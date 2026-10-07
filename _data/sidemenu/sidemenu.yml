@@ -358,6 +358,9 @@
     - label: "Core"
       is_group: true
       children:
+        - label: "Date"
+          url: "/core/date"
+          href: "/core/date.html"
         - label: "Refresh"
           url: "/core/refresh"
           href: "/core/refresh.html"

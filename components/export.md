@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "07/10/2026 - 09:45 AM"
 ---
 
 <section id="exportOverview" class="nds-content-section nds-doc-overview">
@@ -341,7 +341,7 @@ When a user hides a column with the [Tables](../components/tables) column menu, 
             <i class="hgi hgi-stroke hgi-document-validation"></i>
             <span class="nds-label">Dated File Names</span>
           </span>
-          <p class="nds-item-desc">The file is named <code class="nds-inline-code lang-html">{name}-YYYY-MM-DD</code>. The script removes characters that a file system does not allow, and cuts the name to 64 characters.</p>
+          <p class="nds-item-desc">The file is named <code class="nds-inline-code lang-html">{name}-YYYY-MM-DD</code>, with today in the site's timezone (<code class="nds-inline-code lang-html">data-timezone</code>), or the visitor's day without it. The script removes characters that a file system does not allow, and cuts the name to 64 characters.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

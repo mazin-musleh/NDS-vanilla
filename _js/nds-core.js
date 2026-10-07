@@ -31,8 +31,8 @@
  *     NDS.cache.get / .set (key, value, minutes)           localStorage with expiry
  *     NDS.formatNumber(n, opts) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
  *     NDS.date.parse(text, opts) · .format(date, opts) · .convert(text, from, to) · .today() · .site
- *                                      calendar days in any 12-month Intl calendar (hijri =
- *                                      Umm al-Qura); <html data-timezone / data-date-format>
+ *                                      calendar days, Gregorian or Hijri (Umm al-Qura);
+ *                                      <html data-timezone / data-date-format>
  *     NDS.announce(text)               say something in the shared live region
  *     NDS.i18n.load(component, scopes) fetch + apply a component's string table (en
  *                                      fallback; stamps data-i18n / data-i18n-attr in scope)
@@ -382,7 +382,7 @@
     // THE date rule: Date Picker, the topbar date and Export parse and print here.
     // A date is a calendar day: a Date at local midnight, never shifted by a timezone.
     // The site's timezone (<html data-timezone>) enters only through today().
-    // ponytail: 12 numbered months only (gregory, islamic-*, persian); hebrew/japanese when a site asks.
+    // ponytail: built for Saudi Arabia's two calendars, gregory and hijri; any other calendar when a site asks.
     NDS.date = (() => {
         const TOKENS = /YYYY|YY|MM|M|DD|D/g;
         const fmts = new Map();
@@ -468,7 +468,7 @@
                     });
                     regs.set(format, re = { rx: new RegExp('^' + src + '$'), order });
                 }
-                // Arabic-Indic and Persian digits → ASCII (low nibble), bidi marks Intl writes in Arabic out.
+                // Arabic digits (both Unicode forms) → ASCII (low nibble), bidi marks Intl writes in Arabic out.
                 const s = String(text ?? '').replace(/[‎‏؜]/g, '')
                     .replace(/[٠-٩۰-۹]/g, (c) => c.charCodeAt(0) & 15).trim();
                 const match = s.match(re.rx);

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "07/10/2026 - 09:45 AM"
 ---
 
 <section id="datePickerOverview" class="nds-content-section nds-doc-overview">
@@ -114,12 +114,12 @@ The class `dateRange` on `.nds-date-picker` makes the user pick two days. The fi
 ### Hijri Calendar
 {: .nds-block-title}
 
-The class `nds-hijri` on `.nds-date-picker` shows Hijri months and years, and the field holds the Hijri date. A date already in the field picks the calendar too: a year from 1400 to 1500 opens the Hijri calendar, and a year from 1900 to 2100 opens the Gregorian one, whatever the class. The picker takes today's Hijri date from `NDS.TimeDate`, and uses the browser's Islamic calendar until it answers.
+The class `nds-hijri` on `.nds-date-picker` shows Hijri months and years, and the field holds the Hijri date. A date already in the field picks the calendar too: a year up to 1500 opens the Hijri calendar, and a later year opens the Gregorian one, whatever the class. Hijri dates follow Umm al-Qura, the official calendar of Saudi Arabia, through [Date](../core/date). A Hijri day that does not exist, such as day 30 of a 29-day month, is an invalid date.
 
 ### Date Format
 {: .nds-block-title}
 
-`data-format` on `.nds-date-picker` sets how the field writes and reads a date. The default is `DD/MM/YYYY`. Write the same format as the placeholder: with `data-format="YYYY-MM-DD"` and `placeholder="YYYY-MM-DD"`, the field holds `2026-03-15`. The tokens are `YYYY`, `YY`, `MM`, `M`, `DD` and `D`, and any other character stays as written. `YY` reads as a year from 2000 to 2099. One format applies to both calendars and to both days of a range.
+`data-format` on `.nds-date-picker` sets how the field writes and reads a date. The default is the site's format, `data-date-format` on `<html>`, or `DD/MM/YYYY` without it. Write the same format as the placeholder: with `data-format="YYYY-MM-DD"` and `placeholder="YYYY-MM-DD"`, the field holds `2026-03-15`. The tokens are `YYYY`, `YY`, `MM`, `M`, `DD` and `D`, and any other character stays as written. `YY` reads as a year from 2000 to 2099. One format applies to both calendars and to both days of a range.
 
 A format with no day token shows a grid of months, and a format with only year tokens shows a grid of years. The picker then takes the first day of the month, or the first month of the year, as the date.
 
@@ -185,7 +185,7 @@ The picker checks the field at each `change`, typed text included. A date that d
             <i class="hgi hgi-stroke hgi-time-zone"></i>
             <span class="nds-label">Saudi Time</span>
           </span>
-          <p class="nds-item-desc">Today, and the ring that marks it, follow Riyadh time (GMT+3), not the visitor's clock.</p>
+          <p class="nds-item-desc">Today, and the ring that marks it, follow the site's timezone, <code class="nds-inline-code lang-html">data-timezone</code> on <code class="nds-inline-code lang-html">&lt;html&gt;</code>. Without it, they follow the visitor's clock.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -239,7 +239,7 @@ The picker checks the field at each `change`, typed text included. A date that d
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-format` | `.nds-date-picker` | How the field writes and reads a date. The default is `DD/MM/YYYY`. See Date Format |
+| `data-format` | `.nds-date-picker` | How the field writes and reads a date. The default is `data-date-format` on `<html>`, or `DD/MM/YYYY`. See Date Format |
 | `data-clearable` | `.nds-date-picker` | Adds a Clear button to the calendar. See Clear Button |
 | `data-required` | `.nds-date-picker` | The form needs a date. See Validation |
 | `data-state~="disabled"`, `data-state~="readonly"` | `.nds-date-picker` | Set it yourself. See Disabled and Read-only |
@@ -296,9 +296,6 @@ Source: the `date-picker` group in `_sass/tokens/_components.scss`.
 | `NDS.DatePicker.create(input, formControl)` | Starts one field, and returns its instance. `formControl` is optional: the default is the input's `.nds-form-control`. On a field that has started, it returns the same instance. It returns `null` when the input has no `.nds-form-control` or no `.nds-form-container` |
 | `instance.destroy()` | Removes the calendar and its listeners. `create()` can start the field again. Call it before you remove the field from the page |
 | `NDS.DatePicker.CalendarConfig.gregorian`, `.hijri` | The two calendars. Each has `formatDate(date, format)` and `parseDate(text, format)` |
-| `NDS.DatePicker.CalendarConfig.hijri.gregorianToHijri(date)` | Returns the Hijri date of a `Date`, as `{ day, month, year }` |
-| `NDS.DatePicker.CalendarConfig.hijri.hijriToGregorian(year, month, day)` | Returns the `Date` of a Hijri date |
-| `NDS.DatePicker.createHijriDate(day, month, year)` | Returns a `{ day, month, year }` Hijri date |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |
@@ -314,11 +311,11 @@ input.addEventListener('change', function () {
   console.log(input.value, input.dataset.convertedDate);
 });
 
-// The Hijri date of 15 March 2026
-NDS.DatePicker.CalendarConfig.hijri.gregorianToHijri(new Date(2026, 2, 15));
+// The Hijri date of 15 March 2026: '26/09/1447'
+NDS.date.format(new Date(2026, 2, 15), { calendar: 'hijri', format: 'DD/MM/YYYY' });
 </script>
 
-The full API is in the banner of `_js/nds-date-picker.js`.
+To convert dates in your own code, use [Date](../core/date). The full API is in the banner of `_js/nds-date-picker.js`.
 
 </div>
   </div>

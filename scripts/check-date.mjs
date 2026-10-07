@@ -29,8 +29,8 @@ for (const timezoneId of ['Asia/Tokyo', 'America/Los_Angeles']) {
         }
         const eq = (name, got, want) => { if (got !== want) bad.push(`${name}: ${JSON.stringify(got)} ≠ ${JSON.stringify(want)}`); };
         const iso = (d) => d && D.format(d, { format: 'YYYY-MM-DD' });
-        eq('arabic-indic digits', iso(D.parse('٠٣/٠٤/٢٠٢٦', { format: 'DD/MM/YYYY' })), '2026-04-03');
-        eq('persian digits', iso(D.parse('۰۳/۰۴/۲۰۲۶', { format: 'DD/MM/YYYY' })), '2026-04-03');
+        eq('arabic digits', iso(D.parse('٠٣/٠٤/٢٠٢٦', { format: 'DD/MM/YYYY' })), '2026-04-03');
+        eq('arabic digits, U+06F0 form', iso(D.parse('۰۳/۰۴/۲۰۲۶', { format: 'DD/MM/YYYY' })), '2026-04-03');
         eq('bidi marks', iso(D.parse('‏03‏/04/2026؜', { format: 'DD/MM/YYYY' })), '2026-04-03');
         eq('format order', iso(D.parse('04/03/2026', { format: 'MM/DD/YYYY' })), '2026-04-03');
         eq('YY', iso(D.parse('3.4.26', { format: 'D.M.YY' })), '2026-04-03');

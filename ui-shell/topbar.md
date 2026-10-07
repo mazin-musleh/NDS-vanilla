@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "07/10/2026 - 09:45 AM"
 ---
 
 <section id="topbarOverview" class="nds-content-section nds-doc-overview">
@@ -233,7 +233,7 @@ The stamp tab opens the stamp panel, which slides open below the bar. A second p
 ### Widgets
 {: .nds-block-title #topbarWidgets}
 
-The script writes each widget's icon and text. The date changes with the page language and renders again every 24 hours. The clock shows hours and minutes and changes on the minute. The weather renders again every 15 minutes. City and weather work as one widget: both elements must be on the page.
+The script writes each widget's icon and text. The date changes with the page language and renders again every 24 hours. The clock shows hours and minutes and changes on the minute. The date and the clock follow the site's timezone, `data-timezone` on `<html>`, or the visitor's clock without it. See [Date](../core/date). The weather renders again every 15 minutes. City and weather work as one widget: both elements must be on the page.
 
 ### Widgets on Small Screens
 {: .nds-block-title}
@@ -373,7 +373,6 @@ The script writes each widget's icon and text. The date changes with the page la
 | `NDS.TimeDate.init()` | Starts the date and the clock, and renders them again. Call it after you add or replace a widget |
 | `NDS.TimeDate.updateDate()` | Renders the date now |
 | `NDS.TimeDate.updateClock()` | Renders the clock now |
-| `NDS.TimeDate.getHijriDate(isArabic, structured)` | Returns a Promise of today's Hijri date as text, in Arabic when `isArabic` is `true`. With `structured` set to `true`, it returns `{ day, month, year }` |
 | `NDS.CityWeather.init()` | Starts the city and the weather, and renders them again. Call it after you add or replace a widget |
 | `NDS.CityWeather.updateWeather()` | Fetches the weather and renders it |
 | `NDS.CityWeather.updateCity()` | Renders the city name |
@@ -391,11 +390,9 @@ document.querySelector('#stamp-link').addEventListener('click', (e) => {
   e.preventDefault();
   NDS.DigitalStamp.open();
 });
-
-// Today's Hijri date, as text and as numbers
-const text = await NDS.TimeDate.getHijriDate(true);
-const { day, month, year } = await NDS.TimeDate.getHijriDate(true, true);
 </script>
+
+For today's Hijri date in your own code, use [Date](../core/date).
 
 The full API is in the banners of `_js/nds-digitalStamp.js`, `_js/nds-timeDate.js` and `_js/nds-cityWeather.js`.
 
@@ -412,7 +409,7 @@ The full API is in the banners of `_js/nds-digitalStamp.js`, `_js/nds-timeDate.j
 
 - [Header](../ui-shell/header), [Main Navigation](../ui-shell/mainnav) and [Footer](../ui-shell/footer): the other parts of the page shell.
 - [Themes](../components/themes): dark mode.
-- [Date Picker](../components/date-picker): reads the Hijri date from `NDS.TimeDate.getHijriDate()`.
+- [Date](../core/date): the date and the clock use it, and its `data-timezone` sets their day.
 
 </div>
   </div>
