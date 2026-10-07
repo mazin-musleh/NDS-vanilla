@@ -85,6 +85,7 @@ The file name date (:409, :415) uses `toISOString()`, which is the UTC date: bet
 - New `core/date.md` (`/nds-doc date`): the API, the two `<html>` attributes, the search note in one line. Sidemenu entry beside Request and Refresh.
 - `ui-shell/head.md`: two rows in the `<html>` attribute table.
 - `components/date-picker.md`: line 188 ("follow Riyadh time") → the site's timezone; drop the removed API rows (:299–301) and the sample at :318; point to `core/date.md`. `updated` bumps.
+- `components/export.md` (Dated File Names, :344): the date is the site's day (`data-timezone`), else the visitor's.
 - `ui-shell/topbar.md`: drop `getHijriDate` (:376, :396–397) and the Related line at :415; the clock and date follow `data-timezone`. `updated` bumps.
 - `TODO.md` release notes:
   - **Date Picker — Fixed:** Hijri dates follow Umm al-Qura exactly; before, most Hijri days were off by 1 or 2 days.

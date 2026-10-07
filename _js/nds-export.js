@@ -403,16 +403,19 @@
         return s || 'nds-export';
     }
 
+    // The site's day (<html data-timezone>), not toISOString's UTC day.
+    const today = () => NDS.date.format(NDS.date.today(), { format: 'YYYY-MM-DD' });
+
     function defaultFilename(source, ext) {
         const raw = source && source.dataset && source.dataset.exportName;
         const name = sanitizeFilename(raw);
-        return name + '-' + new Date().toISOString().slice(0, 10) + '.' + ext;
+        return name + '-' + today() + '.' + ext;
     }
 
     function download(data, format, opts) {
         opts = opts || {};
         const ext = format === 'pdf' ? 'pdf' : format === 'xls' ? 'xls' : 'csv';
-        const rawName = opts.filename || ('nds-export-' + new Date().toISOString().slice(0, 10) + '.' + ext);
+        const rawName = opts.filename || ('nds-export-' + today() + '.' + ext);
         // sanitize the stem (before extension) — keep the trailing extension as-is.
         const stem = rawName.replace(/\.[a-z]+$/i, '');
         const filename = sanitizeFilename(stem) + (rawName.match(/\.[a-z]+$/i)?.[0] || '.' + ext);
