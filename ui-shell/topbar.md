@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:02 PM"
+last_edit: "07/10/2026 - 07:12 PM"
 ---
 
 <section id="topbarOverview" class="nds-content-section nds-doc-overview">
@@ -233,7 +233,7 @@ The stamp tab opens the stamp panel, which slides open below the bar. A second p
 ### Widgets
 {: .nds-block-title #topbarWidgets}
 
-The script writes each widget's icon and text. The date changes with the page language and renders again every 24 hours. The clock shows hours and minutes and changes on the minute. The date and the clock follow the site's timezone, `data-timezone` on `<html>`, or the visitor's clock without it. See [Date](../core/date). The weather renders again every 15 minutes. City and weather work as one widget: both elements must be on the page.
+The script writes each widget's icon and text. The date changes with the page language and renders again at midnight. The clock shows hours and minutes and changes on the minute. The date and the clock follow the site's timezone, `data-timezone` on `<html>`, or the visitor's clock without it. See [Date](../core/date). The weather renders again every 15 minutes. City and weather work as one widget: both elements must be on the page.
 
 ### Widgets on Small Screens
 {: .nds-block-title}
@@ -284,7 +284,7 @@ The script writes each widget's icon and text. The date changes with the page la
             <i class="hgi hgi-stroke hgi-database"></i>
             <span class="nds-label">Local Cache</span>
           </span>
-          <p class="nds-item-desc">The date is cached for the day, and a looked-up city name for 30 days. The weather is cached for 15 minutes in both languages, so a language switch needs no new weather request.</p>
+          <p class="nds-item-desc">A looked-up city name is cached for 30 days. The weather is cached for 15 minutes in both languages, so a language switch needs no new weather request.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
