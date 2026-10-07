@@ -72,7 +72,9 @@ Keep: `CalendarConfig.gregorian` / `.hijri` with `formatDate`, `parseDate`, `gen
 
 Grid: convert the month's first day once, then step Gregorian days and read each cell's Hijri day: one `formatToParts` per cell, cached formatter.
 
-Verify: `node scripts/doc-check.mjs components/date-picker.md` (owner's go-ahead first), Hijri mode in both languages, plus a page with `data-timezone="America/New_York"` after 21:00 UTC.
+Grid, as built: one loop of 42 days from the month's first day; a Hijri cell stamps its own day. With exact conversion a stamp always agrees with its Gregorian day, so the Hijri-only branches of `isSameCalendarDate` and `isDateInRange` went too (`isSameDay` and `>`/`<`). `NDS.TimeDate.getHijriDate` goes in this step, with its only caller.
+
+Verify: `node scripts/doc-check.mjs components/date-picker.md` (owner's go-ahead first), Hijri mode in both languages. Done 2026-10-07 with a harness on the built doc page (`tmp/date-rework/picker.mjs`, disposable), Chrome and WebKit, under Los Angeles, Riyadh and Tokyo clocks: every Hijri cell matches Umm al-Qura over 24 months of navigation, 1448/4 shows 30 days, `30/03/1448` is invalid, today follows `data-timezone`, month mode, range, bounds, site format and the calendar guess all pass. A Hijri month step renders in ~4 ms. `nds-extras.min.js` −2.5 KB gz. WebKit logs "ResizeObserver loop completed" on this page with or without the change.
 
 ## Step 4: Export (`_js/nds-export.js`)
 

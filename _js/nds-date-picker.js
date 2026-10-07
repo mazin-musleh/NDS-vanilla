@@ -6,14 +6,14 @@
  *   NDS.DatePicker.create(input, formControl)  build/return one instance — idempotent, null on
  *                                              bad markup; formControl is optional
  *   NDS.DatePicker.CalendarConfig              the gregorian + hijri engines
- *                                              (parseDate / formatDate / conversion)
- *   NDS.DatePicker.createHijriDate(d, m, y)    build the {day, month, year} hijri shape
+ *                                              (parseDate / formatDate, on NDS.date)
  *   NDS.DatePicker.DatePickerCalendar          the instance prototype (extension use)
  * Events:
  *   (none — a pick writes the input and dispatches a native `change`; listen on the input)
  * Hooks:
  *   on the .nds-form-container:  data-format (YYYY YY MM M DD D — also picks the
- *                                day/month/year mode) · data-clearable (automatic
+ *                                day/month/year mode; default <html data-date-format>,
+ *                                else DD/MM/YYYY) · data-clearable (automatic
  *                                in range mode) · .dateRange · .nds-hijri (a prefilled
  *                                value's year overrides it: 1400-1500 reads as Hijri)
  *   .date-picker-toggle:         the button that opens the calendar (none: a click on the
@@ -26,52 +26,11 @@
  *     Bounds are day-precision and use the picker's own format.
  *   - Hijri and Gregorian: the picker stamps the OTHER calendar's value in
  *     data-converted-date on the input.
- *   - "Today" is Riyadh time (GMT+3), not the visitor's clock.
+ *   - "Today" follows <html data-timezone>; without it, the visitor's clock.
+ *   - Hijri is Umm al-Qura, converted exactly by NDS.date.
  */
 (() => {
     'use strict';
-
-    /**
-     * Helper to get current date in Saudi Arabia timezone (GMT+3)
-     * Returns a Date object representing Saudi time
-     */
-    function getSaudiDateObject() {
-        // formatToParts with an explicit hourCycle, not a toLocaleString round-trip:
-        // hour12:false leaves the cycle to the engine, and one that picks h24 renders
-        // 00:00-00:59 as "24:mm" — parsed back, that rolls the date a day forward, so
-        // "today" is wrong for an hour every night. h23 pins it, and reading parts
-        // drops the "MM/DD/YYYY, HH:mm:ss" format assumption along with it.
-        var parts = new Intl.DateTimeFormat('en-US', {
-            timeZone: 'Asia/Riyadh',
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hourCycle: 'h23'
-        }).formatToParts(new Date());
-
-        var p = {};
-        for (var i = 0; i < parts.length; i++) p[parts[i].type] = parts[i].value;
-
-        return new Date(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute, +p.second);
-    }
-
-    /**
-     * Creates a unified Hijri date object structure
-     * @param {number} day - Day of the month (1-30)
-     * @param {number} month - Month of the year (1-12)
-     * @param {number} year - Hijri year
-     * @returns {Object} Hijri date object with day, month, year properties
-     */
-    function createHijriDate(day, month, year) {
-        return {
-            day: parseInt(day, 10) || null,
-            month: parseInt(month, 10) || null,
-            year: parseInt(year, 10) || null
-        };
-    }
 
     /**
      * Clones a Date and preserves any attached Hijri metadata
@@ -87,9 +46,8 @@
     }
 
     // Write the Hijri trio onto a Gregorian Date and hand it back. This stamp is
-    // the file's data contract — formatDate, isSameCalendarDate, isDateInRange and
-    // getDisplayDayNumber all read it — so it lives in one place rather than in
-    // nine hand-written copies a future field would have to be grepped into.
+    // the file's data contract — the month/year grids, getYearRange and
+    // getDisplayDayNumber read it — so it lives in one place.
     function stampHijri(date, hYear, hMonth, hDay) {
         date._hijriDay = hDay;
         date._hijriMonth = hMonth;
@@ -110,79 +68,29 @@
         return btn;
     }
 
-    // Accurate "today" reference (from NDS.TimeDate) shared by every picker
-    // instance for Hijri↔Gregorian conversions. Module-scoped — no readers
-    // outside this file.
-    var _accurateTodaysHijriDate = null;
-    var _accurateTodaysGregorianDate = null;
-
     // Shared across both calendar systems
     var WEEKDAY_NAMES = {
         ar: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
         en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     };
 
-    // Format token support for data-format="…". Tokens: YYYY, YY, MM, M, DD, D.
-    // Longer tokens listed first so the alternation prefers YYYY over YY (regex
-    // alternatives are tried in order at each position). Any character outside a
-    // token is passed through literally.
-    var DEFAULT_DATE_FORMAT = 'DD/MM/YYYY';
-    var FORMAT_TOKEN_REGEX = /(YYYY|YY|MM|M|DD|D)/g;
-
-    function applyDateFormat(format, values) {
-        // values = { year, month, day } — month is 1-indexed
-        return format.replace(FORMAT_TOKEN_REGEX, function (token) {
-            switch (token) {
-                case 'YYYY': return String(values.year);
-                case 'YY':   return String(values.year).slice(-2);
-                case 'MM':   return String(values.month).padStart(2, '0');
-                case 'M':    return String(values.month);
-                case 'DD':   return String(values.day).padStart(2, '0');
-                case 'D':    return String(values.day);
-            }
-        });
+    // Hijri <-> a local-midnight Date, through NDS.date (Umm al-Qura).
+    var HIJRI = { calendar: 'hijri', format: 'D/M/YYYY' };
+    function toHijri(date) {
+        var p = NDS.date.format(date, { calendar: 'hijri', format: 'D M YYYY' }).split(' ');
+        return { day: +p[0], month: +p[1], year: +p[2] };
     }
-
-    // Cache parse regexes per format string — cheap, rebuilt only per new format.
-    var _parseRegexCache = {};
-    function getParseConfig(format) {
-        if (_parseRegexCache[format]) return _parseRegexCache[format];
-        var groupOrder = [];
-        var escaped = format.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        var pattern = escaped.replace(FORMAT_TOKEN_REGEX, function (token) {
-            groupOrder.push(token);
-            switch (token) {
-                case 'YYYY': return '(\\d{4})';
-                case 'YY':   return '(\\d{2})';
-                case 'MM':   return '(\\d{2})';
-                case 'M':    return '(\\d{1,2})';
-                case 'DD':   return '(\\d{2})';
-                case 'D':    return '(\\d{1,2})';
-            }
-        });
-        var config = { regex: new RegExp('^' + pattern + '$'), order: groupOrder };
-        _parseRegexCache[format] = config;
-        return config;
+    // Stamped. Day 30 of a 29-day month clamps to the 29th.
+    function fromHijri(year, month, day) {
+        var date = NDS.date.parse(day + '/' + month + '/' + year, HIJRI);
+        if (!date && day > 29) {
+            day = 29;
+            date = NDS.date.parse(day + '/' + month + '/' + year, HIJRI);
+        }
+        return stampHijri(date, year, month, day);
     }
-
-    function parseWithFormat(str, format) {
-        var config = getParseConfig(format);
-        var match = str.match(config.regex);
-        if (!match) return null;
-        var values = { day: null, month: null, year: null };
-        config.order.forEach(function (token, i) {
-            var val = parseInt(match[i + 1], 10);
-            if (token === 'YYYY') values.year = val;
-            else if (token === 'YY') values.year = 2000 + val; // ponytail: 20xx window; add data-year-window if 19xx/21xx dates need parsing
-            else if (token === 'MM' || token === 'M') values.month = val;
-            else if (token === 'DD' || token === 'D') values.day = val;
-        });
-        // Year is required (there is no sensible default); month/day default
-        // to 1 so month-only ('MM/YYYY') and year-only ('YYYY') formats parse.
-        if (values.year === null) return null;
-        if (values.month === null) values.month = 1;
-        if (values.day === null) values.day = 1;
-        return values;
+    function hijriMonthLength(year, month) {
+        return NDS.date.parse('30/' + month + '/' + year, HIJRI) ? 30 : 29;
     }
 
     // Detect picker UI mode from the format string. Token presence drives it:
@@ -204,23 +112,10 @@
             },
             weekdayNames: WEEKDAY_NAMES,
             formatDate: function (date, format) {
-                return applyDateFormat(format || DEFAULT_DATE_FORMAT, {
-                    year: date.getFullYear(),
-                    month: date.getMonth() + 1,
-                    day: date.getDate()
-                });
+                return NDS.date.format(date, { format: format });
             },
             parseDate: function (dateString, format) {
-                var vals = parseWithFormat(dateString, format || DEFAULT_DATE_FORMAT);
-                if (!vals) return null;
-
-                var testDate = new Date(vals.year, vals.month - 1, vals.day);
-                if (testDate.getDate() === vals.day &&
-                    testDate.getMonth() === vals.month - 1 &&
-                    testDate.getFullYear() === vals.year) {
-                    return testDate;
-                }
-                return null;
+                return NDS.date.parse(dateString, { format: format });
             },
             generateCalendarData: function (year, month) {
                 var firstDay = new Date(year, month, 1);
@@ -248,344 +143,27 @@
             weekdayNames: WEEKDAY_NAMES,
 
             formatDate: function (date, format) {
-                var hijriDate;
-
-                // Use attached Hijri data if available
-                if (date._hijriDay && date._hijriMonth && date._hijriYear) {
-                    hijriDate = createHijriDate(date._hijriDay, date._hijriMonth, date._hijriYear);
-                } else {
-                    // Convert Gregorian to Hijri
-                    hijriDate = this.gregorianToHijri(date);
-                }
-
-                return applyDateFormat(format || DEFAULT_DATE_FORMAT, {
-                    year: hijriDate.year,
-                    month: hijriDate.month,
-                    day: hijriDate.day
-                });
+                return NDS.date.format(date, { calendar: 'hijri', format: format });
             },
 
             generateCalendarData: function (year, month) {
-                // For Hijri calendar, we need to work with Hijri dates
-                var hijriFirstDay = this.hijriToGregorian(year, month, 1);
-                var daysInHijriMonth = this.getDaysInHijriMonth(year, month);
-                var startOfWeek = hijriFirstDay.getDay();
-
+                var firstDay = fromHijri(year, month, 1);
+                var daysInMonth = hijriMonthLength(year, month);
                 return {
                     year: year,
                     month: month,
-                    firstDay: hijriFirstDay,
-                    lastDay: this.hijriToGregorian(year, month, daysInHijriMonth),
-                    daysInMonth: daysInHijriMonth,
-                    startOffset: startOfWeek
+                    firstDay: firstDay,
+                    lastDay: fromHijri(year, month, daysInMonth),
+                    daysInMonth: daysInMonth,
+                    startOffset: firstDay.getDay()
                 };
             },
 
-            /**
-             * Converts Gregorian date to Hijri using accurate API reference with browser Intl fallback
-             * @param {Date} gDate - Gregorian date to convert
-             * @returns {Object} Hijri date object with day, month, year properties
-             * @throws {Error} If date is invalid or conversion fails
-             */
-            gregorianToHijri: function (gDate) {
-                // Simple validation
-                if (!gDate || !(gDate instanceof Date) || isNaN(gDate.getTime())) {
-                    throw new Error('Invalid date provided to gregorianToHijri');
-                }
-
-                // Try to use accurate today's date as reference if available
-                if (_accurateTodaysHijriDate && _accurateTodaysGregorianDate) {
-                    try {
-                        return this.gregorianToHijriUsingReference(gDate,
-                            _accurateTodaysHijriDate, _accurateTodaysGregorianDate);
-                    } catch (e) {
-                        // Continue to fallback methods
-                    }
-                }
-
-                // Fallback to browser's Intl API
-                try {
-                    var hijriString = new Intl.DateTimeFormat('en-US-u-ca-islamic', {
-                        day: 'numeric',
-                        month: 'numeric',
-                        year: 'numeric'
-                    }).format(gDate);
-
-                    var parts = hijriString.split('/');
-                    if (parts.length === 3) {
-                        var day = parseInt(parts[1], 10);
-                        var month = parseInt(parts[0], 10);
-                        var year = parseInt(parts[2], 10);
-
-                        // Validate parsed values
-                        if (isNaN(day) || isNaN(month) || isNaN(year) ||
-                            day < 1 || day > 30 || month < 1 || month > 12 || year < 1) {
-                            throw new Error('Invalid Hijri date components');
-                        }
-
-                        return createHijriDate(day, month, year);
-                    }
-                } catch (e) {
-                    console.warn('NDS DatePicker: Hijri conversion via Intl failed, using mathematical fallback:', e.message);
-                }
-
-                // No approximation tier: the old Julian-day math could be days off.
-                // Reaching here means Intl's islamic calendar is unavailable or
-                // returned an unparsable shape — fail loudly rather than mis-date.
-                console.error('NDS DatePicker: all Hijri conversion methods failed');
-                throw new Error('Unable to convert Gregorian date to Hijri');
-            },
-
-            /**
-             * Converts Hijri date to Gregorian using accurate today's date as reference
-             * @param {number} hYear - Hijri year
-             * @param {number} hMonth - Hijri month (1-12)
-             * @param {number} hDay - Hijri day (1-30)
-             * @returns {Date} Gregorian Date object
-             * @throws {Error} If Hijri date components are invalid
-             */
-            hijriToGregorian: function (hYear, hMonth, hDay) {
-                // Simple validation
-                if (hYear < 1 || hMonth < 1 || hMonth > 12 || hDay < 1 || hDay > 30) {
-                    throw new Error('Invalid Hijri date: ' + hDay + '/' + hMonth + '/' + hYear);
-                }
-
-                // Simple cache
-                if (!this._hijriCache) this._hijriCache = {};
-                var key = hYear + '-' + hMonth + '-' + hDay;
-                if (this._hijriCache[key]) return new Date(this._hijriCache[key]);
-
-                var result = null;
-
-                // Try to use accurate today's date as reference if available
-                if (_accurateTodaysHijriDate && _accurateTodaysGregorianDate) {
-                    try {
-                        result = this.convertUsingReference(hYear, hMonth, hDay,
-                            _accurateTodaysHijriDate, _accurateTodaysGregorianDate);
-                    } catch (e) {
-                        // Continue to fallback methods
-                    }
-                }
-
-                // Fallback to original conversion methods
-                if (!result) {
-                    try {
-                        // Start with mathematical conversion as approximation
-                        var jd = this.hijriToJulian(hYear, hMonth, hDay);
-                        var approxDate = this.julianToGregorian(jd);
-
-                        // Search around the approximate date to find the exact match
-                        for (var offset = -3; offset <= 3; offset++) {
-                            var testDate = new Date(approxDate);
-                            testDate.setDate(approxDate.getDate() + offset);
-
-                            var convertedBack = this.gregorianToHijri(testDate);
-                            if (convertedBack &&
-                                convertedBack.day === hDay &&
-                                convertedBack.month === hMonth &&
-                                convertedBack.year === hYear) {
-                                result = testDate;
-                                break;
-                            }
-                        }
-                    } catch (e) {
-                        // Continue to fallback
-                    }
-
-                    // Final fallback to the mathematical conversion. Deliberately
-                    // divergent from gregorianToHijri, which throws instead of
-                    // approximating: this runs per cell inside generateCalendarDates,
-                    // so throwing would blank the whole 42-cell grid. A day-level
-                    // error on an engine without Intl's islamic calendar is the
-                    // accepted trade — a rendered calendar that may be off by a day
-                    // beats no calendar at all.
-                    if (!result) {
-                        var jd = this.hijriToJulian(hYear, hMonth, hDay);
-                        result = this.julianToGregorian(jd);
-                    }
-                }
-
-                // Cache the result
-                this._hijriCache[key] = new Date(result);
-
-                return result;
-            },
-
-            /**
-             * Convert Hijri date using accurate today's date as reference
-             * @param {number} hYear - Target Hijri year
-             * @param {number} hMonth - Target Hijri month
-             * @param {number} hDay - Target Hijri day
-             * @param {Object} todaysHijri - Today's accurate Hijri date {day, month, year}
-             * @param {Date} todaysGregorian - Today's Gregorian date
-             * @returns {Date} Converted Gregorian date
-             */
-            convertUsingReference: function(hYear, hMonth, hDay, todaysHijri, todaysGregorian) {
-                // Calculate difference in days between target date and today's date
-                var targetHijriDays = this.hijriDateToDays(hYear, hMonth, hDay);
-                var todayHijriDays = this.hijriDateToDays(todaysHijri.year, todaysHijri.month, todaysHijri.day);
-
-                var daysDifference = targetHijriDays - todayHijriDays;
-
-                // Create result date at noon to avoid timezone issues with weekday calculation
-                var result = new Date(
-                    todaysGregorian.getFullYear(),
-                    todaysGregorian.getMonth(),
-                    todaysGregorian.getDate(),
-                    12, 0, 0
-                );
-                result.setDate(result.getDate() + daysDifference);
-
-                return result;
-            },
-
-            /**
-             * Convert Gregorian date to Hijri using accurate today's date as reference
-             * @param {Date} gDate - Target Gregorian date
-             * @param {Object} todaysHijri - Today's accurate Hijri date {day, month, year}
-             * @param {Date} todaysGregorian - Today's Gregorian date
-             * @returns {Object} Hijri date object with day, month, year properties
-             */
-            gregorianToHijriUsingReference: function(gDate, todaysHijri, todaysGregorian) {
-                // Create dates at noon to avoid timezone boundary issues
-                var targetDate = new Date(gDate.getFullYear(), gDate.getMonth(), gDate.getDate(), 12, 0, 0);
-                var todayDate = new Date(todaysGregorian.getFullYear(), todaysGregorian.getMonth(), todaysGregorian.getDate(), 12, 0, 0);
-
-                // Calculate difference in days and add to today's Hijri date
-                var daysDifference = Math.round((targetDate.getTime() - todayDate.getTime()) / (1000 * 60 * 60 * 24));
-                return this.addDaysToHijriDate(todaysHijri, daysDifference);
-            },
-
-            /**
-             * Convert Hijri date to a day number for calculation
-             * @param {number} year - Hijri year
-             * @param {number} month - Hijri month
-             * @param {number} day - Hijri day
-             * @returns {number} Total days since a reference point
-             */
-            hijriDateToDays: function(year, month, day) {
-                var totalDays = 0;
-
-                // Add days for complete years (approximate)
-                totalDays += (year - 1) * 354.367;
-
-                // Add days for complete months in current year
-                for (var m = 1; m < month; m++) {
-                    totalDays += this.getDaysInHijriMonth(year, m);
-                }
-
-                // Add days in current month
-                totalDays += day - 1;
-
-                return Math.round(totalDays);
-            },
-
-            addDaysToHijriDate: function(hijriDate, days) {
-                // Always a copy. Callers mutate the result — setHijriDatePart writes a
-                // property straight onto it — and the input can be the module-shared
-                // accurate-today reference, which handing back would corrupt for every
-                // picker on the page.
-                if (days === 0) return createHijriDate(hijriDate.day, hijriDate.month, hijriDate.year);
-
-                var result = createHijriDate(hijriDate.day, hijriDate.month, hijriDate.year);
-                result.day += days;
-                
-                // Handle day overflow/underflow
-                while (result.day > this.getDaysInHijriMonth(result.year, result.month)) {
-                    result.day -= this.getDaysInHijriMonth(result.year, result.month);
-                    result.month++;
-                    if (result.month > 12) {
-                        result.month = 1;
-                        result.year++;
-                    }
-                }
-                
-                while (result.day < 1) {
-                    result.month--;
-                    if (result.month < 1) {
-                        result.month = 12;
-                        result.year--;
-                    }
-                    result.day += this.getDaysInHijriMonth(result.year, result.month);
-                }
-                
-                return result;
-            },
-
-            getDaysInHijriMonth: function (year, month) {
-                // Hijri months alternate between 29 and 30 days
-                // Odd months (1,3,5,7,9,11) have 30 days, even months have 29
-                // The 12th month (Dhu al-Hijjah) has 30 days in leap years
-                if (month % 2 === 1) {
-                    return 30; // Odd months
-                } else if (month === 12 && this.isHijriLeapYear(year)) {
-                    return 30; // Leap year Dhu al-Hijjah
-                } else {
-                    return 29; // Even months
-                }
-            },
-
-            isHijriLeapYear: function (year) {
-                // 11 leap years in every 30-year cycle
-                return ((year * 11) + 14) % 30 < 11;
-            },
-
-            // Julian Day conversion helpers
-            gregorianToJulian: function (date) {
-                var year = date.getFullYear();
-                var month = date.getMonth() + 1;
-                var day = date.getDate();
-                if (month < 3) {
-                    year--;
-                    month += 12;
-                }
-                var a = Math.floor(year / 100);
-                var b = 2 - a + Math.floor(a / 4);
-                return Math.floor(365.25 * (year + 4716)) +
-                       Math.floor(30.6001 * (month + 1)) +
-                       day + b - 1524.5;
-            },
-
-            julianToGregorian: function (jd) {
-                var a = jd + 32044;
-                var b = Math.floor((4 * a + 3) / 146097);
-                var c = a - Math.floor((146097 * b) / 4);
-
-                var d = Math.floor((4 * c + 3) / 1461);
-                var e = c - Math.floor((1461 * d) / 4);
-                var m = Math.floor((5 * e + 2) / 153);
-
-                var day = e - Math.floor((153 * m + 2) / 5) + 1;
-                var month = m + 3 - 12 * Math.floor(m / 10);
-                var year = 100 * b + d - 4800 + Math.floor(m / 10);
-
-                // Create date at noon Saudi time to avoid timezone issues with day-of-week
-                return new Date(year, month - 1, day, 12, 0, 0);
-            },
-
-            hijriToJulian: function (year, month, day) {
-                // Approximate conversion
-                var hijriEpoch = 1948439.5;
-                var avgHijriYear = 354.367;
-                
-                var daysSinceEpoch = (year - 1) * avgHijriYear + 
-                                   (month - 1) * 29.5 + 
-                                   (day - 1);
-                
-                return hijriEpoch + daysSinceEpoch;
-            },
-
             parseDate: function (dateString, format) {
-                var vals = parseWithFormat(dateString, format || DEFAULT_DATE_FORMAT);
-                if (!vals) return null;
-
-                // Pure conversion - no offset involved
-                var gregorianDate = this.hijriToGregorian(vals.year, vals.month, vals.day);
-
-                // Attach original input as Hijri metadata
-                stampHijri(gregorianDate, vals.year, vals.month, vals.day);
-
-                return gregorianDate;
+                var date = NDS.date.parse(dateString, { calendar: 'hijri', format: format });
+                if (!date) return null;
+                var h = toHijri(date);
+                return stampHijri(date, h.year, h.month, h.day);
             },
         }
     };
@@ -934,7 +512,7 @@
 
         // Initialize calendar state
         initializeState: function () {
-            var format = (this.elements.container && this.elements.container.getAttribute('data-format')) || DEFAULT_DATE_FORMAT;
+            var format = (this.elements.container && this.elements.container.getAttribute('data-format')) || NDS.date.site.format;
             var mode = detectFormatMode(format);
             // Expose the mode as an attribute so CSS can gate the day grid /
             // month controls without JS reaching into the dropdown.
@@ -954,7 +532,7 @@
 
             // Open at the nearest bound when today falls outside [min, max] —
             // otherwise the initial month is entirely disabled.
-            var currentDate = getSaudiDateObject();
+            var currentDate = NDS.date.today();
             if (maxDate && currentDate > maxDate) currentDate = copyDateWithHijri(maxDate);
             else if (minDate && currentDate < minDate) currentDate = copyDateWithHijri(minDate);
 
@@ -986,10 +564,8 @@
             var isHijri = this.state.calendarType === 'hijri';
             var first, last;
             if (isHijri) {
-                var calendar = CalendarConfig.hijri;
-                first = calendar.hijriToGregorian(year, monthIdx, 1);
-                var daysInMonth = calendar.getDaysInHijriMonth(year, monthIdx);
-                last = calendar.hijriToGregorian(year, monthIdx, daysInMonth);
+                first = fromHijri(year, monthIdx, 1);
+                last = fromHijri(year, monthIdx, hijriMonthLength(year, monthIdx));
             } else {
                 first = new Date(year, monthIdx, 1);
                 last = new Date(year, monthIdx + 1, 0);
@@ -1089,26 +665,12 @@
         },
 
         detectCalendarTypeFromSingleValue: function (dateString, format) {
-            var vals = parseWithFormat(dateString, format || DEFAULT_DATE_FORMAT);
-            if (!vals) return null;
-
-            // Hijri year heuristics (approximate ranges)
-            if (vals.year >= 1400 && vals.year <= 1500) {
-                // Likely Hijri (current era is around 1440s)
-                return 'hijri';
-            } else if (vals.year >= 1900 && vals.year <= 2100) {
-                // Likely Gregorian
-                return 'gregorian';
-            }
-
-            // If year is ambiguous, check for impossible Gregorian dates
-            if (vals.month > 12) {
-                // Invalid for both, but let's default to gregorian
-                return 'gregorian';
-            }
-
-            // Default assumption based on year range
-            return vals.year > 1500 ? 'gregorian' : 'hijri';
+            // The typed year picks the calendar: a Hijri year is 1500 or less.
+            var greg = NDS.date.parse(dateString, { format: format });
+            var hijri = !greg && NDS.date.parse(dateString, { format: format, calendar: 'hijri' });
+            if (!greg && !hijri) return null;
+            var year = greg ? greg.getFullYear() : toHijri(hijri).year;
+            return year > 1500 ? 'gregorian' : 'hijri';
         },
 
         // Utility methods
@@ -1166,46 +728,12 @@
         },
 
         isTodayDate: function (date) {
-            if (this.state.calendarType === 'hijri') {
-                // Get today's Hijri date (cached)
-                var todaysHijriDate = this.getTodaysHijriDate();
-                if (todaysHijriDate && date._hijriDay) {
-                    return date._hijriDay === todaysHijriDate.day &&
-                        date._hijriMonth === todaysHijriDate.month &&
-                        date._hijriYear === todaysHijriDate.year;
-                }
-            }
-            // Per-render hoist: generateCalendarDates stamps _renderToday once
-            // per grid build so 42 cells don't each run the Intl timezone pass.
-            return this.isSameDay(date, this._renderToday || getSaudiDateObject());
+            // Per-render hoist: generateCalendarDates stamps _renderToday once per grid.
+            return this.isSameDay(date, this._renderToday || NDS.date.today());
         },
 
-        // Read-only for callers: the returned object may BE the module-shared
-        // accurate-today reference, so mutating it corrupts every picker on the
-        // page. Need a mutable copy? createHijriDate(d.day, d.month, d.year).
         getTodaysHijriDate: function () {
-            // Simple cache for today's Hijri date - API handles date validation internally
-            if (!this._cachedTodaysHijriDate) {
-                var self = this;
-
-                NDS.TimeDate.getHijriDate(false, true).then(function(hijriData) {
-                    if (hijriData && hijriData.day && hijriData.month && hijriData.year) {
-                        self.storeAccurateHijriData(hijriData);
-                        // Re-render calendar with accurate date
-                        self.render();
-                    }
-                }).catch(function() {
-                    // API failed, fallback handled below
-                });
-
-                // Seed from the shared accurate reference when another picker has
-                // already fetched it; the math fallback is only for the first one.
-                var today = getSaudiDateObject();
-                this._cachedTodaysHijriDate = _accurateTodaysHijriDate
-                    || CalendarConfig.hijri.gregorianToHijri(today);
-            }
-
-            return this._cachedTodaysHijriDate;
+            return toHijri(NDS.date.today());
         },
 
         initializeCalendar: function () {
@@ -1213,67 +741,6 @@
             // so value-based detection parses custom formats correctly.
             this.state.calendarType = this.detectCalendarType(this.state.format);
             this.state.isInitialized = true;
-
-            // Get accurate Hijri date FIRST before parsing initial values —
-            // ensures accurate conversions. NDS.TimeDate is a hard dependency
-            // (ships in every build; the loader resolves it across bundles).
-            if (this.state.calendarType === 'hijri') {
-                this.initializeHijriCalendarWithParsing();
-            } else {
-                this.parseInitialValue();
-                this.setupCalendarUI();
-                this.bindCalendarEvents();
-                this.setupLanguageObserver();
-                this.fetchAccurateHijriReference();
-                this.render();
-            }
-        },
-
-        initializeHijriCalendarWithParsing: function () {
-            var self = this;
-            NDS.TimeDate.getHijriDate(false, true).then(function(hijriData) {
-                self.storeAccurateHijriData(hijriData);
-                self.completeCalendarSetup();
-            }).catch(function() {
-                self.completeCalendarSetup();
-            });
-        },
-
-        fetchAccurateHijriReference: function () {
-            var self = this;
-            NDS.TimeDate.getHijriDate(false, true).then(function(hijriData) {
-                self.storeAccurateHijriData(hijriData);
-                // Re-stamp the committed value only: updateInput() here fired a stray
-                // change and could commit a pick made before Save.
-                var calendar = self.getCurrentCalendar();
-                var raw = self.elements.input.value.trim();
-                var converted = raw ? raw.split(' - ').map(function (part) {
-                    var date = calendar.parseDate(part.trim(), self.state.format);
-                    return date && self.getConvertedDate(date);
-                }) : [];
-                if (converted.length && converted.every(Boolean)) {
-                    self.elements.input.dataset.convertedDate = converted.join(' - ');
-                }
-            }).catch(function() {});
-        },
-
-        // Helper to store accurate Hijri data and set global reference
-        storeAccurateHijriData: function(hijriData) {
-            if (hijriData && hijriData.day && hijriData.month && hijriData.year) {
-                // Conversions memoised against the previous reference are now wrong,
-                // so the memo is invalidated here — where its input changes — rather
-                // than on every close.
-                CalendarConfig.hijri._hijriCache = {};
-                this._cachedTodaysHijriDate = hijriData;
-                _accurateTodaysHijriDate = hijriData;
-                _accurateTodaysGregorianDate = getSaudiDateObject();
-
-                stampHijri(this.state.currentDate, hijriData.year, hijriData.month, hijriData.day);
-            }
-        },
-
-        // Helper to complete calendar setup after Hijri data fetch
-        completeCalendarSetup: function() {
             this.parseInitialValue();
             this.setupCalendarUI();
             this.bindCalendarEvents();
@@ -1315,13 +782,6 @@
             if (this.elements.dropdown) {
                 this.elements.dropdown.style.cssText = '';
             }
-
-            // Instance cache only. The module-scoped accurate-today refs and the
-            // conversion memo are shared by every picker on the page, and this runs
-            // on each close — dropping them here made closing one picker downgrade
-            // any other open picker to the math fallback. They are refreshed where
-            // they actually change instead (storeAccurateHijriData).
-            this._cachedTodaysHijriDate = null;
 
             // Reset states
             this.resetState();
@@ -1578,9 +1038,7 @@
                 else if (newMonth > 12) { newMonth = 1; newYear++; }
                 if (newYear < range.start || newYear > range.end) return false;
 
-                var calendar = this.getCurrentCalendar();
-                var newDate = stampHijri(calendar.hijriToGregorian(newYear, newMonth, 1), newYear, newMonth, 1);
-                this.state.currentDate = newDate;
+                this.state.currentDate = fromHijri(newYear, newMonth, 1);
             } else {
                 var month = this.state.currentDate.getMonth() + direction;
                 var year = this.state.currentDate.getFullYear();
@@ -1612,8 +1070,7 @@
                 };
             }
 
-            // Convert current Gregorian date to Hijri
-            return CalendarConfig.hijri.gregorianToHijri(this.state.currentDate);
+            return toHijri(this.state.currentDate);
         },
 
         // Bind dropdown events — initialize NDSDropmenu instances
@@ -1687,17 +1144,14 @@
             // Month/year mode has no day cell to click — synthesize a selection
             // from state.currentDate (the currently navigated month/year), with
             // day forced to 1 (and month to 1 in year mode) so the stored value
-            // matches what parseWithFormat produces on the way back in.
+            // matches what NDS.date.parse produces on the way back in.
             if (this.state.mode !== 'day' && !this.isRangeMode() && !this.state.selectedDate) {
-                var date = copyDateWithHijri(this.state.currentDate);
+                var date;
                 if (this.state.calendarType === 'hijri') {
-                    if (this.state.mode === 'year') date._hijriMonth = 1;
-                    date._hijriDay = 1;
-                    var gEq = CalendarConfig.hijri.hijriToGregorian(
-                        date._hijriYear, date._hijriMonth, date._hijriDay
-                    );
-                    date.setTime(gEq.getTime());
+                    var h = this.getCurrentHijriDate();
+                    date = fromHijri(h.year, this.state.mode === 'year' ? 1 : h.month, 1);
                 } else {
+                    date = new Date(this.state.currentDate);
                     if (this.state.mode === 'year') date.setMonth(0);
                     date.setDate(1);
                 }
@@ -1822,7 +1276,7 @@
                 todaysMonth = todaysHijri.month;
                 todaysYear = todaysHijri.year;
             } else {
-                var todayNow = getSaudiDateObject();
+                var todayNow = NDS.date.today();
                 todaysMonth = todayNow.getMonth();
                 todaysYear = todayNow.getFullYear();
             }
@@ -1880,7 +1334,7 @@
             if (this.state.selectedDate) {
                 selectedYear = isHijri ? this.state.selectedDate._hijriYear : this.state.selectedDate.getFullYear();
             }
-            var todaysYear = isHijri ? this.getTodaysHijriDate().year : getSaudiDateObject().getFullYear();
+            var todaysYear = isHijri ? this.getTodaysHijriDate().year : NDS.date.today().getFullYear();
 
             for (var year = startYear; year <= endYear; year++) {
                 var btn = document.createElement('button');
@@ -1914,7 +1368,7 @@
             if (isHijri) {
                 var year = unit === 'year' ? value : this.getCurrentYear();
                 var month = unit === 'month' ? value : (unit === 'year' ? 1 : this.getCurrentMonth());
-                var d = stampHijri(CalendarConfig.hijri.hijriToGregorian(year, month, 1), year, month, 1);
+                var d = fromHijri(year, month, 1);
                 this.state.currentDate = d;
                 this.state.selectedDate = copyDateWithHijri(d);
             } else {
@@ -1950,9 +1404,7 @@
                 var hijri = this.getCurrentHijriDate();
                 var newYear = hijri.year + direction;
                 if (newYear < range.start || newYear > range.end) return;
-                var calendar = this.getCurrentCalendar();
-                var newDate = stampHijri(calendar.hijriToGregorian(newYear, hijri.month, 1), newYear, hijri.month, 1);
-                this.state.currentDate = newDate;
+                this.state.currentDate = fromHijri(newYear, hijri.month, 1);
             } else {
                 var newYearG = this.state.currentDate.getFullYear() + direction;
                 if (newYearG < range.start || newYearG > range.end) return;
@@ -1969,11 +1421,7 @@
         // aren't present (year mode hides them).
         updateNavArrows: function () {
             if (this.elements.todayBtn) {
-                // Day precision — bounds parse at midnight, so a time-stamped
-                // "now" would read as past maxDate on the max day itself.
-                var todayMid = getSaudiDateObject();
-                todayMid.setHours(0, 0, 0, 0);
-                this.elements.todayBtn.disabled = !this.isDateAllowed(todayMid);
+                this.elements.todayBtn.disabled = !this.isDateAllowed(NDS.date.today());
             }
             if (!this.elements.prevBtn || !this.elements.nextBtn) return;
             var range = this.getYearRange();
@@ -1994,50 +1442,18 @@
             this.elements.nextBtn.disabled = atEnd;
         },
 
-        // Calendar date generation (unified for Gregorian and Hijri)
+        // 42 days from the month's first day; a Hijri cell reads its own day.
         generateCalendarDates: function (calendarData) {
-            this._renderToday = getSaudiDateObject();
+            this._renderToday = NDS.date.today();
+            var first = calendarData.firstDay;
             var isHijri = this.state.calendarType === 'hijri';
-            var calendar = isHijri ? this.getCurrentCalendar() : null;
-
-            // Date factory: creates a date with Hijri metadata if needed
-            function makeDate(year, month, day) {
+            for (var i = -calendarData.startOffset; i < 42 - calendarData.startOffset; i++) {
+                var d = new Date(first.getFullYear(), first.getMonth(), first.getDate() + i);
                 if (isHijri) {
-                    var d = stampHijri(calendar.hijriToGregorian(year, month, day), year, month, day);
-                    return d;
+                    var h = toHijri(d);
+                    stampHijri(d, h.year, h.month, h.day);
                 }
-                return new Date(year, month, day);
-            }
-
-            // Previous month trailing dates
-            var prevMonth, prevYear;
-            if (isHijri) {
-                prevMonth = calendarData.month - 1;
-                prevYear = calendarData.year;
-                if (prevMonth < 1) { prevMonth = 12; prevYear--; }
-                var daysInPrev = calendar.getDaysInHijriMonth(prevYear, prevMonth);
-                for (var i = 0; i < calendarData.startOffset; i++) {
-                    this.createDateCell(makeDate(prevYear, prevMonth, daysInPrev - (calendarData.startOffset - i - 1)), 'other-month');
-                }
-            } else {
-                for (var i = 0; i < calendarData.startOffset; i++) {
-                    this.createDateCell(new Date(calendarData.year, calendarData.month, 0 - (calendarData.startOffset - i - 1)), 'other-month');
-                }
-            }
-
-            // Current month dates
-            for (var day = 1; day <= calendarData.daysInMonth; day++) {
-                this.createDateCell(makeDate(calendarData.year, calendarData.month, day), 'current-month');
-            }
-
-            // Fill remaining cells to 42
-            var usedCells = calendarData.startOffset + calendarData.daysInMonth;
-            var nextMonth = calendarData.month + 1;
-            var nextYear = calendarData.year;
-            if (isHijri && nextMonth > 12) { nextMonth = 1; nextYear++; }
-
-            for (var j = 1; usedCells < 42; j++, usedCells++) {
-                this.createDateCell(makeDate(nextYear, nextMonth, j), 'other-month');
+                this.createDateCell(d, i < 0 || i >= calendarData.daysInMonth ? 'other-month' : 'current-month');
             }
 
             // Promote one cell to tabindex=0 so the user can Tab into the grid.
@@ -2127,49 +1543,17 @@
         applySelectionStates: function (btn, date) {
             if (this.isRangeMode()) {
                 this.applyRangeStates(btn, date);
-            } else if (this.state.selectedDate && this.isSameCalendarDate(date, this.state.selectedDate)) {
+            } else if (this.state.selectedDate && this.isSameDay(date, this.state.selectedDate)) {
                 NDS.State.add(btn, 'selected');
-            }
-        },
-
-        // Compare dates considering calendar type
-        isSameCalendarDate: function (date1, date2) {
-            if (this.state.calendarType === 'hijri') {
-                // For Hijri calendar, compare Hijri metadata
-                return date1._hijriDay === date2._hijriDay &&
-                       date1._hijriMonth === date2._hijriMonth &&
-                       date1._hijriYear === date2._hijriYear;
-            } else {
-                // For Gregorian calendar, use regular date comparison
-                return this.isSameDay(date1, date2);
-            }
-        },
-
-        // Check if date is in range considering calendar type
-        isDateInRange: function (date, rangeStart, rangeEnd) {
-            if (this.state.calendarType === 'hijri') {
-                // For Hijri calendar, compare using Hijri metadata
-                if (!date._hijriDay || !rangeStart._hijriDay || !rangeEnd._hijriDay) {
-                    return false;
-                }
-                
-                var dateValue = date._hijriYear * 10000 + date._hijriMonth * 100 + date._hijriDay;
-                var startValue = rangeStart._hijriYear * 10000 + rangeStart._hijriMonth * 100 + rangeStart._hijriDay;
-                var endValue = rangeEnd._hijriYear * 10000 + rangeEnd._hijriMonth * 100 + rangeEnd._hijriDay;
-                
-                return dateValue > startValue && dateValue < endValue;
-            } else {
-                // For Gregorian calendar, use regular date comparison
-                return date > rangeStart && date < rangeEnd;
             }
         },
 
         // Apply range selection states
         applyRangeStates: function (btn, date) {
-            var isRangeStart = this.state.rangeStart && this.isSameCalendarDate(date, this.state.rangeStart);
-            var isRangeEnd = this.state.rangeEnd && this.isSameCalendarDate(date, this.state.rangeEnd);
-            var isInRange = this.state.rangeStart && this.state.rangeEnd && 
-                this.isDateInRange(date, this.state.rangeStart, this.state.rangeEnd);
+            var isRangeStart = this.state.rangeStart && this.isSameDay(date, this.state.rangeStart);
+            var isRangeEnd = this.state.rangeEnd && this.isSameDay(date, this.state.rangeEnd);
+            var isInRange = this.state.rangeStart && this.state.rangeEnd &&
+                date > this.state.rangeStart && date < this.state.rangeEnd;
 
             if (isRangeStart) {
                 NDS.State.add(btn, 'range-start');
@@ -2218,29 +1602,18 @@
         },
 
         selectToday: function () {
-            var today = getSaudiDateObject();
-
-            // For Hijri calendar, use accurate API data
-            if (this.state.calendarType === 'hijri') {
-                var todaysHijriDate = this.getTodaysHijriDate(); // Use accurate cached data
-                stampHijri(today, todaysHijriDate.year, todaysHijriDate.month, todaysHijriDate.day);
+            var today = NDS.date.today();
+            var isHijri = this.state.calendarType === 'hijri';
+            if (isHijri) {
+                var h = toHijri(today);
+                stampHijri(today, h.year, h.month, h.day);
             }
 
             // In range mode, just navigate to today's month (preserve selection)
             if (!this.isRangeMode()) {
                 this.state.selectedDate = copyDateWithHijri(today);
             }
-
-            // Navigate to today's month
-            if (this.state.calendarType === 'hijri') {
-                var calendar = this.getCurrentCalendar();
-                var todaysGregorianEquivalent = stampHijri(
-                    calendar.hijriToGregorian(today._hijriYear, today._hijriMonth, 1),
-                    today._hijriYear, today._hijriMonth, 1);
-                this.state.currentDate = todaysGregorianEquivalent;
-            } else {
-                this.state.currentDate = new Date(today);
-            }
+            this.state.currentDate = isHijri ? fromHijri(today._hijriYear, today._hijriMonth, 1) : new Date(today);
 
             this.updateDropdowns();
             this.renderCalendarDates();
@@ -2309,25 +1682,11 @@
             }
         },
 
-        // Get converted date for input dataset (opposite calendar format)
+        // The other calendar's value, for data-converted-date.
         getConvertedDate: function (date) {
             if (!date) return '';
-
-            var format = this.state.format;
-            if (this.state.calendarType === 'hijri') {
-                if (date._hijriDay && date._hijriMonth && date._hijriYear &&
-                    _accurateTodaysHijriDate && _accurateTodaysGregorianDate) {
-                    var accurateGregorian = CalendarConfig.hijri.convertUsingReference(
-                        date._hijriYear, date._hijriMonth, date._hijriDay,
-                        _accurateTodaysHijriDate, _accurateTodaysGregorianDate
-                    );
-                    return CalendarConfig.gregorian.formatDate(accurateGregorian, format);
-                }
-                return CalendarConfig.gregorian.formatDate(date, format);
-            }
-
-            // Gregorian → Hijri: formatDate handles conversion internally
-            return CalendarConfig.hijri.formatDate(date, format);
+            var other = this.state.calendarType === 'hijri' ? 'gregorian' : 'hijri';
+            return CalendarConfig[other].formatDate(date, this.state.format);
         },
 
         // Utility methods
@@ -2405,7 +1764,7 @@
             var isHijri = this.state.calendarType === 'hijri';
             var todayYear = isHijri
                 ? this.getTodaysHijriDate().year
-                : getSaudiDateObject().getFullYear();
+                : NDS.date.today().getFullYear();
             var start = todayYear - yearRangeBefore;
             var end = todayYear + yearRangeAfter;
 
@@ -2464,15 +1823,9 @@
 
         // Helper methods for Hijri date manipulation
         setHijriDatePart: function (property, value) {
-            var currentHijriDate = this.getCurrentHijriDate();
-            currentHijriDate[property] = value;
-
-            var calendar = this.getCurrentCalendar();
-            var newDate = stampHijri(
-                calendar.hijriToGregorian(currentHijriDate.year, currentHijriDate.month, currentHijriDate.day),
-                currentHijriDate.year, currentHijriDate.month, currentHijriDate.day);
-
-            this.state.currentDate = newDate;
+            var h = this.getCurrentHijriDate();
+            h[property] = value;
+            this.state.currentDate = fromHijri(h.year, h.month, h.day);
         },
 
         // Center the 'selected'-state option in the dropmenu list. Candidates
@@ -2495,7 +1848,7 @@
 
         // Setup language observer.
         // setupLanguageObserver runs every time the calendar is (re-)initialized
-        // (initializeCalendar / completeCalendarSetup paths), so release the
+        // (initializeCalendar), so release the
         // prior subscription before registering a new one — otherwise each
         // re-init stacks a fresh closure on the pool's array. The handle is
         // also released in destroy() so a calendar instance teardown drops
@@ -2605,7 +1958,6 @@
     NDS.DatePicker = {
         DatePickerCalendar,
         CalendarConfig,
-        createHijriDate,
         init: initializeCalendar,
         reinit: initializeCalendar,
         create: createInstance

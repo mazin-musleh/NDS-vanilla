@@ -4,9 +4,6 @@
  *   NDS.TimeDate.init()                     wire the date widget and the clock, if present
  *   NDS.TimeDate.updateDate()               re-render the date now
  *   NDS.TimeDate.updateClock()              re-render the clock now
- *   NDS.TimeDate.getHijriDate(isArabic, structured)
- *                                           → Promise. A formatted string, or
- *                                           {day, month, year} when structured is true
  * Events:
  *   (none)
  * Hooks:
@@ -15,8 +12,6 @@
  * Gotchas:
  *   - The date and the clock follow <html data-timezone>; without it, the visitor's clock.
  *   - init() re-renders on every call, so a replaced widget element fills in again.
- *   - getHijriDate() stays a Promise because the date picker chains on it, even though
- *     the value is computed locally.
  *   - The clock stops while the tab is hidden and catches up when it returns.
  *   - The rendered date is cached for the day in localStorage, as primitives — the DOM is
  *     rebuilt from them, never from stored HTML.
@@ -69,15 +64,6 @@
         const [d, m, y] = NDS.date.format(day, { calendar: 'hijri', format: 'D M YYYY' }).split(' ');
         const monthName = (isArabic ? HIJRI_MONTHS.ar : HIJRI_MONTHS.en)[m - 1];
         return isArabic ? `${d} ${monthName} ${y} هـ` : `${monthName} ${d}, ${y} AH`;
-    }
-
-    // Stays async to preserve the Promise contract consumers rely on
-    // (date-picker calls .then on it).
-    async function getHijriDate(isArabic, returnStructured = false) {
-        const today = NDS.date.today();
-        if (!returnStructured) return hijriText(today, isArabic);
-        const [day, month, year] = NDS.date.format(today, { calendar: 'hijri', format: 'D M YYYY' }).split(' ').map(Number);
-        return { day, month, year };
     }
 
     // Date function with caching
@@ -230,7 +216,6 @@
 
     NDS.TimeDate = {
         init: initializeTimeDate,
-        getHijriDate,
         updateDate,
         updateClock
     };
