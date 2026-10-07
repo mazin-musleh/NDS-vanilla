@@ -17,7 +17,6 @@
  *   NDS.Tables.setColumnHidden(table, i, bool)  hide or show a column by cell index
  *   NDS.Tables.getCellText(cell)                the cell-text reader sort and export use
  * Events (bubble from the <table>):
- *   nds:table:sort         detail {columnIndex, direction, table, button}
  *   nds:table:columns      detail {table, index, hidden, restored} — restored:true is a saved
  *                          hide replayed at init, not a user action
  *   nds:table:sub-request  detail {row, sub, table, signal} — there is nothing to show yet.
@@ -115,15 +114,7 @@
         // ── Sort (delegated to NDS.Sort) ─────────────────────────────────
 
         setupSort() {
-            // Seed initial state from HTML if a <th> already carries sorted-asc / sorted-desc
-            const sortedTh = this.thead.querySelector('[data-state~="sorted-asc"], [data-state~="sorted-desc"]');
-            const initialState = sortedTh?.querySelector('.nds-sort-btn')
-                ? {
-                    key: thIndex(sortedTh),
-                    dir: NDS.State.has(sortedTh, 'sorted-asc') ? 'asc' : 'desc'
-                }
-                : null;
-
+            // Sort seeds from, and writes, sorted-asc / sorted-desc on the <th> (its a11yTarget).
             this.sort = NDS.Sort.create(this.table, {
                 // Direct children only — a nested <table> inside a <td> is valid
                 // HTML (row-expansion / master-detail views), and its rows would
@@ -148,45 +139,14 @@
                     return override !== null ? override : getCellText(cell);
                 },
                 keyFrom: (btn) => thIndex(btn.closest('th')),
-                initialState,
-                onChange: ({ key, dir }) => {
+                onChange: () => {
                     // Runs after NDS.Sort has already re-appended the parent rows.
                     repairSubPairing(this.tbody);
 
-                    this.sortButtons.forEach(btn => {
-                        NDS.State.remove(btn.closest('th'), 'sorted-asc', 'sorted-desc');
-                    });
-
-                    const activeBtn = (key != null && dir)
-                        ? this.sortButtons.find(btn => thIndex(btn.closest('th')) === key)
-                        : null;
-
-                    // Mark the active header for the CSS icon swap in _tables.scss
-                    if (activeBtn) {
-                        NDS.State.add(activeBtn.closest('th'), dir === 'asc' ? 'sorted-asc' : 'sorted-desc');
-                    }
-
                     const pagedContent = this.tbody.closest('.nds-paged-content');
                     if (pagedContent) NDS.Pagination.refresh(pagedContent);
-
-                    // Back-compat event — existing listeners expect columnIndex + direction
-                    this.dispatchSortEvent(key, dir, activeBtn);
                 }
             });
-        }
-
-        dispatchSortEvent(columnIndex, direction, button = null) {
-            const event = new CustomEvent('nds:table:sort', {
-                detail: {
-                    columnIndex: columnIndex,
-                    direction: direction,
-                    table: this.table,
-                    button
-                },
-                bubbles: true
-            });
-
-            this.table.dispatchEvent(event);
         }
 
         // Public API methods

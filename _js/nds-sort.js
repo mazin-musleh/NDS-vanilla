@@ -2,6 +2,8 @@
  * Rides: nds-dropmenu (triggers authored inside a menu are still found while it is portaled
  *        to <body>; soft)
  * Methods:
+ *   NDS.Sort.init()                     wire every list a [data-sort-target] button names
+ *   NDS.Sort.refresh(root)              wire new lists, re-sort the wired ones inside root
  *   NDS.Sort.create(root, options)      factory → instance (one per root, reused)
  *   NDS.Sort.getInstance(rootOrSel)     the existing instance, or null
  *   NDS.Sort.detectType(sampleValues)   'number' | 'date' | 'string'
@@ -15,12 +17,17 @@
  * Events (bubble from the root):
  *   nds:sort:change   detail {key, dir, orderedItems, sort}
  * Hooks:
- *   data-sort        the key, on a trigger
- *   data-sort-dir    the direction that trigger fixes (direct mode)
- *   data-sort-<key>  the value to sort by, on each item (the default accessor)
+ *   data-sort          the key, on a trigger
+ *   data-sort-dir      the direction that trigger fixes (direct mode)
+ *   data-sort-<key>    the value to sort by, on each item (the default accessor)
+ *   data-sort-target   the id of the list a trigger sorts — markup wiring, no create()
+ *   data-sort-mode     "cycle" on any of a list's triggers picks cycle mode
+ *   data-state         sorted-asc | sorted-desc on the state host (a11yTarget in
+ *                      a11y 'sort', else the trigger). Authored, it seeds the state.
  * Gotchas:
- *   - There is no init()/reinit(): sort has no auto-init selector. It is composed into
- *     another widget with create() — filter and tables both do this.
+ *   - Markup wiring sorts the list's children with the defaults. types, accessor, urlSync
+ *     and onChange need create(). Filter and Tables create their own, and init() skips a
+ *     list that already has an instance.
  *   - The options object IS the API: items, triggers, reorderIn, accessor, keyFrom,
  *     mode ('direct' | 'cycle'), a11y ('pressed' | 'sort' | 'none'), a11yTarget, types,
  *     initialState, urlSync, onChange.
@@ -180,17 +187,31 @@
             this._bindTriggers();
 
             // Seed state without reordering — used when HTML arrives pre-sorted
-            if (this.opts.initialState && this.opts.initialState.key != null) {
-                this.state = {
-                    key: this.opts.initialState.key,
-                    dir: this.opts.initialState.dir || 'asc'
-                };
+            const seed = this.opts.initialState || this._readSeed();
+            if (seed && seed.key != null) {
+                this.state = { key: seed.key, dir: seed.dir || 'asc' };
             } else if (this.opts.urlSync) {
                 this._readUrl();  // also applies
                 return;
             }
 
             this._render();
+        }
+
+        // The state host carries sorted-asc / sorted-desc: the header cell in
+        // a11y 'sort' (it carries aria-sort too), else the trigger itself.
+        _stateHost(trigger) {
+            return (this.opts.a11y === 'sort' && this.opts.a11yTarget?.(trigger)) || trigger;
+        }
+
+        _readSeed() {
+            for (const trigger of this._resolveTriggers()) {
+                const host = this._stateHost(trigger);
+                const dir = NDS.State.has(host, 'sorted-asc') ? 'asc'
+                          : NDS.State.has(host, 'sorted-desc') ? 'desc' : null;
+                if (dir) return { key: this.opts.keyFrom(trigger), dir };
+            }
+            return null;
         }
 
         // ── Item / container resolution ──────────────────────────────────
@@ -352,6 +373,8 @@
         _render() {
             const triggers = this._resolveTriggers();
             const a11y = this.opts.a11y;
+            // Cleared in a pass of its own: two triggers can share one host.
+            triggers.forEach(t => NDS.State.remove(this._stateHost(t), 'sorted-asc', 'sorted-desc'));
 
             triggers.forEach(trigger => {
                 const key = this.opts.keyFrom(trigger);
@@ -366,9 +389,11 @@
                             && (!dirAttr || dirAttr === this.state.dir);
                 }
 
+                if (isActive && this.state.dir) NDS.State.add(this._stateHost(trigger), 'sorted-' + this.state.dir);
+
                 if (a11y === 'pressed') {
                     NDS.aria.pressed(trigger, isActive);
-                    if (isActive) NDS.State.set(trigger, 'selected');
+                    if (isActive) NDS.State.add(trigger, 'selected');
                     else NDS.State.remove(trigger, 'selected');
                 } else if (a11y === 'sort') {
                     const target = this.opts.a11yTarget ? this.opts.a11yTarget(trigger) : null;
@@ -456,11 +481,46 @@
         }
     }
 
+    // ── Markup wiring ────────────────────────────────────────────────────
+
+    // One list per distinct target id; a document query, so triggers in a portaled
+    // menu are found too. ponytail: triggers are bound at create — one added later
+    // needs NDS.Init.destroy + refresh; bind by delegation if that becomes common.
+    function markupLists() {
+        const lists = new Set();
+        document.querySelectorAll('[data-sort-target]').forEach(t => {
+            if (t.closest('code, .code-example')) return;
+            const list = document.getElementById(t.getAttribute('data-sort-target'));
+            if (list) lists.add(list);
+        });
+        return lists;
+    }
+
+    function init() {
+        markupLists().forEach(list => {
+            if (list.ndsSort) return;
+            const sel = `[data-sort-target="${CSS.escape(list.id)}"]`;
+            NDS.Sort.create(list, {
+                items: () => list.children,
+                triggers: () => document.querySelectorAll(sel),
+                mode: document.querySelector(`${sel}[data-sort-mode="cycle"]`) ? 'cycle' : 'direct',
+            })._markup = true;
+        });
+    }
+
+    // Owner hook for NDS.Init.refresh: rows added to a wired list join the active sort.
+    function refresh(root = document) {
+        init();
+        markupLists().forEach(list => {
+            if (list.ndsSort?._markup && (root === document || root.contains(list) || list.contains(root))) list.ndsSort.refresh();
+        });
+    }
+
     // ── Global API ───────────────────────────────────────────────────────
-    // No init()/reinit() — sort has no auto-init selector; it is composed into
-    // other widgets via create() (filter, tables).
 
     NDS.Sort = {
+        init,
+        refresh,
         create: (root, options) => {
             if (!root) return null;
             if (root.ndsSort) return root.ndsSort;

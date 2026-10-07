@@ -748,12 +748,13 @@
 
 - title: "Sort"
   description: "DOM-reorder engine for lists, grids, and tables with type auto-detect and URL sync"
-  use_when: "Reorder items already in the DOM: sortable table columns, a sort dropdown over a card grid, A-to-Z or newest-first ordering, with type auto-detect and URL sync. This is the engine Tables sorting uses; call it directly for lists and grids."
+  use_when: "Reorder items already in the DOM: sortable table columns, a sort dropdown over a card grid, A-to-Z or newest-first ordering, with type auto-detect and URL sync. This is the engine Tables sorting uses; for a list or grid, point sort buttons at it with data-sort-target, no JS."
   icon: '<i class="hgi hgi-stroke hgi-sorting-05"></i>'
   category: "Data"
-  tags: ["JS", "API"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/sort.html"
   js: _js/nds-sort.js
+  scss: _sass/components/_sort.scss
 
 - title: "Status Section"
   description: "Whole-page or inline outcome message with a status icon, a title, and one action"

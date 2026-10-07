@@ -286,6 +286,12 @@
             refresh: (root) => NDS.Filter?.refresh?.(root),
         },
         {
+            // After Filter and Tables, so each claims its own list first. Owner hook: the buttons sit outside the list.
+            name: 'Sort',
+            selector: '[data-sort-target]',
+            refresh: (root) => NDS.Sort?.refresh?.(root),
+        },
+        {
             // Delegated: crit shows the first page (presplitPaged) and _pagination.scss reserves the nav row.
             name: 'Pagination',
             selector: '.nds-pagination',

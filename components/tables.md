@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 07:31 AM"
+last_edit: "07/10/2026 - 08:03 AM"
 ---
 
 <section id="tableOverview" class="nds-content-section nds-doc-overview">
@@ -785,7 +785,6 @@ Source: the `table` group in `_sass/tokens/_components.scss`.
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:table:sort` | `.nds-table` | `{ columnIndex, direction, table, button }`. `direction` and `button` are `null` when the sort is cleared |
 | `nds:table:columns` | `.nds-table` | `{ table, index, hidden, restored }`. `restored` is `true` for a saved choice that the script applies at load |
 | `nds:table:sub-request` | `.nds-table` | `{ row, sub, table, signal }`. `sub` is `null`. Pass `signal` to your request, so a cancel stops it |
 | `nds:table:sub-open` | `.nds-table` | `{ row, sub, table }` |

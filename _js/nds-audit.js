@@ -115,6 +115,16 @@
             });
         });
 
+        // Markup sort wires a list no other sorter owns: a Filter or a Table sorts its own,
+        // and the button is left unbound.
+        document.querySelectorAll('[data-sort-target]').forEach(btn => {
+            if (btn.closest('code, .code-example')) return;
+            const id = btn.getAttribute('data-sort-target');
+            const list = document.getElementById(id);
+            if (!list) console.warn(`[NDS.Audit] data-sort-target="${id}" names no element — the button sorts nothing. Give the list id="${id}".`, btn);
+            else if (list.closest('.nds-table') || (list.ndsSort && !list.ndsSort._markup)) console.warn(`[NDS.Audit] data-sort-target="${id}" names a list a Filter or a Table already sorts — this button does nothing. Use data-filter-target on a Filter's sort button, or the table's header sort buttons.`, btn);
+        });
+
         // The stepper hands off a submit-typed control (see its banner), so the
         // attribute is inert here — the author expects a move that never comes.
         // `button` with no type IS submit-typed inside a form.

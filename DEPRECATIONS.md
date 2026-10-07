@@ -85,14 +85,6 @@ then the loser moves to the table above.
   the status off an ancestor, which is what lets a status section paint the chip inside it.
 - **`.nds-full` vs `.nds-full-width`** on cards (`_sass/components/_cards.scss`). Note
   `body.nds-full-width` is a different switch in `_reset.scss` — check before renaming.
-- **`nds:table:sort` vs `nds:sort:change`** — one reorder, dispatched twice. `nds-sort.js`
-  fires `nds:sort:change` with `{key, dir}` (documented in `components/sort.md`), and
-  `nds-tables.js` `dispatchSortEvent` fires `nds:table:sort` straight after it, kept because
-  "existing listeners expect columnIndex + direction" (documented in `components/tables.md`).
-  The back-compat payload now misleads: its `detail.columnIndex` carries the sort KEY, because
-  the caller passes `key` into a parameter still named `columnIndex`. Renaming the field breaks
-  the listeners the event exists for, so the survivor is an owner call, not an audit call.
-
 - **Filter's unprefixed and implicit hooks** (`_js/nds-filter.js`). `.filter-btn` is matched beside `.nds-filter-btn` and `[data-filter-btn]` (`_resolveFilterBtn`): no `nds-` prefix. `setupResetButton` also makes any button in `.nds-filter` with a class containing `refresh`, or holding a `nds-hgi-refresh` / `nds-hgi-refresh-ccw-02` icon, a reset button, where `data-filter-action="reset"` is the documented hook. Neither is marked legacy; decide whether both go at the major.
 
 ## Finding the next one

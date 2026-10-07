@@ -1,0 +1,15 @@
+/* ========================================
+   SORT COMPONENT
+   The direction icon on any trigger NDS.Sort drives. The state sits on the
+   trigger, or on the header cell of a table column.
+   ======================================== */
+
+@use '../mixins' as *;
+
+[data-state~="sorted-asc"] .nds-sort-icon {
+    --nds-icon: var(--nds-icon-sort-by-up-02);
+}
+
+[data-state~="sorted-desc"] .nds-sort-icon {
+    --nds-icon: var(--nds-icon-sort-by-down-02);
+}
