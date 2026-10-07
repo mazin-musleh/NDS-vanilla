@@ -209,6 +209,16 @@
   js: _js/nds-copy.js
   scss: _sass/components/_copy.scss
 
+- title: "Countdown"
+  description: "Live count of the time left to a deadline or the end of a duration, as text or cards"
+  use_when: "Time left until a deadline or the end of a duration: an application window, a session timeout, a one-time code expiry, an event start."
+  icon: '<i class="hgi hgi-stroke hgi-hourglass"></i>'
+  category: "UI"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/countdown.html"
+  js: _js/nds-countdown.js
+  scss: _sass/components/_countdown.scss
+
 - title: "Counter Animation"
   description: "Scroll-triggered animated counters that count up to a target value"
   use_when: "Numbers that count up to their value when scrolled into view: animated statistics, KPI counters, impact figures."

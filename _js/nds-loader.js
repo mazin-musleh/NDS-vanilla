@@ -334,6 +334,11 @@
             critical: true,
         },
         {
+            // Deferred: the authored placeholders paint first; the values fill in after the reveal.
+            name: 'Countdown',
+            selector: '.nds-countdown',
+        },
+        {
             // Critical: a click in the deferred gap would bypass the single-submit cooldown.
             name: 'CooldownButton',
             selector: '.nds-cooldown',
