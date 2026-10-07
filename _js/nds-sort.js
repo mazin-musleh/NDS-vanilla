@@ -86,17 +86,32 @@
         return m ? parseFloat(m[0]) : NaN;
     }
 
+    const DMY = /^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})$/;   // DD/MM/YYYY, DD-MM-YY, etc.
+    const YMD = /^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})$/;     // YYYY-MM-DD
+    const ISO = /^\d{4}-\d{2}-\d{2}T/;                           // ISO 8601 with a time
+
+    // Local midnight, or NaN when the day or month is out of range (31/02 does not roll over).
+    function ymd(y, m, d) {
+        const t = new Date(y, m - 1, d);
+        return t.getMonth() === m - 1 && t.getDate() === d ? t.getTime() : NaN;
+    }
+
+    // `new Date()` reads 03/04/2026 month first and a bare YYYY-MM-DD as UTC, so both
+    // short forms are split by hand: day first, local time.
+    // ponytail: fixed D/M/Y and local time; the date rework (TODO.md) makes both site settings.
+    function dateTime(str) {
+        const s = String(str).trim();
+        let m = s.match(DMY);
+        if (m) return ymd(m[3] < 100 ? 2000 + +m[3] : +m[3], +m[2], +m[1]);
+        m = s.match(YMD);
+        if (m) return ymd(+m[1], +m[2], +m[3]);
+        return new Date(s).getTime();
+    }
+
     function isDateString(str) {
         const s = String(str).trim();
-        // Reject pure-numeric strings that would coerce via Date.parse (e.g. "1995" → 1995-01-01)
-        if (/^-?\d+(\.\d+)?$/.test(s)) return false;
-        const patterns = [
-            /^\d{1,2}[\/\-.]\d{1,2}[\/\-.]\d{2,4}$/,   // DD/MM/YYYY, DD-MM-YY, etc.
-            /^\d{4}[\/\-.]\d{1,2}[\/\-.]\d{1,2}$/,     // YYYY-MM-DD
-            /^\d{4}-\d{2}-\d{2}T/                      // ISO 8601
-        ];
-        if (!patterns.some(p => p.test(s))) return false;
-        return !isNaN(new Date(s).getTime());
+        // Only the three shapes: Date.parse also takes "1995" and "Item 2"
+        return (DMY.test(s) || YMD.test(s) || ISO.test(s)) && !isNaN(dateTime(s));
     }
 
     function detectType(sampleValues) {
@@ -122,7 +137,7 @@
             return isNaN(n) ? 0 : n;
         }
         if (type === 'date') {
-            const t = new Date(String(raw).trim()).getTime();
+            const t = dateTime(raw);
             return isNaN(t) ? 0 : t;
         }
         return String(raw == null ? '' : raw);
