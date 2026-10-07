@@ -776,7 +776,7 @@
 
 - title: "Stepper"
   description: "Sequential step indicators for multi-stage workflows"
-  use_when: "Show progress through a multi-stage flow: step indicator, wizard progress, numbered stages. For a plain percentage bar use Progress."
+  use_when: "Show progress through a multi-stage flow: step indicator, wizard progress, numbered stages. For a timeline, such as a request's history with dates, use the vertical layout with Dot, Divider and Reverse. For a plain percentage bar use Progress."
   icon: '<i class="hgi hgi-stroke hgi-right-to-left-list-number"></i>'
   category: "UI"
   tags: ["JS", "CSS", "API"]

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:02 PM"
+last_edit: "07/10/2026 - 07:20 PM"
 ---
 
 <section id="stepperOverview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "07/10/2026 - 03:02 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A stepper is a `.nds-stepper` of `.nds-stepper-step` items. Each step has a base with a numbered circle, and content with a title and a description. The script marks each step completed, current or upcoming from the stepper's `data-current`, and the line between two circles takes the color of that state. A radial stepper shows only the current step, beside a ring that fills as the user moves on.
+A stepper is a `.nds-stepper` of `.nds-stepper-step` items. Each step has a base with a numbered circle, and content with a title and a description. The script marks each step completed, current or upcoming from the stepper's `data-current`, and the line between two circles takes the color of that state. A radial stepper shows only the current step, beside a ring that fills as the user moves on. A vertical stepper with dots, divider labels and reverse order is also a timeline, such as a request's history with dates.
 
 Pick another component when:
 
