@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 10:20 AM"
+last_edit: "07/10/2026 - 03:30 PM"
 ---
 
 <section id="headOverview" class="nds-content-section nds-doc-overview">
@@ -232,7 +232,7 @@ The inline script runs once, at page load. The stylesheet links it adds and the 
 
 - Change the `?ver=` value on every NDS upgrade. A stale value serves the old files from the browser cache. The loader adds the main script's `?ver=` to every bundle it loads.
 - Keep the head entries in their order. The inline script must come after every `data-nds-defer` preload, because it converts only the preloads above it.
-- Keep every NDS stylesheet in one folder, with the file names as shipped. The loader builds the icon and accessibility sheet URLs from the main CSS link, by swapping its file name.
+- Keep every NDS stylesheet in one folder. The loader builds the icon and accessibility sheet URLs from the main CSS link, by swapping its file name, so those sheets keep their shipped names. The main sheet can take another name, such as a fingerprinted `nds-main.3f2a.min.css`, while its preload keeps `data-nds-defer="main"`.
 - Never add a tag for `nds-delegated.min.js`, `nds-extras.min.js` or any other bundle. The loader adds each one when the page needs it.
 - To defer a stylesheet of your own, give its preload `data-nds-defer`: `<link rel="preload" href="css/site.css" as="style" data-nds-defer>`. The inline script applies it with the others.
 - For a default stylesheet theme, add `<link id="nds-theme-stylesheet" rel="stylesheet" href="…">` right after the critical CSS preload, as a blocking stylesheet, so the brand applies before the first paint. See [Themes](../components/themes).

@@ -449,11 +449,18 @@
     // and document.styleSheets misses one still downloading.
     function addSheet(name) {
         const main = mainCssLink();
-        const url = main
-            ? main.href.replace('nds-main.min.css', name)
-            : ASSET.dir.replace(/\/js\/?$/, '/css/') + name + ASSET.ver;
-        let path;
-        try { path = new URL(url, location.href).pathname; } catch (e) { return null; }
+        let url, path;
+        try {
+            if (main) {
+                // Swap the file name, keep folder and query: the main sheet may be fingerprinted.
+                const u = new URL(main.href);
+                u.pathname = u.pathname.replace(/[^/]*$/, name);
+                url = u.href;
+            } else {
+                url = ASSET.dir.replace(/\/js\/?$/, '/css/') + name + ASSET.ver;
+            }
+            path = new URL(url, location.href).pathname;
+        } catch (e) { return null; }
         const dup = [...document.querySelectorAll('link[rel="stylesheet"]')]
             .some((l) => { try { return new URL(l.href, location.href).pathname === path; } catch (e) { return false; } });
         if (dup) return null;
