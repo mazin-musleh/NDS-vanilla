@@ -892,8 +892,7 @@
                         if (this.opts.tooltip?.show !== false && this._tooltip) {
                             // Build tip as DOM so caller-supplied colors[] flow through
                             // marker.style.backgroundColor (a CSSOM setter) instead of an
-                            // HTML attribute interpolation. escapeHtml cannot safely close
-                            // attribute-context quote-breakouts.
+                            // HTML style-attribute interpolation.
                             this._tooltip.replaceChildren();
                             const title = document.createElement('strong');
                             title.textContent = catLabels[nearest] ?? '';

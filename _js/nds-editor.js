@@ -170,8 +170,7 @@
         return false;
     }
 
-    // Local fork — also escapes quotes for attribute contexts (openTag); NDS.escapeHtml doesn't. Do not swap.
-    const escapeHtml = (s) => s.replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+    const escapeHtml = NDS.escapeHtml;
 
     // ---------- Interpret (normal markup → NDS vocabulary) ----------
     // Runs first inside sanitizeHtml: translate foreign dialects into the

@@ -1000,20 +1000,11 @@
     };
 
     // ── HTML Escape ──────────────────────────────────────────────────
-    // Escape a string for safe insertion into an HTML context (innerHTML, template literals).
-    // Uses the browser's textContent serializer so every edge case the parser cares about
-    // (quotes, angle brackets, entities, mixed charsets) is handled by the engine itself —
-    // no regex-based escape can match that coverage.
-    // Usage: el.innerHTML = `<span>${NDS.escapeHtml(userValue)}</span>`
-    // Shared scratch node — one allocation for the page lifetime instead of
-    // one per escape call. Reading innerHTML between writes is fine because
-    // the node is never inserted into the document.
-    const _escapeNode = document.createElement('div');
-    NDS.escapeHtml = (str) => {
-        if (str == null) return '';
-        _escapeNode.textContent = String(str);
-        return _escapeNode.innerHTML;
-    };
+    // Escape a string for text and QUOTED attribute values. Not for unquoted
+    // attributes, URLs (NDS.safeUrl), or style/script contents.
+    // Usage: el.innerHTML = `<span title="${NDS.escapeHtml(v)}">${NDS.escapeHtml(v)}</span>`
+    const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+    NDS.escapeHtml = (str) => str == null ? '' : String(str).replace(/[&<>"']/g, (c) => ESC[c]);
 
     // ── Unique ID ─────────────────────────────────────────────────────
     // Short collision-resistant ID for DOM-scoped needs (input names,
@@ -1204,7 +1195,7 @@
     // reuse the same coverage when querying focusables.
     NDS.focusableSel =
         'a[href], button:not([disabled]), textarea:not([disabled]), ' +
-        'input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+        'input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
     // Build a keydown handler that traps Tab/Shift+Tab inside `containerFn()`'s
     // returned element. Pass either a function (re-evaluated on every Tab —
@@ -1221,10 +1212,16 @@
         if (e.key !== 'Tab') return;
         const c = typeof containerFn === 'function' ? containerFn() : containerFn;
         if (!c) return;
+        // An unrendered match as `last` never takes focus, so Tab would leave instead of wrapping.
+        // Only the ends decide the wrap: walk in from each, not over every match.
         const f = c.querySelectorAll(NDS.focusableSel);
-        if (!f.length) return;
-        const first = f[0];
-        const last = f[f.length - 1];
+        const shown = (el) => el.checkVisibility?.({ visibilityProperty: true }) ?? el.getClientRects().length > 0;
+        let i = 0, j = f.length - 1;
+        while (i <= j && !shown(f[i])) i++;
+        while (j > i && !shown(f[j])) j--;
+        if (i > j) return;
+        const first = f[i];
+        const last = f[j];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     };

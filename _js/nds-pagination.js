@@ -185,11 +185,8 @@
     // attributes and any consumer-attached listener survive collapse intact.
     // Only what the collapse owns is re-stamped: the dropdown marker class,
     // aria-current, and data-state (NDS.State-managed, never a literal attribute).
-    // Local fork of NDS.escapeHtml — also escapes quotes for the attribute
-    // context (a data-page-url href); core's version doesn't. Do not swap.
-    const _escAttr = v => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
     // data-page-url template ("?page={page}") → page-to-href function, or null.
-    const _urlFn = pageUrl => pageUrl ? (p => _escAttr(pageUrl.replace('{page}', p))) : null;
+    const _urlFn = pageUrl => pageUrl ? (p => NDS.escapeHtml(pageUrl.replace('{page}', p))) : null;
 
     // Capture the ordered page-control set from a manual nav's list, whether it
     // is currently flat or already collapsed (visible buttons + ellipsis

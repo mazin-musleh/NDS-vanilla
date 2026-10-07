@@ -414,7 +414,7 @@
             var limited = data.slice(0, 20);
             // Compile the highlight regex once per render, not once per item.
             var highlightRegex = query
-                ? new RegExp('(' + NDS.escapeHtml(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi')
+                ? new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi')
                 : null;
             var fragment = document.createDocumentFragment();
 
@@ -449,9 +449,11 @@
 
         // Regex is precompiled per render in renderResults — passing it in
         // (instead of the raw query) means the hot path skips 20 regex compiles.
+        // Match the raw text, escape each piece: matching escaped text splits entities ("o" in &quot;).
         highlightMatch(text, regex) {
-            var escaped = NDS.escapeHtml(text);
-            return regex ? escaped.replace(regex, '<mark>$1</mark>') : escaped;
+            if (!regex) return NDS.escapeHtml(text);
+            return text.split(regex).map((part, i) =>
+                i % 2 ? '<mark>' + NDS.escapeHtml(part) + '</mark>' : NDS.escapeHtml(part)).join('');
         }
 
         // ==============================================
