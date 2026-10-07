@@ -417,7 +417,7 @@
             [[codeHtml, out], [codeJs, js], [codeCss, css]].forEach(function (pair) {
                 if (!pair[0] || !pair[1]) return;
                 pair[0].textContent = pair[1];
-                if (pair[0].dataset.ndsCodeInitialized) NDS.Code.reprocessCodeElement(pair[0]);
+                if (pair[0].dataset.ndsCodeHighlighted) NDS.Code.reprocessCodeElement(pair[0]);
             });
             if (tabHtml) {
                 tabHtml.hidden = !html;

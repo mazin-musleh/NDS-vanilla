@@ -16,6 +16,8 @@
  *   - Only a block with NO language class at all is sniffed.
  *   - There is no reinit(): a block is highlighted once. Call reprocessCodeElement() after
  *     you change its content.
+ *   - data-nds-code-highlighted marks a highlighted block. It stays through
+ *     NDS.Init.destroy(): the markup stays highlighted, so a re-mount skips it.
  *   - The copy button in the action bar belongs to nds-copy (.nds-copy), not to this file.
  *   - A CSS value that paints a color (a literal, or a var() that resolves to one on :root)
  *     gets an empty `.nds-code-swatch` span before it. Copy reads textContent, so it skips it.
@@ -81,7 +83,7 @@
     }
 
     function processCodeElement(codeElement) {
-        if (codeElement.dataset.ndsCodeInitialized === 'true') return;
+        if (codeElement.dataset.ndsCodeHighlighted === 'true') return;
 
         const source = getSourceText(codeElement);
         const lang = detectLanguage(codeElement, source);
@@ -89,7 +91,7 @@
         const lines = splitTokensIntoLines(tokens);
 
         if (lines.length === 0) {
-            codeElement.dataset.ndsCodeInitialized = 'true';
+            codeElement.dataset.ndsCodeHighlighted = 'true';
             return;
         }
 
@@ -105,7 +107,7 @@
         }
         codeElement.innerHTML = html.trim();
         labelLanguage(codeElement, lang);
-        codeElement.dataset.ndsCodeInitialized = 'true';
+        codeElement.dataset.ndsCodeHighlighted = 'true';
     }
 
     // ==============================================
@@ -156,7 +158,7 @@
     // textContent (bar the leading newline and trailing blanks getSourceText and
     // splitTokensIntoLines already drop), so re-reading it is idempotent.
     function reprocessCodeElement(codeElement) {
-        codeElement.dataset.ndsCodeInitialized = 'false';
+        codeElement.dataset.ndsCodeHighlighted = 'false';
         processCodeElement(codeElement);
     }
 
