@@ -444,7 +444,7 @@
         }
 
         // The nearest data-date-format wins, like a dark area; <html> holds the site's.
-        const formatFor = (el) => el?.closest?.('[data-date-format]')?.dataset.dateFormat || 'DD/MM/YYYY';
+        const formatFor = (el) => el?.closest?.('[data-date-format]:not([data-date-format=""])')?.dataset.dateFormat || 'DD/MM/YYYY';
         const siteFormat = () => formatFor(document.documentElement);
 
         const api = {
@@ -474,7 +474,7 @@
                     regs.set(format, re = { rx: new RegExp('^' + src + '$'), order });
                 }
                 // Arabic digits (both Unicode forms) → ASCII (low nibble), bidi marks Intl writes in Arabic out.
-                const s = String(text ?? '').replace(/[‎‏؜]/g, '')
+                const s = String(text ?? '').replace(/[\u200e\u200f\u061c]/g, '')
                     .replace(/[٠-٩۰-۹]/g, (c) => c.charCodeAt(0) & 15).trim();
                 const match = s.match(re.rx);
                 if (!match) return null;
@@ -488,17 +488,21 @@
                 return y === null ? null : fromCal(y, m, d, calOf(opts.calendar));
             },
 
-            // { format } fills the tokens (ASCII digits). Without it, Intl options print the day
-            // in the page language; neither → the site format.
+            // { format } fills the tokens (ASCII digits, or `numerals`). Without it, Intl options
+            // print the day in the page language; neither → the site format.
             format(date, opts = {}) {
                 if (!(date instanceof Date) || isNaN(date)) return '';
                 const { format, calendar, locale, numerals, ...intl } = opts;
                 const cal = calOf(calendar);
                 if (format || !Object.keys(intl).length) {
                     const { y, m, d } = toCal(date, cal);
-                    return (format || siteFormat()).replace(TOKENS, (t) =>
+                    const out = (format || siteFormat()).replace(TOKENS, (t) =>
                         t === 'YYYY' ? String(y) : t === 'YY' ? String(y).slice(-2)
                         : String(t[0] === 'M' ? m : d).padStart(t.length, '0'));
+                    if (!numerals || numerals === 'latn') return out;
+                    // The numbering system's zero, then offset: its digits are contiguous.
+                    const zero = (0).toLocaleString('en-u-nu-' + numerals).charCodeAt(0);
+                    return out.replace(/\d/g, (c) => String.fromCharCode(zero + +c));
                 }
                 const o = { ...intl, calendar: cal, numberingSystem: numerals || 'latn' };
                 try { return dtf(locale || document.documentElement.lang || 'en', o).format(date); }

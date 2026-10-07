@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 10:20 AM"
+last_edit: "07/10/2026 - 10:49 AM"
 ---
 
 <section id="dateOverview" class="nds-content-section nds-doc-overview">
@@ -93,7 +93,7 @@ NDS.date.convert('05/03/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', fo
             <i class="hgi hgi-stroke hgi-calendar-03"></i>
             <span class="nds-label">Umm al-Qura Hijri</span>
           </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">calendar: 'hijri'</code> is Umm al-Qura, the official calendar of Saudi Arabia. Without <code class="nds-inline-code lang-js">calendar</code>, the date is Gregorian.</p>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-js">calendar: 'hijri'</code> is Umm al-Qura, the official calendar of Saudi Arabia, for the years 1300 to 1600 AH. Outside them, the browser uses the civil Hijri calendar, which can differ by a day. Without <code class="nds-inline-code lang-js">calendar</code>, the date is Gregorian.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -192,10 +192,10 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 
 | Option | Default | Effect |
 |---|---|---|
-| `format` | `data-date-format`, or `DD/MM/YYYY` | The tokens to read or write. `format` writes ASCII digits |
+| `format` | `data-date-format`, or `DD/MM/YYYY` | The tokens to read or write. `format` writes ASCII digits, unless you set `numerals` |
 | `calendar` | `'gregory'` | The calendar of the text: `'gregory'` or `'hijri'`, the two calendars of Saudi Arabia. `'hijri'` is Umm al-Qura (`'islamic-umalqura'`) |
-| `locale` | the `lang` of `<html>` | The language of the text. Only for the `format` method when it has no `format` option |
-| `numerals` | `'latn'` | The digits. `'arab'` writes Arabic digits. Only for the `format` method when it has no `format` option |
+| `locale` | the `lang` of `<html>` | The language of the text. Only for the `format` method when it writes the text through the browser: with other options and no `format` |
+| `numerals` | `'latn'` | The digits. `'arab'` writes Arabic digits. Only for the `format` method |
 | any other option | — | Only for the `format` method: passed to `Intl.DateTimeFormat`, such as `weekday`, `day`, `month`, `year` and `timeZone` |
 {: .nds-table .nds-responsive}
 

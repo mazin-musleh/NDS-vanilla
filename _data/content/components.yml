@@ -237,6 +237,15 @@
   js: _js/nds-customselect.js
   scss: _sass/components/_forms.scss
 
+- title: "Date"
+  description: "Parse, print and convert dates in Gregorian and Hijri (Umm al-Qura), in the site's timezone and date format"
+  use_when: "Read a date from text, print a date, convert between Gregorian and Hijri, or get today's date in the site's timezone. Use it for any date handled in JavaScript, and to set the site's timezone and date format on <html>. For a date field the user fills in use Date Picker; to sort a list by date use Sort."
+  icon: '<i class="hgi hgi-stroke hgi-calendar-02"></i>'
+  category: "Core"
+  tags: ["JS", "API"]
+  url: "/core/date.html"
+  js: _js/nds-core.js
+
 - title: "Date Picker"
   description: "Hijri/Gregorian calendar with dual date conversion"
   use_when: "Any date field: calendar picker, date range, Hijri or Gregorian selection, date of birth, appointment booking. Converts between both calendars."

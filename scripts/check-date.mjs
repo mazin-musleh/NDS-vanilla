@@ -53,6 +53,10 @@ for (const timezoneId of ['Asia/Tokyo', 'America/Los_Angeles']) {
         eq('formatFor scoped', D.formatFor(area.querySelector('span')), 'MM/DD/YYYY');
         eq('formatFor outside', D.formatFor(document.body.lastChild), 'YYYY/MM/DD');
         eq('formatFor null', D.formatFor(null), 'DD/MM/YYYY');
+        area.dataset.dateFormat = '';
+        eq('formatFor empty skipped', D.formatFor(area.querySelector('span')), 'YYYY/MM/DD');
+        eq('numerals arab', D.format(new Date(2026, 3, 3), { numerals: 'arab' }), '٢٠٢٦/٠٤/٠٣');
+        eq('numerals arabext', D.format(new Date(2026, 3, 3), { format: 'D/M', numerals: 'arabext' }), '۳/۴');
         eq('intl path', D.format(new Date(2026, 3, 3), { locale: 'en', year: 'numeric', month: 'long', day: 'numeric' }), 'April 3, 2026');
         // today(): the visitor's day when unset, the site zone's day when set.
         const now = new Date();
