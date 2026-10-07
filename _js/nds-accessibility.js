@@ -1064,7 +1064,7 @@
     // _includes/accessibility-panel.html, ~185 inert nodes on every load) and
     // built here instead, so it exists only once armed. side comes off the
     // FAB's own data-panel-side (fallback 'end') so the FAB is the one place
-    // to reposition both itself (data-fab-pos) and the panel it builds — no
+    // to reposition both itself (data-fab-pos="auto") and the panel it builds — no
     // JS edit needed for the common case.
     function panelMarkup(side) {
         return `<aside id="ndsAccessibilityPanel"

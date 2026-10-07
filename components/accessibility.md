@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.5"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "07/10/2026 - 07:15 AM"
 ---
 
 <section id="accessibilityOverview" class="nds-content-section nds-doc-overview">
@@ -88,7 +88,7 @@ Any button with `data-accessibility-toggle` and `data-panel-toggle` opens the pa
 ### Panel Position
 {: .nds-block-title}
 
-The panel slides in from the end edge, and the FAB docks there too. To move both, set `data-fab-pos` and `data-panel-side` to the same side on the FAB. The FAB docks before the panel exists, so `auto` cannot follow the panel's side. The first button pressed builds the panel on its own `data-panel-side`, so give every trigger the same value. A custom panel uses the `data-panel-side` on its `<aside>`.
+The panel slides in from the end edge, and the FAB docks there too. To move both, set `data-panel-side` on the FAB: with `data-fab-pos="auto"`, the FAB docks on that side too. The first button pressed builds the panel on its own `data-panel-side`, so give every trigger the same value. A custom panel uses the `data-panel-side` on its `<aside>`.
 
 ### Loading
 {: .nds-block-title}
@@ -570,7 +570,7 @@ The panel reads its text from `assets/i18n/accessibility/en.json` and `ar.json`.
 | `data-accessibility-toggle` | the FAB, or any button outside the panel | The first press loads the script and builds the panel. Pair it with `data-panel-toggle` |
 | `data-panel-toggle` | the same button | `="ndsAccessibilityPanel"`. Opens and closes the built panel and sets `aria-expanded`. See [Panels](../components/panels) |
 | `data-panel-side` | every `data-accessibility-toggle` button | The edge the panel slides from: `end` (default), `start`, `left` or `right`. `start` and `end` flip with the text direction. The script copies it from the first button pressed onto the panel it builds |
-| `data-fab-pos` | the FAB | The FAB's edge: `start`, `end`, `left`, `right` or `bottom`. `auto` docks at `end`. See [FAB](../components/fab) |
+| `data-fab-pos` | the FAB | The FAB's edge: `start`, `end`, `left`, `right` or `bottom`. `auto` docks on the FAB's `data-panel-side`. See [FAB](../components/fab) |
 | `data-state~="loading"` | the pressed button | The script sets it while the panel loads, and removes it about one second later |
 | `data-accessibility-panel` | the panel `<aside>` | Marks the panel. A panel already in the page is used instead of a template |
 | `data-armed` | the panel `<aside>` | The script sets it when it builds the panel |

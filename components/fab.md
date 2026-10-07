@@ -6,7 +6,7 @@ hero_description: A floating action button (FAB) stays at an edge of the screen 
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "07/10/2026 - 07:15 AM"
 lang: en
 direction: ltr
 ---
@@ -152,7 +152,7 @@ Variant and Size have two rows. On a single FAB, the class goes on the FAB butto
 ### Edge
 {: .nds-block-title}
 
-The Edge options set the side of the panel, and the FAB follows it. To place a FAB on an edge of its own, write `data-fab-pos`. `start` and `end` follow the reading direction. `left`, `right` and `bottom` stay on that edge in every language. A FAB with no `data-fab-pos` and no panel, or with a top sheet, docks on the end edge.
+The Edge options set the side of the panel, and the FAB follows it. To place a FAB on an edge of its own, write `data-fab-pos`. `start` and `end` follow the reading direction. `left`, `right` and `bottom` stay on that edge in every language. If its panel is not on the page yet, the FAB reads `data-panel-side` from its toggle button. A FAB with no `data-fab-pos` and no side, or with a top sheet, docks on the end edge.
 
 ### Thumb
 {: .nds-block-title}

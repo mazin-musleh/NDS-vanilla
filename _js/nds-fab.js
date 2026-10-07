@@ -49,8 +49,9 @@
  *     start | end             LOGICAL — resolves by direction: end → left in
  *                             RTL / right in LTR; start → the mirror
  *     auto                    follow the toggled panel to its edge
- *                             (data-panel-toggle → panel data-panel-side); a
- *                             top sheet or a FAB with no panel → the reading-end
+ *                             (data-panel-toggle → panel data-panel-side, or the
+ *                             toggle's own while the panel is unbuilt); a
+ *                             top sheet or a FAB with no side → the reading-end
  *                             edge; a bottom sheet resolves to the bottom dock
  *
  * Delegated: routing runs after the reveal. A FAB ships with `hidden`, so the
@@ -95,10 +96,11 @@
         // `auto` has to descend to find it. ridePanel climbs the same boundary
         // from the other side (btn.closest('.nds-fab')); both must agree or a
         // grouped FAB docks at one edge while its panel opens from another.
-        const id = fab.dataset.panelToggle
-            || fab.querySelector('[data-panel-toggle]')?.dataset.panelToggle;
-        const panel = id ? document.getElementById(id) : null;
-        return sideToEdge(panel ? (panel.getAttribute('data-panel-side') || 'end') : 'end');
+        const btn = fab.matches('[data-panel-toggle]') ? fab : fab.querySelector('[data-panel-toggle]');
+        const panel = btn ? document.getElementById(btn.dataset.panelToggle) : null;
+        // A panel built on first press (accessibility) is absent at dock time and takes
+        // its side from the toggle, so read the same value there.
+        return sideToEdge((panel || btn)?.getAttribute('data-panel-side') || 'end');
     }
 
     // Find the static slot at `pos`, creating it lazily if absent.
