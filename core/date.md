@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 10:49 AM"
+last_edit: "07/10/2026 - 10:56 AM"
 ---
 
 <section id="dateOverview" class="nds-content-section nds-doc-overview">
@@ -18,11 +18,9 @@ last_edit: "07/10/2026 - 10:49 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-`NDS.date` turns text into a date and a date into text. It is in the main bundle, so every page has it, with no init call. Date Picker, the top bar date and clock, and Export use it.
+`NDS.date` is a JavaScript API in the main bundle, so every page has it, with no init call. Two attributes on `<html>` go with it: `data-timezone` sets the site's timezone, and `data-date-format` sets its date format.
 
 A date here is a calendar day: a JavaScript `Date` at local midnight. `parse` returns one, and `format` reads one. The site's timezone changes only which day `today()` returns.
-
-Two attributes on `<html>` set the site's timezone and date format. Every NDS component that shows or reads a date follows them.
 
 Pick another component when:
 
@@ -42,11 +40,11 @@ Pick another component when:
 
 Set the site's timezone and date format on `<html>`. Without `data-timezone`, today is the visitor's day. Without `data-date-format`, the format is `DD/MM/YYYY`.
 
-Give one part of the page its own date format with `data-date-format` on any element. The nearest one wins: inside this section, Date Picker and Sort read dates month first, and the rest of the site reads them day first.
-
 <script type="text/html" id="date-site" data-canon data-preview="none">
 <html lang="ar" dir="rtl" data-timezone="Asia/Riyadh" data-date-format="DD/MM/YYYY">
 </script>
+
+Give one part of the page its own date format with `data-date-format` on any element. The nearest one wins: in the section below, Date Picker and Sort read dates month first. The rest of the site reads them day first.
 
 <script type="text/html" id="date-scoped" data-canon data-preview="none">
 <section data-date-format="MM/DD/YYYY">
@@ -57,10 +55,11 @@ Give one part of the page its own date format with `data-date-format` on any ele
 Read a Hijri date from a field, and send it to the server as `YYYY-MM-DD`.
 
 <script type="text/html" id="date-hijri-field" data-canon data-lang="js">
-// The field holds a Hijri date, such as 15/09/1447.
-const date = NDS.date.parse(field.value, { calendar: 'hijri', format: 'DD/MM/YYYY' });
-if (!date) return showError();
-const iso = NDS.date.format(date, { format: 'YYYY-MM-DD' }); // '2026-03-04'
+// '15/09/1447' → '2026-03-04'. null when the text is not a Hijri date: show the field's error.
+function hijriToIso(text) {
+  const date = NDS.date.parse(text, { calendar: 'hijri', format: 'DD/MM/YYYY' });
+  return date && NDS.date.format(date, { format: 'YYYY-MM-DD' });
+}
 </script>
 
 Show a date to people in the page language.
@@ -93,14 +92,14 @@ NDS.date.convert('05/03/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', fo
             <i class="hgi hgi-stroke hgi-calendar-03"></i>
             <span class="nds-label">Umm al-Qura Hijri</span>
           </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">calendar: 'hijri'</code> is Umm al-Qura, the official calendar of Saudi Arabia, for the years 1300 to 1600 AH. Outside them, the browser uses the civil Hijri calendar, which can differ by a day. Without <code class="nds-inline-code lang-js">calendar</code>, the date is Gregorian.</p>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-js">calendar: 'hijri'</code> is Umm al-Qura, the official calendar of Saudi Arabia, for the years 1300 to 1600 AH. Outside them, the browser uses the civil Hijri calendar, which can differ by a day.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-exchange-01"></i>
             <span class="nds-label">Exact Conversion</span>
           </span>
-          <p class="nds-item-desc">A Hijri date converts to Gregorian through the browser's own calendar data, with no table or estimate in NDS. Every day from 2018 to 2037 matches the browser's calendar.</p>
+          <p class="nds-item-desc">A Hijri date converts through the browser's own calendar data, not a table in NDS. A test checks every day from 2018 to 2037, both ways, against the browser's calendar.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -114,7 +113,7 @@ NDS.date.convert('05/03/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', fo
             <i class="hgi hgi-stroke hgi-language-skill"></i>
             <span class="nds-label">Arabic Digits</span>
           </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">parse</code> reads Arabic digits, such as <code class="nds-inline-code lang-js">٠٣/٠٤/٢٠٢٦</code>. It also removes the direction marks that the browser writes into Arabic dates.</p>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-js">parse</code> reads Arabic digits, such as <code class="nds-inline-code lang-js">٠٣/٠٤/٢٠٢٦</code>. It also removes the direction marks that the browser writes into Arabic dates. <code class="nds-inline-code lang-js">format</code> writes Arabic digits with <code class="nds-inline-code lang-js">numerals: 'arab'</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -128,7 +127,7 @@ NDS.date.convert('05/03/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', fo
             <i class="hgi hgi-stroke hgi-calendar-02"></i>
             <span class="nds-label">Calendar Days</span>
           </span>
-          <p class="nds-item-desc">A parsed date is local midnight, and <code class="nds-inline-code lang-js">format</code> reads it in local time. A visitor in another timezone sees the same day that was typed.</p>
+          <p class="nds-item-desc">No timezone moves a parsed date. A day typed in Riyadh is the same day for a visitor in Tokyo or Los Angeles.</p>
         </div>
       </div>
     </div>
@@ -149,7 +148,7 @@ NDS.date.convert('05/03/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', fo
 - Set `data-timezone` when today must be the same day for every visitor, such as a deadline in Riyadh.
 - Do not pass `timeZone` to `format` for a parsed date. It moves the day for a visitor in another timezone. Pass it only for a moment in time, such as `new Date()` in a clock.
 - For a Hijri month name, format the month as a number and look the name up in your own list. On Android, the browser can print a Gregorian month name for a Hijri month.
-- Write a date for Sort as `YYYY-MM-DD`, in `data-sort-value` on a table cell or `data-sort-{key}` on a list item. Sort compares the attribute, not the text the user sees.
+- Sort reads a Gregorian date from the text, in the nearest `data-date-format`. For a Hijri date, or text in another format, write the date as `YYYY-MM-DD` in `data-sort-value` on a table cell, or in `data-sort-{key}` on a list item.
 
 </div>
   </div>
@@ -185,7 +184,7 @@ NDS.date.convert('05/03/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', fo
 | `D` | The day, 1 or 2 digits |
 {: .nds-table .nds-responsive}
 
-Any other character is literal. A format with no day, such as `MM/YYYY`, parses as the first day of the month. A format with no month parses as the first month. A format needs a year.
+Any other character is literal. A format with no day, such as `MM/YYYY`, parses as the first day of the month. A format with no month parses as the first month. `parse` returns `null` for a format with no year.
 
 ### Options
 {: .nds-block-title}
