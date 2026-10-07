@@ -179,7 +179,12 @@
             swap.parent.insertBefore(swap.done, swap.next);
             endedSwap.delete(el);
         }
-        const lang = el.closest('[lang]')?.lang || 'en';
+        let lang = el.closest('[lang]')?.lang || 'en';
+        // Intl throws on a malformed tag (ar_SA), which would stop every countdown after this one.
+        try { Intl.getCanonicalLocales(lang); } catch {
+            console.warn(`NDS Countdown: lang "${lang}" is not a language tag; using en`, el);
+            lang = 'en';
+        }
         const units = [];
         el.querySelectorAll('[data-unit]').forEach((box) => {
             const unit = box.getAttribute('data-unit');
