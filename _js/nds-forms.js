@@ -24,6 +24,7 @@
  *   NDS.Forms.validateOtpGroup(el, opts)
  *   NDS.Forms.initCheckboxGroupValidation(group) / .initRadioGroupValidation(group)
  *   NDS.Forms.initMultiselectValidation(el)      live-validation wiring for a group
+ *   NDS.Forms.isNationalId(str) / .isIban(str)   the checksum rules behind .nds-national-id / .nds-iban
  * Events:
  *   nds:statusChange         detail {status, message} — from the form container
  *   nds:formValidate         detail {valid, invalidFields, errors} — from the form, every
@@ -53,6 +54,9 @@
  *     through its hidden carrier; the error shows on the field that holds it.
  *   - An autocomplete with data-strict is checked at submit too: typed text must match a
  *     picked suggestion (mechanism and carve-outs in the autocomplete banner).
+ *   - .nds-national-id and .nds-iban stamp setCustomValidity on input (and at init), so the
+ *     checksum fails the field through checkValidity like any native rule. A pattern on the same
+ *     input is redundant; data-error-message still wins.
  *   - A blank setCustomValidity(' ') blocks the submit and outlines the field with no message:
  *     for a component that shows the cause itself (password's red chips). It beats native messages.
  *   - A readonly checkbox, radio or switch cannot change: Forms cancels the click that Space
@@ -382,6 +386,52 @@
             current = current.parentElement;
         }
         return true;
+    }
+
+    // Saudi national ID / iqama: 10 digits, first 1 or 2, Luhn check digit.
+    function isNationalId(v) {
+        if (!/^[12]\d{9}$/.test(v)) return false;
+        var sum = 0;
+        for (var i = 0; i < 10; i++) {
+            var d = +v[i];
+            if (i % 2 === 0) { d *= 2; if (d > 9) d -= 9; }
+            sum += d;
+        }
+        return sum % 10 === 0;
+    }
+
+    // IBAN: country + check digits, then mod-97 of the rearranged, letters-to-numbers string === 1.
+    function isIban(v) {
+        if (!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(v)) return false;
+        var s = (v.slice(4) + v.slice(0, 4)).replace(/[A-Z]/g, function (c) { return c.charCodeAt(0) - 55; });
+        var rem = 0;
+        for (var i = 0; i < s.length; i++) rem = (rem * 10 + +s[i]) % 97;
+        return rem === 1;
+    }
+
+    // .nds-national-id / .nds-iban: normalize the typed value and stamp the checksum result,
+    // so checkValidity() (blur and submit) fails the field with a localized message. Empty = valid.
+    function stampIdentifier(input) {
+        var original = input.value, clean, ok, msg;
+        if (input.classList.contains('nds-national-id')) {
+            clean = original.replace(/[٠-٩]/g, function (c) { return c.charCodeAt(0) - 0x660; }).replace(/\D/g, '');
+            ok = isNationalId(clean);
+            msg = NDS.isArabic ? 'رقم الهوية غير صحيح' : 'Invalid national ID number';
+        } else if (input.classList.contains('nds-iban')) {
+            clean = original.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            // Banking apps copy a Saudi IBAN without its SA: a value starting with a digit gets it back.
+            if (/^\d/.test(clean)) clean = 'SA' + clean;
+            ok = isIban(clean);
+            msg = NDS.isArabic ? 'رقم الآيبان غير صحيح' : 'Invalid IBAN';
+        } else {
+            return;
+        }
+        if (clean !== original) {
+            var caret = Math.max(0, input.selectionStart - (original.length - clean.length));
+            input.value = clean;
+            try { input.setSelectionRange(caret, caret); } catch (_) {}
+        }
+        input.setCustomValidity(clean && !ok ? msg : '');
     }
 
     var Validator = {
@@ -1110,6 +1160,8 @@
                 }
             }
 
+            stampIdentifier(input);
+
             FieldSync.update(input, formControl, true);
 
             var formContainer = formControl.closest('.nds-form-container');
@@ -1614,6 +1666,7 @@
 
             inputElements.forEach(function(input) {
                 FormControls.initializeInput(input, formControl);
+                stampIdentifier(input);
             });
 
             FormControls.initPasswordToggle(formControl);
@@ -1749,7 +1802,11 @@
 
         // Form Validation
         validateForm: Validator.validateForm.bind(Validator),
-        initForm: initForm
+        initForm: initForm,
+
+        // Identifier checks (the .nds-national-id / .nds-iban rules, for your own code)
+        isNationalId: isNationalId,
+        isIban: isIban
     };
 
 })();

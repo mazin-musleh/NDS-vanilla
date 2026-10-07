@@ -37,8 +37,8 @@ sidemenu_mode: false
                                 <label for="ft-national-id"><span class="nds-label">National ID</span></label>
                             </div>
                             <div class="nds-form-control">
-                                <input type="text" id="ft-national-id" name="nationalId" class="nds-input"
-                                    placeholder="10-digit ID number" inputmode="numeric" pattern="[0-9]{10}"
+                                <input type="text" id="ft-national-id" name="nationalId" class="nds-input nds-national-id"
+                                    placeholder="10-digit ID number" inputmode="numeric" maxlength="10"
                                     autocomplete="off" required>
                                 <div class="nds-form-action">
                                     <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>

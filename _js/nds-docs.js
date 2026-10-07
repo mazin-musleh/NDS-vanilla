@@ -32,7 +32,7 @@
     // The group whose rows swap the whole markup. A reference page (grid) names it Example; the token catalog, Pack.
     var STRUCT = /^(Structure|Example|Pack)$/;
     // Markup that a form harness can fail on (docs_canon.rb RULE_RE is the same list).
-    var RULES = '[data-required], [data-strict], .nds-required, [data-min-checked], [data-max-checked], [required], [pattern], [minlength], [min], [max], [type="email"], [type="url"], .nds-date-input, .nds-time-input';
+    var RULES = '[data-required], [data-strict], .nds-required, [data-min-checked], [data-max-checked], [required], [pattern], [minlength], [min], [max], [type="email"], [type="url"], .nds-date-input, .nds-time-input, .nds-national-id, .nds-iban';
 
     // An option's name without its markers: (default), (demo: + id), (hint: text), (id: name), (not: ids), (limit: n name).
     function label(o) { return o.replace(/\s*\((default|limit:[^)]*|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*|not:[^)]*)\)/g, ''); }

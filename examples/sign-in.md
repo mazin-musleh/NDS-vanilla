@@ -83,9 +83,8 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
                 <div class="nds-form-control">
                   <i class="nds-icon nds-hgi-identity-card" aria-hidden="true"></i>
-                  <input type="text" id="national-id" name="national-id" class="nds-input" inputmode="numeric" pattern="[0-9]{10}"
-                    maxlength="10" placeholder="10 digits" autocomplete="username" required
-                    data-error-message="Enter the 10 digits of your National ID">
+                  <input type="text" id="national-id" name="national-id" class="nds-input nds-national-id" inputmode="numeric"
+                    maxlength="10" placeholder="10 digits" autocomplete="username" required>
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
