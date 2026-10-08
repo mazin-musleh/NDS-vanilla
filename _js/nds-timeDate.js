@@ -85,7 +85,7 @@
         renderDate(el, type === 'hijri'
             ? hijriText(today)
             : NDS.date.format(today, {
-                locale: isArabic ? 'ar-SA' : 'en-US',
+                locale: isArabic ? 'ar-SA' : undefined, // undefined = the page's lang
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
             }));
     }

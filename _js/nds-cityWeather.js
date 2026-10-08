@@ -150,7 +150,7 @@
 
         const lat = +(weatherEl.dataset.latitude || 24.7136);
         const lng = +(weatherEl.dataset.longitude || 46.6753);
-        const lang = isArabic ? 'ar' : 'en';
+        const lang = encodeURIComponent(NDS.lang);
         // v2 key: cache shape changed from HTML string to plain city name.
         const cacheKey = `city_v2_${lat}_${lng}_${lang}`;
 

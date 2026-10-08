@@ -109,7 +109,7 @@
     }
 
     function getLanguage() {
-        return NDS.isArabic ? 'ar-SA' : 'en-US';
+        return NDS.isArabic ? 'ar-SA' : (document.documentElement.lang || 'en-US');
     }
 
     function createRecognition() {

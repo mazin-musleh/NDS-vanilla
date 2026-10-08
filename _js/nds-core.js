@@ -150,8 +150,8 @@
     });
 
     // ── i18n ─────────────────────────────────────────────────────────
-    // One pack per language, assets/i18n/{lang}.json, keyed by component. A component
-    // with no section in it reads its own assets/i18n/{component}/{lang}.json instead.
+    // One pack per language, assets/i18n/{lang}.json, keyed by component. A section the
+    // pack leaves out reads en.json's; one neither has reads assets/i18n/{component}/{lang}.json.
     // Missing files fall back to en.json; a missing key keeps the component's default.
     //
     // Override hooks:
@@ -166,8 +166,8 @@
         // so an Arabic page never paints English first; a scope that was
         // already loading keeps it.
         load(component, scopes, lang) {
-            const data = this._section(component, lang);
-            if (data !== undefined) {
+            if (this._fromFiles(component, lang) !== undefined) {
+                const data = this._section(component, lang);
                 if (data && scopes) this.apply(scopes, data);
                 return Promise.resolve(data);
             }
@@ -189,26 +189,34 @@
             return /^[a-z]{2,3}$/.test(l) ? l : 'en';
         },
 
-        // undefined until known; then the pack section or the own file (null when neither),
-        // with the inline override laid over it key by key. Until the file lands, the
-        // override stands alone.
+        // undefined until known; then the pack's section, en's (a pack may leave sections
+        // out), or the own file (null when none). Ignores the override: an override is no
+        // sign the file landed.
+        _fromFiles(component, lang) {
+            lang = this._lang(lang);
+            const pack = this._files[lang], en = this._files.en;
+            if (pack && component in pack) return pack[component];
+            if (pack === undefined || en === undefined) return undefined;
+            if (en && component in en) return en[component];
+            return this._files[component + '/' + lang];
+        },
+
+        // The files' text with the inline override laid over it key by key. Until they
+        // land, the override stands alone.
         _section(component, lang) {
             const inline = window.NDS_I18N && window.NDS_I18N[component];
-            lang = this._lang(lang);
-            const pack = this._files[lang];
-            const data = pack === undefined ? undefined
-                : pack && component in pack ? pack[component]
-                : this._files[component + '/' + lang];
+            const data = this._fromFiles(component, lang);
             if (!inline) return data;
             return data ? Object.assign({}, data, inline) : inline;
         },
 
+        // ponytail: an own-file component (accessibility) on a non-en page also loads en.json
+        // to rule out an en section; moving accessibility into the pack drops that fetch.
         _get(component, lang) {
             lang = this._lang(lang);
-            return this._file(lang).then(pack => {
-                if (pack && component in pack) return;
-                return this._file(component + '/' + lang);
-            });
+            const has = p => p && component in p;
+            return this._file(lang).then(pack => has(pack)
+                || this._file('en').then(en => has(en) || this._file(component + '/' + lang)));
         },
 
         // The page language's pack — the loader starts the injected bundles after it.
@@ -217,7 +225,7 @@
         // One fetch per file per page; falls back to the en file.
         _file(path) {
             return this._loads[path] || (this._loads[path] = this._fetchOne(path)
-                .then(data => data || (/(^|\/)en$/.test(path) ? null : this._fetchOne(path.replace(/[a-z]+$/, 'en'))))
+                .then(data => data || (/(^|\/)en$/.test(path) ? null : this._file(path.replace(/[a-z]+$/, 'en'))))
                 .then(data => (this._files[path] = data || null)));
         },
 
@@ -231,12 +239,12 @@
         strings(component, defaults) {
             const I = this, queue = [];
             const has = (o, k) => !!o && Object.prototype.hasOwnProperty.call(o, k);
-            const landed = () => I._section(component) !== undefined;
+            const landed = () => I._fromFiles(component) !== undefined;
             const read = (el, attr) => (attr === 'text' ? el.textContent : el.getAttribute(attr));
             const write = (el, attr, v) => (attr === 'text' ? (el.textContent = v) : el.setAttribute(attr, v));
             const t = (key, vars, lang) => {
+                if (lang && I._fromFiles(component, lang) === undefined) I._get(component, lang);
                 const d = I._section(component, lang);
-                if (d === undefined && lang) I._get(component, lang);
                 // Own keys only: a key from outside (a cached value, a browser error name) never reaches Object.prototype.
                 return I.format(has(d, key) ? d[key] : has(defaults, key) ? defaults[key] : key, vars, lang);
             };
@@ -244,7 +252,7 @@
                 t,
                 defaults,
                 load: (scopes, lang) => I.load(component, scopes, lang),
-                ready: lang => I._section(component, lang) !== undefined,
+                ready: lang => I._fromFiles(component, lang) !== undefined,
                 has: key => has(defaults, key),
                 set(el, attr, key, vars) {
                     const v = t(key, vars);
@@ -278,7 +286,8 @@
                 const { data } = await NDS.request(base + path + '.json' + ASSETS_VER, { cache: 'default', json: true });
                 return data;
             } catch (err) {
-                console.warn('[NDS.i18n] ' + path + ' failed', err);
+                // An own en file is optional: the component's English is in its strings() call.
+                if (!(err.status === 404 && /\/en$/.test(path))) console.warn('[NDS.i18n] ' + path + ' failed', err);
                 return null;
             }
         },

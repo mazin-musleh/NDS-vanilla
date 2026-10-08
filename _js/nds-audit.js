@@ -32,10 +32,13 @@
         // Not auto-corrected: writing dir here flips the whole document a frame
         // after paint, and cannot help the pre-JS paint at all.
         const htmlDir = document.documentElement.dir; // raw read for the diagnostic text only — comparisons below use NDS.isRTL
-        if (NDS.isArabic && !NDS.isRTL) {
-            console.warn(`[NDS.Audit] <html lang="ar"> without dir="rtl"${htmlDir ? ` (dir="${htmlDir}")` : ' (no dir attribute)'} — NDS.isRTL reads false, so components run left-to-right under Arabic content. Set dir="rtl" in the markup.`);
-        } else if (!NDS.isArabic && NDS.isRTL) {
-            console.warn(`[NDS.Audit] <html dir="rtl"> with lang="${document.documentElement.lang || 'unset'}" — direction and language disagree. Set dir="ltr", or lang to an Arabic locale.`);
+        const htmlLang = document.documentElement.lang || 'unset';
+        // ponytail: the common right-to-left languages; Intl.Locale's text info is missing in Firefox.
+        const rtlLang = /^(ar|fa|ur|he|ps|ckb|dv|yi|sd|ug)$/.test(NDS.lang);
+        if (rtlLang && !NDS.isRTL) {
+            console.warn(`[NDS.Audit] <html lang="${htmlLang}"> without dir="rtl"${htmlDir ? ` (dir="${htmlDir}")` : ' (no dir attribute)'} — NDS.isRTL reads false, so components run left-to-right under right-to-left content. Set dir="rtl" in the markup.`);
+        } else if (!rtlLang && NDS.isRTL) {
+            console.warn(`[NDS.Audit] <html dir="rtl"> with lang="${htmlLang}" — direction and language disagree. Set dir="ltr", or lang to a right-to-left language.`);
         }
 
         document.querySelectorAll('[data-filter-items]:not([data-nds-filter-initialized])').forEach(el => {
