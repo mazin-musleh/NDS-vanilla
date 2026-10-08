@@ -76,28 +76,23 @@
     //   /assets/js/nds-main.min.js                   → /assets/
     //   /NDS-vanilla/assets/js/nds-main.min.js?ver=… → /NDS-vanilla/assets/
     //   https://cdn.example.com/v1/assets/js/…       → https://cdn.example.com/v1/assets/
-    // document.currentScript is valid synchronously while this IIFE runs
-    // (script parsing time). Falls back to page-relative if the bundle was
-    // loaded inline or via a path we can't pattern-match.
+    // The script is found as the loader finds it: its own tag, else the page's nds-main
+    // tag (a module has no currentScript). The assets folder is the one above it, when
+    // it sits in js/ or is named nds-main; any other src (a site's own bundle) falls
+    // back to page-relative.
     //
     // Override layers, in priority order:
     //   1. window.NDS_I18N_PATH       → only the i18n directory (component-specific)
-    //   2. window.NDS_ASSETS_BASE     → entire assets directory (e.g. CDN)
+    //   2. window.NDS_ASSETS_PATH     → entire assets directory (e.g. CDN)
     //   3. auto-derived from script src
     //   4. 'assets/' (page-relative fallback)
     // Set the override BEFORE this bundle loads.
-    //
-    // Use match() (not replace()) so a script src that doesn't fit the
-    // `/.../js/{name}.js` shape falls through to the empty-string fallback,
-    // letting _fetchOne use 'assets/i18n/' page-relative. replace() would
-    // return the original src unchanged and produce a malformed URL like
-    // `https://host/bundle.jsi18n/...` on the first fetch.
-    const _scriptSrc = (document.currentScript && document.currentScript.src) || '';
-    const _scriptBaseMatch = _scriptSrc.match(/^(.*\/)js\/[^/]+\.js(?:\?.*)?$/);
+    const _scriptSrc = (document.currentScript
+        || [...document.scripts].find(s => /nds-main(\.min)?\.js/.test(s.src)) || {}).src || '';
+    const _isOwnPath = /\/js\/[^/?#]+\.js(?:[?#]|$)|nds-main(\.min)?\.js/.test(_scriptSrc);
     const ASSETS_VER = (_scriptSrc.match(/\?ver=[^&#]*/) || [''])[0];
-    const ASSETS_BASE = window.NDS_ASSETS_BASE
-                     || (_scriptBaseMatch && _scriptBaseMatch[1])
-                     || '';
+    const ASSETS_BASE = window.NDS_ASSETS_PATH
+                     || (_isOwnPath ? new URL('../', _scriptSrc).href : '');
 
     // ── Breakpoints (matches _mixins.scss) ─────────────────────────
     // Usage: NDS.breakpoints.desktop → '(width >= 960px)'

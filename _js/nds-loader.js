@@ -24,7 +24,7 @@
  *   (none)
  * Hooks (window globals — set these BEFORE the bundle loads):
  *   window.NDSInitConfig   {autoInitialize, disableAll, enableLogging, enableTiming, initBudgetMs}
- *   window.NDSAssetBase    override the directory the injected bundles load from
+ *   window.NDS_ASSETS_PATH the assets/ folder; the injected bundles load from its js/
  *   window.__NDS_BUNDLES   the build-generated bundle manifest — never hand-write it
  *   written by the loader: data-nds-loaded on <html> — the reveal stamp, set once the
  *                          main CSS has applied; data-paged-split on each .nds-paged-content
@@ -417,12 +417,12 @@
     // Siblings reuse main's origin (passes a CSP host allowlist) and its ?ver= cache-bust.
     const SELF = document.currentScript ||
         [...document.scripts].find((s) => /nds-main(\.min)?\.js/.test(s.src));
+    // NDS_ASSETS_PATH names the assets/ folder, as core reads it for the language files.
     const ASSET = (() => {
-        if (SELF && SELF.src) {
-            const u = new URL(SELF.src, location.href);
-            return { dir: u.href.slice(0, u.href.lastIndexOf('/') + 1), ver: u.search };
-        }
-        return { dir: window.NDSAssetBase || '', ver: '' };
+        const u = SELF && SELF.src ? new URL(SELF.src, location.href) : null;
+        const ver = u ? u.search : '';
+        if (window.NDS_ASSETS_PATH) return { dir: window.NDS_ASSETS_PATH + 'js/', ver };
+        return { dir: u ? u.href.slice(0, u.href.lastIndexOf('/') + 1) : '', ver };
     })();
     const bundleUrl = (file) => ASSET.dir + file + ASSET.ver;
 

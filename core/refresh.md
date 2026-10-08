@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "09/10/2026 - 01:15 AM"
 ---
 
 <section id="refreshOverview" class="nds-content-section nds-doc-overview">
@@ -231,7 +231,7 @@ Set these on `window` before the main bundle loads. A `window.NDSInitConfig` key
 | `NDSInitConfig.enableLogging` | `false` | Logs each component as it starts, and runs `NDS.Init.audit()` after load |
 | `NDSInitConfig.enableTiming` | `false` | Logs the total init time. With `enableLogging`, it also logs the time of each component |
 | `NDSInitConfig.initBudgetMs` | `5` | Milliseconds of init work before the loader yields to the browser |
-| `NDSAssetBase` | the folder of `nds-main.min.js` | The folder the other bundles load from, when the loader cannot find the main script |
+| `NDS_ASSETS_PATH` | the folder above the one that holds `nds-main.min.js` | The `assets/` folder. The other bundles load from its `js/` folder, and the language files from its `i18n/` folder |
 {: .nds-table .nds-responsive}
 
 ### JavaScript

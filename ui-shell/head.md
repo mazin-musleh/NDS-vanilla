@@ -276,7 +276,7 @@ The inline script runs once, at page load. The stylesheet links it adds and the 
 | `data-nds-loaded` | `<html>` | The loader sets it once the main CSS has applied, and the page shows. Do not set it yourself |
 {: .nds-table .nds-responsive}
 
-The loader's window settings (`NDSInitConfig`, `NDSAssetBase`) are on [Refresh](../core/refresh).
+The loader's window settings (`NDSInitConfig`, `NDS_ASSETS_PATH`) are on [Refresh](../core/refresh).
 
 ### Content Security Policy
 {: .nds-block-title #csp}
