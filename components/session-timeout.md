@@ -6,9 +6,9 @@ hero_description: A warning that opens before an idle session ends, counts down 
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
-last_edit: "08/10/2026 - 01:56 PM"
+since: "2.0.0"
+updated: "2.0.0"
+last_edit: "08/10/2026 - 08:55 PM"
 ---
 
 <section id="sessionTimeoutOverview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,9 @@ last_edit: "08/10/2026 - 01:56 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-Session Timeout warns a signed-in user before their session ends for lack of use, and lets them extend it. This meets WCAG 2.2.1, Timing Adjustable. It is a [Modal](../components/modal) with `data-session-*` attributes and a [Countdown](../components/countdown) inside. The script times the session, opens the modal, and starts the countdown.
+Session Timeout warns a signed-in user before their session ends with no activity, and lets them extend it. WCAG 2.2.1, Timing Adjustable, asks for this warning. You add no markup. One `NDS.SessionTimeout.init()` call times the session. The script builds a warning [Modal](../components/modal) with a [Countdown](../components/countdown) in it, and the ended modal.
+
+Connect it to your server in one of two ways, as [Session Renewal](#sessionTimeoutBehavior) shows.
 
 Pick another component when:
 
@@ -35,137 +37,58 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="session-timeout-modal" data-canon data-variants="sessionTimeoutVariantsTable" data-preview="run" data-run-label="Start a session">
-<div id="session-warning" class="nds-modal nds-card nds-stroke nds-sm nds-center" data-status="warning" data-session-timeout="30" data-session-warn="25" data-session-ended="session-ended" role="alertdialog" aria-modal="true" aria-labelledby="session-warning-title" aria-describedby="session-warning-desc session-warning-countdown" aria-hidden="true" hidden>
-  <div class="nds-card-header">
-    <div class="nds-card-featured-icon">
-      <span class="nds-featured-icon nds-xl nds-circle">
-        <i class="nds-icon nds-hgi-alert-circle" aria-hidden="true"></i>
-      </span>
-    </div>
-  </div>
-  <div class="nds-card-content">
-    <div class="nds-card-text">
-      <span class="nds-card-title" id="session-warning-title">Your session is about to end</span>
-      <p class="nds-card-description" id="session-warning-desc">You have not used the page for a while. When the time runs out, you are signed out and lose any data you have not saved.</p>
-      <span class="nds-card-number"><span class="nds-countdown" id="session-warning-countdown" data-countdown=""><span class="nds-countdown-value" data-unit="m">--</span>:<span class="nds-countdown-value" data-unit="s">--</span></span></span>
-    </div>
-  </div>
-  <div class="nds-card-actions">
-    <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
-      <span class="nds-label">Stay signed in</span>
-    </button>
-    <a class="nds-btn nds-secondary-outline nds-lg" href="#">
-      <span class="nds-label">Sign out</span>
-    </a>
-  </div>
-</div>
-<template class="nds-modal-template">
-  <div id="session-ended" class="nds-modal nds-card nds-stroke nds-sm nds-center" data-status="error" data-modal-static role="alertdialog" aria-modal="true" aria-labelledby="session-ended-title" aria-describedby="session-ended-desc" aria-hidden="true" hidden>
-    <div class="nds-card-header">
-      <div class="nds-card-featured-icon">
-        <span class="nds-featured-icon nds-xl nds-circle">
-          <i class="nds-icon nds-hgi-cancel-circle" aria-hidden="true"></i>
-        </span>
-      </div>
-    </div>
-    <div class="nds-card-content">
-      <div class="nds-card-text">
-        <span class="nds-card-title" id="session-ended-title">Your session has ended</span>
-        <p class="nds-card-description" id="session-ended-desc">You were signed out because the page was not used. Sign in again to continue.</p>
-      </div>
-    </div>
-    <div class="nds-card-actions">
-      <a class="nds-btn nds-primary nds-lg" href="#">
-        <span class="nds-label">Sign in</span>
-      </a>
-    </div>
-  </div>
-</template>
-</script>
-<script type="text/html" id="session-timeout-redirect" data-canon>
-<div id="session-warning-redirect" class="nds-modal nds-card nds-stroke nds-sm nds-center" data-status="warning" data-session-timeout="30" data-session-warn="25" data-session-logout="#" role="alertdialog" aria-modal="true" aria-labelledby="session-warning-redirect-title" aria-describedby="session-warning-redirect-desc session-warning-redirect-countdown" aria-hidden="true" hidden>
-  <div class="nds-card-header">
-    <div class="nds-card-featured-icon">
-      <span class="nds-featured-icon nds-xl nds-circle">
-        <i class="nds-icon nds-hgi-alert-circle" aria-hidden="true"></i>
-      </span>
-    </div>
-  </div>
-  <div class="nds-card-content">
-    <div class="nds-card-text">
-      <span class="nds-card-title" id="session-warning-redirect-title">Your session is about to end</span>
-      <p class="nds-card-description" id="session-warning-redirect-desc">You have not used the page for a while. When the time runs out, you are signed out and lose any data you have not saved.</p>
-      <span class="nds-card-number"><span class="nds-countdown" id="session-warning-redirect-countdown" data-countdown=""><span class="nds-countdown-value" data-unit="m">--</span>:<span class="nds-countdown-value" data-unit="s">--</span></span></span>
-    </div>
-  </div>
-  <div class="nds-card-actions">
-    <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
-      <span class="nds-label">Stay signed in</span>
-    </button>
-    <a class="nds-btn nds-secondary-outline nds-lg" href="#">
-      <span class="nds-label">Sign out</span>
-    </a>
-  </div>
-</div>
+<script type="text/html" id="session-timeout-demo" data-canon data-code="none">
+<button type="button" class="nds-btn nds-primary nds-md" data-session-demo data-cooldown-label="Session ends in {s} s">
+  <span class="nds-label">Start a session</span>
+</button>
 </script>
 <script data-demo-script>
-// Demo only, on the page and in each screen. The Run button counts down the demo session, and
-// every extension restarts it. Run after an ended session starts a new one: only the first session
-// modal on a page works. This page has no sign-in page, so Sign in closes the ended modal.
+// Demo only, on the page and in each screen. Start begins a 30-second session with the warning at
+// 25 seconds left, and every extension restarts the count. This page has no sign-in page, so Sign in
+// closes the ended modal.
 (function () {
-  var card = function () { return document.querySelector('[data-preview-of="session-timeout-modal"]') || document; };
-  var run = function () { return card().querySelector('[data-run]'); };
-  var held = function () { return card().querySelector('[data-demo-held]'); };
-  var count = function () {
-    var modal = held().querySelector('[data-session-timeout]');
-    if (!modal) return;
-    NDS.CooldownButton.reset(run());
-    run().setAttribute('data-cooldown-label', 'Session ends in {s} s');
-    NDS.CooldownButton.start(run(), { seconds: +modal.getAttribute('data-session-timeout'), silent: true });
+  var count = function (btn) {
+    NDS.CooldownButton.reset(btn);
+    NDS.CooldownButton.start(btn, { seconds: 30, silent: true });
   };
+  // The page and its screens share localStorage, as tabs do, so two demos would warn together. One runs at a time.
+  var stopOthers = function () {
+    var wins = [top].concat(Array.prototype.map.call(top.document.querySelectorAll('.nds-doc-screen'), function (f) { return f.contentWindow; }));
+    wins.forEach(function (w) {
+      if (w === window || !w || !w.NDS || !w.NDS.SessionTimeout || w.NDS.SessionTimeout.__ndsStub) return;
+      w.NDS.SessionTimeout.destroy();
+      var b = w.document.querySelector('[data-session-demo]');
+      if (b) w.NDS.CooldownButton.reset(b);
+    });
+  };
+  if (window !== top) stopOthers();
   document.addEventListener('click', function (e) {
-    if (e.target.closest('[data-run]') === run()) {
-      if (held().firstChild) { NDS.Init.destroy(held()); held().innerHTML = ''; }
-      setTimeout(count);
+    var btn = e.target.closest('[data-session-demo]');
+    if (btn) {
+      stopOthers();
+      NDS.SessionTimeout.destroy();
+      NDS.SessionTimeout.init({ timeout: 30, warn: 25 });
+      count(btn);
     }
-    if (e.target.closest('[data-run-clear]') && card().contains(e.target)) NDS.CooldownButton.reset(run());
-    if (e.target.closest('[id^="session-ended"] a')) { e.preventDefault(); NDS.Modal.close(); }
-  }, true);
-  document.addEventListener('nds:session:extend', count);
-  // Redirect: a real page leaves for data-session-logout here. The demo stays and says so.
-  document.addEventListener('nds:session:end', function (e) {
-    if (!e.target.hasAttribute('data-session-logout')) return;
-    e.preventDefault();
-    NDS.Modal.close();
-    NDS.Alert.create({ variant: 'info', title: 'Signed out', description: 'A real page now goes to the data-session-logout URL.', display: 'toast', duration: 5000 });
+    if (e.target.closest('#ndsSessionEnded a')) { e.preventDefault(); NDS.Modal.close(); }
+  });
+  document.addEventListener('nds:session:extend', function () {
+    var btn = document.querySelector('[data-session-demo]');
+    if (btn) count(btn);
   });
 })();
 </script>
+<script type="text/html" id="session-timeout-init" data-canon data-lang="js">
+// Once on every signed-in page. The values come from your server.
+NDS.SessionTimeout.init({
+  timeout: 900,
+  warn: 120,
+  extend: '/session/keepalive',
+  logout: '/logout'
+});
+</script>
 
     </div>
-  </div>
-</section>
-
-<section id="sessionTimeoutVariants" class="nds-content-section nds-doc-variants" hidden>
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Variants</h2>
-    </div>
-    <div class="nds-section-body" markdown="1">
-
-Every option goes on the warning modal, the `.nds-modal` with `data-session-timeout`. The markup carries the Test timing. 15 minutes is two rows: write both attributes.
-
-| Group | Option | Markup | On element | Use |
-|---|---|---|---|---|
-| Structure | Ended modal (default) | — | — | At the end, a static error modal opens with a Sign in link. The page stays where it is |
-| Structure | Redirect (hint: Go to the logout URL at the end) | canon `#session-timeout-redirect` | — | At the end, the page goes to the `data-session-logout` URL. For a service with personal data, where the page must not stay on screen |
-| Timing | Test (default) (hint: 30 seconds, warning after 5) | — | — | A 30-second session with the warning at 25 seconds left, to try the flow. Replace both values with your server's before you ship |
-| Timing | 15 minutes | `[data-session-timeout="900"]` | `.nds-modal[data-session-timeout]` | The session ends after 15 minutes with no use, and the warning opens 2 minutes before. Match `data-session-timeout` to the server |
-| Timing | 15 minutes | `[data-session-warn="120"]` | `.nds-modal[data-session-timeout]` | The second row of 15 minutes |
-{: #sessionTimeoutVariantsTable .nds-table .nds-responsive}
-
-</div>
   </div>
 </section>
 
@@ -176,20 +99,25 @@ Every option goes on the warning modal, the `.nds-modal` with `data-session-time
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
+### Session Renewal
+{: .nds-block-title}
+
+Each extension must renew the session on the server. Use one of these two ways:
+
+- **The `extend` option.** The script sends a POST to that URL. A `401` or a redirect to a sign-in page ends the session at once. Any other failure keeps the old deadline, so the warning comes back in time. The request carries cookies but no CSRF token, so a server that asks for one answers `403`.
+- **Your own request.** Leave out `extend` and send the request in the `nds:session:extend` event. Use it when your server needs a CSRF token or other headers. When the server says the session is gone, call `NDS.SessionTimeout.end()`.
+
 ### Timing
 {: .nds-block-title}
 
-The session ends `data-session-timeout` seconds after its last renewal, the way the server counts it. The clock starts when the script starts, right after the page loads. The warning opens `data-session-warn` seconds before the end, and its countdown starts at the time left. A user who closes the warning in any way extends the session.
+The session ends `timeout` seconds after its last renewal, the way the server counts it. The warning opens `warn` seconds before the end, and its countdown starts at the time left. A user who closes the warning in any way extends the session.
 
-### Keep-Alive Request
-{: .nds-block-title}
-
-With `data-session-extend`, the script sends a POST to that URL each time the session is extended. A `401` or `403` answer ends the session at once. Any other failure keeps the old deadline, so the warning comes back in time. Without the attribute, renew the session yourself in the `nds:session:extend` event. A failed renewal is then yours to handle: on a `401`, send the user to sign in.
+The clock starts when `init()` runs, because the request that served the page renewed the session. If your server renews it only on some requests, pass the seconds left as `left`.
 
 ### Session End
 {: .nds-block-title}
 
-At the end, the script fires `nds:session:end`. With `data-session-logout`, the page then goes to that URL. Without it, the modal that `data-session-ended` names opens. Call `preventDefault()` on the event to do neither.
+At the end, the script fires `nds:session:end`. With `logout`, the page then goes to that URL. Without it, the ended modal opens. Call `preventDefault()` on the event to do neither. The warning then closes, and the next step is yours. If the user goes back to the page after the redirect, the script goes to the logout URL again.
 
 </div>
   </div>
@@ -205,9 +133,9 @@ At the end, the script fires `nds:session:end`. With `data-session-logout`, the 
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
+            <span class="nds-label">Built Modals</span>
           </span>
-          <p class="nds-item-desc">The loader starts Session Timeout on any page with a <code class="nds-inline-code lang-html">data-session-timeout</code> modal. You write no script.</p>
+          <p class="nds-item-desc">The script builds the warning and the ended modal when each first opens, with the text of the page's language.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -242,7 +170,7 @@ At the end, the script fires `nds:session:end`. With `data-session-logout`, the 
             <i class="hgi hgi-stroke hgi-timer-02"></i>
             <span class="nds-label">WCAG Time Check</span>
           </span>
-          <p class="nds-item-desc">A <code class="nds-inline-code lang-html">data-session-warn</code> under 20 seconds logs a console warning. WCAG 2.2.1 gives the user at least 20 seconds to extend.</p>
+          <p class="nds-item-desc">A <code class="nds-inline-code lang-js">warn</code> under 20 seconds logs a console warning. WCAG 2.2.1 gives the user at least 20 seconds to extend.</p>
         </div>
       </div>
     </div>
@@ -256,16 +184,14 @@ At the end, the script fires `nds:session:end`. With `data-session-logout`, the 
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Write the server's idle timeout into `data-session-timeout` from the server. A wrong value warns too late or too early. The `30` and `25` in the markup above are test values.
-- Give the user time to act. Keep `data-session-warn` at 120 seconds or more on a page with a long form.
-- Put the modal once in the layout of signed-in pages, never on public pages. Only the first one on a page works.
-- Keep `data-countdown=""` on the countdown. The script starts it when the warning opens.
-- Make Sign out a plain link to your logout URL.
-- If your keep-alive needs a CSRF token, leave out `data-session-extend` and renew the session in `nds:session:extend`.
-- Call `NDS.SessionTimeout.reset()` after a request of your own renews the session, such as an autosave.
-- Save the user's unsaved form data in `nds:session:end`, so it is there after they sign in again.
-- On a shared domain, give each service with its own sign-in its own `data-session-key`.
-- On an Arabic page, translate the text only. The countdown reads `02:03` left to right by itself, in Latin digits.
+- Pass the server's idle timeout as `timeout`, from the server. A wrong value warns too late or too early.
+- Give the user time to act. Keep `warn` at 120 seconds or more on a page with a long form.
+- Call `init()` once on every signed-in page, such as in the script of the shared layout. Never call it on a public page.
+- In a single-page app, call `init()` after sign-in and `destroy()` at sign-out.
+- Call `NDS.SessionTimeout.reset()` after a request of your own renews the session, such as an autosave. In a single-page app, call it from the response hook of your HTTP client.
+- On a page with personal data, send the `Cache-Control: no-store` header. The browser then does not keep the page, so the Back button cannot show it again after the session ends.
+- Save the user's unsaved form data in `nds:session:end`, so it is there after they sign in again. Use `sessionStorage`, not `localStorage`: on a shared computer, `localStorage` keeps the data after the user leaves.
+- When two services with their own sign-in share one site, such as `/service-a` and `/service-b`, give each its own `key`.
 
 </div>
   </div>
@@ -278,53 +204,54 @@ At the end, the script fires `nds:session:end`. With `data-session-logout`, the 
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-The card parts, statuses and `nds-center` are on the [Cards](../components/cards) page. The modal attributes are on the [Modal](../components/modal) page.
-
-### Data Attributes
+### Text
 {: .nds-block-title}
 
-| Attribute | Element | Effect |
-|---|---|---|
-| `data-session-timeout` | `.nds-modal` | Makes the modal the session warning. The value is the server's idle timeout in seconds. It must be above `data-session-warn`, or the script logs a console warning and does not start |
-| `data-session-warn` | `.nds-modal[data-session-timeout]` | Seconds before the end at which the warning opens. Default `120` |
-| `data-session-extend` | `.nds-modal[data-session-timeout]` | A URL the script sends a POST to each time the session is extended. It sends cookies only to a URL on the same site |
-| `data-session-logout` | `.nds-modal[data-session-timeout]` | A URL the page goes to at the end. It wins over `data-session-ended` |
-| `data-session-ended` | `.nds-modal[data-session-timeout]` | The id of the modal that opens at the end. The modal may sit in a `<template class="nds-modal-template">` |
-| `data-session-key` | `.nds-modal[data-session-timeout]` | The name under which tabs share the deadline in `localStorage`. Default: the `data-session-extend` URL, or one name for the whole site when there is none |
-| `data-countdown=""` | the `.nds-countdown` inside the warning | Keeps the countdown still until the warning opens. The script then starts it at the time left |
-{: .nds-table .nds-responsive}
+The modals read their text from `assets/i18n/session-timeout/en.json` and `ar.json`. To use your own text, set `window.NDS_I18N['session-timeout']` before the NDS scripts. It replaces the file, and a key it leaves out shows in English. Copy every key from `en.json`. On an Arabic page, the countdown still reads `02:03` left to right, in Latin digits.
 
 ### JavaScript
 {: .nds-block-title}
 
 | Method | Effect |
 |---|---|
-| `NDS.SessionTimeout.init()` | Starts the first `.nds-modal[data-session-timeout]` on the page. The loader calls it |
+| `NDS.SessionTimeout.init(options)` | Starts timing the session |
 | `NDS.SessionTimeout.extend()` | Extends the session now: it fires `nds:session:extend` and sends the keep-alive request |
-| `NDS.SessionTimeout.reset()` | Starts the deadline again from now, with no event and no request. Call it after a request of your own renews the session. It closes an open warning |
-| `NDS.SessionTimeout.destroy(root)` | Stops the timers and listeners when `root` holds the modal. `NDS.Init.destroy(view)` calls it for you |
+| `NDS.SessionTimeout.reset()` | Starts the deadline again from now, with no event and no request. Call it after a request of your own renews the session. It closes an open warning, and it restarts an ended session, such as after the user signs in again on the same page |
+| `NDS.SessionTimeout.end()` | Ends the session now. Call it when your own request finds the session gone |
+| `NDS.SessionTimeout.destroy()` | Stops the timers and listeners, and closes an open session modal |
 {: .nds-table .nds-responsive}
 
-All events bubble.
+| Option | Default | Effect |
+|---|---|---|
+| `timeout` | — | Required. The server's idle timeout, in seconds. It must be above `warn`, or the script logs a console warning and does not start |
+| `warn` | `120` | Seconds before the end at which the warning opens |
+| `left` | `timeout` | Seconds left in the session when the server rendered the page |
+| `extend` | — | A URL the script sends a POST to each time the session is extended. It sends cookies only to a URL on the same origin |
+| `logout` | — | A URL the page goes to at the end. The warning shows a Sign out link to it only with this option |
+| `signin` | this page | The URL of the Sign in link in the ended modal. With the default, your server sends the signed-out user from this page to sign in |
+| `key` | the `extend` URL | The name under which tabs share the deadline in `localStorage`. Without `extend`, every page on the same origin shares one name |
+{: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:session:extend` | `.nds-modal[data-session-timeout]`, each time the session is extended | `{ reason }`: `activity`, `confirm` (the user closed the warning) or `api` (`extend()`) |
-| `nds:session:end` | `.nds-modal[data-session-timeout]`, once, at the end | None. Cancelable: `preventDefault()` stops the redirect and the ended modal |
+| `nds:session:extend` | `document`, each time the session is extended | `{ reason }`: `activity`, `confirm` (the user closed the warning) or `api` (`extend()`) |
+| `nds:session:end` | `document`, once, at the end | None. Cancelable: `preventDefault()` stops the redirect and the ended modal |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="session-timeout-js" data-canon data-lang="js">
-// The keep-alive needs a CSRF token: data-session-extend is left out, and the page renews here.
-document.addEventListener('nds:session:extend', () => {
-  fetch('/keepalive', { method: 'POST', headers: { 'X-CSRF-Token': csrfToken } });
+// The keep-alive needs a CSRF token: extend is left out, and the page renews here.
+document.addEventListener('nds:session:extend', async () => {
+  const res = await fetch('/keepalive', { method: 'POST', headers: { 'X-CSRF-Token': csrfToken }, redirect: 'manual' });
+  // A 401 or a redirect to the sign-in page: the session is gone.
+  if (res.status === 401 || res.type === 'opaqueredirect') NDS.SessionTimeout.end();
 });
 
 // The autosave request renewed the session on the server.
 autosave().then(() => NDS.SessionTimeout.reset());
 
-// Keep the draft, so it is there after the user signs in again.
+// Keep the draft in this tab, so it is there after the user signs in again.
 document.addEventListener('nds:session:end', () => {
-  localStorage.setItem('application-draft', JSON.stringify(readForm()));
+  sessionStorage.setItem('application-draft', JSON.stringify(readForm()));
 });
 </script>
 

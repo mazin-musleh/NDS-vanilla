@@ -1,0 +1,9 @@
+{
+    "warning_title":        "Your session is about to end",
+    "warning_description":  "You have not used the page for a while. When the time runs out, you are signed out and lose any data you have not saved.",
+    "stay":                 "Stay signed in",
+    "sign_out":             "Sign out",
+    "ended_title":          "Your session has ended",
+    "ended_description":    "You were signed out because the page was not used. Sign in again to continue.",
+    "sign_in":              "Sign in"
+}

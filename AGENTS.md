@@ -189,6 +189,10 @@ All page content is built from sections. Read `layout/section.md` before creatin
 
 Verify a whitespace change by rendered text, not by eyeballing: build before/after, strip tags, collapse whitespace runs to one space, and diff. Identical text = formatting-only.
 
+## Server Calls in Components
+
+**A component is UI plus an event API; a built-in server call is an optional shortcut.** It is fine when it is simple and never limits usage: the events and methods must do everything the call does, so a developer with CSRF, custom headers or their own client skips it (Session Timeout: `data-session-extend` is the shortcut; `nds:session:extend` + `end()`/`reset()` is the full path). A bug in the call is a bug to fix, not a reason to remove it.
+
 ## Adding New Components
 
 **Phase 1: Build & test** — verify behavior in `playground.md` before registering anywhere.
