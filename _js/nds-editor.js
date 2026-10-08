@@ -49,7 +49,7 @@
  * The toolbar is GENERATED too: data-editor-toolbar on the root picks the
  * commands (space-separated data-cmd tokens, "|" starts a new button group,
  * "source" renders at the bar's end, "none" opts out; absent = the full
- * default set). ARIA labels resolve ar/en via NDS.lang. Pre-init the
+ * default set). Labels come from the editor section of the assets/i18n/{lang}.json pack. Pre-init the
  * skeleton in _editor.scss holds the field until the stamp lands.
  *
  * Status: BETA — ships with v1.4.0. Under heavy testing and real-project
@@ -666,68 +666,92 @@
 
     const TOOLBAR_DEFAULT = 'undo redo | bold italic underline strike clear | link image | h2 h3 h4 | align-left align-center align-right align-justify | dir-ltr dir-rtl | ul ol | remove | source';
     const TOOLBAR_CMDS = {
-        undo:      { icon: 'arrow-turn-backward',                     en: 'Undo',             ar: 'تراجع' },
-        redo:      { icon: 'arrow-turn-forward',                      en: 'Redo',             ar: 'إعادة' },
-        bold:      { icon: 'text-bold',                 toggle: true, en: 'Bold',             ar: 'غامق' },
-        italic:    { icon: 'text-italic',               toggle: true, en: 'Italic',           ar: 'مائل' },
-        underline: { icon: 'text-underline',            toggle: true, en: 'Underline',        ar: 'تسطير' },
-        strike:    { icon: 'text-strikethrough',        toggle: true, en: 'Strikethrough',    ar: 'يتوسطه خط' },
-        clear:     { icon: 'text-clear',                              en: 'Clear formatting', ar: 'مسح التنسيق' },
-        link:      { icon: 'link-01',                   toggle: true, en: 'Insert link',      ar: 'إدراج رابط' },
-        image:     { icon: 'image-add-01',              toggle: true, en: 'Insert image',     ar: 'إدراج صورة' },
+        undo:      { icon: 'arrow-turn-backward' },
+        redo:      { icon: 'arrow-turn-forward' },
+        bold:      { icon: 'text-bold',                 toggle: true },
+        italic:    { icon: 'text-italic',               toggle: true },
+        underline: { icon: 'text-underline',            toggle: true },
+        strike:    { icon: 'text-strikethrough',        toggle: true },
+        clear:     { icon: 'text-clear' },
+        link:      { icon: 'link-01',                   toggle: true },
+        image:     { icon: 'image-add-01',              toggle: true },
         // h1 is deliberately OUT of the default set (the page owns its h1) —
         // available via data-editor-toolbar for full-page authoring fields.
-        h1:        { icon: 'heading-01',                toggle: true, en: 'Heading 1',        ar: 'عنوان 1' },
-        h2:        { icon: 'heading-02',                toggle: true, en: 'Heading 2',        ar: 'عنوان 2' },
-        h3:        { icon: 'heading-03',                toggle: true, en: 'Heading 3',        ar: 'عنوان 3' },
-        h4:        { icon: 'heading-04',                toggle: true, en: 'Heading 4',        ar: 'عنوان 4' },
-        ul:        { icon: 'left-to-right-list-bullet', toggle: true, en: 'Bulleted list',    ar: 'قائمة نقطية' },
-        ol:        { icon: 'left-to-right-list-number', toggle: true, en: 'Numbered list',    ar: 'قائمة رقمية' },
+        h1:        { icon: 'heading-01',                toggle: true },
+        h2:        { icon: 'heading-02',                toggle: true },
+        h3:        { icon: 'heading-03',                toggle: true },
+        h4:        { icon: 'heading-04',                toggle: true },
+        ul:        { icon: 'left-to-right-list-bullet', toggle: true },
+        ol:        { icon: 'left-to-right-list-number', toggle: true },
         // Alignment is PHYSICAL (left/right) — absolute icons, never flip;
         // orthogonal to the dir command. Re-clicking the active one clears it
         // back to natural (direction-following).
-        'align-left':    { icon: 'text-align-left',                                    toggle: true, en: 'Align left',   ar: 'محاذاة لليسار' },
-        'align-center':  { icon: 'text-align-center',                                  toggle: true, en: 'Align center', ar: 'توسيط' },
-        'align-right':   { icon: 'text-align-right',                                   toggle: true, en: 'Align right',  ar: 'محاذاة لليمين' },
-        'align-justify': { icon: 'text-align-justify-center',                          toggle: true, en: 'Justify',      ar: 'ضبط' },
+        'align-left':    { icon: 'text-align-left',                                    toggle: true },
+        'align-center':  { icon: 'text-align-center',                                  toggle: true },
+        'align-right':   { icon: 'text-align-right',                                   toggle: true },
+        'align-justify': { icon: 'text-align-justify-center',                          toggle: true },
         // Direction is ABSOLUTE (ltr/rtl) — icons never flip; each writes the
         // native `dir` on the caret's block(s), toggling off clears it back
         // to the editor's inherited direction.
         // Direction buttons use the inline pilcrow glyphs (mask-based, not in
         // the HGI font): pilcrow-right = LTR, pilcrow-left = RTL.
-        'dir-ltr':       { icon: 'pilcrow-right', inlineIcon: true,                    toggle: true, en: 'Left to right', ar: 'من اليسار إلى اليمين' },
-        'dir-rtl':       { icon: 'pilcrow-left', inlineIcon: true,                     toggle: true, en: 'Right to left', ar: 'من اليمين إلى اليسار' },
+        'dir-ltr':       { icon: 'pilcrow-right', inlineIcon: true,                    toggle: true },
+        'dir-rtl':       { icon: 'pilcrow-left', inlineIcon: true,                     toggle: true },
         // Caret-gated: enabled only while the caret sits inside a pasted
         // component — the explicit removal path the shell guards point to.
-        remove:    { icon: 'delete-02',                               en: 'Remove component', ar: 'إزالة المكون' },
+        remove:    { icon: 'delete-02' },
     };
-    const TOOLBAR_STRINGS = {
-        source:   { en: 'View HTML source', ar: 'عرض مصدر HTML' },
-        url:      { en: 'URL',    ar: 'الرابط' },
-        text:     { en: 'Text',   ar: 'النص' },
-        external: { en: 'Open in new tab', ar: 'فتح في تبويب جديد' },
-        colored:  { en: 'Colored link', ar: 'رابط ملون' },
-        noBadge:  { en: 'Hide external badge', ar: 'إخفاء شارة الرابط الخارجي' },
-        fromLink: { en: 'From link', ar: 'من رابط' },
-        or:       { en: 'OR', ar: 'أو' },
-        attrs:    { en: 'Attributes', ar: 'الخصائص' },
-        invalidImageUrl: { en: 'Enter a valid image URL', ar: 'أدخل رابط صورة صالحًا' },
-        invalidUrl:      { en: 'Enter a valid URL', ar: 'أدخل رابطًا صالحًا' },
-        uploadPending:   { en: 'Wait for the upload to finish', ar: 'انتظر حتى يكتمل الرفع' },
-        uploadFailed:    { en: 'The file was not uploaded. Choose another file or enter a link', ar: 'لم يتم رفع الملف. اختر ملفًا آخر أو أدخل رابطًا' },
-        pasteBlocked:    { en: 'Pasting images is not available — use the image dialog', ar: 'لصق الصور غير متاح — استخدم نافذة إدراج الصورة' },
-        pasteClipsShell: { en: 'Selection crosses a component — adjust it before pasting', ar: 'التحديد يتجاوز حدود مكون — عدّل التحديد قبل اللصق' },
-        alt:      { en: 'Alt text', ar: 'النص البديل' },
-        width:    { en: 'Width (px)', ar: 'العرض (بكسل)' },
-        height:   { en: 'Height (px)', ar: 'الارتفاع (بكسل)' },
-        upload:   { en: 'Upload image', ar: 'رفع صورة' },
-        cancel:   { en: 'Cancel', ar: 'إلغاء' },
-        insert:   { en: 'Insert', ar: 'إدراج' },
-        unlink:   { en: 'Unlink', ar: 'إزالة الرابط' },
-        removePrompt:  { en: 'Remove the component:', ar: 'إزالة المكون:' },
-    };
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('editor', {
+        undo: 'Undo',
+        redo: 'Redo',
+        clear: 'Clear formatting',
+        remove: 'Remove component',
+        bold: 'Bold',
+        italic: 'Italic',
+        underline: 'Underline',
+        strike: 'Strikethrough',
+        link: 'Insert link',
+        image: 'Insert image',
+        h1: 'Heading 1',
+        h2: 'Heading 2',
+        h3: 'Heading 3',
+        h4: 'Heading 4',
+        ul: 'Bulleted list',
+        ol: 'Numbered list',
+        'align-left': 'Align left',
+        'align-center': 'Align center',
+        'align-right': 'Align right',
+        'align-justify': 'Justify',
+        'dir-ltr': 'Left to right',
+        'dir-rtl': 'Right to left',
+        source: 'View HTML source',
+        url: 'URL',
+        text: 'Text',
+        external: 'Open in new tab',
+        colored: 'Colored link',
+        no_badge: 'Hide external badge',
+        from_link: 'From link',
+        or: 'OR',
+        attrs: 'Attributes',
+        invalid_image_url: 'Enter a valid image URL',
+        invalid_url: 'Enter a valid URL',
+        upload_pending: 'Wait for the upload to finish',
+        upload_failed: 'The file was not uploaded. Choose another file or enter a link',
+        paste_blocked: 'Pasting images is not available — use the image dialog',
+        paste_clips_shell: 'Selection crosses a component — adjust it before pasting',
+        alt: 'Alt text',
+        width: 'Width (px)',
+        height: 'Height (px)',
+        upload: 'Upload image',
+        cancel: 'Cancel',
+        insert: 'Insert',
+        unlink: 'Unlink',
+        remove_prompt: 'Remove the component:',
+    });
+    // Escaped: the pack is site-editable, and these land in innerHTML.
+    const html = (k) => NDS.escapeHtml(strings.t(k));
 
-    const uiLabel = (s) => (NDS.lang === 'ar' ? s.ar : s.en);
 
     let uid = 0; // minted label ids for adopted fields whose textarea has no id
 
@@ -735,7 +759,7 @@
     // own content is the trigger; nds-tooltip.js generates the balloon).
     function cmdButtonHtml(cmd, extraClass = '') {
         const c = TOOLBAR_CMDS[cmd];
-        const label = uiLabel(c);
+        const label = html(cmd);
         const icon = c.icon;
         // inlineIcon: paint from the mask-based UI-icon sheet (.nds-icon) rather
         // than the HGI font — for glyphs not (yet) in the font, e.g. pilcrow.
@@ -752,55 +776,53 @@
     }
 
     function linkDropmenuHtml(idBase) {
-        const S = TOOLBAR_STRINGS;
         return `<div class="nds-dropmenu" data-editor-link-dropmenu>${cmdButtonHtml('link', ' nds-dropmenu-trigger')}`
             + '<div class="nds-dropmenu-menu nds-editor-link-menu" hidden><div class="nds-dropmenu-scroll">'
             + '<div class="nds-dropmenu-group nds-form-group">'
-            + textFieldHtml(`${idBase}-link-text`, uiLabel(S.text), 'text', 'data-editor-link-text')
-            + textFieldHtml(`${idBase}-link-url`, uiLabel(S.url), 'url', 'data-editor-link-url', 'https://')
-            + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-external"><span class="nds-label">${uiLabel(S.external)}</span></label></div>`
+            + textFieldHtml(`${idBase}-link-text`, html('text'), 'text', 'data-editor-link-text')
+            + textFieldHtml(`${idBase}-link-url`, html('url'), 'url', 'data-editor-link-url', 'https://')
+            + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-external"><span class="nds-label">${html('external')}</span></label></div>`
             + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-external" class="nds-check" data-editor-link-external /></div></div>`
-            + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-noexternal"><span class="nds-label">${uiLabel(S.noBadge)}</span></label></div>`
+            + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-noexternal"><span class="nds-label">${html('no_badge')}</span></label></div>`
             + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-noexternal" class="nds-check" data-editor-link-noexternal /></div></div>`
-            + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-colored"><span class="nds-label">${uiLabel(S.colored)}</span></label></div>`
+            + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-colored"><span class="nds-label">${html('colored')}</span></label></div>`
             + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-colored" class="nds-check" data-editor-link-colored /></div></div>`
             + '</div></div>'
             + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action">'
-            + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-link-cancel><span class="nds-label">${uiLabel(S.cancel)}</span></button>`
-            + `<button type="button" class="nds-btn nds-destructive nds-secondary-outline nds-dropmenu-item" data-editor-link-unlink hidden><span class="nds-label">${uiLabel(S.unlink)}</span></button>`
-            + `<button type="button" class="nds-btn nds-primary nds-dropmenu-item" data-editor-link-confirm data-dropmenu-primary data-no-auto-close><span class="nds-label">${uiLabel(S.insert)}</span></button>`
+            + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-link-cancel><span class="nds-label">${html('cancel')}</span></button>`
+            + `<button type="button" class="nds-btn nds-destructive nds-secondary-outline nds-dropmenu-item" data-editor-link-unlink hidden><span class="nds-label">${html('unlink')}</span></button>`
+            + `<button type="button" class="nds-btn nds-primary nds-dropmenu-item" data-editor-link-confirm data-dropmenu-primary data-no-auto-close><span class="nds-label">${html('insert')}</span></button>`
             + '</div></div></div></div>';
     }
 
     // Image popover: direct URL or a local file — the chosen file lands in
     // the URL field as a data:image URL, so Insert is the one commit path.
     function imageDropmenuHtml(idBase) {
-        const S = TOOLBAR_STRINGS;
         return `<div class="nds-dropmenu" data-editor-image-dropmenu>${cmdButtonHtml('image', ' nds-dropmenu-trigger')}`
             + '<div class="nds-dropmenu-menu nds-editor-image-menu" hidden><div class="nds-dropmenu-scroll">'
             + '<div class="nds-dropmenu-group nds-form-group nds-editor-image-form">'
-            + textFieldHtml(`${idBase}-image-url`, uiLabel(S.fromLink), 'url', 'data-editor-image-url', 'https://')
-            + `<div class="nds-divider" data-editor-image-or>${uiLabel(S.or)}</div>`
+            + textFieldHtml(`${idBase}-image-url`, html('from_link'), 'url', 'data-editor-image-url', 'https://')
+            + `<div class="nds-divider" data-editor-image-or>${html('or')}</div>`
             // Canonical single-file nds-upload (no dropzone) — NDS.Upload owns
             // picking, extension enforcement, and the file chip; the editor
             // only listens for nds:upload:selected.
             + '<div class="nds-form-container nds-file-upload" data-state="single" data-allowed-types="jpg,jpeg,png,gif,webp,svg" data-max-file-size="2097152" data-editor-image-upload>'
             + '<div class="nds-form-control nds-center">'
             + `<input type="file" id="${idBase}-image-file" class="nds-file-input" data-editor-image-file />`
-            + `<div class="nds-form-action"><button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn"><i class="hgi hgi-stroke hgi-folder-01"></i><span class="nds-label">${uiLabel(S.upload)}</span></button></div>`
+            + `<div class="nds-form-action"><button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn"><i class="hgi hgi-stroke hgi-folder-01"></i><span class="nds-label">${html('upload')}</span></button></div>`
             + '</div>'
             + '<div class="nds-file-list"></div>'
             + '</div>'
-            + `<div class="nds-divider">${uiLabel(S.attrs)}</div>`
-            + textFieldHtml(`${idBase}-image-alt`, uiLabel(S.alt), 'text', 'data-editor-image-alt', '', ' nds-md')
+            + `<div class="nds-divider">${html('attrs')}</div>`
+            + textFieldHtml(`${idBase}-image-alt`, html('alt'), 'text', 'data-editor-image-alt', '', ' nds-md')
             + '<div class="nds-form-group nds-row">'
-            + textFieldHtml(`${idBase}-image-width`, uiLabel(S.width), 'text', 'inputmode="numeric" data-editor-image-width', 'auto', ' nds-md')
-            + textFieldHtml(`${idBase}-image-height`, uiLabel(S.height), 'text', 'inputmode="numeric" data-editor-image-height', 'auto', ' nds-md')
+            + textFieldHtml(`${idBase}-image-width`, html('width'), 'text', 'inputmode="numeric" data-editor-image-width', 'auto', ' nds-md')
+            + textFieldHtml(`${idBase}-image-height`, html('height'), 'text', 'inputmode="numeric" data-editor-image-height', 'auto', ' nds-md')
             + '</div>'
             + '</div></div>'
             + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action">'
-            + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-image-cancel><span class="nds-label">${uiLabel(S.cancel)}</span></button>`
-            + `<button type="button" class="nds-btn nds-primary nds-dropmenu-item" data-editor-image-confirm data-dropmenu-primary data-no-auto-close><span class="nds-label">${uiLabel(S.insert)}</span></button>`
+            + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-image-cancel><span class="nds-label">${html('cancel')}</span></button>`
+            + `<button type="button" class="nds-btn nds-primary nds-dropmenu-item" data-editor-image-confirm data-dropmenu-primary data-no-auto-close><span class="nds-label">${html('insert')}</span></button>`
             + '</div></div></div></div>';
     }
 
@@ -817,14 +839,13 @@
     // whose rows are filled per caret position (one destructive row per
     // removable level: nested components, then the shell).
     function removeDropmenuHtml() {
-        const S = TOOLBAR_STRINGS;
         return `<div class="nds-dropmenu" data-editor-remove-dropmenu>${cmdButtonHtml('remove', ' nds-dropmenu-trigger nds-destructive')}`
             + '<div class="nds-dropmenu-menu nds-editor-remove-menu" hidden><div class="nds-dropmenu-scroll">'
-            + `<div class="nds-dropmenu-group"><span class="nds-label">${uiLabel(S.removePrompt)}</span></div>`
+            + `<div class="nds-dropmenu-group"><span class="nds-label">${html('remove_prompt')}</span></div>`
             + '<div data-editor-remove-levels></div>'
             + '</div>'
             + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action">'
-            + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-remove-cancel><span class="nds-label">${uiLabel(S.cancel)}</span></button>`
+            + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-remove-cancel><span class="nds-label">${html('cancel')}</span></button>`
             + '</div></div></div></div>';
     }
 
@@ -835,7 +856,7 @@
             const flush = () => { if (cluster) { start += `<div class="nds-btn-group">${cluster}</div>`; cluster = ''; } };
             for (const cmd of group.trim().split(/\s+/).filter(Boolean)) {
                 if (cmd === 'source') {
-                    const label = uiLabel(TOOLBAR_STRINGS.source);
+                    const label = html('source');
                     end = `<button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip" data-source-toggle aria-pressed="false" aria-label="${label}" data-tooltip-message="${label}" data-tooltip-hover="500"><i class="hgi hgi-stroke hgi-source-code" aria-hidden="true"></i></button>`;
                 } else if (cmd === 'link') {
                     flush(); // the dropmenu wrapper sits outside any button group
@@ -1496,7 +1517,7 @@
             // why.
             const sel = window.getSelection();
             if (sel.rangeCount && this._selectionClipsShell(sel.getRangeAt(0))) {
-                this._notice(uiLabel(TOOLBAR_STRINGS.pasteClipsShell));
+                this._notice(strings.t('paste_clips_shell'));
                 return;
             }
             const html = e.clipboardData.getData('text/html');
@@ -1523,7 +1544,7 @@
                 const files = Array.from(e.clipboardData.files).filter(f => f.type.startsWith('image/'));
                 if (!files.length) return;
                 if (!this._imageEmbedAllowed()) {
-                    this._notice(uiLabel(TOOLBAR_STRINGS.pasteBlocked));
+                    this._notice(strings.t('paste_blocked'));
                     return;
                 }
                 // Same size/type/MIME gates as the popover upload — full
@@ -2349,7 +2370,7 @@
             const noExternal = !!menu?.querySelector('[data-editor-link-noexternal]')?.checked;
             const colored = !!menu?.querySelector('[data-editor-link-colored]')?.checked;
             if (!url || url === 'https://' || !safeUrl(url)) {
-                this._fieldError(menu?.querySelector('[data-editor-link-url]'), uiLabel(TOOLBAR_STRINGS.invalidUrl));
+                this._fieldError(menu?.querySelector('[data-editor-link-url]'), strings.t('invalid_url'));
                 return;
             }
             dropmenu?.ndsDropmenu?.close?.();
@@ -2637,9 +2658,9 @@
                 || (url.startsWith('data:') && !this._imageEmbedAllowed())) {
                 // A picked file that gave no URL is the problem, not the link field.
                 const file = this._imageUploadHost()?.ndsUpload?.getAllFiles?.()[0];
-                const msg = !file || file.status === 'complete' ? TOOLBAR_STRINGS.invalidImageUrl
-                    : file.status === 'error' ? TOOLBAR_STRINGS.uploadFailed : TOOLBAR_STRINGS.uploadPending;
-                this._fieldError(menu?.querySelector('[data-editor-image-url]'), uiLabel(msg));
+                const msg = !file || file.status === 'complete' ? 'invalid_image_url'
+                    : file.status === 'error' ? 'upload_failed' : 'upload_pending';
+                this._fieldError(menu?.querySelector('[data-editor-image-url]'), strings.t(msg));
                 return;
             }
             dropmenu?.ndsDropmenu?.close?.();

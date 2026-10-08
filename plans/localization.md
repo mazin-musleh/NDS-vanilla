@@ -40,7 +40,7 @@ S.load(scope);                         // init: visible text — scope holds its
 - A third language = one `assets/i18n/{lang}.json`.
 - Markup that carries `data-i18n` / `data-i18n-attr` keeps working through `NDS.i18n.apply`.
 - `NDS.i18n.format(str, vars)` fills `{name}`; a plural value is an object of `Intl.PluralRules` categories picked by `vars.n`.
-- **Removed in v2:** `NDS.langKey`. `NDS.isArabic` stays for non-text uses (letter-spacing, default calendar).
+- **Removed in v2:** `NDS.langKey` (done). `NDS.isArabic` stays for non-text uses (letter-spacing, default calendar).
 
 ## Text that shows at first paint: the skeleton holds it
 
@@ -58,8 +58,8 @@ Owner decision (2026-10-08): a component shows its loading skeleton until its st
    - [x] autocomplete, multiselect, taginput, password, upload, voice-input (file sizes name their unit through `Intl`)
    - [x] date-picker, time-picker, timeDate: Gregorian months and weekdays come from `Intl` (`NDS.date.monthNames` / `.weekdayNames`); Hijri month names stay in the pack's `date` section (Android's ICU names them from the Gregorian set). `strings.t(key, vars, lang)` serves the picker's `data-lang`.
    - [x] filter, tables, copy, user-feedback, export, chart, cityWeather (the weather cache holds the condition key, one entry for every language)
-   - [ ] editor
-3. **Carried TODO items**: [ ] Motor Impaired description (accessibility), [x] swiper bullet "Go to page N", [x] the upload check messages (templates, so word order follows the language).
+   - [x] editor (labels escaped: the pack is site-editable and they land in innerHTML)
+3. **Carried TODO items**: [x] Motor Impaired description (accessibility): now "Enlarges click targets"; `components/accessibility.md` still shows the old text in its demo markup — the docs pass fixes it, [x] swiper bullet "Go to page N", [x] the upload check messages (templates, so word order follows the language).
 4. **Docs**, one pass at the end: a new `core/i18n.md` titled Internationalization (`/nds-doc`), beside Date, Refresh and Request: the pack, the lookup order, the override, adding a language, the skeleton hold. Fold `assets/i18n/README.md` into it. The four pages that name the old folders (accessibility, cookies, ipv, session-timeout). A Core child in `_data/sidemenu/sidemenu.yml`, a `category: "Core"` card in `_data/content/components.yml` (copy Date's keys). The date-picker page: `data-lang` now takes any language, not only `ar` / `en`. Migration lines: `NDS.langKey` removed; Filter finds a search box's clear button by `.nds-clear` only (it also matched an `aria-label` containing "clear" or "مسح"); `assets/i18n/{cookies,ipv,session-timeout}/` moved into `assets/i18n/{lang}.json` sections (a site that edited or added a file there moves it into the pack; `window.NDS_I18N` is unchanged).
 5. **NDS IQ**: a rule line joins the end-of-rewrite IQ pass (on its branch).
 

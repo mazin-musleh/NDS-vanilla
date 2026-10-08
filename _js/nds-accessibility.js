@@ -1179,7 +1179,7 @@
                                     <div class="nds-form-header">
                                         <label for="a11y-mode-motor-impaired">
                                             <span class="nds-label" data-i18n-name>Motor Impaired Mode</span>
-                                            <span class="nds-info"  data-i18n-desc>Enlarges click targets and emphasizes the focus indicator</span>
+                                            <span class="nds-info"  data-i18n-desc>Enlarges click targets</span>
                                         </label>
                                     </div>
                                     <div class="nds-form-control">

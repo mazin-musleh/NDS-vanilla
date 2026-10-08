@@ -9,7 +9,7 @@
  *     NDS.aria.expanded / .hidden / .pressed / .selected / .disabled / .label / .current
  *              / .sort (el, value)     write an ARIA attribute (null removes it)
  *   page facts (live getters, not snapshots)
- *     NDS.lang · NDS.langKey · NDS.isArabic · NDS.isRTL · NDS.prefersReducedMotion
+ *     NDS.lang · NDS.isArabic · NDS.isRTL · NDS.prefersReducedMotion
  *     NDS.breakpoints                  the media-query strings the components share
  *   pooled observers — each returns an off() function, and you must call it
  *     NDS.onResize(fn) · NDS.onIntersect(el, fn, opts) · NDS.onElementResize(el, fn)
@@ -119,11 +119,6 @@
     // Usage: NDS.lang    → 'ar' | 'en' | ...
     //        NDS.isArabic → true/false
     //        NDS.isRTL   → true/false
-    //        NDS.langKey → 'ar' | 'en'   (bilingual selector — falls back to
-    //                                     'en' for any non-Arabic locale; use
-    //                                     for component `labels[NDS.langKey]`
-    //                                     lookups where the component carries
-    //                                     only `{ ar, en }` translations)
     // Live getters so runtime language/direction toggles (e.g. language switcher) stay correct.
     Object.defineProperty(NDS, 'lang', {
         get() { return (document.documentElement.lang || 'en').split('-')[0].toLowerCase(); }
@@ -133,9 +128,6 @@
     });
     Object.defineProperty(NDS, 'isRTL', {
         get() { return document.documentElement.dir === 'rtl'; }
-    });
-    Object.defineProperty(NDS, 'langKey', {
-        get() { return NDS.isArabic ? 'ar' : 'en'; }
     });
 
     // ── Reduced-motion preference (live getter) ──────────────────────
