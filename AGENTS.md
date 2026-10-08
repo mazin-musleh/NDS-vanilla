@@ -16,6 +16,7 @@ python scripts/check-data-state-tails.py        # after any [data-state]/[data-s
 python scripts/check-css.py [--report|--unused] # built CSS: dangling var(), dead fallbacks, duplicate decls, global token in a component dark block; --unused = rules no page/JS uses
 node scripts/encode-webp.mjs <master>           # WebP at set widths, lowest quality above a PSNR floor — always from the master
 node scripts/run-audit.mjs [page.html]          # print a built page's NDS.Init.audit() warnings
+bundle exec ruby scripts/surface-history.rb     # names every release had that today's code lacks → tmp/surface/candidates.json; new rows go in _data/migrations.yml
 node scripts/find-unused-icons.mjs              # UI icons nothing references
 node scripts/check-date.mjs                     # NDS.date vs Intl: every day 2018–2037 round-trips gregory ↔ hijri; ENGINE=webkit for Safari
 node scripts/check-i18n.mjs                     # every locale pack mirrors en.json and stays under budget, JS defaults match it, no hardcoded Arabic / NDS.langKey left in _js/

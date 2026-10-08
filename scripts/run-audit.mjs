@@ -1,5 +1,5 @@
 // Open a built page headlessly, call NDS.Init.audit(), and print every
-// [NDS] audit: warning it emits. Also proves the on-demand path: the audit
+// [NDS.Audit] warning it emits. Also proves the on-demand path: the audit
 // bundle must NOT be present before the call and must load because of it.
 //
 //   node scripts/run-audit.mjs [path] [baseUrl]
@@ -20,7 +20,7 @@ const page = await browser.newPage();
 const warnings = [];
 page.on('console', (msg) => {
     const text = msg.text();
-    if (text.includes('[NDS] audit:')) warnings.push(text);
+    if (text.includes('[NDS.Audit]')) warnings.push(text);
 });
 
 await page.goto(`${BASE}/${PAGE}`, { waitUntil: 'networkidle' });
