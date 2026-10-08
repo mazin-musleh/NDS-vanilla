@@ -333,7 +333,7 @@ module DocsCanon
 
   # Every preview card carries its own Dark mode and Grid lines toggles, in its top corner, and
   # Desktop, Tablet and Phone: nds-docs.js shows the preview in a device screen that size, so a breakpoint
-  # class (`nds-vertical-sm`) shows on a desktop too. A Run card has no screens: its demo leaves the card.
+  # class (`nds-vertical-sm`) shows on a desktop too. A Run card's screen runs Run and Clear in the frame (nds-docs.js).
   def self.view(screens = false)
     # A toggle shows its name in a tooltip after 500ms, and the selected look while on.
     btn = lambda do |attr, label, icon, on|
@@ -486,7 +486,7 @@ module DocsCanon
         card = %( nds-doc-preview" data-preview-of="#{id}"#{%( data-builder-card="#{id}") if builder}#{' data-preview-page' if page})
         # On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
         oncolor = !page && src.include?('nds-oncolor')
-        out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view(attr(attrs, 'data-preview') != 'run' && attr(attrs, 'data-screens') != 'none') unless stage_panel}#{demo}\n</div>\n)
+        out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view(attr(attrs, 'data-screens') != 'none') unless stage_panel}#{demo}\n</div>\n)
         out << "#{stage_panel}\n" if stage_panel
       end
       # data-code="none": a behavior demo, shown with no code. A builder whose twin is CSS shows the twin

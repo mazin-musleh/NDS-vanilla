@@ -659,6 +659,9 @@
         var screens = view.querySelectorAll('[data-preview-screen]');
         Array.prototype.forEach.call(screens, function (b) {
             b.addEventListener('click', function () {
+                // A run card's copies stop first: the screen gets the bare Run, and nothing runs behind it.
+                var clear = card.querySelector('[data-demo-run] [data-run-clear]');
+                if (clear) clear.click();
                 Array.prototype.forEach.call(screens, function (x) { pressed(x, x === b); });
                 var w = b.getAttribute('data-preview-screen');
                 w ? card.setAttribute('data-screen', w) : card.removeAttribute('data-screen');
@@ -752,6 +755,8 @@
         f.onload = function () {
             theme(f.contentDocument);
             run(f.contentWindow);
+            var bar = f.contentDocument.querySelector('[data-demo-run]');
+            if (bar) wireRun(card, bar, f.contentWindow);
             f.style.visibility = '';
         };
         // The body lays the demo out as the card does, over the whole screen: a longer demo scrolls in it.
@@ -764,7 +769,13 @@
         f.srcdoc = '<!doctype html><html ' + root + '><head><base target="_top">' + document.head.innerHTML +
             // No nav in the frame: a panel or sticky part starts at the screen top.
             '<style>:root{color-scheme:normal!important;height:100%;scrollbar-width:none;--nds-nav-height:0px}html,body{background:transparent!important}body{margin:0;min-height:100%;padding:' + pad + ';' + lay + ';justify-content:flex-start}</style>' +
-            '</head><body class="nds-doc-preview">' + parts + runtime + '</body></html>';
+            '</head><body class="nds-doc-preview">' + parts + runtime + demoScripts() + '</body></html>';
+    }
+
+    // A page's demo script (data-demo-script) runs in a screen too. Inline, so it runs before the
+    // deferred runtime: it may only bind listeners at the top level.
+    function demoScripts() {
+        return Array.prototype.map.call(document.querySelectorAll('script[data-demo-script]'), function (x) { return '<script>' + x.textContent + '</' + 'script>'; }).join('');
     }
 
     // The NDS runtime: the page's own deferred scripts from assets/js (not docs-assets).
@@ -859,8 +870,9 @@
     // data-preview="run": Run mounts a copy of the code shown in the card's held box, where it can
     // leave the card (a FAB docks at the screen edge). Each copy's ids get its own suffix, so each
     // keeps its own panel. Clear takes every copy away.
-    function fillRun(card, box) {
-        NDS.Init.destroy(box);
+    function fillRun(card, box, win) {
+        var N = (win || window).NDS;
+        N.Init.destroy(box);
         box.innerHTML = card.ndsRunCode || dedent(document.getElementById(card.getAttribute('data-preview-of')).textContent);
         box.querySelectorAll('[id]').forEach(function (el) {
             var id = el.id;
@@ -868,25 +880,28 @@
                 Array.prototype.forEach.call(x.attributes, function (a) { if (a.value === id) a.value = id + '-' + box.ndsRun; });
             });
         });
-        NDS.Init.mount(box);
+        N.Init.mount(box);
     }
     var runs = 0;
-    document.querySelectorAll('[data-demo-run]').forEach(function (bar) {
-        // data-preview-of: every card has it; data-builder-card only one with a Variants table.
-        var card = bar.closest('[data-preview-of]'), held = card.querySelector('[data-demo-held]');
+    // The bar's held box is its next sibling, on the page and in a screen's copy. A screen's copies
+    // mount in its own window; only the page's last copy is rebuilt on a choice.
+    function wireRun(card, bar, win) {
+        var held = bar.nextElementSibling, page = win === window;
         bar.querySelector('[data-run]').addEventListener('click', function () {
-            var box = document.createElement('div');
+            var box = held.ownerDocument.createElement('div');
             box.ndsRun = ++runs;
             held.appendChild(box);
-            card.ndsLastRun = box;
-            fillRun(card, box);
+            if (page) card.ndsLastRun = box;
+            fillRun(card, box, win);
         });
         bar.querySelector('[data-run-clear]').addEventListener('click', function () {
-            NDS.Init.destroy(held);
+            win.NDS.Init.destroy(held);
             held.innerHTML = '';
-            card.ndsLastRun = null;
+            if (page) card.ndsLastRun = null;
         });
-    });
+    }
+    // data-preview-of: every card has it; data-builder-card only one with a Variants table.
+    document.querySelectorAll('[data-demo-run]').forEach(function (bar) { wireRun(bar.closest('[data-preview-of]'), bar, window); });
 
     // data-preview="panel": Preview mounts the code shown in its tall bottom panel, before the panel
     // opens, so the demo builds on a page of its own. Closing the panel takes the copy away.
