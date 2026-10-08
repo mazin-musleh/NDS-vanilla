@@ -36,7 +36,9 @@
  *                                      <html data-timezone / data-date-format>
  *     NDS.announce(text)               say something in the shared live region
  *     NDS.i18n.load(component, scopes) fetch + apply a component's string table (en
- *                                      fallback; stamps data-i18n / data-i18n-attr in scope)
+ *                                      fallback; stamps data-i18n / data-i18n-attr in scope;
+ *                                      each scope holds its skeleton until the strings land)
+ *     NDS.i18n.format(value, vars)     fill {name}; a plural value picks by vars.n
  *     NDS.triggerEvents(el)            dispatch input + change so forms and consumers sync
  *     NDS.badge(el, count) · NDS.buildChip(value, opts)
  * Events:
@@ -161,25 +163,57 @@
     //   window.NDS_I18N      = { '{component}': {...}, ... }   inline strings
     //   window.NDS_I18N_PATH = '/custom/'                       base path
     NDS.i18n = {
-        // Load translations for a component and apply them to its scope(s).
-        // Always fetches — JSON is the single source of truth for both EN
-        // and other locales. Falls back to en.json when the active locale's
-        // file is missing or fails (so consumers can ship a partial set of
-        // translations without breaking the live-region / lazy-built UI).
-        async load(component, scopes) {
-            // Inline override wins — consumer set strings before bundle loaded.
-            const inline = window.NDS_I18N && window.NDS_I18N[component];
-            if (inline) { this.apply(scopes, inline); return inline; }
+        _loads: Object.create(null),   // 'component/lang' → Promise<data|null>
+        _data: Object.create(null),    // 'component/lang' → data, once resolved
 
-            // Reject anything that isn't a BCP-47 base tag (2–3 letters) before
-            // it reaches the fetch URL — guards against <html lang="../foo">
-            // path-traversal into a sibling _data file.
-            const lang = /^[a-z]{2,3}$/.test(NDS.lang) ? NDS.lang : 'en';
-            const data = await this._fetchOne(component, lang)
-                      || (lang !== 'en' && await this._fetchOne(component, 'en'));
-            if (data) this.apply(scopes, data);
-            return data || null;
+        // Load translations for a component and apply them to its scope(s).
+        // Each scope holds its skeleton (data-state loading) until the strings
+        // land, so an Arabic page never paints English first; a scope that was
+        // already loading keeps it. One fetch per component and language per page.
+        load(component, scopes) {
+            const key = this._key(component);
+            if (key in this._data) {
+                const data = this._data[key];
+                if (data) this.apply(scopes, data);
+                return Promise.resolve(data);
+            }
+            const held = scopes ? this._roots(scopes).filter(r => !NDS.State.has(r, 'loading')) : [];
+            held.forEach(r => NDS.State.add(r, 'loading'));
+            return this._get(component, key).then(data => {
+                if (data) this.apply(scopes, data);
+                held.forEach(r => NDS.State.remove(r, 'loading'));
+                return data;
+            });
         },
+
+        // Reject anything that isn't a BCP-47 base tag (2–3 letters) before it
+        // reaches the fetch URL — guards against <html lang="../foo"> traversal.
+        _lang() { return /^[a-z]{2,3}$/.test(NDS.lang) ? NDS.lang : 'en'; },
+        _key(component) { return component + '/' + this._lang(); },
+
+        // Inline override wins. Falls back to en.json when the active locale's
+        // file is missing or fails, so a partial translation set still works.
+        _get(component, key) {
+            const inline = window.NDS_I18N && window.NDS_I18N[component];
+            if (inline) return Promise.resolve(this._data[key] = inline);
+            const lang = key.slice(component.length + 1);
+            return this._loads[key] || (this._loads[key] = this._fetchOne(component, lang)
+                .then(data => data || (lang !== 'en' ? this._fetchOne(component, 'en') : null))
+                .then(data => (this._data[key] = data || null)));
+        },
+
+        // Fill {name} from vars. A plural value is an object of Intl.PluralRules
+        // categories ({ one, two, few, many, other }), picked by vars.n.
+        format(value, vars) {
+            if (value && typeof value === 'object') {
+                const lang = this._lang();
+                const rules = this._plural[lang] || (this._plural[lang] = new Intl.PluralRules(lang));
+                value = value[rules.select(vars && vars.n)] || value.other;
+            }
+            if (typeof value !== 'string' || !vars) return value;
+            return value.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
+        },
+        _plural: Object.create(null),
 
         async _fetchOne(component, lang) {
             const base = window.NDS_I18N_PATH || (ASSETS_BASE ? ASSETS_BASE + 'i18n/' : 'assets/i18n/');

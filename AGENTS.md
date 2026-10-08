@@ -18,6 +18,7 @@ node scripts/encode-webp.mjs <master>           # WebP at set widths, lowest qua
 node scripts/run-audit.mjs [page.html]          # print a built page's NDS.Init.audit() warnings
 node scripts/find-unused-icons.mjs              # UI icons nothing references
 node scripts/check-date.mjs                     # NDS.date vs Intl: every day 2018–2037 round-trips gregory ↔ hijri; ENGINE=webkit for Safari
+node scripts/check-i18n.mjs                     # locale JSON mirrors en.json, JS seeds match it, no hardcoded Arabic / NDS.langKey left in _js/
 python scripts/check-docs.py [page.md]          # one-source doc pages vs the nds-doc rules (no build needed)
 node scripts/doc-check.mjs <page.md>            # clicks every builder option: findings + one contact sheet per theme in tmp/doc-check/ — owner's go-ahead first
 ```
