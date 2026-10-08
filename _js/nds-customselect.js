@@ -152,7 +152,7 @@
         var t = e.target;
         if (!t || !t.closest) return;
         var selectInput = t.closest('.nds-select-input');
-        if (!selectInput || selectInput.closest('code, .code-example')) return;
+        if (!selectInput || selectInput.closest('code')) return;
         build(selectInput);
     }
 

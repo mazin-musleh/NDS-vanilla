@@ -240,7 +240,7 @@
 
     function initializeComponents() {
         document.querySelectorAll('.nds-toc').forEach(toc => {
-            if (toc.closest('code, .code-example')) return;
+            if (toc.closest('code')) return;
             if (toc.hasAttribute('data-nds-toc-initialized')) return;
             const instance = new NDSToc(toc);
             // Expando only on successful construction (sentinel is stamped post-guard by init()).

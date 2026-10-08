@@ -146,7 +146,7 @@
     class NDSUpload {
         constructor(container, options = {}) {
             if (!container || container.hasAttribute('data-nds-upload-initialized')) return;
-            if (container.closest('code, .code-example')) return;
+            if (container.closest('code')) return;
 
             this.container = container;
             this._options = this._normalizeOptions(options);
@@ -827,7 +827,7 @@
 
     function initializeUploads() {
         document.querySelectorAll('.nds-file-upload').forEach(el => {
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-upload-initialized')) return;
             new NDSUpload(el);
         });

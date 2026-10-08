@@ -128,7 +128,7 @@
 
         breadcrumbNavs.forEach(nav => {
             // Skip elements inside code examples
-            if (nav.closest('code, .code-example')) {
+            if (nav.closest('code')) {
                 return;
             }
 

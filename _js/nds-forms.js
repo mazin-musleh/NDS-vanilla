@@ -1011,7 +1011,7 @@
         if (!target || !target.matches || !target.matches('input, textarea, select')) return null;
         var formControl = target.parentElement;
         if (!formControl || !formControl.classList || !formControl.classList.contains('nds-form-control')) return null;
-        if (formControl.closest('code, .code-example')) return null;
+        if (formControl.closest('code')) return null;
         return { input: target, formControl: formControl, formContainer: formControl.closest('.nds-form-container') };
     }
 
@@ -1659,7 +1659,7 @@
             : Array.from(container.querySelectorAll('.nds-form-control'));
 
         formControls.forEach(function(formControl) {
-            if (formControl.closest('code, .code-example')) return;
+            if (formControl.closest('code')) return;
 
             // A slider's inputs sit in its track, one level down.
             var inputElements = formControl.querySelectorAll(':scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input');

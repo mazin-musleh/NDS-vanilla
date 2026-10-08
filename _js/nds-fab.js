@@ -237,7 +237,7 @@
         // panel (which flips via CSS). Physical FABs and the docks don't move.
         runtimeOffs.push(NDS.onAttrChange('html', ['dir'], () => {
             document.querySelectorAll('.nds-fab').forEach(fab => {
-                if (fab.closest('code, .code-example')) return;
+                if (fab.closest('code')) return;
                 if (fab.parentElement?.closest('.nds-fab')) return;   // outermost wins, as in init()
                 register(fab);
             });
@@ -317,7 +317,7 @@
     function init() {
         document.querySelectorAll('.nds-fab').forEach(fab => {
             if (fab.hasAttribute(INIT_ATTR)) return;
-            if (fab.closest('code, .code-example')) return;
+            if (fab.closest('code')) return;
             if (fab.parentElement?.closest('.nds-fab')) return;
             register(fab);
         });

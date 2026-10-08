@@ -55,7 +55,6 @@
     // INITIALIZATION
     // ==============================================
 
-    // Every .code-example is a tab panel inside .nds-code, so one query covers both.
     // Each block highlights one viewport before it scrolls in, not in one init
     // sweep: ten blocks at once was the page's largest style recalc. A block in a
     // hidden tab panel intersects when its tab opens.

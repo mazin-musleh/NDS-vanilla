@@ -416,6 +416,11 @@
 /* ── Horizontal layout ── */
 
 @include desktop(min) {
+    // --gap does not inherit: hand the section's down to its wrapper.
+    :is(.nds-hero-section, .nds-content-section).nds-horizontal {
+        --_section-gap: var(--gap);
+    }
+
     :is(.nds-hero-section, .nds-content-section).nds-horizontal>.nds-section-wrapper {
 
         &:not(.nds-grid) {
@@ -424,7 +429,7 @@
         }
 
         align-items: center;
-        gap: var(--gap, var(--spacing-6xl));
+        gap: var(--gap, var(--_section-gap, var(--spacing-6xl)));
 
         .nds-section-action {
             --btn-width: fit-content;

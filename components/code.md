@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "08/10/2026 - 09:36 PM"
 ---
 
 <section id="codeOverview" class="nds-content-section nds-doc-overview">
@@ -79,7 +79,7 @@ async function submitRequest(form) {
     </button>
   </div>
   <div class="nds-tab-content">
-    <div class="nds-tab-panel code-example" role="tabpanel" id="code-panel-css" aria-labelledby="code-tab-css" tabindex="0">
+    <div class="nds-tab-panel" role="tabpanel" id="code-panel-css" aria-labelledby="code-tab-css" tabindex="0">
       <div class="nds-code-action">
         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code">
           <i class="nds-icon nds-hgi-copy-01"></i>
@@ -91,7 +91,7 @@ async function submitRequest(form) {
   margin-block-end: var(--spacing-xl);
 }</code>
     </div>
-    <div class="nds-tab-panel code-example" role="tabpanel" id="code-panel-js" aria-labelledby="code-tab-js" tabindex="-1" hidden>
+    <div class="nds-tab-panel" role="tabpanel" id="code-panel-js" aria-labelledby="code-tab-js" tabindex="-1" hidden>
       <div class="nds-code-action">
         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code">
           <i class="nds-icon nds-hgi-copy-01"></i>
@@ -295,7 +295,6 @@ Set one on the `<code>` element. The `language-*` form of each class works too (
 | Class | Element | Effect |
 |---|---|---|
 | `nds-code-action` | `div` in `.nds-code`, or in each tab panel | The action bar in the top corner. It holds the copy button |
-| `code-example` | `.nds-tab-panel` in `.nds-tabs.nds-code` | Removes the panel padding, so the code fills the panel |
 | `nds-code-tags` | `span` in `.nds-code` | A strip of tags in the top corner, beside the language tag. It takes the block's `lang-*` class, so it clears the line numbers the same way |
 | `nds-code-lang` | `.nds-tag` in `.nds-code-tags` | The language tag. An authored one stops the script from adding its own |
 | `nds-inline-code` | `code` in text | Inline code. With `lang-js` it takes the keyword color, and with any other class the attribute color |

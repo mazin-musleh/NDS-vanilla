@@ -1395,7 +1395,7 @@
 
     function initializeDropmenus() {
         document.querySelectorAll('.nds-dropmenu').forEach(el => {
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-dropmenu-initialized')) return;
 
             // Menu asleep in an own <template> → arm instead of constructing.

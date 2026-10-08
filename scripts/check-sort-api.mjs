@@ -28,7 +28,7 @@ const FIX = `
   <button type="button" id="m4-t" data-sort-target="a:b.c" data-sort="n">odd id</button>
   <ul id="a:b.c">${li('data-sort-n="2"', '2')}${li('data-sort-n="1"', '1')}</ul>
 
-  <div class="code-example"><button type="button" data-sort-target="m5" data-sort="n">in code</button></div>
+  <code><button type="button" data-sort-target="m5" data-sort="n">in code</button></code>
   <ul id="m5">${li('data-sort-n="2"', '2')}${li('data-sort-n="1"', '1')}</ul>
 
   <button type="button" data-sort-target="missing-list" data-sort="n">dead</button>
@@ -102,7 +102,7 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
     // Seed from markup: no reorder, next click follows the state
     out.m3Seed = [T('m3'), JSON.stringify(document.getElementById('m3').ndsSort.getState()), st('m3-desc'), document.getElementById('m3-desc').getAttribute('aria-pressed')];
 
-    // Odd id + code-example skip
+    // Odd id + <code> skip
     out.m4 = (click('m4-t'), T('a:b.c'));
     out.m5Wired = !!document.getElementById('m5').ndsSort;
 
@@ -232,7 +232,7 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
   E('cycle: 3rd click restores', r.m2c3, ['y2,z1,x3', '']);
   E('seed: state read, no reorder, aria', r.m3Seed, ['9,5,1', '{"key":"n","dir":"desc"}', 'sorted-desc selected', 'true']);
   E('odd id (CSS.escape)', r.m4, '1,2');
-  E('trigger in .code-example not wired', r.m5Wired, false);
+  E('trigger in <code> not wired', r.m5Wired, false);
   E('dropmenu trigger icon sync', r.m8Icon, 'nds-icon nds-hgi-sort-by-down-02');
   E('Sort.refresh scoped: other root leaves list alone', r.refreshOther, 'a,b,c,z0');
   E('Init.refresh(list): new item joins sort', r.refreshOwn, 'z0,a,b,c');

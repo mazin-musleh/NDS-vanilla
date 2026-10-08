@@ -64,7 +64,7 @@
     }
 
     function syncFromData(el) {
-        if (el.closest('code, .code-example')) return;
+        if (el.closest('code')) return;
         syncAria(el);
         const num = parseFloat(el.dataset.num);
         const max = parseFloat(el.dataset.max);
@@ -99,7 +99,7 @@
 
         document.querySelectorAll(SEL).forEach(el => {
             if (el.dataset.value == null && el.dataset.num == null) return;
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
 
             // Reduced motion (or no observer support): show the value at once.
             if (reduced || !canObserve) { syncFromData(el); return; }

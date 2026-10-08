@@ -472,7 +472,7 @@
 
     function initializeMultiselects() {
         document.querySelectorAll('.nds-multiselect').forEach(el => {
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-multiselect-initialized')) return;
             new NDSMultiselect(el);
         });

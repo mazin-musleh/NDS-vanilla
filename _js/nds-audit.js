@@ -39,20 +39,20 @@
         }
 
         document.querySelectorAll('[data-filter-items]:not([data-nds-filter-initialized])').forEach(el => {
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
             console.warn('[NDS.Audit] data-filter-items container never claimed by a filter — it stays skeleton-held. Remove the attribute or add the filter UI.', el);
         });
         document.querySelectorAll('.nds-filter:not([data-filter-target])').forEach(el => {
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
             console.warn('[NDS.Audit] .nds-filter has no data-filter-target — no filter instance binds it, so its options never render and its criteria go nowhere. Add data-filter-target="<results container id>".', el);
         });
         document.querySelectorAll('.nds-paged-content:not([data-paged-initialized])').forEach(el => {
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
             console.warn('[NDS.Audit] .nds-paged-content has no pagination nav — it stays skeleton-held and its data-paged-* slots never stamp. Unpaged lists use a plain container + data-filter-count.', el);
         });
 
         document.querySelectorAll('.nds-icon[class*="nds-hgi-"]').forEach(el => {
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
             // The glyph paints on ::before (mask: var(--nds-icon) …), so read the
             // pseudo — the element itself never carries a mask.
             const cs = getComputedStyle(el, '::before');
@@ -71,7 +71,7 @@
         // fires neither — silence is correct there, not a miss.
         const here = normalizePath(location.pathname);
         document.querySelectorAll('.nds-main-nav .nds-nav-primary a.nds-nav-link').forEach(a => {
-            if (a.closest('code, .code-example')) return;
+            if (a.closest('code')) return;
             if (a.matches('[data-state~="current"]')) return;
             const href = a.getAttribute('href');
             let samePage = false;
@@ -104,7 +104,7 @@
             'nds-mainNav-toggler': 'nds-nav-toggler', 'nds-CTA': 'nds-nav-cta', 'nds-PAB': 'nds-pinned',
         };
         document.querySelectorAll('.nds-main-nav').forEach(nav => {
-            if (nav.closest('code, .code-example')) return;
+            if (nav.closest('code')) return;
             Object.keys(NAV_V2).forEach(old => {
                 const el = nav.querySelector('.' + old);
                 if (el) console.warn(`[NDS.Audit] main navigation uses the class "${old}", renamed in v2.0.0. Use ${NAV_V2[old]}.`, el);
@@ -118,7 +118,7 @@
         // Markup sort wires a list no other sorter owns: a Filter or a Table sorts its own,
         // and the button is left unbound.
         document.querySelectorAll('[data-sort-target]').forEach(btn => {
-            if (btn.closest('code, .code-example')) return;
+            if (btn.closest('code')) return;
             const id = btn.getAttribute('data-sort-target');
             const list = document.getElementById(id);
             if (!list) console.warn(`[NDS.Audit] data-sort-target="${id}" names no element — the button sorts nothing. Give the list id="${id}".`, btn);
@@ -129,7 +129,7 @@
         // attribute is inert here — the author expects a move that never comes.
         // `button` with no type IS submit-typed inside a form.
         document.querySelectorAll('form :is(button:not([type="button"]):not([type="reset"]), input[type="submit"])[data-stepper-control]').forEach(el => {
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
             console.warn('[NDS.Audit] submit-typed button with data-stepper-control — the stepper hands this click to the form and does not move, so the attribute does nothing. A form step is gated, so drive it from JS: call NDS.Stepper.next() after NDS.Forms.validateForm() passes, or from nds:formValid once your request succeeds.', el);
         });
         // A framework mount root between <body> and <main> breaks the vertical
@@ -139,7 +139,7 @@
         // No <main> at all is not a finding — a client-rendered app audited before
         // its first mount has nothing to judge yet.
         const mainEl = document.querySelector('body main');
-        if (mainEl && mainEl.parentElement !== document.body && !mainEl.closest('code, .code-example')) {
+        if (mainEl && mainEl.parentElement !== document.body && !mainEl.closest('code')) {
             for (let n = mainEl.parentElement; n && n !== document.body; n = n.parentElement) {
                 const cs = getComputedStyle(n);
                 // The two treatments layout/page-layout.md prescribes: vanish from
@@ -156,7 +156,7 @@
         // nds-has-sidemenu. A component that returns a wrapper <div> instead of a
         // fragment lands an extra element in it, which takes a column of its own.
         document.querySelectorAll('.nds-content-layout').forEach(layout => {
-            if (layout.closest('code, .code-example')) return;
+            if (layout.closest('code')) return;
             Array.from(layout.children).forEach(child => {
                 if (child.matches('.nds-content, .nds-sidemenu')) return;
                 if (getComputedStyle(child).display === 'contents') return;

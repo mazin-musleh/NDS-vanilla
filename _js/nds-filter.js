@@ -3015,7 +3015,7 @@
         const root = scope || document;
         const groups = new Map();
         const addCandidate = el => {
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
             const id = el.getAttribute('data-filter-target');
             if (!id || liveInstance(id)) return;
             if (!groups.has(id)) groups.set(id, []);

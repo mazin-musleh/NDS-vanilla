@@ -255,7 +255,7 @@
 
     function initializePasswords() {
         document.querySelectorAll('.nds-form-container.nds-password').forEach(function (el) {
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-password-initialized')) return;
             new NDSPassword(el);
         });

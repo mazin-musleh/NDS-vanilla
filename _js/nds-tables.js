@@ -857,7 +857,7 @@
 
         document.addEventListener('click', (e) => {
             const btn = e.target.closest(SUB_TOGGLE);
-            if (!btn || btn.closest('code, .code-example')) return;
+            if (!btn || btn.closest('code')) return;
 
             const handle = rowHandle(rowFor(btn));
             if (!handle) return;
@@ -891,7 +891,7 @@
     // whose <tbody> arrives later must stay eligible for the next reinit().
     function initializeTables() {
         document.querySelectorAll('.nds-table').forEach(table => {
-            if (table.closest('code, .code-example')) return;
+            if (table.closest('code')) return;
 
             // Guarded by the scope stamp: reinit() must not append the rules twice.
             if (!table.hasAttribute('data-nds-align')) applyColumnAlign(table);
@@ -920,7 +920,7 @@
 
         // Column-visibility menus live in a toolbar, not in the table
         document.querySelectorAll('[data-columns-target]').forEach(root => {
-            if (root.closest('code, .code-example')) return;
+            if (root.closest('code')) return;
             if (root.hasAttribute('data-nds-columns-initialized')) return;
 
             new NDSColumnToggle(root); // stamps and registers itself when valid

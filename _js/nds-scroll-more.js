@@ -192,7 +192,7 @@
 
     function initAll() {
         document.querySelectorAll(CONFIG.selectors.wrapper).forEach(wrapper => {
-            if (wrapper.closest('code, .code-example')) return;
+            if (wrapper.closest('code')) return;
             initElement(wrapper);
         });
     }

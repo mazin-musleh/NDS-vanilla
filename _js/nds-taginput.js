@@ -312,7 +312,7 @@
 
     function initializeTagInputs() {
         document.querySelectorAll('.nds-taginput').forEach(el => {
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-taginput-initialized')) return;
             new NDSTagInput(el);
         });

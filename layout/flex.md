@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "08/10/2026 - 09:36 PM"
 ---
 
 <section id="flexOverview" class="nds-content-section nds-doc-overview">
@@ -155,7 +155,6 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
 - Add `--align: center` when a row mixes children of different heights, such as a heading and a button.
 - Add `nds-row` or `nds-col` alone to a component that is already a flex container, such as `nds-card-actions nds-row`. Do not add `nds-flex` to it as well.
 - Do not use `nds-reverse` to fix the order of content people read. A keyboard and a screen reader still follow the markup order. Use it only where the order on screen differs on purpose.
-- A flex container inside another flex container or a grid gets the outer `--gap`, `--justify` and `--align`. Set them again on the inner one when it needs its own.
 - In normal page flow, a flex container is as wide as its parent. In a parent that centers it, it shrinks to its content: add `width: 100%` to its `style` to fill the parent.
 - To make a flex container as wide as its content, add `width: fit-content` to its `style`.
 

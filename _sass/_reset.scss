@@ -1,5 +1,13 @@
 @use './mixins' as *;
 
+// Layout knobs style only the element that sets them, so a nested flex or grid
+// never picks up its parent's. In crit: a horizontal section reads --gap at first paint.
+@property --gap { syntax: '*'; inherits: false; }
+@property --row-gap { syntax: '*'; inherits: false; }
+@property --col-gap { syntax: '*'; inherits: false; }
+@property --justify { syntax: '*'; inherits: false; }
+@property --align { syntax: '*'; inherits: false; }
+
 /* ========================================
    CSS RESET & NORMALIZATION
    ======================================== */

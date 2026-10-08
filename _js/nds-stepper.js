@@ -267,7 +267,7 @@
     // navigation) doesn't stack subscriptions.
     function _initInstances() {
         document.querySelectorAll('.nds-stepper:not([data-nds-stepper-initialized])').forEach(element => {
-            if (element.closest('code, .code-example')) return;
+            if (element.closest('code')) return;
 
             const stepper = new NDSStepper(element);
             element.setAttribute('data-nds-stepper-initialized', 'true');
@@ -338,7 +338,7 @@
 
     function init() {
         document.querySelectorAll('.nds-stepper:not([data-nds-stepper-stamped])').forEach(el => {
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
             _stamp(el);
         });
         _wireGlobals();

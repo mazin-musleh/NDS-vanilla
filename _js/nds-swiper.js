@@ -217,7 +217,7 @@
 
         getGap() {
             if (this._cachedGap === null) {
-                this._cachedGap = parseInt(getComputedStyle(this.container).getPropertyValue('--gap')) || 0;
+                this._cachedGap = parseInt(getComputedStyle(this.container).getPropertyValue('--swiper-gap')) || 0;
             }
             return this._cachedGap;
         }
@@ -994,7 +994,7 @@
         const swipers = document.querySelectorAll('.nds-swiper');
         swipers.forEach(swiper => {
             // A loop clone's nested swiper is a dead copy — reinit must not wire it.
-            if (swiper.closest('code, .code-example, .nds-swiper-clone')) return;
+            if (swiper.closest('code, .nds-swiper-clone')) return;
             if (swiper.hasAttribute('data-nds-swiper-initialized')) return;
             const instance = new NDSSwiper(swiper);
             // Expando only on successful construction — retries must not inherit

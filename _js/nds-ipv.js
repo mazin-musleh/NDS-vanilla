@@ -426,7 +426,7 @@
         // so a thumbnail added after init joins the gallery with no reinit.
         collectThumbnails() {
             return Array.from(document.querySelectorAll('.nds-ipv-thumbnail'))
-                .filter(thumb => !thumb.closest('code, .code-example'));
+                .filter(thumb => !thumb.closest('code'));
         }
 
         // Make each thumbnail keyboard-operable without changing authored markup.
@@ -446,7 +446,7 @@
             this.enhanceThumbnails();
 
             const { signal } = this.abortController;
-            const isKnownThumb = (el) => el && !el.closest('code, .code-example');
+            const isKnownThumb = (el) => el && !el.closest('code');
 
             // One delegated handler each for click and Enter/Space (O(1) wiring).
             document.addEventListener('click', (e) => {

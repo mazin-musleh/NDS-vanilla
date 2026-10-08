@@ -352,7 +352,7 @@
 
     function initializeTabs() {
         document.querySelectorAll('.nds-tabs').forEach(container => {
-            if (container.closest('code, .code-example')) return;
+            if (container.closest('code')) return;
             if (container.hasAttribute('data-nds-tabs-initialized')) return;
             // Only a valid construction stamps, so late-filled markup stays eligible.
             new NDSTabs(container);

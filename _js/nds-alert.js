@@ -352,7 +352,7 @@
         // Initialize existing alerts
         init() {
             document.querySelectorAll('.nds-alert').forEach(alert => {
-                if (alert.hasAttribute('data-nds-alert-initialized') || alert.closest('code, .code-example')) return;
+                if (alert.hasAttribute('data-nds-alert-initialized') || alert.closest('code')) return;
 
                 const closeBtn = alert.querySelector('.nds-alert-close');
                 if (closeBtn) {

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "08/10/2026 - 11:36 AM"
+last_edit: "08/10/2026 - 09:36 PM"
 ---
 
 <section id="numbersOverview" class="nds-content-section nds-doc-overview">
@@ -145,7 +145,7 @@ A counter counts from `data-counter-start` to the `data-counter` value when half
             <i class="hgi hgi-stroke hgi-code"></i>
             <span class="nds-label">Code Blocks Skipped</span>
           </span>
-          <p class="nds-item-desc">A number inside <code class="nds-inline-code lang-html">&lt;code&gt;</code> or <code class="nds-inline-code lang-html">.code-example</code> stays as written.</p>
+          <p class="nds-item-desc">A number inside <code class="nds-inline-code lang-html">&lt;code&gt;</code> stays as written.</p>
         </div>
       </div>
     </div>

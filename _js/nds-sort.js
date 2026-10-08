@@ -487,7 +487,7 @@
     function markupLists() {
         const lists = new Set();
         document.querySelectorAll('[data-sort-target]').forEach(t => {
-            if (t.closest('code, .code-example')) return;
+            if (t.closest('code')) return;
             const list = document.getElementById(t.getAttribute('data-sort-target'));
             if (list) lists.add(list);
         });

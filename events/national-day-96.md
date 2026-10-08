@@ -67,7 +67,7 @@ hero_float_actions:
                                 </button>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-nd96-apply-1"
+                                <div class="nds-tab-panel" role="tabpanel" id="panel-nd96-apply-1"
                                     aria-labelledby="tab-nd96-apply-1">
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -78,7 +78,7 @@ hero_float_actions:
 &lt;script src="/assets/events/national_day_96/nds-theme-national-day-96.min.js"&gt;&lt;/script&gt;
                                     </code>
                                 </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-nd96-apply-2"
+                                <div class="nds-tab-panel" role="tabpanel" id="panel-nd96-apply-2"
                                     aria-labelledby="tab-nd96-apply-2" hidden>
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -89,7 +89,7 @@ hero_float_actions:
 &lt;script src="/assets/events/national_day_96/nds-theme-national-day-96.min.js" data-type="1"&gt;&lt;/script&gt;
                                     </code>
                                 </div>
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-nd96-apply-3"
+                                <div class="nds-tab-panel nds-expandable" role="tabpanel" id="panel-nd96-apply-3"
                                     aria-labelledby="tab-nd96-apply-3" hidden>
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -161,7 +161,7 @@ hero_float_actions:
                                 </button>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-nd96-manual-1"
+                                <div class="nds-tab-panel" role="tabpanel" id="panel-nd96-manual-1"
                                     aria-labelledby="tab-nd96-manual-1">
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -173,7 +173,7 @@ hero_float_actions:
       href="/assets/events/national_day_96/nds-theme-national-day-96.min.css"&gt;
                                     </code>
                                 </div>
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-nd96-manual-2"
+                                <div class="nds-tab-panel nds-expandable" role="tabpanel" id="panel-nd96-manual-2"
                                     aria-labelledby="tab-nd96-manual-2" hidden>
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -196,7 +196,7 @@ hero_float_actions:
                                         </code>
                                     </div>
                                 </div>
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-nd96-manual-4"
+                                <div class="nds-tab-panel nds-expandable" role="tabpanel" id="panel-nd96-manual-4"
                                     aria-labelledby="tab-nd96-manual-4" hidden>
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -234,7 +234,7 @@ hero_float_actions:
                                         </code>
                                     </div>
                                 </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-nd96-manual-3"
+                                <div class="nds-tab-panel" role="tabpanel" id="panel-nd96-manual-3"
                                     aria-labelledby="tab-nd96-manual-3" hidden>
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">

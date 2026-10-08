@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.0"
-last_edit: "06/10/2026 - 10:17 PM"
+updated: "1.12.x"
+last_edit: "08/10/2026 - 09:36 PM"
 ---
 
 <section id="gridOverview" class="nds-content-section nds-doc-overview">
@@ -228,7 +228,6 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
 - Use either column values or track values on one grid, not both. A track value overrides the column count at the same screen size.
 - Do not use a grid for one column of content. Normal page flow already does that.
 - Do not build the page structure from grids inside grids. Use [Section](../layout/section) for page regions.
-- A grid inside a grid gets the outer `--gap`, `--justify` and `--align`. Set them again on the inner grid when it needs its own.
 - Add `nds-cq` only when a grid sits in a narrow column and must follow that column's width. It traps `position: fixed` children, such as a modal or a dropmenu, inside that element.
 - Set `--gap` with a spacing token, such as `var(--spacing-md)`.
 

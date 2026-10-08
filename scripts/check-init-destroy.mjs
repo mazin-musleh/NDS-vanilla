@@ -280,7 +280,7 @@ async function sweepOne(tab, errs, path) {
     const live = await tab.evaluate(() => NDS.Init.components
         // Markup a code sample shows is never initialized (the init pass skips it), so it
         // is not coverage either — same exclusion the pass itself uses.
-        .filter((c) => c.selector && [...document.querySelectorAll(c.selector)].some((el) => !el.closest('code, .code-example')))
+        .filter((c) => c.selector && [...document.querySelectorAll(c.selector)].some((el) => !el.closest('code')))
         .map((c) => c.name));
 
     // Only teardown-time errors count. A demo that throws on its own is a different bug.

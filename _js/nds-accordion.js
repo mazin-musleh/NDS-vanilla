@@ -356,7 +356,7 @@
         
         accordionContainers.forEach(container => {
             // Skip elements inside code examples
-            if (container.closest('code, .code-example')) {
+            if (container.closest('code')) {
                 return;
             }
             

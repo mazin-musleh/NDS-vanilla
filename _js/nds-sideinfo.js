@@ -175,7 +175,7 @@
     function initializeComponents() {
         const sideInfoElements = document.querySelectorAll('.nds-sideinfo');
         sideInfoElements.forEach(element => {
-            if (element.closest('code, .code-example')) return;
+            if (element.closest('code')) return;
             if (!element.hasAttribute('data-nds-sideinfo-initialized')) {
                 const instance = new NDSSideInfo(element);
                 // Expando only on successful construction (sentinel is stamped post-guard by init()).

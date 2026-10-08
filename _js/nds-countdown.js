@@ -215,7 +215,7 @@
     }
 
     function wire(el) {
-        if (el.hasAttribute(WIRED_ATTR) || el.closest('code, .code-example')) return;
+        if (el.hasAttribute(WIRED_ATTR) || el.closest('code')) return;
         const src = el.closest('[data-countdown-now]');
         if (src) {
             const t = parseIso(src.getAttribute('data-countdown-now'));

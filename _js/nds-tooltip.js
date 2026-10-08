@@ -444,7 +444,7 @@
 
     function initializeTooltips() {
         document.querySelectorAll('.nds-tooltip').forEach(el => {
-            if (el.closest('code, .code-example')) return;
+            if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-tooltip-initialized')) return;
             new NDSTooltip(el);
         });

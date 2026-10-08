@@ -275,7 +275,7 @@ module DocsCanon
       %(<button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="#{i.zero?}" aria-controls="#{id}-panel-#{key}" id="#{id}-tab-#{key}"><span class="nds-label">#{name}</span></button>)
     end
     panels = tabs.each_with_index.map do |(key, _, src, lang), i|
-      %(<div class="nds-tab-panel code-example" role="tabpanel" id="#{id}-panel-#{key}" aria-labelledby="#{id}-tab-#{key}"#{' hidden' unless i.zero?}><div class="nds-code-action"><button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example"><i class="nds-icon nds-hgi-copy-01"></i></button></div><code class="lang-#{lang} code">
+      %(<div class="nds-tab-panel" role="tabpanel" id="#{id}-panel-#{key}" aria-labelledby="#{id}-tab-#{key}"#{' hidden' unless i.zero?}><div class="nds-code-action"><button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example"><i class="nds-icon nds-hgi-copy-01"></i></button></div><code class="lang-#{lang} code">
 #{CGI.escapeHTML(src)}
 </code></div>)
     end

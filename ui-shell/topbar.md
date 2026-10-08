@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 07:12 PM"
+last_edit: "08/10/2026 - 09:36 PM"
 ---
 
 <section id="topbarOverview" class="nds-content-section nds-doc-overview">
@@ -380,8 +380,8 @@ The script writes each widget's icon and text. The date changes with the page la
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:digitalStamp:opened` | `#nds-digital-stamp` | None. Fires when the panel starts to open |
-| `nds:digitalStamp:closed` | `#nds-digital-stamp` | None. Fires after the panel has closed |
+| `nds:digital-stamp:opened` | `#nds-digital-stamp` | None. Fires when the panel starts to open |
+| `nds:digital-stamp:closed` | `#nds-digital-stamp` | None. Fires after the panel has closed |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="topbar-js" data-canon data-lang="js" data-preview="none">

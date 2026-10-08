@@ -64,7 +64,7 @@ hero_float_actions:
                                 </button>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-fday-apply-1"
+                                <div class="nds-tab-panel" role="tabpanel" id="panel-fday-apply-1"
                                     aria-labelledby="tab-fday-apply-1">
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -75,7 +75,7 @@ hero_float_actions:
 &lt;script src="/assets/events/foundation_day/nds-theme-foundation-day.min.js"&gt;&lt;/script&gt;
                                     </code>
                                 </div>
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-fday-apply-2"
+                                <div class="nds-tab-panel nds-expandable" role="tabpanel" id="panel-fday-apply-2"
                                     aria-labelledby="tab-fday-apply-2" hidden>
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -130,7 +130,7 @@ hero_float_actions:
                                 </button>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-fday-manual-1"
+                                <div class="nds-tab-panel" role="tabpanel" id="panel-fday-manual-1"
                                     aria-labelledby="tab-fday-manual-1">
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -142,7 +142,7 @@ hero_float_actions:
       href="/assets/events/foundation_day/nds-theme-foundation-day.min.css"&gt;
                                     </code>
                                 </div>
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-fday-manual-2"
+                                <div class="nds-tab-panel nds-expandable" role="tabpanel" id="panel-fday-manual-2"
                                     aria-labelledby="tab-fday-manual-2" hidden>
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">

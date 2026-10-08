@@ -7,8 +7,8 @@
  *   NDS.DigitalStamp.toggle()
  *   NDS.DigitalStamp.isOpen()    open and not closing?
  * Events (bubble from the panel):
- *   nds:digitalStamp:opened   detail (none)
- *   nds:digitalStamp:closed   detail (none) — after the collapse animation
+ *   nds:digital-stamp:opened  detail (none)
+ *   nds:digital-stamp:closed  detail (none) — after the collapse animation
  * Hooks:
  *   (none — class and id markup: .nds-digital-stamp-tab is the trigger, #nds-digital-stamp
  *    is the panel)
@@ -63,7 +63,7 @@
 
         NDS.afterPaint(() => removeState(panel, 'opening'));
 
-        panel.dispatchEvent(new CustomEvent('nds:digitalStamp:opened', { bubbles: true }));
+        panel.dispatchEvent(new CustomEvent('nds:digital-stamp:opened', { bubbles: true }));
     }
 
     function close() {
@@ -79,7 +79,7 @@
             _cancelClose = null;
             clearState(panel);
             panel.setAttribute('hidden', '');
-            panel.dispatchEvent(new CustomEvent('nds:digitalStamp:closed', { bubbles: true }));
+            panel.dispatchEvent(new CustomEvent('nds:digital-stamp:closed', { bubbles: true }));
         });
     }
 

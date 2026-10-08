@@ -25,7 +25,7 @@
         display: grid;
         grid-template-columns: subgrid;
         row-gap: var(--_dl-gap);
-        column-gap: var(--col-gap, var(--gap, var(--spacing-xl)));
+        column-gap: var(--_dl-col-gap, var(--spacing-xl));
     }
 
     // Reset stacked icon indent in tableView mode
@@ -42,7 +42,7 @@
     .nds-definition-item {
         flex-direction: row;
         flex-wrap: wrap;
-        column-gap: var(--col-gap, var(--gap, var(--spacing-sm)));
+        column-gap: var(--_dl-col-gap, var(--spacing-sm));
     }
 
     // Reset stacked icon indent in rowView mode
@@ -102,6 +102,8 @@
     --_dl-title-FS: var(--dl-title-FS, var(--typo-text-lg-FS));
     --_dl-desc-FS: var(--dl-desc-FS, var(--typo-text-md-FS));
     --_dl-gap: var(--row-gap, var(--gap, var(--spacing-lg)));
+    // Items read it, and --col-gap does not inherit. Unset stays invalid, so each layout keeps its own default.
+    --_dl-col-gap: var(--col-gap, var(--gap));
     display: flex;
     flex-direction: column;
     row-gap: var(--_dl-gap);

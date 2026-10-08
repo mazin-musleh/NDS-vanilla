@@ -177,7 +177,7 @@
 
     function initializeSideMenu() {
         const accMenu = document.querySelector(".nds-sidemenu");
-        if (!accMenu || accMenu.closest('code, .code-example')) return;
+        if (!accMenu || accMenu.closest('code')) return;
 
         // Destroy previous instance to prevent duplicate listeners
         destroy();

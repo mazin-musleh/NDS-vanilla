@@ -410,7 +410,7 @@
     function init() {
         bindToggles();
         document.querySelectorAll(SELECTOR).forEach(panel => {
-            if (panel.closest('code, .code-example')) return;
+            if (panel.closest('code')) return;
             createPanel(panel);
         });
     }

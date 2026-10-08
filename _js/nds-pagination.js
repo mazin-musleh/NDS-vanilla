@@ -387,7 +387,7 @@
 
         paginationContainers.forEach(container => {
             // Skip elements inside code examples
-            if (container.closest('code, .code-example')) {
+            if (container.closest('code')) {
                 return;
             }
 
@@ -657,11 +657,11 @@
 
     // Wire one auto-pagination container: paginate to final state now, then
     // call _wireAutoNav for click handlers + the --per-page resize observer.
-    // Skips already-initialized navs and code-example fixtures; the content
+    // Skips already-initialized navs and navs inside <code>; the content
     // container is the previous sibling.
     function setupAutoContainer(paginationNav) {
         if (paginationNav.hasAttribute('data-nds-auto-pagination-initialized') ||
-            paginationNav.closest('code, .code-example')) {
+            paginationNav.closest('code')) {
             return;
         }
 

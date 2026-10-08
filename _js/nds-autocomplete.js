@@ -676,7 +676,7 @@
     // focusin and the programmatic create().
     function buildAutocomplete(container) {
         if (!container || container.hasAttribute('data-nds-autocomplete-initialized')) return;
-        if (container.closest('code') || container.closest('.code-example')) return;
+        if (container.closest('code')) return;
         if (!container.querySelector('input[autocomplete="on"]')) return;
         new NDSAutocomplete(container);
     }

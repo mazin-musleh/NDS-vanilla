@@ -321,7 +321,7 @@
 
     function initAllDrawers() {
         document.querySelectorAll(CONFIG.selectors.drawer).forEach(drawer => {
-            if (drawer.closest('code, .code-example')) return;
+            if (drawer.closest('code')) return;
             initDrawer(drawer);
         });
     }

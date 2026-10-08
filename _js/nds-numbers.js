@@ -68,7 +68,7 @@
     }
 
     function format(el) {
-        if (!el || el.closest('code, .code-example') || el.matches(COUNTER)) return;
+        if (!el || el.closest('code') || el.matches(COUNTER)) return;
         const node = numberNode(el);
         const n = node && parse(source(node));
         if (n) write(node, n.prefix + NDS.formatNumber(n.value, places(n)) + n.suffix);
@@ -116,7 +116,7 @@
             // reinit() re-arms: release a subscription that has not fired yet.
             if (el._ndsCounterOff) el._ndsCounterOff();
             delete el._ndsCounterOff;
-            if (el.closest('code, .code-example') || el.hasAttribute('data-animated') || el._ndsCounting) return;
+            if (el.closest('code') || el.hasAttribute('data-animated') || el._ndsCounting) return;
             el._ndsCounterOff = NDS.onIntersect(el, (entry) => {
                 if (!entry.isIntersecting) return;
                 el._ndsCounterOff();

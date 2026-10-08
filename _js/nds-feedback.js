@@ -215,7 +215,7 @@
             if (!el) return;
 
             el.querySelectorAll('.nds-feedback').forEach(feedback => {
-                if (feedback.closest('code, .code-example')) return;
+                if (feedback.closest('code')) return;
                 if (feedback.hasAttribute('data-permanent')) {
                     feedback.removeAttribute('hidden');
                     return;
@@ -241,7 +241,7 @@
             // Handle existing feedback from target area before adding new one
             if (position === 'prepend' || position === 'append') {
                 targetEl.querySelectorAll('.nds-feedback').forEach(existingFeedback => {
-                    if (!existingFeedback.closest('code, .code-example')) {
+                    if (!existingFeedback.closest('code')) {
                         if (existingFeedback.hasAttribute('data-permanent') && !newIsPermanent) {
                             existingFeedback.setAttribute('hidden', '');
                             hiddenPermanent.push(existingFeedback);
@@ -255,7 +255,7 @@
                 const parent = targetEl.parentNode;
                 if (parent) {
                     parent.querySelectorAll('.nds-feedback').forEach(existingFeedback => {
-                        if (!existingFeedback.closest('code, .code-example')) {
+                        if (!existingFeedback.closest('code')) {
                             if (existingFeedback.parentNode === parent) {
                                 if (existingFeedback.hasAttribute('data-permanent') && !newIsPermanent) {
                                     existingFeedback.setAttribute('hidden', '');
