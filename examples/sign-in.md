@@ -8,7 +8,6 @@ layout_class: nds-middle
 page_bg: assets/img/riyadhcenter.webp
 bg_opacity_top: 60%
 bg_opacity_bottom: 90%
-exclude_showcase: true
 breadcrumb: [["Examples", "/examples"]]
 ---
 {% assign brand_logo = page.brandLogo | default: site.brandLogo %}

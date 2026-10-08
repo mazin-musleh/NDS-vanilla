@@ -1,5 +1,4 @@
 ---
-exclude_showcase: true
 layout: shell
 # `shell` emits the document and the scripts only — no header, hero, content layout or
 # footer. This page composes all of them below, so THIS file shows the whole page shape

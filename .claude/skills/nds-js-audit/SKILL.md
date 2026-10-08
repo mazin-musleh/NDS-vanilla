@@ -90,12 +90,12 @@ Do not begin Phase 2 or any file reads until the user responds.
 
 | `$1` | Files in scope | Rule groups run |
 |---|---|---|
-| `js` | All `_js/nds-*.js` except `nds-core.js`, `nds-loader.js`, `nds-showcase.js` | Always paired with a rule-group filter (`performance` / `dry` / `security` / `architecture`); see below. In `architecture` mode, deep-read JSA rules are **skipped with a banner** — see "JSA deep-read rules in full-tree mode" below |
+| `js` | All `_js/nds-*.js` except `nds-core.js`, `nds-loader.js`, `nds-docs.js` | Always paired with a rule-group filter (`performance` / `dry` / `security` / `architecture`); see below. In `architecture` mode, deep-read JSA rules are **skipped with a banner** — see "JSA deep-read rules in full-tree mode" below |
 | **filename** (e.g. `nds-accessibility.js`, `_js/nds-accessibility.js`, `nds-accessibility`, `accessibility`) | One file: the resolved target | A rule-group filter (`performance` / `dry` / `security` / `architecture`), or `all`. **When the rule-group is omitted, default to `all`** — single-file `all` is cheap, so run it instead of prompting. In `dry` (and the dry portion of `all`), JSD-05 is **skipped with a banner**. `architecture` (and the architecture portion of `all`) runs every JSA rule, greppable AND deep-read. |
 
 **File resolution.** When `$1` doesn't match a known mode token (`js`), treat it as a filename and try these in order: (1) literal `_js/$1` if `$1` already starts with `nds-` and ends in `.js`; (2) `_js/$1` if it ends in `.js`; (3) `_js/$1.js` if it starts with `nds-`; (4) `_js/nds-$1.js` for the bare-name form. Stop at the first existing file. If none exist, reply: *"Couldn't resolve `<filename>` to a file in `_js/`. Tried: `_js/<X>.js`, `_js/nds-<X>.js`. Pass the filename as it appears in `_js/`."* and stop.
 
-**Excluded-file rejection.** If the resolved file is `nds-showcase.js` or any `.min.js`, reply: *"`<file>` is excluded from audits — see the 'Excluded files' section below for why."* and stop. Don't attempt a partial audit on a hard-excluded file.
+**Excluded-file rejection.** If the resolved file is `nds-docs.js` or any `.min.js`, reply: *"`<file>` is excluded from audits — see the 'Excluded files' section below for why."* and stop. Don't attempt a partial audit on a hard-excluded file.
 
 **Direct-named core/loader advisory.** If the resolved file is `nds-core.js` or `nds-loader.js`, proceed with the single-file audit but print this one-line advisory at the top of the Phase 4 report (above the Summary block): *"Auditing `<file>` directly — note: the rule catalog is derived from core's patterns, so findings should be read as 'is this pattern still right for this file' rather than as automatic regressions."* These two files are excluded from full-tree `js` mode (the bulk run would treat the catalog's source-of-truth as a violation target), but single-file mode IS supported for deliberate review. For `architecture` single-file runs on these two files, **JSA's deep-read rules are the primary value** — the catalog's pattern rules typically pass cleanly on core/loader, but JSA surfaces design-tradeoff observations (scheduling choice, polyfill fidelity, unbounded caches) that the per-pattern catalog can't generalize.
 
@@ -142,7 +142,7 @@ Two tiers — direct-named single-file audits behave differently from full-tree 
 
 **Excluded always (no direct-named carve-out):**
 
-- `_js/nds-showcase.js` — demo-page wiring, not a shipped component.
+- `_js/nds-docs.js` — docs-site builder wiring, not a shipped component.
 - Any `.min.js` file.
 
 ---
@@ -174,7 +174,7 @@ Run the rule catalog (the per-group `RULES-*.md` file(s) read in Phase 2) file-b
 
 ### Ponytail overlay (final lens — every run unless `no-pony`)
 
-After the catalog pass completes, apply `PONYTAIL.md` (read in Phase 2) **within this run's resolved scope** — it asks "should this exist at all?", which the perf/DRY/security/architecture rules never ask head-on. Two steps, per that file: (1) **re-tag** each finding already produced with `delete/stdlib/native/yagni/shrink` (a label on the existing row — no new finding, no double-report); (2) **gap-hunt** the small net-new `PONY-STD/-NAT/-YAG/-DEL` set the catalog doesn't cover, scoped to this run (single-file → the target + repo cross-ref for readers; full-tree → the greppable shapes). Honor `PONYTAIL.md`'s carve-outs verbatim — never flag the 3-bundle architecture, pooled core helpers, lifecycle canon, deliberate fidelity shims, the markup contract, or marginal changes to `forms`/`core`/`loader`. **Before any `delete`/`PONY-DEL`/zero-reader `PONY-YAG`, grep the whole repo (incl. `nds-showcase.js` and the component's `.md`) for readers** — the `getFallback` lesson. The single-file deep-read agent runs this lens too: paste `PONYTAIL.md`'s carve-outs into its brief and tag returned rows `PONY-*` + `(deep-read agent)`. PONY findings fold into the Phase 4 report under their severity; print one `Ponytail: <N> cuts (…)` / `Ponytail: none` line below the Summary block. Phase 5 FIX, auto-advance, and Phase 7 EVOLVE treat them like any rule.
+After the catalog pass completes, apply `PONYTAIL.md` (read in Phase 2) **within this run's resolved scope** — it asks "should this exist at all?", which the perf/DRY/security/architecture rules never ask head-on. Two steps, per that file: (1) **re-tag** each finding already produced with `delete/stdlib/native/yagni/shrink` (a label on the existing row — no new finding, no double-report); (2) **gap-hunt** the small net-new `PONY-STD/-NAT/-YAG/-DEL` set the catalog doesn't cover, scoped to this run (single-file → the target + repo cross-ref for readers; full-tree → the greppable shapes). Honor `PONYTAIL.md`'s carve-outs verbatim — never flag the 3-bundle architecture, pooled core helpers, lifecycle canon, deliberate fidelity shims, the markup contract, or marginal changes to `forms`/`core`/`loader`. **Before any `delete`/`PONY-DEL`/zero-reader `PONY-YAG`, grep the whole repo (incl. `nds-docs.js` and the component's `.md`) for readers** — the `getFallback` lesson. The single-file deep-read agent runs this lens too: paste `PONYTAIL.md`'s carve-outs into its brief and tag returned rows `PONY-*` + `(deep-read agent)`. PONY findings fold into the Phase 4 report under their severity; print one `Ponytail: <N> cuts (…)` / `Ponytail: none` line below the Summary block. Phase 5 FIX, auto-advance, and Phase 7 EVOLVE treat them like any rule.
 
 ### Track observations for Phase 7
 

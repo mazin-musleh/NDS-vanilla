@@ -334,9 +334,9 @@ This is a rewrite, not a conversion. Each page is written fresh from its SCSS, i
 - **Gates:** the floor gate for each new sentence, then one `nds-iq-eval` gate.
 - **Housekeeping:** update the "Docs rewrite" item in TODO.md.
 
-### Phase 5: cleanup
+### Phase 5: cleanup — DONE 2026-10-08 (the review of the inline-code guess stays open)
 
-Once the last page is migrated:
+Once the last page is migrated. The upload fake moved to `nds-docs.js`, for any upload in a preview; the event pages' code cards became `.nds-block` with a block title.
 - Delete `_js/nds-showcase.js`, `_sass/_showcase.scss` and `docs-assets/css/nds-showcase.min.scss`.
 - Remove the showcase `<link>` from `_includes/head.html:55` and the showcase `<script>` tags from `_layouts/default.html`, `minimal.html` and `shell.html`.
 - Remove the `exclude_showcase` flag.

@@ -1,5 +1,4 @@
 ---
-exclude_showcase: true
 layout: page
 title: Examples
 hero_title: Examples

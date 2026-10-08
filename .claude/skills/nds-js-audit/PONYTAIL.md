@@ -50,7 +50,7 @@ A design system **ships a public API consumers use** — do not YAGNI the docume
 - **Markup is a production contract** (`markup_is_production_contract`): never propose a change that requires consumers to edit existing markup. A manual focus-trap is NOT `native:`-swappable to `inert`/`<dialog>` unless the markup already supports it (the drawer/IPV focus traps mirror the modal deliberately).
 - **No marginal changes to contract-critical files** (`forms`/`core`/`loader`): a verified-safe but sub-perceptible edit isn't worth touching them (`no_marginal_changes`). Measured-lean inits don't get perf cuts (`forms_init_cold_cheap`).
 
-**Verify before any `delete:` / `PONY-DEL` / zero-reader `PONY-YAG`:** grep the WHOLE repo — sibling components, `nds-showcase.js`, the component's `.md` doc — for readers. *Locally-unused ≠ unused.* (The `getFallback` lesson: it looked dead but `nds-showcase.js` reads `NDS.Stepper.getFallback`. The `upload` "speculative" methods are documented contract. `StatusTypes` WAS genuinely zero-reader — the grep is what tells them apart.)
+**Verify before any `delete:` / `PONY-DEL` / zero-reader `PONY-YAG`:** grep the WHOLE repo — sibling components, `nds-docs.js`, the component's `.md` doc — for readers. *Locally-unused ≠ unused.* (The `getFallback` lesson: it looked dead but `nds-showcase.js` reads `NDS.Stepper.getFallback`. The `upload` "speculative" methods are documented contract. `StatusTypes` WAS genuinely zero-reader — the grep is what tells them apart.)
 
 ---
 

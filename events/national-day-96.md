@@ -45,12 +45,8 @@ hero_float_actions:
             <p class="nds-section-description">One tag in your shared <code class="nds-inline-code lang-html">&lt;head&gt;</code>, after the NDS stylesheets, without <code class="nds-inline-code lang-html">defer</code>. Pick the hero type with <code class="nds-inline-code lang-html">data-type</code>. Delete the tag to end the event. The script carries the pack's CSS, so the tag is the only asset you add to the page. You need the <code class="nds-inline-code lang-html">.min.css</code> file only for the no-script setup below, or when you want to override a rule.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Type 2 is the default; add data-type="1" for the single slide</div>
-                    </div>
-                    <div class="demo-code">
+            <div class="nds-block">
+                <h3 class="nds-block-title">Type 2 is the default; add data-type="1" for the single slide</h3>
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
@@ -115,8 +111,6 @@ hero_float_actions:
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
             </div>
             <div class="nds-block nds-prose">
                 <ul>
@@ -141,12 +135,8 @@ hero_float_actions:
             <p class="nds-section-description">The script is what adds the typed word, the colour change on every slide, and the automatic advance. Without it the hero keeps one colour, the word is plain text, and the cards do not move.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">No-JS setup: stylesheet link and slide markup</div>
-                    </div>
-                    <div class="demo-code">
+            <div class="nds-block">
+                <h3 class="nds-block-title">No-JS setup: stylesheet link and slide markup</h3>
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
@@ -259,8 +249,6 @@ hero_float_actions:
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

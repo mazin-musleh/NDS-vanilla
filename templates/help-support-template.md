@@ -1,5 +1,4 @@
 ---
-exclude_showcase: true
 layout: page
 title: Help & Support Template
 hero_style: "nds-flat"

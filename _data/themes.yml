@@ -1,4 +1,4 @@
-# Selectable themes for the topbar/demo switcher (_js/nds-showcase.js).
+# Selectable themes for the topbar/demo switcher (_js/nds-theme.js).
 #
 # A predefined "theme" is a small set of SEED values defined in the $themes map in
 # _sass/themes/_register.scss; the switcher applies one by TOGGLING its token in the

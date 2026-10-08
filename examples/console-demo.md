@@ -1,5 +1,4 @@
 ---
-exclude_showcase: true
 layout: console
 body_class: nds-full-width
 title: Admin Console Demo

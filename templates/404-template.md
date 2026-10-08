@@ -1,5 +1,4 @@
 ---
-exclude_showcase: true
 layout: default
 title: "Page not found"
 lang: en

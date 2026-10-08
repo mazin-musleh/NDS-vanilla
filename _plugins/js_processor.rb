@@ -39,15 +39,14 @@ class JSProcessor
     @output_dir = 'assets/js'
     # Per-file output dir overrides (keyed by source basename). docs-assets/ holds
     # everything only the documentation site loads, so a consumer copying assets/
-    # into their project never hosts it — here, the showcase demo layer.
+    # into their project never hosts it — here, the docs builder.
     #
     # Only self-booting files may be overridden. nds-loader.js derives the asset
     # dir from nds-main.min.js's own src and fetches every injected bundle as a
     # SIBLING, so anything in @bundles must stay in @output_dir or it 404s at
-    # runtime. Safe here: showcase is a plain <script> tag from the layouts,
+    # runtime. Safe here: nds-docs is a plain <script> tag from the layouts,
     # not loader-managed.
     @output_overrides = {
-      'nds-showcase.js' => 'docs-assets/js',
       'nds-docs.js' => 'docs-assets/js',
     }
     # Event packs (_js/events/) are NOT built here: scripts/mkevent.py owns a pack end to end
@@ -422,7 +421,7 @@ class JSProcessor
         compressed_content = compress_with_terser(original_content)
 
         # Header comment (no timestamp — keeps git diffs stable on rebuild).
-        # Docs-only outputs (@output_overrides — showcase + event themes) skip the
+        # Docs-only outputs (@output_overrides — the docs builder + event themes) skip the
         # version line: they never ship to a consumer, and the stamp dirties the
         # file on every version bump.
         project_title = @config['title'] || 'National Design System'

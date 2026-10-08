@@ -582,6 +582,31 @@
     });
     document.addEventListener('nds:formInvalid', function (e) { dropAlert(e.target); });
 
+    // A preview has no server: an upload in one runs a fake, slow one, 1 in 10 fails. An image replies
+    // with a sample image's URL (doc pages sit one folder deep), so the editor's image popover gets a src.
+    document.addEventListener('nds:upload:beforeUpload', function (e) {
+        if (!NDS.closest(e.target, '[data-demo-slot]')) return;
+        e.preventDefault();
+        var api = NDS.Upload.getInstance(e.target.closest('.nds-file-upload'));
+        var file = e.detail.fileData;
+        if (!api) return;
+        var progress = 0;
+        api.setFileStatus(file.id, 'uploading', { progress: 0 });
+        var timer = setInterval(function () {
+            progress = Math.min(100, progress + Math.random() * 8);
+            api.setFileProgress(file.id, progress);
+            if (progress < 100) return;
+            clearInterval(timer);
+            api.setFileStatus(file.id, 'processing');
+            setTimeout(function () {
+                if (Math.random() < 0.1) return api.setFileStatus(file.id, 'error', { error: 'Demo upload failed' });
+                api.setFileStatus(file.id, 'complete');
+                var reply = file.file.type.indexOf('image/') === 0 ? { url: '../assets/img/riyadhcenter3s.webp' } : {};
+                api.container.dispatchEvent(new CustomEvent('nds:upload:success', { detail: { fileData: file, response: JSON.stringify(reply) }, bubbles: true }));
+            }, 2000);
+        }, 150);
+    });
+
     // The chips are built at site build; the Variants table is read only when the options first open.
     // A builder card's Dark button wires its builder on first use too.
     var builders = {};

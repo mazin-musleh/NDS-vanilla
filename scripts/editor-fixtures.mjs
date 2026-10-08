@@ -2293,9 +2293,8 @@ try {
         await new Promise(requestAnimationFrame);
         const menu = root.querySelector('[data-editor-image-dropmenu] .nds-dropmenu-menu');
         const up = menu.querySelector('[data-editor-image-upload]');
-        // The doc page's showcase script hijacks beforeUpload into a fake
-        // slow simulation — stop it at the container so the REAL XHR runs,
-        // matching a consumer page (which doesn't load nds-showcase.js).
+        // The doc page's docs script fakes uploads in a preview — stop it
+        // at the container so the REAL XHR runs, as on a consumer page.
         up.addEventListener('nds:upload:beforeUpload', (e) => e.stopPropagation());
         up.dataset.uploadUrl = '/NDS-vanilla/fake-upload';
         up.dataset.autoUpload = 'true';

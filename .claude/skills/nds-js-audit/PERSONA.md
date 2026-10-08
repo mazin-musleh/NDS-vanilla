@@ -2,7 +2,7 @@
 
 The project's chosen conventions for `_js/nds-*.js` component files, documented as concrete canonical forms backed by principle reasoning. Consulted by `nds-js-audit` so JSD-15 ("cross-file pattern consistency") works in single-file mode and so the audit measures code against deliberate choices instead of against the loudest accidental majority.
 
-**Scope:** the component files under `_js/nds-*.js`. Excludes `nds-core.js` (publishes the shared utility surface, different conventions), `nds-loader.js` (orchestration shape), `nds-showcase.js` (demo-page wiring). Exception: entry 7 (public-surface banner) uses its own wider scope — the `SCOPE` array in `scripts/check-banners.mjs`, which includes `nds-core.js` and `nds-loader.js`.
+**Scope:** the component files under `_js/nds-*.js`. Excludes `nds-core.js` (publishes the shared utility surface, different conventions), `nds-loader.js` (orchestration shape), `nds-docs.js` (docs-site builder). Exception: entry 7 (public-surface banner) uses its own wider scope — the `SCOPE` array in `scripts/check-banners.mjs`, which includes `nds-core.js` and `nds-loader.js`.
 
 ---
 
@@ -304,7 +304,7 @@ The banner is the knowledge surface a consumer agent (and human reader) greps be
 
 **Carve-outs (NOT divergence)**
 
-- Files outside the `SCOPE` array (`nds-showcase.js`, `nds-theme-foundation-day.js`, `nds-theme-hajj.js`) carry no banner.
+- Files outside the `SCOPE` array (`nds-docs.js`, `nds-theme-foundation-day.js`, `nds-theme-hajj.js`) carry no banner.
 - `(none)` entries are information, not omission — `Hooks: (none)` tells the reader there is nothing to wire; a tiny banner is conformant, not lazy.
 - WHY-prose surviving BELOW the banner (bundle/crit headers, usage notes) is not part of the banner and is not judged by this entry — JSA-16 governs it as usual.
 - The banner itself is never comment noise: JSA-16 explicitly exempts it (see its carve-out list in `RULES-JSA.md`); JSD-20 owns its conformance.

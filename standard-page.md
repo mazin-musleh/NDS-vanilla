@@ -39,7 +39,4 @@ breadcrumb: [["Components", "/components"]]     # or mix linked + label: [["Pare
 # custom_js:
 #   - assets/js/custom.min.js
 
-# === Behavior Flags ===
-# exclude_showcase: true       # exclude showcase CSS/JS
-
 ---

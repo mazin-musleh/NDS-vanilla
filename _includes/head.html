@@ -52,9 +52,6 @@
     {%- endif %}
     {%- comment %} Favicon - low-priority fetch so it doesn't compete with critical assets. Ships as a placeholder so a copied head renders; consumers swap the file. {% endcomment %}
     <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}" fetchpriority="low">
-    {%- unless page.exclude_showcase == true %}
-    <link rel="preload" href="{{ 'docs-assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low" data-nds-defer>
-    {%- endunless %}
     {%- if site.perf_monitor %}
     {% include perf-monitor.html %}
     {%- endif %}

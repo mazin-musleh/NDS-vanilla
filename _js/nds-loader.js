@@ -180,7 +180,6 @@
             name: 'Copy',
             selector: '.nds-copy',
         },
-        // Showcase is not registered: it self-boots from its own defer tag, which may run after this init.
         {
             // nds-tables starts it for a table's header select-all, stamped after detection.
             name: 'Selection',

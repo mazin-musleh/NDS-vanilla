@@ -1,5 +1,4 @@
 ---
-exclude_showcase: true
 layout: page
 title: Social Media Template
 hero_style: ""

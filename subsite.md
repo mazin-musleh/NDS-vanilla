@@ -31,6 +31,4 @@ direction: rtl              # ltr | rtl
 # custom_js:
 #   - assets/js/custom.min.js
 
-# === Behavior Flags ===
-# exclude_showcase: true
 ---

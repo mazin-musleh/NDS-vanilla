@@ -8,7 +8,6 @@ breadcrumb:
 hero_title: "Search Results"
 hero_description: "Find services matching your query"
 sidemenu_mode: false
-exclude_showcase: false
 ---
 
 <section id="searchResults" class="nds-content-section">

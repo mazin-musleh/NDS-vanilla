@@ -1,5 +1,4 @@
 ---
-exclude_showcase: true
 layout: page
 title: KPIs Template
 hero_style: ""

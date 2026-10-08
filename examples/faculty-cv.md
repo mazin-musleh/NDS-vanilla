@@ -1,5 +1,4 @@
 ---
-exclude_showcase: true
 layout: page
 title: "Dr. Noura Al-Otaibi"
 lang: en

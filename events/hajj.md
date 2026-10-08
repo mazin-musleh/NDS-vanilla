@@ -46,12 +46,8 @@ hero_float_actions:
             <p class="nds-section-description">The pack is self-contained. Download the zip, then copy its files into your own assets folder. A template copy already ships them at <code class="nds-inline-code lang-html">docs-assets/events/Hajj/</code>. The paths below assume <code class="nds-inline-code lang-html">assets/events/Hajj/</code>. The script carries its own CSS and finds its images next to itself, so the folder works at any location as long as its contents stay together. You need the <code class="nds-inline-code lang-html">.min.css</code> file only for the no-script setup below, or when you want to override a rule.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">One tag applies everything</div>
-                    </div>
-                    <div class="demo-code">
+            <div class="nds-block">
+                <h3 class="nds-block-title">One tag applies everything</h3>
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
@@ -99,8 +95,6 @@ hero_float_actions:
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -114,12 +108,8 @@ hero_float_actions:
             <p class="nds-section-description">No-JS alternative: link the stylesheet for the decorations, and paste the slide markup yourself. Add the CSS link in <code class="nds-inline-code lang-html">&lt;head&gt;</code>, and place the slide as the first child of <code class="nds-inline-code lang-html">.nds-swiper-wrapper</code> (raise the hero's <code class="nds-inline-code lang-css">--total</code> by one). The background flips for direction automatically.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">No-JS setup: stylesheet link and slide markup</div>
-                    </div>
-                    <div class="demo-code">
+            <div class="nds-block">
+                <h3 class="nds-block-title">No-JS setup: stylesheet link and slide markup</h3>
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
@@ -169,8 +159,6 @@ hero_float_actions:
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

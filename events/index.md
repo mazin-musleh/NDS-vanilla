@@ -1,5 +1,4 @@
 ---
-exclude_showcase: true
 layout: page
 title: Events
 hero_title: Events

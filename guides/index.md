@@ -1,5 +1,4 @@
 ---
-exclude_showcase: true
 layout: page
 title: Guides
 hero_title: Guides

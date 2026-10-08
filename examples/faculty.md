@@ -1,5 +1,4 @@
 ---
-exclude_showcase: true
 layout: page
 title: "Dr. Mohammed Ahmed Al-Salem"
 lang: en

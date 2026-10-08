@@ -3,7 +3,6 @@ layout: home
 
 lang: en
 direction: ltr
-exclude_showcase: true
 
 # Bundle sizes shown in the Architecture section (gzipped KB). Update when bundles change:
 # gzip -c assets/js/nds-main.min.js | wc -c (and delegated/extras, _site/.../nds.critical.min.css)

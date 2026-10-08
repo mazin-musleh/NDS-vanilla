@@ -33,8 +33,8 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
   flex-direction: column;
 
   // Ignored in normal flow, where a block-level flex box already fills its
-  // container. It only bites when tabs is itself a flex item (a demo card's
-  // .state-demo, a flex page region), where it would otherwise shrink to
+  // container. It only bites when tabs is itself a flex item (a flex page
+  // region), where it would otherwise shrink to
   // content width. Preferred over a width: a width resolves against the
   // parent's content box and ignores the element's own inline margins.
   flex: 1;

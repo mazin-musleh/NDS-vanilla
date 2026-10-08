@@ -1,5 +1,4 @@
 ---
-exclude_showcase: true
 layout: page
 title: DGA Templates
 hero_title: DGA Templates

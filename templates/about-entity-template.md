@@ -1,5 +1,4 @@
 ---
-exclude_showcase: true
 layout: page
 title: About The Entity Template
 hero_style: ""
