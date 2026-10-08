@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 10:56 AM"
+last_edit: "09/10/2026 - 12:45 AM"
 ---
 
 <section id="dateOverview" class="nds-content-section nds-doc-overview">
@@ -209,6 +209,8 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 | `NDS.date.today()` | Returns today, in the site's timezone, as a `Date` at local midnight |
 | `NDS.date.formatFor(element)` | Returns the nearest `data-date-format` around `element`, the element's own included, or `DD/MM/YYYY` when there is none. Pass it as `format` for content in that part of the page |
 | `NDS.date.site` | Returns `{ timeZone, format }` from `<html>`. `timeZone` is `undefined` when the attribute is missing or invalid |
+| `NDS.date.monthNames(calendar, lang)` | Returns the 12 month names of `'gregory'` or `'hijri'`, in `lang` or the page's language. The Hijri names come from the `date` section of the [string pack](../core/i18n) |
+| `NDS.date.weekdayNames(lang)` | Returns the 7 short weekday names, Sunday first, in `lang` or the page's language |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="date-api-js" data-canon data-lang="js">

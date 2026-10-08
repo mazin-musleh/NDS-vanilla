@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:20 PM"
+last_edit: "09/10/2026 - 12:45 AM"
 ---
 
 <section id="ipvOverview" class="nds-content-section nds-doc-overview">
@@ -147,7 +147,7 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
             <i class="hgi hgi-stroke hgi-translate"></i>
             <span class="nds-label">Localized Controls</span>
           </span>
-          <p class="nds-item-desc">The button labels and the control list follow the page language. Arabic and English ship in <code class="nds-inline-code">assets/i18n/ipv/</code>.</p>
+          <p class="nds-item-desc">The button labels and the control list follow the page language. Arabic and English ship in the <code class="nds-inline-code">ipv</code> section of <code class="nds-inline-code">assets/i18n/{lang}.json</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

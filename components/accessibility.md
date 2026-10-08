@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.5"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 07:15 AM"
+last_edit: "09/10/2026 - 12:45 AM"
 ---
 
 <section id="accessibilityOverview" class="nds-content-section nds-doc-overview">
@@ -214,7 +214,7 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
                     <div class="nds-form-header">
                       <label for="a11y-mode-motor-impaired">
                         <span class="nds-label" data-i18n-name>Motor Impaired Mode</span>
-                        <span class="nds-info"  data-i18n-desc>Enlarges click targets and emphasizes the focus indicator</span>
+                        <span class="nds-info"  data-i18n-desc>Enlarges click targets</span>
                       </label>
                     </div>
                     <div class="nds-form-control">
@@ -440,7 +440,7 @@ To remove the panel from a page, delete its FAB and every other `data-accessibil
 ### Text
 {: .nds-block-title}
 
-The panel reads its text from `assets/i18n/accessibility/en.json` and `ar.json`. To use your own text, set `window.NDS_I18N.accessibility` before the NDS scripts. It replaces the file, and a key it leaves out shows in English. Copy every key from `en.json`.
+The panel reads its text from `assets/i18n/accessibility/en.json` and `ar.json`. To change some of it, set `window.NDS_I18N.accessibility` before the NDS scripts: each key you set replaces that text, and the rest keep the file's text. See [Internationalization](../core/i18n).
 
 </div>
   </div>

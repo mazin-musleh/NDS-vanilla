@@ -488,6 +488,15 @@
   js: _js/nds-ipv.js
   scss: _sass/components/_ipv.scss
 
+- title: "Internationalization"
+  description: "The text NDS components write, in one file per language that the page loads and a site can change or extend"
+  use_when: "Change the text a component writes (a message, a button label, a screen reader label), add a language, or give your own component text in the page's language. The page's language comes from lang on <html>. For dates in the page's language use Date."
+  icon: '<i class="hgi hgi-stroke hgi-translate"></i>'
+  category: "Core"
+  tags: ["JS", "API"]
+  url: "/core/i18n.html"
+  js: _js/nds-core.js
+
 - title: "Link"
   description: "Inline navigation with color variants and automatic external-link detection"
   use_when: "An inline text link with colour variants, and automatic detection and marking of external links."

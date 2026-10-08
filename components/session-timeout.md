@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "2.0.0"
 updated: "2.0.0"
-last_edit: "08/10/2026 - 08:55 PM"
+last_edit: "09/10/2026 - 12:45 AM"
 ---
 
 <section id="sessionTimeoutOverview" class="nds-content-section nds-doc-overview">
@@ -207,7 +207,7 @@ At the end, the script fires `nds:session:end`. With `logout`, the page then goe
 ### Text
 {: .nds-block-title}
 
-The modals read their text from `assets/i18n/session-timeout/en.json` and `ar.json`. To use your own text, set `window.NDS_I18N['session-timeout']` before the NDS scripts. It replaces the file, and a key it leaves out shows in English. Copy every key from `en.json`. On an Arabic page, the countdown still reads `02:03` left to right, in Latin digits.
+The modals read their text from the `session-timeout` section of `assets/i18n/en.json` and `ar.json`. To change some of it, set `window.NDS_I18N['session-timeout']` before the NDS scripts: each key you set replaces that text, and the rest keep the pack's text. See [Internationalization](../core/i18n). On an Arabic page, the countdown still reads `02:03` left to right, in Latin digits.
 
 ### JavaScript
 {: .nds-block-title}
