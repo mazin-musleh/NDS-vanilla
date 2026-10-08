@@ -2,61 +2,60 @@
 # The audit's migration rule reads this file (nds-audit.js, bundled by js_processor.rb).
 # Built from scripts/surface-history.rb plus DEPRECATIONS.md; add rows at each release.
 #   kind     class | attribute | property | id | event (events go to the docs only: a page cannot see a listener)
-#   scope    the selector the old name lived under; a match must sit inside it (closest)
+#   scope    the selector the old name lived under; a match must sit inside it (closest), or with a leading & match it itself
 #   status   renamed | removed (broken today) | deprecated (still works until the next major)
 #   use      today's name, when there is one
 #   since    the release that changed it
 #   inert    a property NDS never read: setting it never had an effect
 - { kind: attribute, name: data-a11y-pos, scope: .nds-accessibility-toggle, status: renamed, use: data-fab-pos, since: "1.5.0", fix: "Use data-fab-pos on the toggle and data-panel-side on the panel." }
-- { kind: attribute, name: data-accept-message, status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
-- { kind: attribute, name: data-accept-title, status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
+- { kind: attribute, name: data-accept-message, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
+- { kind: attribute, name: data-accept-title, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
 - { kind: attribute, name: data-accessibility-close, scope: .nds-accessibility-panel, status: renamed, use: data-panel-close, since: "1.5.0", fix: "Use data-panel-close on the close button." }
-- { kind: attribute, name: data-always-open-on, scope: .nds-drawer, status: deprecated, use: data-state, since: "1.12.0", fix: "Write data-state=\"always-open\" on the drawer." }
-- { kind: attribute, name: data-cooldown-loading, status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
-- { kind: attribute, name: data-decimals, status: removed, since: "2.0.0", fix: "Remove it: decimals follow the number as written in data-counter or data-target." }
-- { kind: attribute, name: data-decline-message, status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
-- { kind: attribute, name: data-decline-title, status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
-- { kind: attribute, name: data-duration, status: deprecated, use: data-counter-duration, since: "2.0.0", fix: "Still works until the next major. Use data-counter-duration." }
-- { kind: attribute, name: data-filter-name, status: removed, since: "1.7.0", fix: "Delete it. Applied filter chips show the raw value." }
-- { kind: attribute, name: data-free, scope: .nds-number-format, status: deprecated, since: "1.12.0", fix: "Leave out data-currency and write the label, such as Free." }
-- { kind: attribute, name: data-lang-dir, status: removed, since: "1.0.4", fix: "The language switcher module is gone and it only flipped direction. Wire your own click handler that sets html lang and dir." }
-- { kind: attribute, name: data-lang-toggle, status: removed, since: "1.0.4", fix: "The language switcher module is gone and it only flipped direction. Wire your own click handler that sets html lang and dir." }
-- { kind: attribute, name: data-lang-value, status: removed, since: "1.0.4", fix: "The language switcher module is gone and it only flipped direction. Wire your own click handler that sets html lang and dir." }
-- { kind: attribute, name: data-loading, scope: .nds-slider-container, status: deprecated, use: nds-loading, since: "1.12.0", fix: "Use the nds-loading class." }
-- { kind: attribute, name: data-open-on, scope: .nds-drawer, status: deprecated, use: data-state, since: "1.12.0", fix: "Write data-state=\"open\" on the <li> and its <ul>, and aria-expanded=\"true\" on its button." }
-- { kind: attribute, name: data-sent-message, status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
-- { kind: attribute, name: data-sent-title, status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
-- { kind: attribute, name: data-start, status: deprecated, use: data-counter-start, since: "2.0.0", fix: "Still works until the next major. Use data-counter-start." }
-- { kind: attribute, name: data-target, scope: .nds-counter-value, status: deprecated, use: data-counter, since: "1.12.0", fix: "Write the end value in data-counter." }
-- { kind: attribute, name: peek, scope: .nds-swiper, status: deprecated, use: --peek, since: "1.12.0", fix: "Set --peek in the swiper's style attribute." }
-- { kind: attribute, name: slides-max, scope: .nds-swiper, status: deprecated, use: --max-slides, since: "1.12.0", fix: "Set --max-slides in the swiper's style attribute." }
-- { kind: attribute, name: slides-mid, scope: .nds-swiper, status: deprecated, use: --mid-slides, since: "1.12.0", fix: "Set --mid-slides in the swiper's style attribute." }
-- { kind: attribute, name: slides-min, scope: .nds-swiper, status: deprecated, use: --min-slides, since: "1.12.0", fix: "Set --min-slides in the swiper's style attribute." }
-- { kind: class, name: actions-column, status: renamed, use: nds-actions-column, since: "2.0.0", fix: "Use nds-actions-column." }
+- { kind: attribute, name: data-always-open-on, scope: "&.nds-drawer", status: deprecated, use: data-state, since: "2.0.0", fix: "Write data-state=\"always-open\" on the drawer." }
+- { kind: attribute, name: data-cooldown-loading, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
+- { kind: attribute, name: data-decimals, scope: "&:is([data-counter], .nds-counter-value, .nds-number-format)", status: removed, since: "2.0.0", fix: "Remove it: decimals follow the number as written in data-counter or data-target." }
+- { kind: attribute, name: data-decline-message, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
+- { kind: attribute, name: data-decline-title, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
+- { kind: attribute, name: data-duration, scope: "&:is([data-counter], .nds-counter-value)", status: deprecated, use: data-counter-duration, since: "2.0.0", fix: "Use data-counter-duration." }
+- { kind: attribute, name: data-filter-name, scope: .nds-filter, status: removed, since: "1.7.0", fix: "Delete it. Applied filter chips show the raw value." }
+- { kind: attribute, name: data-free, scope: "&.nds-number-format", status: deprecated, since: "2.0.0", fix: "Leave out data-currency and write the label, such as Free." }
+- { kind: attribute, name: data-lang-dir, scope: .nds-main-nav, status: removed, since: "1.0.4", fix: "The language switcher module is gone and it only flipped direction. Wire your own click handler that sets html lang and dir." }
+- { kind: attribute, name: data-lang-value, scope: .nds-main-nav, status: removed, since: "1.0.4", fix: "The language switcher module is gone and it only flipped direction. Wire your own click handler that sets html lang and dir." }
+- { kind: attribute, name: data-loading, scope: "&.nds-slider-container", status: deprecated, use: nds-loading, since: "1.12.0", fix: "Use the nds-loading class." }
+- { kind: attribute, name: data-open-on, scope: .nds-drawer, status: deprecated, use: data-state, since: "2.0.0", fix: "Write data-state=\"open\" on the <li> and its <ul>, and aria-expanded=\"true\" on its button." }
+- { kind: attribute, name: data-sent-message, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
+- { kind: attribute, name: data-sent-title, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
+- { kind: attribute, name: data-start, scope: "&:is([data-counter], .nds-counter-value)", status: deprecated, use: data-counter-start, since: "2.0.0", fix: "Use data-counter-start." }
+- { kind: attribute, name: data-target, scope: "&.nds-counter-value", status: deprecated, use: data-counter, since: "2.0.0", fix: "Write the end value in data-counter." }
+- { kind: attribute, name: peek, scope: "&.nds-swiper", status: deprecated, use: --peek, since: "1.12.0", fix: "Set --peek in the swiper's style attribute." }
+- { kind: attribute, name: slides-max, scope: "&.nds-swiper", status: deprecated, use: --max-slides, since: "1.12.0", fix: "Set --max-slides in the swiper's style attribute." }
+- { kind: attribute, name: slides-mid, scope: "&.nds-swiper", status: deprecated, use: --mid-slides, since: "1.12.0", fix: "Set --mid-slides in the swiper's style attribute." }
+- { kind: attribute, name: slides-min, scope: "&.nds-swiper", status: deprecated, use: --min-slides, since: "1.12.0", fix: "Set --min-slides in the swiper's style attribute." }
+- { kind: class, name: actions-column, scope: .nds-table, status: renamed, use: nds-actions-column, since: "2.0.0", fix: "Use nds-actions-column." }
 - { kind: class, name: article-tags, scope: .nds-group, status: removed, since: "1.0.5", fix: "Delete it, it had no styles." }
-- { kind: class, name: checkbox-column, status: renamed, use: nds-checkbox-column, since: "2.0.0", fix: "Use nds-checkbox-column." }
+- { kind: class, name: checkbox-column, scope: .nds-table, status: renamed, use: nds-checkbox-column, since: "2.0.0", fix: "Use nds-checkbox-column." }
 - { kind: class, name: code-example, scope: .nds-tabs.nds-code, status: removed, since: "2.0.0", fix: "Remove it: a panel in .nds-tabs.nds-code needs no class." }
 - { kind: class, name: external, scope: ".nds-sidemenu li", status: removed, since: "2.0.0", fix: "Remove it: the side menu no longer styles li.redirect.external." }
 - { kind: class, name: focus, scope: .nds-form-control, status: deprecated, since: "1.9.0", fix: "Remove it: the field styles its own focus." }
-- { kind: class, name: generalInfo, status: removed, since: "2.0.0", fix: "Remove it: the top bar rule is gone and no markup used it." }
-- { kind: class, name: hgi-arrange-by-numbers-1-9, scope: .hgi, status: deprecated, use: hgi-arrange-by-numbers-one-9, since: "1.12.0", fix: "Use hgi-arrange-by-numbers-one-9." }
-- { kind: class, name: hgi-arrange-by-numbers-9-1, scope: .hgi, status: deprecated, use: hgi-arrange-by-numbers-nine-1, since: "1.12.0", fix: "Use hgi-arrange-by-numbers-nine-1." }
-- { kind: class, name: hgi-cplusplus, scope: .hgi, status: deprecated, use: hgi-cpp, since: "1.12.0", fix: "Use hgi-cpp." }
-- { kind: class, name: hgi-go-backward-5-sec, scope: .hgi, status: deprecated, use: hgi-go-backward-five-sec, since: "1.12.0", fix: "Use hgi-go-backward-five-sec." }
-- { kind: class, name: hgi-go-forward-5-sec, scope: .hgi, status: deprecated, use: hgi-go-forward-five-sec, since: "1.12.0", fix: "Use hgi-go-forward-five-sec." }
-- { kind: class, name: hgi-layout-2-column, scope: .hgi, status: deprecated, use: hgi-layout-two-column, since: "1.12.0", fix: "Use hgi-layout-two-column." }
-- { kind: class, name: hgi-layout-2-row, scope: .hgi, status: deprecated, use: hgi-layout-two-row, since: "1.12.0", fix: "Use hgi-layout-two-row." }
-- { kind: class, name: hgi-layout-3-column, scope: .hgi, status: deprecated, use: hgi-layout-three-column, since: "1.12.0", fix: "Use hgi-layout-three-column." }
-- { kind: class, name: hgi-layout-3-row, scope: .hgi, status: deprecated, use: hgi-layout-three-row, since: "1.12.0", fix: "Use hgi-layout-three-row." }
-- { kind: class, name: hgi-mp-3-01, scope: .hgi, status: deprecated, use: hgi-mp-three-01, since: "1.12.0", fix: "Use hgi-mp-three-01." }
-- { kind: class, name: hgi-mp-3-02, scope: .hgi, status: deprecated, use: hgi-mp-three-02, since: "1.12.0", fix: "Use hgi-mp-three-02." }
-- { kind: class, name: hgi-mp-4-01, scope: .hgi, status: deprecated, use: hgi-mp-four-01, since: "1.12.0", fix: "Use hgi-mp-four-01." }
-- { kind: class, name: hgi-mp-4-02, scope: .hgi, status: deprecated, use: hgi-mp-four-02, since: "1.12.0", fix: "Use hgi-mp-four-02." }
-- { kind: class, name: hgi-ski-dice-faces-01, scope: .hgi, status: deprecated, use: hgi-ski, since: "1.12.0", fix: "Use hgi-ski." }
+- { kind: class, name: generalInfo, scope: .nds-topbar, status: removed, since: "2.0.0", fix: "Remove it: the top bar rule is gone and no markup used it." }
+- { kind: class, name: hgi-arrange-by-numbers-1-9, scope: .hgi, status: deprecated, use: hgi-arrange-by-numbers-one-9, since: "2.0.0", fix: "Use hgi-arrange-by-numbers-one-9." }
+- { kind: class, name: hgi-arrange-by-numbers-9-1, scope: .hgi, status: deprecated, use: hgi-arrange-by-numbers-nine-1, since: "2.0.0", fix: "Use hgi-arrange-by-numbers-nine-1." }
+- { kind: class, name: hgi-cplusplus, scope: .hgi, status: deprecated, use: hgi-cpp, since: "2.0.0", fix: "Use hgi-cpp." }
+- { kind: class, name: hgi-go-backward-5-sec, scope: .hgi, status: deprecated, use: hgi-go-backward-five-sec, since: "2.0.0", fix: "Use hgi-go-backward-five-sec." }
+- { kind: class, name: hgi-go-forward-5-sec, scope: .hgi, status: deprecated, use: hgi-go-forward-five-sec, since: "2.0.0", fix: "Use hgi-go-forward-five-sec." }
+- { kind: class, name: hgi-layout-2-column, scope: .hgi, status: deprecated, use: hgi-layout-two-column, since: "2.0.0", fix: "Use hgi-layout-two-column." }
+- { kind: class, name: hgi-layout-2-row, scope: .hgi, status: deprecated, use: hgi-layout-two-row, since: "2.0.0", fix: "Use hgi-layout-two-row." }
+- { kind: class, name: hgi-layout-3-column, scope: .hgi, status: deprecated, use: hgi-layout-three-column, since: "2.0.0", fix: "Use hgi-layout-three-column." }
+- { kind: class, name: hgi-layout-3-row, scope: .hgi, status: deprecated, use: hgi-layout-three-row, since: "2.0.0", fix: "Use hgi-layout-three-row." }
+- { kind: class, name: hgi-mp-3-01, scope: .hgi, status: deprecated, use: hgi-mp-three-01, since: "2.0.0", fix: "Use hgi-mp-three-01." }
+- { kind: class, name: hgi-mp-3-02, scope: .hgi, status: deprecated, use: hgi-mp-three-02, since: "2.0.0", fix: "Use hgi-mp-three-02." }
+- { kind: class, name: hgi-mp-4-01, scope: .hgi, status: deprecated, use: hgi-mp-four-01, since: "2.0.0", fix: "Use hgi-mp-four-01." }
+- { kind: class, name: hgi-mp-4-02, scope: .hgi, status: deprecated, use: hgi-mp-four-02, since: "2.0.0", fix: "Use hgi-mp-four-02." }
+- { kind: class, name: hgi-ski-dice-faces-01, scope: .hgi, status: deprecated, use: hgi-ski, since: "2.0.0", fix: "Use hgi-ski." }
 - { kind: class, name: hgi-solid, status: removed, since: "1.4.0", fix: "Only the stroke icon style ships. Use \"hgi hgi-stroke hgi-NAME\" or an nds-hgi-* class." }
-- { kind: class, name: hgi-sorting-1-9, scope: .hgi, status: deprecated, use: hgi-sorting-one-9, since: "1.12.0", fix: "Use hgi-sorting-one-9." }
-- { kind: class, name: hgi-sorting-9-1, scope: .hgi, status: deprecated, use: hgi-sorting-nine-1, since: "1.12.0", fix: "Use hgi-sorting-nine-1." }
-- { kind: class, name: hidden, status: renamed, use: hidden, since: "1.4.0", fix: "Use the native hidden attribute (always hidden) or data-hidden=\"sm md lg\" for widths. The .hidden class has no styles." }
+- { kind: class, name: hgi-sorting-1-9, scope: .hgi, status: deprecated, use: hgi-sorting-one-9, since: "2.0.0", fix: "Use hgi-sorting-one-9." }
+- { kind: class, name: hgi-sorting-9-1, scope: .hgi, status: deprecated, use: hgi-sorting-nine-1, since: "2.0.0", fix: "Use hgi-sorting-nine-1." }
+- { kind: class, name: hidden, scope: "&[class*=\"nds-\"]", status: renamed, use: hidden, since: "1.4.0", fix: "Use the native hidden attribute (always hidden) or data-hidden=\"sm md lg\" for widths. The .hidden class has no styles." }
 - { kind: class, name: nds-404, status: renamed, use: nds-status-section, since: "2.0.0", fix: "Use nds-status-section." }
 - { kind: class, name: nds-accessibility-panel-body, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-body, since: "1.5.0", fix: "Use the shared nds-panel-body class." }
 - { kind: class, name: nds-accessibility-panel-footer, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-footer, since: "1.5.0", fix: "Use the shared nds-panel-footer class." }
@@ -109,10 +108,10 @@
 - { kind: class, name: nds-footer-social-icons, scope: .nds-footer, status: renamed, use: nds-footer-icon-row, since: "1.0.3", fix: "Social and app links now sit in nds-footer-icons > nds-footer-icon-group > nds-footer-icon-row. Re-copy the footer from the Footer page." }
 - { kind: class, name: nds-footer-social-wrapper, scope: .nds-footer, status: renamed, use: nds-footer-icon-row, since: "1.0.3", fix: "Social and app links now sit in nds-footer-icons > nds-footer-icon-group > nds-footer-icon-row. Re-copy the footer from the Footer page." }
 - { kind: class, name: nds-foundingDay, status: renamed, use: nds-founding-day, since: "2.0.0", fix: "Use nds-founding-day." }
-- { kind: class, name: nds-full-width, scope: .nds-card, status: deprecated, use: nds-full, since: "1.12.0", fix: "Use nds-full: on a card, nds-full-width is the full-bleed breakout." }
+- { kind: class, name: nds-full-width, scope: "&.nds-card", status: deprecated, use: nds-full, since: "2.0.0", fix: "Use nds-full: on a card, nds-full-width is the full-bleed breakout." }
 - { kind: class, name: nds-gold, scope: .nds-card, status: removed, since: "1.1.0", fix: "Use a status color (nds-info, nds-warning and so on) or the default card." }
 - { kind: class, name: nds-gradient-green, status: deprecated, use: nds-gradient-primary, since: "1.9.0", fix: "Use nds-gradient-primary." }
-- { kind: class, name: nds-green, scope: ":is(.nds-content-section, .nds-footer)", status: deprecated, use: nds-primary, since: "1.9.0", fix: "Use nds-primary or nds-brand: the surface follows the theme color." }
+- { kind: class, name: nds-green, scope: "&:is(.nds-content-section, .nds-footer)", status: deprecated, use: nds-primary, since: "1.9.0", fix: "Use nds-primary or nds-brand: the surface follows the theme color." }
 - { kind: class, name: nds-group, status: renamed, use: nds-tags, since: "1.0.5", fix: "Use nds-tags for a tag list." }
 - { kind: class, name: nds-hero-content, status: removed, since: "1.0.5", fix: "Delete it, the hero no longer uses this wrapper." }
 - { kind: class, name: nds-hgi-solid-alert, status: removed, since: "1.4.0", fix: "Use the feedback icon or an nds-hgi-* outline icon; the solid marks are tokens only." }
@@ -143,7 +142,7 @@
 - { kind: class, name: nds-required-notice, status: renamed, use: nds-note, since: "2.0.0", fix: "Use nds-note with data-status=\"error\"." }
 - { kind: class, name: nds-rowView, status: renamed, use: nds-horizontal, since: "2.0.0", fix: "Use nds-horizontal (inside a nav menu, nds-nav-row)." }
 - { kind: class, name: nds-section-shape, scope: .nds-content-section, status: renamed, use: nds-section-icon, since: "2.0.0", fix: "Use nds-section-icon inside nds-section-title." }
-- { kind: class, name: nds-statistic, scope: .nds-card, status: deprecated, use: nds-center, since: "1.12.0", fix: "Use nds-center, and nds-card-number on the number." }
+- { kind: class, name: nds-statistic, scope: "&.nds-card", status: deprecated, use: nds-center, since: "2.0.0", fix: "Use nds-center, and nds-card-number on the number." }
 - { kind: class, name: nds-swiper-button-next, scope: .nds-swiper, status: removed, since: "1.0.2", fix: "Drop the class. Keep nds-next on the button and wrap in nds-swiper-navigation > nds-swiper-buttons." }
 - { kind: class, name: nds-swiper-button-prev, scope: .nds-swiper, status: removed, since: "1.0.2", fix: "Drop the class. Keep nds-prev on the button and wrap in nds-swiper-navigation > nds-swiper-buttons." }
 - { kind: class, name: nds-swiper-pagination-bullet, scope: .nds-swiper-pagination, status: renamed, use: nds-bullet, since: "1.0.2", fix: "Use nds-bullet; the swiper creates bullets itself, so only custom CSS needs the rename." }
@@ -157,11 +156,11 @@
 - { kind: class, name: nds-vertical-lg, scope: .nds-stepper, status: removed, since: "2.0.0", fix: "Remove it: the plain layout class is the desktop layout; -sm and -md set phones and tablets." }
 - { kind: class, name: nds-wSideInfo, status: renamed, use: nds-has-sideinfo, since: "2.0.0", fix: "Use nds-has-sideinfo." }
 - { kind: class, name: nds-wSideMenu, status: renamed, use: nds-has-sidemenu, since: "2.0.0", fix: "Use nds-has-sidemenu." }
-- { kind: class, name: open, scope: ".nds-drawer li", status: deprecated, use: data-state, since: "1.0.0", fix: "Write data-state=\"open\" on the <li> and its <ul>, and aria-expanded=\"true\" on its button." }
+- { kind: class, name: open, scope: "&.nds-drawer li", status: deprecated, use: data-state, since: "1.0.0", fix: "Write data-state=\"open\" on the <li> and its <ul>, and aria-expanded=\"true\" on its button." }
 - { kind: class, name: redirect, scope: ".nds-sidemenu li", status: removed, since: "2.0.0", fix: "Remove it: the side menu no longer styles li.redirect.external." }
-- { kind: class, name: showZoom, status: renamed, use: nds-zoom-badge, since: "2.0.0", fix: "Use nds-zoom-badge." }
-- { kind: class, name: sr-only, status: renamed, use: nds-sr-only, since: "2.0.0", fix: "Use nds-sr-only." }
-- { kind: class, name: table-actions, status: renamed, use: nds-table-actions, since: "2.0.0", fix: "Use nds-table-actions." }
+- { kind: class, name: showZoom, scope: .nds-card, status: renamed, use: nds-zoom-badge, since: "2.0.0", fix: "Use nds-zoom-badge." }
+- { kind: class, name: sr-only, scope: "[class*=\"nds-\"]", status: renamed, use: nds-sr-only, since: "2.0.0", fix: "Use nds-sr-only." }
+- { kind: class, name: table-actions, scope: .nds-table, status: renamed, use: nds-table-actions, since: "2.0.0", fix: "Use nds-table-actions." }
 - { kind: event, name: nds:cooldown:loading, status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
 - { kind: event, name: nds:digitalStamp:closed, status: renamed, use: nds:digital-stamp:closed, since: "2.0.0", fix: "Listen for nds:digital-stamp:closed." }
 - { kind: event, name: nds:digitalStamp:opened, status: renamed, use: nds:digital-stamp:opened, since: "2.0.0", fix: "Listen for nds:digital-stamp:opened." }

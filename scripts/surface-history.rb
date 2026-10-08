@@ -38,7 +38,7 @@ def names_at(tag)
   dir = File.join(OUT, tag)
   FileUtils.rm_rf(dir)
   FileUtils.mkdir_p(dir)
-  paths = (%w[_sass assets/css assets/js docs-assets/events] + DOC_DIRS).select { |p| !git('ls-tree', '--name-only', tag, p).empty? }
+  paths = (%w[_sass assets/css assets/js docs-assets/events _data] + DOC_DIRS).select { |p| !git('ls-tree', '--name-only', tag, p).empty? }
   system("git -C \"#{ROOT}\" archive #{tag} #{paths.join(' ')} | tar -x -C \"#{dir}\"", exception: true)
 
   css = css_of(dir)
@@ -46,6 +46,7 @@ def names_at(tag)
   # Event packs ship in the template too; their JS carries their CSS inline.
   js = Dir[File.join(dir, '{assets/js,docs-assets/events/*}/*.min.js')].reject { |f| f =~ SKIP_JS }.map { |f| File.read(f) }.join
   shell = %w[_includes _layouts].flat_map { |d| Dir[File.join(dir, d, '**/*.html')] }.map { |f| File.read(f) }.join
+  data = Dir[File.join(dir, '_data/**/*.yml')].reject { |f| f.end_with?('migrations.yml') }.map { |f| File.read(f) }.join
   docs = DOC_DIRS.flat_map { |d| Dir[File.join(dir, d, '**/*.{md,html}')] }.map { |f| File.read(f) }.join
   dataset = js.scan(/\.dataset\.([a-z]\w*)/).flatten.map { |n| 'data-' + n.gsub(/[A-Z]/) { "-#{$&.downcase}" } }
 
@@ -61,8 +62,10 @@ def names_at(tag)
     # Any mention counts: canon markup, a table row, a code sample.
     'documented' => docs.scan(/[\w-]+/).uniq.sort,
     # What the docs and shell tell users to write: a name here is canon, styled or not.
+    # The shell writes some attributes bare or from _data (the nav's data_attr), so any mention counts there.
     'markup' => ((docs + shell).scan(/class="([^"]*)"/).flatten.flat_map(&:split) +
-                 (docs + shell).scan(/\s(data-[\w-]+)=/).flatten + shell.scan(/\sid="([\w-]+)"/).flatten).uniq.sort,
+                 (docs + shell).scan(/\s(data-[\w-]+)=/).flatten + (shell + data).scan(/\b(data-[a-z][\w-]*)/).flatten +
+                 shell.scan(/\sid="([\w-]+)"/).flatten).uniq.sort,
   }
   FileUtils.rm_rf(dir)
   File.write(cache, JSON.pretty_generate(names))

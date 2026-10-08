@@ -20,7 +20,8 @@ const page = await browser.newPage();
 const warnings = [];
 page.on('console', (msg) => {
     const text = msg.text();
-    if (text.includes('[NDS.Audit]')) warnings.push(text);
+    // The closing "N errors, N warnings" line is the summary, not a finding.
+    if (text.includes('[NDS.Audit]') && !/ errors, \d+ warnings/.test(text)) warnings.push(text);
 });
 
 await page.goto(`${BASE}/${PAGE}`, { waitUntil: 'networkidle' });

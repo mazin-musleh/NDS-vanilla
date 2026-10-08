@@ -221,10 +221,23 @@ class JSProcessor
   def bundle_deps(bundle_name, source_files)
     deps = source_files.map { |sf| File.join(@source_dir, sf) }
     deps += injected_bundles.values.flatten.map { |sf| File.join(@source_dir, sf) } if bundle_name == 'nds-main.min.js'
+    deps << MIGRATIONS if bundle_name == 'nds-audit.min.js'
     (deps + global_deps).uniq
   end
 
   # A bundle is stale when its output is missing or older than any dependency.
+  # _data/migrations.yml as the audit's rows: [kind, name, scope, status, use, since, fix, inert],
+  # 0 for an empty field. A fix that only says "Use <use>." is rebuilt at runtime. Events stay
+  # out: a page cannot see a listener.
+  MIGRATIONS = '_data/migrations.yml'
+  def migrations_js
+    rows = YAML.load_file(MIGRATIONS).reject { |r| r['kind'] == 'event' }.map do |r|
+      fix = r['fix'] == "Use #{r['use']}." ? 0 : r['fix']
+      [r['kind'], r['name'], r['scope'] || 0, r['status'], r['use'] || 0, r['since'].to_s, fix || 0, r['inert'] ? 1 : 0]
+    end
+    JSON.generate(rows)
+  end
+
   def bundle_stale?(bundle_name, source_files)
     out = File.join(@output_dir, bundle_name)
     return true unless File.exist?(out)
@@ -351,6 +364,7 @@ class JSProcessor
         next unless file_path
         
         original_content = File.read(file_path)
+        original_content = original_content.sub('/*@migrations*/[]') { migrations_js } if source_file == 'nds-audit.js'
         processed_files << file_path
         bundle_size += original_content.length
         
