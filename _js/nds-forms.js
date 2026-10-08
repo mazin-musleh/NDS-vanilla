@@ -173,7 +173,7 @@
         shell.hidden = true;
         shell.disabled = true;  // inert affordance — keeps it out of the tab order while loading
         shell.setAttribute('data-loading-slot', '');
-        shell.setAttribute('aria-label', strings.t('loading'));
+        strings.set(shell, 'aria-label', 'loading');
         shell.innerHTML = '<i class="nds-icon" aria-hidden="true"></i>';
         action.appendChild(shell);
         return shell;

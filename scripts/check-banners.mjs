@@ -69,6 +69,7 @@ const SCOPE = [
     ['nds-rating.js', 'Rating'],
     ['nds-scroll-more.js', 'ScrollMore'],
     ['nds-selection.js', 'Selection'],
+    ['nds-session-timeout.js', 'SessionTimeout'],
     ['nds-share.js', 'Share'],
     ['nds-sideinfo.js', 'Sideinfo'],
     ['nds-sidemenu.js', 'Sidemenu'],

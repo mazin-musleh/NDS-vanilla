@@ -41,6 +41,7 @@
  *                                      each scope holds its skeleton until the strings land)
  *     NDS.i18n.strings(component, defaults) → { t, set, load }   a component's strings;
  *                                      set() re-writes its text when the file lands
+ *     NDS.i18n.pack() → Promise         the page language's pack; the loader starts injected bundles after it
  *     NDS.i18n.format(value, vars)     fill {name}; a plural value picks by vars.n
  *     NDS.triggerEvents(el)            dispatch input + change so forms and consumers sync
  *     NDS.badge(el, count) · NDS.buildChip(value, opts)
@@ -188,16 +189,18 @@
             return /^[a-z]{2,3}$/.test(l) ? l : 'en';
         },
 
-        // undefined until known; then the inline override, the pack section, the own file, or null.
+        // undefined until known; then the pack section or the own file (null when neither),
+        // with the inline override laid over it key by key. Until the file lands, the
+        // override stands alone.
         _section(component, lang) {
             const inline = window.NDS_I18N && window.NDS_I18N[component];
-            if (inline) return inline;
             lang = this._lang(lang);
             const pack = this._files[lang];
-            if (pack === undefined) return undefined;
-            if (pack && component in pack) return pack[component];
-            const own = this._files[component + '/' + lang];
-            return own === undefined ? undefined : own;
+            const data = pack === undefined ? undefined
+                : pack && component in pack ? pack[component]
+                : this._files[component + '/' + lang];
+            if (!inline) return data;
+            return data ? Object.assign({}, data, inline) : inline;
         },
 
         _get(component, lang) {
@@ -207,6 +210,9 @@
                 return this._file(component + '/' + lang);
             });
         },
+
+        // The page language's pack — the loader starts the injected bundles after it.
+        pack() { return this._file(this._lang()); },
 
         // One fetch per file per page; falls back to the en file.
         _file(path) {
@@ -232,7 +238,7 @@
                 const d = I._section(component, lang);
                 if (d === undefined && lang) I._get(component, lang);
                 // Own keys only: a key from outside (a cached value, a browser error name) never reaches Object.prototype.
-                return I.format(has(d, key) ? d[key] : has(defaults, key) ? defaults[key] : key, vars);
+                return I.format(has(d, key) ? d[key] : has(defaults, key) ? defaults[key] : key, vars, lang);
             };
             return {
                 t,
@@ -254,9 +260,9 @@
 
         // Fill {name} from vars. A plural value is an object of Intl.PluralRules
         // categories ({ one, two, few, many, other }), picked by vars.n.
-        format(value, vars) {
+        format(value, vars, lang) {
             if (value && typeof value === 'object' && !Array.isArray(value)) {
-                const lang = this._lang();
+                lang = this._lang(lang);
                 const rules = this._plural[lang] || (this._plural[lang] = new Intl.PluralRules(lang));
                 value = value[rules.select(vars && vars.n)] || value.other;
             }

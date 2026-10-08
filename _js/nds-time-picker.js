@@ -172,7 +172,7 @@
     // one innerHTML for the panel beats ~100 imperative appends.
     function optionMarkup(value, label) {
         return '<button type="button" class="nds-btn nds-subtle nds-select-option" data-value="' + value + '">'
-            +     '<span class="nds-option-text"><span class="nds-label">' + label + '</span></span>'
+            +     '<span class="nds-option-text"><span class="nds-label">' + NDS.escapeHtml(label) + '</span></span>'
             +  '</button>';
     }
 
@@ -191,6 +191,7 @@
         // the aria-label carries the real name. "AM/PM" measured 53px inside a
         // 54px box — one font change from clipping — so the meridiem shows a
         // neutral dash. The picked value ("AM", "م") is short and fits.
+        label = NDS.escapeHtml(label);
         const placeholder = unit === 'meridiem' ? '--' : label;
         return '<div class="nds-form-container nds-select nds-darker" data-time-picker-unit="' + unit + '">'
             +    '<div class="nds-form-control">'

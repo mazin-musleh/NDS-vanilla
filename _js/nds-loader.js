@@ -673,10 +673,13 @@
                 if (deferredComponents.length) drainList(deferredComponents, logAllDone);
                 else logAllDone();
 
-                // Each bundle's group inits on its own arrival.
+                // Each bundle's group inits on its own arrival, once the string pack is in:
+                // these components write their text at init.
+                // ponytail: 3 s cap, so a stalled pack never holds them; past it they start in English.
+                const strings = Promise.race([NDS.i18n.pack(), new Promise(r => setTimeout(r, 3000))]);
                 for (const name in injectedGroups) {
                     const group = injectedGroups[name];
-                    loadBundle(name).then(() => drainList(group));
+                    Promise.all([loadBundle(name), strings]).then(() => drainList(group));
                 }
 
                 stampWhenStyled();
