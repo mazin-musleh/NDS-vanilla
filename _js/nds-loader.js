@@ -338,6 +338,12 @@
             selector: '.nds-countdown',
         },
         {
+            // After Modal and Countdown, which it drives. Delegated: nothing shows until the warning.
+            name: 'SessionTimeout',
+            selector: '[data-session-timeout]',
+            destroy: (root) => NDS.SessionTimeout?.destroy?.(root),
+        },
+        {
             // Critical: a click in the deferred gap would bypass the single-submit cooldown.
             name: 'CooldownButton',
             selector: '.nds-cooldown',

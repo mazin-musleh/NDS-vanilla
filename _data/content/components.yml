@@ -211,7 +211,7 @@
 
 - title: "Countdown"
   description: "Live count of the time left to a deadline or the end of a duration, as text or cards"
-  use_when: "Time left until a deadline or the end of a duration: an application window, a session timeout, a one-time code expiry, an event start."
+  use_when: "Time left until a deadline or the end of a duration: an application window, a one-time code expiry, an event start. For a warning before an idle session ends use Session Timeout."
   icon: '<i class="hgi hgi-stroke hgi-hourglass"></i>'
   category: "UI"
   tags: ["JS", "CSS", "API"]
@@ -724,6 +724,15 @@
   url: "/components/forms.html"
   js: _js/nds-forms.js
   scss: _sass/components/_forms.scss
+
+- title: "Session Timeout"
+  description: "Warning before an idle session ends, with a countdown and a way to stay signed in"
+  use_when: "A signed-in service whose server ends idle sessions: warn the user before the logout and let them extend the session (WCAG 2.2.1). Activity renews it, tabs share one deadline, and the end opens a sign-in modal or goes to the logout URL. For a deadline shown on the page use Countdown."
+  icon: '<i class="hgi hgi-stroke hgi-timer-02"></i>'
+  category: "UI"
+  tags: ["JS", "API"]
+  url: "/components/session-timeout.html"
+  js: _js/nds-session-timeout.js
 
 - title: "Share"
   description: "Share buttons for X, LinkedIn, WhatsApp, other sites, and copy link, in a menu or a row"
