@@ -18,7 +18,7 @@
  *                           An empty .nds-countdown-label inside a unit gets the unit word in the element's language,
  *                           and data-countdown-sizes with every form of it, so the CSS reserves the widest
  *                           A <span> root is inline text; any other root is one row of units (CSS, .nds-lg/.nds-sm),
- *                           a .nds-card.nds-statistic per unit bringing every card variant and knob
+ *                           a centered .nds-card (.nds-center) per unit bringing every card variant and knob
  *   [data-countdown-hide-zero]  on a unit: hidden while its value is 0 (the default markup's days)
  *   .nds-countdown-ended    at zero it becomes the root's only content, from any depth; set() puts the rest back.
  *                           Without it the zeros stay
@@ -30,8 +30,9 @@
  *     unit in the middle carries into the next one written.
  *   - data-countdown-seconds counts from wire time, so a reload restarts it. For a resumed timer
  *     the server renders the remainder, or the page calls set(el, seconds).
- *   - The root is a bidi isolate in the page direction (CSS): Arabic words around the units read
- *     right to left, and 05:12:09 stays one number run without a forced direction.
+ *   - With no dir of its own, the root gets dir="auto": digits and separators alone (05:12:09) read
+ *     left to right in every language, and Arabic unit words make it right to left. The ended
+ *     message gets dir="auto" too, so its words never turn the numbers around.
  */
 
 (() => {
@@ -221,6 +222,10 @@
             else console.warn('NDS Countdown: data-countdown-now is not a date', src);
         }
         if (!el.querySelector('[data-unit]')) el.insertAdjacentHTML('afterbegin', DEFAULT_MARKUP);
+        // A time is left to right in every script. Without this, the sized largest unit (an inline box,
+        // which bidi treats as a neutral) flips "02:03" to "03:02" on an Arabic page.
+        if (!el.hasAttribute('dir')) el.dir = 'auto';
+        el.querySelectorAll('.nds-countdown-ended:not([dir])').forEach((m) => { m.dir = 'auto'; });
         const seconds = el.getAttribute('data-countdown-seconds');
         // Stamped only on success, so reinit() retries a target filled in later.
         if (track(el, seconds !== null ? parseInt(seconds, 10) : el.getAttribute('data-countdown'))) el.setAttribute(WIRED_ATTR, '');

@@ -168,7 +168,7 @@
         {
             // Deferred: cosmetic on-scroll animation.
             name: 'Numbers',
-            selector: '.nds-number-format, .nds-counter-value',
+            selector: '.nds-number-format, [data-counter], .nds-counter-value',
         },
         {
             // Docs-only, own bundle: _code.scss paints the box and gutter with no JS.

@@ -97,7 +97,7 @@ hideFeedback: true
     </div>
     <div class="nds-section-body">
         <div class="nds-grid" style="--max-col:4;--mid-col:2;--min-col:1;">
-            <div class="nds-card nds-statistic nds-stroke">
+            <div class="nds-card nds-center nds-stroke">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
                         <span class="nds-featured-icon nds-circle nds-xl">
@@ -107,7 +107,7 @@ hideFeedback: true
                 </div>
                 <div class="nds-card-content">
                     <div class="nds-card-text">
-                        <span class="nds-card-number nds-counter-value nds-number-format" data-target="1248">0</span>
+                        <span class="nds-card-number" data-counter="1248">0</span>
                         <p class="nds-card-description">Completed transactions</p>
                     </div>
                     <div class="nds-card-meta">
@@ -120,7 +120,7 @@ hideFeedback: true
                     </div>
                 </div>
             </div>
-            <div class="nds-card nds-statistic nds-stroke nds-yellow">
+            <div class="nds-card nds-center nds-stroke nds-yellow">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
                         <span class="nds-featured-icon nds-circle nds-xl">
@@ -130,7 +130,7 @@ hideFeedback: true
                 </div>
                 <div class="nds-card-content">
                     <div class="nds-card-text">
-                        <span class="nds-card-number nds-counter-value nds-number-format" data-target="56">0</span>
+                        <span class="nds-card-number" data-counter="56">0</span>
                         <p class="nds-card-description">Pending requests</p>
                     </div>
                     <div class="nds-card-meta">
@@ -143,7 +143,7 @@ hideFeedback: true
                     </div>
                 </div>
             </div>
-            <div class="nds-card nds-statistic nds-stroke nds-blue">
+            <div class="nds-card nds-center nds-stroke nds-blue">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
                         <span class="nds-featured-icon nds-circle nds-xl">
@@ -153,7 +153,7 @@ hideFeedback: true
                 </div>
                 <div class="nds-card-content">
                     <div class="nds-card-text">
-                        <span class="nds-card-number nds-counter-value nds-number-format" data-target="12">0</span>
+                        <span class="nds-card-number" data-counter="12">0</span>
                         <p class="nds-card-description">Active team members</p>
                     </div>
                     <div class="nds-card-meta">
@@ -166,7 +166,7 @@ hideFeedback: true
                     </div>
                 </div>
             </div>
-            <div class="nds-card nds-statistic nds-stroke nds-red">
+            <div class="nds-card nds-center nds-stroke nds-red">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
                         <span class="nds-featured-icon nds-circle nds-xl">
@@ -176,7 +176,7 @@ hideFeedback: true
                 </div>
                 <div class="nds-card-content">
                     <div class="nds-card-text">
-                        <span class="nds-card-number nds-counter-value nds-number-format" data-target="10">0</span>
+                        <span class="nds-card-number" data-counter="10">0</span>
                         <p class="nds-card-description">System notifications</p>
                     </div>
                     <div class="nds-card-meta">

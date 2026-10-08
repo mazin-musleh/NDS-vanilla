@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.2"
 updated: "1.1.0"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "08/10/2026 - 11:36 AM"
 ---
 
 <section id="metricOverview" class="nds-content-section nds-doc-overview">
@@ -22,7 +22,7 @@ A metric goes inside a [card](../components/cards). It holds a large value, a tr
 
 Pick another component when:
 
-- the value has no comparison period: a [card](../components/cards) with `nds-statistic`
+- the value has no comparison period: a [statistic card](../components/cards), a centered card with `nds-card-number`
 - the chart is the focus, or it has more than one series: [Chart](../components/chart)
 
 </div>

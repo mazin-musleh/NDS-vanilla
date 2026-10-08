@@ -101,7 +101,7 @@ layout_class: nds-card-view
 
                 <div class="nds-block nds-cq">
                     <div class="program-overview-cards nds-grid" style="--max-col: 2;--mid-col: 4;--min-col: 2;--min-width: 100px;--gap: 12px;height: auto;">
-                        <div class="nds-card nds-stroke nds-statistic">
+                        <div class="nds-card nds-stroke nds-center">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
                                     <span class="nds-featured-icon nds-circle nds-lg">
@@ -111,13 +111,13 @@ layout_class: nds-card-view
                             </div>
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
-                                    <span class="nds-card-number nds-counter-value nds-number-format nds-md"
-                                        data-target="132">0</span>
+                                    <span class="nds-card-number nds-md"
+                                        data-counter="132">0</span>
                                     <p class="nds-card-description">Credit Hours</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="nds-card nds-stroke nds-statistic">
+                        <div class="nds-card nds-stroke nds-center">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
                                     <span class="nds-featured-icon nds-circle nds-lg">
@@ -127,13 +127,13 @@ layout_class: nds-card-view
                             </div>
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
-                                    <span class="nds-card-number nds-counter-value nds-number-format nds-md"
-                                        data-target="4">0</span>
+                                    <span class="nds-card-number nds-md"
+                                        data-counter="4">0</span>
                                     <p class="nds-card-description">Years</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="nds-card nds-stroke nds-statistic">
+                        <div class="nds-card nds-stroke nds-center">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
                                     <span class="nds-featured-icon nds-circle nds-lg">
@@ -143,13 +143,13 @@ layout_class: nds-card-view
                             </div>
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
-                                    <span class="nds-card-number nds-counter-value nds-number-format nds-md"
-                                        data-target="8">0</span>
+                                    <span class="nds-card-number nds-md"
+                                        data-counter="8">0</span>
                                     <p class="nds-card-description">Semesters</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="nds-card nds-stroke nds-statistic">
+                        <div class="nds-card nds-stroke nds-center">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
                                     <span class="nds-featured-icon nds-circle nds-lg">
@@ -159,8 +159,8 @@ layout_class: nds-card-view
                             </div>
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
-                                    <span class="nds-card-number nds-counter-value nds-number-format nds-md"
-                                        data-target="16">0</span>
+                                    <span class="nds-card-number nds-md"
+                                        data-counter="16">0</span>
                                     <p class="nds-card-description">Weeks per Semester</p>
                                 </div>
                             </div>

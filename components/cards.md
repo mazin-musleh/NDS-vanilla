@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:20 PM"
+last_edit: "08/10/2026 - 11:36 AM"
 ---
 
 <section id="cardOverview" class="nds-content-section nds-doc-overview">
@@ -115,7 +115,7 @@ Pick another component when:
 </a>
 </script>
 <script type="text/html" id="card-statistic" data-canon>
-<div class="nds-card nds-stroke nds-statistic">
+<div class="nds-card nds-stroke nds-center">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
       <span class="nds-featured-icon nds-circle nds-xl">
@@ -125,7 +125,7 @@ Pick another component when:
   </div>
   <div class="nds-card-content">
     <div class="nds-card-text">
-      <span class="nds-card-number nds-counter-value nds-number-format" data-target="125847">0</span>
+      <span class="nds-card-number" data-counter="125847">0</span>
       <p class="nds-card-description">Active Users</p>
     </div>
   </div>
@@ -237,7 +237,7 @@ Pick another component when:
 | Structure | Avatar header | canon `#card-avatar` | — | A person or an account |
 | Structure | No header | canon `#card-no-header` | — | Text only |
 | Structure | Link card (hint: The whole card is one link) | canon `#card-link` | — | The whole card is one `<a>` (or `<button>`). Hover and press feedback come from the element. Do not put links or buttons inside it |
-| Structure | Statistic (hint: One headline number) | canon `#card-statistic` | — | One headline number with a label, centered. The number counts up from 0 to `data-target` when it scrolls into view. See [Numbers](../utilities/numbers#counterAnimation) |
+| Structure | Statistic (hint: One headline number) (id: statistic) | canon `#card-statistic` | — | One headline number with a label, in a centered card. The number is `.nds-card-number`, which works in any card. With `data-counter`, it counts up from 0 when it scrolls into view. See [Numbers](../utilities/numbers#counterAnimation) |
 | Meta | None (default) | — | — | No tags or rating |
 | Meta | Tags | canon `#card-tags` | `.nds-card-content` | Tags alone go straight in the content |
 | Meta | Rating | canon `#card-rating` | `.nds-card-content` | A star rating with a count |
@@ -271,7 +271,7 @@ Pick another component when:
 | Tinted | Tinted (hint: A light tint of the card color) | `.nds-color` | `.nds-card:not(.nds-oncolor)` | Fills the card with a light tint of its color. With no color class, the tint is the brand primary |
 | Layout | Stacked (default) | — | — | Header above content |
 | Layout | Row (hint: Header beside the content) | `.nds-horizontal` | `.nds-card` | Header beside content. The card stacks again when it is narrower than 324px |
-| Layout | Center | `.nds-center` | `.nds-card:not(.nds-statistic)` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing. It does not move the card: its container places it |
+| Layout | Center (not: statistic) | `.nds-center` | `.nds-card` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing. It does not move the card: its container places it |
 | Full width | Full width | `.nds-full` | `.nds-card` | Fills its container, instead of stopping at 360px. Do not use `.nds-full-width` on a card: inside a section, that class breaks out to the full screen width |
 | Number size | LG (default) | — | `.nds-card-number` | The display size |
 | Number size | MD | `.nds-md` | `.nds-card-number` | A smaller headline number |
@@ -401,7 +401,7 @@ Set these on `.nds-card`, except the image properties, which go on `.nds-card-im
 | `--card-title` | `var(--text-display)` | Title color |
 | `--card-subtitle` | `var(--text-primary-paragraph)` | Subtitle color |
 | `--card-text` | `var(--text-display)` | Description color |
-| `--card-number` | `var(--text-primary-strong)` | Statistic number color |
+| `--card-number` | `var(--text-primary-strong)` | Color of the headline number, `.nds-card-number` |
 | `--card-rating` | `var(--text-secondary-paragraph)` | Rating count color |
 | `--featuredicon-color` | `var(--featuredicons-icon-primary)` | Featured icon and avatar color. Color classes change it |
 | `--featuredicon-bg` | `var(--featuredicons-background-primary-light)` | Featured icon background |

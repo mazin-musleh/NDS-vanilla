@@ -20,6 +20,7 @@
  *                       shown and while it animates out. Read-only for consumers
  * Gotchas:
  *   - One modal at a time: open() closes the current one first.
+ *   - Enter while the modal box itself has focus clicks the first .nds-primary button in .nds-card-actions.
  *   - open() focuses the first close control (or the modal itself); close() returns focus
  *     to whatever held it before the open.
  *   - nds-backdrop.js must be in the bundle. Without it init() and open() log an error
@@ -77,7 +78,9 @@
       NDS.State.set(modal, 'open');
       return;
     }
-    if (activeModal) close();
+    // Swapping modals hands the overlay over in place: close()'s deferred hide() would pop the NEW config.
+    const swap = !!activeModal;
+    if (swap) close(true);
 
     // Show backdrop. A [data-modal-static] modal drops both dismiss paths, so
     // it closes only through a [data-modal-close] control or NDS.Modal.close()
@@ -88,7 +91,8 @@
       zIndex: 1100,
       onClick: () => close(),
       escapeClose: !isStatic,
-      clickToClose: !isStatic
+      clickToClose: !isStatic,
+      replace: swap
     });
 
     // Show modal
@@ -121,7 +125,7 @@
   /**
    * Close active modal
    */
-  function close() {
+  function close(swap) {
     if (!activeModal) return;
 
     const modal = activeModal;
@@ -148,7 +152,7 @@
     // Backdrop.hide() runs a synchronous scrollLock.unlock() (full-page reflow);
     // keeping it out of the click frame is what holds the close INP down.
     setTimeout(() => {
-      NDS.Backdrop.hide();
+      if (!swap) NDS.Backdrop.hide();
       // Re-opened during the fade: open() pushed a fresh backdrop owner, so the
       // pop above stays balanced and the modal must stay up.
       if (activeModal === modal) return;
@@ -233,6 +237,11 @@
         e.preventDefault();
         close();
       }
+      // Enter on the box itself (focused when there is no close control) presses the primary action.
+      if (e.key === 'Enter' && activeModal && e.target === activeModal) {
+        const primary = activeModal.querySelector('.nds-card-actions .nds-btn.nds-primary');
+        if (primary) { e.preventDefault(); primary.click(); }
+      }
     }, { signal });
 
     _initDone = true;
@@ -244,7 +253,7 @@
   NDS.Modal = {
     init,
     open,
-    close,
+    close: () => close(),  // never forward an argument as swap
     isOpen: () => activeModal !== null,
     destroy
   };

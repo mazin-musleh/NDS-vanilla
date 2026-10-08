@@ -2,13 +2,13 @@
 layout: page
 title: Numbers
 hero_title: Numbers - National Design System
-hero_description: Classes that format a number with separators, add a currency symbol or a unit, and count up to a number when it scrolls into view
+hero_description: A class that formats a number with separators, a currency symbol or a unit, and an attribute that counts up to a number when it scrolls into view
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "08/10/2026 - 11:36 AM"
 ---
 
 <section id="numbersOverview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "06/10/2026 - 09:57 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-Numbers is two classes. `nds-number-format` formats the number in an element's text, and can add a currency symbol or a unit. `nds-counter-value` counts up to a number.
+Numbers is a class and an attribute. `nds-number-format` formats the number in an element's text, and can add a currency symbol or a unit. `data-counter` counts up to a number.
 
 Pick another component when:
 
@@ -40,7 +40,7 @@ Pick another component when:
 </script>
 
 <script type="text/html" id="numbers-counter" data-canon>
-<span class="nds-counter-value nds-number-format" data-target="42850.75">0</span>
+<span data-counter="42850.75">0</span>
 </script>
 
     </div>
@@ -54,7 +54,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Currency and Unit go on `.nds-number-format`. Start and Duration go on `.nds-counter-value`, so they need the Counter structure. A currency and a unit do not combine: use one.
+Currency and Unit go on `.nds-number-format`, so they need the Number structure. Start and Duration go on `[data-counter]`, so they need the Counter structure. A currency and a unit do not combine: use one.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -71,9 +71,9 @@ Currency and Unit go on `.nds-number-format`. Start and Duration go on `.nds-cou
 | Currency | KRW | `[data-currency="KRW"]` | `.nds-number-format:not([data-unit])` | Korean won (₩) |
 | Currency | TRY | `[data-currency="TRY"]` | `.nds-number-format:not([data-unit])` | Turkish lira (₺) |
 | Unit | Unit (hint: Any text after the number) | `[data-unit="km"]` | `.nds-number-format:not([data-currency])` | A unit such as km, kg, MB or years. Not with a currency |
-| Start | Start From (hint: Counts from 40,000, not from 0) | `[data-start="40000"]` | `.nds-counter-value` | For a large number: the count shows only its last part |
-| Duration | 1000 ms (default) | — | `.nds-counter-value` | One second. Fits most numbers |
-| Duration | 2000 ms | `[data-duration="2000"]` | `.nds-counter-value` | A slower count, for a large number |
+| Start | Start From (hint: Counts from 40,000, not from 0) | `[data-counter-start="40000"]` | `[data-counter]` | For a large number: the count shows only its last part |
+| Duration | 1000 ms (default) | — | `[data-counter]` | One second. Fits most numbers |
+| Duration | 2000 ms | `[data-counter-duration="2000"]` | `[data-counter]` | A slower count, for a large number |
 {: #numbersVariantsTable .nds-table .nds-responsive}
 
 </div>
@@ -90,7 +90,7 @@ Currency and Unit go on `.nds-number-format`. Start and Duration go on `.nds-cou
 ### Counter Animation
 {: #counterAnimation}
 
-A counter counts from `data-start` to `data-target` when half of it is in view. It runs once, and then the script sets `data-animated` on it. A user who asks the system for reduced motion sees the end value at once. The counter adds separators itself, so it needs `nds-number-format` only for a currency or a unit.
+A counter counts from `data-counter-start` to the `data-counter` value when half of it is in view. It runs once, and then the script sets `data-animated` on it. A user who asks the system for reduced motion sees the end value at once. The counter adds separators itself, so it needs `nds-number-format` only for a currency or a unit.
 
 ### Currency Symbol
 {: #currencyFormat}
@@ -117,7 +117,7 @@ A counter counts from `data-start` to `data-target` when half of it is in view. 
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Automatic Start</span>
           </span>
-          <p class="nds-item-desc">The loader starts Numbers on any page that has <code class="nds-inline-code lang-html">nds-number-format</code> or <code class="nds-inline-code lang-html">nds-counter-value</code>. You write no script.</p>
+          <p class="nds-item-desc">The loader starts Numbers on any page that has <code class="nds-inline-code lang-html">nds-number-format</code> or <code class="nds-inline-code lang-html">data-counter</code>. You write no script.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -161,14 +161,15 @@ A counter counts from `data-start` to `data-target` when half of it is in view. 
 
 - Write the number in plain digits, with commas or no separators. It shows before the script runs. The script cannot read other separators, such as `3.240.000`.
 - Write `0` as a counter's text. It shows until the count starts.
-- Write the number with the decimals you want shown. `1250.50` shows as `1,250.50`, and a counter with `data-target="98.6"` counts with one decimal.
+- Write the number with the decimals you want shown. `1250.50` shows as `1,250.50`, and a counter with `data-counter="98.6"` counts with one decimal.
 - Use `data-currency`, not a symbol in the text. See [Currency Symbol](#currencyFormat).
 - A screen reader does not read the SAR icon. Where the currency matters, add it as hidden text after the number: `<span class="nds-number-format" data-currency="SAR">1250 <span class="nds-sr-only">riyals</span></span>`.
 - Use `data-unit` for a unit on a number that a script changes. For a fixed suffix, write it in the text, such as `98.5%`.
 - Use a counter for a few headline figures, such as the statistics on a home page or KPI cards. Do not use it for live data or for a value the user changes: it runs once.
-- Keep `data-duration` between 800 and 2000 ms. A shorter count is too fast to see, and a longer one delays the figure.
+- Keep `data-counter-duration` between 800 and 2000 ms. A shorter count is too fast to see, and a longer one delays the figure.
 - For a free price, write the label, such as "Free" or "مجاني", with no `data-currency`.
-- Put a counter in a [Statistic card](../components/cards) for a headline number with a label.
+- Give a counter with a currency or a unit the `nds-number-format` class too: `<span class="nds-number-format" data-currency="SAR" data-counter="1250">0</span>`.
+- Put a counter in a [statistic card](../components/cards) for a headline number with a label: a centered card, with the counter on its `nds-card-number`.
 
 </div>
   </div>
@@ -188,11 +189,13 @@ A counter counts from `data-start` to `data-target` when half of it is in view. 
 |---|---|---|
 | `data-currency` | `.nds-number-format` | Adds the currency symbol: `SAR`, `USD`, `EUR`, `GBP`, `JPY`, `CNY`, `INR`, `KRW` or `TRY`. Any other value adds nothing |
 | `data-unit` | `.nds-number-format` | Adds its text after the number as a unit. Do not combine it with `data-currency` |
-| `data-target` | `.nds-counter-value` | The end value. Text before and after the number stays: `$75,000`, `98.6%`, `1.5M`. Without it, the counter counts to the number in its own text |
-| `data-start` | `.nds-counter-value` | The start value. Default `0` |
-| `data-duration` | `.nds-counter-value` | The length of the count in milliseconds. Default `1000` |
-| `data-animated` | `.nds-counter-value` | The script sets it to `true` when the count ends, and never removes it. A counter with it does not run. To run a counter again, remove it, then call `NDS.Numbers.reinit()`. The counter starts from `data-start` again |
+| `data-counter` | any element | Makes the element a counter. Its value is the end value. Text before and after the number stays: `$75,000`, `98.6%`, `1.5M`. Empty, the counter counts to the number in its own text |
+| `data-counter-start` | `[data-counter]` | The start value. Default `0` |
+| `data-counter-duration` | `[data-counter]` | The length of the count in milliseconds. Default `1000` |
+| `data-animated` | `[data-counter]` | The script sets it to `true` when the count ends, and never removes it. A counter with it does not run. To run a counter again, remove it, then call `NDS.Numbers.reinit()`. The counter starts from `data-counter-start` again |
 {: .nds-table .nds-responsive}
+
+The older counter markup still works, and is deprecated: the `nds-counter-value` class with `data-target`, `data-start` and `data-duration`.
 
 ### CSS Custom Properties
 {: .nds-block-title}
@@ -237,7 +240,7 @@ NDS.Numbers.reinit();
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [KPIs Template](../templates/kpis-template): counters in KPI cards.
-- [Home Template](../templates/home-template): counters with a suffix in `data-target`, such as `1.5M`.
+- [Home Template](../templates/home-template): counters with a suffix in `data-counter`, such as `1.5M`.
 - [Console Demo](../examples/console-demo): counters in statistic cards on a dashboard.
 - [Manage Records](../examples/manage-records): amounts in riyals with `data-currency="SAR"` in a filtered list.
 

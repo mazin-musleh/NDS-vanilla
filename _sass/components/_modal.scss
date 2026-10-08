@@ -153,11 +153,11 @@
 
 // Note: Body scroll lock moved to _backdrop.scss (body[data-nds-scroll-lock])
 
-// Focus trap styles
-.nds-modal[role="dialog"] {
-  &:focus {
-    outline: none;
-  }
+// open() focuses the box when it has no close control: a focus target, not a control, so no ring (alertdialog too).
+// :where() holds 0,1,0, so .nds-card.nds-shadow keeps its shadow.
+.nds-modal:where(:focus) {
+  outline: none;
+  box-shadow: none;
 }
 
 .nds-modal {

@@ -1202,7 +1202,8 @@
         if (i > j) return;
         const first = f[i];
         const last = f[j];
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        // From the container itself (focused when it has no control to start on), Shift+Tab would leave.
+        if (e.shiftKey && (document.activeElement === first || document.activeElement === c)) { e.preventDefault(); last.focus(); }
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     };
 

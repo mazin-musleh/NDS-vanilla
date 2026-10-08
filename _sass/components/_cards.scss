@@ -527,7 +527,7 @@
 // CARD VARIANTS
 // ==============================================
 
-// Statistic card variant
+// Statistic card variant — deprecated: .nds-center renders it the same (DEPRECATIONS.md).
 .nds-card.nds-statistic {
   justify-content: flex-start !important;
 
@@ -550,25 +550,38 @@
       align-items: center;
       text-align: center;
     }
+  }
+}
 
-    :is(.nds-card-number, .nds-counter-value, .nds-number-format) {
-      color: var(--_card-number);
-      font-size: var(--typo-display-clamp-lg-FS);
-      line-height: 1;
-      letter-spacing: -0.96px;
-      direction: ltr;
-      display: block;
-      width: 100%;
+// The card's big number, in any card; a centered card centers it.
+// Deprecated: the Numbers classes standing in for it in a statistic card (DEPRECATIONS.md).
+.nds-card .nds-card-number,
+.nds-card.nds-statistic .nds-card-text :is(.nds-counter-value, .nds-number-format) {
+  color: var(--_card-number);
+  font-size: var(--typo-display-clamp-lg-FS);
+  line-height: 1;
+  letter-spacing: -0.96px;
+  direction: ltr;
+  display: block;
+  width: 100%;
+  --nds-skeleton-width: 100%; // the loading bar spans the row the number does
 
-      &.nds-md {
-        font-size: var(--typo-display-clamp-md-FS);
-      }
+  &.nds-md {
+    font-size: var(--typo-display-clamp-md-FS);
+  }
 
-      &.nds-sm {
-        font-size: var(--typo-display-clamp-sm-FS);
-      }
-    }
+  &.nds-sm {
+    font-size: var(--typo-display-clamp-sm-FS);
+  }
+}
 
+// Starts on the card's side, not the forced ltr's: :dir() reads the dir attribute, not CSS direction.
+// Chrome resolves match-parent against the element's own direction, so it cannot do this.
+.nds-card .nds-card-number {
+  text-align: left;
+
+  &:where(:dir(rtl)) {
+    text-align: right;
   }
 }
 

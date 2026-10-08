@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 11:21 PM"
+last_edit: "08/10/2026 - 11:53 AM"
 ---
 
 <section id="countdownOverview" class="nds-content-section nds-doc-overview">
@@ -45,7 +45,7 @@ Pick another component when:
 </script>
 <script type="text/html" id="countdown-cards" data-canon>
 <div class="nds-countdown" data-countdown="2027-12-31T23:59">
-  <div class="nds-card nds-stroke nds-statistic" data-unit="d">
+  <div class="nds-card nds-stroke nds-center" data-unit="d">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-number"><span class="nds-countdown-value">--</span></span>
@@ -53,7 +53,7 @@ Pick another component when:
       </div>
     </div>
   </div>
-  <div class="nds-card nds-stroke nds-statistic" data-unit="h">
+  <div class="nds-card nds-stroke nds-center" data-unit="h">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-number"><span class="nds-countdown-value">--</span></span>
@@ -61,7 +61,7 @@ Pick another component when:
       </div>
     </div>
   </div>
-  <div class="nds-card nds-stroke nds-statistic" data-unit="m">
+  <div class="nds-card nds-stroke nds-center" data-unit="m">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-number"><span class="nds-countdown-value">--</span></span>
@@ -69,7 +69,7 @@ Pick another component when:
       </div>
     </div>
   </div>
-  <div class="nds-card nds-stroke nds-statistic" data-unit="s">
+  <div class="nds-card nds-stroke nds-center" data-unit="s">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-number"><span class="nds-countdown-value">--</span></span>
@@ -80,7 +80,7 @@ Pick another component when:
 </div>
 </script>
 <script type="text/html" id="countdown-card" data-canon>
-<div class="nds-card nds-stroke nds-statistic">
+<div class="nds-card nds-stroke nds-center">
   <div class="nds-card-content">
     <div class="nds-card-text">
       <span class="nds-card-number"><span class="nds-countdown" data-countdown="2027-12-31T23:59"></span></span>
@@ -117,7 +117,7 @@ Pick another component when:
 | Size | LG (not: inline, units) | `.nds-lg` | `.nds-countdown` | Numbers `--typo-display-clamp-lg-FS`: 32px on a phone, up to 48px on a wide screen |
 | Size | MD (default) (not: inline, units) | — | `.nds-countdown` | Numbers `--typo-display-sm-FS`, 30px. It needs no class |
 | Size | SM (not: inline, units) | `.nds-sm` | `.nds-countdown` | Numbers `--typo-display-xs-FS`, 24px |
-| Direction | Page (default) | — | — | Follows the direction of the page, even inside a card number |
+| Direction | Auto (default) | — | — | Follows the content, even inside a card number: digits and separators alone (`05:12`) read left to right, and Arabic unit words read right to left |
 | Direction | RTL (hint: Right to left, whatever the page) | `[dir="rtl"]` | `.nds-countdown` | Fixes right to left: the first unit sits on the right |
 | Direction | LTR (hint: Left to right, whatever the page) | `[dir="ltr"]` | `.nds-countdown` | Fixes left to right, such as a number left of its word on an Arabic page |
 | Stroke | Stroke (default) | `.nds-stroke` | `.nds-card` | A 1px border on each card. Leave out both stroke and shadow for plain cards |
@@ -218,6 +218,13 @@ At zero, the root gets `data-state="ended"`. A `.nds-countdown-ended` element an
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-arrow-left-right"></i>
+            <span class="nds-label">Time Direction</span>
+          </span>
+          <p class="nds-item-desc">A countdown of digits alone, such as <code class="nds-inline-code lang-html">05:12</code>, reads left to right on every page, Arabic included. Arabic unit words make the countdown read right to left.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-layout-grid"></i>
             <span class="nds-label">Phone Row</span>
           </span>
@@ -272,7 +279,7 @@ At zero, the root gets `data-state="ended"`. A `.nds-countdown-ended` element an
 | `data-countdown-seconds` | `.nds-countdown` | A duration in seconds, counted from the moment the countdown starts. It wins over `data-countdown` |
 | `data-countdown-warn` | `.nds-countdown` | Seconds left at which the script adds `warning` to `data-state` |
 | `data-countdown-now` | `.nds-countdown`, or any element around it, such as `<html>` | The server's current time, in the format of `data-countdown`. The script reads it once, when the countdown starts |
-| `dir` | `.nds-countdown` | Fixes the direction, such as `dir="ltr"` to keep the number left of the word on an Arabic page. Without it, the countdown follows the direction of the page, even inside a card number, which is always left to right. A CSS `direction` on the root works too |
+| `dir` | `.nds-countdown` | Fixes the direction, such as `dir="ltr"` to keep the number left of the word on an Arabic page. Without it, the script sets `dir="auto"`: digits and separators alone read left to right, and Arabic unit words read right to left. A CSS `direction` on the root works too |
 | `data-state="warning"` | `.nds-countdown` | The script adds it when the time left reaches `data-countdown-warn`. It removes it at zero and on `set()` |
 | `data-state="ended"` | `.nds-countdown` | The script adds it at zero. It removes it on `set()` |
 | `data-unit` | an element inside `.nds-countdown` | One unit: `d`, `h`, `m` or `s`. A root with no `[data-unit]` gets the default units from the script |

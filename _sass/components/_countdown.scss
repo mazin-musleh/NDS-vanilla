@@ -5,7 +5,7 @@
 .nds-countdown {
   // Same advance width for every digit, so 09 → 08 does not twitch.
   font-variant-numeric: tabular-nums;
-  // Isolated, in the page direction: author words read right, and 05:12:09 holds together by itself.
+  // Isolated: the script's dir="auto" sets the direction from the content (digits alone read left to right).
   unicode-bidi: isolate;
 
   // A filled label holds the width of its widest word form, and the largest value the width of its

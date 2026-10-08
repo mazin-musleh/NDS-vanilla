@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:34 PM"
+last_edit: "08/10/2026 - 11:53 AM"
 ---
 
 <section id="modalOverview" class="nds-content-section nds-doc-overview">
@@ -213,14 +213,14 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
             <i class="hgi hgi-stroke hgi-focus-point"></i>
             <span class="nds-label">Focus Management</span>
           </span>
-          <p class="nds-item-desc">Focus moves to the first close control when the modal opens, or to the modal when it has none. Tab and Shift + Tab stay inside the modal. Focus goes back to the trigger when it closes.</p>
+          <p class="nds-item-desc">Focus moves to the first close control when the modal opens, or to the modal when it has none. The modal itself shows no focus ring. Tab and Shift + Tab stay inside the modal. Focus goes back to the trigger when it closes.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Dismissal</span>
+            <span class="nds-label">Keyboard Control</span>
           </span>
-          <p class="nds-item-desc">Escape closes the modal.</p>
+          <p class="nds-item-desc">Escape closes the modal. When the modal itself has focus, Enter presses the first primary button in <code class="nds-inline-code lang-html">.nds-card-actions</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -262,7 +262,7 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
             <i class="hgi hgi-stroke hgi-transition-left"></i>
             <span class="nds-label">One Modal at a Time</span>
           </span>
-          <p class="nds-item-desc">Opening a modal closes the open one first.</p>
+          <p class="nds-item-desc">Opening a modal closes the open one first. The new modal keeps its own settings, such as <code class="nds-inline-code lang-html">data-modal-static</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -291,6 +291,7 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
 - Give every modal an `id`, and give its trigger that `id` in `data-modal-target`.
 - Ship the modal with `hidden` and `aria-hidden="true"`, so it never shows before the script loads.
 - Give the modal `role="dialog"`, `aria-modal="true"` and an `aria-labelledby` that points to its title. Give the close button an `aria-label`.
+- Use `role="alertdialog"` instead for an urgent message the user did not ask for, such as a session that is about to end.
 - Give every button `type="button"`. In a form, a button without it submits the form.
 - Put `.nds-card-actions` after `.nds-card-content`, not inside it.
 - A [Dropmenu](../components/dropmenu), a select, a [Multiselect](../components/multiselect), an [Autocomplete](../components/autocomplete) or a [Filter](../components/filter) works in a modal with no extra attribute. Its menu moves to `<body>` when it opens, so the modal's edge does not cut it off.
