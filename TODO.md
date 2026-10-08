@@ -142,3 +142,7 @@ Cleared at the 1.12.0 release (2026-09-05). That release shipped the swiper loop
 - **Release notes, Saudi Cities — Removed:** the Saudi Cities page is gone. `docs-assets/data/saudi-cities.json` stays as demo data for the Form Template.
 
 - **File Upload, open after the doc rewrite (2026-10-01).** Design calls: the file size under the name in each row, and an image preview for a photo picker (the old catalog card promised one; it never existed). The check messages wait for the localization sweep. Click through the Editor's image dialog once: reopen it on an embedded image after abandoning a picked file, and the `data:` URL must stay (`dace18f7` moved the staging clear before the prefill).
+
+- **New component: Session Timeout (proposed 2026-10-08).** Warns before an idle logout and offers to extend the session (WCAG 2.2.1 Timing Adjustable); every e-service builds this by hand today. Build from Modal + Countdown, with `NDS.request` for the keep-alive call. Decide first: idle and warning times as attributes on `<html>` or a `create()` call, and what "extend" calls on the server.
+
+- **New component: full calendar (proposed 2026-10-08, large — scope with the owner first).** A page-size calendar of events: month view at minimum, perhaps week and agenda (list) views. Date Picker only picks a day, so nothing shows events across a month today. Reuse `NDS.date` for Hijri and Gregorian, so it can show both calendars. Decide the scope before building: which views, events from markup or JSON, and whether clicking a day or event opens a Modal or a Drawer.

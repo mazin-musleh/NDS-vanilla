@@ -303,7 +303,7 @@
 
 - title: "Drawer"
   description: "Collapsible navigation lists with accordion groups"
-  use_when: "A vertical list container for sidebar navigation, submenus, quick links, and inline notifications, in compact or expanded layouts. For a surface that slides in over the page use Panels; for the main collapsible sidebar use Side Menu."
+  use_when: "A vertical list container for sidebar navigation, submenus, quick links, and inline notifications, in compact or expanded layouts. Also a tree view of nested items, such as folders or categories: add `.nds-lined` to show depth and `data-state="always-open"` to keep branches open. For a surface that slides in over the page use Panels; for the main collapsible sidebar use Side Menu."
   icon: '<i class="hgi hgi-stroke hgi-sidebar-right"></i>'
   category: "UI"
   tags: ["JS", "CSS", "API"]
