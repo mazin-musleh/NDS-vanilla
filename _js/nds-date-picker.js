@@ -68,11 +68,21 @@
         return btn;
     }
 
-    // Shared across both calendar systems
-    var WEEKDAY_NAMES = {
-        ar: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
-        en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    };
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    var strings = NDS.i18n.strings('date-picker', {
+        select_month: 'Select month',
+        select_year: 'Select year',
+        prev_month: 'Previous month',
+        next_month: 'Next month',
+        today: 'Today',
+        close: 'Close',
+        clear: 'Clear',
+        save: 'Save',
+        invalid: 'Invalid date — expected format {format}',
+        before_min: 'Earliest allowed date is {date}',
+        after_max: 'Latest allowed date is {date}',
+        range_order: 'Start date must come before end date',
+    });
 
     // Hijri <-> a local-midnight Date, through NDS.date (Umm al-Qura).
     var HIJRI = { calendar: 'hijri', format: 'D/M/YYYY' };
@@ -106,11 +116,6 @@
     var CalendarConfig = {
         gregorian: {
             type: 'gregorian',
-            monthNames: {
-                ar: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
-                en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-            },
-            weekdayNames: WEEKDAY_NAMES,
             formatDate: function (date, format) {
                 return NDS.date.format(date, { format: format });
             },
@@ -136,12 +141,6 @@
         // Hijri calendar implementation
         hijri: {
             type: 'hijri',
-            monthNames: {
-                ar: ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'],
-                en: ['Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani', 'Jumada al-Ula', 'Jumada al-Akhirah', 'Rajab', 'Shaban', 'Ramadan', 'Shawwal', 'Dhu al-Qadah', 'Dhu al-Hijjah']
-            },
-            weekdayNames: WEEKDAY_NAMES,
-
             formatDate: function (date, format) {
                 return NDS.date.format(date, { calendar: 'hijri', format: format });
             },
@@ -170,26 +169,6 @@
 
     // UI Configuration
     var UIConfig = {
-        buttonLabels: {
-            ar: { today: 'اليوم', close: 'إغلاق', clear: 'مسح', save: 'حفظ' },
-            en: { today: 'Today', close: 'Close', clear: 'Clear', save: 'Save' }
-        },
-        // Stamped via setCustomValidity so NDS.Forms / checkValidity surface
-        // them for hand-typed values the picker UI never allowed.
-        validationMessages: {
-            ar: {
-                invalid: 'تاريخ غير صالح — الصيغة المطلوبة {format}',
-                beforeMin: 'أقرب تاريخ متاح {date}',
-                afterMax: 'آخر تاريخ متاح {date}',
-                rangeOrder: 'تاريخ البداية يجب أن يسبق تاريخ النهاية'
-            },
-            en: {
-                invalid: 'Invalid date — expected format {format}',
-                beforeMin: 'Earliest allowed date is {date}',
-                afterMax: 'Latest allowed date is {date}',
-                rangeOrder: 'Start date must come before end date'
-            }
-        },
         selectors: {
             container: '.nds-form-container',
             dropdown: '.nds-date-picker-dropdown',
@@ -360,12 +339,13 @@
             var dropdown = document.createElement('div');
             dropdown.className = 'nds-date-picker-dropdown';
 
+            var lang = this.getLanguage();
             var calendarHTML =
                 '<div class="nds-calendar-header">' +
                     '<div class="nds-calendar-title">' +
                         '<div class="nds-month-year-selectors">' +
                             '<div class="nds-dropmenu nds-month-dropmenu">' +
-                                '<button class="nds-dropmenu-trigger nds-btn nds-subtle nds-menu-btn" aria-label="Select month">' +
+                                '<button class="nds-dropmenu-trigger nds-btn nds-subtle nds-menu-btn" aria-label="' + NDS.escapeHtml(strings.t('select_month', null, lang)) + '">' +
                                     '<span class="nds-label"></span>' +
                                 '</button>' +
                                 '<div class="nds-dropmenu-menu nds-month-dropmenu">' +
@@ -373,7 +353,7 @@
                                 '</div>' +
                             '</div>' +
                             '<div class="nds-dropmenu nds-year-dropmenu">' +
-                                '<button class="nds-dropmenu-trigger nds-btn nds-subtle nds-menu-btn" aria-label="Select year">' +
+                                '<button class="nds-dropmenu-trigger nds-btn nds-subtle nds-menu-btn" aria-label="' + NDS.escapeHtml(strings.t('select_year', null, lang)) + '">' +
                                     '<span class="nds-label"></span>' +
                                 '</button>' +
                                 '<div class="nds-dropmenu-menu nds-year-dropmenu">' +
@@ -382,10 +362,10 @@
                             '</div>' +
                         '</div>' +
                         '<div class="nds-calendar-month-switch">' +
-                            '<button class="nds-btn nds-subtle nds-icon-only prev-month" type="button" aria-label="Previous month">' +
+                            '<button class="nds-btn nds-subtle nds-icon-only prev-month" type="button" aria-label="' + NDS.escapeHtml(strings.t('prev_month', null, lang)) + '">' +
                                 '<i class="nds-icon nds-hgi-arrow-prev-02" aria-hidden="true"></i>' +
                             '</button>' +
-                            '<button class="nds-btn nds-subtle nds-icon-only next-month" type="button" aria-label="Next month">' +
+                            '<button class="nds-btn nds-subtle nds-icon-only next-month" type="button" aria-label="' + NDS.escapeHtml(strings.t('next_month', null, lang)) + '">' +
                                 '<i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>' +
                             '</button>' +
                         '</div>' +
@@ -398,22 +378,22 @@
                 '<div class="nds-calendar-footer">' +
                     '<div class="nds-calendar-action-start">' +
                         '<button class="nds-btn nds-secondary-outline today-btn" type="button">' +
-                            '<span class="nds-label">Today</span>' +
+                            '<span class="nds-label"></span>' +
                         '</button>' +
                         // Clear is opt-in via data-clearable on the container
                         // (or automatic in range mode — typical use case).
                         // Wiped in cacheElements when not enabled so the handler
                         // simply skips it.
                         '<button class="nds-btn nds-subtle clear-btn" type="button">' +
-                            '<span class="nds-label">Clear</span>' +
+                            '<span class="nds-label"></span>' +
                         '</button>' +
                     '</div>' +
                     '<div class="nds-calendar-action-end">' +
                         '<button class="nds-btn nds-subtle close-btn" type="button">' +
-                            '<span class="nds-label">Close</span>' +
+                            '<span class="nds-label"></span>' +
                         '</button>' +
                         '<button class="nds-btn nds-primary save-btn" type="button">' +
-                            '<span class="nds-label">Save</span>' +
+                            '<span class="nds-label"></span>' +
                         '</button>' +
                     '</div>' +
                 '</div>';
@@ -609,23 +589,24 @@
         // Splits on the range separator symmetrically with parseInitialValue,
         // so anything the picker itself would accept validates clean.
         _validationError: function (raw) {
-            var messages = UIConfig.validationMessages[this.getLanguage()];
+            var lang = this.getLanguage();
+            var msg = function (key, vars) { return strings.t(key, vars, lang); };
             var format = this.state.format;
             var calendar = this.getCurrentCalendar();
             var parts = raw.split(' - ');
-            if (parts.length > 2) return messages.invalid.replace('{format}', format);
+            if (parts.length > 2) return msg('invalid', { format: format });
             var dates = [];
             for (var i = 0; i < parts.length; i++) {
                 var parsed = null;
                 // hijri.parseDate throws (rather than returning null) on
                 // impossible component values — same outcome: invalid.
                 try { parsed = calendar.parseDate(parts[i].trim(), format); } catch (e) {}
-                if (!parsed) return messages.invalid.replace('{format}', format);
+                if (!parsed) return msg('invalid', { format: format });
                 if (this.state.minDate && parsed < this.state.minDate) {
-                    return messages.beforeMin.replace('{date}', calendar.formatDate(this.state.minDate, format));
+                    return msg('before_min', { date: calendar.formatDate(this.state.minDate, format) });
                 }
                 if (this.state.maxDate && parsed > this.state.maxDate) {
-                    return messages.afterMax.replace('{date}', calendar.formatDate(this.state.maxDate, format));
+                    return msg('after_max', { date: calendar.formatDate(this.state.maxDate, format) });
                 }
                 dates.push(parsed);
             }
@@ -674,20 +655,11 @@
         },
 
         // Utility methods
+        // The input's data-lang, then its lang, then the page's: the language of the calendar text.
         getLanguage: function () {
-            // Check if the date input has a data-lang attribute
-            if (this.elements && this.elements.input) {
-                var dataLang = this.elements.input.getAttribute('data-lang');
-                if (dataLang) {
-                    return dataLang.split('-')[0].toLowerCase() === 'ar' ? 'ar' : 'en';
-                }
-                // Check if the date input has a lang attribute
-                if (this.elements.input.lang) {
-                    return this.elements.input.lang.split('-')[0].toLowerCase() === 'ar' ? 'ar' : 'en';
-                }
-            }
-            // Fallback to document language
-            return NDS.langKey;
+            var input = this.elements && this.elements.input;
+            var raw = input && (input.getAttribute('data-lang') || input.lang);
+            return raw ? raw.split('-')[0].toLowerCase() : NDS.lang;
         },
 
         getCurrentCalendar: function () {
@@ -723,8 +695,7 @@
         },
 
         getMonthNames: function (lang) {
-            var calendar = this.getCurrentCalendar();
-            return calendar.monthNames[lang];
+            return NDS.date.monthNames(this.state.calendarType, lang);
         },
 
         isTodayDate: function (date) {
@@ -746,6 +717,16 @@
             this.bindCalendarEvents();
             this.setupLanguageObserver();
             this.render();
+            this._renderWhenStringsLand();
+        },
+
+        // The picker's language may not have landed yet (its own data-lang, or a page
+        // switched by script): render again once it does.
+        _renderWhenStringsLand: function () {
+            var self = this, lang = this.getLanguage();
+            if (!strings.ready(lang)) strings.load(null, lang).then(function () {
+                if (self.state.isInitialized) self.render();
+            });
         },
 
         // Main render method
@@ -1198,9 +1179,7 @@
 
             weekdaysContainer.innerHTML = '';
 
-            var calendar = this.getCurrentCalendar();
-            var lang = this.getLanguage();
-            var weekdayNames = calendar.weekdayNames[lang];
+            var weekdayNames = NDS.date.weekdayNames(this.getLanguage());
 
             weekdayNames.forEach(function (name) {
                 var weekdayElement = document.createElement('div');
@@ -1211,12 +1190,12 @@
         },
 
         renderButtonLabels: function () {
-            var labels = UIConfig.buttonLabels[this.getLanguage()];
-            var map = { todayBtn: labels.today, closeBtn: labels.close, clearBtn: labels.clear, saveBtn: labels.save };
+            var lang = this.getLanguage();
+            var map = { todayBtn: 'today', closeBtn: 'close', clearBtn: 'clear', saveBtn: 'save' };
             for (var key in map) {
                 if (this.elements[key]) {
                     var el = this.elements[key].querySelector('.nds-label');
-                    if (el) el.textContent = map[key];
+                    if (el) el.textContent = strings.t(map[key], null, lang);
                 }
             }
         },
@@ -1702,9 +1681,7 @@
 
             this.elements.monthDropdownMenu.innerHTML = '';
 
-            var calendar = this.getCurrentCalendar();
-            var lang = this.getLanguage();
-            var monthNames = calendar.monthNames[lang];
+            var monthNames = this.getMonthNames(this.getLanguage());
             var self = this;
 
             var isHijri = self.state.calendarType === 'hijri';
@@ -1861,6 +1838,7 @@
                     self.renderWeekdays();
                     self.renderButtonLabels();
                     self.updateDropdowns();
+                    self._renderWhenStringsLand();
                 }
             });
         },

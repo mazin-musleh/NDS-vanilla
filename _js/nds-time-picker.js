@@ -52,22 +52,21 @@
         mm: '(\\d{1,2})', ss: '(\\d{1,2})', A: MERIDIEM, a: MERIDIEM
     };
 
-    const LABELS = {
-        ar: { hour: 'ساعة', minute: 'دقيقة', second: 'ثانية', meridiem: 'ص/م', am: 'ص', pm: 'م',
-              toggle: 'اختيار الوقت' },
-        en: { hour: 'Hour', minute: 'Minute', second: 'Second', meridiem: 'AM/PM', am: 'AM', pm: 'PM',
-              toggle: 'Pick a time' }
-    };
-    const MESSAGES = {
-        ar: { invalid: 'وقت غير صالح — الصيغة المطلوبة {format}',
-              beforeMin: 'أقرب وقت متاح {time}', afterMax: 'آخر وقت متاح {time}' },
-        en: { invalid: 'Invalid time — expected format {format}',
-              beforeMin: 'Earliest allowed time is {time}', afterMax: 'Latest allowed time is {time}' }
-    };
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('time-picker', {
+        hour: 'Hour',
+        minute: 'Minute',
+        second: 'Second',
+        meridiem: 'AM/PM',
+        am: 'AM',
+        pm: 'PM',
+        toggle: 'Pick a time',
+        invalid: 'Invalid time — expected format {format}',
+        before_min: 'Earliest allowed time is {time}',
+        after_max: 'Latest allowed time is {time}',
+    });
 
     const pad = (n) => String(n).padStart(2, '0');
-    const labels = () => LABELS[NDS.langKey] || LABELS.en;
-    const messages = () => MESSAGES[NDS.langKey] || MESSAGES.en;
     const isPM = (token) => /^(PM|pm|م)$/.test(token);
 
     // Token presence drives the panel, so the format string stays the single
@@ -103,9 +102,8 @@
     // The localized display string the visible input shows.
     function formatDisplay(secs, format) {
         const p = parts(secs);
-        const L = labels();
         const h12 = ((p.h24 + 11) % 12) + 1;
-        const mer = p.h24 >= 12 ? L.pm : L.am;
+        const mer = strings.t(p.h24 >= 12 ? 'pm' : 'am');
         const map = {
             HH: pad(p.h24), H: String(p.h24), hh: pad(h12), h: String(h12),
             mm: pad(p.m), ss: pad(p.s), A: mer, a: mer.toLowerCase()
@@ -335,8 +333,7 @@
         // ---- panel ------------------------------------------------------
 
         optionsFor(unit) {
-            const L = labels();
-            if (unit === 'meridiem') return optionMarkup('am', L.am) + optionMarkup('pm', L.pm);
+            if (unit === 'meridiem') return optionMarkup('am', strings.t('am')) + optionMarkup('pm', strings.t('pm'));
 
             const list = [];
             if (unit === 'hour') {
@@ -352,11 +349,10 @@
         }
 
         createPanelDOM() {
-            const L = labels();
             const panel = document.createElement('div');
             panel.className = 'nds-time-picker-panel';
             panel.innerHTML = '<div class="nds-time-picker-units">'
-                + this.units.map((u) => unitMarkup(u, L[u], this.optionsFor(u))).join('')
+                + this.units.map((u) => unitMarkup(u, strings.t(u), this.optionsFor(u))).join('')
                 + '</div>';
 
             // After the input, inside the same form-control — date-picker's shape.
@@ -635,14 +631,13 @@
         }
 
         _validationError(raw) {
-            const M = messages();
             const secs = parseTyped(raw, this.format);
-            if (secs === null) return M.invalid.replace('{format}', this.format);
+            if (secs === null) return strings.t('invalid', { format: this.format });
             if (this.min !== null && secs < this.min) {
-                return M.beforeMin.replace('{time}', formatDisplay(this.min, this.format));
+                return strings.t('before_min', { time: formatDisplay(this.min, this.format) });
             }
             if (this.max !== null && secs > this.max) {
-                return M.afterMax.replace('{time}', formatDisplay(this.max, this.format));
+                return strings.t('after_max', { time: formatDisplay(this.max, this.format) });
             }
             return '';
         }
@@ -653,18 +648,24 @@
             // Release before re-registering — otherwise every re-init stacks
             // another closure on the shared observer.
             if (this._offLangChange) this._offLangChange();
-            this._offLangChange = NDS.onAttrChange('html', ['lang'], () => {
-                // The panel carries localized labels throughout; rebuilding it is
-                // cheaper to reason about than patching six places.
-                if (this.isPanelCreated) {
-                    const open = NDS.State.has(this.elements.container, 'open');
-                    this.cleanup();
-                    this.createPanelDOM();
-                    this.setupDropmenu();
-                    if (open) this.dropmenuInstance.open();
-                }
-                this._quiet(() => this.updateInput());
-            });
+            this._offLangChange = NDS.onAttrChange('html', ['lang'], () => this._relocalize());
+            // Built before the pack landed: its AM/PM went out in English.
+            if (!strings.ready()) this._relocalize();
+        }
+
+        // Rewrites the localized text; waits for the language's strings first.
+        _relocalize() {
+            if (!strings.ready()) { strings.load().then(() => this._relocalize()); return; }
+            // The panel carries localized labels throughout; rebuilding it is
+            // cheaper to reason about than patching six places.
+            if (this.isPanelCreated) {
+                const open = NDS.State.has(this.elements.container, 'open');
+                this.cleanup();
+                this.createPanelDOM();
+                this.setupDropmenu();
+                if (open) this.dropmenuInstance.open();
+            }
+            this._quiet(() => this.updateInput());
         }
 
         // Per-open-cycle teardown: releases the panel's listeners and its DOM,

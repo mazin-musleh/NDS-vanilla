@@ -45,21 +45,15 @@
         parent.appendChild(span);
     }
 
-    // Hijri month names (same spellings as the date picker). We map month
-    // number → name ourselves instead of asking Intl for month:'long' because
-    // Android's bundled ICU computes the correct Umm al-Qura *numeric* fields
-    // but renders the en-US islamic month/era SYMBOLS from the Gregorian set
-    // (month 1 → "January", era → "BC"). The numeric parts below are
-    // calendar-correct on every platform.
-    const HIJRI_MONTHS = {
-        en: ['Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani', 'Jumada al-Ula', 'Jumada al-Akhirah', 'Rajab', 'Shaban', 'Ramadan', 'Shawwal', 'Dhu al-Qadah', 'Dhu al-Hijjah'],
-        ar: ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة']
-    };
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('time-date', {
+        hijri_date: '{month} {day}, {year} AH',
+    });
 
-    function hijriText(day, isArabic) {
+    // Month names from NDS.date: Android's ICU names Umm al-Qura months from the Gregorian set.
+    function hijriText(day) {
         const [d, m, y] = NDS.date.format(day, { calendar: 'hijri', format: 'D M YYYY' }).split(' ');
-        const monthName = (isArabic ? HIJRI_MONTHS.ar : HIJRI_MONTHS.en)[m - 1];
-        return isArabic ? `${d} ${monthName} ${y} هـ` : `${monthName} ${d}, ${y} AH`;
+        return strings.t('hijri_date', { day: d, month: NDS.date.monthNames('hijri')[m - 1], year: y });
     }
 
     // The site's wall clock, [h, m, s]. No data-timezone = the visitor's.
@@ -81,13 +75,15 @@
     function updateDate() {
         const el = document.getElementById('nds-date');
         if (!el || !rendered(el)) return;
+        // The authored placeholder stays until the month names land.
+        if (!strings.ready()) { strings.load().then(updateDate); return; }
         scheduleMidnight();
 
         const isArabic = NDS.isArabic;
         const today = NDS.date.today();
         const type = el.dataset?.calendar || (isArabic ? 'hijri' : 'gregorian');
         renderDate(el, type === 'hijri'
-            ? hijriText(today, isArabic)
+            ? hijriText(today)
             : NDS.date.format(today, {
                 locale: isArabic ? 'ar-SA' : 'en-US',
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'

@@ -31,6 +31,36 @@
         "done": "Your response has been successfully recorded. If you wish to modify or change your answer, you can go back by clicking the Undo button.",
         "undo": "Undo"
     },
+    "date": {
+        "hijri_months": [
+            "Muharram",
+            "Safar",
+            "Rabi al-Awwal",
+            "Rabi al-Thani",
+            "Jumada al-Ula",
+            "Jumada al-Akhirah",
+            "Rajab",
+            "Shaban",
+            "Ramadan",
+            "Shawwal",
+            "Dhu al-Qadah",
+            "Dhu al-Hijjah"
+        ]
+    },
+    "date-picker": {
+        "select_month": "Select month",
+        "select_year": "Select year",
+        "prev_month": "Previous month",
+        "next_month": "Next month",
+        "today": "Today",
+        "close": "Close",
+        "clear": "Clear",
+        "save": "Save",
+        "invalid": "Invalid date — expected format {format}",
+        "before_min": "Earliest allowed date is {date}",
+        "after_max": "Latest allowed date is {date}",
+        "range_order": "Start date must come before end date"
+    },
     "dropmenu": {
         "search": "Search items",
         "search_placeholder": "Search…",
@@ -139,6 +169,21 @@
         "max": "Maximum limit {n}",
         "cleared": "All tags removed",
         "strict": "Choose from the suggestions"
+    },
+    "time-date": {
+        "hijri_date": "{month} {day}, {year} AH"
+    },
+    "time-picker": {
+        "hour": "Hour",
+        "minute": "Minute",
+        "second": "Second",
+        "meridiem": "AM/PM",
+        "am": "AM",
+        "pm": "PM",
+        "toggle": "Pick a time",
+        "invalid": "Invalid time — expected format {format}",
+        "before_min": "Earliest allowed time is {time}",
+        "after_max": "Latest allowed time is {time}"
     },
     "tooltip": {
         "more_info": "More info"

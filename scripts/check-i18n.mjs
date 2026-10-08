@@ -71,6 +71,10 @@ function literalAfter(src, marker) {
     return null;
 }
 
+// Arabic the components READ, not write: typed input accepted on every page.
+const INPUT_TOKENS = {
+    'nds-time-picker.js': ['const MERIDIEM =', 'const isPM ='],   // "2:30 م" parses on an English page too
+};
 const ARABIC_LETTER = /[ء-ي]/;   // letters only: Arabic-Indic digit ranges in regexes pass
 for (const f of readdirSync(JS).filter(f => f.endsWith('.js') && !f.endsWith('.min.js'))) {
     const src = read(join(JS, f));
@@ -90,6 +94,7 @@ for (const f of readdirSync(JS).filter(f => f.endsWith('.js') && !f.endsWith('.m
     const hits = [];
     src.split('\n').forEach((line, i) => {
         if (/^\s*(\/\/|\/?\*)/.test(line)) return;   // comments may quote Arabic
+        if ((INPUT_TOKENS[f] || []).some(t => line.includes(t))) return;
         if (ARABIC_LETTER.test(line) || (f !== 'nds-core.js' && line.includes('NDS.langKey'))) hits.push(i + 1);
     });
     if (hits.length) fails.push(`${f}: hardcoded language text on ${hits.length} line(s): ${hits.slice(0, 8).join(', ')}${hits.length > 8 ? ', …' : ''}`);

@@ -32,6 +32,7 @@
  *     NDS.formatNumber(n, opts) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
  *     NDS.date.parse(text, opts) · .format(date, opts) · .convert(text, from, to) · .today() · .site
  *     NDS.date.formatFor(el)           the nearest data-date-format (<html> is the site's)
+ *     NDS.date.monthNames(calendar, lang) · .weekdayNames(lang)   names in a language, Sunday first
  *                                      calendar days, Gregorian or Hijri (Umm al-Qura);
  *                                      <html data-timezone / data-date-format>
  *     NDS.announce(text)               say something in the shared live region
@@ -171,39 +172,44 @@
         // Each scope holds its skeleton (data-state loading) until they land,
         // so an Arabic page never paints English first; a scope that was
         // already loading keeps it.
-        load(component, scopes) {
-            const data = this._section(component);
+        load(component, scopes, lang) {
+            const data = this._section(component, lang);
             if (data !== undefined) {
                 if (data && scopes) this.apply(scopes, data);
                 return Promise.resolve(data);
             }
             const held = scopes ? this._roots(scopes).filter(r => !NDS.State.has(r, 'loading')) : [];
             held.forEach(r => NDS.State.add(r, 'loading'));
-            return this._get(component).then(() => {
-                const d = this._section(component);
+            return this._get(component, lang).then(() => {
+                const d = this._section(component, lang);
                 if (d && scopes) this.apply(scopes, d);
                 held.forEach(r => NDS.State.remove(r, 'loading'));
                 return d;
             });
         },
 
-        // Reject anything that isn't a BCP-47 base tag (2–3 letters) before it
-        // reaches the fetch URL — guards against <html lang="../foo"> traversal.
-        _lang() { return /^[a-z]{2,3}$/.test(NDS.lang) ? NDS.lang : 'en'; },
+        // The page's language, or the one a component passes ('ar-SA' → 'ar'). Anything
+        // that isn't a BCP-47 base tag (2–3 letters) is 'en' — guards the fetch URL
+        // against <html lang="../foo"> traversal.
+        _lang(lang) {
+            const l = String(lang || NDS.lang).split('-')[0].toLowerCase();
+            return /^[a-z]{2,3}$/.test(l) ? l : 'en';
+        },
 
         // undefined until known; then the inline override, the pack section, the own file, or null.
-        _section(component) {
+        _section(component, lang) {
             const inline = window.NDS_I18N && window.NDS_I18N[component];
             if (inline) return inline;
-            const lang = this._lang(), pack = this._files[lang];
+            lang = this._lang(lang);
+            const pack = this._files[lang];
             if (pack === undefined) return undefined;
             if (pack && component in pack) return pack[component];
             const own = this._files[component + '/' + lang];
             return own === undefined ? undefined : own;
         },
 
-        _get(component) {
-            const lang = this._lang();
+        _get(component, lang) {
+            lang = this._lang(lang);
             return this._file(lang).then(pack => {
                 if (pack && component in pack) return;
                 return this._file(component + '/' + lang);
@@ -218,23 +224,26 @@
         },
 
         // A component's strings: English defaults until its file lands.
-        //   s.t(key, vars)              text in the page's language
+        //   s.t(key, vars, lang)        text in the page's language, or in lang (fetched on first use)
         //   s.set(el, attr, key, vars)  write an attribute ('text' = textContent) now, and
         //                               again when the file lands, unless it changed since
-        //   s.load(scopes)              start the fetch at init; scopes hold their skeleton
+        //   s.load(scopes, lang)        start the fetch at init; scopes hold their skeleton
+        //   s.ready(lang)               true once the text for that language is known
         strings(component, defaults) {
             const I = this, queue = [];
             const landed = () => I._section(component) !== undefined;
             const read = (el, attr) => (attr === 'text' ? el.textContent : el.getAttribute(attr));
             const write = (el, attr, v) => (attr === 'text' ? (el.textContent = v) : el.setAttribute(attr, v));
-            const t = (key, vars) => {
-                const d = I._section(component);
+            const t = (key, vars, lang) => {
+                const d = I._section(component, lang);
+                if (d === undefined && lang) I._get(component, lang);
                 return I.format(d && key in d ? d[key] : defaults[key], vars);
             };
             return {
                 t,
                 defaults,
-                load: scopes => I.load(component, scopes),
+                load: (scopes, lang) => I.load(component, scopes, lang),
+                ready: lang => I._section(component, lang) !== undefined,
                 set(el, attr, key, vars) {
                     const v = t(key, vars);
                     write(el, attr, v);
@@ -250,7 +259,7 @@
         // Fill {name} from vars. A plural value is an object of Intl.PluralRules
         // categories ({ one, two, few, many, other }), picked by vars.n.
         format(value, vars) {
-            if (value && typeof value === 'object') {
+            if (value && typeof value === 'object' && !Array.isArray(value)) {
                 const lang = this._lang();
                 const rules = this._plural[lang] || (this._plural[lang] = new Intl.PluralRules(lang));
                 value = value[rules.select(vars && vars.n)] || value.other;
@@ -523,6 +532,21 @@
         }
 
         // The nearest data-date-format wins, like a dark area; <html> holds the site's.
+        // Hijri names come from the pack: Android's ICU renders Umm al-Qura month
+        // symbols from the Gregorian set (month 1 → "January").
+        const names = NDS.i18n.strings('date', {
+            hijri_months: ['Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani', 'Jumada al-Ula', 'Jumada al-Akhirah', 'Rajab', 'Shaban', 'Ramadan', 'Shawwal', 'Dhu al-Qadah', 'Dhu al-Hijjah'],
+        });
+        const intlNames = (lang, opts, at) => {
+            const f = new Intl.DateTimeFormat(NDS.i18n._lang(lang), { timeZone: 'UTC', ...opts });
+            return Array.from({ length: opts.month ? 12 : 7 }, (_, i) => f.format(at(i)));
+        };
+        const monthNames = (calendar, lang) => (calendar === 'hijri'
+            ? names.t('hijri_months', null, lang)
+            : intlNames(lang, { month: 'long' }, i => Date.UTC(2000, i, 15)));
+        // Sunday first: 2 Jan 2000 was a Sunday.
+        const weekdayNames = (lang) => intlNames(lang, { weekday: 'short' }, i => Date.UTC(2000, 0, 2 + i));
+
         const formatFor = (el) => el?.closest?.('[data-date-format]:not([data-date-format=""])')?.dataset.dateFormat || 'DD/MM/YYYY';
         const siteFormat = () => formatFor(document.documentElement);
 
@@ -531,6 +555,8 @@
             get site() { return { timeZone: zone(), format: siteFormat() }; },
 
             formatFor,
+            monthNames,
+            weekdayNames,
 
             // Today in the site's timezone (the visitor's when unset), as a local day.
             today() {
