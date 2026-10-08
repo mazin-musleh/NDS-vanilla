@@ -126,6 +126,20 @@
 (function() {
     'use strict';
 
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('filter', {
+        update_failed: 'Could not update results',
+        update_failed_description: 'Something went wrong applying the filter. The results shown are unchanged.',
+        no_results: 'No Result',
+        no_results_description: 'No result for current filter criteria',
+        clear: 'Clear Filter',
+        all: 'All',
+        apply: 'Apply',
+        min: 'Minimum',
+        max: 'Maximum',
+        max_value: 'Maximum value',
+    });
+
     class NDSFilter {
         constructor(filterContainer, surfaces = null) {
             this.filterContainer = filterContainer;
@@ -732,14 +746,11 @@
             // retry fails while the first toast is still up.
             if (document.getElementById(alertId) || !NDS.Alert) return;
 
-            const isArabic = NDS.isArabic;
             NDS.Alert.create({
                 display: 'toast',
                 variant: 'error',
-                title: isArabic ? 'تعذر تحديث النتائج' : 'Could not update results',
-                description: isArabic
-                    ? 'حدث خطأ أثناء تطبيق التصفية. النتائج المعروضة لم تتغير.'
-                    : 'Something went wrong applying the filter. The results shown are unchanged.',
+                title: strings.t('update_failed'),
+                description: strings.t('update_failed_description'),
                 id: alertId,
                 // The toast is the only failure signal — the results on screen
                 // are unchanged, so nothing else marks the page.
@@ -937,7 +948,7 @@
             // any filter dropmenu panel triggers Apply.
             button.setAttribute('data-dropmenu-primary', '');
             const labelEl = button.querySelector('.nds-label');
-            this.applyButtonBaseLabel = labelEl ? labelEl.textContent : 'Apply';
+            this.applyButtonBaseLabel = labelEl ? labelEl.textContent : strings.t('apply');
 
             // In form mode, turn the apply button into a submit for the
             // submission form — works whether the button is inside the form
@@ -1355,7 +1366,7 @@
                 if (input.closest('.nds-dropmenu-menu')) continue;
 
                 const wrapper = input.closest('.nds-form-control') || input.parentElement;
-                const clearBtn = wrapper?.querySelector('.nds-clear, [aria-label*="مسح"], [aria-label*="clear"]');
+                const clearBtn = wrapper?.querySelector('.nds-clear');
 
                 this.searchInputs.direct = {
                     input: input,
@@ -1432,7 +1443,7 @@
 
             const isInsideDropmenu = element.closest('.nds-dropmenu-menu') !== null;
             const searchContainer = element.matches('input') ? element.parentElement : element;
-            const clearBtn = searchContainer.querySelector('.nds-clear, [aria-label*="مسح"], [aria-label*="clear"]');
+            const clearBtn = searchContainer.querySelector('.nds-clear');
 
             const searchRef = { input: searchInput, clearBtn: clearBtn, element: element };
 
@@ -1802,13 +1813,13 @@
 
             if (single) {
                 // One thumb resting at max — the filter is off until dragged down.
-                track.appendChild(this._buildRangeInput(null, min, max, step, max, NDS.isArabic ? 'القيمة القصوى' : 'Maximum value'));
+                track.appendChild(this._buildRangeInput(null, min, max, step, max, 'max_value'));
                 control.appendChild(track);
                 control.appendChild(this._buildRangeOutput(null, fmt, max));
             } else {
                 control.appendChild(this._buildRangeOutput('min', fmt, min));
-                track.appendChild(this._buildRangeInput('min', min, max, step, min, NDS.isArabic ? 'الحد الأدنى' : 'Minimum'));
-                track.appendChild(this._buildRangeInput('max', min, max, step, max, NDS.isArabic ? 'الحد الأقصى' : 'Maximum'));
+                track.appendChild(this._buildRangeInput('min', min, max, step, min, 'min'));
+                track.appendChild(this._buildRangeInput('max', min, max, step, max, 'max'));
                 control.appendChild(track);
                 control.appendChild(this._buildRangeOutput('max', fmt, max));
             }
@@ -1829,7 +1840,7 @@
             return out;
         }
 
-        _buildRangeInput(which, min, max, step, value, ariaLabel) {
+        _buildRangeInput(which, min, max, step, value, labelKey) {
             const input = document.createElement('input');
             input.type = 'range';
             input.className = which ? `nds-slider nds-slider-${which}` : 'nds-slider';
@@ -1837,7 +1848,7 @@
             input.max = max;
             input.step = step;
             input.value = value;
-            input.setAttribute('aria-label', ariaLabel);
+            strings.set(input, 'aria-label', labelKey);
             return input;
         }
 
@@ -2038,8 +2049,7 @@
             // values, so selecting it clears the filter.
             const includeAllOption = inputType === 'radio'
                 && !container.hasAttribute('data-filter-no-all');
-            const allLabel = container.getAttribute('data-filter-all-label')
-                || (NDS.isArabic ? 'الكل' : 'All');
+            const allLabel = container.getAttribute('data-filter-all-label');
             const values = includeAllOption ? ['', ...collectedValues] : collectedValues;
 
             const isInDropmenu = container.closest('.nds-dropmenu-menu') !== null;
@@ -2273,7 +2283,8 @@
 
             const labelSpan = document.createElement('span');
             labelSpan.className = 'nds-label';
-            labelSpan.textContent = isAllOption ? allLabel : (labelMap[value] || value);
+            if (isAllOption && !allLabel) strings.set(labelSpan, 'text', 'all');
+            else labelSpan.textContent = isAllOption ? allLabel : (labelMap[value] || value);
 
             label.appendChild(labelSpan);
             formHeader.appendChild(label);
@@ -2460,7 +2471,6 @@
             // Soft dependency — filter skips no-results alert banner if NDS.Alert isn't bundled.
             if (document.getElementById(alertId) || !NDS.Alert) return;
 
-            const isArabic = NDS.isArabic;
             const self = this;
 
             // If the target container is a <table>/<tbody>, wrap the alert in a
@@ -2487,14 +2497,14 @@
 
             NDS.Alert.create({
                 variant: 'warning',
-                description: isArabic ? 'لا توجد نتائج لمعايير التصفية الحالية' : 'No result for current filter criteria',
+                description: strings.t('no_results_description'),
                 target: insertTarget,
-                title: isArabic ? 'لا توجد نتائج' : 'No Result',
+                title: strings.t('no_results'),
                 id: alertId,
                 closable: false,
                 actions: [
                     {
-                        label: isArabic ? 'مسح التصفية' : 'Clear Filter',
+                        label: strings.t('clear'),
                         variant: 'neutral',
                         onClick: () => {
                             self.reset();

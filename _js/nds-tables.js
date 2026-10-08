@@ -53,6 +53,12 @@
 (function() {
     'use strict';
 
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('tables', {
+        reset: 'Reset',
+        column: 'Column {n}',
+    });
+
     // Shared cell-text reader. Prefer direct text nodes over textContent so
     // nested sort buttons / icons / badges don't pollute the value used for
     // sorting (NDS.Sort accessor) or exporting (NDS.Export tableAdapter).
@@ -425,7 +431,7 @@
 
             const label = document.createElement('span');
             label.className = 'nds-label';
-            label.textContent = NDS.lang === 'ar' ? 'إعادة تعيين' : 'Reset';
+            label.textContent = strings.t('reset');
             btn.appendChild(label);
 
             const action = document.createElement('div');
@@ -513,7 +519,7 @@
             labelText.className = 'nds-label';
             // Prefer the visible header text — data-export-label exists precisely
             // because the exported name differs from the displayed one.
-            labelText.textContent = getCellText(th) || th.dataset.exportLabel || 'Column ' + (index + 1);
+            labelText.textContent = getCellText(th) || th.dataset.exportLabel || strings.t('column', { n: index + 1 });
             label.appendChild(labelText);
             header.appendChild(label);
 

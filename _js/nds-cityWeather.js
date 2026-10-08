@@ -22,6 +22,18 @@
 (() => {
     'use strict';
 
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('city-weather', {
+        weather: '{desc}, {temp}°C',
+        clear: 'Clear',
+        partly_cloudy: 'Partly Cloudy',
+        overcast: 'Overcast',
+        fog: 'Fog',
+        rain: 'Rain',
+        snow: 'Snow',
+        storm: 'Storm',
+    });
+
     // Cached payloads live in localStorage, which any same-origin script (XSS in another
     // page on the origin, a malicious browser extension with `storage` access) can
     // overwrite. The cache stores primitives only; the renderer rebuilds DOM imperatively
@@ -33,7 +45,7 @@
         NDS.aria.hidden(icon, true);
         const span = document.createElement('span');
         span.className = 'text';
-        span.textContent = payload.desc + ', ' + payload.temp + '°C';
+        span.textContent = strings.t('weather', { desc: strings.t(payload.cond), temp: payload.temp });
         parent.replaceChildren(icon, span);
     }
 
@@ -47,25 +59,19 @@
         parent.replaceChildren(icon, span);
     }
 
-    // Weather function with dual-language API caching
+    // The cache holds the condition key, not text, so one entry serves every language.
     async function updateWeather() {
         const el = document.getElementById('nds-weatherInfo');
         if (!el) return;
 
         const lat = +(el.dataset.latitude || 24.7136);
         const lng = +(el.dataset.longitude || 46.6753);
-        const isArabic = NDS.isArabic;
-        // v2 keys: cache shape changed from HTML string to { desc, temp, icon } primitives.
-        const arabicKey = `weather_v2_ar_${lat}_${lng}`;
-        const englishKey = `weather_v2_en_${lat}_${lng}`;
+        // v3: { cond, temp, icon } — v2 cached the text per language.
+        const key = `weather_v3_${lat}_${lng}`;
 
-        const arabicCached = NDS.cache.get(arabicKey);
-        const englishCached = NDS.cache.get(englishKey);
-
-        if (arabicCached && englishCached &&
-            typeof arabicCached === 'object' && typeof englishCached === 'object' &&
-            arabicCached.icon && englishCached.icon) {
-            renderWeather(el, isArabic ? arabicCached : englishCached);
+        const cached = NDS.cache.get(key);
+        if (cached && typeof cached === 'object' && cached.icon && strings.has(cached.cond)) {
+            renderWeather(el, cached);
             el.style.display = '';
             return;
         }
@@ -83,50 +89,36 @@
             const hour = new Date().getHours();
             const isNight = hour >= 18 || hour <= 6;
 
-            // Simple weather mapping for both languages
-            let arabicDesc, englishDesc, icon;
+            let cond, icon;
             if (code <= 1) {
-                arabicDesc = "صافي";
-                englishDesc = "Clear";
-                icon = isNight ? "nds-hgi-moon-02" : "nds-hgi-sun-03";
+                cond = 'clear';
+                icon = isNight ? 'nds-hgi-moon-02' : 'nds-hgi-sun-03';
             } else if (code === 2) {
-                arabicDesc = "غائم جزئيًا";
-                englishDesc = "Partly Cloudy";
-                icon = isNight ? "nds-hgi-moon-cloud" : "nds-hgi-sun-cloud-01";
+                cond = 'partly_cloudy';
+                icon = isNight ? 'nds-hgi-moon-cloud' : 'nds-hgi-sun-cloud-01';
             } else if (code === 3) {
-                arabicDesc = "غائم";
-                englishDesc = "Overcast";
-                icon = "nds-hgi-cloud";
+                cond = 'overcast';
+                icon = 'nds-hgi-cloud';
             } else if (code >= 45 && code <= 48) {
-                arabicDesc = "ضباب";
-                englishDesc = "Fog";
-                icon = "nds-hgi-slow-winds";
+                cond = 'fog';
+                icon = 'nds-hgi-slow-winds';
             } else if (code >= 51 && code <= 67) {
-                arabicDesc = "أمطار";
-                englishDesc = "Rain";
-                icon = "nds-hgi-cloud-angled-rain";
+                cond = 'rain';
+                icon = 'nds-hgi-cloud-angled-rain';
             } else if (code >= 71 && code <= 77) {
-                arabicDesc = "ثلوج";
-                englishDesc = "Snow";
-                icon = "nds-hgi-cloud-snow";
+                cond = 'snow';
+                icon = 'nds-hgi-cloud-snow';
             } else if (code >= 80 && code <= 99) {
-                arabicDesc = "عاصفة";
-                englishDesc = "Storm";
-                icon = "nds-hgi-cloud-angled-rain-zap";
+                cond = 'storm';
+                icon = 'nds-hgi-cloud-angled-rain-zap';
             } else {
                 throw new Error('Unknown weather code');
             }
 
-            const arabicData = { desc: arabicDesc, temp, icon };
-            const englishData = { desc: englishDesc, temp, icon };
-
-            renderWeather(el, isArabic ? arabicData : englishData);
+            const payload = { cond, temp, icon };
+            renderWeather(el, payload);
             el.style.display = '';
-
-            // Cache both languages for 15 minutes (primitives, not HTML)
-            NDS.cache.set(arabicKey, arabicData, 15);
-            NDS.cache.set(englishKey, englishData, 15);
-            
+            NDS.cache.set(key, payload, 15);
         } catch (error) {
             el.style.display = 'none';
         }

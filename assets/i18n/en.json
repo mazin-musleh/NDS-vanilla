@@ -8,6 +8,21 @@
     "breadcrumb": {
         "more": "More"
     },
+    "chart": {
+        "chart": "Chart",
+        "bar": "Bar chart",
+        "line": "Line chart"
+    },
+    "city-weather": {
+        "weather": "{desc}, {temp}°C",
+        "clear": "Clear",
+        "partly_cloudy": "Partly Cloudy",
+        "overcast": "Overcast",
+        "fog": "Fog",
+        "rain": "Rain",
+        "snow": "Snow",
+        "storm": "Storm"
+    },
     "cookies": {
         "panel_label": "Cookie settings",
         "title": "Cookies",
@@ -30,6 +45,9 @@
         "done_title": "Thank you!",
         "done": "Your response has been successfully recorded. If you wish to modify or change your answer, you can go back by clicking the Undo button.",
         "undo": "Undo"
+    },
+    "copy": {
+        "copied": "Copied"
     },
     "date": {
         "hijri_months": [
@@ -73,6 +91,24 @@
     "expandable": {
         "show_more": "Show More",
         "show_less": "Show Less"
+    },
+    "export": {
+        "exported": {
+            "one": "Exported {n} row",
+            "other": "Exported {n} rows"
+        }
+    },
+    "filter": {
+        "update_failed": "Could not update results",
+        "update_failed_description": "Something went wrong applying the filter. The results shown are unchanged.",
+        "no_results": "No Result",
+        "no_results_description": "No result for current filter criteria",
+        "clear": "Clear Filter",
+        "all": "All",
+        "apply": "Apply",
+        "min": "Minimum",
+        "max": "Maximum",
+        "max_value": "Maximum value"
     },
     "forms": {
         "required": "This field is required",
@@ -161,6 +197,10 @@
     "swiper": {
         "go_to_page": "Go to page {n}"
     },
+    "tables": {
+        "reset": "Reset",
+        "column": "Column {n}"
+    },
     "taginput": {
         "added": "Added {value}",
         "removed": "Removed {value}",
@@ -198,6 +238,10 @@
         "cancelled": "Upload cancelled",
         "failed": "Upload failed",
         "remove_file": "Remove file"
+    },
+    "user-feedback": {
+        "success": "Your feedback is submitted!",
+        "error": "An error occurred, please try again"
     },
     "voice-input": {
         "start": "Start voice input ({language})",

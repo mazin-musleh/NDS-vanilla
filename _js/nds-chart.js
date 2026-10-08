@@ -33,6 +33,13 @@
 (function () {
     'use strict';
 
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('chart', {
+        chart: 'Chart',
+        bar: 'Bar chart',
+        line: 'Line chart',
+    });
+
     const SVG_NS = 'http://www.w3.org/2000/svg';
     let uid = 0;
 
@@ -488,7 +495,7 @@
                 viewBox: `0 0 ${size} ${size}`,
                 class: 'nds-chart-svg',
                 role: 'img',
-                'aria-label': 'Chart',
+                'aria-label': strings.t('chart'),
                 style: `max-height:${size}px`,
             });
 
@@ -570,7 +577,7 @@
             const { bar, dataLabels } = this.opts;
             const stacked = bar?.stacked || false;
 
-            const ctx = this._axisChart(wrap, 'Bar chart', (seriesArr, catCount) => {
+            const ctx = this._axisChart(wrap, strings.t('bar'), (seriesArr, catCount) => {
                 let maxVal = 0;
                 if (stacked) {
                     for (let c = 0; c < catCount; c++) {
@@ -674,7 +681,7 @@
             const lineW = line?.width || 2;
             const showArea = line?.area || false;
 
-            const ctx = this._axisChart(wrap, 'Line chart', (seriesArr) => {
+            const ctx = this._axisChart(wrap, strings.t('line'), (seriesArr) => {
                 let maxVal = 0, minVal = 0;
                 seriesArr.forEach(s => s.data.forEach(v => {
                     if (v > maxVal) maxVal = v;

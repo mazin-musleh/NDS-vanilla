@@ -66,6 +66,12 @@
 NDS.UserFeedback = (() => {
     'use strict';
 
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('user-feedback', {
+        success: 'Your feedback is submitted!',
+        error: 'An error occurred, please try again',
+    });
+
     // Helper function to generate cookie name for current page
     function getFeedbackCookieName() {
         const pagePath = window.location.pathname;
@@ -141,15 +147,8 @@ NDS.UserFeedback = (() => {
             // An error keeps the form open, so the visitor can send it again.
             if (ok) NDS.State.set(feedbackComponent, 'status');
 
-            // Detect page language
-            const isArabic = NDS.isArabic;
-
-            // Get custom message from data attribute or use language-specific defaults
-            const defaultSuccessMessage = isArabic ? 'تم استلام ملاحظتك!' : 'Your feedback is submitted!';
-            const defaultErrorMessage = isArabic ? 'حدث خطأ، يرجى المحاولة مرة أخرى' : 'An error occurred, please try again';
-
-            const successMessage = feedbackComponent.getAttribute('data-success-message') || defaultSuccessMessage;
-            const errorMessage = feedbackComponent.getAttribute('data-error-message') || defaultErrorMessage;
+            const successMessage = feedbackComponent.getAttribute('data-success-message') || strings.t('success');
+            const errorMessage = feedbackComponent.getAttribute('data-error-message') || strings.t('error');
             const message = status === 'success' ? successMessage : errorMessage;
 
             // Create feedback message using NDSFeedback API

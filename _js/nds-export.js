@@ -60,6 +60,11 @@
 (function () {
     'use strict';
 
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('export', {
+        exported: { one: 'Exported {n} row', other: 'Exported {n} rows' },
+    });
+
     // The "is this row selected" rule is NDS.Selection.isSelected: init() loads it.
 
     // A row filtered OUT by NDS.Filter carries data-filtered (hidden via the
@@ -388,7 +393,7 @@
         // next tick is safe across engines.
         setTimeout(() => URL.revokeObjectURL(url), 0);
         if (typeof rowCount === 'number') {
-            NDS.announce('Exported ' + rowCount + ' row' + (rowCount === 1 ? '' : 's'));
+            NDS.announce(strings.t('exported', { n: rowCount }));
         }
     }
 

@@ -27,6 +27,11 @@
  */
 (function () {
     'use strict';
+
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('copy', {
+        copied: 'Copied',
+    });
     window.NDS = window.NDS || {};
 
     const DEFAULT_FLASH_MS = 2000;
@@ -68,7 +73,7 @@
         const duration = opts.duration || DEFAULT_FLASH_MS;
 
         const labelText = button.getAttribute('data-copy-label');
-        const messageText = button.getAttribute('data-copy-announce') || labelText || (NDS.isArabic ? 'تم النسخ' : 'Copied');
+        const messageText = button.getAttribute('data-copy-announce') || labelText || strings.t('copied');
 
         // Icon swap: snapshot the className and replace with the mask
         // checkmark for the flash window. Wholesale replace is needed because

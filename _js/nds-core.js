@@ -229,21 +229,25 @@
         //                               again when the file lands, unless it changed since
         //   s.load(scopes, lang)        start the fetch at init; scopes hold their skeleton
         //   s.ready(lang)               true once the text for that language is known
+        //   s.has(key)                  the component defines this key (for keys from outside)
         strings(component, defaults) {
             const I = this, queue = [];
+            const has = (o, k) => !!o && Object.prototype.hasOwnProperty.call(o, k);
             const landed = () => I._section(component) !== undefined;
             const read = (el, attr) => (attr === 'text' ? el.textContent : el.getAttribute(attr));
             const write = (el, attr, v) => (attr === 'text' ? (el.textContent = v) : el.setAttribute(attr, v));
             const t = (key, vars, lang) => {
                 const d = I._section(component, lang);
                 if (d === undefined && lang) I._get(component, lang);
-                return I.format(d && key in d ? d[key] : defaults[key], vars);
+                // Own keys only: a key from outside (a cached value, a browser error name) never reaches Object.prototype.
+                return I.format(has(d, key) ? d[key] : has(defaults, key) ? defaults[key] : key, vars);
             };
             return {
                 t,
                 defaults,
                 load: (scopes, lang) => I.load(component, scopes, lang),
                 ready: lang => I._section(component, lang) !== undefined,
+                has: key => has(defaults, key),
                 set(el, attr, key, vars) {
                     const v = t(key, vars);
                     write(el, attr, v);

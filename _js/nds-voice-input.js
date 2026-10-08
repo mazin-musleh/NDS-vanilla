@@ -268,7 +268,7 @@
                 onError: function(error) {
                     stop();
                     var errorType = typeof error === 'string' ? error : (error && error.error);
-                    showMessage(input, strings.t(errorType in strings.defaults ? errorType : 'default'));
+                    showMessage(input, strings.t(strings.has(errorType) ? errorType : 'default'));
                 },
                 onEnd: stop
             });
