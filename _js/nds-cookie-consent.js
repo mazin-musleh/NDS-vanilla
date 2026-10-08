@@ -18,7 +18,7 @@
  * Gotchas:
  *   - A lazy BUNDLE like Accessibility, on every page: fetched only for a visitor with no stored
  *     choice (the loader entry's eager()) or on the first data-cookies-toggle press.
- *   - The built panel's text comes from assets/i18n/cookies/{lang}.json, loaded before it is
+ *   - The built panel's text comes from the cookies section of assets/i18n/{lang}.json, loaded before it is
  *     built, so it never shows English first. A page's own panel keeps its own text.
  *   - Closing without a choice stores none and hides the auto-open for 30 minutes under
  *     cookieConsentDismissed. That key is never read as consent.
@@ -33,8 +33,8 @@
     const DELAY = 6000;
     const CATEGORIES = ['performance', 'functional', 'targeting'];
 
-    // English defaults; assets/i18n/cookies/{lang}.json overrides them.
-    const STR = {
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('cookies', {
         panel_label: 'Cookie settings',
         title: 'Cookies',
         description: 'Use of Cookies by this site is just to guarantee Ease of Access and better user experience while browsing. Continuation of your browsing acknowledges your approval for Terms and Conditions of this site and its use of Cookies.',
@@ -56,15 +56,12 @@
         done_title: 'Thank you!',
         done: 'Your response has been successfully recorded. If you wish to modify or change your answer, you can go back by clicking the Undo button.',
         undo: 'Undo',
-    };
+    });
 
-    let strings = null;
-    const loadStrings = () => strings || (strings = NDS.i18n.load('cookies', [])
-        .then(data => { NDS.i18n.safeMerge(STR, data); }));
 
-    const t = (key) => NDS.escapeHtml(STR[key]);
+    const html = (key) => NDS.escapeHtml(strings.t(key));
     const closeBtn = () => `<div class="nds-panel-action">
-          <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="${t('close')}">
+          <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="${html('close')}">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
           </button>
         </div>`;
@@ -72,13 +69,13 @@
     const scrollBody = (inner) => `<div class="nds-scroll-more">
       <div class="nds-scroll-more-content nds-panel-body nds-flex nds-col">${inner}
       </div>
-      <button type="button" class="nds-btn nds-subtle nds-show-more" aria-label="${t('scroll_panel')}">
+      <button type="button" class="nds-btn nds-subtle nds-show-more" aria-label="${html('scroll_panel')}">
         <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
       </button>
     </div>`;
     const category = (name, locked) => `<div class="nds-form-container nds-switch-container">
             <div class="nds-form-header">
-              <label for="ndsCookies-${name}"><span class="nds-label">${t(name)}</span>${locked ? `<span class="nds-info">${t(name + '_info')}</span>` : ''}</label>
+              <label for="ndsCookies-${name}"><span class="nds-label">${html(name)}</span>${locked ? `<span class="nds-info">${html(name + '_info')}</span>` : ''}</label>
             </div>
             <div class="nds-form-control">
               <div class="nds-switch">
@@ -89,47 +86,47 @@
           </div>`;
 
     function panelMarkup() {
-        return `<aside id="${PANEL_ID}" class="nds-panel nds-cookies" data-panel-side="bottom" data-panel-static aria-label="${t('panel_label')}" hidden>
+        return `<aside id="${PANEL_ID}" class="nds-panel nds-cookies" data-panel-side="bottom" data-panel-static aria-label="${html('panel_label')}" hidden>
   <div class="nds-cookies-view" data-cookies-view="notice">
     <div class="nds-panel-header">
       <span class="nds-featured-icon nds-circle"><i class="nds-icon nds-hgi-cookie" aria-hidden="true"></i></span>
-      <div class="nds-panel-text"><span class="nds-panel-title">${t('title')}</span></div>
+      <div class="nds-panel-text"><span class="nds-panel-title">${html('title')}</span></div>
       ${closeBtn()}
     </div>
     ${scrollBody(`
-      <p>${t('description')}</p>
+      <p>${html('description')}</p>
       <div class="nds-flex nds-col">
-        <button type="button" class="nds-btn nds-primary nds-full" data-cookies-action="accept"><span class="nds-label">${t('accept')}</span></button>
-        <button type="button" class="nds-btn nds-secondary-outline nds-full" data-cookies-action="reject"><span class="nds-label">${t('reject')}</span></button>
-        <button type="button" class="nds-btn nds-subtle nds-full" data-cookies-action="manage"><span class="nds-label">${t('manage')}</span></button>
+        <button type="button" class="nds-btn nds-primary nds-full" data-cookies-action="accept"><span class="nds-label">${html('accept')}</span></button>
+        <button type="button" class="nds-btn nds-secondary-outline nds-full" data-cookies-action="reject"><span class="nds-label">${html('reject')}</span></button>
+        <button type="button" class="nds-btn nds-subtle nds-full" data-cookies-action="manage"><span class="nds-label">${html('manage')}</span></button>
       </div>`)}
   </div>
   <div class="nds-cookies-view" data-cookies-view="manage" hidden>
     <div class="nds-panel-header">
       <span class="nds-featured-icon nds-circle"><i class="nds-icon nds-hgi-cookie" aria-hidden="true"></i></span>
-      <div class="nds-panel-text"><span class="nds-panel-title">${t('manage_title')}</span></div>
+      <div class="nds-panel-text"><span class="nds-panel-title">${html('manage_title')}</span></div>
       ${closeBtn()}
     </div>
     ${scrollBody(`
-      <p>${t('manage_description')}</p>
-      <fieldset class="nds-form-group nds-switch-group" aria-label="${t('types')}">
+      <p>${html('manage_description')}</p>
+      <fieldset class="nds-form-group nds-switch-group" aria-label="${html('types')}">
         ${category('necessary', true)}
         ${CATEGORIES.map(c => category(c)).join('')}
       </fieldset>
       <div class="nds-flex nds-col">
-        <button type="button" class="nds-btn nds-primary nds-full" data-cookies-action="save"><span class="nds-label">${t('confirm')}</span></button>
-        <button type="button" class="nds-btn nds-secondary-outline nds-full" data-cookies-action="reject"><span class="nds-label">${t('reject_all')}</span></button>
+        <button type="button" class="nds-btn nds-primary nds-full" data-cookies-action="save"><span class="nds-label">${html('confirm')}</span></button>
+        <button type="button" class="nds-btn nds-secondary-outline nds-full" data-cookies-action="reject"><span class="nds-label">${html('reject_all')}</span></button>
       </div>`)}
   </div>
   <div class="nds-cookies-view" data-cookies-view="done" hidden>
     <div class="nds-panel-header">
       <span class="nds-featured-icon nds-circle" data-status="success"><i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i></span>
-      <div class="nds-panel-text"><span class="nds-panel-title">${t('done_title')}</span></div>
+      <div class="nds-panel-text"><span class="nds-panel-title">${html('done_title')}</span></div>
       ${closeBtn()}
     </div>
     ${scrollBody(`
-      <p role="status">${t('done')}</p>
-      <button type="button" class="nds-btn nds-subtle nds-full" data-cookies-action="undo"><span class="nds-label">${t('undo')}</span></button>`)}
+      <p role="status">${html('done')}</p>
+      <button type="button" class="nds-btn nds-subtle nds-full" data-cookies-action="undo"><span class="nds-label">${html('undo')}</span></button>`)}
   </div>
 </aside>`;
     }
@@ -138,7 +135,7 @@
     async function resolvePanel() {
         const own = NDS.fromTemplate(PANEL_ID);
         if (own) return own;
-        await loadStrings();
+        await strings.load();
         if (!document.getElementById(PANEL_ID)) {
             const tpl = document.createElement('template');
             tpl.innerHTML = panelMarkup();
@@ -225,7 +222,7 @@
         wire();
         if (NDS.Cookies.getConsent() || NDS.Cookies.get(DISMISS_KEY)) return;
         // The strings load during the wait, so the panel is ready when it opens.
-        if (!document.getElementById(PANEL_ID)) loadStrings();
+        if (!document.getElementById(PANEL_ID)) strings.load();
         setTimeout(autoOpen, DELAY);
     }
 

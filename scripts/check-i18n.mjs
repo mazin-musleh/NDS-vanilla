@@ -1,14 +1,18 @@
-// Component strings: every assets/i18n/<component>/<lang>.json has exactly en.json's keys,
-// a component's English seed (`const STR = {…}`) equals its en.json, and no _js/ file still
-// carries hardcoded Arabic text or reads NDS.langKey — that text belongs in the JSON.
+// Component strings: every locale pack (assets/i18n/<lang>.json) and every own file
+// (assets/i18n/<component>/<lang>.json) has exactly en's keys, a pack stays under its size
+// budget, a component's English seed equals its en section, and no _js/ file still carries
+// hardcoded Arabic text or reads NDS.langKey — that text belongs in the JSON.
 // No build, no browser. Usage: node scripts/check-i18n.mjs
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { runInNewContext } from 'node:vm';
+import { gzipSync } from 'node:zlib';
 
 const ROOT = join(import.meta.dirname, '..');
 const I18N = join(ROOT, 'assets', 'i18n');
 const JS = join(ROOT, '_js');
+// ponytail: one pack per language; past this, split the lazy bundles' sections into their own pack.
+const PACK_BUDGET_GZ = 12 * 1024;
 const fails = [];
 const read = (p) => readFileSync(p, 'utf-8');
 // A plural is an object of Intl.PluralRules categories; any other object is component data.
@@ -17,23 +21,40 @@ const kind = (v) => (Array.isArray(v) ? 'array'
     : v && typeof v === 'object' ? (Object.keys(v).every(k => PLURAL.has(k)) ? 'plural' : 'object')
     : typeof v);
 
-// 1. Locale files mirror en.json.
+// 1. Locales mirror en, per component.
 const tables = {};
+function mirror(c, en, loc, where) {
+    for (const k of Object.keys(en)) {
+        if (!(k in loc)) fails.push(`${where}: ${c}.${k} missing`);
+        else if (kind(loc[k]) !== kind(en[k])) fails.push(`${where}: ${c}.${k} is ${kind(loc[k])}, en has ${kind(en[k])}`);
+    }
+    for (const k of Object.keys(loc)) if (!(k in en)) fails.push(`${where}: ${c}.${k} is not in en`);
+}
+const langs = readdirSync(I18N).filter(f => /^[a-z]{2,3}\.json$/.test(f));
+const packs = Object.fromEntries(langs.map(f => [f, JSON.parse(read(join(I18N, f)))]));
+if (!packs['en.json']) fails.push('assets/i18n/en.json missing');
+else Object.assign(tables, packs['en.json']);
+for (const [f, pack] of Object.entries(packs)) {
+    const gz = gzipSync(readFileSync(join(I18N, f)), { level: 9 }).length;
+    if (gz > PACK_BUDGET_GZ) fails.push(`${f}: ${gz} B gzipped, over the ${PACK_BUDGET_GZ} B budget`);
+    if (f === 'en.json') continue;
+    for (const c of Object.keys(tables)) {
+        if (!(c in pack)) fails.push(`${f}: no ${c} section`);
+        else mirror(c, tables[c], pack[c], f);
+    }
+    for (const c of Object.keys(pack)) if (!(c in tables)) fails.push(`${f}: ${c} is not in en.json`);
+}
 for (const c of readdirSync(I18N, { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name)) {
     const enPath = join(I18N, c, 'en.json');
     if (!existsSync(enPath)) { fails.push(`${c}: no en.json`); continue; }
+    if (c in tables) fails.push(`${c}: in the pack and in its own folder`);
     const en = tables[c] = JSON.parse(read(enPath));
-    for (const [k, v] of Object.entries(en)) {
-        if (kind(v) === 'plural' && typeof v.other !== 'string') fails.push(`${c}/en.json ${k}: plural without "other"`);
-    }
     for (const f of readdirSync(join(I18N, c)).filter(f => f.endsWith('.json') && f !== 'en.json')) {
-        const loc = JSON.parse(read(join(I18N, c, f)));
-        for (const k of Object.keys(en)) {
-            if (!(k in loc)) fails.push(`${c}/${f}: missing ${k}`);
-            else if (kind(loc[k]) !== kind(en[k])) fails.push(`${c}/${f} ${k}: ${kind(loc[k])}, en.json has ${kind(en[k])}`);
-        }
-        for (const k of Object.keys(loc)) if (!(k in en)) fails.push(`${c}/${f}: ${k} is not in en.json`);
+        mirror(c, en, JSON.parse(read(join(I18N, c, f))), `${c}/${f}`);
     }
+}
+for (const [c, en] of Object.entries(tables)) for (const [k, v] of Object.entries(en)) {
+    if (kind(v) === 'plural' && typeof v.other !== 'string') fails.push(`en: ${c}.${k} plural without "other"`);
 }
 
 // The object literal after `marker`, by brace depth, skipping quoted text.
@@ -55,13 +76,14 @@ for (const f of readdirSync(JS).filter(f => f.endsWith('.js') && !f.endsWith('.m
     const src = read(join(JS, f));
 
     // 2. The English seed matches en.json.
-    const name = (src.match(/NDS\.i18n\.load\(\s*'([\w-]+)'/) || [])[1];
-    if (name && tables[name] && src.includes('const STR = {')) {
-        const seed = runInNewContext('(' + literalAfter(src, 'const STR = {') + ')');
+    const name = (src.match(/NDS\.i18n\.(?:load|strings)\(\s*'([\w-]+)'/) || [])[1];
+    const marker = src.includes(`NDS.i18n.strings('${name}'`) ? `NDS.i18n.strings('${name}'` : / STR = \{/.test(src) ? ' STR = {' : null;
+    if (name && tables[name] && marker) {
+        const seed = runInNewContext('(' + literalAfter(src, marker) + ')');
         for (const [k, v] of Object.entries(tables[name])) {
-            if (JSON.stringify(seed[k]) !== JSON.stringify(v)) fails.push(`${f}: STR.${k} differs from ${name}/en.json`);
+            if (JSON.stringify(seed[k]) !== JSON.stringify(v)) fails.push(`${f}: default ${k} differs from en ${name}.${k}`);
         }
-        for (const k of Object.keys(seed)) if (!(k in tables[name])) fails.push(`${f}: STR.${k} is not in ${name}/en.json`);
+        for (const k of Object.keys(seed)) if (!(k in tables[name])) fails.push(`${f}: default ${k} is not in en ${name}`);
     }
 
     // 3. No hardcoded language text left.
@@ -78,4 +100,4 @@ if (fails.length) {
     console.log(`\n${fails.length} problem(s).`);
     process.exit(1);
 }
-console.log(`check-i18n: ${Object.keys(tables).length} components clean.`);
+console.log(`check-i18n: ${Object.keys(tables).length} components clean; ${Object.keys(packs).map(f => f + ' ' + gzipSync(readFileSync(join(I18N, f)), { level: 9 }).length + ' B gz').join(', ')}.`);

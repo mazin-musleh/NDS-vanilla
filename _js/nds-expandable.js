@@ -32,11 +32,11 @@
 (function() {
     'use strict';
 
-    // Language labels
-    const labels = {
-        en: { showMore: 'Show More', showLess: 'Show Less' },
-        ar: { showMore: 'عرض المزيد', showLess: 'عرض أقل' }
-    };
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('expandable', {
+        show_more: 'Show More',
+        show_less: 'Show Less',
+    });
 
     class NDSExpandable {
         constructor(expandableContainer) {
@@ -122,7 +122,9 @@
             this.expandButton.className = 'nds-btn nds-subtle nds-expand-btn nds-menu-btn nds-md';
             NDS.aria.expanded(this.expandButton, false);
 
-            this.expandButton.innerHTML = `<span class="nds-label">${labels[NDS.langKey].showMore}</span>`;
+            this.expandButton.innerHTML = '<span class="nds-label"></span>';
+            strings.set(this.expandButton.firstChild, 'text', 'show_more');
+            strings.load(this.expandButton);
 
             // Add button to the parent container (not the content element)
             this.expandableContainer.appendChild(this.expandButton);
@@ -151,7 +153,7 @@
             // Update button state
             if (this.expandButton) {
                 NDS.aria.expanded(this.expandButton, true);
-                this.expandButton.querySelector('.nds-label').textContent = labels[NDS.langKey].showLess;
+                strings.set(this.expandButton.querySelector('.nds-label'), 'text', 'show_less');
             }
 
             // Sync siblings if parent has nds-expand-all
@@ -172,7 +174,7 @@
             // Update button state
             if (this.expandButton) {
                 NDS.aria.expanded(this.expandButton, false);
-                this.expandButton.querySelector('.nds-label').textContent = labels[NDS.langKey].showMore;
+                strings.set(this.expandButton.querySelector('.nds-label'), 'text', 'show_more');
             }
 
             // Sync siblings if parent has nds-expand-all

@@ -49,6 +49,11 @@
 (function() {
     'use strict';
 
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('tooltip', {
+        more_info: 'More info',
+    });
+
     const { add: addState, remove: removeState } = NDS.State;
 
     // Only one tooltip is open at a time — track it module-locally so open()
@@ -147,7 +152,7 @@
                 const trigger = document.createElement('button');
                 trigger.type = 'button';
                 trigger.className = 'nds-tooltip-trigger';
-                NDS.aria.label(trigger, title || 'More info');
+                if (title) NDS.aria.label(trigger, title); else strings.set(trigger, 'aria-label', 'more_info');
                 trigger.appendChild(buildChip(this.root.dataset.tooltipStatus));
                 this.root.prepend(trigger);
             }

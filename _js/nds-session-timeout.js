@@ -26,7 +26,7 @@
  * Gotchas:
  *   - The deadline is the last renewal plus the timeout, never the last click: activity renews the server
  *     at most once a minute, and only a renewal moves the deadline.
- *   - The modals' text comes from assets/i18n/session-timeout/{lang}.json, loaded at init; each modal is
+ *   - The modals' text comes from the session-timeout section of assets/i18n/{lang}.json, loaded at init; each modal is
  *     built when it first opens.
  *   - The warning focuses its box, not its first button: no focus ring until Tab. Enter still presses
  *     the primary button (Modal).
@@ -40,8 +40,8 @@
     const WARN_ID = 'ndsSessionWarning';
     const ENDED_ID = 'ndsSessionEnded';
 
-    // English defaults; assets/i18n/session-timeout/{lang}.json overrides them.
-    const STR = {
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('session-timeout', {
         warning_title: 'Your session is about to end',
         warning_description: 'You have not used the page for a while. When the time runs out, you are signed out and lose any data you have not saved.',
         stay: 'Stay signed in',
@@ -49,13 +49,10 @@
         ended_title: 'Your session has ended',
         ended_description: 'You were signed out because the page was not used. Sign in again to continue.',
         sign_in: 'Sign in',
-    };
+    });
 
-    let strings = null;
-    const loadStrings = () => strings || (strings = NDS.i18n.load('session-timeout', [])
-        .then(data => { NDS.i18n.safeMerge(STR, data); }));
 
-    const t = (key) => NDS.escapeHtml(STR[key]);
+    const html = (key) => NDS.escapeHtml(strings.t(key));
     const icon = (name) => `<div class="nds-card-header">
     <div class="nds-card-featured-icon">
       <span class="nds-featured-icon nds-xl nds-circle">
@@ -68,14 +65,14 @@
   ${icon('alert-circle')}
   <div class="nds-card-content">
     <div class="nds-card-text">
-      <span class="nds-card-title" id="${WARN_ID}-title">${t('warning_title')}</span>
-      <p class="nds-card-description" id="${WARN_ID}-desc">${t('warning_description')}</p>
+      <span class="nds-card-title" id="${WARN_ID}-title">${html('warning_title')}</span>
+      <p class="nds-card-description" id="${WARN_ID}-desc">${html('warning_description')}</p>
       <span class="nds-card-number"><span class="nds-countdown" id="${WARN_ID}-countdown" data-countdown=""><span class="nds-countdown-value" data-unit="m">--</span>:<span class="nds-countdown-value" data-unit="s">--</span></span></span>
     </div>
   </div>
   <div class="nds-card-actions">
-    <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close><span class="nds-label">${t('stay')}</span></button>${logoutUrl ? `
-    <a class="nds-btn nds-secondary-outline nds-lg" href="${NDS.escapeHtml(logoutUrl)}"><span class="nds-label">${t('sign_out')}</span></a>` : ''}
+    <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close><span class="nds-label">${html('stay')}</span></button>${logoutUrl ? `
+    <a class="nds-btn nds-secondary-outline nds-lg" href="${NDS.escapeHtml(logoutUrl)}"><span class="nds-label">${html('sign_out')}</span></a>` : ''}
   </div>
 </div>`;
 
@@ -83,12 +80,12 @@
   ${icon('cancel-circle')}
   <div class="nds-card-content">
     <div class="nds-card-text">
-      <span class="nds-card-title" id="${ENDED_ID}-title">${t('ended_title')}</span>
-      <p class="nds-card-description" id="${ENDED_ID}-desc">${t('ended_description')}</p>
+      <span class="nds-card-title" id="${ENDED_ID}-title">${html('ended_title')}</span>
+      <p class="nds-card-description" id="${ENDED_ID}-desc">${html('ended_description')}</p>
     </div>
   </div>
   <div class="nds-card-actions">
-    <a class="nds-btn nds-primary nds-lg" href="${NDS.escapeHtml(signinUrl || location.href)}"><span class="nds-label">${t('sign_in')}</span></a>
+    <a class="nds-btn nds-primary nds-lg" href="${NDS.escapeHtml(signinUrl || location.href)}"><span class="nds-label">${html('sign_in')}</span></a>
   </div>
 </div>`;
 
@@ -198,7 +195,7 @@
         logoutUrl = NDS.safeUrl(o.logout);
         signinUrl = NDS.safeUrl(o.signin);
         key = 'nds-session:' + (o.key || extendUrl || '');
-        loadStrings();
+        strings.load();
         // The warning's buttons close through Modal's delegated handlers, unwired on a page with no other modal.
         NDS.Modal.init();
 

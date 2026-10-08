@@ -38,6 +38,8 @@
  *     NDS.i18n.load(component, scopes) fetch + apply a component's string table (en
  *                                      fallback; stamps data-i18n / data-i18n-attr in scope;
  *                                      each scope holds its skeleton until the strings land)
+ *     NDS.i18n.strings(component, defaults) → { t, set, load }   a component's strings;
+ *                                      set() re-writes its text when the file lands
  *     NDS.i18n.format(value, vars)     fill {name}; a plural value picks by vars.n
  *     NDS.triggerEvents(el)            dispatch input + change so forms and consumers sync
  *     NDS.badge(el, count) · NDS.buildChip(value, opts)
@@ -90,6 +92,7 @@
     // `https://host/bundle.jsi18n/...` on the first fetch.
     const _scriptSrc = (document.currentScript && document.currentScript.src) || '';
     const _scriptBaseMatch = _scriptSrc.match(/^(.*\/)js\/[^/]+\.js(?:\?.*)?$/);
+    const ASSETS_VER = (_scriptSrc.match(/\?ver=[^&#]*/) || [''])[0];
     const ASSETS_BASE = window.NDS_ASSETS_BASE
                      || (_scriptBaseMatch && _scriptBaseMatch[1])
                      || '';
@@ -153,53 +156,95 @@
     });
 
     // ── i18n ─────────────────────────────────────────────────────────
-    // Component-scoped runtime localization. Each consumer:
-    //   1. Bakes English defaults into its HTML alongside data-i18n keys.
-    //   2. Calls NDS.i18n.load('{component}', scope) at init.
-    //   3. Optionally awaits the returned data for component-specific work
-    //      (iterating arrays, removing locale-excluded controls, etc.).
+    // One pack per language, assets/i18n/{lang}.json, keyed by component. A component
+    // with no section in it reads its own assets/i18n/{component}/{lang}.json instead.
+    // Missing files fall back to en.json; a missing key keeps the component's default.
     //
-    // Override hooks (read once per load):
-    //   window.NDS_I18N      = { '{component}': {...}, ... }   inline strings
-    //   window.NDS_I18N_PATH = '/custom/'                       base path
+    // Override hooks:
+    //   window.NDS_I18N      = { '{component}': {...}, ... }   inline strings, read on every lookup
+    //   window.NDS_I18N_PATH = '/custom/'                       base path, read once per file
     NDS.i18n = {
-        _loads: Object.create(null),   // 'component/lang' → Promise<data|null>
-        _data: Object.create(null),    // 'component/lang' → data, once resolved
+        _files: Object.create(null),   // 'ar' or 'accessibility/ar' → data, once landed (null when none)
+        _loads: Object.create(null),   // same keys → Promise<data>
 
         // Load translations for a component and apply them to its scope(s).
-        // Each scope holds its skeleton (data-state loading) until the strings
-        // land, so an Arabic page never paints English first; a scope that was
-        // already loading keeps it. One fetch per component and language per page.
+        // Each scope holds its skeleton (data-state loading) until they land,
+        // so an Arabic page never paints English first; a scope that was
+        // already loading keeps it.
         load(component, scopes) {
-            const key = this._key(component);
-            if (key in this._data) {
-                const data = this._data[key];
-                if (data) this.apply(scopes, data);
+            const data = this._section(component);
+            if (data !== undefined) {
+                if (data && scopes) this.apply(scopes, data);
                 return Promise.resolve(data);
             }
             const held = scopes ? this._roots(scopes).filter(r => !NDS.State.has(r, 'loading')) : [];
             held.forEach(r => NDS.State.add(r, 'loading'));
-            return this._get(component, key).then(data => {
-                if (data) this.apply(scopes, data);
+            return this._get(component).then(() => {
+                const d = this._section(component);
+                if (d && scopes) this.apply(scopes, d);
                 held.forEach(r => NDS.State.remove(r, 'loading'));
-                return data;
+                return d;
             });
         },
 
         // Reject anything that isn't a BCP-47 base tag (2–3 letters) before it
         // reaches the fetch URL — guards against <html lang="../foo"> traversal.
         _lang() { return /^[a-z]{2,3}$/.test(NDS.lang) ? NDS.lang : 'en'; },
-        _key(component) { return component + '/' + this._lang(); },
 
-        // Inline override wins. Falls back to en.json when the active locale's
-        // file is missing or fails, so a partial translation set still works.
-        _get(component, key) {
+        // undefined until known; then the inline override, the pack section, the own file, or null.
+        _section(component) {
             const inline = window.NDS_I18N && window.NDS_I18N[component];
-            if (inline) return Promise.resolve(this._data[key] = inline);
-            const lang = key.slice(component.length + 1);
-            return this._loads[key] || (this._loads[key] = this._fetchOne(component, lang)
-                .then(data => data || (lang !== 'en' ? this._fetchOne(component, 'en') : null))
-                .then(data => (this._data[key] = data || null)));
+            if (inline) return inline;
+            const lang = this._lang(), pack = this._files[lang];
+            if (pack === undefined) return undefined;
+            if (pack && component in pack) return pack[component];
+            const own = this._files[component + '/' + lang];
+            return own === undefined ? undefined : own;
+        },
+
+        _get(component) {
+            const lang = this._lang();
+            return this._file(lang).then(pack => {
+                if (pack && component in pack) return;
+                return this._file(component + '/' + lang);
+            });
+        },
+
+        // One fetch per file per page; falls back to the en file.
+        _file(path) {
+            return this._loads[path] || (this._loads[path] = this._fetchOne(path)
+                .then(data => data || (/(^|\/)en$/.test(path) ? null : this._fetchOne(path.replace(/[a-z]+$/, 'en'))))
+                .then(data => (this._files[path] = data || null)));
+        },
+
+        // A component's strings: English defaults until its file lands.
+        //   s.t(key, vars)              text in the page's language
+        //   s.set(el, attr, key, vars)  write an attribute ('text' = textContent) now, and
+        //                               again when the file lands, unless it changed since
+        //   s.load(scopes)              start the fetch at init; scopes hold their skeleton
+        strings(component, defaults) {
+            const I = this, queue = [];
+            const landed = () => I._section(component) !== undefined;
+            const read = (el, attr) => (attr === 'text' ? el.textContent : el.getAttribute(attr));
+            const write = (el, attr, v) => (attr === 'text' ? (el.textContent = v) : el.setAttribute(attr, v));
+            const t = (key, vars) => {
+                const d = I._section(component);
+                return I.format(d && key in d ? d[key] : defaults[key], vars);
+            };
+            return {
+                t,
+                defaults,
+                load: scopes => I.load(component, scopes),
+                set(el, attr, key, vars) {
+                    const v = t(key, vars);
+                    write(el, attr, v);
+                    if (landed()) return;
+                    if (!queue.length) I.load(component).then(() => queue.splice(0).forEach(([e, a, was, k, vs]) => {
+                        if (read(e, a) === was) write(e, a, t(k, vs));
+                    }));
+                    queue.push([el, attr, v, key, vars]);
+                },
+            };
         },
 
         // Fill {name} from vars. A plural value is an object of Intl.PluralRules
@@ -215,17 +260,14 @@
         },
         _plural: Object.create(null),
 
-        async _fetchOne(component, lang) {
+        // ?ver= rides along so a release never serves a stale file.
+        async _fetchOne(path) {
             const base = window.NDS_I18N_PATH || (ASSETS_BASE ? ASSETS_BASE + 'i18n/' : 'assets/i18n/');
             try {
-                // json:true — a static host serving .json as text/plain must not
-                // silently hand back a string. cache:'default' rides through to fetch
-                // and is what dedupes repeat loads as i18n fans out across components.
-                const { data } = await NDS.request(base + component + '/' + lang + '.json',
-                                                   { cache: 'default', json: true });
+                const { data } = await NDS.request(base + path + '.json' + ASSETS_VER, { cache: 'default', json: true });
                 return data;
             } catch (err) {
-                console.warn('[NDS.i18n] ' + component + '/' + lang + ' failed', err);
+                console.warn('[NDS.i18n] ' + path + ' failed', err);
                 return null;
             }
         },
@@ -371,6 +413,9 @@
         }
         return text;
     };
+
+    // Start the pack now: nearly every page needs it, and most components init after it lands.
+    NDS.i18n._file(NDS.i18n._lang());
 
     // ── Debounce ─────────────────────────────────────────────────────
     // Usage: const fn = NDS.debounce(handler, 150)

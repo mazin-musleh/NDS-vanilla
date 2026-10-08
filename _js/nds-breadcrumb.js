@@ -25,6 +25,11 @@
 (function() {
     'use strict';
 
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('breadcrumb', {
+        more: 'More',
+    });
+
     class NDSBreadcrumb {
         constructor(breadcrumbNav) {
             this.breadcrumbNav = breadcrumbNav;
@@ -80,7 +85,7 @@
 
             const button = document.createElement('button');
             button.className = 'nds-btn nds-subtle nds-ellipsis nds-dropmenu-trigger';
-            NDS.aria.label(button, 'More');
+            strings.set(button, 'aria-label', 'more');
 
             const menu = document.createElement('div');
             menu.className = 'nds-dropmenu-menu nds-breadcrumb-menu';

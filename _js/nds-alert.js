@@ -46,6 +46,11 @@
 (function() {
     'use strict';
 
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('alert', {
+        close: 'Close',
+    });
+
     const NDSAlert = {
         /**
          * Create and insert an alert
@@ -126,7 +131,7 @@
                 ` : '';
 
                 html += `
-                    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close${progressClass}" aria-label="Close">
+                    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close${progressClass}">
                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                         ${progressSVG}
                     </button>
@@ -134,6 +139,8 @@
             }
 
             alert.innerHTML = html;
+            const closeBtn = alert.querySelector('.nds-alert-close');
+            if (closeBtn) strings.set(closeBtn, 'aria-label', 'close');
 
             // Knob via CSSOM, never a style attribute — a strict style-src blocks the attribute form.
             if (display === 'toast' && duration > 0) {

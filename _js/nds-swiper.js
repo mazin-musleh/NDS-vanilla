@@ -57,6 +57,11 @@
 (function () {
     'use strict';
 
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('swiper', {
+        go_to_page: 'Go to page {n}',
+    });
+
     // ==============================================
     // UTILITIES
     // ==============================================
@@ -756,7 +761,7 @@
                 bullet.className = 'nds-bullet';
                 bullet.type = 'button';
                 bullet.dataset.page = i;
-                NDS.aria.label(bullet, `Go to slide ${i + 1}`);
+                strings.set(bullet, 'aria-label', 'go_to_page', { n: i + 1 });
                 this.pagination.appendChild(bullet);
             }
 

@@ -35,16 +35,16 @@
 (() => {
   'use strict';
 
-  const STRINGS = {
-    ar: 'لا يوجد محتوى',
-    en: 'No content to show',
-  };
+  // English defaults; the assets/i18n/{lang}.json pack overrides them.
+  const strings = NDS.i18n.strings('empty', {
+    message: 'No content to show',
+  });
   const PLACEHOLDER_ATTR = 'data-nds-empty-placeholder';
   const DEFAULT_ICON_CLASS = 'nds-icon nds-hgi-desert';
 
   function getMessage(container) {
     const custom = container.getAttribute('data-empty-message');
-    return custom && custom.trim() ? custom : STRINGS[NDS.langKey];
+    return custom && custom.trim() ? custom : strings.t('message');
   }
 
   function getIconClass(container) {
@@ -130,6 +130,15 @@
   }
 
   function inject(container) {
+    place(container);
+    if ((container.getAttribute('data-empty-message') || '').trim()) return;
+    // The default text comes from the file: hold the skeleton until it lands.
+    const ph = findPlaceholder(container);
+    strings.set(ph.querySelector('.nds-empty-message'), 'text', 'message');
+    strings.load(ph);
+  }
+
+  function place(container) {
     const message = getMessage(container);
     const iconClass = getIconClass(container);
     const tag = container.tagName;

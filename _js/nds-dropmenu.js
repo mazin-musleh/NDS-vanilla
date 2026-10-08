@@ -45,6 +45,14 @@
 (function() {
     'use strict';
 
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('dropmenu', {
+        search: 'Search items',
+        search_placeholder: 'Search…',
+        clear_search: 'Clear search',
+        no_results: 'No results',
+    });
+
     // State helpers — delegated to NDS.State (nds-core.js)
     const { add: addState, remove: removeState } = NDS.State;
 
@@ -279,9 +287,9 @@
             const searchHTML = `<div class="nds-form-container nds-dropmenu-search">
                 <div class="nds-form-control">
                     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                    <input type="text" class="nds-search-input" aria-label="Search items" placeholder="Search…">
+                    <input type="text" class="nds-search-input">
                     <div class="nds-form-action">
-                        <button type="button" class="nds-btn nds-subtle nds-clear" aria-label="Clear search" hidden>
+                        <button type="button" class="nds-btn nds-subtle nds-clear" hidden>
                             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -292,6 +300,10 @@
             // rather than re-querying (which can mis-hit a nested menu's box, and
             // would miss entirely while the menu is portaled to <body>).
             const searchBox = this.menu.firstElementChild;
+            const searchInput = searchBox.querySelector('.nds-search-input');
+            strings.set(searchInput, 'aria-label', 'search');
+            strings.set(searchInput, 'placeholder', 'search_placeholder');
+            strings.set(searchBox.querySelector('.nds-clear'), 'aria-label', 'clear_search');
             // Wire the .nds-clear button — forms init ran before this injection,
             // so the injected .nds-form-control needs its own pass. Soft
             // dependency — the search box stays a plain input if NDS.Forms
@@ -315,8 +327,9 @@
                 <span class="nds-empty-message"></span>
             </div>`;
             scroll.insertAdjacentHTML('afterbegin', emptyHTML);
-            scroll.querySelector('[data-nds-empty-placeholder] .nds-empty-message').textContent =
-                this.dropmenu.getAttribute('data-search-empty') || 'No results';
+            const emptyMsg = scroll.querySelector('[data-nds-empty-placeholder] .nds-empty-message');
+            const customEmpty = this.dropmenu.getAttribute('data-search-empty');
+            if (customEmpty) emptyMsg.textContent = customEmpty; else strings.set(emptyMsg, 'text', 'no_results');
 
             this.searchInput = this._ownFirst('.nds-dropmenu-search .nds-search-input');
             const emptyEl = scroll.querySelector('[data-nds-empty-placeholder]');

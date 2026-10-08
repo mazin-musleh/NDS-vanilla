@@ -29,6 +29,11 @@
 (() => {
   'use strict';
 
+  // English defaults; the assets/i18n/{lang}.json pack overrides them.
+  const strings = NDS.i18n.strings('rating', {
+    stars: { one: '{n} star', other: '{n} stars' },
+  });
+
   // State helpers — delegated to NDS.State (nds-core.js)
   const { add: addState, remove: removeState, has: hasState } = NDS.State;
 
@@ -41,7 +46,7 @@
       // Set data-value on stars for delegation lookups
       for (let i = 0; i < this.stars.length; i++) {
         this.stars[i].dataset.value = i + 1;
-        NDS.aria.label(this.stars[i], `${i + 1} star${i > 0 ? 's' : ''}`);
+        strings.set(this.stars[i], 'aria-label', 'stars', { n: i + 1 });
       }
 
       // Auto-detect interactive from button elements

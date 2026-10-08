@@ -55,3 +55,17 @@ tr[data-nds-empty-placeholder] > td {
     line-height: var(--typo-text-clamp-md-LH);
   }
 }
+
+// The default message is still loading (NDS.i18n holds the placeholder): bar it.
+[data-nds-empty-placeholder].nds-loading {
+  @include loading-skeleton-host;
+  @include skeleton-pulse;
+
+  .nds-empty-message {
+    @include skeleton-bar;
+  }
+
+  i {
+    visibility: hidden;
+  }
+}

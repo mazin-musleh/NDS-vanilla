@@ -235,7 +235,7 @@
     // open. reconcileCollapse parses it and reparents the author's controls
     // into the scroll container, which stays eager.
     function _ellipsisShell() {
-        return `<li class="nds-pagination-item nds-pagination-ellipsis"><div class="nds-dropmenu"><button type="button" class="nds-btn nds-subtle nds-ellipsis nds-indicator nds-dropmenu-trigger" aria-label="${_t('more')}"><span class="nds-label"></span></button><div class="nds-dropmenu-menu nds-pagination-menu" aria-hidden="true"><div class="nds-dropmenu-scroll"></div></div></div></li>`;
+        return `<li class="nds-pagination-item nds-pagination-ellipsis"><div class="nds-dropmenu"><button type="button" class="nds-btn nds-subtle nds-ellipsis nds-indicator nds-dropmenu-trigger" aria-label="${strings.t('more')}"><span class="nds-label"></span></button><div class="nds-dropmenu-menu nds-pagination-menu" aria-hidden="true"><div class="nds-dropmenu-scroll"></div></div></div></li>`;
     }
 
     // Ellipsis <li> whose dropdown holds the collapsed range — reparents each
@@ -763,36 +763,45 @@
     // inside NDS.State.set (activateGeneratedPage / _layoutLazy) so the State
     // vocab never leaks into a literal attribute. aria-current IS emitted; it's
     // semantic and valid pre-JS.
-    // Generated strings are ar/en pairs picked by page language (the
-    // tables/editor convention) — full component localization is a later pass.
-    const _T = {
-        prev: { en: 'Previous page', ar: 'الصفحة السابقة' },
-        next: { en: 'Next page', ar: 'الصفحة التالية' },
-        page: { en: 'Page', ar: 'صفحة' },
-        more: { en: 'More pages', ar: 'المزيد من الصفحات' },
-        jump: { en: 'Jump to page', ar: 'الانتقال إلى صفحة' },
-    };
-    const _t = k => (NDS.isArabic ? _T[k].ar : _T[k].en);
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('pagination', {
+        prev: 'Previous page',
+        next: 'Next page',
+        page: 'Page {n}',
+        more: 'More pages',
+        jump: 'Jump to page',
+    });
+    // Controls generated before the file landed carry the English defaults: re-label them once.
+    let _relabelArmed = false;
+    function _relabel() {
+        const d = strings.defaults;
+        document.querySelectorAll('.nds-pagination-item .nds-btn[aria-label]').forEach(b => {
+            const l = b.getAttribute('aria-label'), n = b.textContent.trim();
+            const key = ['prev', 'next', 'more'].find(k => l === d[k]);
+            if (key) b.setAttribute('aria-label', strings.t(key));
+            else if (l === NDS.i18n.format(d.page, { n })) b.setAttribute('aria-label', strings.t('page', { n }));
+        });
+    }
     // url (when set) is a page→href function — the controls become navigable
     // anchors for no-JS, server-reload pagination (data-page-url). A disabled
     // prev/next anchor drops its href; CSS pointer-events handles the rest.
     const _prevLi = (disabled, url, prevPage) => {
         const inner = url
-            ? `<a class="nds-btn nds-subtle nds-icon-only" aria-label="${_t('prev')}"${disabled ? ' aria-disabled="true"' : ` href="${url(prevPage)}"`}><i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i></a>`
-            : `<button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="${_t('prev')}"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i></button>`;
+            ? `<a class="nds-btn nds-subtle nds-icon-only" aria-label="${strings.t('prev')}"${disabled ? ' aria-disabled="true"' : ` href="${url(prevPage)}"`}><i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i></a>`
+            : `<button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="${strings.t('prev')}"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i></button>`;
         return `<li class="nds-pagination-item nds-pagination-prev">${inner}</li>`;
     };
     const _nextLi = (disabled, url, nextPage) => {
         const inner = url
-            ? `<a class="nds-btn nds-subtle nds-icon-only" aria-label="${_t('next')}"${disabled ? ' aria-disabled="true"' : ` href="${url(nextPage)}"`}><i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i></a>`
-            : `<button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="${_t('next')}"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i></button>`;
+            ? `<a class="nds-btn nds-subtle nds-icon-only" aria-label="${strings.t('next')}"${disabled ? ' aria-disabled="true"' : ` href="${url(nextPage)}"`}><i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i></a>`
+            : `<button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="${strings.t('next')}"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i></button>`;
         return `<li class="nds-pagination-item nds-pagination-next">${inner}</li>`;
     };
     const _pageLi = (i, activePage, url) => {
         const cur = i === activePage ? ' aria-current="page"' : '';
         const inner = url
-            ? `<a class="nds-btn nds-subtle nds-indicator" href="${url(i)}"${cur} aria-label="${_t('page')} ${i}"><span class="nds-label">${i}</span></a>`
-            : `<button type="button" class="nds-btn nds-subtle nds-indicator"${cur} aria-label="${_t('page')} ${i}"><span class="nds-label">${i}</span></button>`;
+            ? `<a class="nds-btn nds-subtle nds-indicator" href="${url(i)}"${cur} aria-label="${strings.t('page', { n: i })}"><span class="nds-label">${i}</span></a>`
+            : `<button type="button" class="nds-btn nds-subtle nds-indicator"${cur} aria-label="${strings.t('page', { n: i })}"><span class="nds-label">${i}</span></button>`;
         return `<li class="nds-pagination-item page_${i}">${inner}</li>`;
     };
 
@@ -802,8 +811,8 @@
     function _menuItem(i, activePage, url) {
         const cur = i === activePage ? ' aria-current="page"' : '';
         return url
-            ? `<a class="nds-btn nds-subtle nds-indicator nds-dropmenu-item" role="menuitem" href="${url(i)}"${cur} aria-label="${_t('page')} ${i}"><span class="nds-label">${i}</span></a>`
-            : `<button type="button" class="nds-btn nds-subtle nds-indicator nds-dropmenu-item" role="menuitem" aria-label="${_t('page')} ${i}"${cur}><span class="nds-label">${i}</span></button>`;
+            ? `<a class="nds-btn nds-subtle nds-indicator nds-dropmenu-item" role="menuitem" href="${url(i)}"${cur} aria-label="${strings.t('page', { n: i })}"><span class="nds-label">${i}</span></a>`
+            : `<button type="button" class="nds-btn nds-subtle nds-indicator nds-dropmenu-item" role="menuitem" aria-label="${strings.t('page', { n: i })}"${cur}><span class="nds-label">${i}</span></button>`;
     }
 
     // Build a pagination list. Above 5 pages, emits the collapsed shape directly
@@ -813,6 +822,7 @@
     // preserves the href/label markup this data-driven builder doesn't carry.
     // pageUrl (a "?page={page}" template) makes every control a navigable <a href>.
     function generatePaginationHTML(totalPages, activePage = 1, pageUrl = null) {
+        if (!_relabelArmed) { _relabelArmed = true; strings.load().then(_relabel); }
         activePage = Math.max(1, Math.min(activePage, totalPages));
         const url = _urlFn(pageUrl);
         let html = '<ul class="nds-pagination-list">' + _prevLi(activePage === 1, url, activePage - 1);
@@ -1062,7 +1072,7 @@
         if (!menu || menu.querySelector('.nds-pagination-jump')) return;
         menu.insertAdjacentHTML('afterbegin', `<div class="nds-form-container nds-dropmenu-search nds-pagination-jump">
             <div class="nds-form-control">
-                <input type="text" inputmode="numeric" dir="ltr" aria-label="${_t('jump')}" placeholder="${scroll._ndsRange.to + 1}">
+                <input type="text" inputmode="numeric" dir="ltr" aria-label="${strings.t('jump')}" placeholder="${scroll._ndsRange.to + 1}">
             </div>
         </div>`);
         const box = menu.firstElementChild;

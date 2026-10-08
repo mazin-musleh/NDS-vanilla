@@ -81,6 +81,36 @@
 (function () {
     'use strict';
 
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    var strings = NDS.i18n.strings('forms', {
+        required:            'This field is required',
+        invalid:             'Invalid input',
+        invalid_email:       'Please enter a valid email address',
+        invalid_url:         'Please enter a valid URL',
+        pattern:             'Please match the requested format',
+        too_short:           'Input is too short (minimum {n} characters)',
+        too_long:            'Input is too long (maximum {n} characters)',
+        range_under:         'Value must be at least {n}',
+        range_over:          'Value must be no more than {n}',
+        min_value:           'Minimum value is {n}',
+        max_value:           'Maximum value is {n}',
+        invalid_national_id: 'Invalid national ID number',
+        invalid_iban:        'Invalid IBAN',
+        no_arabic:           'Arabic characters are not allowed',
+        select_option:       'Please select an option',
+        select_at_least:     { one: 'Please select at least 1 option', other: 'Please select at least {n} options' },
+        select_at_most:      { one: 'Please select no more than 1 option', other: 'Please select no more than {n} options' },
+        rating_required:     'Please choose a rating',
+        tag_required:        'Please add at least one tag',
+        file_required:       'Please add a file',
+        upload_pending:      'Please wait for the upload to finish',
+        pick_suggestion:     'Choose from the suggestions',
+        otp_incomplete:      'Please enter all {n} digits',
+        loading:             'Loading',
+        show_password:       'Show password',
+        hide_password:       'Hide password',
+    });
+
     // ==============================================
     // STATE PROPAGATION HOOKS
     // ==============================================
@@ -143,7 +173,7 @@
         shell.hidden = true;
         shell.disabled = true;  // inert affordance — keeps it out of the tab order while loading
         shell.setAttribute('data-loading-slot', '');
-        shell.setAttribute('aria-label', 'Loading');
+        shell.setAttribute('aria-label', strings.t('loading'));
         shell.innerHTML = '<i class="nds-icon" aria-hidden="true"></i>';
         action.appendChild(shell);
         return shell;
@@ -416,13 +446,13 @@
         if (input.classList.contains('nds-national-id')) {
             clean = original.replace(/[٠-٩]/g, function (c) { return c.charCodeAt(0) - 0x660; }).replace(/\D/g, '');
             ok = isNationalId(clean);
-            msg = NDS.isArabic ? 'رقم الهوية غير صحيح' : 'Invalid national ID number';
+            msg = strings.t('invalid_national_id');
         } else if (input.classList.contains('nds-iban')) {
             clean = original.toUpperCase().replace(/[^A-Z0-9]/g, '');
             // Banking apps copy a Saudi IBAN without its SA: a value starting with a digit gets it back.
             if (/^\d/.test(clean)) clean = 'SA' + clean;
             ok = isIban(clean);
-            msg = NDS.isArabic ? 'رقم الآيبان غير صحيح' : 'Invalid IBAN';
+            msg = strings.t('invalid_iban');
         } else {
             return;
         }
@@ -441,50 +471,39 @@
             }
 
             var validity = input.validity;
-            var isArabic = NDS.isArabic;
 
             // A blank custom message: the component shows the cause itself (password's red chips).
             if (validity.customError && !input.validationMessage.trim()) return '';
 
             if (validity.valueMissing) {
-                return isArabic ? 'هذا الحقل مطلوب' : 'This field is required';
+                return strings.t('required');
             } else if (validity.typeMismatch) {
                 if (input.type === 'email') {
-                    return isArabic ? 'يرجى إدخال عنوان بريد إلكتروني صحيح' : 'Please enter a valid email address';
+                    return strings.t('invalid_email');
                 } else if (input.type === 'url') {
-                    return isArabic ? 'يرجى إدخال رابط صحيح' : 'Please enter a valid URL';
+                    return strings.t('invalid_url');
                 }
             } else if (validity.tooShort) {
-                return isArabic
-                    ? 'المدخل قصير جداً (الحد الأدنى ' + input.minLength + ')'
-                    : 'Input is too short (minimum ' + input.minLength + ' characters)';
+                return strings.t('too_short', { n: input.minLength });
             } else if (validity.tooLong) {
-                return isArabic
-                    ? 'المدخل طويل جداً (الحد الأقصى ' + input.maxLength + ')'
-                    : 'Input is too long (maximum ' + input.maxLength + ' characters)';
+                return strings.t('too_long', { n: input.maxLength });
             } else if (validity.rangeUnderflow) {
-                return isArabic
-                    ? 'القيمة يجب أن تكون على الأقل ' + input.min
-                    : 'Value must be at least ' + input.min;
+                return strings.t('range_under', { n: input.min });
             } else if (validity.rangeOverflow) {
-                return isArabic
-                    ? 'القيمة يجب ألا تزيد عن ' + input.max
-                    : 'Value must be no more than ' + input.max;
+                return strings.t('range_over', { n: input.max });
             } else if (validity.patternMismatch) {
-                return isArabic ? 'يرجى مطابقة التنسيق المطلوب' : 'Please match the requested format';
+                return strings.t('pattern');
             } else if (validity.customError) {
                 // setCustomValidity stamp — already localized by the stamping
                 // component (e.g. date-picker format/bounds).
                 return input.validationMessage;
             }
 
-            return isArabic ? 'مدخل غير صحيح' : 'Invalid input';
+            return strings.t('invalid');
         },
 
         getNumberRangeMessage: function(type, value) {
-            var isArabic = NDS.isArabic;
-            if (type === 'min') return isArabic ? 'الحد الأدنى ' + value : 'Minimum value is ' + value;
-            return isArabic ? 'الحد الأقصى ' + value : 'Maximum value is ' + value;
+            return strings.t(type === 'min' ? 'min_value' : 'max_value', { n: value });
         },
 
         // Shared tail for group validators: apply the data-error-message
@@ -516,16 +535,7 @@
             var message = '';
             if (!isValid) {
                 var below = checkedCount < minChecked;
-                var n = below ? minChecked : maxChecked;
-                if (NDS.isArabic) {
-                    var noun = n === 1 ? 'خيار واحد' : n === 2 ? 'خيارين' : n + ' خيارات';
-                    message = 'يرجى اختيار ' + noun + (below ? ' على الأقل' : ' كحد أقصى');
-                } else {
-                    var word = n === 1 ? '1 option' : n + ' options';
-                    message = below
-                        ? 'Please select at least ' + word
-                        : 'Please select no more than ' + word;
-                }
+                message = strings.t(below ? 'select_at_least' : 'select_at_most', { n: below ? minChecked : maxChecked });
             }
 
             return this._finishGroupValidation(group, options, isValid, message, { checked: checkedCount, min: minChecked, max: maxChecked });
@@ -546,12 +556,7 @@
 
             var isRequired = group.hasAttribute('data-required') || group.classList.contains('nds-required');
             var isValid = !isRequired || isSelected;
-            var message = '';
-            var isArabic = NDS.isArabic;
-
-            if (!isValid) {
-                message = isArabic ? 'يرجى اختيار خيار واحد' : 'Please select an option';
-            }
+            var message = isValid ? '' : strings.t('select_option');
 
             return this._finishGroupValidation(group, options, isValid, message, { selected: isSelected });
         },
@@ -570,11 +575,7 @@
 
             var isRequired = group.hasAttribute('data-required') || group.classList.contains('nds-required');
             var isValid = !isRequired || value > 0;
-            var message = '';
-
-            if (!isValid) {
-                message = NDS.isArabic ? 'يرجى اختيار تقييم' : 'Please choose a rating';
-            }
+            var message = isValid ? '' : strings.t('rating_required');
 
             return this._finishGroupValidation(group, options, isValid, message, { rating: value });
         },
@@ -603,7 +604,7 @@
             var hasRequired = ti.hasAttribute('data-required') || ti.classList.contains('nds-required');
             var count = ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
             var isValid = !hasRequired || count > 0;
-            var message = isValid ? '' : (NDS.isArabic ? 'يرجى إضافة وسم واحد على الأقل' : 'Please add at least one tag');
+            var message = isValid ? '' : strings.t('tag_required');
             return this._finishGroupValidation(ti, options, isValid, message, { count: count });
         },
 
@@ -618,9 +619,7 @@
             var count = up.querySelectorAll('.nds-file-list .nds-file-item:not([data-status="error"])').length;
             var pending = !!up.querySelector('.nds-file-list .nds-file-item:is([data-state~="uploading"], [data-state~="processing"])');
             var isValid = !pending && (!hasRequired || count > 0);
-            var message = isValid ? '' : pending
-                ? (NDS.isArabic ? 'يرجى الانتظار حتى يكتمل الرفع' : 'Please wait for the upload to finish')
-                : (NDS.isArabic ? 'يرجى إرفاق ملف' : 'Please add a file');
+            var message = isValid ? '' : strings.t(pending ? 'upload_pending' : 'file_required');
             return this._finishGroupValidation(up, options, isValid, message, { count: count, pending: pending });
         },
 
@@ -634,7 +633,7 @@
             var carrier = container.querySelector('.nds-select-value');
             var hasRequired = container.hasAttribute('data-required') || container.classList.contains('nds-required');
             var isValid = !hasRequired || !!(carrier && carrier.value.trim());
-            var message = isValid ? '' : (NDS.isArabic ? 'يرجى اختيار خيار' : 'Please select an option');
+            var message = isValid ? '' : strings.t('select_option');
             return this._finishGroupValidation(container, options, isValid, message, { value: carrier ? carrier.value : '' });
         },
 
@@ -646,7 +645,7 @@
             var carrier = Array.prototype.find.call(dm.querySelectorAll('input[data-nds-select-value]'),
                 function(el) { return el.closest('.nds-dropmenu') === dm; });
             var isValid = !!(carrier && carrier.value.trim());
-            var message = isValid ? '' : (NDS.isArabic ? 'يرجى اختيار خيار' : 'Please select an option');
+            var message = isValid ? '' : strings.t('select_option');
             return this._finishGroupValidation(dm, options, isValid, message, { value: carrier ? carrier.value : '' });
         },
 
@@ -663,7 +662,7 @@
             var input = ownField(container);
             var text = input ? input.value.trim() : '';
             var isValid = !carrier || text === '' || carrier.value === text;
-            var message = isValid ? '' : (NDS.isArabic ? 'اختر من الاقتراحات' : 'Choose from the suggestions');
+            var message = isValid ? '' : strings.t('pick_suggestion');
             return this._finishGroupValidation(container, options, isValid, message, { picked: !!(carrier && carrier.value) });
         },
 
@@ -675,12 +674,7 @@
             var isAllFilled = inputs.length > 0 && inputs.every(function(i) { return i.value.length === 1; });
 
             var isValid = isAllFilled;
-            var message = '';
-            var isArabic = NDS.isArabic;
-
-            if (!isValid) {
-                message = isArabic ? 'يرجى إدخال جميع الأرقام' : 'Please enter all ' + inputs.length + ' digits';
-            }
+            var message = isValid ? '' : strings.t('otp_incomplete', { n: inputs.length });
 
             return this._finishGroupValidation(group, options, isValid, message, { filled: isAllFilled });
         },
@@ -1129,7 +1123,7 @@
             e._ndsArabicStripped = true;
             var fc = c.formControl.closest('.nds-form-container');
             if (fc) {
-                var msg = NDS.isArabic ? 'الأحرف العربية غير مسموح بها' : 'Arabic characters are not allowed';
+                var msg = strings.t('no_arabic');
                 StatusManager.set({ element: fc, status: 'error', message: msg });
             }
         }, true);
@@ -1297,7 +1291,7 @@
                 var isPassword = passwordInput.type === 'password';
                 passwordInput.type = isPassword ? 'text' : 'password';
                 passwordToggle.classList.toggle('show', isPassword);
-                NDS.aria.label(passwordToggle, isPassword ? 'Hide password' : 'Show password');
+                NDS.aria.label(passwordToggle, strings.t(isPassword ? 'hide_password' : 'show_password'));
             });
         },
 
@@ -1731,6 +1725,7 @@
         // re-init every auto-fill container at startup. The standalone pass stays
         // wired to the dynamic-content observer (initDynamicContentObserver) for
         // .nds-auto-fill nodes added after load.
+        strings.load();
         installFormDelegation();
         initFormControlClasses();
         initDynamicContentObserver();
