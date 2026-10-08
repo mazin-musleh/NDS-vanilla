@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "08/10/2026 - 11:53 AM"
+last_edit: "08/10/2026 - 12:56 PM"
 ---
 
 <section id="countdownOverview" class="nds-content-section nds-doc-overview">
@@ -275,7 +275,7 @@ At zero, the root gets `data-state="ended"`. A `.nds-countdown-ended` element an
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-countdown` | `.nds-countdown` | The deadline: `YYYY-MM-DD`, with an optional `THH:mm` or `THH:mm:ss` and an optional offset. No offset means the site timezone. A value that is not a date logs a console warning |
+| `data-countdown` | `.nds-countdown` | The deadline: `YYYY-MM-DD`, with an optional `THH:mm` or `THH:mm:ss` and an optional offset. No offset means the site timezone. A value that is not a date logs a console warning. Empty, the countdown shows its placeholders and waits for `NDS.Countdown.set()`: no timer and no events until then |
 | `data-countdown-seconds` | `.nds-countdown` | A duration in seconds, counted from the moment the countdown starts. It wins over `data-countdown` |
 | `data-countdown-warn` | `.nds-countdown` | Seconds left at which the script adds `warning` to `data-state` |
 | `data-countdown-now` | `.nds-countdown`, or any element around it, such as `<html>` | The server's current time, in the format of `data-countdown`. The script reads it once, when the countdown starts |

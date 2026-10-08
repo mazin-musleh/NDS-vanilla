@@ -8,7 +8,8 @@
  *   nds:countdown:warn   detail {remaining} — once, when remaining reaches data-countdown-warn
  *   nds:countdown:end    detail {}          — once, at zero
  * Hooks:
- *   data-countdown          the target: YYYY-MM-DD[THH:mm[:ss]][offset]. No offset = the site timezone
+ *   data-countdown          the target: YYYY-MM-DD[THH:mm[:ss]][offset]. No offset = the site timezone.
+ *                           Empty: shows its placeholders and waits for set(), with no timer and no events
  *   data-countdown-seconds  a duration from wire time instead of a target
  *   data-countdown-warn     seconds; at or under it the root carries data-state="warning"
  *   data-countdown-now      the server's current time (ISO), on the root or any ancestor (<html> for the page),
@@ -227,6 +228,7 @@
         if (!el.hasAttribute('dir')) el.dir = 'auto';
         el.querySelectorAll('.nds-countdown-ended:not([dir])').forEach((m) => { m.dir = 'auto'; });
         const seconds = el.getAttribute('data-countdown-seconds');
+        if (seconds === null && el.getAttribute('data-countdown') === '') return; // waits for set()
         // Stamped only on success, so reinit() retries a target filled in later.
         if (track(el, seconds !== null ? parseInt(seconds, 10) : el.getAttribute('data-countdown'))) el.setAttribute(WIRED_ATTR, '');
     }
