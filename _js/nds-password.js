@@ -98,17 +98,11 @@
         return RULES[chip.getAttribute('data-rule')] || null;
     }
 
-    var STRINGS = {
-        en: {
-            mismatch: 'The two passwords do not match',
-            met: function (n, total) { return n + ' of ' + total + ' password rules met'; }
-        },
-        ar: {
-            mismatch: 'كلمتا المرور غير متطابقتين',
-            met: function (n, total) { return 'تم استيفاء ' + n + ' من ' + total + ' من شروط كلمة المرور'; }
-        }
-    };
-    var S = function () { return STRINGS[NDS.langKey]; };
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    var strings = NDS.i18n.strings('password', {
+        mismatch: 'The two passwords do not match',
+        met: '{n} of {total} password rules met',
+    });
 
     class NDSPassword {
         constructor(container) {
@@ -220,13 +214,13 @@
             // message). Only a mismatch with no match chip needs words.
             // Nothing fires on an empty field: required owns that message.
             var msg = '';
-            if (value && !allPass) msg = mismatched && !('match' in results) ? S().mismatch : ' ';
+            if (value && !allPass) msg = mismatched && !('match' in results) ? strings.t('mismatch') : ' ';
             this.input.setCustomValidity(msg);
 
             // Announce the error, else progress. Empty field says nothing — otherwise
             // every page load would announce "0 of 6 rules met".
             if (this.statusEl) {
-                this._announce(value ? (msg.trim() || (active ? S().met(passing, active) : '')) : '');
+                this._announce(value ? (msg.trim() || (active ? strings.t('met', { n: passing, total: active }) : '')) : '');
             }
 
             // No raw value in the detail — a listener that needs it reads the input.

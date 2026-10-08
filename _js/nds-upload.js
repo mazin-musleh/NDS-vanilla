@@ -59,12 +59,11 @@
     // UTILITY FUNCTIONS
     // ==============================================
 
+    // Intl names the unit in the page's language.
     function formatFileSize(bytes) {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        const i = bytes > 0 ? Math.min(3, Math.floor(Math.log(bytes) / Math.log(1024))) : 0;
+        return NDS.formatNumber(bytes / Math.pow(1024, i),
+            { style: 'unit', unit: ['byte', 'kilobyte', 'megabyte', 'gigabyte'][i], unitDisplay: 'short', maximumFractionDigits: 2 });
     }
 
     function sanitizeFileName(name) {
@@ -77,30 +76,18 @@
             .slice(0, 255);               // truncate
     }
 
-    const MESSAGES = {
-        en: {
-            sizeExceeds: 'File size exceeds',
-            typeNotAllowed: 'File type not allowed',
-            maxFilesReached: 'Maximum number of files reached',
-            networkError: 'Network error',
-            uploadTimedOut: 'Upload timed out',
-            uploadCancelled: 'Upload cancelled',
-            uploadFailed: 'Upload failed'
-        },
-        ar: {
-            sizeExceeds: 'حجم الملف يتجاوز',
-            typeNotAllowed: 'نوع الملف غير مسموح',
-            maxFilesReached: 'تم الوصول للحد الأقصى لعدد الملفات',
-            networkError: 'خطأ في الشبكة',
-            uploadTimedOut: 'انتهت مهلة الرفع',
-            uploadCancelled: 'تم إلغاء الرفع',
-            uploadFailed: 'فشل الرفع'
-        }
-    };
-
-    function msg(key) {
-        return (NDS.isArabic ? MESSAGES.ar : MESSAGES.en)[key];
-    }
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('upload', {
+        size_exceeds: 'File size exceeds {size}',
+        type_not_allowed: 'File type not allowed',
+        type_not_allowed_ext: 'File type not allowed (.{ext})',
+        max_files: 'Maximum number of files reached ({n})',
+        network_error: 'Network error',
+        timed_out: 'Upload timed out',
+        cancelled: 'Upload cancelled',
+        failed: 'Upload failed',
+        remove_file: 'Remove file',
+    });
 
     function warn(message) {
         console.warn('NDS Upload: ' + message);
@@ -133,7 +120,7 @@
                 '<div class="nds-file-error"><span class="nds-error-message"></span></div>' +
             '</div>' +
             '<div class="nds-file-actions">' +
-                '<button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-remove-file" aria-label="Remove file">' +
+                '<button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-remove-file">' +
                     '<i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>' +
                 '</button>' +
             '</div>' +
@@ -360,7 +347,7 @@
             fileData._xhr.abort();
             fileData._xhr = null;
             fileData.status = 'error';
-            fileData.error = msg('uploadCancelled');
+            fileData.error = strings.t('cancelled');
             this._updateFileItem(fileId);
             return true;
         }
@@ -438,14 +425,14 @@
 
             // Size check
             if (file.size > config.maxFileSize) {
-                errors.push(msg('sizeExceeds') + ' ' + formatFileSize(config.maxFileSize));
+                errors.push(strings.t('size_exceeds', { size: formatFileSize(config.maxFileSize) }));
             }
 
             // Extension check
             if (config.allowedTypes) {
                 const ext = file.name.split('.').pop().toLowerCase();
                 if (!config.allowedTypes.includes(ext)) {
-                    errors.push(msg('typeNotAllowed') + ' (.' + ext + ')');
+                    errors.push(strings.t('type_not_allowed_ext', { ext }));
                 }
             }
 
@@ -457,7 +444,7 @@
                     return mime === t;
                 });
                 if (!allowed) {
-                    errors.push(msg('typeNotAllowed'));
+                    errors.push(strings.t('type_not_allowed'));
                 }
             }
 
@@ -492,7 +479,7 @@
 
             // Collect all rejected files (validation errors + excess)
             const rejectedFiles = validationErrors.map(e => e.fileData)
-                .concat(excessFiles.map(file => this._entry(file, [msg('maxFilesReached') + ' (' + config.maxFiles + ')'])));
+                .concat(excessFiles.map(file => this._entry(file, [strings.t('max_files', { n: config.maxFiles })])));
 
             if (excessFiles.length > 0) {
                 this._dispatchEvent('nds:upload:maxFilesReached', {
@@ -595,7 +582,7 @@
                     // statusText (empty over HTTP/2), else localized generic.
                     let serverMsg = '';
                     try { serverMsg = JSON.parse(xhr.response)?.error || ''; } catch { /* non-JSON body */ }
-                    fileData.error = serverMsg || xhr.statusText || msg('uploadFailed');
+                    fileData.error = serverMsg || xhr.statusText || strings.t('failed');
                     this._dispatchEvent('nds:upload:error', {
                         fileData: this._toPublic(fileData),
                         error: fileData.error,
@@ -610,15 +597,15 @@
             const fail = (key) => {
                 fileData._xhr = null;
                 fileData.status = 'error';
-                fileData.error = msg(key);
+                fileData.error = strings.t(key);
                 this._dispatchEvent('nds:upload:error', {
                     fileData: this._toPublic(fileData),
                     error: fileData.error
                 });
                 this._updateFileItem(fileData.id);
             };
-            xhr.addEventListener('error', () => fail('networkError'));
-            xhr.addEventListener('timeout', () => fail('uploadTimedOut'));
+            xhr.addEventListener('error', () => fail('network_error'));
+            xhr.addEventListener('timeout', () => fail('timed_out'));
 
             xhr.open('POST', config.uploadUrl);
             xhr.timeout = config.uploadTimeout * 1000;
@@ -658,6 +645,7 @@
             // Populate content
             const fileName = fileItem.querySelector('.nds-file-name');
             const removeBtn = fileItem.querySelector('.nds-remove-file');
+            if (removeBtn && !removeBtn.hasAttribute('aria-label')) strings.set(removeBtn, 'aria-label', 'remove_file');
             const errorMsg = fileItem.querySelector('.nds-error-message');
 
             if (fileName) {

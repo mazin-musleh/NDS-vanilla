@@ -44,11 +44,16 @@
 (function () {
     'use strict';
 
-    const STRINGS = {
-        en: { added: 'Added', removed: 'Removed', editing: 'Editing', duplicate: 'Already added', max: 'Maximum limit', cleared: 'All tags removed', strict: 'Choose from the suggestions' },
-        ar: { added: 'تمت إضافة', removed: 'تمت إزالة', editing: 'تعديل', duplicate: 'مضاف مسبقًا', max: 'الحد الأقصى', cleared: 'تمت إزالة جميع الوسوم', strict: 'اختر من الاقتراحات' }
-    };
-    const S = () => STRINGS[NDS.langKey];
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('taginput', {
+        added: 'Added {value}',
+        removed: 'Removed {value}',
+        editing: 'Editing {value}',
+        duplicate: 'Already added',
+        max: 'Maximum limit {n}',
+        cleared: 'All tags removed',
+        strict: 'Choose from the suggestions',
+    });
 
     // Chips are buttons outside .nds-form-action, so the forms disabled hook
     // doesn't reach them (same rationale as the multiselect hook).
@@ -130,7 +135,7 @@
                     const last = this.tags.pop();
                     this.renderChips();
                     this.input.value = last;
-                    NDS.announce(S().editing + ' ' + last);
+                    NDS.announce(strings.t('editing', { value: last }));
                     this.emitChange();
                 }
             }, { signal });
@@ -200,7 +205,7 @@
         // Strict-mode rejection of typed commits — same feedback shape as the
         // duplicate/max rejections in addTag (incl. the macrotask deferral).
         _strictReject() {
-            const msg = S().strict;
+            const msg = strings.t('strict');
             setTimeout(() => NDS.Forms?.setStatus?.({ element: this.root, status: 'error', message: msg }), 0);
             NDS.announce(msg);
         }
@@ -219,19 +224,19 @@
             // run between the two listeners) — the status must land once the
             // whole event dispatch has finished.
             if (this.tags.length >= this.maxTags) {
-                const msg = S().max + ' ' + this.maxTags;
+                const msg = strings.t('max', { n: this.maxTags });
                 setTimeout(() => NDS.Forms?.setStatus?.({ element: this.root, status: 'error', message: msg }), 0);
                 NDS.announce(msg);
                 return;
             }
             if (this.tags.some(t => t.toLowerCase() === value.toLowerCase())) {
-                setTimeout(() => NDS.Forms?.setStatus?.({ element: this.root, status: 'error', message: S().duplicate }), 0);
-                NDS.announce(S().duplicate);
+                setTimeout(() => NDS.Forms?.setStatus?.({ element: this.root, status: 'error', message: strings.t('duplicate') }), 0);
+                NDS.announce(strings.t('duplicate'));
                 return;
             }
             this.tags.push(value);
             this.renderChips();
-            NDS.announce(S().added + ' ' + value);
+            NDS.announce(strings.t('added', { value }));
             this.emitChange();
         }
 
@@ -248,7 +253,7 @@
                 const remaining = this.formControl.querySelectorAll('.nds-chip');
                 (remaining[Math.min(removedIdx, remaining.length - 1)] || this.input)?.focus();
             }
-            NDS.announce(S().removed + ' ' + value);
+            NDS.announce(strings.t('removed', { value }));
             this.emitChange();
         }
 
@@ -256,7 +261,7 @@
             if (!this.tags.length) return;
             this.tags = [];
             this.renderChips();
-            NDS.announce(S().cleared);
+            NDS.announce(strings.t('cleared'));
             this.emitChange();
         }
 

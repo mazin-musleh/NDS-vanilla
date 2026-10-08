@@ -46,30 +46,21 @@
 
     var VOICE_TIMEOUT = 30000; // auto-stop after 30s of listening
 
-    var MESSAGES = {
-        ar: {
-            'no-speech': 'لم يتم اكتشاف صوت',
-            'not-allowed': 'مطلوب إذن الميكروفون',
-            'audio-capture': 'تم رفض الوصول للميكروفون',
-            'network': 'خطأ في الشبكة',
-            'aborted': 'تم إلغاء إدخال الصوت',
-            'language-not-supported': 'اللغة غير مدعومة',
-            'default': 'خطأ في إدخال الصوت',
-            'timeout': 'انتهت مهلة إدخال الصوت',
-            'unsupported': 'إدخال الصوت غير مدعوم في هذا المتصفح'
-        },
-        en: {
-            'no-speech': 'No speech detected',
-            'not-allowed': 'Microphone permission required',
-            'audio-capture': 'Microphone access denied',
-            'network': 'Network error',
-            'aborted': 'Voice input cancelled',
-            'language-not-supported': 'Language not supported',
-            'default': 'Voice input error',
-            'timeout': 'Voice input timed out',
-            'unsupported': 'Voice input is not supported in this browser'
-        }
-    };
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    var strings = NDS.i18n.strings('voice-input', {
+        start: 'Start voice input ({language})',
+        stop: 'Stop voice input',
+        language: 'English',
+        'no-speech': 'No speech detected',
+        'not-allowed': 'Microphone permission required',
+        'audio-capture': 'Microphone access denied',
+        network: 'Network error',
+        aborted: 'Voice input cancelled',
+        'language-not-supported': 'Language not supported',
+        default: 'Voice input error',
+        timeout: 'Voice input timed out',
+        unsupported: 'Voice input is not supported in this browser',
+    });
 
     // ── Web Speech engine (internal, lazy) ────────────────────────────
     // The AudioContext is created on the first tone and recognition on the
@@ -201,16 +192,6 @@
         }, duration || 3000);
     }
 
-    // Localized button labels, computed fresh each use so a runtime language
-    // switch is reflected (the engine messages already read NDS.langKey lazily).
-    function labels() {
-        var ar = NDS.isArabic;
-        var langName = ar ? 'العربية' : 'English';
-        return {
-            start: ar ? 'بدء إدخال الصوت (' + langName + ')' : 'Start voice input (' + langName + ')',
-            stop: ar ? 'إيقاف إدخال الصوت' : 'Stop voice input'
-        };
-    }
 
     // ── Per-button session (lazy, kept in a WeakMap) ──────────────────
     var sessions = new WeakMap();
@@ -242,7 +223,7 @@
 
             if (container) NDS.State.remove(container, 'listening');
             NDS.aria.pressed(button, false);
-            NDS.aria.label(button, labels().start);
+            NDS.aria.label(button, strings.t('start', { language: strings.t('language') }));
             if (input) {
                 input.style.fontStyle = '';
                 input.style.opacity = '';
@@ -262,12 +243,12 @@
             isListening = true;
             if (container) NDS.State.add(container, 'listening');
             NDS.aria.pressed(button, true);
-            NDS.aria.label(button, labels().stop);
+            NDS.aria.label(button, strings.t('stop'));
             input.focus();
 
             timeout = setTimeout(function() {
                 stop();
-                showMessage(input, MESSAGES[NDS.langKey].timeout, 4000);
+                showMessage(input, strings.t('timeout'), 4000);
             }, VOICE_TIMEOUT);
 
             listen(recognition, {
@@ -287,8 +268,7 @@
                 onError: function(error) {
                     stop();
                     var errorType = typeof error === 'string' ? error : (error && error.error);
-                    var dict = MESSAGES[NDS.langKey];
-                    showMessage(input, dict[errorType] || dict['default']);
+                    showMessage(input, strings.t(errorType in strings.defaults ? errorType : 'default'));
                 },
                 onEnd: stop
             });
@@ -308,7 +288,7 @@
         if (!button) return;
         if (!isSupported()) {
             // No hiding — tell the user in the field, leave the button alone.
-            showMessage(resolveInput(button), MESSAGES[NDS.langKey].unsupported);
+            showMessage(resolveInput(button), strings.t('unsupported'));
             return;
         }
         getSession(button).toggle();

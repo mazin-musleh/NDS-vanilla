@@ -55,11 +55,11 @@ Owner decision (2026-10-08): a component shows its loading skeleton until its st
 1. [x] **Core** (`4df112e3`): skeleton hold, `format()`, `check-i18n.mjs`.
 2. **Sweep**, one commit per group. Each English-only string gets its Arabic in the same pass.
    - [x] forms · pagination, expandable, empty, dropmenu, alert, breadcrumb, tooltip, swiper, rating · the pack (cookies, ipv, session-timeout moved in)
-   - [ ] autocomplete, multiselect, taginput, password, upload, voice-input
+   - [x] autocomplete, multiselect, taginput, password, upload, voice-input (file sizes name their unit through `Intl`)
    - [ ] date-picker, time-picker, timeDate
    - [ ] filter, tables, copy, user-feedback, export, chart, cityWeather
    - [ ] editor
-3. **Carried TODO items**: [ ] Motor Impaired description (accessibility), [x] swiper bullet "Go to page N", [ ] the upload check messages.
+3. **Carried TODO items**: [ ] Motor Impaired description (accessibility), [x] swiper bullet "Go to page N", [x] the upload check messages (templates, so word order follows the language).
 4. **Docs**, one pass at the end: a new `core/i18n.md` titled Internationalization (`/nds-doc`), beside Date, Refresh and Request: the pack, the lookup order, the override, adding a language, the skeleton hold. Fold `assets/i18n/README.md` into it. The four pages that name the old folders (accessibility, cookies, ipv, session-timeout). A Core child in `_data/sidemenu/sidemenu.yml`, a `category: "Core"` card in `_data/content/components.yml` (copy Date's keys). Migration lines: `NDS.langKey` removed; `assets/i18n/{cookies,ipv,session-timeout}/` moved into `assets/i18n/{lang}.json` sections (a site that edited or added a file there moves it into the pack; `window.NDS_I18N` is unchanged).
 5. **NDS IQ**: a rule line joins the end-of-rewrite IQ pass (on its branch).
 

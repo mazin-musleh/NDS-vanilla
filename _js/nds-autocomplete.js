@@ -41,10 +41,10 @@
     // State helpers — delegated to NDS.State (nds-core.js)
     const { add: addState, remove: removeState } = NDS.State;
 
-    const STRINGS = {
-        en: { noResults: 'No results' },
-        ar: { noResults: 'لا توجد نتائج' }
-    };
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('autocomplete', {
+        no_results: 'No results',
+    });
 
     // ==============================================
     // DEBOUNCE
@@ -168,8 +168,9 @@
             // forward through, so consumers customize per field.
             var scroll = document.createElement('div');
             scroll.className = 'nds-dropmenu-scroll nds-empty';
-            scroll.setAttribute('data-empty-message',
-                this.container.getAttribute('data-empty-message') || STRINGS[NDS.langKey].noResults);
+            const emptyMessage = this.container.getAttribute('data-empty-message');
+            if (emptyMessage) scroll.setAttribute('data-empty-message', emptyMessage);
+            else strings.set(scroll, 'data-empty-message', 'no_results');
             scroll.setAttribute('data-empty-icon',
                 this.container.getAttribute('data-empty-icon') || 'nds-icon nds-hgi-search-01');
             menu.appendChild(scroll);
@@ -405,7 +406,7 @@
                 // Only strict needs "no results": elsewhere any typed text is valid.
                 if (!NDS.Empty || !this.strict) { this.close(); return; }
                 NDS.Empty.refresh(this.scroll);
-                NDS.announce(STRINGS[NDS.langKey].noResults);
+                NDS.announce(strings.t('no_results'));
                 this.open();
                 return;
             }

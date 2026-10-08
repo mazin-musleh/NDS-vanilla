@@ -2,6 +2,9 @@
     "alert": {
         "close": "Close"
     },
+    "autocomplete": {
+        "no_results": "No results"
+    },
     "breadcrumb": {
         "more": "More"
     },
@@ -92,12 +95,23 @@
         "instructionsToggle": "• H key to toggle UI",
         "instructionsClose": "• ESC to close"
     },
+    "multiselect": {
+        "none": "{label}: No selection",
+        "added": "Added {value}",
+        "removed": "Removed {value}",
+        "cleared": "Selection cleared",
+        "applied": "Applied {value}"
+    },
     "pagination": {
         "prev": "Previous page",
         "next": "Next page",
         "page": "Page {n}",
         "more": "More pages",
         "jump": "Jump to page"
+    },
+    "password": {
+        "mismatch": "The two passwords do not match",
+        "met": "{n} of {total} password rules met"
     },
     "rating": {
         "stars": {
@@ -117,7 +131,41 @@
     "swiper": {
         "go_to_page": "Go to page {n}"
     },
+    "taginput": {
+        "added": "Added {value}",
+        "removed": "Removed {value}",
+        "editing": "Editing {value}",
+        "duplicate": "Already added",
+        "max": "Maximum limit {n}",
+        "cleared": "All tags removed",
+        "strict": "Choose from the suggestions"
+    },
     "tooltip": {
         "more_info": "More info"
+    },
+    "upload": {
+        "size_exceeds": "File size exceeds {size}",
+        "type_not_allowed": "File type not allowed",
+        "type_not_allowed_ext": "File type not allowed (.{ext})",
+        "max_files": "Maximum number of files reached ({n})",
+        "network_error": "Network error",
+        "timed_out": "Upload timed out",
+        "cancelled": "Upload cancelled",
+        "failed": "Upload failed",
+        "remove_file": "Remove file"
+    },
+    "voice-input": {
+        "start": "Start voice input ({language})",
+        "stop": "Stop voice input",
+        "language": "English",
+        "no-speech": "No speech detected",
+        "not-allowed": "Microphone permission required",
+        "audio-capture": "Microphone access denied",
+        "network": "Network error",
+        "aborted": "Voice input cancelled",
+        "language-not-supported": "Language not supported",
+        "default": "Voice input error",
+        "timeout": "Voice input timed out",
+        "unsupported": "Voice input is not supported in this browser"
     }
 }

@@ -44,11 +44,14 @@
 (function () {
     'use strict';
 
-    const STRINGS = {
-        en: { none: 'No selection', added: 'Added',     removed: 'Removed',   cleared: 'Selection cleared', applied: 'Applied' },
-        ar: { none: 'لا تحديد',     added: 'تمت إضافة', removed: 'تمت إزالة', cleared: 'تم مسح التحديد',    applied: 'تم تطبيق' }
-    };
-    const S = () => STRINGS[NDS.langKey];
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('multiselect', {
+        none: '{label}: No selection',
+        added: 'Added {value}',
+        removed: 'Removed {value}',
+        cleared: 'Selection cleared',
+        applied: 'Applied {value}',
+    });
 
     // Chips are buttons outside .nds-form-action, so the forms disabled hook
     // doesn't reach them — without this they stay tab-focusable (and removable)
@@ -374,7 +377,7 @@
             this.applied = this.getSelected();
             this.renderChips();
             const labels = this.applied.map(v => this.labelFor(v));
-            NDS.announce(labels.length ? S().applied + ' ' + labels.join(', ') : S().cleared);
+            NDS.announce(labels.length ? strings.t('applied', { value: labels.join(', ') }) : strings.t('cleared'));
             this.emitChange();
         }
 
@@ -392,7 +395,7 @@
             this.applied = [];
             this.renderChips();
             if (before.length) {
-                NDS.announce(S().cleared);
+                NDS.announce(strings.t('cleared'));
                 this.emitChange();
             }
         }
@@ -411,13 +414,12 @@
                 const remaining = this.chipsEl.children;
                 (remaining[Math.min(removedIdx, remaining.length - 1)] || this.trigger)?.focus();
             }
-            NDS.announce(S().removed + ' ' + this.labelFor(value));
+            NDS.announce(strings.t('removed', { value: this.labelFor(value) }));
             this.emitChange();
         }
 
         announceToggle(cb) {
-            const s = S();
-            NDS.announce((cb.checked ? s.added : s.removed) + ' ' + this.labelFor(cb.value));
+            NDS.announce(strings.t(cb.checked ? 'added' : 'removed', { value: this.labelFor(cb.value) }));
         }
 
         labelFor(value) {
@@ -437,8 +439,8 @@
 
             if (this.trigger && this.triggerLabelOriginal) {
                 const labels = selected.map(v => this.labelFor(v));
-                const summary = labels.length ? labels.join(', ') : S().none;
-                NDS.aria.label(this.trigger, this.triggerLabelOriginal + ': ' + summary);
+                if (labels.length) NDS.aria.label(this.trigger, this.triggerLabelOriginal + ': ' + labels.join(', '));
+                else strings.set(this.trigger, 'aria-label', 'none', { label: this.triggerLabelOriginal });
             }
         }
 

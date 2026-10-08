@@ -2,6 +2,9 @@
     "alert": {
         "close": "إغلاق"
     },
+    "autocomplete": {
+        "no_results": "لا توجد نتائج"
+    },
     "breadcrumb": {
         "more": "المزيد"
     },
@@ -98,12 +101,23 @@
         "instructionsToggle": "• المفتاح H لإظهار/إخفاء الأدوات",
         "instructionsClose": "• ESC للإغلاق"
     },
+    "multiselect": {
+        "none": "{label}: لا تحديد",
+        "added": "تمت إضافة {value}",
+        "removed": "تمت إزالة {value}",
+        "cleared": "تم مسح التحديد",
+        "applied": "تم تطبيق {value}"
+    },
     "pagination": {
         "prev": "الصفحة السابقة",
         "next": "الصفحة التالية",
         "page": "صفحة {n}",
         "more": "المزيد من الصفحات",
         "jump": "الانتقال إلى صفحة"
+    },
+    "password": {
+        "mismatch": "كلمتا المرور غير متطابقتين",
+        "met": "تم استيفاء {n} من {total} من شروط كلمة المرور"
     },
     "rating": {
         "stars": {
@@ -127,7 +141,41 @@
     "swiper": {
         "go_to_page": "الانتقال إلى الصفحة {n}"
     },
+    "taginput": {
+        "added": "تمت إضافة {value}",
+        "removed": "تمت إزالة {value}",
+        "editing": "تعديل {value}",
+        "duplicate": "مضاف مسبقًا",
+        "max": "الحد الأقصى {n}",
+        "cleared": "تمت إزالة جميع الوسوم",
+        "strict": "اختر من الاقتراحات"
+    },
     "tooltip": {
         "more_info": "مزيد من المعلومات"
+    },
+    "upload": {
+        "size_exceeds": "حجم الملف يتجاوز {size}",
+        "type_not_allowed": "نوع الملف غير مسموح",
+        "type_not_allowed_ext": "نوع الملف غير مسموح (.{ext})",
+        "max_files": "تم الوصول للحد الأقصى لعدد الملفات ({n})",
+        "network_error": "خطأ في الشبكة",
+        "timed_out": "انتهت مهلة الرفع",
+        "cancelled": "تم إلغاء الرفع",
+        "failed": "فشل الرفع",
+        "remove_file": "إزالة الملف"
+    },
+    "voice-input": {
+        "start": "بدء إدخال الصوت ({language})",
+        "stop": "إيقاف إدخال الصوت",
+        "language": "العربية",
+        "no-speech": "لم يتم اكتشاف صوت",
+        "not-allowed": "مطلوب إذن الميكروفون",
+        "audio-capture": "تم رفض الوصول للميكروفون",
+        "network": "خطأ في الشبكة",
+        "aborted": "تم إلغاء إدخال الصوت",
+        "language-not-supported": "اللغة غير مدعومة",
+        "default": "خطأ في إدخال الصوت",
+        "timeout": "انتهت مهلة إدخال الصوت",
+        "unsupported": "إدخال الصوت غير مدعوم في هذا المتصفح"
     }
 }
