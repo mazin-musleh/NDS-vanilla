@@ -5,7 +5,7 @@
 Done on branch `iq-v4`:
 - Phase 1: `NDS-INDEX.md` ships at the zip root, and `verify()` checks it (4e18e9e9).
 - Phase 2: doc fills for section and forms (fd9f0ef2). The "copy from a built page" fills were dropped: the canons carry their layout.
-- Phase 3: audit rules `legacy-library`, `bundle-tag` and `inline-defer` (6f6b964e). The browser test is NOT run yet; it needs the owner's yes.
+- Phase 3: audit rules `legacy-library`, `bundle-tag` and `inline-defer` (6f6b964e). Browser test PASSED 2026-10-09: each rule fires once on a tripped template page; none fire on 6 clean pages.
 - Phase 4: NDS IQ is rules only, with no paths, classes or APIs, and `verify()` fails on any. Guards 9/9.
 
 **Phase 5 (eval): PARKED 2026-10-09 for an architecture discussion.** Done so far (2de8b3d9, 9dbd9cb7, ef798622): suite moved to v4; floor 48/95 free (docs carry them); real run 46/48 on the rest, 0 fail; built-page copy advice removed from docs. Open:
