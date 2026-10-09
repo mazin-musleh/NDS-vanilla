@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 01:56 PM"
+last_edit: "09/10/2026 - 05:58 PM"
 ---
 
 <section id="auditOverview" class="nds-content-section nds-doc-overview">
@@ -199,6 +199,9 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `skip-link` | page | warn, error | No skip link, a skip link to a missing id (error), or one that lands on `<main>` |
 | `main-flex` | page | warn | A wrapper between `<body>` and `<main>` that stops `<main>` from growing |
 | `content-layout-child` | page | warn | An element in `.nds-content-layout` that is not `.nds-content` or `.nds-sidemenu` |
+| `legacy-library` | page | warn | jQuery, Select2, DataTables, Bootstrap CSS or Font Awesome loaded on the page |
+| `bundle-tag` | page | warn | A tag in the page for a bundle the loader adds itself, such as `nds-delegated.min.js` |
+| `inline-defer` | page | warn | An inline `<script defer>`: without `src`, `defer` does nothing and the code runs before NDS loads |
 | `i18n-pack` | i18n | error | The language file of the page did not load |
 | `filter-unclaimed` | structure | error | `data-filter-items` that no filter claimed, so it stays in its skeleton |
 | `filter-no-target` | structure | error | A `.nds-filter` with no `data-filter-target` |

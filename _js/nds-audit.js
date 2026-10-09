@@ -162,6 +162,37 @@
         });
     } });
 
+    // An NDS page runs NDS and vanilla JS only; a legacy library loaded beside it
+    // restyles or re-wires NDS markup with nothing else reporting it.
+    rule({ id: 'legacy-library', group: 'page', check(ctx) {
+        const $ = window.jQuery;
+        const found = [];
+        if ($) found.push('jQuery');
+        if ($ && $.fn && $.fn.select2) found.push('Select2');
+        if ($ && $.fn && ($.fn.DataTable || $.fn.dataTable)) found.push('DataTables');
+        const sheets = [...document.querySelectorAll('link[rel="stylesheet"][href]')].map(l => l.href.toLowerCase());
+        if (sheets.some(h => /bootstrap/.test(h))) found.push('Bootstrap CSS');
+        if (sheets.some(h => /font-?awesome/.test(h)) || document.querySelector('.fa, .fas, .far, .fab, [class^="fa-"], [class*=" fa-"]')) found.push('Font Awesome');
+        if (found.length) ctx.report(null, `legacy UI loaded on an NDS page: ${found.join(', ')}.`, 'Replace it with the NDS component or API for the same job, and load the legacy library only on legacy pages.');
+    } });
+
+    // The loader injects each bundle itself, and a script it inserts is async.
+    // ponytail: a hand-written tag with an async attribute passes; check the HTML if it matters.
+    rule({ id: 'bundle-tag', group: 'page', docs: 'ui-shell/head.html', check(ctx) {
+        const files = Object.values(window.__NDS_BUNDLES || {}).map(b => b.file).filter(Boolean);
+        ctx.find('script[src]').forEach(s => {
+            const file = files.find(f => s.getAttribute('src').split(/[?#]/)[0].endsWith(f));
+            if (file && !s.async) ctx.report(s, `${file} has a tag in the page. The loader adds each bundle when the page needs it.`, 'Remove the tag.');
+        });
+    } });
+
+    // defer has no effect without src: the code runs at parse time, before the deferred NDS scripts.
+    rule({ id: 'inline-defer', group: 'page', check(ctx) {
+        ctx.find('script:not([src])[defer]').forEach(s => {
+            ctx.report(s, 'an inline <script defer> runs at once: defer works only on a script with src, so this code runs before NDS loads.', 'Use <script type="module">, which waits for the page, or move the code to a file loaded with defer after the NDS scripts.');
+        });
+    } });
+
     // ── i18n ─────────────────────────────────────────────────────────
 
     rule({ id: 'i18n-pack', group: 'i18n', severity: 'error', docs: 'core/i18n.html', check(ctx) {
