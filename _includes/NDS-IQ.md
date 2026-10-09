@@ -48,7 +48,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 
 5. **Style in this order: documented knobs → tokens → scoped overrides.** Rebind tokens in a project stylesheet loaded after the NDS stylesheet, the way the tokens doc shows: every state of a family, in light and dark mode. An override is the last resort: scope it under a project class or `data-*`, comment why, and never restyle NDS internals.
 
-6. **No legacy UI libraries: NDS and vanilla JS only.** The index maps each legacy library to its NDS replacement. Never mix NDS and legacy UI on one page: NDS pages load the NDS runtime, exclude inherited legacy CSS, and migrate inherited JS through §JS wiring. Removing legacy libraries project-wide is the dev's decision. An NDS spike is ONE parallel page with the full head, runtime, and canonical markup; it needs no plan, and every other rule applies.
+6. **No legacy UI libraries: NDS and vanilla JS only.** The index maps common legacy libraries to NDS. Any other UI library is legacy too: replace it as §Design choices says. Never mix NDS and legacy UI on one page: NDS pages load the NDS runtime, exclude inherited legacy CSS, and migrate inherited JS through §JS wiring. Removing legacy libraries project-wide is the dev's decision. An NDS spike is ONE parallel page with the full head, runtime, and canonical markup; it needs no plan, and every other rule applies.
 
 7. **Replacing existing UI needs an approved porting strategy before file #1.**
    - **Default: parallel files.** Each NDS page goes beside its legacy page on a separate route or flag; legacy stays as reference and rollback. Prior non-conformant NDS rebuilds in place (§Plan).

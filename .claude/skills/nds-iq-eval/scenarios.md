@@ -34,7 +34,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S18 | old-template-not-a-blocker | c | older template proceeds on the matching tag; _source population | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:field |
 | S19 | verification-channel-hunt | c | step 4: project's own harness before the checklist | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · leak:C2-mild · ev:field |
 | S20 | stray-runtime-discovery | c | empty NDS_ASSETS proves nothing; stray-runtime sweep | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · leak:C2 · ev:field |
-| S21 | legacy-globals | c | rule #6 globals: CSS never carried, JS = legacy library | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
+| S21 | legacy-globals | c | rule #6 globals: CSS never carried, JS = legacy library | PASS 2026-10-09 scoped (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S22 | inherited-plan-clean-start | c | inherited plan never resumed; clean-start footprint | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S23 | image-geometry-swap | c | swapped image width/height reset to real pixels | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
 | S24 | stale-agent-file-rules | c | one rule source; stale agent-file NDS text proposed out | SOFT 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:policy·non-gating · no rule needed (v4 floor PASS); safety net |
@@ -90,7 +90,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S78 | host-framework-attribute-retention | c | asp-for stays attribute-side on canon inputs | SOFT 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:protocol |
 | S79 | mobile-width-limit-is-not-an-exemption | c | a width limit is not an exemption; headless same-run | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · leak:C2 · ev:field |
 | S82 | legacy-sheet-vs-project-nds-layer | c | classify by CONTENT: legacy sheet vs project NDS layer | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
-| S83 | legacy-globals-caught-at-inventory | c | step-1 stylesheet sweep names bare-element reach | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
+| S83 | legacy-globals-caught-at-inventory | c | step-1 stylesheet sweep names bare-element reach | PASS 2026-10-09 scoped (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
 | S84 | composition-source-members-shipped | c | shipped page carries every cited-source member | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · leak:C1-fixed · 7/7 members · R5 closed · ev:field |
 | S85 | framework-view-lifecycle | c | refresh on mount + destroy on unmount; no poll | PASS 2026-10-09 solo (Sonnet 5.5) | floor:PASS v4 2026-10-09 · WATCH mechanism-naming · ev:field |
 | S86 | verify-headless-entry-gate | c | ladder entry needs a named failed headless attempt | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · leak:C2-fixed · OPEN → R1 field half · ev:field |
@@ -110,7 +110,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S100 | legacy-does-not-scope-facets | c | legacy UI never caps a matched source's facets | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:field |
 | S101 | pre-index-template-redirect | c | no index in NDS_ROOT → install IQv3.2, read it, tell the dev | PASS 2026-10-09 old v1.12.0 (Sonnet 5.5) | root:v1.12.0 · floor:not run · ev:protocol |
 | S102 | index-read-first | c | NDS-INDEX.md read first; every path from it | UNMEASURED (new 2026-10-09) | floor:PASS v4 2026-10-09 · leak:C3-mild · ev:protocol |
-| S103 | audit-legacy-library | c | legacy-library finding: NDS page head without legacy; shared layout untouched | UNMEASURED (new 2026-10-09) | floor:PASS v4 2026-10-09 · ev:field |
+| S103 | audit-legacy-library | c | legacy-library finding: NDS page head without legacy; shared layout untouched | PASS 2026-10-09 scoped (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S104 | audit-bundle-tag | c | bundle-tag finding: remove the tag; loader injects it | UNMEASURED (new 2026-10-09) | floor:PASS v4 2026-10-09 · ev:field |
 | S105 | audit-inline-defer | c | inline-defer finding: module script, no polling | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:field |
 | S106 | empty-root-pre-index-setup | c | empty NDS_ROOT + 1.x runtime → that release, no index → IQv3.2 | PASS 2026-10-09 old v1.12.0 (Sonnet 5.5) | root:v1.12.0 · floor:not run · ev:protocol |

@@ -59,11 +59,13 @@ Each doc, example and template has a built page at the same path under `_site/`,
 
 ## Legacy libraries
 
+Common legacy libraries and their NDS replacements in this release.
+
 | Legacy | NDS |
 |---|---|
 | Select2 | autocomplete, multiselect |
 | Summernote, TinyMCE | editor |
-| jTable, DataTables | table with sort, filter, pagination, export |
+| jTable, DataTables | tables, with sort, filter, pagination, export |
 | Font Awesome | HGI icons |
 | Bootstrap | the layout primitives: grid, flex, block |
 | jQuery | vanilla JS and the NDS APIs |
