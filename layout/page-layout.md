@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:20 PM"
+last_edit: "09/10/2026 - 06:38 PM"
 ---
 
 <section id="pageLayoutOverview" class="nds-content-section nds-doc-overview">
@@ -53,7 +53,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
 <body>
   <a class="nds-skip-link" href="#main-content">Skip to main content</a>
   <header>
-    <!-- Copy the header whole from the built HTML of a live page: ../ui-shell/header -->
+    <!-- The header: copy it from ../ui-shell/header -->
   </header>
   <main>
     <section class="nds-hero-section nds-sub">
@@ -105,7 +105,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
     </section>
   </main>
   <footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer">
-    <!-- Copy the footer whole from the built HTML of a live page: ../ui-shell/footer -->
+    <!-- The footer: copy it from ../ui-shell/footer -->
   </footer>
   <!-- Last in body: the nds-main.min.js script tag, see ../ui-shell/head -->
 </body>
@@ -114,7 +114,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
 <body>
   <a class="nds-skip-link" href="#main-content">Skip to main content</a>
   <header>
-    <!-- Copy the header whole from the built HTML of a live page: ../ui-shell/header -->
+    <!-- The header: copy it from ../ui-shell/header -->
   </header>
   <main>
     <section class="nds-hero-section">
@@ -174,7 +174,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
     </div>
   </main>
   <footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer">
-    <!-- Copy the footer whole from the built HTML of a live page: ../ui-shell/footer -->
+    <!-- The footer: copy it from ../ui-shell/footer -->
   </footer>
   <!-- Last in body: the nds-main.min.js script tag, see ../ui-shell/head -->
 </body>
@@ -183,7 +183,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
 <body>
   <a class="nds-skip-link" href="#main-content">Skip to main content</a>
   <header>
-    <!-- Copy the header whole from the built HTML of a live page: ../ui-shell/header -->
+    <!-- The header: copy it from ../ui-shell/header -->
   </header>
   <main>
     <section class="nds-hero-section nds-sub nds-flat">
@@ -236,7 +236,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
     </section>
   </main>
   <footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer">
-    <!-- Copy the footer whole from the built HTML of a live page: ../ui-shell/footer -->
+    <!-- The footer: copy it from ../ui-shell/footer -->
   </footer>
   <!-- Last in body: the nds-main.min.js script tag, see ../ui-shell/head -->
 </body>
@@ -273,7 +273,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
 <body class="nds-full-width">
   <a class="nds-skip-link" href="#main-content">Skip to main content</a>
   <header>
-    <!-- Copy the header whole from the built HTML of a live page: ../ui-shell/header -->
+    <!-- The header: copy it from ../ui-shell/header -->
   </header>
   <main>
     <div class="nds-content-layout nds-has-sidemenu">
@@ -341,7 +341,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
     </div>
   </main>
   <footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer">
-    <!-- Copy the footer whole from the built HTML of a live page: ../ui-shell/footer -->
+    <!-- The footer: copy it from ../ui-shell/footer -->
   </footer>
   <!-- Last in body: the nds-main.min.js script tag, see ../ui-shell/head -->
 </body>
@@ -594,7 +594,7 @@ A section that paints its own background is never striped, but it still counts: 
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Copy the header, the footer and the script tags whole from the built HTML of a live page. Never rebuild the body from the canons on this page: their header and footer are left empty.
+- Fill the empty header and footer of a shape from the [Header](../ui-shell/header) and [Footer](../ui-shell/footer) pages, and take the script tags from the [Head](../ui-shell/head) page. Never ship a shape with its header or footer left empty.
 - Keep each shape's classes as its live page has them. A structure written from memory loses the classes that set the width, the centering and the background.
 - Use one `nds-content-layout` per page. Never put one content layout in another.
 - Put every page section in `nds-content`.
@@ -622,7 +622,7 @@ A section that paints its own background is never striped, but it still counts: 
 ### Front Matter
 {: .nds-block-title}
 
-For AI agents. Copy the built HTML once for each chrome. For every page after that, read the `.md` source of its live page: it holds only the content, and its front matter names the layout that builds the rest of the body.
+For AI agents. The `.md` source of a live page holds only its content. Its front matter names the layout that builds the rest of the body, and this table maps each key to its markup.
 
 | Key | Value | Markup |
 |---|---|---|

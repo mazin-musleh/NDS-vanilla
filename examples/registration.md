@@ -3,7 +3,7 @@ layout: minimal
 title: Create your account
 lang: en
 direction: ltr
-# layout + layout_class render the page-level wrapper — it exists only in the built twin under _site/. Copy the full <body> structure from the twin; this file's body is only the inner content.
+# layout + layout_class name the page shape: the Front Matter table in layout/page-layout.md maps each key to its markup. This file's body is only the inner content.
 layout_class: nds-middle
 page_bg: assets/img/riyadhcenter.webp
 bg_opacity_top: 60%

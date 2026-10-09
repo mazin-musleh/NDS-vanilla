@@ -14,7 +14,7 @@ The NDS IQ rules name no files. This index maps each need to this release's file
 Component, layout, shell, utility and core docs live in `_source/<folder>/<name>.md`. Each page has the same sections: Overview, Markup, Variants, Behavior, Built-in Features, Best Practices, API, Related.
 
 - **Canon:** each `<script type="text/html" data-canon>` block. Copy the block's body. The `<script>` tag around it is doc packaging and never ships. A block with `data-lang="js"` or `data-lang="css"` holds code for a real script or stylesheet.
-- **Escaped canon:** a block with `data-escaped` holds Liquid output. Copy its code from the capture block just above it, or from the code tab of the built page.
+- **Escaped canon:** a block with `data-escaped` holds Liquid output. Copy its code from the capture block just above it.
 - **Options:** the Variants table (Group, Option, Markup, On element, Use). Add an option's Markup on the element it names. The table is hidden on the site and visible in the `.md`.
 - **Never copy** the live demo or the builder preview.
 - **JS API:** the banner at the top of `_source/_js/nds-<name>.js`: Rides, Methods, Events, Hooks, Gotchas.

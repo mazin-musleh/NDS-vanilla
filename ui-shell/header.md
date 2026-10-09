@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:02 PM"
+last_edit: "09/10/2026 - 06:38 PM"
 ---
 
 <section id="headerOverview" class="nds-content-section nds-doc-overview">
@@ -33,7 +33,7 @@ The links at the end of the page belong in the [Footer](../ui-shell/footer), and
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-The code shows the outer element of each part. Copy each part whole from its own page, or copy the whole header from the built HTML of a live page.
+The code shows the outer element of each part. Copy each part whole from its own page.
 
 <script type="text/html" id="header-canon" data-canon data-preview="none">
 <header>

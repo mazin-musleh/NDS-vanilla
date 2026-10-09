@@ -4,11 +4,9 @@ layout: shell
 # footer. This page composes all of them below, so THIS file shows the whole page shape
 # in order. It does not show the chrome markup: those are includes.
 #
-# For the literal markup, read the built twin: _site/templates/home-template.html.
-# It is one complete standalone page — doctype through scripts, no Liquid left — and it
-# is what ships in the release zip, so it is exactly what a project copies.
-# For one region on its own, read its reference: ui-shell/topbar, ui-shell/mainnav,
-# ui-shell/footer, ui-shell/head.
+# Copy each chrome region from its own page: ui-shell/head, ui-shell/header (with
+# ui-shell/topbar and ui-shell/mainnav), ui-shell/hero, ui-shell/footer.
+# The built page _site/templates/home-template.html shows the result.
 title: Home Page Template
 lang: en
 direction: ltr
