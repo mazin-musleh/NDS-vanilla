@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "23/09/2026 - 06:44 PM"
+last_edit: "09/10/2026 - 08:05 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -137,7 +137,7 @@ Inventory the project and write NDS-PLAN.md for my review.
                 <h3 id="manual-install">Manual Install (optional)</h3>
                 <p>Setup does both steps below. Do them by hand only if the agent cannot download files.</p>
 
-                <p><strong>Step 1. Install the template.</strong> Download <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}.zip</code> from <a class="nds-color" href="{{ site.repository_url }}/releases/latest">GitHub Releases</a>. Extract it into a <code class="nds-inline-code lang-html">.nds/</code> folder at the project root, and add that folder to <code class="nds-inline-code lang-html">.gitignore</code>. <code class="nds-inline-code lang-html">_site/</code> must sit directly inside <code class="nds-inline-code lang-html">.nds/</code>, with no version folder between them.</p>
+                <p><strong>Step 1. Install the template.</strong> Download <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}.zip</code> from <a class="nds-color" href="{{ site.repository_url }}/releases/latest">GitHub Releases</a>. Extract it into a <code class="nds-inline-code lang-html">.nds/</code> folder at the project root, and add that folder to <code class="nds-inline-code lang-html">.gitignore</code>. <code class="nds-inline-code lang-html">NDS-INDEX.md</code> must sit directly inside <code class="nds-inline-code lang-html">.nds/</code>, with no version folder between them.</p>
                 <p>The template is read-only: copy from it, never change it.</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
@@ -148,8 +148,9 @@ Inventory the project and write NDS-PLAN.md for my review.
                     <code class="lang-markdown">
 .nds/
 ├── README.md          - Overview and entry-point documentation
+├── NDS-INDEX.md       - Map from each need to this release's files
 ├── _site/             - Compiled documentation and runtime assets
-│   ├── components/    - Canonical component markup
+│   ├── components/    - Built doc pages, the visual reference
 │   └── assets/        - Runtime CSS, JS, fonts, and i18n
 ├── _source/           - Source files and catalogs (added on install)
 ├── CHANGELOG.md       - Release history and migration notes
@@ -157,7 +158,7 @@ Inventory the project and write NDS-PLAN.md for my review.
                     </code>
                 </div>
 
-                <p><strong>Step 2. Install the rules.</strong> Save the rules below as <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root. Copy them exactly. Then add the anchor to your agent file and set <code class="nds-inline-code lang-html">NDS_ASSETS</code>. The anchor text is in the rules' <em>Install and upgrade this file</em> section.</p>
+                <p><strong>Step 2. Install the rules.</strong> Save the rules below as <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root. Copy them exactly. Then add the anchor to your agent file and set <code class="nds-inline-code lang-html">NDS_ASSETS</code>. The anchor text is in the rules' <em>This file</em> section.</p>
 {%- capture _instr %}{% include NDS-IQ.md %}{% endcapture %}
 {%- assign _iq_parts = _instr | split: 'instructions v' %}
 {%- assign _iq_v = _iq_parts[1] | split: ')' | first %}
@@ -249,7 +250,7 @@ Upgrade the NDS template to the latest release.
                 <p>The agent:</p>
                 <ul>
                     <li>Replaces the template in <code class="nds-inline-code lang-html">NDS_ROOT</code> and copies the new runtime into <code class="nds-inline-code lang-html">NDS_ASSETS</code>.</li>
-                    <li>Reads the changelog's migration notes and fixes the affected pages through the plan.</li>
+                    <li>Reads the changelog's migration notes, runs the audit's migration check on every page, and fixes the affected pages through the plan.</li>
                     <li>Replaces <code class="nds-inline-code lang-html">NDS-IQ.md</code> with the latest revision.</li>
                     <li>Reports new features you may want.</li>
                 </ul>
@@ -267,7 +268,7 @@ Upgrade the NDS template to the latest release.
 Update the NDS IQ rules file to the latest revision.
                     </code>
                 </div>
-                <p>The agent replaces <code class="nds-inline-code lang-html">NDS-IQ.md</code> when the published copy is different. If your template is also behind, it tells you.</p>
+                <p>The agent replaces <code class="nds-inline-code lang-html">NDS-IQ.md</code> when the published copy is different. If your template is also behind, it tells you. On a template older than 2.0, the agent installs revision v3.2 instead, the last revision for those templates.</p>
 
             </article>
         </div>
