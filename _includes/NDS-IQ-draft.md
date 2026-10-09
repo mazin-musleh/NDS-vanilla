@@ -51,8 +51,8 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 6. **No legacy UI libraries: NDS and vanilla JS only.** The index maps common legacy libraries to NDS. Any other UI library is legacy too: replace it as §Design choices says. Never mix NDS and legacy UI on one page: NDS pages load the NDS runtime, exclude inherited legacy CSS, and migrate inherited JS through §JS wiring. Removing legacy libraries project-wide is the dev's decision. An NDS spike is ONE parallel page with the full head, runtime, and canonical markup; it needs no plan, and every other rule applies.
 
 7. **Replacing existing UI needs an approved porting strategy before file #1.**
-   - **Default: parallel files.** Each NDS page goes beside its legacy page on a separate route or flag; legacy stays as reference and rollback. Prior non-conformant NDS rebuilds in place (§Plan).
-   - **Score the strategy:** (1) NDS markup stays in templates/HTML, never in code strings; (2) fewest edits to existing files; (3) side-by-side serving and rollback survive; (4) page JS sits beside its page. Show the dev the comparison; in-place edits and deletions need approval.
+   - **Default: parallel files.** Each NDS page goes beside its legacy page on a separate route or flag; legacy stays as reference and rollback. In a client-rendered app, a parallel page is a parallel view on its own route inside the same app. Prior non-conformant NDS rebuilds in place (§Plan).
+   - **Score the strategy:** (1) NDS markup stays in markup: HTML files or the framework's own templates (JSX, a Vue or Svelte template), never in strings that code assembles; (2) fewest edits to existing files; (3) side-by-side serving and rollback survive; (4) page JS sits beside its page. Show the dev the comparison; in-place edits and deletions need approval.
    - **Page JS** loads after the NDS scripts. Inline page JS is a module script.
 
 ## Checks before claims
@@ -155,7 +155,7 @@ Match by `use_when` across the template, example, and component catalogs, never 
 2. No template → the closest example.
 3. No match → a custom scaffold inside red line #4, reusing canonical wiring patterns.
 
-Keep the matched source's structure and put the project's content into every part; never rebuild it. It is a floor, not a ceiling: add the sections the project needs, matched through the catalogs. A family's `Built and Verified` archetype outranks the cascade for its siblings.
+Keep the matched source's structure and put the project's content into every part; never rebuild it. It is a floor, not a ceiling: add the sections the project needs, matched through the catalogs. A family's `Built and Verified` archetype outranks the cascade for its siblings. Screens that share one app shell (one layout with the same navigation) keep that shell's page shape: a matched template supplies the content inside it, never a different page shape.
 
 At each page start, resolve its recorded questions, list every UI part, and match each against the component catalog: every field and control is a part, so a date field is matched like a table. Record the list under the page's plan row, one line per part: `part → component` (no-plan: in the final report). A missing part comes from its canonical component; no match → custom case.
 
