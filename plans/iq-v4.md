@@ -19,7 +19,7 @@ Done on branch `iq-v4`:
 - **HELD: role-word glossary.** IQ speaks stable role words (sub hero, flat variant, digital stamp, language switcher, single-choice facet, migration check); the index maps each to this release's file and section. A `verify()` check fails when IQ uses a role word the index does not define. About 20–30 index lines plus one guard. Do it once the rework settles.
 - **Redirect loop (found 2026-10-09).** v3.1's rules update compares raw main with the local copy and calls any difference a newer revision. After the redirect, a 1.x project sees v4 on main, installs it, is sent back to v3.1, and repeats on every check. Fix: a final old-line file, `IQv3.2`.
   - Content: v3.1 with its heading marker set to v3.2, and its standalone rules update replaced by "this is the last revision for 1.x templates; rules updates come with the upgrade to a 2.x template". Its Upgrading step 4 (fetch raw main after a template upgrade) stays: after a 2.x upgrade, main's v4 finds the index.
-  - Draft on a branch cut from the `IQv3.1` tag; never merged to main.
+  - DRAFTED 2026-10-09: commit `0d0e3a10` on branch `iq-v3.2` (cut from the `IQv3.1` tag; never merged to main). Three lines: heading v3.2; a rules update installs nothing unless `NDS_ROOT/NDS-INDEX.md` exists, then step 4 runs; `Update:` points there.
   - Tag it on release day with `IQv4.0`, never before: `pre-push` compares main with the newest `IQv` tag by version, so an `IQv3.2` alone blocks main pushes.
   - v4 redirects to `IQv3.2`. Check that `verify()` and `check-release-guards.py` allow that tag name.
   - **Owner call: one address (raw main), the redirect lives in v4.** Rejected: a second download path for v4 that would keep the redirect out of v4. Reasons: a rule is safer than plumbing, and a dev can copy v4 from the guides into a pre-index project, which only a rule inside v4 catches. A later revision drops the bullet once pre-index projects are gone.
@@ -181,16 +181,23 @@ Size: no target. It is whatever the rules need. Expected around 15–20 KB.
 ## Phase 6: pipeline and release
 
 - **Guides:**
-  - rewrite the v4.0 row (rules only; the index; pre-2.0 stays on v3.1)
-  - Compatibility: 2.0+; older templates use the `IQv3.1` tag
+  - rewrite the v4.0 row (rules only; the index; templates without an index go to v3.2)
+  - Compatibility: 2.0+; older templates use the `IQv3.2` tag
   - `get-started.md`: install mentions `NDS-INDEX.md`
 - **`llms.txt`:** point agents at the index.
-- **`TODO.md`:** update the IQ item.
+- **`TODO.md`:** update the IQ item (it still describes the first v4 pass).
+- **Before release, on `main` (owner 2026-10-09, parked):** the camelCase leftovers the class sweep (`2cbd0c6f`) missed.
+  - IDs: `#nds-realTimeClock` → `#nds-real-time-clock`, `#nds-cityName` → `#nds-city-name`, `#nds-weatherInfo` → `#nds-weather-info`. Used in `_includes/topbar.html`, `ui-shell/topbar.md` (canon and tables), `_js/nds-timeDate.js`, `_js/nds-cityWeather.js`, `_js/nds-loader.js`, and the `spa-post-build` eval fixture.
+  - Files: `nds-timeDate.js` → `nds-time-date.js`, `nds-cityWeather.js` → `nds-city-weather.js`. Referenced by `_data/content/components.yml`, `_plugins/js_processor.rb`, `scripts/check-banners.mjs`, a comment in `nds-core.js`, and `ui-shell/topbar.md`.
+  - A `core/migration.md` row and the TODO release-notes line; then `ruby _plugins/js_processor.rb`.
+  - Fix the stale status line in `plans/docs-rewrite.md`: the camelCase sweep and localization are done.
+  - Merge main into `iq-v4` after.
 - **Release day:**
-  1. squash `iq-v4`
-  2. tag `IQv4.0`
-  3. push
-  4. `evolve`
+  1. tag `0d0e3a10` (branch `iq-v3.2`) as `IQv3.2`
+  2. squash `iq-v4`
+  3. tag `IQv4.0`
+  4. push main with both tags
+  5. `evolve`
 
   Each step on the owner's go.
 
