@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 03:18 AM"
+last_edit: "09/10/2026 - 03:58 AM"
 ---
 
 <section id="migrationOverview" class="nds-content-section nds-doc-overview">
@@ -171,9 +171,9 @@ An event name shows in the table, but the audit cannot find it: a page does not 
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Run the migration checks on each page of the site after an upgrade. The audit sees only the page it runs on.
-- Search your scripts for the event names in the table. The audit does not see a listener.
-- Search your server templates and your JavaScript for markup they build later. The audit sees only what is on the page when it runs.
+- Run `NDS.Audit.run({ group: 'migration' })` on each page after an upgrade. The audit sees only the page it runs on.
+- Run it again after the page builds more markup: loaded rows, an opened dialog. The audit sees only what is on the page when it runs.
+- Search your own stylesheets for the old names. The audit reads only the sheets the page loads, and skips any served from another site.
 
 </div>
   </div>
@@ -187,7 +187,6 @@ An event name shows in the table, but the audit cannot find it: a page does not 
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Audit](../core/audit): finds these names on a page and in its CSS.
-- [Internationalization](../core/i18n): `NDS_ASSETS_PATH`, which replaced `NDSAssetBase` and `NDS_ASSETS_BASE`.
 
 </div>
   </div>
