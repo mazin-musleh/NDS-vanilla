@@ -280,6 +280,8 @@ A row carries the dead name, its replacement, when it was deprecated, and where 
 
 **Releases, release notes and the changelog follow the `nds-release` skill.** Never hand-roll the template zip — `python scripts/mkrelease.py` builds it.
 
+**`NDS-INDEX.md` maps a consumer agent's needs to this release's files; the rules name none.** It ships at the template zip root. A commit that moves a doc page, changes the canon format, or changes a chrome shape's page updates it in the same commit. `verify()` fails the release on any path it names that is missing.
+
 **`_includes/NDS-IQ.md` is the single source of the consumer rules (NDS IQ). Load the `nds-iq-eval` skill before editing it** — it holds the versioning, growth-control and floor-gate policy.
 
 **Raw main publishes NDS IQ, so never edit `_includes/NDS-IQ.md` on main.** Draft on a branch; publish = squash into main + tag `IQvX.Y`. `scripts/hooks/pre-push` blocks a main push whose rules file differs from the newest `IQv` tag — install it once per clone: `git config core.hooksPath scripts/hooks`.

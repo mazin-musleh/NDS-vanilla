@@ -38,7 +38,9 @@ def collect_refs(block):
         with open(os.path.join(ROOT, 'guides', f'{name}.md'), encoding='utf8') as f:
             guides += f.read()
     refs = re.findall(r'NDS_ROOT/([^\s`)\]]+)', block + guides)
-    refs += re.findall(r'`((?:_site|_source)/[^`]*)`', block + 'see `_site/index.html`')
+    with open(os.path.join(ROOT, 'NDS-INDEX.md'), encoding='utf8') as f:
+        index = f.read()
+    refs += re.findall(r'`((?:_site|_source)/[^`]*)`', block + index + 'see `_site/index.html`')
     return {p for p in refs if '<' not in p and '*' not in p
             and not p.startswith('_source/')}
 
@@ -84,6 +86,8 @@ def build_stub_zip(version, refs_from, iq_bytes=None, gate_doc=None):
             + '&lt;/style&gt;&lt;script&gt;(function(){})()&lt;/script&gt;</code>')
         put(pkg + 'CHANGELOG.md', f'## [{version}]\n')
         put(pkg + 'README.md', 'see `_site/index.html`\n')
+        with open(os.path.join(ROOT, 'NDS-INDEX.md'), encoding='utf8') as f:
+            put(pkg + 'NDS-INDEX.md', f.read())
         put(pkg + 'NDS-IQ.md', iq_bytes if iq_bytes is not None else block)
         for name in ('get-started', 'integration-quality'):
             put(f'{pkg}_site/guides/{name}.html', guide_html)

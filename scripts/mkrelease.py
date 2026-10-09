@@ -85,7 +85,8 @@ def stage(version):
     shutil.copytree(site, os.path.join(pkg, '_site'),
                     ignore=lambda d, names: EXCLUDE if d == site else set())
 
-    for f in ('CHANGELOG.md', 'LICENSE'):
+    # NDS-INDEX.md maps an agent's needs to this release's files; the rules name none.
+    for f in ('CHANGELOG.md', 'LICENSE', 'NDS-INDEX.md'):
         shutil.copy2(os.path.join(ROOT, f), pkg)
 
     # README.md is a human signpost only.
@@ -148,7 +149,7 @@ def verify(out, version):
                      f'it, and the tag the consumer populates from carries this tree.')
 
     # A missing copy in stage() would silently ship an incomplete zip.
-    for anchor in ('README.md', '_site/guides/get-started.html',
+    for anchor in ('README.md', 'NDS-INDEX.md', '_site/guides/get-started.html',
                    '_site/guides/integration-quality.html'):
         if root + anchor not in names:
             sys.exit(f'Missing from zip: {anchor}')
@@ -309,11 +310,12 @@ def verify(out, version):
     # dead path, and it invents instead (the exact failure the guide
     # prevents). Placeholder/glob refs (<name>, *) are skipped.
     readme = z.read(root + 'README.md').decode('utf8', 'ignore')
+    index = z.read(root + 'NDS-INDEX.md').decode('utf8', 'ignore')
     refs = re.findall(r'NDS_ROOT/([^\s`)\]]+)', block + ''.join(guides.values()))
     # The rules' Reference index writes bare `_source/...` / `_site/...` paths
     # with no NDS_ROOT prefix, so the prefixed pattern alone never saw the one
     # section whose entire job is naming paths.
-    refs += re.findall(r'`((?:_site|_source)/[^`]*)`', block + readme)
+    refs += re.findall(r'`((?:_site|_source)/[^`]*)`', block + readme + index)
     refs = {p for p in refs if '<' not in p and '*' not in p}
 
     # _source/ is populated from the tag, not shipped, so its refs resolve
