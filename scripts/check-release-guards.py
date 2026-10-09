@@ -101,22 +101,27 @@ def build_stub_zip(version, refs_from, iq_bytes=None, gate_doc=None):
     return path
 
 
-def run(mutate=None, version=VERSION):
-    """verify() against an optionally broken rules file. Returns its exit
-    message, or None when it passed."""
+INDEX = os.path.join(ROOT, 'NDS-INDEX.md')
+
+
+def run(mutate=None, version=VERSION, target=IQ):
+    """verify() against an optionally broken rules file (or index, via target).
+    Returns its exit message, or None when it passed."""
     with open(IQ, encoding='utf8') as f:
+        rules = f.read()
+    with open(target, encoding='utf8', newline='') as f:
         original = f.read()
     try:
         if mutate:
-            with open(IQ, 'w', encoding='utf8', newline='\n') as f:
+            with open(target, 'w', encoding='utf8', newline='') as f:
                 f.write(mutate(original))
         try:
-            mkrelease.verify(build_stub_zip(version, refs_from=original), version)
+            mkrelease.verify(build_stub_zip(version, refs_from=rules), version)
             return None
         except SystemExit as e:
             return str(e)
     finally:
-        with open(IQ, 'w', encoding='utf8', newline='\n') as f:
+        with open(target, 'w', encoding='utf8', newline='') as f:
             f.write(original)
 
 
@@ -141,17 +146,22 @@ CASES = [
      lambda t: t.replace('Never write `.nds-*` markup from memory', ''),
      VERSION, 'anchor canon'),
 
-    ('reference index points at a _source/ path not in the repo tree',
+    # The rules name no paths now; NDS-INDEX.md carries them, so its dead path is the case.
+    ('NDS-INDEX.md points at a _source/ path not in the repo tree',
      lambda t: t.replace('`_source/_sass/tokens/_semantic.scss`', '`_source/_sass/tokens/_gone.scss`'),
-     VERSION, 'missing from the repo tree'),
+     VERSION, 'missing from the repo tree', INDEX),
+
+    # A path, class or API in the rules goes stale on the next release.
+    ('a release fact creeps into the rules prose',
+     lambda t: t + 'Read `_source/layout/section.md` and use `nds-grid`.', VERSION, 'release facts'),
 ]
 
 
 def main():
     failures = []
 
-    for label, mutate, version, expect in CASES:
-        msg = run(mutate, version)
+    for label, mutate, version, expect, *target in CASES:
+        msg = run(mutate, version, *target)
         ok = (msg is None) if expect is None else (msg is not None and expect in msg)
         print(f'  {"pass" if ok else "FAIL"}  {label}')
         if not ok:

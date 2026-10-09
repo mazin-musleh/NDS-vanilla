@@ -277,6 +277,14 @@ def verify(out, version):
                  f'— they read the runtime banner instead — so a template version literal is a '
                  f'regression. Reword the sentence to name no release.')
 
+    # The rules hold no release facts: paths, classes and APIs change per release and
+    # live in NDS-INDEX.md and the docs. The anchor block and URLs are exempt.
+    prose = re.sub(r'https?://\S+', '', re.sub(r'```markdown.*?```', '', block, flags=re.S))
+    facts = sorted(set(re.findall(r'_source/|_site/|\bnds-[a-z][\w-]*|\bNDS\.[A-Z]\w*', prose)))
+    if facts:
+        sys.exit(f'_includes/NDS-IQ.md names release facts {facts}. Route them through '
+                 f'NDS-INDEX.md or the docs instead.')
+
     # Every consumer NDS-PLAN.md opens with the plan stamp, which is how a
     # later session recognizes a plan these rules produced. It carries no
     # version — nothing compares it — so presence is the whole check.

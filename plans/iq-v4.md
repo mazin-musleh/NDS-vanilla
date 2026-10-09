@@ -1,5 +1,21 @@
 # NDS IQ v4.0, take 2: version-agnostic rules over the docs and the audit
 
+## Status (2026-10-09)
+
+Done on branch `iq-v4`:
+- Phase 1: `NDS-INDEX.md` ships at the zip root, and `verify()` checks it (4e18e9e9).
+- Phase 2: doc fills for section and forms (fd9f0ef2). The "copy from a built page" fills were dropped: the canons carry their layout.
+- Phase 3: audit rules `legacy-library`, `bundle-tag` and `inline-defer` (6f6b964e). The browser test is NOT run yet; it needs the owner's yes.
+- Phase 4: NDS IQ is rules only, with no paths, classes or APIs, and `verify()` fails on any. Guards 9/9.
+
+**Next: Phase 5 (eval).**
+- Harness: map `NDS_ROOT/NDS-INDEX.md` to the repo-root `NDS-INDEX.md`, and say in the prompt that `NDS_ROOT/` holds `NDS-INDEX.md` at its root.
+- Floor stub variant: no rules, but the index and docs stay. This separates rules from docs.
+- Re-point the `rules:` and `cite` lines; rubrics stay behaviors.
+- New scenarios: the pre-2.0 → `IQv3.1` redirect (v1.12.0 root, no index); the index read first; one per new audit rule.
+- Batches of 5 or fewer (read-dependent); solo re-probe any miss.
+- Costs: full run ~1M tokens, redirect probe ~100K, rigs R3/R4 ~600K. Each needs the owner's go.
+
 ## Context
 
 The first v4 pass (branch `iq-v4`, 5 commits) restructured NDS IQ and tested it: 89/89 on current docs. But it still names about 40 facts that each release can change: file paths, class names, APIs, and doc formats.
