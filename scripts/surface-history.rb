@@ -33,7 +33,8 @@ end
 
 def names_at(tag)
   cache = File.join(OUT, "#{tag}.json")
-  return JSON.parse(File.read(cache)) if File.exist?(cache) && !ENV['FRESH']
+  # HEAD moves, so its cache would hide every name removed since the last run.
+  return JSON.parse(File.read(cache)) if File.exist?(cache) && !ENV['FRESH'] && tag != 'HEAD'
 
   dir = File.join(OUT, tag)
   FileUtils.rm_rf(dir)
