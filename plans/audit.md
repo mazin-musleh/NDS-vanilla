@@ -43,7 +43,7 @@ The owner reviews the list. It lands in `_data/migrations.yml`: old name, where 
 - Rules: id, group (`page`, `structure`, `migration`, `i18n`), severity (error, warn, info), fix sentence, doc link. `NDS.Audit.rule()` adds one.
 - `run()` returns the findings and prints them grouped. `NDS.Init.audit()` resolves to them. `data-nds-audit-ignore="<rule id>"` silences one element.
 - Migration rule: walks `_data/migrations.yml`, bundled into the audit by `js_processor.rb`. Markup and same-origin CSS.
-- Structure rules: dangling id references (`data-*-target`, `aria-controls`, `data-auto-pagination`), page shell, the reveal stamp, an i18n pack that failed.
+- Structure rules: dangling id references (`data-*-target`, `aria-controls`, `data-auto-pagination`), page shell, the reveal stamp, an i18n pack that failed. The reveal-stamp rule was dropped: a page that never reveals stays blank, which nobody misses, and `filter-unclaimed` and `paged-no-nav` cover the per-region holds.
 - The current checks move into rules unchanged.
 - Fix `scripts/run-audit.mjs`: it filters `[NDS] audit:`, the audit prints `[NDS.Audit]`, so it always reports 0.
 

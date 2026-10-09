@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 03:18 AM"
+last_edit: "09/10/2026 - 01:56 PM"
 ---
 
 <section id="auditOverview" class="nds-content-section nds-doc-overview">
@@ -205,7 +205,8 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `paged-no-nav` | structure | error | A `.nds-paged-content` with no pagination nav |
 | `icon-unregistered` | structure | error | An `nds-hgi-*` icon that is not in the registered set |
 | `nav-current` | structure | warn | A main nav link to the current page with no `data-state="current"` |
-| `id-reference` | structure | error | A `data-*-target`, `data-auto-pagination` or `data-copy-target` value that names no element |
+| `id-reference` | structure | error | A `data-*-target`, `data-auto-pagination` or `data-copy-target` value that names no element. An id inside a `<template>` counts as present |
+| `aria-controls` | structure | warn | An `aria-controls` id that no element has, inside or outside a `<template>` |
 | `sort-target-owned` | structure | warn | A `data-sort-target` on a list that a filter or a table already sorts |
 | `stepper-submit` | structure | warn | `data-stepper-control` on a submit button, where it does nothing |
 | `migration-markup` | migration | error, warn, info | A renamed or removed name (error) or a deprecated one (warn) in the markup, or an old window setting |
@@ -225,7 +226,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 
 | Global | Default | Effect |
 |---|---|---|
-| `NDS_AUDIT_RULES` | — | An array of rule definitions that the next run adds. Use it to set rules in a script that runs before NDS |
+| `NDS_AUDIT_RULES` | — | An array of rule definitions that every run reads. Use it to set rules in a script that runs before NDS |
 | `NDSInitConfig.enableLogging` | `false` | Runs the audit once the page has loaded. See [Refresh](../core/refresh) |
 {: .nds-table .nds-responsive}
 

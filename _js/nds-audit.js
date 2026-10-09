@@ -12,7 +12,7 @@
  * Events:
  *   (none)
  * Hooks:
- *   window.NDS_AUDIT_RULES        rule definitions added on the next run (set it before the bundle loads)
+ *   window.NDS_AUDIT_RULES        rule definitions, read on every run
  *   data-nds-audit-ignore         on any element: the audit skips it and everything inside it. A value
  *                                 names the rule ids to skip ("migration-markup id-reference"); empty skips all.
  * Gotchas:
@@ -54,8 +54,8 @@
     }
 
     function run({ group, rule: only, quiet } = {}) {
+        // Read on every run: rule() replaces by id, and a site may push to the array later.
         (window.NDS_AUDIT_RULES || []).forEach(rule);
-        window.NDS_AUDIT_RULES = [];
         const groups = group == null ? null : [].concat(group);
         const ids = only == null ? null : [].concat(only);
         const findings = [];
@@ -240,13 +240,12 @@
         'data-auto-pagination': 'components/pagination.html', 'data-modal-target': 'components/modal.html',
         'data-stepper-target': 'components/stepper.html', 'data-columns-target': 'components/tables.html',
         'data-voice-target': 'components/voice-input.html', 'data-copy-target': 'utilities/copy.html',
-        'data-export-target': 'components/export.html',
+        'data-export-target': 'components/export.html', 'data-paged-target': 'components/pagination.html',
     };
-    const resolves = (attr, v) => {
-        if (NDS.resolveEl) { try { if (NDS.resolveEl(v)) return true; } catch (e) { /* not a selector */ } }
-        else if (document.getElementById(v.replace(/^#/, ''))) return true;
-        return attr === 'data-voice-target' && !!document.querySelector(`[name="${CSS.escape(v)}"]`);
-    };
+    // A template-held modal or panel is real: NDS.fromTemplate moves it in on first open.
+    const inTemplate = (id) => [...document.querySelectorAll('template')].some(t => t.content.getElementById(id));
+    const resolves = (attr, v) => !!NDS.resolveEl(v) || inTemplate(v.replace(/^#/, ''))
+        || (attr === 'data-voice-target' && !!document.querySelector(`[name="${CSS.escape(v)}"]`));
     rule({ id: 'id-reference', severity: 'error', check(ctx) {
         for (const attr in REFS) {
             ctx.find(`[${attr}]`).forEach(el => {
@@ -256,6 +255,15 @@
                 ctx.report(el, `${attr}="${v}" names no element on the page — the component it wires does nothing.`, `Give the element id="${v.replace(/^#/, '')}", or fix the value. See ${DOCS}${REFS[attr]}`);
             });
         }
+    } });
+
+    // A screen reader announces the link to nothing, and a table sub-row toggle opens nothing.
+    rule({ id: 'aria-controls', check(ctx) {
+        ctx.find('[aria-controls]').forEach(el => {
+            const missing = el.getAttribute('aria-controls').trim().split(/\s+/)
+                .filter(id => id && !document.getElementById(id) && !inTemplate(id));
+            if (missing.length) ctx.report(el, `aria-controls="${missing.join(' ')}" names no element on the page.`, 'Give the controlled element that id, or remove the attribute.');
+        });
     } });
 
     // Markup sort wires a list no other sorter owns: a Filter or a Table sorts its own,
@@ -286,9 +294,13 @@
     rows.forEach(r => ((byKind[r.kind] ||= new Map()).get(r.name) || byKind[r.kind].set(r.name, []).get(r.name)).push(r));
     const SEVERITY = { renamed: 'error', removed: 'error', deprecated: 'warn' };
     const label = { class: 'class', attribute: 'attribute', property: 'property', id: 'id', global: 'window setting' };
-    const say = (r) => r.status === 'deprecated'
+    const say = (r, inCss) => r.status === 'deprecated'
         ? `${label[r.kind]} "${r.name}" is deprecated since ${r.since}: it still works, until the next major release.`
-        : `${label[r.kind]} "${r.name}" was ${r.status} in ${r.since}, so ${r.kind === 'global' ? 'NDS no longer reads it' : 'this part gets no NDS style or behavior'}.`;
+        : `${label[r.kind]} "${r.name}" was ${r.status} in ${r.since}` + (inCss ? '.'
+            : `, so ${r.kind === 'global' ? 'NDS no longer reads it' : 'this part gets no NDS style or behavior'}.`);
+    // A name NDS never read had no effect when set, so it is a note, not a break.
+    const reportRow = (ctx, r, el, msg, inert, count) => ctx.report(el, msg,
+        inert ? `${r.fix} Setting the old name never had an effect.` : r.fix, inert ? 'info' : SEVERITY[r.status], count);
     // A leading & tests the element itself; any other scope, the element or an ancestor.
     const inScope = (el, scope) => !scope || (scope[0] === '&' ? el.matches(scope.slice(1)) : !!el.closest(scope));
 
@@ -329,10 +341,8 @@
         }
         // A window setting NDS read before: set by a script that runs before NDS.
         byKind.global?.forEach((rs, name) => { if (name in window) rs.forEach(r => hit(r, null)); });
-        hits.forEach((els, r) => ctx.report(els[0],
-            say(r) + (els.length > 1 ? ` (${els.length} elements; the first is shown)` : ''),
-            r.inert ? `${r.fix} Setting the old name never had an effect.` : r.fix,
-            r.inert ? 'info' : SEVERITY[r.status], els.length));
+        hits.forEach((els, r) => reportRow(ctx, r, els[0],
+            say(r) + (els.length > 1 ? ` (${els.length} elements; the first is shown)` : ''), r.inert, els.length));
     } });
 
     rule({ id: 'migration-css', group: 'migration', check(ctx) {
@@ -343,8 +353,13 @@
             const h = hits.get(k) || hits.set(k, { r, where, sels: new Set(), read: false }).get(k);
             h.sels.add(sel); h.read ||= read;
         };
-        // A scoped name only counts when the same selector names its scope's class too.
-        const scoped = (r, sel) => !r.scope || (r.scope.match(/\.[\w-]+/g) || []).some(c => sel.includes(c));
+        // A scoped name only counts when the same selector names its scope's class too. A scope
+        // with no class (body, &[data-cooldown]) leaves an nds- or data- name to stand alone; a
+        // generic one (.sr-only, .hidden) may be the site's own.
+        const scoped = (r, sel) => {
+            const cls = r.scope && r.scope.match(/\.[\w-]+/g);
+            return !r.scope || (cls ? cls.some(c => sel.includes(c)) : /^(nds|data)-/.test(r.name));
+        };
         for (const { sel, style, where } of siteRules()) {
             for (const [, c] of sel.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)) (byKind.class?.get(c) || []).forEach(r => { if (scoped(r, sel)) hit(r, where, sel); });
             for (const [, a] of sel.matchAll(/\[([\w-]+)/g)) (byKind.attribute?.get(a) || []).forEach(r => { if (scoped(r, sel)) hit(r, where, sel); });
@@ -357,11 +372,9 @@
         }
         hits.forEach(({ r, where, sels, read }) => {
             const first = [...sels][0];
-            const msg = `${say(r).replace(', so this part gets no NDS style or behavior', '')} Your CSS uses it in ${where}: ${first}${sels.size > 1 ? ` and ${sels.size - 1} more rules` : ''}.`;
-            // Setting a property NDS never read had no effect; reading a gone one gets nothing.
-            const inert = r.inert && !read;
-            ctx.report(null, msg, inert ? `${r.fix} Setting the old name never had an effect.` : r.fix,
-                inert ? 'info' : SEVERITY[r.status], sels.size);
+            const msg = `${say(r, true)} Your CSS uses it in ${where}: ${first}${sels.size > 1 ? ` and ${sels.size - 1} more rules` : ''}.`;
+            // Reading a gone property gets nothing, even one NDS never read.
+            reportRow(ctx, r, null, msg, r.inert && !read, sels.size);
         });
     } });
 

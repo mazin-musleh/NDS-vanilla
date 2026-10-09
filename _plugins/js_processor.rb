@@ -225,7 +225,6 @@ class JSProcessor
     (deps + global_deps).uniq
   end
 
-  # A bundle is stale when its output is missing or older than any dependency.
   # _data/migrations.yml as the audit's rows: [kind, name, scope, status, use, since, fix, inert],
   # 0 for an empty field. A fix that only says "Use <use>." is rebuilt at runtime. Events stay
   # out: a page cannot see a listener.
@@ -238,6 +237,7 @@ class JSProcessor
     JSON.generate(rows)
   end
 
+  # A bundle is stale when its output is missing or older than any dependency.
   def bundle_stale?(bundle_name, source_files)
     out = File.join(@output_dir, bundle_name)
     return true unless File.exist?(out)
@@ -364,7 +364,11 @@ class JSProcessor
         next unless file_path
         
         original_content = File.read(file_path)
-        original_content = original_content.sub('/*@migrations*/[]') { migrations_js } if source_file == 'nds-audit.js'
+        if source_file == 'nds-audit.js'
+          # A lost marker would ship an audit that silently finds no old names.
+          raise 'nds-audit.js: /*@migrations*/[] marker missing' unless original_content.include?('/*@migrations*/[]')
+          original_content = original_content.sub('/*@migrations*/[]') { migrations_js }
+        end
         processed_files << file_path
         bundle_size += original_content.length
         
