@@ -71,7 +71,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S57 | host-framework-validation-additions | c | framework-expanded elements banned beside canon | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S58 | fix-proposals-read-the-source-first | c | fix proposals read the source's own section first | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S60 | make-your-own-browser-channel | c | headless default; "cannot see" only after the attempt | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · leak:C2 · WATCH checklist-after-success ×1 · ev:field |
-| S61 | asset-url-prefix-confirm | c | derive the served URL, confirm before the first tag | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · leak:C3-deliberate · ev:policy·non-gating |
+| S61 | asset-url-prefix-confirm | c | derive the served URL, confirm before the first tag | UNMEASURED (confirm moved before Setup 2026-10-10) | floor:SOFT v4 2026-10-09 · leak:C3-deliberate · ev:policy·non-gating |
 | S62 | section-structure-and-gaps | c | rule #4 sections, nds-grid, --gap | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:protocol |
 | S63 | page-js-defer-order | c | page JS after chrome tags; inline-defer trap | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
 | S65 | icon-token-extraction-sweep | c | nds-hgi-* sweep incl. page JS | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:protocol |

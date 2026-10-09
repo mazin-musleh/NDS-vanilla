@@ -17,9 +17,9 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 
 **`NDS_ROOT`**: the flat contents of one template release from https://github.com/mazin-musleh/NDS-vanilla/releases. Default `.nds/` at the project root, gitignored, read-only. It is correct when `NDS_ROOT/NDS-INDEX.md` resolves directly; never keep the zip's versioned wrapper folder.
 
-**`NDS_ASSETS`**: the project's static folder for the NDS runtime; never under `NDS_ROOT`.
+**`NDS_ASSETS`**: the project's static folder for the NDS runtime; never under `NDS_ROOT`. Write it relative to the project root, as `NDS_ROOT` is: the anchor is committed and shared, so an absolute path breaks on every other machine.
 
-- Derive its served URL from the stack and confirm it with the dev before the first asset tag.
+- Derive its folder and served URL from the stack, and confirm both with the dev in one question before §Setup copies the runtime. The plan review records them as answered.
 - Placeholder path? Stop NDS-side work and ask the dev. Inventory and plan work may continue; NDS targets stay `blocked on NDS_ROOT` until the sources resolve.
 - Never adopt a candidate path yourself: list the candidates, read their version banners, and let the dev choose. Write a dev-supplied path into the anchor that session, never into `NDS-PLAN.md`.
 
@@ -120,7 +120,7 @@ Inspect every globally loaded stylesheet for element selectors (`body`, `h1`, `a
 - **Rebuild** clean, in place. Old work is a content, flow, and data reference, never a copy source. Remove its NDS footprint through the approved plan; rollback is git. The approval names the cost: unported pages run on the new runtime before their rebuild and may render worse.
 - **Second runtime:** only by explicit dev decision, with parallel files and a second assets folder, accepting the cost.
 
-When a plan is required, create `NDS-PLAN.md` at the project root, starting with `Managed by NDS IQ`, with columns for page, route, legacy libraries, NDS target, and status. Stop before building. Ask every project-wide decision in ONE review (asset URL prefix, porting strategy, prior-NDS split, CSP grant only when a CSP was found, pacing), each with options and a recommended default. Ask it through the host's question tool, the one that shows the dev options to pick from, when the host has one, in back-to-back calls if it caps how many questions one call holds. With no such tool, ask in one numbered message. Record the answers in the plan. Page-specific questions wait for that page's session. In every phase, the conversation asks and the plan records, and a question with options takes the question tool the same way.
+When a plan is required, create `NDS-PLAN.md` at the project root, starting with `Managed by NDS IQ`, with columns for page, route, legacy libraries, NDS target, and status. Stop before building. Ask every project-wide decision in ONE review (porting strategy, prior-NDS split, CSP grant only when a CSP was found, pacing), each with options and a recommended default. Ask it through the host's question tool, the one that shows the dev options to pick from, when the host has one, in back-to-back calls if it caps how many questions one call holds. With no such tool, ask in one numbered message. Record the answers in the plan. Page-specific questions wait for that page's session. In every phase, the conversation asks and the plan records, and a question with options takes the question tool the same way.
 
 **The plan is cross-session memory.**
 
@@ -256,15 +256,15 @@ Two pieces: **`NDS-IQ.md`** at the project root, committed and replaced whole on
 
 **Update:** compare raw main's content with the project-root copy; any difference is a newer revision, installed on dev approval (an explicit update request is approval). Download with curl or the stack's HTTP client, never a web-fetch tool. Accept it only if line 1 starts `# NDS IQ`; otherwise discard and retry once, and after a second failure report it and keep the installed copy. Replace the root copy whole (no merging, anchor untouched), then read it again before continuing.
 
-**First install:** download the raw file to the project root, add the anchor with `NDS_ROOT=.nds/` and the real `NDS_ASSETS` path, commit both, then run the §Plan inventory and create `NDS-PLAN.md`.
+**First install:** download the raw file to the project root, add the anchor with `NDS_ROOT=.nds/` and the `NDS_ASSETS` path the dev confirmed, commit both, then run the §Plan inventory and create `NDS-PLAN.md`.
 
-The anchor, with `NDS_ASSETS` set to the project's real static root:
+The anchor, with `NDS_ASSETS` set to the project's static folder, relative to the project root:
 
 ```markdown
 ## NDS — National Design System (UI layer)
 
 - `NDS_ROOT` = `.nds/`
-- `NDS_ASSETS` = `/path/to/your-project/public/assets/`
+- `NDS_ASSETS` = `public/assets/`
 
 All UI in this project is built with NDS. Before any UI, page, component, styling,
 or asset work — or when unsure whether a task touches NDS — read `NDS-IQ.md` at this

@@ -152,7 +152,7 @@ def check_rules(block, name='_includes/NDS-IQ.md'):
     # These literals appear ONLY inside the anchor code block — a string the
     # surrounding prose also uses would keep passing after the anchor lost it.
     for canon in ('- `NDS_ROOT` = `.nds/`',
-                  '- `NDS_ASSETS` = `/path/to/your-project/public/assets/`',
+                  '- `NDS_ASSETS` = `public/assets/`',
                   'Do no NDS work before that read.',
                   'Never write `.nds-*` markup from memory'):
         if canon not in block:
