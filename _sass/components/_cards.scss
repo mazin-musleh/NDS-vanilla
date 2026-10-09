@@ -553,6 +553,17 @@
   &:where(:dir(rtl)) {
     text-align: right;
   }
+
+  // A number format keeps its flex row: block drops its gap, symbol order and icon centering.
+  // start/end follow the forced ltr, not the reversed row; :where() lets a centered card win.
+  &:where(.nds-number-format) {
+    display: flex;
+    justify-content: start;
+
+    &:where(:dir(rtl)) {
+      justify-content: end;
+    }
+  }
 }
 
 
