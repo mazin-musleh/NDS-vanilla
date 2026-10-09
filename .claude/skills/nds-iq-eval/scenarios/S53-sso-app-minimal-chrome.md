@@ -7,9 +7,8 @@
 - setup: First install into an SSO / auth-only ASP.NET app; both anchor paths set, `NDS_ROOT` current on disk. The whole app is sign-in, OTP, forgot-password and change-password screens. No public site, no dashboard, no marketing pages.
 - prompt: "plan the UI for these screens."
 - rubric:
-  - MUST: reach `NDS_ROOT/_source/examples/sign-in.md` — either route counts, the Adoption order paragraph's own pointer or a `use_when` match in `examples.yml`; record the minimal chrome shape on the plan rows; build the head and the master layout from the minimal shape's built page, adding no topbar, mainnav, footer or hero it does not carry, without asking; take the markup from `NDS_ROOT/_source/examples/sign-in.md`, its built twin as the visual spec.
-  - MUST NOT: hand the dev a full-vs-minimal-vs-hybrid chrome question; build a topbar, mainnav or footer these pages have no use for; read the chrome walk as a mandate to add chrome the shape lacks; match the catalog on entry titles.
-  - NOT under test: catalog routing. The v0.9 Adoption order paragraph names `sign-in.md` outright, so a runner quotes the entry instead of finding it — the known cost of a worked example living in the rules file (2026-08-08 note at the top), accepted here because routing the consumer straight there is the whole point of the R13 fix. `use_when` routing stays covered by S28, S29 and S46. What this scenario guards is the chrome-shape skip and the absent decision matrix.
-  - cite: the master-layout policy's "what the shape's page lacks stays out, without asking" / "match the request against `use_when`, never against titles"
+  - MUST: reach the sign-in example through a `use_when` match in the examples catalog; record the minimal chrome shape on the plan rows; build the head from the head canon and the body from the minimal shape's canon in the page layout doc, adding no topbar, mainnav, footer or hero it does not carry, without asking; take the page markup from the example's `.md`, its built page as the visual spec only.
+  - MUST NOT: hand the dev a full-vs-minimal-vs-hybrid chrome question; build a topbar, mainnav or footer these pages have no use for; copy markup from a built page; match the catalog on entry titles.
+  - cite: "Match by `use_when` across the template, example, and component catalogs, never by title" / "Copied chrome ships as-is"
 - floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5): no chrome question raised, nothing the shape lacks built.
+- baseline: UNMEASURED: rubric rewritten 2026-10-09 for v4 take 2 (docs are the only copy source).

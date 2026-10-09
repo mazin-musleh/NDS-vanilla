@@ -2,7 +2,7 @@
 
 
 - mode: comprehension
-- rules: conflict bullet's prior-NDS-guidance exception ("this block is the only NDS rule source... propose removing them with the plan, the dev's call"); clean-start footprint list ("stale NDS instructions in the agent file")
+- rules: NONE in v4 — agent file's stale hand-written NDS conventions: one rule source, propose removing them (nearest: Stop and ask row "project rules conflict"; §Plan "Remove its NDS footprint")
 - provenance: maintainer directive 2026-08-05 (the v0.6 rule): v0.5 only flagged conflicts, leaving a prior attempt's own NDS rules in the agent file forever beside the block's claim to be the only source. Drafted in the v0.6 scoped run.
 - setup: First session; the anchor was installed into `CLAUDE.md` today with real paths (`NDS-IQ.md` at the project root). The SAME `CLAUDE.md` already carried, from a prior NDS attempt by another team months ago: a hand-written "## NDS conventions" section (rules like "always use `.nds-btn-primary` for buttons", "put page-specific CSS in `wwwroot/css/site.css`", "components get initialized in `site.js`"), plus leftover agent notes about that attempt's decisions. The project has ~8 pages of `.nds-*` markup from that attempt and old NDS bundles in `wwwroot/`.
 - prompt: "let's get our NDS work back on track — what's the plan?"

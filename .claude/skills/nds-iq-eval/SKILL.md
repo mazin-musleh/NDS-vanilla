@@ -15,7 +15,7 @@ Tests the consumer rules file, `_includes/NDS-IQ.md`. A consumer project saves i
 - **Runners are fresh `general-purpose` agents with a `model` override, never forks.** A fork inherits this conversation and biases the test.
 - **A new sentence must fail the floor first** (see Floor). A stub PASS means the model already does it: fix the source instead.
 - **The harness states only what the field state would show.** Setup, prompt and seeded files carry world-state, never the graded answer. The four leak classes are defined in the `scenarios.md` preamble. Reuse field artifacts verbatim where they exist. Write a gate run's setup BLIND, before the sentence it grades. A pass that a leak audit voids goes back to UNMEASURED, never FAIL.
-- **Rules run on every template.** Consumers on any release since 1.7.0 fetch raw main. So a sentence that routes to a newer doc or runtime feature also needs the old-template probe (Modes).
+- **Rules run on every 2.x template; older ones are redirected.** Consumers on any release since 1.7.0 fetch raw main. A template with no `NDS-INDEX.md` (every 1.x) must send the agent to the frozen `IQv3.1` file: the `old` mode probes that redirect.
 
 ## Token rules
 
@@ -37,8 +37,8 @@ Tests the consumer rules file, `_includes/NDS-IQ.md`. A consumer project saves i
 |---|---|---|---|
 | `scoped` (default) | The single most direct scenario for each changed sentence (Workflow step 1). Indirect matches wait for the next `full`. A one-word or list-only edit needs no run: say so. | sonnet | After an edit batch |
 | `full` | Every comprehension scenario | sonnet | Before a revision is published |
-| `old` | Every scenario with a `root:` field, plus the routing scenarios, against the old-template root (below) | sonnet | When a sentence routes to a source or runtime feature that older templates may lack; before a revision is published |
-| `floor [ids]` | The named scenarios against `fixtures/NDS-IQ-STUB.md`. Only the rulebook path changes, or the comparison is void. | sonnet | Before a new sentence; when a trim is proposed |
+| `old` | The redirect probe: every scenario with a `root:` field, against the old-template root (below) | sonnet | When the start-here or update text changes; before a revision is published |
+| `floor [ids]` | The named scenarios against `fixtures/NDS-IQ-STUB.md`. Only the rulebook path changes, or the comparison is void: the index and docs stay mapped, so a floor PASS means the docs carry it, not the rules. | sonnet | Before a new sentence; when a trim is proposed |
 | `behavior <id>` | One scenario or rig against the fixtures | sonnet (or named) | Explicit ask only |
 | `sweep` | Every comprehension scenario on fable + opus + sonnet in parallel | all three | The owner's call only, never a release step. Demoted 2026-08-18: it proved nothing the sonnet runs did not. |
 
@@ -55,11 +55,12 @@ python -c "import zipfile,sys;z=zipfile.ZipFile(sys.argv[1]);[z.extract(n,'tmp/i
 mv tmp/iq-old-zip/*/_site $R/_site && rm -rf tmp/iq-old-zip
 ```
 
-- The default tag is the newest 1.x. Its docs are the old format: the code tab and the Modifier Classes table.
-- A scenario with a `root:` field runs only against that tag. For example, S81 needs a template older than its routed doc.
+- The default tag is the newest 1.x. It ships no `NDS-INDEX.md`, which is what the redirect keys on.
+- A scenario with a `root:` field runs only against that tag.
 - In the harness prompt:
   - `{SRC}` = `C:\Projects\NDS-vanilla\tmp\iq-old-root-<tag>\_source`
   - `{SITE}` = `C:\Projects\NDS-vanilla\tmp\iq-old-root-<tag>\_site`
+  - `{ROOT}` = `C:\Projects\NDS-vanilla\tmp\iq-old-root-<tag>` (CHANGELOG.md, no index)
   - `{ROOT_VERSION}` = the tag without its `v`
 
 ## Floor
@@ -115,7 +116,7 @@ The floor answers one question: does this sentence earn its place? A scenario th
 
 ## Harness prompt (comprehension)
 
-Keep it canonical, so runs stay comparable. Defaults: `{SRC}` = `C:\Projects\NDS-vanilla`, `{SITE}` = `C:\Projects\NDS-vanilla\_site`, and `{ROOT_VERSION}` = the current `version` in `_config.yml` without `-dev`. `old` mode swaps all three. Fill `{SCENARIOS}` with setup + prompt only, never the rubric.
+Keep it canonical, so runs stay comparable. Defaults: `{SRC}` = `{ROOT}` = `C:\Projects\NDS-vanilla`, `{SITE}` = `C:\Projects\NDS-vanilla\_site`, and `{ROOT_VERSION}` = the version the next release takes (2.0.0 while `_config.yml` reads 1.12.x-dev). `old` mode swaps all four. Fill `{SCENARIOS}` with setup + prompt only, never the rubric.
 
 ```
 You are simulating an AI coding agent working inside a CONSUMER web project
@@ -139,6 +140,9 @@ under NDS_ROOT, simulate it:
 - NDS_ROOT/_site/<path>  is  {SITE}\<path>, when it exists. If it does not,
   report the read as unavailable and continue — never substitute the _source
   twin for a _site read, or the reverse.
+- NDS_ROOT/NDS-INDEX.md  is  {ROOT}\NDS-INDEX.md, and NDS_ROOT/CHANGELOG.md
+  is  {ROOT}\CHANGELOG.md. No other file in {ROOT} is part of NDS_ROOT. A
+  file missing there is missing from NDS_ROOT.
 
 If a routed read lands on a path that does not exist, say so explicitly and
 name the path you tried. Do not silently substitute a different file: a routing
@@ -254,8 +258,8 @@ The fixtures stay skeletal on purpose: a bigger fixture is a slower run with no 
   After any edit to `verify()` or to a sentence a guard keys on, run `python scripts/check-release-guards.py`. It breaks the file once per case and asserts the guard notices.
 
 **What a sentence may say**
-- **Route, don't restate.** A sentence says where a fact lives. It names a literal only for a stable contract: `NDS_ROOT`, `NDS_ASSETS`, `_source/`, `_site/`, `NDS-PLAN.md`, the catalogs, `NDS.Init.audit()`. A component class, a renamed file or a folder layout is routed, never named. A renamed path that must be named is named both ways, with no version: `page-layout.md` (older: `page-shell.md`).
-- **Every template, never blocking.** A routed doc or a runtime feature that only newer templates ship is enrichment ("where present"). The sentence's action must work without it. A missing path on an old template is reported as a gap and an upgrade is proposed, never a stall.
+- **IQ names no facts.** Each release's `NDS-INDEX.md`, docs and audit own every path, class, API and doc format. Outside the anchor, a sentence may name only `NDS_ROOT`, `NDS_ASSETS`, `NDS-PLAN.md`, `NDS-REPORT.md`, `NDS-IQ.md`, `NDS-INDEX.md`, the release and raw URLs, and the `IQv3.1` tag; `verify()` fails on anything else. A sentence routes by need ("the index names …"), never by path.
+- **Every 2.x template, never blocking.** A doc or runtime feature that only newer releases ship is enrichment. The sentence's action must work without it: report the gap and propose the upgrade, never stall.
 - **Attribution default (owner, 2026-08-14): a field failure is a SOURCE finding.**
   - Presume a doc, example, catalog entry or banner was unclear, and fix it there.
   - Never change source just to rescue an agent; change it only when that improves the component or fixes a real gap.
