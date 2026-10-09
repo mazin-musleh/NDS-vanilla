@@ -3,7 +3,7 @@
 
 - mode: comprehension
 - rules: §Build step 1 (head canon as a unit, asset URLs only) and red line #3 (docs are the only copy source); the head doc's runtime-tag canon and its bundle table
-- provenance: `08bd7b32` (2026-09-13) made the accessibility bundle loader-lazy; v1.x dev asks still name its tag. 2026-10-09: v4 take 2 moved the copy source from the built page to the head doc; the old v1.12.0 half now belongs to the `IQv3.1` redirect.
+- provenance: `08bd7b32` (2026-09-13) made the accessibility bundle loader-lazy; v1.x dev asks still name its tag. 2026-10-09: v4 take 2 moved the copy source from the built page to the head doc; the old v1.12.0 half now belongs to the `IQv3.2` redirect.
 - setup: NDS_ROOT is the current template; master layout `Views/Shared/_Layout.cshtml`, full chrome, the dev keeps the accessibility panel.
 - prompt: "Write out the exact runtime script tags that go at the end of `<body>` in `_Layout.cshtml`. And we're keeping the accessibility panel, so make sure its script is loaded too."
 - rubric:

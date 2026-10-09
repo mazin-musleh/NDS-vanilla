@@ -2,7 +2,7 @@
 
 One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak, baseline) lives in `scenarios/S<n>-<slug>.md`. Scoping reads THIS file only, then opens just the scoped files. Records follow SKILL.md's no-records rule: a scenario file holds its durable fields, a one-line verdict log, and at most ONE current story while something is open — stories are replaced, never appended; git is the archive (the pre-split monolith is at commit `6490326a`).
 
-**Numbering:** S1–S100 are written. S43 was never used. Retired 2026-10-09: S59 and S64 (netted out), S80 (closed), S26 (its v6 pasted-block rule was cut in v4); their files are in git. S92–S100 added 2026-10-09 for v4 (authored blind, before their sentences). Retired 2026-10-09 (v4 take 2): S16 (old-format twin of S93) and S81 (1.x root: now the `IQv3.1` redirect, S101). S101–S105 added 2026-10-09 for take 2. **Next free is S106.** Update this line whenever a scenario lands.
+**Numbering:** S1–S100 are written. S43 was never used. Retired 2026-10-09: S59 and S64 (netted out), S80 (closed), S26 (its v6 pasted-block rule was cut in v4); their files are in git. S92–S100 added 2026-10-09 for v4 (authored blind, before their sentences). Retired 2026-10-09 (v4 take 2): S16 (old-format twin of S93) and S81 (1.x root: now the `IQv3.2` redirect, S101). S101–S105 added 2026-10-09 for take 2. **Next free is S106.** Update this line whenever a scenario lands.
 
 **Standing harness rules** (method lives in SKILL.md; these are the file-level ones):
 - Catalog-routing prompts stay in the dev's words — never words a `use_when` uses verbatim; worked examples that name an entry stay OUT of the rules file or the runner quotes the answer instead of finding it (S28's first run, 2026-08-08).
@@ -108,7 +108,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S98 | page-layout-read-order | c | reuse the chrome; example .md + front matter; built page as visual spec only | UNMEASURED (rubric rewritten 2026-10-09, v4 take 2) | floor:PASS v4 2026-10-09 · ev:protocol · leak:C3-deliberate |
 | S99 | component-text-override | c | component text via the pack / window.NDS_I18N, never runtime edits | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:protocol |
 | S100 | legacy-does-not-scope-facets | c | legacy UI never caps a matched source's facets | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:field |
-| S101 | pre-index-template-redirect | c | no index in NDS_ROOT → install IQv3.1, read it, tell the dev | PASS 2026-10-09 old v1.12.0 reads-forced (Sonnet 5.5): index missing -> IQv3.1, read, dev told | root:v1.12.0 · floor:not run · ev:protocol |
+| S101 | pre-index-template-redirect | c | no index in NDS_ROOT → install IQv3.2, read it, tell the dev | UNMEASURED (target moved to IQv3.2 2026-10-09; the PASS was against IQv3.1) | root:v1.12.0 · floor:not run · ev:protocol |
 | S102 | index-read-first | c | NDS-INDEX.md read first; every path from it | UNMEASURED (new 2026-10-09) | floor:PASS v4 2026-10-09 · leak:C3-mild · ev:protocol |
 | S103 | audit-legacy-library | c | legacy-library finding: NDS page head without legacy; shared layout untouched | UNMEASURED (new 2026-10-09) | floor:PASS v4 2026-10-09 · ev:field |
 | S104 | audit-bundle-tag | c | bundle-tag finding: remove the tag; loader injects it | UNMEASURED (new 2026-10-09) | floor:PASS v4 2026-10-09 · ev:field |

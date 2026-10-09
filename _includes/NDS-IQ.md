@@ -90,7 +90,7 @@ If the dev says a found runtime is legacy, treat setup as new, with the latest r
 
 1. Read the opening `Version:` banners of the main NDS script and stylesheet in `NDS_ASSETS`. They must agree; otherwise stop and ask.
 2. Download that exact release's template zip from the release page and extract its contents flat into `NDS_ROOT`.
-3. Follow the Install section of `NDS_ROOT/NDS-INDEX.md`: it names the sources to add and what to copy into `NDS_ASSETS`.
+3. Follow the Install section of `NDS_ROOT/NDS-INDEX.md`: it names the sources to add and what to copy into `NDS_ASSETS`. No `NDS-INDEX.md` in the extracted release → it predates this file: switch to `IQv3.2` as §Start here says.
 
 - An empty `NDS_ASSETS` proves nothing: search the project for NDS runtime files and the layouts that load them. Found → stop and ask. None → install the latest release and report it.
 - At session start, compare the runtime banner in `NDS_ROOT` with `NDS_ASSETS`. Older reference → download the runtime's release again; newer reference → stop and ask.

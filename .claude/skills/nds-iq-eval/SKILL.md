@@ -15,7 +15,7 @@ Tests the consumer rules file, `_includes/NDS-IQ.md`. A consumer project saves i
 - **Runners are fresh `general-purpose` agents with a `model` override, never forks.** A fork inherits this conversation and biases the test.
 - **A new sentence must fail the floor first** (see Floor). A stub PASS means the model already does it: fix the source instead.
 - **The harness states only what the field state would show.** Setup, prompt and seeded files carry world-state, never the graded answer. The four leak classes are defined in the `scenarios.md` preamble. Reuse field artifacts verbatim where they exist. Write a gate run's setup BLIND, before the sentence it grades. A pass that a leak audit voids goes back to UNMEASURED, never FAIL.
-- **Rules run on every 2.x template; older ones are redirected.** Consumers on any release since 1.7.0 fetch raw main. A template with no `NDS-INDEX.md` (every 1.x) must send the agent to the frozen `IQv3.1` file: the `old` mode probes that redirect.
+- **Rules run on every 2.x template; older ones are redirected.** Consumers on any release since 1.7.0 fetch raw main. A template with no `NDS-INDEX.md` (every 1.x) must send the agent to the frozen `IQv3.2` file: the `old` mode probes that redirect.
 
 ## Token rules
 
@@ -261,7 +261,7 @@ The fixtures stay skeletal on purpose: a bigger fixture is a slower run with no 
   After any edit to `verify()` or to a sentence a guard keys on, run `python scripts/check-release-guards.py`. It breaks the file once per case and asserts the guard notices.
 
 **What a sentence may say**
-- **IQ names no facts.** Each release's `NDS-INDEX.md`, docs and audit own every path, class, API and doc format. Outside the anchor, a sentence may name only `NDS_ROOT`, `NDS_ASSETS`, `NDS-PLAN.md`, `NDS-REPORT.md`, `NDS-IQ.md`, `NDS-INDEX.md`, the release and raw URLs, and the `IQv3.1` tag; `verify()` fails on anything else. A sentence routes by need ("the index names …"), never by path.
+- **IQ names no facts.** Each release's `NDS-INDEX.md`, docs and audit own every path, class, API and doc format. Outside the anchor, a sentence may name only `NDS_ROOT`, `NDS_ASSETS`, `NDS-PLAN.md`, `NDS-REPORT.md`, `NDS-IQ.md`, `NDS-INDEX.md`, the release and raw URLs, and the `IQv3.2` tag; `verify()` fails on anything else. A sentence routes by need ("the index names …"), never by path.
 - **Every 2.x template, never blocking.** A doc or runtime feature that only newer releases ship is enrichment. The sentence's action must work without it: report the gap and propose the upgrade, never stall.
 - **Attribution default (owner, 2026-08-14): a field failure is a SOURCE finding.**
   - Presume a doc, example, catalog entry or banner was unclear, and fix it there.
