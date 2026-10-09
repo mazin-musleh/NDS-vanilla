@@ -364,12 +364,18 @@
     - label: "Core"
       is_group: true
       children:
+        - label: "Audit"
+          url: "/core/audit"
+          href: "/core/audit.html"
         - label: "Date"
           url: "/core/date"
           href: "/core/date.html"
         - label: "Internationalization"
           url: "/core/i18n"
           href: "/core/i18n.html"
+        - label: "Migration"
+          url: "/core/migration"
+          href: "/core/migration.html"
         - label: "Refresh"
           url: "/core/refresh"
           href: "/core/refresh.html"

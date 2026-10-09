@@ -1,74 +1,39 @@
 # Names a site may still use that today's NDS renamed, removed or deprecated.
 # The audit's migration rule reads this file (nds-audit.js, bundled by js_processor.rb).
 # Built from scripts/surface-history.rb plus DEPRECATIONS.md; add rows at each release.
-#   kind     class | attribute | property | id | event (events go to the docs only: a page cannot see a listener)
+# Keep the newest release first: core/migration.md groups the rows in this order.
+#   kind     class | attribute | property | id | global (a window setting) | event (events go to the docs only: a page cannot see a listener)
 #   scope    the selector the old name lived under; a match must sit inside it (closest), or with a leading & match it itself
 #   status   renamed | removed (broken today) | deprecated (still works until the next major)
 #   use      today's name, when there is one
 #   since    the release that changed it
 #   inert    a property NDS never read: setting it never had an effect
-- { kind: attribute, name: data-a11y-pos, scope: .nds-accessibility-toggle, status: renamed, use: data-fab-pos, since: "1.5.0", fix: "Use data-fab-pos on the toggle and data-panel-side on the panel." }
-- { kind: attribute, name: data-accept-message, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
-- { kind: attribute, name: data-accept-title, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
-- { kind: attribute, name: data-accessibility-close, scope: .nds-accessibility-panel, status: renamed, use: data-panel-close, since: "1.5.0", fix: "Use data-panel-close on the close button." }
-- { kind: attribute, name: data-always-open-on, scope: "&.nds-drawer", status: deprecated, use: data-state, since: "2.0.0", fix: "Write data-state=\"always-open\" on the drawer." }
-- { kind: attribute, name: data-cooldown-loading, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
-- { kind: attribute, name: data-decimals, scope: "&:is([data-counter], .nds-counter-value, .nds-number-format)", status: removed, since: "2.0.0", fix: "Remove it: decimals follow the number as written in data-counter or data-target." }
-- { kind: attribute, name: data-decline-message, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
-- { kind: attribute, name: data-decline-title, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
-- { kind: attribute, name: data-duration, scope: "&:is([data-counter], .nds-counter-value)", status: deprecated, use: data-counter-duration, since: "2.0.0", fix: "Use data-counter-duration." }
-- { kind: attribute, name: data-filter-name, scope: .nds-filter, status: removed, since: "1.7.0", fix: "Delete it. Applied filter chips show the raw value." }
-- { kind: attribute, name: data-free, scope: "&.nds-number-format", status: deprecated, since: "2.0.0", fix: "Leave out data-currency and write the label, such as Free." }
-- { kind: attribute, name: data-lang-dir, scope: .nds-main-nav, status: removed, since: "1.0.4", fix: "The language switcher module is gone and it only flipped direction. Wire your own click handler that sets html lang and dir." }
-- { kind: attribute, name: data-lang-value, scope: .nds-main-nav, status: removed, since: "1.0.4", fix: "The language switcher module is gone and it only flipped direction. Wire your own click handler that sets html lang and dir." }
-- { kind: attribute, name: data-loading, scope: "&.nds-slider-container", status: deprecated, use: nds-loading, since: "1.12.0", fix: "Use the nds-loading class." }
-- { kind: attribute, name: data-open-on, scope: .nds-drawer, status: deprecated, use: data-state, since: "2.0.0", fix: "Write data-state=\"open\" on the <li> and its <ul>, and aria-expanded=\"true\" on its button." }
-- { kind: attribute, name: data-sent-message, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
-- { kind: attribute, name: data-sent-title, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
-- { kind: attribute, name: data-start, scope: "&:is([data-counter], .nds-counter-value)", status: deprecated, use: data-counter-start, since: "2.0.0", fix: "Use data-counter-start." }
-- { kind: attribute, name: data-target, scope: "&.nds-counter-value", status: deprecated, use: data-counter, since: "2.0.0", fix: "Write the end value in data-counter." }
-- { kind: attribute, name: peek, scope: "&.nds-swiper", status: deprecated, use: --peek, since: "1.12.0", fix: "Set --peek in the swiper's style attribute." }
-- { kind: attribute, name: slides-max, scope: "&.nds-swiper", status: deprecated, use: --max-slides, since: "1.12.0", fix: "Set --max-slides in the swiper's style attribute." }
-- { kind: attribute, name: slides-mid, scope: "&.nds-swiper", status: deprecated, use: --mid-slides, since: "1.12.0", fix: "Set --mid-slides in the swiper's style attribute." }
-- { kind: attribute, name: slides-min, scope: "&.nds-swiper", status: deprecated, use: --min-slides, since: "1.12.0", fix: "Set --min-slides in the swiper's style attribute." }
 - { kind: class, name: actions-column, scope: .nds-table, status: renamed, use: nds-actions-column, since: "2.0.0", fix: "Use nds-actions-column." }
-- { kind: class, name: article-tags, scope: .nds-group, status: removed, since: "1.0.5", fix: "Delete it, it had no styles." }
 - { kind: class, name: checkbox-column, scope: .nds-table, status: renamed, use: nds-checkbox-column, since: "2.0.0", fix: "Use nds-checkbox-column." }
 - { kind: class, name: code-example, scope: .nds-tabs.nds-code, status: removed, since: "2.0.0", fix: "Remove it: a panel in .nds-tabs.nds-code needs no class." }
 - { kind: class, name: external, scope: ".nds-sidemenu li", status: removed, since: "2.0.0", fix: "Remove it: the side menu no longer styles li.redirect.external." }
-- { kind: class, name: focus, scope: .nds-form-control, status: deprecated, since: "1.9.0", fix: "Remove it: the field styles its own focus." }
+- { kind: class, name: filter-btn, scope: .nds-filter, status: renamed, use: nds-filter-btn, since: "2.0.0", fix: "Use nds-filter-btn on the filter menu trigger." }
+- { kind: class, name: focus, scope: .nds-form-control, status: removed, since: "2.0.0", fix: "Remove it: the field styles its own focus." }
 - { kind: class, name: generalInfo, scope: .nds-topbar, status: removed, since: "2.0.0", fix: "Remove it: the top bar rule is gone and no markup used it." }
-- { kind: class, name: hgi-arrange-by-numbers-1-9, scope: .hgi, status: deprecated, use: hgi-arrange-by-numbers-one-9, since: "2.0.0", fix: "Use hgi-arrange-by-numbers-one-9." }
-- { kind: class, name: hgi-arrange-by-numbers-9-1, scope: .hgi, status: deprecated, use: hgi-arrange-by-numbers-nine-1, since: "2.0.0", fix: "Use hgi-arrange-by-numbers-nine-1." }
-- { kind: class, name: hgi-cplusplus, scope: .hgi, status: deprecated, use: hgi-cpp, since: "2.0.0", fix: "Use hgi-cpp." }
-- { kind: class, name: hgi-go-backward-5-sec, scope: .hgi, status: deprecated, use: hgi-go-backward-five-sec, since: "2.0.0", fix: "Use hgi-go-backward-five-sec." }
-- { kind: class, name: hgi-go-forward-5-sec, scope: .hgi, status: deprecated, use: hgi-go-forward-five-sec, since: "2.0.0", fix: "Use hgi-go-forward-five-sec." }
-- { kind: class, name: hgi-layout-2-column, scope: .hgi, status: deprecated, use: hgi-layout-two-column, since: "2.0.0", fix: "Use hgi-layout-two-column." }
-- { kind: class, name: hgi-layout-2-row, scope: .hgi, status: deprecated, use: hgi-layout-two-row, since: "2.0.0", fix: "Use hgi-layout-two-row." }
-- { kind: class, name: hgi-layout-3-column, scope: .hgi, status: deprecated, use: hgi-layout-three-column, since: "2.0.0", fix: "Use hgi-layout-three-column." }
-- { kind: class, name: hgi-layout-3-row, scope: .hgi, status: deprecated, use: hgi-layout-three-row, since: "2.0.0", fix: "Use hgi-layout-three-row." }
-- { kind: class, name: hgi-mp-3-01, scope: .hgi, status: deprecated, use: hgi-mp-three-01, since: "2.0.0", fix: "Use hgi-mp-three-01." }
-- { kind: class, name: hgi-mp-3-02, scope: .hgi, status: deprecated, use: hgi-mp-three-02, since: "2.0.0", fix: "Use hgi-mp-three-02." }
-- { kind: class, name: hgi-mp-4-01, scope: .hgi, status: deprecated, use: hgi-mp-four-01, since: "2.0.0", fix: "Use hgi-mp-four-01." }
-- { kind: class, name: hgi-mp-4-02, scope: .hgi, status: deprecated, use: hgi-mp-four-02, since: "2.0.0", fix: "Use hgi-mp-four-02." }
-- { kind: class, name: hgi-ski-dice-faces-01, scope: .hgi, status: deprecated, use: hgi-ski, since: "2.0.0", fix: "Use hgi-ski." }
-- { kind: class, name: hgi-solid, status: removed, since: "1.4.0", fix: "Only the stroke icon style ships. Use \"hgi hgi-stroke hgi-NAME\" or an nds-hgi-* class." }
-- { kind: class, name: hgi-sorting-1-9, scope: .hgi, status: deprecated, use: hgi-sorting-one-9, since: "2.0.0", fix: "Use hgi-sorting-one-9." }
-- { kind: class, name: hgi-sorting-9-1, scope: .hgi, status: deprecated, use: hgi-sorting-nine-1, since: "2.0.0", fix: "Use hgi-sorting-nine-1." }
-- { kind: class, name: hidden, scope: "&[class*=\"nds-\"]", status: renamed, use: hidden, since: "1.4.0", fix: "Use the native hidden attribute (always hidden) or data-hidden=\"sm md lg\" for widths. The .hidden class has no styles." }
+- { kind: class, name: hgi-arrange-by-numbers-1-9, scope: .hgi, status: renamed, use: hgi-arrange-by-numbers-one-9, since: "2.0.0", fix: "Use hgi-arrange-by-numbers-one-9." }
+- { kind: class, name: hgi-arrange-by-numbers-9-1, scope: .hgi, status: renamed, use: hgi-arrange-by-numbers-nine-1, since: "2.0.0", fix: "Use hgi-arrange-by-numbers-nine-1." }
+- { kind: class, name: hgi-cplusplus, scope: .hgi, status: renamed, use: hgi-cpp, since: "2.0.0", fix: "Use hgi-cpp." }
+- { kind: class, name: hgi-go-backward-5-sec, scope: .hgi, status: renamed, use: hgi-go-backward-five-sec, since: "2.0.0", fix: "Use hgi-go-backward-five-sec." }
+- { kind: class, name: hgi-go-forward-5-sec, scope: .hgi, status: renamed, use: hgi-go-forward-five-sec, since: "2.0.0", fix: "Use hgi-go-forward-five-sec." }
+- { kind: class, name: hgi-layout-2-column, scope: .hgi, status: renamed, use: hgi-layout-two-column, since: "2.0.0", fix: "Use hgi-layout-two-column." }
+- { kind: class, name: hgi-layout-2-row, scope: .hgi, status: renamed, use: hgi-layout-two-row, since: "2.0.0", fix: "Use hgi-layout-two-row." }
+- { kind: class, name: hgi-layout-3-column, scope: .hgi, status: renamed, use: hgi-layout-three-column, since: "2.0.0", fix: "Use hgi-layout-three-column." }
+- { kind: class, name: hgi-layout-3-row, scope: .hgi, status: renamed, use: hgi-layout-three-row, since: "2.0.0", fix: "Use hgi-layout-three-row." }
+- { kind: class, name: hgi-mp-3-01, scope: .hgi, status: renamed, use: hgi-mp-three-01, since: "2.0.0", fix: "Use hgi-mp-three-01." }
+- { kind: class, name: hgi-mp-3-02, scope: .hgi, status: renamed, use: hgi-mp-three-02, since: "2.0.0", fix: "Use hgi-mp-three-02." }
+- { kind: class, name: hgi-mp-4-01, scope: .hgi, status: renamed, use: hgi-mp-four-01, since: "2.0.0", fix: "Use hgi-mp-four-01." }
+- { kind: class, name: hgi-mp-4-02, scope: .hgi, status: renamed, use: hgi-mp-four-02, since: "2.0.0", fix: "Use hgi-mp-four-02." }
+- { kind: class, name: hgi-ski-dice-faces-01, scope: .hgi, status: renamed, use: hgi-ski, since: "2.0.0", fix: "Use hgi-ski." }
+- { kind: class, name: hgi-sorting-1-9, scope: .hgi, status: renamed, use: hgi-sorting-one-9, since: "2.0.0", fix: "Use hgi-sorting-one-9." }
+- { kind: class, name: hgi-sorting-9-1, scope: .hgi, status: renamed, use: hgi-sorting-nine-1, since: "2.0.0", fix: "Use hgi-sorting-nine-1." }
 - { kind: class, name: nds-404, status: renamed, use: nds-status-section, since: "2.0.0", fix: "Use nds-status-section." }
-- { kind: class, name: nds-accessibility-panel-body, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-body, since: "1.5.0", fix: "Use the shared nds-panel-body class." }
-- { kind: class, name: nds-accessibility-panel-footer, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-footer, since: "1.5.0", fix: "Use the shared nds-panel-footer class." }
-- { kind: class, name: nds-accessibility-panel-header, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-header, since: "1.5.0", fix: "Use the shared nds-panel-header class." }
-- { kind: class, name: nds-accessibility-panel-quick, scope: .nds-accessibility-panel, status: renamed, use: nds-accessibility-quick, since: "1.5.0", fix: "Rename the quick-toggle row to nds-accessibility-quick." }
-- { kind: class, name: nds-accessibility-panel-title, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-title, since: "1.5.0", fix: "Use the shared nds-panel-title class." }
-- { kind: class, name: nds-card-form, scope: .nds-card, status: renamed, use: nds-card-meta, since: "1.7.0", fix: "Use nds-card-meta where it was the column wrapper, and drop the class otherwise." }
-- { kind: class, name: nds-card-price, status: deprecated, use: nds-card-value, since: "1.11.0", fix: "Use nds-card-value." }
+- { kind: class, name: nds-card-price, status: renamed, use: nds-card-value, since: "2.0.0", fix: "Use nds-card-value." }
 - { kind: class, name: nds-cardView, status: renamed, use: nds-card-view, since: "2.0.0", fix: "Use nds-card-view." }
-- { kind: class, name: nds-center-lg, status: removed, since: "1.7.0", fix: "Write the media query in your own stylesheet; nds-center itself is unchanged." }
-- { kind: class, name: nds-center-md, status: removed, since: "1.7.0", fix: "Write the media query in your own stylesheet; nds-center itself is unchanged." }
-- { kind: class, name: nds-center-sm, status: removed, since: "1.7.0", fix: "Write the media query in your own stylesheet; nds-center itself is unchanged." }
-- { kind: class, name: nds-center-xl, status: removed, since: "1.7.0", fix: "Write the media query in your own stylesheet; nds-center itself is unchanged." }
 - { kind: class, name: nds-collapse, scope: .nds-main-nav, status: renamed, use: nds-nav-collapse, since: "2.0.0", fix: "Use nds-nav-collapse." }
 - { kind: class, name: nds-collapse-content, scope: .nds-main-nav, status: renamed, use: nds-nav-collapse-content, since: "2.0.0", fix: "Use nds-nav-collapse-content." }
 - { kind: class, name: nds-column, scope: .nds-main-nav, status: renamed, use: nds-nav-column, since: "2.0.0", fix: "Use nds-nav-column." }
@@ -76,10 +41,9 @@
 - { kind: class, name: nds-cookie-popup, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #ndsCookiesPanel in a template.nds-panel-template." }
 - { kind: class, name: nds-cookie-popup-links, status: removed, since: "2.0.0", fix: "Remove it: there are no default links in the cookie panel." }
 - { kind: class, name: nds-CTA, scope: .nds-main-nav, status: renamed, use: nds-nav-cta, since: "2.0.0", fix: "Use nds-nav-cta." }
-- { kind: class, name: nds-desktop-only, status: renamed, use: data-hidden, since: "1.4.0", fix: "Put data-hidden on the element with the widths where it must hide (sm, md, lg)." }
+- { kind: class, name: nds-date-picker-dropdown, status: renamed, use: nds-date-picker-menu, since: "2.0.0", fix: "Use nds-date-picker-menu." }
 - { kind: class, name: nds-digitalStamp, status: renamed, use: nds-digital-stamp, since: "2.0.0", fix: "Use nds-digital-stamp." }
 - { kind: class, name: nds-digitalStamp-card, status: renamed, use: nds-digital-stamp-card, since: "2.0.0", fix: "Use nds-digital-stamp-card." }
-- { kind: class, name: nds-digitalStamp-closed, status: renamed, use: nds:digital-stamp:closed, since: "1.7.0", fix: "Listen for the event nds:digital-stamp:closed (it is an event name, not a class)." }
 - { kind: class, name: nds-digitalStamp-content, status: renamed, use: nds-digital-stamp-content, since: "2.0.0", fix: "Use nds-digital-stamp-content." }
 - { kind: class, name: nds-digitalStamp-description, status: renamed, use: nds-digital-stamp-description, since: "2.0.0", fix: "Use nds-digital-stamp-description." }
 - { kind: class, name: nds-digitalStamp-heading, status: renamed, use: nds-digital-stamp-heading, since: "2.0.0", fix: "Use nds-digital-stamp-heading." }
@@ -87,7 +51,6 @@
 - { kind: class, name: nds-digitalStamp-icon, status: renamed, use: nds-digital-stamp-icon, since: "2.0.0", fix: "Use nds-digital-stamp-icon." }
 - { kind: class, name: nds-digitalStamp-lg-text, status: renamed, use: nds-digital-stamp-lg-text, since: "2.0.0", fix: "Use nds-digital-stamp-lg-text." }
 - { kind: class, name: nds-digitalStamp-notices, status: renamed, use: nds-digital-stamp-notices, since: "2.0.0", fix: "Use nds-digital-stamp-notices." }
-- { kind: class, name: nds-digitalStamp-opened, status: renamed, use: nds:digital-stamp:opened, since: "1.7.0", fix: "Listen for the event nds:digital-stamp:opened (it is an event name, not a class)." }
 - { kind: class, name: nds-digitalStamp-register, status: renamed, use: nds-digital-stamp-register, since: "2.0.0", fix: "Use nds-digital-stamp-register." }
 - { kind: class, name: nds-digitalStamp-sm-text, status: renamed, use: nds-digital-stamp-sm-text, since: "2.0.0", fix: "Use nds-digital-stamp-sm-text." }
 - { kind: class, name: nds-digitalStamp-tab, status: renamed, use: nds-digital-stamp-tab, since: "2.0.0", fix: "Use nds-digital-stamp-tab." }
@@ -97,75 +60,57 @@
 - { kind: class, name: nds-dropdown-item, scope: .nds-main-nav, status: renamed, use: nds-nav-menu-item, since: "2.0.0", fix: "Use nds-nav-menu-item." }
 - { kind: class, name: nds-dropdown-menu, scope: .nds-main-nav, status: renamed, use: nds-nav-menu, since: "2.0.0", fix: "Use nds-nav-menu." }
 - { kind: class, name: nds-dropdown-title, scope: .nds-main-nav, status: renamed, use: nds-nav-title, since: "2.0.0", fix: "Use nds-nav-title." }
-- { kind: class, name: nds-filter-bar, status: deprecated, use: nds-toolbar, since: "1.4.0", fix: "Use nds-toolbar." }
-- { kind: class, name: nds-focus, status: deprecated, since: "1.9.0", fix: "Remove it: the field styles its own focus." }
-- { kind: class, name: nds-footer-app-item, scope: .nds-footer, status: renamed, use: nds-footer-icon-row, since: "1.0.3", fix: "Social and app links now sit in nds-footer-icons > nds-footer-icon-group > nds-footer-icon-row. Re-copy the footer from the Footer page." }
-- { kind: class, name: nds-footer-apps-wrapper, scope: .nds-footer, status: renamed, use: nds-footer-icon-row, since: "1.0.3", fix: "Social and app links now sit in nds-footer-icons > nds-footer-icon-group > nds-footer-icon-row. Re-copy the footer from the Footer page." }
-- { kind: class, name: nds-footer-copy-right, scope: .nds-footer, status: renamed, use: nds-footer-policy, since: "1.0.3", fix: "Terms and privacy links go in nds-footer-policy, inside nds-footer-legal." }
-- { kind: class, name: nds-footer-drawer, scope: .nds-footer, status: removed, since: "1.0.3", fix: "The footer drawer is flat link columns: nds-footer-column with a heading and nds-footer-list. Re-copy the footer." }
-- { kind: class, name: nds-footer-mobile-app-icons, scope: .nds-footer, status: renamed, use: nds-footer-icon-row, since: "1.0.3", fix: "Social and app links now sit in nds-footer-icons > nds-footer-icon-group > nds-footer-icon-row. Re-copy the footer from the Footer page." }
-- { kind: class, name: nds-footer-separator, scope: .nds-footer, status: removed, since: "1.0.3", fix: "Delete the pipe separators; gap handles spacing." }
-- { kind: class, name: nds-footer-social-icons, scope: .nds-footer, status: renamed, use: nds-footer-icon-row, since: "1.0.3", fix: "Social and app links now sit in nds-footer-icons > nds-footer-icon-group > nds-footer-icon-row. Re-copy the footer from the Footer page." }
-- { kind: class, name: nds-footer-social-wrapper, scope: .nds-footer, status: renamed, use: nds-footer-icon-row, since: "1.0.3", fix: "Social and app links now sit in nds-footer-icons > nds-footer-icon-group > nds-footer-icon-row. Re-copy the footer from the Footer page." }
+- { kind: class, name: nds-filter-bar, status: renamed, use: nds-toolbar, since: "2.0.0", fix: "Use nds-toolbar." }
+- { kind: class, name: nds-focus, status: removed, since: "2.0.0", fix: "Remove it: the field styles its own focus." }
 - { kind: class, name: nds-foundingDay, status: renamed, use: nds-founding-day, since: "2.0.0", fix: "Use nds-founding-day." }
-- { kind: class, name: nds-full-width, scope: "&.nds-card", status: deprecated, use: nds-full, since: "2.0.0", fix: "Use nds-full: on a card, nds-full-width is the full-bleed breakout." }
-- { kind: class, name: nds-gold, scope: .nds-card, status: removed, since: "1.1.0", fix: "Use a status color (nds-info, nds-warning and so on) or the default card." }
-- { kind: class, name: nds-gradient-green, status: deprecated, use: nds-gradient-primary, since: "1.9.0", fix: "Use nds-gradient-primary." }
-- { kind: class, name: nds-green, scope: "&:is(.nds-content-section, .nds-footer)", status: deprecated, use: nds-primary, since: "1.9.0", fix: "Use nds-primary or nds-brand: the surface follows the theme color." }
-- { kind: class, name: nds-group, status: renamed, use: nds-tags, since: "1.0.5", fix: "Use nds-tags for a tag list." }
-- { kind: class, name: nds-hero-content, status: removed, since: "1.0.5", fix: "Delete it, the hero no longer uses this wrapper." }
-- { kind: class, name: nds-hgi-solid-alert, status: removed, since: "1.4.0", fix: "Use the feedback icon or an nds-hgi-* outline icon; the solid marks are tokens only." }
-- { kind: class, name: nds-hgi-solid-cancel, status: removed, since: "1.4.0", fix: "Use the feedback icon or an nds-hgi-* outline icon; the solid marks are tokens only." }
-- { kind: class, name: nds-hgi-solid-checkmark, status: removed, since: "1.4.0", fix: "Use the feedback icon or an nds-hgi-* outline icon; the solid marks are tokens only." }
-- { kind: class, name: nds-hgi-solid-disc, status: removed, since: "1.4.0", fix: "Use the feedback icon or an nds-hgi-* outline icon; the solid marks are tokens only." }
-- { kind: class, name: nds-hgi-solid-help, status: removed, since: "1.4.0", fix: "Use the feedback icon or an nds-hgi-* outline icon; the solid marks are tokens only." }
-- { kind: class, name: nds-hgi-solid-info, status: removed, since: "1.4.0", fix: "Use the feedback icon or an nds-hgi-* outline icon; the solid marks are tokens only." }
-- { kind: class, name: nds-hgi-sun-01, status: renamed, use: nds-hgi-sun-03, since: "1.4.0", fix: "Use nds-hgi-sun-03." }
+- { kind: class, name: nds-full-width, scope: "&.nds-card", status: renamed, use: nds-full, since: "2.0.0", fix: "Use nds-full: on a card, nds-full-width is the full-bleed breakout." }
+- { kind: class, name: nds-gradient-green, status: renamed, use: nds-gradient-primary, since: "2.0.0", fix: "Use nds-gradient-primary." }
+- { kind: class, name: nds-green, scope: "&:is(.nds-content-section, .nds-footer)", status: renamed, use: nds-primary, since: "2.0.0", fix: "Use nds-primary or nds-brand: the surface follows the theme color." }
 - { kind: class, name: nds-horizontal-lg, scope: .nds-stepper, status: removed, since: "2.0.0", fix: "Remove it: the plain layout class is the desktop layout; -sm and -md set phones and tablets." }
-- { kind: class, name: nds-lang-current, status: removed, since: "1.0.4", fix: "The language switcher module is gone and it only flipped direction. Wire your own click handler that sets html lang and dir." }
-- { kind: class, name: nds-lavendar, scope: .nds-card, status: removed, since: "1.1.0", fix: "Use a status color (nds-info, nds-warning and so on) or the default card." }
 - { kind: class, name: nds-list, scope: .nds-main-nav, status: renamed, use: nds-nav-list, since: "2.0.0", fix: "Use nds-nav-list." }
-- { kind: class, name: nds-list-header, scope: .nds-footer, status: removed, since: "1.0.3", fix: "The footer drawer is flat link columns: nds-footer-column with a heading and nds-footer-list. Re-copy the footer." }
 - { kind: class, name: nds-main-content, status: renamed, use: nds-content, since: "2.0.0", fix: "Use nds-content." }
 - { kind: class, name: nds-mainNav-toggler, scope: .nds-main-nav, status: renamed, use: nds-nav-toggler, since: "2.0.0", fix: "Use nds-nav-toggler." }
 - { kind: class, name: nds-mask, status: removed, since: "2.0.0", fix: "Remove it: the scroll-edge fade has no replacement." }
-- { kind: class, name: nds-mobile-only, status: renamed, use: data-hidden, since: "1.4.0", fix: "Put data-hidden on the element with the widths where it must hide (sm, md, lg)." }
-- { kind: class, name: nds-modal-closed, status: renamed, use: nds:modal:closed, since: "1.7.0", fix: "Listen for the event nds:modal:closed (it is an event name, not a class)." }
-- { kind: class, name: nds-modal-opened, status: renamed, use: nds:modal:opened, since: "1.7.0", fix: "Listen for the event nds:modal:opened (it is an event name, not a class)." }
 - { kind: class, name: nds-multi-column-list, scope: .nds-main-nav, status: renamed, use: nds-multi-col, since: "2.0.0", fix: "Use nds-multi-col." }
-- { kind: class, name: nds-multiselect-values, scope: .nds-multiselect, status: removed, since: "1.4.0", fix: "Delete the hidden CSV carrier. The checkboxes are the form value; give each one name=\"x[]\"." }
 - { kind: class, name: nds-nationalDay, status: renamed, use: nds-national-day, since: "2.0.0", fix: "Use nds-national-day." }
 - { kind: class, name: nds-nationalDay-logo, status: renamed, use: nds-national-day-logo, since: "2.0.0", fix: "Use nds-national-day-logo." }
 - { kind: class, name: nds-noBg, scope: .nds-content-section, status: renamed, use: nds-ghost, since: "2.0.0", fix: "Use nds-ghost." }
 - { kind: class, name: nds-PAB, scope: .nds-main-nav, status: renamed, use: nds-pinned, since: "2.0.0", fix: "Use nds-pinned." }
 - { kind: class, name: nds-radial-lg, scope: .nds-stepper, status: removed, since: "2.0.0", fix: "Remove it: the plain layout class is the desktop layout; -sm and -md set phones and tablets." }
+- { kind: class, name: nds-rating-dropmenu, status: renamed, use: nds-rating-menu, since: "2.0.0", fix: "Use nds-rating-menu." }
 - { kind: class, name: nds-required-notice, status: renamed, use: nds-note, since: "2.0.0", fix: "Use nds-note with data-status=\"error\"." }
 - { kind: class, name: nds-rowView, status: renamed, use: nds-horizontal, since: "2.0.0", fix: "Use nds-horizontal (inside a nav menu, nds-nav-row)." }
 - { kind: class, name: nds-section-shape, scope: .nds-content-section, status: renamed, use: nds-section-icon, since: "2.0.0", fix: "Use nds-section-icon inside nds-section-title." }
-- { kind: class, name: nds-statistic, scope: "&.nds-card", status: deprecated, use: nds-center, since: "2.0.0", fix: "Use nds-center, and nds-card-number on the number." }
-- { kind: class, name: nds-swiper-button-next, scope: .nds-swiper, status: removed, since: "1.0.2", fix: "Drop the class. Keep nds-next on the button and wrap in nds-swiper-navigation > nds-swiper-buttons." }
-- { kind: class, name: nds-swiper-button-prev, scope: .nds-swiper, status: removed, since: "1.0.2", fix: "Drop the class. Keep nds-prev on the button and wrap in nds-swiper-navigation > nds-swiper-buttons." }
-- { kind: class, name: nds-swiper-pagination-bullet, scope: .nds-swiper-pagination, status: renamed, use: nds-bullet, since: "1.0.2", fix: "Use nds-bullet; the swiper creates bullets itself, so only custom CSS needs the rename." }
-- { kind: class, name: nds-swiper-sr-only, scope: .nds-swiper, status: removed, since: "1.0.2", fix: "Delete it; the swiper no longer ships this helper." }
+- { kind: class, name: nds-statistic, scope: "&.nds-card", status: renamed, use: nds-center, since: "2.0.0", fix: "Use nds-center, and nds-card-number on the number." }
 - { kind: class, name: nds-tableView, status: renamed, use: nds-table-view, since: "2.0.0", fix: "Use nds-table-view." }
 - { kind: class, name: nds-tableView-lg, status: renamed, use: nds-table-view-lg, since: "2.0.0", fix: "Use nds-table-view-lg." }
 - { kind: class, name: nds-tableView-md, status: renamed, use: nds-table-view-md, since: "2.0.0", fix: "Use nds-table-view-md." }
 - { kind: class, name: nds-tableView-sm, status: renamed, use: nds-table-view-sm, since: "2.0.0", fix: "Use nds-table-view-sm." }
-- { kind: class, name: nds-toEdge, scope: body, status: renamed, use: nds-full-width, since: "1.6.0", fix: "Put nds-full-width on body (body_class in page front matter) for edge-to-edge pages." }
 - { kind: class, name: nds-user, scope: .nds-card, status: removed, since: "2.0.0", fix: "Remove it: user cards no longer have a special class." }
 - { kind: class, name: nds-vertical-lg, scope: .nds-stepper, status: removed, since: "2.0.0", fix: "Remove it: the plain layout class is the desktop layout; -sm and -md set phones and tablets." }
 - { kind: class, name: nds-wSideInfo, status: renamed, use: nds-has-sideinfo, since: "2.0.0", fix: "Use nds-has-sideinfo." }
 - { kind: class, name: nds-wSideMenu, status: renamed, use: nds-has-sidemenu, since: "2.0.0", fix: "Use nds-has-sidemenu." }
-- { kind: class, name: open, scope: "&.nds-drawer li", status: deprecated, use: data-state, since: "1.0.0", fix: "Write data-state=\"open\" on the <li> and its <ul>, and aria-expanded=\"true\" on its button." }
+- { kind: class, name: open, scope: "&.nds-drawer li", status: renamed, use: data-state, since: "2.0.0", fix: "Write data-state=\"open\" on the <li> and its <ul>, and aria-expanded=\"true\" on its button." }
 - { kind: class, name: redirect, scope: ".nds-sidemenu li", status: removed, since: "2.0.0", fix: "Remove it: the side menu no longer styles li.redirect.external." }
 - { kind: class, name: showZoom, scope: .nds-card, status: renamed, use: nds-zoom-badge, since: "2.0.0", fix: "Use nds-zoom-badge." }
 - { kind: class, name: sr-only, scope: "[class*=\"nds-\"]", status: renamed, use: nds-sr-only, since: "2.0.0", fix: "Use nds-sr-only." }
 - { kind: class, name: table-actions, scope: .nds-table, status: renamed, use: nds-table-actions, since: "2.0.0", fix: "Use nds-table-actions." }
-- { kind: event, name: nds:cooldown:loading, status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
-- { kind: event, name: nds:digitalStamp:closed, status: renamed, use: nds:digital-stamp:closed, since: "2.0.0", fix: "Listen for nds:digital-stamp:closed." }
-- { kind: event, name: nds:digitalStamp:opened, status: renamed, use: nds:digital-stamp:opened, since: "2.0.0", fix: "Listen for nds:digital-stamp:opened." }
-- { kind: event, name: nds:table:selection, status: renamed, use: nds:selection:change, since: "2.0.0", fix: "Listen for nds:selection:change on the list." }
-- { kind: event, name: nds:table:sort, status: renamed, use: nds:sort:change, since: "2.0.0", fix: "Listen for nds:sort:change; detail.key is the column index and detail.dir the direction." }
+- { kind: attribute, name: data-accept-message, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
+- { kind: attribute, name: data-accept-title, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
+- { kind: attribute, name: data-always-open-on, scope: "&.nds-drawer", status: removed, since: "2.0.0", fix: "Remove it: a drawer no longer locks open by screen width. data-state=\"always-open\" is different: it lets several submenus stay open." }
+- { kind: attribute, name: data-decimals, scope: "&:is([data-counter], .nds-counter-value, .nds-number-format)", status: removed, since: "2.0.0", fix: "Remove it: decimals follow the number as written in data-counter or data-target." }
+- { kind: attribute, name: data-decline-message, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
+- { kind: attribute, name: data-decline-title, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
+- { kind: attribute, name: data-duration, scope: "&:is([data-counter], .nds-counter-value)", status: renamed, use: data-counter-duration, since: "2.0.0", fix: "Use data-counter-duration." }
+- { kind: attribute, name: data-free, scope: "&.nds-number-format", status: removed, since: "2.0.0", fix: "Leave out data-currency and write the label, such as Free." }
+- { kind: attribute, name: data-loading, scope: "&.nds-slider-container", status: renamed, use: nds-loading, since: "2.0.0", fix: "Use the nds-loading class." }
+- { kind: attribute, name: data-open-on, scope: .nds-drawer, status: removed, since: "2.0.0", fix: "Remove it: a drawer no longer opens by screen width. To start an item open, write data-state=\"open\" on the <li> and its <ul>, and aria-expanded=\"true\" on its button." }
+- { kind: attribute, name: data-start, scope: "&:is([data-counter], .nds-counter-value)", status: renamed, use: data-counter-start, since: "2.0.0", fix: "Use data-counter-start." }
+- { kind: attribute, name: data-target, scope: "&.nds-counter-value", status: renamed, use: data-counter, since: "2.0.0", fix: "Write the end value in data-counter." }
+- { kind: attribute, name: peek, scope: "&.nds-swiper", status: renamed, use: --peek, since: "2.0.0", fix: "Set --peek in the swiper's style attribute." }
+- { kind: attribute, name: slides-max, scope: "&.nds-swiper", status: renamed, use: --max-slides, since: "2.0.0", fix: "Set --max-slides in the swiper's style attribute." }
+- { kind: attribute, name: slides-mid, scope: "&.nds-swiper", status: renamed, use: --mid-slides, since: "2.0.0", fix: "Set --mid-slides in the swiper's style attribute." }
+- { kind: attribute, name: slides-min, scope: "&.nds-swiper", status: renamed, use: --min-slides, since: "2.0.0", fix: "Set --min-slides in the swiper's style attribute." }
 - { kind: id, name: nds-digitalStamp, status: renamed, use: nds-digital-stamp, since: "2.0.0", fix: "Use id nds-digital-stamp (and the button's aria-controls)." }
 - { kind: id, name: nds-digitalStamp-verify-text, status: renamed, use: nds-digital-stamp-verify-text, since: "2.0.0", fix: "Use id nds-digital-stamp-verify-text." }
 - { kind: id, name: ndsCookiesAcceptBtn, status: renamed, use: "data-cookies-action=\"accept\"", since: "2.0.0", fix: "Use data-cookies-action=\"accept\" on your own button." }
@@ -178,15 +123,70 @@
 - { kind: id, name: ndsCookiesTitle, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #ndsCookiesPanel in a template.nds-panel-template." }
 - { kind: id, name: ndsMainNav, status: renamed, use: nds-main-nav, since: "2.0.0", fix: "Use id nds-main-nav (and the menu button's aria-controls)." }
 - { kind: id, name: ndsNavCollapse, status: renamed, use: nds-nav-collapse, since: "2.0.0", fix: "Use id nds-nav-collapse (and the menu button's aria-controls)." }
+- { kind: property, name: --backdrop-z-index, status: removed, since: "2.0.0", fix: "Remove it: it never applied; each component sets its own backdrop z-index." }
+- { kind: property, name: --drawer-indicator-active, scope: .nds-drawer, status: removed, since: "2.0.0", fix: "Remove it: the drawer uses the button indicator. Set --btn-indicator-selected on .nds-drawer .nds-btn instead." }
+- { kind: property, name: --drawer-indicator-hover, scope: .nds-drawer, status: removed, since: "2.0.0", fix: "Remove it: the drawer uses the button indicator. Set --btn-indicator-color on .nds-drawer .nds-btn instead." }
+- { kind: property, name: --hero_image, scope: .nds-hero, status: renamed, use: --hero-image, since: "2.0.0", fix: "Use --hero-image." }
+- { kind: property, name: --hero-mask-angle, scope: .nds-hero, status: renamed, use: --hero-image-fade-angle, since: "2.0.0", fix: "Use --hero-image-fade-angle." }
+- { kind: property, name: --hero-mask-from, scope: .nds-hero, status: renamed, use: --hero-image-fade-from, since: "2.0.0", fix: "Use --hero-image-fade-from." }
+- { kind: property, name: --hero-mask-to, scope: .nds-hero, status: renamed, use: --hero-image-fade-to, since: "2.0.0", fix: "Use --hero-image-fade-to." }
+- { kind: property, name: --main-gap, scope: .nds-content, status: renamed, use: --content-gap, since: "2.0.0", fix: "Use --content-gap." }
+- { kind: property, name: --main-padding-block, scope: .nds-content, status: renamed, use: --content-padding-block, since: "2.0.0", fix: "Use --content-padding-block." }
+- { kind: property, name: --main-padding-inline, scope: .nds-content, status: renamed, use: --content-padding-inline, since: "2.0.0", fix: "Use --content-padding-inline." }
+- { kind: property, name: --section-image-MB, scope: .nds-content-section, status: removed, since: "2.0.0", fix: "Remove it: nothing read it." }
+- { kind: property, name: --section-shape-size, scope: .nds-content-section, status: renamed, use: --section-icon-size, since: "2.0.0", fix: "Use --section-icon-size." }
+- { kind: property, name: --toggle-height, scope: .nds-sidemenu, status: renamed, use: --nds-sidemenu-toggle-height, since: "2.0.0", fix: "Use --nds-sidemenu-toggle-height." }
+- { kind: property, name: --toggle-transform, scope: .nds-sidemenu, status: removed, since: "2.0.0", fix: "Remove it: the component sets the side menu toggle position." }
+- { kind: global, name: NDS_ASSETS_BASE, status: renamed, use: NDS_ASSETS_PATH, since: "2.0.0", fix: "Use NDS_ASSETS_PATH, with the same value." }
+- { kind: global, name: NDSAssetBase, status: renamed, use: NDS_ASSETS_PATH, since: "2.0.0", fix: "Set NDS_ASSETS_PATH to the assets/ folder, one level above the js/ folder NDSAssetBase named." }
+- { kind: event, name: nds:digitalStamp:closed, status: renamed, use: nds:digital-stamp:closed, since: "2.0.0", fix: "Listen for nds:digital-stamp:closed." }
+- { kind: event, name: nds:digitalStamp:opened, status: renamed, use: nds:digital-stamp:opened, since: "2.0.0", fix: "Listen for nds:digital-stamp:opened." }
+- { kind: event, name: nds:table:selection, status: renamed, use: nds:selection:change, since: "2.0.0", fix: "Listen for nds:selection:change on the list." }
+- { kind: event, name: nds:table:sort, status: renamed, use: nds:sort:change, since: "2.0.0", fix: "Listen for nds:sort:change; detail.key is the column index and detail.dir the direction." }
+- { kind: property, name: --tooltip-background-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-background-default, since: "1.12.0", fix: "Set --tooltip-background-default under :root[data-theme~=\"dark\"] instead." }
+- { kind: property, name: --tooltip-text-heading-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-text-heading-default, since: "1.12.0", fix: "Set --tooltip-text-heading-default under :root[data-theme~=\"dark\"] instead." }
+- { kind: property, name: --tooltip-text-paragraph-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-text-paragraph-default, since: "1.12.0", fix: "Set --tooltip-text-paragraph-default under :root[data-theme~=\"dark\"] instead." }
+- { kind: property, name: --form-field-border-info, scope: .nds-form-control, status: renamed, use: --border-info, since: "1.11.0", fix: "Use --border-info.", inert: true }
+- { kind: property, name: --form-field-border-success, scope: .nds-form-control, status: renamed, use: --border-success, since: "1.11.0", fix: "Use --border-success.", inert: true }
+- { kind: property, name: --form-field-border-warning, scope: .nds-form-control, status: renamed, use: --border-warning, since: "1.11.0", fix: "Use --border-warning.", inert: true }
+- { kind: attribute, name: data-cooldown-loading, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
+- { kind: attribute, name: data-sent-message, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
+- { kind: attribute, name: data-sent-title, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
+- { kind: event, name: nds:cooldown:loading, status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
+- { kind: class, name: nds-card-form, scope: .nds-card, status: renamed, use: nds-card-meta, since: "1.7.0", fix: "Use nds-card-meta where it was the column wrapper, and drop the class otherwise." }
+- { kind: class, name: nds-center-lg, status: removed, since: "1.7.0", fix: "Write the media query in your own stylesheet; nds-center itself is unchanged." }
+- { kind: class, name: nds-center-md, status: removed, since: "1.7.0", fix: "Write the media query in your own stylesheet; nds-center itself is unchanged." }
+- { kind: class, name: nds-center-sm, status: removed, since: "1.7.0", fix: "Write the media query in your own stylesheet; nds-center itself is unchanged." }
+- { kind: class, name: nds-center-xl, status: removed, since: "1.7.0", fix: "Write the media query in your own stylesheet; nds-center itself is unchanged." }
+- { kind: class, name: nds-digitalStamp-closed, status: renamed, use: nds:digital-stamp:closed, since: "1.7.0", fix: "Listen for the event nds:digital-stamp:closed (it is an event name, not a class)." }
+- { kind: class, name: nds-digitalStamp-opened, status: renamed, use: nds:digital-stamp:opened, since: "1.7.0", fix: "Listen for the event nds:digital-stamp:opened (it is an event name, not a class)." }
+- { kind: class, name: nds-modal-closed, status: renamed, use: nds:modal:closed, since: "1.7.0", fix: "Listen for the event nds:modal:closed (it is an event name, not a class)." }
+- { kind: class, name: nds-modal-opened, status: renamed, use: nds:modal:opened, since: "1.7.0", fix: "Listen for the event nds:modal:opened (it is an event name, not a class)." }
+- { kind: attribute, name: data-filter-name, scope: .nds-filter, status: removed, since: "1.7.0", fix: "Delete it. Applied filter chips show the raw value." }
+- { kind: class, name: nds-toEdge, scope: body, status: renamed, use: nds-full-width, since: "1.6.0", fix: "Put nds-full-width on body (body_class in page front matter) for edge-to-edge pages." }
+- { kind: class, name: nds-accessibility-panel-body, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-body, since: "1.5.0", fix: "Use the shared nds-panel-body class." }
+- { kind: class, name: nds-accessibility-panel-footer, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-footer, since: "1.5.0", fix: "Use the shared nds-panel-footer class." }
+- { kind: class, name: nds-accessibility-panel-header, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-header, since: "1.5.0", fix: "Use the shared nds-panel-header class." }
+- { kind: class, name: nds-accessibility-panel-quick, scope: .nds-accessibility-panel, status: renamed, use: nds-accessibility-quick, since: "1.5.0", fix: "Rename the quick-toggle row to nds-accessibility-quick." }
+- { kind: class, name: nds-accessibility-panel-title, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-title, since: "1.5.0", fix: "Use the shared nds-panel-title class." }
+- { kind: attribute, name: data-a11y-pos, scope: .nds-accessibility-toggle, status: renamed, use: data-fab-pos, since: "1.5.0", fix: "Use data-fab-pos on the toggle and data-panel-side on the panel." }
+- { kind: attribute, name: data-accessibility-close, scope: .nds-accessibility-panel, status: renamed, use: data-panel-close, since: "1.5.0", fix: "Use data-panel-close on the close button." }
 - { kind: property, name: --a11y-fab-offset, scope: .nds-a11y, status: removed, since: "1.5.0", fix: "The accessibility panel now takes its size from shared components." }
 - { kind: property, name: --a11y-panel-top, scope: .nds-a11y, status: removed, since: "1.5.0", fix: "The accessibility panel now takes its size from shared components." }
 - { kind: property, name: --a11y-panel-width, scope: .nds-a11y, status: removed, since: "1.5.0", fix: "The accessibility panel now takes its size from shared components." }
-- { kind: property, name: --accordion-lg-header-gap, scope: .nds-accordion, status: removed, since: "1.1.0", fix: "Header gap is no longer a knob.", inert: true }
-- { kind: property, name: --accordion-lg-header-padding, scope: .nds-accordion, status: renamed, use: --accordion-header-padding, since: "1.1.0", fix: "Use --accordion-header-padding. Set it on the size modifier." }
-- { kind: property, name: --accordion-md-header-gap, scope: .nds-accordion, status: removed, since: "1.1.0", fix: "Header gap is no longer a knob.", inert: true }
-- { kind: property, name: --accordion-md-header-padding, scope: .nds-accordion, status: renamed, use: --accordion-header-padding, since: "1.1.0", fix: "Use --accordion-header-padding. Set it on the size modifier.", inert: true }
-- { kind: property, name: --accordion-sm-header-gap, scope: .nds-accordion, status: removed, since: "1.1.0", fix: "Header gap is no longer a knob.", inert: true }
-- { kind: property, name: --accordion-sm-header-padding, scope: .nds-accordion, status: renamed, use: --accordion-header-padding, since: "1.1.0", fix: "Use --accordion-header-padding. Set it on the size modifier.", inert: true }
+- { kind: class, name: hgi-solid, status: removed, since: "1.4.0", fix: "Only the stroke icon style ships. Use \"hgi hgi-stroke hgi-NAME\" or an nds-hgi-* class." }
+- { kind: class, name: hidden, scope: "&[class*=\"nds-\"]", status: renamed, use: hidden, since: "1.4.0", fix: "Use the native hidden attribute (always hidden) or data-hidden=\"sm md lg\" for widths. The .hidden class has no styles." }
+- { kind: class, name: nds-desktop-only, status: renamed, use: data-hidden, since: "1.4.0", fix: "Put data-hidden on the element with the widths where it must hide (sm, md, lg)." }
+- { kind: class, name: nds-hgi-solid-alert, status: removed, since: "1.4.0", fix: "Use the feedback icon or an nds-hgi-* outline icon; the solid marks are tokens only." }
+- { kind: class, name: nds-hgi-solid-cancel, status: removed, since: "1.4.0", fix: "Use the feedback icon or an nds-hgi-* outline icon; the solid marks are tokens only." }
+- { kind: class, name: nds-hgi-solid-checkmark, status: removed, since: "1.4.0", fix: "Use the feedback icon or an nds-hgi-* outline icon; the solid marks are tokens only." }
+- { kind: class, name: nds-hgi-solid-disc, status: removed, since: "1.4.0", fix: "Use the feedback icon or an nds-hgi-* outline icon; the solid marks are tokens only." }
+- { kind: class, name: nds-hgi-solid-help, status: removed, since: "1.4.0", fix: "Use the feedback icon or an nds-hgi-* outline icon; the solid marks are tokens only." }
+- { kind: class, name: nds-hgi-solid-info, status: removed, since: "1.4.0", fix: "Use the feedback icon or an nds-hgi-* outline icon; the solid marks are tokens only." }
+- { kind: class, name: nds-hgi-sun-01, status: renamed, use: nds-hgi-sun-03, since: "1.4.0", fix: "Use nds-hgi-sun-03." }
+- { kind: class, name: nds-mobile-only, status: renamed, use: data-hidden, since: "1.4.0", fix: "Put data-hidden on the element with the widths where it must hide (sm, md, lg)." }
+- { kind: class, name: nds-multiselect-values, scope: .nds-multiselect, status: removed, since: "1.4.0", fix: "Delete the hidden CSV carrier. The checkboxes are the form value; give each one name=\"x[]\"." }
+- { kind: property, name: --form-textarea-padding, scope: .nds-form-control, status: removed, since: "1.4.0", fix: "Form spacing is no longer a knob." }
 - { kind: property, name: --alpha-black-0, status: renamed, use: --colors-alpha-black-0, since: "1.3.0", fix: "Use --colors-alpha-black-0.", inert: true }
 - { kind: property, name: --alpha-black-10, status: renamed, use: --colors-alpha-black-10, since: "1.3.0", fix: "Use --colors-alpha-black-10." }
 - { kind: property, name: --alpha-black-100, status: renamed, use: --colors-alpha-black-100, since: "1.3.0", fix: "Use --colors-alpha-black-100.", inert: true }
@@ -202,8 +202,6 @@
 - { kind: property, name: --alpha-error-20, status: renamed, use: --colors-red-alpha-20, since: "1.3.0", fix: "Use --colors-red-alpha-20." }
 - { kind: property, name: --alpha-info-10, status: renamed, use: --colors-blue-alpha-10, since: "1.3.0", fix: "Use --colors-blue-alpha-10." }
 - { kind: property, name: --alpha-info-20, status: renamed, use: --colors-blue-alpha-20, since: "1.3.0", fix: "Use --colors-blue-alpha-20." }
-- { kind: property, name: --alpha-lavender-10, status: renamed, use: --colors-tertiary-alpha-10, since: "1.1.0", fix: "Use --colors-tertiary-alpha-10." }
-- { kind: property, name: --alpha-lavender-20, status: renamed, use: --colors-tertiary-alpha-20, since: "1.1.0", fix: "Use --colors-tertiary-alpha-20." }
 - { kind: property, name: --alpha-primary-10, status: renamed, use: --colors-primary-alpha-10, since: "1.3.0", fix: "Use --colors-primary-alpha-10." }
 - { kind: property, name: --alpha-primary-20, status: renamed, use: --colors-primary-alpha-20, since: "1.3.0", fix: "Use --colors-primary-alpha-20." }
 - { kind: property, name: --alpha-success-10, status: renamed, use: --colors-green-alpha-10, since: "1.3.0", fix: "Use --colors-green-alpha-10." }
@@ -221,15 +219,11 @@
 - { kind: property, name: --alpha-white-70, status: renamed, use: --colors-alpha-white-70, since: "1.3.0", fix: "Use --colors-alpha-white-70." }
 - { kind: property, name: --alpha-white-80, status: renamed, use: --colors-alpha-white-80, since: "1.3.0", fix: "Use --colors-alpha-white-80." }
 - { kind: property, name: --alpha-white-90, status: renamed, use: --colors-alpha-white-90, since: "1.3.0", fix: "Use --colors-alpha-white-90." }
-- { kind: property, name: --autocomplete-active, status: renamed, use: --autocomplete-highlight, since: "1.1.0", fix: "Use --autocomplete-highlight.", inert: true }
-- { kind: property, name: --backdrop-z-index, status: removed, since: "2.0.0", fix: "Remove it: it never applied; each component sets its own backdrop z-index." }
 - { kind: property, name: --background-black, status: renamed, use: --colors-base-black, since: "1.3.0", fix: "Use --colors-base-black." }
 - { kind: property, name: --background-brand-light, status: renamed, use: --background-primary-light, since: "1.3.0", fix: "Use --background-primary-light." }
 - { kind: property, name: --background-brand-strong, status: renamed, use: --background-primary-strong, since: "1.3.0", fix: "Use --background-primary-strong." }
 - { kind: property, name: --background-error-25, status: renamed, use: --background-error-faint, since: "1.3.0", fix: "Use --background-error-faint." }
-- { kind: property, name: --background-error-50, status: renamed, use: --background-error-light, since: "1.1.0", fix: "Use --background-error-light." }
 - { kind: property, name: --background-info-25, status: renamed, use: --background-info-faint, since: "1.3.0", fix: "Use --background-info-faint." }
-- { kind: property, name: --background-info-50, status: renamed, use: --background-info-light, since: "1.1.0", fix: "Use --background-info-light." }
 - { kind: property, name: --background-neutral-100, status: renamed, use: --colors-neutral-100, since: "1.3.0", fix: "Use the palette token --colors-neutral-100." }
 - { kind: property, name: --background-neutral-200, status: renamed, use: --colors-neutral-200, since: "1.3.0", fix: "Use the palette token --colors-neutral-200.", inert: true }
 - { kind: property, name: --background-neutral-25, status: renamed, use: --colors-neutral-25, since: "1.3.0", fix: "Use the palette token --colors-neutral-25.", inert: true }
@@ -238,38 +232,131 @@
 - { kind: property, name: --background-neutral-50, status: renamed, use: --colors-neutral-50, since: "1.3.0", fix: "Use the palette token --colors-neutral-50.", inert: true }
 - { kind: property, name: --background-neutral-800, status: renamed, use: --colors-neutral-800, since: "1.3.0", fix: "Use the palette token --colors-neutral-800." }
 - { kind: property, name: --background-neutral-900, status: renamed, use: --colors-neutral-900, since: "1.3.0", fix: "Use the palette token --colors-neutral-900." }
-- { kind: property, name: --background-notification-white, status: removed, since: "1.1.0", fix: "Removed; use --background-surface-elevated or a palette token.", inert: true }
 - { kind: property, name: --background-primary-200, status: renamed, use: --colors-primary-200, since: "1.3.0", fix: "Use the palette token --colors-primary-200.", inert: true }
 - { kind: property, name: --background-primary-25, status: renamed, use: --background-primary-faint, since: "1.3.0", fix: "Use --background-primary-faint.", inert: true }
 - { kind: property, name: --background-primary-300, status: renamed, use: --colors-primary-300, since: "1.3.0", fix: "Use the palette token --colors-primary-300.", inert: true }
 - { kind: property, name: --background-primary-400, status: renamed, use: --colors-primary-400, since: "1.3.0", fix: "Use the palette token --colors-primary-400." }
 - { kind: property, name: --background-primary-50, status: renamed, use: --background-primary-light, since: "1.3.0", fix: "Use --background-primary-light.", inert: true }
-- { kind: property, name: --background-sa-flag, status: renamed, use: --background-primary-strong, since: "1.1.0", fix: "Use --background-primary-strong." }
-- { kind: property, name: --background-sa-flag-25, status: renamed, use: --background-primary-faint, since: "1.1.0", fix: "Use --background-primary-faint.", inert: true }
-- { kind: property, name: --background-sa-flag-50, status: renamed, use: --background-primary-light, since: "1.1.0", fix: "Use --background-primary-light.", inert: true }
 - { kind: property, name: --background-secondary-25, status: renamed, use: --colors-secondary-25, since: "1.3.0", fix: "Use the palette token --colors-secondary-25.", inert: true }
 - { kind: property, name: --background-secondary-50, status: renamed, use: --colors-secondary-50, since: "1.3.0", fix: "Use the palette token --colors-secondary-50.", inert: true }
 - { kind: property, name: --background-success-25, status: renamed, use: --background-success-faint, since: "1.3.0", fix: "Use --background-success-faint." }
-- { kind: property, name: --background-success-50, status: renamed, use: --background-success-light, since: "1.1.0", fix: "Use --background-success-light." }
 - { kind: property, name: --background-tertiary-25, status: renamed, use: --colors-tertiary-25, since: "1.3.0", fix: "Use the palette token --colors-tertiary-25.", inert: true }
 - { kind: property, name: --background-tertiary-50, status: renamed, use: --colors-tertiary-50, since: "1.3.0", fix: "Use the palette token --colors-tertiary-50.", inert: true }
 - { kind: property, name: --background-warning-25, status: renamed, use: --background-warning-faint, since: "1.3.0", fix: "Use --background-warning-faint." }
-- { kind: property, name: --background-warning-50, status: renamed, use: --background-warning-light, since: "1.1.0", fix: "Use --background-warning-light." }
 - { kind: property, name: --background-white, status: renamed, use: --colors-base-white, since: "1.3.0", fix: "Use --colors-base-white." }
 - { kind: property, name: --border-background-neutral, status: renamed, use: --border-neutral-primary, since: "1.3.0", fix: "Use --border-neutral-primary.", inert: true }
 - { kind: property, name: --border-background-white, status: renamed, use: --border-neutral-tertiary, since: "1.3.0", fix: "Use --border-neutral-tertiary.", inert: true }
 - { kind: property, name: --border-black, status: renamed, use: --colors-base-black, since: "1.3.0", fix: "Use --colors-base-black.", inert: true }
-- { kind: property, name: --border-default, status: removed, since: "1.1.0", fix: "Was never defined, so it resolved to nothing. Use --border-neutral-primary." }
 - { kind: property, name: --border-oncolor-transparent-30, status: renamed, use: --colors-alpha-white-30, since: "1.3.0", fix: "Use --colors-alpha-white-30.", inert: true }
-- { kind: property, name: --border-radius-md, status: removed, since: "1.1.0", fix: "Was never defined, so it resolved to nothing. Use --radius-md." }
 - { kind: property, name: --border-transparent-10, status: renamed, use: --colors-alpha-white-10, since: "1.3.0", fix: "Use --colors-alpha-white-10.", inert: true }
 - { kind: property, name: --border-white, status: renamed, use: --colors-base-white, since: "1.3.0", fix: "Use --colors-base-white." }
 - { kind: property, name: --border-white-40, status: renamed, use: --border-oncolor, since: "1.3.0", fix: "Use --border-oncolor." }
 - { kind: property, name: --button-background-black-default, status: renamed, use: --button-background-neutral-default, since: "1.3.0", fix: "Use --button-background-neutral-default." }
-- { kind: property, name: --button-background-black-focused, scope: .nds-btn, status: removed, since: "1.1.0", fix: "Focus is drawn by the focus ring; the button has no focused background.", inert: true }
 - { kind: property, name: --button-background-black-hovered, status: renamed, use: --button-background-neutral-hovered, since: "1.3.0", fix: "Use --button-background-neutral-hovered." }
 - { kind: property, name: --button-background-black-pressed, status: renamed, use: --button-background-neutral-pressed, since: "1.3.0", fix: "Use --button-background-neutral-pressed." }
 - { kind: property, name: --button-background-black-selected, status: renamed, use: --button-background-neutral-selected, since: "1.3.0", fix: "Use --button-background-neutral-selected." }
+- { kind: property, name: --control-disabled, status: renamed, use: --controls-disabled, since: "1.3.0", fix: "Use --controls-disabled." }
+- { kind: property, name: --controls-icon-hovered, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
+- { kind: property, name: --controls-icon-pressed, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
+- { kind: property, name: --controls-neutral-focused, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
+- { kind: property, name: --controls-pressed, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
+- { kind: property, name: --controls-primary, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
+- { kind: property, name: --controls-primary-focused, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
+- { kind: property, name: --controls-primary-readonly, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
+- { kind: property, name: --featuredicons-background-brand-light, scope: .nds-featured-icon, status: renamed, use: --featuredicons-background-primary-light, since: "1.3.0", fix: "Use --featuredicons-background-primary-light." }
+- { kind: property, name: --icon-default-400, status: renamed, use: --colors-neutral-400, since: "1.3.0", fix: "Use the palette token --colors-neutral-400." }
+- { kind: property, name: --icon-default-500, status: renamed, use: --colors-neutral-500, since: "1.3.0", fix: "Use the palette token --colors-neutral-500." }
+- { kind: property, name: --icon-primary-400, status: renamed, use: --colors-primary-400, since: "1.3.0", fix: "Use the palette token --colors-primary-400.", inert: true }
+- { kind: property, name: --icon-text-gap, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
+- { kind: property, name: --progressindicator-progress-indicator-gap, scope: .nds-stepper, status: renamed, use: --stepper-indicator-gap, since: "1.3.0", fix: "Use --stepper-indicator-gap." }
+- { kind: property, name: --progressindicator-progress-text-content-side-padding, scope: .nds-stepper, status: renamed, use: --stepper-text-padding, since: "1.3.0", fix: "Use --stepper-text-padding." }
+- { kind: property, name: --radius-0, status: renamed, use: --radius-none, since: "1.3.0", fix: "Use --radius-none." }
+- { kind: property, name: --radius-16, status: renamed, use: --radius-lg, since: "1.3.0", fix: "Use --radius-lg." }
+- { kind: property, name: --radius-2, status: renamed, use: --radius-xs, since: "1.3.0", fix: "Use --radius-xs." }
+- { kind: property, name: --radius-24, status: renamed, use: --radius-xl, since: "1.3.0", fix: "Use --radius-xl." }
+- { kind: property, name: --radius-4, status: renamed, use: --radius-sm, since: "1.3.0", fix: "Use --radius-sm." }
+- { kind: property, name: --radius-8, status: renamed, use: --radius-md, since: "1.3.0", fix: "Use --radius-md." }
+- { kind: property, name: --radius-9999, status: renamed, use: --radius-full, since: "1.3.0", fix: "Use --radius-full." }
+- { kind: property, name: --rating-star-hovered-brand, scope: .nds-rating, status: renamed, use: --rating-star-brand-hovered, since: "1.3.0", fix: "Use --rating-star-brand-hovered." }
+- { kind: property, name: --rating-star-hovered-default, scope: .nds-rating, status: renamed, use: --rating-star-default-hovered, since: "1.3.0", fix: "Use --rating-star-default-hovered." }
+- { kind: property, name: --rating-star-normal-brand, scope: .nds-rating, status: renamed, use: --rating-star-brand-default, since: "1.3.0", fix: "Use --rating-star-brand-default." }
+- { kind: property, name: --rating-star-normal-default, scope: .nds-rating, status: renamed, use: --rating-star-default-default, since: "1.3.0", fix: "Use --rating-star-default-default." }
+- { kind: property, name: --rating-star-pressed-brand, scope: .nds-rating, status: renamed, use: --rating-star-brand-pressed, since: "1.3.0", fix: "Use --rating-star-brand-pressed." }
+- { kind: property, name: --rating-star-pressed-default, scope: .nds-rating, status: renamed, use: --rating-star-default-pressed, since: "1.3.0", fix: "Use --rating-star-default-pressed." }
+- { kind: property, name: --rating-star-selected-brand, scope: .nds-rating, status: renamed, use: --rating-star-brand-selected, since: "1.3.0", fix: "Use --rating-star-brand-selected." }
+- { kind: property, name: --rating-star-selected-default, scope: .nds-rating, status: renamed, use: --rating-star-default-selected, since: "1.3.0", fix: "Use --rating-star-default-selected." }
+- { kind: property, name: --spacing-0, status: renamed, use: --spacing-none, since: "1.3.0", fix: "Use --spacing-none." }
+- { kind: property, name: --spacing-0-5, status: renamed, use: --spacing-xxs, since: "1.3.0", fix: "Use --spacing-xxs." }
+- { kind: property, name: --spacing-1, status: renamed, use: --spacing-xs, since: "1.3.0", fix: "Use --spacing-xs." }
+- { kind: property, name: --spacing-1-5, status: renamed, use: --spacing-sm, since: "1.3.0", fix: "Use --spacing-sm." }
+- { kind: property, name: --spacing-10, status: renamed, use: --spacing-5xl, since: "1.3.0", fix: "Use --spacing-5xl." }
+- { kind: property, name: --spacing-12, status: renamed, use: --spacing-6xl, since: "1.3.0", fix: "Use --spacing-6xl." }
+- { kind: property, name: --spacing-120, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
+- { kind: property, name: --spacing-140, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
+- { kind: property, name: --spacing-16, status: renamed, use: --spacing-7xl, since: "1.3.0", fix: "Use --spacing-7xl." }
+- { kind: property, name: --spacing-160, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
+- { kind: property, name: --spacing-180, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
+- { kind: property, name: --spacing-192, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
+- { kind: property, name: --spacing-2, status: renamed, use: --spacing-md, since: "1.3.0", fix: "Use --spacing-md." }
+- { kind: property, name: --spacing-20, status: renamed, use: --spacing-8xl, since: "1.3.0", fix: "Use --spacing-8xl." }
+- { kind: property, name: --spacing-24, status: renamed, use: --spacing-9xl, since: "1.3.0", fix: "Use --spacing-9xl." }
+- { kind: property, name: --spacing-256, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
+- { kind: property, name: --spacing-3, status: renamed, use: --spacing-lg, since: "1.3.0", fix: "Use --spacing-lg." }
+- { kind: property, name: --spacing-32, status: renamed, use: --spacing-10xl, since: "1.3.0", fix: "Use --spacing-10xl." }
+- { kind: property, name: --spacing-320, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
+- { kind: property, name: --spacing-360, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
+- { kind: property, name: --spacing-4, status: renamed, use: --spacing-xl, since: "1.3.0", fix: "Use --spacing-xl." }
+- { kind: property, name: --spacing-40, status: renamed, use: --spacing-11xl, since: "1.3.0", fix: "Use --spacing-11xl." }
+- { kind: property, name: --spacing-400, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
+- { kind: property, name: --spacing-48, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px).", inert: true }
+- { kind: property, name: --spacing-480, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
+- { kind: property, name: --spacing-5, status: renamed, use: --spacing-2xl, since: "1.3.0", fix: "Use --spacing-2xl." }
+- { kind: property, name: --spacing-56, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px).", inert: true }
+- { kind: property, name: --spacing-6, status: renamed, use: --spacing-3xl, since: "1.3.0", fix: "Use --spacing-3xl." }
+- { kind: property, name: --spacing-64, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px).", inert: true }
+- { kind: property, name: --spacing-8, status: renamed, use: --spacing-4xl, since: "1.3.0", fix: "Use --spacing-4xl." }
+- { kind: property, name: --spacing-80, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
+- { kind: property, name: --spacing-96, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
+- { kind: property, name: --tab-horizontal-tab-md-button-h-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-inline, since: "1.3.0", fix: "Use --tab-button-padding-inline." }
+- { kind: property, name: --tab-horizontal-tab-md-button-v-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-block, since: "1.3.0", fix: "Use --tab-button-padding-block." }
+- { kind: property, name: --table-cell-h-padding, scope: .nds-table, status: renamed, use: --table-cell-padding-inline, since: "1.3.0", fix: "Use --table-cell-padding-inline." }
+- { kind: property, name: --table-cell-v-padding, scope: .nds-table, status: renamed, use: --table-cell-padding-block, since: "1.3.0", fix: "Use --table-cell-padding-block." }
+- { kind: property, name: --text-black, status: renamed, use: --text-default, since: "1.3.0", fix: "Use --text-default." }
+- { kind: property, name: --text-brand, status: renamed, use: --text-primary, since: "1.3.0", fix: "Use --text-primary.", inert: true }
+- { kind: property, name: --text-content-gap, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
+- { kind: property, name: --width-2xl, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
+- { kind: property, name: --width-3xl, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
+- { kind: property, name: --width-4xl, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
+- { kind: property, name: --width-5xl, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
+- { kind: property, name: --width-6xl, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
+- { kind: property, name: --width-lg, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
+- { kind: property, name: --width-md, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
+- { kind: property, name: --width-sm, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
+- { kind: property, name: --width-xl, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
+- { kind: property, name: --width-xs, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
+- { kind: property, name: --width-xxs, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
+- { kind: class, name: nds-gold, scope: .nds-card, status: removed, since: "1.1.0", fix: "Use a status color (nds-info, nds-warning and so on) or the default card." }
+- { kind: class, name: nds-lavendar, scope: .nds-card, status: removed, since: "1.1.0", fix: "Use a status color (nds-info, nds-warning and so on) or the default card." }
+- { kind: property, name: --accordion-lg-header-gap, scope: .nds-accordion, status: removed, since: "1.1.0", fix: "Header gap is no longer a knob.", inert: true }
+- { kind: property, name: --accordion-lg-header-padding, scope: .nds-accordion, status: renamed, use: --accordion-header-padding, since: "1.1.0", fix: "Use --accordion-header-padding. Set it on the size modifier." }
+- { kind: property, name: --accordion-md-header-gap, scope: .nds-accordion, status: removed, since: "1.1.0", fix: "Header gap is no longer a knob.", inert: true }
+- { kind: property, name: --accordion-md-header-padding, scope: .nds-accordion, status: renamed, use: --accordion-header-padding, since: "1.1.0", fix: "Use --accordion-header-padding. Set it on the size modifier.", inert: true }
+- { kind: property, name: --accordion-sm-header-gap, scope: .nds-accordion, status: removed, since: "1.1.0", fix: "Header gap is no longer a knob.", inert: true }
+- { kind: property, name: --accordion-sm-header-padding, scope: .nds-accordion, status: renamed, use: --accordion-header-padding, since: "1.1.0", fix: "Use --accordion-header-padding. Set it on the size modifier.", inert: true }
+- { kind: property, name: --alpha-lavender-10, status: renamed, use: --colors-tertiary-alpha-10, since: "1.1.0", fix: "Use --colors-tertiary-alpha-10." }
+- { kind: property, name: --alpha-lavender-20, status: renamed, use: --colors-tertiary-alpha-20, since: "1.1.0", fix: "Use --colors-tertiary-alpha-20." }
+- { kind: property, name: --autocomplete-active, status: renamed, use: --autocomplete-highlight, since: "1.1.0", fix: "Use --autocomplete-highlight.", inert: true }
+- { kind: property, name: --background-error-50, status: renamed, use: --background-error-light, since: "1.1.0", fix: "Use --background-error-light." }
+- { kind: property, name: --background-info-50, status: renamed, use: --background-info-light, since: "1.1.0", fix: "Use --background-info-light." }
+- { kind: property, name: --background-notification-white, status: removed, since: "1.1.0", fix: "Removed; use --background-surface-elevated or a palette token.", inert: true }
+- { kind: property, name: --background-sa-flag, status: renamed, use: --background-primary-strong, since: "1.1.0", fix: "Use --background-primary-strong." }
+- { kind: property, name: --background-sa-flag-25, status: renamed, use: --background-primary-faint, since: "1.1.0", fix: "Use --background-primary-faint.", inert: true }
+- { kind: property, name: --background-sa-flag-50, status: renamed, use: --background-primary-light, since: "1.1.0", fix: "Use --background-primary-light.", inert: true }
+- { kind: property, name: --background-success-50, status: renamed, use: --background-success-light, since: "1.1.0", fix: "Use --background-success-light." }
+- { kind: property, name: --background-warning-50, status: renamed, use: --background-warning-light, since: "1.1.0", fix: "Use --background-warning-light." }
+- { kind: property, name: --border-default, status: removed, since: "1.1.0", fix: "Was never defined, so it resolved to nothing. Use --border-neutral-primary." }
+- { kind: property, name: --border-radius-md, status: removed, since: "1.1.0", fix: "Was never defined, so it resolved to nothing. Use --radius-md." }
+- { kind: property, name: --button-background-black-focused, scope: .nds-btn, status: removed, since: "1.1.0", fix: "Focus is drawn by the focus ring; the button has no focused background.", inert: true }
 - { kind: property, name: --button-background-danger-primary-focused, scope: .nds-btn, status: removed, since: "1.1.0", fix: "Focus is drawn by the focus ring; the button has no focused background.", inert: true }
 - { kind: property, name: --button-background-danger-secondary-focused, scope: .nds-btn, status: removed, since: "1.1.0", fix: "Focus is drawn by the focus ring; the button has no focused background.", inert: true }
 - { kind: property, name: --button-background-disabled-on-color, scope: .nds-btn, status: renamed, use: --button-background-disabled-oncolor, since: "1.1.0", fix: "Use --button-background-disabled-oncolor." }
@@ -382,7 +469,6 @@
 - { kind: property, name: --colors-tertiary-lavendar-950, status: renamed, use: --colors-tertiary-950, since: "1.1.0", fix: "Use --colors-tertiary-950.", inert: true }
 - { kind: property, name: --colors-tertiary-lavendar-primary, status: renamed, use: --colors-tertiary-500, since: "1.1.0", fix: "Use --colors-tertiary-500.", inert: true }
 - { kind: property, name: --components-card-radius, scope: .nds-card, status: renamed, use: --card-radius, since: "1.1.0", fix: "Use --card-radius." }
-- { kind: property, name: --control-disabled, status: renamed, use: --controls-disabled, since: "1.3.0", fix: "Use --controls-disabled." }
 - { kind: property, name: --control-radio-description-padding, scope: .nds-check, status: removed, since: "1.1.0", fix: "Control spacing is no longer a knob.", inert: true }
 - { kind: property, name: --control-radio-error-icon-gap, scope: .nds-check, status: removed, since: "1.1.0", fix: "Control spacing is no longer a knob.", inert: true }
 - { kind: property, name: --control-switch-description-padding, scope: .nds-check, status: removed, since: "1.1.0", fix: "Control spacing is no longer a knob.", inert: true }
@@ -406,18 +492,8 @@
 - { kind: property, name: --controls-control-primary-pressed, status: renamed, use: --controls-primary-pressed, since: "1.1.0", fix: "Use --controls-primary-pressed." }
 - { kind: property, name: --controls-control-ripple-effect, status: renamed, use: --controls-ripple-effect, since: "1.1.0", fix: "Use --controls-ripple-effect." }
 - { kind: property, name: --controls-control-text-error, status: renamed, use: --controls-text-error, since: "1.1.0", fix: "Use --controls-text-error." }
-- { kind: property, name: --controls-icon-hovered, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
-- { kind: property, name: --controls-icon-pressed, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
-- { kind: property, name: --controls-neutral-focused, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
-- { kind: property, name: --controls-pressed, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
-- { kind: property, name: --controls-primary, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
-- { kind: property, name: --controls-primary-focused, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
-- { kind: property, name: --controls-primary-readonly, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
 - { kind: property, name: --controls-switch-track-background, scope: .nds-switch, status: removed, since: "1.1.0", fix: "Switch track color is now --switch-track-bg.", inert: true }
 - { kind: property, name: --dark-bg-color, scope: .nds-featured-icon, status: renamed, use: --featuredicon-dark-bg, since: "1.1.0", fix: "Use --featuredicon-dark-bg." }
-- { kind: property, name: --drawer-indicator-active, scope: .nds-drawer, status: removed, since: "2.0.0", fix: "Remove it: the drawer uses the button indicator. Set --btn-indicator-selected on .nds-drawer .nds-btn instead." }
-- { kind: property, name: --drawer-indicator-hover, scope: .nds-drawer, status: removed, since: "2.0.0", fix: "Remove it: the drawer uses the button indicator. Set --btn-indicator-color on .nds-drawer .nds-btn instead." }
-- { kind: property, name: --featuredicons-background-brand-light, scope: .nds-featured-icon, status: renamed, use: --featuredicons-background-primary-light, since: "1.3.0", fix: "Use --featuredicons-background-primary-light." }
 - { kind: property, name: --featuredicons-bg-color, scope: .nds-featured-icon, status: renamed, use: --featuredicon-bg, since: "1.1.0", fix: "Use --featuredicon-bg." }
 - { kind: property, name: --featuredicons-bg-icon-brand-light, scope: .nds-featured-icon, status: renamed, use: --featuredicons-background-primary-light, since: "1.1.0", fix: "Use --featuredicons-background-primary-light.", inert: true }
 - { kind: property, name: --featuredicons-bg-icon-error-light, scope: .nds-featured-icon, status: renamed, use: --featuredicons-background-error-light, since: "1.1.0", fix: "Use --featuredicons-background-error-light.", inert: true }
@@ -438,7 +514,6 @@
 - { kind: property, name: --featuredicons-icon-tertiary, scope: .nds-featured-icon, status: removed, since: "1.1.0", fix: "Removed with the old featured-icon color ramps; use --featuredicons-icon-{primary,info,success,warning,error,neutral}.", inert: true }
 - { kind: property, name: --featuredicons-icon-tertiary-light, scope: .nds-featured-icon, status: removed, since: "1.1.0", fix: "Removed with the old featured-icon color ramps; use --featuredicons-icon-{primary,info,success,warning,error,neutral}.", inert: true }
 - { kind: property, name: --feedback-bg, scope: .nds-feedback-icon, status: removed, since: "1.1.0", fix: "The feedback icon no longer has a background knob." }
-- { kind: property, name: --font-size-sm, status: removed, since: "1.0.1", fix: "Was never defined, so it resolved to nothing. Use --typo-text-sm-FS." }
 - { kind: property, name: --form-datecell-background-100, scope: .nds-date-picker, status: removed, since: "1.1.0", fix: "Date cell state tokens were reduced to --form-datecell-background-{default,hovered,range,in-range}." }
 - { kind: property, name: --form-datecell-background-200, scope: .nds-date-picker, status: removed, since: "1.1.0", fix: "Date cell state tokens were reduced to --form-datecell-background-{default,hovered,range,in-range}." }
 - { kind: property, name: --form-datecell-background-300, scope: .nds-date-picker, status: removed, since: "1.1.0", fix: "Date cell state tokens were reduced to --form-datecell-background-{default,hovered,range,in-range}." }
@@ -451,9 +526,6 @@
 - { kind: property, name: --form-datecell-today-background-hovered, scope: .nds-date-picker, status: removed, since: "1.1.0", fix: "Date cell state tokens were reduced to --form-datecell-background-{default,hovered,range,in-range}.", inert: true }
 - { kind: property, name: --form-datecell-today-background-pressed, scope: .nds-date-picker, status: removed, since: "1.1.0", fix: "Date cell state tokens were reduced to --form-datecell-background-{default,hovered,range,in-range}.", inert: true }
 - { kind: property, name: --form-field-background-pressed, scope: .nds-form-control, status: removed, since: "1.1.0", fix: "Removed with no replacement.", inert: true }
-- { kind: property, name: --form-field-border-info, scope: .nds-form-control, status: renamed, use: --border-info, since: "1.11.0", fix: "Use --border-info.", inert: true }
-- { kind: property, name: --form-field-border-success, scope: .nds-form-control, status: renamed, use: --border-success, since: "1.11.0", fix: "Use --border-success.", inert: true }
-- { kind: property, name: --form-field-border-warning, scope: .nds-form-control, status: renamed, use: --border-warning, since: "1.11.0", fix: "Use --border-warning.", inert: true }
 - { kind: property, name: --form-field-label-gap, scope: .nds-form-control, status: removed, since: "1.1.0", fix: "Form spacing is no longer a knob.", inert: true }
 - { kind: property, name: --form-field-text-filled, scope: .nds-form-control, status: removed, since: "1.1.0", fix: "Use --text-default.", inert: true }
 - { kind: property, name: --form-field-text-helper, scope: .nds-form-control, status: removed, since: "1.1.0", fix: "Use --text-secondary-paragraph.", inert: true }
@@ -467,17 +539,8 @@
 - { kind: property, name: --form-text-form-paragraph, scope: .nds-form-control, status: removed, since: "1.1.0", fix: "Use --text-secondary-paragraph.", inert: true }
 - { kind: property, name: --form-text-form-title, scope: .nds-form-control, status: removed, since: "1.1.0", fix: "Use --text-default.", inert: true }
 - { kind: property, name: --form-textarea-gap, scope: .nds-form-control, status: removed, since: "1.1.0", fix: "Form spacing is no longer a knob.", inert: true }
-- { kind: property, name: --form-textarea-padding, scope: .nds-form-control, status: removed, since: "1.4.0", fix: "Form spacing is no longer a knob." }
-- { kind: property, name: --hero_image, scope: .nds-hero, status: renamed, use: --hero-image, since: "2.0.0", fix: "Use --hero-image." }
-- { kind: property, name: --hero-mask-angle, scope: .nds-hero, status: renamed, use: --hero-image-fade-angle, since: "2.0.0", fix: "Use --hero-image-fade-angle." }
-- { kind: property, name: --hero-mask-from, scope: .nds-hero, status: renamed, use: --hero-image-fade-from, since: "2.0.0", fix: "Use --hero-image-fade-from." }
-- { kind: property, name: --hero-mask-to, scope: .nds-hero, status: renamed, use: --hero-image-fade-to, since: "2.0.0", fix: "Use --hero-image-fade-to." }
 - { kind: property, name: --icon-bg-color, scope: .nds-featured-icon, status: renamed, use: --featuredicon-bg, since: "1.1.0", fix: "Use --featuredicon-bg." }
 - { kind: property, name: --icon-color, scope: .nds-featured-icon, status: renamed, use: --featuredicon-color, since: "1.1.0", fix: "Use --featuredicon-color." }
-- { kind: property, name: --icon-default-400, status: renamed, use: --colors-neutral-400, since: "1.3.0", fix: "Use the palette token --colors-neutral-400." }
-- { kind: property, name: --icon-default-500, status: renamed, use: --colors-neutral-500, since: "1.3.0", fix: "Use the palette token --colors-neutral-500." }
-- { kind: property, name: --icon-primary-400, status: renamed, use: --colors-primary-400, since: "1.3.0", fix: "Use the palette token --colors-primary-400.", inert: true }
-- { kind: property, name: --icon-text-gap, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
 - { kind: property, name: --link-danger, scope: .nds-link, status: removed, since: "1.1.0", fix: "The danger, secondary and tertiary link colors were removed; use the primary or neutral link.", inert: true }
 - { kind: property, name: --link-danger-focused, scope: .nds-link, status: removed, since: "1.1.0", fix: "The danger, secondary and tertiary link colors were removed; use the primary or neutral link.", inert: true }
 - { kind: property, name: --link-danger-hovered, scope: .nds-link, status: removed, since: "1.1.0", fix: "The danger, secondary and tertiary link colors were removed; use the primary or neutral link.", inert: true }
@@ -514,9 +577,6 @@
 - { kind: property, name: --link-tertiary-hovered, scope: .nds-link, status: removed, since: "1.1.0", fix: "The danger, secondary and tertiary link colors were removed; use the primary or neutral link.", inert: true }
 - { kind: property, name: --link-tertiary-pressed, scope: .nds-link, status: removed, since: "1.1.0", fix: "The danger, secondary and tertiary link colors were removed; use the primary or neutral link.", inert: true }
 - { kind: property, name: --link-tertiary-visited, scope: .nds-link, status: removed, since: "1.1.0", fix: "The danger, secondary and tertiary link colors were removed; use the primary or neutral link.", inert: true }
-- { kind: property, name: --main-gap, scope: .nds-content, status: renamed, use: --content-gap, since: "2.0.0", fix: "Use --content-gap." }
-- { kind: property, name: --main-padding-block, scope: .nds-content, status: renamed, use: --content-padding-block, since: "2.0.0", fix: "Use --content-padding-block." }
-- { kind: property, name: --main-padding-inline, scope: .nds-content, status: renamed, use: --content-padding-inline, since: "2.0.0", fix: "Use --content-padding-inline." }
 - { kind: property, name: --maxwidth-paragraph-max-width, status: renamed, use: --paragraph-max-width, since: "1.1.0", fix: "Use --paragraph-max-width." }
 - { kind: property, name: --model-content-bottom-padding, scope: .nds-modal, status: removed, since: "1.1.0", fix: "Modal spacing tokens were removed (misspelled \"model\").", inert: true }
 - { kind: property, name: --model-gap, scope: .nds-modal, status: removed, since: "1.1.0", fix: "Modal spacing tokens were removed (misspelled \"model\").", inert: true }
@@ -556,65 +616,58 @@
 - { kind: property, name: --pagination-item-md-padding, scope: .nds-pagination, status: removed, since: "1.1.0", fix: "Pagination item padding is no longer a knob.", inert: true }
 - { kind: property, name: --pagination-item-sm-padding, scope: .nds-pagination, status: removed, since: "1.1.0", fix: "Pagination item padding is no longer a knob.", inert: true }
 - { kind: property, name: --pagination-items-padding, scope: .nds-pagination, status: removed, since: "1.1.0", fix: "Pagination item padding is no longer a knob.", inert: true }
-- { kind: property, name: --progressindicator-progress-indicator-gap, scope: .nds-stepper, status: renamed, use: --stepper-indicator-gap, since: "1.3.0", fix: "Use --stepper-indicator-gap." }
-- { kind: property, name: --progressindicator-progress-text-content-side-padding, scope: .nds-stepper, status: renamed, use: --stepper-text-padding, since: "1.3.0", fix: "Use --stepper-text-padding." }
-- { kind: property, name: --radius-0, status: renamed, use: --radius-none, since: "1.3.0", fix: "Use --radius-none." }
-- { kind: property, name: --radius-16, status: renamed, use: --radius-lg, since: "1.3.0", fix: "Use --radius-lg." }
-- { kind: property, name: --radius-2, status: renamed, use: --radius-xs, since: "1.3.0", fix: "Use --radius-xs." }
-- { kind: property, name: --radius-24, status: renamed, use: --radius-xl, since: "1.3.0", fix: "Use --radius-xl." }
-- { kind: property, name: --radius-4, status: renamed, use: --radius-sm, since: "1.3.0", fix: "Use --radius-sm." }
-- { kind: property, name: --radius-8, status: renamed, use: --radius-md, since: "1.3.0", fix: "Use --radius-md." }
-- { kind: property, name: --radius-9999, status: renamed, use: --radius-full, since: "1.3.0", fix: "Use --radius-full." }
-- { kind: property, name: --rating-star-hovered-brand, scope: .nds-rating, status: renamed, use: --rating-star-brand-hovered, since: "1.3.0", fix: "Use --rating-star-brand-hovered." }
-- { kind: property, name: --rating-star-hovered-default, scope: .nds-rating, status: renamed, use: --rating-star-default-hovered, since: "1.3.0", fix: "Use --rating-star-default-hovered." }
-- { kind: property, name: --rating-star-normal-brand, scope: .nds-rating, status: renamed, use: --rating-star-brand-default, since: "1.3.0", fix: "Use --rating-star-brand-default." }
-- { kind: property, name: --rating-star-normal-default, scope: .nds-rating, status: renamed, use: --rating-star-default-default, since: "1.3.0", fix: "Use --rating-star-default-default." }
-- { kind: property, name: --rating-star-pressed-brand, scope: .nds-rating, status: renamed, use: --rating-star-brand-pressed, since: "1.3.0", fix: "Use --rating-star-brand-pressed." }
-- { kind: property, name: --rating-star-pressed-default, scope: .nds-rating, status: renamed, use: --rating-star-default-pressed, since: "1.3.0", fix: "Use --rating-star-default-pressed." }
-- { kind: property, name: --rating-star-selected-brand, scope: .nds-rating, status: renamed, use: --rating-star-brand-selected, since: "1.3.0", fix: "Use --rating-star-brand-selected." }
-- { kind: property, name: --rating-star-selected-default, scope: .nds-rating, status: renamed, use: --rating-star-default-selected, since: "1.3.0", fix: "Use --rating-star-default-selected." }
 - { kind: property, name: --section-gap, scope: .nds-content-section, status: renamed, use: --section-row-gap, since: "1.1.0", fix: "Use --section-row-gap.", inert: true }
-- { kind: property, name: --section-image-MB, scope: .nds-content-section, status: removed, since: "2.0.0", fix: "Remove it: nothing read it." }
 - { kind: property, name: --section-padding, scope: .nds-content-section, status: renamed, use: --section-padding-block, since: "1.1.0", fix: "Use --section-padding-block.", inert: true }
-- { kind: property, name: --section-shape-size, scope: .nds-content-section, status: renamed, use: --section-icon-size, since: "2.0.0", fix: "Use --section-icon-size." }
-- { kind: property, name: --spacing-0, status: renamed, use: --spacing-none, since: "1.3.0", fix: "Use --spacing-none." }
-- { kind: property, name: --spacing-0-5, status: renamed, use: --spacing-xxs, since: "1.3.0", fix: "Use --spacing-xxs." }
-- { kind: property, name: --spacing-1, status: renamed, use: --spacing-xs, since: "1.3.0", fix: "Use --spacing-xs." }
-- { kind: property, name: --spacing-1-5, status: renamed, use: --spacing-sm, since: "1.3.0", fix: "Use --spacing-sm." }
-- { kind: property, name: --spacing-10, status: renamed, use: --spacing-5xl, since: "1.3.0", fix: "Use --spacing-5xl." }
-- { kind: property, name: --spacing-12, status: renamed, use: --spacing-6xl, since: "1.3.0", fix: "Use --spacing-6xl." }
-- { kind: property, name: --spacing-120, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
-- { kind: property, name: --spacing-140, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
-- { kind: property, name: --spacing-16, status: renamed, use: --spacing-7xl, since: "1.3.0", fix: "Use --spacing-7xl." }
-- { kind: property, name: --spacing-160, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
-- { kind: property, name: --spacing-180, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
-- { kind: property, name: --spacing-192, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
-- { kind: property, name: --spacing-2, status: renamed, use: --spacing-md, since: "1.3.0", fix: "Use --spacing-md." }
-- { kind: property, name: --spacing-20, status: renamed, use: --spacing-8xl, since: "1.3.0", fix: "Use --spacing-8xl." }
-- { kind: property, name: --spacing-24, status: renamed, use: --spacing-9xl, since: "1.3.0", fix: "Use --spacing-9xl." }
-- { kind: property, name: --spacing-256, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
 - { kind: property, name: --spacing-2xs, status: removed, since: "1.1.0", fix: "Was never defined, so it resolved to nothing. Use --spacing-xxs." }
-- { kind: property, name: --spacing-3, status: renamed, use: --spacing-lg, since: "1.3.0", fix: "Use --spacing-lg." }
-- { kind: property, name: --spacing-32, status: renamed, use: --spacing-10xl, since: "1.3.0", fix: "Use --spacing-10xl." }
-- { kind: property, name: --spacing-320, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
-- { kind: property, name: --spacing-360, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
-- { kind: property, name: --spacing-4, status: renamed, use: --spacing-xl, since: "1.3.0", fix: "Use --spacing-xl." }
-- { kind: property, name: --spacing-40, status: renamed, use: --spacing-11xl, since: "1.3.0", fix: "Use --spacing-11xl." }
-- { kind: property, name: --spacing-400, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
-- { kind: property, name: --spacing-48, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px).", inert: true }
-- { kind: property, name: --spacing-480, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
-- { kind: property, name: --spacing-5, status: renamed, use: --spacing-2xl, since: "1.3.0", fix: "Use --spacing-2xl." }
-- { kind: property, name: --spacing-56, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px).", inert: true }
-- { kind: property, name: --spacing-6, status: renamed, use: --spacing-3xl, since: "1.3.0", fix: "Use --spacing-3xl." }
-- { kind: property, name: --spacing-64, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px).", inert: true }
-- { kind: property, name: --spacing-8, status: renamed, use: --spacing-4xl, since: "1.3.0", fix: "Use --spacing-4xl." }
-- { kind: property, name: --spacing-80, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
-- { kind: property, name: --spacing-96, status: removed, since: "1.3.0", fix: "No named equivalent; set an explicit length (the old rung was N x 4px)." }
 - { kind: property, name: --stepper-button-upcomming, scope: .nds-stepper, status: renamed, use: --stepper-button-upcoming, since: "1.1.0", fix: "Use --stepper-button-upcoming. Old name was misspelled." }
 - { kind: property, name: --stepper-button-upcomming-hovered, scope: .nds-stepper, status: renamed, use: --stepper-button-upcoming-hovered, since: "1.1.0", fix: "Use --stepper-button-upcoming-hovered. Old name was misspelled." }
 - { kind: property, name: --stepper-line-completed-hovered, scope: .nds-stepper, status: removed, since: "1.1.0", fix: "The completed line has no hover state.", inert: true }
 - { kind: property, name: --stepper-line-upcomming, scope: .nds-stepper, status: renamed, use: --stepper-line-upcoming, since: "1.1.0", fix: "Use --stepper-line-upcoming. Old name was misspelled." }
 - { kind: property, name: --stepper-line-upcomming-hovered, scope: .nds-stepper, status: removed, since: "1.1.0", fix: "Removed; the upcoming line has no hover state.", inert: true }
+- { kind: property, name: --tab-horizontal-tab-sm-button-h-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-inline, since: "1.1.0", fix: "Use --tab-button-padding-inline.", inert: true }
+- { kind: property, name: --tab-horizontal-tab-sm-button-v-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-block, since: "1.1.0", fix: "Use --tab-button-padding-block.", inert: true }
+- { kind: property, name: --tab-vertical-tab-md-button-h-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-inline, since: "1.1.0", fix: "Use --tab-button-padding-inline.", inert: true }
+- { kind: property, name: --tab-vertical-tab-md-button-v-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-block, since: "1.1.0", fix: "Use --tab-button-padding-block.", inert: true }
+- { kind: property, name: --tab-vertical-tab-sm-button-h-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-inline, since: "1.1.0", fix: "Use --tab-button-padding-inline.", inert: true }
+- { kind: property, name: --tab-vertical-tab-sm-button-v-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-block, since: "1.1.0", fix: "Use --tab-button-padding-block.", inert: true }
+- { kind: property, name: --table-background-disabled, scope: .nds-table, status: removed, since: "1.1.0", fix: "Removed with no replacement.", inert: true }
+- { kind: property, name: --table-cell-border-inverse, scope: .nds-table, status: removed, since: "1.1.0", fix: "Removed with no replacement.", inert: true }
+- { kind: property, name: --table-cell-gap, scope: .nds-table, status: removed, since: "1.1.0", fix: "Removed with no replacement.", inert: true }
+- { kind: property, name: --tag-background-on-color, scope: .nds-tag, status: renamed, use: --tag-background-oncolor, since: "1.1.0", fix: "Use --tag-background-oncolor." }
+- { kind: property, name: --tag-border-on-color, scope: .nds-tag, status: renamed, use: --tag-border-oncolor, since: "1.1.0", fix: "Use --tag-border-oncolor." }
+- { kind: property, name: --text-disabled, status: removed, since: "1.1.0", fix: "Was never defined, so it resolved to nothing. Use --text-default-disabled." }
+- { kind: property, name: --text-muted, status: removed, since: "1.1.0", fix: "Was never defined, so it resolved to nothing." }
+- { kind: property, name: --text-primary-default, status: removed, since: "1.1.0", fix: "Was never defined, so it resolved to nothing." }
+- { kind: property, name: --text-primary-sa-flag, status: removed, since: "1.1.0", fix: "Use --colors-primary-100." }
+- { kind: property, name: --text-subdued, status: removed, since: "1.1.0", fix: "Was never defined, so it resolved to nothing." }
+- { kind: property, name: --text-white, status: renamed, use: --colors-base-white, since: "1.1.0", fix: "Use --colors-base-white.", inert: true }
+- { kind: property, name: --tooltip-background-dark, scope: .nds-tooltip, status: renamed, use: --tooltip-background-default, since: "1.1.0", fix: "Set --tooltip-background-default under :root[data-theme~=\"dark\"] instead." }
+- { kind: property, name: --tooltip-background-light, scope: .nds-tooltip, status: renamed, use: --tooltip-background-default, since: "1.1.0", fix: "Use --tooltip-background-default. Set the dark-mode value under :root[data-theme~=\"dark\"]." }
+- { kind: property, name: --tooltip-text-heading-dark, scope: .nds-tooltip, status: renamed, use: --tooltip-text-heading-default, since: "1.1.0", fix: "Set --tooltip-text-heading-default under :root[data-theme~=\"dark\"] instead." }
+- { kind: property, name: --tooltip-text-heading-light, scope: .nds-tooltip, status: renamed, use: --tooltip-text-heading-default, since: "1.1.0", fix: "Use --tooltip-text-heading-default. Set the dark-mode value under :root[data-theme~=\"dark\"]." }
+- { kind: property, name: --tooltip-text-paragraph-dark, scope: .nds-tooltip, status: renamed, use: --tooltip-text-paragraph-default, since: "1.1.0", fix: "Set --tooltip-text-paragraph-default under :root[data-theme~=\"dark\"] instead." }
+- { kind: property, name: --tooltip-text-paragraph-light, scope: .nds-tooltip, status: renamed, use: --tooltip-text-paragraph-default, since: "1.1.0", fix: "Use --tooltip-text-paragraph-default. Set the dark-mode value under :root[data-theme~=\"dark\"]." }
+- { kind: class, name: article-tags, scope: .nds-group, status: removed, since: "1.0.5", fix: "Delete it, it had no styles." }
+- { kind: class, name: nds-group, status: renamed, use: nds-tags, since: "1.0.5", fix: "Use nds-tags for a tag list." }
+- { kind: class, name: nds-hero-content, status: removed, since: "1.0.5", fix: "Delete it, the hero no longer uses this wrapper." }
+- { kind: property, name: --table-background-tr-selected, scope: .nds-table, status: renamed, use: --table-background-row-selected, since: "1.0.5", fix: "Use --table-background-row-selected." }
+- { kind: property, name: --typo-display-clamp-ms-MB, status: renamed, use: --typo-display-clamp-sm-MB, since: "1.0.5", fix: "Use --typo-display-clamp-sm-MB. Old name was a typo." }
+- { kind: class, name: nds-lang-current, status: removed, since: "1.0.4", fix: "The language switcher module is gone and it only flipped direction. Wire your own click handler that sets html lang and dir." }
+- { kind: attribute, name: data-lang-dir, scope: .nds-main-nav, status: removed, since: "1.0.4", fix: "The language switcher module is gone and it only flipped direction. Wire your own click handler that sets html lang and dir." }
+- { kind: attribute, name: data-lang-value, scope: .nds-main-nav, status: removed, since: "1.0.4", fix: "The language switcher module is gone and it only flipped direction. Wire your own click handler that sets html lang and dir." }
+- { kind: class, name: nds-footer-app-item, scope: .nds-footer, status: renamed, use: nds-footer-icon-row, since: "1.0.3", fix: "Social and app links now sit in nds-footer-icons > nds-footer-icon-group > nds-footer-icon-row. Re-copy the footer from the Footer page." }
+- { kind: class, name: nds-footer-apps-wrapper, scope: .nds-footer, status: renamed, use: nds-footer-icon-row, since: "1.0.3", fix: "Social and app links now sit in nds-footer-icons > nds-footer-icon-group > nds-footer-icon-row. Re-copy the footer from the Footer page." }
+- { kind: class, name: nds-footer-copy-right, scope: .nds-footer, status: renamed, use: nds-footer-policy, since: "1.0.3", fix: "Terms and privacy links go in nds-footer-policy, inside nds-footer-legal." }
+- { kind: class, name: nds-footer-drawer, scope: .nds-footer, status: removed, since: "1.0.3", fix: "The footer drawer is flat link columns: nds-footer-column with a heading and nds-footer-list. Re-copy the footer." }
+- { kind: class, name: nds-footer-mobile-app-icons, scope: .nds-footer, status: renamed, use: nds-footer-icon-row, since: "1.0.3", fix: "Social and app links now sit in nds-footer-icons > nds-footer-icon-group > nds-footer-icon-row. Re-copy the footer from the Footer page." }
+- { kind: class, name: nds-footer-separator, scope: .nds-footer, status: removed, since: "1.0.3", fix: "Delete the pipe separators; gap handles spacing." }
+- { kind: class, name: nds-footer-social-icons, scope: .nds-footer, status: renamed, use: nds-footer-icon-row, since: "1.0.3", fix: "Social and app links now sit in nds-footer-icons > nds-footer-icon-group > nds-footer-icon-row. Re-copy the footer from the Footer page." }
+- { kind: class, name: nds-footer-social-wrapper, scope: .nds-footer, status: renamed, use: nds-footer-icon-row, since: "1.0.3", fix: "Social and app links now sit in nds-footer-icons > nds-footer-icon-group > nds-footer-icon-row. Re-copy the footer from the Footer page." }
+- { kind: class, name: nds-list-header, scope: .nds-footer, status: removed, since: "1.0.3", fix: "The footer drawer is flat link columns: nds-footer-column with a heading and nds-footer-list. Re-copy the footer." }
+- { kind: class, name: nds-swiper-button-next, scope: .nds-swiper, status: removed, since: "1.0.2", fix: "Drop the class. Keep nds-next on the button and wrap in nds-swiper-navigation > nds-swiper-buttons." }
+- { kind: class, name: nds-swiper-button-prev, scope: .nds-swiper, status: removed, since: "1.0.2", fix: "Drop the class. Keep nds-prev on the button and wrap in nds-swiper-navigation > nds-swiper-buttons." }
+- { kind: class, name: nds-swiper-pagination-bullet, scope: .nds-swiper-pagination, status: renamed, use: nds-bullet, since: "1.0.2", fix: "Use nds-bullet; the swiper creates bullets itself, so only custom CSS needs the rename." }
+- { kind: class, name: nds-swiper-sr-only, scope: .nds-swiper, status: removed, since: "1.0.2", fix: "Delete it; the swiper no longer ships this helper." }
 - { kind: property, name: --swiper-button-background-default, scope: .nds-swiper, status: removed, since: "1.0.2", fix: "Swiper arrows are now ordinary .nds-btn buttons; style them with the button tokens.", inert: true }
 - { kind: property, name: --swiper-button-background-disabled, scope: .nds-swiper, status: removed, since: "1.0.2", fix: "Swiper arrows are now ordinary .nds-btn buttons; style them with the button tokens.", inert: true }
 - { kind: property, name: --swiper-button-background-hovered, scope: .nds-swiper, status: removed, since: "1.0.2", fix: "Swiper arrows are now ordinary .nds-btn buttons; style them with the button tokens.", inert: true }
@@ -633,51 +686,4 @@
 - { kind: property, name: --swiper-pagination-bullet-oncolor-default, scope: .nds-swiper, status: renamed, use: --swiper-bullet-background-default-oncolor, since: "1.0.2", fix: "Use --swiper-bullet-background-default-oncolor." }
 - { kind: property, name: --swiper-transition-speed, scope: .nds-swiper, status: removed, since: "1.0.2", fix: "Removed with no replacement.", inert: true }
 - { kind: property, name: --swiper-transition-timing, scope: .nds-swiper, status: removed, since: "1.0.2", fix: "Removed with no replacement.", inert: true }
-- { kind: property, name: --tab-horizontal-tab-md-button-h-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-inline, since: "1.3.0", fix: "Use --tab-button-padding-inline." }
-- { kind: property, name: --tab-horizontal-tab-md-button-v-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-block, since: "1.3.0", fix: "Use --tab-button-padding-block." }
-- { kind: property, name: --tab-horizontal-tab-sm-button-h-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-inline, since: "1.1.0", fix: "Use --tab-button-padding-inline.", inert: true }
-- { kind: property, name: --tab-horizontal-tab-sm-button-v-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-block, since: "1.1.0", fix: "Use --tab-button-padding-block.", inert: true }
-- { kind: property, name: --tab-vertical-tab-md-button-h-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-inline, since: "1.1.0", fix: "Use --tab-button-padding-inline.", inert: true }
-- { kind: property, name: --tab-vertical-tab-md-button-v-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-block, since: "1.1.0", fix: "Use --tab-button-padding-block.", inert: true }
-- { kind: property, name: --tab-vertical-tab-sm-button-h-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-inline, since: "1.1.0", fix: "Use --tab-button-padding-inline.", inert: true }
-- { kind: property, name: --tab-vertical-tab-sm-button-v-padding, scope: .nds-tabs, status: renamed, use: --tab-button-padding-block, since: "1.1.0", fix: "Use --tab-button-padding-block.", inert: true }
-- { kind: property, name: --table-background-disabled, scope: .nds-table, status: removed, since: "1.1.0", fix: "Removed with no replacement.", inert: true }
-- { kind: property, name: --table-background-tr-selected, scope: .nds-table, status: renamed, use: --table-background-row-selected, since: "1.0.5", fix: "Use --table-background-row-selected." }
-- { kind: property, name: --table-cell-border-inverse, scope: .nds-table, status: removed, since: "1.1.0", fix: "Removed with no replacement.", inert: true }
-- { kind: property, name: --table-cell-gap, scope: .nds-table, status: removed, since: "1.1.0", fix: "Removed with no replacement.", inert: true }
-- { kind: property, name: --table-cell-h-padding, scope: .nds-table, status: renamed, use: --table-cell-padding-inline, since: "1.3.0", fix: "Use --table-cell-padding-inline." }
-- { kind: property, name: --table-cell-v-padding, scope: .nds-table, status: renamed, use: --table-cell-padding-block, since: "1.3.0", fix: "Use --table-cell-padding-block." }
-- { kind: property, name: --tag-background-on-color, scope: .nds-tag, status: renamed, use: --tag-background-oncolor, since: "1.1.0", fix: "Use --tag-background-oncolor." }
-- { kind: property, name: --tag-border-on-color, scope: .nds-tag, status: renamed, use: --tag-border-oncolor, since: "1.1.0", fix: "Use --tag-border-oncolor." }
-- { kind: property, name: --text-black, status: renamed, use: --text-default, since: "1.3.0", fix: "Use --text-default." }
-- { kind: property, name: --text-brand, status: renamed, use: --text-primary, since: "1.3.0", fix: "Use --text-primary.", inert: true }
-- { kind: property, name: --text-content-gap, status: removed, since: "1.3.0", fix: "Removed with no replacement.", inert: true }
-- { kind: property, name: --text-disabled, status: removed, since: "1.1.0", fix: "Was never defined, so it resolved to nothing. Use --text-default-disabled." }
-- { kind: property, name: --text-muted, status: removed, since: "1.1.0", fix: "Was never defined, so it resolved to nothing." }
-- { kind: property, name: --text-primary-default, status: removed, since: "1.1.0", fix: "Was never defined, so it resolved to nothing." }
-- { kind: property, name: --text-primary-sa-flag, status: removed, since: "1.1.0", fix: "Use --colors-primary-100." }
-- { kind: property, name: --text-subdued, status: removed, since: "1.1.0", fix: "Was never defined, so it resolved to nothing." }
-- { kind: property, name: --text-white, status: renamed, use: --colors-base-white, since: "1.1.0", fix: "Use --colors-base-white.", inert: true }
-- { kind: property, name: --toggle-height, scope: .nds-sidemenu, status: renamed, use: --nds-sidemenu-toggle-height, since: "2.0.0", fix: "Use --nds-sidemenu-toggle-height." }
-- { kind: property, name: --toggle-transform, scope: .nds-sidemenu, status: removed, since: "2.0.0", fix: "Remove it: the component sets the side menu toggle position." }
-- { kind: property, name: --tooltip-background-dark, scope: .nds-tooltip, status: renamed, use: --tooltip-background-default, since: "1.1.0", fix: "Set --tooltip-background-default under :root[data-theme~=\"dark\"] instead." }
-- { kind: property, name: --tooltip-background-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-background-default, since: "1.12.0", fix: "Set --tooltip-background-default under :root[data-theme~=\"dark\"] instead." }
-- { kind: property, name: --tooltip-background-light, scope: .nds-tooltip, status: renamed, use: --tooltip-background-default, since: "1.1.0", fix: "Use --tooltip-background-default. Set the dark-mode value under :root[data-theme~=\"dark\"]." }
-- { kind: property, name: --tooltip-text-heading-dark, scope: .nds-tooltip, status: renamed, use: --tooltip-text-heading-default, since: "1.1.0", fix: "Set --tooltip-text-heading-default under :root[data-theme~=\"dark\"] instead." }
-- { kind: property, name: --tooltip-text-heading-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-text-heading-default, since: "1.12.0", fix: "Set --tooltip-text-heading-default under :root[data-theme~=\"dark\"] instead." }
-- { kind: property, name: --tooltip-text-heading-light, scope: .nds-tooltip, status: renamed, use: --tooltip-text-heading-default, since: "1.1.0", fix: "Use --tooltip-text-heading-default. Set the dark-mode value under :root[data-theme~=\"dark\"]." }
-- { kind: property, name: --tooltip-text-paragraph-dark, scope: .nds-tooltip, status: renamed, use: --tooltip-text-paragraph-default, since: "1.1.0", fix: "Set --tooltip-text-paragraph-default under :root[data-theme~=\"dark\"] instead." }
-- { kind: property, name: --tooltip-text-paragraph-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-text-paragraph-default, since: "1.12.0", fix: "Set --tooltip-text-paragraph-default under :root[data-theme~=\"dark\"] instead." }
-- { kind: property, name: --tooltip-text-paragraph-light, scope: .nds-tooltip, status: renamed, use: --tooltip-text-paragraph-default, since: "1.1.0", fix: "Use --tooltip-text-paragraph-default. Set the dark-mode value under :root[data-theme~=\"dark\"]." }
-- { kind: property, name: --typo-display-clamp-ms-MB, status: renamed, use: --typo-display-clamp-sm-MB, since: "1.0.5", fix: "Use --typo-display-clamp-sm-MB. Old name was a typo." }
-- { kind: property, name: --width-2xl, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
-- { kind: property, name: --width-3xl, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
-- { kind: property, name: --width-4xl, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
-- { kind: property, name: --width-5xl, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
-- { kind: property, name: --width-6xl, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
-- { kind: property, name: --width-lg, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
-- { kind: property, name: --width-md, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
-- { kind: property, name: --width-sm, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
-- { kind: property, name: --width-xl, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
-- { kind: property, name: --width-xs, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
-- { kind: property, name: --width-xxs, status: removed, since: "1.3.0", fix: "Set an explicit width or the component width knob.", inert: true }
+- { kind: property, name: --font-size-sm, status: removed, since: "1.0.1", fix: "Was never defined, so it resolved to nothing. Use --typo-text-sm-FS." }

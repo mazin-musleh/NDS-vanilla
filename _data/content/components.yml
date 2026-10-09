@@ -56,6 +56,15 @@
   js: _js/nds-alert.js
   scss: _sass/components/_alert.scss
 
+- title: "Audit"
+  description: "A check you run on a built page that lists NDS markup and CSS that fail with no error, and every name an NDS release changed"
+  use_when: "Check a page you built or upgraded: a filter that binds to nothing, an id a target names that does not exist, a missing skip link, a language file that did not load, and old class, attribute or custom property names in the markup and in your own CSS. It returns the findings as an array, for a test or an AI coding agent. For the list of changed names by release use Migration."
+  icon: '<i class="hgi hgi-stroke hgi-file-validation"></i>'
+  category: "Core"
+  tags: ["JS", "API"]
+  url: "/core/audit.html"
+  js: _js/nds-audit.js
+
 - title: "Autocomplete"
   description: "Type-ahead search with filtered suggestions"
   use_when: "A type-ahead field: search suggestions, live search, combobox, async option loading, city or name lookup. Adds suggestions to a search box too. To pick several values use Multiselect; for free typed values use Tag Input."
@@ -533,6 +542,14 @@
   tags: ["CSS"]
   url: "/components/metric.html"
   scss: _sass/components/_metric.scss
+
+- title: "Migration"
+  description: "Every class, attribute, id, custom property, window setting and event that an NDS release renamed or removed, with what to write instead"
+  use_when: "Upgrade a site to a newer NDS release: read what changed in each release after yours, and what to write instead. The Audit finds these names on a page for you. Old JavaScript method names are in each release's notes."
+  icon: '<i class="hgi hgi-stroke hgi-git-compare"></i>'
+  category: "Core"
+  tags: ["JS", "CSS"]
+  url: "/core/migration.html"
 
 - title: "Modal"
   description: "Focused dialog overlays for confirmations and forms"

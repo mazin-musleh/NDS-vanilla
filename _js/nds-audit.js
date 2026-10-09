@@ -285,10 +285,10 @@
     const byKind = {};
     rows.forEach(r => ((byKind[r.kind] ||= new Map()).get(r.name) || byKind[r.kind].set(r.name, []).get(r.name)).push(r));
     const SEVERITY = { renamed: 'error', removed: 'error', deprecated: 'warn' };
-    const label = { class: 'class', attribute: 'attribute', property: 'property', id: 'id' };
+    const label = { class: 'class', attribute: 'attribute', property: 'property', id: 'id', global: 'window setting' };
     const say = (r) => r.status === 'deprecated'
         ? `${label[r.kind]} "${r.name}" is deprecated since ${r.since}: it still works, until the next major release.`
-        : `${label[r.kind]} "${r.name}" was ${r.status} in ${r.since}, so this part gets no NDS style or behavior.`;
+        : `${label[r.kind]} "${r.name}" was ${r.status} in ${r.since}, so ${r.kind === 'global' ? 'NDS no longer reads it' : 'this part gets no NDS style or behavior'}.`;
     // A leading & tests the element itself; any other scope, the element or an ancestor.
     const inScope = (el, scope) => !scope || (scope[0] === '&' ? el.matches(scope.slice(1)) : !!el.closest(scope));
 
@@ -327,6 +327,8 @@
             const style = el.getAttribute('style');
             if (style && style.includes('--')) for (const [, p] of style.matchAll(/(--[\w-]+)\s*:/g)) look('property', p, el);
         }
+        // A window setting NDS read before: set by a script that runs before NDS.
+        byKind.global?.forEach((rs, name) => { if (name in window) rs.forEach(r => hit(r, null)); });
         hits.forEach((els, r) => ctx.report(els[0],
             say(r) + (els.length > 1 ? ` (${els.length} elements; the first is shown)` : ''),
             r.inert ? `${r.fix} Setting the old name never had an effect.` : r.fix,

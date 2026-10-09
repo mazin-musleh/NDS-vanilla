@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 01:15 AM"
+last_edit: "09/10/2026 - 02:29 AM"
 ---
 
 <section id="refreshOverview" class="nds-content-section nds-doc-overview">
@@ -243,7 +243,7 @@ Set these on `window` before the main bundle loads. A `window.NDSInitConfig` key
 | `NDS.Init.mount(el)` | Loads the bundles the markup in `el` needs, then calls `refresh(el)`. Returns a promise |
 | `NDS.Init.destroy(el)` | Releases every component instance inside `el`. Returns the number released. Without `el`, it covers the whole page |
 | `NDS.Init.initialize()` | Starts every component on the page. The loader calls it at load |
-| `NDS.Init.audit()` | Logs page problems that fail with no error, such as an icon with no registration or a filter nothing started. The first call loads the audit bundle and returns a promise |
+| `NDS.Init.audit()` | Runs the [Audit](../core/audit) and returns its findings: page problems that fail with no error, and names an NDS release changed. The first call loads the audit bundle and returns a promise of them |
 | `NDS.Init.components` | The component registry: one entry per component, with its `name`, `selector` and `init` |
 | `NDS.Init.config` | The settings in use, from the Configuration table |
 | `NDS.loadBundle(name)` | Loads one bundle, such as `'extras'`. Returns a promise. `mount()` calls it for you |

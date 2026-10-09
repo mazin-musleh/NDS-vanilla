@@ -16,7 +16,9 @@ The audit sees markup (classes, `data-*`, ids, inline knobs) and the site's same
 
 ## Status (2026-10-09)
 
-Phases 1 to 3 done: `_data/migrations.yml` holds 675 rows (388 renamed, 251 removed, 36 deprecated). Verified against the v2 release notes both ways, token renames by compiled value (249 of 304 identical, the rest design changes or knobs), every replacement and scope against the release surfaces. The owner delegated the review. Next: Phase 4.
+Phases 1 to 3 done: `_data/migrations.yml` holds 675 rows (388 renamed, 251 removed, 36 deprecated). Verified against the v2 release notes both ways, token renames by compiled value (249 of 304 identical, the rest design changes or knobs), every replacement and scope against the release surfaces. The owner delegated the review.
+
+Phase 4 done (02709b57): 16 rules, browser-tested on 6 real pages (no false alarms) and a fixture of old markup and CSS (every planted name found, every decoy skipped). Phase 5 docs done: core/audit.md and core/migration.md (built from the data file, newest release first). Next: the nds-release step, then NDS IQ.
 
 ## Phase 1: Surface History
 
