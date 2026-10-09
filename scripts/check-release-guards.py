@@ -77,11 +77,11 @@ def build_stub_zip(version, refs_from, iq_bytes=None, gate_doc=None):
         # head.md prints. Both must exist or the guard cannot run at all, so the
         # stub carries a matching pair; gate_doc stages a drifted doc side.
         put(pkg + '_site/index.html',
-            f'<a href="../index.html">ok</a><style>{GATE_CSS}</style>')
+            f'<a href="../index.html">ok</a><style>{GATE_CSS}</style><script>(function(){{}})()</script></head>')
         put(pkg + '_site/ui-shell/head.html',
-            '<div id="panel-setup-html">&lt;style&gt;'
+            '<script type="text/html" id="head-setup"></script><code class="lang-html code">&lt;style&gt;'
             + html.escape(gate_doc if gate_doc is not None else GATE_CSS, quote=False)
-            + '&lt;/style&gt;</div><div id="panel-setup-js"></div>')
+            + '&lt;/style&gt;&lt;script&gt;(function(){})()&lt;/script&gt;</code>')
         put(pkg + 'CHANGELOG.md', f'## [{version}]\n')
         put(pkg + 'README.md', 'see `_site/index.html`\n')
         put(pkg + 'NDS-IQ.md', iq_bytes if iq_bytes is not None else block)
