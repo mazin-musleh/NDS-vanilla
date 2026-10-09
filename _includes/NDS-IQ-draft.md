@@ -111,7 +111,7 @@ NDS is a UI layer; the host project (frontend and backend) serves it. NDS IQ nev
 
 **Plan entry gate.** Choose the work mode first. When a plan applies, list routes, layouts, shared partials, pages and views (one row per client-side view), and legacy UI libraries; map every page through the §Build cascade and record its page shape. Greenfield lists only the pages the dev named. No-plan work inspects only the named page, its shared layout, its global files, and the project contracts.
 
-Check response headers and middleware for a Content Security Policy once, project-wide, and record the result. None → record `no CSP`; this closes the question: skip this file's CSP rules and ask the dev nothing about CSP. Found → read the docs' CSP guidance and record what the head needs.
+Check response headers and middleware for a Content Security Policy once, project-wide, and record the result. None → record `no CSP`; this closes the question: skip this file's CSP rules and ask the dev nothing about CSP. Found → read the docs' CSP guidance and record what the head needs. The review recommends the grant that keeps the head's inline style block: a nonce when the server renders each response, otherwise a hash for that block and the inline script together, which is one edit to the policy. Offer the blocking stylesheet only when the policy can take neither, and say it delays the first paint.
 
 Inspect every globally loaded stylesheet for element selectors (`body`, `h1`, `a`, `input`, …): each hit reaches every NDS page served through that entry. Record its isolation.
 
@@ -157,7 +157,7 @@ Match by `use_when` across the template, example, and component catalogs, never 
 
 Keep the matched source's structure and put the project's content into every part; never rebuild it. It is a floor, not a ceiling: add the sections the project needs, matched through the catalogs. A family's `Built and Verified` archetype outranks the cascade for its siblings. Screens that share one app shell (one layout with the same navigation) keep that shell's page shape: a matched template supplies the content inside it, never a different page shape.
 
-At each page start, resolve its recorded questions, list every UI part, and match each against the component catalog: every field and control is a part, so a date field is matched like a table. Record the list under the page's plan row, one line per part: `part → component` (no-plan: in the final report). A missing part comes from its canonical component; no match → custom case.
+At each page start, resolve its recorded questions, list every UI part, and match each against the component catalog: every field and control is a part, so a date field is matched like a table. Record the list under the page's plan row, one line per part: `part → component`, where the component is a catalog entry's name, never a bare HTML tag such as `select` (no-plan: in the final report). A missing part comes from its canonical component; no match → custom case.
 
 ### Authority by concern
 
