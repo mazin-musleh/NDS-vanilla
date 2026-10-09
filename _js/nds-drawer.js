@@ -3,7 +3,6 @@
  * Methods:
  *   NDS.Drawer.init() / .reinit()   scan + initialize .nds-drawer
  *   NDS.Drawer.create(drawer)       initialize one drawer
- *   NDS.Drawer.initDrawer(drawer)   the same function under its older name
  *   NDS.Drawer.destroy(drawer)      detach its listeners and clear the init stamp
  *   NDS.Drawer.toggle(button)       open or close the submenu that BUTTON owns
  * Events (bubble from the .nds-drawer):
@@ -13,8 +12,6 @@
  *   data-state="always-open"   on the drawer: submenus open and close on their own
  *   data-state="open"          on an <li> and its <ul> (+ aria-expanded="true" on the
  *                              button): the submenu starts open, painted by CSS
- *   data-open-on, data-always-open-on   DEPRECATED breakpoint opening (DEPRECATIONS.md);
- *                              the second stamps data-drawer-locked on the drawer
  * Gotchas:
  *   - Opening a submenu closes its siblings — one open branch per level — unless always-open.
  *   - toggle() takes the BUTTON, not the <li>.
@@ -22,8 +19,8 @@
  */
 /**
  * NDS Drawer Component
- * Handles expand/collapse of nested menus with responsive state control
- * Uses data-state for state management and data-open-on for breakpoint control
+ * Handles expand/collapse of nested menus
+ * Uses data-state for state management
  */
 
 (function () {
@@ -39,56 +36,9 @@
             closing: 'closing',
             closed: '',
             active: 'active'
-        },
-        breakpoints: NDS.breakpoints
+        }
     };
 
-
-    // ==============================================
-    // RESPONSIVE STATE HELPERS
-    // ==============================================
-
-    function checkBreakpoint(breakpoint) {
-        if (breakpoint === 'always') return true;
-        if (breakpoint === 'never') return false;
-
-        const mediaQuery = CONFIG.breakpoints[breakpoint];
-        return mediaQuery ? window.matchMedia(mediaQuery).matches : false;
-    }
-
-    function getOpenOnValue(item, drawer) {
-        // Item-level override takes priority
-        if (item.hasAttribute('data-open-on')) {
-            return item.getAttribute('data-open-on');
-        }
-
-        // Drawer-level default
-        if (drawer.hasAttribute('data-open-on')) {
-            return drawer.getAttribute('data-open-on');
-        }
-
-        // Opened in the markup (the `open` class is the legacy spelling)
-        if (hasState(item, 'open') || item.classList.contains('open')) {
-            return 'always';
-        }
-
-        return 'never';
-    }
-
-    function shouldItemBeOpen(item, drawer) {
-        const openOn = getOpenOnValue(item, drawer);
-        return checkBreakpoint(openOn);
-    }
-
-    function getAlwaysOpenOnValue(drawer) {
-        return drawer.getAttribute('data-always-open-on') || null;
-    }
-
-    function shouldBeAlwaysOpen(drawer) {
-        const alwaysOpenOn = getAlwaysOpenOnValue(drawer);
-        if (!alwaysOpenOn) return false;
-        return checkBreakpoint(alwaysOpenOn);
-    }
 
     // ==============================================
     // STATE MANAGEMENT
@@ -190,12 +140,10 @@
     }
 
     // ==============================================
-    // RESPONSIVE STATE INITIALIZATION
+    // INITIAL STATE
     // ==============================================
 
-    function initResponsiveState(drawer) {
-        const isAlwaysOpen = shouldBeAlwaysOpen(drawer);
-
+    function initOpenState(drawer) {
         drawer.querySelectorAll('.nds-drawer-list li').forEach(item => {
             const submenu = item.querySelector(':scope > ul');
             if (!submenu) return;
@@ -203,10 +151,8 @@
             const button = item.querySelector(':scope > .nds-btn');
             if (!button) return;
 
-            // Check if should be open (either always-open or conditional)
-            const shouldBeOpen = isAlwaysOpen || shouldItemBeOpen(item, drawer);
-
-            if (shouldBeOpen) {
+            // Opened in the markup
+            if (hasState(item, CONFIG.states.open)) {
                 setState(item, CONFIG.states.open);
                 setState(submenu, CONFIG.states.open);
                 NDS.aria.expanded(button, true);
@@ -218,9 +164,6 @@
                 clearButton(item, button);
             }
         });
-
-        // Own attribute, not a data-state token: always-open means something else now
-        drawer.toggleAttribute('data-drawer-locked', isAlwaysOpen);
     }
 
     function initToggles(drawer) {
@@ -238,10 +181,6 @@
             button.classList.add('nds-menu-btn');
 
             button.addEventListener('click', (e) => {
-                if (drawer.hasAttribute('data-drawer-locked')) {
-                    return;
-                }
-
                 if (button.tagName === 'BUTTON' || button.getAttribute('href') === '#') {
                     e.preventDefault();
                     toggleSubmenu(button);
@@ -280,41 +219,15 @@
     }
 
     // ==============================================
-    // RESIZE HANDLER FOR RESPONSIVE STATE
-    // ==============================================
-
-    function handleResize(drawer) {
-        const currentWidth = window.innerWidth;
-        const previousWidth = drawer._previousWidth;
-        drawer._previousWidth = currentWidth;
-
-        // Skip height-only changes (mobile address bar show/hide) — width is
-        // unchanged. A first resize has no baseline (previousWidth undefined),
-        // so it never equals currentWidth and correctly re-evaluates.
-        if (currentWidth === previousWidth) return;
-
-        initResponsiveState(drawer);
-    }
-
-    // ==============================================
     // INITIALIZATION
     // ==============================================
 
-    function initDrawer(drawer) {
+    function createDrawer(drawer) {
         if (drawer.hasAttribute('data-nds-drawer-initialized')) return;
 
-        initResponsiveState(drawer);
+        initOpenState(drawer);
         initToggles(drawer);
         initActiveStates(drawer);
-
-        // Cold init: no window.innerWidth read here — it would force a
-        // synchronous reflow of every setState write above. handleResize
-        // establishes the width baseline lazily on its first call instead.
-
-        // Add resize listener for responsive state updates
-        if (drawer.hasAttribute('data-open-on') || drawer.hasAttribute('data-always-open-on') || drawer.querySelector('[data-open-on]')) {
-            drawer._offResize = NDS.onResize(() => handleResize(drawer));
-        }
 
         drawer.setAttribute('data-nds-drawer-initialized', 'true');
     }
@@ -322,25 +235,17 @@
     function initAllDrawers() {
         document.querySelectorAll(CONFIG.selectors.drawer).forEach(drawer => {
             if (drawer.closest('code')) return;
-            initDrawer(drawer);
+            createDrawer(drawer);
         });
     }
 
     function destroyDrawer(drawer) {
-        // Release pooled resize subscription stored in initDrawer.
-        if (drawer._offResize) {
-            drawer._offResize();
-            delete drawer._offResize;
-        }
-
         // Abort all submenu-toggle listeners attached in initToggles
         if (drawer._togglesAC) {
             drawer._togglesAC.abort();
             delete drawer._togglesAC;
         }
 
-        // Clean up stored width
-        delete drawer._previousWidth;
         drawer.removeAttribute('data-nds-drawer-initialized');
     }
 
@@ -351,8 +256,7 @@
     NDS.Drawer = {
         init: initAllDrawers,
         reinit: initAllDrawers,
-        create: initDrawer,
-        initDrawer,
+        create: createDrawer,
         destroy: destroyDrawer,
         toggle: toggleSubmenu
     };

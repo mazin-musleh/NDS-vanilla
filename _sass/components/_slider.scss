@@ -217,8 +217,7 @@
 // the row) and hide the thumb until the init sentinel is stamped. Consumers flip
 // `.nds-loading` during async value updates (e.g. fetching bounds); the container is
 // a .nds-form-container, which the spinner overlay exempts, so the class means skeleton here.
-// `[data-loading]` is the slider's original flag — deprecated, see DEPRECATIONS.md.
-.nds-slider-container:is(:not([data-nds-slider-initialized]), .nds-loading, [data-loading]) {
+.nds-slider-container:is(:not([data-nds-slider-initialized]), .nds-loading) {
     @include skeleton-pulse;
     .nds-slider {
         pointer-events: none;

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 12:45 AM"
+last_edit: "09/10/2026 - 03:10 AM"
 ---
 
 <section id="datePickerOverview" class="nds-content-section nds-doc-overview">
@@ -254,7 +254,7 @@ The picker checks the field at each `change`, typed text included. A date that d
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set them in a rule on `.nds-date-picker-dropdown`, the calendar.
+Set them in a rule on `.nds-date-picker-menu`, the calendar.
 
 | Property | Default | Controls |
 |---|---|---|

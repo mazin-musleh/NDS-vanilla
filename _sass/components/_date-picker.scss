@@ -11,7 +11,7 @@
 // ==============================================
 // The calendar dropdown lives inside `.nds-form-control` (which date-picker.js
 // promotes to an NDSDropmenu wrapper). The dropdown carries both
-// `.nds-date-picker-dropdown` and `.nds-dropmenu-menu`, so dropmenu's
+// `.nds-date-picker-menu` and `.nds-dropmenu-menu`, so dropmenu's
 // default positioning (`position: absolute`, anchored to the form-control)
 // applies — the calendar scrolls naturally with its trigger.
 
@@ -50,7 +50,7 @@
 // DATE PICKER DROPDOWN (anchored to .nds-form-control)
 // ==============================================
 
-.nds-date-picker-dropdown {
+.nds-date-picker-menu {
     --btn-size: 32px;
     // Drive sizing through NDSDropmenu tokens so the menu picks up the
     // calendar's width/clamp/padding without an inline-style stomp from JS.
@@ -233,9 +233,9 @@
 }
 
 // Month/year dropmenu — class-on-menu so styles match whether the menu
-// is nested in `.nds-date-picker-dropdown` or portaled to <body>.
+// is nested in `.nds-date-picker-menu` or portaled to <body>.
 .nds-dropmenu-menu:is(.nds-month-dropmenu, .nds-year-dropmenu) {
-    // Reset all `--dropmenu-*` tokens — the parent .nds-date-picker-dropdown
+    // Reset all `--dropmenu-*` tokens — the parent .nds-date-picker-menu
     // sets them for the calendar (width: 100%, min: 350, max: 500, padding: 0)
     // and CSS custom property inheritance carries those into THIS nested
     // sub-dropmenu. Use `initial` to fall back to .nds-dropmenu-menu's own

@@ -310,20 +310,6 @@ fieldset {
         }
     }
 
-    // Legacy class support (deprecated)
-    &:is(.nds-focus, .focus) {
-        &::before {
-            width: 100%;
-        }
-
-        box-shadow: var(--shadow-md);
-        color: var(--_control-color-forced, var(--form-field-text-focused));
-
-        :is(input, textarea)::-webkit-input-placeholder {
-            color: var(--_placeholder-color, var(--form-field-text-focused));
-        }
-    }
-
     >:is(i, img, svg) {
         align-self: center;
         font-size: 20px;

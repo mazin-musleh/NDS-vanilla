@@ -83,7 +83,7 @@
   transform: translateY(50%);
 }
 
-.nds-content-layout:not(.nds-has-sidemenu, .nds-card-view) .nds-content .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(even) {
+.nds-content-layout:not(.nds-has-sidemenu, .nds-card-view) .nds-content .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-gradient-primary, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(even) {
  &::before{
   content: "";
   position: absolute;
@@ -110,9 +110,9 @@
 
 }
 
-// :root prefix bumps to 0,3,0 — beats _footer.scss's .nds-footer:is(.nds-green,.nds-brand) (0,2,0)
+// :root prefix bumps to 0,3,0 — beats _footer.scss's .nds-footer.nds-brand (0,2,0)
 // which resets background-image to none via the background shorthand
-:root .nds-footer:is(.nds-green, .nds-brand) {
+:root .nds-footer.nds-brand {
   background-color: #231F20;
   background-image: url(footer-backeground.svg);
   background-repeat: no-repeat;

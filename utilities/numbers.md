@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "08/10/2026 - 09:36 PM"
+last_edit: "09/10/2026 - 03:10 AM"
 ---
 
 <section id="numbersOverview" class="nds-content-section nds-doc-overview">
@@ -194,8 +194,6 @@ A counter counts from `data-counter-start` to the `data-counter` value when half
 | `data-counter-duration` | `[data-counter]` | The length of the count in milliseconds. Default `1000` |
 | `data-animated` | `[data-counter]` | The script sets it to `true` when the count ends, and never removes it. A counter with it does not run. To run a counter again, remove it, then call `NDS.Numbers.reinit()`. The counter starts from `data-counter-start` again |
 {: .nds-table .nds-responsive}
-
-The older counter markup still works, and is deprecated: the `nds-counter-value` class with `data-target`, `data-start` and `data-duration`.
 
 ### CSS Custom Properties
 {: .nds-block-title}

@@ -1,7 +1,7 @@
 /**
  * NDS Filter Component - SCSS
  * The filter anchor + submission states, the applied-chips / auto-fill rows, the
- * result-count line, and the standard .nds-filter-bar controls layout.
+ * result-count line. The controls row is a .nds-toolbar (_toolbar.scss).
  */
 
 @use '../mixins' as *;
@@ -80,5 +80,3 @@
     }
 }
 
-// .nds-filter-bar — the controls row that hosts these surfaces — is a
-// .nds-toolbar alias; its layout lives in _toolbar.scss.

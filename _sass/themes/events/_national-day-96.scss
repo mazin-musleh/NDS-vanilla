@@ -166,7 +166,7 @@
 
 // Sections that paint their own surface (brand, status, gradient) take neither
 // decoration — the bar and the vector are for the plain page ground only.
-$plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand, .nds-last-edit)';
+$plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-gradient-primary, .nds-neutral, .nds-brand, .nds-last-edit)';
 
 // ── Section bar — a thin identity strip along the bottom of every plain content
 //    section, rotating through the three artworks so a long page doesn't repeat
@@ -227,9 +227,9 @@ $plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradien
   }
 }
 
-// :root prefix bumps to 0,3,0 — beats _footer.scss's .nds-footer:is(.nds-green,.nds-brand)
+// :root prefix bumps to 0,3,0 — beats _footer.scss's .nds-footer.nds-brand
 // (0,2,0) which resets background-image to none via the background shorthand
-:root .nds-footer:is(.nds-green, .nds-brand) {
+:root .nds-footer.nds-brand {
   background-image: url("footer_bar.svg");
   background-repeat: repeat-x;
   background-position: bottom center;

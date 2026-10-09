@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "09/10/2026 - 03:10 AM"
 ---
 
 <section id="swiperOverview" class="nds-content-section nds-doc-overview">
@@ -405,8 +405,6 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 | `data-status` | `.nds-bullet`, spotlight `.nds-swiper-slide` | The script writes `active` on the current bullet. In a spotlight it also writes `active` on the open slide and its loop copies, and `after` on the slides after it |
 | `data-swiper-peek` | `.nds-swiper` | The script writes it while the peek shows |
 {: .nds-table .nds-responsive}
-
-The bare attributes `slides-max`, `slides-mid`, `slides-min` and `peek` still work but are deprecated. Only the script reads them, so the row gets its size late. Use the custom properties.
 
 ### CSS Custom Properties
 {: .nds-block-title}

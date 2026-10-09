@@ -29,21 +29,19 @@
     border-radius: var(--_section-border-radius);
     color: var(--_section-text-color);
 
-    &:is(.nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral) {
+    &:is(.nds-primary, .nds-gradient-primary, .nds-neutral) {
         --_section-title-color-base: var(--text-oncolor-primary);
         --_section-subtitle-color-base: var(--text-oncolor-secondary);
         --_section-description-color-base: var(--text-oncolor-secondary);
         --_section-text-color-base: var(--text-oncolor-secondary);
     }
 
-    // .nds-green is the deprecated alias of .nds-primary — same brand surface.
-    &:is(.nds-primary, .nds-green) {
+    &.nds-primary {
         // re-tints under runtime themes (was pinned to status green-900)
         --_section-bg-base: var(--background-primary-strong);
     }
 
-    // .nds-gradient-green is the deprecated alias of .nds-gradient-primary.
-    &:is(.nds-gradient-primary, .nds-gradient-green) {
+    &.nds-gradient-primary {
         --_gradient-angle: var(--gradient-angle, -45deg);
         --_section-bg-base: var(--background-primary-strong);
         background: linear-gradient(var(--_gradient-angle), var(--background-primary-strong), var(--background-primary));

@@ -12,9 +12,8 @@ Never writes @font-face here: the icon face lives in _sass/_fonts.scss (crit) an
 the 1em invisible placeholder, in _sass/_fonts-hgi-blank.scss (main); it only changes if the icon
 font's metrics or code-point plane do.
 
-A name that disappears upstream would break existing markup. --apply refuses until every such
-name has an entry in ALIASES (old name -> new name); the alias block keeps it rendering, and
-DEPRECATIONS.md lists it. Upstream also redraws icons under the same name: that is accepted —
+A name that disappears upstream is listed as removed, with no alias left behind: migrate the
+markup to the new name (and add a Migration line) in the same change. Upstream also redraws icons under the same name: that is accepted —
 the docs tell readers to pick icons on hugeicons.com, so the font must match it.
 """
 import os
@@ -30,16 +29,6 @@ WOFF2 = os.path.join(ROOT, 'assets', 'fonts', 'hgi-stroke-rounded.woff2')
 DATA = os.path.join(ROOT, '_data', 'hgi.yml')  # the version the docs state; written here only
 STAMP_LINE = '// HugeIcons Stroke Rounded'
 
-# Old names HugeIcons renamed (2026-09 set spelled digits out). Keep until the next major.
-ALIASES = {
-    'arrange-by-numbers-1-9': 'arrange-by-numbers-one-9', 'arrange-by-numbers-9-1': 'arrange-by-numbers-nine-1',
-    'cplusplus': 'cpp', 'go-backward-5-sec': 'go-backward-five-sec', 'go-forward-5-sec': 'go-forward-five-sec',
-    'layout-2-column': 'layout-two-column', 'layout-2-row': 'layout-two-row',
-    'layout-3-column': 'layout-three-column', 'layout-3-row': 'layout-three-row',
-    'mp-3-01': 'mp-three-01', 'mp-3-02': 'mp-three-02', 'mp-4-01': 'mp-four-01', 'mp-4-02': 'mp-four-02',
-    'ski-dice-faces-01': 'ski', 'sorting-1-9': 'sorting-one-9', 'sorting-9-1': 'sorting-nine-1',
-}
-ALIAS_NOTE = '// Deprecated names: HugeIcons renamed these (DEPRECATIONS.md). Remove at the next major.'
 
 
 def fetch(url):
@@ -66,24 +55,15 @@ def main():
         sys.exit('parsed only %d icons from %s: the CSS format changed, update the regex' % (len(new), CSS_URL))
     cur = open(SCSS, encoding='utf-8', newline='').read()
     body = cur.replace('\r\n', '\n')
-    body = body[:body.find(ALIAS_NOTE)] if ALIAS_NOTE in body else body
     old = set(re.findall(r'\.hgi-stroke\.hgi-([a-z0-9-]+):before', body))
     added, removed = sorted(set(new) - old), sorted(old - set(new))
     print('icons: local %d, CDN %d | added %d | removed %d' % (len(old), len(new), len(added), len(removed)))
     if added:
         print('  added:', ', '.join(added[:30]) + (' …' if len(added) > 30 else ''))
-    unaliased = [n for n in removed if n not in ALIASES]
     if removed:
-        print('  removed:', ', '.join(removed))
-    if unaliased:
-        print('  NO ALIAS: %s — add each to ALIASES (compare the glyphs first) and to DEPRECATIONS.md' % ', '.join(unaliased))
-    bad = [k for k, v in ALIASES.items() if v not in new or k in new]
-    if bad:
-        print('  stale ALIASES entries (target gone, or the old name is back upstream):', ', '.join(bad))
+        print('  removed (no alias is kept; migrate the markup):', ', '.join(removed))
     if '--apply' not in sys.argv:
         return
-    if unaliased or bad:
-        sys.exit('not applied: fix ALIASES first')
     font_url = re.search(r'url\("?(hgi-stroke-rounded\.woff2[^")]*)"?\)', css).group(1)
     woff2 = fetch(FONT_BASE + font_url)
     if woff2[:4] != b'wOF2':
@@ -93,15 +73,13 @@ def main():
     header = '%s build %s, %s icons (use.hugeicons.com). Written by scripts/hgi-font-update.py.\n%s' % (
         STAMP_LINE, build, format(len(rules), ','), header)
     out = [header] + ['\n.hgi-stroke.hgi-%s:before {\n  content: "%s";\n}\n' % r for r in rules]
-    out.append('\n' + ALIAS_NOTE + '\n')
-    out += ['.hgi-stroke.hgi-%s:before {\n  content: "%s";\n}\n' % (o, new[n]) for o, n in ALIASES.items()]
     nl = '\r\n' if '\r\n' in cur else '\n'
     open(SCSS, 'w', encoding='utf-8', newline='').write(''.join(out).replace('\n', nl))
     open(WOFF2, 'wb').write(woff2)
     open(DATA, 'w', encoding='utf-8', newline='\n').write(
         '# HGI content-icon font version. Written by scripts/hgi-font-update.py: do not edit.\n'
         'build: "%s"\nstamp: "%s"\nicons: "%s"\nsource: %s\n' % (build, stamp, format(len(rules), ','), CSS_URL))
-    print('applied: %d icons + %d aliases; font %d bytes (%s)' % (len(rules), len(ALIASES), len(woff2), font_url))
+    print('applied: %d icons; font %d bytes (%s)' % (len(rules), len(woff2), font_url))
 
 
 if __name__ == '__main__':

@@ -22,9 +22,6 @@
  *                                                mobile, default 1 each; CSS sizes the row
  *                                                from them before any JS runs
  *   --peek                                       length of the next slide left showing
- *   slides-max · slides-mid · slides-min · peek  deprecated bare-attribute spellings of the
- *                                                same knobs — JS-only, so the row waits for
- *                                                the loader preset (DEPRECATIONS.md)
  *   --gap                                        gap between slides
  *   data-swiper-loop                             endless row: clones at both ends, a silent
  *                                                jump when the scroll rests on one. Needs
@@ -182,19 +179,13 @@
                 return;
             }
 
-            // Static knobs — read once, reused on every breakpoint change. Inline
-            // custom property first (the canonical spelling, which CSS also reads),
-            // the deprecated bare attribute second.
-            const knob = (prop, attr) =>
-                parseInt(container.style.getPropertyValue(prop)) || parseInt(container.getAttribute(attr)) || 0;
-            this._slidesMax = knob('--max-slides', 'slides-max') || 1;
-            this._slidesMid = knob('--mid-slides', 'slides-mid') || 1;
-            this._slidesMin = knob('--min-slides', 'slides-min') || 1;
+            // Static knobs — read once, reused on every breakpoint change.
+            const knob = prop => parseInt(container.style.getPropertyValue(prop)) || 0;
+            this._slidesMax = knob('--max-slides') || 1;
+            this._slidesMid = knob('--mid-slides') || 1;
+            this._slidesMin = knob('--min-slides') || 1;
             if (this._spotlight) this._slidesMax = this._slidesMid = this._slidesMin = 1;
-            this._peek = knob('--peek', 'peek');
-            // An attribute-authored peek is invisible to CSS, so JS writes --peek for
-            // it and owns it; an author's inline --peek is never touched.
-            this._ownsPeek = container.hasAttribute('peek');
+            this._peek = knob('--peek');
 
             // Loop needs more slides than the largest page, or a page would show a
             // slide twice. Decided once, against the largest tier.
@@ -260,7 +251,6 @@
         init() {
             this.abortController = new AbortController();
             this.container.style.setProperty('--total', this._real);
-            if (this._ownsPeek && this._peek) this.container.style.setProperty('--peek', `${this._peek}px`);
             this.updateSlidesPerView();
 
             // Single-slide swipers can never navigate; bail before nav/observer/keyboard
@@ -956,7 +946,6 @@
             this.container.removeAttribute('data-swiper-single');
             NDS.State.clear(this.container); // at-start/at-end are a documented consumer hook
             ['--total', '--slides'].forEach(p => this.container.style.removeProperty(p));
-            if (this._ownsPeek) this.container.style.removeProperty('--peek');
             if (this._spotlight) this.slides.forEach(s => NDS.Status.clear(s));
             this.wrapper.style.removeProperty('overflow');
             this.wrapper.removeAttribute('data-swiper-moving');

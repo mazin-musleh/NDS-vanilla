@@ -114,24 +114,6 @@
 }
 
 // ==============================================
-// LOCKED STATE (deprecated data-always-open-on)
-// ==============================================
-
-// Toggles only, at every depth: plain links stay clickable.
-.nds-drawer[data-drawer-locked] .nds-drawer-list .nds-btn.nds-menu-btn {
-    pointer-events: none;
-    cursor: default;
-
-    &::after {
-        display: none;
-    }
-
-    &::before {
-        background-color: transparent;
-    }
-}
-
-// ==============================================
 // ACTIVE STATE
 // ==============================================
 
@@ -373,28 +355,12 @@
 
 .nds-drawer.nds-divided {
     .nds-drawer-list>li {
-        // The locked state moves this border onto the button by setting --_item-border.
-        border-block-end: var(--_item-border, 1px solid var(--_divider));
+        border-block-end: 1px solid var(--_divider);
         padding-bottom: var(--_gap);
 
         &:last-child {
             border-block-end: none;
             padding-bottom: 0;
-        }
-    }
-
-    // When locked, move border to button instead of li.
-    &[data-drawer-locked] {
-        --_item-border: none;
-
-        .nds-drawer-list>li>.nds-btn {
-            border-block-end: 1px solid var(--_divider);
-            border-radius: 0;
-        }
-
-        // Remove border only if it's the only child (no siblings)
-        .nds-drawer-list>li:only-child>.nds-btn {
-            border-block-end: none;
         }
     }
 }

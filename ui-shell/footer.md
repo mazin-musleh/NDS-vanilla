@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 08:00 AM"
+last_edit: "09/10/2026 - 03:10 AM"
 ---
 
 <section id="footerOverview" class="nds-content-section nds-doc-overview">
@@ -172,7 +172,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Surface | Brand (default) | `.nds-brand` | `.nds-footer` | The deep primary surface with white text. `.nds-green` is a deprecated alias |
+| Surface | Brand (default) | `.nds-brand` | `.nds-footer` | The deep primary surface with white text |
 | Surface | Light | — | — | Leave out `.nds-brand`: a light neutral surface, dark in dark mode |
 | Logo | On color | — | — | Add `.nds-oncolor` to a one-color logo `<img>` so it turns white on the brand footer and in dark mode. It is a choice per logo: leave it off a logo whose colors must stay |
 {: #footerVariantsTable .nds-table .nds-responsive}

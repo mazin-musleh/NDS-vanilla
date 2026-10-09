@@ -69,7 +69,7 @@ const inModal = async (page, { rows = 8, row = 3 } = {}) => page.evaluate(async 
             el.removeAttribute('data-dropmenu-no-click');
             el.removeAttribute('data-dropmenu-no-keys');
         });
-        clone.querySelectorAll('.nds-dropmenu-menu, .nds-date-picker-dropdown')
+        clone.querySelectorAll('.nds-dropmenu-menu, .nds-date-picker-menu')
             .forEach((el) => el.remove());
         content.appendChild(clone);
     }

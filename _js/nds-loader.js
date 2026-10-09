@@ -168,7 +168,7 @@
         {
             // Deferred: cosmetic on-scroll animation.
             name: 'Numbers',
-            selector: '.nds-number-format, [data-counter], .nds-counter-value',
+            selector: '.nds-number-format, [data-counter]',
         },
         {
             // Docs-only, own bundle: _code.scss paints the box and gutter with no JS.
@@ -592,15 +592,13 @@
                     : matchMedia(NDS.breakpoints.tablet).matches ? 'mid' : 'min';
                 const tracks = [];
                 document.querySelectorAll('.nds-swiper:not([data-nds-swiper-initialized], [data-swiper-preset])').forEach(s => {
-                    // Inline knob first, the deprecated bare attribute second.
-                    const knob = (prop, attr) => parseInt(s.style.getPropertyValue(prop)) || parseInt(s.getAttribute(attr)) || 0;
-                    const per = s.classList.contains('nds-spotlight') ? 1 : knob(`--${tier}-slides`, 'slides-' + tier) || 1;
-                    const peek = knob('--peek', 'peek');
+                    const knob = prop => parseInt(s.style.getPropertyValue(prop)) || 0;
+                    const per = s.classList.contains('nds-spotlight') ? 1 : knob(`--${tier}-slides`) || 1;
+                    const peek = knob('--peek');
                     // Own slides only: a swiper nested in a slide must not add pages.
                     const w = s.querySelector('.nds-swiper-wrapper');
                     const pages = Math.ceil((w ? w.querySelectorAll(':scope > .nds-swiper-slide').length : 0) / per);
                     s.style.setProperty('--slides', per);
-                    if (peek && s.hasAttribute('peek')) s.style.setProperty('--peek', `${peek}px`);
                     s.toggleAttribute('data-swiper-peek', peek > 0 && pages > 1);
                     // One page: init keeps the nav hidden, so its reserve goes now.
                     s.toggleAttribute('data-swiper-single', pages <= 1);

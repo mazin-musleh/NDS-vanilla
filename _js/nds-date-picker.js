@@ -171,7 +171,7 @@
     var UIConfig = {
         selectors: {
             container: '.nds-form-container',
-            dropdown: '.nds-date-picker-dropdown',
+            dropdown: '.nds-date-picker-menu',
             toggleBtn: '.date-picker-toggle',
             monthDropmenu: '.nds-month-dropmenu',
             yearDropmenu: '.nds-year-dropmenu',
@@ -337,7 +337,7 @@
         // Create dropdown DOM structure
         createDropdownDOM: function () {
             var dropdown = document.createElement('div');
-            dropdown.className = 'nds-date-picker-dropdown';
+            dropdown.className = 'nds-date-picker-menu';
 
             var lang = this.getLanguage();
             var calendarHTML =

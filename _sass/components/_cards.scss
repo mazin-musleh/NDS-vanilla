@@ -187,9 +187,7 @@
     }
   }
 
-  // .nds-full-width is deprecated here: inside a section it is the full-bleed
-  // breakout (_skeleton.scss). See DEPRECATIONS.md.
-  &:is(.nds-full-width, .nds-full) {
+  &.nds-full {
     --card-width: 100%;
   }
 
@@ -205,7 +203,7 @@
     margin-inline: 0;
   }
 
-  &:is(.nds-center, .nds-statistic) {
+  &.nds-center {
     :is(.nds-card-header, .nds-card-content > *, .nds-card-text > *, .nds-card-tags, .nds-card-actions) {
       align-items: center;
       justify-content: center;
@@ -242,7 +240,7 @@
   // A centred card centres its header too. Wins on source order over the
   // space-between rule above, which would otherwise pin the featured icon to
   // the start. The close button leaves the flow so it cannot pull it off-centre.
-  &:is(.nds-center, .nds-statistic) .nds-card-header {
+  &.nds-center .nds-card-header {
     justify-content: center;
 
     .nds-close {
@@ -282,7 +280,7 @@
     }
   }
 
-  &:not(.nds-center, .nds-statistic) .nds-card-featured-icon {
+  &:not(.nds-center) .nds-card-featured-icon {
     align-self: flex-start;
   }
 
@@ -378,8 +376,8 @@
   // wrapper's own type IS the muted suffix style, so bare text like "/ كجم"
   // needs no class; the .nds-number-format child is the prominent value
   // (currency icon tracks the font via 1em); a <s> child is the crossed-out
-  // original. .nds-card-price is the pre-rename alias — see DEPRECATIONS.md.
-  :is(.nds-card-value, .nds-card-price) {
+  // original.
+  .nds-card-value {
     display: flex;
     align-items: baseline;
     gap: var(--spacing-sm);
@@ -447,7 +445,7 @@
     }
   }
 
-  &:is(.nds-center, .nds-statistic) .nds-card-status {
+  &.nds-center .nds-card-status {
     position: absolute;
     top: 0;
     inset-inline-end: var(--_card-status-shift, 0);
@@ -456,7 +454,7 @@
 
   // A row header is only a column around the icon, so the tag stays under it.
   // Once a narrow row card stacks, the header spans the card again: back out.
-  &.nds-horizontal:is(.nds-center, .nds-statistic) {
+  &.nds-horizontal.nds-center {
     .nds-card-status {
       position: static;
     }
@@ -527,36 +525,8 @@
 // CARD VARIANTS
 // ==============================================
 
-// Statistic card variant — deprecated: .nds-center renders it the same (DEPRECATIONS.md).
-.nds-card.nds-statistic {
-  justify-content: flex-start !important;
-
-  .nds-card-header {
-    align-items: center;
-  }
-
-  .nds-card-featured-icon {
-    align-self: center;
-    margin-bottom: 0;
-  }
-
-  .nds-card-content {
-    align-items: center;
-  }
-
-  .nds-card-text {
-
-    &>* {
-      align-items: center;
-      text-align: center;
-    }
-  }
-}
-
 // The card's big number, in any card; a centered card centers it.
-// Deprecated: the Numbers classes standing in for it in a statistic card (DEPRECATIONS.md).
-.nds-card .nds-card-number,
-.nds-card.nds-statistic .nds-card-text :is(.nds-counter-value, .nds-number-format) {
+.nds-card .nds-card-number {
   color: var(--_card-number);
   font-size: var(--typo-display-clamp-lg-FS);
   line-height: 1;
@@ -822,7 +792,7 @@ html:not([data-nds-loaded]) .nds-card {
   }
 
   // One bar the width of the price line.
-  :is(.nds-card-value, .nds-card-price) {
+  .nds-card-value {
     @include skeleton-bar;
 
     // Outranks the value line's own colour on the prominent number.

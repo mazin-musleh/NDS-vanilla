@@ -10,7 +10,7 @@
     padding-block: var(--spacing-4xl);
     z-index: 1;
 
-    &:not(.nds-green, .nds-brand) {
+    &:not(.nds-brand) {
         @include dark {
             background: var(--colors-neutral-700);
         }
@@ -196,7 +196,7 @@
                 filter: brightness(0) invert(1);
             }
 
-            .nds-footer:is(.nds-green, .nds-brand) & {
+            .nds-footer:is(.nds-brand) & {
                 filter: brightness(0) invert(1);
             }
         }
@@ -204,10 +204,10 @@
 }
 
 /* ========================================
-   BRAND VARIANT (.nds-green kept for backward-compat)
+   BRAND VARIANT
    ======================================== */
 
-.nds-footer:is(.nds-green, .nds-brand) {
+.nds-footer:is(.nds-brand) {
     background: var(--background-footer);
 
     // Light mode: force dark-bg appearance since green bg stays dark regardless of theme

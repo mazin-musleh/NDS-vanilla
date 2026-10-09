@@ -22,16 +22,13 @@
  * the canonical arrangement, not a requirement. The content + pagination stay
  * independent siblings below the bar.
  *
- * .nds-filter-bar is transitional, not public API: it predates this component
- * and still ships in consumer markup, so the rules carry it. Nothing in this
- * repo uses it and it is undocumented. Drop it once consumers have migrated.
  */
 
 @use '../mixins' as *;
 
 // Shared layout — a .nds-bar-row IS a bar, so it lays its children out the same
 // way. Stack rows to build a multi-row bar; each one takes a line of its own.
-:is(.nds-toolbar, .nds-filter-bar, .nds-bar-row) {
+:is(.nds-toolbar, .nds-bar-row) {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -77,7 +74,7 @@
 }
 
 // Bar-only — a row inherits the layout above but never the outer spacing.
-:is(.nds-toolbar, .nds-filter-bar) {
+.nds-toolbar {
     // Knob: the bar's block margins, "<start> <end>". A toolbar hugs its content
     // and clears nothing above it; set --toolbar-margin-block on the bar (or an
     // ancestor) to change either edge.
@@ -89,7 +86,7 @@
 
 // Inside a sub-row (a compact detail cell): a smaller bottom gap before the
 // nested content. Still overridable per-bar via the public --toolbar-margin-block.
-.nds-sub :is(.nds-toolbar, .nds-filter-bar) {
+.nds-sub .nds-toolbar {
     --_toolbar-margin-block: var(--toolbar-margin-block, 0 var(--spacing-xl));
 }
 

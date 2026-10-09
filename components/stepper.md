@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 07:20 PM"
+last_edit: "09/10/2026 - 03:10 AM"
 ---
 
 <section id="stepperOverview" class="nds-content-section nds-doc-overview">
@@ -241,7 +241,7 @@ When something can refuse the move, such as validation or a request, call `NDS.S
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-sorting-1-9"></i>
+            <i class="hgi hgi-stroke hgi-sorting-one-9"></i>
             <span class="nds-label">Automatic Numbers</span>
           </span>
           <p class="nds-item-desc">CSS numbers the circles in order, and a completed step shows a check mark. <code class="nds-inline-code lang-html">data-step-text</code> on a circle shows other text in place of the number.</p>

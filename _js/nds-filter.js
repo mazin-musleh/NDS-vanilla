@@ -338,7 +338,6 @@
             }, 500);
 
             this.setupFilterElements();
-            this.setupResetButton();
             this.setupActionButtons();
             this.setupChipStyle();
             this.applyUrlParams();
@@ -1088,7 +1087,7 @@
         // first resolve — walked once, not on every filter change.
         _resolveFilterBtn() {
             if (this.filterButtonEl === undefined) {
-                this.filterButtonEl = this.query('.nds-filter-btn, [data-filter-btn], .filter-btn');
+                this.filterButtonEl = this.query('.nds-filter-btn, [data-filter-btn]');
             }
             return this.filterButtonEl;
         }
@@ -1989,13 +1988,7 @@
                 const filterElements = card.querySelectorAll(`[data-filter="${filterName}"]`);
                 const itemHasFilter = card.getAttribute('data-filter') === filterName;
 
-                if (!filterElements.length && !itemHasFilter) {
-                    // Fallback for tags: traditional .nds-card-tags structure
-                    if (filterName === 'tags') {
-                        this._collectCardTagLabels(card).forEach(value => values.add(value));
-                    }
-                    return;
-                }
+                if (!filterElements.length && !itemHasFilter) return;
 
                 filterElements.forEach(harvest);
                 // The item itself can carry the marker too
@@ -2008,21 +2001,6 @@
             }
 
             return Array.from(values).sort((a, b) => a.localeCompare(b, 'ar'));
-        }
-
-        // Harvest legacy .nds-card-tags labels from a card: the trimmed
-        // .nds-tag .nds-label text of each tag, original case. Shared by
-        // collectFilterValues (option build) and _buildItemCache (match cache);
-        // callers lowercase as needed.
-        _collectCardTagLabels(card) {
-            const cardTags = card.querySelector('.nds-card-tags');
-            if (!cardTags) return [];
-            const labels = [];
-            cardTags.querySelectorAll('.nds-tag .nds-label').forEach(el => {
-                const value = el.textContent.trim();
-                if (value) labels.push(value);
-            });
-            return labels;
         }
 
         generateFilterInputs(container, filterName, inputType, explicitValues = null) {
@@ -2572,15 +2550,6 @@
                     filterValues[itemFilter].push(this.getFilterValue(item).toLowerCase());
                 }
 
-                // Legacy .nds-card-tags fallback — only contributes when no
-                // data-filter="tags" markers exist on this card.
-                if (!filterValues.tags) {
-                    const tagLabels = this._collectCardTagLabels(item);
-                    if (tagLabels.length) {
-                        filterValues.tags = tagLabels.map(v => v.toLowerCase());
-                    }
-                }
-
                 item._ndsFilterValues = filterValues;
 
                 const textSource = item.querySelector('.nds-card-content') || item;
@@ -2629,19 +2598,6 @@
         // ==============================================
         // RESET FUNCTIONALITY
         // ==============================================
-
-        setupResetButton() {
-            const resetBtn = this.filterContainer.querySelector('[class*="refresh"], button:has(.nds-hgi-refresh)');
-            const resetByIcon = this.filterContainer.querySelector('.nds-hgi-refresh-ccw-02, .nds-hgi-refresh');
-            const resetButton = resetBtn || (resetByIcon ? resetByIcon.closest('button') : null);
-
-            if (resetButton) {
-                resetButton.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    this.reset();
-                }, { signal: this.abortController.signal });
-            }
-        }
 
         // Uncheck every filter input, zero out the criteria entries, and
         // re-check the "All" radio (value="") so radio groups keep a valid
@@ -2916,11 +2872,6 @@
             // Re-setup the filter listeners
             this.setupManualFilter(actualElement, filterName);
             this._flushAccordionInit();
-        }
-
-        // Legacy API for backward compatibility
-        setSelectedTags(tags) {
-            this.setFilterValues('tags', tags);
         }
 
         destroy() {

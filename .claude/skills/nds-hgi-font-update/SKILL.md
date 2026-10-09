@@ -16,9 +16,9 @@ The HGI icon font is served locally (not from the CDN) to avoid CORS issues. It 
 
 | File | Role |
 |------|------|
-| `_sass/_hgiRoundedStroke.scss` | `.hgi-stroke` base (family list ends in the `hgi-blank` placeholder) + every `.hgi-stroke.hgi-*` rule + the deprecated-name alias block. NO `@font-face`: that lives in `_sass/_fonts.scss` (crit) |
+| `_sass/_hgiRoundedStroke.scss` | `.hgi-stroke` base (family list ends in the `hgi-blank` placeholder) + every `.hgi-stroke.hgi-*` rule. NO `@font-face`: that lives in `_sass/_fonts.scss` (crit) |
 | `assets/fonts/hgi-stroke-rounded.woff2` | the font file |
-| `scripts/hgi-font-update.py` | does the work; holds the `ALIASES` map |
+| `scripts/hgi-font-update.py` | does the work |
 | `_data/hgi.yml` | the version the docs state (CDN build date, icon count). The font itself only says "Version 1.0"; the build stamp is the real version |
 
 ## Step 1: Compare
@@ -27,15 +27,15 @@ The HGI icon font is served locally (not from the CDN) to avoid CORS issues. It 
 python scripts/hgi-font-update.py
 ```
 
-Reports local vs CDN counts, added names, removed names, and any removed name with no alias. Nothing changed: report "already up to date" and stop.
+Reports local vs CDN counts, added names and removed names. Nothing changed: report "already up to date" and stop.
 
 ## Step 2: Handle removed names
 
-A name removed upstream breaks existing markup. For each one the script flags `NO ALIAS`:
+No alias is kept. For each removed name:
 
 1. Find its new name (HugeIcons renames rather than deletes; the 2026-09 set spelled digits out: `layout-3-column` → `layout-three-column`).
 2. **Confirm by the glyph, not the name:** render the old and new glyphs side by side with fontTools + PIL and look.
-3. Add it to `ALIASES` in the script and to the HGI row in `DEPRECATIONS.md`.
+3. Move this repo's own markup to the new name, and add a Migration line for the rename.
 
 ## Step 3: Apply
 
@@ -43,7 +43,7 @@ A name removed upstream breaks existing markup. For each one the script flags `N
 python scripts/hgi-font-update.py --apply
 ```
 
-It rewrites the SCSS (keeping our header and family names `hgi-stroke-rounded` and `hgi-blank`, since the loader and the font faces key on them) and replaces the woff2. The `hgi-blank` face in `_sass/_fonts-hgi-blank.scss` is an invisible 1em placeholder over U+F0000–FFFFD with the icon font's metrics: rebuild it with `python scripts/hgi-blank-font.py` only if an update moves the icons off that plane or changes the metrics. It refuses while any removed name lacks an alias.
+It rewrites the SCSS (keeping our header and family names `hgi-stroke-rounded` and `hgi-blank`, since the loader and the font faces key on them) and replaces the woff2. The `hgi-blank` face in `_sass/_fonts-hgi-blank.scss` is an invisible 1em placeholder over U+F0000–FFFFD with the icon font's metrics: rebuild it with `python scripts/hgi-blank-font.py` only if an update moves the icons off that plane or changes the metrics.
 
 ## Step 4: Verify
 

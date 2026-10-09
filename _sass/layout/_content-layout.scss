@@ -224,7 +224,7 @@ main {
     // takes the INVERSE parity: its predecessor always has the other parity, so
     // inverse-strip + excluded-from-the-list = always matching the section above.
     @mixin _section-striping($sections, $last-edit) {
-        .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(#{$sections}) {
+        .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-gradient-primary, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(#{$sections}) {
             --_section-bg-base: var(--background-stripe);
         }
 

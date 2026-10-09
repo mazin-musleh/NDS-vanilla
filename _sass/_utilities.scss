@@ -68,10 +68,6 @@
   &[data-unit]:not([data-currency]) {
     @include ltr { flex-direction: row; }
   }
-  // Deprecated (DEPRECATIONS.md): same as leaving out data-currency.
-  &[data-free]::after {
-    display: none;
-  }
 }
 
 :where(.nds-truncate) {

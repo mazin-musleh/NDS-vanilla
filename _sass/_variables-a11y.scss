@@ -231,7 +231,7 @@ $a11y-filters: (
     --text-oncolor-primary: var(--_hc-bg);
 }
 
-// Content sections — the coloured variants (.nds-primary / .nds-green /
+// Content sections — the coloured variants (.nds-primary /
 // .nds-neutral / .nds-brand / .nds-gradient-primary) and any author-set
 // --section-bg collapse to the mono palette. Writing the public knob outranks
 // the variants (they retune --_section-bg-base), and !important also beats an
@@ -245,12 +245,12 @@ $a11y-filters: (
     --section-description-color:  var(--_hc-fg);
     --section-text-color:        var(--_hc-fg);
 }
-:root[data-a11y~="high-contrast"] .nds-content-section:is(.nds-gradient-primary, .nds-gradient-green) {
+:root[data-a11y~="high-contrast"] .nds-content-section.nds-gradient-primary {
     background: var(--_hc-bg);
 }
 
 // Footer (light theme): the plain footer flattens to the white page;
-// the .nds-green variant inverts to a solid black band so it still reads
+// the .nds-brand variant inverts to a solid black band so it still reads
 // as a distinct footer. !important on background beats the neutral base
 // fills in _footer.scss.
 :root[data-a11y~="high-contrast"] .nds-footer {
@@ -260,7 +260,7 @@ $a11y-filters: (
     --text-oncolor-secondary: var(--_hc-fg);
     border-block-start: 1px solid var(--_hc-fg);
 }
-:root[data-a11y~="high-contrast"] .nds-footer.nds-green {
+:root[data-a11y~="high-contrast"] .nds-footer.nds-brand {
     background: var(--_hc-fg) !important;
     color: var(--_hc-bg);
     --text-oncolor-primary:   var(--_hc-bg);
@@ -269,9 +269,9 @@ $a11y-filters: (
 }
 
 // Dark theme: the page is already black, so every footer — including the
-// .nds-green variant, which would otherwise invert to a white band — sits
+// .nds-brand variant, which would otherwise invert to a white band — sits
 // flush at --_hc-bg with a --_hc-fg top edge for separation. Comes after
-// the rules above so it wins over the .nds-green inversion in dark mode.
+// the rules above so it wins over the .nds-brand inversion in dark mode.
 :root[data-a11y~="high-contrast"][data-theme~="dark"] .nds-footer {
     background: var(--_hc-bg) !important;
     color: var(--_hc-fg);

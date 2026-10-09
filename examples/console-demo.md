@@ -418,7 +418,7 @@ hideFeedback: true
                                 </td>
                                 <td data-sort-value="{{ txn.amount }}">
                                     {% if txn.amount == 0 %}
-                                    <span class="nds-number-format" data-currency="{{ txn.currency }}" data-free data-filter="amount" data-filter-value="0">Free</span>
+                                    <span class="nds-number-format" data-filter="amount" data-filter-value="0">Free</span>
                                     {% else %}
                                     <span class="nds-number-format" data-currency="{{ txn.currency }}" data-filter="amount" data-filter-value="{{ txn.amount }}">{{ txn.amount }}</span>
                                     {% endif %}

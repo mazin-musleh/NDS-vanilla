@@ -81,7 +81,7 @@
 // Variant class lives on `.nds-dropmenu-menu` directly so a single
 // selector matches whether the menu is nested in the wrapper (closed)
 // or portaled to <body> (open).
-.nds-dropmenu-menu.nds-rating-dropmenu {
+.nds-dropmenu-menu.nds-rating-menu {
   --menu-padding: var(--spacing-2xl);
 
   // Stack label and stars inside the rating dropmenu's prompt item.

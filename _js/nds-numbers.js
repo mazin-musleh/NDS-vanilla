@@ -16,7 +16,6 @@
  *                        The counter formats its own output, so it needs no .nds-number-format
  *   data-counter-start   the start value, default 0
  *   data-counter-duration  milliseconds, default 1000
- *   deprecated: .nds-counter-value with data-target, data-start, data-duration (DEPRECATIONS.md)
  *   written by the component: data-animated once a counter has finished
  * Gotchas:
  *   - format() is idempotent — it remembers the text it wrote and re-reads the source,
@@ -31,9 +30,8 @@
 
     // prefix · sign · digits (commas allowed) · suffix
     const NUMBER = /^(.*?)([-+]?)((?:\d[\d,]*)?\.?\d+)(.*)$/s;
-    const COUNTER = '[data-counter], .nds-counter-value';
-    // The data-counter-* name, else the deprecated bare one.
-    const attr = (el, name) => el.getAttribute('data-counter-' + name) ?? el.getAttribute('data-' + name);
+    const COUNTER = '[data-counter]';
+    const attr = (el, name) => el.getAttribute('data-counter-' + name);
 
     // text node → [text we wrote, the text it came from]: a re-run reads the source, never
     // our own output, which other locales group with "." ("3.240.000").
@@ -80,7 +78,7 @@
 
     function count(el, reduced) {
         const node = numberNode(el);
-        const n = parse(el.getAttribute('data-counter') || el.getAttribute('data-target') || (node ? source(node) : '')) || { prefix: '', value: 0, decimals: 0, suffix: '' };
+        const n = parse(el.getAttribute('data-counter') || (node ? source(node) : '')) || { prefix: '', value: 0, decimals: 0, suffix: '' };
         const opts = places(n);
         const start = parseFloat(attr(el, 'start')) || 0;
         const ms = parseInt(attr(el, 'duration'), 10);

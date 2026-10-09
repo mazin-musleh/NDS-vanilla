@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "09/10/2026 - 03:10 AM"
 ---
 
 <section id="ratingOverview" class="nds-content-section nds-doc-overview">
@@ -66,7 +66,7 @@ Pick another component when:
     </div>
     <span class="nds-label">4.5 - (18) Votes</span>
   </button>
-  <div class="nds-dropmenu-menu nds-rating-dropmenu" hidden>
+  <div class="nds-dropmenu-menu nds-rating-menu" hidden>
     <div class="nds-dropmenu-item" data-no-auto-close>
       <span class="nds-label">Rate this service</span>
       <div class="nds-rating">
@@ -138,7 +138,7 @@ Stars built from `<button>` elements let the user pick a score. Hover shows the 
 
 ### Menu
 
-The Menu structure puts a display rating and a vote count in a [Dropmenu](../components/dropmenu) trigger. The panel holds an interactive rating and a Vote button. Put `nds-rating-dropmenu` on the `.nds-dropmenu-menu`, not on its parent. The menu moves to `<body>` while it is open, and the class goes with it. The page owns the vote: listen for `nds:rating:change`, and send the score from your own code.
+The Menu structure puts a display rating and a vote count in a [Dropmenu](../components/dropmenu) trigger. The panel holds an interactive rating and a Vote button. Put `nds-rating-menu` on the `.nds-dropmenu-menu`, not on its parent. The menu moves to `<body>` while it is open, and the class goes with it. The page owns the vote: listen for `nds:rating:change`, and send the score from your own code.
 
 ### Required
 
@@ -243,7 +243,7 @@ To require a score, put the rating in a `.nds-form-group` and add `data-required
 | Class | Element | Effect |
 |---|---|---|
 | `.nds-rating-star` | a child of `.nds-rating` | One star. A `<button>` makes the rating interactive |
-| `.nds-rating-dropmenu` | `.nds-dropmenu-menu` | Centers the label and the stars of the vote item in a [Dropmenu](../components/dropmenu), and sets the menu padding |
+| `.nds-rating-menu` | `.nds-dropmenu-menu` | Centers the label and the stars of the vote item in a [Dropmenu](../components/dropmenu), and sets the menu padding |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes
