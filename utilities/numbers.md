@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 03:10 AM"
+last_edit: "10/10/2026 - 01:37 AM"
 ---
 
 <section id="numbersOverview" class="nds-content-section nds-doc-overview">
@@ -39,10 +39,6 @@ Pick another component when:
 <span class="nds-number-format">3240000</span>
 </script>
 
-<script type="text/html" id="numbers-counter" data-canon>
-<span data-counter="42850.75">0</span>
-</script>
-
     </div>
   </div>
 </section>
@@ -54,12 +50,10 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Currency and Unit go on `.nds-number-format`, so they need the Number structure. Start and Duration go on `[data-counter]`, so they need the Counter structure. A currency and a unit do not combine: use one.
+Every option goes on the number, `.nds-number-format`. Counter makes it count up to the number it holds, and keeps its currency or unit. Start From and 2000 ms need Counter. A currency and a unit do not combine: use one.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Structure | Number (default) | — | — | Any number on the page: totals, counts, prices |
-| Structure | Counter (hint: Counts up when it scrolls into view) | canon `#numbers-counter` | — | A headline figure that counts up once. Use it for a few key figures, never for live data |
 | Currency | None (default) | — | — | A number with no currency |
 | Currency | SAR | `[data-currency="SAR"]` | `.nds-number-format:not([data-unit])` | Saudi riyals. Draws the Riyal sign as an icon |
 | Currency | USD | `[data-currency="USD"]` | `.nds-number-format:not([data-unit])` | US dollars ($) |
@@ -71,9 +65,9 @@ Currency and Unit go on `.nds-number-format`, so they need the Number structure.
 | Currency | KRW | `[data-currency="KRW"]` | `.nds-number-format:not([data-unit])` | Korean won (₩) |
 | Currency | TRY | `[data-currency="TRY"]` | `.nds-number-format:not([data-unit])` | Turkish lira (₺) |
 | Unit | Unit (hint: Any text after the number) | `[data-unit="km"]` | `.nds-number-format:not([data-currency])` | A unit such as km, kg, MB or years. Not with a currency |
-| Start | Start From (hint: Counts from 40,000, not from 0) | `[data-counter-start="40000"]` | `[data-counter]` | For a large number: the count shows only its last part |
-| Duration | 1000 ms (default) | — | `[data-counter]` | One second. Fits most numbers |
-| Duration | 2000 ms | `[data-counter-duration="2000"]` | `[data-counter]` | A slower count, for a large number |
+| Counter (any) | Counter (hint: Counts up when it scrolls into view) | `[data-counter]` | `.nds-number-format` | A headline figure that counts up once, to the number in its text. Combines with a currency or a unit. Use it for a few key figures, never for live data |
+| Counter (any) | Start From (hint: Counts from 40,000, not from 0) | `[data-counter-start="40000"]` | `[data-counter]` | For a large number: the count shows only its last part |
+| Counter (any) | 2000 ms (hint: Slower than the 1000 ms default) | `[data-counter-duration="2000"]` | `[data-counter]` | A slower count, for a large number. Without it, a count takes one second |
 {: #numbersVariantsTable .nds-table .nds-responsive}
 
 </div>
