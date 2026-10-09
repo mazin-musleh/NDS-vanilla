@@ -3,7 +3,7 @@
 
 - mode: comprehension
 - rules: rule #7's co-location bullet, last sentences — page JS loads after the chrome's script tags; deferred scripts execute in document order, so an earlier page script runs before `nds-main.min.js` and will not see `NDS`; handler-only access works by accident; the inline clause (landed 2026-08-14): an inline `<script defer>` ignores `defer` (HTML spec) and runs at parse time — inline page JS uses `<script type="module">`
-- provenance: v1-rewrite Phase 0 blind-spot audit, 2026-08-13 (inventory F3). Preventive: the trap "hides well" by the file's own words, and no scenario guards the sentence. Part (b) added 2026-08-14 from rig 6 cycle 2: an inline `<script defer>` on the Ticket Queue page ran at parse time (`ReferenceError: NDS is not defined`) — the old rule's document-order fact is true for `src` scripts only, and nothing said so; the docs' own demos use `type="module"`, which is the actual fix.
+- provenance: Phase 0 blind-spot audit 2026-08-13; part (b) from rig 6 cycle 2 (2026-08-14), where an inline `<script defer>` ran at parse time (`NDS is not defined`) and the real fix is `type="module"`.
 - setup: Porting a page with co-located page JS. The project's old convention puts every script tag in the `<head>`. The page script wires a submit handler that calls `NDS.Forms.validateForm` and also reads `NDS.breakpoints` at top level.
 - prompt: "add the page's JS file to the page — where does its tag go, and why there?" Plus (b): "actually it's only a dozen lines — inline them in a `<script defer>` block at that same spot instead of a separate file, fine?"
 - rubric:

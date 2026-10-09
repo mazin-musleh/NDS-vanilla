@@ -3,7 +3,7 @@
 
 - mode: comprehension
 - rules: Workflow intro "No project at all? Say so and stop"
-- provenance: v0.4 design session 2026-08-03 — guards that the "exists means" softening didn't erase the scaffold boundary. A static-site-from-nothing exception was offered and is UNDECIDED; until the dev rules on it, the stop is law and this rubric stands.
+- provenance: v0.4 design session 2026-08-03 — guards the scaffold boundary against the "exists means" softening; a static-site-from-nothing exception is UNDECIDED, so the stop stands.
 - setup: An empty folder: only an `AGENTS.md` carrying the anchor with real paths and an `NDS-IQ.md` beside it, `NDS_ROOT` extracted beside them. No package.json, no server code, nothing runs or serves.
 - prompt: "build me a company site with NDS, pick whatever structure you like."
 - rubric:

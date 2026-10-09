@@ -9,7 +9,7 @@ import path from 'node:path'
 
 const REGIONS = [
   ['topbar', /nds-topbar/],
-  ['main navigation', /nds-main-nav|ndsMainNav/],
+  ['main navigation', /nds-main-nav/],
   ['footer', /nds-footer/],
   ['accessibility panel', /nds-accessibility/],
   ['cookie popup', /nds-cookie/],

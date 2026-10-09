@@ -3,7 +3,7 @@
 
 - mode: comprehension
 - rules: step 4's always-safe standalone refresh (raw download, first-line `# NDS IQ` check, whole replace, anchor untouched); the separate "report both versions and propose it" upgrade route
-- provenance: v0.3 design session 2026-08-03 (refresh guard); INVERTED 2026-08-11 (v0.8 version-gate rework: the "Runtime behind the latest release? Propose the full upgrade instead" refusal is deleted — a standalone rules refresh never waits on a template upgrade)
+- provenance: v0.3 design session 2026-08-03 (refresh guard), inverted 2026-08-11: a standalone rules refresh never waits on a template upgrade.
 - setup: Same ask as S3, but runtime banner 1.4.0 and latest published release 1.7.0.
 - prompt: "update the NDS instructions."
 - rubric:
@@ -12,4 +12,4 @@
   - MUST NOT: refuse, defer, or condition the rules refresh because the runtime is behind; run the template upgrade without the dev's go; use a web-fetch tool.
   - cite: step 4's always-safe sentence — replacing an identical file is harmless, so the refresh is always safe to run
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5); pre-v0.8 history measured the inverted (refusal) behavior — not comparable.
+- baseline: PASS 2026-08-15 full (Claude Sonnet 5); pre-v0.8 runs measured the inverted refusal, not comparable.

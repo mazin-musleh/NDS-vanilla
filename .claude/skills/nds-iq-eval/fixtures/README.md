@@ -48,8 +48,10 @@ README, where no runner reads it.
     Only registered names paint in the inline set, so a missing one is a silent
     solid box that `NDS.Init.audit()` reports — an agent then correctly flags a
     page that is actually fine, and the run pays attention to a harness fault.
-  - `NDS-IQ.md` (top level) = heading + pairing-stamp stub of the zip's copy of
-    the rules file; the upgrade flow compares against it.
+  - **Doc format: old.** Its docs use the 1.x code tab and Modifier Classes
+    table, and its names are 1.x names (as `mini-app`'s are). The default
+    `--root repo` copy is the new format (`data-canon` + Variants), so the two
+    roots test both formats. Keep `mini-root` old; never mix formats in it.
 - `mini-app/` = a fake consumer ASP.NET MVC app mid-legacy: two legacy `.cshtml`
   pages (Bootstrap + jQuery-table flavored) plus `Home/Dashboard.cshtml`, an
   NDS-built page carrying a canonical department multiselect for the wiring

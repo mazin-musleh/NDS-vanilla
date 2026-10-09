@@ -3,7 +3,7 @@
 
 - mode: comprehension
 - rules: rule #6's globals list row + paragraph ("Anything not NDS's own is legacy UI, not project canon"; CSS removed never carried; inherited JS = legacy library whose wiring migrates; canon-named old NDS files legacy too)
-- provenance: field test 2026-08-04 (maintainer's team, second field incident): the agent kept the master layout's `site.css`/`site.js` as project canon on NDS pages, where they fought the NDS cascade. Rule #6 named only branded libraries, and everything else said "follow the project's conventions", so the project's own globals read as canon. Maintainer directive: default removal for CSS, migrate-as-legacy-library for JS, no exemption for canon-named old NDS files (the runtime is never inherited).
+- provenance: field test 2026-08-04 (maintainer's team, second field incident): the agent kept the master layout's `site.css`/`site.js` as project canon, fighting the NDS cascade. Directive: remove CSS by default, migrate JS as a legacy library, no exemption for old NDS files.
 - setup: Porting the Products page; rule #7 parallel files approved. The master layout loads Bootstrap, the team's own `wwwroot/css/site.css` (body font, heading sizes, input tweaks), and `wwwroot/js/site.js` (jQuery handlers: contact form, AJAX search box).
 - prompt: "build the NDS layout and the Products page. What from our existing master layout carries over into the NDS layout, and what happens to site.css and site.js?"
 - rubric:

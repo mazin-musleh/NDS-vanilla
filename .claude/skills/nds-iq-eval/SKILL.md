@@ -5,59 +5,117 @@ description: Test and evolve the NDS consumer rules file NDS-IQ.md (source _incl
 
 # nds-iq-eval
 
-Evaluates the consumer rules file (`_includes/NDS-IQ.md` — installed at a consumer project's root as `NDS-IQ.md`, read on demand when an anchor in the project's agent file fires) for the one property it must hold: **capability-independence**. A rule the strong model infers but the weak model misses is a file bug. Scenarios are the regression suite; every real incident becomes a scenario so a fixed rule cannot silently regress in a later rewrite.
+Tests the consumer rules file, `_includes/NDS-IQ.md`. A consumer project saves it at its root as `NDS-IQ.md`, and an anchor in the project's agent file makes the agent read it. The file must hold one property: **capability-independence**. A rule the strong model infers and the weak model misses is a bug in the file. The scenarios are the regression suite: every real incident becomes a scenario, so a later rewrite cannot quietly undo a fixed rule.
 
 ## Principles
 
-- **Scenarios are born from real incidents** (rig findings, session gaps, real dev asks), never invented hypotheticals. The suite validates that the text is followable; the user's integration rigs remain the real evidence. Record provenance on every scenario.
-- **Token discipline is a feature.** Default runs are scoped and single-model. Escalate only on explicit ask.
-- **One eval per edit-batch, never per edit.** Finish ALL of a sitting's edits (rules, catalog, docs) first, then run once against the combined diff; re-probe only findings. Firing a run after each sentence multiplies cost with no added signal — the 2026-08-14 cycle spent 5 launches (~520K subagent tokens) where 2 carried the same information.
-- **Findings are suggest-only.** A divergence becomes a proposed file edit only after verifying the text is actually ambiguous (not just an agent failure), and the user approves every edit — same contract as nds-js-audit evolve.
-- **Runners are fresh agents, never forks.** A fork inherits this conversation and biases the test. Spawn `general-purpose` agents with a `model` override.
-- **A new sentence must fail the floor first.** Before proposing any addition to `_includes/NDS-IQ.md`, run its scenario in `floor` mode. Stub PASSES → the model already does this and the sentence buys nothing: fix the source instead (doc, example, catalog, banner), which is where AGENTS.md's attribution default sends it anyway. Stub FAILS → the sentence is carrying real weight and can be proposed. This is the cheap half of the cause-removal ladder: it tells you whether the top rung is even needed before you argue about wording.
-- **The harness states only what the field state would show.** A scenario's setup, prompt, and seeded artifacts carry world-state, never the graded answer — the leak-class taxonomy (four classes, proven cases, audited 2026-08-17) is canonical in the `scenarios.md` preamble, next to the `leak:` labels it defines. Reuse field artifacts verbatim where they exist; author a same-sitting gate run's setup BLIND — written before the sentence it will grade. A pass a leak audit voids reverts to UNMEASURED, never FAIL.
+- **Scenarios come from real incidents**: rig findings, session gaps, real dev asks. Never invent hypotheticals. Each scenario records where it came from. The owner's field rigs stay the real evidence.
+- **One eval per edit batch, never per edit.** Finish every edit of a sitting first, then run once against the combined diff. Afterwards, re-probe only the findings.
+- **Findings are suggest-only.** A divergence becomes a proposed edit only once the text is shown to be ambiguous, not just an agent failure. The owner approves every edit.
+- **Runners are fresh `general-purpose` agents with a `model` override, never forks.** A fork inherits this conversation and biases the test.
+- **A new sentence must fail the floor first** (see Floor). A stub PASS means the model already does it: fix the source instead.
+- **The harness states only what the field state would show.** Setup, prompt and seeded files carry world-state, never the graded answer. The four leak classes are defined in the `scenarios.md` preamble. Reuse field artifacts verbatim where they exist. Write a gate run's setup BLIND, before the sentence it grades. A pass that a leak audit voids goes back to UNMEASURED, never FAIL.
+- **Rules run on every template.** Consumers on any release since 1.7.0 fetch raw main. So a sentence that routes to a newer doc or runtime feature also needs the old-template probe (Modes).
 
-## Token efficiency (hard rules)
+## Token rules
 
-- **Cheapest instrument first, always:** a grep or mechanical check → one scoped comprehension run → behavior on the SMALLEST fixture that lets the graded behavior fire → the field rig. Reaching for a costlier instrument when a cheaper one answers the question is a violation, not a preference.
-- **Every proposed run names its expected token cost before launch.** Anything above ~300K in one launch needs the owner's explicit go.
-- **One run per question.** A scenario with a standing verdict is never re-run unless its rules text changed or a field report contradicts it. (Extends the one-eval-per-edit-batch principle.)
-- **Behavior runs grade everything their artifacts touch** — one small fixture, many verdicts. A single-scenario rig is the exception, used only when no existing state can carry it.
-- **Fixtures stay skeletal and states get reused.** A new state is authored only when no existing one can host the run — authoring and leak-auditing a state costs more than most runs.
-- **Small batches are paid for, not waste.** Every runner batch re-reads the full rulebook, so fewer, bigger batches look cheaper — but big batches flatten per-scenario tool effort (the 2026-08-12 full batch made ZERO routed reads) and a lazy runner under-passes. The re-read tax is the price of runners that actually read; never "optimize" it by inflating batch size past the ~10 the Floor section's tool-effort rule sets.
+- **Cheapest instrument first:**
+  1. a grep or a mechanical check
+  2. one scoped comprehension run
+  3. a behavior run on the SMALLEST fixture that lets the behavior fire
+  4. the field rig
 
-## Modes (cost tiers)
+  Reaching for a costlier instrument when a cheaper one answers is a violation.
+- **Name the expected cost before every launch.** A single launch above ~300K tokens needs the owner's explicit go.
+- **One run per question.** A scenario with a standing verdict is re-run only if its rules text changed or a field report contradicts it.
+- **A behavior run grades everything its artifacts touch.** Use one small fixture for many verdicts. Reuse existing states; author a new one only when no state can host the run.
+- **Batch at most ~10 scenarios.** Every batch re-reads the rulebook, and big batches flatten tool effort: the 2026-08-12 full batch made zero routed reads. Never inflate a batch to save the re-read.
 
-| Mode | What runs | Model(s) | When |
+## Modes
+
+| Mode | What runs | Model | When |
 |---|---|---|---|
-| `scoped` (default) | Scenarios whose `rules:` cover the changed lines. The diff is mechanical — working-tree `_includes/NDS-IQ.md` against the `last-evaluated.md` snapshot (commits are irrelevant: uncommitted edits scope correctly) — but the scenario match is judgment: `rules:` is prose, many scenarios quote no literal, so read each `rules:` line against the changed sentences and pick the SINGLE most direct scenario per changed sentence — the one whose rubric the sentence exists to satisfy. Plausible-but-indirect matches ride the next `full` run instead (that run exists to catch cross-effects); a one-word or enumeration-only edit whose reading is obvious needs no run at all, just say so | sonnet | After an edit batch |
-| `full` | Every comprehension scenario | sonnet | Before a version bump |
-| `sweep` | Every comprehension scenario | fable + opus + sonnet in parallel | Occasional, owner's call only — NOT a release step |
-| `behavior <id>` | One scenario against the micro-fixtures | sonnet (or named) | Explicit ask only |
-| `floor [ids]` | The named scenarios — or all of them — against `fixtures/NDS-IQ-STUB.md` instead of the real rules file. Everything else in the harness stays byte-identical; ONLY the rulebook path changes, or the comparison is void | sonnet | Before writing a new sentence; when a trim is proposed; explicit ask |
+| `scoped` (default) | The single most direct scenario for each changed sentence (Workflow step 1). Indirect matches wait for the next `full`. A one-word or list-only edit needs no run: say so. | sonnet | After an edit batch |
+| `full` | Every comprehension scenario | sonnet | Before a revision is published |
+| `old` | Every scenario with a `root:` field, plus the routing scenarios, against the old-template root (below) | sonnet | When a sentence routes to a source or runtime feature that older templates may lack; before a revision is published |
+| `floor [ids]` | The named scenarios against `fixtures/NDS-IQ-STUB.md`. Only the rulebook path changes, or the comparison is void. | sonnet | Before a new sentence; when a trim is proposed |
+| `behavior <id>` | One scenario or rig against the fixtures | sonnet (or named) | Explicit ask only |
+| `sweep` | Every comprehension scenario on fable + opus + sonnet in parallel | all three | The owner's call only, never a release step. Demoted 2026-08-18: it proved nothing the sonnet runs did not. |
 
-Sonnet is the default deliberately: it is the tier the file must not lean on, and it is the tier this project works on. Strong models add little signal per token. **The 3-model sweep is demoted (owner call 2026-08-18): it proved nothing the sonnet runs did not, so it is occasional and on the owner's ask, never a release gate.** Reach for it only when a specific question needs the per-model diff — a sentence suspected of leaning on capability, say — not as routine pre-release ceremony.
+Sonnet is the default on purpose. It is the tier the file must not lean on, and the tier this project works on.
 
-**Floor mode answers "does this sentence earn its place?"** A scenario that PASSES with a stub rulebook is measuring the model, not the file. Every scenario carries a `floor:` line from the 2026-08-14 run (24 PASS / 51 FAIL / 2 n-a — see the `scenarios.md` index preamble for the lower-bound caveats); a scenario with no `floor:` line has never been floor-run.
+**Old-template root.** Build it once per sitting into the disposable `tmp/`:
 
-- **A floor PASS is a trim CANDIDATE, never a trim.** Confirm the source actually carries the behavior, then remove the sentence and re-run its scenario: pass → remove → still-pass. Skipping that is how a rule disappears because a doc happened to answer once.
-- **A floor FAIL is the sentence earning its keep** — the strongest evidence a rule should exist. Do not trim it without a source fix that absorbs it first.
-- Floor passes cluster on **source-doc-answerable** scenarios. That is the cause-removal ladder showing up as data: when a doc, catalog or banner answers, the rules text is redundant. `ea66d4e5` (a wrapper comment added to nine sources) is the worked example — it made S36 and S38 free.
-- **Never quote a floor score as "the file contributes X%".** The floor is not zero-knowledge — the harness supplies constant context (what exactly: the `scenarios.md` preamble's floor note), so floor-vs-file deltas are clean but the absolute score is not a contribution measure.
-- **Tool effort dominates the result.** In the 2026-08-14 run one batch made 39 tool calls and most made 2, and the high-reading batch passed far more. Batch small (≤10) and treat any floor PASS from a 2-call batch as unproven — a lazy runner under-passes, which makes the file look more necessary than it is.
+```bash
+T=v1.12.0 R=tmp/iq-old-root-$T && rm -rf $R && mkdir -p $R/_source
+git archive $T _js _sass components utilities layout ui-shell core templates examples _data/content | tar -x -C $R/_source
+git show $T:CHANGELOG.md > $R/CHANGELOG.md
+ls dist/nds-vanilla-template-$T.zip || gh release download $T -p '*.zip' -D dist
+python -c "import zipfile,sys;z=zipfile.ZipFile(sys.argv[1]);[z.extract(n,'tmp/iq-old-zip') for n in z.namelist() if '/_site/' in n]" dist/nds-vanilla-template-$T.zip
+mv tmp/iq-old-zip/*/_site $R/_site && rm -rf tmp/iq-old-zip
+```
+
+- The default tag is the newest 1.x. Its docs are the old format: the code tab and the Modifier Classes table.
+- A scenario with a `root:` field runs only against that tag. For example, S81 needs a template older than its routed doc.
+- In the harness prompt:
+  - `{SRC}` = `C:\Projects\NDS-vanilla\tmp\iq-old-root-<tag>\_source`
+  - `{SITE}` = `C:\Projects\NDS-vanilla\tmp\iq-old-root-<tag>\_site`
+  - `{ROOT_VERSION}` = the tag without its `v`
+
+## Floor
+
+The floor answers one question: does this sentence earn its place? A scenario that PASSES against the stub measures the model, not the file.
+
+- **A floor PASS on existing text is a trim CANDIDATE, never a trim.** Re-running the cut sentence's own scenario proves nothing, because it already passed with no rules at all. Clear a trim in this order:
+  1. **Read** the source that should carry the behavior. It must be a doc, example, catalog or banner the agent is already routed to, **in every template since 1.7.0**. A source fix only absorbs a rule for templates that ship it.
+  2. Cut the batch, not one sentence at a time.
+  3. Re-run WIDE (`full`), because the live risk is collateral: a sentence that holds up a scenario nobody mapped it to.
+
+  A sentence guarded by both passes and fails stays.
+- **A floor FAIL means the model does not do this for free.** It does not by itself justify a sentence. Run the same scenario against the REAL file too, and propose a sentence only when BOTH fail. S80 (2026-08-15) is why: its stub failed, and the real file then disagreed with itself across two setups.
+- **A floor result is only as good as its prompt.** A prompt that names the file or surface under test hands the pass (S80, and the S72/S79 tell).
+- **Never quote a floor score as "the file contributes X%".** The harness supplies constant context (the `scenarios.md` floor note), so deltas are clean and absolute scores are not.
+- **Tool effort dominates.** A floor PASS from a 2-call batch is unproven.
 
 ## Workflow
 
-1. **Scope.** First diff the working-tree `_includes/NDS-IQ.md` against this skill's `last-evaluated.md` snapshot — a shell `diff`, never Read: pulling both files into context costs ~23K tokens to learn a handful of changed lines. Identical → recommend no run — there is nothing new to measure — and name what would trigger the next one (next file edit → `scoped`; release prep → `sweep`). Different → the changed lines are the scope; this works identically for committed and uncommitted edits, so eval-fix-eval loops before a commit scope to just the fixes. Then: if the user's ask names a mode, run it. If it doesn't ("test the file", "run nds-iq-eval"), propose the mode as numbered options with a recommendation derived from state, so the user picks the path knowingly: file edited since the last run → `scoped` (recommended); version bump pending or many rules changed → `full`; release prep → `full`; user doubts stated intent matches real behavior → `behavior <id>`. Include each option's rough token cost. Then read the `scenarios.md` INDEX (one small read) and pick the applicable scenarios from its rules-gist column; pull the picked `scenarios/S<n>-<slug>.md` files' `rules:`, `setup:` and `prompt:` fields with one field-range shell extraction (awk/sed from the field label to the next `- ` label — fields carry indented continuation lines, so a plain line-grep truncates). Never Read a scenario file whole at run time: ~40% of its bytes is provenance/floor/baseline history no run step uses. Whole-file reads are for when the history IS the question (floor decisions, leak review, `evolve`). If a rule changed and no scenario covers it, draft one (with rubric) and include it — flag it as new in the report.
-2. **Run.** Spawn one fresh `general-purpose` agent per model with the harness prompt below. All models of a sweep go in one parallel batch. Build each batch's `{SCENARIOS}` inline in the Agent prompt, straight from the setup+prompt text you just extracted — no tmp files, no batch files on disk (the field-range extraction prints to stdout; the ban is the disk round-trip). The 2026-08-13 full run wrote a Python extractor, dumped three batch files to disk, then hand-copied them back into three prompts; the cap made a script look necessary and it was not.
-3. **Grade in-session.** Pull each scoped scenario's `rubric:` block now (same field-range extraction) and diff each answer against it. Only divergences become findings. No grader agents — the main session grades. Batch runs flatten per-scenario tool effort — the 2026-08-12 full batch made ZERO routed reads — so a read-dependent rubric (a MUST naming a fact only a banner, catalog, or doc read supplies) is gradable only from a scoped or solo run; presume a batch miss on one is harness behavior until a solo run repeats it. When a soft REPEATS across model tiers, check for a tail-rider before assuming batch noise — a rule sitting behind a clause that reads as the sentence's ending. That was S20's actual defect, and it is the first thing to test.
-4. **Verify before proposing.** For each finding, re-read the exact file sentences involved: is the text genuinely ambiguous or incomplete (CONFIRMED), or did the agent fail despite clear text (agent noise — drop it, or mark PLAUSIBLE if unsure)? A finding that survives gets a minimal proposed fix that extends an existing principle — never a new rule per incident. Then screen it against AGENTS.md's attribution default: a surviving finding is presumed a SOURCE fix (doc, example, catalog, banner) — it becomes proposed rules text only for a true procedure hole, a mistake-preventing policy, or a mandatory structure, and only if the sentence ends in an artifact check, a preference question, or an NDS-REPORT entry (never maintainer-only judgment).
-5. **Report.** In-conversation by default: verdict first (n/N scenarios clean per model), stamped with each runner's self-reported model version — `sonnet` is an alias that serves different versions on different machines and dates, so the alias alone makes results incomparable — then numbered findings, each with the divergence, the file sentence, the proposed fix, and numbered reply options (apply / skip / discuss), recommended action always in the list. A report file exists only on explicit ask AND with a named reader the in-conversation report cannot serve; it is ONE undated file, replaced never accumulated, and it dies the moment its content lands in its working home (baselines, TODO, the rules file). Findings act or die — dated report piles are banned by the no-records rule; git is the archive.
-6. **Evolve (explicit `evolve` only).** Add session findings as scenarios with rubrics and provenance, update rubrics the file edits invalidated, dedupe, and overwrite `last-evaluated.md` with the file state this run evaluated. Never write skill files without the explicit ask.
+1. **Scope.**
+   - Diff the working-tree `_includes/NDS-IQ.md` against `last-evaluated.md` with a shell `diff`. Never Read both: that costs ~23K tokens to learn a few lines.
+   - Identical → recommend no run, and name what would trigger the next one.
+   - Different → the changed lines are the scope, committed or not.
+   - If the ask names no mode, offer numbered options with a recommendation and a rough cost:
+     - file edited → `scoped`
+     - publish prep or many rules changed → `full` + `old`
+     - doubt that stated intent matches real behavior → `behavior <id>`
+   - Read the `scenarios.md` INDEX and pick scenarios from its gist column.
+   - Pull the picked files' `rules:`, `setup:` and `prompt:` with one field-range shell extraction (awk from the label to the next `- ` label). Fields carry indented continuation lines, so a line-grep truncates them. Never Read a scenario file whole at run time; whole reads are for floor decisions, leak review and `evolve`.
+   - A changed rule that no scenario covers gets a drafted scenario with a rubric, flagged as new.
+2. **Run.**
+   - Spawn one fresh agent per model with the harness prompt. A sweep's models go in one parallel batch.
+   - Build `{SCENARIOS}` inline in the Agent prompt from the extracted setup and prompt text, with no batch files on disk.
+3. **Grade in-session.**
+   - Pull each `rubric:` with the same extraction and diff each answer against it. Only divergences become findings. No grader agents.
+   - A read-dependent rubric (a MUST naming a fact only a banner, catalog or doc read supplies) is gradable only from a scoped or solo run. Treat a batch miss on one as harness behavior until a solo run repeats it.
+   - When a soft result REPEATS across model tiers, check for a tail-rider first: a rule sitting behind a clause that reads as the sentence's end (S20's real defect).
+4. **Verify before proposing.**
+   - Re-read the exact sentences involved:
+     - genuinely ambiguous or incomplete → CONFIRMED
+     - clear text and the agent still failed → drop it, or mark it PLAUSIBLE
+   - A surviving finding is presumed a SOURCE fix (Rules-file policy, Attribution).
+   - Propose rules text only for a true procedure hole, a mistake-preventing policy or a mandatory structure, and as the minimal edit that extends an existing principle.
+5. **Report in the conversation.**
+   - Verdict first: n/N clean per model, stamped with each runner's self-reported model version. The alias `sonnet` serves different versions on different machines and dates.
+   - Then numbered findings. Each gives the divergence, the sentence, the proposed fix, and apply / skip / discuss options, recommendation included.
+   - A report file exists only on explicit ask, with a named reader. It is one undated file, replaced and never accumulated, and it is deleted once its content lands in its real home.
+6. **Evolve (explicit `evolve` only).**
+   - Add the session's findings as scenarios with rubrics and provenance.
+   - Update the rubrics that edits invalidated, and dedupe.
+   - Overwrite `last-evaluated.md` with the evaluated file state.
+   - Never write skill files without the ask.
 
 ## Harness prompt (comprehension)
 
-Keep this canonical so runs stay comparable across file versions. Fill `{SCENARIOS}` from the picked `scenarios/S<n>-<slug>.md` files (setup + prompt only — never the rubric; the index has no field text).
+Keep it canonical, so runs stay comparable. Defaults: `{SRC}` = `C:\Projects\NDS-vanilla`, `{SITE}` = `C:\Projects\NDS-vanilla\_site`, and `{ROOT_VERSION}` = the current `version` in `_config.yml` without `-dev`. `old` mode swaps all three. Fill `{SCENARIOS}` with setup + prompt only, never the rubric.
 
 ```
 You are simulating an AI coding agent working inside a CONSUMER web project
@@ -73,14 +131,14 @@ First: Read C:\Projects\NDS-vanilla\_includes\NDS-IQ.md in full. That file is
 your ONLY rulebook. Ignore every other file in this repo (CLAUDE.md,
 AGENTS.md, source code) — they are maintainer-side documents the consumer
 agent never sees. ONE exception: where the rules file routes you to a read
-under NDS_ROOT, simulate it against this repo:
-- NDS_ROOT/_source/<path>  is  C:\Projects\NDS-vanilla\<path>. The zip's
-  _source/ is a straight copy of the repo's own folders, so strip the prefix:
-  _js, _sass, components, utilities, layout, ui-shell, core, templates, examples,
-  _data/content. For a _source/_js/<f>.js read, read only its top banner comment.
-- NDS_ROOT/_site/<path>  is  C:\Projects\NDS-vanilla\_site\<path>, when a build
-  exists. If it does not, report the read as unavailable and continue — never
-  substitute the _source twin for a _site read, or the reverse.
+under NDS_ROOT, simulate it:
+- NDS_ROOT/_source/<path>  is  {SRC}\<path>. The zip's _source/ is a straight
+  copy of these folders, so strip the prefix: _js, _sass, components,
+  utilities, layout, ui-shell, core, templates, examples, _data/content. For a
+  _source/_js/<f>.js read, read only its top banner comment.
+- NDS_ROOT/_site/<path>  is  {SITE}\<path>, when it exists. If it does not,
+  report the read as unavailable and continue — never substitute the _source
+  twin for a _site read, or the reverse.
 
 If a routed read lands on a path that does not exist, say so explicitly and
 name the path you tried. Do not silently substitute a different file: a routing
@@ -110,43 +168,125 @@ Return, as your final message: first line = your exact model name and model
 ID from your environment info, then your answers, numbered, nothing else.
 ```
 
-## Behavior mode (micro-fixtures)
+## Behavior mode and rigs
 
-Comprehension asks "what would you do"; behavior mode checks what an agent actually does — plan files written, markup copied verbatim, stopping at gates, and (v0.7) whether the anchor's read trigger actually fires. Costs more, so: one scenario, one agent, explicit ask.
+Comprehension asks what an agent says it would do. Behavior mode checks what it does: the plan files it writes, the markup it copies, whether it stops at gates, and whether the anchor's read trigger fires. It costs more, so run one scenario or rig per agent, on explicit ask only. It found what a 3-model comprehension sweep could not (S1, 2026-08-10).
 
-1. Assemble the run dir: `node fixtures/tools/assemble.mjs --fixture <mini-spa|mini-app> --state <name|none> --rulebook <real|stub> --out <scratchpad dir>` (`--root mini` swaps the repo real-copy `.nds/` for `mini-root/` — the classic mini-app scenarios). It fail-closes on `check-fixtures.mjs`, extracts the anchor from the rules file's own canon, overlays the checked-in state, and stamps `run-manifest.json` — "what was the runner shown?" becomes a file read. Never hand-seed a state inline; states live leak-audited in `fixtures/states/` (the S84 leak was born in hand-seeding). Do NOT tell the runner to read the rulebook — whether it reads is part of what behavior mode measures.
-2. Apply any scenario `setup:` mutations no state carries (e.g. stamp a banner version, drop a broken `.nds-*` page in, delete the root `NDS-IQ.md` for read-obedience part d).
-3. Spawn one agent: work dir = the assembled copy, task = the scenario prompt plus, verbatim, the behavior read-discipline line: *"Files under `.nds/` run to thousands of lines: NEVER Read one whole. Grep for the section, class, or markup block you need, then Read ~100 lines around the hit."* It constrains HOW the runner reads, never WHETHER — it names only the `.nds/` path the anchor already declares, never the rulebook, so the read-trigger measurement stays clean — and it is part of the harness constant from 2026-08-20 (behavior baselines before that date predate it; a routed read that dominated an older run's cost is not comparable). Without it a single rig run spends 300–430K tokens, mostly on whole doc reads (S84: 186 tool calls, 418K). The task also carries, verbatim: *"Do not use the session's interactive browser tools (claude-in-chrome or similar) — they drive the owner's real browser. Any browser you need, launch yourself, headless."* (Added 2026-08-20 after an R7 runner opened a tab in the owner's Chrome. Tradeoff, accepted: the S86 tab-temptation can never fire in a rig — comprehension covers it.) The task also carries, verbatim: *"Launch any browser you need with `--headless=new` and an explicit throwaway `--user-data-dir` under your temp directory, and kill it by PID when the run ends. Never kill a browser by image name — `taskkill /IM chrome.exe` and its equivalents take the owner's own browser down with them. The same goes for any server you start: note its PID, serve from a directory you can name rather than one you `cd` into, and kill it by PID before you finish."* (Added 2026-08-22 after the R4 runner leaked 17 orphaned `chrome.exe` processes across a 22-minute run — `child_process.kill()` does not kill a Windows process tree — and the owner's Chrome crashed during that pass. That runner's profile isolation was already correct; the leak and the cleanup are what needed naming, and an image-name kill is the one cleanup that reaches outside the rig. Extended 2026-08-22 to servers after a rig's `python -m http.server` outlived its run with its CWD inside the fixture's `.nds/_site`, which blocked the owner from deleting the folder — a process holding a directory as CWD keeps it undeletable even after every file inside is gone.) `mini-spa` RUNS — a plain static server serves it and repo `playwright-core` (launched via `scripts/lib/browser.mjs`) + the machine's Chrome give the runner a REAL verify channel; grant or withhold serving/browsing per what the scenario measures, and state the constraints plainly. `mini-app` stays non-running: tell the runner the project serves at a fictional URL and browser verification is unavailable (it should emit the checklist per the rules).
+1. **Assemble:** `node fixtures/tools/assemble.mjs --fixture <mini-spa|mini-app|mini-mpa> --state <name|none> --rulebook <real|stub|path> --out <scratchpad dir> [--root repo|mini]`.
+   - It fails closed on `check-fixtures.mjs`, extracts the anchor from the rules file's own canon, overlays the state, and writes `run-manifest.json`.
+   - `--root repo` (default) copies the real repo: the new doc format. `--root mini` copies `mini-root/`: the old format.
+   - Never hand-seed a state; states live leak-audited in `fixtures/states/`.
+   - Do NOT tell the runner to read the rulebook. Whether it reads is part of the measurement.
+2. **Apply any `setup:` mutation** no state carries, for example stamping a banner version or deleting the root `NDS-IQ.md`.
+3. **Spawn one agent.**
+   - Its work dir is the assembled copy.
+   - Its task is the scenario prompt plus these three lines, verbatim:
+     - *"Files under `.nds/` run to thousands of lines: NEVER Read one whole. Grep for the section, class, or markup block you need, then Read ~100 lines around the hit."* It constrains how the runner reads, never whether.
+     - *"Do not use the session's interactive browser tools (claude-in-chrome or similar) — they drive the owner's real browser. Any browser you need, launch yourself, headless."*
+     - *"Launch any browser you need with `--headless=new` and an explicit throwaway `--user-data-dir` under your temp directory, and kill it by PID when the run ends. Never kill a browser by image name — `taskkill /IM chrome.exe` and its equivalents take the owner's own browser down with them. The same goes for any server you start: note its PID, serve from a directory you can name rather than one you `cd` into, and kill it by PID before you finish."*
+   - `mini-spa` and `mini-mpa` RUN: a static server plus repo `playwright-core` (`scripts/lib/browser.mjs`) and the machine's Chrome give a real verify channel. Grant it or withhold it per the scenario, and say so plainly.
+   - `mini-app` does not run. Say it serves at a fictional URL and browser verification is unavailable.
+4. **Grade the artifacts against the rubric's `artifacts:` list, never the runner's own report.** Use the graders below for the mechanical half; judgment sits on top. Score the FIRST output, never the state after corrections.
 
-**World-state a runner can disprove is worse than none — three rules, all from the 2026-08-22 pass.** (1) **Never assert "no internet".** R5 runners curled raw main successfully on 2026-08-20 AND 2026-08-22; a premise one command refutes teaches the runner the setup is unreliable. State the release source positively instead — "the release artifacts are at `./releases/`, laid out as the download URL paths" — and let real egress be irrelevant rather than denied. (2) **Grade R5 on the runtime bundles only.** The seeded template zip ships 156-459 byte `_site/` stubs while `.nds/_site/` is a real repo copy, so a literal wholesale replace overwrites real doc pages with stubs; the 2026-08-22 runner correctly refused and the rig graded judgment instead of the rule. Say so in the prompt, or seed realistic pages before claiming R5 covers the replace step. (3) **Never state a fixture fact the files deny.** R6's prompt says NDS loads on first paint because no shell is seeded, but `index.html` loads no NDS tags and `Records.js` carries no canonical classes — the 2026-08-22 runner caught the contradiction and spent turns on it. Give the observable symptom and nothing more, or seed the tags.
-4. Grade the artifacts against the rubric's `artifacts:` list (e.g. `NDS-PLAN.md` exists with the five columns and the `Managed by NDS IQ` opener; no page file written; copied markup byte-matches the fixture doc block). Use a `fixtures/tools/grade/` reporter for the mechanical half where one exists (S84's member diff); judgment sits on top.
+**World-state the runner can disprove is worse than none:**
+- Never assert "no internet". State the release source positively ("the release artifacts are at `./releases/`").
+- Never state a fixture fact the files deny.
+- Grade R5 on the runtime bundles only. The seeded zip ships stub `_site/` pages.
 
-**Runners are not neutral — check the artifacts for host-persona bleed before grading.** The runner inherits this session's system prompt, so a persona active in the host (an output style, a `/`-invoked mode) reaches it and shapes what it writes. Observed on an S25 run: the runner annotated its uncertainty with `ponytail:` comments, which is the host's persona, not anything NDS IQ asks for. Nothing was invalidated there — every graded behavior was still an NDS-IQ one — but a graded artifact carrying a house style the rules never named is a measurement of the host, not the file. Scan for it, discount what it explains, and say so in the report. If it touched a MUST, re-run the scenario from a session without that persona.
+**Host-persona bleed.** Runners inherit this session's system prompt, so an active output style or mode can shape what they write (an S25 runner wrote `ponytail:` comments). Scan the artifacts for it and discount what it explains. If it touched a MUST, re-run from a session without the persona.
 
-The fixtures are deliberately skeletal — stubs with just enough structure for the rules file's references to resolve. Do not grow them toward realism; a bigger fixture is a slower, costlier eval with no extra signal. `fixtures/README.md` maps what each file stands in for.
+**Rigs.** One state each, many verdicts per run:
+
+| Rig | Phase | Fixture + state | Graders |
+|---|---|---|---|
+| R1 | install | `mini-app` + `app-no-root` (runtime 1.7.1 in assets, no `NDS_ROOT`) | `plan-status` |
+| R2 | plan | `mini-spa` + `spa-fresh` | `plan-status` |
+| R3 | build | `mini-spa` + `spa-post-review` (plan approved, chrome not built) | `chrome-regions`, `icon-tokens`, `premount-modifier`, `s84-members`, `plan-status` |
+| R4 | verify | `mini-spa` + `spa-post-build` (frozen from R3) | `verify-artifacts`, `plan-status`, `icon-tokens` |
+| R5 | upgrade | `mini-spa` + `spa-old-runtime` (assets 1.8.0, reference newer) | runtime banners by hand |
+| R6 | lifecycle | `mini-spa` + `spa-broken-hook` (views stale after route changes) | by hand |
+| R7 | legacy port | `mini-mpa` + no state (static Bootstrap/jQuery site) | `legacy-untouched`, `no-legacy-on-nds`, `plan-status` |
+
+Each grader in `fixtures/tools/grade/` is a REPORTER, not a verdict. Its header says what it reads.
+
+The fixtures stay skeletal on purpose: a bigger fixture is a slower run with no extra signal. `fixtures/README.md` maps what each file stands for. When a setup says a surface exists, the fixture must ship it.
 
 ## Scenario files
 
-`scenarios.md` is the INDEX: one row per scenario (id, slug, mode, rules gist, last verdict, flags) plus the standing harness rules — scoping reads it alone. The full record lives in `scenarios/S<n>-<slug>.md`: `mode`, `rules` (file sentences under test), `provenance` (short), `setup`, `prompt`, `rubric` (MUST / MUST NOT / cite), optional `artifacts` (behavior mode), optional `grading note`, `floor`, optional `leak`, `baseline`. Rubrics never enter runner prompts.
+- `scenarios.md` is the INDEX: one row per scenario (id, slug, mode, rules gist, last verdict, flags), plus the file-level harness rules. Scoping reads it alone.
+- Each `scenarios/S<n>-<slug>.md` holds these fields:
+  - `mode`, optional `root` (a 1.x tag: the scenario's world is that template, so it runs only in `old` mode), `rules` (the sentences under test), `provenance` (one sentence)
+  - `setup`, `prompt`, `rubric` (MUST / MUST NOT / cite)
+  - optional `artifacts`, `grading note` and `leak`
+  - `floor`, `baseline`
 
-**Records follow the no-records rule** (Principles): `baseline:` is the CURRENT verdict — date, resolved model version (the bare alias is ambiguous across machines and dates), run mode, one clause — plus surviving standing decisions and WATCH counters (`×N` with dates, never narrative). A new run REPLACES the verdict; at most one open story stays while an item is live, and it dies at close leaving its one-line decision. After any run, update the scenario's index row (verdict + flags); a new scenario = one file + one index row + the index's numbering line. Git is the archive — the pre-split monolith is at commit `6490326a`.
-
-**Read-dependent scenarios ship with an artifact-forcing prompt from day one** — a prompt that ends in a demonstrable artifact (sketch the markup, name the exact calls in order) so the answer cannot hide behind a route description. The alternative is a two-step you pay for twice: batch INCONCLUSIVE → solo re-probe (S69's first exposure, 2026-08-14, ~224K tokens for one scenario). The solo prompt's artifact ask is what settled it in one run; write that ask into the scenario's `prompt:` from the start.
+  Rubrics never enter runner prompts.
+- **No records beyond the current state.**
+  - `baseline:` holds the CURRENT verdict: the date, the resolved model version, the run mode and one clause. Add only the standing decisions and the `WATCH <item> ×N (dates)` counters.
+  - A new run REPLACES the verdict. Git is the archive.
+  - After a run, update the index row.
+  - A new scenario is one file, one index row and the numbering line.
+- **A read-dependent scenario ships an artifact-forcing prompt from day one.** The prompt ends in a demonstrable artifact: sketch the markup, name the exact calls in order. Without it the answer hides behind a route description, and the run is paid for twice (S69).
 
 ## Rules-file policy
 
-**The consumer rules ship as a FILE, not a pasted block** (v7 install model, 1.7.0). **Single source of truth: `_includes/NDS-IQ.md`** — clean, unescaped markdown. The consumer saves it as `NDS-IQ.md` at their project root and reads it **on demand, once per session** when NDS work starts; only a small **anchor** (two path declarations + the read trigger) goes into their `AGENTS.md`/`CLAUDE.md`. So the file is **universal** — zero per-project values, every copy byte-identical, update = whole-file replace — and the canonical anchor text lives INSIDE the file's final "Install and upgrade this file" section, never restated in the guides. Edit the rules THERE, never in a guide's HTML.
+**The file and its renders**
+- **One source:** `_includes/NDS-IQ.md`, as clean unescaped markdown. The consumer reads it once per session. The anchor holds the path values and no version, so it is installed once; the file holds no path values. It is universal: every copy is byte-identical, and an update replaces the whole file. The canonical anchor text lives only in the file's own final section. Edit the rules there, never in a guide.
+- **Renders:**
+  - `guides/get-started.md` (install and session playbook) and `guides/integration-quality.md` (what it is, revision history) render it via `{% include %}` + `escape`.
+  - `_includes/footer.html` derives the footer tag from it.
+  - Every revision chip is Liquid-derived from the heading. Never hardcode one.
+  - The guides carry `since` and `last_edit` and no `updated`: the rules version independently of the template.
+  - The Pages workflow overlays main's `NDS-IQ.md` and `integration-quality.md` onto the release site.
+  - The zip ships neither the rules file nor `_source/`. Its `README.md` is a human signpost only.
+- **One workflow.** NDS is a UI layer. The consumer's project already exists and serves, and NDS never scaffolds it. Steps that apply only when replacing an existing UI are marked conditional in place.
 
-**Two guides render it**, each via `{% include %}` + the `escape` filter: `guides/get-started.md` (install + session playbook) and `guides/integration-quality.md` (what the system is, revision history). Their green `.nds-code-tags` chips are **Liquid-derived** from the include's heading — never hardcode a version in a guide. Neither guide carries an `updated` front-matter field, and neither should: the rules version independently of the template, so a template release number on a guide tracks nothing the page is about — it rendered an "Updated in vX.Y.Z" tag that moved for reasons no reader could see. `since` stays (the release the guide first shipped in), the revision the content describes is the Liquid-derived chip, and page freshness is `last_edit`'s job. The workflow assumes the consumer's project **already exists and serves** — NDS is a UI layer, it never scaffolds an app — so there is one workflow, not a new-project/existing-project fork; the steps that only apply when replacing an existing UI (rule #7's parallel files, legacy-library removal) are marked conditional in place. The zip's `README.md` (`scripts/release-template/`) is a human signpost only — no rules live there.
+**Versions and publishing**
+- **One marker, display-only.** `(instructions vX.Y)` in the heading. Nothing parses or compares it: the update check is a whole-file content compare against raw main, guarded only by a `# NDS IQ` first-line check. Set it BY HAND on the first edit after a publish; later edits before the next publish ride the same number.
+- **Raw main is the publish channel, forever.** Every installed copy carries that link. So main's file is always the published revision. Draft each revision on its own branch. Publish by squashing it into main, then tag that commit `IQvX.Y`, then push main with the tag. The tag is the lock link a dev can pin. `scripts/hooks/pre-push` refuses a main push whose rules file differs from the newest `IQv` tag.
+- **The file names no template version.** It reads the runtime's own banner and the matching tag's sources, so it runs on any release.
+- **`verify()` in `scripts/mkrelease.py` fails the build** if the file:
+  - names an `x.y.z` literal
+  - loses its revision stamp, its `Managed by NDS IQ` plan stamp, its anchor-canon lines, or its Liquid-free state (Liquid delimiters kill the build that renders it)
+  - is no longer included by either guide
+  - names a literal path missing from the zip (`_site/…`) or the repo tree (`_source/…`)
 
-**The rules carry ONE version-ish marker, and nothing compares it.** The revision number in the include's heading (`instructions v3.0`, written literally so the file reads standalone online without a build) is a DISPLAY stamp: no step parses it, the consumer's update check is a whole-file content compare against raw main, and the refresh is an unconditional whole-file replace guarded only by a `# NDS IQ` first-line check. **It tracks PUBLISHED revisions, not edits**: set it BY HAND on the first edit after the current revision is published — further edits before the next publish ride the same number. **Raw main is the publish channel, forever** — every installed copy carries that link, and some never update — **so main's `_includes/NDS-IQ.md` is always the published revision.** Draft each revision on its own branch; publish by squashing it into main and tagging that commit `IQvX.Y` (the heading's revision; a fixed link a dev can lock to): `git tag IQvX.Y && git push origin main IQvX.Y`. `scripts/hooks/pre-push` refuses a push of main whose rules file differs from the newest `IQv` tag, so the tag goes on first. No sweep touches it. Beyond it the file names NO template version at all: the rules read the runtime's own banner and fetch matching-version references, so they run on any release, and `verify()` enforces that absolutely — one `x.y.z` literal anywhere in the file fails the build. The plan-file stamp is versionless for the same reason (`Managed by NDS IQ`); `verify()` only checks the phrase is still there. The anchor is version-FREE by design — install once, never churns. `verify()` fails the build if the include loses its revision stamp, its plan stamp, its anchor-canon lines or Liquid-free guarantee, if it names a template version, if EITHER guide stops including the file, if either rendered guide lacks the revision stamp, or if any literal path the rules, guides, or README reference has gone missing — the zip for `_site/…` paths, the repo working tree for the `_source/…` ones the consumer populates from the tag. The rules' bare paths count, not just the `NDS_ROOT/`-prefixed ones.
+  After any edit to `verify()` or to a sentence a guard keys on, run `python scripts/check-release-guards.py`. It breaks the file once per case and asserts the guard notices.
 
-**The rules file names no version, and that is checkable.** Nothing sweeps the file, so any release number left in its prose would go stale silently — `verify()` therefore rejects every three-segment literal it finds, which leaves the heading's display revision as the only marker the file carries. **`python scripts/check-release-guards.py` proves these guards still fire** — it breaks the rules file one way per case and asserts the matching guard notices, because the failure that matters is a guard silently becoming a no-op after someone rewords the sentence it keys on. Run it after any edit to `verify()` or the stamp/anchor sentences themselves.
+**What a sentence may say**
+- **Route, don't restate.** A sentence says where a fact lives. It names a literal only for a stable contract: `NDS_ROOT`, `NDS_ASSETS`, `_source/`, `_site/`, `NDS-PLAN.md`, the catalogs, `NDS.Init.audit()`. A component class, a renamed file or a folder layout is routed, never named. A renamed path that must be named is named both ways, with no version: `page-layout.md` (older: `page-shell.md`).
+- **Every template, never blocking.** A routed doc or a runtime feature that only newer templates ship is enrichment ("where present"). The sentence's action must work without it. A missing path on an old template is reported as a gap and an upgrade is proposed, never a stall.
+- **Attribution default (owner, 2026-08-14): a field failure is a SOURCE finding.**
+  - Presume a doc, example, catalog entry or banner was unclear, and fix it there.
+  - Never change source just to rescue an agent; change it only when that improves the component or fixes a real gap.
+  - A real source gap is fixed in the source, never papered over with rules text.
+  - A repeated custom-case means a missing example, which goes to the `examples/` backlog in `TODO.md`.
+- **Admission test.** A proposed sentence is a procedure, a claim precondition or an ask trigger. It must end in one of these:
+  - an artifact check the agent runs alone (built twin, catalog, `audit()`, banner, grep)
+  - a preference question any dev can answer
+  - an `NDS-REPORT.md` entry
 
-**Evolving the consumer rules** (`_includes/NDS-IQ.md`; public name **NDS IQ**, Integration Quality — the umbrella name for the project's AI layer) — drive changes from real integration runs, not speculation, and verify each finding against the source first (audit findings are often already fixed or misread). Highest value is what a weaker model missed and a stronger one inferred: the block must not lean on capability. Extend an existing principle rather than mint a rule per incident, and keep rules component-agnostic — name a specific component only when the fix is important enough to justify it. Never change source to rescue an agent failure; only when the change improves the component itself or fixes a real gap/bug in it. Keep ONE canonical statement per concern, cross-referenced by name from the other moments that need it — duplicates drift, and every sentence is read start to finish once a session. A real source gap (missing API, canonical markup contradicting a rule) is fixed in the source, never papered over with instruction text. Batch edits near releases — don't let main's copy drift far ahead of the latest published template (agents may read it straight from the repo). After any substantive edit, propose a `scoped` `nds-iq-eval` run before calling the edit done; at release prep, propose a `full` run. **Sonnet is the working tier and the one the file must not lean on; the 3-model sweep is occasional and the owner's call, never a release step** (owner call 2026-08-18: the per-model diff has not paid for itself). The skill owns modes, scenarios, and baselines (`.claude/skills/nds-iq-eval/`) — propose, don't auto-run.
+  Never end it in judgment only a maintainer has. The dev is a preference oracle, not a correctness oracle. A sentence names a component only on field recurrence (the Toolbar precedent).
+- **One canonical statement per concern.** Every other place that needs it cross-references it by name.
 
-**Growth control — the suite licenses the trim.** Behavior lives in the eval scenarios; the block's text is the smallest thing that makes them pass. Every field incident becomes a scenario first — the sentence it spawns is negotiable later, the scenario never is. Before any sentence lands, walk the cause-removal ladder top-down: source fix → shipped artifact or mechanism (a template, a stamp, a check, a script) → knowledge at the point of copy (banners, canonical markup) → block text; the block holds only what no mechanism above it can absorb, and a mechanism that ships later lets its text shrink under the same gates. Trim only through the gates: pass→remove→still-pass per sentence, and scale per-component knowledge out of the file into on-demand surfaces (the banner project, the `_source/` doc and page sources) behind an eval-gated routing rule.
+**Growth control**
+- The scenarios hold the behavior. The text is the smallest thing that makes them pass, and its trajectory is DOWN.
+- **The cause-removal ladder.** Walk it top-down before any sentence lands:
+  1. source fix
+  2. shipped mechanism (a template, a stamp, a check, a script)
+  3. knowledge at the point of copy (banners, canonical markup)
+  4. rules text
+- Every field incident becomes a scenario first. The sentence it spawns stays negotiable.
+- **Size is a quality outcome, not a budget.** The file is read whole, once a session, by the weakest tier. The old 30K ceiling was retired with the v7 install model.
+- **Don'ts:**
+  - Never split the file.
+  - Never move rules into satellite guides.
+  - Never trim rationale speculatively: weak models comply by quoting the why.
+- **Consolidation passes** (no new behavior, full re-run) wait for a cycle boundary, never mid-cycle on freshly validated text.
+- **Text does not fix every failure.** In v3 field rig 5, six failures reproduced identically on the 44K and the 24K file. A failure that survives a rewrite needs a mechanism, which goes to `TODO.md` and is never patched with more text.
 
-**FLOOR GATE — run it BEFORE a sentence is written, and again before it is trimmed** (`nds-iq-eval` `floor` mode, against `fixtures/NDS-IQ-STUB.md`). It answers the one question the pass→remove→still-pass gate cannot: a suite that still passes after a removal may only mean no scenario covered it, whereas a scenario that passes with a STUB rulebook proves the model already does this and the sentence buys nothing. **Stub passes → do not write the sentence; fix the source** (doc, example, catalog, banner), which is where the attribution default sends it anyway. **Stub fails → the sentence carries real weight** and may be proposed — **but a stub FAIL alone never justifies one.** It shows only that the model does not do this for free; the file may already say the thing in other words, or say something that pulls the other way. Run the same scenario against the REAL file too, and propose only when BOTH fail. Corrected 2026-08-15 after S80: its stub failed, a sentence was drafted, and the real-file run then disagreed with itself across two setups — the draft was withheld, and the near-miss is recorded in S80's baseline. The same run taught the companion lesson: a floor result is only as good as its prompt. S80 PASSED the stub when its prompt named the file under test and FAILED it when the prompt merely said "build the page", which is the S72/S79 tell in its cheapest form, caught before it cost anything. A floor PASS on existing text is a trim CANDIDATE, never a trim. Clear it in this order, and note that the obvious check is the useless one: **re-running the cut sentence's OWN scenario proves nothing** — it already passed against a stub with zero rules, so it cannot fail against the file minus one sentence. (1) Confirm by READING that the source genuinely carries the behavior — a doc, example, catalog or banner the agent is already routed to; that read is the real gate. (2) Cut the batch, not one sentence at a time (one eval per edit-batch). (3) Re-run WIDE — the full suite, not the cut scenarios — because the only live risk is collateral: a sentence load-bearing for some scenario nobody mapped it to. **Most floor passes are not cuttable at all:** they share sentences with floor-FAIL scenarios, and a sentence guarded by both stays. Of the 2026-08-14 run's 24, only 8 map to cleanly severable text (~2,974 chars, ~7% of the file) — the cascade `use_when` sentence, rule #3's copy-verbatim rule and the two-paths block are each guarded by passes AND fails, so they stay whatever their passes say. Why this rule exists: the trajectory-is-DOWN policy below was unenforceable without it and went unfollowed — v1.0 shipped at 41,440 chars on 2026-08-13 and reached 43,420 by 2026-08-14 (+4.8%) across five additions and ONE 138-char trim, because writing a sentence is always cheaper than fixing a doc and nothing could prove a sentence unnecessary. The 2026-08-14 floor run measured 24 of 75 scenarios passing with no rules file at all (a lower bound — see the `scenarios.md` preamble for both undercount caveats); those 24 are the standing trim backlog, and the passes cluster exactly where a source doc answers, which is the cause-removal ladder showing up as data rather than intention. **The ≤30K character ceiling is RETIRED (v7).** It existed because the rules were pasted into the consumer's own instruction file and loaded every turn, against Claude Code's 40K warning on a file that belongs to the dev — the v7 install model moved the rules out of that file, so the dev's headroom is no longer ours to spend and there is no external ceiling to chase. Size is now a **quality outcome, not a budget**: the file is read start to finish, once a session, by the weakest model tier it serves, so length costs comprehension rather than the dev's budget, and the gates above are what hold it down. Never split it into multiple files (one file, one read), never move rules into satellite guides, and never trim rationale clauses speculatively: weak models comply by quoting the why, so rationale is load-bearing until a scenario proves otherwise. A consolidation pass — cluster sentences that accreted separately around one concern, rewrite each cluster as one tighter statement, full-suite rerun, no new behavior — waits for a cycle boundary (a release or the banner cycle), never mid-cycle on freshly validated text.
-
-**Attribution default (owner call, 2026-08-14): a field failure is a SOURCE finding, not an instructions finding.** Presume a doc, example, catalog entry, or banner was unclear or missing and fix it there; rules text is admitted only for a true procedure hole, a policy that prevents a real mistake, or a mandatory structure. **Admission test for any proposed sentence:** it must end in an artifact check the agent runs alone (built twin, catalog, `audit()`, banner, grep), a preference question any dev can answer, or an NDS-REPORT entry — never in judgment only an NDS maintainer has. The consumer dev is a preference oracle, not a correctness oracle: the maintainer can tell an agent "that's not canon"; a normal dev cannot, so no rule may lean on dev expertise. Sentences are procedures, claim-preconditions, or ask-triggers; naming a component requires field recurrence (the Toolbar precedent). **A repeated custom-case is a missing example:** rigs scaffolding the same page shape custom — or bending an ill-fitting example onto a common legacy layout — feeds the example backlog in `TODO.md`, fixed in `examples/`, never in rules text. **The file's trajectory is DOWN:** each source clarification licenses a trim attempt on the sentences it absorbs, through the same pass→remove→still-pass gates; growth is the exception and must argue for itself.
+**Evolving.**
+- Drive changes from real integration runs, never speculation. Verify each finding against the source first: audit findings are often already fixed or misread.
+- Batch edits near publish.
+- After a substantive edit, propose a `scoped` run. Before a publish, propose `full` + `old`.
+- The skill proposes runs and never auto-runs them.

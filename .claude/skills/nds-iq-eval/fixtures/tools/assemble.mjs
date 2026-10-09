@@ -54,11 +54,10 @@ if (rootMode === 'mini') {
 // 4. runtime into NDS_ASSETS
 fs.cpSync(path.join(nds, '_site', 'assets'), path.join(out, ASSETS[fixture]), { recursive: true })
 
-// 5. rulebook at project root AND .nds (zip shape)
+// 5. rulebook at project root only (template zips stopped shipping it in 7035a2f8)
 const rbPath = rulebook === 'real' ? path.join(REPO, '_includes', 'NDS-IQ.md')
   : rulebook === 'stub' ? path.join(FIX, 'NDS-IQ-STUB.md') : path.resolve(rulebook)
 fs.cpSync(rbPath, path.join(out, 'NDS-IQ.md'))
-fs.cpSync(rbPath, path.join(nds, 'NDS-IQ.md'))
 
 // 6. anchor — extracted from the REAL rules file's Install section so it never
 // drifts from canon; NDS_ASSETS placeholder swapped for the fixture's path

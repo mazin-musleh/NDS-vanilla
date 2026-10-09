@@ -191,7 +191,7 @@ const SECTION_HTML = `
                   <div class="nds-col-actions"><button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by status"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button></div>
                 </div>
               </th>
-              <th class="actions-column" data-export-skip><div class="nds-col-header"><span class="nds-label">Actions</span></div></th>
+              <th class="nds-actions-column" data-export-skip><div class="nds-col-header"><span class="nds-label">Actions</span></div></th>
             </tr>
           </thead>
           <tbody id="recordsTableBody" class="nds-paged-content" data-filter-items="tr" style="--per-page:5;"></tbody>
@@ -354,7 +354,7 @@ function rowHtml(record) {
     '<td data-sort-value="' + esc(toIso(record.date)) + '">' + esc(record.date) + '</td>' +
     '<td data-sort-value="' + esc(record.amount) + '"><span class="nds-number-format" data-currency="SAR" data-filter="amount" data-filter-value="' + esc(record.amount) + '">' + esc(record.amount) + '</span></td>' +
     '<td data-sort-value="' + status.sort + '"><span class="nds-tag nds-sm" data-status="' + status.tag + '"><span class="nds-label" data-filter="status" data-filter-value="' + esc(record.status) + '">' + status.label + '</span></span></td>' +
-    '<td class="actions-column"><div class="nds-flex" style="--gap: var(--spacing-xs); --align: center;">' +
+    '<td class="nds-actions-column"><div class="nds-flex" style="--gap: var(--spacing-xs); --align: center;">' +
     // No aria-controls: the sub row is built on demand; the component stamps
     // the toggle with the real id once it exists (see nds:table:sub-request).
     '<button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-label="Toggle details"><i class="hgi hgi-stroke hgi-list-view"></i></button>' +

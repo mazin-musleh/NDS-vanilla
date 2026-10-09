@@ -8,7 +8,7 @@ bundles, or prior NDS files anywhere — first setup, not a conformance split.
 
 | Page | Route | Legacy libraries | NDS target | Status |
 |---|---|---|---|---|
-| Shell (topbar + nav + footer) — chrome, built once | `/nds` (`src/nds/Shell.js`) | `src/styles.css` (global entry injection in `src/main.js` — see hazard below) | Console shape: `nds-content-layout nds-wSideMenu` + `nds-full-width` on `body`, from `_source/layout/page-shell.md` / `_site/examples/console-demo.html` | Planned |
+| Shell (topbar + nav + footer) — chrome, built once | `/nds` (`src/nds/Shell.js`) | `src/styles.css` (global entry injection in `src/main.js` — see hazard below) | Console shape: `nds-content-layout nds-has-sidemenu` + `nds-full-width` on `body`, from `_source/layout/page-shell.md` / `_site/examples/console-demo.html` | Planned |
 | Records list | `/nds/records` (`src/nds/records/RecordsList.js`); legacy `#/records` (`src/pages/Records.js`) stays as the reference | same | Example match: "Manage Records" (`_source/examples/manage-records.md`), console/`nds-full-width` chrome shape | Planned |
 | Reports | `/nds/reports` | same | later gate | Planned |
 | Home / About / Contact / Settings | later gates | same | later gates | Planned |

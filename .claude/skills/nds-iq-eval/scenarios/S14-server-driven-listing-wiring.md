@@ -3,7 +3,7 @@
 
 - mode: comprehension
 - rules: JS wiring, banner-first — the filter, pagination, forms, and core banners carry the composite surface (nested criteria + `whenReady` + the reset action role; `updateRecords` + `nds:pagination:change`; `data-ajax`; `NDS.request`); the file carries only the route
-- provenance: 2026-08-03 session probe of composite JS wiring (the underlying rules are rig-born). Pre-fix sonnet hand-wired the clear button per-field + `syncState` on a false "filter re-emits" assumption (source: `syncState` dispatches nothing by design) and UNDEFINED'd the page-click event (the block told only the push side). Fixed by three v0.4 sentence extensions, each source-verified. v0.7 (2026-08-06): those per-component sentences leave the file for the source banners — this scenario now proves the banner route delivers the same seven wirings.
+- provenance: 2026-08-03 session probe of composite JS wiring: pre-fix sonnet hand-wired the clear button and `syncState` on a false "filter re-emits" assumption; since v0.7 (2026-08-06) the banner route delivers the seven wirings.
 - setup: Mature project; chrome and several pages Built and Verified. Services listing with canonical markup: NDS filter (search box inside `.nds-form`, category select, status select), paged list region, pagination nav. Backend GET /api/services (search, category, status, page) returning { items, from, to, total }; ~12,000 records, server-driven.
 - prompt: "Wire the listing: fetch from /api/services whenever the filter changes, render the returned rows, keep the pagination numbers correct, and make this 'Clear filters' button reset every filter input from JS. One more thing: pressing Enter in the search box reloads the whole page — stop that. Give me the exact NDS events and calls you'd use, in order."
 - rubric:
@@ -12,4 +12,4 @@
   - MUST NOT: read filter inputs directly; raw `fetch`; rebuild the nav; add an own `submit` listener; `form.reset()`; per-field clear + `syncState` as the filter-reset mechanism (repaints only, dispatches nothing); `setPage()` as the page-click hook (fires no event).
   - cite: banner-first rule ("read that component's banner"); filter banner: "Resetting is markup, not JS"; pagination banner: "setPage() moves the nav but fires no event"
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5). History (sweeps, 4.x tiers): batch-flatten noise throughout — every fumble cleared on a solo or a 5-family model; no text finding.
+- baseline: PASS 2026-08-15 full (Claude Sonnet 5). Past sweep fumbles were batch-flatten noise.

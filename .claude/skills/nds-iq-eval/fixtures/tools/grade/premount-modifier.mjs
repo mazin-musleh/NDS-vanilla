@@ -1,4 +1,4 @@
-// Layout-modifier timing report. Finds every nds-full-width / nds-wSideMenu in
+// Layout-modifier timing report. Finds every nds-full-width / nds-has-sidemenu in
 // the target and says WHEN it lands: in the served HTML, in JS that runs as the
 // module/render evaluates, or inside a mount callback that fires after first
 // paint. A REPORTER, not a verdict — the caller decides whether a given
@@ -7,7 +7,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-const MODIFIERS = /nds-full-width|nds-wSideMenu/g
+const MODIFIERS = /nds-full-width|nds-has-sidemenu/g
 const OPENERS = /\b(useEffect|useLayoutEffect|componentDidMount|componentDidUpdate|onMounted|ngOnInit|ngAfterViewInit|connectedCallback)\s*\(/g
 
 const target = process.argv[2]
@@ -62,6 +62,6 @@ for (const f of files) {
   }
 }
 
-if (!total) console.log('no nds-full-width / nds-wSideMenu occurrence found')
+if (!total) console.log('no nds-full-width / nds-has-sidemenu occurrence found')
 console.log(`${total} occurrence(s): ` + (Object.entries(counts).map(([k, v]) => `${k}=${v}`).join(', ') || 'none') +
   ' — mount-effect means the class lands after first paint.')
