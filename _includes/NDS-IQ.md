@@ -1,4 +1,4 @@
-# NDS IQ — building UI with the National Design System (instructions v3.1)
+# NDS IQ — building UI with the National Design System (instructions v3.2)
 
 ## How to use this file
 
@@ -322,7 +322,7 @@ An explicit upgrade request is approval. Download latest and replace `NDS_ROOT` 
 
 For an update check, compare the runtime banner with the latest release and report relevant changelog changes; upgrade only on dev approval.
 
-For rules updates, compare raw main `NDS-IQ.md` content with the project-root copy. Any difference means a newer revision; install only on dev approval. An explicit update request runs step 4 directly.
+For rules updates: this is the last revision for a template without `NDS_ROOT/NDS-INDEX.md`, and raw main's `NDS-IQ.md` cannot serve one. A rules update installs nothing: report that new rules come with a template upgrade, the dev's call. If `NDS_ROOT/NDS-INDEX.md` exists, the template has moved on: run step 4 now.
 
 Use absolute paths for writes; never `cd` into `NDS_ROOT`/`NDS_ASSETS`. After each write, inspect the destination.
 
@@ -364,4 +364,4 @@ These hold even before the read:
 
 **Migrating from pasted instructions (v6 and earlier):** install this file + anchor, carry over the two path values, delete the old pasted instruction block — everything from its `## Design system: NDS Vanilla` heading through its `<!-- end NDS instructions -->` marker — then run §Plan conformance as prior NDS work.
 
-**Update:** use §Upgrading NDS step 4.
+**Update:** §Upgrading NDS, "For rules updates".
