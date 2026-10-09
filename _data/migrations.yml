@@ -68,6 +68,7 @@
 - { kind: class, name: nds-gradient-green, status: renamed, use: nds-gradient-primary, since: "2.0.0", fix: "Use nds-gradient-primary." }
 - { kind: class, name: nds-green, scope: "&:is(.nds-content-section, .nds-footer)", status: renamed, use: nds-primary, since: "2.0.0", fix: "Use nds-primary or nds-brand: the surface follows the theme color." }
 - { kind: class, name: nds-hgi-refresh-ccw-02, scope: .nds-filter, status: removed, since: "2.0.0", fix: "Put data-filter-action=\"reset\" on the button: a refresh icon no longer makes it a reset button." }
+- { kind: class, name: nds-hijri, scope: "&.nds-date-picker", status: removed, since: "2.0.0", fix: "Write data-calendar=\"hijri\" on the picker, or on <html> for every picker on the site." }
 - { kind: class, name: nds-horizontal-lg, scope: .nds-stepper, status: removed, since: "2.0.0", fix: "Remove it: the plain layout class is the desktop layout; -sm and -md set phones and tablets." }
 - { kind: class, name: nds-list, scope: .nds-main-nav, status: renamed, use: nds-nav-list, since: "2.0.0", fix: "Use nds-nav-list." }
 - { kind: class, name: nds-main-content, status: renamed, use: nds-content, since: "2.0.0", fix: "Use nds-content." }
@@ -100,6 +101,7 @@
 - { kind: attribute, name: data-accept-message, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
 - { kind: attribute, name: data-accept-title, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
 - { kind: attribute, name: data-always-open-on, scope: "&.nds-drawer", status: removed, since: "2.0.0", fix: "Remove it: a drawer no longer locks open by screen width. data-state=\"always-open\" is different: it lets several submenus stay open." }
+- { kind: attribute, name: data-calendar, scope: "&[data-calendar=gregorian]", status: renamed, since: "2.0.0", fix: "Write data-calendar=\"gregory\": gregorian is not a calendar name." }
 - { kind: attribute, name: data-decimals, scope: "&:is([data-counter], .nds-counter-value, .nds-number-format)", status: removed, since: "2.0.0", fix: "Remove it: decimals follow the number as written in data-counter or data-target." }
 - { kind: attribute, name: data-decline-message, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }
 - { kind: attribute, name: data-decline-title, scope: ":is(.nds-cookie-popup, #ndsCookiesPopup)", status: removed, since: "2.0.0", fix: "Remove it: there is no toast now, and the Done view text comes from the i18n keys done_title and done." }

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 03:10 AM"
+last_edit: "09/10/2026 - 03:29 PM"
 ---
 
 <section id="datePickerOverview" class="nds-content-section nds-doc-overview">
@@ -70,7 +70,7 @@ A Picker choice changes two elements: write `data-format` on `.nds-date-picker` 
 | Selection | Single date (default) | — | — | The user picks one day |
 | Selection | Range | `.nds-date-range` | `.nds-date-picker:not([data-format="MM/YYYY"]):not([data-format="YYYY"])` | The user picks a start day and an end day. Not with the Month or Year picker. See Date Range |
 | Calendar | Gregorian (default) | — | — | The calendar shows Gregorian months |
-| Calendar | Hijri | `.nds-hijri` | `.nds-date-picker` | The calendar shows Hijri months, and the field holds a Hijri date. See Hijri Calendar |
+| Calendar | Hijri | `[data-calendar="hijri"]` | `.nds-date-picker` | The calendar shows Hijri months, and the field holds a Hijri date. See Hijri Calendar |
 | Picker | Day (default) | — | — | The calendar shows a grid of days. The field holds `DD/MM/YYYY` |
 | Picker | Month (hint: A grid of months, for a card expiry) | `[data-format="MM/YYYY"]` | `.nds-date-picker:not(.nds-date-range)` | The calendar shows a grid of months, for a month such as a card expiry. Not with Range. See Date Format |
 | Picker | Month (hint: A grid of months, for a card expiry) | `[placeholder="MM/YYYY"]` | `.nds-date-input:not(.nds-date-range *)` | |
@@ -114,7 +114,7 @@ The class `nds-date-range` on `.nds-date-picker` makes the user pick two days. T
 ### Hijri Calendar
 {: .nds-block-title}
 
-The class `nds-hijri` on `.nds-date-picker` shows Hijri months and years, and the field holds the Hijri date. A date already in the field picks the calendar too: a year up to 1500 opens the Hijri calendar, and a later year opens the Gregorian one, whatever the class. Hijri dates follow Umm al-Qura, the official calendar of Saudi Arabia, through [Date](../core/date). A Hijri day that does not exist, such as day 30 of a 29-day month, is an invalid date.
+`data-calendar="hijri"` on `.nds-date-picker` shows Hijri months and years, and the field holds the Hijri date. The nearest `data-calendar` wins, so on `<html>` it makes every picker on the site Hijri, and `data-calendar="gregory"` on one picker keeps it Gregorian. A date already in the field picks the calendar too: a year up to 1500 opens the Hijri calendar, and a later year opens the Gregorian one, whatever the attribute. Hijri dates follow Umm al-Qura, the official calendar of Saudi Arabia, through [Date](../core/date). A Hijri day that does not exist, such as day 30 of a 29-day month, is an invalid date.
 
 ### Date Format
 {: .nds-block-title}
@@ -122,6 +122,15 @@ The class `nds-hijri` on `.nds-date-picker` shows Hijri months and years, and th
 `data-format` on `.nds-date-picker` sets how the field writes and reads a date. The default is the nearest `data-date-format`, on the picker or an element around it such as `<html>`, or `DD/MM/YYYY` without one. Write the same format as the placeholder: with `data-format="YYYY-MM-DD"` and `placeholder="YYYY-MM-DD"`, the field holds `2026-03-15`. The tokens are `YYYY`, `YY`, `MM`, `M`, `DD` and `D`, and any other character stays as written. `YY` reads as a year from 2000 to 2099. One format applies to both calendars and to both days of a range.
 
 A format with no day token shows a grid of months, and a format with only year tokens shows a grid of years. The picker then takes the first day of the month, or the first month of the year, as the date.
+
+### Value for the Server
+{: .nds-block-title}
+
+The field sends the date as the user sees it, such as `15/09/1447`. To send the server one fixed format, put a hidden input with the class `nds-date-value` in `.nds-date-picker`, and give it the field name. The script writes the date there each time the field changes, in the input's own `data-date-format` and `data-calendar`. Without them, the input takes the picker's format and calendar, so it holds the same text as the field. Text that is not a valid date leaves it empty. Each one holds the date, so two can send it in two formats. In a range, the first holds the start and the second the end.
+
+<script type="text/html" id="date-picker-value" data-canon data-preview="none">
+<input type="hidden" class="nds-date-value" name="visit_date" data-date-format="YYYY-MM-DD" data-calendar="gregory">
+</script>
 
 ### Date Bounds
 {: .nds-block-title}
@@ -219,6 +228,7 @@ The picker checks the field at each `change`, typed text included. A date that d
 - Set the year list for the task. With the defaults, the user cannot pick a future year.
 - Use Range for a start and an end date, not two separate pickers. The calendar then shows the days between them.
 - Listen for `change` on the input. A pick fires nothing until the user presses Save.
+- Add a `.nds-date-value` when the server needs one format, such as a Gregorian `YYYY-MM-DD` from a Hijri field.
 - Read `data-converted-date` when the server needs the date in both calendars.
 - Do not put a date picker inside another dropmenu. The calendar is a dropmenu itself.
 - For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
@@ -240,6 +250,8 @@ The picker checks the field at each `change`, typed text included. A date that d
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-format` | `.nds-date-picker` | How the field writes and reads a date. The default is the nearest `data-date-format`, or `DD/MM/YYYY`. See Date Format |
+| `data-calendar` | `.nds-date-picker`, or any element around it | `hijri` or `gregory`. The nearest one sets the calendar. The default is Gregorian. See Hijri Calendar |
+| `data-date-format`, `data-calendar` | `.nds-date-value` | The format and calendar of the date the script writes in this hidden input. The defaults are the picker's. See Value for the Server |
 | `data-clearable` | `.nds-date-picker` | Adds a Clear button to the calendar. See Clear Button |
 | `data-required` | `.nds-date-picker` | The form needs a date. See Validation |
 | `data-state~="disabled"`, `data-state~="readonly"` | `.nds-date-picker` | Set it yourself. See Disabled and Read-only |

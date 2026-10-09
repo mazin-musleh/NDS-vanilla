@@ -14,8 +14,13 @@
  *   on the .nds-form-container:  data-format (YYYY YY MM M DD D — also picks the
  *                                day/month/year mode; default: the nearest
  *                                data-date-format, else DD/MM/YYYY) · data-clearable (automatic
- *                                in range mode) · .nds-date-range · .nds-hijri (a prefilled
- *                                value's year overrides it: 1400-1500 reads as Hijri)
+ *                                in range mode) · .nds-date-range
+ *   data-calendar="hijri":       on the container or any ancestor (<html> too): Hijri months
+ *                                (a prefilled value's year overrides it: up to 1500 reads as Hijri)
+ *   .nds-date-value:             a hidden input in the container the picker fills with the day;
+ *                                its own data-date-format / data-calendar, else the picker's.
+ *                                Range: the first takes the start, the second the end;
+ *                                a single date fills every one
  *   .date-picker-toggle:         the button that opens the calendar (none: a click on the
  *                                input opens it)
  *   on the .nds-date-input:      data-min-date · data-max-date · data-lang
@@ -218,6 +223,7 @@
         // Pre-filled values stamp validity at construction (silently) so a
         // server-rendered out-of-bounds value can't pass a pre-open submit.
         if (dateInput.value.trim()) this._validateInput(true);
+        this._syncValueInputs();
         this.valid = true;
     }
 
@@ -283,7 +289,11 @@
             // reads validity.
             this.elements.input.addEventListener('change', function () {
                 self._validateInput();
+                self._syncValueInputs();
             }, { signal: signal });
+            // A form reset restores the field after this event, and a hidden input keeps what JS wrote.
+            var form = this.elements.input.form;
+            if (form) form.addEventListener('reset', function () { setTimeout(function () { self._syncValueInputs(); }); }, { signal: signal });
         },
 
         // Adopt NDSDropmenu for the calendar's open/close/escape/outside-click
@@ -625,10 +635,7 @@
             }
 
             // Check hijri class dynamically each time
-            if (this.elements.container && this.elements.container.classList.contains('nds-hijri')) {
-                return 'hijri';
-            }
-            return 'gregorian';
+            return NDS.date.calendarFor(this.elements.container) === 'hijri' ? 'hijri' : 'gregorian';
         },
 
         detectCalendarTypeFromValue: function (inputValue, format) {
@@ -1659,6 +1666,26 @@
             } else {
                 delete this.elements.input.dataset.convertedDate;
             }
+        },
+
+        // Fill each .nds-date-value from the field's text, in its own format and calendar.
+        // Text that does not parse empties it, so the server never gets a stale day.
+        _syncValueInputs: function () {
+            var outs = this.elements.container.querySelectorAll('.nds-date-value');
+            if (!outs.length) return;
+            var format = this.state.format;
+            var type = this.detectCalendarType(format);
+            var text = this.elements.input.value.trim();
+            var range = this.isRangeMode(), parts = text.split(' - ');
+            outs.forEach(function (out, i) {
+                var date = null;
+                var part = range ? parts[i] : text;
+                try { date = part && CalendarConfig[type].parseDate(part.trim(), format); } catch (e) {}
+                out.value = date ? NDS.date.format(date, {
+                    format: out.getAttribute('data-date-format') || format,
+                    calendar: out.getAttribute('data-calendar') || (type === 'hijri' ? 'hijri' : 'gregory')
+                }) : '';
+            });
         },
 
         // The other calendar's value, for data-converted-date.

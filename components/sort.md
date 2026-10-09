@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 10:20 AM"
+last_edit: "09/10/2026 - 03:29 PM"
 ---
 
 <section id="sortOverview" class="nds-content-section nds-doc-overview">
@@ -300,7 +300,7 @@ In `create()`, set `urlSync: { keyParam, dirParam }` and the sort key and direct
             <i class="hgi hgi-stroke hgi-arrow-data-transfer-vertical"></i>
             <span class="nds-label">Type Detection</span>
           </span>
-          <p class="nds-item-desc">Sort reads the values at sort time and picks number, date or text. A value such as <code class="nds-inline-code lang-html">9,375 SAR</code> sorts as a number. A date in the list's date format sorts as a date: the nearest <code class="nds-inline-code lang-html">data-date-format</code> around the list, such as on <code class="nds-inline-code lang-html">&lt;html&gt;</code>, or <code class="nds-inline-code lang-html">DD/MM/YYYY</code>, in Latin or Arabic digits. So do <code class="nds-inline-code lang-html">YYYY-MM-DD</code> and ISO dates with a time. Other text with <code class="nds-inline-code lang-html">/</code> or <code class="nds-inline-code lang-html">:</code> between digits sorts as text, never as a number. Text sorts in the language of the browser, and numbers inside text stay in order: item 2 comes before item 10.</p>
+          <p class="nds-item-desc">Sort reads the values at sort time and picks number, date or text. A value such as <code class="nds-inline-code lang-html">9,375 SAR</code> sorts as a number. A date in the list's date format sorts as a date: the nearest <code class="nds-inline-code lang-html">data-date-format</code> around the list, such as on <code class="nds-inline-code lang-html">&lt;html&gt;</code>, or <code class="nds-inline-code lang-html">DD/MM/YYYY</code>, in Latin or Arabic digits. It reads in the nearest <code class="nds-inline-code lang-html">data-calendar</code>, so a Hijri column sorts by its Hijri dates. So do <code class="nds-inline-code lang-html">YYYY-MM-DD</code> and ISO dates with a time. Other text with <code class="nds-inline-code lang-html">/</code> or <code class="nds-inline-code lang-html">:</code> between digits sorts as text, never as a number. Text sorts in the language of the browser, and numbers inside text stay in order: item 2 comes before item 10.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 12:45 AM"
+last_edit: "09/10/2026 - 03:29 PM"
 ---
 
 <section id="dateOverview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "09/10/2026 - 12:45 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-`NDS.date` is a JavaScript API in the main bundle, so every page has it, with no init call. Two attributes on `<html>` go with it: `data-timezone` sets the site's timezone, and `data-date-format` sets its date format.
+`NDS.date` is a JavaScript API in the main bundle, so every page has it, with no init call. Three attributes on `<html>` go with it: `data-timezone` sets the site's timezone, `data-date-format` sets its date format, and `data-calendar` sets its calendar.
 
 A date here is a calendar day: a JavaScript `Date` at local midnight. `parse` returns one, and `format` reads one. The site's timezone changes only which day `today()` returns.
 
@@ -148,7 +148,7 @@ NDS.date.convert('05/03/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', fo
 - Set `data-timezone` when today must be the same day for every visitor, such as a deadline in Riyadh.
 - Do not pass `timeZone` to `format` for a parsed date. It moves the day for a visitor in another timezone. Pass it only for a moment in time, such as `new Date()` in a clock.
 - For a Hijri month name, format the month as a number and look the name up in your own list. On Android, the browser can print a Gregorian month name for a Hijri month.
-- Sort reads a Gregorian date from the text, in the nearest `data-date-format`. For a Hijri date, or text in another format, write the date as `YYYY-MM-DD` in `data-sort-value` on a table cell, or in `data-sort-{key}` on a list item.
+- Sort reads a date from the text in the nearest `data-date-format` and `data-calendar`. For text in another format, write the date as a Gregorian `YYYY-MM-DD` in `data-sort-value` on a table cell, or in `data-sort-{key}` on a list item.
 
 </div>
   </div>
@@ -169,6 +169,7 @@ NDS.date.convert('05/03/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', fo
 | `data-timezone` | `<html>` | The site's timezone, as an IANA name such as `Asia/Riyadh`. It sets today in `today()`, Date Picker, the top bar date and clock, and the date in an Export file name. Without it, the visitor's timezone applies |
 | `data-date-format` | `<html>` | The site's date format, in the tokens below. `parse` and `format` use it when you name no format. The default is `DD/MM/YYYY` |
 | `data-date-format` | any element | The date format of the content inside it. The nearest one wins over the one on `<html>`. A Date Picker without its own `data-format`, and Sort when it reads a date from text, use it |
+| `data-calendar` | `<html>`, or any element | `hijri` or `gregory`, the calendar of the dates inside it. The nearest one wins. Date Picker, the top bar date and Sort read it. The default is Gregorian, and the top bar date follows the page language |
 {: .nds-table .nds-responsive}
 
 ### Format Tokens
@@ -208,6 +209,7 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 | `NDS.date.convert(text, from, to)` | Parses `text` with the options in `from` and formats it with the options in `to`. Returns `null` when `text` does not parse |
 | `NDS.date.today()` | Returns today, in the site's timezone, as a `Date` at local midnight |
 | `NDS.date.formatFor(element)` | Returns the nearest `data-date-format` around `element`, the element's own included, or `DD/MM/YYYY` when there is none. Pass it as `format` for content in that part of the page |
+| `NDS.date.calendarFor(element, fallback)` | Returns the nearest `data-calendar` around `element`, the element's own included, or `fallback` (default `'gregory'`) when there is none. Pass it as `calendar` |
 | `NDS.date.site` | Returns `{ timeZone, format }` from `<html>`. `timeZone` is `undefined` when the attribute is missing or invalid |
 | `NDS.date.monthNames(calendar, lang)` | Returns the 12 month names of `'gregory'` or `'hijri'`, in `lang` or the page's language. The Hijri names come from the `date` section of the [string pack](../core/i18n) |
 | `NDS.date.weekdayNames(lang)` | Returns the 7 short weekday names, Sunday first, in `lang` or the page's language |

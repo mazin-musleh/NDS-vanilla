@@ -8,7 +8,7 @@
  *   (none)
  * Hooks:
  *   ids, not attributes: #nds-date (the date line) · #nds-realTimeClock (the clock)
- *   data-calendar   on #nds-date: hijri | gregorian. Default follows the page language
+ *   data-calendar   on #nds-date or any ancestor: hijri | gregory. Default follows the page language
  * Gotchas:
  *   - The date and the clock follow <html data-timezone>; without it, the visitor's clock.
  *   - init() re-renders on every call, so a replaced widget element fills in again.
@@ -81,7 +81,7 @@
 
         const isArabic = NDS.isArabic;
         const today = NDS.date.today();
-        const type = el.dataset?.calendar || (isArabic ? 'hijri' : 'gregorian');
+        const type = NDS.date.calendarFor(el, isArabic ? 'hijri' : 'gregory');
         renderDate(el, type === 'hijri'
             ? hijriText(today)
             : NDS.date.format(today, {

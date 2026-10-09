@@ -32,6 +32,7 @@
  *     NDS.formatNumber(n, opts) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
  *     NDS.date.parse(text, opts) · .format(date, opts) · .convert(text, from, to) · .today() · .site
  *     NDS.date.formatFor(el)           the nearest data-date-format (<html> is the site's)
+ *     NDS.date.calendarFor(el, fb)     the nearest data-calendar: hijri | gregory (else fb, gregory)
  *     NDS.date.monthNames(calendar, lang) · .weekdayNames(lang)   names in a language, Sunday first
  *                                      calendar days, Gregorian or Hijri (Umm al-Qura);
  *                                      <html data-timezone / data-date-format>
@@ -554,6 +555,7 @@
         const weekdayNames = (lang) => intlNames(lang, { weekday: 'short' }, i => Date.UTC(2000, 0, 2 + i));
 
         const formatFor = (el) => el?.closest?.('[data-date-format]:not([data-date-format=""])')?.dataset.dateFormat || 'DD/MM/YYYY';
+        const calendarFor = (el, fallback = 'gregory') => el?.closest?.('[data-calendar]:not([data-calendar=""])')?.dataset.calendar || fallback;
         const siteFormat = () => formatFor(document.documentElement);
 
         const api = {
@@ -561,6 +563,7 @@
             get site() { return { timeZone: zone(), format: siteFormat() }; },
 
             formatFor,
+            calendarFor,
             monthNames,
             weekdayNames,
 
