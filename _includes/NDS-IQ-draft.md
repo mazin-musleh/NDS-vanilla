@@ -142,7 +142,7 @@ When a plan is required, create `NDS-PLAN.md` at the project root, starting with
 2. **Page shape:** copy the shape's canon and swap the content; never recreate it from prose.
    - Layout state (the shape's classes) is in the first HTML the browser paints. One app serving two shapes (public pages and a console admin) sets each route's classes for that route only, before the framework mounts; never in a mount effect, never on every route.
    - A client-rendered app follows the page layout doc's framework rules for its mount element.
-   - Set both `<html lang>` and `dir`: Arabic → `ar`/`rtl`; others → `ltr`. With no locale mechanism, ship Arabic-first bilingual with the language switcher.
+   - Set both `<html lang>` and `dir`: Arabic → `ar`/`rtl`; others → `ltr`. A single-language site ships without the language switcher; a site in two languages keeps it.
 3. **Brand:** the project logo replaces the template's; drop the brand text when the logo already carries the name.
 
 **Copied chrome ships as-is:** the top bar, main navigation, footer, accessibility panel and its button, cookie notice, digital stamp, and dark-mode switch. Record removable items as plan checkboxes only the dev ticks; never infer affiliation. Before page #2, wire project-backed controls to real session, API, or route data; remove what the project cannot back. Never ship a fake identity or a dead widget.
