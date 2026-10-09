@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 03:29 PM"
+last_edit: "09/10/2026 - 10:43 PM"
 ---
 
 <section id="topbarOverview" class="nds-content-section nds-doc-overview">
@@ -44,7 +44,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
   </button>
   <div class="nds-topbar-info">
     <span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"></span>
-    <span id="nds-realTimeClock" class="nds-text-icon" data-hidden="sm"></span>
+    <span id="nds-real-time-clock" class="nds-text-icon" data-hidden="sm"></span>
     <button class="nds-btn nds-subtle nds-icon-only nds-tooltip" data-tooltip-hover="500" data-theme-toggle title="Toggle dark mode" aria-label="Toggle dark mode">
       <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
     </button>
@@ -143,11 +143,11 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
 <span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"></span>
 </script>
 <script type="text/html" id="topbar-clock" data-canon>
-<span id="nds-realTimeClock" class="nds-text-icon" data-hidden="sm"></span>
+<span id="nds-real-time-clock" class="nds-text-icon" data-hidden="sm"></span>
 </script>
 <script type="text/html" id="topbar-weather" data-canon>
-<span id="nds-cityName" class="nds-text-icon" data-hidden="sm" data-city="الرياض" data-city-en="Riyadh"></span>
-<span id="nds-weatherInfo" class="nds-text-icon" data-hidden="sm" data-latitude="24.7136" data-longitude="46.6753"></span>
+<span id="nds-city-name" class="nds-text-icon" data-hidden="sm" data-city="الرياض" data-city-en="Riyadh"></span>
+<span id="nds-weather-info" class="nds-text-icon" data-hidden="sm" data-latitude="24.7136" data-longitude="46.6753"></span>
 </script>
 <script type="text/html" id="topbar-dark" data-canon>
 <button class="nds-btn nds-subtle nds-icon-only nds-tooltip" data-tooltip-hover="500" data-theme-toggle title="Toggle dark mode" aria-label="Toggle dark mode">
@@ -204,13 +204,13 @@ Two choices change two places, so write both of their rows. Weather changes the 
 | Date (any) | Hide on tablet (default) (hint: 600px to 959px) | `[data-hidden~="md"]` | `#nds-date` | Hides the date from 600px to 959px |
 | Date (any) | Gregorian | `[data-calendar="gregory"]` | `#nds-date` | Replaces `hijri`: the Gregorian date with the weekday. Pick it for an English service for international visitors. The Hijri date suits Arabic pages and Saudi government sites |
 | Clock (any) | Show (default) (limit: 2 widgets) | canon `#topbar-clock` | `.nds-topbar-info` | The time. Leave it out when the date shows elsewhere on the page |
-| Clock (any) | Hide on phone (default) (hint: Below 600px) | `[data-hidden~="sm"]` | `#nds-realTimeClock` | Hides the clock below 600px |
-| Clock (any) | Hide on tablet (hint: 600px to 959px) | `[data-hidden~="md"]` | `#nds-realTimeClock` | Hides the clock from 600px to 959px |
+| Clock (any) | Hide on phone (default) (hint: Below 600px) | `[data-hidden~="sm"]` | `#nds-real-time-clock` | Hides the clock below 600px |
+| Clock (any) | Hide on tablet (hint: 600px to 959px) | `[data-hidden~="md"]` | `#nds-real-time-clock` | Hides the clock from 600px to 959px |
 | Weather (any) | Show (limit: 2 widgets) | canon `#topbar-weather` | `.nds-topbar-info` | The city and the weather. Pick it for a portal where people want general awareness: citizen services, public dashboards |
-| Weather (any) | Hide on phone (default) (hint: Below 600px) | `[data-hidden~="sm"]` | `#nds-cityName` | Hides the city and the weather below 600px |
-| Weather (any) | Hide on phone (default) (hint: Below 600px) | `[data-hidden~="sm"]` | `#nds-weatherInfo` |  |
-| Weather (any) | Hide on tablet (hint: 600px to 959px) | `[data-hidden~="md"]` | `#nds-cityName` | Hides the city and the weather from 600px to 959px |
-| Weather (any) | Hide on tablet (hint: 600px to 959px) | `[data-hidden~="md"]` | `#nds-weatherInfo` |  |
+| Weather (any) | Hide on phone (default) (hint: Below 600px) | `[data-hidden~="sm"]` | `#nds-city-name` | Hides the city and the weather below 600px |
+| Weather (any) | Hide on phone (default) (hint: Below 600px) | `[data-hidden~="sm"]` | `#nds-weather-info` |  |
+| Weather (any) | Hide on tablet (hint: 600px to 959px) | `[data-hidden~="md"]` | `#nds-city-name` | Hides the city and the weather from 600px to 959px |
+| Weather (any) | Hide on tablet (hint: 600px to 959px) | `[data-hidden~="md"]` | `#nds-weather-info` |  |
 | Theme button (any) | Show (default) (hint: The dark mode button in the bar) | canon `#topbar-dark` | `.nds-topbar-info` | The dark mode button, last in the row |
 {: #topbarVariantsTable .nds-table .nds-responsive}
 
@@ -331,9 +331,9 @@ The script writes each widget's icon and text. The date changes with the page la
 | Id | Widget | Effect |
 |---|---|---|
 | `#nds-date` | Date | The script writes a calendar icon and the date |
-| `#nds-realTimeClock` | Clock | The script writes a clock icon and the time, as `h:mm AM` |
-| `#nds-cityName` | City | The script writes a location icon and the city name. Needs `#nds-weatherInfo` |
-| `#nds-weatherInfo` | Weather | The script writes a weather icon, the conditions and the temperature in °C. Needs `#nds-cityName` |
+| `#nds-real-time-clock` | Clock | The script writes a clock icon and the time, as `h:mm AM` |
+| `#nds-city-name` | City | The script writes a location icon and the city name. Needs `#nds-weather-info` |
+| `#nds-weather-info` | Weather | The script writes a weather icon, the conditions and the temperature in °C. Needs `#nds-city-name` |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes
@@ -343,9 +343,9 @@ The script writes each widget's icon and text. The date changes with the page la
 |---|---|---|
 | `data-hidden` | A widget | Hides it in the named width bands: `sm`, `md`, `lg`, space-separated. See [Hidden](../utilities/hidden) |
 | `data-calendar` | `#nds-date`, or any element around it | `hijri` or `gregory`. The nearest one wins. Without one, the date follows `<html lang>`: Hijri for `ar`, Gregorian for any other language |
-| `data-city` | `#nds-cityName` | The Arabic city name, shown when `<html lang>` is `ar`, and on any other page when `data-city-en` is not set. With it, the script makes no lookup |
-| `data-city-en` | `#nds-cityName` | The English city name, shown when `<html lang>` is not `ar` |
-| `data-latitude`, `data-longitude` | `#nds-weatherInfo` | The coordinates for the weather, and for the city lookup. The default is Riyadh (24.7136, 46.6753) |
+| `data-city` | `#nds-city-name` | The Arabic city name, shown when `<html lang>` is `ar`, and on any other page when `data-city-en` is not set. With it, the script makes no lookup |
+| `data-city-en` | `#nds-city-name` | The English city name, shown when `<html lang>` is not `ar` |
+| `data-latitude`, `data-longitude` | `#nds-weather-info` | The coordinates for the weather, and for the city lookup. The default is Riyadh (24.7136, 46.6753) |
 | `data-theme-toggle` | A button | Makes it the dark mode button. See [Themes](../components/themes) |
 | `aria-expanded` | `.nds-digital-stamp-tab` | Write `false` in the markup. The script sets `true` when the panel opens, and `false` when it closes |
 | `data-state="expanded"` | `.nds-digital-stamp-tab` | The script sets it when the panel opens, and removes it when the panel closes |
@@ -394,7 +394,7 @@ document.querySelector('#stamp-link').addEventListener('click', (e) => {
 
 For today's Hijri date in your own code, use [Date](../core/date).
 
-The full API is in the banners of `_js/nds-digital-stamp.js`, `_js/nds-timeDate.js` and `_js/nds-cityWeather.js`.
+The full API is in the banners of `_js/nds-digital-stamp.js`, `_js/nds-time-date.js` and `_js/nds-city-weather.js`.
 
 </div>
   </div>

@@ -156,7 +156,7 @@
   category: "UI Shell"
   tags: ["JS", "API"]
   url: "/ui-shell/topbar.html#topbarWidgets"
-  js: _js/nds-timeDate.js
+  js: _js/nds-time-date.js
   scss: _sass/components/_topbar.scss
 
 - title: "Code"
@@ -1006,5 +1006,5 @@
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
   url: "/ui-shell/topbar.html#topbarWidgets"
-  js: _js/nds-cityWeather.js
+  js: _js/nds-city-weather.js
   scss: _sass/components/_topbar.scss

@@ -16,7 +16,7 @@ const HEADER_HTML = `
   </button>
   <div class="nds-topbar-info">
     <span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"></span>
-    <span id="nds-realTimeClock" class="nds-text-icon" data-hidden="sm"></span>
+    <span id="nds-real-time-clock" class="nds-text-icon" data-hidden="sm"></span>
     <button class="nds-btn nds-subtle nds-theme-toggle-wrap" data-theme-toggle aria-label="Toggle dark mode">
       <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
     </button>

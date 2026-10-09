@@ -2,7 +2,7 @@
 
 The page tracker lives in `TODO.md` (Docs rewrite item). Update it and the Status below after every page commit.
 
-**Status (2026-10-06):** Phases 0, 1 and 2 DONE. Phase 3 page rewrites DONE: 90 / 90 pages, `check-docs.py` clean. Phase 4 (NDS IQ v4.0) built on branch `iq-v4` 2026-10-09; it publishes on release day. Left: the camelCase sweep and localization (tracker in `TODO.md`).
+**Status (2026-10-09):** Phases 0, 1 and 2 DONE. Phase 3 page rewrites DONE: 90 / 90 pages, `check-docs.py` clean. The camelCase sweep and localization DONE. Phase 4 (NDS IQ v4.0) is on main as the draft; it publishes on release day (`plans/iq-v4.md`).
 
 - **Pilots done (Phase 1):** switch, cards, alert, footer (shell), button, grid (reference: one `Example` group of whole examples, never mixed toggles).
 - **Standard locked (Phase 2):** `/nds-doc` skill rewritten; `scripts/check-docs.py`; `scripts/doc-check.mjs` (owner-approved browser check: clicks every builder option in both themes, flags console errors / empty previews / stretched small parts / mismatched disabled colors, writes contact sheets to `tmp/doc-check/`; overlays are shot closed — add opening them on the first overlay page).

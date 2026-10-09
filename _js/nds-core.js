@@ -1368,7 +1368,7 @@
     // Cache safety: callers are responsible for treating cached values as
     // potentially-untrusted (any same-origin script can write to
     // localStorage). Store primitive values, not pre-rendered HTML; render
-    // imperatively at the consumer. See `_js/nds-cityWeather.js` for the
+    // imperatively at the consumer. See `_js/nds-city-weather.js` for the
     // canonical pattern.
     //
     // Usage:

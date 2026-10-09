@@ -186,13 +186,8 @@ Size: no target. It is whatever the rules need. Expected around 15–20 KB.
   - `get-started.md`: install mentions `NDS-INDEX.md`
 - **`llms.txt`:** point agents at the index.
 - **`TODO.md`:** update the IQ item (it still describes the first v4 pass).
-- **Before release, on `main` (owner 2026-10-09, parked):** the camelCase leftovers the class sweep (`2cbd0c6f`) missed.
-  - IDs: `#nds-realTimeClock` → `#nds-real-time-clock`, `#nds-cityName` → `#nds-city-name`, `#nds-weatherInfo` → `#nds-weather-info`. Used in `_includes/topbar.html`, `ui-shell/topbar.md` (canon and tables), `_js/nds-timeDate.js`, `_js/nds-cityWeather.js`, `_js/nds-loader.js`, and the `spa-post-build` eval fixture.
-  - Files: `nds-timeDate.js` → `nds-time-date.js`, `nds-cityWeather.js` → `nds-city-weather.js`. Referenced by `_data/content/components.yml`, `_plugins/js_processor.rb`, `scripts/check-banners.mjs`, a comment in `nds-core.js`, and `ui-shell/topbar.md`.
-  - A `core/migration.md` row and the TODO release-notes line; then `ruby _plugins/js_processor.rb`.
-  - Fix the stale status line in `plans/docs-rewrite.md`: the camelCase sweep and localization are done.
-  - Merge main into `iq-v4` after.
-- **Before release (any time):** merge `iq-v4` into main. The v4 rules ride along as the draft; nothing publishes (`plans/iq-publish.md`).
+- **camelCase leftovers: DONE 2026-10-09 on main.** Top bar ids `nds-real-time-clock`, `nds-city-name`, `nds-weather-info` (rows in `_data/migrations.yml`); files `nds-time-date.js`, `nds-city-weather.js`; `plans/docs-rewrite.md` status fixed.
+- **Merged into main 2026-10-09** (fast-forward; branch deleted). The v4 rules ride as the draft; nothing publishes (`plans/iq-publish.md`).
 - **Release day:**
   1. tag `0d0e3a10` (branch `iq-v3.2`) as `IQv3.2`
   2. `python scripts/publish-iq.py`, then `--apply`: copies the draft, commits, tags `IQv4.0`

@@ -7,7 +7,7 @@
  * Events:
  *   (none)
  * Hooks:
- *   ids, not attributes: #nds-date (the date line) · #nds-realTimeClock (the clock)
+ *   ids, not attributes: #nds-date (the date line) · #nds-real-time-clock (the clock)
  *   data-calendar   on #nds-date or any ancestor: hijri | gregory. Default follows the page language
  * Gotchas:
  *   - The date and the clock follow <html data-timezone>; without it, the visitor's clock.
@@ -101,7 +101,7 @@
     function ensureClockDOM() {
         // A replaced clock element strands the old text node: rebuild into the new one.
         if (clockText?.isConnected) return true;
-        const el = document.getElementById('nds-realTimeClock');
+        const el = document.getElementById('nds-real-time-clock');
         if (!el) return false;
         const icon = document.createElement('i');
         icon.className = 'nds-icon nds-hgi-clock-01';
@@ -130,7 +130,7 @@
     }
 
     function startClock() {
-        const el = document.getElementById('nds-realTimeClock');
+        const el = document.getElementById('nds-real-time-clock');
         if (!el || !rendered(el)) return;
         updateClock();
         if (!clockTimer) scheduleNextMinute();
@@ -154,7 +154,7 @@
 
     function initializeTimeDate() {
         const dateEl = document.getElementById('nds-date');
-        const clockEl = document.getElementById('nds-realTimeClock');
+        const clockEl = document.getElementById('nds-real-time-clock');
 
         // The render runs on every init, so a widget element added or replaced later fills in;
         // the latches guard only the timers and listeners.
@@ -187,7 +187,7 @@
             _resizeInitDone = true;
             NDS.onResize(() => {
                 updateDate();
-                const el = document.getElementById('nds-realTimeClock');
+                const el = document.getElementById('nds-real-time-clock');
                 if (el && rendered(el) && !document.hidden) startClock(); else stopClock();
             });
         }

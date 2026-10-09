@@ -358,11 +358,11 @@
         },
         {
             name: 'CityWeather',
-            selector: '#nds-weatherInfo, #nds-cityName',
+            selector: '#nds-weather-info, #nds-city-name',
         },
         {
             name: 'TimeDate',
-            selector: '#nds-date, #nds-realTimeClock',
+            selector: '#nds-date, #nds-real-time-clock',
         },
         {
             // Lazy: the FAB is on every page but most visitors never open the panel.

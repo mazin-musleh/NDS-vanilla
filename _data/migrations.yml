@@ -115,8 +115,11 @@
 - { kind: attribute, name: slides-max, scope: "&.nds-swiper", status: renamed, use: --max-slides, since: "2.0.0", fix: "Set --max-slides in the swiper's style attribute." }
 - { kind: attribute, name: slides-mid, scope: "&.nds-swiper", status: renamed, use: --mid-slides, since: "2.0.0", fix: "Set --mid-slides in the swiper's style attribute." }
 - { kind: attribute, name: slides-min, scope: "&.nds-swiper", status: renamed, use: --min-slides, since: "2.0.0", fix: "Set --min-slides in the swiper's style attribute." }
+- { kind: id, name: nds-cityName, status: renamed, use: nds-city-name, since: "2.0.0", fix: "Use id nds-city-name." }
 - { kind: id, name: nds-digitalStamp, status: renamed, use: nds-digital-stamp, since: "2.0.0", fix: "Use id nds-digital-stamp (and the button's aria-controls)." }
 - { kind: id, name: nds-digitalStamp-verify-text, status: renamed, use: nds-digital-stamp-verify-text, since: "2.0.0", fix: "Use id nds-digital-stamp-verify-text." }
+- { kind: id, name: nds-realTimeClock, status: renamed, use: nds-real-time-clock, since: "2.0.0", fix: "Use id nds-real-time-clock." }
+- { kind: id, name: nds-weatherInfo, status: renamed, use: nds-weather-info, since: "2.0.0", fix: "Use id nds-weather-info." }
 - { kind: id, name: ndsCookiesAcceptBtn, status: renamed, use: "data-cookies-action=\"accept\"", since: "2.0.0", fix: "Use data-cookies-action=\"accept\" on your own button." }
 - { kind: id, name: ndsCookiesCloseBtn, status: renamed, use: data-panel-close, since: "2.0.0", fix: "Use data-panel-close on the close button." }
 - { kind: id, name: ndsCookiesContent, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #ndsCookiesPanel in a template.nds-panel-template." }

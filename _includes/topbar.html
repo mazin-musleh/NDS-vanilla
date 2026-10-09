@@ -8,11 +8,11 @@
     </button>
     <div class="nds-topbar-info">
         <span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"></span>
-        <span id="nds-realTimeClock" class="nds-text-icon" data-hidden="sm"></span>
+        <span id="nds-real-time-clock" class="nds-text-icon" data-hidden="sm"></span>
         {%- comment %}
-        <span id="nds-cityName" class="nds-text-icon" data-hidden="sm md" data-city="{{ site.city_name_ar | default: 'الرياض' }}"
+        <span id="nds-city-name" class="nds-text-icon" data-hidden="sm md" data-city="{{ site.city_name_ar | default: 'الرياض' }}"
             data-city-en="{{ site.city_name | default: 'Riyadh' }}"></span>
-        <span id="nds-weatherInfo" class="nds-text-icon" data-hidden="sm" data-latitude="{{ site.city_latitude | default: '24.7136' }}"
+        <span id="nds-weather-info" class="nds-text-icon" data-hidden="sm" data-latitude="{{ site.city_latitude | default: '24.7136' }}"
             data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
         {% endcomment %}
         {% if site.brand_switcher %}

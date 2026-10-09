@@ -7,9 +7,9 @@
  * Events:
  *   (none)
  * Hooks:
- *   ids, not attributes: #nds-cityName · #nds-weatherInfo
- *   data-city · data-city-en   on #nds-cityName — the name per language
- *   data-latitude · data-longitude   on #nds-weatherInfo; default Riyadh
+ *   ids, not attributes: #nds-city-name · #nds-weather-info
+ *   data-city · data-city-en   on #nds-city-name — the name per language
+ *   data-latitude · data-longitude   on #nds-weather-info; default Riyadh
  * Gotchas:
  *   - Weather comes from the public open-meteo API. No key, no account — and no data at
  *     all when the request fails; the widget hides (display: none).
@@ -61,7 +61,7 @@
 
     // The cache holds the condition key, not text, so one entry serves every language.
     async function updateWeather() {
-        const el = document.getElementById('nds-weatherInfo');
+        const el = document.getElementById('nds-weather-info');
         if (!el) return;
 
         const lat = +(el.dataset.latitude || 24.7136);
@@ -126,8 +126,8 @@
 
     // City function with API caching
     async function updateCity() {
-        const cityEl = document.getElementById('nds-cityName');
-        const weatherEl = document.getElementById('nds-weatherInfo');
+        const cityEl = document.getElementById('nds-city-name');
+        const weatherEl = document.getElementById('nds-weather-info');
         if (!cityEl || !weatherEl) return;
 
         const isArabic = NDS.isArabic;
@@ -189,8 +189,8 @@
     let _initDone = false;
 
     function initializeCityWeather() {
-        const weatherEl = document.getElementById('nds-weatherInfo');
-        const cityEl = document.getElementById('nds-cityName');
+        const weatherEl = document.getElementById('nds-weather-info');
+        const cityEl = document.getElementById('nds-city-name');
 
         // Only run if both weather and city elements exist (they depend on each other)
         if (!weatherEl || !cityEl) return;
