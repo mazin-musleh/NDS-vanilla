@@ -10,7 +10,7 @@ Done on branch `iq-v4`:
 
 **Phase 5 (eval): PARKED 2026-10-09 for an architecture discussion.** Done so far (2de8b3d9, 9dbd9cb7, ef798622): suite moved to v4; floor 48/95 free (docs carry them); real run 46/48 on the rest, 0 fail; built-page copy advice removed from docs. Open:
 - S101: the IQv3.1 redirect passes only when the runner is told to do its reads; real behavior unproven (behavior run on `mini-root`).
-- S8: the update check does not compare the rules file.
+- ~~S8: the update check does not compare the rules file.~~ FIXED 2026-10-09 (owner): the update check also compares the project-root `NDS-IQ.md` with raw main and reports both.
 - ~~S12, S67, S68, S76 expect trimming~~ SETTLED 2026-10-09: no conflict. v4 cuts a part only when nothing real backs it (no data, no feature, not in a greenfield brief) and names the removal to the dev; mechanism always stays. S68 cuts content, not a part. S67 and S76 rubrics now require naming the removal.
 - S24, S41, S70 have no v4 rule.
 

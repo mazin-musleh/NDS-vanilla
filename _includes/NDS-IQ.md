@@ -243,7 +243,7 @@ An unmet item keeps the row `In Progress`; no-plan work reports the page unverif
 
 ## Upgrade
 
-An explicit upgrade request is approval. A request to update the rules or instructions is not an upgrade: it runs only §This file's Update. An update check compares the runtime banner with the latest release and reports relevant changelog entries; upgrade only on dev approval. Write with absolute paths, never `cd` into `NDS_ROOT` or `NDS_ASSETS`, and inspect each destination after writing.
+An explicit upgrade request is approval. A request to update the rules or instructions is not an upgrade: it runs only §This file's Update. An update check compares the runtime banner with the latest release and reports relevant changelog entries, and compares the project-root `NDS-IQ.md` with raw main as §This file's Update does; it reports both, and upgrades or installs only on dev approval. Write with absolute paths, never `cd` into `NDS_ROOT` or `NDS_ASSETS`, and inspect each destination after writing.
 
 1. **Compare versions:** the runtime banners in `NDS_ROOT` and `NDS_ASSETS`.
 2. **Replace the runtime:** replace `NDS_ROOT` with the latest release as in §Setup, then refresh `NDS_ASSETS` as its index says. Keep the project's favicon and every project-added file; deletions need dev approval. Work done under earlier rules passes §Plan's conformance check first.
