@@ -1456,6 +1456,8 @@
         toggleBtn = triggerEl || document.querySelector('[data-accessibility-toggle]');
         panel = resolvePanel();
         if (!toggleBtn || !panel) return;
+        // Not in the markup: before the first press the panel does not exist, so the id would point nowhere.
+        document.querySelectorAll('[data-accessibility-toggle]').forEach(b => b.setAttribute('aria-controls', panel.id));
 
         // Stamped here, not just in the boot gate, so the marker is true whichever
         // path armed the component.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.5"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 12:45 AM"
+last_edit: "09/10/2026 - 02:08 PM"
 ---
 
 <section id="accessibilityOverview" class="nds-content-section nds-doc-overview">
@@ -49,7 +49,6 @@ Pick another component when:
         type="button"
         aria-label="Accessibility settings"
         data-i18n-attr="aria-label:panel_label"
-        aria-controls="ndsAccessibilityPanel"
         aria-expanded="false"
         data-fab-pos="auto"
         data-panel-side="end"
@@ -568,7 +567,7 @@ The panel reads its text from `assets/i18n/accessibility/en.json` and `ar.json`.
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-accessibility-toggle` | the FAB, or any button outside the panel | The first press loads the script and builds the panel. Pair it with `data-panel-toggle` |
-| `data-panel-toggle` | the same button | `="ndsAccessibilityPanel"`. Opens and closes the built panel and sets `aria-expanded`. See [Panels](../components/panels) |
+| `data-panel-toggle` | the same button | `="ndsAccessibilityPanel"`. Opens and closes the built panel and sets `aria-expanded`. The script adds `aria-controls` once it builds the panel, so the markup leaves it out. See [Panels](../components/panels) |
 | `data-panel-side` | every `data-accessibility-toggle` button | The edge the panel slides from: `end` (default), `start`, `left` or `right`. `start` and `end` flip with the text direction. The script copies it from the first button pressed onto the panel it builds |
 | `data-fab-pos` | the FAB | The FAB's edge: `start`, `end`, `left`, `right` or `bottom`. `auto` docks on the FAB's `data-panel-side`. See [FAB](../components/fab) |
 | `data-state~="loading"` | the pressed button | The script sets it while the panel loads, and removes it about one second later |
