@@ -37,7 +37,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S21 | legacy-globals | c | rule #6 globals: CSS never carried, JS = legacy library | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S22 | inherited-plan-clean-start | c | inherited plan never resumed; clean-start footprint | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S23 | image-geometry-swap | c | swapped image width/height reset to real pixels | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
-| S24 | stale-agent-file-rules | c | one rule source; stale agent-file NDS text proposed out | SOFT 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:policy·non-gating |
+| S24 | stale-agent-file-rules | c | one rule source; stale agent-file NDS text proposed out | SOFT 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:policy·non-gating · no rule needed (v4 floor PASS); safety net |
 | S25 | banner-first-wiring | both | banner-first wiring; bannerless fallback via doc + file | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
 | S27 | read-obedience | b | anchor read trigger; missing-file stop | behavior 4/4 PASS 2026-08-10 | floor:n/a · ev:protocol |
 | S28 | catalog-routing-composed-pattern | c | use_when routing to the composed example | PASS 2026-10-09 solo v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
@@ -53,7 +53,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S38 | rendered-markup-not-in-source | c | front matter → Front Matter table; Liquid loop body; never the built twin | UNMEASURED (rubric rewritten 2026-10-09, v4 take 2) | floor:PASS v4 2026-10-09 · ev:field |
 | S39 | doc-folder-routing-utilities | c | folder from the catalog url; utilities route | SOFT 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:protocol |
 | S40 | theme-rebind-dark-mirror | c | rule #5 token tier + dark mirror | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:protocol |
-| S41 | agent-file-rule-copy | c | never copy rules into the agent file | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:protocol |
+| S41 | agent-file-rule-copy | c | never copy rules into the agent file | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:protocol · no rule needed (v4 floor PASS, called a guess; Aug floor FAIL); WATCH rule-copy ×0 |
 | S42 | setup-prompt-first-install | b | guide setup prompt → install → plan handoff | behavior 2/2 PASS 2026-08-15; probe PASS 2026-08-17 | floor:n/a · standing-rule · ev:field |
 | S44 | install-strict-csp | c | step-1 CSP sweep + nonce-first grant | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · leak:C2 (sweep half) · ev:field |
 | S45 | upgrade-Added-sweep | c | upgrade step 3: Migrating + Added/Changed/Fixed report | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:field |
@@ -79,7 +79,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S67 | two-canonical-flows-one-page | c | both flows through the catalog; [hidden] card swap | PASS 2026-10-09 after catalog fix (Sonnet 5.5) | floor:PASS v4 2026-10-09 · read-dep · ev:field |
 | S68 | trimmed-copy-keeps-units | c | trim steps, keep class+SVG units | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S69 | custom-scaffold-anchors-on-canon | c | custom scaffolds pull structure from canon usage | PASS 2026-10-09 solo (Sonnet 5.5) | floor:PASS v4 2026-10-09 · read-dep · ev:field |
-| S70 | knob-verified-by-effect | c | verify a knob by its effect, not coincidence | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · leak:C2 · ev:field |
+| S70 | knob-verified-by-effect | c | verify a knob by its effect, not coincidence | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · leak:C2 · ev:field · no rule needed (v4 floor PASS); safety net |
 | S71 | fallback-mode-before-substitute | c | missing asset ≠ substitute; the component's own fallback mode | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · read-dep · ev:field |
 | S72 | mobile-width-ladder-resize-blocked | c | headless default over a width-locked attached browser | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · leak:C2 · ev:field |
 | S73 | custom-select-default-vs-native-shortcut | c | in-form selects default Custom Select; offer first | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · read-dep · ev:field |

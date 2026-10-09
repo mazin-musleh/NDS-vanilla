@@ -12,7 +12,7 @@ Done on branch `iq-v4`:
 - S101: the IQv3.1 redirect passes only when the runner is told to do its reads; real behavior unproven (behavior run on `mini-root`).
 - ~~S8: the update check does not compare the rules file.~~ FIXED 2026-10-09 (owner): the update check also compares the project-root `NDS-IQ.md` with raw main and reports both.
 - ~~S12, S67, S68, S76 expect trimming~~ SETTLED 2026-10-09: no conflict. v4 cuts a part only when nothing real backs it (no data, no feature, not in a greenfield brief) and names the removal to the dev; mechanism always stays. S68 cuts content, not a part. S67 and S76 rubrics now require naming the removal.
-- S24, S41, S70 have no v4 rule.
+- ~~S24, S41, S70 have no v4 rule.~~ SETTLED 2026-10-09 (owner): no rule needed, all three pass the v4 floor; kept as safety nets. S41 on watch (Aug floor FAIL, Oct PASS called a guess): add one line only on a field miss.
 
 **Architecture (2026-10-09):**
 - **IQ/index line:** "Would this sentence be wrong for another release?" Yes → index; no → IQ. The index holds what and where; every never/always lives only in IQ. Applied: four duplicate rules left the index (built page, `file://`, live demos, "every page").
