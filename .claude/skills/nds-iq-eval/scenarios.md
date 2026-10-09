@@ -2,7 +2,7 @@
 
 One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak, baseline) lives in `scenarios/S<n>-<slug>.md`. Scoping reads THIS file only, then opens just the scoped files. Records follow SKILL.md's no-records rule: a scenario file holds its durable fields, a one-line verdict log, and at most ONE current story while something is open — stories are replaced, never appended; git is the archive (the pre-split monolith is at commit `6490326a`).
 
-**Numbering:** S1–S100 are written. S43 was never used. Retired 2026-10-09: S59 and S64 (netted out), S80 (closed), S26 (its v6 pasted-block rule was cut in v4); their files are in git. S92–S100 added 2026-10-09 for v4 (authored blind, before their sentences). Retired 2026-10-09 (v4 take 2): S16 (old-format twin of S93) and S81 (1.x root: now the `IQv3.2` redirect, S101). S101–S105 added 2026-10-09 for take 2; S106 added 2026-10-09 (review: the empty-root Setup path). **Next free is S107.** Update this line whenever a scenario lands.
+**Numbering:** S1–S100 are written. S43 was never used. Retired 2026-10-09: S59 and S64 (netted out), S80 (closed), S26 (its v6 pasted-block rule was cut in v4); their files are in git. S92–S100 added 2026-10-09 for v4 (authored blind, before their sentences). Retired 2026-10-09 (v4 take 2): S16 (old-format twin of S93) and S81 (1.x root: now the `IQv3.2` redirect, S101). S101–S105 added 2026-10-09 for take 2; S106 added 2026-10-09 (review: the empty-root Setup path); S107 added 2026-10-09 (a library outside the index table). **Next free is S108.** Update this line whenever a scenario lands.
 
 **Standing harness rules** (method lives in SKILL.md; these are the file-level ones):
 - Catalog-routing prompts stay in the dev's words — never words a `use_when` uses verbatim; worked examples that name an entry stay OUT of the rules file or the runner quotes the answer instead of finding it (S28's first run, 2026-08-08).
@@ -114,3 +114,4 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S104 | audit-bundle-tag | c | bundle-tag finding: remove the tag; loader injects it | UNMEASURED (new 2026-10-09) | floor:PASS v4 2026-10-09 · ev:field |
 | S105 | audit-inline-defer | c | inline-defer finding: module script, no polling | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:field |
 | S106 | empty-root-pre-index-setup | c | empty NDS_ROOT + 1.x runtime → that release, no index → IQv3.2 | PASS 2026-10-09 old v1.12.0 (Sonnet 5.5) | root:v1.12.0 · floor:not run · ev:protocol |
+| S107 | unlisted-legacy-library | c | a library outside the index table is legacy too: catalog match, NDS canon | PASS 2026-10-09 solo (Sonnet 5.5) | floor:not run · ev:policy |
