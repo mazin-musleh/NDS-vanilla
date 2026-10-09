@@ -532,7 +532,7 @@
   line-height: 1;
   letter-spacing: -0.96px;
   direction: ltr;
-  display: block;
+  display: flex; // a number format inside keeps its gap, symbol order and icon centering
   width: 100%;
   --nds-skeleton-width: 100%; // the loading bar spans the row the number does
 
@@ -547,22 +547,14 @@
 
 // Starts on the card's side, not the forced ltr's: :dir() reads the dir attribute, not CSS direction.
 // Chrome resolves match-parent against the element's own direction, so it cannot do this.
+// start/end follow the forced ltr, not a number format's reversed row. text-align lines up a wrapped number.
 .nds-card .nds-card-number {
+  justify-content: start;
   text-align: left;
 
   &:where(:dir(rtl)) {
+    justify-content: end;
     text-align: right;
-  }
-
-  // A number format keeps its flex row: block drops its gap, symbol order and icon centering.
-  // start/end follow the forced ltr, not the reversed row; :where() lets a centered card win.
-  &:where(.nds-number-format) {
-    display: flex;
-    justify-content: start;
-
-    &:where(:dir(rtl)) {
-      justify-content: end;
-    }
   }
 }
 
