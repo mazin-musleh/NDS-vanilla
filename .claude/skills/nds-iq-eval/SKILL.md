@@ -156,6 +156,9 @@ full read.)
 
 Read only what the rules file's own workflow would have you read; nothing else. Answer strictly from the
 file's text, those routed reads, and ordinary engineering judgment.
+Do every read your answer depends on now, before you answer, and quote what
+you found or name the path that was missing. An answer that describes a read
+it did not make is incomplete.
 
 Then answer the scenarios below. For each, give exactly three parts:
 (a) ACTION — what you do first and next, concretely.
