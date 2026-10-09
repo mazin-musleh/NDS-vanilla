@@ -4,7 +4,7 @@
 - mode: comprehension
 - rules: step 4's always-safe standalone refresh (raw download, first-line `# NDS IQ` check, whole replace, anchor untouched); the separate "report both versions and propose it" upgrade route
 - provenance: v0.3 design session 2026-08-03 (refresh guard), inverted 2026-08-11: a standalone rules refresh never waits on a template upgrade.
-- setup: Same ask as S3, but runtime banner 1.4.0 and latest published release 1.7.0.
+- setup: Mature project; runtime banner 1.4.0 and latest published release 1.7.0.
 - prompt: "update the NDS instructions."
 - rubric:
   - MUST: perform the standalone rules refresh unconditionally — raw download straight to a file, first line confirmed to start `# NDS IQ`, project-root copy replaced whole, anchor untouched.

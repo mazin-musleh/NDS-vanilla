@@ -18,7 +18,7 @@
 
 - title: "Registration"
   description: "Sign-up form with field validation, a matching password check, and an OTP step."
-  use_when: "A standalone create-account or sign-up flow, with field validation, a confirm-password match check, and an OTP verification step. The page carries no topbar, header, or footer (the minimal chrome shape), so use it for any full-screen auth flow."
+  use_when: "A standalone create-account or sign-up flow, with field validation, a confirm-password match check, and an OTP verification step. The page carries no topbar, header, or footer (the minimal chrome shape), so use it for any full-screen auth flow. Its steps are sibling cards swapped in place with plain `[hidden]`."
   icon: '<i class="hgi hgi-stroke hgi-file-validation"></i>'
   category: "Form"
   tags: ["Forms", "OTP", "Validation"]
@@ -26,7 +26,7 @@
 
 - title: "Sign In"
   description: "National single sign-on with a credentials fallback, one-time code, and account settings."
-  use_when: "A standalone login page: national single sign-on as the primary path, a username and password fallback, an OTP step, and a resend button with a cooldown timer. No topbar, header, or footer (the minimal chrome shape)."
+  use_when: "A standalone login page: national single sign-on as the primary path, a username and password fallback, an OTP step, and a resend button with a cooldown timer. No topbar, header, or footer (the minimal chrome shape). Its steps are sibling cards swapped in place with plain `[hidden]`: the pattern for any same-page switch between auth forms, such as sign-in and create-account."
   icon: '<i class="hgi hgi-stroke hgi-login-circle-01"></i>'
   category: "Form"
   tags: ["Forms", "OTP", "Cooldown Button", "Alert"]

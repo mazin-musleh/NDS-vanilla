@@ -171,7 +171,7 @@ When a plan is required, create `NDS-PLAN.md` at the project root, starting with
 
 1. **Head:** copy the head of `NDS_ROOT/_site/index.html` as a unit (reference: `ui-shell/head.md`). Rewrite asset URLs only; never remove or reorder entries. Keep `<title>` and hero preloads page-specific. Never add `nds-delegated.min.js` or `nds-extras.min.js` by hand. Replace the favicon. Under CSP, authorize the head's inline script.
 2. **Master layout:** copy the complete `<body>` of a built `_site/` page of the required shape, once per shape, and swap the content; never recreate it from prose. Each later page takes its content from its matched `.md` source, whose front matter names its layout on newer releases. Shapes and modifiers: `_source/layout/page-layout.md` (older: `page-shell.md`); with neither, pick the built page by inspection and report the missing reference.
-   - Every layout modifier the built page carries on `<body>` and the content layout is in the initial HTML. Set route-dependent ones synchronously before the framework mounts, never in a mount effect.
+   - Every layout modifier the built page carries on `<body>` and the content layout is in the initial HTML. One app serving two shapes (public pages and a console admin) sets each route's modifiers for that route only, synchronously before the framework mounts; never in a mount effect, never on every route.
    - A client-rendered app mounts the shell inside `#root` (or equivalent) with `display: contents` in project CSS.
    - Keep the runtime `<script defer>` tags the built page carries at the end of `<body>`.
    - Set both `<html lang>` and `dir`: Arabic → `ar`/`rtl`; others → `ltr`. With no locale mechanism, ship Arabic-first bilingual with the existing switcher.
@@ -223,7 +223,6 @@ Before listening on `.nds-*` elements or writing NDS-owned `data-*`, read the co
 
 - Every request needs a visible failure path (form or component status, or an alert), exercised in §Verify.
 - Markup that changes after load (added rows, fetched HTML, views that mount or unmount) follows `_source/core/refresh.md`; check the banner too, as lifecycle APIs differ. A lazy namespace's existence proves nothing.
-- Copied template or example page JS is canonical (hard rule #3).
 - Data scale follows the existing API: full set returned → fetch once, client-side table/filter/sort/export; server-side paging, sorting, filtering → wire the NDS controls to its parameters. A shape that misfits the data → report it; backend changes are the dev's.
 - If NDS has no surface you need, direct code is allowed: comment what you checked and add the finding to `NDS-REPORT.md`.
 
@@ -235,6 +234,7 @@ Before listening on `.nds-*` elements or writing NDS-owned `data-*`, read the co
 - Confirm every structural change is one of hard rule #3's allowed edits.
 - Check every `nds-hgi-*` token in the page HTML and JS against `icons.yml` (`NDS.Init.audit()` misses icon names in JS strings). Other glyphs use `<i class="hgi hgi-stroke hgi-<name>">` from `_source/_sass/_hgiRoundedStroke.scss`.
 - Under strict `style-src`, grep the page for `style="` and convert each canonical inline knob through rule #3's CSP edit.
+- A client-rendered app: its mount element has `display: contents` in project CSS (step 2).
 
 Record the evidence under the plan row (no-plan: in the final report). An unmet check stays open: the row stays `In Progress`.
 
@@ -276,7 +276,7 @@ An unmet item keeps the row `In Progress`; no-plan work reports the page unverif
 
 ## Upgrade
 
-An explicit upgrade request is approval. An update check compares the runtime banner with the latest release and reports relevant changelog entries; upgrade only on dev approval. Write with absolute paths, never `cd` into `NDS_ROOT` or `NDS_ASSETS`, and inspect each destination after writing.
+An explicit upgrade request is approval. A request to update the rules or instructions is not an upgrade: it runs only §This file's Update. An update check compares the runtime banner with the latest release and reports relevant changelog entries; upgrade only on dev approval. Write with absolute paths, never `cd` into `NDS_ROOT` or `NDS_ASSETS`, and inspect each destination after writing.
 
 1. **Compare versions:** the opening `Version:` banners in `NDS_ROOT/_site/assets/js/nds-main.min.js` and `NDS_ASSETS/js/nds-main.min.js`.
 2. **Replace the runtime:** replace `NDS_ROOT` with the latest release as in §Setup, then copy its `_site/assets/` over `NDS_ASSETS`. Keep the project's `img/favicon.svg` and every project-added file; deletions need dev approval. Work done under earlier rules passes §Plan's conformance check first.
