@@ -2,7 +2,7 @@
 
 The page tracker lives in `TODO.md` (Docs rewrite item). Update it and the Status below after every page commit.
 
-**Status (2026-10-06):** Phases 0, 1 and 2 DONE. Phase 3 page rewrites DONE: 90 / 90 pages, `check-docs.py` clean. Left: the NDS IQ pass, the camelCase sweep and localization (tracker in `TODO.md`).
+**Status (2026-10-06):** Phases 0, 1 and 2 DONE. Phase 3 page rewrites DONE: 90 / 90 pages, `check-docs.py` clean. Phase 4 (NDS IQ v4.0) built on branch `iq-v4` 2026-10-09; it publishes on release day. Left: the camelCase sweep and localization (tracker in `TODO.md`).
 
 - **Pilots done (Phase 1):** switch, cards, alert, footer (shell), button, grid (reference: one `Example` group of whole examples, never mixed toggles).
 - **Standard locked (Phase 2):** `/nds-doc` skill rewritten; `scripts/check-docs.py`; `scripts/doc-check.mjs` (owner-approved browser check: clicks every builder option in both themes, flags console errors / empty previews / stretched small parts / mismatched disabled colors, writes contact sheets to `tmp/doc-check/`; overlays are shot closed — add opening them on the first overlay page).
@@ -317,7 +317,7 @@ This is a rewrite, not a conversion. Each page is written fresh from its SCSS, i
   - Dropped: `nds-sortable` (nothing reads it), "`--min-width` is calculated by JS" (it has no default).
 - `components/chart.md` — **DONE (2026-10-05).** One builder on the JS twin (`data-preview="js"`, as Sort): the HTML is the empty `.nds-chart`, every row sets a `create()` option. Structure rows Bar, Line, Pie, Donut (pie and donut also swap `series` and `labels`). Line style chips stack, like the old toggles (owner 2026-10-05): a Markup cell `line.area: true` sets one key inside an object option (`nds-docs.js` `jsSet`). HTML attributes and crowded x labels go to Behavior.
 
-### Phase 4: NDS IQ (parked, last)
+### Phase 4: NDS IQ: DONE on branch `iq-v4` (2026-10-09)
 
 **Constraint:** the rules must work on every template version and name no version.
 
