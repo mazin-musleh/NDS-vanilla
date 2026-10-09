@@ -244,13 +244,13 @@ The fixtures stay skeletal on purpose: a bigger fixture is a slower run with no 
   - `_includes/footer.html` derives the footer tag from it.
   - Every revision chip is Liquid-derived from the heading. Never hardcode one.
   - The guides carry `since` and `last_edit` and no `updated`: the rules version independently of the template.
-  - The Pages workflow overlays the newest `IQv` tag's `NDS-IQ.md` and `integration-quality.md` onto the release site, so a draft or a history row on main stays off it.
+  - The Pages workflow overlays `NDS-IQ.md` and `integration-quality.md` from the `IQv` tag that matches the published file onto the release site, so a draft or a history row on main stays off it.
   - The zip ships neither the rules file nor `_source/`. Its `README.md` is a human signpost only.
 - **One workflow.** NDS is a UI layer. The consumer's project already exists and serves, and NDS never scaffolds it. Steps that apply only when replacing an existing UI are marked conditional in place.
 
 **Versions and publishing**
 - **One marker, display-only.** `(instructions vX.Y)` in the heading. Only `publish-iq.py` reads it, to name the tag: the update check is a whole-file content compare against raw main, guarded only by a `# NDS IQ` first-line check. Set it BY HAND on the first edit after a publish; later edits before the next publish ride the same number.
-- **Raw main's `_includes/NDS-IQ.md` is the publish channel, forever.** Every installed copy carries that link, so only `python scripts/publish-iq.py` writes it. Edit the draft and push it any time. To publish, write the revision's history row in `guides/integration-quality.md`, then run the script: a dry run checks the draft (`check_rules()`), the tag and the row; `--apply` copies, commits and tags `IQvX.Y`. Push main with the tag yourself. The tag is the lock link a dev can pin. `scripts/hooks/pre-push` refuses a main push whose published file differs from the newest `IQv` tag.
+- **Raw main's `_includes/NDS-IQ.md` is the publish channel, forever.** Every installed copy carries that link, so only `python scripts/publish-iq.py` writes it. Edit the draft and push it any time. To publish, write the revision's history row in `guides/integration-quality.md`, then run the script: a dry run checks the draft (`check_rules()`), the tag and the row; `--apply` copies, commits and tags `IQvX.Y`. Push main with the tag yourself. The tag is the lock link a dev can pin. `scripts/hooks/pre-push` refuses a main push whose published file differs from the newest `IQv` tag in main's history; an off-main tag (`IQv3.2`) never counts.
 - **The file names no template version.** It reads the runtime's own banner and the matching tag's sources, so it runs on any release.
 - **`check_rules()` in `scripts/mkrelease.py` fails** (on the draft at publish, on the published copy in the release `verify()`) if the file:
   - names an `x.y.z` literal

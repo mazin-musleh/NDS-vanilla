@@ -20,7 +20,7 @@ Done on branch `iq-v4`:
 - **Redirect loop (found 2026-10-09).** v3.1's rules update compares raw main with the local copy and calls any difference a newer revision. After the redirect, a 1.x project sees v4 on main, installs it, is sent back to v3.1, and repeats on every check. Fix: a final old-line file, `IQv3.2`.
   - Content: v3.1 with its heading marker set to v3.2, and its standalone rules update replaced by "this is the last revision for 1.x templates; rules updates come with the upgrade to a 2.x template". Its Upgrading step 4 (fetch raw main after a template upgrade) stays: after a 2.x upgrade, main's v4 finds the index.
   - DRAFTED 2026-10-09: commit `0d0e3a10` on branch `iq-v3.2` (cut from the `IQv3.1` tag; never merged to main). Three lines: heading v3.2; a rules update installs nothing unless `NDS_ROOT/NDS-INDEX.md` exists, then step 4 runs; `Update:` points there.
-  - Tag it on release day with `IQv4.0`, never before: `pre-push` compares main with the newest `IQv` tag by version, so an `IQv3.2` alone blocks main pushes.
+  - Tag it any time before `IQv4.0` goes out: `pre-push` and the Pages workflow ignore a tag off main's published file (`plans/iq-publish.md`).
   - v4 redirects to `IQv3.2`. Check that `verify()` and `check-release-guards.py` allow that tag name.
   - **Owner call: one address (raw main), the redirect lives in v4.** Rejected: a second download path for v4 that would keep the redirect out of v4. Reasons: a rule is safer than plumbing, and a dev can copy v4 from the guides into a pre-index project, which only a rule inside v4 catches. A later revision drops the bullet once pre-index projects are gone.
 - **Hard first gate: APPLIED 2026-10-09** in `_includes/NDS-IQ.md`. Start here now opens with "open `NDS_ROOT/NDS-INDEX.md`", with three branches: not installed → §Setup; one folder down → flatten; template without an index → `IQv3.2`. Red line #2 adds: never use an NDS path from memory, even when the file exists. Guards 9/9. S101 now expects `IQv3.2`.
@@ -196,7 +196,7 @@ Size: no target. It is whatever the rules need. Expected around 15–20 KB.
 - **Release day:**
   1. tag `0d0e3a10` (branch `iq-v3.2`) as `IQv3.2`
   2. `python scripts/publish-iq.py`, then `--apply`: copies the draft, commits, tags `IQv4.0`
-  3. `git push origin main IQv3.2 IQv4.0`, all together
+  3. `git push origin main IQv3.2 IQv4.0`
   4. `evolve`
 
   Each step on the owner's go.

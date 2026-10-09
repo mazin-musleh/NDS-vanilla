@@ -45,7 +45,7 @@ def main():
         sys.exit(f'{tag} exists. Set a new "instructions v<N>" in the draft heading.')
     if draft == read(PUBLISHED):
         sys.exit(f'{DRAFT} matches {PUBLISHED}: nothing to publish.')
-    # The live site reads the guide from the newest IQv tag, so its row lands in the tagged commit.
+    # The live site reads the guide from the published tag, so its row lands in the tagged commit.
     if f'<td>v{rev}</td>' not in read(GUIDE):
         sys.exit(f'{GUIDE} has no history row for v{rev}. Write it, then run this again.')
 

@@ -74,11 +74,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Find the published NDS IQ
-        # The newest IQv tag: drafts and history rows on main stay off the live site until publish-iq.py tags them.
+        # The IQv tag whose rules match what raw main serves: drafts and history rows on main stay off
+        # the live site until publish-iq.py tags them, and an off-main tag (IQv3.2) never matches.
         id: iq
         run: |
           git fetch --depth=1 origin 'refs/tags/IQv*:refs/tags/IQv*'
-          echo "tag=$(git tag -l 'IQv*' --sort=-v:refname | head -n 1)" >> "$GITHUB_OUTPUT"
+          for t in $(git tag -l 'IQv*' --sort=-v:refname); do
+            git diff --quiet "$t" HEAD -- _includes/NDS-IQ.md && { echo "tag=$t" >> "$GITHUB_OUTPUT"; exit 0; }
+          done
+          echo "No IQv tag matches _includes/NDS-IQ.md on main." >&2; exit 1
       - name: Name the saved release site
         # One saved build per release + NDS IQ tag; a new release, a new IQ publish or a forced rebuild misses it.
         id: key
