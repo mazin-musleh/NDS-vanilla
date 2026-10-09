@@ -584,6 +584,15 @@
 
     // A preview has no server: an upload in one runs a fake, slow one, 1 in 10 fails. An image replies
     // with a sample image's URL (doc pages sit one folder deep), so the editor's image popover gets a src.
+    // A preview field with no URL gets one on its first pick or drop (capture runs before Upload reads it).
+    function demoUploadUrl(e) {
+        var up = e.target.closest && e.target.closest('.nds-file-upload');
+        if (!up || up.dataset.uploadUrl || !NDS.closest(up, '[data-demo-slot]')) return;
+        up.dataset.uploadUrl = '/demo/upload';
+        up.dataset.autoUpload = 'true';
+    }
+    document.addEventListener('change', demoUploadUrl, true);
+    document.addEventListener('drop', demoUploadUrl, true);
     document.addEventListener('nds:upload:beforeUpload', function (e) {
         if (!NDS.closest(e.target, '[data-demo-slot]')) return;
         e.preventDefault();
