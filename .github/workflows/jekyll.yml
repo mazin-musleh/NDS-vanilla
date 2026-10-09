@@ -114,7 +114,7 @@ jobs:
         with:
           ref: ${{ steps.release.outputs.tag }}
           path: _release
-      - name: Take NDS IQ from its newest tag
+      - name: Take NDS IQ from its published tag
         # IQ versions apart from the template: the site shows the published rules and their history.
         if: ${{ !steps.saved.outputs.cache-matched-key }}
         run: |
