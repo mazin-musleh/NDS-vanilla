@@ -2,7 +2,7 @@
 layout: page
 title: NDS IQ
 since: "1.7.0"
-last_edit: "23/09/2026 - 05:18 PM"
+last_edit: "09/10/2026 - 05:22 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -78,6 +78,7 @@ sidemenu_mode: false
                 <table class="nds-table nds-responsive">
                     <thead><tr><th data-align="center">Revision</th><th>Highlights</th></tr></thead>
                     <tbody>
+                        <tr><td>v4.0</td><td>Rebuilt from its goals: an 8% shorter read that covers both doc formats. One table shows where each fact lives. The agent copies canonical markup from a newer doc's canon blocks or an older doc's code tab, and takes options from the Variants table. The rules name no class or file a release renamed, so they read the same on older and newer templates. Token overrides set every state and reach dark areas. A rules update never runs a template upgrade. An app with public pages and an admin console sets its layout classes per route before the framework runs. Validated on Claude Sonnet against the current docs and the v1.12.0 and v1.7.2 templates.</td></tr>
                         <tr><td>v3.1</td><td>The runtime script tags now come from the built page, not a list of file names. The rules stay correct on templates that load the accessibility panel on demand, and on older ones that still ship its tag.</td></tr>
                         <tr><td>v3.0</td><td>A 34% shorter read, organized around the work. The agent picks a work mode first, and each phase has entry and exit checks. A new table sets who decides what: the existing UI owns the content, the backend owns the data rules, and NDS owns the structure. The existing UI never limits NDS features, so a missing search or filter is added by default. Mobile checks set the page viewport, not the browser window. A page with an unmet check stays <code class="nds-inline-code lang-html">In Progress</code>.</td></tr>
                         <tr><td>v2.2</td><td>Better support for apps that render in the browser, such as React or Vue apps. The mount element and every layout class must be correct in the first HTML, before the framework runs. Every page sets both language and direction. When the agent's context is summarized, the agent reads the rules again. A matched source keeps all its parts.</td></tr>
@@ -103,10 +104,11 @@ sidemenu_mode: false
                     <li><strong>Standalone update</strong>: fetches the latest published revision on demand.</li>
                 </ul>
                 <p>Both paths compare the <strong>content</strong> of the installed and published rulebooks. A difference means a newer revision exists, and the agent replaces the whole file. There is no merging or partial patching. The anchor has no version, so it and the project paths stay unchanged. Use the upgrade prompts in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>.</p>
+                <p>Each published revision from v3.1 on has a fixed link. To stay on one revision, download the file from its tag instead of <code class="nds-inline-code lang-html">main</code>: <code class="nds-inline-code lang-html">https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/tags/IQv4.0/_includes/NDS-IQ.md</code>. The tags are <code class="nds-inline-code lang-html">IQv3.1</code> and <code class="nds-inline-code lang-html">IQv4.0</code>. An update replaces a locked copy with the revision on <code class="nds-inline-code lang-html">main</code>, so skip updates to stay on it.</p>
 
                 <h2 id="compatibility">Compatibility</h2>
                 <p>NDS IQ is designed for any AI coding agent that runs locally and can read files and run shell commands. It is validated end to end with Claude Code.</p>
-                <p>The rules are written to work with any template release. If an older release lacks a feature the rules name, the agent uses that release's own docs and source instead. It reports the gap and can propose an upgrade.</p>
+                <p>The rules are written to work with any template release since 1.7.0. They read canonical markup in both doc formats: the canon blocks of newer docs and the code tab of older docs. If an older release lacks a feature the rules name, the agent uses that release's own docs and source instead. It reports the gap and can propose an upgrade.</p>
 
                 <h2 id="the-instructions">The Instructions</h2>
                 <p>The complete rulebook appears below, built from its source in the repository.</p>

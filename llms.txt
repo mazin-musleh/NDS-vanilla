@@ -16,7 +16,7 @@ A framework-free build of the design language the Saudi [Digital Government Auth
 Important notes:
 
 - **Plain HTML/CSS/JS, zero runtime dependencies.** Works with any stack — or none — and is *not* tied to React, Vue, Svelte, or any framework. A smart loader detects the components present on each page and initializes only those.
-- **Markup is a contract.** Every component page below ships canonical, copy-ready HTML in a `lang-html` code block alongside live demos. Copy that markup verbatim — class names, element nesting, `data-*` attributes, and ARIA roles all matter. Do not infer or invent structure.
+- **Markup is a contract.** Every component page below ships canonical, copy-ready HTML beside a live builder. In the page's `.md` source it sits in `<script type="text/html" data-canon>` blocks: copy the block's body, never the `<script>` wrapper. Copy that markup verbatim — class names, element nesting, `data-*` attributes, and ARIA roles all matter. Do not infer or invent structure.
 - **RTL is the default.** Styles use CSS logical properties, so direction flips from a single `dir`/`lang` attribute — there is no separate RTL stylesheet.
 - **Composition.** Pages are built from sections and a responsive grid (see *Layout*). The *Document head* (under *UI shell*) lists the stylesheets and scripts every page must load.
 - **Theming.** Styling uses a 4-tier design-token system (palette → primitives → semantic → component) as CSS custom properties. Light/dark mode and full re-branding work from a single `data-theme` attribute — OKLCH-seed palettes, predefined themes, or stylesheet themes — with no rebuild.
