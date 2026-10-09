@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "09/10/2026 - 02:24 PM"
 ---
 
 <section id="uploadOverview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "06/10/2026 - 10:17 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A file upload is a form field for files. The user picks files with a Browse button, or drops them on a drop zone. The script checks each file and lists it in a row with its name, its status and a remove button. The files then go to your server one by one, or with the rest of the form.
+A file upload is a form field for files. The user picks files with a Browse button, or drops them on a drop zone. The script checks each file and lists it in a row with its name, its size, its status and a remove button. The files then go to your server one by one, or with the rest of the form.
 
 Pick another component when:
 
@@ -197,6 +197,7 @@ The script draws each row from the built-in row. To customize the row, put a hid
     </div>
     <div class="nds-file-info">
       <div class="nds-file-name nds-truncate"></div>
+      <div class="nds-file-size"></div>
       <div class="nds-file-error"><span class="nds-error-message"></span></div>
     </div>
     <div class="nds-file-actions">
@@ -211,7 +212,7 @@ The script draws each row from the built-in row. To customize the row, put a hid
 ### Saved Files
 {: .nds-block-title}
 
-To show the files the server already holds, such as in an edit form, add each one as a complete file: `instance.addFile(new File([], 'lease-contract.pdf'), { status: 'complete' })`. The row shows the name and a check mark, and the script never uploads it. To delete the server copy when the user removes the row, listen for `nds:upload:removed`.
+To show the files the server already holds, such as in an edit form, add each one as a complete file: `instance.addFile(new File([], 'lease-contract.pdf'), { status: 'complete' })`. The row shows the name and a check mark, with no size, since the file is empty, and the script never uploads it. To delete the server copy when the user removes the row, listen for `nds:upload:removed`.
 
 ### Disabled
 {: .nds-block-title}

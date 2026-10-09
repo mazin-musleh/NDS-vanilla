@@ -210,6 +210,14 @@
 
                 .nds-file-ext { flex: none; }
             }
+
+            .nds-file-size {
+                color: var(--text-primary-paragraph);
+                font-size: var(--typo-text-xs-FS);
+                line-height: var(--typo-text-xs-LH);
+
+                &:empty { display: none; }
+            }
         }
 
         .nds-file-actions {

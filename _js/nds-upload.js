@@ -117,6 +117,7 @@
             '</div>' +
             '<div class="nds-file-info">' +
                 '<div class="nds-file-name nds-truncate"></div>' +
+                '<div class="nds-file-size"></div>' +
                 '<div class="nds-file-error"><span class="nds-error-message"></span></div>' +
             '</div>' +
             '<div class="nds-file-actions">' +
@@ -668,6 +669,9 @@
                 fileName.setAttribute('data-tooltip-hover', '500');
                 NDS.Tooltip?.create?.(fileName);
             }
+            // A saved file added as new File([], name) has no size to show.
+            const fileSize = fileItem.querySelector('.nds-file-size');
+            if (fileSize && fileData.file.size) fileSize.textContent = formatFileSize(fileData.file.size);
             if (removeBtn) removeBtn.setAttribute('data-file-id', fileData.id);
             if (errorMsg && fileData.error) errorMsg.textContent = fileData.error;
 

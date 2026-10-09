@@ -146,7 +146,9 @@ Cleared at the 1.12.0 release (2026-09-05). That release shipped the swiper loop
 
 - **Release notes, Saudi Cities — Removed:** the Saudi Cities page is gone. `docs-assets/data/saudi-cities.json` stays as demo data for the Form Template.
 
-- **File Upload, open after the doc rewrite (2026-10-01).** Design calls: the file size under the name in each row, and an image preview for a photo picker (the old catalog card promised one; it never existed). Click through the Editor's image dialog once: reopen it on an embedded image after abandoning a picked file, and the `data:` URL must stay (`dace18f7` moved the staging clear before the prefill).
+- **Release notes, File Upload — Added:** each row shows the file size under the name, in `.nds-file-size`. A file added with no content, such as a saved file, shows no size. A custom `.nds-file-item-template` shows it once it holds a `.nds-file-size`.
+
+- **File Upload image preview for a photo picker — parked until after v2.0 (owner 2026-10-09).** The old catalog card promised one; it never existed.
 
 - **Release notes, Session Timeout — Added:** a warning modal that opens before an idle session ends, counts down the time left, and lets the user stay signed in (WCAG 2.2.1). One `NDS.SessionTimeout.init({ timeout, warn, extend, logout })` call starts it; the script builds the warning and the ended modal, with English and Arabic text. Activity renews the session, tabs share one deadline, `extend` posts a keep-alive, and `left` takes the time left from the server. Events: `nds:session:extend`, `nds:session:end`. Methods: `extend()`, `reset()`, `end()`, `destroy()`. Docs: `components/session-timeout.md`.
 

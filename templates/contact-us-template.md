@@ -293,6 +293,7 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-file-info">
                                     <div class="nds-file-name nds-truncate"></div>
+                                    <div class="nds-file-size"></div>
                                     <div class="nds-file-error">
                                         <span class="nds-error-message"></span>
                                     </div>
