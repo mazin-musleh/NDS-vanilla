@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 07:28 PM"
+last_edit: "09/10/2026 - 05:57 PM"
 lang: en
 direction: ltr
 ---
@@ -547,6 +547,7 @@ The eye button switches the field between hidden and plain text, and its label b
 - Set `input.value` from a script, then call `NDS.Forms.syncState(input)`. Setting the value alone does not update the Clear button or the field's state.
 - Do not call `form.reset()`. No NDS field listens for it: clear each field and call `syncState()` on it.
 - Give an icon-only action button an `aria-label`, such as "Clear input".
+- Test each required field type empty, one at a time. A text field, a custom select, a multiselect and a tag input each check their own required state, so one passing proves nothing about the others.
 
 </div>
   </div>

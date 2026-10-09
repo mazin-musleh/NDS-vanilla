@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "09/10/2026 - 05:57 PM"
 ---
 
 <section id="sectionOverview" class="nds-content-section nds-doc-overview">
@@ -376,6 +376,7 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
 - Use a background color on one section at a time. Two dark sections in a row read as one block.
 - Use a breakout body for a [swiper](../components/swiper) or a wide image, not for text.
 - Use `nds-full` on a title or a description only for short text. Long lines are hard to read.
+- Put two or more parts of a section body in a [grid](../layout/grid), a [flex](../layout/flex) or a [block](../layout/block). The section body is a plain block, so it puts no space between its children.
 
 </div>
   </div>
