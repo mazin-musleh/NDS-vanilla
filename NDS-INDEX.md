@@ -16,10 +16,9 @@ Component, layout, shell, utility and core docs live in `_source/<folder>/<name>
 - **Canon:** each `<script type="text/html" data-canon>` block. Copy the block's body. The `<script>` tag around it is doc packaging and never ships. A block with `data-lang="js"` or `data-lang="css"` holds code for a real script or stylesheet.
 - **Escaped canon:** a block with `data-escaped` holds Liquid output. Copy its code from the capture block just above it.
 - **Options:** the Variants table (Group, Option, Markup, On element, Use). Add an option's Markup on the element it names. The table is hidden on the site and visible in the `.md`.
-- **Never copy** the live demo or the builder preview.
+- **Live demos:** the demo card and the builder preview on a doc page.
 - **JS API:** the banner at the top of `_source/_js/nds-<name>.js`: Rides, Methods, Events, Hooks, Gotchas.
 - **Whole pages:** `_source/examples/*.md` and `_source/templates/*.md` hold a page's content as plain HTML. Their front matter builds the rest: the Front Matter table in `_source/layout/page-layout.md` maps each key to its markup, and the hero's keys are in `_source/ui-shell/hero.md`. A Liquid loop repeats one block: its body is the markup, and its fields take the project's content.
-- **The `.md` is enough.** Never copy from a built page: it is only where you see the result.
 
 ## Need → file
 
@@ -45,7 +44,7 @@ Component, layout, shell, utility and core docs live in `_source/<folder>/<name>
 
 ## View the built site
 
-Each doc, example and template has a built page at the same path under `_site/`, such as `_site/components/cards.html`: the visual reference for a page you build. Serve `_site/` with a static HTTP server and open its pages by URL. Never open them as `file://`: the console fills with false errors.
+Each doc, example and template has a built page at the same path under `_site/`, such as `_site/components/cards.html`: the visual reference for a page you build. Serve `_site/` with a static HTTP server and open its pages by URL.
 
 ## Audit
 
@@ -55,8 +54,8 @@ Each doc, example and template has a built page at the same path under `_site/`,
 
 ## Upgrade
 
-- Read every `### Migrating from` section in `CHANGELOG.md` between the old and the new version.
-- Run the audit's `migration` group on every page.
+- **Migration notes:** the `### Migrating from` sections in `CHANGELOG.md`.
+- **Migration check:** the audit's `migration` group, `NDS.Audit.run({ group: 'migration' })`.
 
 ## Legacy libraries
 

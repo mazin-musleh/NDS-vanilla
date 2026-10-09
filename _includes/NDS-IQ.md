@@ -2,15 +2,17 @@
 
 ## Start here
 
+**Before anything else, open `NDS_ROOT/NDS-INDEX.md`.** It maps every need to this release's files. Read it once per session.
+
+- **No `NDS_ROOT` yet, or a placeholder path?** Keep reading: §Setup restores it.
+- **`NDS-INDEX.md` one folder down** (inside the zip's versioned folder)? Move that folder's contents up into `NDS_ROOT`, then open it.
+- **`NDS_ROOT` holds a template but no `NDS-INDEX.md`?** The template predates this file, and this file cannot serve it. Download https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/tags/IQv3.2/_includes/NDS-IQ.md with curl or the stack's HTTP client, check that line 1 starts `# NDS IQ`, replace the project-root `NDS-IQ.md` with it, and read it. Tell the dev it is the last rules revision for this template: new rules come with an upgrade to a release that ships `NDS-INDEX.md`. Stop reading this file.
+
 The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the values of `NDS_ROOT` and `NDS_ASSETS`, and the trigger that sent you here.
 
 - Read this file top to bottom once per session, before any NDS or UI work, and when unsure. Read it again after it is replaced or your context is compacted. At each phase boundary, reread that phase's gates.
 - It is universal and read-only: no project values, no edits. Path values live only in the anchor.
-- **This file holds rules, not facts.** It names no NDS file, class or API, because each release can change them. The template carries the facts:
-  - `NDS_ROOT/NDS-INDEX.md` maps every need to that release's files. Read it first, once per session.
-  - The docs it names hold every fact: markup, options, APIs, layout and styling rules.
-  - The template's audit checks a live page. The index names how to run it.
-- **No `NDS-INDEX.md` in `NDS_ROOT`?** The template predates this revision. Replace the project-root `NDS-IQ.md` with the revision that serves it, https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/tags/IQv3.1/_includes/NDS-IQ.md, read it, and tell the dev that rules updates stay on it until the template is upgraded.
+- **This file holds rules, not facts.** It names no NDS file, class or API, because each release can change them. The template carries the facts: the docs the index names hold markup, options, APIs, layout and styling rules, and the template's audit checks a live page.
 - An older release may lack a doc or feature a newer one has: use what it ships, report the gap, and propose the upgrade as the dev's call. A missing route never blocks.
 
 **`NDS_ROOT`**: the flat contents of one template release from https://github.com/mazin-musleh/NDS-vanilla/releases. Default `.nds/` at the project root, gitignored, read-only. It is correct when `NDS_ROOT/NDS-INDEX.md` resolves directly; never keep the zip's versioned wrapper folder.
@@ -25,7 +27,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 
 1. **Never edit `NDS_ROOT`; never hand-edit NDS files in `NDS_ASSETS`.** If NDS itself needs a change, report it and stop.
 
-2. **Never read minified JS or CSS.** Read the sources the index names. The one exception is a bundle's opening comment, read for its `Version:` banner.
+2. **Never read minified JS or CSS. Never use an NDS path from memory.** Every path comes from the index; a remembered path is an invented one, even when the file exists. The one exception is a bundle's opening comment, read for its `Version:` banner.
 
 3. **Copy canonical markup verbatim. Never invent it.** The index says where a doc keeps its canon and how to read it. Never copy a live demo or a built page: the docs are the only copy source. Preserve structure, classes, `data-*` attributes, and ARIA. Only these edits are allowed:
 

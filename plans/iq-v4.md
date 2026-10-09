@@ -8,7 +8,24 @@ Done on branch `iq-v4`:
 - Phase 3: audit rules `legacy-library`, `bundle-tag` and `inline-defer` (6f6b964e). The browser test is NOT run yet; it needs the owner's yes.
 - Phase 4: NDS IQ is rules only, with no paths, classes or APIs, and `verify()` fails on any. Guards 9/9.
 
-**Next: Phase 5 (eval).**
+**Phase 5 (eval): PARKED 2026-10-09 for an architecture discussion.** Done so far (2de8b3d9, 9dbd9cb7, ef798622): suite moved to v4; floor 48/95 free (docs carry them); real run 46/48 on the rest, 0 fail; built-page copy advice removed from docs. Open:
+- S101: the IQv3.1 redirect passes only when the runner is told to do its reads; real behavior unproven (behavior run on `mini-root`).
+- S8: the update check does not compare the rules file.
+- S12, S67, S68, S76 expect trimming; v4 says keep every part. Owner call.
+- S24, S41, S70 have no v4 rule.
+
+**Architecture (2026-10-09):**
+- **IQ/index line:** "Would this sentence be wrong for another release?" Yes → index; no → IQ. The index holds what and where; every never/always lives only in IQ. Applied: four duplicate rules left the index (built page, `file://`, live demos, "every page").
+- **HELD: role-word glossary.** IQ speaks stable role words (sub hero, flat variant, digital stamp, language switcher, single-choice facet, migration check); the index maps each to this release's file and section. A `verify()` check fails when IQ uses a role word the index does not define. About 20–30 index lines plus one guard. Do it once the rework settles.
+- **Redirect loop (found 2026-10-09).** v3.1's rules update compares raw main with the local copy and calls any difference a newer revision. After the redirect, a 1.x project sees v4 on main, installs it, is sent back to v3.1, and repeats on every check. Fix: a final old-line file, `IQv3.2`.
+  - Content: v3.1 with its heading marker set to v3.2, and its standalone rules update replaced by "this is the last revision for 1.x templates; rules updates come with the upgrade to a 2.x template". Its Upgrading step 4 (fetch raw main after a template upgrade) stays: after a 2.x upgrade, main's v4 finds the index.
+  - Draft on a branch cut from the `IQv3.1` tag; never merged to main.
+  - Tag it on release day with `IQv4.0`, never before: `pre-push` compares main with the newest `IQv` tag by version, so an `IQv3.2` alone blocks main pushes.
+  - v4 redirects to `IQv3.2`. Check that `verify()` and `check-release-guards.py` allow that tag name.
+  - **Owner call: one address (raw main), the redirect lives in v4.** Rejected: a second download path for v4 that would keep the redirect out of v4. Reasons: a rule is safer than plumbing, and a dev can copy v4 from the guides into a pre-index project, which only a rule inside v4 catches. A later revision drops the bullet once pre-index projects are gone.
+- **Hard first gate: APPLIED 2026-10-09** in `_includes/NDS-IQ.md`. Start here now opens with "open `NDS_ROOT/NDS-INDEX.md`", with three branches: not installed → §Setup; one folder down → flatten; template without an index → `IQv3.2`. Red line #2 adds: never use an NDS path from memory, even when the file exists. Guards 9/9. S101 now expects `IQv3.2`.
+
+**Earlier Phase 5 notes:**
 - Harness: map `NDS_ROOT/NDS-INDEX.md` to the repo-root `NDS-INDEX.md`, and say in the prompt that `NDS_ROOT/` holds `NDS-INDEX.md` at its root.
 - Floor stub variant: no rules, but the index and docs stay. This separates rules from docs.
 - Re-point the `rules:` and `cite` lines; rubrics stay behaviors.
