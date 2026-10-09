@@ -21,6 +21,7 @@ node scripts/find-unused-icons.mjs              # UI icons nothing references
 node scripts/check-date.mjs                     # NDS.date vs Intl: every day 2018–2037 round-trips gregory ↔ hijri; ENGINE=webkit for Safari
 node scripts/check-i18n.mjs                     # every locale pack mirrors en.json and stays under budget, JS defaults match it, no hardcoded Arabic / NDS.langKey left in _js/
 python scripts/check-docs.py [page.md]          # one-source doc pages vs the nds-doc rules (no build needed)
+python scripts/publish-iq.py [--apply]          # NDS IQ draft → the file installs download: dry run; --apply commits + tags IQvX.Y, never pushes
 node scripts/doc-check.mjs <page.md>            # clicks every builder option: findings + one contact sheet per theme in tmp/doc-check/ — owner's go-ahead first
 ```
 
@@ -257,7 +258,7 @@ Documentation pages under `components/`, `ui-shell/`, `layout/`, `utilities/`, a
 
 ## Writing
 
-**All user-facing prose follows `EDITORIAL.md`: sentences, terms, claims, and tone per surface.** Read it before you write or rewrite any doc page, guide, alert, demo copy, README, changelog entry, or `_includes/NDS-IQ.md`. The `ste100-writer` skill, if installed, adds an approved-word check on top.
+**All user-facing prose follows `EDITORIAL.md`: sentences, terms, claims, and tone per surface.** Read it before you write or rewrite any doc page, guide, alert, demo copy, README, changelog entry, or `_includes/NDS-IQ-draft.md`. The `ste100-writer` skill, if installed, adds an approved-word check on top.
 
 ## Git Commits
 
@@ -282,10 +283,10 @@ A row carries the dead name, its replacement, when it was deprecated, and where 
 
 **`NDS-INDEX.md` maps a consumer agent's needs to this release's files; the rules name none.** It ships at the template zip root. A commit that moves a doc page, changes the canon format, or changes a chrome shape's page updates it in the same commit. `verify()` fails the release on any path it names that is missing.
 
-**`_includes/NDS-IQ.md` is the single source of the consumer rules (NDS IQ). Load the `nds-iq-eval` skill before editing it** — it holds the versioning, growth-control and floor-gate policy.
+**`_includes/NDS-IQ-draft.md` is where the consumer rules (NDS IQ) are written. Load the `nds-iq-eval` skill before editing it** — it holds the versioning, growth-control and floor-gate policy.
 
-**Raw main publishes NDS IQ, so never edit `_includes/NDS-IQ.md` on main.** Draft on a branch; publish = squash into main + tag `IQvX.Y`. `scripts/hooks/pre-push` blocks a main push whose rules file differs from the newest `IQv` tag — install it once per clone: `git config core.hooksPath scripts/hooks`.
+**Raw main's `_includes/NDS-IQ.md` is what every install downloads, so only `python scripts/publish-iq.py` writes it.** Edit the draft and push it any time. The script checks the draft, copies it over the published file, commits and tags `IQvX.Y`; pushing stays a separate step. The live site takes the rules and `guides/integration-quality.md` from the newest `IQv` tag, so drafts and history rows on main stay off it. `scripts/hooks/pre-push` blocks a main push whose published file differs from the newest `IQv` tag — install it once per clone: `git config core.hooksPath scripts/hooks`.
 
-**HARD CONSTRAINT: `_includes/NDS-IQ.md` may never contain literal Liquid delimiters** (curly-brace-percent or double-curly). It is a Jekyll include — the footer and both guides render it — so the build parses them and dies pointing at the footer. Write around them; `verify()` guards it.
+**HARD CONSTRAINT: the rules file may never contain literal Liquid delimiters** (curly-brace-percent or double-curly). The published copy is a Jekyll include — the footer and both guides render it — so the build parses them and dies pointing at the footer. Write around them; `check_rules()` guards the draft at publish and the published copy at release.
 
-**The rules file names no template version** — `verify()` fails the build on any `x.y.z` literal in it.
+**The rules file names no template version** — `check_rules()` fails on any `x.y.z` literal in it.

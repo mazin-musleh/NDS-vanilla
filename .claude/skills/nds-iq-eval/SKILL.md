@@ -1,11 +1,11 @@
 ---
 name: nds-iq-eval
-description: Test and evolve the NDS consumer rules file NDS-IQ.md (source _includes/NDS-IQ.md) with scenario batteries run by fresh agents, and micro-fixture behavior runs. Use whenever the user asks to test the instructions/rules file, eval the block, check whether an NDS-IQ change broke a rule, run a model sweep (Fable/Opus/Sonnet comprehension comparison), add an eval scenario, or asks how a weaker model would read a rule. Also load it before ANY edit to _includes/NDS-IQ.md — it holds the rules-file policy. Also use after substantial NDS-IQ edits when the user asks "did we break anything". NOT for auditing NDS source JS/CSS (nds-js-audit / nds-css-audit) or doc pages (nds-doc).
+description: Test and evolve the NDS consumer rules file NDS-IQ.md (draft _includes/NDS-IQ-draft.md, published _includes/NDS-IQ.md) with scenario batteries run by fresh agents, and micro-fixture behavior runs. Use whenever the user asks to test the instructions/rules file, eval the block, check whether an NDS-IQ change broke a rule, run a model sweep (Fable/Opus/Sonnet comprehension comparison), add an eval scenario, or asks how a weaker model would read a rule. Also load it before ANY edit to _includes/NDS-IQ-draft.md — it holds the rules-file policy. Also use after substantial NDS-IQ edits when the user asks "did we break anything". NOT for auditing NDS source JS/CSS (nds-js-audit / nds-css-audit) or doc pages (nds-doc).
 ---
 
 # nds-iq-eval
 
-Tests the consumer rules file, `_includes/NDS-IQ.md`. A consumer project saves it at its root as `NDS-IQ.md`, and an anchor in the project's agent file makes the agent read it. The file must hold one property: **capability-independence**. A rule the strong model infers and the weak model misses is a bug in the file. The scenarios are the regression suite: every real incident becomes a scenario, so a later rewrite cannot quietly undo a fixed rule.
+Tests the consumer rules file in its draft, `_includes/NDS-IQ-draft.md`; `scripts/publish-iq.py` copies it to `_includes/NDS-IQ.md`, which installs download. A consumer project saves it at its root as `NDS-IQ.md`, and an anchor in the project's agent file makes the agent read it. The file must hold one property: **capability-independence**. A rule the strong model infers and the weak model misses is a bug in the file. The scenarios are the regression suite: every real incident becomes a scenario, so a later rewrite cannot quietly undo a fixed rule.
 
 ## Principles
 
@@ -81,7 +81,7 @@ The floor answers one question: does this sentence earn its place? A scenario th
 ## Workflow
 
 1. **Scope.**
-   - Diff the working-tree `_includes/NDS-IQ.md` against `last-evaluated.md` with a shell `diff`. Never Read both: that costs ~23K tokens to learn a few lines.
+   - Diff the working-tree `_includes/NDS-IQ-draft.md` against `last-evaluated.md` with a shell `diff`. Never Read both: that costs ~23K tokens to learn a few lines.
    - Identical → recommend no run, and name what would trigger the next one.
    - Different → the changed lines are the scope, committed or not.
    - If the ask names no mode, offer numbered options with a recommendation and a rough cost:
@@ -126,9 +126,9 @@ lines — NDS_ROOT = .nds/ (an extracted NDS template zip, version
 {ROOT_VERSION}, present on disk) and NDS_ASSETS = wwwroot/assets/ — plus the
 instruction to read NDS-IQ.md at the project root before any UI work. The
 project root's NDS-IQ.md is byte-identical to the file stored in this repo at
-C:\Projects\NDS-vanilla\_includes\NDS-IQ.md.
+C:\Projects\NDS-vanilla\_includes\NDS-IQ-draft.md.
 
-First: Read C:\Projects\NDS-vanilla\_includes\NDS-IQ.md in full. That file is
+First: Read C:\Projects\NDS-vanilla\_includes\NDS-IQ-draft.md in full. That file is
 your ONLY rulebook. Ignore every other file in this repo (CLAUDE.md,
 AGENTS.md, source code) — they are maintainer-side documents the consumer
 agent never sees. ONE exception: where the rules file routes you to a read
@@ -238,27 +238,27 @@ The fixtures stay skeletal on purpose: a bigger fixture is a slower run with no 
 ## Rules-file policy
 
 **The file and its renders**
-- **One source:** `_includes/NDS-IQ.md`, as clean unescaped markdown. The consumer reads it once per session. The anchor holds the path values and no version, so it is installed once; the file holds no path values. It is universal: every copy is byte-identical, and an update replaces the whole file. The canonical anchor text lives only in the file's own final section. Edit the rules there, never in a guide.
+- **One source:** `_includes/NDS-IQ-draft.md`, as clean unescaped markdown; `_includes/NDS-IQ.md` is its published copy, written only by `scripts/publish-iq.py`. The consumer reads it once per session. The anchor holds the path values and no version, so it is installed once; the file holds no path values. It is universal: every copy is byte-identical, and an update replaces the whole file. The canonical anchor text lives only in the file's own final section. Edit the rules there, never in a guide.
 - **Renders:**
-  - `guides/get-started.md` (install and session playbook) and `guides/integration-quality.md` (what it is, revision history) render it via `{% include %}` + `escape`.
+  - `guides/get-started.md` (install and session playbook) and `guides/integration-quality.md` (what it is, revision history) render the published copy via `{% include %}` + `escape`.
   - `_includes/footer.html` derives the footer tag from it.
   - Every revision chip is Liquid-derived from the heading. Never hardcode one.
   - The guides carry `since` and `last_edit` and no `updated`: the rules version independently of the template.
-  - The Pages workflow overlays main's `NDS-IQ.md` and `integration-quality.md` onto the release site.
+  - The Pages workflow overlays the newest `IQv` tag's `NDS-IQ.md` and `integration-quality.md` onto the release site, so a draft or a history row on main stays off it.
   - The zip ships neither the rules file nor `_source/`. Its `README.md` is a human signpost only.
 - **One workflow.** NDS is a UI layer. The consumer's project already exists and serves, and NDS never scaffolds it. Steps that apply only when replacing an existing UI are marked conditional in place.
 
 **Versions and publishing**
-- **One marker, display-only.** `(instructions vX.Y)` in the heading. Nothing parses or compares it: the update check is a whole-file content compare against raw main, guarded only by a `# NDS IQ` first-line check. Set it BY HAND on the first edit after a publish; later edits before the next publish ride the same number.
-- **Raw main is the publish channel, forever.** Every installed copy carries that link. So main's file is always the published revision. Draft each revision on its own branch. Publish by squashing it into main, then tag that commit `IQvX.Y`, then push main with the tag. The tag is the lock link a dev can pin. `scripts/hooks/pre-push` refuses a main push whose rules file differs from the newest `IQv` tag.
+- **One marker, display-only.** `(instructions vX.Y)` in the heading. Only `publish-iq.py` reads it, to name the tag: the update check is a whole-file content compare against raw main, guarded only by a `# NDS IQ` first-line check. Set it BY HAND on the first edit after a publish; later edits before the next publish ride the same number.
+- **Raw main's `_includes/NDS-IQ.md` is the publish channel, forever.** Every installed copy carries that link, so only `python scripts/publish-iq.py` writes it. Edit the draft and push it any time. To publish, write the revision's history row in `guides/integration-quality.md`, then run the script: a dry run checks the draft (`check_rules()`), the tag and the row; `--apply` copies, commits and tags `IQvX.Y`. Push main with the tag yourself. The tag is the lock link a dev can pin. `scripts/hooks/pre-push` refuses a main push whose published file differs from the newest `IQv` tag.
 - **The file names no template version.** It reads the runtime's own banner and the matching tag's sources, so it runs on any release.
-- **`verify()` in `scripts/mkrelease.py` fails the build** if the file:
+- **`check_rules()` in `scripts/mkrelease.py` fails** (on the draft at publish, on the published copy in the release `verify()`) if the file:
   - names an `x.y.z` literal
   - loses its revision stamp, its `Managed by NDS IQ` plan stamp, its anchor-canon lines, or its Liquid-free state (Liquid delimiters kill the build that renders it)
   - is no longer included by either guide
   - names a literal path missing from the zip (`_site/…`) or the repo tree (`_source/…`)
 
-  After any edit to `verify()` or to a sentence a guard keys on, run `python scripts/check-release-guards.py`. It breaks the file once per case and asserts the guard notices.
+  After any edit to `check_rules()`, `verify()` or a sentence a guard keys on, run `python scripts/check-release-guards.py`. It breaks the draft once per case and asserts the guard notices.
 
 **What a sentence may say**
 - **IQ names no facts.** Each release's `NDS-INDEX.md`, docs and audit own every path, class, API and doc format. Outside the anchor, a sentence may name only `NDS_ROOT`, `NDS_ASSETS`, `NDS-PLAN.md`, `NDS-REPORT.md`, `NDS-IQ.md`, `NDS-INDEX.md`, the release and raw URLs, and the `IQv3.2` tag; `verify()` fails on anything else. A sentence routes by need ("the index names …"), never by path.

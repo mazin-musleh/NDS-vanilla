@@ -1,5 +1,5 @@
 #!/bin/sh
-# Raw main publishes NDS IQ to every install, so main's rules file must match the newest IQv tag.
+# Raw main serves _includes/NDS-IQ.md to every install; only scripts/publish-iq.py writes it.
 # Install once per clone: git config core.hooksPath scripts/hooks
 tag=$(git tag -l 'IQv*' --sort=-v:refname | head -n 1)
 [ -n "$tag" ] || exit 0
@@ -8,7 +8,7 @@ while read -r lref lsha rref rsha; do
   case $lsha in 0000000000000000000000000000000000000000) continue ;; esac
   if ! git diff --quiet "$tag" "$lsha" -- _includes/NDS-IQ.md; then
     echo "pre-push: _includes/NDS-IQ.md on main differs from $tag, and raw main publishes it." >&2
-    echo "Draft NDS IQ on a branch. To publish, tag the commit IQvX.Y, then push main with the tag." >&2
+    echo "Edit _includes/NDS-IQ-draft.md instead, and publish with: python scripts/publish-iq.py" >&2
     exit 1
   fi
 done

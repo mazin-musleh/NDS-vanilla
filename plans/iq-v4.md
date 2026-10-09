@@ -192,12 +192,12 @@ Size: no target. It is whatever the rules need. Expected around 15–20 KB.
   - A `core/migration.md` row and the TODO release-notes line; then `ruby _plugins/js_processor.rb`.
   - Fix the stale status line in `plans/docs-rewrite.md`: the camelCase sweep and localization are done.
   - Merge main into `iq-v4` after.
+- **Before release (any time):** merge `iq-v4` into main. The v4 rules ride along as the draft; nothing publishes (`plans/iq-publish.md`).
 - **Release day:**
   1. tag `0d0e3a10` (branch `iq-v3.2`) as `IQv3.2`
-  2. squash `iq-v4`
-  3. tag `IQv4.0`
-  4. push main with both tags
-  5. `evolve`
+  2. `python scripts/publish-iq.py`, then `--apply`: copies the draft, commits, tags `IQv4.0`
+  3. `git push origin main IQv3.2 IQv4.0`, all together
+  4. `evolve`
 
   Each step on the owner's go.
 

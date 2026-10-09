@@ -23,7 +23,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
 import mkrelease
 
-IQ = os.path.join(ROOT, '_includes', 'NDS-IQ.md')
+# The draft: the file people edit. publish-iq.py runs the same checks on it.
+IQ = os.path.join(ROOT, '_includes', 'NDS-IQ-draft.md')
 VERSION = '1.7.0'   # names the stub zip's root folder and CHANGELOG section
 
 # The _source/ anchors and refs verify() checks are NOT staged here: the zip
@@ -116,7 +117,7 @@ def run(mutate=None, version=VERSION, target=IQ):
             with open(target, 'w', encoding='utf8', newline='') as f:
                 f.write(mutate(original))
         try:
-            mkrelease.verify(build_stub_zip(version, refs_from=rules), version)
+            mkrelease.verify(build_stub_zip(version, refs_from=rules), version, IQ)
             return None
         except SystemExit as e:
             return str(e)
@@ -186,7 +187,7 @@ def main():
     ):
         zip_path = build_stub_zip(VERSION, refs_from=source, gate_doc=drifted)
         try:
-            mkrelease.verify(zip_path, VERSION)
+            mkrelease.verify(zip_path, VERSION, IQ)
             ok, detail = False, 'accepted a drifted critical gate'
         except SystemExit as e:
             ok, detail = 'has drifted' in str(e), str(e)

@@ -55,14 +55,14 @@ if (rootMode === 'mini') {
 fs.cpSync(path.join(nds, '_site', 'assets'), path.join(out, ASSETS[fixture]), { recursive: true })
 
 // 5. rulebook at project root only (template zips stopped shipping it in 7035a2f8)
-const rbPath = rulebook === 'real' ? path.join(REPO, '_includes', 'NDS-IQ.md')
+const rbPath = rulebook === 'real' ? path.join(REPO, '_includes', 'NDS-IQ-draft.md')
   : rulebook === 'stub' ? path.join(FIX, 'NDS-IQ-STUB.md') : path.resolve(rulebook)
 fs.cpSync(rbPath, path.join(out, 'NDS-IQ.md'))
 
 // 6. anchor — extracted from the REAL rules file's Install section so it never
 // drifts from canon; NDS_ASSETS placeholder swapped for the fixture's path
 if (!fs.existsSync(path.join(out, 'AGENTS.md'))) {
-  const rules = fs.readFileSync(path.join(REPO, '_includes', 'NDS-IQ.md'), 'utf8')
+  const rules = fs.readFileSync(path.join(REPO, '_includes', 'NDS-IQ-draft.md'), 'utf8')
   const fence = rules.match(/```markdown\n(## NDS — National Design System[\s\S]*?)```/)
   if (!fence) { console.error('anchor canon not found in rules file'); process.exit(1) }
   const anchor = fence[1].replace(/`NDS_ASSETS` = `[^`]+`/, '`NDS_ASSETS` = `' + ASSETS[fixture] + '/`')

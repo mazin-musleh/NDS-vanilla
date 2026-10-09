@@ -5,7 +5,7 @@ description: Cut an NDS release — build the template zip with mkrelease.py, ma
 
 # nds-release
 
-NDS-IQ versioning rules (revision stamp, no version literals, what `verify()` guards) live in the `nds-iq-eval` skill — read them before touching `_includes/NDS-IQ.md` during a release.
+NDS-IQ versioning rules (revision stamp, no version literals, what `check_rules()` guards) live in the `nds-iq-eval` skill — read them before touching `_includes/NDS-IQ-draft.md` during a release. `verify()` checks the PUBLISHED `_includes/NDS-IQ.md`, so a template release that needs new rules publishes them first with `python scripts/publish-iq.py`.
 
 **Never hand-roll the template zip** — `python scripts/mkrelease.py` builds it. A plain `jekyll build` zip ships absolute `/NDS-vanilla/` asset paths that 404 the moment a consumer drops the folder into their own project. The script builds, runs `_plugins/baseurl_cleaner.rb` (paths → depth-relative) then `_plugins/html_compressor.rb`, drops the five docs-site-only files (`playground.html`, `TOKEN-MIGRATION.md`, `llms.txt`, `robots.txt`, `sitemap.xml`), adds `CHANGELOG.md` + `LICENSE` + `README.md` (from `scripts/release-template/` — a human signpost pointing at the in-zip adoption guide), and verifies the result before handing over `dist/nds-vanilla-template-v<version>.zip`. **The zip ships no `_source/` tree** — the consumer populates `NDS_ROOT/_source/` from the tag's auto-generated Source code zip, per the population rule in the rules file — so `verify()` checks those paths against the repo working tree, which is what the tag captures.
 

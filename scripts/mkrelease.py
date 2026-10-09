@@ -4,7 +4,7 @@
     python scripts/mkrelease.py              # full: build, clean, format, zip
     python scripts/mkrelease.py --no-build   # reuse the existing _site
 
-scripts/check-release-guards.py proves verify()'s NDS-IQ guards still fire —
+scripts/check-release-guards.py proves the NDS-IQ guards (check_rules) still fire —
 run it after touching verify() or the sentences it keys on.
 
 Output: dist/nds-vanilla-template-v<version>.zip, laid out as
@@ -110,7 +110,57 @@ def zip_up(dist, pkg, version):
     return out
 
 
-def verify(out, version):
+def check_rules(block, name='_includes/NDS-IQ.md'):
+    """The rules file's own text checks. verify() runs them on the published
+    copy; publish-iq.py runs them on the draft before it publishes.
+    Returns the heading's revision ("4.0")."""
+    if '{%' in block or '{{' in block:
+        sys.exit(f'{name} contains literal Liquid delimiters — it is a Jekyll '
+                 'include (topbar + guide render it), so the build parses them and dies.')
+    # Display only — nothing compares it. The pattern takes the decimal so it
+    # can't stop at the "v0" of "v0.8" and match a stamp that isn't there.
+    m = re.search(r'instructions v([\d.]+)', block)
+    if not m:
+        sys.exit(f'{name} heading has no "instructions v<N>" stamp.')
+    # The rules name NO template version, anywhere: they read the runtime's own
+    # banner and fetch matching-version references, so they run on any release.
+    # Nothing sweeps this file, so a literal that creeps in is prose that goes
+    # stale on the next release with nothing to catch it.
+    stray = sorted(set(re.findall(r'\d+\.\d+\.\d+', block)))
+    if stray:
+        sys.exit(f'{name} names {stray}. The rules are version-agnostic by design '
+                 f'— they read the runtime banner instead — so a template version literal is a '
+                 f'regression. Reword the sentence to name no release.')
+
+    # The rules hold no release facts: paths, classes and APIs change per release and
+    # live in NDS-INDEX.md and the docs. The anchor block and URLs are exempt.
+    prose = re.sub(r'https?://\S+', '', re.sub(r'```markdown.*?```', '', block, flags=re.S))
+    facts = sorted(set(re.findall(r'_source/|_site/|\bnds-[a-z][\w-]*|\bNDS\.[A-Z]\w*', prose)))
+    if facts:
+        sys.exit(f'{name} names release facts {facts}. Route them through '
+                 f'NDS-INDEX.md or the docs instead.')
+
+    # Every consumer NDS-PLAN.md opens with the plan stamp, which is how a
+    # later session recognizes a plan these rules produced. It carries no
+    # version — nothing compares it — so presence is the whole check.
+    if 'Managed by NDS IQ' not in block:
+        sys.exit(f'{name} lost its "Managed by NDS IQ" plan-stamp line — '
+                 'consumer plan files are opened with it.')
+
+    # The canonical anchor text lives INSIDE the file (Install section); both
+    # a first install and a pasted-block migration copy the anchor from there.
+    # These literals appear ONLY inside the anchor code block — a string the
+    # surrounding prose also uses would keep passing after the anchor lost it.
+    for canon in ('- `NDS_ROOT` = `.nds/`',
+                  '- `NDS_ASSETS` = `/path/to/your-project/public/assets/`',
+                  'Do no NDS work before that read.',
+                  'Never write `.nds-*` markup from memory'):
+        if canon not in block:
+            sys.exit(f'{name} anchor canon lost its line: {canon!r}')
+    return m.group(1)
+
+
+def verify(out, version, rules=None):
     """Fail loudly if a pass silently didn't happen."""
     z = zipfile.ZipFile(out)
     names = z.namelist()
@@ -244,64 +294,17 @@ def verify(out, version):
     if _canon('a11y-fab') != _markup(_read('_includes/accessibility-panel.html')):
         sys.exit('FAB in components/accessibility.md has drifted from _includes/accessibility-panel.html.')
 
-    # The rules file's checks run against its SOURCE include (the guide
-    # renders the same include; raw main and the zip top level serve it
-    # byte-identical). The file is universal — no per-project values — so a
-    # refresh is a whole-file replace keyed on the heading stamps; lose a
-    # stamp or the in-file anchor canon and installs or migrations break
-    # silently.
-    with open(os.path.join(ROOT, '_includes', 'NDS-IQ.md'), encoding='utf8') as f:
+    # The rules file's checks run against the PUBLISHED copy: the one the
+    # guides render and raw main serves.
+    rules = rules or os.path.join(ROOT, '_includes', 'NDS-IQ.md')
+    with open(rules, encoding='utf8') as f:
         block = f.read()
-
+    rev = check_rules(block, os.path.relpath(rules, ROOT).replace(os.sep, '/'))
 
     guides = {}
     for name in ('get-started', 'integration-quality'):
         with open(os.path.join(ROOT, 'guides', f'{name}.md'), encoding='utf8') as f:
             guides[name] = html.unescape(f.read())
-
-    if '{%' in block or '{{' in block:
-        sys.exit('_includes/NDS-IQ.md contains literal Liquid delimiters — it is a Jekyll '
-                 'include (topbar + guide render it), so the build parses them and dies.')
-    # Display only — nothing compares it. The pattern takes the decimal so it
-    # can't stop at the "v0" of "v0.8" and match a stamp that isn't there.
-    m = re.search(r'instructions v([\d.]+)', block)
-    if not m:
-        sys.exit('_includes/NDS-IQ.md heading has no "instructions v<N>" stamp.')
-    # The rules name NO template version, anywhere: they read the runtime's own
-    # banner and fetch matching-version references, so they run on any release.
-    # Nothing sweeps this file, so a literal that creeps in is prose that goes
-    # stale on the next release with nothing to catch it.
-    stray = sorted(set(re.findall(r'\d+\.\d+\.\d+', block)))
-    if stray:
-        sys.exit(f'_includes/NDS-IQ.md names {stray}. The rules are version-agnostic by design '
-                 f'— they read the runtime banner instead — so a template version literal is a '
-                 f'regression. Reword the sentence to name no release.')
-
-    # The rules hold no release facts: paths, classes and APIs change per release and
-    # live in NDS-INDEX.md and the docs. The anchor block and URLs are exempt.
-    prose = re.sub(r'https?://\S+', '', re.sub(r'```markdown.*?```', '', block, flags=re.S))
-    facts = sorted(set(re.findall(r'_source/|_site/|\bnds-[a-z][\w-]*|\bNDS\.[A-Z]\w*', prose)))
-    if facts:
-        sys.exit(f'_includes/NDS-IQ.md names release facts {facts}. Route them through '
-                 f'NDS-INDEX.md or the docs instead.')
-
-    # Every consumer NDS-PLAN.md opens with the plan stamp, which is how a
-    # later session recognizes a plan these rules produced. It carries no
-    # version — nothing compares it — so presence is the whole check.
-    if 'Managed by NDS IQ' not in block:
-        sys.exit('_includes/NDS-IQ.md lost its "Managed by NDS IQ" plan-stamp line — '
-                 'consumer plan files are opened with it.')
-
-    # The canonical anchor text lives INSIDE the file (Install section); both
-    # a first install and a pasted-block migration copy the anchor from there.
-    # These literals appear ONLY inside the anchor code block — a string the
-    # surrounding prose also uses would keep passing after the anchor lost it.
-    for canon in ('- `NDS_ROOT` = `.nds/`',
-                  '- `NDS_ASSETS` = `/path/to/your-project/public/assets/`',
-                  'Do no NDS work before that read.',
-                  'Never write `.nds-*` markup from memory'):
-        if canon not in block:
-            sys.exit(f'_includes/NDS-IQ.md anchor canon lost its line: {canon!r}')
 
     # BOTH guides render the include, and both are in the zip's link graph.
     # Checking only one lets the other lose the entire rulebook silently.
@@ -309,8 +312,8 @@ def verify(out, version):
         if 'include NDS-IQ.md' not in text:
             sys.exit(f'guides/{name}.md no longer includes NDS-IQ.md — the rules file is not rendered.')
         guide_html = z.read(f'{root}_site/guides/{name}.html').decode('utf8', 'ignore')
-        if f'instructions v{m.group(1)}' not in guide_html:
-            sys.exit(f'Built guides/{name}.html lacks "instructions v{m.group(1)}" — the rendered '
+        if f'instructions v{rev}' not in guide_html:
+            sys.exit(f'Built guides/{name}.html lacks "instructions v{rev}" — the rendered '
                      'version stamp is missing or stale.')
 
     # Every literal path the rules, guides and README reference must exist —

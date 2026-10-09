@@ -73,10 +73,16 @@ jobs:
         run: echo "tag=$(gh release view --json tagName -q .tagName)" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ github.token }}
+      - name: Find the published NDS IQ
+        # The newest IQv tag: drafts and history rows on main stay off the live site until publish-iq.py tags them.
+        id: iq
+        run: |
+          git fetch --depth=1 origin 'refs/tags/IQv*:refs/tags/IQv*'
+          echo "tag=$(git tag -l 'IQv*' --sort=-v:refname | head -n 1)" >> "$GITHUB_OUTPUT"
       - name: Name the saved release site
-        # One saved build per tag + NDS IQ revision; a new release, an IQ edit or a forced rebuild misses it.
+        # One saved build per release + NDS IQ tag; a new release, a new IQ publish or a forced rebuild misses it.
         id: key
-        run: echo "prefix=release-site-${{ steps.release.outputs.tag }}-${{ hashFiles('_includes/NDS-IQ.md', 'guides/integration-quality.md') }}-" >> "$GITHUB_OUTPUT"
+        run: echo "prefix=release-site-${{ steps.release.outputs.tag }}-${{ steps.iq.outputs.tag }}-" >> "$GITHUB_OUTPUT"
       - name: Restore the saved release site
         id: saved
         if: ${{ !inputs.rebuild_release }}
@@ -104,10 +110,12 @@ jobs:
         with:
           ref: ${{ steps.release.outputs.tag }}
           path: _release
-      - name: Take NDS IQ from main
-        # IQ versions apart from the template: the site shows the rules the raw main link serves.
+      - name: Take NDS IQ from its newest tag
+        # IQ versions apart from the template: the site shows the published rules and their history.
         if: ${{ !steps.saved.outputs.cache-matched-key }}
-        run: cp _includes/NDS-IQ.md _release/_includes/ && cp guides/integration-quality.md _release/guides/
+        run: |
+          git show "${{ steps.iq.outputs.tag }}:_includes/NDS-IQ.md" > _release/_includes/NDS-IQ.md
+          git show "${{ steps.iq.outputs.tag }}:guides/integration-quality.md" > _release/guides/integration-quality.md
       - name: Setup Ruby (release)
         if: ${{ !steps.saved.outputs.cache-matched-key }}
         uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8
