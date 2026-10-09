@@ -59,7 +59,12 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
 {
   const page = await browser.newPage();
   const warns = [], errors = [];
-  page.on('console', m => { if (m.type() === 'warning') warns.push(m.text()); if (m.type() === 'error') errors.push(m.text()); });
+  // The audit logs an error-severity finding with console.error: a finding, not a page error.
+  page.on('console', m => {
+      const t = m.text();
+      if (m.type() === 'warning' || (m.type() === 'error' && t.startsWith('[NDS.Audit]'))) warns.push(t);
+      else if (m.type() === 'error') errors.push(t);
+  });
   page.on('pageerror', e => errors.push(e.message));
   await page.route('**/components/sort.html*', async r => {
     const res = await r.fetch();
