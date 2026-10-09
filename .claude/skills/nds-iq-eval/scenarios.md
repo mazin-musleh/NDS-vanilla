@@ -83,7 +83,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S71 | fallback-mode-before-substitute | c | missing asset ≠ substitute; the component's own fallback mode | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · read-dep · ev:field |
 | S72 | mobile-width-ladder-resize-blocked | c | headless default over a width-locked attached browser | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · leak:C2 · ev:field |
 | S73 | custom-select-default-vs-native-shortcut | c | in-form selects default Custom Select; offer first | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · read-dep · ev:field |
-| S74 | plan-review-decisions-are-asked | c | review = ONE stop: numbered decisions in chat | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
+| S74 | plan-review-decisions-are-asked | c | review = ONE stop: the host question tool, else one numbered message | UNMEASURED (question-tool change 2026-10-10) | floor:PASS v4 2026-10-09 · ev:field |
 | S75 | csp-inline-knob-sweep | c | style=" before-done sweep under a locked style-src | PASS 2026-10-09 v4 take 2 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
 | S76 | mechanism-vs-filler-split | c | split a copied unit: keep mechanism, cut filler | PASS 2026-10-09 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S77 | chrome-ships-as-is | c | topbar/stamp/dark-mode ship as-is, boxed subtract-later; one language = no switcher | UNMEASURED (locale rule changed 2026-10-09) | floor:FAIL v4 2026-10-09 · WATCH stamp-flag · ev:field |

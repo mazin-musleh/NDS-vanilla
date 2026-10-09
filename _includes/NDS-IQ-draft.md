@@ -120,7 +120,7 @@ Inspect every globally loaded stylesheet for element selectors (`body`, `h1`, `a
 - **Rebuild** clean, in place. Old work is a content, flow, and data reference, never a copy source. Remove its NDS footprint through the approved plan; rollback is git. The approval names the cost: unported pages run on the new runtime before their rebuild and may render worse.
 - **Second runtime:** only by explicit dev decision, with parallel files and a second assets folder, accepting the cost.
 
-When a plan is required, create `NDS-PLAN.md` at the project root, starting with `Managed by NDS IQ`, with columns for page, route, legacy libraries, NDS target, and status. Stop before building. Ask every project-wide decision in ONE numbered review message (asset URL prefix, porting strategy, prior-NDS split, CSP grant only when a CSP was found, pacing), each with options and a recommended default, and record the answers in the plan. Page-specific questions wait for that page's session. In every phase, the conversation asks and the plan records.
+When a plan is required, create `NDS-PLAN.md` at the project root, starting with `Managed by NDS IQ`, with columns for page, route, legacy libraries, NDS target, and status. Stop before building. Ask every project-wide decision in ONE review (asset URL prefix, porting strategy, prior-NDS split, CSP grant only when a CSP was found, pacing), each with options and a recommended default. Ask it through the host's question tool, the one that shows the dev options to pick from, when the host has one, in back-to-back calls if it caps how many questions one call holds. With no such tool, ask in one numbered message. Record the answers in the plan. Page-specific questions wait for that page's session. In every phase, the conversation asks and the plan records, and a question with options takes the question tool the same way.
 
 **The plan is cross-session memory.**
 
@@ -157,7 +157,7 @@ Match by `use_when` across the template, example, and component catalogs, never 
 
 Keep the matched source's structure and put the project's content into every part; never rebuild it. It is a floor, not a ceiling: add the sections the project needs, matched through the catalogs. A family's `Built and Verified` archetype outranks the cascade for its siblings.
 
-At each page start, resolve its recorded questions, list every UI part, and match each against the component catalog. A missing part comes from its canonical component; no match → custom case.
+At each page start, resolve its recorded questions, list every UI part, and match each against the component catalog: every field and control is a part, so a date field is matched like a table. Record the list under the page's plan row, one line per part: `part → component` (no-plan: in the final report). A missing part comes from its canonical component; no match → custom case.
 
 ### Authority by concern
 
@@ -197,7 +197,7 @@ Before listening on NDS elements or writing NDS-owned attributes, read the compo
 **Build exit gate.** Before §Verify:
 
 - Name the canonical page source and the doc sources used.
-- Confirm every part and behavior was matched through the catalogs and the docs.
+- Point to the recorded parts list: every part and behavior matched through the catalogs and the docs.
 - List the matched source's facets, controls, and columns beside the page's: equal counts, or each difference named.
 - Confirm every structural change is one of red line #3's allowed edits.
 - Check every icon name in the page HTML and its JS against the icon catalog: the audit cannot see names inside JS strings.

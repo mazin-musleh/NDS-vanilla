@@ -193,6 +193,15 @@
         });
     } });
 
+    // A browser date or time field skips the NDS picker: no Hijri, no site format, its own look.
+    rule({ id: 'native-date-time', group: 'page', check(ctx) {
+        ctx.find('input[type="date"], input[type="month"], input[type="week"], input[type="datetime-local"], input[type="time"]').forEach(el => {
+            const time = el.type === 'time';
+            ctx.report(el, `<input type="${el.type}"> on an NDS page: the browser's own picker, not the NDS ${time ? 'time' : 'date'} picker.`,
+                `Use the ${time ? 'Time Picker' : 'Date Picker'} canon.`);
+        });
+    } });
+
     // ── i18n ─────────────────────────────────────────────────────────
 
     rule({ id: 'i18n-pack', group: 'i18n', severity: 'error', docs: 'core/i18n.html', check(ctx) {
