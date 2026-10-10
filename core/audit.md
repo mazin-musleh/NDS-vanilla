@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:50 PM"
+last_edit: "10/10/2026 - 04:13 PM"
 ---
 
 <section id="auditOverview" class="nds-content-section nds-doc-overview">
@@ -88,7 +88,12 @@ NDS.Audit.rule({
 ### Severity
 {: .nds-block-title}
 
-Each finding has a severity. `error` is broken now: a part gets no style or behavior, or shows the wrong text. `warn` works today but is wrong, or goes away at the next major release. `info` changes nothing on the page, such as a custom property that NDS never read.
+Each finding has a severity. `error` is broken now: a part gets no style or behavior, or shows the wrong text. `warn` works today but is wrong, or goes away at the next major release. `info` is a note: a custom property that NDS never read, or a tip.
+
+### Tips
+{: .nds-block-title}
+
+The `practice` group holds tips from the Best Practices of the doc pages, such as a section inside a section. A tip is `info`: its line starts with `tip:`, and it never means that the page is broken. To run the audit without tips, name the other groups: `NDS.Audit.run({ group: ['page', 'structure', 'migration', 'i18n'] })`.
 
 ### Console Output
 {: .nds-block-title}
@@ -206,6 +211,8 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `skip-link` | page | warn, error | No skip link, a skip link to a missing id (error), or one that lands on `<main>` |
 | `main-flex` | page | warn | A wrapper between `<body>` and `<main>` that stops `<main>` from growing |
 | `content-layout-child` | page | warn | An element in `.nds-content-layout` that is not `.nds-content` or `.nds-sidemenu` |
+| `content-layout-once` | page | warn | More than one `.nds-content-layout` on the page, or one inside another: the page grid is set once |
+| `sidemenu-pair` | page | warn | `.nds-has-sidemenu` with no `.nds-sidemenu` as its child, or a `.nds-sidemenu` outside such a layout |
 | `legacy-library` | page | warn | A common legacy UI library loaded on the page, such as jQuery, Select2, DataTables, Bootstrap CSS or Font Awesome |
 | `bundle-tag` | page | warn | A tag in the page for a bundle the loader adds itself, such as `nds-delegated.min.js` |
 | `inline-defer` | page | warn | An inline `<script defer>`: without `src`, `defer` does nothing and the code runs before NDS loads |
@@ -217,6 +224,8 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `filter-no-target` | structure | error | A `.nds-filter` with no `data-filter-target` |
 | `paged-no-nav` | structure | error | A `.nds-paged-content` with no pagination nav |
 | `icon-unregistered` | structure | error | An `nds-hgi-*` icon that is not in the registered set |
+| `icon-tag` | structure | error | A UI icon (`nds-icon nds-hgi-*`) on a tag other than `<i>`. The icon styles apply to `<i>` only, so it shows nothing |
+| `name-on-display` | structure | error | `name` on the text box of a Custom Select or Time Picker, or on an OTP digit box. The form then sends the text it shows, not the value |
 | `nav-current` | structure | warn | A main nav link to the current page with no `data-state="current"` |
 | `id-reference` | structure | error | A `data-*-target`, `data-auto-pagination` or `data-copy-target` value that names no element. An id inside a `<template>` counts as present |
 | `aria-controls` | structure | warn | An `aria-controls` id that no element has, inside or outside a `<template>` |
@@ -231,6 +240,15 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `unknown-class` | structure | warn | An `nds-` class that no NDS style sheet, doc or script has, so it gets no NDS style or behavior. An old name is left to `migration-markup` |
 | `required-part` | structure | error | A part or attribute that a component's script needs to work, missing with no console warning, such as a tab with no panel or a date field outside its `.nds-form-control`. Each component lists these in the `Requires` lines of its script's banner |
 | `part-outside` | structure | warn | A component part outside its component, such as `.nds-card-title` with no `.nds-card` around it. It skips a part that NDS also styles on its own |
+| `card-link-nested` | practice | info | A link or a button inside a clickable card (`a.nds-card`, `button.nds-card`) |
+| `section-nested` | practice | info | A section inside a section. Divide a section body with `.nds-block` |
+| `card-actions-place` | practice | info | `.nds-card-actions` inside `.nds-card-content`, not after it |
+| `dark-nested` | practice | info | `data-theme="dark"` inside a dark area, which is already dark |
+| `prose-nested` | practice | info | `.nds-prose` inside `.nds-prose` |
+| `loading-field` | practice | info | `nds-loading` on a form field, which has a loading look of its own |
+| `voice-secret` | practice | info | Voice input on a password, OTP or read-only field, or on a select |
+| `dark-selector` | practice | info | `[data-theme="dark"]` in the site's own CSS, where `[data-theme~="dark"]` also matches a `data-theme` with more than one value |
+| `palette-scope` | practice | info | A palette token (`--colors-*`) set below `:root` in the site's own CSS. The tokens built from the palette read it at `:root` |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes

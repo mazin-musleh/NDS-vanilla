@@ -8,7 +8,7 @@
  *   NDS.Audit.rules       every rule, in run order
  * Findings: { rule, group, severity, message, fix, docs, el, count }
  *   severity: error (broken now) · warn (works, but wrong or going away) · info
- *   groups:   page · structure · migration · i18n
+ *   groups:   page · structure · migration · i18n · practice (a doc's Best Practices tip, info only)
  * Events:
  *   (none)
  * Hooks:
@@ -82,7 +82,7 @@
         const n = { error: 0, warn: 0, info: 0 };
         for (const f of findings) {
             n[f.severity]++;
-            const text = `[NDS.Audit] ${f.rule}: ${f.message}${f.fix ? ' ' + f.fix : ''}${f.docs ? ' ' + f.docs : ''}`;
+            const text = `[NDS.Audit] ${f.rule}: ${f.group === 'practice' ? 'tip: ' : ''}${f.message}${f.fix ? ' ' + f.fix : ''}${f.docs ? ' ' + f.docs : ''}`;
             (out[f.severity] || console.warn)(text, ...(f.el ? [f.el] : []));
         }
         console.info(`[NDS.Audit] ${n.error} errors, ${n.warn} warnings, ${n.info} notes.`);
@@ -254,7 +254,7 @@
     } });
 
     rule({ id: 'icon-unregistered', severity: 'error', docs: 'components/icons.html', check(ctx) {
-        ctx.find('.nds-icon[class*="nds-hgi-"]').forEach(el => {
+        ctx.find('i.nds-icon[class*="nds-hgi-"]').forEach(el => {
             // The glyph paints on ::before (mask: var(--nds-icon) …), so read the
             // pseudo — the element itself never carries a mask.
             const cs = getComputedStyle(el, '::before');
@@ -621,6 +621,79 @@
             ctx.report(missing[0], `${host} needs ${need}: ${why}${missing.length > 1 ? ` (${missing.length} elements; the first is shown)` : ''}.`,
                 `Copy the missing part from the ${name} canon.`, undefined, missing.length);
         }
+    } });
+
+    // The icon styles key on <i> (_icons.scss), so the same classes on any other tag paint nothing.
+    rule({ id: 'icon-tag', severity: 'error', docs: 'components/icons.html', check(ctx) {
+        const els = ctx.find('.nds-icon[class*="nds-hgi-"]:not(i)');
+        if (els.length) ctx.report(els[0], `a UI icon on a <${els[0].tagName.toLowerCase()}>: the icon styles apply to <i> only, so it shows nothing${els.length > 1 ? ` (${els.length} elements; the first is shown)` : ''}.`,
+            'Write it as <i class="nds-icon nds-hgi-…" aria-hidden="true">.', undefined, els.length);
+    } });
+
+    // The visible box of a select or time field and each OTP digit hold display text; the hidden input holds the value.
+    rule({ id: 'name-on-display', severity: 'error', check(ctx) {
+        ctx.find('.nds-select-input[name], .nds-time-input[name], .nds-otp-container input[name]:not(.nds-otp-value)').forEach(el => {
+            ctx.report(el, `name="${el.getAttribute('name')}" on a display input: the form sends the text it shows, not the value.`,
+                'Move name to the hidden value input (.nds-select-value, .nds-time-value or .nds-otp-value).');
+        });
+    } });
+
+    rule({ id: 'content-layout-once', group: 'page', docs: 'layout/page-layout.html', check(ctx) {
+        const all = ctx.find('.nds-content-layout');
+        if (all.length > 1) ctx.report(all[1], `${all.length} .nds-content-layout elements on one page: the page grid is set once.`,
+            'Keep one .nds-content-layout, around the page content.', undefined, all.length);
+    } });
+
+    rule({ id: 'sidemenu-pair', group: 'page', docs: 'layout/page-layout.html', check(ctx) {
+        ctx.find('.nds-has-sidemenu').forEach(l => {
+            if (!l.querySelector(':scope > .nds-sidemenu')) ctx.report(l, '.nds-has-sidemenu with no .nds-sidemenu as its child: the layout makes room for a menu that is not there.',
+                'Add the side menu as its first child, or remove nds-has-sidemenu.');
+        });
+        ctx.find('.nds-sidemenu').forEach(m => {
+            if (!m.closest('.nds-has-sidemenu')) ctx.report(m, '.nds-sidemenu outside a layout with nds-has-sidemenu: the layout gives it no column.',
+                'Add nds-has-sidemenu to its .nds-content-layout.');
+        });
+    } });
+
+    // ── practice: tips from the docs' Best Practices, info only ─────────────
+    const practice = (id, docs, sel, message, fix) => rule({ id, group: 'practice', severity: 'info', docs, check(ctx) {
+        const els = ctx.find(sel);
+        if (els.length) ctx.report(els[0], message + (els.length > 1 ? ` (${els.length} elements; the first is shown).` : '.'), fix, undefined, els.length);
+    } });
+    practice('card-link-nested', 'components/cards.html', ':is(a, button).nds-card :is(a, button)',
+        'a link or a button inside a clickable card', 'Keep one control: make the card a plain .nds-card, or drop the inner link.');
+    practice('section-nested', 'layout/section.html', '.nds-content-section .nds-content-section',
+        'a section inside a section', 'Divide the section body with .nds-block instead.');
+    practice('card-actions-place', 'components/cards.html', '.nds-card-content .nds-card-actions',
+        '.nds-card-actions inside .nds-card-content: in a modal, only the content scrolls', 'Put .nds-card-actions after .nds-card-content.');
+    practice('dark-nested', 'components/themes.html', '[data-theme~="dark"]:not(html) [data-theme~="dark"]',
+        'data-theme="dark" inside a dark area, which is already dark', 'Write data-theme="dark" once, on the surface.');
+    practice('prose-nested', 'layout/prose.html', '.nds-prose .nds-prose',
+        '.nds-prose inside .nds-prose', 'Put nds-prose once, on the element the text renders into.');
+    practice('loading-field', 'components/loading.html', ':is(.nds-form-control, .nds-input).nds-loading',
+        'nds-loading on a form field, which has a loading look of its own', 'Remove it. See Forms for the field loading state.');
+
+    rule({ id: 'voice-secret', group: 'practice', severity: 'info', docs: 'components/voice-input.html', check(ctx) {
+        ctx.find('.nds-voice-input').forEach(btn => {
+            const t = btn.getAttribute('data-voice-target') || btn.getAttribute('data-target');
+            const input = t ? (document.getElementById(t) || document.querySelector(`[name="${CSS.escape(t)}"]`))
+                : btn.closest('.nds-form-control')?.querySelector(':scope > input, :scope > textarea, :scope > select');
+            if (input && (input.matches('[type="password"], [readonly], select') || input.closest('.nds-otp-group'))) {
+                ctx.report(btn, 'voice input on a password, OTP, read-only field or select', 'Remove the button. People nearby hear a spoken secret, and the other fields take no dictation.');
+            }
+        });
+    } });
+
+    rule({ id: 'dark-selector', group: 'practice', severity: 'info', docs: 'components/themes.html', check(ctx) {
+        const sels = siteRules().map(r => r.sel).filter(s => s.includes('[data-theme="dark"]'));
+        if (sels.length) ctx.report(null, `[data-theme="dark"] in the site's CSS (${sels[0]}${sels.length > 1 ? ` and ${sels.length - 1} more` : ''}): it misses a data-theme with more than one value.`,
+            'Write [data-theme~="dark"].', undefined, sels.length);
+    } });
+
+    rule({ id: 'palette-scope', group: 'practice', severity: 'info', docs: 'components/tokens.html', check(ctx) {
+        const sels = siteRules().filter(r => [...r.style].some(p => p.startsWith('--colors-')) && selItems(r.sel).some(s => !/^(:root|html)\b/.test(s))).map(r => r.sel);
+        if (sels.length) ctx.report(null, `a palette token (--colors-*) set below :root (${sels[0]}${sels.length > 1 ? ` and ${sels.length - 1} more` : ''}): the tokens built from the palette read it at :root, so they keep the NDS value.`,
+            'Set palette tokens at :root. On a wrapper, set the token the component reads.', undefined, sels.length);
     } });
 
     NDS.Audit = { run, rule, rules: RULES };
