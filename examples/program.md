@@ -91,7 +91,7 @@ layout_class: nds-card-view
                                 <span class="nds-label">Program Specification</span>
                             </dt>
                             <dd>
-                                <a class="nds-btn nds-secondary-outline nds-md" href="#" target="_blank"
+                                <a class="nds-btn nds-secondary-outline nds-md nds-icon-only" href="#" target="_blank"
                                     aria-label="Download program specification"><i class="hgi hgi-stroke hgi-pdf-01"></i>
                                 </a>
                             </dd>
@@ -338,7 +338,7 @@ layout_class: nds-card-view
                                         <td>2nd</td>
                                         <td>Semester 1</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>
@@ -350,7 +350,7 @@ layout_class: nds-card-view
                                         <td>2nd</td>
                                         <td>Semester 2</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>
@@ -362,7 +362,7 @@ layout_class: nds-card-view
                                         <td>2nd</td>
                                         <td>Semester 2</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>
@@ -374,7 +374,7 @@ layout_class: nds-card-view
                                         <td>3rd</td>
                                         <td>Semester 1</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>
@@ -386,7 +386,7 @@ layout_class: nds-card-view
                                         <td>3rd</td>
                                         <td>Semester 1</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>
@@ -398,7 +398,7 @@ layout_class: nds-card-view
                                         <td>3rd</td>
                                         <td>Semester 1</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>
@@ -410,7 +410,7 @@ layout_class: nds-card-view
                                         <td>3rd</td>
                                         <td>Semester 2</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>
@@ -422,7 +422,7 @@ layout_class: nds-card-view
                                         <td>3rd</td>
                                         <td>Semester 2</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>
@@ -434,7 +434,7 @@ layout_class: nds-card-view
                                         <td>3rd</td>
                                         <td>Semester 2</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>
@@ -446,7 +446,7 @@ layout_class: nds-card-view
                                         <td>4th</td>
                                         <td>Semester 1</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>
@@ -458,7 +458,7 @@ layout_class: nds-card-view
                                         <td>4th</td>
                                         <td>Semester 1</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>
@@ -470,7 +470,7 @@ layout_class: nds-card-view
                                         <td>4th</td>
                                         <td>Semester 1</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>
@@ -482,7 +482,7 @@ layout_class: nds-card-view
                                         <td>3rd</td>
                                         <td>Semester 2</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>
@@ -494,7 +494,7 @@ layout_class: nds-card-view
                                         <td>2nd</td>
                                         <td>Semester 2</td>
                                         <td>
-                                            <a class="nds-btn nds-secondary-outline" href="#" target="_blank"
+                                            <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank"
                                                 aria-label="Download course specification">
                                                 <i class="hgi hgi-stroke hgi-pdf-01"></i>
                                             </a>

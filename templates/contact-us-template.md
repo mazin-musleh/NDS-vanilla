@@ -29,7 +29,7 @@ sidemenu_mode: false
                             <input type="text" id="contact-first-name" name="firstName" class="nds-input"
                                 placeholder="Type your first name" autocomplete="given-name" required>
                             <div class="nds-form-action">
-                                <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                                <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
                                     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -47,7 +47,7 @@ sidemenu_mode: false
                             <input type="text" id="contact-last-name" name="lastName" class="nds-input"
                                 placeholder="Type your last name" autocomplete="family-name" required>
                             <div class="nds-form-action">
-                                <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                                <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
                                     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -65,7 +65,7 @@ sidemenu_mode: false
                             <input type="email" id="contact-email" name="email" class="nds-input"
                                 placeholder="name@example.gov.sa" autocomplete="email" required>
                             <div class="nds-form-action">
-                                <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                                <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
                                     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -179,7 +179,7 @@ sidemenu_mode: false
                             <input type="tel" id="contact-phone" name="phone" class="nds-input nds-phone"
                                 placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric" required>
                             <div class="nds-form-action">
-                                <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                                <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
                                     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -197,7 +197,7 @@ sidemenu_mode: false
                             <input type="text" id="contact-subject" name="subject" class="nds-input"
                                 placeholder="Type your subject">
                             <div class="nds-form-action">
-                                <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                                <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
                                     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                 </button>
                             </div>

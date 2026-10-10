@@ -40,7 +40,7 @@ sidemenu_mode: false
                                     placeholder="10-digit ID number" inputmode="numeric" maxlength="10"
                                     autocomplete="off" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -59,7 +59,7 @@ sidemenu_mode: false
                             </div>
                             <div class="nds-form-control">
                                 <div class="nds-form-action">
-                                    <button type="button" class="nds-btn nds-subtle date-picker-toggle" aria-label="Calendar toggle">
+                                    <button type="button" class="nds-btn nds-subtle date-picker-toggle nds-icon-only" aria-label="Calendar toggle">
                                         <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -81,7 +81,7 @@ sidemenu_mode: false
                                     placeholder="5XX XXX XXX" autocomplete="tel-national"
                                     inputmode="numeric" maxlength="9" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -137,7 +137,7 @@ sidemenu_mode: false
                                 <input type="text" id="ft-first-name" name="firstName" class="nds-input"
                                     placeholder="As written on your ID" autocomplete="given-name" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -152,7 +152,7 @@ sidemenu_mode: false
                                 <input type="text" id="ft-father-name" name="fatherName" class="nds-input"
                                     placeholder="As written on your ID" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -167,7 +167,7 @@ sidemenu_mode: false
                                 <input type="text" id="ft-grandfather-name" name="grandfatherName" class="nds-input"
                                     placeholder="Optional">
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -182,7 +182,7 @@ sidemenu_mode: false
                                 <input type="text" id="ft-family-name" name="familyName" class="nds-input"
                                     placeholder="As written on your ID" autocomplete="family-name" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -198,7 +198,7 @@ sidemenu_mode: false
                                 <input type="email" id="ft-email" name="email" class="nds-input"
                                     placeholder="name@example.com" autocomplete="email" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -216,7 +216,7 @@ sidemenu_mode: false
                                 <input type="text" id="ft-city" name="city" autocomplete="on"
                                     placeholder="Type to search Saudi cities" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>

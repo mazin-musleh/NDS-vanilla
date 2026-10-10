@@ -289,7 +289,7 @@
                     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                     <input type="text" class="nds-search-input">
                     <div class="nds-form-action">
-                        <button type="button" class="nds-btn nds-subtle nds-clear" hidden>
+                        <button type="button" class="nds-btn nds-subtle nds-clear nds-icon-only" hidden>
                             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                         </button>
                     </div>

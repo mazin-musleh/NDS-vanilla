@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 11:12 PM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -160,7 +160,7 @@ Pick another component when:
           <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
           <input type="text" class="nds-search-input" placeholder="Search requests..." aria-label="Search requests">
           <div class="nds-form-action">
-            <button class="nds-btn nds-subtle nds-clear" type="button" hidden aria-label="Clear search">
+            <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" hidden aria-label="Clear search">
               <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
             </button>
           </div>

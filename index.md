@@ -329,7 +329,7 @@ bundle_sizes:
                             <input id="component-search" type="text" class="nds-search-input" name="search" autocomplete="off"
                                 placeholder="Search components...">
                             <div class="nds-form-action">
-                                <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i
+                                <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search"><i
                                         class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                             </div>
                         </div>

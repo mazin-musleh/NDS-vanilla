@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 11:12 PM"
 ---
 
 <section id="time-picker-overview" class="nds-content-section nds-doc-overview">
@@ -44,7 +44,7 @@ Pick another component when:
   </div>
   <div class="nds-form-control">
     <div class="nds-form-action">
-      <button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle" aria-label="Pick a time">
+      <button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle nds-icon-only" aria-label="Pick a time">
         <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
       </button>
     </div>

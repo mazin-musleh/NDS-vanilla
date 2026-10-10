@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 10:10 PM"
+last_edit: "10/10/2026 - 11:12 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -227,6 +227,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `paged-no-nav` | structure | error | A `.nds-paged-content` with no pagination nav |
 | `icon-unregistered` | structure | error | An `nds-hgi-*` icon that is not in the registered set |
 | `icon-tag` | structure | error | A UI icon (`nds-icon nds-hgi-*`) on a tag other than `<i>`. The icon styles apply to `<i>` only, so it shows nothing |
+| `icon-only-btn` | structure | warn | A button in a field's `.nds-form-action` with an icon, no text and no `nds-icon-only`: it keeps its text padding and renders wider than tall |
 | `name-on-display` | structure | error | `name` on the text box of a Custom Select or Time Picker, or on an OTP digit box. The form then sends the text it shows, not the value |
 | `nav-current` | structure | warn | A main nav link to the current page with no `data-state="current"` |
 | `id-reference` | structure | error | A `data-*-target`, `data-auto-pagination` or `data-copy-target` value that names no element. An id inside a `<template>` counts as present |

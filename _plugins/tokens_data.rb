@@ -153,7 +153,7 @@ module NDS
     # The token's name with a button that copies `var(--name)`: the form a stylesheet reads it in.
     def label(d, copy = "var(#{d[:name]})")
       n = h(d[:name])
-      %(<span class="nds-doc-name">#{n}<button type="button" class="nds-btn nds-subtle nds-sm nds-copy" data-copy="#{h(copy)}" data-copy-announce="Token copied" aria-label="Copy #{n}"><i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i></button></span>)
+      %(<span class="nds-doc-name">#{n}<button type="button" class="nds-btn nds-subtle nds-sm nds-copy nds-icon-only" data-copy="#{h(copy)}" data-copy-announce="Token copied" aria-label="Copy #{n}"><i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i></button></span>)
     end
 
     def value(d) = %(<span class="nds-doc-value">#{h(d[:value])}</span>)

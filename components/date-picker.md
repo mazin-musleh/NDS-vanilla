@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 11:12 PM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -44,7 +44,7 @@ Pick another component when:
   </div>
   <div class="nds-form-control">
     <div class="nds-form-action">
-      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Open calendar">
+      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle nds-icon-only" aria-label="Open calendar">
         <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
       </button>
     </div>

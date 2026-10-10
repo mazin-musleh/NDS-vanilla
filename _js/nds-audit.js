@@ -645,6 +645,15 @@
         }
     } });
 
+    // Without nds-icon-only a button keeps its text padding, so an icon-only button renders wider than tall.
+    // A full-width bar (nds-full, Show More) is not a square, and a main-nav link takes its size from the nav.
+    rule({ id: 'icon-only-btn', docs: 'components/button.html', check(ctx) {
+        const els = ctx.find('.nds-btn:not(.nds-icon-only, .nds-show-more, .nds-full, .nds-nav-link)')
+            .filter(b => b.querySelector('i, svg, img') && !b.textContent.trim());
+        if (els.length) ctx.report(els[0], `an icon-only button without nds-icon-only${els.length > 1 ? ` (${els.length} buttons; the first is shown)` : ''}: it keeps its text padding and renders wider than tall.`,
+            'Add nds-icon-only to the button.', undefined, els.length);
+    } });
+
     // The icon styles key on <i> (_icons.scss), so the same classes on any other tag paint nothing.
     rule({ id: 'icon-tag', severity: 'error', docs: 'components/icons.html', check(ctx) {
         const els = ctx.find('.nds-icon[class*="nds-hgi-"]:not(i)');

@@ -120,7 +120,7 @@ sidemenu_mode: false
                         <span class="nds-tag nds-green nds-xs"><span class="nds-label">IQ v{{ _iq_v }}</span></span>
                     </span>
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy NDS IQ instructions">
+                        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy NDS IQ instructions">
                             <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>

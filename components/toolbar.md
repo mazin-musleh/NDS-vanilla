@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.6.0"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 11:12 PM"
 ---
 
 <section id="toolbar-overview" class="nds-content-section nds-doc-overview">
@@ -124,7 +124,7 @@ A count and an export group on the first row, a search box on the second, and th
           <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
           <input type="text" class="nds-search-input" placeholder="Search orders..." aria-label="Search orders">
           <div class="nds-form-action">
-            <button class="nds-btn nds-subtle nds-clear" type="button" hidden aria-label="Clear search">
+            <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" hidden aria-label="Clear search">
               <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
             </button>
           </div>

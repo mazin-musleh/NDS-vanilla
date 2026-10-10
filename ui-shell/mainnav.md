@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 11:12 PM"
 ---
 
 <section id="mainnav-overview" class="nds-content-section nds-doc-overview">
@@ -148,7 +148,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
                         <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                         <input id="main-search" type="text" class="nds-search-input" name="q" placeholder="Search..." aria-label="Search">
                         <div class="nds-form-action">
-                          <button type="button" class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search">
+                          <button type="button" class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search">
                             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -310,7 +310,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
               <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
               <input id="main-search" type="text" class="nds-search-input" name="q" placeholder="Search..." aria-label="Search">
               <div class="nds-form-action">
-                <button type="button" class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search">
+                <button type="button" class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search">
                   <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                 </button>
               </div>

@@ -85,7 +85,7 @@ breadcrumb: [["Examples", "/examples"]]
                   <input type="text" id="national-id" name="national-id" class="nds-input nds-national-id" inputmode="numeric"
                     maxlength="10" placeholder="10 digits" autocomplete="username" required>
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -104,10 +104,10 @@ breadcrumb: [["Examples", "/examples"]]
                   <input type="password" id="signin-password" name="password" class="nds-input" placeholder="Enter your password"
                     autocomplete="current-password" required>
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
-                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password">
                       <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -137,7 +137,7 @@ breadcrumb: [["Examples", "/examples"]]
                     maxlength="5" placeholder="Type the code shown below" autocomplete="off" required
                     data-error-message="Enter the 5 digits shown below">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -351,10 +351,10 @@ breadcrumb: [["Examples", "/examples"]]
                   <input type="password" id="current-password" name="current-password" class="nds-input"
                     autocomplete="current-password" required>
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
-                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password">
                       <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -373,10 +373,10 @@ breadcrumb: [["Examples", "/examples"]]
                   <input type="password" id="new-password" name="new-password" class="nds-input" autocomplete="new-password"
                     minlength="10" required aria-describedby="new-password-rules">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
-                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password">
                       <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -430,10 +430,10 @@ breadcrumb: [["Examples", "/examples"]]
                   <input type="password" id="retype-password" name="retype-password" class="nds-input"
                     autocomplete="new-password" required aria-describedby="retype-password-rules">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
-                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password">
                       <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -491,7 +491,7 @@ breadcrumb: [["Examples", "/examples"]]
                     pattern="05[0-9]{8}" maxlength="10" placeholder="05XXXXXXXX" value="0501234419" autocomplete="tel" required
                     data-error-message="Enter a 10-digit number that starts with 05">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>

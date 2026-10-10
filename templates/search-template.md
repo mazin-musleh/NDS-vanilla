@@ -19,10 +19,10 @@ sidemenu_mode: false
                     <input id="search-results-input" type="text" class="nds-search-input" name="q" autocomplete="on"
                         placeholder="Search...">
                     <div class="nds-form-action">
-                        <button type="button" class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear">
+                        <button type="button" class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear">
                             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                         </button>
-                        <button type="button" class="nds-btn nds-subtle nds-voice-input" aria-label="Voice input">
+                        <button type="button" class="nds-btn nds-subtle nds-voice-input nds-icon-only" aria-label="Voice input">
                             <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
                         </button>
                     </div>

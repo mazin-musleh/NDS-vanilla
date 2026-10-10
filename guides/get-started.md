@@ -73,7 +73,7 @@ sidemenu_mode: false
                 <p>Open a new agent session and paste this prompt:</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy prompt">
+                        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy prompt">
                             <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
@@ -123,7 +123,7 @@ Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. T
                 <p>If the agent did not write the plan, paste:</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy prompt">
+                        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy prompt">
                             <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
@@ -141,7 +141,7 @@ Inventory the project and write NDS-PLAN.md for my review.
                 <p>The template is read-only: copy from it, never change it.</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy code example">
                             <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
@@ -168,7 +168,7 @@ Inventory the project and write NDS-PLAN.md for my review.
                         <span class="nds-tag nds-green nds-xs"><span class="nds-label">IQ v{{ _iq_v }}</span></span>
                     </span>
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy NDS IQ instructions">
+                        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy NDS IQ instructions">
                             <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
@@ -216,7 +216,7 @@ Inventory the project and write NDS-PLAN.md for my review.
                 <p>In a new session, paste:</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy prompt">
+                        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy prompt">
                             <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
@@ -240,7 +240,7 @@ Continue: read NDS-PLAN.md and propose the next step.
                 <p>When a new release ships, paste:</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy prompt">
+                        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy prompt">
                             <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
@@ -261,7 +261,7 @@ Upgrade the NDS template to the latest release.
                 <p>To update only the rules, paste:</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy prompt">
+                        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy prompt">
                             <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>

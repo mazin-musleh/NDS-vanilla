@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 11:12 PM"
 ---
 
 <section id="password-overview" class="nds-content-section nds-doc-overview">
@@ -46,10 +46,10 @@ Pick another component when:
     <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
     <input type="password" id="new-password" name="new-password" class="nds-input" autocomplete="new-password" minlength="8" aria-describedby="new-password-rules">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password">
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
-      <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+      <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password">
         <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
       </button>
     </div>
@@ -76,10 +76,10 @@ Pick another component when:
     <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
     <input type="password" id="first-password" name="new-password" class="nds-input" autocomplete="new-password" minlength="8" aria-describedby="first-password-rules">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password">
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
-      <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+      <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password">
         <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
       </button>
     </div>
@@ -104,10 +104,10 @@ Pick another component when:
     <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
     <input type="password" id="retype-password" name="retype-password" class="nds-input" autocomplete="new-password" aria-describedby="retype-password-rules">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password">
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
-      <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+      <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password">
         <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
       </button>
     </div>

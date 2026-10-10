@@ -50,7 +50,7 @@ breadcrumb: [["Examples", "/examples"]]
                 <div class="nds-form-control">
                   <input type="text" id="full-name" class="nds-input" placeholder="Your full name" autocomplete="name" required>
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -68,7 +68,7 @@ breadcrumb: [["Examples", "/examples"]]
                   <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
                   <input type="email" id="email-address" class="nds-input" placeholder="name@example.gov.sa" autocomplete="email" required>
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -86,10 +86,10 @@ breadcrumb: [["Examples", "/examples"]]
                   <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
                   <input type="password" id="password" class="nds-input" placeholder="Create a password" autocomplete="new-password" minlength="8" required aria-describedby="password-rules">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
-                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password">
                       <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -118,10 +118,10 @@ breadcrumb: [["Examples", "/examples"]]
                   <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
                   <input type="password" id="confirm-password" class="nds-input" placeholder="Re-enter your password" autocomplete="new-password" required aria-describedby="confirm-password-rules">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
-                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password">
                       <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                     </button>
                   </div>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 11:12 PM"
 ---
 
 <section id="code-overview" class="nds-content-section nds-doc-overview">
@@ -38,7 +38,7 @@ Pick another component when:
 <script type="text/html" id="code-block" data-canon data-variants="code-variants-table">
 <div class="nds-code nds-expandable">
   <div class="nds-code-action">
-    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code">
+    <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy code">
       <i class="nds-icon nds-hgi-copy-01"></i>
     </button>
   </div>
@@ -81,7 +81,7 @@ async function submitRequest(form) {
   <div class="nds-tab-content">
     <div class="nds-tab-panel" role="tabpanel" id="code-panel-css" aria-labelledby="code-tab-css" tabindex="0">
       <div class="nds-code-action">
-        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code">
+        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy code">
           <i class="nds-icon nds-hgi-copy-01"></i>
         </button>
       </div>
@@ -93,7 +93,7 @@ async function submitRequest(form) {
     </div>
     <div class="nds-tab-panel" role="tabpanel" id="code-panel-js" aria-labelledby="code-tab-js" tabindex="-1" hidden>
       <div class="nds-code-action">
-        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code">
+        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy code">
           <i class="nds-icon nds-hgi-copy-01"></i>
         </button>
       </div>
@@ -109,7 +109,7 @@ document.querySelector('.request-summary')
 <script type="text/html" id="code-markdown" data-canon>
 <div class="nds-code">
   <div class="nds-code-action">
-    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code">
+    <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy code">
       <i class="nds-icon nds-hgi-copy-01"></i>
     </button>
   </div>

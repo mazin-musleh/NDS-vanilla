@@ -100,7 +100,7 @@ hideFeedback: true
                                 <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                                 <input type="text" class="nds-search-input" placeholder="Search requests...">
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                                 </div>
                             </div>
                             <button class="nds-btn nds-primary nds-search-btn" type="button">
@@ -815,7 +815,7 @@ hideFeedback: true
         <span class="nds-featured-icon nds-circle">
             <i class="hgi hgi-stroke hgi-file-edit"></i>
         </span>
-        <button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close dialog">
+        <button class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close dialog">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>
@@ -841,7 +841,7 @@ hideFeedback: true
                         <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                         <input type="text" id="record-requester" class="nds-input" autocomplete="on" placeholder="Type a name..." required>
                         <div class="nds-form-action">
-                            <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
+                            <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input">
                                 <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -889,7 +889,7 @@ hideFeedback: true
                     </div>
                     <div class="nds-form-control" data-portal>
                         <div class="nds-form-action">
-                            <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
+                            <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle nds-icon-only" aria-label="Calendar Toggler">
                                 <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -959,7 +959,7 @@ hideFeedback: true
         <span class="nds-featured-icon nds-circle" data-status="error">
             <i class="hgi hgi-stroke hgi-delete-02"></i>
         </span>
-        <button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close dialog">
+        <button class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close dialog">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>

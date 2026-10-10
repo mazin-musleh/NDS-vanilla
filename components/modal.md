@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 11:12 PM"
 ---
 
 <section id="modal-overview" class="nds-content-section nds-doc-overview">
@@ -47,7 +47,7 @@ Pick another component when:
         <i class="nds-icon nds-hgi-information-circle" aria-hidden="true"></i>
       </span>
     </div>
-    <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close">
+    <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close">
       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
     </button>
   </div>
@@ -104,7 +104,7 @@ Pick another component when:
           <i class="nds-icon nds-hgi-information-circle" aria-hidden="true"></i>
         </span>
       </div>
-      <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close">
+      <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close">
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>

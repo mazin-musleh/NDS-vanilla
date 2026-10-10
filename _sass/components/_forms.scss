@@ -426,6 +426,12 @@ fieldset {
             --btn-color-disabled: var(--icon-default-disabled);
         }
 
+        // The slot sets the height (100%), so an icon button takes its width from it and stays square.
+        >.nds-btn.nds-icon-only:not(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down) {
+            width: auto;
+            aspect-ratio: 1;
+        }
+
         >*:not(.nds-dropmenu, .nds-dropmenu-menu, .nds-browse-btn) {
             --btn-height: 100%;
             --btn-height-min: var(--btn-height);

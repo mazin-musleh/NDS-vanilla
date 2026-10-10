@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 11:12 PM"
 ---
 
 <section id="migration-overview" class="nds-content-section nds-doc-overview">
@@ -53,7 +53,7 @@ Pick another component when:
                 <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                 <input type="text" class="nds-search-input" placeholder="Search names and fixes">
                 <div class="nds-form-action">
-                  <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                  <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                 </div>
               </div>
               <button class="nds-btn nds-primary nds-search-btn" type="button">

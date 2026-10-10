@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 11:12 PM"
 lang: en
 direction: ltr
 ---
@@ -50,7 +50,7 @@ Pick another component when:
   <div class="nds-form-control">
     <input type="text" id="full-name" name="full-name" class="nds-input" placeholder="Enter your full name" autocomplete="name">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -68,7 +68,7 @@ Pick another component when:
     <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
     <input type="email" id="email-address" name="email" class="nds-input" placeholder="name@example.com" autocomplete="email">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear email" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear email" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -86,10 +86,10 @@ Pick another component when:
     <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
     <input type="password" id="current-password" name="password" class="nds-input" placeholder="Enter your password" autocomplete="current-password">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear password" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
-      <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+      <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password">
         <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
       </button>
     </div>
@@ -107,10 +107,10 @@ Pick another component when:
     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
     <input type="text" id="search-services" name="search" class="nds-search-input" placeholder="Search services">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear search" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear search" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
-      <button class="nds-btn nds-subtle nds-voice-input" type="button" aria-label="Voice input">
+      <button class="nds-btn nds-subtle nds-voice-input nds-icon-only" type="button" aria-label="Voice input">
         <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -126,13 +126,13 @@ Pick another component when:
   </div>
   <div class="nds-form-control">
     <div class="nds-form-action nds-prefix">
-      <button class="nds-btn nds-subtle nds-number-decrement" type="button" aria-label="Decrease value">
+      <button class="nds-btn nds-subtle nds-number-decrement nds-icon-only" type="button" aria-label="Decrease value">
         <i class="nds-icon nds-hgi-minus-sign" aria-hidden="true"></i>
       </button>
     </div>
     <input type="text" id="quantity" name="quantity" class="nds-input nds-center" inputmode="numeric" value="1" min="1" max="20" step="1">
     <div class="nds-form-action nds-suffix">
-      <button class="nds-btn nds-subtle nds-number-increment" type="button" aria-label="Increase value">
+      <button class="nds-btn nds-subtle nds-number-increment nds-icon-only" type="button" aria-label="Increase value">
         <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
       </button>
     </div>
@@ -152,7 +152,7 @@ Pick another component when:
     </div>
     <input type="tel" id="mobile" name="mobile" class="nds-input nds-phone" placeholder="5XX XXX XXX" autocomplete="tel-national" inputmode="numeric" maxlength="9">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -196,7 +196,7 @@ Pick another component when:
     </div>
     <input type="tel" id="phone" name="phone" class="nds-input nds-phone" placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -213,7 +213,7 @@ Pick another component when:
   <div class="nds-form-control">
     <input type="text" id="national-id" name="national-id" class="nds-input nds-national-id" placeholder="1XXXXXXXXX" inputmode="numeric" maxlength="10" autocomplete="off">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -230,7 +230,7 @@ Pick another component when:
   <div class="nds-form-control">
     <input type="text" id="iban" name="iban" class="nds-input nds-iban" placeholder="SA0000000000000000000000" maxlength="34" autocomplete="off" spellcheck="false">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>

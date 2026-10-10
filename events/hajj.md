@@ -67,7 +67,7 @@ hero_float_actions:
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-hajj-apply-1"
                                     aria-labelledby="tab-hajj-apply-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy code example">
                                             <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
@@ -78,7 +78,7 @@ hero_float_actions:
                                 <div class="nds-tab-panel nds-expandable" role="tabpanel" id="panel-hajj-apply-2"
                                     aria-labelledby="tab-hajj-apply-2" hidden>
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy code example">
                                             <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
@@ -129,7 +129,7 @@ hero_float_actions:
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-hajj-manual-1"
                                     aria-labelledby="tab-hajj-manual-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy code example">
                                             <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
@@ -141,7 +141,7 @@ hero_float_actions:
                                 <div class="nds-tab-panel nds-expandable" role="tabpanel" id="panel-hajj-manual-2"
                                     aria-labelledby="tab-hajj-manual-2" hidden>
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <button class="nds-btn nds-subtle nds-copy nds-icon-only" aria-label="Copy code example">
                                             <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
