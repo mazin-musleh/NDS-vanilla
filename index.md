@@ -112,6 +112,11 @@ bundle_sizes:
 <section id="compliance" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
+            <div class="nds-section-action nds-wrap">
+                <a href="{{ '/templates/index.html' | relative_url }}" class="nds-btn nds-secondary-outline">
+                    <span class="nds-label">View all</span>
+                </a>
+            </div>
             <h2 class="nds-section-title">DGA Page Templates</h2>
             <p class="nds-section-brief">DGA page templates as working code.</p>
             <p class="nds-section-description">Components follow the DGA design tokens, typography, spacing, and interaction patterns. The templates below cover common government service screens. Copy one, add your content, and adapt it to your project.</p>
