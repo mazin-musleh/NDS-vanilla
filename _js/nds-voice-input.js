@@ -12,11 +12,15 @@
  *   data-voice-target · data-target   id, name, or data-name of the input to dictate into.
  *                                     With neither, the button's own .nds-form-control input.
  * Gotchas:
- *   - The button is never hidden on an unsupported browser; a click shows a message in the
- *     field instead. Gate on isSupported() if you want it gone.
+ *   - The button is never hidden on an unsupported browser; a click shows a message under
+ *     the field instead. Gate on isSupported() if you want it gone.
  *   - Listening auto-stops after 30 seconds.
+ *   - Words go in at the caret, or over the selection, and keep the text around them; a field
+ *     the user was not in, or one with no caret (email), takes them at the end.
  *   - Interim words are written into the input as they arrive; only the final result
  *     dispatches input/change.
+ *   - Messages (no speech, permission, timeout) are an NDS.Feedback under the field for
+ *     4 seconds; it replaces the field's validation message while it shows.
  */
 // NDS Voice Input — voice-dictation for a text field.
 //
@@ -175,24 +179,24 @@
             || fc.querySelector(':scope > input, :scope > textarea');
     }
 
-    // Transient message in the field's placeholder, restored after `duration`.
-    // Captures the true original only when no message is already showing and
-    // cancels any pending restore, so overlapping messages can't strand a
-    // message string as the "original".
-    function showMessage(input, message, duration) {
+    // A transient message under the field: a placeholder is hidden once the field has text.
+    function showMessage(input, message, status, duration) {
         if (!input) return;
-        if (input._ndsMsgTimer) clearTimeout(input._ndsMsgTimer);
-        else input._ndsMsgOrig = input.placeholder;
-        input.placeholder = message;
-        input.style.fontStyle = 'italic';
-        input.style.opacity = '0.7';
-        input._ndsMsgTimer = setTimeout(function() {
-            input.placeholder = input._ndsMsgOrig;
-            input.style.fontStyle = '';
-            input.style.opacity = '';
-            input._ndsMsgTimer = null;
-        }, duration || 3000);
+        var container = input.closest('.nds-form-container');
+        var el = NDS.Feedback.create({
+            message: message,
+            status: status,
+            target: container || input,
+            position: container ? 'append' : 'after',
+            size: 'sm',
+            style: 'outline'
+        });
+        setTimeout(function() { NDS.Feedback.dismiss(el); }, duration || 4000);
     }
+
+    // The element that last lost focus: a click on the mic moves focus off the field,
+    // and its caret counts only if the user was just in it.
+    var lastBlurred = null;
 
 
     // ── Per-button session (lazy, kept in a WeakMap) ──────────────────
@@ -210,6 +214,27 @@
         var timeout = null;
         var input = null;
         var container = null;
+        var before = '', after = '';
+
+        // Dictation goes in at the caret (or over the selection), like OS dictation;
+        // a field the user was not in, or one with no caret (email), takes it at the end.
+        function markInsertPoint() {
+            var value = input.value, s = null, e = null;
+            if (document.activeElement === input || lastBlurred === input) {
+                try { s = input.selectionStart; e = input.selectionEnd; } catch (err) {}
+            }
+            if (s == null) s = e = value.length;
+            before = value.slice(0, s);
+            after = value.slice(e);
+        }
+
+        function write(text) {
+            if (text && before && !/\s$/.test(before)) text = ' ' + text;
+            if (text && after && !/^\s/.test(after)) text += ' ';
+            input.value = before + text + after;
+            var caret = before.length + text.length;
+            try { input.setSelectionRange(caret, caret); } catch (err) {}
+        }
 
         function stop() {
             isListening = false;
@@ -226,10 +251,6 @@
             if (container) NDS.State.remove(container, 'listening');
             NDS.aria.pressed(button, false);
             NDS.aria.label(button, strings.t('start', { language: strings.t('language') }));
-            if (input) {
-                input.style.fontStyle = '';
-                input.style.opacity = '';
-            }
         }
 
         function start() {
@@ -246,19 +267,17 @@
             if (container) NDS.State.add(container, 'listening');
             NDS.aria.pressed(button, true);
             NDS.aria.label(button, strings.t('stop'));
+            markInsertPoint();
             input.focus();
 
             timeout = setTimeout(function() {
                 stop();
-                showMessage(input, strings.t('timeout'), 4000);
+                showMessage(input, strings.t('timeout'), 'warning');
             }, VOICE_TIMEOUT);
 
             listen(recognition, {
                 onResult: function(result) {
-                    var value = result.isFinal ? result.final.trim() : result.interim;
-                    input.style.fontStyle = result.isFinal ? '' : 'italic';
-                    input.style.opacity = result.isFinal ? '' : '0.7';
-                    input.value = value;
+                    write(result.isFinal ? result.final.trim() : (result.final + result.interim).trim());
 
                     if (result.isFinal) {
                         stop();
@@ -270,7 +289,8 @@
                 onError: function(error) {
                     stop();
                     var errorType = typeof error === 'string' ? error : (error && error.error);
-                    showMessage(input, strings.t(strings.has(errorType) ? errorType : 'default'));
+                    var minor = errorType === 'no-speech' || errorType === 'aborted';
+                    showMessage(input, strings.t(strings.has(errorType) ? errorType : 'default'), minor ? 'warning' : 'error');
                 },
                 onEnd: stop
             });
@@ -290,7 +310,7 @@
         if (!button) return;
         if (!isSupported()) {
             // No hiding — tell the user in the field, leave the button alone.
-            showMessage(resolveInput(button), strings.t('unsupported'));
+            showMessage(resolveInput(button), strings.t('unsupported'), 'error');
             return;
         }
         getSession(button).toggle();
@@ -300,6 +320,7 @@
         if (_initDone) return;
         _initDone = true;
         document.addEventListener('click', onVoiceClick);
+        document.addEventListener('focusout', function(e) { lastBlurred = e.target; });
         // If a button is removed mid-listening, stop its session so the mic
         // doesn't stay open until the 30s timeout. Pooled observer, fires only
         // on real removals (portal reparents are filtered out by the bus).

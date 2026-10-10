@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.1.0"
-last_edit: "10/10/2026 - 11:12 PM"
+updated: "1.12.x"
+last_edit: "10/10/2026 - 11:42 PM"
 ---
 
 <section id="voice-overview" class="nds-content-section nds-doc-overview">
@@ -125,7 +125,7 @@ Pick another component when:
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Search field (default) | — | — | A field with a search icon, a clear button and the voice button. The most common use |
-| Structure | Text area | canon `#voice-textarea` | — | Long free text, such as a message. Each dictation replaces the whole text |
+| Structure | Text area | canon `#voice-textarea` | — | Long free text, such as a message. Each dictation adds at the caret |
 | Structure | Search box | canon `#voice-search-box` | — | A search field with a Search button, at the top of a results page |
 | Structure | Linked button | canon `#voice-linked` | — | The button sits outside the field and names it in `data-voice-target` |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
@@ -177,7 +177,7 @@ A button inside `.nds-form-control` dictates into that field's input or text are
             <i class="hgi hgi-stroke hgi-voice"></i>
             <span class="nds-label">Live Transcript</span>
           </span>
-          <p class="nds-item-desc">Words show in the field in italic while the user speaks. The final text replaces the field's value and fires <code class="nds-inline-code lang-js">input</code> and <code class="nds-inline-code lang-js">change</code>, so a form treats it like typed text.</p>
+          <p class="nds-item-desc">Words show in the field while the user speaks. They go in at the caret, or over the selected text, and the rest of the text stays. A field the user was not in takes them at the end. The final text fires <code class="nds-inline-code lang-js">input</code> and <code class="nds-inline-code lang-js">change</code>, so a form treats it like typed text.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -205,7 +205,7 @@ A button inside `.nds-form-control` dictates into that field's input or text are
             <i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>
             <span class="nds-label">Error Messages</span>
           </span>
-          <p class="nds-item-desc">An error shows as the field's placeholder for a few seconds, in the page language. On a browser without speech recognition, a click shows a "not supported" message and the field still takes typed text.</p>
+          <p class="nds-item-desc">An error shows under the field for 4 seconds, in the page language, and screen readers announce it. On a browser without speech recognition, a click shows a "not supported" message and the field still takes typed text.</p>
         </div>
       </div>
     </div>
@@ -222,7 +222,6 @@ A button inside `.nds-form-control` dictates into that field's input or text are
 - Use voice input on search fields and long free-text fields. Typing these takes the most effort.
 - Never add it to a password, OTP or other secret field. People near the user can hear what they say.
 - Do not point it at a read-only field or a `<select>`. A read-only field still takes the text, and a `<select>` loses its choice.
-- On a text area, say in the info text that each dictation replaces the text. The user then says the whole message at once.
 - Write `aria-label="Start voice input"` and `aria-pressed="false"` on the button.
 - Keep the `nds-hgi-mic-01` icon as an `<i>` directly inside the button. The color animation styles only that element.
 - The browser asks for permission to use the mic the first time. When voice input is a main part of a service, say why in the info text.
@@ -282,7 +281,7 @@ document.getElementById('voice-search').addEventListener('change', function (e) 
 ### Messages
 {: .nds-block-title}
 
-The script shows these in the field's placeholder, in the page language. The timeout message stays 4 seconds. The others stay 3 seconds.
+The script shows these under the field for 4 seconds, in the page language. While one shows, it takes the place of the field's validation message.
 
 | Code | English | Arabic |
 |---|---|---|
