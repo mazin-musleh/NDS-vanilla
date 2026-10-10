@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 04:03 AM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="heroOverview" class="nds-content-section nds-doc-overview">
@@ -148,8 +148,8 @@ The hero is one region of the page. The other regions are on [Page Layout](../la
   </nav>
   <div class="nds-section-wrapper">
     <div class="nds-section-image">
-      <div class="nds-avatar" aria-hidden="true">
-        <span class="nds-label">NA</span>
+      <div class="nds-avatar nds-image-border">
+        <img src="../docs-assets/img/avatar2.webp" width="120" height="120" alt="Dr. Noura Al-Otaibi" fetchpriority="high">
       </div>
     </div>
     <div class="nds-section-head">
@@ -209,7 +209,11 @@ The hero is one region of the page. The other regions are on [Page Layout](../la
       </div>
       <div class="nds-swiper-slide nds-content-wrapper" hidden>
         <div class="nds-hero-image-wrapper" style="--overlay: 0.7;">
-          <img data-src="../assets/img/riyadhcenter_ai.webp" class="nds-hero-image" alt="">
+          <picture>
+            <source media="(max-width: 768px)" data-srcset="../docs-assets/img/home_hero_bg_sm.webp">
+            <source media="(max-width: 1646px)" data-srcset="../docs-assets/img/home_hero_bg_md.webp">
+            <img data-src="../docs-assets/img/home_hero_bg.webp" class="nds-hero-image" alt="">
+          </picture>
         </div>
         <div class="nds-section-body">
           <h2 class="nds-section-title">Digital Identity</h2>

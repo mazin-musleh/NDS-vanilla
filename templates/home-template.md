@@ -25,9 +25,9 @@ direction: ltr
                 <div class="nds-swiper-slide nds-content-wrapper">
                     <div class="nds-hero-image-wrapper" style="--overlay: 0.8;">
                         <picture>
-                            <source media="(max-width: 768px)" srcset="{{ 'assets/img/riyadhcenter_IQ_sm.webp' | relative_url }}">
-                            <source media="(max-width: 1646px)" srcset="{{ 'assets/img/riyadhcenter_IQ_md.webp' | relative_url }}">
-                            <img src="{{ 'assets/img/riyadhcenter_IQ.webp' | relative_url }}" class="nds-hero-image" alt="" fetchpriority="high">
+                            <source media="(max-width: 768px)" srcset="{{ 'docs-assets/img/home_hero_bg_sm.webp' | relative_url }}">
+                            <source media="(max-width: 1646px)" srcset="{{ 'docs-assets/img/home_hero_bg_md.webp' | relative_url }}">
+                            <img src="{{ 'docs-assets/img/home_hero_bg.webp' | relative_url }}" class="nds-hero-image" alt="" fetchpriority="high">
                         </picture>
                     </div>
                     <div class="nds-section-body">
@@ -44,9 +44,9 @@ direction: ltr
                 <div class="nds-swiper-slide nds-content-wrapper" hidden>
                     <div class="nds-hero-image-wrapper" style="--overlay: 0.8;">
                         <picture>
-                            <source media="(max-width: 768px)" data-srcset="{{ 'assets/img/riyadhcenter_IQ_sm.webp' | relative_url }}">
-                            <source media="(max-width: 1646px)" data-srcset="{{ 'assets/img/riyadhcenter_IQ_md.webp' | relative_url }}">
-                            <img data-src="{{ 'assets/img/riyadhcenter_IQ.webp' | relative_url }}" class="nds-hero-image" alt="">
+                            <source media="(max-width: 768px)" data-srcset="{{ 'docs-assets/img/home_hero_bg_sm.webp' | relative_url }}">
+                            <source media="(max-width: 1646px)" data-srcset="{{ 'docs-assets/img/home_hero_bg_md.webp' | relative_url }}">
+                            <img data-src="{{ 'docs-assets/img/home_hero_bg.webp' | relative_url }}" class="nds-hero-image" alt="">
                         </picture>
                     </div>
                     <div class="nds-section-body">
@@ -63,9 +63,9 @@ direction: ltr
                 <div class="nds-swiper-slide nds-content-wrapper" hidden>
                     <div class="nds-hero-image-wrapper" style="--overlay: 0.8;">
                         <picture>
-                            <source media="(max-width: 768px)" data-srcset="{{ 'assets/img/riyadhcenter_IQ_sm.webp' | relative_url }}">
-                            <source media="(max-width: 1646px)" data-srcset="{{ 'assets/img/riyadhcenter_IQ_md.webp' | relative_url }}">
-                            <img data-src="{{ 'assets/img/riyadhcenter_IQ.webp' | relative_url }}" class="nds-hero-image" alt="">
+                            <source media="(max-width: 768px)" data-srcset="{{ 'docs-assets/img/home_hero_bg_sm.webp' | relative_url }}">
+                            <source media="(max-width: 1646px)" data-srcset="{{ 'docs-assets/img/home_hero_bg_md.webp' | relative_url }}">
+                            <img data-src="{{ 'docs-assets/img/home_hero_bg.webp' | relative_url }}" class="nds-hero-image" alt="">
                         </picture>
                     </div>
                     <div class="nds-section-body">
