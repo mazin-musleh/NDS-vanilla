@@ -845,6 +845,8 @@
             form.querySelectorAll('.nds-form-container[data-strict]').forEach(function(ac) {
                 if (!isFieldVisible(ac, form)) return;
                 if (ac.classList.contains('nds-taginput')) return;
+                // Already failed required: strict passes empty text and would clear that message.
+                if (acc.invalidFields.indexOf(ac) !== -1) return;
                 var result = Validator.validateAutocomplete(ac, { showMessage: options.showMessages });
                 if (!result.valid) {
                     var anchor = ownField(ac);

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 10:10 PM"
 ---
 
 <section id="empty-overview" class="nds-content-section nds-doc-overview">
@@ -23,7 +23,8 @@ Add `nds-empty` to a container that can have no items, such as search results, a
 Pick another component when:
 
 - the data is still loading: [Loading](../components/loading).
-- a request failed: [Alert](../components/alert), with `data-status="error"`, so the user knows that something went wrong.
+- a request failed and the rest of the view still shows: [Alert](../components/alert), with `data-status="error"`, so the user knows that something went wrong.
+- a request failed and the view has nothing else to show: [Status Section](../layout/status-section).
 
 </div>
   </div>

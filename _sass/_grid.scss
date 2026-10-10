@@ -30,6 +30,9 @@
   align-items: var(--align, start);
   width: 100%;
 
+  // The important display above outranks the global hide rule, so a hidden grid restates it.
+  &:is(.nds-hidden, [hidden], [data-state~=hidden], [data-filtered]) { display: none !important; }
+
   > * {
     max-width: 100% !important;
     min-width: 0;

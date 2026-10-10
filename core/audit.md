@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 07:03 PM"
+last_edit: "10/10/2026 - 10:10 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -212,6 +212,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `main-flex` | page | warn | A wrapper between `<body>` and `<main>` that stops `<main>` from growing |
 | `content-layout-child` | page | warn | An element in `.nds-content-layout` that is not `.nds-content` or `.nds-sidemenu` |
 | `sidemenu-missing` | page | warn | `nds-has-sidemenu` on a `.nds-content-layout` whose `.nds-sidemenu` is missing or `hidden`: the content squeezes into the menu column |
+| `alert-as-page` | page | warn | A view whose only visible content is an `.nds-alert`: a view that cannot show its content (sign in, no permission, not found, a failed load) is a Status Section |
 | `content-layout-once` | page | warn | More than one `.nds-content-layout` on the page, or one inside another: the page grid is set once |
 | `sidemenu-pair` | page | warn | `.nds-has-sidemenu` with no `.nds-sidemenu` as its child, or a `.nds-sidemenu` outside such a layout |
 | `legacy-library` | page | warn | A common legacy UI library loaded on the page, such as jQuery, Select2, DataTables, Bootstrap CSS or Font Awesome |
@@ -244,6 +245,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `card-link-nested` | practice | info | A link or a button inside a clickable card (`a.nds-card`, `button.nds-card`) |
 | `section-nested` | practice | info | A section inside a section. Divide a section body with `.nds-block` |
 | `card-actions-place` | practice | info | `.nds-card-actions` inside `.nds-card-content`, not after it |
+| `tag-kind-mix` | practice | info | A table column whose one-tag cells mix status tags (`data-status`) and standard tags. A state takes a status tag on every row |
 | `dark-nested` | practice | info | `data-theme="dark"` inside a dark area, which is already dark |
 | `prose-nested` | practice | info | `.nds-prose` inside `.nds-prose` |
 | `loading-field` | practice | info | `nds-loading` on a form field, which has a loading look of its own |

@@ -171,6 +171,18 @@
         });
     } });
 
+    // A view whose only content is an alert is a page state, which Status Section is built for.
+    rule({ id: 'alert-as-page', group: 'page', docs: 'layout/status-section.html', check(ctx) {
+        const shown = el => el.checkVisibility ? el.checkVisibility() : el.getClientRects().length > 0;
+        const sections = ctx.find('main .nds-content-section').filter(shown);
+        const alert = sections.flatMap(s => [...s.querySelectorAll('.nds-alert')]).find(shown);
+        if (!alert) return;
+        const content = 'p, li, dt, dd, td, img, figure, canvas, input, select, textarea, .nds-card, .nds-btn';
+        if (sections.some(s => [...s.querySelectorAll(content)].some(el => !el.closest('.nds-alert') && shown(el)))) return;
+        ctx.report(alert, 'the only content this view shows is an alert: a view that cannot show its content (sign in first, no permission, not found, a failed load) is a Status Section.',
+            'Replace the alert with a Status Section that carries the same title, text and action.');
+    } });
+
     // An NDS page runs NDS and vanilla JS only; a legacy library loaded beside it
     // restyles or re-wires NDS markup with nothing else reporting it.
     rule({ id: 'legacy-library', group: 'page', check(ctx) {
@@ -692,6 +704,24 @@
                 ctx.report(btn, 'voice input on a password, OTP, read-only field or select', 'Remove the button. People nearby hear a spoken secret, and the other fields take no dictation.');
             }
         });
+    } });
+
+    // One table column is one field: a status tag on some rows and a standard tag on others shows one state two ways.
+    rule({ id: 'tag-kind-mix', group: 'practice', severity: 'info', docs: 'components/tags.html', check(ctx) {
+        const cols = new Map();
+        ctx.find('td .nds-tag').forEach(tag => {
+            const td = tag.closest('td'), key = td.closest('table');
+            if (td.querySelectorAll('.nds-tag').length > 1) return; // a tag group mixes kinds on purpose
+            if (!cols.has(key)) cols.set(key, new Map());
+            const col = cols.get(key);
+            if (!col.has(td.cellIndex)) col.set(td.cellIndex, []);
+            col.get(td.cellIndex).push(tag);
+        });
+        for (const col of cols.values()) for (const tags of col.values()) {
+            const plain = tags.filter(t => !t.hasAttribute('data-status'));
+            if (plain.length && plain.length < tags.length) ctx.report(plain[0], `a table column shows a status tag on some rows and a standard tag on others (${plain.length} of ${tags.length} standard).`,
+                'Give every tag in the column data-status. A state that needs no color takes "neutral".', undefined, plain.length);
+        }
     } });
 
     rule({ id: 'dark-selector', group: 'practice', severity: 'info', docs: 'components/themes.html', check(ctx) {
