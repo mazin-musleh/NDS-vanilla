@@ -15,11 +15,20 @@
     flex-direction: column;
     width: 100%;
 
+    // A message sits at a field's own gap from the input, not the panel's.
+    > .nds-feedback {
+        margin-block-start: calc(var(--spacing-md) - var(--spacing-2xl));
+    }
+
     @include mobile {
         gap: var(--spacing-xl) !important; // must match the base's !important or it never wins
 
         .nds-main-nav & {
             padding-inline: var(--spacing-xl);
+        }
+
+        > .nds-feedback {
+            margin-block-start: calc(var(--spacing-md) - var(--spacing-xl));
         }
     }
 

@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 11:12 PM"
+last_edit: "10/10/2026 - 11:59 PM"
 lang: en
 direction: ltr
 ---
@@ -419,7 +419,7 @@ if (first) (first.querySelector('input, textarea, select') || first).focus();
 ### Permanent Feedback
 {: .nds-block-title}
 
-A `.nds-feedback` with `data-permanent` stays under the field as a hint. A validation message hides it, and it comes back when the message clears. It sits in an element with `data-feedback-target`: every message for the field goes there. A `.nds-form-footer` puts the messages under the input, and the `.nds-form-header` puts them above it. Without a feedback target, messages go at the end of the container.
+A `.nds-feedback` with `data-permanent` stays under the field as a hint. A validation message hides it, and it comes back when the message clears. It sits in an element with `data-feedback-target`: every message for the field goes there. A `.nds-form-footer` puts the messages under the input, and the `.nds-form-header` puts them above it. Without a feedback target, a message goes right after the field's input row, above anything else the field holds.
 
 ### Loading
 {: .nds-block-title}
@@ -591,7 +591,7 @@ The eye button switches the field between hidden and plain text, and its label b
 | `data-status` | `.nds-form-container` | The script sets it with each message: `error`, `help` or `neutral`. Only `error` draws the red outline. `clearStatus()` and any edit to the field remove it |
 | `data-message` | `.nds-form-container` | The script writes the current message text with `data-status`. `getStatus()` reads it, and `clearStatus()` removes it |
 | `data-feedback-target` | `.nds-form-container` | A CSS selector for the element inside the field that holds its messages |
-| `data-feedback-target` | an element inside `.nds-form-container`, usually `.nds-form-footer` | Messages go in it, instead of at the end of the container. A hidden one shows while a message is in it |
+| `data-feedback-target` | an element inside `.nds-form-container`, usually `.nds-form-footer` | Messages go in it, instead of right after the input row. A hidden one shows while a message is in it |
 | `hidden` | `.nds-form-container`, `.nds-form-group` or `.nds-form-action` | The script removes it at start. Write it to keep a field out of view until its state is set |
 | `data-permanent` | `.nds-feedback` in the feedback target | A message hides it instead of removing it. It comes back when the message clears |
 | `data-error-message` | the `<input>`, `<textarea>` or `<select>` | Replaces every message the field shows when a check fails |

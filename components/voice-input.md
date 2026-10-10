@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 11:42 PM"
+last_edit: "10/10/2026 - 11:59 PM"
 ---
 
 <section id="voice-overview" class="nds-content-section nds-doc-overview">
@@ -281,7 +281,7 @@ document.getElementById('voice-search').addEventListener('change', function (e) 
 ### Messages
 {: .nds-block-title}
 
-The script shows these under the field for 4 seconds, in the page language. While one shows, it takes the place of the field's validation message.
+The script shows these under the field for 4 seconds, in the page language. They are neutral, so the field is not marked invalid. While one shows, it takes the place of the field's validation message, which comes back after.
 
 | Code | English | Arabic |
 |---|---|---|

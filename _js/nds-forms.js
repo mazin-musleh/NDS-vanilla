@@ -321,8 +321,15 @@
                         }
                     }
 
+                    // No slot: right after the field's control row, not the container's end,
+                    // so a row the field carries below it (a search box's suggestions) stays below.
+                    var position = 'append';
+                    var row = target === container && container.classList.contains('nds-form-container') && ownControl(container);
+                    while (row && row.parentNode !== container) row = row.parentNode;
+                    if (row) { target = row; position = 'after'; }
+
                     var defaults = {
-                        position: 'append',
+                        position: position,
                         size: 'sm',
                         style: 'outline'
                     };

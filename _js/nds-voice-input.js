@@ -19,8 +19,9 @@
  *     the user was not in, or one with no caret (email), takes them at the end.
  *   - Interim words are written into the input as they arrive; only the final result
  *     dispatches input/change.
- *   - Messages (no speech, permission, timeout) are an NDS.Feedback under the field for
- *     4 seconds; it replaces the field's validation message while it shows.
+ *   - Messages (no speech, permission, timeout) are a neutral field message for 4 seconds,
+ *     through NDS.Forms.setStatus, so they sit where the field's validation message does;
+ *     a message they cover comes back after.
  */
 // NDS Voice Input — voice-dictation for a text field.
 //
@@ -179,19 +180,24 @@
             || fc.querySelector(':scope > input, :scope > textarea');
     }
 
-    // A transient message under the field: a placeholder is hidden once the field has text.
-    function showMessage(input, message, status, duration) {
+    // A 4-second field message, placed like any field message (a placeholder hides once the
+    // field has text). Neutral: a mic problem is not an invalid value. The message it covered
+    // comes back.
+    function showMessage(input, message) {
         if (!input) return;
         var container = input.closest('.nds-form-container');
-        var el = NDS.Feedback.create({
-            message: message,
-            status: status,
-            target: container || input,
-            position: container ? 'append' : 'after',
-            size: 'sm',
-            style: 'outline'
-        });
-        setTimeout(function() { NDS.Feedback.dismiss(el); }, duration || 4000);
+        if (!container) {
+            var el = NDS.Feedback.create({ message: message, status: 'neutral', target: input, position: 'after', size: 'sm', style: 'outline' });
+            setTimeout(function() { NDS.Feedback.dismiss(el); }, 4000);
+            return;
+        }
+        var prev = { status: container.getAttribute('data-status'), message: container.getAttribute('data-message') };
+        NDS.Forms.setStatus({ element: input, status: 'neutral', message: message });
+        setTimeout(function() {
+            if (container.getAttribute('data-message') !== message) return; // validation wrote since
+            if (prev.status && prev.message) NDS.Forms.setStatus({ element: input, status: prev.status, message: prev.message });
+            else NDS.Forms.clearStatus(input);
+        }, 4000);
     }
 
     // The element that last lost focus: a click on the mic moves focus off the field,
@@ -272,7 +278,7 @@
 
             timeout = setTimeout(function() {
                 stop();
-                showMessage(input, strings.t('timeout'), 'warning');
+                showMessage(input, strings.t('timeout'));
             }, VOICE_TIMEOUT);
 
             listen(recognition, {
@@ -289,8 +295,7 @@
                 onError: function(error) {
                     stop();
                     var errorType = typeof error === 'string' ? error : (error && error.error);
-                    var minor = errorType === 'no-speech' || errorType === 'aborted';
-                    showMessage(input, strings.t(strings.has(errorType) ? errorType : 'default'), minor ? 'warning' : 'error');
+                    showMessage(input, strings.t(strings.has(errorType) ? errorType : 'default'));
                 },
                 onEnd: stop
             });
@@ -310,7 +315,7 @@
         if (!button) return;
         if (!isSupported()) {
             // No hiding — tell the user in the field, leave the button alone.
-            showMessage(resolveInput(button), strings.t('unsupported'), 'error');
+            showMessage(resolveInput(button), strings.t('unsupported'));
             return;
         }
         getSession(button).toggle();
