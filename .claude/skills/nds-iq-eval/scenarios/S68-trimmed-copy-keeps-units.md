@@ -12,4 +12,4 @@
   - MUST NOT: re-type the stepper from memory of what three steps need; drop a class or block because the current viewport doesn't show its purpose; treat the SVG as optional decoration.
   - cite: "Preserve structure, classes, `data-*` attributes, and ARIA." / "Keep every canonical part, in order." / "never rebuild it"
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

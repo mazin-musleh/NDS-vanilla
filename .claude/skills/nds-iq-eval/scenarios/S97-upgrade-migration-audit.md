@@ -11,4 +11,4 @@
   - MUST NOT: audit only the pages the changelog names or the pages edited; edit `NDS_ROOT` or runtime files.
   - cite: "run the audit's migration check on every page, not only the ones you touched" / index: "Run the audit's `migration` group on every page."
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

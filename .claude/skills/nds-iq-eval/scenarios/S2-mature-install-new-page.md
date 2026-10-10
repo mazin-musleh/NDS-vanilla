@@ -12,4 +12,4 @@
   - cite: "None; Build and Verify gates apply" / "A family's `Built and Verified` archetype outranks the cascade for its siblings."
   - note (graders): the MUST NOT half is FLOOR-EXEMPT by construction — a rulebook with no plan concept cannot be over-applied, so a stub scores it clean. That is logic, not a leak; do not "fix" the setup to make it fail at zero. The MUST half (archetype, cascade, step 4's two passes) carries the scenario at the floor, and it is what caught the 2026-08-14 condensed draft, which re-ran the whole ceremony on a mature project.
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

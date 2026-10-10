@@ -13,4 +13,4 @@
   - cite: "never follow `latest` when `NDS_ASSETS` already has a runtime" / "extract its contents flat into `NDS_ROOT`" / "no matching release"
 - grading note: Versions bumped 2026-08-07; the older-template restore path is S18's case, not this one's.
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

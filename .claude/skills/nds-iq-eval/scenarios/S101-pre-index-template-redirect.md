@@ -12,4 +12,4 @@
   - MUST NOT: build under the v4 file without an index; re-download or "repair" `NDS_ROOT` as a broken install; upgrade the template unasked; stop the work to ask.
   - cite: "`NDS_ROOT` holds a template but no `NDS-INDEX.md`? The template predates this file, and this file cannot serve it."
 - floor: not run.
-- baseline: PASS 2026-10-10 old v1.12.0 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 old v1.12.0 post-cut (Sonnet 5.5).

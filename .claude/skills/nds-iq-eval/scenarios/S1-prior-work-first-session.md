@@ -12,4 +12,4 @@
   - cite: "Never silently resume an inherited plan." / "reference newer than runtime" / "pending upgrade"
 - artifacts (behavior): `NDS-PLAN.md` exists with the five columns and a checkout row, and opens with the `Managed by NDS IQ` stamp line; its open items (the conformance-split questions, the upgrade proposal, deferred decisions) are `- [ ]` lines (re-pointed 2026-08-17, v2.1 plan-format change — earlier baselines predate it); no page file written; no asset copy yet.
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5). WATCH upgrade-verb (stop at flagging instead of proposing) ×2 (batch 2026-08-12; scoped 2026-08-12 proposed it).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5). WATCH upgrade-verb (stop at flagging instead of proposing) ×2 (batch 2026-08-12; scoped 2026-08-12 proposed it).

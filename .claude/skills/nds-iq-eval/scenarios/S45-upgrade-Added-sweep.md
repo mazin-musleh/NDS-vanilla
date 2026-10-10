@@ -11,4 +11,4 @@
   - MUST NOT: adopt a new component, knob, or behavior into a built page as part of the upgrade; report the Migrating sweep alone as the complete step 3; present the adoption items as work already done rather than proposals.
   - cite: "Also report useful new and changed features for the dev to choose." / index: "Read every `### Migrating from` section in `CHANGELOG.md` between the old and the new version."
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

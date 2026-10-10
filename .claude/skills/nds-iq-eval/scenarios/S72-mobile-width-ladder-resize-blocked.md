@@ -12,4 +12,4 @@
   - cite: "Set the viewport, never the window." / "An unreachable viewport stays unmet." / "Drive both passes headlessly"
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped). Standing, from the earlier floor: VOID as evidence: the setup hands the runner the blockage. Standing: comprehension mode cannot test discovery-under-load; treat neither this floor nor S79's cut probe as evidence for any trim in this chain.
 - leak: C2, self-documented (audit 2026-08-17) — the setup states the resize block.
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

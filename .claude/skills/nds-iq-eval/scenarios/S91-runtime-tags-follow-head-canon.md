@@ -12,4 +12,4 @@
   - cite: "copy the head canon as a unit. Rewrite asset URLs only" / head doc: "Added by the loader on the first press of the accessibility button"
 - leak: class (3), eased by a temptation trap — the prompt names the runtime tags and asks for the lazy one.
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

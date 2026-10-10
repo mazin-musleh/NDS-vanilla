@@ -12,4 +12,4 @@
   - cite: "read the component's JS API (the index names where)" / "use what it ships, report the gap, and propose the upgrade as the dev's call" / index: "Rides, Methods, Events, Hooks, Gotchas"
 - artifacts (behavior): page JS binds `nds:multiselect:change` by exact name and calls `populate(...)`; no invented `data-*` attributes; no listener on inner `.nds-*` elements the banner doesn't expose.
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

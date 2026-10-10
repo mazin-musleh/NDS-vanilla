@@ -12,4 +12,4 @@
   - cite: index: "Their front matter builds the rest" / "Never copy from a built page: it is only where you see the result."
 - leak: C3 deliberate — the read order IS the graded behavior, and comprehension cannot observe it without asking.
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

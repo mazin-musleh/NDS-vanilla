@@ -12,4 +12,4 @@
   - cite: "list every UI part, and match each against the component catalog" / "Match by `use_when` across the template, example, and component catalogs, never by title" / Avatar `use_when`: "A user picture, profile photo, initials circle, or a stacked group"
 - grading note: read-dependent (catalog + avatar doc) — scoped or solo runs only. Prompt gained the markup ask 2026-08-20 (SKILL.md's artifact-forcing rule); it names no component or mode.
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

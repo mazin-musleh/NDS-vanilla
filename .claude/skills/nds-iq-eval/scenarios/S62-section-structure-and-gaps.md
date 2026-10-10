@@ -11,4 +11,4 @@
   - MUST NOT: hand-rolled margins between stacked siblings; custom `display:flex` wrappers or Bootstrap-style columns; one section tier assumed without the doc.
   - cite: "the NDS page structure and layout primitives" / "no spacing the primitives do not set" / index: "Sections and spacing"
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5). WATCH read-section-doc-first step compressed ×2.
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5). WATCH read-section-doc-first step compressed ×2.

@@ -12,4 +12,4 @@
   - cite: "They must agree; otherwise stop and ask." / "hand-assembled runtime or interrupted upgrade" / "If the dev says a found runtime is legacy, treat setup as new, with the latest release as default, and assess its pages as prior NDS work."
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C2-mild (audit 2026-08-17): both banners stated in the setup, the read pre-done.
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

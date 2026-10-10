@@ -11,4 +11,4 @@
   - MUST NOT: invent markup or CSS for a "horizontal look"; use a 1.x class name from memory (`nds-rowView`); refuse because no canon block shows the horizontal card.
   - cite: "Add an option the doc lists, on the element it names" / index: "Add an option's Markup on the element it names."
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

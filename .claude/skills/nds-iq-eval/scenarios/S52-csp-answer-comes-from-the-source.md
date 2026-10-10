@@ -11,4 +11,4 @@
   - MUST NOT: hand the three options back as an open design question without reading the source; externalize or rewrite the head's inline script; reduce or reorder the head set; reach for `'unsafe-inline'`.
   - cite: "Read the source before you ask or answer an NDS question or wire page JS." / "Found → read the docs' CSP guidance and record what the head needs." / head.md: "Pick the first that fits: 1. A nonce, when your server builds each page … 2. A hash, when the page is a plain file, even one your own server sends …"
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): head.md not read in the batch: nonce order right, loader nonce propagation missing.
+- baseline: SOFT 2026-10-10 full v4 post-cut (Sonnet 5.5): nonce order right, loader nonce propagation missing.

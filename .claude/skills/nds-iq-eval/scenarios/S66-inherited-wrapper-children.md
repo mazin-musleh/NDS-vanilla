@@ -11,4 +11,4 @@
   - MUST NOT: silently move the count out and restyle it; treat "it still looks right" as proof the behavior survived; invent a standalone count element alongside the toolbar's.
   - cite: "Keep canonical wrappers with their children; never lift a child out." / "Inherited markup follows the same rule."
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): toolbar doc not read before answering.
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

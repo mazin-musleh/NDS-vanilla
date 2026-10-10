@@ -12,4 +12,4 @@
   - note (graders): path (a) is a full-credit answer, not a dodge — it is the documented brand-colour route. It carries one cost NEITHER file states: custom seeds are not flash-free. Do not grade an agent down for missing it; it is a source gap, and if a dev is bitten by it in the field the fix belongs in `components/themes.md`, not here.
   - cite: "Rebind tokens in a project stylesheet loaded after the NDS stylesheet, the way the tokens doc shows." / index: "Tokens, knobs, dark mode"
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

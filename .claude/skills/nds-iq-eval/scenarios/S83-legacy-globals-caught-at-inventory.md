@@ -12,4 +12,4 @@
   - cite: "fix or name every finding" / "exclude inherited legacy CSS"
 - grading note: the artifact is the change to the sheet or its import, plus the plan entry; "isolate the CSS" as prose is not a pass. Behavior form: `assemble.mjs --fixture mini-spa --state spa-post-build` with the sheet seeded.
 - floor: not run (reframed 2026-10-10).
-- baseline: UNMEASURED: reframed 2026-10-10 after the inventory sentence moved to the audit; the prior PASS graded the inventory-time rubric.
+- baseline: SOFT 2026-10-10 full v4 post-cut (Sonnet 5.5): first run since the reframe: proposes the scoped-class fix and asks first (right, red line #7), but writes no plan entry.

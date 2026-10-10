@@ -11,4 +11,4 @@
   - MUST NOT: remove jQuery, Bootstrap or Select2 from the shared layout for every page; keep Select2 on the NDS page; call the page done with the finding open.
   - cite: "Never mix NDS and legacy UI on one page" / "Removing legacy libraries project-wide is the dev's decision."
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): stops to ask about the NDS layout instead of giving the page its own head; no audit re-run.
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

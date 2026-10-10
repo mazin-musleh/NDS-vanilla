@@ -12,4 +12,4 @@
   - cite: "Before hand-writing fetch, debounce, resize, state, text, or date logic, read the core APIs the index names." / "Every request needs a visible failure path (form or component status, or an alert), exercised in §Verify."
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C3-mild (audit 2026-08-17): the prompt asks the failure-path question, so passes show the `NDS.request` route, not unprompted noticing.
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

@@ -10,7 +10,7 @@
 
 The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the values of `NDS_ROOT` and `NDS_ASSETS`, and the trigger that sent you here.
 
-- Read this file top to bottom once per session, before any NDS or UI work, and when unsure. Read it again after it is replaced or your context is compacted. At each phase boundary, reread that phase's gates.
+- Read this file top to bottom once per session, before any NDS or UI work, and when unsure. At each phase boundary, reread that phase's gates.
 - It is universal and read-only: no project values, no edits. Path values live only in the anchor.
 - **This file holds rules, not facts.** It names no NDS file, class or API, because each release can change them. The template carries the facts: the docs the index names hold markup, options, APIs, layout and styling rules, and the template's audit checks a live page.
 - An older release may lack a doc or feature a newer one has: use what it ships, report the gap, and propose the upgrade as the dev's call. A missing route never blocks.
@@ -34,7 +34,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
    | Edit | Allowed change |
    |---|---|
    | Asset URL | Rewrite `href`/`src` to `NDS_ASSETS` URLs |
-   | Content | Replace placeholder text and content attributes; reset a replaced image's `width`/`height` to its real size |
+   | Content | Replace placeholder text and content attributes |
    | Option | Add an option the doc lists, on the element it names |
    | CSP | The conversion the docs give for a strict Content Security Policy |
 
@@ -46,7 +46,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 
 4. **All page content uses the NDS page structure and layout primitives** the docs describe. No other framework's layout, no custom wrappers, no spacing the primitives do not set.
 
-5. **Style in this order: documented knobs → tokens → scoped overrides.** Rebind tokens in a project stylesheet loaded after the NDS stylesheet, the way the tokens doc shows: every state of a family, in light and dark mode. An override is the last resort: scope it under a project class or `data-*`, comment why, and never restyle NDS internals.
+5. **Style in this order: documented knobs → tokens → scoped overrides.** Rebind tokens in a project stylesheet loaded after the NDS stylesheet, the way the tokens doc shows. An override is the last resort: scope it under a project class or `data-*`, comment why, and never restyle NDS internals.
 
 6. **No legacy UI libraries: NDS and vanilla JS only.** The index maps common legacy libraries to NDS. Any other UI library is legacy too: replace it as §Design choices says. Never mix NDS and legacy UI on one page: NDS pages load the NDS runtime, exclude inherited legacy CSS, and migrate inherited JS through §JS wiring. Removing legacy libraries project-wide is the dev's decision. An NDS spike is ONE parallel page with the full head, runtime, and canonical markup; it needs no plan, and every other rule applies.
 
@@ -77,7 +77,6 @@ Report and stop when the dev must decide:
 | `-dev` banner | no matching release | release |
 | runtime outside `NDS_ASSETS` | location + affected pages | point the anchor there / move it |
 | reference newer than runtime | pending upgrade | upgrade or not |
-| no runtime anywhere | first setup | install latest and report |
 | prior NDS work / inherited plan | conformance split (§Plan) | adopt / retire / rebuild |
 | project rules conflict | conflict | which rules win |
 | NDS itself needs changes | gap | separate conversation |
@@ -112,8 +111,6 @@ NDS is a UI layer; the host project (frontend and backend) serves it. NDS IQ nev
 **Plan entry gate.** Choose the work mode first. When a plan applies, list routes, layouts, shared partials, pages and views (one row per client-side view), and legacy UI libraries; map every page through the §Build cascade and record its page shape. Greenfield lists only the pages the dev named. No-plan work inspects only the named page, its shared layout, its global files, and the project contracts.
 
 Check response headers and middleware for a Content Security Policy once, project-wide. None → record `no CSP` and skip this file's CSP rules: ask the dev nothing about CSP. Found → read the docs' CSP guidance and record what the head needs. Recommend its grants in its order: a nonce, else a hash, and the blocking stylesheet last, since it slows the first paint.
-
-Inspect every globally loaded stylesheet for element selectors (`body`, `h1`, `a`, `input`, …): each hit reaches every NDS page served through that entry. Record its isolation.
 
 - **Repeated families:** map one archetype; sibling rows read `same as <archetype>`.
 - **Prior NDS:** assess each page against current canon: conformant → `Awaiting Verification`; non-conformant → rebuild. Never silently resume an inherited plan.
@@ -157,7 +154,7 @@ Match by `use_when` across the template, example, and component catalogs, never 
 
 Keep the matched source's structure and put the project's content into every part; never rebuild it. It is a floor, not a ceiling: add the sections the project needs, matched through the catalogs. A family's `Built and Verified` archetype outranks the cascade for its siblings. Screens that share one app shell (one layout with the same navigation) keep that shell's page shape: a matched template supplies the content inside it, never a different page shape.
 
-At each page start, resolve its recorded questions, list every UI part, and match each against the component catalog: every field and control is a part, so a date field is matched like a table. Record the list under the page's plan row, one line per part: `part → component`, where the component is a catalog entry's name, never a bare HTML tag such as `select` (no-plan: in the final report). A missing part comes from its canonical component; no match → custom case.
+At each page start, resolve its recorded questions, list every UI part, and match each against the component catalog: every field and control is a part, so a date field is matched like a table. Record the list under the page's plan row, one line per part: `part → component`, where the component is a catalog entry's name, never a bare HTML tag such as `select` (no-plan: in the final report).
 
 ### Authority by concern
 
@@ -191,7 +188,6 @@ Map every part a matched source ships to the project's data: a two-state field i
 Before listening on NDS elements or writing NDS-owned attributes, read the component's JS API (the index names where). If NDS ships a behavior, use its methods and events; never rebuild it. Before hand-writing fetch, debounce, resize, state, text, or date logic, read the core APIs the index names.
 
 - Every request needs a visible failure path (form or component status, or an alert), exercised in §Verify.
-- Markup that changes after load (added rows, fetched HTML, views that mount or unmount) follows the docs' guidance for content that changes after load. A lazy namespace's existence proves nothing.
 - If NDS has no surface you need, direct code is allowed: comment what you checked and add the finding to `NDS-REPORT.md`.
 
 **Build exit gate.** Before §Verify:
@@ -201,7 +197,7 @@ Before listening on NDS elements or writing NDS-owned attributes, read the compo
 - List the matched source's facets, controls, and columns beside the page's: equal counts, or each difference named.
 - Confirm every structural change is one of red line #3's allowed edits.
 - Check every icon name in the page HTML and its JS against the icon catalog: the audit cannot see names inside JS strings.
-- Under a strict style policy, find every inline style the copied markup carries and convert it as the docs show.
+- Under a strict CSP, find every inline style the copied markup carries and convert it as the docs show.
 
 Record the evidence under the plan row (no-plan: in the final report). An unmet check stays open: the row stays `In Progress`.
 
@@ -243,7 +239,10 @@ An unmet item keeps the row `In Progress`; no-plan work reports the page unverif
 
 ## Upgrade
 
-An explicit upgrade request is approval. A request to update the rules or instructions is not an upgrade: it runs only §This file's Update. An update check compares the runtime banner with the latest release and reports relevant changelog entries, and compares the project-root `NDS-IQ.md` with raw main as §This file's Update does; it reports both, and upgrades or installs only on dev approval. Write with absolute paths, never `cd` into `NDS_ROOT` or `NDS_ASSETS`, and inspect each destination after writing.
+- An explicit upgrade request is approval.
+- A request to update the rules or instructions is not an upgrade: it runs only §This file's Update.
+- An update check compares the runtime banner with the latest release and reports relevant changelog entries, and compares the project-root `NDS-IQ.md` with raw main as §This file's Update does. It reports both, and upgrades or installs only on dev approval.
+- Write with absolute paths, never `cd` into `NDS_ROOT` or `NDS_ASSETS`, and inspect each destination after writing.
 
 1. **Compare versions:** the runtime banners in `NDS_ROOT` and `NDS_ASSETS`.
 2. **Replace the runtime:** replace `NDS_ROOT` with the latest release as in §Setup, then refresh `NDS_ASSETS` as its index says. Keep the project's favicon and every project-added file; deletions need dev approval. Work done under earlier rules passes §Plan's conformance check first.

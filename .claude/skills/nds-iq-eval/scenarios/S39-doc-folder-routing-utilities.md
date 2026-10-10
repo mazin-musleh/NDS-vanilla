@@ -11,4 +11,4 @@
   - MUST NOT: report the doc missing; route to `_source/components/copy.md`; copy from the built `_site` page; hand-write clipboard JS; conclude NDS has no copy utility.
   - cite: index: "Each entry's `url` names its folder" / components.yml Copy `use_when`
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): value-based copy canon, not the target-based one (data-copy-target).
+- baseline: SOFT 2026-10-10 full v4 post-cut (Sonnet 5.5): value-based copy canon, not the target-based one (data-copy-target).

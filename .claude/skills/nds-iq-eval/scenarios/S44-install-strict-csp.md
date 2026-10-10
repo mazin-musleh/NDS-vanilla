@@ -12,4 +12,4 @@
   - cite: "Check response headers and middleware for a Content Security Policy once, project-wide, and record the result." / "Under a CSP, apply the docs' CSP guidance to the head." / "never remove or reorder entries"
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C2 on the sweep half (audit 2026-08-17): the setup states the CSP, so whether the sweep fires unprompted is gradable only in behavior mode.
-- baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): names the blocked inline script, not its consequence (deferred stylesheets never load). WATCH consequence-sentence word-cap soft ×2 (2026-08-13/-17).
+- baseline: SOFT 2026-10-10 full v4 post-cut (Sonnet 5.5): names the blocked inline script, not its consequence (deferred stylesheets never load). WATCH consequence-sentence word-cap soft ×2 (2026-08-13/-17).

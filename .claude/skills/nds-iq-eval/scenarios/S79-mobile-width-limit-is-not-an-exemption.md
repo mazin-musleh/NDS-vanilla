@@ -13,4 +13,4 @@
 - grading note: the artifact carries the grade — a result line reading "mobile: unverifiable" is the field failure verbatim, and it cannot hide behind a described route. Never ask for an `NDS-REPORT.md` entry (2026-08-15: a clean run is not an entry, so the ask manufactured a soft). The dev-facing result line carries the grade.
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C2, self-documented (audit 2026-08-17) — stating the gap is the tell.
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

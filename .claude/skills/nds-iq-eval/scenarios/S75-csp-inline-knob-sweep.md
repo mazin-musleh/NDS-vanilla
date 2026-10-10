@@ -11,4 +11,4 @@
   - MUST NOT: declare the page done with inline knobs standing; delete the knobs' values instead of converting them; treat verbatim-copied canon as exempt from the sweep.
   - cite: "Under a strict CSP, find every inline style the copied markup carries and convert it as the docs show." / "The conversion the docs give for a strict Content Security Policy"
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

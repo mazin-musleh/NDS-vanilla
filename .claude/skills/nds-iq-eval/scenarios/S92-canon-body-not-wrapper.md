@@ -11,4 +11,4 @@
   - MUST NOT: ship any `<script type="text/html" …data-canon…>` wrapper on the page; copy the live demo or the builder's preview markup; hand-write the switch markup.
   - cite: index: "Copy the block's body. The `<script>` tag around it is doc packaging and never ships." / "Never copy a live demo or a built page: the docs are the only copy source."
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

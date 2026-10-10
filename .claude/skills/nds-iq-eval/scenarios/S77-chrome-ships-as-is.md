@@ -11,4 +11,4 @@
   - MUST NOT: raise a topbar, dark-mode, or stamp question in either port; raise a locale/direction question for port A's single-language app (it ships in its one language without the switcher — owner 2026-10-09, replacing the 2026-08-17 bilingual default); remove the stamp on its own affiliation judgment; drop dark mode; drop the bar because its slots look empty.
   - cite: "Record removable items as plan checkboxes only the dev ticks; never infer affiliation." / "Never ship a fake identity or a dead widget."
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped). Standing, from the earlier floor: TRIM EXECUTED 2026-08-14 (topbar walk guard cut, 75/75 clean after). Do not re-add; do not re-cut what remains.
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5). WATCH stamp affiliation flag unnamed ×1 (2026-08-17), firm only if a field run ships the stamp unflagged.
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5). WATCH stamp affiliation flag unnamed ×1 (2026-08-17), firm only if a field run ships the stamp unflagged.

@@ -11,4 +11,4 @@
   - MUST NOT: accept the dev's "NDS has nothing" at face value; hand-compose the toggle; fall back to a bare native date input as the finished answer; conclude from a title scan.
   - cite: "search the catalogs' `use_when` lines (the index names them)" / "A claim needs its check first" / index: "Each entry's `url` names its folder."
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5). WATCH copy-canon step compressed ×3 (2026-08-13/-14/-15).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5). WATCH copy-canon step compressed ×3 (2026-08-13/-14/-15).

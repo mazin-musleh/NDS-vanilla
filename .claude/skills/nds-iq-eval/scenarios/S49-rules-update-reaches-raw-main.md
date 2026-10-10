@@ -12,4 +12,4 @@
   - cite: "compare raw main's content with the project-root copy" / "(an explicit update request is approval)" / "Download with curl or the stack's HTTP client, never a web-fetch tool."
 - grading note: Setup fixed 2026-10-09: template zips stopped shipping an offline `NDS-IQ.md` (7035a2f8), so the old byte-identical offline-copy world-state was false.
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

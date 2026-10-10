@@ -11,4 +11,4 @@
   - MUST NOT: (a) refuse or stall for a plan; write `NDS-PLAN.md` anyway; read the waiver as license to skip verification, the cascade, or canonical markup; re-raise the cost every turn. (b) add `.nds-*` markup to the live Bootstrap page; ship a reduced head to make it fit; read the waiver as covering rule #6.
   - cite: "If the dev waived a required plan, note once that cross-session memory is lost." / "Never mix NDS and legacy UI on one page" / "An NDS spike is ONE parallel page"
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5). WATCH (a)'s one-real-cost line compressed ×1 (2026-08-12).
+- baseline: SOFT 2026-10-10 full v4 post-cut (Sonnet 5.5): (a) skips the one-line cost note: read the project as needing no plan. WATCH (a)'s one-real-cost line compressed ×2 (2026-08-12, 2026-10-10).

@@ -12,4 +12,4 @@
   - cite: "Rebind tokens in a project stylesheet loaded after the NDS stylesheet" / "exclude inherited legacy CSS"
 - grading note: the per-file disposition is the artifact; "handle the stylesheets appropriately" as prose is ungradable.
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

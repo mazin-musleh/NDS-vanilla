@@ -12,4 +12,4 @@
   - cite: "Any other UI library is legacy too: replace it as §Design choices says." / "never the legacy library for one widget"
 - grading note: read-dependent (the catalog and the date picker doc): grade from a scoped or solo run only. The prompt avoids the `use_when` words "appointment" and "booking".
 - floor: not run.
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

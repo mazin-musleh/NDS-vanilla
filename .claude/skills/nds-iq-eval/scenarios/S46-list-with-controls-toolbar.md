@@ -11,4 +11,4 @@
   - MUST NOT: hand-compose a control-bar wrapper from grid or flex primitives; lift the count, filters, or search out of `.nds-toolbar` into a row of their own; treat the four controls as unrelated parts with no bar component between them; match on titles alone.
   - cite: "list every UI part, and match each against the component catalog" / components.yml Toolbar `use_when`: "The controls bar above a table, list, or grid: result counts and applied filters lead, search, export, and actions trail"
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

@@ -12,4 +12,4 @@
   - cite: "A smoke check: `curl -sI` for status and CSP; `curl -s` for an intact head and scripts, server errors, and forbidden inline styles under a strict CSP." / "Under a strict CSP, find every inline style the copied markup carries and convert it as the docs show."
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C2-mild (audit 2026-08-17): the CSP is stated in the setup, so passes cover the procedure choice, not the discovery.
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5). WATCH closing checklist step unnamed ×1 (2026-08-13).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5). WATCH closing checklist step unnamed ×1 (2026-08-13).

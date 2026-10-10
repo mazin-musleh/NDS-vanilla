@@ -11,4 +11,4 @@
   - MUST NOT: keep the tag; suppress or skip the audit finding; edit the runtime or the loader.
   - cite: "Rewrite asset URLs only; never remove or reorder entries" / the audit's fix line
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).

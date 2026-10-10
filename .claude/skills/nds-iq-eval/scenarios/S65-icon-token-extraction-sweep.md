@@ -11,4 +11,4 @@
   - MUST NOT: treat the clean `audit()`/console as icon coverage; mark the page done without the sweep; invent an inline-set registration.
   - cite: "Check every icon name in the page HTML and its JS against the icon catalog: the audit cannot see names inside JS strings." / index: "The inline names: `_source/_data/content/icons.yml`"
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
+- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).
