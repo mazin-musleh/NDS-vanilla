@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 11:18 PM"
 ---
 
 <section id="refresh-overview" class="nds-content-section nds-doc-overview">
@@ -81,7 +81,7 @@ NDS.Init.refresh(tbody);
 ### Refresh
 {: .nds-block-title}
 
-`refresh(el)` checks every registered component. A component with an element in `el` runs its `init()` again, which wires the new elements and skips the ones it already started. Filter, Selection and Main Nav drive a container from outside it, so they run their own refresh instead. Use it when the markup holds only components the page already had at load.
+`refresh(el)` checks every registered component. A component with an element in `el` runs its `init()` again, which wires the new elements and skips the ones it already started. Filter, Selection and Main Nav drive a container from outside it, so they run their own refresh instead. Use it when the markup holds only components the page already had at load. A started component does not pick up new items of its own, such as slides added to a running swiper: call `NDS.Init.destroy(el)`, change the markup, then `NDS.Init.mount(el)`.
 
 ### Mount
 {: .nds-block-title}

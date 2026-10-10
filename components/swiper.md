@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 06:54 PM"
+last_edit: "10/10/2026 - 11:18 PM"
 ---
 
 <section id="swiper-overview" class="nds-content-section nds-doc-overview">
@@ -359,6 +359,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 - Use a swiper for a set the user browses, such as featured services or a gallery. Put content the user must see all at once in a [Grid](../layout/grid).
 - Write `hidden` on `.nds-swiper-navigation`. The script shows the row only when there is more than one page.
 - Set the slides per view in the swiper's `style`, not in a stylesheet. The script reads them from `style`.
+- Slides that arrive after the swiper started: call `NDS.Init.destroy(swiper)`, append the slides, then `NDS.Init.mount(swiper)`. A refresh does not add slides to a running swiper.
 - Give the slides in one swiper the same height. The tallest slide sets the height of the row.
 - Load the images of later slides with `data-src` and `data-srcset`, not `src`. Give the first image `fetchpriority="high"`.
 - Give a lazy image a width and a height, or an `aspect-ratio`. Before it loads it has no size of its own, so its skeleton does not show.

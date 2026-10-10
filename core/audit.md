@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 11:12 PM"
+last_edit: "10/10/2026 - 11:18 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -142,7 +142,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
             <i class="hgi hgi-stroke hgi-database"></i>
             <span class="nds-label">Findings as Data</span>
           </span>
-          <p class="nds-item-desc">The call returns an array with the rule, the severity, the fix and the element of each finding. A test or an AI coding agent reads it with no console parsing.</p>
+          <p class="nds-item-desc">The call returns an array of findings. Each one has `rule`, `group`, `severity`, `message`, `fix`, `docs`, `el` (the element) and `count`. A test or an AI coding agent reads it with no console parsing.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -210,9 +210,9 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `css-missing` | page | error | The NDS main style sheet did not apply |
 | `skip-link` | page | warn, error | No skip link, a skip link to a missing id (error), or one that lands on `<main>` |
 | `main-flex` | page | warn | A wrapper between `<body>` and `<main>` that stops `<main>` from growing |
-| `content-layout-child` | page | warn | An element in `.nds-content-layout` that is not `.nds-content` or `.nds-sidemenu` |
+| `content-layout-child` | page | warn | An element in `.nds-content-layout` that is not `.nds-content` or `.nds-sidemenu`. An element that renders nothing, such as a `<template>`, passes |
 | `sidemenu-missing` | page | warn | `nds-has-sidemenu` on a `.nds-content-layout` whose `.nds-sidemenu` is missing or `hidden`: the content squeezes into the menu column |
-| `alert-as-page` | page | warn | A view whose only visible content is an `.nds-alert`: a view that cannot show its content (sign in, no permission, not found, a failed load) is a Status Section |
+| `alert-as-page` | page | warn | A view whose only visible content, apart from tabs, a breadcrumb or pagination, is an `.nds-alert`: a view that cannot show its content (sign in, no permission, not found, a failed load) is a Status Section |
 | `content-layout-once` | page | warn | More than one `.nds-content-layout` on the page, or one inside another: the page grid is set once |
 | `sidemenu-pair` | page | warn | `.nds-has-sidemenu` with no `.nds-sidemenu` as its child, or a `.nds-sidemenu` outside such a layout |
 | `legacy-library` | page | warn | A common legacy UI library loaded on the page, such as jQuery, Select2, DataTables, Bootstrap CSS or Font Awesome |
@@ -226,6 +226,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `filter-no-target` | structure | error | A `.nds-filter` with no `data-filter-target` |
 | `paged-no-nav` | structure | error | A `.nds-paged-content` with no pagination nav |
 | `icon-unregistered` | structure | error | An `nds-hgi-*` icon that is not in the registered set |
+| `font-icon-unknown` | structure | error | A font icon (`hgi hgi-stroke hgi-*`) whose name the HGI stroke rounded set lacks, so it shows nothing. It runs once the HGI style sheet has loaded |
 | `icon-tag` | structure | error | A UI icon (`nds-icon nds-hgi-*`) on a tag other than `<i>`. The icon styles apply to `<i>` only, so it shows nothing |
 | `icon-only-btn` | structure | warn | A button in a field's `.nds-form-action` with an icon, no text and no `nds-icon-only`: it keeps its text padding and renders wider than tall |
 | `name-on-display` | structure | error | `name` on the text box of a Custom Select or Time Picker, or on an OTP digit box. The form then sends the text it shows, not the value |

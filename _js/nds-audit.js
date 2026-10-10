@@ -156,7 +156,8 @@
         ctx.find('.nds-content-layout').forEach(layout => {
             Array.from(layout.children).forEach(child => {
                 if (child.matches('.nds-content, .nds-sidemenu')) return;
-                if (getComputedStyle(child).display === 'contents') return;
+                const display = getComputedStyle(child).display;
+                if (display === 'contents' || display === 'none') return; // none: a <template>, a script, a hidden element
                 ctx.report(child, `<${child.tagName.toLowerCase()}> is a direct child of .nds-content-layout but is neither .nds-content nor .nds-sidemenu — it takes a grid column and shifts the layout.`, 'Return a fragment from the component instead of a wrapper, or give the wrapper "display: contents".');
             });
         });
@@ -178,7 +179,8 @@
         const alert = sections.flatMap(s => [...s.querySelectorAll('.nds-alert')]).find(shown);
         if (!alert) return;
         const content = 'p, li, dt, dd, td, img, figure, canvas, input, select, textarea, .nds-card, .nds-btn';
-        if (sections.some(s => [...s.querySelectorAll(content)].some(el => !el.closest('.nds-alert') && shown(el)))) return;
+        const chrome = '.nds-alert, .nds-tabs, .nds-breadcrumb, .nds-pagination, nav, [role="tablist"]';
+        if (sections.some(s => [...s.querySelectorAll(content)].some(el => !el.closest(chrome) && shown(el)))) return;
         ctx.report(alert, 'the only content this view shows is an alert: a view that cannot show its content (sign in first, no permission, not found, a failed load) is a Status Section.',
             'Replace the alert with a Status Section that carries the same title, text and action.');
     } });
@@ -286,6 +288,20 @@
             const cls = [...el.classList].find(c => c.startsWith('nds-hgi-'));
             ctx.report(el, `inline icon "${cls}" is not in the registered set and paints as a solid box.`, `Use the HGI font class: <i class="hgi hgi-stroke ${cls.replace('nds-', '')}">`);
         });
+    } });
+
+    // A font icon whose name the HGI sheet lacks gets no ::before glyph, so it paints nothing.
+    rule({ id: 'font-icon-unknown', severity: 'error', docs: 'components/icons.html', check(ctx) {
+        if (![...document.querySelectorAll('link[href*="hgi-rounded-stroke-min.css"]')].some(l => l.sheet)) return;
+        const bad = ctx.find('i.hgi[class*="hgi-"]').filter(el => {
+            const c = getComputedStyle(el, '::before').content;
+            return !c || c === 'none' || c === 'normal';
+        });
+        if (bad.length) {
+            const name = [...bad[0].classList].find(c => c.startsWith('hgi-') && c !== 'hgi-stroke') || bad[0].className;
+            ctx.report(bad[0], `font icon "${name}" is not in the HGI stroke rounded set, so it shows nothing${bad.length > 1 ? ` (${bad.length} icons; the first is shown)` : ''}.`,
+                'Pick a name from the HGI stroke rounded set, written as <i class="hgi hgi-stroke hgi-…">.', undefined, bad.length);
+        }
     } });
 
     // Current-page nav marking. The highlight keys off data-state~="current"
