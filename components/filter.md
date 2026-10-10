@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:41 AM"
+last_edit: "10/10/2026 - 03:54 AM"
 ---
 
 <section id="filterOverview" class="nds-content-section nds-doc-overview">
@@ -477,9 +477,12 @@ On a failure the items stay as they were, and so do the chips, the badge, the op
 
 Call `preventDefault()` on `nds:filterFormAjax` to send the request yourself, such as a POST with a JSON body. The event fires for Apply, a chip removal, the menu's Reset, `reset()` and the search box. The chips, the badge and the URL already show the new filters when it fires: call `detail.rollback()` if your request fails.
 
+The event fires on the filter and bubbles, so a form that does not hold the filter never hears it. Listen on `document` and check `detail.form`. In `detail.criteria`, each group in `filters` is an array of values, even with one value picked. A range is one `min-max` string in it. The search term is the `search` string.
+
 <script type="text/html" id="filter-request-js" data-canon data-lang="js" data-preview="none">
 var form = document.getElementById('services-form');
-form.addEventListener('nds:filterFormAjax', function (e) {
+document.addEventListener('nds:filterFormAjax', function (e) {
+  if (e.detail.form !== form) return;
   e.preventDefault();
   NDS.request('/api/services', { method: 'POST', body: new FormData(form), json: true })
     .then(function (res) { renderServices(res.data.records); })
@@ -515,7 +518,7 @@ A filter also drives the [Sort](../components/sort) triggers that carry its `dat
             <i class="hgi hgi-stroke hgi-link-circle-02"></i>
             <span class="nds-label">Shareable URL State</span>
           </span>
-          <p class="nds-item-desc">The search term and the applied values stay in the URL query, so a reload or a shared link opens the same list. A checkbox or switch group joins its values with commas, so its values must not contain one.</p>
+          <p class="nds-item-desc">The search term and the applied values stay in the URL query, so a reload or a shared link opens the same list. The search term's key is the search field's <code class="nds-inline-code lang-html">name</code>, or <code class="nds-inline-code lang-html">search</code> when it has none. A group's key is its <code class="nds-inline-code lang-html">data-filter</code> name. A checkbox or switch group joins its values with commas, so its values must not contain one.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
