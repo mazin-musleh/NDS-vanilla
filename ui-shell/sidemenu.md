@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:20 PM"
+last_edit: "10/10/2026 - 04:09 AM"
 ---
 
 <section id="sidemenuOverview" class="nds-content-section nds-doc-overview">
@@ -478,7 +478,7 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
     <div class="nds-section-body nds-prose" markdown="1">
 
 - Put one side menu on a page. The script uses the first one it finds.
-- Mark the current page's `li` with `data-state="active"`. It highlights the link, opens its groups, and names the top bar.
+- Mark the current page's `li` with `data-state="active"`. It highlights the link, opens its groups, and names the top bar. On a page that changes view without a load, move the mark to the new `li`: the menu follows.
 - Name each group by what its pages share. Do not mix pages of other topics in one group.
 - Use two levels for most sites. A third level hides pages two clicks deep.
 - Pick Top bar for a short list, and Slide-in for a long one that people scroll.
@@ -507,7 +507,7 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
 | `data-state="open"` | `button.nds-sidemenu-toggle` | The script sets it when the menu opens, and removes it after the close |
 | `hidden` | The menu button's `.nds-label` | The script sets it in slide-in mode, and removes it in top bar mode. Leave the label's text to the script: it writes the current page's name in it |
 | `data-state` | `nav.nds-drawer` in top bar mode | The script sets `open` when the menu opens, adds `closing` when it closes, and removes both after the close |
-| `data-state="active"` | The current page's `li` | Set it yourself. The drawer opens every group above it when it starts |
+| `data-state="active"` | The current page's `li` | Set it yourself. The drawer opens every group above it, and follows the mark when it moves |
 | `aria-expanded` | A group's `button` | Write `false` in the markup. The drawer sets `true` when the group opens, and `false` when it closes. See [Drawer](../components/drawer) |
 {: .nds-table .nds-responsive}
 

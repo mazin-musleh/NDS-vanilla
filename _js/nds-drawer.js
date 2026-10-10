@@ -15,7 +15,8 @@
  * Gotchas:
  *   - Opening a submenu closes its siblings — one open branch per level — unless always-open.
  *   - toggle() takes the BUTTON, not the <li>.
- *   - An <li> marked data-state="active" opens every ancestor branch at init.
+ *   - An <li> marked data-state="active" opens every ancestor branch at init; moving the
+ *     mark later (a client-side route) marks its button and opens its branch too.
  */
 /**
  * NDS Drawer Component
@@ -193,29 +194,50 @@
     // ACTIVE STATE MANAGEMENT
     // ==============================================
 
-    function initActiveStates(drawer) {
-        drawer.querySelectorAll('li[data-state~="active"]').forEach(activeItem => {
-            // Set active state on the item's own button for visual indicator
-            const activeBtn = activeItem.querySelector(':scope > .nds-btn');
-            if (activeBtn) setState(activeBtn, CONFIG.states.active);
+    // Marks the item's button and opens its closed ancestors: painted at once at init,
+    // through toggleSubmenu() later, so a moved mark animates and closes sibling branches.
+    function activateItem(drawer, activeItem, animate) {
+        const activeBtn = activeItem.querySelector(':scope > .nds-btn');
+        if (activeBtn) setState(activeBtn, CONFIG.states.active);
 
-            let parent = activeItem.closest('ul')?.closest('li');
-
-            while (parent && drawer.contains(parent)) {
-                if (!isOpen(parent)) {
-                    const btn = parent.querySelector(':scope > .nds-btn');
-                    const submenu = parent.querySelector(':scope > ul');
-
-                    setState(parent, CONFIG.states.open);
-                    if (btn) {
-                        NDS.aria.expanded(btn, true);
-                        setState(btn, CONFIG.states.active);
-                    }
-                    if (submenu) setState(submenu, CONFIG.states.open);
-                }
-                parent = parent.closest('ul')?.closest('li');
+        const closed = [];
+        let parent = activeItem.closest('ul')?.closest('li');
+        while (parent && drawer.contains(parent)) {
+            if (!isOpen(parent)) closed.unshift(parent);
+            parent = parent.closest('ul')?.closest('li');
+        }
+        closed.forEach(item => {
+            const btn = item.querySelector(':scope > .nds-btn');
+            const submenu = item.querySelector(':scope > ul');
+            if (animate) { if (btn && submenu) toggleSubmenu(btn); return; }
+            setState(item, CONFIG.states.open);
+            if (btn) {
+                NDS.aria.expanded(btn, true);
+                setState(btn, CONFIG.states.active);
             }
+            if (submenu) setState(submenu, CONFIG.states.open);
         });
+    }
+
+    function initActiveStates(drawer) {
+        drawer.querySelectorAll('li[data-state~="active"]').forEach(item => activateItem(drawer, item, false));
+    }
+
+    // A page that routes on the client moves the <li>'s active mark after init; the
+    // button and the branch follow. Idempotent, so the drawer's own open/close writes pass.
+    let watchingActive = false;
+    function watchActive() {
+        if (watchingActive) return;
+        watchingActive = true;
+        NDS.onAttrChange('.nds-drawer[data-nds-drawer-initialized] li', ['data-state'], items => items.forEach(item => {
+            const btn = item.querySelector(':scope > .nds-btn');
+            if (!btn) return;
+            if (hasState(item, CONFIG.states.active)) {
+                if (!hasState(btn, CONFIG.states.active)) activateItem(item.closest(CONFIG.selectors.drawer), item, true);
+            } else if (!isOpen(item) && hasState(btn, CONFIG.states.active)) {
+                clearButton(item, btn);
+            }
+        }));
     }
 
     // ==============================================
@@ -228,6 +250,7 @@
         initOpenState(drawer);
         initToggles(drawer);
         initActiveStates(drawer);
+        watchActive();
 
         drawer.setAttribute('data-nds-drawer-initialized', 'true');
     }

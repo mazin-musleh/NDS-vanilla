@@ -18,6 +18,7 @@
  *   - init() does not start the drawer: new markup needs NDS.Init.refresh().
  *   - .nds-top scrolls its bar to the top and locks the page before it opens.
  *   - A width change closes it.
+ *   - The top bar label is the active <li>'s label, and follows the mark when it moves.
  */
 // Side Menu Navigation
 (() => {
@@ -119,7 +120,7 @@
 
         const menuLabel = accMenu.querySelector('li[data-state~="active"] .nds-btn .nds-label')
             || accMenu.querySelector('.nds-drawer-list > li .nds-btn .nds-label');
-        if (menuLabel) labelSpan.textContent = menuLabel.textContent;
+        if (menuLabel && labelSpan.textContent !== menuLabel.textContent) labelSpan.textContent = menuLabel.textContent;
         // The label shows only on the top bar; the slide-in button is icon-only.
         labelSpan.hidden = !isTopMode;
     }
@@ -204,6 +205,9 @@
         }, { signal: abortController.signal });
         toggleBtn.removeAttribute('hidden');
         updateToggleLabel(accMenu, toggleBtn, isTopMode);
+        // The label follows an active mark a client-side route moves.
+        const offLabel = NDS.onAttrChange('.nds-sidemenu li', ['data-state'], () => updateToggleLabel(accMenu, toggleBtn, isTopMode));
+        abortController.signal.addEventListener('abort', offLabel);
         setupScrollPeek(toggleBtn, abortController);
 
         // Close on width change
