@@ -2,7 +2,7 @@
 layout: page
 title: NDS IQ
 since: "1.7.0"
-last_edit: "09/10/2026 - 08:05 PM"
+last_edit: "10/10/2026 - 04:53 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -78,7 +78,8 @@ sidemenu_mode: false
                 <table class="nds-table nds-responsive">
                     <thead><tr><th data-align="center">Revision</th><th>Highlights</th></tr></thead>
                     <tbody>
-                        <tr><td>v4.0</td><td>Rules only. The rules name no NDS file, class, or API, so a release can rename them without making the rules wrong. Each template release from 2.0 on ships <code class="nds-inline-code lang-html">NDS-INDEX.md</code>, a map from each need to that release's files, and the agent opens it before anything else. A template without the index gets revision v3.2 instead. The docs are the only copy source: the agent never copies markup from a built page and never uses a file path from memory. An update check also compares the installed rules file with the published one. A rules update never runs a template upgrade.</td></tr>
+                        <tr><td>v4.0</td><td>Rules only, with the facts in the template. The rules name no NDS file, class, or API, so a release can rename them without making the rules wrong. From 2.0 on, each template ships <code class="nds-inline-code lang-html">NDS-INDEX.md</code>, a map from each need to that release's files. The agent opens it before anything else. Some rules moved into the template's audit, which flags them on the page. It catches token overrides without a dark value, project CSS that reaches NDS elements, stretched images, invented classes, and missing component parts. The docs are the only copy source: the agent never copies markup from a built page and never uses a file path from memory. A template without the index gets revision v3.2 instead. An update check also compares the installed rules file with the published one, not only the runtime version. A rules update never runs a template upgrade.</td></tr>
+                        <tr><td>v3.2</td><td>The last revision for templates before 2.0, which ship no <code class="nds-inline-code lang-html">NDS-INDEX.md</code>. It is v3.1 with one change: a rules update installs nothing, and the agent reports that new rules come with a template upgrade. Once the template ships the index, the next update installs the current revision. This stops a loop: without it, an older project would install the newest rules, be sent back, and repeat on every update.</td></tr>
                         <tr><td>v3.1</td><td>The runtime script tags now come from the built page, not a list of file names. The rules stay correct on templates that load the accessibility panel on demand, and on older ones that still ship its tag.</td></tr>
                         <tr><td>v3.0</td><td>A 34% shorter read, organized around the work. The agent picks a work mode first, and each phase has entry and exit checks. A new table sets who decides what: the existing UI owns the content, the backend owns the data rules, and NDS owns the structure. The existing UI never limits NDS features, so a missing search or filter is added by default. Mobile checks set the page viewport, not the browser window. A page with an unmet check stays <code class="nds-inline-code lang-html">In Progress</code>.</td></tr>
                         <tr><td>v2.2</td><td>Better support for apps that render in the browser, such as React or Vue apps. The mount element and every layout class must be correct in the first HTML, before the framework runs. Every page sets both language and direction. When the agent's context is summarized, the agent reads the rules again. A matched source keeps all its parts.</td></tr>
