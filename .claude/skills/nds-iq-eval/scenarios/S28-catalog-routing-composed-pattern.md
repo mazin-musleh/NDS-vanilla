@@ -11,4 +11,4 @@
   - MUST NOT: hand-compose from Tables + Filter + Pagination + Selection + Export as separate parts; conclude NDS has no data grid; match on titles alone; hold 8,000 rows client-side.
   - cite: "Match by `use_when` across the template, example, and component catalogs, never by title" / index: "Which component, example, or template fits" / examples.yml Manage Records `use_when`: "the closest fit for any data grid, data table, CRUD screen, admin list, records management, or back-office table request"
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).
+- baseline: SOFT 2026-10-10 scoped v4 rig5-gaps (Sonnet 5.5): "fetch once" for 8,000 rows when the API returns the full set (Data scale sentence) vs the rubric's server threshold; rule untouched by this batch, PASS on the morning full run. WATCH client-scale ×1 (2026-10-10).

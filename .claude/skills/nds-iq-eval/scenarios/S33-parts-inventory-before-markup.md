@@ -12,4 +12,4 @@
   - cite: "list every UI part, and match each against the component catalog" / "never how they are presented, and never a component's feature set"
 - grading note: read-dependent — scoped or solo runs only. Owner call 2026-10-09: the legacy UI never sets presentation (§UI defaults, from the 2026-08-22 six-run facet fix), so the source's Filter dropmenu wins; the 2026-08-08 "legacy shape wins" reading is retired.
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).
+- baseline: PASS 2026-10-10 scoped v4 rig5-gaps (Sonnet 5.5).

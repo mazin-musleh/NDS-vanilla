@@ -11,4 +11,4 @@
   - MUST NOT: move any row without its own reference comparison to `Awaiting Verification`; count Catalog's comparison for Events or Contact because they share its archetype; hand a missing reference comparison to the dev as a "dev check" or checklist item while the headless harness works.
   - cite: "Record under the plan row … the built reference page and the inspected desktop screenshot" / "An unmet item keeps the row `In Progress`" / "`Awaiting Verification` means every agent-owned check passed with its evidence recorded."
 - floor: PASS 2026-10-10 (claude-sonnet-5-5), FREE: with the stub the runner kept the four uncompared rows open and named the comparisons as its own next work from judgment alone.
-- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).
+- baseline: PASS 2026-10-10 scoped v4 rig5-gaps (Sonnet 5.5).
