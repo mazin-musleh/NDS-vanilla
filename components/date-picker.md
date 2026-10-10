@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 03:29 PM"
+last_edit: "10/10/2026 - 04:11 AM"
 ---
 
 <section id="datePickerOverview" class="nds-content-section nds-doc-overview">
@@ -135,7 +135,7 @@ The field sends the date as the user sees it, such as `15/09/1447`. To send the 
 ### Date Bounds
 {: .nds-block-title}
 
-`data-min-date` and `data-max-date` on `.nds-date-input` set the first and the last day the user can pick. Write them in the field's format and calendar. In a `DD/MM/YYYY` field, `data-min-date="01/01/2026" data-max-date="31/12/2026"` allows only 2026. A Month picker takes a bound such as `01/2026`, and a Hijri field takes a Hijri date such as `29/12/1448`. Days, months and years outside the bounds are off, and the arrows stop at them. When today is outside the bounds, the calendar opens on the nearest bound.
+`data-min-date` and `data-max-date` on `.nds-date-input` set the first and the last day the user can pick. Write them in the field's format and calendar. In a `DD/MM/YYYY` field, `data-min-date="01/01/2026" data-max-date="31/12/2026"` allows only 2026. A Month picker takes a bound such as `01/2026`, and a Hijri field takes a Hijri date such as `29/12/1448`. `today` is the current day in the site's timezone: `data-min-date="today"` blocks past days, and `data-max-date="today"` blocks future ones. Days, months and years outside the bounds are off, and the arrows stop at them. When today is outside the bounds, the calendar opens on the nearest bound.
 
 ### Year List
 {: .nds-block-title}
@@ -257,7 +257,7 @@ The picker checks the field at each `change`, typed text included. A date that d
 | `data-state~="disabled"`, `data-state~="readonly"` | `.nds-date-picker` | Set it yourself. See Disabled and Read-only |
 | `data-state~="open"` | `.nds-date-picker` | The script sets it when the calendar opens, and removes it when the calendar closes. No NDS style reads it: it is for your CSS |
 | `data-picker-mode` | `.nds-date-picker` | The script writes `day`, `month` or `year` from `data-format` when the field starts. The CSS reads it to show the month or the year grid |
-| `data-min-date`, `data-max-date` | `.nds-date-input` | The first and the last day the user can pick, in the field's format and calendar. See Date Bounds |
+| `data-min-date`, `data-max-date` | `.nds-date-input` | The first and the last day the user can pick, in the field's format and calendar, or `today`. See Date Bounds |
 | `data-year-before`, `data-year-after` | `.nds-date-input` | How many years before and after this year the year menu lists. The defaults are `5` and `0`. See Year List |
 | `data-lang` | `.nds-date-input` | The language of the calendar text, such as `ar` or `en`. Without it, the picker reads the input's `lang`, then the page language. See [Internationalization](../core/i18n) |
 | `data-converted-date` | `.nds-date-input` | The script writes the date in the other calendar, in the field's format, when the user presses Save, and when the calendar opens on a field that holds a date. Clear, and Save with no date, remove it. A typed date does not update it |

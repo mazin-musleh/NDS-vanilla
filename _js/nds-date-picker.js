@@ -23,7 +23,7 @@
  *                                a single date fills every one
  *   .date-picker-toggle:         the button that opens the calendar (none: a click on the
  *                                input opens it)
- *   on the .nds-date-input:      data-min-date · data-max-date · data-lang
+ *   on the .nds-date-input:      data-min-date · data-max-date (a date, or `today`) · data-lang
  *                                data-year-before · data-year-after
  *   written by the picker:       data-picker-mode (container) · data-converted-date (input)
  * Gotchas:
@@ -517,8 +517,14 @@
             var calendar = CalendarConfig[calendarType];
             var minStr = this.elements.input.getAttribute('data-min-date');
             var maxStr = this.elements.input.getAttribute('data-max-date');
-            var minDate = minStr ? calendar.parseDate(minStr, format) : null;
-            var maxDate = maxStr ? calendar.parseDate(maxStr, format) : null;
+            // 'today' round-trips through the format, so it carries the calendar's fields like a written date.
+            // ponytail: resolved once at init; a tab left open past midnight keeps the old day until reinit.
+            var bound = function (s) {
+                if (!s) return null;
+                return calendar.parseDate(s === 'today' ? calendar.formatDate(NDS.date.today(), format) : s, format);
+            };
+            var minDate = bound(minStr);
+            var maxDate = bound(maxStr);
 
             // Open at the nearest bound when today falls outside [min, max] —
             // otherwise the initial month is entirely disabled.
