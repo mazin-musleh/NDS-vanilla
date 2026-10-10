@@ -53,11 +53,11 @@ hero_float_actions:
                                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                         aria-controls="panel-hajj-apply-1" id="tab-hajj-apply-1">
-                                        <span class="nds-tab-label">HTML</span>
+                                        <span class="nds-label">HTML</span>
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-hajj-apply-2" id="tab-hajj-apply-2">
-                                        <span class="nds-tab-label">With overrides</span>
+                                        <span class="nds-label">With overrides</span>
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
@@ -115,11 +115,11 @@ hero_float_actions:
                                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                         aria-controls="panel-hajj-manual-1" id="tab-hajj-manual-1">
-                                        <span class="nds-tab-label">CSS file</span>
+                                        <span class="nds-label">CSS file</span>
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-hajj-manual-2" id="tab-hajj-manual-2">
-                                        <span class="nds-tab-label">Hero markup</span>
+                                        <span class="nds-label">Hero markup</span>
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
