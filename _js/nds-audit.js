@@ -193,6 +193,19 @@
         });
     } });
 
+    // A swapped picture that keeps the template's width/height is stretched, or reserves the wrong space.
+    // ponytail: SVG skipped — its natural size is the browser's 300×150 default when it has none.
+    rule({ id: 'img-size', group: 'page', check(ctx) {
+        ctx.find('img[width][height]').forEach(img => {
+            if (!img.complete || !img.naturalWidth || /\.svg([?#]|$)/i.test(img.currentSrc)) return;
+            const w = +img.getAttribute('width'), h = +img.getAttribute('height');
+            if (!w || !h || Math.abs((w / h) / (img.naturalWidth / img.naturalHeight) - 1) < 0.05) return;
+            ctx.report(img, `<img width="${w}" height="${h}"> shows a ${img.naturalWidth}×${img.naturalHeight} picture: the shapes differ, so it stretches or the layout jumps when it loads.`,
+                'Set width and height to the picture\'s real pixel size.');
+        });
+    } });
+
+
     // A browser date or time field skips the NDS picker: no Hijri, no site format, its own look.
     rule({ id: 'native-date-time', group: 'page', check(ctx) {
         ctx.find('input[type="date"], input[type="month"], input[type="week"], input[type="datetime-local"], input[type="time"]').forEach(el => {
@@ -358,20 +371,101 @@
     // The site's own sheets: NDS's carry the deprecated aliases on purpose, and a cross-origin
     // sheet throws on cssRules.
     const OWN = /\/(nds[-.][\w.-]*|hgi-[\w-]*)\.css(\?|#|$)|\/docs-assets\//;
+    // NDS's inline <style>s: an event pack's sheet, and the head's fold copy.
+    // ponytail: the fold is known by its topbar reservation; mark the tag if that ever moves.
+    const ownStyle = (n) => n?.tagName === 'STYLE' && (n.hasAttribute('data-nds-event-style') || n.textContent.includes(':where(.nds-topbar)'));
+    const walkRules = (sheet, fn) => {
+        const walk = (list) => { for (const r of list) { if (r.selectorText) fn(r); if (r.cssRules) walk(r.cssRules); } };
+        try { walk(sheet.cssRules); return true; } catch (e) { return false; /* cross-origin */ }
+    };
     function siteRules() {
         const out = [];
-        const walk = (list, where) => {
-            for (const r of list) {
-                if (r.selectorText != null) out.push({ sel: r.selectorText, style: r.style, where });
-                if (r.cssRules) walk(r.cssRules, where);
-            }
-        };
         for (const sheet of document.styleSheets) {
-            if (sheet.href && OWN.test(sheet.href)) continue;
-            try { walk(sheet.cssRules, sheet.href || 'an inline <style>'); } catch (e) { /* cross-origin */ }
+            if ((sheet.href && OWN.test(sheet.href)) || ownStyle(sheet.ownerNode)) continue;
+            const where = sheet.href || 'an inline <style>';
+            walkRules(sheet, r => out.push({ sel: r.selectorText, style: r.style, where }));
         }
         return out;
     }
+
+    // A selector list split at its top-level commas only: :is(a, b) stays one item.
+    const selItems = (sel) => {
+        const out = [];
+        let depth = 0, from = 0;
+        for (let i = 0; i < sel.length; i++) {
+            const c = sel[i];
+            if (c === '(' || c === '[') depth++;
+            else if (c === ')' || c === ']') depth--;
+            else if (c === ',' && !depth) { out.push(sel.slice(from, i).trim()); from = i + 1; }
+        }
+        out.push(sel.slice(from).trim());
+        return out;
+    };
+    const DARK_MODE = /^:root\[data-theme~?="dark"\]/;
+    const DARK_AREA = /\[data-theme~?="dark"\]:not\(:root\)/;
+    const STATE = /^(--[\w-]+)-(default|hovered|pressed|selected|focused|disabled)$/;
+    const customOnly = (style) => [...style].every(p => p.startsWith('--'));
+
+    // A site rule on bare tags (body, h1, a, input) reaches every NDS element on the page.
+    rule({ id: 'global-element-css', group: 'page', check(ctx) {
+        const bySheet = new Map();
+        for (const { sel, style, where } of siteRules()) {
+            if (customOnly(style)) continue;
+            const bare = selItems(sel).filter(s => !/[.#]|\[(data-|class|id)\b|:root/.test(s));
+            if (bare.length) (bySheet.get(where) || bySheet.set(where, []).get(where)).push(...bare);
+        }
+        bySheet.forEach((sels, where) => ctx.report(null,
+            `${where} styles bare elements (${[...new Set(sels)].slice(0, 4).join(', ')}${sels.length > 4 ? ', …' : ''}): ${sels.length} selector${sels.length > 1 ? 's' : ''} that reach${sels.length > 1 ? '' : 'es'} every NDS element on the page.`,
+            'Scope them under a project class, or keep the sheet off NDS pages.', undefined, sels.length));
+    } });
+
+    // A token override follows the tokens doc: every state of a family, a dark value when NDS has one,
+    // and the dark-area selector on both rules. Judged only when NDS's own sheets are readable.
+    rule({ id: 'token-dark', group: 'page', docs: 'components/tokens.html', check(ctx) {
+        const nds = { light: new Set(), dark: new Set(), area: new Set() };
+        let readable = false;
+        for (const sheet of document.styleSheets) {
+            if (!sheet.href || !OWN.test(sheet.href)) continue;
+            readable = walkRules(sheet, r => {
+                const it = selItems(r.selectorText);
+                const dark = it.some(s => DARK_MODE.test(s)), root = it.includes(':root'), area = it.some(s => DARK_AREA.test(s));
+                if (!dark && !root) return;
+                for (const p of r.style) if (p.startsWith('--')) { nds[dark ? 'dark' : 'light'].add(p); if (area) nds.area.add(p); }
+            }) || readable;
+        }
+        if (!readable) return;
+        const set = new Map();   // name → { light, dark, lightArea, darkArea }
+        for (const { sel, style } of siteRules()) {
+            const it = selItems(sel);
+            const dark = it.some(s => DARK_MODE.test(s)), root = it.includes(':root'), area = it.some(s => DARK_AREA.test(s));
+            if (!dark && !root) continue;
+            for (const p of style) {
+                if (!nds.light.has(p) && !nds.dark.has(p)) continue;
+                const s = set.get(p) || set.set(p, {}).get(p);
+                if (dark) { s.dark = true; s.darkArea ||= area; } else { s.light = true; s.lightArea ||= area; }
+            }
+        }
+        const list = (names) => names.slice(0, 5).join(', ') + (names.length > 5 ? ` and ${names.length - 5} more` : '');
+        const noDark = [...set].filter(([p, s]) => s.light && !s.dark && nds.dark.has(p)).map(([p]) => p);
+        if (noDark.length) ctx.report(null, `token override with no dark value: ${list(noDark)}. Dark mode shows the NDS value.`,
+            'Add a dark rule for each, as the tokens doc\'s Override Scope shows.', undefined, noDark.length);
+        if (document.querySelector('[data-theme~="dark"]:not(html)')) {
+            const noArea = [...set].filter(([p, s]) => nds.area.has(p) && ((s.light && !s.lightArea) || (s.dark && !s.darkArea))).map(([p]) => p);
+            if (noArea.length) ctx.report(null, `token override that skips dark areas: ${list(noArea)}. A dark area declares every token again, so it keeps the NDS value.`,
+                'List [data-theme~="dark"]:not(:root) in both override rules, as the tokens doc\'s Override Scope shows.', undefined, noArea.length);
+        }
+        const missing = [];
+        set.forEach((s, p) => {
+            const m = p.match(STATE);
+            if (!m) return;
+            for (const st of ['default', 'hovered', 'pressed', 'selected', 'focused', 'disabled']) {
+                const sib = `${m[1]}-${st}`;
+                if (nds.light.has(sib) && !set.has(sib) && !missing.includes(sib)) missing.push(sib);
+            }
+        });
+        if (missing.length) ctx.report(null, `token override sets part of a state family: ${list(missing)} still hold the NDS value, so the states no longer match.`,
+            'Set every state of the family.', undefined, missing.length);
+    } });
     // Generic classes the site styles itself are the site's own (a Tailwind .sr-only). An nds- or hgi- name never is.
     const siteClasses = (sheetRules) => new Set(sheetRules.flatMap(r => (r.sel.match(/\.(-?[_a-zA-Z][\w-]*)/g) || []).map(c => c.slice(1)))
         .filter(c => !/^(nds|hgi)-/.test(c)));

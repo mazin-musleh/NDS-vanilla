@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:37 AM"
+last_edit: "10/10/2026 - 02:54 PM"
 ---
 
 <section id="auditOverview" class="nds-content-section nds-doc-overview">
@@ -98,9 +98,14 @@ Each finding prints one line that starts with `[NDS.Audit]` and its rule id, the
 ### Migration Checks
 {: .nds-block-title}
 
-`migration-markup` checks the classes, attributes, ids and inline custom properties on the page, and the window settings NDS read before. `migration-css` checks the site's own style sheets, inline `<style>` included. A name used on many elements is one finding, with the count and the first element.
+`migration-markup` checks the classes, attributes, ids and inline custom properties on the page, and the window settings NDS read before. `migration-css` checks the site's own CSS. A name used on many elements is one finding, with the count and the first element.
 
-A generic name, such as `sr-only`, counts only inside NDS markup. When the site's own CSS styles that class, the audit treats it as the site's class and skips it. The audit never reads the NDS style sheets, or a sheet from another origin.
+A generic name, such as `sr-only`, counts only inside NDS markup. When the site's own CSS styles that class, the audit treats it as the site's class and skips it.
+
+### Site CSS
+{: .nds-block-title}
+
+`migration-css`, `global-element-css` and `token-dark` check only the site's own style sheets, inline `<style>` included. They skip the NDS style sheets, the NDS `<style>` in the head, an event pack's style and any sheet from another origin. `token-dark` reads the NDS style sheets only to learn which tokens exist and which have a dark value. When those sheets come from another origin, it checks nothing.
 
 ### Limits
 {: .nds-block-title}
@@ -144,7 +149,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
             <i class="hgi hgi-stroke hgi-paint-brush-01"></i>
             <span class="nds-label">Your CSS Too</span>
           </span>
-          <p class="nds-item-desc">Old class names and custom properties in your own style sheets show, with the sheet and the rule that holds them.</p>
+          <p class="nds-item-desc">Old class names and custom properties in your own style sheets show, with the sheet and the rule that holds them. So do rules on bare elements and token overrides with no dark value.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -202,6 +207,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `legacy-library` | page | warn | A common legacy UI library loaded on the page, such as jQuery, Select2, DataTables, Bootstrap CSS or Font Awesome |
 | `bundle-tag` | page | warn | A tag in the page for a bundle the loader adds itself, such as `nds-delegated.min.js` |
 | `inline-defer` | page | warn | An inline `<script defer>`: without `src`, `defer` does nothing and the code runs before NDS loads |
+| `img-size` | page | warn | An `<img>` whose `width` and `height` give a different shape from the picture, so it stretches or the layout jumps. It skips SVG images and images that have not loaded |
 | `native-date-time` | page | warn | A browser date or time field (`type="date"`, `month`, `week`, `datetime-local`, `time`) where the Date Picker or Time Picker belongs |
 | `toolbar-part` | structure | warn | An `nds-toolbar-*` part (row, start, end, text) outside a `.nds-toolbar`: it still lays out as a bar, but stacked rows touch and the bar loses its gap. One finding per bar |
 | `i18n-pack` | i18n | error | The language file of the page did not load |
@@ -214,6 +220,8 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `aria-controls` | structure | warn | An `aria-controls` id that no element has, inside or outside a `<template>` |
 | `sort-target-owned` | structure | warn | A `data-sort-target` on a list that a filter or a table already sorts |
 | `stepper-submit` | structure | warn | `data-stepper-control` on a submit button, where it does nothing |
+| `global-element-css` | page | warn | A rule in the site's own CSS on bare elements, such as `body`, `h1` or `a`: it reaches every NDS element on the page. One finding per sheet. It skips a rule that sets only custom properties |
+| `token-dark` | page | warn | A token override in the site's own CSS that has no dark value where NDS has one, sets only some states of a family, or misses the dark-area selector on a page with dark areas. See [Tokens](../components/tokens) |
 | `migration-markup` | migration | error, warn, info | A renamed or removed name (error) or a deprecated one (warn) in the markup, or an old window setting |
 | `migration-css` | migration | error, warn, info | The same names in the site's own CSS. Setting a custom property that NDS never read is info |
 {: .nds-table .nds-responsive}
