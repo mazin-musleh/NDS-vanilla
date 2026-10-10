@@ -48,7 +48,7 @@
 
 - title: "Alert"
   description: "Contextual messages for status, warnings, and notifications"
-  use_when: "An inline status message sitting in the page: success, error, warning, or info banner, form-level feedback, a dismissible notice. For a blocking message over the page use Modal."
+  use_when: "An inline status message sitting in the page: success, error, warning, or info banner, form-level feedback, a dismissible notice. For a blocking message over the page use Modal. For a page or view the user cannot use (sign in first, no permission, not found, or a load that failed with nothing else to show) use Status Section, never an alert in its place."
   icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
   category: "UI"
   tags: ["JS", "CSS", "API"]
@@ -812,7 +812,7 @@
 
 - title: "Status Section"
   description: "Whole-page or inline outcome message with a status icon, a title, and one action"
-  use_when: "Report one outcome on its own page or as a section: page not found, 404, 500, access denied, request submitted, thank-you or confirmation page, payment failed, order received, form sent. A centered icon or illustration over a title, a short message, and a way out. For a message inside a form or a page region use Alert; for a status icon on its own use Feedback Icons."
+  use_when: "Report one outcome on its own page or as a section: page not found, 404, 500, access denied, no permission, sign in required, request submitted, thank-you or confirmation page, payment failed, order received, form sent. A centered icon or illustration over a title, a short message, and a way out. For a message inside a form or a page region use Alert; for a status icon on its own use Feedback Icons."
   icon: '<i class="hgi hgi-stroke hgi-alert-circle"></i>'
   category: "Layout"
   tags: ["CSS"]

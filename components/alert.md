@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.0"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 08:11 PM"
 ---
 
 <section id="alert-overview" class="nds-content-section nds-doc-overview">
@@ -29,6 +29,7 @@ Write the HTML for an alert that is in the page when it loads. Call `NDS.Alert.c
 Pick another component when:
 
 - the user must make a decision before they continue: [Modal](../components/modal). An alert never blocks the page.
+- the page or view cannot show its content: the user must sign in, has no permission, the item is not found, or the load failed with nothing else to show: [Status Section](../layout/status-section)
 
 </div>
   </div>
@@ -258,6 +259,7 @@ A toast with a `duration` closes itself after that many milliseconds, and a ring
 - Keep the description to one or two sentences. For more, add a link to a detail page.
 - Add actions when the user must respond, such as retry, undo or update. Do not add an action that only closes the alert; the close button does that.
 - Add a copy action for text the user will paste somewhere else, such as a code, a reference number or an error log.
+- Do not use an alert in place of a page the user cannot use, such as a sign-in gate or an access-denied page. Show a [Status Section](../layout/status-section) instead: there, the message is the page.
 - Do not use a toast for a critical error or a message the user must act on. A toast can close before the user reads it.
 - Give a toast a `duration` of 3000 to 5000 ms. Under 2000 ms is too short to read.
 - Prefer the logical toast positions (`-start`, `-end`), which follow the text direction. Use `-left` and `-right` only when the toast must stay at one physical edge.

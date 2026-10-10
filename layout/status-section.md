@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.10.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 08:11 PM"
 ---
 
 <section id="status-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "10/10/2026 - 05:28 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A status section is a content section or a hero section with the `nds-status-section` class. It stacks a feedback chip or an illustration, a title, a description and an action row in one centered column. Use it as a whole page, such as an error page or a confirmation page, or as one section of a longer page. It needs no JavaScript.
+A status section is a content section or a hero section with the `nds-status-section` class. It stacks a feedback chip or an illustration, a title, a description and an action row in one centered column. Use it as a whole page, such as an error page or a confirmation page, or as one section of a longer page. It is also the view a user cannot use: sign in first, no permission, or an item that is not found. It needs no JavaScript.
 
 Pick another component when:
 
