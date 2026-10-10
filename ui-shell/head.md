@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:30 PM"
+last_edit: "10/10/2026 - 02:59 AM"
 ---
 
 <section id="headOverview" class="nds-content-section nds-doc-overview">
@@ -156,9 +156,9 @@ Copy the head as one block. The JS Library tab holds the main script: put it jus
 The head above is the gated setup. The browser paints the gate's shell at once, while the critical CSS downloads without blocking. Once the main CSS applies, the loader sets `data-nds-loaded` on `<html>`, and the page shows in its final layout. NDS needs JavaScript: without it, no NDS style applies, and the gate keeps the content hidden.
 
 ### Blocking Critical CSS
-{: .nds-block-title}
+{: .nds-block-title #blocking-css}
 
-Use a blocking stylesheet when a strict Content Security Policy cannot grant a nonce or a hash to the inline style block. Delete the `<style>` block. Replace the critical CSS preload with `<link rel="stylesheet" href="assets/css/nds.critical.min.css?ver=…">`. The first paint waits for that file, and it holds the same gate. Never delete the style block alone: the page then paints raw HTML first, and jumps when the critical CSS lands.
+The last choice under a strict Content Security Policy, after a nonce and a hash (see [Content Security Policy](#csp)). Use it only when the policy can grant neither to the inline style block. Delete the `<style>` block. Replace the critical CSS preload with `<link rel="stylesheet" href="assets/css/nds.critical.min.css?ver=…">`. The first paint waits for that file, and it holds the same gate. Never delete the style block alone: the page then paints raw HTML first, and jumps when the critical CSS lands.
 
 ### Framework Navigation
 {: .nds-block-title}
@@ -281,7 +281,11 @@ The loader's window settings (`NDSInitConfig`, `NDS_ASSETS_PATH`) are on [Refres
 ### Content Security Policy
 {: .nds-block-title #csp}
 
-A strict policy blocks inline code, so the gate and the inline script each need a nonce or a hash. Prefer a nonce when your server renders each response. Use a hash only on a static host.
+A strict policy blocks inline code, so the gate and the inline script each need a grant. Pick the first that fits:
+
+1. **A nonce**, when your server builds each page and can write a new random value into it.
+2. **A hash**, when the page is a plain file, even one your own server sends. Add the SHA-256 of the gate and of the inline script: one edit to the policy.
+3. **A blocking stylesheet**, only when the policy can take neither. The first paint waits for the critical CSS. See [Blocking Critical CSS](#blocking-css).
 
 | Part | Needs |
 |---|---|
@@ -320,7 +324,7 @@ Put the same value on the gate, the inline script and the main script:
 
 Your server makes a new random value for each response: a fixed value gives an attacker the same permission as your own code. Under a policy with no `'self'` in `script-src`, the main script needs the value too. Without it, the bundles the loader adds are blocked, and their components never start.
 
-**No server?** Use a hash: the SHA-256 of the bytes between the tags, never the tags, in base64. It covers those bytes exactly, indentation and line endings included. A file saved with CRLF line endings hashes differently from the same file with LF, and a formatter or minifier breaks the match too. When the policy blocks a block, the browser prints the hash it expected in the console error. Add that hash to the policy as `'sha256-…'`. Do it again whenever anything edits the block.
+**The hash** is the SHA-256 of the bytes between the tags, never the tags, in base64. It covers those bytes exactly, indentation and line endings included. A file saved with CRLF line endings hashes differently from the same file with LF, and a formatter or minifier breaks the match too. When the policy blocks a block, the browser prints the hash it expected in the console error. Add that hash to the policy as `'sha256-…'`. Do it again whenever anything edits the block.
 
 A policy that allows no injected scripts can still run NDS: add each bundle's own `<script>` tag with its nonce or `integrity`. The loader skips a bundle that already has a tag.
 
