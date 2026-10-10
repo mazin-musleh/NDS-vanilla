@@ -121,46 +121,46 @@ bundle_sizes:
             <p class="nds-section-brief">DGA page templates as working code.</p>
             <p class="nds-section-description">Components follow the DGA design tokens, typography, spacing, and interaction patterns. The templates below cover common government service screens. Copy one, add your content, and adapt it to your project.</p>
         </div>
-        <div class="nds-section-body nds-max-width">
-            <div class="nds-block">
-                <div class="nds-swiper" data-swiper-loop style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:0px">
-                    <div class="nds-swiper-wrapper">
-                        {% for tpl in site.data.content.templates %}
-                        <div class="nds-swiper-slide">
-                            <div class="nds-card nds-stroke nds-shadow">
-                                <div class="nds-card-header">
-                                    <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-circle nds-xl">
-                                            {{ tpl.icon }}
-                                        </span>
-                                    </div>
+    </div>
+    <div class="nds-section-body nds-max-width">
+        <div class="nds-block">
+            <div class="nds-swiper" data-swiper-loop style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:0px">
+                <div class="nds-swiper-wrapper">
+                    {% for tpl in site.data.content.templates %}
+                    <div class="nds-swiper-slide">
+                        <div class="nds-card nds-stroke nds-shadow">
+                            <div class="nds-card-header">
+                                <div class="nds-card-featured-icon">
+                                    <span class="nds-featured-icon nds-circle nds-xl">
+                                        {{ tpl.icon }}
+                                    </span>
                                 </div>
-                                <div class="nds-card-content">
-                                    <div class="nds-card-text">
-                                        <span class="nds-card-title">{{ tpl.title }}</span>
-                                        <p class="nds-card-description">{{ tpl.description }}</p>
-                                    </div>
-                                </div>
-                                {% if tpl.url %}
-                                <div class="nds-card-actions">
-                                    <a href="{{ tpl.url | relative_url }}" class="nds-btn nds-primary">
-                                        <span class="nds-label">View Template</span>
-                                    </a>
-                                </div>
-                                {% endif %}
                             </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-title">{{ tpl.title }}</span>
+                                    <p class="nds-card-description">{{ tpl.description }}</p>
+                                </div>
+                            </div>
+                            {% if tpl.url %}
+                            <div class="nds-card-actions">
+                                <a href="{{ tpl.url | relative_url }}" class="nds-btn nds-primary">
+                                    <span class="nds-label">View Template</span>
+                                </a>
+                            </div>
+                            {% endif %}
                         </div>
-                        {% endfor %}
                     </div>
-                    <div class="nds-swiper-navigation" hidden>
-                        <div class="nds-swiper-buttons">
-                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button"
-                                aria-label="Previous template"></button>
-                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button"
-                                aria-label="Next template"></button>
-                        </div>
-                        <div class="nds-swiper-pagination"></div>
+                    {% endfor %}
+                </div>
+                <div class="nds-swiper-navigation" hidden>
+                    <div class="nds-swiper-buttons">
+                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button"
+                            aria-label="Previous template"></button>
+                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button"
+                            aria-label="Next template"></button>
                     </div>
+                    <div class="nds-swiper-pagination"></div>
                 </div>
             </div>
         </div>
@@ -173,56 +173,56 @@ bundle_sizes:
             <h2 class="nds-section-title">Real-World Examples</h2>
             <p class="nds-section-description">{{ site.data.content.examples | size }} full pages that show NDS components working together in government services.</p>
         </div>
-        <div class="nds-section-body  nds-max-width">
-            <div class="nds-block">
-                <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
-                    <div class="nds-swiper-wrapper">
-                        {% for ex in site.data.content.examples %}
-                        <div class="nds-swiper-slide">
-                            <div class="nds-card nds-stroke nds-shadow">
-                                <div class="nds-card-header">
-                                    <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-circle nds-xl">
-                                            {{ ex.icon }}
-                                        </span>
-                                    </div>
+    </div>
+    <div class="nds-section-body  nds-max-width">
+        <div class="nds-block">
+            <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
+                <div class="nds-swiper-wrapper">
+                    {% for ex in site.data.content.examples %}
+                    <div class="nds-swiper-slide">
+                        <div class="nds-card nds-stroke nds-shadow">
+                            <div class="nds-card-header">
+                                <div class="nds-card-featured-icon">
+                                    <span class="nds-featured-icon nds-circle nds-xl">
+                                        {{ ex.icon }}
+                                    </span>
                                 </div>
-                                <div class="nds-card-content">
-                                    <div class="nds-card-text">
-                                        <span class="nds-card-title">{{ ex.title }}</span>
-                                        <p class="nds-card-description nds-truncate" style="--truncate: 2;">{{ ex.description }}</p>
-                                    </div>
-                                    <div class="nds-card-tags">
-                                        <span class="nds-tag nds-blue nds-sm">
-                                            <span class="nds-label">{{ ex.category }}</span>
-                                        </span>
-                                        {% for tag in ex.tags %}
-                                        <span class="nds-tag nds-gray nds-sm">
-                                            <span class="nds-label">{{ tag }}</span>
-                                        </span>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                                {% if ex.url %}
-                                <div class="nds-card-actions">
-                                    <a href="{{ ex.url | relative_url }}" class="nds-btn nds-primary">
-                                        <span class="nds-label">View Page</span>
-                                    </a>
-                                </div>
-                                {% endif %}
                             </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-title">{{ ex.title }}</span>
+                                    <p class="nds-card-description nds-truncate" style="--truncate: 2;">{{ ex.description }}</p>
+                                </div>
+                                <div class="nds-card-tags">
+                                    <span class="nds-tag nds-blue nds-sm">
+                                        <span class="nds-label">{{ ex.category }}</span>
+                                    </span>
+                                    {% for tag in ex.tags %}
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label">{{ tag }}</span>
+                                    </span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% if ex.url %}
+                            <div class="nds-card-actions">
+                                <a href="{{ ex.url | relative_url }}" class="nds-btn nds-primary">
+                                    <span class="nds-label">View Page</span>
+                                </a>
+                            </div>
+                            {% endif %}
                         </div>
-                        {% endfor %}
                     </div>
-                    <div class="nds-swiper-navigation" hidden>
-                        <div class="nds-swiper-buttons">
-                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button"
-                                aria-label="Previous example"></button>
-                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button"
-                                aria-label="Next example"></button>
-                        </div>
-                        <div class="nds-swiper-pagination"></div>
+                    {% endfor %}
+                </div>
+                <div class="nds-swiper-navigation" hidden>
+                    <div class="nds-swiper-buttons">
+                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button"
+                            aria-label="Previous example"></button>
+                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button"
+                            aria-label="Next example"></button>
                     </div>
+                    <div class="nds-swiper-pagination"></div>
                 </div>
             </div>
         </div>
@@ -235,79 +235,79 @@ bundle_sizes:
             <h2 class="nds-section-title">Event Themes</h2>
             <p class="nds-section-description">Theme packs for national occasions. One script tag applies a theme to the whole site. Remove the tag to restore the default.</p>
         </div>
-        <div class="nds-section-body  nds-max-width">
-            <div class="nds-block">
-                <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:20px">
-                    <div class="nds-swiper-wrapper">
-                        {% for ev in site.data.content.events %}
-                        <div class="nds-swiper-slide">
-                            <div class="nds-card nds-stroke nds-shadow">
-                                <div class="nds-card-header">
-                                    {% if ev.thumbnail %}
-                                    <div class="nds-card-image">
-                                        <img data-src="{{ ev.thumbnail | relative_url }}" width="400" height="200"
-                                            alt="{{ ev.title }} theme preview" decoding="async">
-                                    </div>
-                                    {% else %}
-                                    <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-circle nds-xl">
-                                            {{ ev.icon }}
-                                        </span>
-                                    </div>
-                                    {% endif %}
+    </div>
+    <div class="nds-section-body  nds-max-width">
+        <div class="nds-block">
+            <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:20px">
+                <div class="nds-swiper-wrapper">
+                    {% for ev in site.data.content.events %}
+                    <div class="nds-swiper-slide">
+                        <div class="nds-card nds-stroke nds-shadow">
+                            <div class="nds-card-header">
+                                {% if ev.thumbnail %}
+                                <div class="nds-card-image">
+                                    <img data-src="{{ ev.thumbnail | relative_url }}" width="400" height="200"
+                                        alt="{{ ev.title }} theme preview" decoding="async">
                                 </div>
-                                <div class="nds-card-content">
-                                    <div class="nds-card-text">
-                                        <span class="nds-card-title">{{ ev.title }}</span>
-                                        <p class="nds-card-description">{{ ev.description }}</p>
-                                    </div>
-                                    <div class="nds-card-tags">
-                                        <span class="nds-tag nds-blue nds-sm">
-                                            <span class="nds-label">{{ ev.category }}</span>
-                                        </span>
-                                        {% for tag in ev.tags %}
-                                        <span class="nds-tag nds-gray nds-sm">
-                                            <span class="nds-label">{{ tag }}</span>
-                                        </span>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                                {% if ev.theme or ev.url %}
-                                <div class="nds-card-actions">
-                                    {% if ev.theme %}
-                                    {%- assign _tflat = "" | split: "" -%}
-                                    {%- for _g in site.data.themes -%}{%- assign _tflat = _tflat | concat: _g.list -%}{%-
-                                    endfor -%}
-                                    {%- assign _t = _tflat | where: 'value', ev.theme | first -%}
-                                    {%- if _t %}
-                                    <button type="button" class="nds-btn nds-primary" data-theme-value="{{ _t.value }}"
-                                        {%- if _t.js %}
-                                        data-theme-js="{{ _t.js | relative_url }}?ver={{ site.asset_ver }}"
-                                        {% endif %}>
-                                        <span class="nds-label">Preview</span>
-                                    </button>
-                                    {%- endif %}
-                                    {% endif %}
-                                    {% if ev.url %}
-                                    <a href="{{ ev.url | relative_url }}" class="nds-btn nds-secondary-outline">
-                                        <span class="nds-label">Details</span>
-                                    </a>
-                                    {% endif %}
+                                {% else %}
+                                <div class="nds-card-featured-icon">
+                                    <span class="nds-featured-icon nds-circle nds-xl">
+                                        {{ ev.icon }}
+                                    </span>
                                 </div>
                                 {% endif %}
                             </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-title">{{ ev.title }}</span>
+                                    <p class="nds-card-description">{{ ev.description }}</p>
+                                </div>
+                                <div class="nds-card-tags">
+                                    <span class="nds-tag nds-blue nds-sm">
+                                        <span class="nds-label">{{ ev.category }}</span>
+                                    </span>
+                                    {% for tag in ev.tags %}
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label">{{ tag }}</span>
+                                    </span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% if ev.theme or ev.url %}
+                            <div class="nds-card-actions">
+                                {% if ev.theme %}
+                                {%- assign _tflat = "" | split: "" -%}
+                                {%- for _g in site.data.themes -%}{%- assign _tflat = _tflat | concat: _g.list -%}{%-
+                                endfor -%}
+                                {%- assign _t = _tflat | where: 'value', ev.theme | first -%}
+                                {%- if _t %}
+                                <button type="button" class="nds-btn nds-primary" data-theme-value="{{ _t.value }}"
+                                    {%- if _t.js %}
+                                    data-theme-js="{{ _t.js | relative_url }}?ver={{ site.asset_ver }}"
+                                    {% endif %}>
+                                    <span class="nds-label">Preview</span>
+                                </button>
+                                {%- endif %}
+                                {% endif %}
+                                {% if ev.url %}
+                                <a href="{{ ev.url | relative_url }}" class="nds-btn nds-secondary-outline">
+                                    <span class="nds-label">Details</span>
+                                </a>
+                                {% endif %}
+                            </div>
+                            {% endif %}
                         </div>
-                        {% endfor %}
                     </div>
-                    <div class="nds-swiper-navigation" hidden>
-                        <div class="nds-swiper-buttons">
-                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button"
-                                aria-label="Previous event"></button>
-                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button"
-                                aria-label="Next event"></button>
-                        </div>
-                        <div class="nds-swiper-pagination"></div>
+                    {% endfor %}
+                </div>
+                <div class="nds-swiper-navigation" hidden>
+                    <div class="nds-swiper-buttons">
+                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button"
+                            aria-label="Previous event"></button>
+                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button"
+                            aria-label="Next event"></button>
                     </div>
+                    <div class="nds-swiper-pagination"></div>
                 </div>
             </div>
         </div>
@@ -432,7 +432,7 @@ bundle_sizes:
 <section id="architecture" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <div class="nds-section-action">
+            <div class="nds-section-action nds-wrap">
                 <div class="nds-progress-circle nds-lg" data-num="100" data-max="100" role="progressbar" aria-labelledby="home-performance-text">
                     <svg width="120" height="120" viewBox="0 0 24 24">
                         <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />

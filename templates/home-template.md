@@ -95,9 +95,9 @@ direction: ltr
         <section id="about" class="nds-content-section">
             <div class="nds-section-wrapper">
                 <div class="nds-section-head">
-                    <div class="nds-section-action">
+                    <div class="nds-section-action nds-wrap">
                         <a href="#" class="nds-btn nds-secondary-outline">
-                            <span class="nds-label">Secondary</span>
+                            <span class="nds-label">Learn more</span>
                         </a>
                     </div>
                     <h2 class="nds-section-title">About us Section</h2>
@@ -176,7 +176,7 @@ direction: ltr
         <section id="services" class="nds-content-section">
             <div class="nds-section-wrapper">
                 <div class="nds-section-head">
-                    <div class="nds-section-action">
+                    <div class="nds-section-action nds-wrap">
                         <a href="#" class="nds-btn nds-secondary-outline">
                             <span class="nds-label">View all</span>
                         </a>
@@ -185,200 +185,200 @@ direction: ltr
                     <p class="nds-section-description">Here you can add a brief description about the purpose of the portal
                         followed by a call to action button and an image or an illustration on the left hand side.</p>
                 </div>
-                <div class="nds-section-body nds-max-width">
-                    <div class="nds-block">
-                        <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
-                            <div class="nds-swiper-wrapper">
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke">
-                                        <div class="nds-card-header">
-                                            <div class="nds-card-featured-icon">
-                                                <span class="nds-featured-icon nds-circle nds-lg">
-                                                    <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <span class="nds-card-title">Card Title</span>
-                                                <p class="nds-card-description">Card content placeholder text goes here</p>
-                                            </div>
-                                            <div class="nds-card-tags">
-                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
-                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
-                                                <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-actions">
-                                            <a href="#" class="nds-btn nds-secondary-outline">
-                                                <span class="nds-label">Action</span>
-                                            </a>
-                                            <a href="#" class="nds-btn nds-primary">
-                                                <span class="nds-label">Action</span>
-                                            </a>
+            </div>
+            <div class="nds-section-body nds-max-width">
+                <div class="nds-block">
+                    <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
+                        <div class="nds-swiper-wrapper">
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke">
+                                    <div class="nds-card-header">
+                                        <div class="nds-card-featured-icon">
+                                            <span class="nds-featured-icon nds-circle nds-lg">
+                                                <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
+                                            </span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke">
-                                        <div class="nds-card-header">
-                                            <div class="nds-card-featured-icon">
-                                                <span class="nds-featured-icon nds-circle nds-lg">
-                                                    <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <span class="nds-card-title">Card Title</span>
+                                            <p class="nds-card-description">Card content placeholder text goes here</p>
                                         </div>
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <span class="nds-card-title">Card Title</span>
-                                                <p class="nds-card-description">Card content placeholder text goes here</p>
-                                            </div>
-                                            <div class="nds-card-tags">
-                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
-                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
-                                                <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-actions">
-                                            <a href="#" class="nds-btn nds-secondary-outline">
-                                                <span class="nds-label">Action</span>
-                                            </a>
-                                            <a href="#" class="nds-btn nds-primary">
-                                                <span class="nds-label">Action</span>
-                                            </a>
+                                        <div class="nds-card-tags">
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
+                                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke">
-                                        <div class="nds-card-header">
-                                            <div class="nds-card-featured-icon">
-                                                <span class="nds-featured-icon nds-circle nds-lg">
-                                                    <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <span class="nds-card-title">Card Title</span>
-                                                <p class="nds-card-description">Card content placeholder text goes here</p>
-                                            </div>
-                                            <div class="nds-card-tags">
-                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
-                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
-                                                <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-actions">
-                                            <a href="#" class="nds-btn nds-secondary-outline">
-                                                <span class="nds-label">Action</span>
-                                            </a>
-                                            <a href="#" class="nds-btn nds-primary">
-                                                <span class="nds-label">Action</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke">
-                                        <div class="nds-card-header">
-                                            <div class="nds-card-featured-icon">
-                                                <span class="nds-featured-icon nds-circle nds-lg">
-                                                    <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <span class="nds-card-title">Card Title</span>
-                                                <p class="nds-card-description">Card content placeholder text goes here</p>
-                                            </div>
-                                            <div class="nds-card-tags">
-                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
-                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
-                                                <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-actions">
-                                            <a href="#" class="nds-btn nds-secondary-outline">
-                                                <span class="nds-label">Action</span>
-                                            </a>
-                                            <a href="#" class="nds-btn nds-primary">
-                                                <span class="nds-label">Action</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke">
-                                        <div class="nds-card-header">
-                                            <div class="nds-card-featured-icon">
-                                                <span class="nds-featured-icon nds-circle nds-lg">
-                                                    <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <span class="nds-card-title">Card Title</span>
-                                                <p class="nds-card-description">Card content placeholder text goes here</p>
-                                            </div>
-                                            <div class="nds-card-tags">
-                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
-                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
-                                                <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-actions">
-                                            <a href="#" class="nds-btn nds-secondary-outline">
-                                                <span class="nds-label">Action</span>
-                                            </a>
-                                            <a href="#" class="nds-btn nds-primary">
-                                                <span class="nds-label">Action</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke">
-                                        <div class="nds-card-header">
-                                            <div class="nds-card-featured-icon">
-                                                <span class="nds-featured-icon nds-circle nds-lg">
-                                                    <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <span class="nds-card-title">Card Title</span>
-                                                <p class="nds-card-description">Card content placeholder text goes here</p>
-                                            </div>
-                                            <div class="nds-card-tags">
-                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
-                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
-                                                <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-actions">
-                                            <a href="#" class="nds-btn nds-secondary-outline">
-                                                <span class="nds-label">Action</span>
-                                            </a>
-                                            <a href="#" class="nds-btn nds-primary">
-                                                <span class="nds-label">Action</span>
-                                            </a>
-                                        </div>
+                                    <div class="nds-card-actions">
+                                        <a href="#" class="nds-btn nds-secondary-outline">
+                                            <span class="nds-label">Action</span>
+                                        </a>
+                                        <a href="#" class="nds-btn nds-primary">
+                                            <span class="nds-label">Action</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="nds-swiper-navigation" hidden>
-                                <div class="nds-swiper-buttons">
-                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button"
-                                        aria-label="Previous services"></button>
-                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button"
-                                        aria-label="Next services"></button>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke">
+                                    <div class="nds-card-header">
+                                        <div class="nds-card-featured-icon">
+                                            <span class="nds-featured-icon nds-circle nds-lg">
+                                                <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <span class="nds-card-title">Card Title</span>
+                                            <p class="nds-card-description">Card content placeholder text goes here</p>
+                                        </div>
+                                        <div class="nds-card-tags">
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
+                                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card-actions">
+                                        <a href="#" class="nds-btn nds-secondary-outline">
+                                            <span class="nds-label">Action</span>
+                                        </a>
+                                        <a href="#" class="nds-btn nds-primary">
+                                            <span class="nds-label">Action</span>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="nds-swiper-pagination"></div>
                             </div>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke">
+                                    <div class="nds-card-header">
+                                        <div class="nds-card-featured-icon">
+                                            <span class="nds-featured-icon nds-circle nds-lg">
+                                                <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <span class="nds-card-title">Card Title</span>
+                                            <p class="nds-card-description">Card content placeholder text goes here</p>
+                                        </div>
+                                        <div class="nds-card-tags">
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
+                                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card-actions">
+                                        <a href="#" class="nds-btn nds-secondary-outline">
+                                            <span class="nds-label">Action</span>
+                                        </a>
+                                        <a href="#" class="nds-btn nds-primary">
+                                            <span class="nds-label">Action</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke">
+                                    <div class="nds-card-header">
+                                        <div class="nds-card-featured-icon">
+                                            <span class="nds-featured-icon nds-circle nds-lg">
+                                                <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <span class="nds-card-title">Card Title</span>
+                                            <p class="nds-card-description">Card content placeholder text goes here</p>
+                                        </div>
+                                        <div class="nds-card-tags">
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
+                                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card-actions">
+                                        <a href="#" class="nds-btn nds-secondary-outline">
+                                            <span class="nds-label">Action</span>
+                                        </a>
+                                        <a href="#" class="nds-btn nds-primary">
+                                            <span class="nds-label">Action</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke">
+                                    <div class="nds-card-header">
+                                        <div class="nds-card-featured-icon">
+                                            <span class="nds-featured-icon nds-circle nds-lg">
+                                                <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <span class="nds-card-title">Card Title</span>
+                                            <p class="nds-card-description">Card content placeholder text goes here</p>
+                                        </div>
+                                        <div class="nds-card-tags">
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
+                                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card-actions">
+                                        <a href="#" class="nds-btn nds-secondary-outline">
+                                            <span class="nds-label">Action</span>
+                                        </a>
+                                        <a href="#" class="nds-btn nds-primary">
+                                            <span class="nds-label">Action</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke">
+                                    <div class="nds-card-header">
+                                        <div class="nds-card-featured-icon">
+                                            <span class="nds-featured-icon nds-circle nds-lg">
+                                                <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <span class="nds-card-title">Card Title</span>
+                                            <p class="nds-card-description">Card content placeholder text goes here</p>
+                                        </div>
+                                        <div class="nds-card-tags">
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
+                                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card-actions">
+                                        <a href="#" class="nds-btn nds-secondary-outline">
+                                            <span class="nds-label">Action</span>
+                                        </a>
+                                        <a href="#" class="nds-btn nds-primary">
+                                            <span class="nds-label">Action</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nds-swiper-navigation" hidden>
+                            <div class="nds-swiper-buttons">
+                                <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button"
+                                    aria-label="Previous services"></button>
+                                <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button"
+                                    aria-label="Next services"></button>
+                            </div>
+                            <div class="nds-swiper-pagination"></div>
                         </div>
                     </div>
                 </div>
@@ -388,7 +388,7 @@ direction: ltr
         <section id="news" class="nds-content-section">
             <div class="nds-section-wrapper">
                 <div class="nds-section-head">
-                    <div class="nds-section-action">
+                    <div class="nds-section-action nds-wrap">
                         <a href="#" class="nds-btn nds-secondary-outline">
                             <span class="nds-label">View all</span>
                         </a>
@@ -396,188 +396,188 @@ direction: ltr
                     <h2 class="nds-section-title">Articles and News Section</h2>
                     <p class="nds-section-description">Here you can add a brief description about the purpose of the portal.</p>
                 </div>
-                <div class="nds-section-body">
-                    <div class="nds-block">
-                        <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1">
-                            <div class="nds-swiper-wrapper">
-                        <div class="nds-swiper-slide">
-                            <div class="nds-card nds-stroke">
-                                <div class="nds-card-header">
-                                    <div class="nds-card-image">
-                                        <img src="{{ 'docs-assets/img/card_img.webp' | relative_url }}" width="650"
-                                            height="371" alt="" loading="lazy" decoding="async">
-                                    </div>
+            </div>
+            <div class="nds-section-body nds-max-width">
+                <div class="nds-block">
+                    <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1">
+                        <div class="nds-swiper-wrapper">
+                    <div class="nds-swiper-slide">
+                        <div class="nds-card nds-stroke">
+                            <div class="nds-card-header">
+                                <div class="nds-card-image">
+                                    <img src="{{ 'docs-assets/img/card_img.webp' | relative_url }}" width="650"
+                                        height="371" alt="" loading="lazy" decoding="async">
                                 </div>
-                                <div class="nds-card-content">
-                                    <div class="nds-card-text">
-                                        <span class="nds-card-title">The Title of the News Card in two Lines</span>
-                                        <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
-                                            include a brief description of the headline in four lines. Here you can include
-                                            a brief description of the headline in four lines.</p>
-                                    </div>
-                                    <div class="nds-card-tags">
-                                        <span class="nds-tag nds-gray nds-sm">
-                                            <span class="nds-label">12 April 2026</span>
-                                        </span>
-                                    </div>
+                            </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-title">The Title of the News Card in two Lines</span>
+                                    <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
+                                        include a brief description of the headline in four lines. Here you can include
+                                        a brief description of the headline in four lines.</p>
                                 </div>
-                                <div class="nds-card-actions">
-                                    <a href="#" class="nds-btn nds-primary">
-                                        <span class="nds-label">Read More</span>
-                                    </a>
+                                <div class="nds-card-tags">
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label">12 April 2026</span>
+                                    </span>
                                 </div>
+                            </div>
+                            <div class="nds-card-actions">
+                                <a href="#" class="nds-btn nds-primary">
+                                    <span class="nds-label">Read More</span>
+                                </a>
                             </div>
                         </div>
-                        <div class="nds-swiper-slide">
-                            <div class="nds-card nds-stroke">
-                                <div class="nds-card-header">
-                                    <div class="nds-card-image">
-                                        <img src="{{ 'docs-assets/img/card_img.webp' | relative_url }}" width="650"
-                                            height="371" alt="" loading="lazy" decoding="async">
-                                    </div>
+                    </div>
+                    <div class="nds-swiper-slide">
+                        <div class="nds-card nds-stroke">
+                            <div class="nds-card-header">
+                                <div class="nds-card-image">
+                                    <img src="{{ 'docs-assets/img/card_img.webp' | relative_url }}" width="650"
+                                        height="371" alt="" loading="lazy" decoding="async">
                                 </div>
-                                <div class="nds-card-content">
-                                    <div class="nds-card-text">
-                                        <span class="nds-card-title">The Title of the News Card in two Lines</span>
-                                        <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
-                                            include a brief description of the headline in four lines. Here you can include
-                                            a brief description of the headline in four lines.</p>
-                                    </div>
-                                    <div class="nds-card-tags">
-                                        <span class="nds-tag nds-gray nds-sm">
-                                            <span class="nds-label">12 April 2026</span>
-                                        </span>
-                                    </div>
+                            </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-title">The Title of the News Card in two Lines</span>
+                                    <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
+                                        include a brief description of the headline in four lines. Here you can include
+                                        a brief description of the headline in four lines.</p>
                                 </div>
-                                <div class="nds-card-actions">
-                                    <a href="#" class="nds-btn nds-primary">
-                                        <span class="nds-label">Read More</span>
-                                    </a>
+                                <div class="nds-card-tags">
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label">12 April 2026</span>
+                                    </span>
                                 </div>
+                            </div>
+                            <div class="nds-card-actions">
+                                <a href="#" class="nds-btn nds-primary">
+                                    <span class="nds-label">Read More</span>
+                                </a>
                             </div>
                         </div>
-                        <div class="nds-swiper-slide">
-                            <div class="nds-card nds-stroke">
-                                <div class="nds-card-header">
-                                    <div class="nds-card-image">
-                                        <img src="{{ 'docs-assets/img/card_img.webp' | relative_url }}" width="650"
-                                            height="371" alt="" loading="lazy" decoding="async">
-                                    </div>
+                    </div>
+                    <div class="nds-swiper-slide">
+                        <div class="nds-card nds-stroke">
+                            <div class="nds-card-header">
+                                <div class="nds-card-image">
+                                    <img src="{{ 'docs-assets/img/card_img.webp' | relative_url }}" width="650"
+                                        height="371" alt="" loading="lazy" decoding="async">
                                 </div>
-                                <div class="nds-card-content">
-                                    <div class="nds-card-text">
-                                        <span class="nds-card-title">The Title of the News Card in two Lines</span>
-                                        <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
-                                            include a brief description of the headline in four lines. Here you can include
-                                            a brief description of the headline in four lines.</p>
-                                    </div>
-                                    <div class="nds-card-tags">
-                                        <span class="nds-tag nds-gray nds-sm">
-                                            <span class="nds-label">12 April 2026</span>
-                                        </span>
-                                    </div>
+                            </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-title">The Title of the News Card in two Lines</span>
+                                    <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
+                                        include a brief description of the headline in four lines. Here you can include
+                                        a brief description of the headline in four lines.</p>
                                 </div>
-                                <div class="nds-card-actions">
-                                    <a href="#" class="nds-btn nds-primary">
-                                        <span class="nds-label">Read More</span>
-                                    </a>
+                                <div class="nds-card-tags">
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label">12 April 2026</span>
+                                    </span>
                                 </div>
+                            </div>
+                            <div class="nds-card-actions">
+                                <a href="#" class="nds-btn nds-primary">
+                                    <span class="nds-label">Read More</span>
+                                </a>
                             </div>
                         </div>
-                        <div class="nds-swiper-slide">
-                            <div class="nds-card nds-stroke">
-                                <div class="nds-card-header">
-                                    <div class="nds-card-image">
-                                        <img data-src="{{ 'docs-assets/img/card_img.webp' | relative_url }}" width="650"
-                                            height="371" alt="" decoding="async">
-                                    </div>
+                    </div>
+                    <div class="nds-swiper-slide">
+                        <div class="nds-card nds-stroke">
+                            <div class="nds-card-header">
+                                <div class="nds-card-image">
+                                    <img data-src="{{ 'docs-assets/img/card_img.webp' | relative_url }}" width="650"
+                                        height="371" alt="" decoding="async">
                                 </div>
-                                <div class="nds-card-content">
-                                    <div class="nds-card-text">
-                                        <span class="nds-card-title">The Title of the News Card in two Lines</span>
-                                        <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
-                                            include a brief description of the headline in four lines. Here you can include
-                                            a brief description of the headline in four lines.</p>
-                                    </div>
-                                    <div class="nds-card-tags">
-                                        <span class="nds-tag nds-gray nds-sm">
-                                            <span class="nds-label">12 April 2026</span>
-                                        </span>
-                                    </div>
+                            </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-title">The Title of the News Card in two Lines</span>
+                                    <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
+                                        include a brief description of the headline in four lines. Here you can include
+                                        a brief description of the headline in four lines.</p>
                                 </div>
-                                <div class="nds-card-actions">
-                                    <a href="#" class="nds-btn nds-primary">
-                                        <span class="nds-label">Read More</span>
-                                    </a>
+                                <div class="nds-card-tags">
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label">12 April 2026</span>
+                                    </span>
                                 </div>
+                            </div>
+                            <div class="nds-card-actions">
+                                <a href="#" class="nds-btn nds-primary">
+                                    <span class="nds-label">Read More</span>
+                                </a>
                             </div>
                         </div>
-                        <div class="nds-swiper-slide">
-                            <div class="nds-card nds-stroke">
-                                <div class="nds-card-header">
-                                    <div class="nds-card-image">
-                                        <img data-src="{{ 'docs-assets/img/card_img.webp' | relative_url }}" width="650"
-                                            height="371" alt="" decoding="async">
-                                    </div>
+                    </div>
+                    <div class="nds-swiper-slide">
+                        <div class="nds-card nds-stroke">
+                            <div class="nds-card-header">
+                                <div class="nds-card-image">
+                                    <img data-src="{{ 'docs-assets/img/card_img.webp' | relative_url }}" width="650"
+                                        height="371" alt="" decoding="async">
                                 </div>
-                                <div class="nds-card-content">
-                                    <div class="nds-card-text">
-                                        <span class="nds-card-title">The Title of the News Card in two Lines</span>
-                                        <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
-                                            include a brief description of the headline in four lines. Here you can include
-                                            a brief description of the headline in four lines.</p>
-                                    </div>
-                                    <div class="nds-card-tags">
-                                        <span class="nds-tag nds-gray nds-sm">
-                                            <span class="nds-label">12 April 2026</span>
-                                        </span>
-                                    </div>
+                            </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-title">The Title of the News Card in two Lines</span>
+                                    <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
+                                        include a brief description of the headline in four lines. Here you can include
+                                        a brief description of the headline in four lines.</p>
                                 </div>
-                                <div class="nds-card-actions">
-                                    <a href="#" class="nds-btn nds-primary">
-                                        <span class="nds-label">Read More</span>
-                                    </a>
+                                <div class="nds-card-tags">
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label">12 April 2026</span>
+                                    </span>
                                 </div>
+                            </div>
+                            <div class="nds-card-actions">
+                                <a href="#" class="nds-btn nds-primary">
+                                    <span class="nds-label">Read More</span>
+                                </a>
                             </div>
                         </div>
-                        <div class="nds-swiper-slide">
-                            <div class="nds-card nds-stroke">
-                                <div class="nds-card-header">
-                                    <div class="nds-card-image">
-                                        <img data-src="{{ 'docs-assets/img/card_img.webp' | relative_url }}" width="650"
-                                            height="371" alt="" decoding="async">
-                                    </div>
+                    </div>
+                    <div class="nds-swiper-slide">
+                        <div class="nds-card nds-stroke">
+                            <div class="nds-card-header">
+                                <div class="nds-card-image">
+                                    <img data-src="{{ 'docs-assets/img/card_img.webp' | relative_url }}" width="650"
+                                        height="371" alt="" decoding="async">
                                 </div>
-                                <div class="nds-card-content">
-                                    <div class="nds-card-text">
-                                        <span class="nds-card-title">The Title of the News Card in two Lines</span>
-                                        <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
-                                            include a brief description of the headline in four lines. Here you can include
-                                            a brief description of the headline in four lines.</p>
-                                    </div>
-                                    <div class="nds-card-tags">
-                                        <span class="nds-tag nds-gray nds-sm">
-                                            <span class="nds-label">12 April 2026</span>
-                                        </span>
-                                    </div>
+                            </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-title">The Title of the News Card in two Lines</span>
+                                    <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
+                                        include a brief description of the headline in four lines. Here you can include
+                                        a brief description of the headline in four lines.</p>
                                 </div>
-                                <div class="nds-card-actions">
-                                    <a href="#" class="nds-btn nds-primary">
-                                        <span class="nds-label">Read More</span>
-                                    </a>
+                                <div class="nds-card-tags">
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label">12 April 2026</span>
+                                    </span>
                                 </div>
+                            </div>
+                            <div class="nds-card-actions">
+                                <a href="#" class="nds-btn nds-primary">
+                                    <span class="nds-label">Read More</span>
+                                </a>
                             </div>
                         </div>
+                    </div>
+                        </div>
+                        <div class="nds-swiper-navigation" hidden>
+                            <div class="nds-swiper-buttons">
+                                <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button"
+                                    aria-label="Previous articles"></button>
+                                <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button"
+                                    aria-label="Next articles"></button>
                             </div>
-                            <div class="nds-swiper-navigation" hidden>
-                                <div class="nds-swiper-buttons">
-                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button"
-                                        aria-label="Previous articles"></button>
-                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button"
-                                        aria-label="Next articles"></button>
-                                </div>
-                                <div class="nds-swiper-pagination"></div>
-                            </div>
+                            <div class="nds-swiper-pagination"></div>
                         </div>
                     </div>
                 </div>
@@ -589,130 +589,130 @@ direction: ltr
                 <div class="nds-section-head">
                     <h2 class="nds-section-title">Partner Section</h2>
                 </div>
-                <div class="nds-section-body">
-                    <div class="nds-block">
-                        <div class="nds-swiper nds-middle" style="--max-slides:8; --mid-slides:4; --min-slides:2">
-                            <div class="nds-swiper-wrapper">
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke nds-center">
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
-                                                    height="48" alt="" loading="lazy" decoding="async">
-                                                <p class="nds-card-description">Platform Logo</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke nds-center">
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
-                                                    height="48" alt="" loading="lazy" decoding="async">
-                                                <p class="nds-card-description">Platform Logo</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke nds-center">
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
-                                                    height="48" alt="" loading="lazy" decoding="async">
-                                                <p class="nds-card-description">Platform Logo</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke nds-center">
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
-                                                    height="48" alt="" loading="lazy" decoding="async">
-                                                <p class="nds-card-description">Platform Logo</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke nds-center">
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
-                                                    height="48" alt="" loading="lazy" decoding="async">
-                                                <p class="nds-card-description">Platform Logo</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke nds-center">
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
-                                                    height="48" alt="" loading="lazy" decoding="async">
-                                                <p class="nds-card-description">Platform Logo</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke nds-center">
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
-                                                    height="48" alt="" loading="lazy" decoding="async">
-                                                <p class="nds-card-description">Platform Logo</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke nds-center">
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
-                                                    height="48" alt="" loading="lazy" decoding="async">
-                                                <p class="nds-card-description">Platform Logo</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke nds-center">
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
-                                                    height="48" alt="" loading="lazy" decoding="async">
-                                                <p class="nds-card-description">Platform Logo</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-swiper-slide">
-                                    <div class="nds-card nds-stroke nds-center">
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
-                                                    height="48" alt="" loading="lazy" decoding="async">
-                                                <p class="nds-card-description">Platform Logo</p>
-                                            </div>
+            </div>
+            <div class="nds-section-body nds-max-width">
+                <div class="nds-block">
+                    <div class="nds-swiper nds-middle" style="--max-slides:8; --mid-slides:4; --min-slides:2">
+                        <div class="nds-swiper-wrapper">
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke nds-center">
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
+                                                height="48" alt="" loading="lazy" decoding="async">
+                                            <p class="nds-card-description">Platform Logo</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="nds-swiper-navigation nds-center" hidden>
-                                <div class="nds-swiper-buttons">
-                                    <button class="nds-btn nds-subtle nds-icon-only nds-prev" type="button"
-                                        aria-label="Previous partners"></button>
-                                    <button class="nds-btn nds-subtle nds-icon-only nds-next" type="button"
-                                        aria-label="Next partners"></button>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke nds-center">
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
+                                                height="48" alt="" loading="lazy" decoding="async">
+                                            <p class="nds-card-description">Platform Logo</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="nds-swiper-pagination nds-md"></div>
                             </div>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke nds-center">
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
+                                                height="48" alt="" loading="lazy" decoding="async">
+                                            <p class="nds-card-description">Platform Logo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke nds-center">
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
+                                                height="48" alt="" loading="lazy" decoding="async">
+                                            <p class="nds-card-description">Platform Logo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke nds-center">
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
+                                                height="48" alt="" loading="lazy" decoding="async">
+                                            <p class="nds-card-description">Platform Logo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke nds-center">
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
+                                                height="48" alt="" loading="lazy" decoding="async">
+                                            <p class="nds-card-description">Platform Logo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke nds-center">
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
+                                                height="48" alt="" loading="lazy" decoding="async">
+                                            <p class="nds-card-description">Platform Logo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke nds-center">
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
+                                                height="48" alt="" loading="lazy" decoding="async">
+                                            <p class="nds-card-description">Platform Logo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke nds-center">
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
+                                                height="48" alt="" loading="lazy" decoding="async">
+                                            <p class="nds-card-description">Platform Logo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-swiper-slide">
+                                <div class="nds-card nds-stroke nds-center">
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <img src="{{ 'assets/img/palm_swords.svg' | relative_url }}" width="48"
+                                                height="48" alt="" loading="lazy" decoding="async">
+                                            <p class="nds-card-description">Platform Logo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nds-swiper-navigation nds-center" hidden>
+                            <div class="nds-swiper-buttons">
+                                <button class="nds-btn nds-subtle nds-icon-only nds-prev" type="button"
+                                    aria-label="Previous partners"></button>
+                                <button class="nds-btn nds-subtle nds-icon-only nds-next" type="button"
+                                    aria-label="Next partners"></button>
+                            </div>
+                            <div class="nds-swiper-pagination nds-md"></div>
                         </div>
                     </div>
                 </div>
