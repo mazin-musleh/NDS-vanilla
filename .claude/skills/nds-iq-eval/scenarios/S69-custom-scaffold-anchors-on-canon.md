@@ -11,5 +11,5 @@
   - MUST NOT: compose card internals from memory; hang the modifier on an inner part; pick a `data-status` or color-alias class as a color picker.
   - cite: "No match → a custom scaffold inside red line #4, reusing canonical wiring patterns." / "Copy canonical markup verbatim. Never invent it."
 - grading note: read-dependent (cards doc / a canon centered-card usage) — scoped or solo runs only. The markup-sketch ask moved INTO `prompt:` 2026-08-20 (SKILL.md's artifact-forcing rule) — it is the same instrument the baseline solo run used, so the baseline stands. Setup fixed 2026-10-09: it claimed no template matches, but `templates.yml` routes feature rows to the About Entity template; runners rightly overruled it.
-- floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — the file supplies this: described the route but produced no canon-anchored specifics.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

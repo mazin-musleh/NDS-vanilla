@@ -10,5 +10,5 @@
   - MUST: make the block `<script type="module">` (or move it to a file loaded with `defer` after the NDS scripts); re-run the audit and check the console.
   - MUST NOT: leave the inline `defer` block as is; poll or `setTimeout` for `NDS`; move the NDS tag.
   - cite: "Page JS loads after the NDS scripts. Inline page JS is a module script."
-- floor: not run.
+- floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

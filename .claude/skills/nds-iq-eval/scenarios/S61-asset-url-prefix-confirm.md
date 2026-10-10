@@ -11,6 +11,6 @@
   - MUST NOT: use the filesystem path as the URL; ship the layout on a guessed prefix without the dev confirmation; point any tag into `NDS_ROOT`.
   - cite: "Derive its folder and served URL from the stack, and confirm both with the dev in one question before §Setup copies the runtime. The plan review records them as answered." / "Rewrite `href`/`src` to `NDS_ASSETS` URLs"
 - grading note: Prompt sharpened 2026-08-13 so the run exercises the URL derivation and confirm, not just the head-unit rules.
-- floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
+- floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C3-deliberate (audit 2026-08-17): the prompt is aimed at the guard on purpose; do not cite a pass for unprompted firing.
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

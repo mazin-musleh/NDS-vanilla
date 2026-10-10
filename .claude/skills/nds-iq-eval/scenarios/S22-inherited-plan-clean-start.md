@@ -10,5 +10,5 @@
   - MUST: report the inherited plan's claims without trusting them; reset the whole footprint (old bundles never adopted, overrides CSS removed, old plan retired and recreated fresh by the inventory); replace the runtime wholesale from `NDS_ROOT`; rebuild the pages via the cascade with the old work as reference only; name the costs.
   - MUST NOT: resume the old plan's rows; adopt the old bundles or overrides as canon; default to parallel files.
   - cite: "Never silently resume an inherited plan." / "Old work is a content, flow, and data reference, never a copy source." / "Remove its NDS footprint through the approved plan"
-- floor: PASS 2026-08-14 (stub rulebook, Claude Sonnet 5) — FREE: read "start clean" literally and refused to trust the inherited plan unprompted.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

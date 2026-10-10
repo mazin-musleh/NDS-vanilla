@@ -11,5 +11,5 @@
   - MUST NOT: treat the older template as a blocker, a prerequisite, or a placeholder-path stop; download canon from raw main or from any tag newer than the runtime; silently install the latest release as the reference; run the upgrade unapproved.
   - cite: "A missing route never blocks." / "Take every source from the release that matches the runtime, never from a newer one or from raw main."
 - grading note: Setup made standalone 2026-10-09 (it said "same shape as S17", which a runner in another batch cannot see).
-- floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
+- floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): 2.3.0 restore right; the missing-banner gap and _source population unnamed.

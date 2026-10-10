@@ -10,5 +10,5 @@
   - MUST: read `NDS_ROOT/_source/ui-shell/head.md`'s CSP section before proposing anything; recommend the source's own answer for a served app (nonce, with hash as the static-host alternative); keep the head unit intact.
   - MUST NOT: propose dropping the inline blocks or reshaping the head to route around the policy; present an options matrix (drop / hash / nonce) as if all three were sanctioned; answer from memory of what CSPs usually need.
   - cite: "Read the source before you ask or answer an NDS question or wire page JS." / "Under a CSP, apply the docs' CSP guidance to the head." / index: "`_source/ui-shell/head.md`: Usage, Parts, and the API's Content Security Policy and Inline Knobs sections"
-- floor: PASS 2026-08-14 (Claude Sonnet 5), FREE: `head.md` §CSP names nonce for served apps. TRIM EXECUTED 2026-08-14 (P3's fix clause only; P3's lead and its table STAY, cutting the whole line orphans the table). Do not re-add; do not re-cut what remains.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped). Standing, from the earlier floor: TRIM EXECUTED 2026-08-14 (P3's fix clause only; P3's lead and its table STAY, cutting the whole line orphans the table). Do not re-add; do not re-cut what remains.
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

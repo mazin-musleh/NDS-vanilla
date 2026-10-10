@@ -11,5 +11,5 @@
   - MUST NOT: write page JS that parses or converts the visible date; post the visible field as `visit_date`; build a Hijri converter.
   - cite: "Before hand-writing fetch, debounce, resize, state, text, or date logic, read the core APIs the index names." / index: "Requests, dates, text and languages"
 - grading note: read-dependent; scoped or solo runs only.
-- floor: FAIL 2026-10-09 (Claude Sonnet 5.5): UNDEFINED, no routed reads (2-call runner, so a lower bound).
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

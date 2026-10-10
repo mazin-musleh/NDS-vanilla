@@ -11,5 +11,5 @@
   - MUST NOT: compare the project root copy against `NDS_ROOT/NDS-IQ.md`, or conclude anything from two local copies agreeing; stop at "a newer revision exists" without running step 4 when the dev asked for the update; use a web-fetch tool; run a template upgrade.
   - cite: "compare raw main's content with the project-root copy" / "(an explicit update request is approval)" / "Download with curl or the stack's HTTP client, never a web-fetch tool."
 - grading note: Setup fixed 2026-10-09: template zips stopped shipping an offline `NDS-IQ.md` (7035a2f8), so the old byte-identical offline-copy world-state was false.
-- floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
+- floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

@@ -10,6 +10,6 @@
   - MUST: (a) read BOTH bundle banners, name the mismatch as the finding (hand-assembled runtime or interrupted upgrade), report it and stop for the dev's call. (b) proceed as first setup — the latest release becomes the default — and treat the pages riding the ignored runtime as prior NDS work under Workflow step 1's split.
   - MUST NOT: (a) restore from the JS banner alone, or from either banner, before the dev answers; pick the newer of the two as the tiebreak. (b) stall on "no listed course matches the answer"; silently delete or upgrade the ignored runtime.
   - cite: "They must agree; otherwise stop and ask." / "hand-assembled runtime or interrupted upgrade" / "If the dev says a found runtime is legacy, treat setup as new, with the latest release as default, and assess its pages as prior NDS work."
-- floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
+- floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C2-mild (audit 2026-08-17): both banners stated in the setup, the read pre-done.
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

@@ -11,5 +11,5 @@
   - MUST NOT: (a) dredge the full source when the banner answers; hand-write listeners or `data-*` guesses without the banner read; (b) treat the missing banner as a block or a prerequisite; read canon from a newer tag or from raw main; invent the surface from memory instead of reading the 2.3.0 doc source and JS file.
   - cite: "read the component's JS API (the index names where)" / "use what it ships, report the gap, and propose the upgrade as the dev's call" / index: "Rides, Methods, Events, Hooks, Gotchas"
 - artifacts (behavior): page JS binds `nds:multiselect:change` by exact name and calls `populate(...)`; no invented `data-*` attributes; no listener on inner `.nds-*` elements the banner doesn't expose.
-- floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
+- floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

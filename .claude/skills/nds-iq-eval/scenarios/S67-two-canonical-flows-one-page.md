@@ -11,5 +11,5 @@
   - MUST NOT: reach for Tabs or Content Switcher as the flow switcher; treat the second flow as a design exercise once the first is routed; place a bare `.nds-form` in an unstyled wrapper as the layout container; write new swap JS from scratch; drop the SSO path silently.
   - cite: "list every UI part, and match each against the component catalog" / "Edit a copied script point by point against its source; never rewrite it." / examples script comment: "Plain [hidden] toggling: no NDS component swaps sibling cards"
 - grading note: read-dependent (the mechanism lives in the example scripts) — scoped or solo runs only. Prompt gained the skeleton ask 2026-08-20 (SKILL.md's artifact-forcing rule); "the swap" restates the prompt's own world-state, the mechanism stays unnamed.
-- floor: PASS 2026-08-14 (stub rulebook, Claude Sonnet 5) — FREE, ordinary judgment; trim candidate once the source is confirmed to carry it.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

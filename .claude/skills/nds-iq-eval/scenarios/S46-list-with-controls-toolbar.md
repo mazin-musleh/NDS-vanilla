@@ -10,5 +10,5 @@
   - MUST: run the parts inventory before writing any markup and match each part against `components.yml`; route the control bar itself to Toolbar off its `use_when` (matched on the job the entry names, not on its title); copy Toolbar's canonical markup from the folder its catalog `url` names; keep the search, filters, result count, and paging controls inside the `.nds-toolbar` nesting they land in.
   - MUST NOT: hand-compose a control-bar wrapper from grid or flex primitives; lift the count, filters, or search out of `.nds-toolbar` into a row of their own; treat the four controls as unrelated parts with no bar component between them; match on titles alone.
   - cite: "list every UI part, and match each against the component catalog" / components.yml Toolbar `use_when`: "The controls bar above a table, list, or grid: result counts and applied filters lead, search, export, and actions trail"
-- floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

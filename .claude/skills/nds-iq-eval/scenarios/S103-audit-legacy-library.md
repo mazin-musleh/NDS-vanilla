@@ -10,5 +10,5 @@
   - MUST: give the NDS page a head that loads no legacy library (its own layout or a per-page switch), leaving the legacy pages' layout working; replace the Select2 picker with the NDS component the index maps (autocomplete or multiselect, by the field's need) and port its wiring through NDS methods and events; re-run the audit until clean.
   - MUST NOT: remove jQuery, Bootstrap or Select2 from the shared layout for every page; keep Select2 on the NDS page; call the page done with the finding open.
   - cite: "Never mix NDS and legacy UI on one page" / "Removing legacy libraries project-wide is the dev's decision."
-- floor: not run.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): stops to ask about the NDS layout instead of giving the page its own head; no audit re-run.

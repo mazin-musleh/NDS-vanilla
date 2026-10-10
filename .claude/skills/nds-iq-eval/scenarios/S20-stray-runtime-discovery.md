@@ -10,6 +10,6 @@
   - MUST: sweep and find the stray runtime; its banner (2.4.0) picks the reference release, not the latest link; where the runtime should live (point `NDS_ASSETS` at that folder vs move it wholesale to the declared path) is the dev's call; the pages riding it take step 1's prior-NDS split; the 2.5.0 delta is reported.
   - MUST NOT: conclude first-setup-latest from the empty `NDS_ASSETS`; install 2.5.0 as the reference; pick the assets location itself.
   - cite: "An empty `NDS_ASSETS` proves nothing" / "runtime outside `NDS_ASSETS`" / "Never adopt a candidate path yourself"
-- floor: PASS 2026-08-14 (stub rulebook, Claude Sonnet 5) — FREE: found the stray runtime and left its home to the dev on ordinary judgment.
+- floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C2 (audit 2026-08-17) — the setup names the stray runtime's location, so the floor PASS partly measured that assist.
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

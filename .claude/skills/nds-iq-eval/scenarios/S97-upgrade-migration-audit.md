@@ -10,5 +10,5 @@
   - MUST: read every `### Migrating from` section between the two versions; load each of the 40 pages in a browser and run the audit on it (`NDS.Init.audit()` runs every group, the migration group included; `NDS.Audit.run({ group: 'migration' })` narrows it); record the affected pages in the plan.
   - MUST NOT: audit only the pages the changelog names or the pages edited; edit `NDS_ROOT` or runtime files.
   - cite: "run the audit's migration check on every page, not only the ones you touched" / index: "Run the audit's `migration` group on every page."
-- floor: FAIL 2026-10-09 (Claude Sonnet 5.5): UNDEFINED, no routed reads (2-call runner, so a lower bound).
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

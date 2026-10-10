@@ -11,6 +11,6 @@
   - MUST NOT: report the page verified from desktop width alone; record mobile as "unverifiable" / "not testable in this environment" / "needs the dev" in the report, the plan, or the dev-facing result; emit the dev checklist while a headless browser is drivable; claim "cannot see the page" (the page WAS seen — only the width was out of reach); install browser packages into the project or touch its lockfile; self-mark `Built and Verified`.
   - cite: "Drive both passes headlessly" / "An unreachable viewport stays unmet." / "Set the viewport, never the window."
 - grading note: the artifact carries the grade — a result line reading "mobile: unverifiable" is the field failure verbatim, and it cannot hide behind a described route. Never ask for an `NDS-REPORT.md` entry (2026-08-15: a clean run is not an entry, so the ask manufactured a soft). The dev-facing result line carries the grade.
-- floor: not stub-run. CUT PROBE PASS 2026-08-15 — stating a capability gap is itself the tell. Do not re-propose a cut probe as a trim gate in this chain (see S72's floor).
+- floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C2, self-documented (audit 2026-08-17) — stating the gap is the tell.
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

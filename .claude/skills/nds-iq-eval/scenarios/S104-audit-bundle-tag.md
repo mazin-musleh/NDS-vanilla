@@ -10,5 +10,5 @@
   - MUST: remove the tag; keep the end of `<body>` as the head doc's canon gives it; explain that the loader injects the bundle, so the tables still work; re-run the audit and exercise a table.
   - MUST NOT: keep the tag; suppress or skip the audit finding; edit the runtime or the loader.
   - cite: "Rewrite asset URLs only; never remove or reorder entries" / the audit's fix line
-- floor: not run.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

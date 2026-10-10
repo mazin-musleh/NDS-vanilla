@@ -10,5 +10,5 @@
   - MUST: inventory the pages and old bundles AND the agent file's own NDS text; propose removing the hand-written section and the leftover notes as the attempt's footprint, the dev's call; assess each page against `NDS_ROOT` canon and propose the adopt/rebuild split rather than presuming either; replace the old bundles wholesale from `NDS_ROOT`; write a fresh `NDS-PLAN.md` and stop for review.
   - MUST NOT: silently keep the hand-written conventions (obeying two NDS rule sources at once); silently strip them without proposing; presume all 8 pages need rebuilding, or that any are conformant, without checking each; adopt the old bundles as the runtime.
   - cite: "One rule source remains: this file." / "propose removing those with the plan"
-- floor: PASS 2026-08-14 (stub rulebook, Claude Sonnet 5) — FREE: flagged the stale hand-written section and asked rather than obeying two sources.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): asks "which rules win" instead of proposing removal of the hand-written section.

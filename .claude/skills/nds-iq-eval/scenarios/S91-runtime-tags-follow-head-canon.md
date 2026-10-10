@@ -11,5 +11,5 @@
   - MUST NOT: add an `nds-accessibility.min.js` tag from memory or the dev's ask; add `nds-delegated`/`nds-extras`; copy the tags from a built page.
   - cite: "copy the head canon as a unit. Rewrite asset URLs only" / head doc: "Added by the loader on the first press of the accessibility button"
 - leak: class (3), eased by a temptation trap — the prompt names the runtime tags and asks for the lazy one.
-- floor: not run — a rewording of an existing bullet, not a new sentence.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

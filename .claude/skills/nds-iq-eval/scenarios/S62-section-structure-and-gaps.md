@@ -10,5 +10,5 @@
   - MUST: read `NDS_ROOT/_source/layout/section.md` first; wrap both blocks in `nds-content-section` (tier chosen from the doc, not defaulted) inside the content wrapper `section.md` shows (`.nds-content-layout > .nds-content`; `.nds-main-content` on 1.x templates); compose the columns with `nds-grid`; widen the spacing through `--gap`.
   - MUST NOT: hand-rolled margins between stacked siblings; custom `display:flex` wrappers or Bootstrap-style columns; one section tier assumed without the doc.
   - cite: "the NDS page structure and layout primitives" / "no spacing the primitives do not set" / index: "Sections and spacing"
-- floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5). WATCH read-section-doc-first step compressed ×2.

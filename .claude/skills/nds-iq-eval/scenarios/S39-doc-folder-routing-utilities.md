@@ -10,5 +10,5 @@
   - MUST: land on the Copy entry in `components.yml`; name the read path as `NDS_ROOT/_source/utilities/copy.md` (the folder from the entry's `url`); copy the target-based canon's body, since the reference number is already in the page, and set its `data-copy-target` to a selector for that element.
   - MUST NOT: report the doc missing; route to `_source/components/copy.md`; copy from the built `_site` page; hand-write clipboard JS; conclude NDS has no copy utility.
   - cite: index: "Each entry's `url` names its folder" / components.yml Copy `use_when`
-- floor: PASS 2026-08-14 (Claude Sonnet 5), FREE: found `utilities/copy.md` by exploring.
+- floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): value-based copy canon, not the target-based one (data-copy-target).

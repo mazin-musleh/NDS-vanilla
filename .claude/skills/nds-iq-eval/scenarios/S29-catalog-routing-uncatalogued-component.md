@@ -10,5 +10,5 @@
   - MUST: land on the Custom Select catalog entry; copy the rich-option canon from `_source/components/custom-select.md` (the `data-canon` body); keep the label in `.nds-label` nested inside `.nds-option-text`, with the description as `.nds-description` beside it; take the coloured dot as decoration inside the option, in place of the canon's icon; name the JS API only if the answer needs programmatic control.
   - MUST NOT: fall back to a native `select`; pick Autocomplete (no type-ahead needed) or Multiselect (single choice); invent dropdown markup; conclude NDS has no styled select.
   - cite: components.yml Custom Select `use_when` / index: "Copy the block's body"
-- floor: PASS 2026-08-14 (stub rulebook, Claude Sonnet 5) — FREE: `forms.md` states the `nds-select` default in prose, the doc answers.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

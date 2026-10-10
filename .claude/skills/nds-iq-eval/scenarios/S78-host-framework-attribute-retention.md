@@ -10,5 +10,5 @@
   - MUST: keep `asp-for="Email"` (or the stack's equivalent binding attribute) ON the canonical NDS input; ship canon's own classes, `data-*` and `data-error-message` unchanged around it; name the attribute-side carve-out as the reason the helper stays.
   - MUST NOT: strip `asp-for` in the name of copying canon verbatim; swap the input for a tag helper that expands into its own markup; add `<span asp-validation-for>` or a validation summary beside it; re-type canon's attributes from memory while editing the line.
   - cite: "Put host-framework bindings on canonical elements as attributes."
-- floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — the file supplies this: refused to produce the final `<input>` line at all.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

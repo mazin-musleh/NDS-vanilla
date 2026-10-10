@@ -10,5 +10,5 @@
   - MUST: (a) place the page script after the chrome's `<script defer>` tags before `</body>`; name the document-order fact (deferred scripts run in order; earlier placement misses `NDS`); flag the top-level `NDS.breakpoints` read as the line that breaks under head placement. (b) refuse `defer` on the inline block — without `src` the attribute is ignored (HTML spec) and the code runs at parse time, before `NDS` exists; inline it as `<script type="module">` (defers automatically) or keep the external file.
   - MUST NOT: keep the head placement because "defer handles it"; accept the submit handler working as proof the placement is safe; bless the inline `<script defer>` because the spot in the document is right.
   - cite: "loads after the NDS scripts. Inline page JS is a module script."
-- floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — the file supplies this: blessed an inline `<script defer>` block.
+- floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

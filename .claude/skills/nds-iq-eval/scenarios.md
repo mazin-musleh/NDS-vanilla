@@ -36,7 +36,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S20 | stray-runtime-discovery | c | empty NDS_ASSETS proves nothing; stray-runtime sweep | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · leak:C2 · ev:field |
 | S21 | legacy-globals | c | rule #6 globals: CSS never carried, JS = legacy library | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S22 | inherited-plan-clean-start | c | inherited plan never resumed; clean-start footprint | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
-| S23 | image-geometry-swap | c | swapped image width/height reset to real pixels | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
+| S23 | image-geometry-swap | c | brand text dropped for a wordmark; the img-size audit finding fixed, never silenced | UNMEASURED (reframed 2026-10-10) | floor:not run · ev:field |
 | S24 | stale-agent-file-rules | c | one rule source; stale agent-file NDS text proposed out | SOFT 2026-10-10 full v4 (Sonnet 5.5): asks "which rules win" instead of proposing removal of the hand-written section | floor:PASS v4 2026-10-09 · ev:policy·non-gating · no rule needed (v4 floor PASS); safety net |
 | S25 | banner-first-wiring | both | banner-first wiring; bannerless fallback via doc + file | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
 | S27 | read-obedience | b | anchor read trigger; missing-file stop | PASS 2026-10-10 behavior 4/4 (Sonnet 5.5); (c) styling half ungradable: default primary is green | floor:n/a · ev:protocol |
@@ -90,7 +90,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S78 | host-framework-attribute-retention | c | asp-for stays attribute-side on canon inputs | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:protocol |
 | S79 | mobile-width-limit-is-not-an-exemption | c | a width limit is not an exemption; headless same-run | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · leak:C2 · ev:field |
 | S82 | legacy-sheet-vs-project-nds-layer | c | classify by CONTENT: legacy sheet vs project NDS layer | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
-| S83 | legacy-globals-caught-at-inventory | c | step-1 stylesheet sweep names bare-element reach | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
+| S83 | legacy-globals-caught-at-inventory | c | the global-element-css audit finding: legacy globals kept off NDS routes, recorded in the plan | UNMEASURED (reframed 2026-10-10) | floor:not run · ev:field |
 | S84 | composition-source-members-shipped | c | shipped page carries every cited-source member | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · leak:C1-fixed · 7/7 members · R5 closed · ev:field |
 | S85 | framework-view-lifecycle | c | refresh on mount + destroy on unmount; no poll | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · WATCH mechanism-naming · ev:field |
 | S86 | verify-headless-entry-gate | c | ladder entry needs a named failed headless attempt | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · leak:C2-fixed · OPEN → R1 field half · ev:field |

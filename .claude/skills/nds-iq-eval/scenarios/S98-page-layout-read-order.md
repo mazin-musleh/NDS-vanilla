@@ -11,5 +11,5 @@
   - MUST NOT: copy any built body or region; copy Liquid or front matter into the page; read every doc page in full.
   - cite: index: "Their front matter builds the rest" / "Never copy from a built page: it is only where you see the result."
 - leak: C3 deliberate — the read order IS the graded behavior, and comprehension cannot observe it without asking.
-- floor: FAIL 2026-10-09 (Claude Sonnet 5.5): UNDEFINED, no routed reads (2-call runner, so a lower bound).
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

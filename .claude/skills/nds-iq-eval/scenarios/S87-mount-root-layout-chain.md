@@ -12,5 +12,5 @@
   - cite: "A client-rendered app follows the page layout doc's framework rules for its mount element." / index: "Page shapes, layout classes, framework apps"
 - grading note: Contact is deliberately the SHORT page (a heading and one card) — the only shape where the break is visible, so a runner that ports a tall page has not been tested. In behavior mode the artifact is the shipped CSS rule; in comprehension a described rule counts; both have now been observed. "No page ported yet" is load-bearing: the graded sentence lives in the master-layout copy, so seeded built rows put the runner past the moment under test. Setup and prompt name no mount element, stylesheet, footer, layout chain, or `display: contents`.
 - leak: C2 CONFIRMED and FIXED 2026-08-18 — the setup named the mount container and stylesheet; pass voided, re-run de-leaked. "Fixture re-used verbatim" is not a mitigation for re-runs.
-- floor: FAIL 2026-08-18 (stub rulebook, Claude Sonnet 5) — three stub cells never treated the shell as a step; the sentence is not redundant with the doc.
+- floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

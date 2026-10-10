@@ -11,6 +11,6 @@
   - ACCEPTABLE, not required (added 2026-08-15): `NDS.Init.refresh(regionEl)` on the swapped region in place of `initializeContainer` — `core/refresh.md` names form controls in refresh's re-scan, so the core route is correct by canon; `syncState` per JS-written field and the `form.reset()` refusal still carry the grade.
   - MUST NOT: `form.reset()`; own listeners on `.nds-*` elements.
   - cite: "read the component's JS API (the index names where)" / index: "the banner at the top of `_source/_js/nds-<name>.js`: Rides, Methods, Events, Hooks, Gotchas" / forms banner: "Never call form.reset()"
-- floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C3-mild (audit 2026-08-17) — the prompt reveals a ban exists; passes are route-knowledge evidence, not unprompted-refusal evidence.
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

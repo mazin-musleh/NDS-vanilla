@@ -10,5 +10,5 @@
   - MUST: reach the sign-in example through a `use_when` match in the examples catalog; record the minimal chrome shape on the plan rows; build the head from the head canon and the body from the minimal shape's canon in the page layout doc, adding no topbar, mainnav, footer or hero it does not carry, without asking; take the page markup from the example's `.md`, its built page as the visual spec only.
   - MUST NOT: hand the dev a full-vs-minimal-vs-hybrid chrome question; build a topbar, mainnav or footer these pages have no use for; copy markup from a built page; match the catalog on entry titles.
   - cite: "Match by `use_when` across the template, example, and component catalogs, never by title" / "Copied chrome ships as-is"
-- floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
+- floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): minimal shape reached but called UNDEFINED.

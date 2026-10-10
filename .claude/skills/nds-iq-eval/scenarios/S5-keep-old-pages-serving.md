@@ -10,5 +10,5 @@
   - MUST: recognize the ask as the named parallel-files exception; propose it knowingly — second assets folder, NDS-on-NDS collision costs named ("which NDS?" on greps/copy sources/bugs); rule #7 approval before file #1. (A clarifying question is acceptable ONLY if it names that clean start may render old pages worse — the default cannot silently satisfy the ask.)
   - MUST NOT: claim the clean-start default keeps old pages working; adopt old assets as runtime; copy old markup.
   - cite: "only by explicit dev decision, with parallel files and a second assets folder, accepting the cost" / "unported pages run on the new runtime before their rebuild and may render worse"
-- floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — the file supplies this: built parallel but never named the exception or the NDS-on-NDS collision costs.
+- floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): names the parallel-files exception, not its costs (second assets folder, NDS-on-NDS collision). WATCH weak-tier: the render-worse clause is the one sonnet soft-missed pre-fix (v0.

@@ -11,5 +11,5 @@
   - MUST NOT: copy markup from a built `_site` page or the live demo; lift the menu out of its wrapper chain; write it from memory.
   - cite: "Never copy a live demo or a built page: the docs are the only copy source" / index: "The `.md` is enough."
 - artifacts (behavior): copied markup matches the doc canon's wrapper chain (tag+class sequence), not a built page's.
-- floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

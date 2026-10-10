@@ -12,5 +12,5 @@
   - cite: "A small dataset or a minimal existing page is no reason to remove one. A matched source ships every part; name any domain-required removal to the dev before the page is done." / "equal counts, or each difference named"
 - grading note: the artifact carries the grade — diff the built page's control bar member-by-member against `manage-records.md`'s toolbar block; "I followed the source" as prose passes nothing. The stub cell grades on substance (no rule #3 exists there): a complete copy or a flagged cut on ordinary judgment passes; a silent parity trim fails. Behavior form: `assemble.mjs --fixture mini-spa --state spa-post-review`; mechanical half `tools/grade/s84-members.mjs`. The seeded row must never enumerate members (de-leaked 2026-08-17). The prompt never names the toolbar, the source, or completeness.
 - leak: C1 CONFIRMED (audit 2026-08-17) — the leaked PASS-PASS pair was voided.
-- floor: see baseline — the de-leaked pair is the floor evidence.
+- floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

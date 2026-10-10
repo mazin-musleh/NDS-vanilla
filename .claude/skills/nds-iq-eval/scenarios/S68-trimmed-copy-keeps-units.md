@@ -11,5 +11,5 @@
   - ACCEPTABLE, not required: naming the mobile width as where the radial mode bites. Relaxed from a MUST 2026-08-14 after the first exposure: no file sentence states the radial↔mobile pairing, so an agent cannot be graded on it (the S4/S17 over-ask lesson).
   - MUST NOT: re-type the stepper from memory of what three steps need; drop a class or block because the current viewport doesn't show its purpose; treat the SVG as optional decoration.
   - cite: "Preserve structure, classes, `data-*` attributes, and ARIA." / "Keep every canonical part, in order." / "never rebuild it"
-- floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

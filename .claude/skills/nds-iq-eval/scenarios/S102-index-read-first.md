@@ -11,5 +11,5 @@
   - MUST NOT: name a doc path before the index read; copy from a built page; read the built page as a source.
   - cite: "Read it first, once per session."
 - leak: C3-mild — the prompt asks for the read order, which is the graded behavior (comprehension cannot see it otherwise).
-- floor: not run.
+- floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

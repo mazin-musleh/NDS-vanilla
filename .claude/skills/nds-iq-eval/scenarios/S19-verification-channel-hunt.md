@@ -10,6 +10,6 @@
   - MUST: drive both passes headlessly from its own tool loop — its own headless browser (tooling kept outside the project), or the existing `tools/e2e/` harness run as is; either counts, since neither adds tooling to the project (rubric re-pointed 2026-10-10: §Verify puts the own headless browser first and an existing harness at fallback 1, so a MUST of harness-first graded against the rules); behavioral pass = scripted load capturing console (`NDS`-prefixed warnings) plus `NDS.Init.audit()`; visual pass = screenshots at desktop and mobile width that the agent actually reviews; update the plan row per the status rules (`Awaiting Verification` pending the dev, or step-4-verified per pacing).
   - MUST NOT: emit the dev checklist while either channel is drivable; add browser packages to the project or touch its lockfile; report verified from code alone; treat "no graphical browser" as "cannot see the page".
   - cite: "Drive both passes headlessly" / "only after the headless attempt fails, and report the failure" / "An existing browser tool or harness"
-- floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
+- floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C2-mild (audit 2026-08-17) — the setup names the harness, so the hunt half is behavior mode's to grade; passes cover using-what-is-known.
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5): own headless browser first, tooling outside the project.

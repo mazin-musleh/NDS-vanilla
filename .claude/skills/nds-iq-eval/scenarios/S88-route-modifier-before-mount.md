@@ -12,5 +12,5 @@
   - cite: "sets each route's classes for that route only, before the framework mounts; never in a mount effect, never on every route" / "Layout state (the shape's classes) is in the first HTML the browser paints."
 - grading note: the mixed-shape app is load-bearing — an all-console app licenses a static class in `index.html` and the route-dependent branch under guard goes untested. A runner that widens every route has hit a MUST NOT, not found a variant pass. The recorded console shape is canonical plan output, not a leak: the graded answer is the class and its timing. Setup and prompt name no modifier class, `<body>` class, timing, frame, or first paint.
 - leak: authored blind 2026-08-20; same-hand residual as S87.
-- floor: not run.
+- floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
