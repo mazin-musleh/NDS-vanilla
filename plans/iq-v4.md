@@ -189,9 +189,9 @@ Size: no target. It is whatever the rules need. Expected around 15–20 KB.
 - **camelCase leftovers: DONE 2026-10-09 on main.** Top bar ids `nds-real-time-clock`, `nds-city-name`, `nds-weather-info` (rows in `_data/migrations.yml`); files `nds-time-date.js`, `nds-city-weather.js`; `plans/docs-rewrite.md` status fixed.
 - **Merged into main 2026-10-09** (fast-forward; branch deleted). The v4 rules ride as the draft; nothing publishes (`plans/iq-publish.md`).
 - **Release day:**
-  1. tag `0d0e3a10` (branch `iq-v3.2`) as `IQv3.2`
+  1. DONE 2026-10-10: `0d0e3a10` (branch `iq-v3.2`) tagged `IQv3.2` and pushed alone; its raw link serves v3.2, raw main still v3.1
   2. `python scripts/publish-iq.py`, then `--apply`: copies the draft, commits, tags `IQv4.0`
-  3. `git push origin main IQv3.2 IQv4.0`
+  3. `git push origin main IQv4.0`
   4. `evolve`
 
   Each step on the owner's go.
