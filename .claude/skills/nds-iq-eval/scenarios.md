@@ -32,7 +32,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S15 | menu-clipping-in-modal | c | dropmenu portal via banner Rides | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S17 | banner-first-install | c | banner-first restore, -dev report, flattened layout | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:field |
 | S18 | old-template-not-a-blocker | c | older template proceeds on the matching tag; _source population | SOFT 2026-10-10 full v4 (Sonnet 5.5): 2.3.0 restore right; the missing-banner gap and _source population unnamed | floor:FAIL v4 2026-10-09 · ev:field |
-| S19 | verification-channel-hunt | c | step 4: project's own harness before the checklist | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · leak:C2-mild · ev:field |
+| S19 | verification-channel-hunt | c | step 4: headless first (own browser or the project's harness), never the checklist while one is drivable | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · leak:C2-mild · ev:field |
 | S20 | stray-runtime-discovery | c | empty NDS_ASSETS proves nothing; stray-runtime sweep | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · leak:C2 · ev:field |
 | S21 | legacy-globals | c | rule #6 globals: CSS never carried, JS = legacy library | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S22 | inherited-plan-clean-start | c | inherited plan never resumed; clean-start footprint | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
