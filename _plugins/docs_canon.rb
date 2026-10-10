@@ -422,8 +422,8 @@ module DocsCanon
     end
 
     # Shared doc-section knobs (DOC_STYLE). Written at build, not by JS, so the page paints in its
-    # final layout.
-    html = html.sub('</head>', "<style>#{DOC_STYLE}</style>\n</head>")
+    # final layout. data-nds-doc keeps the audit's site-CSS checks off it.
+    html = html.sub('</head>', "<style data-nds-doc>#{DOC_STYLE}</style>\n</head>")
 
     # Markdown backtick code gets the NDS inline-code look, in its own language. A JS or CSS
     # table (by its first header) sets the default for the codes in its name and value

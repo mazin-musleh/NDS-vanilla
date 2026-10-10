@@ -371,9 +371,9 @@
     // The site's own sheets: NDS's carry the deprecated aliases on purpose, and a cross-origin
     // sheet throws on cssRules.
     const OWN = /\/(nds[-.][\w.-]*|hgi-[\w-]*)\.css(\?|#|$)|\/docs-assets\//;
-    // NDS's inline <style>s: an event pack's sheet, and the head's fold copy.
+    // NDS's inline <style>s: an event pack's sheet, the docs site's, and the head's fold copy.
     // ponytail: the fold is known by its topbar reservation; mark the tag if that ever moves.
-    const ownStyle = (n) => n?.tagName === 'STYLE' && (n.hasAttribute('data-nds-event-style') || n.textContent.includes(':where(.nds-topbar)'));
+    const ownStyle = (n) => n?.tagName === 'STYLE' && (n.hasAttribute('data-nds-event-style') || n.hasAttribute('data-nds-doc') || n.textContent.includes(':where(.nds-topbar)'));
     const walkRules = (sheet, fn) => {
         const walk = (list) => { for (const r of list) { if (r.selectorText) fn(r); if (r.cssRules) walk(r.cssRules); } };
         try { walk(sheet.cssRules); return true; } catch (e) { return false; /* cross-origin */ }
@@ -406,6 +406,58 @@
     const STATE = /^(--[\w-]+)-(default|hovered|pressed|selected|focused|disabled)$/;
     const customOnly = (style) => [...style].every(p => p.startsWith('--'));
 
+    // What NDS's own sheets declare: their classes, the nds- classes of each selector, and the tokens
+    // at :root in light mode, in dark mode, and with the dark-area selector. null when the sheets
+    // come from another origin.
+    function ndsSheets() {
+        const nds = { classes: new Set(), items: [], light: new Set(), dark: new Set(), area: new Set() };
+        let readable = false;
+        for (const sheet of document.styleSheets) {
+            if (!sheet.href || !OWN.test(sheet.href)) continue;
+            readable = walkRules(sheet, r => {
+                const it = selItems(r.selectorText);
+                for (const s of it) {
+                    const cls = new Set([...s.matchAll(/\.(nds-[\w-]+)/g)].map(m => m[1]));
+                    if (cls.size) { nds.items.push(cls); cls.forEach(c => nds.classes.add(c)); }
+                }
+                const dark = it.some(s => DARK_MODE.test(s)), root = it.includes(':root'), area = it.some(s => DARK_AREA.test(s));
+                if (!dark && !root) return;
+                for (const p of r.style) if (p.startsWith('--')) { nds[dark ? 'dark' : 'light'].add(p); if (area) nds.area.add(p); }
+            }) || readable;
+        }
+        return readable ? nds : null;
+    }
+    const isToken = (nds, p) => nds.light.has(p) || nds.dark.has(p);
+
+    // A site sheet before the NDS one loses every tie with it, so its overrides of NDS do nothing.
+    rule({ id: 'css-order', group: 'page', docs: 'components/tokens.html', check(ctx) {
+        const main = document.querySelector('link[rel="stylesheet"][href*="nds-main"]');
+        const nds = main && ndsSheets();
+        if (!nds) return;
+        for (const sheet of document.styleSheets) {
+            const n = sheet.ownerNode;
+            if (!n || (sheet.href && OWN.test(sheet.href)) || ownStyle(n) || !(main.compareDocumentPosition(n) & Node.DOCUMENT_POSITION_PRECEDING)) continue;
+            let touches = false;
+            walkRules(sheet, r => { touches ||= /\.nds-/.test(r.selectorText) || [...r.style].some(p => isToken(nds, p)); });
+            if (touches) ctx.report(n, `${sheet.href || 'an inline <style>'} styles NDS but loads before the NDS stylesheet, so NDS wins every tie and the override does nothing.`,
+                'Load it after the NDS stylesheet.');
+        }
+    } });
+
+    // An override is the last resort, and it names a project hook so it never restyles NDS everywhere.
+    rule({ id: 'nds-restyle', group: 'page', docs: 'components/tokens.html', check(ctx) {
+        const bySheet = new Map();
+        for (const { sel, style, where } of siteRules()) {
+            if (customOnly(style)) continue;
+            // A project class, an id, or a data-* that is not an NDS state names the site's own scope.
+            const bare = selItems(sel).filter(s => /\.(nds|hgi)-/.test(s) && !/\.(?!nds-|hgi-)-?[_a-zA-Z]|#|\[data-(?!state|status|theme|nds-)/.test(s));
+            if (bare.length) (bySheet.get(where) || bySheet.set(where, []).get(where)).push(...bare);
+        }
+        bySheet.forEach((sels, where) => ctx.report(null,
+            `${where} restyles NDS classes with no project class in the selector (${[...new Set(sels)].slice(0, 3).join(', ')}${sels.length > 3 ? ', …' : ''}): ${sels.length} selector${sels.length > 1 ? 's' : ''}.`,
+            'Use the component\'s knobs or a token. When an override is the only way, scope it under a project class or data-* attribute, and comment why.', undefined, sels.length));
+    } });
+
     // A site rule on bare tags (body, h1, a, input) reaches every NDS element on the page.
     rule({ id: 'global-element-css', group: 'page', check(ctx) {
         const bySheet = new Map();
@@ -422,25 +474,15 @@
     // A token override follows the tokens doc: every state of a family, a dark value when NDS has one,
     // and the dark-area selector on both rules. Judged only when NDS's own sheets are readable.
     rule({ id: 'token-dark', group: 'page', docs: 'components/tokens.html', check(ctx) {
-        const nds = { light: new Set(), dark: new Set(), area: new Set() };
-        let readable = false;
-        for (const sheet of document.styleSheets) {
-            if (!sheet.href || !OWN.test(sheet.href)) continue;
-            readable = walkRules(sheet, r => {
-                const it = selItems(r.selectorText);
-                const dark = it.some(s => DARK_MODE.test(s)), root = it.includes(':root'), area = it.some(s => DARK_AREA.test(s));
-                if (!dark && !root) return;
-                for (const p of r.style) if (p.startsWith('--')) { nds[dark ? 'dark' : 'light'].add(p); if (area) nds.area.add(p); }
-            }) || readable;
-        }
-        if (!readable) return;
+        const nds = ndsSheets();
+        if (!nds) return;
         const set = new Map();   // name → { light, dark, lightArea, darkArea }
         for (const { sel, style } of siteRules()) {
             const it = selItems(sel);
             const dark = it.some(s => DARK_MODE.test(s)), root = it.includes(':root'), area = it.some(s => DARK_AREA.test(s));
             if (!dark && !root) continue;
             for (const p of style) {
-                if (!nds.light.has(p) && !nds.dark.has(p)) continue;
+                if (!isToken(nds, p)) continue;
                 const s = set.get(p) || set.set(p, {}).get(p);
                 if (dark) { s.dark = true; s.darkArea ||= area; } else { s.light = true; s.lightArea ||= area; }
             }
@@ -521,6 +563,39 @@
             // Reading a gone property gets nothing, even one NDS never read.
             reportRow(ctx, r, null, msg, r.inert && !read, sels.size);
         });
+    } });
+
+    // Baked by js_processor.rb from the docs' canons, includes and scripts.
+    const ANATOMY = /*@anatomy*/{};
+
+    // An nds- class that no NDS sheet, doc or script has is invented markup: it gets nothing.
+    // Judged only when NDS's own sheets are readable; an old name is migration-markup's.
+    rule({ id: 'unknown-class', check(ctx) {
+        const nds = ndsSheets();
+        if (!nds) return;
+        const known = new Set([...(ANATOMY.known || []), ...nds.classes]);
+        const hits = new Map();
+        for (const el of ctx.find('[class*="nds-"]')) {
+            for (const c of el.classList) {
+                if (!c.startsWith('nds-') || c.startsWith('nds-hgi-') || known.has(c) || byKind.class?.has(c)) continue;
+                (hits.get(c) || hits.set(c, []).get(c)).push(el);
+            }
+        }
+        hits.forEach((els, c) => ctx.report(els[0], `class "${c}" is not an NDS class, so it gets no NDS style or behavior${els.length > 1 ? ` (${els.length} elements; the first is shown)` : ''}.`,
+            'Copy the class from the component\'s canon.', undefined, els.length));
+    } });
+
+    // A part outside its component root still renders, but loses what the root gives it. A part
+    // NDS also styles on its own is free to stand alone. toolbar-part covers the toolbar.
+    rule({ id: 'part-outside', check(ctx) {
+        const nds = ndsSheets();
+        if (!nds) return;
+        for (const [part, root] of Object.entries(ANATOMY.parts || {})) {
+            if (root === 'nds-toolbar' || nds.items.some(s => s.has(part) && !s.has(root))) continue;
+            const lost = ctx.find('.' + part).filter(el => !el.closest('.' + root));
+            if (lost.length) ctx.report(lost[0], `.${part} outside a .${root}${lost.length > 1 ? ` (${lost.length} elements; the first is shown)` : ''}.`,
+                `Keep it inside its .${root}, as the canon has it.`, undefined, lost.length);
+        }
     } });
 
     NDS.Audit = { run, rule, rules: RULES };

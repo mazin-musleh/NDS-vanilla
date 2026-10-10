@@ -221,7 +221,7 @@ class JSProcessor
   def bundle_deps(bundle_name, source_files)
     deps = source_files.map { |sf| File.join(@source_dir, sf) }
     deps += injected_bundles.values.flatten.map { |sf| File.join(@source_dir, sf) } if bundle_name == 'nds-main.min.js'
-    deps << MIGRATIONS if bundle_name == 'nds-audit.min.js'
+    deps += [MIGRATIONS] + anatomy_sources if bundle_name == 'nds-audit.min.js'
     (deps + global_deps).uniq
   end
 
@@ -235,6 +235,48 @@ class JSProcessor
       [r['kind'], r['name'], r['scope'] || 0, r['status'], r['use'] || 0, r['since'].to_s, fix || 0, r['inert'] ? 1 : 0]
     end
     JSON.generate(rows)
+  end
+
+  # The audit's anatomy: every nds- name the docs, includes, data and scripts use (known), and each
+  # part that sits inside its component root in every canon (parts: part → root). A part inside
+  # a -menu is left out: the menu may portal to <body>.
+  ANATOMY_DOCS = '{components,ui-shell,layout,utilities,core}/*.md'
+  ANATOMY_NAME = /(?<![\w-])nds-[a-z0-9]+(?:-[a-z0-9]+)*/
+  VOID_TAGS = %w[area base br col embed hr img input link meta source track wbr].freeze
+  def anatomy_sources
+    Dir.glob(ANATOMY_DOCS) + Dir.glob('{templates,examples}/*.md') + Dir.glob('{_includes,_layouts}/**/*.html') +
+      Dir.glob('_js/**/*.js') + Dir.glob('_data/**/*.yml') + Dir.glob('_plugins/*.rb')
+  end
+  def anatomy_js
+    known = anatomy_sources.flat_map { |f| File.read(f, encoding: 'utf-8').scan(ANATOMY_NAME) }.uniq.sort
+    ancestors = Hash.new { |h, k| h[k] = [] }
+    Dir.glob(ANATOMY_DOCS).each do |f|
+      File.read(f, encoding: 'utf-8').scan(/<script\b([^>]*\bdata-canon\b[^>]*)>(.*?)<\/script>/m) do |attrs, body|
+        next if attrs =~ /data-lang="(js|css)"|data-generated|data-escaped/
+        stack = []
+        body.gsub(/<!--.*?-->/m, '').scan(/<(\/)?([a-zA-Z][\w-]*)([^>]*?)(\/)?>/) do |close, tag, rest, self_close|
+          tag = tag.downcase
+          if close
+            i = stack.rindex { |e| e[0] == tag }
+            stack = stack[0...i] if i
+            next
+          end
+          classes = (rest[/\bclass\s*=\s*"([^"]*)"/, 1] || '').split.grep(/\Ands-/)
+          above = stack.flat_map(&:last)
+          classes.each { |c| ancestors[c] << above }
+          stack << [tag, classes] unless VOID_TAGS.include?(tag) || self_close
+        end
+      end
+    end
+    parts = {}
+    ancestors.each do |c, sets|
+      segs = c.split('-')
+      root = (segs.length - 1).downto(2).map { |k| segs[0...k].join('-') }.find { |r| ancestors.key?(r) }
+      next unless root
+      next if sets.any? { |a| a.any? { |x| x.end_with?('-menu') } }
+      parts[c] = root if sets.all? { |a| a.include?(root) }
+    end
+    JSON.generate({ known: known, parts: parts })
   end
 
   # A bundle is stale when its output is missing or older than any dependency.
@@ -368,6 +410,8 @@ class JSProcessor
           # A lost marker would ship an audit that silently finds no old names.
           raise 'nds-audit.js: /*@migrations*/[] marker missing' unless original_content.include?('/*@migrations*/[]')
           original_content = original_content.sub('/*@migrations*/[]') { migrations_js }
+          raise 'nds-audit.js: /*@anatomy*/{} marker missing' unless original_content.include?('/*@anatomy*/{}')
+          original_content = original_content.sub('/*@anatomy*/{}') { anatomy_js }
         end
         processed_files << file_path
         bundle_size += original_content.length
