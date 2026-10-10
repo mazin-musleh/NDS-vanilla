@@ -334,14 +334,14 @@ This is a rewrite, not a conversion. Each page is written fresh from its SCSS, i
 - **Gates:** the floor gate for each new sentence, then one `nds-iq-eval` gate.
 - **Housekeeping:** update the "Docs rewrite" item in TODO.md.
 
-### Phase 5: cleanup — DONE 2026-10-08 (the review of the inline-code guess stays open)
+### Phase 5: cleanup — DONE 2026-10-08
 
 Once the last page is migrated. The upload fake moved to `nds-docs.js`, for any upload in a preview; the event pages' code cards became `.nds-block` with a block title.
 - Delete `_js/nds-showcase.js`, `_sass/_showcase.scss` and `docs-assets/css/nds-showcase.min.scss`.
 - Remove the showcase `<link>` from `_includes/head.html:55` and the showcase `<script>` tags from `_layouts/default.html`, `minimal.html` and `shell.html`.
 - Remove the `exclude_showcase` flag.
 - Run `ruby _plugins/js_processor.rb`.
-- **Review the inline-code language guess** (owner call 2026-09-25, f835e790): `docs_canon.rb` `code_lang` picks `lang-html/js/css` for backtick code by its shape, and a Method/Option/Event/Action key (JS) or Property (CSS) table sets the default for its name and value columns. A bare JS word in prose (`duration` in Best Practices) still reads as HTML. Decide: keep the guess, add an explicit `{: .lang-x}` marker, or both.
+- **Review the inline-code language guess** (owner call 2026-09-25, f835e790): `docs_canon.rb` `code_lang` picks `lang-html/js/css` for backtick code by its shape, and a Method/Option/Event/Action key (JS) or Property (CSS) table sets the default for its name and value columns. A bare JS word in prose (`duration` in Best Practices) still reads as HTML. **Settled 2026-10-10 (owner): keep the guess, no marker.** The language only sets the color, HTML and CSS share one, and a marker is one more rule for a shade.
 
 ## Critical files
 
