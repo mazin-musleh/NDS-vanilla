@@ -112,6 +112,9 @@
 - { kind: attribute, name: data-duration, scope: "&:is([data-counter], .nds-counter-value)", status: renamed, use: data-counter-duration, since: "2.0.0", fix: "Use data-counter-duration." }
 - { kind: attribute, name: data-free, scope: "&.nds-number-format", status: removed, since: "2.0.0", fix: "Leave out data-currency and write the label, such as Free." }
 - { kind: attribute, name: data-loading, scope: "&.nds-slider-container", status: renamed, use: nds-loading, since: "2.0.0", fix: "Use the nds-loading class." }
+- { kind: attribute, name: data-nds-code-processed, scope: "&code", status: renamed, use: data-nds-code-highlighted, since: "2.0.0", fix: "Read data-nds-code-highlighted instead; to highlight a block again after you replace its text, call NDS.Code.reprocessCodeElement(code)." }
+- { kind: attribute, name: data-nds-fonts-loaded, scope: "&html", status: removed, since: "2.0.0", fix: "Remove any rule keyed on it: icons hold their box from the first paint, with no font gate." }
+- { kind: attribute, name: data-nds-icons-loaded, scope: "&html", status: removed, since: "2.0.0", fix: "Remove any rule keyed on it: icons hold their box from the first paint, with no font gate." }
 - { kind: attribute, name: data-open-on, scope: .nds-drawer, status: removed, since: "2.0.0", fix: "Remove it: a drawer no longer opens by screen width. To start an item open, write data-state=\"open\" on the <li> and its <ul>, and aria-expanded=\"true\" on its button." }
 - { kind: attribute, name: data-start, scope: "&:is([data-counter], .nds-counter-value)", status: renamed, use: data-counter-start, since: "2.0.0", fix: "Use data-counter-start." }
 - { kind: attribute, name: data-target, scope: "&.nds-counter-value", status: renamed, use: data-counter, since: "2.0.0", fix: "Write the end value in data-counter." }
