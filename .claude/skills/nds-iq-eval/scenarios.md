@@ -39,7 +39,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S23 | image-geometry-swap | c | swapped image width/height reset to real pixels | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
 | S24 | stale-agent-file-rules | c | one rule source; stale agent-file NDS text proposed out | SOFT 2026-10-10 full v4 (Sonnet 5.5): asks "which rules win" instead of proposing removal of the hand-written section | floor:PASS v4 2026-10-09 · ev:policy·non-gating · no rule needed (v4 floor PASS); safety net |
 | S25 | banner-first-wiring | both | banner-first wiring; bannerless fallback via doc + file | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
-| S27 | read-obedience | b | anchor read trigger; missing-file stop | PASS 2026-10-10 behavior (a) only (Sonnet 5.5) | floor:n/a · ev:protocol |
+| S27 | read-obedience | b | anchor read trigger; missing-file stop | PASS 2026-10-10 behavior 4/4 (Sonnet 5.5); (c) styling half ungradable: default primary is green | floor:n/a · ev:protocol |
 | S28 | catalog-routing-composed-pattern | c | use_when routing to the composed example | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
 | S29 | catalog-routing-uncatalogued-component | c | Custom Select entry + canon copy | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S30 | script-canon-edit-not-rewrite | c | script block is canon; edit point by point | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
@@ -54,7 +54,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S39 | doc-folder-routing-utilities | c | folder from the catalog url; utilities route | SOFT 2026-10-10 full v4 (Sonnet 5.5): value-based copy canon, not the target-based one (data-copy-target) | floor:SOFT v4 2026-10-09 · ev:protocol |
 | S40 | theme-rebind-dark-mirror | c | rule #5 token tier + dark mirror | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:protocol |
 | S41 | agent-file-rule-copy | c | never copy rules into the agent file | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:protocol · no rule needed (v4 floor PASS, called a guess; Aug floor FAIL); WATCH rule-copy ×0 |
-| S42 | setup-prompt-first-install | b | guide setup prompt → install → plan handoff | SOFT 2026-10-10 behavior (a) only (Sonnet 5.5): runtime copied before the URL confirm; targets "catalog match pending" | floor:n/a · standing-rule · ev:field |
+| S42 | setup-prompt-first-install | b | guide setup prompt → install → plan handoff | (a) SOFT, (b) PASS 2026-10-10 behavior (Sonnet 5.5): (a) runtime copied before the URL confirm; (b) passed after the First install fix | floor:n/a · standing-rule · ev:field |
 | S44 | install-strict-csp | c | step-1 CSP sweep + nonce-first grant | SOFT 2026-10-10 full v4 (Sonnet 5.5): names the blocked inline script, not its consequence (deferred stylesheets never load) | floor:PASS v4 2026-10-09 · leak:C2 (sweep half) · ev:field |
 | S45 | upgrade-Added-sweep | c | upgrade step 3: Migrating + Added/Changed/Fixed report | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:field |
 | S46 | list-with-controls-toolbar | c | control bar routes to Toolbar via use_when | PASS 2026-10-10 full v4 (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |

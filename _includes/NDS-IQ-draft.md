@@ -256,7 +256,7 @@ Two pieces: **`NDS-IQ.md`** at the project root, committed and replaced whole on
 
 **Update:** compare raw main's content with the project-root copy; any difference is a newer revision, installed on dev approval (an explicit update request is approval). Download with curl or the stack's HTTP client, never a web-fetch tool. Accept it only if line 1 starts `# NDS IQ`; otherwise discard and retry once, and after a second failure report it and keep the installed copy. Replace the root copy whole (no merging, anchor untouched), then read it again before continuing.
 
-**First install:** download the raw file to the project root, add the anchor with `NDS_ROOT=.nds/` and the `NDS_ASSETS` path the dev confirmed, commit both, then run the §Plan inventory and create `NDS-PLAN.md`.
+**First install:** download the raw file to the project root, add the anchor with `NDS_ROOT=.nds/` and the `NDS_ASSETS` path the dev confirmed (a placeholder until then; the plan does not wait for it), commit both, then run the §Plan inventory and create `NDS-PLAN.md`.
 
 The anchor, with `NDS_ASSETS` set to the project's static folder, relative to the project root:
 
