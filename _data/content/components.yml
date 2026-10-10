@@ -95,7 +95,7 @@
 
 - title: "Breadcrumb"
   description: "Hierarchical path showing the current page location"
-  use_when: "The path trail showing where the current page sits: breadcrumbs, hierarchy path, back-navigation trail. On template pages it is set from front matter, not hand-written."
+  use_when: "The path trail showing where the current page sits: breadcrumbs, hierarchy path, back-navigation trail."
   icon: '<i class="hgi hgi-stroke hgi-arrow-right-double"></i>'
   category: "UI"
   tags: ["JS", "CSS", "API"]
@@ -427,8 +427,8 @@
   scss: _sass/components/_fab.scss
 
 - title: "Footer"
-  description: "Multi-column footer with light and green variants"
-  use_when: "The site footer: multi-column links, contact details, and legal links, in light or green variants."
+  description: "Multi-column footer on the brand surface or light"
+  use_when: "The site footer: multi-column links, contact details, and legal links, on the brand surface (default) or light."
   icon: '<i class="hgi hgi-stroke hgi-layout-bottom"></i>'
   category: "UI Shell"
   tags: ["CSS"]
@@ -446,7 +446,7 @@
 
 - title: "Header"
   description: "The region at the top of the page where the top bar, digital stamp panel, and main navigation compose"
-  use_when: "How the top bar, the DGA digital stamp panel, and the main navigation compose into one header region: their order, and why the header draws no box. Copy each part from its own page, or the whole header from a built page. For the navigation bar itself, its dropdown menus and its JS API, use Main Navigation. For the government branding strip use Top Bar."
+  use_when: "How the top bar, the DGA digital stamp panel, and the main navigation compose into one header region: their order, and why the header draws no box. Copy each part from its own page. For the navigation bar itself, its dropdown menus and its JS API, use Main Navigation. For the government branding strip use Top Bar."
   icon: '<i class="hgi hgi-stroke hgi-navigation-01"></i>'
   category: "UI Shell"
   tags: ["CSS"]
@@ -454,7 +454,7 @@
 
 - title: "Hero"
   description: "Full-width page banners with slider and call-to-action"
-  use_when: "The banner at the top of a page: page hero, sub-hero, homepage slider, title block with a call-to-action. Usually set from page front matter, so copy it from a built page."
+  use_when: "The banner at the top of a page: page hero, sub-hero, homepage slider, title block with a call-to-action. A sub hero on most pages, a main hero slider on a home page."
   icon: '<i class="hgi hgi-stroke hgi-image-02"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS"]
@@ -527,7 +527,7 @@
 
 - title: "Main Navigation"
   description: "Primary navigation bar with branding, mega-menu dropdowns, utility actions, and a mobile drawer"
-  use_when: "The primary navigation bar of a site: branding, top-level links, mega-menu dropdowns in column, row or multi-column layouts, utility actions, and the mobile hamburger drawer. Use for main nav, top nav, navbar, site navigation, primary menu, or mega menu requests. Documented on its own page, split out of Header. For section navigation inside a page tree use Side Menu. For the government branding strip above it use Top Bar."
+  use_when: "The primary navigation bar of a site: branding, top-level links, mega-menu dropdowns in column, row or multi-column layouts, utility actions, and the mobile hamburger drawer. Use for main nav, top nav, navbar, site navigation, primary menu, or mega menu requests. For section navigation inside a page tree use Side Menu. For the government branding strip above it use Top Bar."
   icon: '<i class="hgi hgi-stroke hgi-menu-02"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
@@ -622,7 +622,7 @@
 
 - title: "Page Layout"
   description: "The body structure every page shares, with the classes that switch chrome shape"
-  use_when: "Build the page skeleton before any content: the body structure, the chrome regions, and the classes that switch between the home, content page, minimal, and console shapes. Read this when you start a new page, pick a chrome shape, or mount a framework app inside NDS markup. It also names the two ways a page gets its chrome. A layout can inject the header, hero, and footer, which is what every page on this site does. Or the page composes them itself on the shell layout, so one file holds the whole page and its source reads as a complete document. Use the second when you want a standalone or full page in a single file, and copy the Home Page Template for it."
+  use_when: "Build the page skeleton before any content: the body structure, the chrome regions, and the classes that switch between the home, content page, minimal, and console shapes. Read this when you start a new page, pick a chrome shape, or mount a framework app inside NDS markup. It also covers the two ways a page gets its chrome: a layout injects the header, hero, and footer, or the page writes them itself. For a whole page in one file, copy the Home Page Template."
   icon: '<i class="hgi hgi-stroke hgi-layout-01"></i>'
   category: "Layout"
   tags: ["CSS"]
@@ -687,7 +687,7 @@
 
 - title: "Rating"
   description: "Star-based display and input for user ratings"
-  use_when: "Star ratings, both read-only display and user input."
+  use_when: "Star ratings, both read-only display and user input: a review score, a product or service rating, a rate-this field. For a full survey or was-this-helpful prompt use User Feedback."
   icon: '<i class="hgi hgi-stroke hgi-star"></i>'
   category: "UI"
   tags: ["JS", "CSS", "API"]
@@ -772,7 +772,7 @@
 
 - title: "Side Info"
   description: "Companion column for service details, progress, and in-page navigation"
-  use_when: "The companion column beside main content: service details, progress, a contact card, in-page navigation. Layout-coupled, so copy it from a full template page rather than in isolation."
+  use_when: "The companion column beside main content: service details, progress, a contact card, in-page navigation. Its parent needs `nds-has-sideinfo`: see Page Layout."
   icon: '<i class="hgi hgi-stroke hgi-layout-right"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
@@ -782,7 +782,7 @@
 
 - title: "Side Menu"
   description: "Collapsible nested sidebar navigation"
-  use_when: "The collapsible nested sidebar for section navigation, common on admin screens and documentation. Layout-coupled, so copy it from a full page."
+  use_when: "The collapsible nested sidebar for section navigation, common on admin screens and documentation. Its parent needs `nds-has-sidemenu`, or the menu stays hidden: see Page Layout."
   icon: '<i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS"]
@@ -812,7 +812,7 @@
 
 - title: "Status Section"
   description: "Whole-page or inline outcome message with a status icon, a title, and one action"
-  use_when: "Report one outcome on its own page or as a section: page not found, 404, 500, access denied, request submitted, thank-you or confirmation page, payment failed, order received, form sent. A centered icon or illustration over a title, a short message, and a way out. For a message inside a form or a page region use Alert; for a chip on its own use Feedback icons."
+  use_when: "Report one outcome on its own page or as a section: page not found, 404, 500, access denied, request submitted, thank-you or confirmation page, payment failed, order received, form sent. A centered icon or illustration over a title, a short message, and a way out. For a message inside a form or a page region use Alert; for a status icon on its own use Feedback Icons."
   icon: '<i class="hgi hgi-stroke hgi-alert-circle"></i>'
   category: "Layout"
   tags: ["CSS"]
