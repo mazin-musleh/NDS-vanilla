@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 11:27 PM"
 ---
 
 <section id="footer-overview" class="nds-content-section nds-doc-overview">
@@ -246,7 +246,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
 - Put the most used links in the first column, and contact and social links last.
 - Do not repeat the main navigation. The footer is for secondary pages, contact details, social profiles and legal notices.
 - Start contact links with an icon (location, phone, email), so they are quick to scan.
-- Always include privacy, terms and accessibility links in `.nds-footer-policy`. Government sites must have them.
+- Always include privacy, terms and accessibility links in `.nds-footer-policy`. Government sites must have them. Until a page exists, leave its link out and record it for the dev: a link to `#` goes nowhere.
 - Give every icon-only button an `aria-label`, and the same text in `title` for its tooltip.
 - Open social profiles, app stores and other external sites in a new tab, with `target="_blank"`.
 - Keep `nds-brand` unless the design asks for the light footer.

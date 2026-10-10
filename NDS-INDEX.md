@@ -6,6 +6,7 @@ The NDS IQ rules name no files. This index maps each need to this release's file
 
 - **Version:** the opening comment of `_site/assets/js/nds-main.min.js` and `_site/assets/css/nds-main.min.css` reads `Version:`.
 - **Runtime:** copy `_site/assets/` into `NDS_ASSETS` whole, every subfolder included. Never copy `_site/docs-assets/`: it serves the docs site. The one exception is an event skin the dev wants, with its script.
+- **Images:** a template's photos are in `docs-assets/`, so they do not ship. A photo slot the project has no image for takes `img/placeholder.svg` from `NDS_ASSETS`, with a plan checkbox for the dev's photo.
 - **Sources:** from this release tag's source zip, copy these folders into `_source/`: `_js`, `_sass`, `components`, `utilities`, `layout`, `ui-shell`, `core`, `templates`, `examples`, `_data/content`.
 - **Release notes:** `CHANGELOG.md`.
 
@@ -38,7 +39,7 @@ Component, layout, shell, utility and core docs live in `_source/<folder>/<name>
 
 ## Page shapes
 
-- **Head:** the canon in `_source/ui-shell/head.md`.
+- **Head:** the canon in `_source/ui-shell/head.md`. Its asset URLs end in `?ver=` and the Liquid value `site.asset_ver`: write the runtime's `Version:` there, such as `?ver=2.0.0`, so an upgrade fetches the new files.
 - **Body:** each shape is a canon in `_source/layout/page-layout.md`: standard page, home, article, minimal, console, side menu, side info. The comments in a shape's header and footer name where those parts come from.
 - The Overview table there names the chrome of each shape (`full`, `minimal`, `console`) and a live page that uses it.
 

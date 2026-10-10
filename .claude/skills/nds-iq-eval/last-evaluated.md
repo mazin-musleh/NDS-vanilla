@@ -143,7 +143,7 @@ When a plan is required, create `NDS-PLAN.md` at the project root, starting with
    - Set both `<html lang>` and `dir`: Arabic → `ar`/`rtl`; others → `ltr`. A single-language site ships without the language switcher; a site in two languages keeps it.
 3. **Brand:** the project logo replaces the template's; drop the brand text when the logo already carries the name.
 
-**Copied chrome ships as-is:** the top bar, main navigation, footer, accessibility panel and its button, cookie notice, digital stamp, and dark-mode switch. Record removable items as plan checkboxes only the dev ticks; never infer affiliation. The one exception is the digital stamp: it claims a government verification, so the plan review asks whether the site holds it, and it ships only if so. Before page #2, wire project-backed controls to real session, API, or route data; remove what the project cannot back. Never ship a fake identity or a dead widget.
+**Copied chrome ships as-is:** the top bar, main navigation, footer, accessibility panel and its button, cookie notice, digital stamp, and dark-mode switch. Record removable items as plan checkboxes only the dev ticks; never infer affiliation. The one exception is the digital stamp: it claims a government verification, so the plan review asks whether the site holds it, and it ships only if so. Before page #2, wire project-backed controls to real session, API, or route data; remove what the project cannot back. Never ship a fake identity or a dead widget: a copied link or control with no real target, such as a footer link with no page behind it, is removed even from chrome, with a plan checkbox naming it.
 
 ### Composition cascade
 
