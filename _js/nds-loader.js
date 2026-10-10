@@ -591,10 +591,16 @@
                 const tier = matchMedia(NDS.breakpoints.desktop).matches ? 'max'
                     : matchMedia(NDS.breakpoints.tablet).matches ? 'mid' : 'min';
                 const tracks = [];
-                document.querySelectorAll('.nds-swiper:not([data-nds-swiper-initialized], [data-swiper-preset])').forEach(s => {
-                    const knob = prop => parseInt(s.style.getPropertyValue(prop)) || 0;
-                    const per = s.classList.contains('nds-spotlight') ? 1 : knob(`--${tier}-slides`) || 1;
-                    const peek = knob('--peek');
+                const swipers = [...document.querySelectorAll('.nds-swiper:not([data-nds-swiper-initialized], [data-swiper-preset])')];
+                // Every read before the first write: one style recalc, not one per swiper.
+                const knobs = swipers.map(s => {
+                    const cs = getComputedStyle(s);
+                    const knob = prop => parseInt(cs.getPropertyValue(prop)) || 0;
+                    return [knob(`--${tier}-slides`), knob('--peek')];
+                });
+                swipers.forEach((s, i) => {
+                    const per = s.classList.contains('nds-spotlight') ? 1 : knobs[i][0] || 1;
+                    const peek = knobs[i][1];
                     // Own slides only: a swiper nested in a slide must not add pages.
                     const w = s.querySelector('.nds-swiper-wrapper');
                     const pages = Math.ceil((w ? w.querySelectorAll(':scope > .nds-swiper-slide').length : 0) / per);

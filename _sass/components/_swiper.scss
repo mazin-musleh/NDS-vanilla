@@ -9,8 +9,15 @@
 // CONTAINER
 // ==============================================
 
+// Own value only: a nested swiper never takes its parent's, and JS reads the computed
+// value, so a class sets them as well as an inline style (strict CSP).
+@property --max-slides { syntax: '*'; inherits: false; }
+@property --mid-slides { syntax: '*'; inherits: false; }
+@property --min-slides { syntax: '*'; inherits: false; }
+@property --peek { syntax: '*'; inherits: false; }
+
 .nds-swiper {
-    // The author's knobs sit inline on the element (--max/mid/min-slides, --peek),
+    // The author's knobs sit on the element (--max/mid/min-slides, --peek),
     // so CSS sizes the row the moment main CSS applies — before any JS, in every
     // browser. --slides (loader preset, then init) wins once written; it is also
     // how the deprecated bare attributes still work, since only JS can read those.

@@ -11,7 +11,7 @@
  *   instance.destroy()
  * Events:
  *   nds:swiper:change (bubbles)     detail.index = the real slide now at rest, after every move
- * Hooks (knobs set inline on the swiper container's style attribute):
+ * Hooks (knobs set on the swiper container, inline or in a class; never inherited):
  *   .nds-spotlight                               the open slide rests in the middle at full size,
  *                                                the ones beside it shrink toward it. Loops,
  *                                                one slide at a time; a wide row shows three
@@ -180,7 +180,9 @@
             }
 
             // Static knobs — read once, reused on every breakpoint change.
-            const knob = prop => parseInt(container.style.getPropertyValue(prop)) || 0;
+            // Computed, not inline: a strict-CSP page sets them in a class.
+            const cs = getComputedStyle(container);
+            const knob = prop => parseInt(cs.getPropertyValue(prop)) || 0;
             this._slidesMax = knob('--max-slides') || 1;
             this._slidesMid = knob('--mid-slides') || 1;
             this._slidesMin = knob('--min-slides') || 1;
