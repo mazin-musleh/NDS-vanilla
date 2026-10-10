@@ -368,6 +368,19 @@
         });
     } });
 
+    // getElementById, a label's for and every data-*-target reach only the first of two.
+    // SVG ids are left out: an inline logo used twice repeats its gradient ids.
+    rule({ id: 'id-duplicate', severity: 'error', check(ctx) {
+        const byId = new Map();
+        ctx.find('[id]').forEach(el => {
+            if (el.closest('svg')) return;
+            byId.set(el.id, (byId.get(el.id) || []).concat(el));
+        });
+        byId.forEach((els, id) => {
+            if (els.length > 1) ctx.report(els[1], `id="${id}" is on ${els.length} elements: a lookup by id reaches only the first, ${els[0].tagName.toLowerCase()}.`, 'Give each element its own id, and point each reference at the one it means.', undefined, els.length);
+        });
+    } });
+
     // Markup sort wires a list no other sorter owns: a Filter or a Table sorts its own,
     // and the button is left unbound.
     rule({ id: 'sort-target-owned', docs: 'components/sort.html', check(ctx) {
