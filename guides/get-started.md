@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "10/10/2026 - 07:41 PM"
+last_edit: "10/10/2026 - 08:08 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -226,6 +226,7 @@ Continue: read NDS-PLAN.md and propose the next step.
                 </div>
 
                 <p>The work is done when every page in the plan is <code class="nds-inline-code lang-html">Built and Verified</code>. Pages marked <code class="nds-inline-code lang-html">Awaiting Verification</code> wait for your sign-off.</p>
+                <p>After that, ask for changes in plain words, with no plan. The agent checks each page it changes again, in the states the change touches. A change to a shared file, such as a layout or the project stylesheet, re-checks every page that loads it.</p>
 
                 <p>Long sessions drift. If the agent skips the plan or asks something the rules already answer, tell it to <strong>follow the IQ</strong>. It reads the rules again and gets back on track.</p>
 
