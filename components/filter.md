@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "10/10/2026 - 03:41 AM"
 ---
 
 <section id="filterOverview" class="nds-content-section nds-doc-overview">
@@ -273,7 +273,7 @@ Pick another component when:
 </div>
 </script>
 <script type="text/html" id="filter-part-count" data-canon>
-<span class="nds-bar-text" data-filter-target="flt-items"><span data-filter-count>8</span> services</span>
+<span class="nds-toolbar-text" data-filter-target="flt-items"><span data-filter-count>8</span> services</span>
 </script>
 <script type="text/html" id="filter-part-suggest" data-canon>
 <div class="nds-auto-fill" data-target="flt-search-input" data-filter-target="flt-items" data-autofill-apply>

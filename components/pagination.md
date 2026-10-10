@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "10/10/2026 - 03:41 AM"
 ---
 
 <section id="paginationOverview" class="nds-content-section nds-doc-overview">
@@ -207,13 +207,13 @@ Pick another component when:
 </script>
 <script type="text/html" id="pg-toolbar" data-canon>
 <div class="nds-toolbar">
-  <div class="nds-bar-start">
-    <span class="nds-bar-text" data-paged-target="pg-results">
+  <div class="nds-toolbar-start">
+    <span class="nds-toolbar-text" data-paged-target="pg-results">
       Showing <b data-paged-from>1</b>–<b data-paged-to>3</b> of <b data-paged-count>9</b> services
     </span>
   </div>
-  <div class="nds-bar-end">
-    <span class="nds-bar-text">Per page</span>
+  <div class="nds-toolbar-end">
+    <span class="nds-toolbar-text">Per page</span>
     <div class="nds-dropmenu" data-select-name="perPage" data-select-value="3" data-per-page-target="pg-results">
       <button type="button" class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" aria-label="Services per page">
         <span class="nds-label">3</span>

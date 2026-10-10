@@ -6,7 +6,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 const MEMBERS = [
-  ['count text', /nds-bar-text|data-paged-target/],
+  ['count text', /nds-toolbar-text|data-paged-target/],
   ['per-page menu', /data-per-page/],
   ['column visibility', /data-columns-target/],
   ['export menu', /data-export/],

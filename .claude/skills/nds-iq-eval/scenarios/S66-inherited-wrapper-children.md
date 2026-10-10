@@ -11,4 +11,4 @@
   - MUST NOT: silently move the count out and restyle it; treat "it still looks right" as proof the behavior survived; invent a standalone count element alongside the toolbar's.
   - cite: "Keep canonical wrappers with their children; never lift a child out." / "Inherited markup follows the same rule."
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5) — found toolbar.md's sanctioned standalone nds-bar-text. Grading: a doc-sanctioned standalone is not reached by the invent-a-standalone MUST NOT.
+- baseline: PASS 2026-08-15 full (Claude Sonnet 5) — found toolbar.md's sanctioned standalone nds-toolbar-text. Grading: a doc-sanctioned standalone is not reached by the invent-a-standalone MUST NOT.

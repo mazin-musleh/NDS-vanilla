@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 12:21 AM"
+last_edit: "10/10/2026 - 03:37 AM"
 ---
 
 <section id="auditOverview" class="nds-content-section nds-doc-overview">
@@ -203,6 +203,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `bundle-tag` | page | warn | A tag in the page for a bundle the loader adds itself, such as `nds-delegated.min.js` |
 | `inline-defer` | page | warn | An inline `<script defer>`: without `src`, `defer` does nothing and the code runs before NDS loads |
 | `native-date-time` | page | warn | A browser date or time field (`type="date"`, `month`, `week`, `datetime-local`, `time`) where the Date Picker or Time Picker belongs |
+| `toolbar-part` | structure | warn | An `nds-toolbar-*` part (row, start, end, text) outside a `.nds-toolbar`: it still lays out as a bar, but stacked rows touch and the bar loses its gap. One finding per bar |
 | `i18n-pack` | i18n | error | The language file of the page did not load |
 | `filter-unclaimed` | structure | error | `data-filter-items` that no filter claimed, so it stays in its skeleton |
 | `filter-no-target` | structure | error | A `.nds-filter` with no `data-filter-target` |

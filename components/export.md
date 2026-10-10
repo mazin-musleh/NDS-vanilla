@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 09:45 AM"
+last_edit: "10/10/2026 - 03:41 AM"
 ---
 
 <section id="exportOverview" class="nds-content-section nds-doc-overview">
@@ -38,13 +38,13 @@ Pick another component when:
     <div class="nds-section-body">
 <script type="text/html" id="export-table" data-canon data-variants="exportVariantsTable">
 <div class="nds-toolbar">
-  <div class="nds-bar-row">
-    <div class="nds-bar-start">
-      <span class="nds-bar-text" data-selection-target="export-orders-body">
+  <div class="nds-toolbar-row">
+    <div class="nds-toolbar-start">
+      <span class="nds-toolbar-text" data-selection-target="export-orders-body">
         <b data-selection-count>0</b> selected of <b data-selection-total>3</b> orders
       </span>
     </div>
-    <div class="nds-bar-end">
+    <div class="nds-toolbar-end">
       <div class="nds-export nds-btn-group">
         <button type="button" class="nds-btn nds-secondary-outline nds-md" data-export="csv" data-export-target="#export-orders">
           <span class="nds-label">CSV</span>
@@ -120,8 +120,8 @@ Pick another component when:
 </script>
 <script type="text/html" id="export-cards" data-canon>
 <div class="nds-toolbar">
-  <div class="nds-bar-row">
-    <div class="nds-bar-start">
+  <div class="nds-toolbar-row">
+    <div class="nds-toolbar-start">
       <div class="nds-form-container nds-check-container">
         <div class="nds-form-header">
           <label for="export-services-all">
@@ -132,11 +132,11 @@ Pick another component when:
           <input type="checkbox" id="export-services-all" class="nds-check" data-selection-target="export-services">
         </div>
       </div>
-      <span class="nds-bar-text" data-selection-target="export-services">
+      <span class="nds-toolbar-text" data-selection-target="export-services">
         <b data-selection-count>0</b> selected of <b data-selection-total>3</b> services
       </span>
     </div>
-    <div class="nds-bar-end">
+    <div class="nds-toolbar-end">
       <div class="nds-export nds-btn-group">
         <button type="button" class="nds-btn nds-secondary-outline nds-md" data-export="csv" data-export-target="#export-services">
           <span class="nds-label">CSV</span>
@@ -249,7 +249,7 @@ A Scope option goes on every export button of the list. The Column hide target i
 | Scope | Auto (default) (hint: Selected rows if any are selected, else every row) | — | — | The selected rows when any row is selected, else every row |
 | Scope | Selected | `[data-export-scope="selected"]` | `[data-export]` | Only the selected rows. With nothing selected, the file has only the header |
 | Scope | All | `[data-export-scope="all"]` | `[data-export]` | Every row, selected or not |
-| Column hide | Column hide (hint: Adds a Columns menu, and hidden columns stay out of the file) | canon `#export-columns` | `.nds-bar-end:has([data-export-target="#export-orders"])` (start) | The [Tables](../components/tables) column menu. A column the user hides drops out of the file |
+| Column hide | Column hide (hint: Adds a Columns menu, and hidden columns stay out of the file) | canon `#export-columns` | `.nds-toolbar-end:has([data-export-target="#export-orders"])` (start) | The [Tables](../components/tables) column menu. A column the user hides drops out of the file |
 {: #exportVariantsTable .nds-table .nds-responsive}
 
 </div>
@@ -281,7 +281,7 @@ By default, the file holds the selected rows when any row is selected, else ever
 ### Hidden Columns
 {: .nds-block-title}
 
-When a user hides a column with the [Tables](../components/tables) column menu, the column drops out of the file. Put the menu in the toolbar's `.nds-bar-end`, before the export group, and give its `data-columns-target` the table's id. Tables sets `data-export-skip` on its header cell, and removes it when the column shows again. A `data-export-skip` that you write stays. A table with an id keeps its hidden columns for the next visit, so the next export leaves them out too.
+When a user hides a column with the [Tables](../components/tables) column menu, the column drops out of the file. Put the menu in the toolbar's `.nds-toolbar-end`, before the export group, and give its `data-columns-target` the table's id. Tables sets `data-export-skip` on its header cell, and removes it when the column shows again. A `data-export-skip` that you write stays. A table with an id keeps its hidden columns for the next visit, so the next export leaves them out too.
 
 </div>
   </div>
@@ -369,7 +369,7 @@ When a user hides a column with the [Tables](../components/tables) column menu, 
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Put the export group in the `.nds-bar-end` of a [Toolbar](../components/toolbar) above the list.
+- Put the export group in the `.nds-toolbar-end` of a [Toolbar](../components/toolbar) above the list.
 - Give every source a `data-export-name`. Without it, every file name starts with `nds-export`.
 - Write a unit or a currency once, in the column label: `data-export-label="Amount (SAR)"`. Keep the cells to raw numbers, so a spreadsheet can add them up.
 - Give a cell `data-export-value` when it shows a formatted value: a currency, a local date. Put the raw number or the ISO date in it.

@@ -1,8 +1,8 @@
 /**
  * NDS Toolbar Component
  * Layout only — a controls row above any content region (table, list, grid).
- * It owns no state and no behavior. Two clusters bracket it: .nds-bar-start
- * leads, .nds-bar-end trails, and the search / filter / sort surfaces sit
+ * It owns no state and no behavior. Two clusters bracket it: .nds-toolbar-start
+ * leads, .nds-toolbar-end trails, and the search / filter / sort surfaces sit
  * between them. The names are positional, not semantic — a cluster holds
  * whatever a bar needs at that edge, reporting or acting.
  *
@@ -13,7 +13,7 @@
  * (an export group, a column-visibility menu, bulk actions), but an editor bar
  * is formatting controls at the start and a source toggle at the end.
  *
- * A bar wraps its items by default. Wrap them in .nds-bar-row instead to pin an
+ * A bar wraps its items by default. Wrap them in .nds-toolbar-row instead to pin an
  * explicit line — a row lays out exactly like the bar, so clusters and search
  * surfaces behave the same inside one. Stack rows for a multi-row bar.
  *
@@ -26,9 +26,9 @@
 
 @use '../mixins' as *;
 
-// Shared layout — a .nds-bar-row IS a bar, so it lays its children out the same
+// Shared layout — a .nds-toolbar-row IS a bar, so it lays its children out the same
 // way. Stack rows to build a multi-row bar; each one takes a line of its own.
-:is(.nds-toolbar, .nds-bar-row) {
+:is(.nds-toolbar, .nds-toolbar-row) {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -46,7 +46,7 @@
     }
 
     // Applied chips + auto-fill claim their own line via their own flex: 1 1 100%
-    // in _filter.scss (the JS swaps which one shows) — an implicit .nds-bar-row.
+    // in _filter.scss (the JS swaps which one shows) — an implicit .nds-toolbar-row.
 
     // Control labels collapse to icon-only on mobile via data-hidden="sm sr"
     // stamped in the markup (_utilities.scss).
@@ -55,7 +55,7 @@
     }
 
     // Clusters — widget slots that lay their children out as one bar item.
-    :is(.nds-bar-start, .nds-bar-end) {
+    :is(.nds-toolbar-start, .nds-toolbar-end) {
         display: flex;
         height: stretch;   // fill the bar's cross-axis despite its align-items:center
         align-items: center;
@@ -67,7 +67,7 @@
     // holds end at the trailing edge once it wraps onto a line of its own, where
     // space-between would leave a lone item at the leading edge instead.
     // flex-end aligns the cluster's OWN children inside its box.
-    .nds-bar-end {
+    .nds-toolbar-end {
         margin-inline-start: auto;
         justify-content: flex-end;
     }
@@ -91,7 +91,7 @@
 }
 
 // A row spans the bar, so whatever follows it starts a new line.
-.nds-bar-row {
+.nds-toolbar-row {
     flex: 1 1 100%;
     min-width: 0;
 }
@@ -101,7 +101,7 @@
 // bar: pagination, selection and the search template use it standalone with no
 // toolbar around it. <b> slots read as medium emphasis, not full bold.
 // .nds-results-count is the original name and stays a permanent alias.
-:is(.nds-bar-text, .nds-results-count) {
+:is(.nds-toolbar-text, .nds-results-count) {
     display: block;   // span-rooted; block so standalone counters sit on their own line
     color: var(--text-primary-paragraph);
 
@@ -124,15 +124,15 @@
 // toolbar stays uncoupled from filter/export/pagination.
 
 // A cluster of nothing but hidden widgets would still eat a column gap.
-:is(.nds-bar-start, .nds-bar-end):not(:has(> :not([hidden]))) {
+:is(.nds-toolbar-start, .nds-toolbar-end):not(:has(> :not([hidden]))) {
     display: none;
 }
 
 // A row is empty when it holds no visible child of its own AND no cluster
 // holding a visible child. Then it takes no line at all.
-.nds-bar-row:not(:has(
-    > :not([hidden], .nds-bar-start, .nds-bar-end),
-    > :is(.nds-bar-start, .nds-bar-end) > :not([hidden])
+.nds-toolbar-row:not(:has(
+    > :not([hidden], .nds-toolbar-start, .nds-toolbar-end),
+    > :is(.nds-toolbar-start, .nds-toolbar-end) > :not([hidden])
 )) {
     display: none;
 }

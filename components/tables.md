@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 10:20 AM"
+last_edit: "10/10/2026 - 03:41 AM"
 ---
 
 <section id="tableOverview" class="nds-content-section nds-doc-overview">
@@ -97,16 +97,16 @@ Pick another component when:
 </script>
 <script type="text/html" id="tbl-records" data-canon>
 <div class="nds-toolbar">
-  <div class="nds-bar-row">
-    <div class="nds-bar-start">
-      <span class="nds-bar-text" data-paged-target="tbl-rec-rows" data-selection-target="tbl-rec-rows">
+  <div class="nds-toolbar-row">
+    <div class="nds-toolbar-start">
+      <span class="nds-toolbar-text" data-paged-target="tbl-rec-rows" data-selection-target="tbl-rec-rows">
         <span class="nds-records-view">Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>5</b> of <b data-paged-count>6</b> requests</span>
         <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>6</b> requests</span>
         <button type="button" data-selection-all hidden>(<b>Select all</b>)</button>
         <button type="button" data-selection-clear hidden>(<b>Clear all</b>)</button>
       </span>
     </div>
-    <div class="nds-bar-end">
+    <div class="nds-toolbar-end">
       <div class="nds-dropmenu" data-select-name="perPage" data-select-value="5" data-per-page-target="tbl-rec-rows">
         <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button" aria-label="Requests per page">
           <span class="nds-label">5</span>
@@ -153,7 +153,7 @@ Pick another component when:
       </div>
     </div>
   </div>
-  <div class="nds-bar-row">
+  <div class="nds-toolbar-row">
     <div class="nds-form-container nds-search-box" data-filter-target="tbl-rec-rows">
       <div class="nds-search-content">
         <div class="nds-form-control">
@@ -196,8 +196,8 @@ Pick another component when:
       </div>
     </div>
   </div>
-  <div class="nds-bar-row">
-    <div class="nds-bar-start">
+  <div class="nds-toolbar-row">
+    <div class="nds-toolbar-start">
       <div class="nds-filter-applied" data-filter-target="tbl-rec-rows" hidden>
         <span class="nds-label">Applied filters:</span>
         <div class="nds-chips"></div>
@@ -592,7 +592,7 @@ Records holds every part. To leave a part out, delete its markup and everything 
 | Actions column | the `.nds-actions-column` header cell and the cell of every row | Delete it when neither sub-rows nor the row menu stay |
 {: .nds-table .nds-responsive}
 
-Delete the count line (`.nds-bar-text`) when neither Selection nor Pages stays. Keep the table's `id` while the column menu or export stays.
+Delete the count line (`.nds-toolbar-text`) when neither Selection nor Pages stays. Keep the table's `id` while the column menu or export stays.
 
 </div>
   </div>

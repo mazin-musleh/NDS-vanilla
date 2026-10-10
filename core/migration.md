@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 03:58 AM"
+last_edit: "10/10/2026 - 03:41 AM"
 ---
 
 <section id="migrationOverview" class="nds-content-section nds-doc-overview">
@@ -39,14 +39,14 @@ Pick another component when:
       </div>
 {%- assign releases = site.data.migrations | group_by: "since" | map: "name" %}
       <div class="nds-toolbar">
-        <div class="nds-bar-row">
-          <div class="nds-bar-start">
-            <span class="nds-bar-text" data-paged-target="migrationRows">
+        <div class="nds-toolbar-row">
+          <div class="nds-toolbar-start">
+            <span class="nds-toolbar-text" data-paged-target="migrationRows">
               <span class="nds-records-view">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> names</span>
             </span>
           </div>
         </div>
-        <div class="nds-bar-row">
+        <div class="nds-toolbar-row">
           <div class="nds-form-container nds-search-box" data-filter-target="migrationRows">
             <div class="nds-search-content">
               <div class="nds-form-control">
@@ -97,8 +97,8 @@ Pick another component when:
             </div>
           </div>
         </div>
-        <div class="nds-bar-row">
-          <div class="nds-bar-start">
+        <div class="nds-toolbar-row">
+          <div class="nds-toolbar-start">
             <div class="nds-filter-applied" data-filter-target="migrationRows" hidden>
               <span class="nds-label">Applied Filters:</span>
               <div class="nds-chips"></div>

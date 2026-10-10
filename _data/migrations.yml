@@ -32,6 +32,10 @@
 - { kind: class, name: hgi-sorting-1-9, scope: .hgi, status: renamed, use: hgi-sorting-one-9, since: "2.0.0", fix: "Use hgi-sorting-one-9." }
 - { kind: class, name: hgi-sorting-9-1, scope: .hgi, status: renamed, use: hgi-sorting-nine-1, since: "2.0.0", fix: "Use hgi-sorting-nine-1." }
 - { kind: class, name: nds-404, status: renamed, use: nds-status-section, since: "2.0.0", fix: "Use nds-status-section." }
+- { kind: class, name: nds-bar-end, status: renamed, use: nds-toolbar-end, since: "2.0.0", fix: "Use nds-toolbar-end." }
+- { kind: class, name: nds-bar-row, status: renamed, use: nds-toolbar-row, since: "2.0.0", fix: "Use nds-toolbar-row." }
+- { kind: class, name: nds-bar-start, status: renamed, use: nds-toolbar-start, since: "2.0.0", fix: "Use nds-toolbar-start." }
+- { kind: class, name: nds-bar-text, status: renamed, use: nds-toolbar-text, since: "2.0.0", fix: "Use nds-toolbar-text." }
 - { kind: class, name: nds-card-price, status: renamed, use: nds-card-value, since: "2.0.0", fix: "Use nds-card-value." }
 - { kind: class, name: nds-cardView, status: renamed, use: nds-card-view, since: "2.0.0", fix: "Use nds-card-view." }
 - { kind: class, name: nds-collapse, scope: .nds-main-nav, status: renamed, use: nds-nav-collapse, since: "2.0.0", fix: "Use nds-nav-collapse." }

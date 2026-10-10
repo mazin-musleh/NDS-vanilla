@@ -876,7 +876,7 @@
             flush();
         }
         if (!start && !end) return '';
-        return `<div class="nds-toolbar">${start ? `<div class="nds-bar-start">${start}</div>` : ''}${end ? `<div class="nds-bar-end">${end}</div>` : ''}</div>`;
+        return `<div class="nds-toolbar">${start ? `<div class="nds-toolbar-start">${start}</div>` : ''}${end ? `<div class="nds-toolbar-end">${end}</div>` : ''}</div>`;
     }
 
     // ---------- Editor ----------

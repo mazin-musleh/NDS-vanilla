@@ -202,6 +202,17 @@
         });
     } });
 
+    // A toolbar part lifted out of .nds-toolbar still lays out as a bar, so nothing else shows the
+    // lost wrapper: stacked rows touch, and the bar loses its gap to the content below.
+    // Every nds-toolbar-* class is a toolbar part. One finding per lost bar: a part inside a reported one is skipped.
+    rule({ id: 'toolbar-part', group: 'structure', docs: 'components/toolbar.html', check(ctx) {
+        ctx.find('[class*="nds-toolbar-"]').forEach(el => {
+            const part = [...el.classList].find(c => c.startsWith('nds-toolbar-'));
+            if (!part || el.closest('.nds-toolbar') || el.parentElement?.closest('[class*="nds-toolbar-"]')) return;
+            ctx.report(el, `.${part} outside a .nds-toolbar.`, 'Wrap the bar in <div class="nds-toolbar">, as the toolbar canon has it.');
+        });
+    } });
+
     // ── i18n ─────────────────────────────────────────────────────────
 
     rule({ id: 'i18n-pack', group: 'i18n', severity: 'error', docs: 'core/i18n.html', check(ctx) {

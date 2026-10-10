@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 03:29 PM"
+last_edit: "10/10/2026 - 03:41 AM"
 ---
 
 <section id="sortOverview" class="nds-content-section nds-doc-overview">
@@ -46,7 +46,7 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
 <script type="text/html" id="sort-direct" data-canon data-variants="sortVariantsTable">
 <div>
   <div class="nds-toolbar">
-    <div class="nds-bar-end">
+    <div class="nds-toolbar-end">
       <div class="nds-dropmenu">
         <button type="button" class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
           <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
@@ -146,7 +146,7 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
 <script type="text/html" id="sort-cycle" data-canon>
 <div>
   <div class="nds-toolbar">
-    <div class="nds-bar-end">
+    <div class="nds-toolbar-end">
       <div class="nds-btn-group">
         <button type="button" class="nds-btn nds-secondary-outline" data-sort-target="sort-services-cycle" data-sort="name" data-sort-mode="cycle">
           <span class="nds-label">Name</span>

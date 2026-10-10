@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.6.0"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 03:41 AM"
 ---
 
 <section id="toolbarOverview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "06/10/2026 - 10:17 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A toolbar is a layout only. It has no script and no state. Two clusters hold its items: `nds-bar-start` at the leading edge, and `nds-bar-end` at the trailing edge. Each item, such as an [Export](../components/export) group or a [Filter](../components/filter), connects to its content through its own target attribute. The bar wraps its items onto more lines when they do not fit. To give items a line of their own, wrap each line in `nds-bar-row`.
+A toolbar is a layout only. It has no script and no state. Two clusters hold its items: `nds-toolbar-start` at the leading edge, and `nds-toolbar-end` at the trailing edge. Each item, such as an [Export](../components/export) group or a [Filter](../components/filter), connects to its content through its own target attribute. The bar wraps its items onto more lines when they do not fit. To give items a line of their own, wrap each line in `nds-toolbar-row`.
 
 Pick another component when:
 
@@ -37,10 +37,10 @@ Pick another component when:
     <div class="nds-section-body">
 <script type="text/html" id="toolbar-line" data-canon data-variants="toolbarVariantsTable">
 <div class="nds-toolbar">
-  <div class="nds-bar-start">
+  <div class="nds-toolbar-start">
     <div class="nds-content-placeholder nds-sm">Start</div>
   </div>
-  <div class="nds-bar-end">
+  <div class="nds-toolbar-end">
     <div class="nds-content-placeholder nds-sm">End</div>
   </div>
 </div>
@@ -48,16 +48,16 @@ Pick another component when:
 </script>
 <script type="text/html" id="toolbar-rows" data-canon>
 <div class="nds-toolbar">
-  <div class="nds-bar-row">
-    <div class="nds-bar-start">
+  <div class="nds-toolbar-row">
+    <div class="nds-toolbar-start">
       <div class="nds-content-placeholder nds-sm">Row 1 start</div>
     </div>
-    <div class="nds-bar-end">
+    <div class="nds-toolbar-end">
       <div class="nds-content-placeholder nds-sm">Row 1 end</div>
     </div>
   </div>
-  <div class="nds-bar-row">
-    <div class="nds-bar-start">
+  <div class="nds-toolbar-row">
+    <div class="nds-toolbar-start">
       <div class="nds-content-placeholder nds-sm">Row 2 start</div>
     </div>
   </div>
@@ -80,7 +80,7 @@ The dashed boxes are [Content Placeholder](../utilities/content-placeholder) ite
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | One line (default) | — | — | Items at the start and at the end. They wrap onto a new line when they do not fit |
-| Structure | Rows (hint: Each row takes a line of its own) | canon `#toolbar-rows` | — | Each `nds-bar-row` takes a line of its own. Use it when the bar needs more than one line, or to keep some items together on one line at every width |
+| Structure | Rows (hint: Each row takes a line of its own) | canon `#toolbar-rows` | — | Each `nds-toolbar-row` takes a line of its own. Use it when the bar needs more than one line, or to keep some items together on one line at every width |
 | Margin | No margin | `--toolbar-margin-block: 0` | `.nds-toolbar` | No space above or below the bar. Use it when the parent, such as a card, already sets the space |
 {: #toolbarVariantsTable .nds-table .nds-responsive}
 
@@ -102,11 +102,11 @@ A count and an export group on the first row, a search box on the second, and th
 
 <script type="text/html" id="toolbar-table" data-canon>
 <div class="nds-toolbar">
-  <div class="nds-bar-row">
-    <div class="nds-bar-start">
-      <span class="nds-bar-text" data-filter-target="toolbar-table-body"><span data-filter-count>3</span> of 3 orders</span>
+  <div class="nds-toolbar-row">
+    <div class="nds-toolbar-start">
+      <span class="nds-toolbar-text" data-filter-target="toolbar-table-body"><span data-filter-count>3</span> of 3 orders</span>
     </div>
-    <div class="nds-bar-end">
+    <div class="nds-toolbar-end">
       <div class="nds-export nds-btn-group">
         <button type="button" class="nds-btn nds-secondary-outline nds-md" data-export="csv" data-export-target="#toolbar-table-orders">
           <span class="nds-label">CSV</span>
@@ -117,7 +117,7 @@ A count and an export group on the first row, a search box on the second, and th
       </div>
     </div>
   </div>
-  <div class="nds-bar-row">
+  <div class="nds-toolbar-row">
     <div class="nds-form-container nds-search-box" data-filter-target="toolbar-table-body">
       <div class="nds-search-content">
         <div class="nds-form-control">
@@ -136,8 +136,8 @@ A count and an export group on the first row, a search box on the second, and th
       </div>
     </div>
   </div>
-  <div class="nds-bar-row">
-    <div class="nds-bar-start">
+  <div class="nds-toolbar-row">
+    <div class="nds-toolbar-start">
       <div class="nds-filter-applied" data-filter-target="toolbar-table-body" hidden>
         <span class="nds-label">Applied Filters:</span>
         <div class="nds-chips"></div>
@@ -228,7 +228,7 @@ The toolbar of the [Editor](../components/editor).
             <i class="hgi hgi-stroke hgi-text-align-left"></i>
             <span class="nds-label">Bar Text</span>
           </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-bar-text</code> is block text in the paragraph color. A <code class="nds-inline-code lang-html">&lt;b&gt;</code> in it shows in medium weight. It also works outside a bar.</p>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-toolbar-text</code> is block text in the paragraph color. A <code class="nds-inline-code lang-html">&lt;b&gt;</code> in it shows in medium weight. It also works outside a bar.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -250,11 +250,11 @@ The toolbar of the [Editor](../components/editor).
     <div class="nds-section-body nds-prose" markdown="1">
 
 - Put the toolbar directly above the content it controls. Keep the content and its [Pagination](../components/pagination) below the bar, not inside it.
-- Put every item in `nds-bar-start` or `nds-bar-end`. A search box is the one exception: it goes straight in the bar or in an `nds-bar-row`, where it fills the free space.
+- Put every item in `nds-toolbar-start` or `nds-toolbar-end`. A search box is the one exception: it goes straight in the bar or in an `nds-toolbar-row`, where it fills the free space.
 - Choose a cluster by position, not by job. A table bar usually shows a count, applied filters or a selection summary at the start. It puts [Export](../components/export), a column menu or bulk actions at the end. An editor bar puts its format controls at the start and a source toggle at the end.
-- Use `nds-bar-row` only when the bar has two or more rows, or a row and another item. A row that is the bar's only child changes nothing. For two or three items, use no rows: the bar wraps them itself.
+- Use `nds-toolbar-row` only when the bar has two or more rows, or a row and another item. A row that is the bar's only child changes nothing. For two or three items, use no rows: the bar wraps them itself.
 - Use the toolbar on every data screen, so all bars have one layout. A layout made with [Grid](../layout/grid) also works, because each item connects to its content by itself.
-- Do not put a toolbar inside another toolbar. Use `nds-bar-row`: it has the same layout, with no outer margin.
+- Do not put a toolbar inside another toolbar. Use `nds-toolbar-row`: it has the same layout, with no outer margin.
 - Keep the `hidden` attribute on items that start empty, such as the applied-filters row. Without it, the bar keeps an empty line.
 - Keep the end cluster to one or two items. Put related buttons in an `nds-btn-group`, so they read as one control.
 - Use one button size in a cluster. A default button is 40px tall and an `nds-md` button is 32px.
@@ -277,10 +277,10 @@ The toolbar of the [Editor](../components/editor).
 | Class | Element | Effect |
 |---|---|---|
 | `nds-toolbar` | `div` above the content | The bar. It spans the width of its container |
-| `nds-bar-row` | `div` in `.nds-toolbar` | Takes a line of its own. Its items have the same layout as the bar's, with no outer margin |
-| `nds-bar-start` | `div` in `.nds-toolbar` or `.nds-bar-row` | The items at the leading edge, `var(--spacing-md)` apart |
-| `nds-bar-end` | `div` in `.nds-toolbar` or `.nds-bar-row` | The items at the trailing edge, `var(--spacing-md)` apart |
-| `nds-bar-text` | `span` in a cluster, or on its own | Text such as a record count or a selection summary. `nds-results-count` is the same class under its first name |
+| `nds-toolbar-row` | `div` in `.nds-toolbar` | Takes a line of its own. Its items have the same layout as the bar's, with no outer margin |
+| `nds-toolbar-start` | `div` in `.nds-toolbar` or `.nds-toolbar-row` | The items at the leading edge, `var(--spacing-md)` apart |
+| `nds-toolbar-end` | `div` in `.nds-toolbar` or `.nds-toolbar-row` | The items at the trailing edge, `var(--spacing-md)` apart |
+| `nds-toolbar-text` | `span` in a cluster, or on its own | Text such as a record count or a selection summary. `nds-results-count` is the same class under its first name |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties

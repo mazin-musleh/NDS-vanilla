@@ -202,16 +202,16 @@ hideFeedback: true
         </div>
         <div class="nds-section-body">
             <div class="nds-toolbar">
-                <div class="nds-bar-row">
-                    <div class="nds-bar-start">
-                        <span class="nds-bar-text" data-paged-target="transactionsTableBody" data-selection-target="transactionsTableBody">
+                <div class="nds-toolbar-row">
+                    <div class="nds-toolbar-start">
+                        <span class="nds-toolbar-text" data-paged-target="transactionsTableBody" data-selection-target="transactionsTableBody">
                             <span class="nds-records-view">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> transaction(s)</span>
                             <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>0</b> transaction(s)</span>
                             <button type="button" data-selection-all hidden>(<b>Select all</b>)</button>
                             <button type="button" data-selection-clear hidden>(<b>Clear all</b>)</button>
                         </span>
                     </div>
-                    <div class="nds-bar-end">
+                    <div class="nds-toolbar-end">
                         <div class="nds-dropmenu"
                              data-select-name="perPage"
                              data-select-value="10"
@@ -267,7 +267,7 @@ hideFeedback: true
                         </div>
                     </div>
                 </div>
-                <div class="nds-bar-row">
+                <div class="nds-toolbar-row">
                     <div class="nds-form-container nds-search-box" data-filter-target="transactionsTableBody">
                         <div class="nds-search-content">
                             <div class="nds-form-control">
@@ -323,8 +323,8 @@ hideFeedback: true
                         </div>
                     </div>
                 </div>
-                <div class="nds-bar-row">
-                    <div class="nds-bar-start">
+                <div class="nds-toolbar-row">
+                    <div class="nds-toolbar-start">
                         <div class="nds-filter-applied" data-filter-target="transactionsTableBody" hidden>
                             <span class="nds-label">Applied Filters:</span>
                             <div class="nds-chips"></div>

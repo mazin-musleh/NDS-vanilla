@@ -39,14 +39,14 @@ const SECTION_HTML = `
     </div>
     <div class="nds-section-body">
       <div class="nds-toolbar">
-        <div class="nds-bar-row">
-          <div class="nds-bar-start">
-            <span class="nds-bar-text" data-paged-target="recordsTableBody" data-selection-target="recordsTableBody">
+        <div class="nds-toolbar-row">
+          <div class="nds-toolbar-start">
+            <span class="nds-toolbar-text" data-paged-target="recordsTableBody" data-selection-target="recordsTableBody">
               <span class="nds-records-view">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> record(s)</span>
               <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>0</b> record(s)</span>
             </span>
           </div>
-          <div class="nds-bar-end">
+          <div class="nds-toolbar-end">
             <button class="nds-btn nds-primary nds-destructive nds-md nds-lead-icon" id="bulk-delete" type="button" hidden>
               <i class="hgi hgi-stroke hgi-delete-02"></i>
               <span class="nds-label">Delete selected</span>
@@ -98,7 +98,7 @@ const SECTION_HTML = `
             </div>
           </div>
         </div>
-        <div class="nds-bar-row">
+        <div class="nds-toolbar-row">
           <div class="nds-form-container nds-search-box" data-filter-target="recordsTableBody">
             <div class="nds-search-content">
               <div class="nds-form-control">
@@ -143,8 +143,8 @@ const SECTION_HTML = `
             </div>
           </div>
         </div>
-        <div class="nds-bar-row">
-          <div class="nds-bar-start">
+        <div class="nds-toolbar-row">
+          <div class="nds-toolbar-start">
             <div class="nds-filter-applied" data-filter-target="recordsTableBody" hidden>
               <span class="nds-label">Applied Filters:</span>
               <div class="nds-chips"></div>

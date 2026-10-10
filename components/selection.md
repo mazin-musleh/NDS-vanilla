@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "03/10/2026 - 06:31 PM"
+last_edit: "10/10/2026 - 03:41 AM"
 ---
 
 <section id="selectionOverview" class="nds-content-section nds-doc-overview">
@@ -38,8 +38,8 @@ Pick another component when:
     <div class="nds-section-body">
 <script type="text/html" id="selection-cards" data-canon data-variants="selectionVariantsTable">
 <div class="nds-toolbar">
-  <div class="nds-bar-row">
-    <div class="nds-bar-start">
+  <div class="nds-toolbar-row">
+    <div class="nds-toolbar-start">
       <div class="nds-form-container nds-check-container">
         <div class="nds-form-header">
           <label for="selection-services-all">
@@ -50,7 +50,7 @@ Pick another component when:
           <input type="checkbox" id="selection-services-all" class="nds-check" data-selection-target="selection-services">
         </div>
       </div>
-      <span class="nds-bar-text" data-selection-target="selection-services">
+      <span class="nds-toolbar-text" data-selection-target="selection-services">
         <b data-selection-count>0</b> selected of <b data-selection-total>3</b> services
         <button type="button" data-selection-all hidden>(<b>Select all</b>)</button>
         <button type="button" data-selection-clear hidden>(<b>Clear all</b>)</button>
@@ -108,9 +108,9 @@ Pick another component when:
 </script>
 <script type="text/html" id="selection-table" data-canon>
 <div class="nds-toolbar">
-  <div class="nds-bar-row">
-    <div class="nds-bar-start">
-      <span class="nds-bar-text" data-paged-target="selection-requests" data-selection-target="selection-requests">
+  <div class="nds-toolbar-row">
+    <div class="nds-toolbar-start">
+      <span class="nds-toolbar-text" data-paged-target="selection-requests" data-selection-target="selection-requests">
         <span class="nds-records-view">Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>4</b> of <b data-paged-count>6</b> requests</span>
         <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>6</b> requests</span>
         <button type="button" data-selection-all hidden>(<b>Select all</b>)</button>

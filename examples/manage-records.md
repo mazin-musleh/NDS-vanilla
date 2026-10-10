@@ -26,16 +26,16 @@ hideFeedback: true
         </div>
         <div class="nds-section-body">
             <div class="nds-toolbar">
-                <div class="nds-bar-row">
-                    <div class="nds-bar-start">
-                        <span class="nds-bar-text" data-paged-target="requestsTableBody" data-selection-target="requestsTableBody">
+                <div class="nds-toolbar-row">
+                    <div class="nds-toolbar-start">
+                        <span class="nds-toolbar-text" data-paged-target="requestsTableBody" data-selection-target="requestsTableBody">
                             <span class="nds-records-view">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> request(s)</span>
                             <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>0</b> request(s)</span>
                             <button type="button" data-selection-all hidden>(<b>Select all</b>)</button>
                             <button type="button" data-selection-clear hidden>(<b>Clear all</b>)</button>
                         </span>
                     </div>
-                    <div class="nds-bar-end">
+                    <div class="nds-toolbar-end">
                         <button class="nds-btn nds-primary nds-destructive nds-md nds-lead-icon" id="bulk-delete" type="button" hidden>
                             <i class="hgi hgi-stroke hgi-delete-02"></i>
                             <span class="nds-label">Delete selected</span>
@@ -93,7 +93,7 @@ hideFeedback: true
                         </div>
                     </div>
                 </div>
-                <div class="nds-bar-row">
+                <div class="nds-toolbar-row">
                     <div class="nds-form-container nds-search-box" data-filter-target="requestsTableBody">
                         <div class="nds-search-content">
                             <div class="nds-form-control">
@@ -149,8 +149,8 @@ hideFeedback: true
                         </div>
                     </div>
                 </div>
-                <div class="nds-bar-row">
-                    <div class="nds-bar-start">
+                <div class="nds-toolbar-row">
+                    <div class="nds-toolbar-start">
                         <div class="nds-filter-applied" data-filter-target="requestsTableBody" hidden>
                             <span class="nds-label">Applied Filters:</span>
                             <div class="nds-chips"></div>
@@ -278,10 +278,10 @@ hideFeedback: true
                         <tr id="detail-REQ-2026-118" class="nds-sub" hidden>
                             <td>
                                 <div class="nds-toolbar">
-                                    <div class="nds-bar-start">
-                                        <span class="nds-bar-text">Fee breakdown for the commercial registration request.</span>
+                                    <div class="nds-toolbar-start">
+                                        <span class="nds-toolbar-text">Fee breakdown for the commercial registration request.</span>
                                     </div>
-                                    <div class="nds-bar-end">
+                                    <div class="nds-toolbar-end">
                                         <button type="button" class="nds-btn nds-secondary-outline nds-md" data-export="csv" data-export-target="#detail-REQ-2026-118-items">
                                             <span class="nds-label">Export CSV</span>
                                         </button>
@@ -364,10 +364,10 @@ hideFeedback: true
                         <tr id="detail-REQ-2026-117" class="nds-sub" hidden>
                             <td>
                                 <div class="nds-toolbar">
-                                    <div class="nds-bar-start">
-                                        <span class="nds-bar-text">Renewal approved by the labour office. The permit card is ready for collection at the service centre.</span>
+                                    <div class="nds-toolbar-start">
+                                        <span class="nds-toolbar-text">Renewal approved by the labour office. The permit card is ready for collection at the service centre.</span>
                                     </div>
-                                    <div class="nds-bar-end">
+                                    <div class="nds-toolbar-end">
                                         <button type="button" class="nds-btn nds-secondary-outline nds-md" data-export="csv" data-export-target="#detail-REQ-2026-117-timeline">
                                             <span class="nds-label">Export CSV</span>
                                         </button>
