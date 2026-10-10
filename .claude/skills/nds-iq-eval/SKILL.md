@@ -15,7 +15,7 @@ Tests the consumer rules file in its draft, `_includes/NDS-IQ-draft.md`; `script
 - **Runners are fresh `general-purpose` agents with a `model` override, never forks.** A fork inherits this conversation and biases the test.
 - **A new sentence must fail the floor first** (see Floor). A stub PASS means the model already does it: fix the source instead.
 - **The harness states only what the field state would show.** Setup, prompt and seeded files carry world-state, never the graded answer. The four leak classes are defined in the `scenarios.md` preamble. Reuse field artifacts verbatim where they exist. Write a gate run's setup BLIND, before the sentence it grades. A pass that a leak audit voids goes back to UNMEASURED, never FAIL.
-- **Rules run on every 2.x template; older ones are redirected.** Consumers on any release since 1.7.0 fetch raw main. A template with no `NDS-INDEX.md` (every 1.x) must send the agent to the frozen `IQv3.2` file: the `old` mode probes that redirect.
+- **Rules run on every template that ships `NDS-INDEX.md`; older ones are redirected.** Consumers on any release since 1.7.0 fetch raw main. A template with no `NDS-INDEX.md` (every 1.x) must send the agent to the frozen `IQv3.2` file: the `old` mode probes that redirect. So a rule leans only on what every template it serves ships (every one with `NDS-INDEX.md`, the oldest included). How to work goes in the rules; what NDS is (a doc, an index section, an audit rule) goes in the template, where it versions with the release.
 
 ## Token rules
 
