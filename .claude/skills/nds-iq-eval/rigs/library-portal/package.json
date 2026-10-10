@@ -1,0 +1,12 @@
+{
+  "name": "library-portal",
+  "version": "1.0.0",
+  "description": "بوابة المكتبة العامة — legacy portal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

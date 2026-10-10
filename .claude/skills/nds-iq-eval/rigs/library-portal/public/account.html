@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>المكتبة العامة — حسابي</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">المكتبة العامة</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/catalog.html">الفهرس</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/events.html">الفعاليات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/booking.html">حجز القاعات</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/account.html">حسابي</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact.html">اتصل بنا</a></li>
+                </ul>
+                <form class="d-flex ms-3" action="/catalog.html" method="get">
+                    <input class="form-control form-control-sm" type="search" name="q" placeholder="ابحث في الفهرس...">
+                    <button class="btn btn-light btn-sm ms-2" type="submit">بحث</button>
+                </form>
+                <span id="authArea"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+        <!-- تبويبات العرض — موجه بالهاش: #/profile و #/loans و #/loans/:id -->
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item"><a class="nav-link" id="tabProfile" href="#/profile">ملفي</a></li>
+            <li class="nav-item"><a class="nav-link" id="tabLoans" href="#/loans">استعاراتي</a></li>
+        </ul>
+        <div id="view"></div>
+    </main>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container d-flex justify-content-between flex-wrap">
+            <span>المكتبة العامة — شارع الثقافة، حي المعرفة</span>
+            <span>الدوام: السبت الى الخميس، 8 صباحا الى 9 مساء</span>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function renderAuth() {
+            var m = document.cookie.match(/(?:^|; )lib_user=([^;]+)/);
+            if (m) {
+                $('#authArea').html('<span class="text-light ms-3">' + decodeURIComponent(m[1]) +
+                    '</span> <a class="btn btn-outline-light btn-sm" href="/sso/logout?return=/account.html">خروج</a>');
+            } else {
+                $('#authArea').html('<a class="btn btn-outline-light btn-sm ms-3" href="/sso/login?return=/account.html">دخول الاعضاء</a>');
+            }
+            return !!m;
+        }
+
+        // ── عروض الموجه ──
+
+        function renderProfile() {
+            $('#tabProfile').addClass('active'); $('#tabLoans').removeClass('active');
+            $('#view').html(
+                '<div class="card" style="max-width:560px">' +
+                '<div class="card-header">بيانات العضوية</div>' +
+                '<div class="card-body">' +
+                '<p><strong>الاسم:</strong> عضو المكتبة</p>' +
+                '<p><strong>رقم العضوية:</strong> 20481</p>' +
+                '<p><strong>الفئة:</strong> عضوية عامة</p>' +
+                '<p class="mb-0"><strong>تاريخ الانتهاء:</strong> 2027-03-01</p>' +
+                '</div></div>'
+            );
+        }
+
+        function statusBadge(s) {
+            if (s === 'متأخر') return '<span class="badge bg-danger">متأخر</span>';
+            if (s === 'مرجع') return '<span class="badge bg-secondary">مرجع</span>';
+            return '<span class="badge bg-success">مستعار</span>';
+        }
+
+        function renderLoans() {
+            $('#tabLoans').addClass('active'); $('#tabProfile').removeClass('active');
+            $.getJSON('/api/loans', function (loans) {
+                var rows = '';
+                loans.forEach(function (l) {
+                    rows += '<tr>' +
+                        '<td><a href="#/loans/' + l.id + '">' + l.title + '</a></td>' +
+                        '<td>' + l.out + '</td><td>' + l.due + '</td>' +
+                        '<td>' + statusBadge(l.status) + '</td></tr>';
+                });
+                $('#view').html(
+                    '<table class="table table-striped">' +
+                    '<thead><tr><th>العنوان</th><th>تاريخ الاستعارة</th><th>تاريخ الاستحقاق</th><th>الحالة</th></tr></thead>' +
+                    '<tbody>' + rows + '</tbody></table>'
+                );
+            });
+        }
+
+        function renderLoanDetail(id) {
+            $('#tabLoans').addClass('active'); $('#tabProfile').removeClass('active');
+            $.getJSON('/api/loans/' + id, function (l) {
+                $('#view').html(
+                    '<nav aria-label="breadcrumb"><ol class="breadcrumb">' +
+                    '<li class="breadcrumb-item"><a href="#/loans">استعاراتي</a></li>' +
+                    '<li class="breadcrumb-item active">' + l.title + '</li></ol></nav>' +
+                    '<div class="card" style="max-width:560px">' +
+                    '<div class="card-header">تفاصيل الاستعارة #' + l.id + '</div>' +
+                    '<div class="card-body">' +
+                    '<p><strong>العنوان:</strong> ' + l.title + '</p>' +
+                    '<p><strong>تاريخ الاستعارة:</strong> ' + l.out + '</p>' +
+                    '<p><strong>تاريخ الاستحقاق:</strong> ' + l.due + '</p>' +
+                    '<p><strong>مرات التجديد:</strong> ' + l.renewals + ' من 2</p>' +
+                    '<p class="mb-3"><strong>الحالة:</strong> ' + statusBadge(l.status) + '</p>' +
+                    (l.status === 'مستعار' && l.renewals < 2
+                        ? '<button class="btn btn-success btn-sm" id="renewBtn">تجديد الاستعارة</button>'
+                        : '') +
+                    '</div></div>'
+                );
+                $('#renewBtn').on('click', function () {
+                    $(this).replaceWith('<span class="text-success">تم ارسال طلب التجديد</span>');
+                });
+            }).fail(function () {
+                $('#view').html('<div class="alert alert-warning">الاستعارة غير موجودة. <a href="#/loans">عودة</a></div>');
+            });
+        }
+
+        // ── الموجه ──
+        function router() {
+            var h = location.hash || '#/profile';
+            var loanMatch = h.match(/^#\/loans\/(\d+)$/);
+            if (loanMatch) return renderLoanDetail(loanMatch[1]);
+            if (h === '#/loans') return renderLoans();
+            renderProfile();
+        }
+
+        $(function () {
+            var loggedIn = renderAuth();
+            if (!loggedIn) {
+                $('#view').html('<div class="alert alert-info">هذه الصفحة للاعضاء. <a href="/sso/login?return=/account.html">سجل دخولك</a> للاطلاع على بياناتك.</div>');
+                return;
+            }
+            $(window).on('hashchange', router);
+            router();
+        });
+    </script>
+</body>
+</html>

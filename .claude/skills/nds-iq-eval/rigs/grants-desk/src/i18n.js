@@ -1,0 +1,140 @@
+import { createContext, useContext, useEffect, useState, createElement } from 'react';
+
+const STRINGS = {
+    en: {
+        appName: 'Grants Desk',
+        appTagline: 'Internal review console',
+        navRequests: 'Applications',
+        navNew: 'New application',
+        navReports: 'Reports',
+        navSettings: 'Settings',
+        signedInAs: 'Signed in as',
+        reviewer: 'R. Al-Harbi, Reviewer',
+        signOut: 'Sign out',
+        toggleLang: 'العربية',
+        dashboardTitle: 'Grant applications',
+        dashboardLead: 'Every application assigned to your committee.',
+        statTotal: 'Total',
+        statPending: 'Awaiting review',
+        statApproved: 'Approved',
+        statValue: 'Committed value',
+        search: 'Search by reference or applicant',
+        colRef: 'Reference',
+        colApplicant: 'Applicant',
+        colScheme: 'Scheme',
+        colAmount: 'Amount',
+        colSubmitted: 'Submitted',
+        colStatus: 'Status',
+        noResults: 'No applications match your search.',
+        newTitle: 'New application',
+        step: 'Step',
+        of: 'of',
+        stepApplicant: 'Applicant',
+        stepProject: 'Project',
+        stepReview: 'Review',
+        fieldOrg: 'Organisation name',
+        fieldContact: 'Contact person',
+        fieldEmail: 'Email',
+        fieldPhone: 'Phone',
+        fieldScheme: 'Funding scheme',
+        fieldAmount: 'Amount requested (SAR)',
+        fieldSummary: 'Project summary',
+        back: 'Back',
+        next: 'Next',
+        submit: 'Submit application',
+        required: 'This field is required.',
+        submitted: 'Application submitted.',
+        detailTitle: 'Application',
+        printReceipt: 'Print receipt',
+        history: 'History',
+        decision: 'Decision',
+        approve: 'Approve',
+        reject: 'Reject',
+        notFound: 'Application not found.',
+        receiptTitle: 'Submission receipt',
+        receiptNote: 'Keep this reference for any follow-up.',
+        print: 'Print',
+    },
+    ar: {
+        appName: 'مكتب المنح',
+        appTagline: 'وحدة المراجعة الداخلية',
+        navRequests: 'الطلبات',
+        navNew: 'طلب جديد',
+        navReports: 'التقارير',
+        navSettings: 'الإعدادات',
+        signedInAs: 'مسجل الدخول باسم',
+        reviewer: 'ر. الحربي، مراجع',
+        signOut: 'تسجيل الخروج',
+        toggleLang: 'English',
+        dashboardTitle: 'طلبات المنح',
+        dashboardLead: 'جميع الطلبات المحالة إلى لجنتك.',
+        statTotal: 'الإجمالي',
+        statPending: 'بانتظار المراجعة',
+        statApproved: 'معتمدة',
+        statValue: 'القيمة الملتزم بها',
+        search: 'ابحث بالرقم المرجعي أو اسم مقدم الطلب',
+        colRef: 'الرقم المرجعي',
+        colApplicant: 'مقدم الطلب',
+        colScheme: 'البرنامج',
+        colAmount: 'المبلغ',
+        colSubmitted: 'تاريخ التقديم',
+        colStatus: 'الحالة',
+        noResults: 'لا توجد طلبات مطابقة للبحث.',
+        newTitle: 'طلب جديد',
+        step: 'الخطوة',
+        of: 'من',
+        stepApplicant: 'مقدم الطلب',
+        stepProject: 'المشروع',
+        stepReview: 'المراجعة',
+        fieldOrg: 'اسم الجهة',
+        fieldContact: 'الشخص المسؤول',
+        fieldEmail: 'البريد الإلكتروني',
+        fieldPhone: 'رقم الجوال',
+        fieldScheme: 'برنامج التمويل',
+        fieldAmount: 'المبلغ المطلوب (ريال)',
+        fieldSummary: 'ملخص المشروع',
+        back: 'رجوع',
+        next: 'التالي',
+        submit: 'إرسال الطلب',
+        required: 'هذا الحقل مطلوب.',
+        submitted: 'تم إرسال الطلب.',
+        detailTitle: 'الطلب',
+        printReceipt: 'طباعة الإيصال',
+        history: 'السجل',
+        decision: 'القرار',
+        approve: 'اعتماد',
+        reject: 'رفض',
+        notFound: 'الطلب غير موجود.',
+        receiptTitle: 'إيصال التقديم',
+        receiptNote: 'احتفظ بهذا الرقم المرجعي لأي متابعة.',
+        print: 'طباعة',
+    },
+};
+
+const STATUS_LABELS = {
+    en: { pending: 'Awaiting review', review: 'Under review', approved: 'Approved', rejected: 'Rejected' },
+    ar: { pending: 'بانتظار المراجعة', review: 'قيد المراجعة', approved: 'معتمد', rejected: 'مرفوض' },
+};
+
+const LangContext = createContext(null);
+
+export function LangProvider({ children }) {
+    const [lang, setLang] = useState(() => localStorage.getItem('gd-lang') || 'en');
+
+    useEffect(() => {
+        localStorage.setItem('gd-lang', lang);
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    }, [lang]);
+
+    const value = {
+        lang,
+        toggle: () => setLang((l) => (l === 'en' ? 'ar' : 'en')),
+        t: (key) => STRINGS[lang][key] ?? key,
+        status: (key) => STATUS_LABELS[lang][key] ?? key,
+        money: (n) => new Intl.NumberFormat(lang === 'ar' ? 'ar-SA' : 'en-US').format(n),
+    };
+    return createElement(LangContext.Provider, { value }, children);
+}
+
+export const useLang = () => useContext(LangContext);

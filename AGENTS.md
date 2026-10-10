@@ -22,6 +22,7 @@ node scripts/check-date.mjs                     # NDS.date vs Intl: every day 20
 node scripts/check-i18n.mjs                     # every locale pack mirrors en.json and stays under budget, JS defaults match it, no hardcoded Arabic / NDS.langKey left in _js/
 python scripts/check-docs.py [page.md]          # one-source doc pages vs the nds-doc rules (no build needed)
 python scripts/publish-iq.py [--apply]          # NDS IQ draft → the file installs download: dry run; --apply commits + tags IQvX.Y, never pushes
+python scripts/rig.py new|stage|reset ...       # field rigs: a legacy app a fresh agent ports with the draft rules — guide in .claude/skills/nds-iq-eval/RIGS.md
 node scripts/doc-check.mjs <page.md>            # clicks every builder option: findings + one contact sheet per theme in tmp/doc-check/ — owner's go-ahead first
 ```
 

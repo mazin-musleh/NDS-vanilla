@@ -1,0 +1,157 @@
+/* CityDesk portal - global styles */
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #222;
+  background-color: #f7f8fa;
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+input,
+select,
+textarea {
+  font-size: 0.95rem;
+}
+
+/* --- navbar --- */
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: #14396b;
+}
+
+.navbar .form-control {
+  min-width: 220px;
+}
+
+/* --- hero --- */
+.hero {
+  background-color: #14396b;
+  color: #fff;
+  padding: 4rem 1rem;
+}
+
+.hero h1 {
+  color: #fff;
+}
+
+.hero p.lead {
+  color: #dbe4f0;
+  max-width: 640px;
+}
+
+/* --- buttons --- */
+.btn-city {
+  background-color: #14396b;
+  border-color: #14396b;
+  color: #fff;
+}
+
+.btn-city:hover,
+.btn-city:focus {
+  background-color: #0e2c54;
+  border-color: #0e2c54;
+  color: #fff;
+}
+
+.btn-city-outline {
+  color: #14396b;
+  border: 1px solid #14396b;
+}
+
+.btn-city-outline:hover {
+  background-color: #14396b;
+  color: #fff;
+}
+
+/* --- feature / service cards --- */
+.feature-card,
+.service-card {
+  height: 100%;
+  border: 1px solid #e2e5ea;
+}
+
+.feature-card .card-icon,
+.service-card .card-icon {
+  font-size: 2rem;
+  color: #14396b;
+}
+
+/* --- footer --- */
+footer {
+  background-color: #1b1f24;
+  color: #c8ccd2;
+  padding: 2.5rem 1rem 1.5rem;
+  margin-top: 3rem;
+}
+
+footer a {
+  color: #c8ccd2;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+footer h6 {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+/* --- tickets back-office --- */
+#resultCount {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.status-toggle.active,
+.dept-toggle.active {
+  font-weight: 600;
+}
+
+.tickets-toolbar {
+  background-color: #fff;
+  border: 1px solid #e2e5ea;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* --- form field errors --- */
+.field-error {
+  display: block;
+  color: #b02a37;
+  font-size: 0.825rem;
+  margin-top: 0.25rem;
+}
+
+/* --- account page --- */
+.account-nav .nav-link.active {
+  font-weight: 600;
+  color: #14396b;
+}
+
+.account-view {
+  display: none;
+}
+
+.account-view.active {
+  display: block;
+}

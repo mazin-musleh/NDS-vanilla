@@ -3,6 +3,7 @@
 
     python scripts/mkrelease.py              # full: build, clean, format, zip
     python scripts/mkrelease.py --no-build   # reuse the existing _site
+    python scripts/mkrelease.py --preview 2.0.0   # a field rig's zip before the release (scripts/rig.py)
 
 scripts/check-release-guards.py proves the NDS-IQ guards (check_rules) still fire —
 run it after touching verify() or the sentences it keys on.
@@ -351,9 +352,11 @@ def verify(out, version, rules=None):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--no-build', action='store_true', help='reuse the existing _site')
+    ap.add_argument('--preview', metavar='VERSION',
+                    help='a field rig zip before the release: named VERSION, no version guard, no verify')
     args = ap.parse_args()
 
-    version = read_version()
+    version = args.preview or read_version()
     print(f'\nPackaging v{version}\n')
 
     if not args.no_build:
@@ -364,6 +367,10 @@ def main():
     dist, pkg = stage(version)
     out = zip_up(dist, pkg, version)
     shutil.rmtree(pkg)
+    if args.preview:
+        # verify() gates a release: its CHANGELOG section and published rules do not exist yet.
+        print(f'  Preview: {out}\n')
+        return
     verify(out, version)
     print('  Upload:  gh release upload v%s "%s" --clobber\n' % (version, out))
 

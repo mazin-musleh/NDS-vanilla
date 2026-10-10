@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>المكتبة العامة — لوحة الادارة</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <style>
+        body { background: #f5f6f7; }
+        .sidebar { min-height: 100vh; width: 220px; }
+    </style>
+</head>
+<body>
+
+    <div class="d-flex">
+        <!-- القائمة الجانبية -->
+        <aside class="sidebar bg-dark text-light p-3 flex-shrink-0">
+            <h5 class="mb-4">لوحة الادارة</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link text-light active" href="#">النظرة العامة</a></li>
+                <li class="nav-item"><a class="nav-link text-light-50" href="#">الاستعارات</a></li>
+                <li class="nav-item"><a class="nav-link text-light-50" href="#">الحجوزات</a></li>
+                <li class="nav-item"><a class="nav-link text-light-50" href="#">الاعضاء</a></li>
+                <li class="nav-item mt-4"><a class="nav-link text-light-50" href="/">عودة للبوابة</a></li>
+            </ul>
+        </aside>
+
+        <!-- المحتوى -->
+        <main class="flex-grow-1 p-4">
+            <h1 class="h3 mb-4">النظرة العامة</h1>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-3"><div class="card"><div class="card-body"><h4 id="mBooks">—</h4><p class="text-muted mb-0">العناوين</p></div></div></div>
+                <div class="col-md-3"><div class="card"><div class="card-body"><h4 id="mLoans">—</h4><p class="text-muted mb-0">استعارات نشطة</p></div></div></div>
+                <div class="col-md-3"><div class="card"><div class="card-body"><h4 id="mLate">—</h4><p class="text-muted mb-0">متأخرة</p></div></div></div>
+                <div class="col-md-3"><div class="card"><div class="card-body"><h4 id="mEvents">—</h4><p class="text-muted mb-0">فعاليات مجدولة</p></div></div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">احدث حركات الاستعارة</div>
+                <div class="card-body p-0">
+                    <table class="table table-striped mb-0">
+                        <thead><tr><th>#</th><th>العنوان</th><th>الاستعارة</th><th>الاستحقاق</th><th>الحالة</th></tr></thead>
+                        <tbody id="loanRows"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(function () {
+            $.getJSON('/api/books', function (b) { $('#mBooks').text(b.length); });
+            $.getJSON('/api/events', function (e) { $('#mEvents').text(e.length); });
+            $.getJSON('/api/loans', function (loans) {
+                $('#mLoans').text(loans.filter(function (l) { return l.status === 'مستعار'; }).length);
+                $('#mLate').text(loans.filter(function (l) { return l.status === 'متأخر'; }).length);
+                var rows = '';
+                loans.forEach(function (l) {
+                    var badge = l.status === 'متأخر' ? 'bg-danger' : (l.status === 'مرجع' ? 'bg-secondary' : 'bg-success');
+                    rows += '<tr><td>' + l.id + '</td><td>' + l.title + '</td><td>' + l.out +
+                        '</td><td>' + l.due + '</td><td><span class="badge ' + badge + '">' + l.status + '</span></td></tr>';
+                });
+                $('#loanRows').html(rows);
+            });
+        });
+    </script>
+</body>
+</html>

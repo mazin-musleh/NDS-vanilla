@@ -179,6 +179,8 @@ ID from your environment info, then your answers, numbered, nothing else.
 
 Comprehension asks what an agent says it would do. Behavior mode checks what it does: the plan files it writes, the markup it copies, whether it stops at gates, and whether the anchor's read trigger fires. It costs more, so run one scenario or rig per agent, on explicit ask only. It found what a 3-model comprehension sweep could not (S1, 2026-08-10).
 
+The rigs below are small fixtures. A **field rig** is a real legacy app a fresh session ports end to end, run by the owner: `RIGS.md` covers its setup, staging, review and reset (`scripts/rig.py`).
+
 1. **Assemble:** `node fixtures/tools/assemble.mjs --fixture <mini-spa|mini-app|mini-mpa> --state <name|none> --rulebook <real|stub|path> --out <scratchpad dir> [--root repo|mini]`.
    - It fails closed on `check-fixtures.mjs`, extracts the anchor from the rules file's own canon, overlays the state, and writes `run-manifest.json`.
    - `--root repo` (default) copies the real repo: the new doc format. `--root mini` copies `mini-root/`: the old format.
