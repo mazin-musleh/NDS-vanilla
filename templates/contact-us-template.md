@@ -12,7 +12,7 @@ lang: en
 direction: ltr
 sidemenu_mode: false
 ---
-<section id="contact-form" class="nds-content-section nds-sideinfo-section">
+<section id="contact-us" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <div class="nds-info-content">
             <form id="contact-form" class="nds-form nds-flex nds-col" data-ajax>
@@ -218,19 +218,19 @@ sidemenu_mode: false
                             <div class="nds-select-dropdown" hidden>
                                 <div class="nds-select-options">
                                     <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="suggestion">
-                                        <span class="nds-option-text">Suggestion</span>
+                                        <span class="nds-option-text"><span class="nds-label">Suggestion</span></span>
                                     </button>
                                     <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="complaint">
-                                        <span class="nds-option-text">Complaint</span>
+                                        <span class="nds-option-text"><span class="nds-label">Complaint</span></span>
                                     </button>
                                     <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="inquiry">
-                                        <span class="nds-option-text">General Inquiry</span>
+                                        <span class="nds-option-text"><span class="nds-label">General Inquiry</span></span>
                                     </button>
                                     <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="technical">
-                                        <span class="nds-option-text">Technical Support</span>
+                                        <span class="nds-option-text"><span class="nds-label">Technical Support</span></span>
                                     </button>
                                     <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="partnership">
-                                        <span class="nds-option-text">Partnership Request</span>
+                                        <span class="nds-option-text"><span class="nds-label">Partnership Request</span></span>
                                     </button>
                                 </div>
                             </div>
@@ -484,12 +484,15 @@ sidemenu_mode: false
                 }
                 // Not form.reset(): nothing in NDS listens for the native reset
                 // event, so it changes values behind the validation chrome's back.
-                // Clear per field and sync each through the Forms API instead.
+                // Reset per field and sync each through the Forms API instead. A hidden
+                // value or a read-only display is a component's (a country code, a custom
+                // select's choice): clearing it alone leaves the visible choice behind, so
+                // the choice stays and only what the user typed clears.
                 Array.prototype.forEach.call(form.elements, function (el) {
-                    if (el.type === 'button' || el.type === 'submit') return;
+                    if (el.type === 'button' || el.type === 'submit' || el.type === 'hidden' || el.readOnly) return;
                     if (el.type === 'checkbox' || el.type === 'radio') el.checked = el.defaultChecked;
-                    else if (el.tagName === 'SELECT') el.selectedIndex = 0;
-                    else el.value = '';
+                    else if (el.tagName === 'SELECT') Array.prototype.forEach.call(el.options, function (o) { o.selected = o.defaultSelected; });
+                    else if ('defaultValue' in el) el.value = el.defaultValue;
                     NDS.Forms.syncState(el);
                     NDS.Forms.clearStatus(el);
                 });

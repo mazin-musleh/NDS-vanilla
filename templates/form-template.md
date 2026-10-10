@@ -23,7 +23,7 @@ sidemenu_mode: false
 
             <!-- data-ajax: Forms owns the submit listener and stops the POST itself
                  after validation. Send the request from nds:formValid. -->
-            <form id="form-template" class="nds-form" data-ajax>
+            <form id="ft-form" class="nds-form" data-ajax>
 
                 <!-- ============================================================
                      STEP 1 — Identity Verification
@@ -547,7 +547,7 @@ sidemenu_mode: false
         // data-ajax: Forms validates on submit, stops the POST and fires nds:formValid.
         // Advance from the request's OUTCOME, never the click — a failure must not
         // report success. Forms skips fields in a hidden panel, so this validates step 3.
-        document.getElementById('form-template')
+        document.getElementById('ft-form')
             .addEventListener('nds:formValid', function () {
                 var btn = document.getElementById('ft-submit');
                 NDS.State.add(btn, 'loading');

@@ -862,19 +862,19 @@ hideFeedback: true
                         <div class="nds-select-dropdown" hidden>
                             <div class="nds-select-options">
                                 <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Commercial registration">
-                                    <span class="nds-option-text">Commercial registration</span>
+                                    <span class="nds-option-text"><span class="nds-label">Commercial registration</span></span>
                                 </button>
                                 <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Work permit renewal">
-                                    <span class="nds-option-text">Work permit renewal</span>
+                                    <span class="nds-option-text"><span class="nds-label">Work permit renewal</span></span>
                                 </button>
                                 <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Municipal licence">
-                                    <span class="nds-option-text">Municipal licence</span>
+                                    <span class="nds-option-text"><span class="nds-label">Municipal licence</span></span>
                                 </button>
                                 <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Building permit">
-                                    <span class="nds-option-text">Building permit</span>
+                                    <span class="nds-option-text"><span class="nds-label">Building permit</span></span>
                                 </button>
                                 <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Vehicle transfer">
-                                    <span class="nds-option-text">Vehicle transfer</span>
+                                    <span class="nds-option-text"><span class="nds-label">Vehicle transfer</span></span>
                                 </button>
                             </div>
                         </div>
@@ -920,13 +920,13 @@ hideFeedback: true
                         <div class="nds-select-dropdown" hidden>
                             <div class="nds-select-options">
                                 <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="pending">
-                                    <span class="nds-option-text">Pending</span>
+                                    <span class="nds-option-text"><span class="nds-label">Pending</span></span>
                                 </button>
                                 <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="approved">
-                                    <span class="nds-option-text">Approved</span>
+                                    <span class="nds-option-text"><span class="nds-label">Approved</span></span>
                                 </button>
                                 <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="rejected">
-                                    <span class="nds-option-text">Rejected</span>
+                                    <span class="nds-option-text"><span class="nds-label">Rejected</span></span>
                                 </button>
                             </div>
                         </div>
