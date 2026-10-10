@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:41 AM"
+last_edit: "10/10/2026 - 04:14 AM"
 ---
 
 <section id="exportOverview" class="nds-content-section nds-doc-overview">
@@ -278,6 +278,11 @@ Use it for cards or any list that is not a table. Give the list `data-export-row
 
 By default, the file holds the selected rows when any row is selected, else every row. A row is selected when it holds a checked `input.nds-check` or carries `data-state="selected"`, the same rule as [Selection](../components/selection). Set `data-export-scope="selected"` or `"all"` on the buttons to fix the scope. Every format follows the scope. With nothing selected, the Selected scope exports only the header row.
 
+### Server Pages
+{: .nds-block-title}
+
+When your server sends one page of rows at a time, the page holds only those rows, and so does the file. The script cannot get the other pages, and nothing on the screen says the file is short. Do one of these: hide the export buttons, give them a label that says they export this page, or offer your server's own export of every row in their place.
+
 ### Hidden Columns
 {: .nds-block-title}
 
@@ -306,7 +311,7 @@ When a user hides a column with the [Tables](../components/tables) column menu, 
             <i class="hgi hgi-stroke hgi-file-management"></i>
             <span class="nds-label">Pagination Aware</span>
           </span>
-          <p class="nds-item-desc">A paged list exports every page, not only the page on the screen.</p>
+          <p class="nds-item-desc">A paged list exports every page in the HTML, not only the page on the screen. Rows a server has not sent are not in the file: see Server Pages.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
