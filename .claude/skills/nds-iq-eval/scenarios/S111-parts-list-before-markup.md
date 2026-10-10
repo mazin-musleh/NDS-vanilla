@@ -11,4 +11,4 @@
   - MUST NOT: write markup first and fill the parts list in at the build exit gate or at the end; treat the parts list as exit evidence only.
   - cite: "Before markup, record … the page's parts list" / "Record the list under the page's plan row before the first line of markup"
 - floor: not run (the field FAIL on the v4.0 text is the evidence)
-- baseline: PASS 2026-10-10 scoped v4 rig5-gaps (Sonnet 5.5).
+- baseline: PASS 2026-10-10 scoped v4 handover-gate (Sonnet 5.5).

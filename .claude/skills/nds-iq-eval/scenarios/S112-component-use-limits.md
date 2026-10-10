@@ -12,4 +12,4 @@
   - cite: "followed by every line of that component's doc that limits its use (never, only, do not)"
 - grading note: read-dependent (the numbers doc's limit line); grade the read half of the MUST from a solo or scoped run only.
 - floor: not run (the field FAIL on the v4.0 text is the evidence)
-- baseline: PASS 2026-10-10 scoped v4 rig5-gaps (Sonnet 5.5).
+- baseline: PASS 2026-10-10 scoped v4 handover-gate (Sonnet 5.5).
