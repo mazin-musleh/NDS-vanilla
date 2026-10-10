@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 11:18 PM"
+last_edit: "11/10/2026 - 12:25 AM"
 ---
 
 <section id="refresh-overview" class="nds-content-section nds-doc-overview">
@@ -56,6 +56,21 @@ const grid = document.getElementById('servicesGrid');
 const { data } = await NDS.request('/api/services.html');
 grid.innerHTML = data;
 await NDS.Init.mount(grid);
+</script>
+
+Build rows from JSON. Keep one row's markup, copied from its canon, in a `<template>` on the page. Fill each copy with `textContent` and attributes, never with an HTML string.
+
+<script type="text/html" id="refresh-template" data-canon data-lang="js">
+// <template id="request-row"> holds one row's markup, copied from its canon
+const rowTemplate = document.getElementById('request-row');
+const { data } = await NDS.request('/api/requests', { json: true });
+data.forEach(item => {
+  const row = rowTemplate.content.firstElementChild.cloneNode(true);
+  row.querySelector('[data-field="title"]').textContent = item.title;
+  row.querySelector('.nds-tag').setAttribute('data-status', item.status);
+  tbody.appendChild(row);
+});
+await NDS.Init.mount(tbody);
 </script>
 
 Destroy a row before you remove it.
