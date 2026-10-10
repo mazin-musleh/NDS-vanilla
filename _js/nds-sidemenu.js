@@ -2,6 +2,9 @@
  * Rides: nds-drawer (the menu tree inside it — expand/collapse and the responsive
  *        open rules) · nds-backdrop (dims the page while it is open, and closes it on
  *        Escape or a click outside)
+ * Requires:
+ *   .nds-sidemenu needs .nds-sidemenu-toggle — the menu is inert
+ *   .nds-sidemenu needs .nds-drawer — the first open throws
  * Methods:
  *   NDS.Sidemenu.init()      wire the one sidemenu on the page (destroys the previous
  *                            instance first, so it doubles as reinit)

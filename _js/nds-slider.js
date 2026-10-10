@@ -1,6 +1,10 @@
 /* NDS.Slider — public surface
  * Rides: nds-numbers (locale, thousand separators and the currency mark on the value
  *        output; soft — the raw value shows without it)
+ * Requires:
+ *   .nds-slider-container:not(.nds-slider-range) needs .nds-slider-track — the fill never paints
+ *   .nds-slider-container.nds-slider-range needs .nds-slider-min — the thumbs are not clamped and the fill never paints
+ *   .nds-slider-container.nds-slider-range needs .nds-slider-max — the thumbs are not clamped and the fill never paints
  * Methods:
  *   NDS.Slider.init()          wire the delegated input listener; initialize every
  *                              .nds-slider-container

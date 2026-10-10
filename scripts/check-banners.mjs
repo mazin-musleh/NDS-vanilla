@@ -110,6 +110,8 @@ const EVENT_EXCEPTIONS = {
 const isPrefix = (name) => name.endsWith(':');
 
 const SECTIONS = ['Rides', 'Methods', 'Events', 'Hooks', 'Gotchas'];
+// Optional, after Rides: the markup the script needs to work, baked into the audit's required-part rule.
+const ORDER = ['Rides', 'Requires', 'Methods', 'Events', 'Hooks', 'Gotchas'];
 const RESERVED = new Set(['null', 'true', 'false', 'undefined', 'return']);
 
 // ── source parsing ──────────────────────────────────────────────────────────
@@ -269,7 +271,7 @@ function parseBanner(source) {
     const sections = [];
     let current = null;
     for (const line of banner) {
-        const m = line.match(/^\s*\*\s*(Rides|Methods|Events|Hooks|Gotchas)\s*(\([^)]*\))?\s*:(.*)$/);
+        const m = line.match(/^\s*\*\s*(Rides|Requires|Methods|Events|Hooks|Gotchas)\s*(\([^)]*\))?\s*:(.*)$/);
         if (m) {
             current = { label: m[1], text: m[3] };
             sections.push(current);
@@ -300,8 +302,8 @@ function verifyFile(file, ns, source) {
     for (const want of SECTIONS) {
         if (!labels.includes(want)) issues.push(`missing section: ${want}`);
     }
-    const order = labels.filter((l) => SECTIONS.includes(l));
-    if (order.join() !== SECTIONS.filter((s) => labels.includes(s)).join()) {
+    const order = labels.filter((l) => ORDER.includes(l));
+    if (order.join() !== ORDER.filter((s) => labels.includes(s)).join()) {
         issues.push(`sections out of order (${labels.join(' → ')})`);
     }
 

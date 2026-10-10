@@ -1,5 +1,7 @@
 /* NDS.Accordion — public surface
  * Rides: (none — base component)
+ * Requires:
+ *   .nds-accordion needs one .nds-accordion-collapse per .nds-accordion-btn — a button without its collapse toggles nothing
  * Methods:
  *   NDS.Accordion.init() / .reinit()   scan .nds-accordion; a live root adopts new items
  *   NDS.Accordion.create(container)    instance one accordion — returns the live controller

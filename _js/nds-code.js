@@ -1,5 +1,7 @@
 /* NDS.Code — public surface
  * Rides: (none — base component)
+ * Requires:
+ *   .nds-code needs code — there is nothing to highlight
  * Methods:
  *   NDS.Code.init()                          highlight each `.nds-code code` as it nears the
  *                                            viewport and size the action-bar buttons

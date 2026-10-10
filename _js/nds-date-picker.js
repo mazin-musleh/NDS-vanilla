@@ -1,6 +1,8 @@
 /* NDS.DatePicker — public surface
  * Rides: nds-dropmenu (positioning, outside-click, portal — the input drives open/close)
  *      · nds-forms (invalid-value status message under the field; soft)
+ * Requires:
+ *   .nds-date-input sits in .nds-form-control — the picker is not built
  * Methods:
  *   NDS.DatePicker.init() / .reinit()          attach a calendar to every .nds-date-input
  *   NDS.DatePicker.create(input, formControl)  build/return one instance — idempotent, null on

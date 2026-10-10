@@ -276,7 +276,32 @@ class JSProcessor
       next if sets.any? { |a| a.any? { |x| x.end_with?('-menu') } }
       parts[c] = root if sets.all? { |a| a.include?(root) }
     end
-    JSON.generate({ known: known, parts: parts })
+    JSON.generate({ known: known, parts: parts, requires: requires_rows })
+  end
+
+  # Each banner's Requires lines: "<host> needs|needs one X per|sits in|is|with|points at X via" … " — why".
+  # Rows: [component, host, verb, arg, extra, why]. A line that does not parse fails the build.
+  REQUIRES_LINE = /\A(.+?) (needs one|points at|sits in|needs|is|with) (.+?) — (.+)\z/
+  def requires_rows
+    Dir.glob('_js/**/*.js').sort.flat_map do |f|
+      head = File.read(f, encoding: 'utf-8')[/\A\/\*.*?\*\//m] || ''
+      name = head[/\A\/\*\s*NDS\.(\S+)/, 1]
+      block = head[/^ \* Requires:\s*\n(.*?)(?=^ \* (?:Methods|Events|Hooks|Gotchas))/m, 1]
+      next [] unless name && block
+      block.lines.map(&:strip).map { |l| l.sub(/\A\*\s*/, '') }.reject(&:empty?).map do |l|
+        m = l.match(REQUIRES_LINE) or raise "#{f}: Requires line does not parse: #{l}"
+        host, verb, arg, why = m.captures
+        extra = 0
+        if verb == 'needs one'
+          arg, extra = arg.split(' per ', 2)
+          raise "#{f}: 'needs one' takes 'X per Y': #{l}" unless extra
+        elsif verb == 'points at'
+          arg, extra = arg.split(' via ', 2)
+          raise "#{f}: 'points at' takes 'X via attribute': #{l}" unless extra
+        end
+        [name, host, verb, arg, extra, why]
+      end
+    end
   end
 
   # A bundle is stale when its output is missing or older than any dependency.

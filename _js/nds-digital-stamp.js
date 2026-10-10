@@ -1,5 +1,7 @@
 /* NDS.DigitalStamp — public surface
  * Rides: (none — base component)
+ * Requires:
+ *   .nds-digital-stamp-tab with #nds-digital-stamp — the tab opens nothing without its panel
  * Methods:
  *   NDS.DigitalStamp.init()      wire the tab, outside-click and Escape
  *   NDS.DigitalStamp.open()      expand the banner

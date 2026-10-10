@@ -1,5 +1,7 @@
 /* NDS.ScrollMore — public surface
  * Rides: (none — base component)
+ * Requires:
+ *   .nds-scroll-more needs .nds-scroll-more-content — no overflow state
  * Methods:
  *   NDS.ScrollMore.init() / .reinit()      scan + initialize .nds-scroll-more
  *   NDS.ScrollMore.create(wrapper)         initialize one wrapper

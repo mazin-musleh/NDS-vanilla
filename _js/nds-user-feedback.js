@@ -1,6 +1,9 @@
 /* NDS.UserFeedback — public surface
  * Rides: nds-feedback (renders the success / error message) · nds-cookies (remembers a
  *        submission per page) · nds-forms (validateForm when the widget sits in a form)
+ * Requires:
+ *   .nds-user-feedback needs .nds-user-feedback-answer-btn .nds-btn[data-answer] — the details step never opens
+ *   .nds-user-feedback needs .nds-user-feedback-submit-btn — nothing is sent
  * Methods:
  *   NDS.UserFeedback.init() / .reinit()   scan + initialize .nds-user-feedback
  *   NDS.UserFeedback.create(el)           initialize one widget (idempotent)

@@ -1,5 +1,8 @@
 /* NDS.CityWeather — public surface
  * Rides: (none — base component)
+ * Requires:
+ *   #nds-weather-info with #nds-city-name — the widget starts only when both are on the page
+ *   #nds-city-name with #nds-weather-info — the widget starts only when both are on the page
  * Methods:
  *   NDS.CityWeather.init()            wire the city and weather widgets, if present
  *   NDS.CityWeather.updateWeather()   re-fetch and re-render the weather

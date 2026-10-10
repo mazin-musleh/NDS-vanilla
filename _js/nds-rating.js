@@ -1,5 +1,7 @@
 /* NDS.Rating — public surface
  * Rides: (none — base component)
+ * Requires:
+ *   .nds-rating needs .nds-rating-star — there is nothing to show
  * Methods:
  *   NDS.Rating.init() / .reinit()   scan + initialize .nds-rating
  *   NDS.Rating.create(el)           instance one rating (returns the live one if there is

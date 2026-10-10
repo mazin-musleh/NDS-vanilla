@@ -1,5 +1,11 @@
 /* NDS.Mainnav — public surface
  * Rides: nds-backdrop (dims the page behind an open drawer or dropdown; soft)
+ * Requires:
+ *   .nds-main-nav needs #nds-nav-collapse — the nav does nothing
+ *   .nds-main-nav needs .nds-nav-toggler — the menu cannot open on small screens
+ *   .nds-main-nav needs .nds-nav-primary — links that overflow never move to More
+ *   .nds-has-menu needs :scope > .nds-nav-link — the menu has no trigger
+ *   .nds-has-menu needs .nds-nav-menu — the trigger opens nothing
  * Methods:
  *   NDS.Mainnav.init()               wire the one nav on the page
  *   NDS.Mainnav.reinit()             re-resolve the markup and wire it again — for a nav

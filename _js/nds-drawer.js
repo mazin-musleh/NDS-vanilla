@@ -1,5 +1,7 @@
 /* NDS.Drawer — public surface
  * Rides: (none — base component)
+ * Requires:
+ *   .nds-drawer-list li:has(> ul) needs :scope > .nds-btn — the item never opens
  * Methods:
  *   NDS.Drawer.init() / .reinit()   scan + initialize .nds-drawer
  *   NDS.Drawer.create(drawer)       initialize one drawer

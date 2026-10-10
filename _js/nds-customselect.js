@@ -1,5 +1,8 @@
 /* NDS.CustomSelect — public surface
  * Rides: nds-dropmenu (open/close, keyboard nav, positioning, portal, outside-click)
+ * Requires:
+ *   .nds-select-option needs [data-value] — a pick writes an empty value
+ *   form .nds-form-control:has(> .nds-select-input) needs .nds-select-value — the form never gets the picked value
  * Methods:
  *   NDS.CustomSelect.init() / .reinit()    arm the delegated listeners; paint pre-selected labels
  *   NDS.CustomSelect.create(el)            build one select now — pass the input or its form-control

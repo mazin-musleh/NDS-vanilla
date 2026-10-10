@@ -3,6 +3,8 @@
  *        soft) · nds-pagination (a paged list still exports every page; soft)
  *      · nds-filter (rows the filter removed are left out; soft)
  *      · nds-selection (NDS.Selection.isSelected decides the selected scope; init() loads it)
+ * Requires:
+ *   [data-export] is [data-export="csv"], [data-export="xls"], [data-export="pdf"] — any other format does nothing
  * Methods:
  *   NDS.Export.init()                            wire the delegated [data-export] click
  *   NDS.Export.export(source, format, scope, opts)   collect and download.

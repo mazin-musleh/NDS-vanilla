@@ -1,5 +1,12 @@
 /* NDS.Forms — public surface
  * Rides: (none — base component)
+ * Requires:
+ *   .nds-form-control:not(:has(> .nds-switch)):not(.nds-multiselect .nds-form-control) needs :scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input — the field gets no states, required mark or clear button
+ *   .nds-form-control sits in .nds-form-container — no state, status or error shows
+ *   .nds-form-control .nds-clear sits in .nds-form-action — the clear button is never wired
+ *   .nds-form-control .nds-toggle-password sits in .nds-form-action — the show-password button is never wired
+ *   .nds-auto-fill needs .nds-item — nothing is wired
+ *   .nds-form is form — submit validation runs only on a <form>
  * Methods:
  *   NDS.Forms.init()                       scan + initialize every .nds-form-container
  *   NDS.Forms.initializeContainer(el)      initialize one container

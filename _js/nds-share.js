@@ -1,6 +1,8 @@
 /* NDS.Share — public surface
  * Rides: nds-copy (the copy-link action; soft — the other buttons work without it)
  *      · nds-dropmenu (when the buttons sit in a menu; soft — an inline row works too)
+ * Requires:
+ *   .nds-share needs .nds-share-x, .nds-share-linkedin, .nds-share-whatsapp, .nds-share-copy, [data-share-href] — no button shares
  * Methods:
  *   NDS.Share.init()   delegate clicks on .nds-share — safe to call again
  * Events:

@@ -1,6 +1,8 @@
 /* NDS.Tabs — public surface
  * Rides: nds-scroll-more (overflow detection, edge mask and the show-more button on the
  *        tab list) · nds-expandable (heights are rechecked when a panel becomes visible)
+ * Requires:
+ *   .nds-tabs needs one .nds-tab-panel per .nds-tab:not(.nds-show-more) — a tab without its panel switches nothing
  * Methods:
  *   NDS.Tabs.init() / .reinit()      scan + initialize .nds-tabs
  *   NDS.Tabs.create(container)       instance one tab set

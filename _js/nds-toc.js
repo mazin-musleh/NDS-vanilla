@@ -1,6 +1,9 @@
 /* NDS.Toc — public surface
  * Rides: nds-drawer (the list itself is a .nds-drawer, so expand/collapse and the
  *        responsive open rules come from there)
+ * Requires:
+ *   .nds-toc:not([data-toc-source]) needs li a[href^="#"] — the TOC has no entries
+ *   .nds-toc[data-toc-source] needs .nds-drawer-list — the list is not built
  * Methods:
  *   NDS.Toc.init() / .reinit()   scan + initialize .nds-toc
  *   NDS.Toc.create(el)           instance one table of contents

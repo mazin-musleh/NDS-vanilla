@@ -1,5 +1,7 @@
 /* NDS.OTP — public surface
  * Rides: nds-forms (clears the field status as the user types; soft)
+ * Requires:
+ *   .nds-otp-group needs .nds-otp-container input — the group is not wired
  * Methods:
  *   NDS.OTP.init()                  wire every .nds-otp-group, and self-arm for late ones
  *   NDS.OTP.getValue(group)         the digits, joined

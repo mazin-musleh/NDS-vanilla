@@ -1,5 +1,7 @@
 /* NDS.Stepper — public surface
  * Rides: (none — base component)
+ * Requires:
+ *   .nds-stepper needs .nds-stepper-step — there are no steps
  * Methods:
  *   NDS.Stepper.init() / .reinit()        stamp the steps, wire the delegated control listener
  *   NDS.Stepper.create(el)                instance one stepper

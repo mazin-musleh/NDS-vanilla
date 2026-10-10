@@ -1,5 +1,9 @@
 /* NDS.Upload — public surface
  * Rides: nds-tooltip (the full file name on hover; soft)
+ * Requires:
+ *   .nds-file-upload needs input[type="file"] — the upload is not built
+ *   .nds-file-upload needs .nds-form-control — the upload is not built
+ *   .nds-file-upload needs .nds-file-list — the upload is not built
  * Methods:
  *   NDS.Upload.init() / .reinit()                scan + initialize .nds-file-upload
  *   NDS.Upload.create(el, options)               instance one uploader; options override the

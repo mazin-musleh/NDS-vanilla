@@ -1,6 +1,8 @@
 /* NDS.VoiceInput — public surface
  * Rides: nds-forms (the `listening` state on the field container; soft — a bare input just
  *        gets its value set)
+ * Requires:
+ *   .nds-voice-input:not([data-voice-target]):not([data-target]) sits in .nds-form-control — there is no input to fill
  * Methods:
  *   NDS.VoiceInput.init() / .reinit()   install the delegated click handler (idempotent)
  *   NDS.VoiceInput.isSupported()        Web Speech API available? — gate your own UI on it

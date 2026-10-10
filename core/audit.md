@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:12 PM"
+last_edit: "10/10/2026 - 03:50 PM"
 ---
 
 <section id="auditOverview" class="nds-content-section nds-doc-overview">
@@ -229,6 +229,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `migration-markup` | migration | error, warn, info | A renamed or removed name (error) or a deprecated one (warn) in the markup, or an old window setting |
 | `migration-css` | migration | error, warn, info | The same names in the site's own CSS. Setting a custom property that NDS never read is info |
 | `unknown-class` | structure | warn | An `nds-` class that no NDS style sheet, doc or script has, so it gets no NDS style or behavior. An old name is left to `migration-markup` |
+| `required-part` | structure | error | A part or attribute that a component's script needs to work, missing with no console warning, such as a tab with no panel or a date field outside its `.nds-form-control`. Each component lists these in the `Requires` lines of its script's banner |
 | `part-outside` | structure | warn | A component part outside its component, such as `.nds-card-title` with no `.nds-card` around it. It skips a part that NDS also styles on its own |
 {: .nds-table .nds-responsive}
 

@@ -93,7 +93,7 @@ not the obvious thing. Match the density of the file you are in; do not out-comm
 - No restating what the code says. No comments on removed code.
 - A shortcut with a known ceiling gets a `ponytail:` line naming the ceiling and the upgrade path.
 - Component banners are the exception in FORM, not in length: they stay structured
-  (Rides/Methods/Events/Hooks/Gotchas) and each Gotcha is still as short as it can be.
+  (Rides/Requires/Methods/Events/Hooks/Gotchas; Requires is optional and feeds the audit) and each Gotcha is still as short as it can be.
 
 ## Model Usage
 

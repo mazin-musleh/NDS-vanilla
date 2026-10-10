@@ -1,5 +1,7 @@
 /* NDS.Copy — public surface
  * Rides: (none — base component)
+ * Requires:
+ *   .nds-copy:not([data-copy]):not([data-copy-target]) sits in .nds-code — with no text source it copies nothing
  * Methods:
  *   NDS.Copy.init()                     delegate clicks on .nds-copy
  *   NDS.Copy.bind(selector, opts)       delegate on your own selector; one listener per

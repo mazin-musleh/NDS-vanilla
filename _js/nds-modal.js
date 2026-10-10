@@ -1,5 +1,7 @@
 /* NDS.Modal — public surface
  * Rides: nds-backdrop (the overlay layer, plus ESC and click-outside dismiss)
+ * Requires:
+ *   [data-modal-target] points at .nds-modal via data-modal-target — the click opens nothing
  * Methods:
  *   NDS.Modal.init()            wire the delegated trigger, close and ESC handlers
  *   NDS.Modal.open(idOrEl)      open a .nds-modal
