@@ -111,7 +111,7 @@ NDS is a UI layer; the host project (frontend and backend) serves it. NDS IQ nev
 
 **Plan entry gate.** Choose the work mode first. When a plan applies, list routes, layouts, shared partials, pages and views (one row per client-side view), and legacy UI libraries; map every page through the §Build cascade and record its page shape. Greenfield lists only the pages the dev named. No-plan work inspects only the named page, its shared layout, its global files, and the project contracts.
 
-Check response headers and middleware for a Content Security Policy once, project-wide, and record the result. None → record `no CSP`; this closes the question: skip this file's CSP rules and ask the dev nothing about CSP. Found → read the docs' CSP guidance and record what the head needs. The review recommends the grant that keeps the head's inline style block: a nonce when the server renders each response, otherwise a hash for that block and the inline script together, which is one edit to the policy. Offer the blocking stylesheet only when the policy can take neither, and say it delays the first paint.
+Check response headers and middleware for a Content Security Policy once, project-wide. None → record `no CSP` and skip this file's CSP rules: ask the dev nothing about CSP. Found → read the docs' CSP guidance and record what the head needs. Recommend its grants in its order: a nonce, else a hash, and the blocking stylesheet last, since it slows the first paint.
 
 Inspect every globally loaded stylesheet for element selectors (`body`, `h1`, `a`, `input`, …): each hit reaches every NDS page served through that entry. Record its isolation.
 
