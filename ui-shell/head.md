@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 02:59 AM"
+last_edit: "10/10/2026 - 03:55 AM"
 ---
 
 <section id="headOverview" class="nds-content-section nds-doc-overview">
@@ -294,6 +294,7 @@ A strict policy blocks inline code, so the gate and the inline script each need 
 | Every stylesheet and script file | `'self'` |
 | The bundles the loader adds | `'self'`, or the nonce: the loader copies the main script's nonce onto each one |
 | UI icons (`nds-icon`) | `img-src data:`: each icon is an inline SVG mask |
+| Content icons (`hgi`) | `font-src data:`: an inline font holds each icon's space while the icon font loads |
 | A `style` attribute on your markup (`style="--gap: 16px"`) | `'unsafe-inline'`. No nonce or hash covers an attribute, so move the value to a class |
 | Trusted Types (`require-trusted-types-for 'script'`) | The policy name `nds` in `trusted-types` |
 {: .nds-table .nds-responsive}
@@ -306,7 +307,7 @@ Content-Security-Policy:
   script-src  'self' 'nonce-YOUR_RANDOM_VALUE';
   style-src   'self' 'nonce-YOUR_RANDOM_VALUE';
   img-src     'self' data:;
-  font-src    'self';
+  font-src    'self' data:;
 </script>
 
 Put the same value on the gate, the inline script and the main script:
