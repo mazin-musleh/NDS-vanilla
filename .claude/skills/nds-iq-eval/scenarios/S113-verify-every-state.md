@@ -11,4 +11,4 @@
   - MUST NOT: move the row to `Awaiting Verification` on the signed-in pass alone; hand the other states to the dev while the harness can set them up.
   - cite: "run both passes on each state in the parts list, not only the default one" / "each state from the parts list, its setup, and its inspected screenshots at both widths"
 - floor: not run (the field FAIL on the v4.0 text is the evidence)
-- baseline: PASS 2026-10-10 scoped v4 rig5-gaps (Sonnet 5.5).
+- baseline: PASS 2026-10-10 scoped v4 edit-mode (Sonnet 5.5).
