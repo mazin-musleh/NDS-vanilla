@@ -27,6 +27,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CSS = sorted(glob.glob(os.path.join(ROOT, '_site', 'assets', 'css', '*.min.css')))
 NESTING = ('media', 'supports', 'container', 'layer', 'scope')
 NAME = r'--[\w-]+'
+# Matched against the path inside the repo: a checkout under C:\tmp\ once skipped every source file.
+SKIP = re.compile(r'(^|[\\/])(dist|tmp|_site|node_modules)[\\/]')
 
 
 def rules(css):
@@ -88,7 +90,7 @@ def set_outside_css():
     globs = ['_js/*.js', '_js/**/*.js', '_includes/**/*.html', '_layouts/*.html', '**/*.md']
     for g in globs:
         for p in glob.glob(os.path.join(ROOT, g), recursive=True):
-            if os.sep + '_site' + os.sep in p or os.sep + 'node_modules' + os.sep in p or os.sep + 'tmp' + os.sep in p:
+            if SKIP.search(os.path.relpath(p, ROOT)):
                 continue
             names.update(re.findall(r"(" + NAME + r")\s*:", read(p)))
             names.update(re.findall(r"""['"`](""" + NAME + r""")['"`]""", read(p)))
@@ -154,7 +156,7 @@ def unused_report():
     # A class a doc page names but never renders is API without a demo, not dead CSS.
     docs = set()
     for p in glob.glob(os.path.join(ROOT, '*', '*.md')) + glob.glob(os.path.join(ROOT, '*.md')):
-        if not re.search(r'[\\/](dist|tmp|_site|node_modules)[\\/]', p):
+        if not SKIP.search(os.path.relpath(p, ROOT)):
             docs.update(re.findall(r'[\w-]+', read(p)))
     raw = ''.join(total)
     print(f'unused-rule candidates: {len(total)} rules, {len(raw)} B raw, ~{len(gzip.compress(raw.encode()))} B gzip (alone; less in place)')
