@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 04:10 PM"
 ---
 
 <section id="iconsOverview" class="nds-content-section nds-doc-overview">
@@ -54,7 +54,7 @@ An icon is one `<i>` element. Where it goes in a component, such as before a lab
 <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
 </script>
 
-<div class="nds-block nds-prose">
+<div class="nds-block">
 <h3 class="nds-block-title" id="iconsCatalog">UI Icon Catalog</h3>
 <p>The {{ site.data.content.icons.hgi | size }} UI icons from HugeIcons. Click a tile to copy its classes. The list is <code class="nds-inline-code lang-js">_data/content/icons.yml</code>.</p>
 <div class="nds-grid nds-doc-icons">
@@ -67,7 +67,7 @@ An icon is one `<i>` element. Where it goes in a component, such as before a lab
 </div>
 </div>
 
-<div class="nds-block nds-prose">
+<div class="nds-block">
 <h3 class="nds-block-title">Custom Marks</h3>
 <p>The {{ site.data.content.icons.custom | size }} marks drawn for NDS: the store logos, the riyal symbol, and marks that components paint, such as the avatar placeholder and the checkbox tick. A mark is not the HugeIcons glyph of the same name: <code class="nds-inline-code lang-html">nds-icon-riyal</code> and <code class="nds-inline-code lang-html">hgi-riyal</code> differ.</p>
 <div class="nds-grid nds-doc-icons">
