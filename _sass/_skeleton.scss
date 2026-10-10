@@ -340,9 +340,16 @@ tbody[data-filter-items]:not([data-nds-filter-initialized], .nds-paged-content) 
         margin-inline: calc(50% - 50vw);
     }
 
+    // Full gutter while the section is narrower than the max width (runs to the
+    // screen edge); eases to half a gutter past it, so it never exceeds max width + one gutter.
     .nds-max-width {
-        margin-inline: calc(var(--_wrapper-padding) * -1);
+        margin-inline: calc(min(var(--_wrapper-padding), (var(--nds-content-MaxWidth) + var(--_wrapper-padding) - 100%) / 2) * -1);
     }
+}
+
+// MaxWidth 100% re-resolves against the body itself, so the cap never applies here.
+body.nds-full-width :is(.nds-content-wrapper, .nds-hero-section, .nds-content-section) .nds-max-width {
+    margin-inline: calc(var(--_wrapper-padding) * -1);
 }
 
 /* ── Nav background + shadow ──
