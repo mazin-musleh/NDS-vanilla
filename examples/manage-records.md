@@ -57,7 +57,7 @@ hideFeedback: true
                             </div>
                         </div>
                         <div class="nds-dropmenu" data-columns-target="requestsTable">
-                            <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
+                            <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
                                 <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
                                 <span class="nds-label">Columns</span>
                             </button>

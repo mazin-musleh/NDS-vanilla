@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:41 AM"
+last_edit: "10/10/2026 - 03:30 PM"
 ---
 
 <section id="tableOverview" class="nds-content-section nds-doc-overview">
@@ -120,7 +120,7 @@ Pick another component when:
         </div>
       </div>
       <div class="nds-dropmenu" data-columns-target="tbl-rec-requests">
-        <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
+        <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
           <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
           <span class="nds-label" data-hidden="sm sr">Columns</span>
         </button>
