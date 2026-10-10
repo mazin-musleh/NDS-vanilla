@@ -262,7 +262,7 @@ The fixtures stay skeletal on purpose: a bigger fixture is a slower run with no 
 
 **What a sentence may say**
 - **IQ names no facts.** Each release's `NDS-INDEX.md`, docs and audit own every path, class, API and doc format. Outside the anchor, a sentence may name only `NDS_ROOT`, `NDS_ASSETS`, `NDS-PLAN.md`, `NDS-REPORT.md`, `NDS-IQ.md`, `NDS-INDEX.md`, the release and raw URLs, and the `IQv3.2` tag; `verify()` fails on anything else. A sentence routes by need ("the index names …"), never by path.
-- **Every 2.x template, never blocking.** A doc or runtime feature that only newer releases ship is enrichment. The sentence's action must work without it: report the gap and propose the upgrade, never stall.
+- **Every template the rules serve, never blocking.** A doc or runtime feature that only newer releases ship is enrichment. The sentence's action must work without it: report the gap and propose the upgrade, never stall.
 - **Attribution default (owner, 2026-08-14): a field failure is a SOURCE finding.**
   - Presume a doc, example, catalog entry or banner was unclear, and fix it there.
   - Never change source just to rescue an agent; change it only when that improves the component or fixes a real gap.
