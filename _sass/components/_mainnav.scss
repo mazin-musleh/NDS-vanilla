@@ -148,11 +148,12 @@
     /* Navigation Items */
     .nds-nav-item {
 
+        // Labels below take `>`: an initials avatar's .nds-label is its content.
         :is(.nds-nav-link, .nds-nav-menu-item) {
 
             --btn-height-min: 40px;
 
-            .nds-label {
+            > .nds-label {
                 position: relative;
                 font-size: var(--typo-text-md-FS);
                 line-height: var(--typo-text-md-LH);
@@ -181,7 +182,7 @@
         }
 
         &.nds-icon-only {
-            .nds-nav-link .nds-label {
+            .nds-nav-link > .nds-label {
                 @include label-hidden;
             }
         }
