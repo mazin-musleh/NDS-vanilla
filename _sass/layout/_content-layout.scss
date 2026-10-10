@@ -167,6 +167,8 @@ main {
 
             @include desktop(min) {
                 --_wrapper-padding: 0;
+                // Insets to the cards' column. Not max-width + auto margins: .nds-content wraps, so its column is only as wide as its widest section.
+                padding-inline: max(0px, calc((100% - var(--nds-content-MaxWidth)) / 2));
             }
 
             @include tablet(max) {
