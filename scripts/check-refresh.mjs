@@ -57,17 +57,17 @@ report.push(...await recordsPage.evaluate(async () => {
     const ok = (name, pass, detail = '') => out.push({ name, pass, detail: String(detail) });
     const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
-    const tbody = document.getElementById('requestsTableBody');
-    const table = document.getElementById('requestsTable');
+    const tbody = document.getElementById('requests-table-body');
+    const table = document.getElementById('requests-table');
     if (!tbody || !table) return [{ name: 'fixture present', pass: false, detail: 'manage-records markup not found' }];
 
     const rows = () => [...tbody.querySelectorAll('tr.nds-page-item')];
     const order = () => rows().map((r) => r.cells[1].textContent.trim()).join(',');
-    const filter = () => NDS.Filter.getByTarget('requestsTableBody');
+    const filter = () => NDS.Filter.getByTarget('requests-table-body');
     const slot = (sel) => document.querySelector(sel)?.textContent?.trim() ?? null;
     // rows() ignores the `hidden` attribute pagination sets, so row order alone cannot
     // see a page change. Read the nav directly, or every paging assertion is blind.
-    const nav = () => document.querySelector('[data-auto-pagination="requestsTableBody"]');
+    const nav = () => document.querySelector('[data-auto-pagination="requests-table-body"]');
     const activePage = () => nav()?.querySelector('button[data-state~="active"]')?.getAttribute('aria-label') ?? null;
     const firstVisible = () => rows().filter((r) => !r.hidden)[0]?.cells[1].textContent.trim() ?? null;
     const gotoPage = async (n) => {
@@ -330,7 +330,7 @@ report.push(...await recordsPage.evaluate(async () => {
     NDS.Numbers.reinit();
     NDS.Pagination.refresh(tbody, { keepPage: true });
     NDS.Selection.reinit();
-    NDS.Filter.getByTarget('requestsTableBody')?.refresh();
+    NDS.Filter.getByTarget('requests-table-body')?.refresh();
     await wait(600);
     const viaManual = fullState();
 
@@ -358,7 +358,7 @@ report.push(...await recordsPage.evaluate(async () => {
 
 // ── 9. the stub guard: refreshing must never force a bundle to load ────────
 const beforeScripts = scriptRequests.length;
-await recordsPage.evaluate(() => NDS.Init.refresh(document.getElementById('requestsTableBody')));
+await recordsPage.evaluate(() => NDS.Init.refresh(document.getElementById('requests-table-body')));
 await new Promise((r) => setTimeout(r, 800));
 report.push({
     name: 'no bundle loads — a stubbed namespace is skipped, never probed',

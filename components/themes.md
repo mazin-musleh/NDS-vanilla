@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="themesOverview" class="nds-content-section nds-doc-overview">
+<section id="themes-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="themesMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="themes-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="theme-toggle" data-canon data-screens="none" data-variants="themesVariantsTable">
+<script type="text/html" id="theme-toggle" data-canon data-screens="none" data-variants="themes-variants-table">
 <button class="nds-btn nds-subtle nds-icon-only" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
   <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
 </button>
@@ -85,7 +85,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="themesVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="themes-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -99,13 +99,13 @@ The preview controls the real page: a click changes the look of this whole page,
 | Structure | Button toggle (default) | — | — | The dark mode button. Put it in the [Top Bar](../ui-shell/topbar), so it is on every page |
 | Structure | Switch toggle | canon `#theme-switch` | — | Dark mode as a setting, on a settings page |
 | Structure | Theme menu | canon `#theme-menu` | — | A menu of themes. Each option names its theme in `data-theme-value`. The empty value is the DGA default |
-{: #themesVariantsTable .nds-table .nds-responsive}
+{: #themes-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="themesBehavior" class="nds-content-section nds-doc-behavior">
+<section id="themes-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -243,7 +243,7 @@ A stylesheet theme is your own CSS file that sets the color tokens at `:root`. L
 A theme menu option can load a stylesheet theme too. `data-theme-css` on the option names the CSS file, and `data-theme-js` names a script. Each attribute works on its own: an option can carry one or both. The script loads them when the user picks the option, and removes the stylesheet when the user picks another one. The [event themes](../events/) are stylesheet themes that load from one script tag.
 
 ### Dark Areas
-{: .nds-block-title #themesDarkArea}
+{: .nds-block-title #dark-areas}
 
 `data-theme="dark"` on any element renders it and everything inside it in dark mode. The rest of the page stays as it is. Put it on a dark surface, such as a deep primary section, the footer or a card on a photo. In the preview, the second card carries it. Status tags keep their status colors. Only the `dark` word works on an element: a theme name works only on `<html>`.
 
@@ -288,7 +288,7 @@ A theme menu option can load a stylesheet theme too. `data-theme-css` on the opt
   </div>
 </section>
 
-<section id="themesFeatures" class="nds-content-section nds-doc-features">
+<section id="themes-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -342,7 +342,7 @@ A theme menu option can load a stylesheet theme too. `data-theme-css` on the opt
   </div>
 </section>
 
-<section id="themesPractices" class="nds-content-section nds-doc-practices">
+<section id="themes-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -363,7 +363,7 @@ A theme menu option can load a stylesheet theme too. `data-theme-css` on the opt
   </div>
 </section>
 
-<section id="themesApi" class="nds-content-section nds-doc-api">
+<section id="themes-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -378,7 +378,7 @@ A theme menu option can load a stylesheet theme too. `data-theme-css` on the opt
 | `data-theme` | `<html>` | The mode and the theme, as words: `dark`, a theme name, or both. Light mode has no word. The script writes it when the user picks a mode or a theme. The head script writes the saved value before first paint |
 | `data-palette` | `<html>` | Builds the palette from the `--brand-*` seeds. The script sets it when the user picks an option with `data-seed-primary`, and removes it when the user picks another option |
 | `data-theme="dark"` | any element except `<html>` | Renders the element and everything inside it in dark mode. A theme name does nothing here |
-| `data-theme-toggle` | a button, or a `.nds-switch-container` | Makes it a dark mode toggle. `id="ndsThemeToggle"` does the same |
+| `data-theme-toggle` | a button, or a `.nds-switch-container` | Makes it a dark mode toggle |
 | `aria-pressed` | a dark mode toggle | Write `false` in the markup. The script sets `true` in dark mode and `false` in light mode, at load and on each change. It also swaps the icon between `nds-hgi-moon-02` and `nds-hgi-sun-03`, and checks the switch in dark mode |
 | `data-theme-value` | a theme option: a button, or a `.nds-switch-container` | The theme name the option applies. Leave it empty for the DGA default |
 | `aria-current` | a theme option | The script sets `true` on the chosen option and `false` on the others, at load and on each pick. It also checks the switch of the chosen option |
@@ -447,7 +447,7 @@ The full API is in the banner of `_js/nds-theme.js`.
   </div>
 </section>
 
-<section id="themesRelated" class="nds-content-section nds-doc-related">
+<section id="themes-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

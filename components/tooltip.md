@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="tooltipOverview" class="nds-content-section nds-doc-overview">
+<section id="tooltip-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -31,13 +31,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="tooltipMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="tooltip-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="tooltip-help" data-canon data-variants="tooltipVariantsTable">
+<script type="text/html" id="tooltip-help" data-canon data-variants="tooltip-variants-table">
 <span class="nds-tooltip">
   <button type="button" class="nds-tooltip-trigger" aria-label="About the National ID">
     <span class="nds-feedback nds-sm">
@@ -74,7 +74,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="tooltipVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="tooltip-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -94,13 +94,13 @@ Pick another component when:
 | Status | Success | `[data-tooltip-status="success"]` | `.nds-tooltip[data-tooltip-title]` | The help icon uses the success status. Auto structure only |
 | Status | Warning | `[data-tooltip-status="warning"]` | `.nds-tooltip[data-tooltip-title]` | The help icon uses the warning status. Auto structure only |
 | Status | Error | `[data-tooltip-status="error"]` | `.nds-tooltip[data-tooltip-title]` | The help icon uses the error status. Auto structure only |
-{: #tooltipVariantsTable .nds-table .nds-responsive}
+{: #tooltip-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="tooltipBehavior" class="nds-content-section nds-doc-behavior">
+<section id="tooltip-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -136,7 +136,7 @@ With no `data-tooltip-message`, the root's `title` is the message. Until the scr
   </div>
 </section>
 
-<section id="tooltipFeatures" class="nds-content-section nds-doc-features">
+<section id="tooltip-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -190,7 +190,7 @@ With no `data-tooltip-message`, the root's `title` is the message. Until the scr
   </div>
 </section>
 
-<section id="tooltipPractices" class="nds-content-section nds-doc-practices">
+<section id="tooltip-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -209,7 +209,7 @@ With no `data-tooltip-message`, the root's `title` is the message. Until the scr
   </div>
 </section>
 
-<section id="tooltipApi" class="nds-content-section nds-doc-api">
+<section id="tooltip-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -296,7 +296,7 @@ The full API is in the banner of `_js/nds-tooltip.js`.
   </div>
 </section>
 
-<section id="tooltipRelated" class="nds-content-section nds-doc-related">
+<section id="tooltip-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

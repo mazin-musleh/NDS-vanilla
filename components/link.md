@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="linkOverview" class="nds-content-section nds-doc-overview">
+<section id="link-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,20 +30,20 @@ Pick another component when:
   </div>
 </section>
 
-<section id="linkMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="link-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="link-single" data-canon data-variants="linkVariantsTable">
+<script type="text/html" id="link-single" data-canon data-variants="link-variants-table">
 <a href="#" class="nds-link">official guidelines</a>
 </script>
     </div>
   </div>
 </section>
 
-<section id="linkVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="link-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -61,13 +61,13 @@ Every row goes on the link. Inside a content section, a link is also underlined.
 | Icon | Link icon (hint: A chain-link icon after the text) | `.nds-icon` | `.nds-link` | A link icon after the text, for an internal link that needs a visual cue |
 | Icon | External icon | `.nds-external` | `.nds-link` | The external icon after the text. The script adds it to links to other websites, so add it yourself only to force it |
 | Underline | Underline | `.nds-underline` | `.nds-link` | Always underlined, for dense text where color alone does not mark the link |
-{: #linkVariantsTable .nds-table .nds-responsive}
+{: #link-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="linkFeatures" class="nds-content-section nds-doc-features">
+<section id="link-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -128,7 +128,7 @@ Every row goes on the link. Inside a content section, a link is also underlined.
   </div>
 </section>
 
-<section id="linkPractices" class="nds-content-section nds-doc-practices">
+<section id="link-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -138,7 +138,7 @@ Every row goes on the link. Inside a content section, a link is also underlined.
 - Keep the primary default for links in running text, so readers find them.
 - Add `nds-neutral` to a link that should stay quiet, such as a secondary link in a list or in metadata.
 - Add `nds-underline` in dense text outside a content section, where color alone does not mark the link.
-- On a deep primary or dark surface, primary and neutral links lack contrast. Add `nds-oncolor` for the white look, or give the surface `data-theme="dark"`. See [Dark Areas](../components/themes#themesDarkArea).
+- On a deep primary or dark surface, primary and neutral links lack contrast. Add `nds-oncolor` for the white look, or give the surface `data-theme="dark"`. See [Dark Areas](../components/themes#dark-areas).
 - Write link text that names the destination, such as "official guidelines". Avoid "click here".
 - Do not add `target="_blank"` to a link to another website: the script adds it. Add `rel="noreferrer"` yourself when the link must not send the page address.
 - Add `data-no-external` to a link or a container for a trusted partner site or an embedded widget that must open in the same tab.
@@ -148,7 +148,7 @@ Every row goes on the link. Inside a content section, a link is also underlined.
   </div>
 </section>
 
-<section id="linkApi" class="nds-content-section nds-doc-api">
+<section id="link-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -218,7 +218,7 @@ The full API is in the banner of `_js/nds-link.js`.
   </div>
 </section>
 
-<section id="linkRelated" class="nds-content-section nds-doc-related">
+<section id="link-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 06:38 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="headerOverview" class="nds-content-section nds-doc-overview">
+<section id="header-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -26,7 +26,7 @@ The links at the end of the page belong in the [Footer](../ui-shell/footer), and
   </div>
 </section>
 
-<section id="headerMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="header-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage</h2>
@@ -53,7 +53,7 @@ The code shows the outer element of each part. Copy each part whole from its own
   </div>
 </section>
 
-<section id="headerParts" class="nds-content-section nds-doc-parts">
+<section id="header-parts" class="nds-content-section nds-doc-parts">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Parts</h2>
@@ -64,7 +64,7 @@ The code shows the outer element of each part. Copy each part whole from its own
 |---|---|---|
 | `header` | The three parts below | Yes |
 | `.nds-topbar` | The top bar: the stamp tab, the widgets and the dark mode button. See [Top Bar](../ui-shell/topbar) | Yes, on a government site |
-| `#nds-digital-stamp` | The stamp panel, right after the top bar. The stamp tab opens it. See [Top Bar](../ui-shell/topbar#dgaDigitalStamp) | Yes, with the stamp tab |
+| `#nds-digital-stamp` | The stamp panel, right after the top bar. The stamp tab opens it. See [Top Bar](../ui-shell/topbar#digital-stamp) | Yes, with the stamp tab |
 | `nav.nds-main-nav` | The main navigation: the brand, the links, the dropdowns and the actions. See [Main Navigation](../ui-shell/mainnav) | Yes |
 {: .nds-table .nds-responsive}
 
@@ -72,7 +72,7 @@ The code shows the outer element of each part. Copy each part whole from its own
   </div>
 </section>
 
-<section id="headerFeatures" class="nds-content-section nds-doc-features">
+<section id="header-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -98,7 +98,7 @@ The code shows the outer element of each part. Copy each part whole from its own
   </div>
 </section>
 
-<section id="headerPractices" class="nds-content-section nds-doc-practices">
+<section id="header-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -115,7 +115,7 @@ The code shows the outer element of each part. Copy each part whole from its own
   </div>
 </section>
 
-<section id="headerRelated" class="nds-content-section nds-doc-related">
+<section id="header-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

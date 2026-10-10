@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="heroOverview" class="nds-content-section nds-doc-overview">
+<section id="hero-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -32,13 +32,13 @@ The hero is one region of the page. The other regions are on [Page Layout](../la
   </div>
 </section>
 
-<section id="heroMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="hero-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="hero-canon" data-canon data-preview="page" data-preview-height="560" data-variants="heroVariantsTable">
+<script type="text/html" id="hero-canon" data-canon data-preview="page" data-preview-height="560" data-variants="hero-variants-table">
 <section class="nds-hero-section nds-sub">
   <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
     <ol class="nds-breadcrumb">
@@ -240,7 +240,7 @@ The hero is one region of the page. The other regions are on [Page Layout](../la
   </div>
 </section>
 
-<section id="heroParts" class="nds-content-section nds-doc-parts">
+<section id="hero-parts" class="nds-content-section nds-doc-parts">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Parts</h2>
@@ -280,7 +280,7 @@ The main hero is a section that holds one hero swiper. The navigation row is the
   </div>
 </section>
 
-<section id="heroVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="hero-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -298,13 +298,13 @@ The structures are the shapes the site uses. For another mix of the head parts, 
 | Background | Tint (default) (not: profile) (hint: A light brand tint with an inner shadow) | — | `.nds-hero-section.nds-sub` | A light tint of the brand primary, with a shadow inside its edges |
 | Background | Image (not: profile) | `--hero-image: url('../assets/img/riyadhcenter_ai.webp')` | `.nds-hero-section.nds-sub` | A photo on the end side, which fades into the tint toward the title. For a page with its own photo |
 | Background | Flat (not: profile) (hint: The page background, with no tint, shadow or image) | `.nds-flat` | `.nds-hero-section.nds-sub` | The page background, with no tint, shadow or image. For an article or a form, where the content starts right under the title |
-{: #heroVariantsTable .nds-table .nds-responsive}
+{: #hero-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="heroBehavior" class="nds-content-section nds-doc-behavior">
+<section id="hero-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -325,7 +325,7 @@ The main hero shows one slide at a time, and the Swiper script moves between the
   </div>
 </section>
 
-<section id="heroFeatures" class="nds-content-section nds-doc-features">
+<section id="hero-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -365,7 +365,7 @@ The main hero shows one slide at a time, and the Swiper script moves between the
   </div>
 </section>
 
-<section id="heroPractices" class="nds-content-section nds-doc-practices">
+<section id="hero-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -388,7 +388,7 @@ The main hero shows one slide at a time, and the Swiper script moves between the
   </div>
 </section>
 
-<section id="heroApi" class="nds-content-section nds-doc-api">
+<section id="hero-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -429,7 +429,7 @@ The hero has no script of its own. The Swiper script runs the main hero, and the
   </div>
 </section>
 
-<section id="heroRelated" class="nds-content-section nds-doc-related">
+<section id="hero-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

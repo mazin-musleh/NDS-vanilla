@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 10:43 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="topbarOverview" class="nds-content-section nds-doc-overview">
+<section id="topbar-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -28,13 +28,13 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
   </div>
 </section>
 
-<section id="topbarMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="topbar-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="topbar-canon" data-canon data-preview="page" data-preview-height="304" data-variants="topbarVariantsTable">
+<script type="text/html" id="topbar-canon" data-canon data-preview="page" data-preview-height="304" data-variants="topbar-variants-table">
 <div class="nds-topbar nds-content-wrapper" role="region" aria-label="Top bar utilities">
   <button class="nds-btn nds-menu-btn nds-digital-stamp-tab" role="button" aria-expanded="false" aria-controls="nds-digital-stamp">
     <img class="nds-flag" src="../assets/icon/SAflag.min.svg" width="20" height="14" loading="lazy" alt="Saudi Arabia flag">
@@ -158,7 +158,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
   </div>
 </section>
 
-<section id="topbarParts" class="nds-content-section nds-doc-parts">
+<section id="topbar-parts" class="nds-content-section nds-doc-parts">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Parts</h2>
@@ -182,7 +182,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
   </div>
 </section>
 
-<section id="topbarVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="topbar-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -212,13 +212,13 @@ Two choices change two places, so write both of their rows. Weather changes the 
 | Weather (any) | Hide on tablet (hint: 600px to 959px) | `[data-hidden~="md"]` | `#nds-city-name` | Hides the city and the weather from 600px to 959px |
 | Weather (any) | Hide on tablet (hint: 600px to 959px) | `[data-hidden~="md"]` | `#nds-weather-info` |  |
 | Theme button (any) | Show (default) (hint: The dark mode button in the bar) | canon `#topbar-dark` | `.nds-topbar-info` | The dark mode button, last in the row |
-{: #topbarVariantsTable .nds-table .nds-responsive}
+{: #topbar-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="topbarBehavior" class="nds-content-section nds-doc-behavior">
+<section id="topbar-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -226,12 +226,12 @@ Two choices change two places, so write both of their rows. Weather changes the 
     <div class="nds-section-body nds-prose" markdown="1">
 
 ### Digital Stamp
-{: .nds-block-title #dgaDigitalStamp}
+{: .nds-block-title #digital-stamp}
 
 The stamp tab opens the stamp panel, which slides open below the bar. A second press, Escape, or a click outside the tab and the panel closes it. Opening the main navigation closes the panel too, and opening the panel closes the navigation. A press while the panel closes opens it again.
 
 ### Widgets
-{: .nds-block-title #topbarWidgets}
+{: .nds-block-title #topbar-widgets}
 
 The script writes each widget's icon and text. The date changes with the page language and renders again at midnight. The clock shows hours and minutes and changes on the minute. The date and the clock follow the site's timezone, `data-timezone` on `<html>`, or the visitor's clock without it. See [Date](../core/date). The weather renders again every 15 minutes. City and weather work as one widget: both elements must be on the page.
 
@@ -244,7 +244,7 @@ The script writes each widget's icon and text. The date changes with the page la
   </div>
 </section>
 
-<section id="topbarFeatures" class="nds-content-section nds-doc-features">
+<section id="topbar-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -298,7 +298,7 @@ The script writes each widget's icon and text. The date changes with the page la
   </div>
 </section>
 
-<section id="topbarPractices" class="nds-content-section nds-doc-practices">
+<section id="topbar-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -318,7 +318,7 @@ The script writes each widget's icon and text. The date changes with the page la
   </div>
 </section>
 
-<section id="topbarApi" class="nds-content-section nds-doc-api">
+<section id="topbar-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -400,7 +400,7 @@ The full API is in the banners of `_js/nds-digital-stamp.js`, `_js/nds-time-date
   </div>
 </section>
 
-<section id="topbarRelated" class="nds-content-section nds-doc-related">
+<section id="topbar-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

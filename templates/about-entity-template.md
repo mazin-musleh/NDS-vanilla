@@ -10,7 +10,7 @@ lang: en
 direction: ltr
 sidemenu_mode: false
 ---
-<section id="entityTopics" class="nds-content-section">
+<section id="entity-topics" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-body">
             <div class="nds-block nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">

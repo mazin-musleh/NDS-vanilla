@@ -15,7 +15,7 @@ sidemenu_mode: false
 <!-- --ft-scroll-offset: the gap NDS.scrollBelowNav leaves past the nav when it
      scrolls a new step into view. 0 lands the section flush, where the mobile
      stepper strip pins. Without it the helper falls back to 120px. -->
-<section id="formTemplate" class="nds-content-section nds-sideinfo-section" style="--ft-scroll-offset: 0px;">
+<section id="form-template" class="nds-content-section nds-sideinfo-section" style="--ft-scroll-offset: 0px;">
     <div class="nds-section-body">
 
         <div class="nds-info-content">
@@ -248,7 +248,7 @@ sidemenu_mode: false
 
                     <div class="nds-form-actions">
                         <button type="button" class="nds-btn nds-secondary-outline"
-                            data-stepper-control="previous" data-stepper-target="formStepper">
+                            data-stepper-control="previous" data-stepper-target="form-stepper">
                             <span class="nds-label">Back</span>
                         </button>
                         <button type="button" class="nds-btn nds-primary" data-ft-continue>
@@ -304,7 +304,7 @@ sidemenu_mode: false
 
                     <div class="nds-form-actions">
                         <button type="button" class="nds-btn nds-secondary-outline"
-                            data-stepper-control="previous" data-stepper-target="formStepper">
+                            data-stepper-control="previous" data-stepper-target="form-stepper">
                             <span class="nds-label">Back</span>
                         </button>
                         <!-- No data-stepper-control: it would preventDefault the click
@@ -345,7 +345,7 @@ sidemenu_mode: false
                             </a>
                             <button type="button" class="nds-btn nds-primary"
                                 data-stepper-control="goto" data-stepper-value="1"
-                                data-stepper-target="formStepper">
+                                data-stepper-target="form-stepper">
                                 <span class="nds-label">Submit another</span>
                             </button>
                         </div>
@@ -359,7 +359,7 @@ sidemenu_mode: false
             <!-- Vertical on desktops, radial on phones and tablets, so the 4-step
                  flow stays compact on small screens. -->
             <div class="nds-stepper nds-vertical nds-radial-sm nds-radial-md nds-card nds-stroke nds-shadow"
-                id="formStepper"
+                id="form-stepper"
                 data-current="1" data-total="4">
                 <!-- Radial-only progress ring; hidden on non-radial variants by base CSS. -->
                 <div class="nds-progress-circle">
@@ -456,8 +456,8 @@ sidemenu_mode: false
             return new Promise(resolve => setTimeout(resolve, 1200));
         }
 
-        const requiredNotice = document.querySelector('#formTemplate .nds-note');
-        const formSection = document.getElementById('formTemplate');
+        const requiredNotice = document.querySelector('#form-template .nds-note');
+        const formSection = document.getElementById('form-template');
 
         function showPanel(step) {
             panels.forEach(p => {
@@ -465,7 +465,7 @@ sidemenu_mode: false
             });
             // The success panel has no required fields, so hide the notice there.
             if (requiredNotice) requiredNotice.hidden = step === 4;
-            const panel = document.querySelector('#formTemplate [data-form-step]:not([hidden])');
+            const panel = document.querySelector('#form-template [data-form-step]:not([hidden])');
             // Scroll to the form section top, not the panel. The section sits above
             // all the dynamic content (notice, panels, mobile stepper strip), so its
             // position never drifts and the scroll lands the same on every step.
@@ -519,7 +519,7 @@ sidemenu_mode: false
         // number). One more next() on the last step marks every step completed —
         // the component owns that rule, including the radial exception.
         document.addEventListener('nds:stepper:change', (e) => {
-            if (e.target.id !== 'formStepper') return;
+            if (e.target.id !== 'form-stepper') return;
             const step = e.detail.currentStep;
             const panelStep = Math.min(step, 4);
 
@@ -531,7 +531,7 @@ sidemenu_mode: false
                 // Deferred so the second change event does not fire mid-handler.
                 // It is a no-op once the last step is already completed, so this
                 // settles after one extra pass.
-                if (step === 4) queueMicrotask(() => { NDS.Stepper.next('formStepper'); });
+                if (step === 4) queueMicrotask(() => { NDS.Stepper.next('form-stepper'); });
             }
         });
 
@@ -540,7 +540,7 @@ sidemenu_mode: false
         // fields in a hidden panel, so this checks the step on screen.
         formSection.querySelectorAll('[data-ft-continue]').forEach(btn => {
             btn.addEventListener('click', () => {
-                if (NDS.Forms.validateForm(btn).valid) NDS.Stepper.next('formStepper');
+                if (NDS.Forms.validateForm(btn).valid) NDS.Stepper.next('form-stepper');
             });
         });
 
@@ -553,7 +553,7 @@ sidemenu_mode: false
                 NDS.State.add(btn, 'loading');
                 // Replace submitApplication() with your own request.
                 submitApplication()
-                    .then(() => NDS.Stepper.next('formStepper'))
+                    .then(() => NDS.Stepper.next('form-stepper'))
                     .catch(() => NDS.Alert.create({
                         variant: 'error', title: 'Could not submit the application',
                         description: 'Check your connection and try again.',

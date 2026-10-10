@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 04:26 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="sectionOverview" class="nds-content-section nds-doc-overview">
+<section id="section-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -31,13 +31,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="sectionMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="section-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="section-standard" data-canon data-preview="page" data-preview-height="fit" data-variants="sectionVariantsTable" data-preview-flush>
+<script type="text/html" id="section-standard" data-canon data-preview="page" data-preview-height="fit" data-variants="section-variants-table" data-preview-flush>
 <section class="nds-content-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
@@ -216,7 +216,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="sectionVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="section-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -251,13 +251,13 @@ The standard action goes right after the head. The float action goes first in th
 | Color | Neutral | `[data-theme="dark"]` | `.nds-content-section` | The components inside take their dark-mode colors |
 | Color | Brand | `.nds-brand` | `.nds-content-section` | A light brand tint with an inset shadow |
 | Color | Ghost (hint: No background, border or shadow) | `.nds-ghost` | `.nds-content-section` | No background, border or shadow, in every layout |
-{: #sectionVariantsTable .nds-table .nds-responsive}
+{: #section-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="sectionBehavior" class="nds-content-section nds-doc-behavior">
+<section id="section-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -269,17 +269,17 @@ The standard action goes right after the head. The float action goes first in th
 A section with no action and no image can leave out `nds-section-wrapper`: its `nds-section-head` and `nds-section-body` then sit straight in the section. It looks the same as a section with a wrapper.
 
 ### Horizontal Layout
-{: #sectionHorizontal}
+{: #section-horizontal-behavior}
 
 `nds-horizontal` on the section makes the wrapper a grid of two columns at 960px and wider: the head, then the body. Below 960px the wrapper stacks again. Add `nds-grid` to the wrapper to set the column widths with `--max-track`: see [Grid](../layout/grid).
 
 ### Stacked Wrappers
-{: #sectionStacked}
+{: #section-stacked-behavior}
 
 Each `nds-section-wrapper` after the first starts a new titled block, with `--section-wrapper-gap` above it. The blocks share the section background. In card view they are one card, and with stripes they are one stripe. Both are set on the page, not on the section: see [Page Layout](../layout/page-layout).
 
 ### Breakout
-{: #sectionBreakout}
+{: #section-breakout-behavior}
 
 A body with `nds-max-width` cancels the section's side padding, so its content runs to the section edges. Put it after the wrapper, not inside it. `nds-full-width` on an element in a section goes further, to the edges of the screen. The two differ where the section is narrower than the screen, such as beside a side menu.
 
@@ -311,7 +311,7 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
   </div>
 </section>
 
-<section id="sectionFeatures" class="nds-content-section nds-doc-features">
+<section id="section-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -358,7 +358,7 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
   </div>
 </section>
 
-<section id="sectionPractices" class="nds-content-section nds-doc-practices">
+<section id="section-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -382,7 +382,7 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
   </div>
 </section>
 
-<section id="sectionApi" class="nds-content-section nds-doc-api">
+<section id="section-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -448,7 +448,7 @@ Sections have no script, methods or events.
   </div>
 </section>
 
-<section id="sectionRelated" class="nds-content-section nds-doc-related">
+<section id="section-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

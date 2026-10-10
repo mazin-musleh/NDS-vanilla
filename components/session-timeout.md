@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "2.0.0"
 updated: "2.0.0"
-last_edit: "09/10/2026 - 12:45 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="sessionTimeoutOverview" class="nds-content-section nds-doc-overview">
+<section id="session-timeout-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -20,7 +20,7 @@ last_edit: "09/10/2026 - 12:45 AM"
 
 Session Timeout warns a signed-in user before their session ends with no activity, and lets them extend it. WCAG 2.2.1, Timing Adjustable, asks for this warning. You add no markup. One `NDS.SessionTimeout.init()` call times the session. The script builds a warning [Modal](../components/modal) with a [Countdown](../components/countdown) in it, and the ended modal.
 
-Connect it to your server in one of two ways, as [Session Renewal](#sessionTimeoutBehavior) shows.
+Connect it to your server in one of two ways, as [Session Renewal](#session-timeout-behavior) shows.
 
 Pick another component when:
 
@@ -31,7 +31,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="sessionTimeoutMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="session-timeout-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
@@ -92,7 +92,7 @@ NDS.SessionTimeout.init({
   </div>
 </section>
 
-<section id="sessionTimeoutBehavior" class="nds-content-section nds-doc-behavior">
+<section id="session-timeout-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -123,7 +123,7 @@ At the end, the script fires `nds:session:end`. With `logout`, the page then goe
   </div>
 </section>
 
-<section id="sessionTimeoutFeatures" class="nds-content-section nds-doc-features">
+<section id="session-timeout-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -177,7 +177,7 @@ At the end, the script fires `nds:session:end`. With `logout`, the page then goe
   </div>
 </section>
 
-<section id="sessionTimeoutPractices" class="nds-content-section nds-doc-practices">
+<section id="session-timeout-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -197,7 +197,7 @@ At the end, the script fires `nds:session:end`. With `logout`, the page then goe
   </div>
 </section>
 
-<section id="sessionTimeoutApi" class="nds-content-section nds-doc-api">
+<section id="session-timeout-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>

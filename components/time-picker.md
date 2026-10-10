@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="timePickerOverview" class="nds-content-section nds-doc-overview">
+<section id="time-picker-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="timePickerMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="time-picker-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="time-picker-field" data-canon data-variants="timePickerVariantsTable" data-harness="form" data-demo-width="300px">
+<script type="text/html" id="time-picker-field" data-canon data-variants="time-picker-variants-table" data-harness="form" data-demo-width="300px">
 <div class="nds-form-container nds-time-picker">
   <div class="nds-form-header">
     <label for="time-picker-visit">
@@ -57,7 +57,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="timePickerVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="time-picker-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -90,13 +90,13 @@ A Format or Seconds choice changes two elements: write `data-format` on `.nds-ti
 | State (any) | Read-only | `[data-state~="readonly"]` | `.nds-time-picker:not([data-state~="disabled"])` | The user sees the time but cannot change it. The time posts. Not with Disabled |
 | State (any) | Required (hint: Press Validate with the field empty) | `[data-required]` | `.nds-time-picker` | The form needs a time. It does not submit while the field is empty |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
-{: #timePickerVariantsTable .nds-table .nds-responsive}
+{: #time-picker-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="timePickerBehavior" class="nds-content-section nds-doc-behavior">
+<section id="time-picker-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -141,7 +141,7 @@ Any other character stays as written. `ss` adds a Second list, and `A` or `a` ad
   </div>
 </section>
 
-<section id="timePickerFeatures" class="nds-content-section nds-doc-features">
+<section id="time-picker-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -195,7 +195,7 @@ Any other character stays as written. `ss` adds a Second list, and `A` or `a` ad
   </div>
 </section>
 
-<section id="timePickerPractices" class="nds-content-section nds-doc-practices">
+<section id="time-picker-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -219,7 +219,7 @@ Any other character stays as written. `ss` adds a Second list, and `A` or `a` ad
   </div>
 </section>
 
-<section id="timePickerApi" class="nds-content-section nds-doc-api">
+<section id="time-picker-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>

@@ -42,7 +42,7 @@
 - { kind: class, name: nds-collapse-content, scope: .nds-main-nav, status: renamed, use: nds-nav-collapse-content, since: "2.0.0", fix: "Use nds-nav-collapse-content." }
 - { kind: class, name: nds-column, scope: .nds-main-nav, status: renamed, use: nds-nav-column, since: "2.0.0", fix: "Use nds-nav-column." }
 - { kind: class, name: nds-colView, status: renamed, use: nds-vertical, since: "2.0.0", fix: "Use nds-vertical (inside a nav menu, drop it)." }
-- { kind: class, name: nds-cookie-popup, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #ndsCookiesPanel in a template.nds-panel-template." }
+- { kind: class, name: nds-cookie-popup, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #nds-cookies-panel in a template.nds-panel-template." }
 - { kind: class, name: nds-cookie-popup-links, status: removed, since: "2.0.0", fix: "Remove it: there are no default links in the cookie panel." }
 - { kind: class, name: nds-counter-value, status: removed, since: "2.0.0", fix: "Remove it: data-counter marks a counter, and .nds-card-number styles the number in a statistic card." }
 - { kind: class, name: nds-CTA, scope: .nds-main-nav, status: renamed, use: nds-nav-cta, since: "2.0.0", fix: "Use nds-nav-cta." }
@@ -119,24 +119,39 @@
 - { kind: attribute, name: slides-max, scope: "&.nds-swiper", status: renamed, use: --max-slides, since: "2.0.0", fix: "Set --max-slides in the swiper's style attribute." }
 - { kind: attribute, name: slides-mid, scope: "&.nds-swiper", status: renamed, use: --mid-slides, since: "2.0.0", fix: "Set --mid-slides in the swiper's style attribute." }
 - { kind: attribute, name: slides-min, scope: "&.nds-swiper", status: renamed, use: --min-slides, since: "2.0.0", fix: "Set --min-slides in the swiper's style attribute." }
+- { kind: id, name: a11yModesCollapse, status: renamed, use: a11y-modes-collapse, since: "2.0.0", fix: "Use id a11y-modes-collapse (and its button's aria-controls)." }
+- { kind: id, name: a11yReadableCollapse, status: renamed, use: a11y-readable-collapse, since: "2.0.0", fix: "Use id a11y-readable-collapse (and its button's aria-controls)." }
+- { kind: id, name: a11yVisualCollapse, status: renamed, use: a11y-visual-collapse, since: "2.0.0", fix: "Use id a11y-visual-collapse (and its button's aria-controls)." }
 - { kind: id, name: nds-cityName, status: renamed, use: nds-city-name, since: "2.0.0", fix: "Use id nds-city-name." }
 - { kind: id, name: nds-digitalStamp, status: renamed, use: nds-digital-stamp, since: "2.0.0", fix: "Use id nds-digital-stamp (and the button's aria-controls)." }
 - { kind: id, name: nds-digitalStamp-verify-text, status: renamed, use: nds-digital-stamp-verify-text, since: "2.0.0", fix: "Use id nds-digital-stamp-verify-text." }
 - { kind: id, name: nds-realTimeClock, status: renamed, use: nds-real-time-clock, since: "2.0.0", fix: "Use id nds-real-time-clock." }
 - { kind: id, name: nds-weatherInfo, status: renamed, use: nds-weather-info, since: "2.0.0", fix: "Use id nds-weather-info." }
+- { kind: id, name: ndsAccessibilityPanel, status: renamed, use: nds-accessibility-panel, since: "2.0.0", fix: "Use id nds-accessibility-panel (and data-panel-toggle on its button)." }
+- { kind: id, name: ndsCookies-functional, status: renamed, use: nds-cookies-functional, since: "2.0.0", fix: "Use id nds-cookies-functional (and the label's for)." }
+- { kind: id, name: ndsCookies-necessary, status: renamed, use: nds-cookies-necessary, since: "2.0.0", fix: "Use id nds-cookies-necessary (and the label's for)." }
 - { kind: id, name: ndsCookiesAcceptBtn, status: renamed, use: "data-cookies-action=\"accept\"", since: "2.0.0", fix: "Use data-cookies-action=\"accept\" on your own button." }
 - { kind: id, name: ndsCookiesCloseBtn, status: renamed, use: data-panel-close, since: "2.0.0", fix: "Use data-panel-close on the close button." }
-- { kind: id, name: ndsCookiesContent, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #ndsCookiesPanel in a template.nds-panel-template." }
+- { kind: id, name: ndsCookiesContent, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #nds-cookies-panel in a template.nds-panel-template." }
 - { kind: id, name: ndsCookiesDeclineBtn, status: renamed, use: "data-cookies-action=\"reject\"", since: "2.0.0", fix: "Use data-cookies-action=\"reject\" on your own button." }
-- { kind: id, name: ndsCookiesPopup, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #ndsCookiesPanel in a template.nds-panel-template." }
-- { kind: id, name: ndsCookiesPrivacyLink, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #ndsCookiesPanel in a template.nds-panel-template." }
-- { kind: id, name: ndsCookiesTermsLink, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #ndsCookiesPanel in a template.nds-panel-template." }
-- { kind: id, name: ndsCookiesTitle, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #ndsCookiesPanel in a template.nds-panel-template." }
+- { kind: id, name: ndsCookiesPanel, status: renamed, use: nds-cookies-panel, since: "2.0.0", fix: "Use id nds-cookies-panel." }
+- { kind: id, name: ndsCookiesPopup, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #nds-cookies-panel in a template.nds-panel-template." }
+- { kind: id, name: ndsCookiesPrivacyLink, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #nds-cookies-panel in a template.nds-panel-template." }
+- { kind: id, name: ndsCookiesTermsLink, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #nds-cookies-panel in a template.nds-panel-template." }
+- { kind: id, name: ndsCookiesTitle, status: removed, since: "2.0.0", fix: "Remove it: the script builds the cookie panel; a custom one is #nds-cookies-panel in a template.nds-panel-template." }
+- { kind: id, name: ndsCookies-performance, status: renamed, use: nds-cookies-performance, since: "2.0.0", fix: "Use id nds-cookies-performance (and the label's for)." }
+- { kind: id, name: ndsCookies-targeting, status: renamed, use: nds-cookies-targeting, since: "2.0.0", fix: "Use id nds-cookies-targeting (and the label's for)." }
+- { kind: id, name: ndsIpvImageCounter, status: renamed, use: nds-ipv-image-counter, since: "2.0.0", fix: "Use id nds-ipv-image-counter." }
+- { kind: id, name: ndsIpvPopupImage, status: renamed, use: nds-ipv-popup-image, since: "2.0.0", fix: "Use id nds-ipv-popup-image." }
+- { kind: id, name: ndsIpvPopupOverlay, status: renamed, use: nds-ipv-popup-overlay, since: "2.0.0", fix: "Use id nds-ipv-popup-overlay." }
+- { kind: id, name: ndsIpvZoomInfo, status: renamed, use: nds-ipv-zoom-info, since: "2.0.0", fix: "Use id nds-ipv-zoom-info." }
 - { kind: id, name: ndsMainNav, status: renamed, use: nds-main-nav, since: "2.0.0", fix: "Use id nds-main-nav (and the menu button's aria-controls)." }
 - { kind: id, name: ndsNavCollapse, status: renamed, use: nds-nav-collapse, since: "2.0.0", fix: "Use id nds-nav-collapse (and the menu button's aria-controls)." }
+- { kind: id, name: ndsThemeToggle, status: renamed, use: data-theme-toggle, since: "2.0.0", fix: "Use data-theme-toggle on the toggle." }
 - { kind: property, name: --backdrop-z-index, status: removed, since: "2.0.0", fix: "Remove it: it never applied; each component sets its own backdrop z-index." }
 - { kind: property, name: --drawer-indicator-active, scope: .nds-drawer, status: removed, since: "2.0.0", fix: "Remove it: the drawer uses the button indicator. Set --btn-indicator-selected on .nds-drawer .nds-btn instead." }
 - { kind: property, name: --drawer-indicator-hover, scope: .nds-drawer, status: removed, since: "2.0.0", fix: "Remove it: the drawer uses the button indicator. Set --btn-indicator-color on .nds-drawer .nds-btn instead." }
+- { kind: property, name: --nds-content-MaxWidth, status: renamed, use: --nds-content-max-width, since: "2.0.0", fix: "Use --nds-content-max-width." }
 - { kind: property, name: --hero_image, scope: .nds-hero, status: renamed, use: --hero-image, since: "2.0.0", fix: "Use --hero-image." }
 - { kind: property, name: --hero-mask-angle, scope: .nds-hero, status: renamed, use: --hero-image-fade-angle, since: "2.0.0", fix: "Use --hero-image-fade-angle." }
 - { kind: property, name: --hero-mask-from, scope: .nds-hero, status: renamed, use: --hero-image-fade-from, since: "2.0.0", fix: "Use --hero-image-fade-from." }

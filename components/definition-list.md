@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:20 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="dlOverview" class="nds-content-section nds-doc-overview">
+<section id="dl-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="dlMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="dl-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="dl-details" data-canon data-variants="dlVariantsTable">
+<script type="text/html" id="dl-details" data-canon data-variants="dl-variants-table">
 <dl class="nds-definition-list">
   <div class="nds-definition-item">
     <dt>
@@ -61,7 +61,7 @@ Pick another component when:
   </div>
 </dl>
 </script>
-<script type="text/html" id="dl-features" data-canon>
+<script type="text/html" id="dl-feature-list" data-canon>
 <div class="nds-definition-list">
   <div class="nds-definition-item">
     <span class="nds-item-title">
@@ -128,7 +128,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="dlVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="dl-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -140,7 +140,7 @@ The Layout, Style, Size and Loading rows go on the list. The two Cards rows are 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Details (default) | — | — | `dl`, `dt` and `dd`, for data where each title names its value, such as a profile |
-| Structure | Feature list | canon `#dl-features` | — | Plain elements with `nds-item-title` and `nds-item-desc`, for feature lists and highlights |
+| Structure | Feature list | canon `#dl-feature-list` | — | Plain elements with `nds-item-title` and `nds-item-desc`, for feature lists and highlights |
 | Structure | With actions | canon `#dl-actions` | — | Values with buttons after them, such as copy and share. `nds-item-action` holds the value and its buttons in one row |
 | Layout | Stacked (default) | — | — | Each value under its title, for long values |
 | Layout | Table | `.nds-table-view` | `.nds-definition-list` | Titles in one column and values in the next, aligned across every item |
@@ -159,13 +159,13 @@ The Layout, Style, Size and Loading rows go on the list. The two Cards rows are 
 | Size | MD | `.nds-md` | `.nds-definition-list` | An 18px icon, a medium title, the same value size and a smaller gap |
 | Size | SM | `.nds-sm` | `.nds-definition-list` | An 18px icon, a small title, a small value and the smallest gap |
 | Loading | Loading | `.nds-loading` | `.nds-definition-list` | Gray bars in place of the titles and values while the data loads. The icons hide |
-{: #dlVariantsTable .nds-table .nds-responsive}
+{: #dl-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="dlFeatures" class="nds-content-section nds-doc-features">
+<section id="dl-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -226,7 +226,7 @@ The Layout, Style, Size and Loading rows go on the list. The two Cards rows are 
   </div>
 </section>
 
-<section id="dlPractices" class="nds-content-section nds-doc-practices">
+<section id="dl-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -246,7 +246,7 @@ The Layout, Style, Size and Loading rows go on the list. The two Cards rows are 
   </div>
 </section>
 
-<section id="dlApi" class="nds-content-section nds-doc-api">
+<section id="dl-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -289,7 +289,7 @@ Set these on the list. The size classes set the icon size, the title size and th
   </div>
 </section>
 
-<section id="dlRelated" class="nds-content-section nds-doc-related">
+<section id="dl-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

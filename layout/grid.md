@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "08/10/2026 - 09:36 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="gridOverview" class="nds-content-section nds-doc-overview">
+<section id="grid-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="gridMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="grid-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="grid-equal" data-canon data-variants="gridVariantsTable">
+<script type="text/html" id="grid-equal" data-canon data-variants="grid-variants-table">
 <!-- One equal column per child, all in one row -->
 <div class="nds-grid">
   <div class="nds-card nds-stroke">1</div>
@@ -129,7 +129,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="gridVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="grid-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -148,13 +148,13 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
 | Example | Gaps | canon `#grid-gaps` | — | Row and column gaps set apart. `--gap` sets both |
 | Example | Centered items | canon `#grid-center` | — | Children at their own width, in the middle of their columns. The text inside is centered too |
 | Example | Container width (hint: The grid follows its parent's width, not the screen's) | canon `#grid-container` | — | A grid inside an `nds-cq` element follows that element's width, not the screen's. The same grid shows more columns in a wide column than in a narrow one. The container steps are 768px and 480px |
-{: #gridVariantsTable .nds-table .nds-responsive}
+{: #grid-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="gridFeatures" class="nds-content-section nds-doc-features">
+<section id="grid-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -215,7 +215,7 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
   </div>
 </section>
 
-<section id="gridPractices" class="nds-content-section nds-doc-practices">
+<section id="grid-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -235,7 +235,7 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
   </div>
 </section>
 
-<section id="gridApi" class="nds-content-section nds-doc-api">
+<section id="grid-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -289,7 +289,7 @@ The container widths apply only inside an `nds-cq` element. The screen widths st
   </div>
 </section>
 
-<section id="gridRelated" class="nds-content-section nds-doc-related">
+<section id="grid-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

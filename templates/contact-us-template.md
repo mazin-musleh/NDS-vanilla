@@ -12,7 +12,7 @@ lang: en
 direction: ltr
 sidemenu_mode: false
 ---
-<section id="contactForm" class="nds-content-section nds-sideinfo-section">
+<section id="contact-form" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <div class="nds-info-content">
             <form id="contact-form" class="nds-form nds-flex nds-col" data-ajax>

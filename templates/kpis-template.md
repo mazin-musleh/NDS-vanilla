@@ -12,7 +12,7 @@ direction: ltr
 sidemenu_mode: false
 ---
 <!-- Section 1: Portal Performance Statistics -->
-<section id="portalStats" class="nds-content-section">
+<section id="portal-stats" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">
@@ -311,7 +311,7 @@ sidemenu_mode: false
 </section>
 
 <!-- Section 3: Service Performance Statistics -->
-<section id="serviceStats" class="nds-content-section">
+<section id="service-stats" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">

@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 03:10 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="ratingOverview" class="nds-content-section nds-doc-overview">
+<section id="rating-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="ratingMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="rating-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="rating-display" data-canon data-variants="ratingVariantsTable">
+<script type="text/html" id="rating-display" data-canon data-variants="rating-variants-table">
 <div class="nds-rating" data-rating="3.5">
   <span class="nds-rating-star"></span>
   <span class="nds-rating-star"></span>
@@ -92,7 +92,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="ratingVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="rating-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -115,13 +115,13 @@ Pick another component when:
 | State (any) | Loading | `.nds-loading` | `.nds-rating` | The stars pulse as placeholders while the score loads |
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-rating:has(> button):not(.nds-dropmenu .nds-rating)` | The user cannot pick a score now. Interactive only |
 | State (any) | Disabled | `[disabled]` | `button.nds-rating-star:not(.nds-dropmenu .nds-rating-star)` | Write both parts of this choice |
-{: #ratingVariantsTable .nds-table .nds-responsive}
+{: #rating-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="ratingBehavior" class="nds-content-section nds-doc-behavior">
+<section id="rating-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -148,7 +148,7 @@ To require a score, put the rating in a `.nds-form-group` and add `data-required
   </div>
 </section>
 
-<section id="ratingFeatures" class="nds-content-section nds-doc-features">
+<section id="rating-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -209,7 +209,7 @@ To require a score, put the rating in a `.nds-form-group` and add `data-required
   </div>
 </section>
 
-<section id="ratingPractices" class="nds-content-section nds-doc-practices">
+<section id="rating-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -230,7 +230,7 @@ To require a score, put the rating in a `.nds-form-group` and add `data-required
   </div>
 </section>
 
-<section id="ratingApi" class="nds-content-section nds-doc-api">
+<section id="rating-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -320,7 +320,7 @@ The full API is in the banner of `_js/nds-rating.js`.
   </div>
 </section>
 
-<section id="ratingRelated" class="nds-content-section nds-doc-related">
+<section id="rating-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

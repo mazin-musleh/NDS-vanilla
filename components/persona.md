@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:20 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="personaOverview" class="nds-content-section nds-doc-overview">
+<section id="persona-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="personaMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="persona-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="persona-base" data-canon data-variants="personaVariantsTable">
+<script type="text/html" id="persona-base" data-canon data-variants="persona-variants-table">
 <div class="nds-persona">
   <div class="nds-avatar">
     <img src="../docs-assets/img/avatar2.webp" alt="">
@@ -102,7 +102,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="personaVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="persona-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -123,13 +123,13 @@ The Actions and Details parts go at the end of `.nds-persona`, after the info bl
 | Extra | None (default) | — | — | Identity only |
 | Extra | Actions | canon `#persona-actions` | `.nds-persona` | A row of links or buttons for this person's account. Each button is as wide as its label |
 | Extra | Details | canon `#persona-details` | `.nds-persona` | A definition list of facts about the person, such as a department or a location. For a directory entry |
-{: #personaVariantsTable .nds-table .nds-responsive}
+{: #persona-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="personaFeatures" class="nds-content-section nds-doc-features">
+<section id="persona-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -169,7 +169,7 @@ The Actions and Details parts go at the end of `.nds-persona`, after the info bl
   </div>
 </section>
 
-<section id="personaPractices" class="nds-content-section nds-doc-practices">
+<section id="persona-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -187,7 +187,7 @@ The Actions and Details parts go at the end of `.nds-persona`, after the info bl
   </div>
 </section>
 
-<section id="personaApi" class="nds-content-section nds-doc-api">
+<section id="persona-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -219,7 +219,7 @@ MD takes every text one step down the type scale, and SM two steps.
   </div>
 </section>
 
-<section id="personaRelated" class="nds-content-section nds-doc-related">
+<section id="persona-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

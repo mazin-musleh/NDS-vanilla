@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.0"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="alertOverview" class="nds-content-section nds-doc-overview">
+<section id="alert-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -34,13 +34,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="alertMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="alert-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="alert-standard" data-canon data-variants="alertVariantsTable" data-js="alert-js">
+<script type="text/html" id="alert-standard" data-canon data-variants="alert-variants-table" data-js="alert-js">
 <div class="nds-alert nds-card" data-status="info" role="alert">
   <span class="nds-feedback nds-alert-icon nds-outline">
     <span class="nds-feedback-icon">
@@ -136,7 +136,7 @@ actions: [
   </div>
 </section>
 
-<section id="alertVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="alert-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -186,13 +186,13 @@ actions: [
 | Position | Bottom start | `position: 'bottom-start'` | `create({ display: 'toast' })` | Bottom, on the start side |
 | Position | Bottom left (hint: Stays on the left in every direction) | `position: 'bottom-left'` | `create({ display: 'toast' })` | Bottom left in every direction |
 | Position | Bottom right (hint: Stays on the right in every direction) | `position: 'bottom-right'` | `create({ display: 'toast' })` | Bottom right in every direction |
-{: #alertVariantsTable .nds-table .nds-responsive}
+{: #alert-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="alertBehavior" class="nds-content-section nds-doc-behavior">
+<section id="alert-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -213,7 +213,7 @@ A toast with a `duration` closes itself after that many milliseconds, and a ring
   </div>
 </section>
 
-<section id="alertFeatures" class="nds-content-section nds-doc-features">
+<section id="alert-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -246,7 +246,7 @@ A toast with a `duration` closes itself after that many milliseconds, and a ring
   </div>
 </section>
 
-<section id="alertPractices" class="nds-content-section nds-doc-practices">
+<section id="alert-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -266,7 +266,7 @@ A toast with a `duration` closes itself after that many milliseconds, and a ring
   </div>
 </section>
 
-<section id="alertApi" class="nds-content-section nds-doc-api">
+<section id="alert-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -358,7 +358,7 @@ NDS.Alert.dismissAll('#messages');
   </div>
 </section>
 
-<section id="alertRelated" class="nds-content-section nds-doc-related">
+<section id="alert-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

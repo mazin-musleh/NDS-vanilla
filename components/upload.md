@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 02:24 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="uploadOverview" class="nds-content-section nds-doc-overview">
+<section id="upload-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -28,13 +28,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="uploadMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="upload-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="upload-field" data-canon data-variants="uploadVariantsTable" data-harness="form" data-demo-width="400px">
+<script type="text/html" id="upload-field" data-canon data-variants="upload-variants-table" data-harness="form" data-demo-width="400px">
 <div class="nds-form-container nds-file-upload" data-state="dropbox" data-max-file-size="2097152" data-allowed-types="jpg,jpeg,png,pdf">
   <div class="nds-form-header">
     <label for="upload-files">
@@ -65,7 +65,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="uploadVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="upload-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -84,13 +84,13 @@ Button mode removes `.nds-upload-zone` and the `dropbox` token. Single adds the 
 | State (any) | Required (hint: Press Validate with no file) | `[data-required]` | `.nds-file-upload` | The form needs at least one file that passed the checks. See File Checks |
 | Max files | Max files | `[data-max-files="3"]` | `.nds-file-upload:not([data-state~="single"])` | The list takes 3 files at most. Not with Single. See File Checks |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
-{: #uploadVariantsTable .nds-table .nds-responsive}
+{: #upload-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="uploadBehavior" class="nds-content-section nds-doc-behavior">
+<section id="upload-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -223,7 +223,7 @@ The token `disabled` in `data-state` on `.nds-file-upload` stops the user from a
   </div>
 </section>
 
-<section id="uploadFeatures" class="nds-content-section nds-doc-features">
+<section id="upload-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -270,7 +270,7 @@ The token `disabled` in `data-state` on `.nds-file-upload` stops the user from a
   </div>
 </section>
 
-<section id="uploadPractices" class="nds-content-section nds-doc-practices">
+<section id="upload-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -290,7 +290,7 @@ The token `disabled` in `data-state` on `.nds-file-upload` stops the user from a
   </div>
 </section>
 
-<section id="uploadApi" class="nds-content-section nds-doc-api">
+<section id="upload-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -420,7 +420,7 @@ The full API is in the banner of `_js/nds-upload.js`.
   </div>
 </section>
 
-<section id="uploadRelated" class="nds-content-section nds-doc-related">
+<section id="upload-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

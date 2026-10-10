@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:20 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="sideinfoOverview" class="nds-content-section nds-doc-overview">
+<section id="sideinfo-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -20,7 +20,7 @@ last_edit: "07/10/2026 - 03:20 PM"
 
 Side info sits in a section whose body is a row: the content in `.nds-info-content`, and the column in `aside.nds-sideinfo`. The `aside` sets the width, the place and the sticky behavior. It has no look of its own: the cards inside it have the look.
 
-The preview shows it in a frame of its own, with a hero above it, so the column can move up beside the page title. A placeholder stands in for the card in the column: the [Related](#sideinfoRelated) templates show real content.
+The preview shows it in a frame of its own, with a hero above it, so the column can move up beside the page title. A placeholder stands in for the card in the column: the [Related](#sideinfo-related) templates show real content.
 
 Pick another component when:
 
@@ -34,13 +34,13 @@ The side info is the side column of a standard page. The other page columns are 
   </div>
 </section>
 
-<section id="sideinfoMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="sideinfo-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="sideinfo-canon" data-canon data-preview="page" data-preview-height="720" data-preview-style="@media (width >= 960px) { .nds-hero-section.nds-aside + .nds-content-layout .nds-sideinfo > :first-child .nds-content-placeholder { min-height: 500px } }" data-variants="sideinfoVariantsTable">
+<script type="text/html" id="sideinfo-canon" data-canon data-preview="page" data-preview-height="720" data-preview-style="@media (width >= 960px) { .nds-hero-section.nds-aside + .nds-content-layout .nds-sideinfo > :first-child .nds-content-placeholder { min-height: 500px } }" data-variants="sideinfo-variants-table">
 <section class="nds-hero-section nds-sub">
   <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
     <ol class="nds-breadcrumb">
@@ -109,7 +109,7 @@ The side info is the side column of a standard page. The other page columns are 
   </div>
 </section>
 
-<section id="sideinfoParts" class="nds-content-section nds-doc-parts">
+<section id="sideinfo-parts" class="nds-content-section nds-doc-parts">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Parts</h2>
@@ -131,7 +131,7 @@ The side info is the side column of a standard page. The other page columns are 
   </div>
 </section>
 
-<section id="sideinfoVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="sideinfo-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -149,13 +149,13 @@ The width is not in the builder: see `--nds-sideinfo-width` in the API.
 | Start side | Start side (hint: The column moves to the start side of the row) (limit: 1 position) | `.nds-reverse` | `.nds-sideinfo` | The column moves to the start side of the row, and above the content below 960px. For a table of contents, write the `aside` first in the markup instead. Not with Beside the title |
 | Beside the title | Beside the title (hint: On desktops, the column moves up beside the page title) (limit: 1 position) | `.nds-aside` | `.nds-hero-section.nds-sub` | At 960px and wider, the column moves up beside the page title, on the end side. For a column about the whole page, in the first section. Not with Start side |
 | More cards | More cards (hint: A second card under the first) | canon `#sideinfo-more` | `.nds-sideinfo` | A second card in the column, under the first |
-{: #sideinfoVariantsTable .nds-table .nds-responsive}
+{: #sideinfo-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="sideinfoBehavior" class="nds-content-section nds-doc-behavior">
+<section id="sideinfo-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -186,7 +186,7 @@ The `aside` shows where it is in the markup: after the content, it is on the end
   </div>
 </section>
 
-<section id="sideinfoFeatures" class="nds-content-section nds-doc-features">
+<section id="sideinfo-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -247,7 +247,7 @@ The `aside` shows where it is in the markup: after the content, it is on the end
   </div>
 </section>
 
-<section id="sideinfoPractices" class="nds-content-section nds-doc-practices">
+<section id="sideinfo-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -266,7 +266,7 @@ The `aside` shows where it is in the markup: after the content, it is on the end
   </div>
 </section>
 
-<section id="sideinfoApi" class="nds-content-section nds-doc-api">
+<section id="sideinfo-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -320,7 +320,7 @@ The full API is in the banner of `_js/nds-sideinfo.js`.
   </div>
 </section>
 
-<section id="sideinfoRelated" class="nds-content-section nds-doc-related">
+<section id="sideinfo-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/09/2026 - 03:58 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="otpOverview" class="nds-content-section nds-doc-overview">
+<section id="otp-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="otpMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="otp-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="otp-4" data-canon data-variants="otpVariantsTable" data-harness="form">
+<script type="text/html" id="otp-4" data-canon data-variants="otp-variants-table" data-harness="form">
 <fieldset class="nds-form-group nds-otp-group" data-required>
   <legend><span class="nds-label">Verification code</span></legend>
   <div class="nds-otp">
@@ -106,7 +106,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="otpVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="otp-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -124,13 +124,13 @@ For another code length, copy a box, give it a unique `id`, and number the `aria
 | Size | LG | `.nds-lg` | `.nds-otp-group` | 48px boxes with larger digits, 44px on phones, for a page that holds only the code |
 | No separator | No separator | remove | `.nds-otp-separator` | Six boxes in one set. Keep the separator for a code the user reads as two sets |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
-{: #otpVariantsTable .nds-table .nds-responsive}
+{: #otp-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="otpFeatures" class="nds-content-section nds-doc-features">
+<section id="otp-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -205,7 +205,7 @@ For another code length, copy a box, give it a unique `id`, and number the `aria
   </div>
 </section>
 
-<section id="otpPractices" class="nds-content-section nds-doc-practices">
+<section id="otp-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -226,7 +226,7 @@ For another code length, copy a box, give it a unique `id`, and number the `aria
   </div>
 </section>
 
-<section id="otpApi" class="nds-content-section nds-doc-api">
+<section id="otp-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -286,7 +286,7 @@ The full API is in the banner of `_js/nds-otp.js`.
   </div>
 </section>
 
-<section id="otpRelated" class="nds-content-section nds-doc-related">
+<section id="otp-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

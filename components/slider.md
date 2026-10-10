@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="sliderOverview" class="nds-content-section nds-doc-overview">
+<section id="slider-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="sliderMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="slider-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="slider-single" data-canon data-variants="sliderVariantsTable" data-demo-width="360px">
+<script type="text/html" id="slider-single" data-canon data-variants="slider-variants-table" data-demo-width="360px">
 <div class="nds-form-container nds-slider-container">
   <div class="nds-form-header">
     <label for="slider-budget">
@@ -74,7 +74,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="sliderVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="slider-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -97,13 +97,13 @@ Currency makes two changes on a `.nds-slider-value`: write both. A range slider 
 | Currency | Currency | `[data-currency="SAR"]` | `.nds-slider-value` | Thousands separators and a currency symbol on the value |
 | Loading | Loading | `.nds-loading` | `.nds-slider-container` | A skeleton while the script loads the bounds or the value |
 | Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/forms) |
-{: #sliderVariantsTable .nds-table .nds-responsive}
+{: #slider-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="sliderBehavior" class="nds-content-section nds-doc-behavior">
+<section id="slider-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -139,7 +139,7 @@ The `nds-loading` class shows the bar and the value as a skeleton, and hides the
   </div>
 </section>
 
-<section id="sliderFeatures" class="nds-content-section nds-doc-features">
+<section id="slider-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -186,7 +186,7 @@ The `nds-loading` class shows the bar and the value as a skeleton, and hides the
   </div>
 </section>
 
-<section id="sliderPractices" class="nds-content-section nds-doc-practices">
+<section id="slider-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -208,7 +208,7 @@ The `nds-loading` class shows the bar and the value as a skeleton, and hides the
   </div>
 </section>
 
-<section id="sliderApi" class="nds-content-section nds-doc-api">
+<section id="slider-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>

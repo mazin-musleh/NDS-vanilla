@@ -8,11 +8,11 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 04:26 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 hideFeedback: true
 ---
 
-<section id="userFeedbackOverview" class="nds-content-section nds-doc-overview">
+<section id="user-feedback-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="userFeedbackMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="user-feedback-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="uf-survey" data-canon data-preview="page" data-preview-height="fit" data-form data-variants="userFeedbackVariantsTable">
+<script type="text/html" id="uf-survey" data-canon data-preview="page" data-preview-height="fit" data-form data-variants="user-feedback-variants-table">
 <section id="user-feedback" class="nds-user-feedback-section nds-content-section">
   <div class="nds-section-body">
     <form class="nds-form">
@@ -273,7 +273,7 @@ document.addEventListener('nds:userfeedback:submit', function () {
   </div>
 </section>
 
-<section id="userFeedbackVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="user-feedback-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -289,13 +289,13 @@ Each structure is the whole page section, form included. Submit validates the fo
 | Statistic | No statistic | remove | `.nds-user-feedback-statistic` | Leave it out when you have no real numbers to show |
 | Memory | Ask every visit (hint: No cookie saves the answer) | `[data-no-persist]` | `.nds-user-feedback` | No cookie: the widget asks again on every visit |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
-{: #userFeedbackVariantsTable .nds-table .nds-responsive}
+{: #user-feedback-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="userFeedbackBehavior" class="nds-content-section nds-doc-behavior">
+<section id="user-feedback-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -324,7 +324,7 @@ To send the data another way, listen for `nds:userfeedback:submit` and call `pre
   </div>
 </section>
 
-<section id="userFeedbackFeatures" class="nds-content-section nds-doc-features">
+<section id="user-feedback-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -378,7 +378,7 @@ To send the data another way, listen for `nds:userfeedback:submit` and call `pre
   </div>
 </section>
 
-<section id="userFeedbackPractices" class="nds-content-section nds-doc-practices">
+<section id="user-feedback-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -399,7 +399,7 @@ To send the data another way, listen for `nds:userfeedback:submit` and call `pre
   </div>
 </section>
 
-<section id="userFeedbackApi" class="nds-content-section nds-doc-api">
+<section id="user-feedback-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -483,7 +483,7 @@ The full API is in the banner of `_js/nds-user-feedback.js`.
   </div>
 </section>
 
-<section id="userFeedbackRelated" class="nds-content-section nds-doc-related">
+<section id="user-feedback-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

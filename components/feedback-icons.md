@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="feedbackOverview" class="nds-content-section nds-doc-overview">
+<section id="feedback-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="feedbackMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="feedback-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="fb-message" data-canon data-variants="fbVariantsTable" data-js="fb-js">
+<script type="text/html" id="fb-message" data-canon data-variants="fb-variants-table" data-js="fb-js">
 <span class="nds-feedback nds-sm nds-outline" data-status="error">
   <span class="nds-feedback-icon">
     <i class="nds-icon" aria-hidden="true"></i>
@@ -62,7 +62,7 @@ NDS.Feedback.create({
   </div>
 </section>
 
-<section id="feedbackVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="feedback-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -100,13 +100,13 @@ NDS.Feedback.create({
 | Style | Solid | `style: ''` | `create()` | The same, in JavaScript |
 | Style | Ring (hint: A light halo around the disc) | `.nds-ring` | `.nds-feedback` | A solid disc with a light halo around it, for a status that must stand out |
 | Style | Ring (hint: A light halo around the disc) | `style: 'ring'` | `create()` | The same, in JavaScript |
-{: #fbVariantsTable .nds-table .nds-responsive}
+{: #fb-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="feedbackBehavior" class="nds-content-section nds-doc-behavior">
+<section id="feedback-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -122,7 +122,7 @@ A permanent message is a hint that stays in place, such as "Use 8 characters or 
   </div>
 </section>
 
-<section id="feedbackFeatures" class="nds-content-section nds-doc-features">
+<section id="feedback-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -162,7 +162,7 @@ A permanent message is a hint that stays in place, such as "Use 8 characters or 
   </div>
 </section>
 
-<section id="feedbackPractices" class="nds-content-section nds-doc-practices">
+<section id="feedback-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -180,7 +180,7 @@ A permanent message is a hint that stays in place, such as "Use 8 characters or 
   </div>
 </section>
 
-<section id="feedbackApi" class="nds-content-section nds-doc-api">
+<section id="feedback-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -278,7 +278,7 @@ The full API is in the banner of `_js/nds-feedback.js`.
   </div>
 </section>
 
-<section id="feedbackRelated" class="nds-content-section nds-doc-related">
+<section id="feedback-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

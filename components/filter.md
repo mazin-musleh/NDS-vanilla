@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:54 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="filterOverview" class="nds-content-section nds-doc-overview">
+<section id="filter-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="filterMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="filter-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="filter-bar" data-canon data-variants="filterVariantsTable">
+<script type="text/html" id="filter-bar" data-canon data-variants="filter-variants-table">
 <div class="nds-toolbar">
   <div class="nds-form-container nds-search-box" data-filter-target="flt-items">
     <div class="nds-search-content">
@@ -298,7 +298,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="filterVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="filter-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -325,13 +325,13 @@ Every card carries two marks: `sector` and `fee`. A group in the menu filters by
 | Applied chips | Applied chips (default) | canon `#filter-part-applied` | `.nds-toolbar` | One removable chip per applied value and for the search term. Hidden while nothing is applied |
 | Suggestions | Suggestions (demo: + search) (hint: Chips that fill the search box) | canon `#filter-part-suggest` | `.nds-toolbar` | Chips that write a search term into the search box. Hidden once a filter is applied. Needs the Search box |
 | Result count | Result count | canon `#filter-part-count` | `.nds-toolbar` | The script writes the number of matching items into `[data-filter-count]` |
-{: #filterVariantsTable .nds-table .nds-responsive}
+{: #filter-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="filterBehavior" class="nds-content-section nds-doc-behavior">
+<section id="filter-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -499,7 +499,7 @@ A filter also drives the [Sort](../components/sort) triggers that carry its `dat
   </div>
 </section>
 
-<section id="filterFeatures" class="nds-content-section nds-doc-features">
+<section id="filter-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -581,7 +581,7 @@ A filter also drives the [Sort](../components/sort) triggers that carry its `dat
   </div>
 </section>
 
-<section id="filterPractices" class="nds-content-section nds-doc-practices">
+<section id="filter-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -604,7 +604,7 @@ A filter also drives the [Sort](../components/sort) triggers that carry its `dat
   </div>
 </section>
 
-<section id="filterApi" class="nds-content-section nds-doc-api">
+<section id="filter-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -734,7 +734,7 @@ The full API is in the banner of `_js/nds-filter.js`.
   </div>
 </section>
 
-<section id="filterRelated" class="nds-content-section nds-doc-related">
+<section id="filter-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

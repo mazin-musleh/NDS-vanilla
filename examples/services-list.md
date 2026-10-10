@@ -8,10 +8,10 @@ breadcrumb:
 hero_title: "Government Services"
 hero_description: "Browse all available government digital services"
 sidemenu_mode: false
-last_edit: "10/08/2026 - 12:42 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="servicesList" class="nds-content-section">
+<section id="services-list" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-body">
             <div class="nds-toolbar">
@@ -21,7 +21,7 @@ last_edit: "10/08/2026 - 12:42 AM"
                     <div class="nds-search-content">
                         <div class="nds-form-control">
                             <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                            <input id="filterSearch" type="text" class="nds-search-input" name="search" autocomplete="on"
+                            <input id="filter-search" type="text" class="nds-search-input" name="search" autocomplete="on"
                                 placeholder="Search in services...">
                             <div class="nds-form-action">
                                 <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
@@ -68,7 +68,7 @@ last_edit: "10/08/2026 - 12:42 AM"
                     <span class="nds-label">Applied Filters:</span>
                     <div class="nds-chips"></div>
                 </div>
-                <div class="nds-auto-fill" data-target="filterSearch" data-filter-target="services_list_content">
+                <div class="nds-auto-fill" data-target="filter-search" data-filter-target="services_list_content">
                     <span class="nds-label">Most Searched:</span>
                     <div class="nds-chips">
                         <button class="nds-chip nds-neutral nds-rounded nds-item">

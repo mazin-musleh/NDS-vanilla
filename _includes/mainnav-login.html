@@ -1,4 +1,4 @@
-<form id="loginForm" class="nds-form" novalidate>
+<form id="login-form" class="nds-form" novalidate>
 <div class="nds-card-content">
     <div class="nds-card-text">
         <span class="nds-card-title" id="login-modal-title">Login</span>
@@ -57,7 +57,7 @@
     </div>
 </div>
 <div class="nds-card-actions">
-    <button type="submit" class="nds-btn nds-primary nds-full" id="loginSubmitBtn">
+    <button type="submit" class="nds-btn nds-primary nds-full" id="login-submit-btn">
         <span class="nds-label">Login</span>
     </button>
     <button type="button" class="nds-btn nds-subtle nds-full nds-modal-close">
@@ -70,7 +70,7 @@
         var nav = document.getElementById('nds-main-nav');
         var emailInput = document.getElementById('login-email');
         var passInput = document.getElementById('login-password');
-        var loginForm = document.getElementById('loginForm');
+        var loginForm = document.getElementById('login-form');
 
         function setAuth(isAuth) {
             if (isAuth) {
@@ -111,7 +111,7 @@
         // Login (inside modal) — submit event covers both button-click and
         // Enter-in-field. novalidate on the form disables native browser
         // popups; NDS.Forms.validateForm handles validation + error display.
-        var loginBtn = document.getElementById('loginSubmitBtn');
+        var loginBtn = document.getElementById('login-submit-btn');
         loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
             if (!NDS.Forms.validateForm(loginForm).valid) return;
@@ -127,7 +127,7 @@
 
         // Logout (inside dropdown)
         document.addEventListener('click', function (e) {
-            var btn = e.target.closest('#logoutBtn');
+            var btn = e.target.closest('#logout-btn');
             if (btn) {
                 e.preventDefault();
                 btn.dataset.state = 'loading';

@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:20 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="switchOverview" class="nds-content-section nds-doc-overview">
+<section id="switch-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="switchMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="switch-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="switch-single" data-canon data-variants="switchVariantsTable" data-harness="form">
+<script type="text/html" id="switch-single" data-canon data-variants="switch-variants-table" data-harness="form">
 <div class="nds-form-container nds-switch-container">
   <div class="nds-form-header" data-feedback-target>
     <label for="switch-1">
@@ -108,7 +108,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="switchVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="switch-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -133,13 +133,13 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
 | Disabled | Disabled | `[disabled]` | `.nds-switch-input` | The user cannot change the setting now |
 | Layout | Row | `.nds-horizontal` | `.nds-switch-group` | Group only. The switches sit side by side and wrap |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
-{: #switchVariantsTable .nds-table .nds-responsive}
+{: #switch-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="switchFeatures" class="nds-content-section nds-doc-features">
+<section id="switch-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -186,7 +186,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
   </div>
 </section>
 
-<section id="switchPractices" class="nds-content-section nds-doc-practices">
+<section id="switch-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -204,7 +204,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
   </div>
 </section>
 
-<section id="switchApi" class="nds-content-section nds-doc-api">
+<section id="switch-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>

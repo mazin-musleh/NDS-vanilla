@@ -395,7 +395,7 @@ $plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-gradient-primary, .
         // already use for the content column, with the deck as a third floor.
         .nds-swiper-slide,
         .nds-swiper-navigation {
-            padding-inline-end: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2), var(--_deck-reserve));
+            padding-inline-end: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-max-width)) / 2), var(--_deck-reserve));
         }
     }
 }

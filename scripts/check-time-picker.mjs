@@ -67,7 +67,7 @@ const build = (id, attrs = {}, seed = '', typed = '') => page.evaluate(([id, att
     // layout the hero swiper's CLONED slides also contain one, and clones are
     // `inert`, so a field built there can never take focus and every typing
     // assertion fails on the harness rather than on the component.
-    document.querySelector('#timePickerOverview .nds-section-body').appendChild(el);
+    document.querySelector('#time-picker-overview .nds-section-body').appendChild(el);
     window.NDS.TimePicker.create(el);
     return id;
 }, [id, attrs, seed, typed]);

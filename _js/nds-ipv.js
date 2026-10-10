@@ -16,7 +16,7 @@
  * Gotchas:
  *   - One viewer serves the whole page; the thumbnails form a single gallery you can page
  *     through with the arrow controls.
- *   - The overlay (#ndsIpvPopupOverlay) is built by the component on the FIRST open —
+ *   - The overlay (#nds-ipv-popup-overlay) is built by the component on the FIRST open —
  *     a page where no thumbnail is clicked carries zero overlay DOM and none of the
  *     document-level listeners.
  *   - The instance is a page singleton at window.ndsIPV.
@@ -94,12 +94,12 @@
             createOverlayMarkup();
 
             this.el = {
-                overlay: document.getElementById('ndsIpvPopupOverlay'),
+                overlay: document.getElementById('nds-ipv-popup-overlay'),
                 container: document.querySelector('.nds-ipv-popup-container'),
-                zoomInfo: document.getElementById('ndsIpvZoomInfo'),
+                zoomInfo: document.getElementById('nds-ipv-zoom-info'),
                 controls: document.querySelector('.nds-ipv-popup-controls'),
                 navControls: document.querySelector('.nds-ipv-navigation-controls'),
-                imageCounter: document.getElementById('ndsIpvImageCounter'),
+                imageCounter: document.getElementById('nds-ipv-image-counter'),
                 closeBtn: document.querySelector('.nds-ipv-close-btn'),
                 prevBtn: document.querySelector('.nds-ipv-prev-btn'),
                 nextBtn: document.querySelector('.nds-ipv-next-btn')
@@ -243,7 +243,7 @@
             this.showSpinner();
 
             const img = document.createElement('img');
-            img.id = 'ndsIpvPopupImage';
+            img.id = 'nds-ipv-popup-image';
             img.className = 'nds-ipv-popup-image';
             img.alt = alt || '';
             img.src = src;
@@ -518,10 +518,10 @@
     // data-i18n keys so it renders correctly with no JSON / before NDS.i18n
     // resolves; NDS.i18n.load('ipv', overlay) swaps them per locale at init.
     function createOverlayMarkup() {
-        if (document.getElementById('ndsIpvPopupOverlay')) return;
+        if (document.getElementById('nds-ipv-popup-overlay')) return;
 
         const overlayHTML = `
-            <div class="nds-ipv-popup-overlay" id="ndsIpvPopupOverlay" data-theme="dark" role="dialog" aria-modal="true" aria-label="Image viewer">
+            <div class="nds-ipv-popup-overlay" id="nds-ipv-popup-overlay" data-theme="dark" role="dialog" aria-modal="true" aria-label="Image viewer">
                 <div class="nds-ipv-popup-container">
                     <div class="nds-ipv-popup-controls">
                         <button type="button" class="nds-btn nds-secondary nds-icon-only nds-circle nds-ipv-control-btn nds-ipv-zoom-in-btn" title="Zoom In" aria-label="Zoom in" data-i18n-attr="aria-label:zoomIn,title:zoomIn">
@@ -550,7 +550,7 @@
                         </button>
                     </div>
 
-                    <div class="nds-ipv-image-counter" id="ndsIpvImageCounter">1 / 1</div>
+                    <div class="nds-ipv-image-counter" id="nds-ipv-image-counter">1 / 1</div>
 
                     <div class="nds-ipv-instructions" data-hidden="sm">
                         <strong data-i18n="instructionsTitle">Controls:</strong><br>
@@ -562,7 +562,7 @@
                         <span data-i18n="instructionsClose">• ESC to close</span>
                     </div>
 
-                    <div class="nds-ipv-zoom-info" id="ndsIpvZoomInfo">100%</div>
+                    <div class="nds-ipv-zoom-info" id="nds-ipv-zoom-info">100%</div>
                 </div>
             </div>
         `;

@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="btnOverview" class="nds-content-section nds-doc-overview">
+<section id="btn-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -31,13 +31,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="btnMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="btn-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="btn-standard" data-canon data-variants="btnVariantsTable">
+<script type="text/html" id="btn-standard" data-canon data-variants="btn-variants-table">
 <button type="button" class="nds-btn nds-primary">
   <span class="nds-label">Add item</span>
 </button>
@@ -90,7 +90,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="btnVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="btn-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -149,13 +149,13 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 | Full width | Full width | `.nds-full` | `.nds-btn-group` | On a group, the group fills the width and its buttons share it equally. Put it on the group, not on its buttons |
 | Primary text | Primary text (hint: Brand-color text, no fill) | `.nds-color` | `.nds-transparent:not(.nds-destructive):not(.nds-oncolor)` | The text takes the brand primary color, and goes back to the default color on hover |
 | Badge | Badge (hint: A count over the icon corner) | canon `#btn-badge` | `i.nds-icon` | A count over the corner of the icon. It goes inside the `<i>` icon element, never beside it. The icon is `aria-hidden`, so screen readers skip the count: put it in the label too |
-{: #btnVariantsTable .nds-table .nds-responsive}
+{: #btn-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="btnFeatures" class="nds-content-section nds-doc-features">
+<section id="btn-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -209,7 +209,7 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
   </div>
 </section>
 
-<section id="btnPractices" class="nds-content-section nds-doc-practices">
+<section id="btn-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -231,7 +231,7 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
   </div>
 </section>
 
-<section id="btnApi" class="nds-content-section nds-doc-api">
+<section id="btn-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -322,7 +322,7 @@ save().then(function () {
   </div>
 </section>
 
-<section id="btnRelated" class="nds-content-section nds-doc-related">
+<section id="btn-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

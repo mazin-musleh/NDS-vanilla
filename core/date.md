@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 03:29 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="dateOverview" class="nds-content-section nds-doc-overview">
+<section id="date-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -31,7 +31,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="dateMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="date-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage</h2>
@@ -80,7 +80,7 @@ NDS.date.convert('05/03/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', fo
   </div>
 </section>
 
-<section id="dateFeatures" class="nds-content-section nds-doc-features">
+<section id="date-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -134,7 +134,7 @@ NDS.date.convert('05/03/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', fo
   </div>
 </section>
 
-<section id="datePractices" class="nds-content-section nds-doc-practices">
+<section id="date-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -154,7 +154,7 @@ NDS.date.convert('05/03/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', fo
   </div>
 </section>
 
-<section id="dateApi" class="nds-content-section nds-doc-api">
+<section id="date-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -229,7 +229,7 @@ The full API is in the banner of `_js/nds-core.js`, and in the comment above `ND
   </div>
 </section>
 
-<section id="dateRelated" class="nds-content-section nds-doc-related">
+<section id="date-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

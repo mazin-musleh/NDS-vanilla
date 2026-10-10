@@ -10,13 +10,13 @@ hero_description: "Find services matching your query"
 sidemenu_mode: false
 ---
 
-<section id="searchResults" class="nds-content-section">
+<section id="search-results" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-form-container nds-search-box" data-filter-target="search_results_content">
             <div class="nds-search-content">
                 <div class="nds-form-control">
                     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                    <input id="searchResultsInput" type="text" class="nds-search-input" name="q" autocomplete="on"
+                    <input id="search-results-input" type="text" class="nds-search-input" name="q" autocomplete="on"
                         placeholder="Search...">
                     <div class="nds-form-action">
                         <button type="button" class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear">

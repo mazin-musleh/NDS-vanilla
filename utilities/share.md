@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="shareOverview" class="nds-content-section nds-doc-overview">
+<section id="share-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="shareMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="share-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="share-menu" data-canon data-variants="shareVariantsTable">
+<script type="text/html" id="share-menu" data-canon data-variants="share-variants-table">
 <div class="nds-share nds-dropmenu">
   <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Page">
     <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
@@ -171,7 +171,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="shareVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="share-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -200,13 +200,13 @@ Custom Link is two rows of one choice: write both attributes on `.nds-share`. Ic
 | Custom Target (any) | Email (hint: Open the mail app with the link) | canon `#share-email-item` | `.nds-dropmenu-menu` | A target added with `data-share-href`, as a menu item |
 | Custom Target (any) | Email (hint: Open the mail app with the link) | canon `#share-email-button` | `.nds-share-copy:not(.nds-dropmenu-item):not(.nds-icon-only)` (after) | The same target as a button in the Inline row |
 | Custom Target (any) | Email (hint: Open the mail app with the link) | canon `#share-email-icon` | `.nds-share-copy.nds-icon-only` (after) | The same target as an icon-only button in Inline Icons |
-{: #shareVariantsTable .nds-table .nds-responsive}
+{: #share-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="shareBehavior" class="nds-content-section nds-doc-behavior">
+<section id="share-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -214,24 +214,24 @@ Custom Link is two rows of one choice: write both attributes on `.nds-share`. Ic
     <div class="nds-section-body nds-prose" markdown="1">
 
 ### Copy Link in a Menu
-{: #shareCopyInMenu}
+{: #share-copy-in-menu}
 
 `data-no-auto-close` on the Copy Link item keeps the menu open after the click. The item shows the checkmark for 2 seconds, then the script closes the menu. In the Inline structures, nothing closes, so the attribute is not needed.
 
 ### Custom Link
-{: #shareCustomLink}
+{: #share-custom-link}
 
 `data-share-url` and `data-share-title` on `.nds-share` replace the page link and the page title. A relative link, such as `/news/12`, becomes a full link on the current site. A link whose scheme is not `http`, `https`, `mailto` or `tel` is ignored, and the buttons share the current page.
 
 ### Custom Target
-{: #shareCustomTarget}
+{: #share-custom-target}
 
 `data-share-href` on a button in `.nds-share` adds a target that the built-in buttons do not cover. It holds the target's share link. The script replaces `{url}` and `{title}` with the encoded link and title, then opens the link in a 600×400 window. A `mailto:` or `tel:` link opens the mail or phone app instead. The Custom Target options in the builder show the links for Facebook, Telegram and email.
 </div>
   </div>
 </section>
 
-<section id="shareFeatures" class="nds-content-section nds-doc-features">
+<section id="share-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -278,7 +278,7 @@ Custom Link is two rows of one choice: write both attributes on `.nds-share`. Ic
   </div>
 </section>
 
-<section id="sharePractices" class="nds-content-section nds-doc-practices">
+<section id="share-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -300,7 +300,7 @@ Custom Link is two rows of one choice: write both attributes on `.nds-share`. Ic
   </div>
 </section>
 
-<section id="shareApi" class="nds-content-section nds-doc-api">
+<section id="share-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -357,7 +357,7 @@ The full API is in the banner of `_js/nds-share.js`.
   </div>
 </section>
 
-<section id="shareRelated" class="nds-content-section nds-doc-related">
+<section id="share-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

@@ -6,12 +6,12 @@ hero_description: A floating action button (FAB) stays at an edge of the screen 
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 07:15 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 lang: en
 direction: ltr
 ---
 
-<section id="fabOverview" class="nds-content-section nds-doc-overview">
+<section id="fab-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="fabMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="fab-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="fab-button" data-canon data-variants="fabVariantsTable" data-preview="run" data-run-label="Add FAB" data-sheet="top">
+<script type="text/html" id="fab-button" data-canon data-variants="fab-variants-table" data-preview="run" data-run-label="Add FAB" data-sheet="top">
 <button type="button" class="nds-btn nds-fab nds-primary nds-circle nds-icon-only" data-panel-toggle="fab-panel" aria-label="Open panel" hidden>
   <i class="hgi hgi-stroke hgi-menu-01"></i>
 </button>
@@ -94,7 +94,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="fabVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="fab-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -136,13 +136,13 @@ Variant and Size have two rows. On a single FAB, the class goes on the FAB butto
 | Gap | SM | `[data-fab-gap="sm"]` | `.nds-fab` | 8px of extra space between the FAB and the one before it |
 | Gap | MD | `[data-fab-gap="md"]` | `.nds-fab` | 16px of extra space, to start a new set of FABs |
 | Gap | LG | `[data-fab-gap="lg"]` | `.nds-fab` | 32px of extra space, for FABs that do not belong together |
-{: #fabVariantsTable .nds-table .nds-responsive}
+{: #fab-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="fabBehavior" class="nds-content-section nds-doc-behavior">
+<section id="fab-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -173,7 +173,7 @@ A button group with `nds-fab` docks as one item, with one shadow around the whol
   </div>
 </section>
 
-<section id="fabFeatures" class="nds-content-section nds-doc-features">
+<section id="fab-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -248,7 +248,7 @@ A button group with `nds-fab` docks as one item, with one shadow around the whol
   </div>
 </section>
 
-<section id="fabPractices" class="nds-content-section nds-doc-practices">
+<section id="fab-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -268,7 +268,7 @@ A button group with `nds-fab` docks as one item, with one shadow around the whol
   </div>
 </section>
 
-<section id="fabApi" class="nds-content-section nds-doc-api">
+<section id="fab-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -346,7 +346,7 @@ The full API is in the banner of `_js/nds-fab.js`.
   </div>
 </section>
 
-<section id="fabRelated" class="nds-content-section nds-doc-related">
+<section id="fab-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

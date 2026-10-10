@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="featuredIconOverview" class="nds-content-section nds-doc-overview">
+<section id="featured-icon-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="featuredIconMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="featured-icon-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="featured-icon-single" data-canon data-variants="featuredIconVariantsTable">
+<script type="text/html" id="featured-icon-single" data-canon data-variants="featured-icon-variants-table">
 <span class="nds-featured-icon">
   <i class="hgi hgi-stroke hgi-stars" aria-hidden="true"></i>
 </span>
@@ -44,7 +44,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="featuredIconVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="featured-icon-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -71,13 +71,13 @@ Every row goes on the `.nds-featured-icon` element. Pick one option from each gr
 | Style | Outline | `.nds-outline` | `.nds-featured-icon` | No fill and a border in the icon's color, for a lighter look |
 | Style | Dark (hint: A solid fill and a white icon) | `.nds-dark` | `.nds-featured-icon` | A solid fill and a white icon, for the strongest emphasis |
 | Style | Subtle (hint: The icon alone, with no container) | `.nds-subtle` | `.nds-featured-icon` | No container: the icon alone, drawn at the full size |
-{: #featuredIconVariantsTable .nds-table .nds-responsive}
+{: #featured-icon-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="featuredIconFeatures" class="nds-content-section nds-doc-features">
+<section id="featured-icon-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -124,7 +124,7 @@ Every row goes on the `.nds-featured-icon` element. Pick one option from each gr
   </div>
 </section>
 
-<section id="featuredIconPractices" class="nds-content-section nds-doc-practices">
+<section id="featured-icon-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -146,7 +146,7 @@ Every row goes on the `.nds-featured-icon` element. Pick one option from each gr
   </div>
 </section>
 
-<section id="featuredIconApi" class="nds-content-section nds-doc-api">
+<section id="featured-icon-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -198,7 +198,7 @@ Source: the `featured-icons` group in `_sass/tokens/_components.scss`.
   </div>
 </section>
 
-<section id="featuredIconRelated" class="nds-content-section nds-doc-related">
+<section id="featured-icon-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.10.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 04:26 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="statusOverview" class="nds-content-section nds-doc-overview">
+<section id="status-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="statusMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="status-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="status-icon" data-canon data-preview="page" data-preview-height="fit" data-variants="statusVariantsTable">
+<script type="text/html" id="status-icon" data-canon data-preview="page" data-preview-height="fit" data-variants="status-variants-table">
 <section class="nds-content-section nds-status-section" data-status="success">
   <div class="nds-section-wrapper">
     <div class="nds-section-icon">
@@ -85,7 +85,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="statusVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="status-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -104,13 +104,13 @@ Pick another component when:
 | Status | Help (not: illustration) | `[data-status="help"]` | `.nds-status-section` | A pointer to help. The title keeps its own color, and the chip shows a question mark |
 | Chip | Outline | `.nds-outline` | `.nds-feedback` | The chip shows an outlined icon instead of a solid disc. The ring stays |
 | Second action | Second action | canon `#status-second-action` | `.nds-section-action` | A second way out beside the main one, such as Try Again |
-{: #statusVariantsTable .nds-table .nds-responsive}
+{: #status-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="statusFeatures" class="nds-content-section nds-doc-features">
+<section id="status-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -143,7 +143,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="statusPractices" class="nds-content-section nds-doc-practices">
+<section id="status-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -163,7 +163,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="statusApi" class="nds-content-section nds-doc-api">
+<section id="status-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -190,7 +190,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="statusRelated" class="nds-content-section nds-doc-related">
+<section id="status-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

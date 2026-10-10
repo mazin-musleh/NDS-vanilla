@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="scrollMoreOverview" class="nds-content-section nds-doc-overview">
+<section id="scroll-more-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="scrollMoreMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="scroll-more-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="sm-list" data-canon data-variants="smVariantsTable">
+<script type="text/html" id="sm-list" data-canon data-variants="sm-variants-table">
 <div class="nds-scroll-more" style="--scroll-max-height: 240px;">
   <ul class="nds-scroll-more-content">
     <li>Riyadh</li>
@@ -138,7 +138,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="scrollMoreVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="scroll-more-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -155,13 +155,13 @@ Every row goes on the wrapper. The wrapper fits its content, but never grows wid
 | Divided | Divided | `.nds-divided` | `.nds-scroll-more` | A hairline between the content and the button, shown while the content overflows |
 | Snap | Snap (hint: Each click and drag stops at the start of an item) | `.nds-snap` | `.nds-scroll-more` | Each item's start snaps to the edge of the scrolling area |
 | Gap | Gap | `--scroll-gap: var(--spacing-md)` | `.nds-scroll-more` | Space between the content and the button. With Divided, the hairline sits in the gap |
-{: #smVariantsTable .nds-table .nds-responsive}
+{: #sm-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="scrollMoreFeatures" class="nds-content-section nds-doc-features">
+<section id="scroll-more-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -229,7 +229,7 @@ Every row goes on the wrapper. The wrapper fits its content, but never grows wid
   </div>
 </section>
 
-<section id="scrollMorePractices" class="nds-content-section nds-doc-practices">
+<section id="scroll-more-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -247,7 +247,7 @@ Every row goes on the wrapper. The wrapper fits its content, but never grows wid
   </div>
 </section>
 
-<section id="scrollMoreApi" class="nds-content-section nds-doc-api">
+<section id="scroll-more-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -303,7 +303,7 @@ The full API is in the banner of `_js/nds-scroll-more.js`.
   </div>
 </section>
 
-<section id="scrollMoreRelated" class="nds-content-section nds-doc-related">
+<section id="scroll-more-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

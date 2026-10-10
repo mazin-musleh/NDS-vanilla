@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/09/2026 - 03:50 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="loadingOverview" class="nds-content-section nds-doc-overview">
+<section id="loading-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="loadingMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="loading-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="loading-spinner" data-canon data-variants="loadingVariantsTable">
+<script type="text/html" id="loading-spinner" data-canon data-variants="loading-variants-table">
 <div class="nds-loading" aria-busy="true">
   <div class="nds-card nds-stroke">
     <div class="nds-card-content">
@@ -51,7 +51,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="loadingVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="loading-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -72,13 +72,13 @@ The size and color classes go on the element that carries `nds-loading`.
 | Color | Primary (default) | — | `.nds-loading` | The primary color on a light surface. White in dark mode |
 | Color | Neutral | `.nds-neutral` | `.nds-loading` | Black on a light surface, white in dark mode. Use it where the primary color clashes with the content |
 | Color | On color (hint: White spinner for a dark or colored surface) | `.nds-oncolor` | `.nds-loading` | White in every mode. Use it on a surface that is always dark or colored, such as a primary banner. On a white surface the spinner does not show |
-{: #loadingVariantsTable .nds-table .nds-responsive}
+{: #loading-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="loadingBehavior" class="nds-content-section nds-doc-behavior">
+<section id="loading-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -118,7 +118,7 @@ A component that has a skeleton, such as a card, a table or tabs, replaces its t
   </div>
 </section>
 
-<section id="loadingFeatures" class="nds-content-section nds-doc-features">
+<section id="loading-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -158,7 +158,7 @@ A component that has a skeleton, such as a card, a table or tabs, replaces its t
   </div>
 </section>
 
-<section id="loadingPractices" class="nds-content-section nds-doc-practices">
+<section id="loading-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -177,7 +177,7 @@ A component that has a skeleton, such as a card, a table or tabs, replaces its t
   </div>
 </section>
 
-<section id="loadingApi" class="nds-content-section nds-doc-api">
+<section id="loading-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>

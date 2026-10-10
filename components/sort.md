@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:41 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="sortOverview" class="nds-content-section nds-doc-overview">
+<section id="sort-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -34,7 +34,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="sortMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="sort-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
@@ -43,7 +43,7 @@ Pick another component when:
 
 The triggers sit in a [Toolbar](../components/toolbar) above the list. The list needs only the `id` that the triggers name.
 
-<script type="text/html" id="sort-direct" data-canon data-variants="sortVariantsTable">
+<script type="text/html" id="sort-direct" data-canon data-variants="sort-variants-table">
 <div>
   <div class="nds-toolbar">
     <div class="nds-toolbar-end">
@@ -228,7 +228,7 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
   </div>
 </section>
 
-<section id="sortVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="sort-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -239,13 +239,13 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
 |---|---|---|---|---|
 | Structure | Direct (default) (hint: Each menu item sets one key and one direction) | — | — | A dropmenu of sort choices in a [Toolbar](../components/toolbar). Each item fixes one key and one direction |
 | Structure | Cycle (hint: Each click steps through up, down and the original order) | canon `#sort-cycle` | — | One button per key, with `data-sort-mode="cycle"`. Each click steps its key through ascending, descending and the original order, and its `.nds-sort-icon` turns to match |
-{: #sortVariantsTable .nds-table .nds-responsive}
+{: #sort-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="sortBehavior" class="nds-content-section nds-doc-behavior">
+<section id="sort-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -281,7 +281,7 @@ In `create()`, set `urlSync: { keyParam, dirParam }` and the sort key and direct
   </div>
 </section>
 
-<section id="sortFeatures" class="nds-content-section nds-doc-features">
+<section id="sort-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -342,7 +342,7 @@ In `create()`, set `urlSync: { keyParam, dirParam }` and the sort key and direct
   </div>
 </section>
 
-<section id="sortPractices" class="nds-content-section nds-doc-practices">
+<section id="sort-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -367,7 +367,7 @@ In `create()`, set `urlSync: { keyParam, dirParam }` and the sort key and direct
   </div>
 </section>
 
-<section id="sortApi" class="nds-content-section nds-doc-api">
+<section id="sort-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -467,7 +467,7 @@ The full API is in the banner of `_js/nds-sort.js`.
   </div>
 </section>
 
-<section id="sortRelated" class="nds-content-section nds-doc-related">
+<section id="sort-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

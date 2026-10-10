@@ -303,7 +303,7 @@
   position: fixed;
   z-index: 9999;
   // Content-edge offset shared by every anchored side
-  --_toast-edge: max(var(--nds-viewport-padding), calc((100vw - var(--nds-content-MaxWidth)) / 2));
+  --_toast-edge: max(var(--nds-viewport-padding), calc((100vw - var(--nds-content-max-width)) / 2));
   inset-inline-end: var(--_toast-edge);
   display: flex;
   flex-direction: column;

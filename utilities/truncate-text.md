@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.2.0"
-last_edit: "03/10/2026 - 06:08 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="truncateOverview" class="nds-content-section nds-doc-overview">
+<section id="truncate-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -28,13 +28,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="truncateMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="truncate-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="truncate-card" data-canon data-variants="truncateVariantsTable" data-demo-width="360px">
+<script type="text/html" id="truncate-card" data-canon data-variants="truncate-variants-table" data-demo-width="360px">
 <div class="nds-card nds-stroke">
   <div class="nds-card-content">
     <div class="nds-card-text">
@@ -48,7 +48,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="truncateVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="truncate-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -63,13 +63,13 @@ The card title stays at one line. A Lines option sets `--truncate` in the `style
 | Lines | 2 | `--truncate: 2` | `.nds-card-description` | Short descriptions, where one line cuts too much |
 | Lines | 3 | `--truncate: 3` | `.nds-card-description` | Previews where the first sentence matters |
 | Lines | 4 | `--truncate: 4` | `.nds-card-description` | Longer previews |
-{: #truncateVariantsTable .nds-table .nds-responsive}
+{: #truncate-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="truncateFeatures" class="nds-content-section nds-doc-features">
+<section id="truncate-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -109,7 +109,7 @@ The card title stays at one line. A Lines option sets `--truncate` in the `style
   </div>
 </section>
 
-<section id="truncatePractices" class="nds-content-section nds-doc-practices">
+<section id="truncate-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -128,7 +128,7 @@ The card title stays at one line. A Lines option sets `--truncate` in the `style
   </div>
 </section>
 
-<section id="truncateApi" class="nds-content-section nds-doc-api">
+<section id="truncate-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -149,7 +149,7 @@ Set it in the `style` attribute of the element with `nds-truncate`: `style="--tr
   </div>
 </section>
 
-<section id="truncateRelated" class="nds-content-section nds-doc-related">
+<section id="truncate-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.2.0"
-last_edit: "02/10/2026 - 10:15 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="quoteOverview" class="nds-content-section nds-doc-overview">
+<section id="quote-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="quoteMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="quote-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="quote-base" data-canon data-variants="quoteVariantsTable">
+<script type="text/html" id="quote-base" data-canon data-variants="quote-variants-table">
 <figure class="nds-quote">
   <blockquote class="nds-quote-body">
     <span class="nds-quote-title">The Power of Design</span>
@@ -58,7 +58,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="quoteVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="quote-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -72,13 +72,13 @@ Pick another component when:
 | No title | No title | `remove` | `.nds-quote-title` | Leave out the title when a few words cannot sum up the quote |
 | No author | No author | `remove` | `.nds-quote-author` | Leave out the author for a quote from a document, a publication or an unnamed source. Name the source in the title instead |
 | No avatar | No avatar | `remove` | `.nds-avatar` | Show the name and the role only, when there is no photo of the author |
-{: #quoteVariantsTable .nds-table .nds-responsive}
+{: #quote-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="quoteFeatures" class="nds-content-section nds-doc-features">
+<section id="quote-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -125,7 +125,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="quotePractices" class="nds-content-section nds-doc-practices">
+<section id="quote-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -144,7 +144,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="quoteApi" class="nds-content-section nds-doc-api">
+<section id="quote-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>

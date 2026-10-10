@@ -155,7 +155,7 @@
   icon: '<i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>'
   category: "UI Shell"
   tags: ["JS", "API"]
-  url: "/ui-shell/topbar.html#topbarWidgets"
+  url: "/ui-shell/topbar.html#topbar-widgets"
   js: _js/nds-time-date.js
   scss: _sass/components/_topbar.scss
 
@@ -234,7 +234,7 @@
   icon: '<i class="hgi hgi-stroke hgi-chart-increase"></i>'
   category: "Utilities"
   tags: ["JS"]
-  url: "/utilities/numbers.html#counterAnimation"
+  url: "/utilities/numbers.html#counter-animation"
   js: _js/nds-numbers.js
 
 - title: "Currency"
@@ -243,7 +243,7 @@
   icon: '<i class="hgi hgi-stroke hgi-coins-dollar"></i>'
   category: "Utilities"
   tags: ["JS", "CSS"]
-  url: "/utilities/numbers.html#currencyFormat"
+  url: "/utilities/numbers.html#currency-format"
   js: _js/nds-numbers.js
 
 - title: "Custom Select"
@@ -290,7 +290,7 @@
   icon: '<i class="hgi hgi-stroke hgi-shield-01"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS"]
-  url: "/ui-shell/topbar.html#dgaDigitalStamp"
+  url: "/ui-shell/topbar.html#digital-stamp"
   js: _js/nds-digital-stamp.js
   scss: _sass/components/_digital-stamp.scss
 
@@ -577,7 +577,7 @@
   icon: '<i class="hgi hgi-stroke hgi-calculator"></i>'
   category: "Forms"
   tags: ["JS", "CSS"]
-  url: "/components/forms.html#numberInput"
+  url: "/components/forms.html#number-input"
   js: _js/nds-forms.js
   scss: _sass/components/_forms.scss
 
@@ -1005,6 +1005,6 @@
   icon: '<i class="nds-icon nds-hgi-sun-cloud-01" aria-hidden="true"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
-  url: "/ui-shell/topbar.html#topbarWidgets"
+  url: "/ui-shell/topbar.html#topbar-widgets"
   js: _js/nds-city-weather.js
   scss: _sass/components/_topbar.scss

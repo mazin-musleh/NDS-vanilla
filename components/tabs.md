@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="tabsOverview" class="nds-content-section nds-doc-overview">
+<section id="tabs-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="tabsMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="tabs-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="tabs-standard" data-canon data-variants="tabsVariantsTable">
+<script type="text/html" id="tabs-standard" data-canon data-variants="tabs-variants-table">
 <div class="nds-tabs">
   <div class="nds-tab-list-container nds-scroll-more">
     <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Service details">
@@ -203,7 +203,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="tabsVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="tabs-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -232,13 +232,13 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
 | Divided | Divided (hint: A line between the tabs and the panels) | `.nds-divided` | `.nds-tabs` | A line between the tabs and the panels: under the row, or beside a vertical list |
 | Center | Center | `.nds-center` | `.nds-tab-list:not(.nds-vertical .nds-tab-list)` | Horizontal only. Centers a horizontal tab row while every tab fits. A row that scrolls starts at the edge |
 | Loading | Loading | `.nds-loading` | `.nds-tabs` | Gray bars in place of the labels and the panel content while the data loads. On `.nds-tab-list` it bars the labels only |
-{: #tabsVariantsTable .nds-table .nds-responsive}
+{: #tabs-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="tabsFeatures" class="nds-content-section nds-doc-features">
+<section id="tabs-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -306,7 +306,7 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
   </div>
 </section>
 
-<section id="tabsPractices" class="nds-content-section nds-doc-practices">
+<section id="tabs-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -327,7 +327,7 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
   </div>
 </section>
 
-<section id="tabsApi" class="nds-content-section nds-doc-api">
+<section id="tabs-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -391,7 +391,7 @@ The full API is in the banner of `_js/nds-tabs.js`.
   </div>
 </section>
 
-<section id="tabsRelated" class="nds-content-section nds-doc-related">
+<section id="tabs-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

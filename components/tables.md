@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:30 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="tableOverview" class="nds-content-section nds-doc-overview">
+<section id="table-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="tableMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="table-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="tbl-standard" data-canon data-variants="tableVariantsTable">
+<script type="text/html" id="tbl-standard" data-canon data-variants="table-variants-table">
 <table id="tbl-requests" class="nds-table">
   <thead>
     <tr>
@@ -496,7 +496,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="tableVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="table-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -519,13 +519,13 @@ Every option goes on the outer `<table>`, never on a table in a sub-row.
 | Sub-rows | Several open (hint: Detail rows stay open together) | `[data-state~="always-open"]` | `#tbl-rec-requests` | Opens more than one detail row at a time. Records only |
 | Loading | Loading (hint: Skeleton bars in place of the rows) | `.nds-loading` | `#tbl-requests` | Shows skeleton bars in place of the cells while new rows load. `data-state="loading"` does the same |
 | Loading | Loading (hint: Skeleton bars in place of the rows) | `.nds-loading` | `#tbl-rec-requests` | |
-{: #tableVariantsTable .nds-table .nds-responsive}
+{: #table-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="tableBehavior" class="nds-content-section nds-doc-behavior">
+<section id="table-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -540,7 +540,7 @@ A `.nds-sort-btn` in a header cell makes its column sortable. Each click moves t
 ### Row Selection
 {: .nds-block-title}
 
-A checkbox in a header cell selects every row on the current page, and the script links it to the `<tbody>` with `data-selection-target`. A checked row gets `data-state="selected"` and a tinted background. The counter, the Select all link and the selection API belong to [Selection](../components/selection#selectionBehavior).
+A checkbox in a header cell selects every row on the current page, and the script links it to the `<tbody>` with `data-selection-target`. A checked row gets `data-state="selected"` and a tinted background. The counter, the Select all link and the selection API belong to [Selection](../components/selection#selection-behavior).
 
 ### Column Menu
 {: .nds-block-title}
@@ -598,7 +598,7 @@ Delete the count line (`.nds-toolbar-text`) when neither Selection nor Pages sta
   </div>
 </section>
 
-<section id="tableFeatures" class="nds-content-section nds-doc-features">
+<section id="table-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -652,7 +652,7 @@ Delete the count line (`.nds-toolbar-text`) when neither Selection nor Pages sta
   </div>
 </section>
 
-<section id="tablePractices" class="nds-content-section nds-doc-practices">
+<section id="table-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -680,7 +680,7 @@ Delete the count line (`.nds-toolbar-text`) when neither Selection nor Pages sta
   </div>
 </section>
 
-<section id="tableApi" class="nds-content-section nds-doc-api">
+<section id="table-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -811,7 +811,7 @@ The full API is in the banner of `_js/nds-tables.js`.
   </div>
 </section>
 
-<section id="tableRelated" class="nds-content-section nds-doc-related">
+<section id="table-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

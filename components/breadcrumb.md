@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="breadcrumbOverview" class="nds-content-section nds-doc-overview">
+<section id="breadcrumb-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="breadcrumbMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="breadcrumb-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="breadcrumb-standard" data-canon data-variants="breadcrumbVariantsTable">
+<script type="text/html" id="breadcrumb-standard" data-canon data-variants="breadcrumb-variants-table">
 <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
   <ol class="nds-breadcrumb">
     <li><a href="#">Home</a></li>
@@ -72,7 +72,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="breadcrumbVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="breadcrumb-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -88,13 +88,13 @@ Pick another component when:
 | Structure | Deep trail | `canon #breadcrumb-deep` | — | Seven levels. The script shows the first level, a More button and the last two |
 | Truncate | Truncate (hint: Cuts a long page title with an ellipsis) | `.nds-truncate` | `li:last-child` | Cuts a long current page title with an ellipsis, so the trail stays on one line |
 | Loading | Loading | `.nds-loading` | `.nds-breadcrumb-nav` | Shows each label as a pulsing skeleton bar while the trail content loads. Remove it when the content is ready |
-{: #breadcrumbVariantsTable .nds-table .nds-responsive}
+{: #breadcrumb-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="breadcrumbFeatures" class="nds-content-section nds-doc-features">
+<section id="breadcrumb-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -141,7 +141,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="breadcrumbPractices" class="nds-content-section nds-doc-practices">
+<section id="breadcrumb-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -161,7 +161,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="breadcrumbApi" class="nds-content-section nds-doc-api">
+<section id="breadcrumb-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -212,7 +212,7 @@ The full API is in the banner of `_js/nds-breadcrumb.js`.
   </div>
 </section>
 
-<section id="breadcrumbRelated" class="nds-content-section nds-doc-related">
+<section id="breadcrumb-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

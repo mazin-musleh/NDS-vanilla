@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="autocompleteOverview" class="nds-content-section nds-doc-overview">
+<section id="autocomplete-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="autocompleteMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="autocomplete-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="autocomplete-field" data-canon data-variants="autocompleteVariantsTable" data-harness="form" data-demo-width="300px">
+<script type="text/html" id="autocomplete-field" data-canon data-variants="autocomplete-variants-table" data-harness="form" data-demo-width="300px">
 <div class="nds-form-container" data-url="../docs-assets/data/services-autocomplete.json" data-name="Title" data-fetch="once">
   <div class="nds-form-header">
     <label for="service-search">
@@ -59,7 +59,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="autocompleteVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="autocomplete-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -77,13 +77,13 @@ The canon carries `data-fetch="once"` because the demo data is a static file. Fo
 | Custom empty message | Custom empty message (hint: Replaces the "No results" text) | `[data-empty-message="No matching services"]` | `.nds-form-container[data-strict]` | Replaces the "No results" text that a strict field shows when nothing matches |
 | Required | Required (hint: Press Validate with the field empty) | `[data-required]` | `.nds-form-container` | The form needs text in the field. Use it when the field is required |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
-{: #autocompleteVariantsTable .nds-table .nds-responsive}
+{: #autocomplete-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="autocompleteBehavior" class="nds-content-section nds-doc-behavior">
+<section id="autocomplete-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -111,7 +111,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
   </div>
 </section>
 
-<section id="autocompleteFeatures" class="nds-content-section nds-doc-features">
+<section id="autocomplete-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -172,7 +172,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
   </div>
 </section>
 
-<section id="autocompletePractices" class="nds-content-section nds-doc-practices">
+<section id="autocomplete-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -189,7 +189,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
   </div>
 </section>
 
-<section id="autocompleteApi" class="nds-content-section nds-doc-api">
+<section id="autocomplete-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -298,7 +298,7 @@ The full API is in the banner of `_js/nds-autocomplete.js`.
   </div>
 </section>
 
-<section id="autocompleteRelated" class="nds-content-section nds-doc-related">
+<section id="autocomplete-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

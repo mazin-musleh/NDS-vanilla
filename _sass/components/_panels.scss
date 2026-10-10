@@ -190,7 +190,7 @@
 // page gutter (never edge-to-edge, which would crowd the viewport edge).
 .nds-panel:is([data-panel-side="top"], [data-panel-side="bottom"])
     :is(.nds-panel-header, .nds-panel-body, .nds-panel-footer) {
-    --_panel-content-width: var(--panel-content-width, var(--nds-content-MaxWidth));
+    --_panel-content-width: var(--panel-content-width, var(--nds-content-max-width));
     width: 100%;
     padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--_panel-content-width)) / 2));
 }

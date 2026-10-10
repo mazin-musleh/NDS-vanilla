@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="tokensOverview" class="nds-content-section nds-doc-overview">
+<section id="tokens-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -35,14 +35,14 @@ Pick another page when:
   </div>
 </section>
 
-<section id="tokensMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="tokens-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
 {% comment %} Agents: each pack is generated at build time by _plugins/tokens_data.rb. Read the names and values in _sass/themes/_dga.scss, _sass/tokens/_primitives.scss, _sass/tokens/_semantic.scss and _sass/tokens/_components.scss. {% endcomment %}
-<script type="text/html" id="tokens-brand" data-canon data-generated data-variants="tokensVariantsTable" data-js="tokens-brand-css">
+<script type="text/html" id="tokens-brand" data-canon data-generated data-variants="tokens-variants-table" data-js="tokens-brand-css">
 {{ site.data.tokens.packs.brand.html }}
 </script>
 <script type="text/html" id="tokens-brand-css" data-canon data-generated data-lang="css">
@@ -137,7 +137,7 @@ Pick another page when:
   </div>
 </section>
 
-<section id="tokensVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="tokens-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -161,13 +161,13 @@ Pick another page when:
 | Pack | Icon (hint: Semantic tokens) | canon `#tokens-icon` | — | Icon colors by meaning, with their light fills and rings |
 | Pack | Controls (hint: Semantic tokens) | canon `#tokens-controls` | — | The fills that checkbox, radio, switch and slider share |
 | Pack | Component (hint: Component tokens) | canon `#tokens-component` | — | Each component's own tokens, under its name. Set them to restyle that component alone. Each component's page lists its own |
-{: #tokensVariantsTable .nds-table .nds-responsive}
+{: #tokens-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="tokensBehavior" class="nds-content-section nds-doc-behavior">
+<section id="tokens-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -225,7 +225,7 @@ To change a token on every page, set it in your own stylesheet, loaded after `nd
   </div>
 </section>
 
-<section id="tokensFeatures" class="nds-content-section nds-doc-features">
+<section id="tokens-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -265,7 +265,7 @@ To change a token on every page, set it in your own stylesheet, loaded after `nd
   </div>
 </section>
 
-<section id="tokensPractices" class="nds-content-section nds-doc-practices">
+<section id="tokens-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -285,7 +285,7 @@ To change a token on every page, set it in your own stylesheet, loaded after `nd
   </div>
 </section>
 
-<section id="tokensApi" class="nds-content-section nds-doc-api">
+<section id="tokens-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -321,7 +321,7 @@ A semantic or component name says what the value is for. It never names a color 
   </div>
 </section>
 
-<section id="tokensRelated" class="nds-content-section nds-doc-related">
+<section id="tokens-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

@@ -129,7 +129,7 @@ Sections in this order. Each `<section>` carries its class. A section the compon
 | API | `nds-doc-api` | reference tables and one JS example |
 | Related | `nds-doc-related` | the examples and templates that use it |
 
-Section ids are `{name}{Section}`: `btnOverview`, `gridApi`.
+Ids are kebab case. Section ids are `{name}-{section}`: `btn-overview`, `grid-api`.
 
 **Markdown bodies.** Prose and tables are markdown: the section body gets `markdown="1"` (and `nds-prose` for text). A table takes the IAL `{: .nds-table .nds-responsive}`. Inside a `markdown="1"` body, a line indented 4 or more spaces is a code block, so the closing `</div>` tags after markdown start at column 0 to 3. Headings inside the API section are `### Title` then `{: .nds-block-title}`.
 
@@ -144,7 +144,7 @@ A short paragraph: what the component is and what it is made of. Then `Pick anot
 The canon is the one copy of the markup. Both readers use it: the build renders the preview and the code from it, and an agent copies it from the `.md`.
 
 ```html
-<script type="text/html" id="switch-single" data-canon data-variants="switchVariantsTable">
+<script type="text/html" id="switch-single" data-canon data-variants="switch-variants-table">
 <div class="nds-form-container nds-switch-container">
   …
 </div>
@@ -190,7 +190,7 @@ The builder is generated from this table, and agents read it as the list of ever
 |---|---|---|---|---|
 | Size | SM (default) | — | — | … |
 | Size | LG | `.nds-lg` | `.nds-switch-container` | … |
-{: #switchVariantsTable .nds-table .nds-responsive}
+{: #switch-variants-table .nds-table .nds-responsive}
 ```
 
 A short paragraph above the table explains any target that is not obvious (what `:first-child` or `create()` means on this page).

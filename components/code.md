@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "08/10/2026 - 09:36 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="codeOverview" class="nds-content-section nds-doc-overview">
+<section id="code-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="codeMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="code-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="code-block" data-canon data-variants="codeVariantsTable">
+<script type="text/html" id="code-block" data-canon data-variants="code-variants-table">
 <div class="nds-code nds-expandable">
   <div class="nds-code-action">
     <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code">
@@ -141,7 +141,7 @@ Send the request from your **account page**. The review takes up to five working
   </div>
 </section>
 
-<section id="codeVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="code-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -158,13 +158,13 @@ The language of every structure comes from the `lang-*` class on its `<code>`. T
 | Structure | Inline | canon `#code-inline` | — | A short code reference in a sentence: a class name, a method, a value |
 | Tag strip | Tag strip (hint: More tags beside the language tag, such as a version) | canon `#code-tags` | `.nds-code.nds-expandable` (start) | Extra tags beside the language tag, such as a version |
 | Tag strip | Tag strip (hint: More tags beside the language tag, such as a version) | canon `#code-tags-md` | `div.nds-code:not(.nds-expandable):not(.nds-tabs)` (start) | The same, on a Markdown block. The strip takes the block's `lang-*` class |
-{: #codeVariantsTable .nds-table .nds-responsive}
+{: #code-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="codeFeatures" class="nds-content-section nds-doc-features">
+<section id="code-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -246,7 +246,7 @@ The language of every structure comes from the `lang-*` class on its `<code>`. T
   </div>
 </section>
 
-<section id="codePractices" class="nds-content-section nds-doc-practices">
+<section id="code-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -266,7 +266,7 @@ The language of every structure comes from the `lang-*` class on its `<code>`. T
   </div>
 </section>
 
-<section id="codeApi" class="nds-content-section nds-doc-api">
+<section id="code-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -341,7 +341,7 @@ The full API is in the banner of `_js/nds-code.js`.
   </div>
 </section>
 
-<section id="codeRelated" class="nds-content-section nds-doc-related">
+<section id="code-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

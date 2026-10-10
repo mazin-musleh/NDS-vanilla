@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="tagOverview" class="nds-content-section nds-doc-overview">
+<section id="tag-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="tagMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="tag-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="tag-single" data-canon data-variants="tagVariantsTable">
+<script type="text/html" id="tag-single" data-canon data-variants="tag-variants-table">
 <span class="nds-tag">
   <span class="nds-label">Riyadh</span>
 </span>
@@ -68,7 +68,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="tagVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="tag-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -107,13 +107,13 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 | Content | Icon only | `.nds-icon-only` | `.nds-tag:not([data-status])` | The same: hides the label from view. Screen readers still read it, so keep the label |
 | Rounded | Rounded | `.nds-rounded` | `.nds-tag:not([data-status])` | Fully round ends. A status tag is always round |
 | Center | Center (hint: Group only) | `.nds-center` | `.nds-tags` | Centers the tags in their row |
-{: #tagVariantsTable .nds-table .nds-responsive}
+{: #tag-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="tagFeatures" class="nds-content-section nds-doc-features">
+<section id="tag-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -153,7 +153,7 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
   </div>
 </section>
 
-<section id="tagPractices" class="nds-content-section nds-doc-practices">
+<section id="tag-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -167,13 +167,13 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 - Keep labels to one to three words. A label longer than 160px ends with an ellipsis.
 - Put related tags in one `nds-tags` group, so they share the gap and wrap together.
 - Keep the label of an icon-only tag, and give its icon `aria-hidden="true"`. Screen readers read the label.
-- On a deep primary or dark surface, give the surface `data-theme="dark"`: every tag inside takes its dark-mode colors, status tags included. See [Dark Areas](../components/themes#themesDarkArea). For the DGA white look on a standard tag, add `nds-oncolor` instead.
+- On a deep primary or dark surface, give the surface `data-theme="dark"`: every tag inside takes its dark-mode colors, status tags included. See [Dark Areas](../components/themes#dark-areas). For the DGA white look on a standard tag, add `nds-oncolor` instead.
 
 </div>
   </div>
 </section>
 
-<section id="tagApi" class="nds-content-section nds-doc-api">
+<section id="tag-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -228,7 +228,7 @@ Source: the `tag` group in `_sass/tokens/_components.scss`.
   </div>
 </section>
 
-<section id="tagRelated" class="nds-content-section nds-doc-related">
+<section id="tag-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

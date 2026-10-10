@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.0"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="blockOverview" class="nds-content-section nds-doc-overview">
+<section id="block-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -28,13 +28,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="blockMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="block-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="block-titled" data-canon data-variants="blockVariantsTable">
+<script type="text/html" id="block-titled" data-canon data-variants="block-variants-table">
 <!-- Three blocks. The last one has no title -->
 <div class="nds-block nds-prose">
   <h3 class="nds-block-title">Eligibility</h3>
@@ -67,7 +67,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="blockVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="block-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -80,13 +80,13 @@ Pick another component when:
 | Example | Block on a component | canon `#block-component` | — | Gives a grid, a tab set or a table the same gap as a text block. Put `nds-block` on the component itself, not on a wrapper |
 | Card | Card | `.nds-card` | `.nds-block:not(.nds-grid)` | Puts each block in a card with padding and a 1px border. Write both classes. Not on a block that is a grid |
 | Card | Card | `.nds-stroke` | `.nds-block:not(.nds-grid)` | The card's border. Written with `nds-card` |
-{: #blockVariantsTable .nds-table .nds-responsive}
+{: #block-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="blockFeatures" class="nds-content-section nds-doc-features">
+<section id="block-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -126,7 +126,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="blockPractices" class="nds-content-section nds-doc-practices">
+<section id="block-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -147,7 +147,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="blockApi" class="nds-content-section nds-doc-api">
+<section id="block-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -182,7 +182,7 @@ Set these in the `style` of `.nds-block-title`, or of any element around it.
   </div>
 </section>
 
-<section id="blockRelated" class="nds-content-section nds-doc-related">
+<section id="block-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

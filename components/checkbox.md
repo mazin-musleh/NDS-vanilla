@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:20 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="checkboxOverview" class="nds-content-section nds-doc-overview">
+<section id="checkbox-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="checkboxMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="checkbox-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="check-single" data-canon data-variants="checkboxVariantsTable" data-harness="form">
+<script type="text/html" id="check-single" data-canon data-variants="checkbox-variants-table" data-harness="form">
 <div class="nds-form-container nds-check-container">
   <div class="nds-form-header" data-feedback-target>
     <label for="terms">
@@ -98,7 +98,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="checkboxVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="checkbox-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -128,13 +128,13 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
 | Readonly | Readonly | `[data-state~="readonly"]` | `.nds-check-container` | The options show their value but cannot change, by pointer or by keyboard. The tile shows a border only, and a checked tile keeps its mark |
 | Layout | Row | `.nds-horizontal` | `.nds-check-group` | The options sit side by side and wrap |
 | Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/forms) |
-{: #checkboxVariantsTable .nds-table .nds-responsive}
+{: #checkbox-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="checkboxBehavior" class="nds-content-section nds-doc-behavior">
+<section id="checkbox-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -160,7 +160,7 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
   </div>
 </section>
 
-<section id="checkboxFeatures" class="nds-content-section nds-doc-features">
+<section id="checkbox-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -186,7 +186,7 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
   </div>
 </section>
 
-<section id="checkboxPractices" class="nds-content-section nds-doc-practices">
+<section id="checkbox-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -207,7 +207,7 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
   </div>
 </section>
 
-<section id="checkboxApi" class="nds-content-section nds-doc-api">
+<section id="checkbox-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -292,7 +292,7 @@ The full API is in the banner of `_js/nds-forms.js`.
   </div>
 </section>
 
-<section id="checkboxRelated" class="nds-content-section nds-doc-related">
+<section id="checkbox-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

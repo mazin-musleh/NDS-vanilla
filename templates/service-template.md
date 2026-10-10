@@ -30,7 +30,7 @@ hero_float_actions:
     - share
 sidemenu_mode: false
 ---
-<section id="serviceTabs" class="nds-content-section nds-sideinfo-section">
+<section id="service-tabs" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <div class="nds-info-content">
             <div class="nds-tabs">
@@ -165,7 +165,7 @@ sidemenu_mode: false
             </aside>
     </div>
 </section>
-<section id="relatedServices" class="nds-content-section nds-brand">
+<section id="related-services" class="nds-content-section nds-brand">
 
     <div class="nds-section-head">
         <h2 class="nds-section-title">Related Services</h2>

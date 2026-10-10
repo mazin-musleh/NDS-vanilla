@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 12:45 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="cookiesOverview" class="nds-content-section nds-doc-overview">
+<section id="cookies-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="cookiesMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="cookies-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="cookies-trigger" data-canon data-variants="cookiesVariantsTable">
+<script type="text/html" id="cookies-trigger" data-canon data-variants="cookies-variants-table">
 <!-- Nothing to add: the panel is built on every page -->
 <!-- Optional: opens the panel again -->
 <button type="button" class="nds-btn nds-secondary-outline" data-cookies-toggle>
@@ -46,7 +46,7 @@ Pick another component when:
 <script type="text/html" id="cookies-manual" data-canon>
 <!-- Your own panel. It replaces the built one -->
 <template class="nds-panel-template">
-  <aside id="ndsCookiesPanel" class="nds-panel nds-cookies" data-panel-side="bottom" data-panel-static aria-label="Cookie settings" hidden>
+  <aside id="nds-cookies-panel" class="nds-panel nds-cookies" data-panel-side="bottom" data-panel-static aria-label="Cookie settings" hidden>
     <div class="nds-cookies-view" data-cookies-view="notice">
       <div class="nds-panel-header">
         <span class="nds-featured-icon nds-circle"><i class="nds-icon nds-hgi-cookie" aria-hidden="true"></i></span>
@@ -87,44 +87,44 @@ Pick another component when:
           <fieldset class="nds-form-group nds-switch-group" aria-label="Cookie types">
             <div class="nds-form-container nds-switch-container">
               <div class="nds-form-header">
-                <label for="ndsCookies-necessary"><span class="nds-label">Necessary Cookies</span><span class="nds-info">Always active</span></label>
+                <label for="nds-cookies-necessary"><span class="nds-label">Necessary Cookies</span><span class="nds-info">Always active</span></label>
               </div>
               <div class="nds-form-control">
                 <div class="nds-switch">
-                  <input type="checkbox" id="ndsCookies-necessary" class="nds-switch-input" data-cookies-category="necessary" checked disabled>
+                  <input type="checkbox" id="nds-cookies-necessary" class="nds-switch-input" data-cookies-category="necessary" checked disabled>
                   <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                 </div>
               </div>
             </div>
             <div class="nds-form-container nds-switch-container">
               <div class="nds-form-header">
-                <label for="ndsCookies-performance"><span class="nds-label">Performance Cookies</span></label>
+                <label for="nds-cookies-performance"><span class="nds-label">Performance Cookies</span></label>
               </div>
               <div class="nds-form-control">
                 <div class="nds-switch">
-                  <input type="checkbox" id="ndsCookies-performance" class="nds-switch-input" data-cookies-category="performance">
+                  <input type="checkbox" id="nds-cookies-performance" class="nds-switch-input" data-cookies-category="performance">
                   <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                 </div>
               </div>
             </div>
             <div class="nds-form-container nds-switch-container">
               <div class="nds-form-header">
-                <label for="ndsCookies-functional"><span class="nds-label">Functional Cookies</span></label>
+                <label for="nds-cookies-functional"><span class="nds-label">Functional Cookies</span></label>
               </div>
               <div class="nds-form-control">
                 <div class="nds-switch">
-                  <input type="checkbox" id="ndsCookies-functional" class="nds-switch-input" data-cookies-category="functional">
+                  <input type="checkbox" id="nds-cookies-functional" class="nds-switch-input" data-cookies-category="functional">
                   <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                 </div>
               </div>
             </div>
             <div class="nds-form-container nds-switch-container">
               <div class="nds-form-header">
-                <label for="ndsCookies-targeting"><span class="nds-label">Targeting Cookies</span></label>
+                <label for="nds-cookies-targeting"><span class="nds-label">Targeting Cookies</span></label>
               </div>
               <div class="nds-form-control">
                 <div class="nds-switch">
-                  <input type="checkbox" id="ndsCookies-targeting" class="nds-switch-input" data-cookies-category="targeting">
+                  <input type="checkbox" id="nds-cookies-targeting" class="nds-switch-input" data-cookies-category="targeting">
                   <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                 </div>
               </div>
@@ -172,7 +172,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="cookiesVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="cookies-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -184,14 +184,14 @@ Both structures end with an optional trigger button. The Manual template holds t
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Auto (default) | — | — | Add nothing. The script builds the panel on every page, with the text of the page's language |
-| Structure | Manual (hint: Your own text, links or categories) | canon `#cookies-manual` | — | Your own text, links or categories. A `#ndsCookiesPanel` in a `<template class="nds-panel-template">` replaces the built one. Keep `data-cookies-view`, `data-cookies-action` and `data-cookies-category` |
-{: #cookiesVariantsTable .nds-table .nds-responsive}
+| Structure | Manual (hint: Your own text, links or categories) | canon `#cookies-manual` | — | Your own text, links or categories. A `#nds-cookies-panel` in a `<template class="nds-panel-template">` replaces the built one. Keep `data-cookies-view`, `data-cookies-action` and `data-cookies-category` |
+{: #cookies-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="cookiesBehavior" class="nds-content-section nds-doc-behavior">
+<section id="cookies-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -214,7 +214,7 @@ The close button stores no choice. The panel then does not open by itself for 30
   </div>
 </section>
 
-<section id="cookiesFeatures" class="nds-content-section nds-doc-features">
+<section id="cookies-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -268,7 +268,7 @@ The close button stores no choice. The panel then does not open by itself for 30
   </div>
 </section>
 
-<section id="cookiesPractices" class="nds-content-section nds-doc-practices">
+<section id="cookies-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -287,7 +287,7 @@ The close button stores no choice. The panel then does not open by itself for 30
   </div>
 </section>
 
-<section id="cookiesApi" class="nds-content-section nds-doc-api">
+<section id="cookies-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -313,7 +313,7 @@ The close button stores no choice. The panel then does not open by itself for 30
 | `data-cookies-action` | a button in the panel | `accept`, `reject` and `save` store the choice and show the Done view. `manage` shows the Manage view. `undo` goes back to the Notice view |
 | `data-cookies-category` | a switch input in the Manage view | The category the switch allows. `necessary` is always allowed |
 | `data-ga-tracking-id` | any element | A Google Analytics ID to disable while performance cookies are denied |
-| `data-panel-static` | `#ndsCookiesPanel` | An outside click does not close the panel. Keep it on your own panel |
+| `data-panel-static` | `#nds-cookies-panel` | An outside click does not close the panel. Keep it on your own panel |
 {: .nds-table .nds-responsive}
 
 ### Text

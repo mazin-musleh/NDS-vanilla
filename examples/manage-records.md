@@ -28,7 +28,7 @@ hideFeedback: true
             <div class="nds-toolbar">
                 <div class="nds-toolbar-row">
                     <div class="nds-toolbar-start">
-                        <span class="nds-toolbar-text" data-paged-target="requestsTableBody" data-selection-target="requestsTableBody">
+                        <span class="nds-toolbar-text" data-paged-target="requests-table-body" data-selection-target="requests-table-body">
                             <span class="nds-records-view">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> request(s)</span>
                             <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>0</b> request(s)</span>
                             <button type="button" data-selection-all hidden>(<b>Select all</b>)</button>
@@ -43,7 +43,7 @@ hideFeedback: true
                         <div class="nds-dropmenu"
                              data-select-name="perPage"
                              data-select-value="5"
-                             data-per-page-target="requestsTableBody">
+                             data-per-page-target="requests-table-body">
                             <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
                                 <span class="nds-label">5</span>
                             </button>
@@ -56,7 +56,7 @@ hideFeedback: true
                                 </div>
                             </div>
                         </div>
-                        <div class="nds-dropmenu" data-columns-target="requestsTable">
+                        <div class="nds-dropmenu" data-columns-target="requests-table">
                             <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
                                 <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
                                 <span class="nds-label">Columns</span>
@@ -77,15 +77,15 @@ hideFeedback: true
                             <div class="nds-dropmenu-menu" hidden>
                                 <div class="nds-dropmenu-scroll">
                                     <button type="button" class="nds-btn nds-subtle nds-dropmenu-item"
-                                            data-export="csv" data-export-target="#requestsTable">
+                                            data-export="csv" data-export-target="#requests-table">
                                         <span class="nds-label">CSV</span>
                                     </button>
                                     <button type="button" class="nds-btn nds-subtle nds-dropmenu-item"
-                                            data-export="xls" data-export-target="#requestsTable">
+                                            data-export="xls" data-export-target="#requests-table">
                                         <span class="nds-label">Excel</span>
                                     </button>
                                     <button type="button" class="nds-btn nds-subtle nds-dropmenu-item"
-                                            data-export="pdf" data-export-target="#requestsTable">
+                                            data-export="pdf" data-export-target="#requests-table">
                                         <span class="nds-label">PDF</span>
                                     </button>
                                 </div>
@@ -94,7 +94,7 @@ hideFeedback: true
                     </div>
                 </div>
                 <div class="nds-toolbar-row">
-                    <div class="nds-form-container nds-search-box" data-filter-target="requestsTableBody">
+                    <div class="nds-form-container nds-search-box" data-filter-target="requests-table-body">
                         <div class="nds-search-content">
                             <div class="nds-form-control">
                                 <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
@@ -109,7 +109,7 @@ hideFeedback: true
                             </button>
                         </div>
                     </div>
-                    <div class="nds-dropmenu nds-filter" data-filter-target="requestsTableBody">
+                    <div class="nds-dropmenu nds-filter" data-filter-target="requests-table-body">
                         <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                             <i class="hgi hgi-stroke hgi-filter"></i>
                             <span class="nds-label" data-hidden="sm sr">Filter</span>
@@ -151,7 +151,7 @@ hideFeedback: true
                 </div>
                 <div class="nds-toolbar-row">
                     <div class="nds-toolbar-start">
-                        <div class="nds-filter-applied" data-filter-target="requestsTableBody" hidden>
+                        <div class="nds-filter-applied" data-filter-target="requests-table-body" hidden>
                             <span class="nds-label">Applied Filters:</span>
                             <div class="nds-chips"></div>
                         </div>
@@ -159,7 +159,7 @@ hideFeedback: true
                 </div>
             </div>
             <div class="nds-block">
-                <table id="requestsTable" class="nds-table" data-export-name="service-requests">
+                <table id="requests-table" class="nds-table" data-export-name="service-requests">
                     <thead>
                         <tr>
                             <th>
@@ -224,7 +224,7 @@ hideFeedback: true
                             </th>
                         </tr>
                     </thead>
-                    <tbody id="requestsTableBody" class="nds-paged-content" data-filter-items="tr" style="--per-page:5;">
+                    <tbody id="requests-table-body" class="nds-paged-content" data-filter-items="tr" style="--per-page:5;">
                         <tr class="nds-page-item">
                             <td>
                                 <div class="nds-form-container nds-check-container">
@@ -804,7 +804,7 @@ hideFeedback: true
                     </tbody>
                 </table>
             </div>
-            <nav class="nds-pagination" data-auto-pagination="requestsTableBody" aria-label="Requests pagination"></nav>
+            <nav class="nds-pagination" data-auto-pagination="requests-table-body" aria-label="Requests pagination"></nav>
         </div>
     </div>
 </section>
@@ -981,8 +981,8 @@ hideFeedback: true
 
 <script>
   function initPage() {
-    var table = document.getElementById('requestsTable');
-    var tbody = document.getElementById('requestsTableBody');
+    var table = document.getElementById('requests-table');
+    var tbody = document.getElementById('requests-table-body');
     var form = document.getElementById('record-form');
     var modalTitle = document.getElementById('record-modal-title');
     var bulkBtn = document.getElementById('bulk-delete');

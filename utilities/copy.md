@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/10/2026 - 10:12 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="copyOverview" class="nds-content-section nds-doc-overview">
+<section id="copy-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="copyMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="copy-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="copy-button" data-canon data-variants="copyVariantsTable">
+<script type="text/html" id="copy-button" data-canon data-variants="copy-variants-table">
 <button type="button" class="nds-btn nds-secondary-outline nds-copy" data-copy="REF-2026-04-19-7A3F">
   <i class="nds-icon nds-hgi-copy-01"></i>
   <span class="nds-label">Copy reference</span>
@@ -77,7 +77,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="copyVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="copy-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -93,13 +93,13 @@ Label Swap and Announcement go on the copy button. Label Swap needs a `.nds-labe
 | Structure | From Element | canon `#copy-target` | — | The button copies the text of another element, named by `data-copy-target` |
 | Label Swap | Label Swap (hint: The label reads "Copied" after the copy) | `[data-copy-label="Copied"]` | `.nds-copy:not(.nds-icon-only)` | The label reads "Copied" for 2 seconds after the copy |
 | Announcement | Announcement (hint: What a screen reader says after the copy) | `[data-copy-announce="Reference number copied"]` | `.nds-copy` | The text a screen reader announces after the copy. Without it, the script announces `data-copy-label`, then "Copied" («تم النسخ» on an Arabic page) |
-{: #copyVariantsTable .nds-table .nds-responsive}
+{: #copy-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="copyBehavior" class="nds-content-section nds-doc-behavior">
+<section id="copy-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -107,12 +107,12 @@ Label Swap and Announcement go on the copy button. Label Swap needs a `.nds-labe
     <div class="nds-section-body nds-prose" markdown="1">
 
 ### From Element
-{: #copyFromElement}
+{: #copy-from-element}
 
 `data-copy-target` holds a CSS selector. At each click, the script copies the text of the first element that matches, without spaces at the start and end. Use it for a value that changes after the page loads, or a value that is already on the page.
 
 ### Label Swap
-{: #copyLabelSwap}
+{: #copy-label-swap}
 
 `data-copy-label` replaces the text of the button's `.nds-label` while the checkmark shows. Then the script puts the old text back. On a button with no `.nds-label`, only the screen reader says the text.
 
@@ -120,7 +120,7 @@ Label Swap and Announcement go on the copy button. Label Swap needs a `.nds-labe
   </div>
 </section>
 
-<section id="copyFeatures" class="nds-content-section nds-doc-features">
+<section id="copy-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -174,7 +174,7 @@ Label Swap and Announcement go on the copy button. Label Swap needs a `.nds-labe
   </div>
 </section>
 
-<section id="copyPractices" class="nds-content-section nds-doc-practices">
+<section id="copy-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -191,7 +191,7 @@ Label Swap and Announcement go on the copy button. Label Swap needs a `.nds-labe
   </div>
 </section>
 
-<section id="copyApi" class="nds-content-section nds-doc-api">
+<section id="copy-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -250,7 +250,7 @@ The full API is in the banner of `_js/nds-copy.js`.
   </div>
 </section>
 
-<section id="copyRelated" class="nds-content-section nds-doc-related">
+<section id="copy-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

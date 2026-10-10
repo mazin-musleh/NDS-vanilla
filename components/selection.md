@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:41 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="selectionOverview" class="nds-content-section nds-doc-overview">
+<section id="selection-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="selectionMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="selection-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="selection-cards" data-canon data-variants="selectionVariantsTable">
+<script type="text/html" id="selection-cards" data-canon data-variants="selection-variants-table">
 <div class="nds-toolbar">
   <div class="nds-toolbar-row">
     <div class="nds-toolbar-start">
@@ -208,7 +208,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="selectionVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="selection-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -219,13 +219,13 @@ Pick another component when:
 |---|---|---|---|---|
 | Structure | Cards (default) | — | — | Any list whose items hold a checkbox: cards, a plain checkbox list. A select-all checkbox and a counter sit in a toolbar above it |
 | Structure | Table | canon `#selection-table` | — | A paged table. The header checkbox is the select-all. The counter shares its line with the Pagination records line and takes its place while anything is selected. A Select all link selects every page, and a Clear all link clears every page |
-{: #selectionVariantsTable .nds-table .nds-responsive}
+{: #selection-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="selectionBehavior" class="nds-content-section nds-doc-behavior">
+<section id="selection-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -253,7 +253,7 @@ Use it on a paged list, so one line serves both browsing and selecting. The coun
   </div>
 </section>
 
-<section id="selectionFeatures" class="nds-content-section nds-doc-features">
+<section id="selection-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -314,7 +314,7 @@ Use it on a paged list, so one line serves both browsing and selecting. The coun
   </div>
 </section>
 
-<section id="selectionPractices" class="nds-content-section nds-doc-practices">
+<section id="selection-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -332,7 +332,7 @@ Use it on a paged list, so one line serves both browsing and selecting. The coun
   </div>
 </section>
 
-<section id="selectionApi" class="nds-content-section nds-doc-api">
+<section id="selection-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -413,7 +413,7 @@ When you replace the list's content, call `NDS.Init.refresh(container)`: it upda
   </div>
 </section>
 
-<section id="selectionRelated" class="nds-content-section nds-doc-related">
+<section id="selection-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

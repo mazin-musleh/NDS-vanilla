@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 12:45 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="ipvOverview" class="nds-content-section nds-doc-overview">
+<section id="ipv-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="ipvMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="ipv-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="ipv-gallery" data-canon data-variants="ipvVariantsTable" data-demo-width="100%">
+<script type="text/html" id="ipv-gallery" data-canon data-variants="ipv-variants-table" data-demo-width="100%">
 <div class="nds-grid" style="--max-col:3;--mid-col:2;--min-col:1;">
   <div>
     <div class="nds-ipv-image-card">
@@ -61,7 +61,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="ipvVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="ipv-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -73,13 +73,13 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Zoom badge | Zoom badge | `.nds-zoom-badge` | `.nds-ipv-image-card` | A magnifier in the corner of the image. Add it when nothing else shows that the image opens |
-{: #ipvVariantsTable .nds-table .nds-responsive}
+{: #ipv-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="ipvFeatures" class="nds-content-section nds-doc-features">
+<section id="ipv-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -161,7 +161,7 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
   </div>
 </section>
 
-<section id="ipvPractices" class="nds-content-section nds-doc-practices">
+<section id="ipv-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -181,7 +181,7 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
   </div>
 </section>
 
-<section id="ipvApi" class="nds-content-section nds-doc-api">
+<section id="ipv-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>

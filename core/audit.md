@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 04:38 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="auditOverview" class="nds-content-section nds-doc-overview">
+<section id="audit-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,7 +30,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="auditMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="audit-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage</h2>
@@ -78,7 +78,7 @@ NDS.Audit.rule({
   </div>
 </section>
 
-<section id="auditBehavior" class="nds-content-section nds-doc-behavior">
+<section id="audit-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -123,7 +123,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
   </div>
 </section>
 
-<section id="auditFeatures" class="nds-content-section nds-doc-features">
+<section id="audit-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -177,7 +177,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
   </div>
 </section>
 
-<section id="auditPractices" class="nds-content-section nds-doc-practices">
+<section id="audit-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -194,7 +194,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
   </div>
 </section>
 
-<section id="auditApi" class="nds-content-section nds-doc-api">
+<section id="audit-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -309,7 +309,7 @@ The full API is in the banner of `_js/nds-audit.js`.
   </div>
 </section>
 
-<section id="auditRelated" class="nds-content-section nds-doc-related">
+<section id="audit-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 02:49 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="pageLayoutOverview" class="nds-content-section nds-doc-overview">
+<section id="page-layout-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -43,13 +43,13 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
   </div>
 </section>
 
-<section id="pageLayoutMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="page-layout-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="layout-content" data-canon data-variants="pageLayoutVariantsTable" data-preview="page">
+<script type="text/html" id="layout-content" data-canon data-variants="page-layout-variants-table" data-preview="page">
 <body>
   <a class="nds-skip-link" href="#main-content">Skip to main content</a>
   <header>
@@ -419,7 +419,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
   </div>
 </section>
 
-<section id="pageLayoutParts" class="nds-content-section nds-doc-parts">
+<section id="page-layout-parts" class="nds-content-section nds-doc-parts">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Parts</h2>
@@ -446,7 +446,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
   </div>
 </section>
 
-<section id="pageLayoutVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="page-layout-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -472,13 +472,13 @@ Each shape is the markup of a live page, listed in the Overview. Side menu and S
 | Card view | Card view (not: home, article, minimal) (hint: Each section shows as a raised card) | `.nds-card-view` | `.nds-content-layout` | Each section shows as a raised card, for record and profile pages. |
 | Stripe | Stripe (id: stripe) (not: article, minimal) | `.nds-stripe` | `.nds-content:not(.nds-card-view .nds-content)` | Every second section gets the stripe color, from the second one |
 | Odd | Odd (hint: The stripe starts on the first section) | `.nds-odd` | `.nds-content.nds-stripe:not(.nds-card-view .nds-content)` | The stripe starts on the first section. Needs Stripe |
-{: #pageLayoutVariantsTable .nds-table .nds-responsive}
+{: #page-layout-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="pageLayoutBehavior" class="nds-content-section nds-doc-behavior">
+<section id="page-layout-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -509,7 +509,7 @@ A section that paints its own background is never striped, but it still counts: 
 
 ### Console
 
-`nds-full-width` on `body` sets `--nds-content-MaxWidth` to 100%, so the header, the content and the footer reach the screen edges. The content layout also removes its own gutters, except in card view. The hero is in `nds-content`, beside the side menu.
+`nds-full-width` on `body` sets `--nds-content-max-width` to 100%, so the header, the content and the footer reach the screen edges. The content layout also removes its own gutters, except in card view. The hero is in `nds-content`, beside the side menu.
 
 ### Minimal Page
 
@@ -519,7 +519,7 @@ A section that paints its own background is never striped, but it still counts: 
   </div>
 </section>
 
-<section id="pageLayoutFeatures" class="nds-content-section nds-doc-features">
+<section id="page-layout-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -531,7 +531,7 @@ A section that paints its own background is never striped, but it still counts: 
             <i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>
             <span class="nds-label">Centered Content Width</span>
           </span>
-          <p class="nds-item-desc">The content stops at <code class="nds-inline-code lang-css">--nds-content-MaxWidth</code> and centers, with the same gutter as the header and the footer.</p>
+          <p class="nds-item-desc">The content stops at <code class="nds-inline-code lang-css">--nds-content-max-width</code> and centers, with the same gutter as the header and the footer.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -587,7 +587,7 @@ A section that paints its own background is never striped, but it still counts: 
   </div>
 </section>
 
-<section id="pageLayoutPractices" class="nds-content-section nds-doc-practices">
+<section id="page-layout-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -610,7 +610,7 @@ A section that paints its own background is never striped, but it still counts: 
   </div>
 </section>
 
-<section id="pageLayoutApi" class="nds-content-section nds-doc-api">
+<section id="page-layout-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -676,7 +676,7 @@ These tokens are global. Set them on `:root`.
 
 | Property | Default | Controls |
 |---|---|---|
-| `--nds-content-MaxWidth` | `1280px` | The width of the content, the header and the footer. `nds-full-width` sets `100%` |
+| `--nds-content-max-width` | `1280px` | The width of the content, the header and the footer. `nds-full-width` sets `100%` |
 | `--nds-sidemenu-width` | `260px` | The width of the side menu column |
 | `--background-stripe` | Theme token | The color of a striped section |
 {: .nds-table .nds-responsive}
@@ -690,7 +690,7 @@ The page layout has no script, methods or events.
   </div>
 </section>
 
-<section id="pageLayoutRelated" class="nds-content-section nds-doc-related">
+<section id="page-layout-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

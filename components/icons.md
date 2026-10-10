@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 04:10 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="iconsOverview" class="nds-content-section nds-doc-overview">
+<section id="icons-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -38,7 +38,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="iconsMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="icons-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
@@ -47,7 +47,7 @@ Pick another component when:
 
 An icon is one `<i>` element. Where it goes in a component, such as before a label or inside a field, is on that component's page.
 
-<script type="text/html" id="icons-content" data-canon data-variants="iconsVariantsTable" data-demo-size="24px">
+<script type="text/html" id="icons-content" data-canon data-variants="icons-variants-table" data-demo-size="24px">
 <i class="hgi hgi-stroke hgi-search-01" aria-hidden="true"></i>
 </script>
 <script type="text/html" id="icons-ui" data-canon>
@@ -55,7 +55,7 @@ An icon is one `<i>` element. Where it goes in a component, such as before a lab
 </script>
 
 <div class="nds-block">
-<h3 class="nds-block-title" id="iconsCatalog">UI Icon Catalog</h3>
+<h3 class="nds-block-title" id="icons-catalog">UI Icon Catalog</h3>
 <p>The {{ site.data.content.icons.hgi | size }} UI icons from HugeIcons. Click a tile to copy its classes. The list is <code class="nds-inline-code lang-js">_data/content/icons.yml</code>.</p>
 <div class="nds-grid nds-doc-icons">
 {%- for name in site.data.content.icons.hgi %}
@@ -84,7 +84,7 @@ An icon is one `<i>` element. Where it goes in a component, such as before a lab
   </div>
 </section>
 
-<section id="iconsVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="icons-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -109,13 +109,13 @@ Change the glyph name to the one you need: a font name from hugeicons.com, or a 
 | Color | Info | `color: var(--icon-info);` | `i` | An information mark |
 | Color | Warning | `color: var(--icon-warning);` | `i` | A warning mark |
 | Color | Error | `color: var(--icon-error);` | `i` | An error mark |
-{: #iconsVariantsTable .nds-table .nds-responsive}
+{: #icons-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="iconsBehavior" class="nds-content-section nds-doc-behavior">
+<section id="icons-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -141,7 +141,7 @@ An `nds-icon` draws the glyph set in `--nds-icon`, and each UI icon has a token,
   </div>
 </section>
 
-<section id="iconsFeatures" class="nds-content-section nds-doc-features">
+<section id="icons-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -181,7 +181,7 @@ An `nds-icon` draws the glyph set in `--nds-icon`, and each UI icon has a token,
   </div>
 </section>
 
-<section id="iconsPractices" class="nds-content-section nds-doc-practices">
+<section id="icons-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -202,7 +202,7 @@ An `nds-icon` draws the glyph set in `--nds-icon`, and each UI icon has a token,
   </div>
 </section>
 
-<section id="iconsApi" class="nds-content-section nds-doc-api">
+<section id="icons-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -247,7 +247,7 @@ The MIT License permits commercial use, changes and redistribution. The HugeIcon
   </div>
 </section>
 
-<section id="iconsRelated" class="nds-content-section nds-doc-related">
+<section id="icons-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

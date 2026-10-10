@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.1.0"
-last_edit: "01/10/2026 - 01:10 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="voiceOverview" class="nds-content-section nds-doc-overview">
+<section id="voice-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -28,13 +28,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="voiceMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="voice-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="voice-field" data-canon data-variants="voiceVariantsTable" data-demo-width="400px">
+<script type="text/html" id="voice-field" data-canon data-variants="voice-variants-table" data-demo-width="400px">
 <div class="nds-form-container">
   <div class="nds-form-header">
     <label for="voice-search">
@@ -115,7 +115,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="voiceVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="voice-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -129,13 +129,13 @@ Pick another component when:
 | Structure | Search box | canon `#voice-search-box` | — | A search field with a Search button, at the top of a results page |
 | Structure | Linked button | canon `#voice-linked` | — | The button sits outside the field and names it in `data-voice-target` |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
-{: #voiceVariantsTable .nds-table .nds-responsive}
+{: #voice-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="voiceBehavior" class="nds-content-section nds-doc-behavior">
+<section id="voice-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -151,7 +151,7 @@ A button inside `.nds-form-control` dictates into that field's input or text are
   </div>
 </section>
 
-<section id="voiceFeatures" class="nds-content-section nds-doc-features">
+<section id="voice-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -212,7 +212,7 @@ A button inside `.nds-form-control` dictates into that field's input or text are
   </div>
 </section>
 
-<section id="voicePractices" class="nds-content-section nds-doc-practices">
+<section id="voice-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -233,7 +233,7 @@ A button inside `.nds-form-control` dictates into that field's input or text are
   </div>
 </section>
 
-<section id="voiceApi" class="nds-content-section nds-doc-api">
+<section id="voice-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -301,7 +301,7 @@ The script shows these in the field's placeholder, in the page language. The tim
   </div>
 </section>
 
-<section id="voiceRelated" class="nds-content-section nds-doc-related">
+<section id="voice-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

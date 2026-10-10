@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:30 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="exportOverview" class="nds-content-section nds-doc-overview">
+<section id="export-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="exportMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="export-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="export-table" data-canon data-variants="exportVariantsTable">
+<script type="text/html" id="export-table" data-canon data-variants="export-variants-table">
 <div class="nds-toolbar">
   <div class="nds-toolbar-row">
     <div class="nds-toolbar-start">
@@ -233,7 +233,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="exportVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="export-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -250,13 +250,13 @@ A Scope option goes on every export button of the list. The Column hide target i
 | Scope | Selected | `[data-export-scope="selected"]` | `[data-export]` | Only the selected rows. With nothing selected, the file has only the header |
 | Scope | All | `[data-export-scope="all"]` | `[data-export]` | Every row, selected or not |
 | Column hide | Column hide (hint: Adds a Columns menu, and hidden columns stay out of the file) | canon `#export-columns` | `.nds-toolbar-end:has([data-export-target="#export-orders"])` (start) | The [Tables](../components/tables) column menu. A column the user hides drops out of the file |
-{: #exportVariantsTable .nds-table .nds-responsive}
+{: #export-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="exportBehavior" class="nds-content-section nds-doc-behavior">
+<section id="export-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -292,7 +292,7 @@ When a user hides a column with the [Tables](../components/tables) column menu, 
   </div>
 </section>
 
-<section id="exportFeatures" class="nds-content-section nds-doc-features">
+<section id="export-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -367,7 +367,7 @@ When a user hides a column with the [Tables](../components/tables) column menu, 
   </div>
 </section>
 
-<section id="exportPractices" class="nds-content-section nds-doc-practices">
+<section id="export-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -387,7 +387,7 @@ When a user hides a column with the [Tables](../components/tables) column menu, 
   </div>
 </section>
 
-<section id="exportApi" class="nds-content-section nds-doc-api">
+<section id="export-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -460,7 +460,7 @@ A table column's key is `c` plus its position, starting at 0. The checkbox colum
   </div>
 </section>
 
-<section id="exportRelated" class="nds-content-section nds-doc-related">
+<section id="export-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

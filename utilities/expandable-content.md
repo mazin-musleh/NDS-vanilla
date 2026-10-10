@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/10/2026 - 07:51 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="expandableOverview" class="nds-content-section nds-doc-overview">
+<section id="expandable-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="expandableMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="expandable-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="expandable-block" data-canon data-variants="expandableVariantsTable">
+<script type="text/html" id="expandable-block" data-canon data-variants="expandable-variants-table">
 <div class="nds-expandable">
   <div class="nds-expandable-content nds-prose">
     <p>The National Digital Transformation Strategy sets a framework to modernize government services in all sectors. It has three pillars: the citizen experience, efficient operations, and decisions based on data.</p>
@@ -89,7 +89,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="expandableVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="expandable-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -107,13 +107,13 @@ Max Height goes on `.nds-expandable-content`, and Fade on `.nds-expandable`, eac
 | Max Height | 150px (id: h150) | `--max-height: 150px` | `.nds-expandable-content` | A short preview, for cards |
 | Fade | 35% (default) | — | `.nds-expandable` | The fade is 35% of the max height, and ends above the button |
 | Fade | 60% | `--mask-fade-percentage: 60%` | `.nds-expandable` | A longer fade |
-{: #expandableVariantsTable .nds-table .nds-responsive}
+{: #expandable-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="expandableBehavior" class="nds-content-section nds-doc-behavior">
+<section id="expandable-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -121,7 +121,7 @@ Max Height goes on `.nds-expandable-content`, and Fade on `.nds-expandable`, eac
     <div class="nds-section-body nds-prose" markdown="1">
 
 ### Group
-{: #expandableGroup}
+{: #expandable-group-behavior}
 
 Put `nds-expand-all` on the parent of several expandable boxes. Show More on one box then opens every box in the group, and Show Less closes them all. Only the boxes in the group itself follow: an expandable box inside a box's content opens and closes by itself.
 
@@ -129,7 +129,7 @@ Put `nds-expand-all` on the parent of several expandable boxes. Show More on one
   </div>
 </section>
 
-<section id="expandableFeatures" class="nds-content-section nds-doc-features">
+<section id="expandable-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -183,7 +183,7 @@ Put `nds-expand-all` on the parent of several expandable boxes. Show More on one
   </div>
 </section>
 
-<section id="expandablePractices" class="nds-content-section nds-doc-practices">
+<section id="expandable-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -203,7 +203,7 @@ Put `nds-expand-all` on the parent of several expandable boxes. Show More on one
   </div>
 </section>
 
-<section id="expandableApi" class="nds-content-section nds-doc-api">
+<section id="expandable-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -280,7 +280,7 @@ The full API is in the banner of `_js/nds-expandable.js`.
   </div>
 </section>
 
-<section id="expandableRelated" class="nds-content-section nds-doc-related">
+<section id="expandable-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

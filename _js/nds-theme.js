@@ -12,7 +12,7 @@
  * Hooks:
  *   data-theme          on <html> — a TOKEN LIST: the mode token (dark; light is the
  *                       default and writes nothing) plus an optional theme token
- *   data-theme-toggle   on a mode toggle (#ndsThemeToggle also works)
+ *   data-theme-toggle   on a mode toggle
  *   data-theme-value    on a switcher option — the theme token it applies
  *   data-theme-css · data-theme-js   on an option, a stylesheet and/or a script to load
  *                       with the theme. Both optional, each loaded on its own
@@ -55,7 +55,7 @@
     // a runtime override could only desync the two, so it's a plain const.
     const STORAGE_KEY = 'nds-theme';            // full data-theme string ("dark crimson")
     const PALETTE_KEY = 'nds-palette';          // custom inline-seed theme only: { seeds, value }
-    const TOGGLE_SEL = '[data-theme-toggle], #ndsThemeToggle';
+    const TOGGLE_SEL = '[data-theme-toggle]';
     const SWITCH_SEL = '[data-theme-value]';
     const LINK_ID = 'nds-theme-stylesheet';
     const MODE = ['light', 'dark'];

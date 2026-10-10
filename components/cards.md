@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "08/10/2026 - 11:36 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="cardOverview" class="nds-content-section nds-doc-overview">
+<section id="card-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="cardMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="card-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="card-standard" data-canon data-variants="cardVariantsTable">
+<script type="text/html" id="card-standard" data-canon data-variants="card-variants-table">
 <div class="nds-card nds-stroke">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
@@ -223,7 +223,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="cardVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="card-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -237,7 +237,7 @@ Pick another component when:
 | Structure | Avatar header | canon `#card-avatar` | — | A person or an account |
 | Structure | No header | canon `#card-no-header` | — | Text only |
 | Structure | Link card (hint: The whole card is one link) | canon `#card-link` | — | The whole card is one `<a>` (or `<button>`). Hover and press feedback come from the element. Do not put links or buttons inside it |
-| Structure | Statistic (hint: One headline number) (id: statistic) | canon `#card-statistic` | — | One headline number with a label, in a centered card. The number is `.nds-card-number`, which works in any card. With `data-counter`, it counts up from 0 when it scrolls into view. See [Numbers](../utilities/numbers#counterAnimation) |
+| Structure | Statistic (hint: One headline number) (id: statistic) | canon `#card-statistic` | — | One headline number with a label, in a centered card. The number is `.nds-card-number`, which works in any card. With `data-counter`, it counts up from 0 when it scrolls into view. See [Numbers](../utilities/numbers#counter-animation) |
 | Meta | None (default) | — | — | No tags or rating |
 | Meta | Tags | canon `#card-tags` | `.nds-card-content` | Tags alone go straight in the content |
 | Meta | Rating | canon `#card-rating` | `.nds-card-content` | A star rating with a count |
@@ -278,13 +278,13 @@ Pick another component when:
 | Number size | SM | `.nds-sm` | `.nds-card-number` | The smallest headline number |
 | Disabled | Disabled | `.nds-disabled` | `.nds-card` | Mutes the card and blocks clicks. `[disabled]` works on a `<button>` card |
 | Loading | Loading (hint: Skeleton placeholders) | `.nds-loading` | `.nds-card` | Skeleton placeholders while the content loads |
-{: #cardVariantsTable .nds-table .nds-responsive}
+{: #card-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="cardFeatures" class="nds-content-section nds-doc-features">
+<section id="card-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -338,7 +338,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="cardPractices" class="nds-content-section nds-doc-practices">
+<section id="card-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -362,7 +362,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="cardApi" class="nds-content-section nds-doc-api">
+<section id="card-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -421,7 +421,7 @@ Cards have no script, methods or events.
   </div>
 </section>
 
-<section id="cardRelated" class="nds-content-section nds-doc-related">
+<section id="card-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

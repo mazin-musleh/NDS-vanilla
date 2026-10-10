@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.6.0"
 updated: "1.12.x"
-last_edit: "05/10/2026 - 03:23 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="switcherOverview" class="nds-content-section nds-doc-overview">
+<section id="switcher-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="switcherMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="switcher-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="switcher-standard" data-canon data-variants="switcherVariantsTable">
+<script type="text/html" id="switcher-standard" data-canon data-variants="switcher-variants-table">
 <div class="nds-tabs nds-content-switcher">
   <div class="nds-tab-list" role="tablist" aria-label="Request status">
     <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="true" aria-controls="panel-all" id="tab-all" tabindex="0">
@@ -72,7 +72,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="switcherVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="switcher-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -89,13 +89,13 @@ The first button is open in the markup: its `aria-selected` is `true`, and every
 | On color | On color | `.nds-oncolor` | `.nds-content-switcher` | For a switcher on a deep primary or dark background. The open button turns brand primary, as in dark mode. The panel text turns white |
 | Center | Center | `.nds-center` | `.nds-tab-list` | Centers the row of buttons above the panels |
 | Loading | Loading | `.nds-loading` | `.nds-content-switcher` | Gray bars in place of the labels and the panel content while the data loads. On `.nds-tab-list` it bars the labels only |
-{: #switcherVariantsTable .nds-table .nds-responsive}
+{: #switcher-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="switcherFeatures" class="nds-content-section nds-doc-features">
+<section id="switcher-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -156,7 +156,7 @@ The first button is open in the markup: its `aria-selected` is `true`, and every
   </div>
 </section>
 
-<section id="switcherPractices" class="nds-content-section nds-doc-practices">
+<section id="switcher-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -176,7 +176,7 @@ The first button is open in the markup: its `aria-selected` is `true`, and every
   </div>
 </section>
 
-<section id="switcherApi" class="nds-content-section nds-doc-api">
+<section id="switcher-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -240,7 +240,7 @@ The full API is in the banner of `_js/nds-tabs.js`.
   </div>
 </section>
 
-<section id="switcherRelated" class="nds-content-section nds-doc-related">
+<section id="switcher-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

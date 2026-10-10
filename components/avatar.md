@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="avatarOverview" class="nds-content-section nds-doc-overview">
+<section id="avatar-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="avatarMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="avatar-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="avatar-icon" data-canon data-variants="avatarVariantsTable">
+<script type="text/html" id="avatar-icon" data-canon data-variants="avatar-variants-table">
 <div class="nds-avatar nds-xl">
   <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
 </div>
@@ -112,7 +112,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="avatarVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="avatar-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -156,13 +156,13 @@ The Link, Menu trigger and Button structures take any of the three contents: a p
 | Square | Square | `.nds-square` | `.nds-avatar` | Rounded corners in place of a circle, for an organization or a service account. In a group, give it to every avatar |
 | Image border | Image border (hint: A thin dark line inside the photo edge) | `.nds-image-border` | `.nds-avatar:has(> img)` | A thin dark line inside the edge of the photo, so a light photo stays apart from a light page |
 | Stacked | Stacked (default) (hint: The avatars overlap) | `.nds-stacked` | `.nds-avatar-group` | The avatars overlap. Leave it out to space them apart by the group gap. Each stacked avatar has a ring in the border color. The ring is 1px at XS and SM, 2px at MD and LG, and 4px at XL and larger. At 3XL it replaces the border, so the photo keeps its full size |
-{: #avatarVariantsTable .nds-table .nds-responsive}
+{: #avatar-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="avatarFeatures" class="nds-content-section nds-doc-features">
+<section id="avatar-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -209,7 +209,7 @@ The Link, Menu trigger and Button structures take any of the three contents: a p
   </div>
 </section>
 
-<section id="avatarPractices" class="nds-content-section nds-doc-practices">
+<section id="avatar-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -229,7 +229,7 @@ The Link, Menu trigger and Button structures take any of the three contents: a p
   </div>
 </section>
 
-<section id="avatarApi" class="nds-content-section nds-doc-api">
+<section id="avatar-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -258,7 +258,7 @@ Source: the `avatar` group in `_sass/tokens/_components.scss`.
   </div>
 </section>
 
-<section id="avatarRelated" class="nds-content-section nds-doc-related">
+<section id="avatar-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

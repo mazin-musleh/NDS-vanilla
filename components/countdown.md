@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "08/10/2026 - 12:56 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="countdownOverview" class="nds-content-section nds-doc-overview">
+<section id="countdown-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="countdownMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="countdown-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="countdown-inline" data-canon data-variants="countdownVariantsTable">
+<script type="text/html" id="countdown-inline" data-canon data-variants="countdown-variants-table">
 <span class="nds-countdown" data-countdown="2027-12-31T23:59"></span>
 </script>
 <script type="text/html" id="countdown-units" data-canon>
@@ -96,7 +96,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="countdownVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="countdown-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -132,13 +132,13 @@ Pick another component when:
 | Tinted | Tinted (hint: A light tint of the card color) | `.nds-color` | `.nds-card:not(.nds-oncolor)` | Fills each card with a light tint of its color. With no color class, the tint is the brand primary |
 | Warning | Warning (hint: Turns red near the end) (demo: + duration) | `[data-countdown-warn="60"]` | `.nds-countdown` | The countdown turns red when 60 seconds are left. The builder picks Duration with it, 63 seconds, so the red shows after 3 seconds |
 | Ended | Ended message (hint: Text shown at zero) (id: ended) (demo: + passed) | canon `#countdown-ended` | `.nds-countdown` | The text replaces the countdown at zero. Without it, the zeros stay. The builder picks Passed with it, so the text shows at once |
-{: #countdownVariantsTable .nds-table .nds-responsive}
+{: #countdown-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="countdownBehavior" class="nds-content-section nds-doc-behavior">
+<section id="countdown-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -174,7 +174,7 @@ At zero, the root gets `data-state="ended"`. A `.nds-countdown-ended` element an
   </div>
 </section>
 
-<section id="countdownFeatures" class="nds-content-section nds-doc-features">
+<section id="countdown-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -235,7 +235,7 @@ At zero, the root gets `data-state="ended"`. A `.nds-countdown-ended` element an
   </div>
 </section>
 
-<section id="countdownPractices" class="nds-content-section nds-doc-practices">
+<section id="countdown-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -254,7 +254,7 @@ At zero, the root gets `data-state="ended"`. A `.nds-countdown-ended` element an
   </div>
 </section>
 
-<section id="countdownApi" class="nds-content-section nds-doc-api">
+<section id="countdown-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>

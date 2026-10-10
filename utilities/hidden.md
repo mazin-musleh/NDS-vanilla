@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "03/10/2026 - 02:12 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="hiddenOverview" class="nds-content-section nds-doc-overview">
+<section id="hidden-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -31,13 +31,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="hiddenMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="hidden-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="hidden-button" data-canon data-variants="hiddenVariantsTable">
+<script type="text/html" id="hidden-button" data-canon data-variants="hidden-variants-table">
 <button class="nds-btn nds-neutral" type="button">
   <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
   <span class="nds-label" data-hidden="sm">Share</span>
@@ -47,7 +47,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="hiddenVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="hidden-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -63,13 +63,13 @@ The canon is a Share button, and every option goes on its label. The label start
 | Hide At (any) | LG (hint: Hidden on desktops) | `[data-hidden~="lg"]` | `.nds-label:not([hidden])` | Hides the element on screens 960px and wider |
 | Hide At (any) | Always (hint: The hidden attribute: hidden at every width) | `[hidden]` | `.nds-label:not([data-hidden])` | Hides the element at every width and from screen readers. Use it for state your script turns on and off. Never on a button's only label: the button loses its name |
 | Screen Readers | Keep for Screen Readers (hint: Hidden on screen only. Screen readers still read it) | `[data-hidden~="sr"]` | `.nds-label[data-hidden]` | Hides the element on screen only, and screen readers still read it. On a button label, the button shows only its icon and keeps its name |
-{: #hiddenVariantsTable .nds-table .nds-responsive}
+{: #hidden-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="hiddenFeatures" class="nds-content-section nds-doc-features">
+<section id="hidden-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -116,7 +116,7 @@ The canon is a Share button, and every option goes on its label. The label start
   </div>
 </section>
 
-<section id="hiddenPractices" class="nds-content-section nds-doc-practices">
+<section id="hidden-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -137,7 +137,7 @@ The canon is a Share button, and every option goes on its label. The label start
   </div>
 </section>
 
-<section id="hiddenApi" class="nds-content-section nds-doc-api">
+<section id="hidden-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -167,7 +167,7 @@ The canon is a Share button, and every option goes on its label. The label start
   </div>
 </section>
 
-<section id="hiddenRelated" class="nds-content-section nds-doc-related">
+<section id="hidden-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

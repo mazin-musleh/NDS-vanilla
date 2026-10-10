@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="placeholderOverview" class="nds-content-section nds-doc-overview">
+<section id="placeholder-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="placeholderMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="placeholder-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="placeholder-default" data-canon data-variants="placeholderVariantsTable">
+<script type="text/html" id="placeholder-default" data-canon data-variants="placeholder-variants-table">
 <div class="nds-content-placeholder">
   <span>Swap with content component</span>
   <span>استبدل هذا العنصر بأي عنصر آخر</span>
@@ -45,7 +45,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="placeholderVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="placeholder-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -57,13 +57,13 @@ Pick another component when:
 | Size | MD (default) | — | — | Most regions: a panel body, a card, a page section |
 | Size | SM | `.nds-sm` | `.nds-content-placeholder` | Tight regions, such as a [Toolbar](../components/toolbar) slot. The text drops to the `2xs` size and the box is at least 40px tall, the height of a default button |
 | Size | LG | `.nds-lg` | `.nds-content-placeholder` | Large regions, where the default text looks too small. The text grows to the `sm` size |
-{: #placeholderVariantsTable .nds-table .nds-responsive}
+{: #placeholder-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="placeholderFeatures" class="nds-content-section nds-doc-features">
+<section id="placeholder-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -103,7 +103,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="placeholderPractices" class="nds-content-section nds-doc-practices">
+<section id="placeholder-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -121,7 +121,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="placeholderApi" class="nds-content-section nds-doc-api">
+<section id="placeholder-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>

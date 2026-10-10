@@ -6,12 +6,12 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 05:57 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 lang: en
 direction: ltr
 ---
 
-<section id="formsOverview" class="nds-content-section nds-doc-overview">
+<section id="forms-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -34,13 +34,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="formsMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="forms-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="field-text" data-canon data-variants="formsVariantsTable" data-harness="form" data-demo-width="320px">
+<script type="text/html" id="field-text" data-canon data-variants="forms-variants-table" data-harness="form" data-demo-width="320px">
 <div class="nds-form-container">
   <div class="nds-form-header">
     <label for="full-name">
@@ -292,7 +292,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="formsVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="forms-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -332,13 +332,13 @@ Each Structure is one field type. Options stack: a field can be MD, Lighter and 
 | Required | Required (id: required) | `[data-required]` | `.nds-form-container` | A red asterisk before the label. An empty field blocks the submit |
 | Info | Info (hint: Help text under the label) | canon `#field-info` | `label` | A line of help text under the label |
 | Hint | Hint (hint: A message that stays under the field) | canon `#field-hint` | `.nds-form-container` | A hint under the field that stays. A validation message takes its place while it shows |
-{: #formsVariantsTable .nds-table .nds-responsive}
+{: #forms-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="formsBehavior" class="nds-content-section nds-doc-behavior">
+<section id="forms-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -346,7 +346,7 @@ Each Structure is one field type. Options stack: a field can be MD, Lighter and 
     <div class="nds-section-body nds-prose" markdown="1">
 
 ### Field States
-{: .nds-block-title #fieldStates}
+{: .nds-block-title #field-states}
 
 Every NDS field uses these states, and the other field pages link here for them. `data-required` on the container adds the red asterisk, and the forms script adds `required` to the input. `data-state="disabled"` or `data-state="readonly"` on the container sets the same property on every input inside it. The script also works the other way: an input that is disabled, readonly or required in the HTML puts its state on the container.
 
@@ -445,7 +445,7 @@ async function checkUsername(name) {
 </script>
 
 ### Number Stepper
-{: .nds-block-title #numberInput}
+{: .nds-block-title #number-input}
 
 The minus and plus buttons change the value by `step`, 1 by default. Hold a button to repeat the step, and hold it about two seconds to step ten at a time. A button at `min` or `max` shows a message instead of a change. A value typed outside the range is set to the nearest limit when the field loses focus. Without `min` and `max`, the value has no limit.
 
@@ -468,7 +468,7 @@ The eye button switches the field between hidden and plain text, and its label b
   </div>
 </section>
 
-<section id="formsFeatures" class="nds-content-section nds-doc-features">
+<section id="forms-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -529,7 +529,7 @@ The eye button switches the field between hidden and plain text, and its label b
   </div>
 </section>
 
-<section id="formsPractices" class="nds-content-section nds-doc-practices">
+<section id="forms-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -553,7 +553,7 @@ The eye button switches the field between hidden and plain text, and its label b
   </div>
 </section>
 
-<section id="formsApi" class="nds-content-section nds-doc-api">
+<section id="forms-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -709,7 +709,7 @@ The full API is in the banner of `_js/nds-forms.js`.
   </div>
 </section>
 
-<section id="formsRelated" class="nds-content-section nds-doc-related">
+<section id="forms-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 04:18 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="helpersOverview" class="nds-content-section nds-doc-overview">
+<section id="helpers-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -32,13 +32,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="helpersMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="helpers-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="helpers-all" data-canon data-variants="helpersVariantsTable">
+<script type="text/html" id="helpers-all" data-canon data-variants="helpers-variants-table">
 <div dir="rtl" lang="ar">
   <div class="nds-flex nds-center">
     <div class="nds-card nds-stroke" id="helpers-card">
@@ -58,7 +58,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="helpersVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="helpers-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -79,13 +79,13 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
 | Note Status | Warning | `[data-status="warning"]` | `.nds-note` | A note the user must read before they continue |
 | Note Status | Success | `[data-status="success"]` | `.nds-note` | A note that confirms a condition is met |
 | Note Status | Info | `[data-status="info"]` | `.nds-note` | A neutral fact the user may want |
-{: #helpersVariantsTable .nds-table .nds-responsive}
+{: #helpers-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="helpersFeatures" class="nds-content-section nds-doc-features">
+<section id="helpers-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -139,7 +139,7 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
   </div>
 </section>
 
-<section id="helpersPractices" class="nds-content-section nds-doc-practices">
+<section id="helpers-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -163,7 +163,7 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
   </div>
 </section>
 
-<section id="helpersApi" class="nds-content-section nds-doc-api">
+<section id="helpers-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -194,7 +194,7 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
   </div>
 </section>
 
-<section id="helpersRelated" class="nds-content-section nds-doc-related">
+<section id="helpers-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="passwordOverview" class="nds-content-section nds-doc-overview">
+<section id="password-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="passwordMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="password-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="password-new" data-canon data-variants="passwordVariantsTable" data-harness="form" data-demo-width="300px">
+<script type="text/html" id="password-new" data-canon data-variants="password-variants-table" data-harness="form" data-demo-width="300px">
 <div class="nds-form-container nds-password" data-required>
   <div class="nds-form-header">
     <label for="new-password">
@@ -175,7 +175,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="passwordVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="password-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -212,13 +212,13 @@ A Min length choice sets `minlength` on the input and swaps the length chip for 
 | Validation (any) | No spaces | canon `#password-rule-space` | `#new-password-rules` | A chip whose rule is the regular expression in `data-rule-pattern`. It needs no `addRule()` call |
 | Validation (any) | No spaces | canon `#password-rule-space` | `#first-password-rules` | The same, on the first field of Confirm |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
-{: #passwordVariantsTable .nds-table .nds-responsive}
+{: #password-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="passwordBehavior" class="nds-content-section nds-doc-behavior">
+<section id="password-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -241,7 +241,7 @@ The chip is optional. Without it, leave out `.nds-password-rules` and the input'
   </div>
 </section>
 
-<section id="passwordFeatures" class="nds-content-section nds-doc-features">
+<section id="password-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -309,7 +309,7 @@ The chip is optional. Without it, leave out `.nds-password-rules` and the input'
   </div>
 </section>
 
-<section id="passwordPractices" class="nds-content-section nds-doc-practices">
+<section id="password-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -331,7 +331,7 @@ The chip is optional. Without it, leave out `.nds-password-rules` and the input'
   </div>
 </section>
 
-<section id="passwordApi" class="nds-content-section nds-doc-api">
+<section id="password-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -393,7 +393,7 @@ The full API is in the banner of `_js/nds-password.js`.
   </div>
 </section>
 
-<section id="passwordRelated" class="nds-content-section nds-doc-related">
+<section id="password-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

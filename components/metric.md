@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.2"
 updated: "1.1.0"
-last_edit: "08/10/2026 - 11:36 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="metricOverview" class="nds-content-section nds-doc-overview">
+<section id="metric-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="metricMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="metric-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="metric-positive" data-canon data-variants="metricVariantsTable">
+<script type="text/html" id="metric-positive" data-canon data-variants="metric-variants-table">
 <div class="nds-card nds-stroke" data-status="positive">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
@@ -121,7 +121,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="metricVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="metric-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -137,13 +137,13 @@ Pick another component when:
 | Arrow | Arrow (hint: A plain arrow instead of the trade icon) | `.nds-arrow` | `.nds-card-metric-trend` | Shows a plain arrow in the trend row. Keep the icon's class: `.nds-arrow` changes what the icon shows. The arrow follows the status, not the sign: `positive` points up, `negative` points down |
 | Stroke | Stroke (default) | `.nds-stroke` | `.nds-card` | A 1px border on the card |
 | Shadow | Shadow | `.nds-shadow` | `.nds-card` | An elevation shadow on the card. It combines with the stroke |
-{: #metricVariantsTable .nds-table .nds-responsive}
+{: #metric-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="metricFeatures" class="nds-content-section nds-doc-features">
+<section id="metric-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -197,7 +197,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="metricPractices" class="nds-content-section nds-doc-practices">
+<section id="metric-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -218,7 +218,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="metricApi" class="nds-content-section nds-doc-api">
+<section id="metric-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>

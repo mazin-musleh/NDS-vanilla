@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 04:09 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="sidemenuOverview" class="nds-content-section nds-doc-overview">
+<section id="sidemenu-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -35,13 +35,13 @@ The main links of the site belong in the [Main Navigation](../ui-shell/mainnav),
   </div>
 </section>
 
-<section id="sidemenuMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="sidemenu-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="sidemenu-canon" data-canon data-preview="page" data-preview-height="520" data-variants="sidemenuVariantsTable">
+<script type="text/html" id="sidemenu-canon" data-canon data-preview="page" data-preview-height="520" data-variants="sidemenu-variants-table">
 <div class="nds-content-layout nds-has-sidemenu">
   <aside class="nds-sidemenu" aria-label="Sidebar">
     <button class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" hidden>
@@ -335,7 +335,7 @@ The main links of the site belong in the [Main Navigation](../ui-shell/mainnav),
   </div>
 </section>
 
-<section id="sidemenuParts" class="nds-content-section nds-doc-parts">
+<section id="sidemenu-parts" class="nds-content-section nds-doc-parts">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Parts</h2>
@@ -358,7 +358,7 @@ The main links of the site belong in the [Main Navigation](../ui-shell/mainnav),
   </div>
 </section>
 
-<section id="sidemenuVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="sidemenu-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -377,13 +377,13 @@ The Small screens options change the menu below 960px only.
 | Peek button | Full button (hint: The button stays in full view) | — | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle)` | The button stays in full view at the screen edge |
 | Lined | Lined (hint: A line beside each open group) | `.nds-lined` | `.nds-drawer` | A line beside each open group, so the levels are easy to see |
 | Many links | Many links (hint: The list does not fit, so the show more arrow appears) | canon `#sidemenu-more` | `.nds-drawer-list` | 24 more links. Shows how the list scrolls when it is taller than the screen |
-{: #sidemenuVariantsTable .nds-table .nds-responsive}
+{: #sidemenu-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="sidemenuBehavior" class="nds-content-section nds-doc-behavior">
+<section id="sidemenu-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -409,7 +409,7 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
   </div>
 </section>
 
-<section id="sidemenuFeatures" class="nds-content-section nds-doc-features">
+<section id="sidemenu-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -470,7 +470,7 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
   </div>
 </section>
 
-<section id="sidemenuPractices" class="nds-content-section nds-doc-practices">
+<section id="sidemenu-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -489,7 +489,7 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
   </div>
 </section>
 
-<section id="sidemenuApi" class="nds-content-section nds-doc-api">
+<section id="sidemenu-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -553,7 +553,7 @@ The full API is in the banner of `_js/nds-sidemenu.js`.
   </div>
 </section>
 
-<section id="sidemenuRelated" class="nds-content-section nds-doc-related">
+<section id="sidemenu-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="emptyOverview" class="nds-content-section nds-doc-overview">
+<section id="empty-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="emptyMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="empty-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="empty-container" data-canon data-variants="emptyVariantsTable">
+<script type="text/html" id="empty-container" data-canon data-variants="empty-variants-table">
 <div class="nds-empty"></div>
 </script>
 <script type="text/html" id="empty-list" data-canon>
@@ -68,7 +68,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="emptyVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="empty-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -85,13 +85,13 @@ The Message and Icon rows go on the element that carries `nds-empty`, whatever i
 | Structure | Table body | canon `#empty-tbody` | — | `nds-empty` on one `<tbody>`, for a table with more than one body |
 | Message | Message (hint: Replaces the default text) | `[data-empty-message="No requests match your search"]` | `.nds-empty` | Replaces the default text. Say why the container is empty, or what the user can do next |
 | Icon | Icon (hint: Replaces the default icon) | `[data-empty-icon="nds-icon nds-hgi-search-01"]` | `.nds-empty` | Replaces the default icon. The value is the whole `class` of the icon, from any icon set |
-{: #emptyVariantsTable .nds-table .nds-responsive}
+{: #empty-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="emptyBehavior" class="nds-content-section nds-doc-behavior">
+<section id="empty-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -141,7 +141,7 @@ In a table, the placeholder is one row with one cell across every column. The sc
   </div>
 </section>
 
-<section id="emptyFeatures" class="nds-content-section nds-doc-features">
+<section id="empty-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -188,7 +188,7 @@ In a table, the placeholder is one row with one cell across every column. The sc
   </div>
 </section>
 
-<section id="emptyPractices" class="nds-content-section nds-doc-practices">
+<section id="empty-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -206,7 +206,7 @@ In a table, the placeholder is one row with one cell across every column. The sc
   </div>
 </section>
 
-<section id="emptyApi" class="nds-content-section nds-doc-api">
+<section id="empty-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -261,7 +261,7 @@ The full API is in the banner of `_js/nds-empty.js`.
   </div>
 </section>
 
-<section id="emptyRelated" class="nds-content-section nds-doc-related">
+<section id="empty-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

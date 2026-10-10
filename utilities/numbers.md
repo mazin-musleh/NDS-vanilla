@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 01:37 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="numbersOverview" class="nds-content-section nds-doc-overview">
+<section id="numbers-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -22,20 +22,20 @@ Numbers is a class and an attribute. `nds-number-format` formats the number in a
 
 Pick another component when:
 
-- the user types a number: [Number Input](../components/forms#numberInput)
+- the user types a number: [Number Input](../components/forms#number-input)
 - the user picks a number in a range: [Slider](../components/slider)
 
 </div>
   </div>
 </section>
 
-<section id="numbersMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="numbers-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="numbers-number" data-canon data-variants="numbersVariantsTable">
+<script type="text/html" id="numbers-number" data-canon data-variants="numbers-variants-table">
 <span class="nds-number-format">3240000</span>
 </script>
 
@@ -43,7 +43,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="numbersVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="numbers-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -68,13 +68,13 @@ Every option goes on the number, `.nds-number-format`. Counter makes it count up
 | Counter (any) | Counter (hint: Counts up when it scrolls into view) | `[data-counter]` | `.nds-number-format` | A headline figure that counts up once, to the number in its text. Combines with a currency or a unit. Use it for a few key figures, never for live data |
 | Counter (any) | Start From (hint: Counts from 40,000, not from 0) | `[data-counter-start="40000"]` | `[data-counter]` | For a large number: the count shows only its last part |
 | Counter (any) | 2000 ms (hint: Slower than the 1000 ms default) | `[data-counter-duration="2000"]` | `[data-counter]` | A slower count, for a large number. Without it, a count takes one second |
-{: #numbersVariantsTable .nds-table .nds-responsive}
+{: #numbers-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="numbersBehavior" class="nds-content-section nds-doc-behavior">
+<section id="numbers-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -82,12 +82,12 @@ Every option goes on the number, `.nds-number-format`. Counter makes it count up
     <div class="nds-section-body nds-prose" markdown="1">
 
 ### Counter Animation
-{: #counterAnimation}
+{: #counter-animation}
 
 A counter counts from `data-counter-start` to the `data-counter` value when half of it is in view. It runs once, and then the script sets `data-animated` on it. A user who asks the system for reduced motion sees the end value at once. The counter adds separators itself, so it needs `nds-number-format` only for a currency or a unit.
 
 ### Currency Symbol
-{: #currencyFormat}
+{: #currency-format}
 
 `data-currency` adds the currency symbol beside the number. The symbol sits before the number in English and after it in Arabic. `SAR` draws the Riyal sign as an icon in the text color. The other codes add their Unicode symbol.
 
@@ -99,7 +99,7 @@ A counter counts from `data-counter-start` to the `data-counter` value when half
   </div>
 </section>
 
-<section id="numbersFeatures" class="nds-content-section nds-doc-features">
+<section id="numbers-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -146,7 +146,7 @@ A counter counts from `data-counter-start` to the `data-counter` value when half
   </div>
 </section>
 
-<section id="numbersPractices" class="nds-content-section nds-doc-practices">
+<section id="numbers-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -156,7 +156,7 @@ A counter counts from `data-counter-start` to the `data-counter` value when half
 - Write the number in plain digits, with commas or no separators. It shows before the script runs. The script cannot read other separators, such as `3.240.000`.
 - Write `0` as a counter's text. It shows until the count starts.
 - Write the number with the decimals you want shown. `1250.50` shows as `1,250.50`, and a counter with `data-counter="98.6"` counts with one decimal.
-- Use `data-currency`, not a symbol in the text. See [Currency Symbol](#currencyFormat).
+- Use `data-currency`, not a symbol in the text. See [Currency Symbol](#currency-format).
 - A screen reader does not read the SAR icon. Where the currency matters, add it as hidden text after the number: `<span class="nds-number-format" data-currency="SAR">1250 <span class="nds-sr-only">riyals</span></span>`.
 - Use `data-unit` for a unit on a number that a script changes. For a fixed suffix, write it in the text, such as `98.5%`.
 - Use a counter for a few headline figures, such as the statistics on a home page or KPI cards. Do not use it for live data or for a value the user changes: it runs once.
@@ -169,7 +169,7 @@ A counter counts from `data-counter-start` to the `data-counter` value when half
   </div>
 </section>
 
-<section id="numbersApi" class="nds-content-section nds-doc-api">
+<section id="numbers-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -224,7 +224,7 @@ NDS.Numbers.reinit();
   </div>
 </section>
 
-<section id="numbersRelated" class="nds-content-section nds-doc-related">
+<section id="numbers-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

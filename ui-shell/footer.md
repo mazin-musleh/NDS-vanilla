@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 03:10 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="footerOverview" class="nds-content-section nds-doc-overview">
+<section id="footer-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -28,13 +28,13 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
   </div>
 </section>
 
-<section id="footerMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="footer-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="footer-canon" data-canon data-preview="page" data-preview-height="320" data-preview-style="body{display:flex;flex-direction:column;min-height:100vh}.nds-footer{margin-block-start:auto}" data-variants="footerVariantsTable">
+<script type="text/html" id="footer-canon" data-canon data-preview="page" data-preview-height="320" data-preview-style="body{display:flex;flex-direction:column;min-height:100vh}.nds-footer{margin-block-start:auto}" data-variants="footer-variants-table">
 <footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer">
   <nav class="nds-footer-content" aria-label="Footer navigation">
     <div class="nds-footer-column">
@@ -137,7 +137,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
   </div>
 </section>
 
-<section id="footerParts" class="nds-content-section nds-doc-parts">
+<section id="footer-parts" class="nds-content-section nds-doc-parts">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Parts</h2>
@@ -163,7 +163,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
   </div>
 </section>
 
-<section id="footerVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="footer-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -175,13 +175,13 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
 | Surface | Brand (default) | `.nds-brand` | `.nds-footer` | The deep primary surface with white text |
 | Surface | Light | — | — | Leave out `.nds-brand`: a light neutral surface, dark in dark mode |
 | Logo | On color | — | — | Add `.nds-oncolor` to a one-color logo `<img>` so it turns white on the brand footer and in dark mode. It is a choice per logo: leave it off a logo whose colors must stay |
-{: #footerVariantsTable .nds-table .nds-responsive}
+{: #footer-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="footerFeatures" class="nds-content-section nds-doc-features">
+<section id="footer-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -235,7 +235,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
   </div>
 </section>
 
-<section id="footerPractices" class="nds-content-section nds-doc-practices">
+<section id="footer-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -256,7 +256,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
   </div>
 </section>
 
-<section id="footerApi" class="nds-content-section nds-doc-api">
+<section id="footer-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -276,7 +276,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
   </div>
 </section>
 
-<section id="footerRelated" class="nds-content-section nds-doc-related">
+<section id="footer-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

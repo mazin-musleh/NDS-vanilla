@@ -16,7 +16,7 @@ To reposition: set data-panel-side HERE, on this button (not 'end'|'start'|
 resolvePanel() reads it off the FAB and threads it into the built panel, so
 this one attribute is the single control point: data-fab-pos="auto" reads
 it too, so the FAB docks on the same side. A page-authored <template
-class="nds-panel-template"><aside id="ndsAccessibilityPanel"> still wins
+class="nds-panel-template"><aside id="nds-accessibility-panel"> still wins
 over the built-in markup if you need more than repositioning.
 {%- endcomment -%}
 <button class="nds-btn nds-primary nds-circle nds-icon-only nds-fab nds-accessibility-toggle"
@@ -26,7 +26,7 @@ over the built-in markup if you need more than repositioning.
         aria-expanded="false"
         data-fab-pos="auto"
         data-panel-side="end"
-        data-panel-toggle="ndsAccessibilityPanel"
+        data-panel-toggle="nds-accessibility-panel"
         data-accessibility-toggle
         hidden>
     <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>

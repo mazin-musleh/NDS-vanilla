@@ -6,12 +6,12 @@ hero_description: A panel is a surface that slides in from an edge of the screen
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 lang: en
 direction: ltr
 ---
 
-<section id="panelOverview" class="nds-content-section nds-doc-overview">
+<section id="panel-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -31,13 +31,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="panelMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="panel-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="panel-settings" data-canon data-variants="panelVariantsTable">
+<script type="text/html" id="panel-settings" data-canon data-variants="panel-variants-table">
 <button type="button" class="nds-btn nds-primary nds-lg" data-panel-toggle="settings-panel">
   <span class="nds-label">Open Panel</span>
 </button>
@@ -120,7 +120,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="panelVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="panel-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -148,13 +148,13 @@ Every option goes on the `nds-panel` element, except Resizable, which has two ro
 | Modal | Modal (hint: Dims the page and keeps focus in the panel) | `[data-panel-modal]` | `.nds-panel` | Dims the page, stops it from scrolling and keeps focus in the panel. For a panel the user must finish first |
 | Static | Static (hint: Escape and a click outside do not close it) | `[data-panel-static]` | `.nds-panel` | Escape and a click outside do not close the panel. For a panel with a form the user could lose |
 | Full width | Full width (hint: Top and bottom sheets) | `--panel-content-width: 100%` | `.nds-panel:is([data-panel-side="top"], [data-panel-side="bottom"])` | The sheet's content spans the full width, not the page's content width. For a wide table or a row of media |
-{: #panelVariantsTable .nds-table .nds-responsive}
+{: #panel-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="panelBehavior" class="nds-content-section nds-doc-behavior">
+<section id="panel-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -195,7 +195,7 @@ A lazy panel keeps its markup in a `<template class="nds-panel-template">`, so i
   </div>
 </section>
 
-<section id="panelFeatures" class="nds-content-section nds-doc-features">
+<section id="panel-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -242,7 +242,7 @@ A lazy panel keeps its markup in a `<template class="nds-panel-template">`, so i
   </div>
 </section>
 
-<section id="panelPractices" class="nds-content-section nds-doc-practices">
+<section id="panel-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -263,7 +263,7 @@ A lazy panel keeps its markup in a `<template class="nds-panel-template">`, so i
   </div>
 </section>
 
-<section id="panelApi" class="nds-content-section nds-doc-api">
+<section id="panel-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -313,7 +313,7 @@ Set these on the `.nds-panel` element.
 |---|---|---|
 | `--panel-width` | `420px` | Width of a start, end, left or right panel, at the `md` size. The panel is never wider than the screen |
 | `--panel-height` | `60svh` | Most height of a top or bottom sheet, at the `md` size. The sheet also stops at the header |
-| `--panel-content-width` | `var(--nds-content-MaxWidth)` | Most width of a sheet's content. `100%` spans the full width, inside the page gutter |
+| `--panel-content-width` | `var(--nds-content-max-width)` | Most width of a sheet's content. `100%` spans the full width, inside the page gutter |
 | `--panel-top` | the bottom of the sticky header | Where the panel starts. Any value turns off the header tracking. `0` covers the header too, and needs a `--panel-z` above the header's |
 | `--panel-padding` | `var(--spacing-lg)` | Space inside the header, the body and the footer |
 | `--panel-gap` | `0` | Space between the header, the body and the footer |
@@ -358,7 +358,7 @@ The full API is in the banner of `_js/nds-panels.js`.
   </div>
 </section>
 
-<section id="panelRelated" class="nds-content-section nds-doc-related">
+<section id="panel-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

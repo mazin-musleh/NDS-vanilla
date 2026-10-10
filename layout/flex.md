@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "08/10/2026 - 09:36 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="flexOverview" class="nds-content-section nds-doc-overview">
+<section id="flex-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="flexMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="flex-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="flex-row" data-canon data-variants="flexVariantsTable" data-demo-width="100%">
+<script type="text/html" id="flex-row" data-canon data-variants="flex-variants-table" data-demo-width="100%">
 <div class="nds-flex">
   <button type="button" class="nds-btn nds-primary">
     <span class="nds-label">Submit</span>
@@ -55,7 +55,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="flexVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="flex-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -82,13 +82,13 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
 | Gap | 3XL (hint: 24px between the children) | `--gap: var(--spacing-3xl)` | `.nds-flex` | 24px. Larger children, such as cards in a column |
 | Wrap | Wrap | `.nds-wrap` | `.nds-flex:not(.nds-col)` | The children flow onto a new line when the row is full. Row only: a column wraps only when it has a fixed height |
 | Reverse | Reverse (hint: Shows the children in the opposite order, from the other edge) | `.nds-reverse` | `.nds-flex` | Shows the children in the opposite order. They also move to the other edge: with Justify Start they sit at the end. The keyboard order stays the markup order |
-{: #flexVariantsTable .nds-table .nds-responsive}
+{: #flex-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="flexFeatures" class="nds-content-section nds-doc-features">
+<section id="flex-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -142,7 +142,7 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
   </div>
 </section>
 
-<section id="flexPractices" class="nds-content-section nds-doc-practices">
+<section id="flex-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -162,7 +162,7 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
   </div>
 </section>
 
-<section id="flexApi" class="nds-content-section nds-doc-api">
+<section id="flex-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -199,7 +199,7 @@ Set these in the `style` of `.nds-flex`.
   </div>
 </section>
 
-<section id="flexRelated" class="nds-content-section nds-doc-related">
+<section id="flex-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

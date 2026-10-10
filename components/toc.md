@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="tocOverview" class="nds-content-section nds-doc-overview">
+<section id="toc-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,7 +30,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="tocMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="toc-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
@@ -43,11 +43,11 @@ Pick another component when:
 The TOC sits in a sticky [Side Info](../ui-shell/sideinfo) column next to the article it lists. Preview opens it in a panel, where the article can scroll.
 
 <script type="text/html" id="toc-auto" data-canon data-preview="panel" data-preview-flush>
-<section id="policyPage" class="nds-content-section nds-sideinfo-section">
+<section id="policy-page" class="nds-content-section nds-sideinfo-section">
   <div class="nds-section-body">
     <aside class="nds-sideinfo nds-sticky nds-top" aria-label="On this page">
       <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 5"
-        data-toc-source="#policyPage article" data-toc-levels="h2,h3">
+        data-toc-source="#policy-page article" data-toc-levels="h2,h3">
         <div class="nds-toc-head">
           <span class="nds-label">On this page</span>
           <h2 class="nds-toc-title nds-truncate">Privacy Policy</h2>
@@ -141,7 +141,7 @@ You write the links. Nest a `<ul>` inside an `<li>` for each level.
   </div>
 </section>
 
-<section id="tocBehavior" class="nds-content-section nds-doc-behavior">
+<section id="toc-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -162,7 +162,7 @@ Without `data-toc-source`, the script reads the links you write. Pick it for som
   </div>
 </section>
 
-<section id="tocFeatures" class="nds-content-section nds-doc-features">
+<section id="toc-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -209,7 +209,7 @@ Without `data-toc-source`, the script reads the links you write. Pick it for som
   </div>
 </section>
 
-<section id="tocPractices" class="nds-content-section nds-doc-practices">
+<section id="toc-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -229,7 +229,7 @@ Without `data-toc-source`, the script reads the links you write. Pick it for som
   </div>
 </section>
 
-<section id="tocApi" class="nds-content-section nds-doc-api">
+<section id="toc-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -296,7 +296,7 @@ The full API is in the banner of `_js/nds-toc.js`.
   </div>
 </section>
 
-<section id="tocRelated" class="nds-content-section nds-doc-related">
+<section id="toc-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

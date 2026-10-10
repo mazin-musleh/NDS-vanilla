@@ -11,7 +11,7 @@ layout_class: nds-card-view
 sidemenu_mode: top
 ---
 
-<section id="facultyInfo" class="nds-content-section">
+<section id="faculty-info" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-image faculty-avatar nds-avatar nds-3xl nds-image nds-image-border">
             <img src="{{ 'docs-assets/img/avatar3.webp' | relative_url }}" width="112" height="112"
@@ -61,7 +61,7 @@ sidemenu_mode: top
     </div>
 </section>
 
-<section id="facultyTabs" class="nds-content-section nds-ghost">
+<section id="faculty-tabs" class="nds-content-section nds-ghost">
     <div class="nds-section-body">
         <div class="nds-tabs nds-divided nds-lg">
             <div class="nds-tab-list-container nds-scroll-more">

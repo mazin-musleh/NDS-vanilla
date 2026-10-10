@@ -14,7 +14,7 @@ sidemenu_mode: false
 {% assign categories = "general,services,account,technical" | split: "," %}
 {% assign category_labels = "General,Services,Account,Technical" | split: "," %}
 
-<section id="faqList" class="nds-content-section">
+<section id="faq-list" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Browse questions</h2>
@@ -26,7 +26,7 @@ sidemenu_mode: false
                     <div class="nds-search-content">
                         <div class="nds-form-control">
                             <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                            <input id="faqSearch" type="text" class="nds-search-input" name="q" autocomplete="off"
+                            <input id="faq-search" type="text" class="nds-search-input" name="q" autocomplete="off"
                                 placeholder="Search">
                             <div class="nds-form-action">
                                 <button type="button" class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear">
@@ -189,7 +189,7 @@ sidemenu_mode: false
         allTabBtn.click();
     }
 
-    const searchInput = document.getElementById('faqSearch');
+    const searchInput = document.getElementById('faq-search');
     if (searchInput) searchInput.addEventListener('input', switchToAll);
     if (searchBox) {
         searchBox.addEventListener('click', function (e) {
@@ -204,7 +204,7 @@ sidemenu_mode: false
 })();
 </script>
 
-<section id="faqFeedback" class="nds-content-section">
+<section id="faq-feedback" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-body">
             <div class="nds-block">

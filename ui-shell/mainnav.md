@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="mainnavOverview" class="nds-content-section nds-doc-overview">
+<section id="mainnav-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -28,13 +28,13 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
   </div>
 </section>
 
-<section id="mainnavMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="mainnav-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="mainnav-canon" data-canon data-form data-preview="page" data-preview-height="440" data-variants="mainnavVariantsTable">
+<script type="text/html" id="mainnav-canon" data-canon data-form data-preview="page" data-preview-height="440" data-variants="mainnav-variants-table">
 <nav class="nds-main-nav nds-content-wrapper" id="nds-main-nav" aria-label="Primary navigation">
   <div class="nds-nav-container">
     <a href="../" class="nds-brand">
@@ -146,7 +146,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
                     <div class="nds-search-content">
                       <div class="nds-form-control">
                         <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                        <input id="mainSearch" type="text" class="nds-search-input" name="q" placeholder="Search..." aria-label="Search">
+                        <input id="main-search" type="text" class="nds-search-input" name="q" placeholder="Search..." aria-label="Search">
                         <div class="nds-form-action">
                           <button type="button" class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search">
                             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -308,7 +308,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
           <div class="nds-search-content">
             <div class="nds-form-control">
               <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-              <input id="mainSearch" type="text" class="nds-search-input" name="q" placeholder="Search..." aria-label="Search">
+              <input id="main-search" type="text" class="nds-search-input" name="q" placeholder="Search..." aria-label="Search">
               <div class="nds-form-action">
                 <button type="button" class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search">
                   <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -432,7 +432,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
   </div>
 </section>
 
-<section id="mainnavParts" class="nds-content-section nds-doc-parts">
+<section id="mainnav-parts" class="nds-content-section nds-doc-parts">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Parts</h2>
@@ -458,7 +458,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
   </div>
 </section>
 
-<section id="mainnavVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="mainnav-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -489,13 +489,13 @@ The canon carries the Services dropdown, the search action and the language acti
 | Pinned on Small Screens (any) | User (hint: Stays in the bar below 960px) | `.nds-pinned` | `#nav-user` | The avatar stays in the bar below 960px |
 | Pinned on Small Screens (any) | Language (hint: Stays in the bar below 960px) | `.nds-pinned` | `#nav-language` | Language stays in the bar below 960px |
 | Pinned on Small Screens (any) | Call to action (hint: Stays in the bar below 960px) | `.nds-pinned` | `#nav-cta` | The button stays in the bar below 960px, first in the row |
-{: #mainnavVariantsTable .nds-table .nds-responsive}
+{: #mainnav-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="mainnavBehavior" class="nds-content-section nds-doc-behavior">
+<section id="mainnav-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -521,7 +521,7 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
   </div>
 </section>
 
-<section id="mainnavFeatures" class="nds-content-section nds-doc-features">
+<section id="mainnav-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -582,7 +582,7 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
   </div>
 </section>
 
-<section id="mainnavPractices" class="nds-content-section nds-doc-practices">
+<section id="mainnav-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -605,7 +605,7 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
   </div>
 </section>
 
-<section id="mainnavApi" class="nds-content-section nds-doc-api">
+<section id="mainnav-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -709,7 +709,7 @@ The full API is in the banner of `_js/nds-mainnav.js`.
   </div>
 </section>
 
-<section id="mainnavRelated" class="nds-content-section nds-doc-related">
+<section id="mainnav-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="multiselectOverview" class="nds-content-section nds-doc-overview">
+<section id="multiselect-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="multiselectMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="multiselect-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="multiselect-grouped" data-canon data-variants="multiselectVariantsTable" data-harness="form" data-demo-width="100%">
+<script type="text/html" id="multiselect-grouped" data-canon data-variants="multiselect-variants-table" data-harness="form" data-demo-width="100%">
 <div class="nds-form-container nds-multiselect" data-multiselect-name="interests">
   <div class="nds-form-header">
     <label><span class="nds-label">Interests</span></label>
@@ -175,7 +175,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="multiselectVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="multiselect-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -219,13 +219,13 @@ A row on `.nds-check-container` changes every option row. A Reset or Apply row i
 | Validation (any) | At least 2 (hint: Press Validate with one option checked) | `[data-min-checked="2"]` | `.nds-multiselect` | At least 2 options must be checked. Say the rule in the label |
 | Validation (any) | At most 3 (hint: Check four options, then press Validate) | `[data-max-checked="3"]` | `.nds-multiselect` | No more than 3 options may be checked. Say the rule in the label |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
-{: #multiselectVariantsTable .nds-table .nds-responsive}
+{: #multiselect-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="multiselectBehavior" class="nds-content-section nds-doc-behavior">
+<section id="multiselect-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -266,7 +266,7 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
   </div>
 </section>
 
-<section id="multiselectFeatures" class="nds-content-section nds-doc-features">
+<section id="multiselect-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -334,7 +334,7 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
   </div>
 </section>
 
-<section id="multiselectPractices" class="nds-content-section nds-doc-practices">
+<section id="multiselect-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -354,7 +354,7 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
   </div>
 </section>
 
-<section id="multiselectApi" class="nds-content-section nds-doc-api">
+<section id="multiselect-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>

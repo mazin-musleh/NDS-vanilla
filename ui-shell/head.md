@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:55 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="headOverview" class="nds-content-section nds-doc-overview">
+<section id="head-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -28,7 +28,7 @@ The body of the page is on [Page Layout](../layout/page-layout).
   </div>
 </section>
 
-<section id="headMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="head-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage</h2>
@@ -120,7 +120,7 @@ Copy the head as one block. The JS Library tab holds the main script: put it jus
   </div>
 </section>
 
-<section id="headParts" class="nds-content-section nds-doc-parts">
+<section id="head-parts" class="nds-content-section nds-doc-parts">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Parts</h2>
@@ -143,7 +143,7 @@ Copy the head as one block. The JS Library tab holds the main script: put it jus
   </div>
 </section>
 
-<section id="headBehavior" class="nds-content-section nds-doc-behavior">
+<section id="head-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -169,7 +169,7 @@ The inline script runs once, at page load. The stylesheet links it adds and the 
   </div>
 </section>
 
-<section id="headFeatures" class="nds-content-section nds-doc-features">
+<section id="head-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -223,7 +223,7 @@ The inline script runs once, at page load. The stylesheet links it adds and the 
   </div>
 </section>
 
-<section id="headPractices" class="nds-content-section nds-doc-practices">
+<section id="head-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -241,7 +241,7 @@ The inline script runs once, at page load. The stylesheet links it adds and the 
   </div>
 </section>
 
-<section id="headApi" class="nds-content-section nds-doc-api">
+<section id="head-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -249,7 +249,7 @@ The inline script runs once, at page load. The stylesheet links it adds and the 
     <div class="nds-section-body nds-prose" markdown="1">
 
 ### Files
-{: .nds-block-title #assetFiles}
+{: .nds-block-title #asset-files}
 
 | File | Holds | Loading |
 |---|---|---|
@@ -352,7 +352,7 @@ NDS components are not affected: their scripts set styles through the CSSOM, whi
   </div>
 </section>
 
-<section id="headRelated" class="nds-content-section nds-doc-related">
+<section id="head-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

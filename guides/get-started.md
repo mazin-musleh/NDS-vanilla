@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "09/10/2026 - 08:05 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -14,11 +14,11 @@ layout_class: nds-has-sideinfo
 sidemenu_mode: false
 ---
 
-<section id="getStartedGuide" class="nds-content-section nds-sideinfo-section">
+<section id="get-started-guide" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <aside class="nds-sideinfo nds-sticky nds-top" aria-label="On this page">
             <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 14"
-                data-toc-source="#getStartedGuide article" data-toc-levels="h2, h3">
+                data-toc-source="#get-started-guide article" data-toc-levels="h2, h3">
                 <div class="nds-toc-head">
                     <span class="nds-label">On this page</span>
                     <h2 class="nds-toc-title nds-truncate">NDS Integration</h2>

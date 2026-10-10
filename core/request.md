@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.6.0"
 updated: "1.12.0"
-last_edit: "03/10/2026 - 11:54 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="requestOverview" class="nds-content-section nds-doc-overview">
+<section id="request-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,7 +30,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="requestMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="request-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage</h2>
@@ -80,7 +80,7 @@ async function search(term) {
   </div>
 </section>
 
-<section id="requestFeatures" class="nds-content-section nds-doc-features">
+<section id="request-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -141,7 +141,7 @@ async function search(term) {
   </div>
 </section>
 
-<section id="requestPractices" class="nds-content-section nds-doc-practices">
+<section id="request-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -163,7 +163,7 @@ async function search(term) {
   </div>
 </section>
 
-<section id="requestApi" class="nds-content-section nds-doc-api">
+<section id="request-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -232,7 +232,7 @@ The full API is in the banner of `_js/nds-core.js`, and in the comment above `ND
   </div>
 </section>
 
-<section id="requestRelated" class="nds-content-section nds-doc-related">
+<section id="request-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

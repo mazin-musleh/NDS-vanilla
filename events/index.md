@@ -20,7 +20,7 @@ sidemenu_mode: false
                     <div class="nds-search-content">
                         <div class="nds-form-control">
                             <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                            <input id="eventSearch" type="text" class="nds-search-input" name="search" autocomplete="off"
+                            <input id="event-search" type="text" class="nds-search-input" name="search" autocomplete="off"
                                 placeholder="Search events...">
                             <div class="nds-form-action">
                                 <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>

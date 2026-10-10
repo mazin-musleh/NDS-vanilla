@@ -331,7 +331,7 @@ tbody[data-filter-items]:not([data-nds-filter-initialized], .nds-paged-content) 
    .nds-full-width / .nds-max-width descendants inherit (0,2,0), matching
    the specificity main-CSS rules expect when adjusting these knobs. */
 :is(.nds-content-wrapper, .nds-hero-section, .nds-content-section) {
-    --_wrapper-padding: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
+    --_wrapper-padding: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-max-width)) / 2));
     width: 100%;
     padding-inline: var(--_wrapper-padding);
 
@@ -343,7 +343,7 @@ tbody[data-filter-items]:not([data-nds-filter-initialized], .nds-paged-content) 
     // Full gutter while the section is narrower than the max width (runs to the
     // screen edge); eases to half a gutter past it, so it never exceeds max width + one gutter.
     .nds-max-width {
-        margin-inline: calc(min(var(--_wrapper-padding), (var(--nds-content-MaxWidth) + var(--_wrapper-padding) - 100%) / 2) * -1);
+        margin-inline: calc(min(var(--_wrapper-padding), (var(--nds-content-max-width) + var(--_wrapper-padding) - 100%) / 2) * -1);
     }
 }
 

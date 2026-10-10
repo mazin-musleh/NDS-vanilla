@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "08/10/2026 - 11:53 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="modalOverview" class="nds-content-section nds-doc-overview">
+<section id="modal-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="modalMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="modal-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="modal-dialog" data-canon data-variants="modalVariantsTable">
+<script type="text/html" id="modal-dialog" data-canon data-variants="modal-variants-table">
 <button type="button" class="nds-btn nds-primary nds-lg" data-modal-target="withdraw-modal">
   <span class="nds-label">Open Modal</span>
 </button>
@@ -138,7 +138,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="modalVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="modal-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -167,13 +167,13 @@ Every option goes on the `nds-modal` element. On a lazy modal, write it on the `
 | Status | Info | remove | `.nds-featured-icon.nds-xl > .nds-hgi-checkmark-circle-02` | Neutral news about the action |
 | Status | Info | canon `#modal-icon-info` | `.nds-featured-icon.nds-xl` | Neutral news about the action |
 | Static | Static (hint: Escape and an overlay click do not close it) | `[data-modal-static]` | `.nds-modal` | Escape and a click on the overlay do not close the modal. For a choice the user must make |
-{: #modalVariantsTable .nds-table .nds-responsive}
+{: #modal-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="modalBehavior" class="nds-content-section nds-doc-behavior">
+<section id="modal-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -194,7 +194,7 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
   </div>
 </section>
 
-<section id="modalFeatures" class="nds-content-section nds-doc-features">
+<section id="modal-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -276,7 +276,7 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
   </div>
 </section>
 
-<section id="modalPractices" class="nds-content-section nds-doc-practices">
+<section id="modal-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -301,7 +301,7 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
   </div>
 </section>
 
-<section id="modalApi" class="nds-content-section nds-doc-api">
+<section id="modal-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -378,7 +378,7 @@ The full API is in the banner of `_js/nds-modal.js`.
   </div>
 </section>
 
-<section id="modalRelated" class="nds-content-section nds-doc-related">
+<section id="modal-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

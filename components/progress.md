@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="progressOverview" class="nds-content-section nds-doc-overview">
+<section id="progress-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="progressMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="progress-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="progress-circle" data-canon data-variants="progressVariantsTable">
+<script type="text/html" id="progress-circle" data-canon data-variants="progress-variants-table">
 <div class="nds-progress-circle nds-lg" data-value="75" role="progressbar" aria-labelledby="progress-circle-text">
   <svg width="120" height="120" viewBox="0 0 24 24">
     <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
@@ -87,7 +87,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="progressVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="progress-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -116,13 +116,13 @@ Color and Status have one row for the circle and one for the bar. Write the row 
 | Status | Success | `[data-status="success"]` | `.nds-progress-bar` | The same, on a bar. The feedback icon turns to success |
 | Status | Error | `[data-status="error"]` | `.nds-progress-circle:not([data-num])` | The task failed. The fill stays and turns to the error color. The circle shows the error icon in place of the number |
 | Status | Error | `[data-status="error"]` | `.nds-progress-bar` | The same, on a bar. The feedback icon turns to error |
-{: #progressVariantsTable .nds-table .nds-responsive}
+{: #progress-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="progressBehavior" class="nds-content-section nds-doc-behavior">
+<section id="progress-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -148,7 +148,7 @@ A large bar (`nds-lg`) shows the percentage inside the fill, at its end. Small a
   </div>
 </section>
 
-<section id="progressFeatures" class="nds-content-section nds-doc-features">
+<section id="progress-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -209,7 +209,7 @@ A large bar (`nds-lg`) shows the percentage inside the fill, at its end. Small a
   </div>
 </section>
 
-<section id="progressPractices" class="nds-content-section nds-doc-practices">
+<section id="progress-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -227,7 +227,7 @@ A large bar (`nds-lg`) shows the percentage inside the fill, at its end. Small a
   </div>
 </section>
 
-<section id="progressApi" class="nds-content-section nds-doc-api">
+<section id="progress-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -287,7 +287,7 @@ NDS.Progress.setOutOf(score, 4.2, 5);
   </div>
 </section>
 
-<section id="progressRelated" class="nds-content-section nds-doc-related">
+<section id="progress-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

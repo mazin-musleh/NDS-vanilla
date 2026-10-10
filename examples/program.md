@@ -11,7 +11,7 @@ layout_class: nds-card-view
 ---
 
 <!--Section 1: About the Program - Expandable Content -->
-<section id="aboutProgram" class="nds-content-section">
+<section id="about-program" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">About the Program</h2>
@@ -28,7 +28,7 @@ layout_class: nds-card-view
 </section>
 
 <!--Section 2: Program Description -->
-<section id="programDescription" class="nds-content-section">
+<section id="program-description" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Program Details</h2>
@@ -173,10 +173,10 @@ layout_class: nds-card-view
 </section>
 
 <!--Section 3: Tabs (Objectives, Requirements, Curriculum, Course Descriptions) -->
-<section id="programDetails" class="nds-content-section nds-ghost">
+<section id="program-details" class="nds-content-section nds-ghost">
     <div class="nds-section-wrapper">
         <div class="nds-section-body">
-            <div class="nds-tabs nds-divided nds-lg" id="programTabs">
+            <div class="nds-tabs nds-divided nds-lg" id="program-tabs">
                 <div class="nds-tab-list-container nds-scroll-more">
                     <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Program details navigation">
                         <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"

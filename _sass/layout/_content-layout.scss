@@ -84,7 +84,7 @@ main {
 
     /* ── Edge-to-edge ──
        body.nds-full-width (_reset.scss) is the single switch: it sets
-       --nds-content-MaxWidth: 100% page-wide, which widens the chrome. These
+       --nds-content-max-width: 100% page-wide, which widens the chrome. These
        rules take the layout's own gutters off to match, so the content area
        goes edge-to-edge from the same class — no per-layout modifier. */
 
@@ -144,7 +144,7 @@ main {
             section:not(.nds-hero-section, .nds-ghost) {
                 --_section-shadow-base: var(--shadow-md);
                 --_section-border-radius-base: var(--radius-md);
-                max-width: var(--nds-content-MaxWidth);
+                max-width: var(--nds-content-max-width);
                 margin-inline: auto;
                 padding-inline: var(--nds-viewport-padding);
 
@@ -168,7 +168,7 @@ main {
             @include desktop(min) {
                 --_wrapper-padding: 0;
                 // Insets to the cards' column. Not max-width + auto margins: .nds-content wraps, so its column is only as wide as its widest section.
-                padding-inline: max(0px, calc((100% - var(--nds-content-MaxWidth)) / 2));
+                padding-inline: max(0px, calc((100% - var(--nds-content-max-width)) / 2));
             }
 
             @include tablet(max) {
@@ -208,7 +208,7 @@ main {
     @include desktop(min) {
         &.nds-has-sidemenu {
             margin-inline: auto;
-            padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
+            padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-max-width)) / 2));
         }
 
         // Edge-to-edge wins over the centring gutter above — higher specificity

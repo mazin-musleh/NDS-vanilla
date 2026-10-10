@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 11:05 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="chartOverview" class="nds-content-section nds-doc-overview">
+<section id="chart-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,7 +30,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="chartMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="chart-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
@@ -39,7 +39,7 @@ Pick another component when:
 
 The JS tab is the `create()` call that draws the chart. To draw one with no script call, see HTML Attributes under Behavior.
 
-<script type="text/html" id="chart-demo" data-canon data-variants="chartVariantsTable" data-js="chart-js" data-preview="js">
+<script type="text/html" id="chart-demo" data-canon data-variants="chart-variants-table" data-js="chart-js" data-preview="js">
 <div id="chart-root" class="nds-chart"></div>
 </script>
 <script type="text/html" id="chart-js" data-canon data-lang="js">
@@ -57,7 +57,7 @@ NDS.Chart.create('#chart-root', {
   </div>
 </section>
 
-<section id="chartVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="chart-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -97,13 +97,13 @@ NDS.Chart.create('#chart-root', {
 | No grid | No grid | `grid: { show: false }` | `create({ type: 'line' })` | The same, on a line chart |
 | No legend | No legend | `legend: { show: false }` | `create()` | Hides the legend. Keep it when the chart has more than one series or slice |
 | No tooltip | No tooltip | `tooltip: { show: false }` | `create()` | No tooltip on hover or tap |
-{: #chartVariantsTable .nds-table .nds-responsive}
+{: #chart-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="chartBehavior" class="nds-content-section nds-doc-behavior">
+<section id="chart-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -147,7 +147,7 @@ NDS.Chart.create('#chart-days-root', {
   </div>
 </section>
 
-<section id="chartFeatures" class="nds-content-section nds-doc-features">
+<section id="chart-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -208,7 +208,7 @@ NDS.Chart.create('#chart-days-root', {
   </div>
 </section>
 
-<section id="chartPractices" class="nds-content-section nds-doc-practices">
+<section id="chart-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -227,7 +227,7 @@ NDS.Chart.create('#chart-days-root', {
   </div>
 </section>
 
-<section id="chartApi" class="nds-content-section nds-doc-api">
+<section id="chart-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -341,7 +341,7 @@ The full API is in the banner of `_js/nds-chart.js`.
   </div>
 </section>
 
-<section id="chartRelated" class="nds-content-section nds-doc-related">
+<section id="chart-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

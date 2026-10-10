@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="chipOverview" class="nds-content-section nds-doc-overview">
+<section id="chip-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="chipMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="chip-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="chip-single" data-canon data-variants="chipVariantsTable">
+<script type="text/html" id="chip-single" data-canon data-variants="chip-variants-table">
 <button type="button" class="nds-chip nds-primary">
   <span class="nds-label">Services</span>
 </button>
@@ -67,7 +67,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="chipVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="chip-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -97,13 +97,13 @@ A row on `.nds-chip` changes every chip. Selected goes on one chip: the builder 
 | Rounded | Rounded | `.nds-rounded` | `.nds-chip` | Fully round ends |
 | On color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-chip` | For chips on a deep primary or dark background |
 | Center | Center (hint: Group only) | `.nds-center` | `.nds-chips` | Centers the chips in their row |
-{: #chipVariantsTable .nds-table .nds-responsive}
+{: #chip-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="chipFeatures" class="nds-content-section nds-doc-features">
+<section id="chip-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -143,7 +143,7 @@ A row on `.nds-chip` changes every chip. Selected goes on one chip: the builder 
   </div>
 </section>
 
-<section id="chipPractices" class="nds-content-section nds-doc-practices">
+<section id="chip-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -157,13 +157,13 @@ A row on `.nds-chip` changes every chip. Selected goes on one chip: the builder 
 - Keep labels to one or two words. A label longer than 160px is cut with an ellipsis.
 - Add an icon only when it helps the user recognize the choice.
 - Give each chip `type="button"`, so a chip inside a form does not send the form.
-- On a deep primary or dark surface, add `nds-oncolor` for the DGA white look, or give the surface `data-theme="dark"` for the dark-mode chips. See [Dark Areas](../components/themes#themesDarkArea).
+- On a deep primary or dark surface, add `nds-oncolor` for the DGA white look, or give the surface `data-theme="dark"` for the dark-mode chips. See [Dark Areas](../components/themes#dark-areas).
 
 </div>
   </div>
 </section>
 
-<section id="chipApi" class="nds-content-section nds-doc-api">
+<section id="chip-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -238,7 +238,7 @@ The full API is in the banner of `_js/nds-core.js`.
   </div>
 </section>
 
-<section id="chipRelated" class="nds-content-section nds-doc-related">
+<section id="chip-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

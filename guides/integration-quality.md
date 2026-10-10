@@ -2,7 +2,7 @@
 layout: page
 title: NDS IQ
 since: "1.7.0"
-last_edit: "10/10/2026 - 04:53 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -17,11 +17,11 @@ sidemenu_mode: false
 {%- capture _instr %}{% include NDS-IQ.md %}{% endcapture %}
 {%- assign _iq_parts = _instr | split: 'instructions v' %}
 {%- assign _iq_v = _iq_parts[1] | split: ')' | first %}
-<section id="ndsIqGuide" class="nds-content-section nds-sideinfo-section">
+<section id="nds-iq-guide" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <aside class="nds-sideinfo nds-sticky nds-top" aria-label="On this page">
             <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 11"
-                data-toc-source="#ndsIqGuide article" data-toc-levels="h2, h3">
+                data-toc-source="#nds-iq-guide article" data-toc-levels="h2, h3">
                 <div class="nds-toc-head">
                     <span class="nds-label">On this page</span>
                     <h2 class="nds-toc-title nds-truncate">NDS IQ</h2>

@@ -9,7 +9,7 @@
  * Events:
  *   (none — the choice fires nds:cookies:consent from NDS.Cookies.save)
  * Hooks:
- *   #ndsCookiesPanel               a page's own panel, in the DOM or a <template>, replaces the
+ *   #nds-cookies-panel               a page's own panel, in the DOM or a <template>, replaces the
  *                                  built one: text, links and categories are then the page's
  *   data-cookies-toggle[="manage"] on any button outside the panel — opens it (armed by the loader)
  *   data-cookies-view              notice | manage | done — the views inside the panel
@@ -28,7 +28,7 @@
 (() => {
     'use strict';
 
-    const PANEL_ID = 'ndsCookiesPanel';
+    const PANEL_ID = 'nds-cookies-panel';
     const DISMISS_KEY = 'cookieConsentDismissed';
     const DELAY = 6000;
     const CATEGORIES = ['performance', 'functional', 'targeting'];
@@ -75,11 +75,11 @@
     </div>`;
     const category = (name, locked) => `<div class="nds-form-container nds-switch-container">
             <div class="nds-form-header">
-              <label for="ndsCookies-${name}"><span class="nds-label">${html(name)}</span>${locked ? `<span class="nds-info">${html(name + '_info')}</span>` : ''}</label>
+              <label for="nds-cookies-${name}"><span class="nds-label">${html(name)}</span>${locked ? `<span class="nds-info">${html(name + '_info')}</span>` : ''}</label>
             </div>
             <div class="nds-form-control">
               <div class="nds-switch">
-                <input type="checkbox" id="ndsCookies-${name}" class="nds-switch-input" data-cookies-category="${name}"${locked ? ' checked disabled' : ''}>
+                <input type="checkbox" id="nds-cookies-${name}" class="nds-switch-input" data-cookies-category="${name}"${locked ? ' checked disabled' : ''}>
                 <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
               </div>
             </div>

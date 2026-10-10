@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:20 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="radioOverview" class="nds-content-section nds-doc-overview">
+<section id="radio-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="radioMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="radio-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="radio-group" data-canon data-variants="radioVariantsTable">
+<script type="text/html" id="radio-group" data-canon data-variants="radio-variants-table">
 <fieldset class="nds-form-group nds-radio-group">
   <legend class="nds-label">Select your plan</legend>
   <div class="nds-form-container nds-radio-container">
@@ -78,7 +78,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="radioVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="radio-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -99,13 +99,13 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
 | Readonly | Readonly | `[data-state~="readonly"]` | `.nds-radio-container` | The group shows its value but cannot change, by pointer or by keyboard. Put it on every option's container. The tile outline takes the disabled color, and the fill stays |
 | Layout | Row | `.nds-horizontal` | `.nds-radio-group` | The options sit side by side and wrap |
 | Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/forms) |
-{: #radioVariantsTable .nds-table .nds-responsive}
+{: #radio-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="radioBehavior" class="nds-content-section nds-doc-behavior">
+<section id="radio-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -126,7 +126,7 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
   </div>
 </section>
 
-<section id="radioFeatures" class="nds-content-section nds-doc-features">
+<section id="radio-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -159,7 +159,7 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
   </div>
 </section>
 
-<section id="radioPractices" class="nds-content-section nds-doc-practices">
+<section id="radio-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -180,7 +180,7 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
   </div>
 </section>
 
-<section id="radioApi" class="nds-content-section nds-doc-api">
+<section id="radio-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -247,7 +247,7 @@ The full API is in the banner of `_js/nds-forms.js`.
   </div>
 </section>
 
-<section id="radioRelated" class="nds-content-section nds-doc-related">
+<section id="radio-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:41 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="migrationOverview" class="nds-content-section nds-doc-overview">
+<section id="migration-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -28,7 +28,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="migrationMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="migration-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Changed Names</h2>
@@ -41,13 +41,13 @@ Pick another component when:
       <div class="nds-toolbar">
         <div class="nds-toolbar-row">
           <div class="nds-toolbar-start">
-            <span class="nds-toolbar-text" data-paged-target="migrationRows">
+            <span class="nds-toolbar-text" data-paged-target="migration-rows">
               <span class="nds-records-view">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> names</span>
             </span>
           </div>
         </div>
         <div class="nds-toolbar-row">
-          <div class="nds-form-container nds-search-box" data-filter-target="migrationRows">
+          <div class="nds-form-container nds-search-box" data-filter-target="migration-rows">
             <div class="nds-search-content">
               <div class="nds-form-control">
                 <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
@@ -62,7 +62,7 @@ Pick another component when:
               </button>
             </div>
           </div>
-          <div class="nds-dropmenu nds-filter" data-filter-target="migrationRows">
+          <div class="nds-dropmenu nds-filter" data-filter-target="migration-rows">
             <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
               <i class="hgi hgi-stroke hgi-filter"></i>
               <span class="nds-label" data-hidden="sm sr">Filter</span>
@@ -99,7 +99,7 @@ Pick another component when:
         </div>
         <div class="nds-toolbar-row">
           <div class="nds-toolbar-start">
-            <div class="nds-filter-applied" data-filter-target="migrationRows" hidden>
+            <div class="nds-filter-applied" data-filter-target="migration-rows" hidden>
               <span class="nds-label">Applied Filters:</span>
               <div class="nds-chips"></div>
             </div>
@@ -108,11 +108,11 @@ Pick another component when:
       </div>
       <div class="nds-block">
         <div class="nds-table-wrapper nds-doc-table">
-          <table id="migrationTable" class="nds-table nds-compact">
+          <table id="migration-table" class="nds-table nds-compact">
             <thead>
               <tr><th>Name</th><th>Release</th><th>Change</th><th>Fix</th></tr>
             </thead>
-            <tbody id="migrationRows" class="nds-paged-content" data-filter-items="tr" style="--per-page:25;">
+            <tbody id="migration-rows" class="nds-paged-content" data-filter-items="tr" style="--per-page:25;">
 {%- for r in site.data.migrations %}
               <tr class="nds-page-item"><td><code class="nds-inline-code">{{ r.name | escape }}</code><br><small><span data-filter="kind">{{ r.kind }}</span>{% if r.scope %}{% assign first = r.scope | slice: 0 %}, {% if first == "&" %}on{% else %}inside{% endif %} <code class="nds-inline-code">{{ r.scope | remove_first: "&" | escape }}</code>{% endif %}</small></td><td><span data-filter="release">{{ r.since }}</span></td><td><span data-filter="change">{{ r.status }}</span>{% if r.inert %}<br><small>never read by NDS</small>{% endif %}</td><td>{{ r.fix | escape }}</td></tr>
 {%- endfor %}
@@ -120,7 +120,7 @@ Pick another component when:
           </table>
         </div>
       </div>
-      <nav class="nds-pagination nds-block" data-auto-pagination="migrationRows" aria-label="Changed names pagination"></nav>
+      <nav class="nds-pagination nds-block" data-auto-pagination="migration-rows" aria-label="Changed names pagination"></nav>
       <div class="nds-prose nds-block">
         <p>To find these names on a page, run the migration checks of the audit there. The first call loads the audit.</p>
       </div>
@@ -133,7 +133,7 @@ const findings = await NDS.Audit.run({ group: 'migration' });
   </div>
 </section>
 
-<section id="migrationBehavior" class="nds-content-section nds-doc-behavior">
+<section id="migration-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -164,7 +164,7 @@ An event name shows in the table, but the audit cannot find it: a page does not 
   </div>
 </section>
 
-<section id="migrationPractices" class="nds-content-section nds-doc-practices">
+<section id="migration-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -179,7 +179,7 @@ An event name shows in the table, but the audit cannot find it: a page does not 
   </div>
 </section>
 
-<section id="migrationRelated" class="nds-content-section nds-doc-related">
+<section id="migration-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

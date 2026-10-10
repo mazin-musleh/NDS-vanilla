@@ -38,7 +38,7 @@ hero_float_actions:
 </section>
 
 <!-- Automatic -->
-<section id="hajjApply" class="nds-content-section nds-demo-section">
+<section id="hajj-apply" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic</h2>
@@ -101,7 +101,7 @@ hero_float_actions:
 </section>
 
 <!-- Manual (no JavaScript) -->
-<section id="hajjManual" class="nds-content-section nds-demo-section">
+<section id="hajj-manual" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Manual (no JavaScript)</h2>
@@ -165,7 +165,7 @@ hero_float_actions:
 </section>
 
 <!-- Data Attributes -->
-<section id="hajjAttributes" class="nds-content-section nds-demo-section">
+<section id="hajj-attributes" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Data Attributes</h2>
@@ -190,7 +190,7 @@ hero_float_actions:
 </section>
 
 <!-- Built-in Features -->
-<section id="hajjFeatures" class="nds-content-section nds-demo-section">
+<section id="hajj-features" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -245,7 +245,7 @@ hero_float_actions:
 </section>
 
 <!-- Usage Guidelines -->
-<section id="hajjGuidelines" class="nds-content-section nds-demo-section">
+<section id="hajj-guidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

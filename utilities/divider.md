@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="dividerOverview" class="nds-content-section nds-doc-overview">
+<section id="divider-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="dividerMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="divider-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="divider-line" data-canon data-variants="dividerVariantsTable" data-demo-width="400px">
+<script type="text/html" id="divider-line" data-canon data-variants="divider-variants-table" data-demo-width="400px">
 <div>
   <p>Your request was received on 12 March 2026.</p>
   <hr class="nds-divider">
@@ -75,7 +75,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="dividerVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="divider-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -104,13 +104,13 @@ A Spacing class sets the space above and below a line, or before and after a ver
 | Color | Primary | `.nds-primary` | `.nds-divider` | A brand primary line |
 | On color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-divider` | For a divider on a deep primary or dark background: a faint white line and a white label. With Primary, the line is the same white as the label |
 | Thick | Thick | `--divider-size: 2px` | `.nds-divider` | A 2px line instead of 1px. Set it in the `style` attribute: there is no class for it |
-{: #dividerVariantsTable .nds-table .nds-responsive}
+{: #divider-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="dividerFeatures" class="nds-content-section nds-doc-features">
+<section id="divider-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -150,7 +150,7 @@ A Spacing class sets the space above and below a line, or before and after a ver
   </div>
 </section>
 
-<section id="dividerPractices" class="nds-content-section nds-doc-practices">
+<section id="divider-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -165,14 +165,14 @@ A Spacing class sets the space above and below a line, or before and after a ver
 - Pick the smallest spacing that gives enough room. Keep `nds-3xl` and `nds-4xl` for major breaks.
 - Put a vertical divider only in a flex row. Outside one it has no height to stretch to.
 - Use the default color for most dividers. Use `nds-primary` only where the line is an accent.
-- On a deep primary or dark surface, add `nds-oncolor`, or give the surface `data-theme="dark"`. See [Dark Areas](../components/themes#themesDarkArea).
+- On a deep primary or dark surface, add `nds-oncolor`, or give the surface `data-theme="dark"`. See [Dark Areas](../components/themes#dark-areas).
 - To change the line color on a tinted surface, set `--divider-color` on that surface, not on `:root`.
 
 </div>
   </div>
 </section>
 
-<section id="dividerApi" class="nds-content-section nds-doc-api">
+<section id="divider-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -197,7 +197,7 @@ Set these on `.nds-divider`, or on a parent to change every divider inside it. A
   </div>
 </section>
 
-<section id="dividerRelated" class="nds-content-section nds-doc-related">
+<section id="divider-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

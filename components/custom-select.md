@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="customSelectOverview" class="nds-content-section nds-doc-overview">
+<section id="custom-select-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="customSelectMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="custom-select-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="custom-select-field" data-canon data-variants="customSelectVariantsTable" data-harness="form" data-demo-width="300px">
+<script type="text/html" id="custom-select-field" data-canon data-variants="custom-select-variants-table" data-harness="form" data-demo-width="300px">
 <div class="nds-form-container nds-select">
   <div class="nds-form-header">
     <label for="custom-select-region">
@@ -115,7 +115,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="customSelectVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="custom-select-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -136,13 +136,13 @@ Pick another component when:
 | State (any) | Read-only | `[data-state~="readonly"]` | `.nds-select:not([data-state~="disabled"])` | The user sees the value but cannot change it. The value posts. Not with Disabled |
 | Validation | Required (hint: Press Validate with no option picked) | `[data-required]` | `.nds-select` | The form needs a pick. It does not submit while the field is empty |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Text Fields](../components/forms) |
-{: #customSelectVariantsTable .nds-table .nds-responsive}
+{: #custom-select-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="customSelectBehavior" class="nds-content-section nds-doc-behavior">
+<section id="custom-select-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -168,7 +168,7 @@ To show a saved value, write it in the `value` of `.nds-select-value`, and leave
   </div>
 </section>
 
-<section id="customSelectFeatures" class="nds-content-section nds-doc-features">
+<section id="custom-select-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -215,7 +215,7 @@ To show a saved value, write it in the `value` of `.nds-select-value`, and leave
   </div>
 </section>
 
-<section id="customSelectPractices" class="nds-content-section nds-doc-practices">
+<section id="custom-select-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -237,7 +237,7 @@ To show a saved value, write it in the `value` of `.nds-select-value`, and leave
   </div>
 </section>
 
-<section id="customSelectApi" class="nds-content-section nds-doc-api">
+<section id="custom-select-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>

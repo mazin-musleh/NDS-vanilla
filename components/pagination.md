@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 03:41 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="paginationOverview" class="nds-content-section nds-doc-overview">
+<section id="pagination-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="paginationMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="pagination-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="pg-buttons" data-canon data-variants="paginationVariantsTable">
+<script type="text/html" id="pg-buttons" data-canon data-variants="pagination-variants-table">
 <nav class="nds-pagination" aria-label="Pagination">
   <ul class="nds-pagination-list">
     <li class="nds-pagination-item nds-pagination-prev">
@@ -305,7 +305,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="paginationVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="pagination-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -331,13 +331,13 @@ Every option goes on the `nds-pagination` nav. Pages and Page links work only on
 | Page links | Page links (hint: Links in place of buttons, one URL per page) | `[data-page-url="?page={page}"]` | `.nds-pagination[data-total-pages]` | The script builds `<a href>` links in place of buttons, for a server that renders each page. `{page}` becomes the page number |
 | URL sync | URL sync (hint: Keeps the page number in the address) | `[data-page-param]` | `.nds-pagination` | Keeps the current page in the address as `?page=N`, so a reload or a shared link opens the same page |
 | No scroll | No scroll (hint: A page change does not scroll back to the content) | `[data-pagination-no-scroll]` | `.nds-pagination` | A page change does not scroll back to the content. Your script calls `NDS.Pagination.scrollToContent()` when it wants the scroll |
-{: #paginationVariantsTable .nds-table .nds-responsive}
+{: #pagination-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="paginationBehavior" class="nds-content-section nds-doc-behavior">
+<section id="pagination-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -388,7 +388,7 @@ After a page change, the script scrolls the content back into view when its top 
   </div>
 </section>
 
-<section id="paginationFeatures" class="nds-content-section nds-doc-features">
+<section id="pagination-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -456,7 +456,7 @@ After a page change, the script scrolls the content back into view when its top 
   </div>
 </section>
 
-<section id="paginationPractices" class="nds-content-section nds-doc-practices">
+<section id="pagination-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -477,7 +477,7 @@ After a page change, the script scrolls the content back into view when its top 
   </div>
 </section>
 
-<section id="paginationApi" class="nds-content-section nds-doc-api">
+<section id="pagination-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -562,7 +562,7 @@ The full API is in the banner of `_js/nds-pagination.js`.
   </div>
 </section>
 
-<section id="paginationRelated" class="nds-content-section nds-doc-related">
+<section id="pagination-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

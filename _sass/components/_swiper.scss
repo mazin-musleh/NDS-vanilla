@@ -262,10 +262,10 @@
     gap: var(--spacing-xl);
     z-index: 5;
 
-    padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
+    padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-max-width)) / 2));
 
     .nds-max-width & {
-        padding-inline: max(calc(var(--nds-viewport-padding) + var(--spacing-lg)), calc((100% - var(--nds-content-MaxWidth)) / 2));
+        padding-inline: max(calc(var(--nds-viewport-padding) + var(--spacing-lg)), calc((100% - var(--nds-content-max-width)) / 2));
     }
 
     .nds-swiper-buttons {

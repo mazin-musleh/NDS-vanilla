@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 03:10 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="swiperOverview" class="nds-content-section nds-doc-overview">
+<section id="swiper-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="swiperMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="swiper-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="swiper-cards" data-canon data-variants="swiperVariantsTable">
+<script type="text/html" id="swiper-cards" data-canon data-variants="swiper-variants-table">
 <div class="nds-swiper" style="--max-slides: 3; --mid-slides: 2; --min-slides: 1">
   <div class="nds-swiper-wrapper">
     <div class="nds-swiper-slide">
@@ -203,7 +203,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="swiperVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="swiper-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -234,13 +234,13 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 | Peek | Peek (hint: Shows the edge of the next slide) | `--peek: 40px` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | Shows 40px of the next slide, so the user sees there is more. Any length works |
 | Loop | Loop | `[data-swiper-loop]` | `.nds-swiper:not(.nds-spotlight)` | An endless row: the first slide follows the last |
 | Loading | Loading (hint: Skeleton placeholders) | `.nds-loading` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | Every card shows as a skeleton while its data loads. Remove the class when the data is in |
-{: #swiperVariantsTable .nds-table .nds-responsive}
+{: #swiper-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="swiperBehavior" class="nds-content-section nds-doc-behavior">
+<section id="swiper-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -281,7 +281,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
   </div>
 </section>
 
-<section id="swiperFeatures" class="nds-content-section nds-doc-features">
+<section id="swiper-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -349,7 +349,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
   </div>
 </section>
 
-<section id="swiperPractices" class="nds-content-section nds-doc-practices">
+<section id="swiper-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -362,7 +362,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 - Give the slides in one swiper the same height. The tallest slide sets the height of the row.
 - Load the images of later slides with `data-src` and `data-srcset`, not `src`. Give the first image `fetchpriority="high"`.
 - Give a lazy image a width and a height, or an `aspect-ratio`. Before it loads it has no size of its own, so its skeleton does not show.
-- To run the row to the edges of the page, put the swiper in a section body with `nds-max-width`. See [Section](../layout/section#sectionBreakout).
+- To run the row to the edges of the page, put the swiper in a section body with `nds-max-width`. See [Section](../layout/section#section-breakout-behavior).
 - Add `--peek` when the slides do not fit on one page, so the user sees there is more.
 - Keep a hero to four slides or fewer. Few users reach the later ones.
 - Put one element in each spotlight slide, such as an image or a card. The spotlight shrinks and grows that one element.
@@ -373,7 +373,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
   </div>
 </section>
 
-<section id="swiperApi" class="nds-content-section nds-doc-api">
+<section id="swiper-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -476,7 +476,7 @@ The full API is in the banner of `_js/nds-swiper.js`.
   </div>
 </section>
 
-<section id="swiperRelated" class="nds-content-section nds-doc-related">
+<section id="swiper-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

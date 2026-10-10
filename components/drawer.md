@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="drawerOverview" class="nds-content-section nds-doc-overview">
+<section id="drawer-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -32,13 +32,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="drawerMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="drawer-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="drawer-nested" data-canon data-variants="drawerVariantsTable">
+<script type="text/html" id="drawer-nested" data-canon data-variants="drawer-variants-table">
 <nav class="nds-drawer" aria-label="Service menu">
   <ul class="nds-drawer-list">
     <li>
@@ -264,7 +264,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="drawerVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="drawer-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -286,13 +286,13 @@ The current page's `<li>` carries `data-state="active"`. To open a submenu at lo
 | Card | Card | `.nds-card` | `.nds-drawer` | A card background and rounded corners, so the drawer sits in a grid of cards |
 | Stroke | Stroke | `.nds-stroke` | `.nds-drawer.nds-card` | A border around the card |
 | Always open | Always open (hint: Several submenus stay open at once) | `[data-state~="always-open"]` | `.nds-drawer:has(.nds-menu-btn)` | Several submenus stay open at once. Without it, opening a submenu closes the open one next to it |
-{: #drawerVariantsTable .nds-table .nds-responsive}
+{: #drawer-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="drawerBehavior" class="nds-content-section nds-doc-behavior">
+<section id="drawer-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -323,7 +323,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
   </div>
 </section>
 
-<section id="drawerFeatures" class="nds-content-section nds-doc-features">
+<section id="drawer-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -377,7 +377,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
   </div>
 </section>
 
-<section id="drawerPractices" class="nds-content-section nds-doc-practices">
+<section id="drawer-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -397,7 +397,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
   </div>
 </section>
 
-<section id="drawerApi" class="nds-content-section nds-doc-api">
+<section id="drawer-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -481,7 +481,7 @@ The full API is in the banner of `_js/nds-drawer.js`.
   </div>
 </section>
 
-<section id="drawerRelated" class="nds-content-section nds-doc-related">
+<section id="drawer-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

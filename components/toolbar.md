@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.6.0"
-last_edit: "10/10/2026 - 03:41 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="toolbarOverview" class="nds-content-section nds-doc-overview">
+<section id="toolbar-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,13 +29,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="toolbarMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="toolbar-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="toolbar-line" data-canon data-variants="toolbarVariantsTable">
+<script type="text/html" id="toolbar-line" data-canon data-variants="toolbar-variants-table">
 <div class="nds-toolbar">
   <div class="nds-toolbar-start">
     <div class="nds-content-placeholder nds-sm">Start</div>
@@ -68,7 +68,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="toolbarVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="toolbar-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -82,13 +82,13 @@ The dashed boxes are [Content Placeholder](../utilities/content-placeholder) ite
 | Structure | One line (default) | — | — | Items at the start and at the end. They wrap onto a new line when they do not fit |
 | Structure | Rows (hint: Each row takes a line of its own) | canon `#toolbar-rows` | — | Each `nds-toolbar-row` takes a line of its own. Use it when the bar needs more than one line, or to keep some items together on one line at every width |
 | Margin | No margin | `--toolbar-margin-block: 0` | `.nds-toolbar` | No space above or below the bar. Use it when the parent, such as a card, already sets the space |
-{: #toolbarVariantsTable .nds-table .nds-responsive}
+{: #toolbar-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="toolbarExamples" class="nds-content-section nds-doc-examples">
+<section id="toolbar-examples" class="nds-content-section nds-doc-examples">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Examples</h2>
@@ -195,7 +195,7 @@ The toolbar of the [Editor](../components/editor).
   </div>
 </section>
 
-<section id="toolbarFeatures" class="nds-content-section nds-doc-features">
+<section id="toolbar-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -242,7 +242,7 @@ The toolbar of the [Editor](../components/editor).
   </div>
 </section>
 
-<section id="toolbarPractices" class="nds-content-section nds-doc-practices">
+<section id="toolbar-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -264,7 +264,7 @@ The toolbar of the [Editor](../components/editor).
   </div>
 </section>
 
-<section id="toolbarApi" class="nds-content-section nds-doc-api">
+<section id="toolbar-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -295,7 +295,7 @@ The toolbar of the [Editor](../components/editor).
   </div>
 </section>
 
-<section id="toolbarRelated" class="nds-content-section nds-doc-related">
+<section id="toolbar-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

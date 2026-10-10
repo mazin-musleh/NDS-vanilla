@@ -63,7 +63,7 @@
     // trusting it here silently orphaned the whole component: resolvePanel()
     // returned null, but _initDone was already set, so nothing — not even the
     // real FAB — could ever arm it again for the rest of the page.
-    const PANEL_ID = 'ndsAccessibilityPanel';
+    const PANEL_ID = 'nds-accessibility-panel';
 
     const { add: addState, remove: removeState, has: hasState, clear: clearState } = NDS.State;
 
@@ -618,9 +618,9 @@
             return root ? root.querySelectorAll(sel).length : 0;
         };
         const counts = {
-            modes:    countActive('#a11yModesCollapse',    'input[data-a11y-mode]:checked'),
-            readable: countActive('#a11yReadableCollapse', 'button[aria-pressed="true"]'),
-            visual:   countActive('#a11yVisualCollapse',   'button[aria-pressed="true"]'),
+            modes:    countActive('#a11y-modes-collapse',    'input[data-a11y-mode]:checked'),
+            readable: countActive('#a11y-readable-collapse', 'button[aria-pressed="true"]'),
+            visual:   countActive('#a11y-visual-collapse',   'button[aria-pressed="true"]'),
         };
         panel.querySelectorAll('[data-a11y-count]').forEach(el => {
             const n = counts[el.dataset.a11yCount] || 0;
@@ -1067,7 +1067,7 @@
     // to reposition both itself (data-fab-pos="auto") and the panel it builds — no
     // JS edit needed for the common case.
     function panelMarkup(side) {
-        return `<aside id="ndsAccessibilityPanel"
+        return `<aside id="nds-accessibility-panel"
        class="nds-panel nds-accessibility-panel"
        data-panel-side="${side}"
        aria-label="Accessibility settings"
@@ -1112,7 +1112,7 @@
              Modes (switches), Readable Experience (tile grid), Visually
              Pleasing (tile grid). First item open by default; the other
              two collapsed to keep the panel compact on first open. -->
-        <div class="nds-accordion nds-lg nds-accessibility-modes" id="a11yAccordion">
+        <div class="nds-accordion nds-lg nds-accessibility-modes" id="a11y-accordion">
 
             <!-- Item 1: Accessibility Modes (bundle switches) -->
             <div class="nds-accordion-item">
@@ -1121,11 +1121,11 @@
                             type="button"
                             aria-expanded="true"
                             data-state="open"
-                            aria-controls="a11yModesCollapse">
+                            aria-controls="a11y-modes-collapse">
                         <span class="nds-accordion-title"><span data-i18n="section_modes">Accessibility Modes</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="modes" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="modes"></span></span>
                     </button>
                 </h3>
-                <div class="nds-accordion-collapse" id="a11yModesCollapse" data-state="open">
+                <div class="nds-accordion-collapse" id="a11y-modes-collapse" data-state="open">
                     <div class="nds-accordion-content">
                         <div class="nds-accordion-body">
                             <fieldset class="nds-form-group nds-switch-group">
@@ -1247,11 +1247,11 @@
                     <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
                             type="button"
                             aria-expanded="false"
-                            aria-controls="a11yReadableCollapse">
+                            aria-controls="a11y-readable-collapse">
                         <span class="nds-accordion-title"><span data-i18n="section_readable">Readable Experience</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="readable" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="readable"></span></span>
                     </button>
                 </h3>
-                <div class="nds-accordion-collapse" id="a11yReadableCollapse">
+                <div class="nds-accordion-collapse" id="a11y-readable-collapse">
                     <div class="nds-accordion-content">
                         <div class="nds-accordion-body">
                             <div class="nds-grid" role="group" aria-label="Readable experience controls" data-i18n-attr="aria-label:aria_readable">
@@ -1328,11 +1328,11 @@
                     <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
                             type="button"
                             aria-expanded="false"
-                            aria-controls="a11yVisualCollapse">
+                            aria-controls="a11y-visual-collapse">
                         <span class="nds-accordion-title"><span data-i18n="section_visual">Visually Pleasing Experience</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="visual" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="visual"></span></span>
                     </button>
                 </h3>
-                <div class="nds-accordion-collapse" id="a11yVisualCollapse">
+                <div class="nds-accordion-collapse" id="a11y-visual-collapse">
                     <div class="nds-accordion-content">
                         <div class="nds-accordion-body">
                             <div class="nds-grid" role="group" aria-label="Visual adjustments" data-i18n-attr="aria-label:aria_visual">

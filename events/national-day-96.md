@@ -38,7 +38,7 @@ hero_float_actions:
 </section>
 
 <!-- Automatic -->
-<section id="nd96Apply" class="nds-content-section nds-demo-section">
+<section id="nd96-apply" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic</h2>
@@ -125,7 +125,7 @@ hero_float_actions:
 </section>
 
 <!-- Manual (no JavaScript) -->
-<section id="nd96Manual" class="nds-content-section nds-demo-section">
+<section id="nd96-manual" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Manual (no JavaScript)</h2>
@@ -255,7 +255,7 @@ hero_float_actions:
 </section>
 
 <!-- Data Attributes -->
-<section id="nd96Attributes" class="nds-content-section nds-demo-section">
+<section id="nd96-attributes" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Data Attributes</h2>
@@ -282,7 +282,7 @@ hero_float_actions:
 </section>
 
 <!-- Built-in Features -->
-<section id="nd96Features" class="nds-content-section nds-demo-section">
+<section id="nd96-features" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -344,7 +344,7 @@ hero_float_actions:
 </section>
 
 <!-- Usage Guidelines -->
-<section id="nd96Guidelines" class="nds-content-section nds-demo-section">
+<section id="nd96-guidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

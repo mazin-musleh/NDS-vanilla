@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.5"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 02:08 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="accessibilityOverview" class="nds-content-section nds-doc-overview">
+<section id="accessibility-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -29,7 +29,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="accessibilityMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="accessibility-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
@@ -37,7 +37,7 @@ Pick another component when:
     <div class="nds-section-body nds-prose" markdown="1">
 
 <script type="text/html" id="a11y-preview" data-canon data-code="none" data-screens="none">
-<button type="button" class="nds-btn nds-secondary-outline" data-accessibility-toggle data-panel-toggle="ndsAccessibilityPanel">
+<button type="button" class="nds-btn nds-secondary-outline" data-accessibility-toggle data-panel-toggle="nds-accessibility-panel">
   <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
   <span class="nds-label">Open the accessibility panel</span>
 </button>
@@ -52,7 +52,7 @@ Pick another component when:
         aria-expanded="false"
         data-fab-pos="auto"
         data-panel-side="end"
-        data-panel-toggle="ndsAccessibilityPanel"
+        data-panel-toggle="nds-accessibility-panel"
         data-accessibility-toggle
         hidden>
   <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
@@ -65,7 +65,7 @@ The FAB ships `hidden`, and the FAB script shows it once it is docked. A new pag
   </div>
 </section>
 
-<section id="accessibilityBehavior" class="nds-content-section nds-doc-behavior">
+<section id="accessibility-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -78,7 +78,7 @@ The FAB ships `hidden`, and the FAB script shows it once it is docked. A new pag
 Any button with `data-accessibility-toggle` and `data-panel-toggle` opens the panel, as the FAB does. The first attribute builds the panel on the first press, with a spinner on the button for about one second. The second opens and closes the panel after that. To open it from your own code, call `NDS.Accessibility.open()`, as in the API.
 
 <script type="text/html" id="a11y-trigger" data-canon data-preview="none">
-<button type="button" class="nds-btn nds-secondary-outline" data-accessibility-toggle data-panel-toggle="ndsAccessibilityPanel">
+<button type="button" class="nds-btn nds-secondary-outline" data-accessibility-toggle data-panel-toggle="nds-accessibility-panel">
   <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
   <span class="nds-label">Accessibility settings</span>
 </button>
@@ -101,7 +101,7 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
 
 <script type="text/html" id="a11y-panel" data-canon data-preview="none">
 <template class="nds-panel-template">
-  <aside id="ndsAccessibilityPanel"
+  <aside id="nds-accessibility-panel"
      class="nds-panel nds-accessibility-panel"
      data-panel-side="end"
      aria-label="Accessibility settings"
@@ -146,7 +146,7 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
         Modes (switches), Readable Experience (tile grid), Visually
         Pleasing (tile grid). First item open by default; the other
         two collapsed to keep the panel compact on first open. -->
-      <div class="nds-accordion nds-lg nds-accessibility-modes" id="a11yAccordion">
+      <div class="nds-accordion nds-lg nds-accessibility-modes" id="a11y-accordion">
 
         <!-- Item 1: Accessibility Modes (bundle switches) -->
         <div class="nds-accordion-item">
@@ -155,11 +155,11 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
                 type="button"
                 aria-expanded="true"
                 data-state="open"
-                aria-controls="a11yModesCollapse">
+                aria-controls="a11y-modes-collapse">
               <span class="nds-accordion-title"><span data-i18n="section_modes">Accessibility Modes</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="modes" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="modes"></span></span>
             </button>
           </h3>
-          <div class="nds-accordion-collapse" id="a11yModesCollapse" data-state="open">
+          <div class="nds-accordion-collapse" id="a11y-modes-collapse" data-state="open">
             <div class="nds-accordion-content">
               <div class="nds-accordion-body">
                 <fieldset class="nds-form-group nds-switch-group">
@@ -281,11 +281,11 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
             <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
                 type="button"
                 aria-expanded="false"
-                aria-controls="a11yReadableCollapse">
+                aria-controls="a11y-readable-collapse">
               <span class="nds-accordion-title"><span data-i18n="section_readable">Readable Experience</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="readable" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="readable"></span></span>
             </button>
           </h3>
-          <div class="nds-accordion-collapse" id="a11yReadableCollapse">
+          <div class="nds-accordion-collapse" id="a11y-readable-collapse">
             <div class="nds-accordion-content">
               <div class="nds-accordion-body">
                 <div class="nds-grid" role="group" aria-label="Readable experience controls" data-i18n-attr="aria-label:aria_readable">
@@ -362,11 +362,11 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
             <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
                 type="button"
                 aria-expanded="false"
-                aria-controls="a11yVisualCollapse">
+                aria-controls="a11y-visual-collapse">
               <span class="nds-accordion-title"><span data-i18n="section_visual">Visually Pleasing Experience</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="visual" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="visual"></span></span>
             </button>
           </h3>
-          <div class="nds-accordion-collapse" id="a11yVisualCollapse">
+          <div class="nds-accordion-collapse" id="a11y-visual-collapse">
             <div class="nds-accordion-content">
               <div class="nds-accordion-body">
                 <div class="nds-grid" role="group" aria-label="Visual adjustments" data-i18n-attr="aria-label:aria_visual">
@@ -445,7 +445,7 @@ The panel reads its text from `assets/i18n/accessibility/en.json` and `ar.json`.
   </div>
 </section>
 
-<section id="accessibilityFeatures" class="nds-content-section nds-doc-features">
+<section id="accessibility-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -520,7 +520,7 @@ The panel reads its text from `assets/i18n/accessibility/en.json` and `ar.json`.
   </div>
 </section>
 
-<section id="accessibilityPractices" class="nds-content-section nds-doc-practices">
+<section id="accessibility-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -540,7 +540,7 @@ The panel reads its text from `assets/i18n/accessibility/en.json` and `ar.json`.
   </div>
 </section>
 
-<section id="accessibilityApi" class="nds-content-section nds-doc-api">
+<section id="accessibility-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -567,14 +567,14 @@ The panel reads its text from `assets/i18n/accessibility/en.json` and `ar.json`.
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-accessibility-toggle` | the FAB, or any button outside the panel | The first press loads the script and builds the panel. Pair it with `data-panel-toggle` |
-| `data-panel-toggle` | the same button | `="ndsAccessibilityPanel"`. Opens and closes the built panel and sets `aria-expanded`. The script adds `aria-controls` once it builds the panel, so the markup leaves it out. See [Panels](../components/panels) |
+| `data-panel-toggle` | the same button | `="nds-accessibility-panel"`. Opens and closes the built panel and sets `aria-expanded`. The script adds `aria-controls` once it builds the panel, so the markup leaves it out. See [Panels](../components/panels) |
 | `data-panel-side` | every `data-accessibility-toggle` button | The edge the panel slides from: `end` (default), `start`, `left` or `right`. `start` and `end` flip with the text direction. The script copies it from the first button pressed onto the panel it builds |
 | `data-fab-pos` | the FAB | The FAB's edge: `start`, `end`, `left`, `right` or `bottom`. `auto` docks on the FAB's `data-panel-side`. See [FAB](../components/fab) |
 | `data-state~="loading"` | the pressed button | The script sets it while the panel loads, and removes it about one second later |
 | `data-accessibility-panel` | the panel `<aside>` | Marks the panel. A panel already in the page is used instead of a template |
 | `data-armed` | the panel `<aside>` | The script sets it when it builds the panel |
 | `data-a11y-status` | a screen-reader `role="status"` element in the panel | The script writes each announcement in it |
-| `data-a11y-count` | the count tag in an accordion title | `modes`, `readable` or `visual`. The script writes the group's count in it. It counts inside `#a11yModesCollapse`, `#a11yReadableCollapse` and `#a11yVisualCollapse`, so keep those ids |
+| `data-a11y-count` | the count tag in an accordion title | `modes`, `readable` or `visual`. The script writes the group's count in it. It counts inside `#a11y-modes-collapse`, `#a11y-readable-collapse` and `#a11y-visual-collapse`, so keep those ids |
 | `data-a11y-count-sr` | a screen-reader span next to the tag | The same group names. The script writes the count as text for screen readers |
 | `data-mode-id` | a mode switch container | The mode whose name and description the language file writes in it |
 | `data-a11y-mode` | a mode switch input, or a tile button | The mode or token the control turns on and off: a name from Modes or from Tokens on `<html>` |

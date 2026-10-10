@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="dropmenuOverview" class="nds-content-section nds-doc-overview">
+<section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -32,13 +32,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="dropmenuMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="dropmenu-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="dm-actions" data-canon data-variants="dmVariantsTable" data-harness="form">
+<script type="text/html" id="dm-actions" data-canon data-variants="dm-variants-table" data-harness="form">
 <div class="nds-dropmenu">
   <button type="button" class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
     <span class="nds-label">Actions</span>
@@ -228,7 +228,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="dropmenuVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="dropmenu-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -256,13 +256,13 @@ Every option goes on the `nds-dropmenu` wrapper, except Center items, which goes
 | Required | Required | `[data-required]` | `.nds-dropmenu[data-select-name]` | The form does not submit until a value is picked |
 | Center items | Center items (hint: For short labels) | `.nds-center` | `.nds-dropmenu-menu` | Centers each item's label. For short values, such as numbers |
 | Delay | Delayed open (hint: Waits with a spinner while your script fills the menu) | `[data-delay="800"]` | `.nds-dropmenu` | The first open waits 800 ms, with a spinner on the trigger, while your script fills the menu |
-{: #dmVariantsTable .nds-table .nds-responsive}
+{: #dm-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="dropmenuBehavior" class="nds-content-section nds-doc-behavior">
+<section id="dropmenu-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -308,7 +308,7 @@ A lazy menu keeps its items in a `<template>`, so they are not in the page until
   </div>
 </section>
 
-<section id="dropmenuFeatures" class="nds-content-section nds-doc-features">
+<section id="dropmenu-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -355,7 +355,7 @@ A lazy menu keeps its items in a `<template>`, so they are not in the page until
   </div>
 </section>
 
-<section id="dropmenuPractices" class="nds-content-section nds-doc-practices">
+<section id="dropmenu-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -376,7 +376,7 @@ A lazy menu keeps its items in a `<template>`, so they are not in the page until
   </div>
 </section>
 
-<section id="dropmenuApi" class="nds-content-section nds-doc-api">
+<section id="dropmenu-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -482,7 +482,7 @@ The full API is in the banner of `_js/nds-dropmenu.js`.
   </div>
 </section>
 
-<section id="dropmenuRelated" class="nds-content-section nds-doc-related">
+<section id="dropmenu-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

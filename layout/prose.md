@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "03/10/2026 - 12:12 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="proseOverview" class="nds-content-section nds-doc-overview">
+<section id="prose-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="proseMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="prose-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="prose-article" data-canon data-variants="proseVariantsTable" data-demo-width="100%">
+<script type="text/html" id="prose-article" data-canon data-variants="prose-variants-table" data-demo-width="100%">
 <!-- A classless article: no element inside has a class, except the alert component -->
 <article class="nds-prose">
   <h2>Passport Renewal</h2>
@@ -102,7 +102,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="proseVariants" class="nds-content-section nds-doc-variants" hidden>
+<section id="prose-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -114,13 +114,13 @@ Pick another component when:
 | Prose | Prose (default) | `.nds-prose` | `article` | Styles the classless elements inside. Turn it off to see the same markup without it |
 | Card | Card | `.nds-card` | `article` | Puts the text in a card with padding and a 1px border. Write both classes |
 | Card | Card | `.nds-stroke` | `article` | The card's border. Written with `nds-card` |
-{: #proseVariantsTable .nds-table .nds-responsive}
+{: #prose-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="proseFeatures" class="nds-content-section nds-doc-features">
+<section id="prose-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -181,7 +181,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="prosePractices" class="nds-content-section nds-doc-practices">
+<section id="prose-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -201,7 +201,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="proseApi" class="nds-content-section nds-doc-api">
+<section id="prose-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -238,7 +238,7 @@ Some elements are styled on every page, with or without `nds-prose`. Others are 
   </div>
 </section>
 
-<section id="proseRelated" class="nds-content-section nds-doc-related">
+<section id="prose-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

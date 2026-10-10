@@ -8,10 +8,10 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "09/10/2026 - 02:29 AM"
+last_edit: "10/10/2026 - 05:28 PM"
 ---
 
-<section id="refreshOverview" class="nds-content-section nds-doc-overview">
+<section id="refresh-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -30,7 +30,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="refreshMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="refresh-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage</h2>
@@ -40,7 +40,7 @@ Pick another component when:
 Add, edit or remove rows, then make one call on the container.
 
 <script type="text/html" id="refresh-rows" data-canon data-lang="js">
-const tbody = document.getElementById('requestsTableBody');
+const tbody = document.getElementById('requests-table-body');
 
 // Change the rows the way your app does it
 tbody.appendChild(buildRow(record));
@@ -71,7 +71,7 @@ NDS.Init.refresh(tbody);
   </div>
 </section>
 
-<section id="refreshBehavior" class="nds-content-section nds-doc-behavior">
+<section id="refresh-behavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Behavior</h2>
@@ -106,7 +106,7 @@ Call `window.NDS?.Init.mount(view)` after a view mounts, and `window.NDS?.Init.d
   </div>
 </section>
 
-<section id="refreshFeatures" class="nds-content-section nds-doc-features">
+<section id="refresh-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -160,7 +160,7 @@ Call `window.NDS?.Init.mount(view)` after a view mounts, and `window.NDS?.Init.d
   </div>
 </section>
 
-<section id="refreshPractices" class="nds-content-section nds-doc-practices">
+<section id="refresh-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -183,7 +183,7 @@ Call `window.NDS?.Init.mount(view)` after a view mounts, and `window.NDS?.Init.d
   </div>
 </section>
 
-<section id="refreshApi" class="nds-content-section nds-doc-api">
+<section id="refresh-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -266,7 +266,7 @@ The full API is in the banner of `_js/nds-loader.js`.
   </div>
 </section>
 
-<section id="refreshRelated" class="nds-content-section nds-doc-related">
+<section id="refresh-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>
