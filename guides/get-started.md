@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "10/10/2026 - 08:08 PM"
+last_edit: "10/10/2026 - 08:35 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -67,7 +67,7 @@ sidemenu_mode: false
                 </div>
 
                 <h2 id="setup">1. Setup</h2>
-                <p>Setup runs once. The agent installs NDS IQ, downloads the template, sets the project paths, and writes a plan for you to review.</p>
+                <p>Setup runs once. The agent installs NDS IQ, downloads the template, writes a plan, and asks you its questions once. Then it builds.</p>
 
                 <h3 id="instructions-block">Setup Prompt</h3>
                 <p>Open a new agent session and paste this prompt:</p>
@@ -81,7 +81,7 @@ sidemenu_mode: false
 Download the raw file to `NDS-IQ.md` at the project root using `curl` or another direct HTTP client. Do not use a web-fetch tool: it may save a re-rendered copy.
 https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/NDS-IQ.md
 
-Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. This is the project's UI-layer rulebook. All NDS work runs by its rules. Set up NDS IQ in this project as its install section describes.
+Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. This is the project's UI-layer rulebook. All NDS work runs by its rules. Set up NDS IQ in this project as its install section describes, then build the plan.
                     </code>
                 </div>
 
@@ -180,7 +180,7 @@ Inventory the project and write NDS-PLAN.md for my review.
                 </div>
 
                 <h2 id="sessions">2. Build</h2>
-                <p>Once you approve the plan, ask for what you want: the outcome, the content, the data, and any limits. NDS IQ decides how the agent builds it.</p>
+                <p>Your answers to the plan review approve the plan, and the agent starts building right away. After that, ask for what you want: the outcome, the content, the data, and any limits. NDS IQ decides how the agent builds it.</p>
 
                 <h3 id="agent-drives">Pace</h3>
                 <p>Pick one:</p>
