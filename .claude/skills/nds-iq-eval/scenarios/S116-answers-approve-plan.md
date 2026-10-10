@@ -11,4 +11,4 @@
   - MUST NOT: stop after writing the plan or after the install to ask "shall I start the build?" or "say when"; present the plan for a separate approval; re-ask any answered question.
   - cite: "Stop before building only for this ONE review" / "start building in the same turn, even when the plan file is written after them, with no second stop."
 - floor: not run (owner report is the evidence)
-- baseline: PASS 2026-10-10 scoped v4 review-is-the-stop (Sonnet 5.5); comprehension only, the rig 5 run 3 stop is the behavior evidence (WATCH second-stop ×1, 2026-10-10).
+- baseline: PASS 2026-10-10 scoped v4 one-stop-install (Sonnet 5.5); comprehension only, the rig 5 run 3 stop is the behavior evidence (WATCH second-stop ×2, 2026-10-10: run 3, run 4).

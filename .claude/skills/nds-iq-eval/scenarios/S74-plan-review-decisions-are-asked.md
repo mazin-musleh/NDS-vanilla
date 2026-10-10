@@ -2,7 +2,7 @@
 
 
 - mode: comprehension
-- rules: §Plan ("Ask every project-wide decision in ONE review"; "Ask it through the host's question tool … With no such tool, ask in one numbered message."; "each with options and a recommended default, and record the answers in the plan"; "In every phase, the conversation asks and the plan records.")
+- rules: §Plan ("Ask every project-wide decision in ONE review"; "Ask it in the same turn you write the plan, never in a message that offers to ask, through the host's question tool … With no such tool, ask in one numbered message."; "each with options and a recommended default, and record the answers in the plan"; "In every phase, the conversation asks and the plan records.")
 - provenance: rig 6 cycle 2 (2026-08-14): at the review gate the agent filed six open decisions in `NDS-PLAN.md` and told the dev to answer from there, because the old text never said where or how to ask.
 - setup: First session; step 1 inventory done; `NDS-PLAN.md` written with all pages and four open project-wide decisions (porting-file convention, a required CSP grant, a shared layout partial, build pacing). Nothing built yet.
 - prompt: the dev's message: "the plan's written — what do you need from me?"

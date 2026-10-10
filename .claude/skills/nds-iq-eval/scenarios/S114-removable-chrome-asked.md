@@ -11,4 +11,4 @@
   - MUST NOT: decide the stamp by inferring whether the library is a government entity; ship the stamp without asking; ask about the top bar, dark mode or other chrome; ask about CSP.
   - cite: "the plan review asks whether the site holds it, and it ships only if so" / "never infer affiliation"
 - floor: not run (the field FAIL on the v4.0 text is the evidence)
-- baseline: PASS 2026-10-10 scoped v4 one-stop review (Sonnet 5.5).
+- baseline: PASS 2026-10-10 scoped v4 one-stop-install (Sonnet 5.5).
