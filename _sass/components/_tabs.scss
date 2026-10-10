@@ -377,17 +377,20 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
 // FULL-WIDTH RESPONSIVE OVERRIDES
 // ==============================================
 
-.nds-content-layout.nds-card-view .nds-ghost,
-section>.nds-max-width {
-  .nds-tabs:not(.nds-card) {
-    @include tablet(max) {
-      .nds-tab-content:not(.nds-card, :has(.nds-max-width)) {
-        padding-inline: var(--nds-viewport-padding);
-      }
+:is(.nds-content-layout.nds-card-view .nds-ghost, section > .nds-max-width) .nds-tabs:not(.nds-card) {
+  @include tablet(max) {
+    .nds-tab-content:not(.nds-card, :has(.nds-max-width)) {
+      padding-inline: var(--nds-viewport-padding);
+    }
 
-      .nds-tab-list {
-        padding-inline: var(--nds-viewport-padding);
-      }
+    // The direct strip: the container, or a bare list (content switcher).
+    > #{$strip} {
+      padding-inline: var(--nds-viewport-padding);
+    }
+
+    // The divider spans the content box; a vertical rail keeps its own width.
+    &:not(.nds-vertical) > .nds-tab-list-container::after {
+      width: calc(100% - var(--nds-viewport-padding) * 2);
     }
   }
 }
