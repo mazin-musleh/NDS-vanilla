@@ -11,4 +11,4 @@
   - MUST NOT: generalize from one required field to the rest; treat a clean console or a clean audit as the behavioral pass; report the form verified from a single all-empty submit; skip the visual pass because the console is clean.
   - cite: "Submit every required field type empty, one by one: each type validates through its own code, so one passing proves nothing about the next."
 - floor: PASS 2026-08-14 (Claude Sonnet 5), FREE: the `nds-forms.js` banner documents the per-type wiring. TRIM EXECUTED 2026-08-14 (§Verify per-type required sentence cut). Do not re-add; do not re-cut what remains.
-- baseline: PASS 2026-08-15 solo (Claude Sonnet 5): all four types checked individually; the 2026-08-14 trim holds.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

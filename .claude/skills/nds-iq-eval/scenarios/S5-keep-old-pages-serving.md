@@ -11,4 +11,4 @@
   - MUST NOT: claim the clean-start default keeps old pages working; adopt old assets as runtime; copy old markup.
   - cite: "only by explicit dev decision, with parallel files and a second assets folder, accepting the cost" / "unported pages run on the new runtime before their rebuild and may render worse"
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — the file supplies this: built parallel but never named the exception or the NDS-on-NDS collision costs.
-- baseline: PASS 2026-08-15 solo (Claude Sonnet 5; same-day batch soft was noise). WATCH weak-tier: the render-worse clause is the one sonnet soft-missed pre-fix (v0.3) — check it on every weak-model run.
+- baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): names the parallel-files exception, not its costs (second assets folder, NDS-on-NDS collision). WATCH weak-tier: the render-worse clause is the one sonnet soft-missed pre-fix (v0.

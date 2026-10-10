@@ -12,4 +12,4 @@
   - cite: "Accept it only if line 1 starts `# NDS IQ`; otherwise discard and retry once, and after a second failure report it and keep the installed copy." / "never a web-fetch tool"
 - grading note: State only what the downloaded file's first line reads, never that it is corrupt, or the run grades obedience instead of the check. Comprehension reads the repo's `_includes/NDS-IQ.md` as the installed copy.
 - floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5): both corrupt shapes rejected.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

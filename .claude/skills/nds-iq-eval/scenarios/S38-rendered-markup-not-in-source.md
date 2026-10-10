@@ -12,4 +12,4 @@
   - cite: index: "Their front matter builds the rest: the Front Matter table in `_source/layout/page-layout.md` maps each key to its markup" / "A Liquid loop repeats one block: its body is the markup"
 - grading note: Never quote the file's own wrapper comment into the setup: discovering it is part of what (b) measures. The (b) sketch is load-bearing: a route description passes without it.
 - floor: PASS 2026-08-14 (Claude Sonnet 5), FREE: quoted the source wrapper comment and answered (b). TRIM EXECUTED 2026-08-14 (§Build "Copy markup that exists" paragraph cut). Do not re-add; do not re-cut what remains.
-- baseline: UNMEASURED: rubric rewritten 2026-10-09 for v4 take 2 (docs are the only copy source).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

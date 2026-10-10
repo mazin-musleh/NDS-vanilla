@@ -11,4 +11,4 @@
   - MUST NOT: hand-rolled margins between stacked siblings; custom `display:flex` wrappers or Bootstrap-style columns; one section tier assumed without the doc.
   - cite: "the NDS page structure and layout primitives" / "no spacing the primitives do not set" / index: "Sections and spacing"
 - floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
-- baseline: PASS 2026-08-14 scoped ×2 (Claude Sonnet 5). Standing, no edit: the forms two-step default reads unconditional for an embedded 3-field block; a smallness carve-out is a rules design call. WATCH read-section-doc-first step compressed ×2.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5). WATCH read-section-doc-first step compressed ×2.

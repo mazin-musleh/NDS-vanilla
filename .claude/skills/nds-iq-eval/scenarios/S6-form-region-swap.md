@@ -13,4 +13,4 @@
   - cite: "read the component's JS API (the index names where)" / index: "the banner at the top of `_source/_js/nds-<name>.js`: Rides, Methods, Events, Hooks, Gotchas" / forms banner: "Never call form.reset()"
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
 - leak: C3-mild (audit 2026-08-17) — the prompt reveals a ban exists; passes are route-knowledge evidence, not unprompted-refusal evidence.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5) via the NDS.Init.refresh route, graded correct by canon (rubric ACCEPTABLE line).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

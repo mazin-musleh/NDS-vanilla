@@ -11,4 +11,4 @@
   - MUST NOT: leave the inline `defer` block as is; poll or `setTimeout` for `NDS`; move the NDS tag.
   - cite: "Page JS loads after the NDS scripts. Inline page JS is a module script."
 - floor: not run.
-- baseline: UNMEASURED (new 2026-10-09).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

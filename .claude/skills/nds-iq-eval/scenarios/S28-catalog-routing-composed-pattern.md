@@ -11,4 +11,4 @@
   - MUST NOT: hand-compose from Tables + Filter + Pagination + Selection + Export as separate parts; conclude NDS has no data grid; match on titles alone; hold 8,000 rows client-side.
   - cite: "Match by `use_when` across the template, example, and component catalogs, never by title" / index: "Which component, example, or template fits" / examples.yml Manage Records `use_when`: "the closest fit for any data grid, data table, CRUD screen, admin list, records management, or back-office table request"
 - floor: PASS 2026-08-14 (stub rulebook, Claude Sonnet 5) — FREE: `examples/manage-records.md` found by exploring; the example is the answer.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5) — layout MUST answered from the manage-records catalog chrome sentence. Standing: no worked example naming a catalog entry in the rules file.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

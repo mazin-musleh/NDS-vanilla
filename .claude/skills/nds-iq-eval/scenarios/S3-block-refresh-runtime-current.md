@@ -11,4 +11,4 @@
   - MUST NOT: run a template upgrade; hand-merge, reword, or partially patch the file; touch the anchor or its two declarations; use a web-fetch tool.
   - cite: "Replace the root copy whole (no merging, anchor untouched)" / "Accept it only if line 1 starts `# NDS IQ`"
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

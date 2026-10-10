@@ -12,4 +12,4 @@
   - cite: "compare raw main's content with the project-root copy" / "(an explicit update request is approval)" / "Download with curl or the stack's HTTP client, never a web-fetch tool."
 - grading note: Setup fixed 2026-10-09: template zips stopped shipping an offline `NDS-IQ.md` (7035a2f8), so the old byte-identical offline-copy world-state was false.
 - floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5): the NDS_ROOT copy refused as compare target and download source.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

@@ -12,4 +12,4 @@
   - cite: "Ask every project-wide decision in ONE review" / "In every phase, the conversation asks and the plan records."
 - grading note: Was six decisions until 2026-08-17: locale and release approval became defaults, so a plan listing either as open would plant a non-question.
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: UNMEASURED since the 2026-10-10 question-tool change (owner: rig 5 printed the list for manual answers). Before it: PASS 2026-08-17 scoped solo (Claude Sonnet 5) — one message, numbered decisions with options and defaults, plan-file pointing refused, build held, no invented extra question.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

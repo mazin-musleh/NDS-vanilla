@@ -12,4 +12,4 @@
   - cite: "Rebind tokens in a project stylesheet loaded after the NDS stylesheet" / "exclude inherited legacy CSS" / "Inspect every globally loaded stylesheet for element selectors"
 - grading note: the per-file disposition is the artifact; "handle the stylesheets appropriately" as prose is ungradable.
 - floor: PASS 2026-08-16 (stub rulebook, Claude Sonnet 5) — kept `brand.css`, dropped `site.css`, both justified by content.
-- baseline: PASS pair 2026-08-16 (stub and real; Claude Sonnet 5) — brand.css kept, site.css dropped, by content; collision is latent, no text moves. Standing guard: a run that deletes a legitimate project layer reopens the discriminator question (B5's withheld sentence inherits the gap). Fixture blemish: `--form-max-width` matches no NDS knob.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

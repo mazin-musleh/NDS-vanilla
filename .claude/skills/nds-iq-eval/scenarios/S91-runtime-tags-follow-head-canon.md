@@ -12,4 +12,4 @@
   - cite: "copy the head canon as a unit. Rewrite asset URLs only" / head doc: "Added by the loader on the first press of the accessibility button"
 - leak: class (3), eased by a temptation trap — the prompt names the runtime tags and asks for the lazy one.
 - floor: not run — a rewording of an existing bullet, not a new sentence.
-- baseline: UNMEASURED: rubric rewritten 2026-10-09 for v4 take 2 (docs are the only copy source).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

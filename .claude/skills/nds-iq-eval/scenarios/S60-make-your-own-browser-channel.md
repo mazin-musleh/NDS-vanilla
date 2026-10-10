@@ -12,4 +12,4 @@
   - cite: "Drive both passes headlessly" / "Keep temporary tooling outside the project; never change its lockfile." / "No CDP-capable tool? Set one up"
 - floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
 - leak: C2 (audit 2026-08-17): Node/npx availability is foregrounded, so the noticing half is comprehension-untestable and passes cover the license/order half only.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5). WATCH checklist-emitted-after-successful-self-run ×1 (2026-08-13).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5). WATCH checklist-emitted-after-successful-self-run ×1 (2026-08-13).

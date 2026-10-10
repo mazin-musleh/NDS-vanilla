@@ -12,4 +12,4 @@
   - cite: "read the component's JS API (the index names where)" / "use what it ships, report the gap, and propose the upgrade as the dev's call" / index: "Rides, Methods, Events, Hooks, Gotchas"
 - artifacts (behavior): page JS binds `nds:multiselect:change` by exact name and calls `populate(...)`; no invented `data-*` attributes; no listener on inner `.nds-*` elements the banner doesn't expose.
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5). Standing: the banner and core-doc API routes do not compete (component surface to banner, core call to core doc; do not "fix").
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

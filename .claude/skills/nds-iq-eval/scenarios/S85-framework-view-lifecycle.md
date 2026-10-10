@@ -11,4 +11,4 @@
   - MUST NOT: blame or propose patching NDS source; keep or defend the poll/retry helper; work around via key-remount or full-reload hacks; invent a readiness event or promise the runtime does not ship.
   - cite: "follows the docs' guidance for content that changes after load" / index: "Content that changes after load, framework views"
 - grading note: the artifact is the corrected hook plus the named mechanism — "add cleanup" as prose without the destroy call and the squatting-registry cause is not a pass. Show the symptom and the code only: never name destroy, teardown, or the missing half (the S72/S79 tell). A behavior variant can seed the hook into `fixtures/mini-spa`.
-- baseline: PASS 2026-08-17 solo (Claude Sonnet 5) — routed to core/refresh.md, missing destroy() named, corrected hook delivered. WATCH mechanism-naming ×1 (2026-08-17), cause named as stale markers/listeners not the registry-id squat; firm only if a field run misdiagnoses.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5). WATCH mechanism-naming ×1 (2026-08-17), cause named as stale markers/listeners not the registry-id squat.

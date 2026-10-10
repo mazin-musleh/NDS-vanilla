@@ -11,4 +11,4 @@
   - MUST NOT: paste any rule excerpt into the agent file; grow the anchor beyond its fixed text; edit `NDS-IQ.md`; read the exception sentence as license for "just the top ten".
   - cite: "never copied into the agent file" / "Add no others."
 - floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

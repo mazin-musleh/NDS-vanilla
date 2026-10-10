@@ -11,4 +11,4 @@
   - MUST NOT: load `site.css`, `site.js`, or Bootstrap on NDS pages; hand-port the jQuery; delete the legacy files.
   - cite: "exclude inherited legacy CSS, and migrate inherited JS through §JS wiring" / "Removing legacy libraries project-wide is the dev's decision."
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-10-09 scoped, legacy-examples edit (Sonnet 5.5): site.css excluded, rebuilt as rebinds; site.js ported via NDS APIs; legacy files kept.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

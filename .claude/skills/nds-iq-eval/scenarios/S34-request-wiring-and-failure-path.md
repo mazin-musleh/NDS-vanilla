@@ -12,4 +12,4 @@
   - cite: "Before hand-writing fetch, debounce, resize, state, text, or date logic, read the core APIs the index names." / "Every request needs a visible failure path (form or component status, or an alert), exercised in §Verify."
 - floor: FAIL 2026-08-14 (Claude Sonnet 5), hand-wrote `fetch`, never reached `NDS.request`.
 - leak: C3-mild (audit 2026-08-17): the prompt asks the failure-path question, so passes show the `NDS.request` route, not unprompted noticing.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5). Standing: raising NDS.request to a mandate REJECTED (R2.6); reopen only on a field hand-rolled fetch despite the rule.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

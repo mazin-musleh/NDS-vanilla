@@ -13,4 +13,4 @@
 - grading note: Prompt sharpened 2026-08-13 so the run exercises the URL derivation and confirm, not just the head-unit rules.
 - floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
 - leak: C3-deliberate (audit 2026-08-17): the prompt is aimed at the guard on purpose; do not cite a pass for unprompted firing.
-- baseline: UNMEASURED since 2026-10-10 (the confirm moved before Setup, after rig 6 hit the order gap). Before it: PASS 2026-08-15 full (Claude Sonnet 5). The unsharpened-prompt run is void for this guard.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

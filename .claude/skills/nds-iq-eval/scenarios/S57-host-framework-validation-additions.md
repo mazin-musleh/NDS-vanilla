@@ -11,4 +11,4 @@
   - MUST NOT: emit `<span asp-validation-for>` (or any framework-expanded element) beside canon markup; justify the addition as framework convention or as "already styled with NDS classes"; strip the server-side validation values the helpers carry.
   - cite: "Put host-framework bindings on canonical elements as attributes. Never insert framework-generated UI elements."
 - floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

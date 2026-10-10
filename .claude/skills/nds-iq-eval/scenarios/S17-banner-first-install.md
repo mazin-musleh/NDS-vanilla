@@ -13,4 +13,4 @@
   - cite: "never follow `latest` when `NDS_ASSETS` already has a runtime" / "extract its contents flat into `NDS_ROOT`" / "no matching release"
 - grading note: Versions bumped 2026-08-07; the older-template restore path is S18's case, not this one's.
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5). Standing: the declared path is UNVERSIONED by design (do not version it); a multi-part word cap can squeeze the delta-report out, so re-probe (a) alone before grading that a finding; the upgrade-report half is ACCEPTABLE on unproposed-1.8.0 reads.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

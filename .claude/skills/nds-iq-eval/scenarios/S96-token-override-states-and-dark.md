@@ -12,4 +12,4 @@
   - cite: "every state of a family, in light and dark mode" / index: "`_source/components/tokens.md` (Override Scope)"
 - grading note: read-dependent; scoped or solo runs only.
 - floor: FAIL 2026-10-09 (Claude Sonnet 5.5): UNDEFINED, no routed reads (2-call runner, so a lower bound).
-- baseline: PASS 2026-10-09 comprehension vs v3.1 (Claude Sonnet 5.5): four states, both Override Scope rules, dark last; read tokens.md despite rule #5 naming the old dark selector. Fix that selector in rule #5; no new sentence.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

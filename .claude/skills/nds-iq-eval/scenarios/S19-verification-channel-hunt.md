@@ -12,4 +12,4 @@
   - cite: "Drive both passes headlessly" / "only after the headless attempt fails, and report the failure" / "An existing browser tool or harness"
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
 - leak: C2-mild (audit 2026-08-17) — the setup names the harness, so the hunt half is behavior mode's to grade; passes cover using-what-is-known.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5). rubric stale: it still requires the project harness first; the rules now say own headless first (fallback 1 = existing harness). Graded on the rules.

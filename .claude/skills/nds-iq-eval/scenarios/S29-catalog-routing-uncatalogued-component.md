@@ -11,4 +11,4 @@
   - MUST NOT: fall back to a native `select`; pick Autocomplete (no type-ahead needed) or Multiselect (single choice); invent dropdown markup; conclude NDS has no styled select.
   - cite: components.yml Custom Select `use_when` / index: "Copy the block's body"
 - floor: PASS 2026-08-14 (stub rulebook, Claude Sonnet 5) — FREE: `forms.md` states the `nds-select` default in prose, the doc answers.
-- baseline: UNMEASURED: rubric rewritten 2026-10-09 for v4 take 2 (docs are the only copy source).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

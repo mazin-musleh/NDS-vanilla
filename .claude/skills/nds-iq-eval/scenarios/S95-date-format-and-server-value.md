@@ -12,4 +12,4 @@
   - cite: "Before hand-writing fetch, debounce, resize, state, text, or date logic, read the core APIs the index names." / index: "Requests, dates, text and languages"
 - grading note: read-dependent; scoped or solo runs only.
 - floor: FAIL 2026-10-09 (Claude Sonnet 5.5): UNDEFINED, no routed reads (2-call runner, so a lower bound).
-- baseline: PASS 2026-10-09 comprehension vs v3.1 (Claude Sonnet 5.5): `.nds-date-value` with Gregorian ISO, timezone on `<html>`. The docs carry it: no new sentence.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

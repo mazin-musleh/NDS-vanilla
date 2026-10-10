@@ -11,4 +11,4 @@
   - MUST NOT: hand-roll the per-component dance; patch the count or pagination text by hand; reach for `NDS.Init.initialize()` to pick up one row; call refresh from a handler that refresh itself dispatches (loop).
   - cite: "Markup that changes after load (added rows, fetched HTML, views that mount or unmount) follows the docs' guidance for content that changes after load." / index: "Content that changes after load, framework views"
 - floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

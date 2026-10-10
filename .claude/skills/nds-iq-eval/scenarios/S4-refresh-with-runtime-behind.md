@@ -12,4 +12,4 @@
   - MUST NOT: refuse, defer, or condition the rules refresh because the runtime is behind; run the template upgrade without the dev's go; use a web-fetch tool.
   - cite: "A request to update the rules or instructions is not an upgrade: it runs only §This file's Update." / "Replace the root copy whole (no merging, anchor untouched)"
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5); pre-v0.8 runs measured the inverted refusal, not comparable.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

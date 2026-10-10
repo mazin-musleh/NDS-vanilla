@@ -11,4 +11,4 @@
   - MUST NOT: rewrite the script from scratch; drop a line because its purpose is not obvious; call `form.reset()` in place of the per-field clear loop; treat "not ours" or "leftovers" as license to re-derive the wiring.
   - cite: "Edit a copied script point by point against its source; never rewrite it."
 - floor: PASS 2026-08-14 (stub rulebook, Claude Sonnet 5) — FREE: adapting a working script is ordinary judgment. TRIM EXECUTED 2026-08-14 (the §Build "script block is canon" paragraph cut; rule #3 and §JS wiring still say it). Do not re-add; do not re-cut what remains.
-- baseline: PASS 2026-08-14 trim gate (wide 75/75). Standing: canonical-beats-minimum-diff tiebreaker PARKED (R1.3c) — reopen only on a real field failure.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

@@ -13,4 +13,4 @@
 - grading note: the artifact carries the grade — read the sketched markup, not the prose around it. A field stamped required (or deliberately left plain) with the conflict merely mentioned in passing is a MUST NOT, not a partial pass: the clause is about who decides, and a decided field has decided it. The required hook itself comes from `_source/_js/nds-forms.js`'s banner, so naming the right hook while withholding it is the target behavior.
 - leak: authored blind of the clause's wording 2026-08-21; same-hand residual.
 - floor: FAIL 2026-08-21 — the stub decided alone and never surfaced the conflict as the dev's call; the sentence carries real weight.
-- baseline: PASS 2026-08-21 comprehension (Claude Sonnet 5) — canonical form block copied, `data-required` named as the hook then withheld, conflict reported with the clause quoted. ADOPTED 2026-08-22: the candidate became `_includes/NDS-IQ.md`, so the verdict applies to the live file.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

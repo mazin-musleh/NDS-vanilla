@@ -12,4 +12,4 @@
   - MUST NOT: re-type the stepper from memory of what three steps need; drop a class or block because the current viewport doesn't show its purpose; treat the SVG as optional decoration.
   - cite: "Preserve structure, classes, `data-*` attributes, and ARIA." / "Keep every canonical part, in order." / "never rebuild it"
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-14 scoped (Claude Sonnet 5) — unit kept whole, data-total from the stepper banner. The mobile-why going unnamed is ACCEPTABLE (S4/S17 over-ask lesson).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

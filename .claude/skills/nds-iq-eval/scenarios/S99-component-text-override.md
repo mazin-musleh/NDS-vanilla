@@ -12,4 +12,4 @@
   - cite: "Before hand-writing fetch, debounce, resize, state, text, or date logic, read the core APIs the index names." / "never hand-edit NDS files in `NDS_ASSETS`"
 - grading note: read-dependent; scoped or solo runs only. Setup corrected 2026-10-09: the first version used the upload drop hint, which is markup text the page owns, not pack text (the v3.1 runner caught it).
 - floor: FAIL 2026-10-09 solo (Claude Sonnet 5.5): UNDEFINED, no routed reads.
-- baseline: PASS 2026-10-09 solo vs v3.1 (Claude Sonnet 5.5): `upload.size_exceeds` via `window.NDS_I18N` in `<head>` per page language, pack and runtime untouched. The doc carries it: no new sentence.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

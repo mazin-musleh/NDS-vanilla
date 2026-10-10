@@ -12,4 +12,4 @@
   - cite: index: "Their front matter builds the rest" / "Never copy from a built page: it is only where you see the result."
 - leak: C3 deliberate — the read order IS the graded behavior, and comprehension cannot observe it without asking.
 - floor: FAIL 2026-10-09 (Claude Sonnet 5.5): UNDEFINED, no routed reads (2-call runner, so a lower bound).
-- baseline: UNMEASURED: rubric rewritten 2026-10-09 for v4 take 2 (docs are the only copy source).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

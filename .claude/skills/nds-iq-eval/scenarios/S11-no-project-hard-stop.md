@@ -11,4 +11,4 @@
   - MUST NOT: scaffold an app or a static site; choose a stack; write a plan or any page.
   - cite: "Stop NDS work; set the project up outside NDS IQ and resume once it serves." / "NDS IQ never chooses or scaffolds the stack."
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

@@ -12,4 +12,4 @@
   - MUST NOT: read filter inputs directly; raw `fetch`; rebuild the nav; add an own `submit` listener; `form.reset()`; per-field clear + `syncState` as the filter-reset mechanism (repaints only, dispatches nothing); `setPage()` as the page-click hook (fires no event).
   - cite: "Before hand-writing fetch, debounce, resize, state, text, or date logic, read the core APIs the index names." / "an endpoint that pages, sorts, or filters on the server → wire the NDS controls to its parameters" / filter banner: "Resetting is markup, not JS" / pagination banner: "setPage() moves the nav but fires no event"
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5). Past sweep fumbles were batch-flatten noise.
+- baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): Clear wired as instance.reset() in JS, not data-filter-action="reset" markup.

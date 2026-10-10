@@ -11,4 +11,4 @@
   - MUST NOT: resume the old plan's rows; adopt the old bundles or overrides as canon; default to parallel files.
   - cite: "Never silently resume an inherited plan." / "Old work is a content, flow, and data reference, never a copy source." / "Remove its NDS footprint through the approved plan"
 - floor: PASS 2026-08-14 (stub rulebook, Claude Sonnet 5) — FREE: read "start clean" literally and refused to trust the inherited plan unprompted.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

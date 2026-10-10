@@ -11,4 +11,4 @@
   - MUST NOT: audit only the pages the changelog names or the pages edited; edit `NDS_ROOT` or runtime files.
   - cite: "run the audit's migration check on every page, not only the ones you touched" / index: "Run the audit's `migration` group on every page."
 - floor: FAIL 2026-10-09 (Claude Sonnet 5.5): UNDEFINED, no routed reads (2-call runner, so a lower bound).
-- baseline: PASS 2026-10-09 comprehension vs v3.1 (Claude Sonnet 5.5): Migrating sections, then `NDS.Init.audit()` on all 40 pages (rubric corrected the same day: a plain audit runs the migration group). No new sentence.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

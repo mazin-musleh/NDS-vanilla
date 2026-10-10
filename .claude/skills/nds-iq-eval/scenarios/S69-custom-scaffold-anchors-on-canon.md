@@ -12,4 +12,4 @@
   - cite: "No match → a custom scaffold inside red line #4, reusing canonical wiring patterns." / "Copy canonical markup verbatim. Never invent it."
 - grading note: read-dependent (cards doc / a canon centered-card usage) — scoped or solo runs only. The markup-sketch ask moved INTO `prompt:` 2026-08-20 (SKILL.md's artifact-forcing rule) — it is the same instrument the baseline solo run used, so the baseline stands. Setup fixed 2026-10-09: it claimed no template matches, but `templates.yml` routes feature rows to the About Entity template; runners rightly overruled it.
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — the file supplies this: described the route but produced no canon-anchored specifics.
-- baseline: PASS 2026-08-14 solo with the markup-sketch prompt (Claude Sonnet 5) — both rig misses done right. Run solo: batching flattens read depth (INCONCLUSIVE).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

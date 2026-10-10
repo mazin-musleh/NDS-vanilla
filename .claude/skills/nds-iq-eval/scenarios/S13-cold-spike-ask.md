@@ -11,4 +11,4 @@
   - MUST NOT: edit the live legacy view or add `.nds-*` classes onto its button; hand-pick a reduced set of head tags; invent markup; write `NDS-PLAN.md` for a spike (the sentence under test sanctions skipping it).
   - cite: "An NDS spike is ONE parallel page with the full head, runtime, and canonical markup; it needs no plan, and every other rule applies." / "copy the head canon as a unit" / index: "copy `_site/assets/` into `NDS_ASSETS` whole, every subfolder included"
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — the file supplies this: added the class to the live legacy view instead of building a spike page.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5). WATCH the "quick one" pressure on every weak-model run (the model invents a lighter ceremony tier).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5). WATCH the "quick one" pressure on every weak-model run (the model invents a lighter ceremony tier).

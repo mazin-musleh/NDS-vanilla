@@ -11,4 +11,4 @@
   - MUST NOT: keep the head placement because "defer handles it"; accept the submit handler working as proof the placement is safe; bless the inline `<script defer>` because the spot in the document is right.
   - cite: "loads after the NDS scripts. Inline page JS is a module script."
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — the file supplies this: blessed an inline `<script defer>` block.
-- baseline: PASS 2026-08-14 scoped, both parts (Claude Sonnet 5) — inline defer refused with the spec fact, type="module" given as the fix.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

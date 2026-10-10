@@ -11,4 +11,4 @@
   - MUST NOT: ship one facet because the legacy page had one; drop facets silently; change a business rule or the API.
   - cite: "never how they are presented, and never a component's feature set" / "Legacy filtering by one thing is no reason to ship one facet."
 - floor: FAIL 2026-10-09 (Claude Sonnet 5.5): UNDEFINED, no routed reads (2-call runner, so a lower bound).
-- baseline: PASS 2026-10-09 comprehension vs v3.1 (Claude Sonnet 5.5): three facets mapped (type, status single-choice, date range), quoting §UI defaults.
+- baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): all three facets kept; type mapped single-choice, not the multi-choice facet.

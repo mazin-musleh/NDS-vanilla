@@ -31,7 +31,7 @@ Done on branch `iq-v4`:
 - Re-point the `rules:` and `cite` lines; rubrics stay behaviors.
 - New scenarios: the pre-2.0 → `IQv3.1` redirect (v1.12.0 root, no index); the index read first; one per new audit rule.
 - Batches of 5 or fewer (read-dependent); solo re-probe any miss.
-- Costs: full run ~1M tokens, redirect probe ~100K, rigs R3/R4 ~600K. Each needs the owner's go.
+- Costs (measured 2026-10-10, Sonnet 5.5): full run ~920K tokens (10 runners, 79–121K each), redirect probe ~70K, rigs R3/R4 ~600K (not re-measured). Each needs the owner's go.
 
 ## Context
 
@@ -173,8 +173,8 @@ Size: no target. It is whatever the rules need. Expected around 15–20 KB.
   - the index is read first
   - one test per new audit rule
 - **Runs:** each needs the owner's go and a named cost.
-  - full Sonnet run (~1M tokens)
-  - the redirect probe on the v1.12.0 root (~100K)
+  - full Sonnet run (~920K tokens, measured 2026-10-10)
+  - the redirect probe on the v1.12.0 root (~70K, measured 2026-10-10)
   - rigs R3 and R4 (~600K), since behavior now matters more than wording
 - **SKILL.md:** the `old` mode becomes the redirect probe only. The policy section says IQ names no facts, and that the index, docs and audit own them.
 

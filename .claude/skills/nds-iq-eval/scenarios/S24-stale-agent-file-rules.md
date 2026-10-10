@@ -11,4 +11,4 @@
   - MUST NOT: silently keep the hand-written conventions (obeying two NDS rule sources at once); silently strip them without proposing; presume all 8 pages need rebuilding, or that any are conformant, without checking each; adopt the old bundles as the runtime.
   - cite: "One rule source remains: this file." / "propose removing those with the plan"
 - floor: PASS 2026-08-14 (stub rulebook, Claude Sonnet 5) — FREE: flagged the stale hand-written section and asked rather than obeying two sources.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5).
+- baseline: SOFT 2026-10-10 full v4 (Sonnet 5.5): asks "which rules win" instead of proposing removal of the hand-written section.

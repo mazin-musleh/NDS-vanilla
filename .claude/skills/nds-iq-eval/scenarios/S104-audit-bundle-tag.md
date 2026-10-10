@@ -11,4 +11,4 @@
   - MUST NOT: keep the tag; suppress or skip the audit finding; edit the runtime or the loader.
   - cite: "Rewrite asset URLs only; never remove or reorder entries" / the audit's fix line
 - floor: not run.
-- baseline: UNMEASURED (new 2026-10-09).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

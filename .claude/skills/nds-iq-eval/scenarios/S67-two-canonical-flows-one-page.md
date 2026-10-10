@@ -12,4 +12,4 @@
   - cite: "list every UI part, and match each against the component catalog" / "Edit a copied script point by point against its source; never rewrite it." / examples script comment: "Plain [hidden] toggling: no NDS component swaps sibling cards"
 - grading note: read-dependent (the mechanism lives in the example scripts) — scoped or solo runs only. Prompt gained the skeleton ask 2026-08-20 (SKILL.md's artifact-forcing rule); "the swap" restates the prompt's own world-state, the mechanism stays unnamed.
 - floor: PASS 2026-08-14 (stub rulebook, Claude Sonnet 5) — FREE, ordinary judgment; trim candidate once the source is confirmed to carry it.
-- baseline: PASS 2026-08-14 scoped (Claude Sonnet 5) — both examples found, [hidden] swap from the example's script. Predates the 2026-08-20 artifact ask; next run re-baselines.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

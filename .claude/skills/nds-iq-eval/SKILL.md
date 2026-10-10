@@ -26,7 +26,7 @@ Tests the consumer rules file in its draft, `_includes/NDS-IQ-draft.md`; `script
   4. the field rig
 
   Reaching for a costlier instrument when a cheaper one answers is a violation.
-- **Name the expected cost before every launch.** A single launch above ~300K tokens needs the owner's explicit go.
+- **Name the expected cost before every launch.** A single launch above ~300K tokens needs the owner's explicit go. Measured 2026-10-10 on Sonnet 5.5: a comprehension runner costs ~60K before its first scenario (its setup plus the rules file and the index), and ~80–120K for a batch of 10; `full` ~920K over 10 runners; `old` ~70K; a solo scenario ~60–70K; a behavior run on `mini-app` ~75K (S27 and S42, part (a) each).
 - **One run per question.** A scenario with a standing verdict is re-run only if its rules text changed or a field report contradicts it.
 - **A behavior run grades everything its artifacts touch.** Use one small fixture for many verdicts. Reuse existing states; author a new one only when no state can host the run.
 - **Batch at most ~10 scenarios.** Every batch re-reads the rulebook, and big batches flatten tool effort: the 2026-08-12 full batch made zero routed reads. Never inflate a batch to save the re-read.

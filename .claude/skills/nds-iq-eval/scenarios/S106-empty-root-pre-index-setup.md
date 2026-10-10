@@ -13,4 +13,4 @@
   - cite: "No `NDS-INDEX.md` in the extracted release → it predates this file: switch to `IQv3.2` as §Start here says." / "The existing runtime version wins"
 - grading note: the canonical harness says `NDS_ROOT` is present on disk. Drop that clause from the harness prompt for this run, or the setup contradicts it.
 - floor: not run.
-- baseline: PASS 2026-10-09 old v1.12.0, batched with S101 (Sonnet 5.5): banners 1.12.0 → that zip flat → index missing → IQv3.2, cites the Setup step 3 clause. Harness: downloads simulated (the tag is not pushed yet).
+- baseline: PASS 2026-10-10 old v1.12.0 (Sonnet 5.5).

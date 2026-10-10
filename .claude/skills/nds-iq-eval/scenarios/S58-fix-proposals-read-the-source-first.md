@@ -11,4 +11,4 @@
   - MUST NOT: propose dropping the inline blocks or reshaping the head to route around the policy; present an options matrix (drop / hash / nonce) as if all three were sanctioned; answer from memory of what CSPs usually need.
   - cite: "Read the source before you ask or answer an NDS question or wire page JS." / "Under a CSP, apply the docs' CSP guidance to the head." / index: "`_source/ui-shell/head.md`: Usage, Parts, and the API's Content Security Policy and Inline Knobs sections"
 - floor: PASS 2026-08-14 (Claude Sonnet 5), FREE: `head.md` §CSP names nonce for served apps. TRIM EXECUTED 2026-08-14 (P3's fix clause only; P3's lead and its table STAY, cutting the whole line orphans the table). Do not re-add; do not re-cut what remains.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5): the 2026-08-14 trim holds.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

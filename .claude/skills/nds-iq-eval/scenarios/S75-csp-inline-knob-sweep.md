@@ -11,4 +11,4 @@
   - MUST NOT: declare the page done with inline knobs standing; delete the knobs' values instead of converting them; treat verbatim-copied canon as exempt from the sweep.
   - cite: "Under a strict style policy, find every inline style the copied markup carries and convert it as the docs show." / "The conversion the docs give for a strict Content Security Policy"
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5); sweep + edit-4 conversion before done at first exposure.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

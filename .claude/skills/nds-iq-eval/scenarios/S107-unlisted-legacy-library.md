@@ -12,4 +12,4 @@
   - cite: "Any other UI library is legacy too: replace it as §Design choices says." / "never the legacy library for one widget"
 - grading note: read-dependent (the catalog and the date picker doc): grade from a scoped or solo run only. The prompt avoids the `use_when` words "appointment" and "booking".
 - floor: not run.
-- baseline: PASS 2026-10-09 solo (Sonnet 5.5): Flatpickr treated as legacy, cites the new red-line #6 sentence; date picker via `use_when`; past dates → `data-min-date`, two-month view named as having no option; head canon only.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

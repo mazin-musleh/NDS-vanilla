@@ -11,4 +11,4 @@
   - MUST NOT: re-declare `NDS_ROOT` to `.nds/nds-vanilla-template-v2.4.1/` (or any versioned path); leave the wrapper nested under the declared path; edit anything under `NDS_ROOT`.
   - cite: "It is correct when `NDS_ROOT/NDS-INDEX.md` resolves directly; never keep the zip's versioned wrapper folder." / "extract its contents flat into `NDS_ROOT`"
 - floor: PASS 2026-08-14 (Claude Sonnet 5), FREE: the flatten is deducible from the path definition.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

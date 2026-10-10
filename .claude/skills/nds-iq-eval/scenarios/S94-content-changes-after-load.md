@@ -12,4 +12,4 @@
   - cite: "follows the docs' guidance for content that changes after load" / index: "Content that changes after load, framework views"
 - leak: C3 mild — the prompt asks for the lifecycle calls to force an artifact; the graded part is which calls and where.
 - floor: FAIL 2026-10-09 (Claude Sonnet 5.5): UNDEFINED, no routed reads (2-call runner, so a lower bound).
-- baseline: PASS 2026-10-09 comprehension vs v3.1 (Claude Sonnet 5.5): refresh.md read through the core route; mount, refresh, destroy placed right. No new sentence.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

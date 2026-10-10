@@ -11,4 +11,4 @@
   - MUST NOT: keep the sample's 40×40; keep the name span beside a wordmark logo.
   - cite: "reset a replaced image's `width`/`height` to its real size" / "drop the brand text when the logo already carries the name"
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

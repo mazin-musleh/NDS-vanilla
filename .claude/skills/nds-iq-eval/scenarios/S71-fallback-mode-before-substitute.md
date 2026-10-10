@@ -12,4 +12,4 @@
   - cite: "A missing part comes from its canonical component; no match → custom case." / "Match by `use_when` across the template, example, and component catalogs, never by title" / Avatar `use_when`: "A user picture, profile photo, initials circle, or a stacked group"
 - grading note: read-dependent (catalog + avatar doc) — scoped or solo runs only. Prompt gained the markup ask 2026-08-20 (SKILL.md's artifact-forcing rule); it names no component or mode.
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-14 scoped (Claude Sonnet 5) — exact canon initials markup quoted, no substitution proposed. Verdict predates the 2026-08-20 artifact ask in the prompt; next run re-baselines.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

@@ -11,4 +11,4 @@
   - MUST NOT: fabricate org or statistics content to fill the template; rebuild a custom skeleton around only the kept sections; ship a single-step form because the brief said "one screen".
   - cite: "remove a template section the brief does not cover; never invent content to fill one" / "Forms default to TWO input steps, form and review; add more only when the flow needs them."
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — the file supplies this: shipped a single-step contact form — the two-step default is file-supplied.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

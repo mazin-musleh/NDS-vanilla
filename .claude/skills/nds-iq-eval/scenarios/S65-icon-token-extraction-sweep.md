@@ -11,4 +11,4 @@
   - MUST NOT: treat the clean `audit()`/console as icon coverage; mark the page done without the sweep; invent an inline-set registration.
   - cite: "Check every icon name in the page HTML and its JS against the icon catalog: the audit cannot see names inside JS strings." / index: "The inline names: `_source/_data/content/icons.yml`"
 - floor: FAIL 2026-08-14 (stub rulebook, Claude Sonnet 5) — stub answered UNDEFINED or took no correct action; the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5); the font-class-fallback soft is the known cap pattern.
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

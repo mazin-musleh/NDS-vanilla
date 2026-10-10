@@ -12,4 +12,4 @@
   - cite: "A difference you didn't [choose] is a bug" (nearest existing anchor — flagged: no covering sentence yet; a first-exposure FAIL here licenses the sentence, a PASS retires the need for it)
 - floor: PASS 2026-08-14 (stub rulebook, Claude Sonnet 5) — FREE, pure engineering judgment (leak-assisted, see leak).
 - leak: C2 (audit 2026-08-17) — the setup hands over the default-coincidence; retirement stands on the `:where()` fix and zero field recurrence, and a field miss reopens it.
-- baseline: PASS 2026-08-14 scoped (Claude Sonnet 5) — divergence-width reasoning unprompted; the sentence stays RETIRED (leak-caveated, a field miss reopens it).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

@@ -11,4 +11,4 @@
   - MUST NOT: continue from the pre-swap reading because the upgrade is nearly done; substitute a skim or a diff for the read; report the upgrade complete without the re-read.
   - cite: "Read it again after it is replaced or your context is compacted." / "then read it again before continuing"
 - floor: FAIL 2026-08-14 (Claude Sonnet 5), the rule is doing the work.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).

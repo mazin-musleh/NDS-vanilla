@@ -11,4 +11,4 @@
   - MUST NOT: add a nested `<form>` tag; report the component broken or the markup wrong; hand-write per-field validation; wait on `nds:formValid` or `nds:formInvalid`; call `form.reset()` to clear.
   - cite: "read the component's JS API (the index names where)" / index: "Forms and validation" / forms banner: "That automatic wiring is <form>-tags only"
 - floor: PASS 2026-08-14 (Claude Sonnet 5), FREE: `forms.md` answers.
-- baseline: PASS 2026-08-15 full (Claude Sonnet 5).
+- baseline: PASS 2026-10-10 full v4 (Sonnet 5.5).
