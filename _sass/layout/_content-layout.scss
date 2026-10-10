@@ -49,7 +49,9 @@ main {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-        align-content: flex-start;
+        // Stretch, not flex-start: the column fills the page, so a max-width card
+        // (card view, no side menu) has room to center on its auto margins.
+        align-content: stretch;
         position: relative;
         padding-block: var(--_content-padding-block);
         padding-inline: var(--_content-padding-inline);
@@ -167,7 +169,7 @@ main {
 
             @include desktop(min) {
                 --_wrapper-padding: 0;
-                // Insets to the cards' column. Not max-width + auto margins: .nds-content wraps, so its column is only as wide as its widest section.
+                // Insets to the cards' column.
                 padding-inline: max(0px, calc((100% - var(--nds-content-max-width)) / 2));
             }
 
