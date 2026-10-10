@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 07:03 PM"
 ---
 
 <section id="page-layout-overview" class="nds-content-section nds-doc-overview">
@@ -57,6 +57,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
   </header>
   <main>
     <section class="nds-hero-section nds-sub">
+      <!-- Share and the other forms of the sub hero: ../ui-shell/hero -->
       <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
         <ol class="nds-breadcrumb">
           <li><a href="#">Home</a></li>
@@ -66,6 +67,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
       <div class="nds-section-wrapper">
         <div class="nds-section-head">
           <h1 class="nds-section-title">Hero Section</h1>
+          <p class="nds-section-description">One or two sentences on what the page holds.</p>
         </div>
       </div>
     </section>
@@ -187,6 +189,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
   </header>
   <main>
     <section class="nds-hero-section nds-sub nds-flat">
+      <!-- Share and the other forms of the sub hero: ../ui-shell/hero -->
       <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
         <ol class="nds-breadcrumb">
           <li><a href="#">Home</a></li>
@@ -196,6 +199,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
       <div class="nds-section-wrapper">
         <div class="nds-section-head">
           <h1 class="nds-section-title">Hero Section</h1>
+          <p class="nds-section-description">One or two sentences on what the page holds.</p>
         </div>
       </div>
     </section>
@@ -309,6 +313,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
       </aside>
       <div class="nds-content" id="main-content">
         <section class="nds-hero-section nds-sub">
+          <!-- Share and the other forms of the sub hero: ../ui-shell/hero -->
           <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
             <ol class="nds-breadcrumb">
               <li><a href="#">Home</a></li>
@@ -318,6 +323,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
           <div class="nds-section-wrapper">
             <div class="nds-section-head">
               <h1 class="nds-section-title">Hero Section</h1>
+              <p class="nds-section-description">One or two sentences on what the page holds.</p>
             </div>
           </div>
         </section>

@@ -162,6 +162,15 @@
         });
     } });
 
+    // nds-has-sidemenu keeps the menu's grid column even when no menu shows in it.
+    rule({ id: 'sidemenu-missing', group: 'page', docs: 'layout/page-layout.html', check(ctx) {
+        ctx.find('.nds-content-layout.nds-has-sidemenu').forEach(layout => {
+            const menu = Array.from(layout.children).find(c => c.matches('.nds-sidemenu'));
+            if (menu && !menu.hidden) return;
+            ctx.report(layout, `nds-has-sidemenu with ${menu ? 'a hidden' : 'no'} .nds-sidemenu — the layout keeps the menu column, so the content squeezes into it.`, 'Remove nds-has-sidemenu from .nds-content-layout on a page that shows no side menu.');
+        });
+    } });
+
     // An NDS page runs NDS and vanilla JS only; a legacy library loaded beside it
     // restyles or re-wires NDS markup with nothing else reporting it.
     rule({ id: 'legacy-library', group: 'page', check(ctx) {

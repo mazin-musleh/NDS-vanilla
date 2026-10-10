@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 07:03 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -211,6 +211,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `skip-link` | page | warn, error | No skip link, a skip link to a missing id (error), or one that lands on `<main>` |
 | `main-flex` | page | warn | A wrapper between `<body>` and `<main>` that stops `<main>` from growing |
 | `content-layout-child` | page | warn | An element in `.nds-content-layout` that is not `.nds-content` or `.nds-sidemenu` |
+| `sidemenu-missing` | page | warn | `nds-has-sidemenu` on a `.nds-content-layout` whose `.nds-sidemenu` is missing or `hidden`: the content squeezes into the menu column |
 | `content-layout-once` | page | warn | More than one `.nds-content-layout` on the page, or one inside another: the page grid is set once |
 | `sidemenu-pair` | page | warn | `.nds-has-sidemenu` with no `.nds-sidemenu` as its child, or a `.nds-sidemenu` outside such a layout |
 | `legacy-library` | page | warn | A common legacy UI library loaded on the page, such as jQuery, Select2, DataTables, Bootstrap CSS or Font Awesome |
