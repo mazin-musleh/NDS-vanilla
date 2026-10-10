@@ -178,6 +178,7 @@
 }
 
 .nds-ipv-image-counter {
+  direction: ltr; // "1 / 5": RTL would lay the two numbers out as "5 / 1"
   inset-block-start: var(--spacing-2xl);
   font-weight: var(--font-weight-medium);
 
