@@ -19,7 +19,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 
 **`NDS_ASSETS`**: the project's static folder for the NDS runtime; never under `NDS_ROOT`. Write it relative to the project root, as `NDS_ROOT` is: the anchor is committed and shared, so an absolute path breaks on every other machine.
 
-- Derive its folder and served URL from the stack, and confirm both with the dev in one question before §Setup copies the runtime. The plan review records them as answered.
+- Derive its folder and served URL from the stack, and confirm both with the dev as one question in the plan review, before §Setup copies the runtime (no plan: one question before the copy).
 - Placeholder path? Stop NDS-side work and ask the dev. Inventory and plan work may continue; NDS targets stay `blocked on NDS_ROOT` until the sources resolve.
 - Never adopt a candidate path yourself: list the candidates, read their version banners, and let the dev choose. Write a dev-supplied path into the anchor that session, never into `NDS-PLAN.md`.
 
@@ -117,14 +117,14 @@ Check response headers and middleware for a Content Security Policy once, projec
 - **Rebuild** clean, in place. Old work is a content, flow, and data reference, never a copy source. Remove its NDS footprint through the approved plan; rollback is git. The approval names the cost: unported pages run on the new runtime before their rebuild and may render worse.
 - **Second runtime:** only by explicit dev decision, with parallel files and a second assets folder, accepting the cost.
 
-When a plan is required, create `NDS-PLAN.md` at the project root, starting with `Managed by NDS IQ`, with columns for page, route, legacy libraries, NDS target, and status. Stop before building. Ask every project-wide decision in ONE review (porting strategy, prior-NDS split, CSP grant only when a CSP was found, the digital stamp, pacing), each with options and a recommended default. Ask it through the host's question tool, the one that shows the dev options to pick from, when the host has one, in back-to-back calls if it caps how many questions one call holds. With no such tool, ask in one numbered message. Record the answers in the plan. Page-specific questions wait for that page's session. In every phase, the conversation asks and the plan records, and a question with options takes the question tool the same way.
+When a plan is required, create `NDS-PLAN.md` at the project root, starting with `Managed by NDS IQ`, with columns for page, route, legacy libraries, NDS target, and status. Stop before building. Ask every project-wide decision in ONE review (the `NDS_ASSETS` folder and URL when unconfirmed, porting strategy, prior-NDS split, CSP grant only when a CSP was found, the digital stamp, pacing), each with options and a recommended default. Ask it through the host's question tool, the one that shows the dev options to pick from, when the host has one, in back-to-back calls if it caps how many questions one call holds. With no such tool, ask in one numbered message. Record the answers in the plan. The answers approve the plan: start building, with no second stop. Page-specific questions wait for that page's session. In every phase, the conversation asks and the plan records, and a question with options takes the question tool the same way.
 
 **The plan is cross-session memory.**
 
 - Statuses, in the Status column only: `Planned`, `In Progress`, `Awaiting Verification`, `Built and Verified`. Only dev confirmation sets `Built and Verified`.
 - `Awaiting Verification` means every agent-owned check passed with its evidence recorded. An unmet required check keeps the row `In Progress` with an open checkbox.
 - Every open question, check, fix, or deferred decision is a `- [ ]` item, resolved as `- [x]`, never deleted. Checkboxes are not status.
-- **Pacing:** `gate-by-gate` (default) or `whole plan`, which takes this file's defaults, verifies each page, and leaves rows `Awaiting Verification` until the dev confirms. `whole plan` still stops once after the first page of each page shape, for the dev to review that page in each of its states.
+- **Pacing:** `gate-by-gate` (default) or `whole plan`, which takes this file's defaults, verifies each page, and leaves rows `Awaiting Verification` until the dev confirms.
 - When every row is verified, retire the plan. A new multi-page effort or a dev-requested re-audit recreates it from current state: passing pages `Awaiting Verification`, drifted pages `Planned` with their deltas named.
 - **No-plan work** covers one named page: state its source paths and open questions first; the final report carries the verification evidence and any unmet check. If the dev waived a required plan, note once that cross-session memory is lost.
 - **`NDS-REPORT.md`** (optional) holds NDS findings only: a missing API or event, a canon/rule/doc contradiction, a reproducible bug, a rule gap. Give the NDS version, instruction version, component, and a generic repro; never project markup, routes, or data.

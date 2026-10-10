@@ -12,4 +12,4 @@
   - cite: "Ask every project-wide decision in ONE review" / "In every phase, the conversation asks and the plan records."
 - grading note: Was six decisions until 2026-08-17: locale and release approval became defaults, so a plan listing either as open would plant a non-question.
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 scoped v4 rig5-gaps (Sonnet 5.5).
+- baseline: PASS 2026-10-10 scoped v4 one-stop review (Sonnet 5.5).
