@@ -194,10 +194,11 @@
     } });
 
     // A swapped picture that keeps the template's width/height is stretched, or reserves the wrong space.
-    // ponytail: SVG skipped — its natural size is the browser's 300×150 default when it has none.
+    // An SVG with no width, height or viewBox reports the browser's 300×150 default, so that size is no evidence.
     rule({ id: 'img-size', group: 'page', check(ctx) {
         ctx.find('img[width][height]').forEach(img => {
-            if (!img.complete || !img.naturalWidth || /\.svg([?#]|$)/i.test(img.currentSrc)) return;
+            if (!img.complete || !img.naturalWidth) return;
+            if (img.naturalWidth === 300 && img.naturalHeight === 150 && /\.svg([?#]|$)|^data:image\/svg/i.test(img.currentSrc)) return;
             const w = +img.getAttribute('width'), h = +img.getAttribute('height');
             if (!w || !h || Math.abs((w / h) / (img.naturalWidth / img.naturalHeight) - 1) < 0.05) return;
             ctx.report(img, `<img width="${w}" height="${h}"> shows a ${img.naturalWidth}×${img.naturalHeight} picture: the shapes differ, so it stretches or the layout jumps when it loads.`,

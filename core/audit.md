@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 04:13 PM"
+last_edit: "10/10/2026 - 04:38 PM"
 ---
 
 <section id="auditOverview" class="nds-content-section nds-doc-overview">
@@ -216,7 +216,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `legacy-library` | page | warn | A common legacy UI library loaded on the page, such as jQuery, Select2, DataTables, Bootstrap CSS or Font Awesome |
 | `bundle-tag` | page | warn | A tag in the page for a bundle the loader adds itself, such as `nds-delegated.min.js` |
 | `inline-defer` | page | warn | An inline `<script defer>`: without `src`, `defer` does nothing and the code runs before NDS loads |
-| `img-size` | page | warn | An `<img>` whose `width` and `height` give a different shape from the picture, so it stretches or the layout jumps. It skips SVG images and images that have not loaded |
+| `img-size` | page | warn | An `<img>` whose `width` and `height` give a different shape from the picture, so it stretches or the layout jumps. It skips images that have not loaded, and an SVG with no size of its own |
 | `native-date-time` | page | warn | A browser date or time field (`type="date"`, `month`, `week`, `datetime-local`, `time`) where the Date Picker or Time Picker belongs |
 | `toolbar-part` | structure | warn | An `nds-toolbar-*` part (row, start, end, text) outside a `.nds-toolbar`: it still lays out as a bar, but stacked rows touch and the bar loses its gap. One finding per bar |
 | `i18n-pack` | i18n | error | The language file of the page did not load |
