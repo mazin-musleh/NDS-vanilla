@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "10/10/2026 - 07:41 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -118,7 +118,7 @@ Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. T
                 <p>Never edit <code class="nds-inline-code lang-html">NDS-IQ.md</code>. Updates replace it as a whole.</p>
 
                 <h3 id="plan-review">Plan Review</h3>
-                <p>Next, the agent lists your pages, routes, and old UI libraries in <code class="nds-inline-code lang-html">NDS-PLAN.md</code>. Then it stops and asks all project-wide questions in one message: the asset URL, the porting strategy, what to do with earlier NDS work, CSP (only if your project has one), and the pace.</p>
+                <p>Next, the agent lists your pages, routes, and old UI libraries in <code class="nds-inline-code lang-html">NDS-PLAN.md</code>. Then it stops and asks all project-wide questions in one message: the asset URL, the porting strategy, what to do with earlier NDS work, CSP (only if your project has one), whether your site holds the digital stamp's verification, and the pace. Your answers approve the plan, and the agent starts building.</p>
 
                 <p>If the agent did not write the plan, paste:</p>
                 <div class="nds-code">
