@@ -5,11 +5,11 @@ lang: en
 direction: ltr
 
 # Bundle sizes shown in the Architecture section (gzipped KB). Update when bundles change:
-# gzip -c assets/js/nds-main.min.js | wc -c (and delegated/extras, _site/.../nds.critical.min.css)
+# gzip -c <file> | wc -c, divided by 1024: nds-main.min.js, every other bundle but nds-audit, _site/.../nds.critical.min.css
 bundle_sizes:
   critical_css: 10 # nds.critical.min.css
-  core_js: 41 # nds-main.min.js (loads on every page)
-  total_js: 139 # main + delegated + extras (full library, demand-loaded)
+  core_js: 43 # nds-main.min.js (loads on every page)
+  total_js: 154 # every assets/js/*.min.js except nds-audit (full library, demand-loaded)
 ---
 
 <section id="about" class="nds-content-section">

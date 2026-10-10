@@ -14,7 +14,7 @@ NDS-vanilla is an independent build of the same design system in plain HTML, CSS
 - **Framework-free.** Plain HTML, CSS, and JavaScript, with zero runtime dependencies.
 - **More than components.** A layout system, page templates, live documentation, and a 4-tier design-token system (palette, primitives, semantic, component).
 - **DGA page templates.** Common government service pages as working code, built on the DGA tokens, typography, spacing, and interaction patterns.
-- **Fast.** A PageSpeed score of 100, with LCP, CLS, and INP passing. A ~41 KB gzipped core loads on every page; the rest of the ~139 KB library loads only where a page needs it. Critical CSS is ~10 KB.
+- **Fast.** A PageSpeed score of 100, with LCP, CLS, and INP passing. A ~43 KB gzipped core loads on every page; the rest of the ~154 KB library loads only where a page needs it. Critical CSS is ~10 KB.
 - **Bilingual and themeable.** Arabic (RTL) first, with full English (LTR) support. Light and dark mode, and re-branding from one OKLCH seed color, a predefined theme, or a stylesheet theme. One HTML attribute switches the theme, with no rebuild.
 
 > **Accessibility:** Components are tested by hand against WCAG 2.1 AA. An automated audit with axe-core and screen readers is planned. Known gaps are tracked in issues labeled `accessibility`.
@@ -42,7 +42,7 @@ Quick links:
 | **UI shell** | The page chrome: top bar, header, main navigation, hero, side menu, side info, and footer. |
 | **Utilities** | Small helpers: copy, share, number formats, text truncation, dividers, and more. |
 | **Page templates** | 16 DGA page templates, such as service, FAQ, contact, search, and KPIs. |
-| **Examples** | 12 full pages, such as an admin console, a registration flow, and a services list. |
+| **Examples** | 8 full pages, such as an admin console, a registration flow, and a services list. |
 | **Theming** | Light and dark mode, OKLCH-seed palettes, and predefined or stylesheet themes. |
 | **Event themes** | Seasonal skins for Foundation Day, Hajj, and National Day. One script tag applies each one. |
 
@@ -70,7 +70,7 @@ Every page is Arabic (RTL) first, with English (LTR) support. The docs show a li
 
 [NDS IQ](https://mazin-musleh.github.io/NDS-vanilla/guides/integration-quality.html) is a versioned instruction system that gives AI coding agents a consistent way to build with NDS. It lives in this repository, not in the release zip. The Get Started setup prompt downloads it to your project root and points your `AGENTS.md` or `CLAUDE.md` at it. Claude Code, Cursor, Codex, and other agents then read the same file. The [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html) covers setup, the workflow, and upgrades.
 
-**Working on NDS itself?** The project rules live in [AGENTS.md](AGENTS.md), which Cursor, Codex, Aider, and other agents read. [CLAUDE.md](CLAUDE.md) imports it for Claude Code. Claude Code also gets project skills in [.claude/skills/](.claude/skills/): docs, JS and CSS audits, performance measurement, icons, font updates, and NDS IQ evaluation. No setup is needed.
+**Working on NDS itself?** The project rules live in [AGENTS.md](AGENTS.md), which Cursor, Codex, Aider, and other agents read. [CLAUDE.md](CLAUDE.md) imports it for Claude Code. Claude Code also gets project skills in [.claude/skills/](.claude/skills/): docs, JS and CSS audits, performance measurement, icons, font updates, releases, and NDS IQ evaluation. No setup is needed.
 
 ## Quick start (local development)
 
