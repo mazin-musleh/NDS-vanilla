@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 04:02 AM"
 ---
 
 <section id="mainnavOverview" class="nds-content-section nds-doc-overview">
@@ -387,7 +387,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 </script>
 <script type="text/html" id="mainnav-user" data-canon>
 <li class="nds-nav-item nds-has-menu nds-icon-only" id="nav-user">
-  <button class="nds-nav-link nds-btn nds-subtle nds-lg nds-indicator nds-tooltip" data-tooltip-hover="500" title="Ahmed" aria-expanded="false"><span class="nds-avatar"><img src="../docs-assets/img/avatar3.webp" alt="Ahmed" class="nds-icon" loading="lazy"></span><span class="nds-label" data-hidden="sm md sr">Ahmed</span></button>
+  <button class="nds-nav-link nds-btn nds-subtle nds-lg nds-indicator nds-tooltip" data-tooltip-hover="500" title="Ahmed" aria-expanded="false"><span class="nds-avatar" aria-hidden="true"><span class="nds-label">AH</span></span><span class="nds-label" data-hidden="sm md sr">Ahmed</span></button>
   <div class="nds-nav-menu nds-fit" hidden>
     <div class="nds-nav-menu-content">
       <div class="nds-nav-column">
