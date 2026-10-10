@@ -125,7 +125,7 @@ When a plan is required, create `NDS-PLAN.md` at the project root, starting with
 - Statuses, in the Status column only: `Planned`, `In Progress`, `Awaiting Verification`, `Built and Verified`. Only dev confirmation sets `Built and Verified`.
 - `Awaiting Verification` means every agent-owned check passed with its evidence recorded. An unmet required check keeps the row `In Progress` with an open checkbox.
 - Every open question, check, fix, or deferred decision is a `- [ ]` item, resolved as `- [x]`, never deleted. Checkboxes are not status.
-- **Pacing:** `gate-by-gate` (default) or `whole plan`, which takes this file's defaults, verifies each page, and leaves rows `Awaiting Verification` until the dev confirms.
+- **Pacing:** `gate-by-gate` (default) or `whole plan`, which takes this file's defaults and verifies each page. Under either pacing, a row reaches `Awaiting Verification` only when every agent-owned check passed, then waits there for the dev.
 - When every row is verified, retire the plan. A new multi-page effort or a dev-requested re-audit recreates it from current state: passing pages `Awaiting Verification`, drifted pages `Planned` with their deltas named.
 - **No-plan work** covers one named page: state its source paths and open questions first; the final report carries the verification evidence and any unmet check. If the dev waived a required plan, note once that cross-session memory is lost.
 - **`NDS-REPORT.md`** (optional) holds NDS findings only: a missing API or event, a canon/rule/doc contradiction, a reproducible bug, a rule gap. Give the NDS version, instruction version, component, and a generic repro; never project markup, routes, or data.
@@ -194,7 +194,7 @@ Before listening on NDS elements or writing NDS-owned attributes, read the compo
 **Build exit gate.** Before §Verify:
 
 - Name the canonical page source and the doc sources used.
-- Point to the recorded parts list: every part and behavior matched through the catalogs and the docs.
+- Point to the recorded parts list: every part, state, and behavior matched through the catalogs and the docs, each part with its use-limit lines.
 - List the matched source's facets, controls, and columns beside the page's: equal counts, or each difference named.
 - Confirm every structural change is one of red line #3's allowed edits.
 - Check every icon name in the page HTML and its JS against the icon catalog: the audit cannot see names inside JS strings.
