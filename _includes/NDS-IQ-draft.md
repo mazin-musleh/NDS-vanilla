@@ -60,7 +60,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 Read the source before you ask or answer an NDS question or wire page JS. A claim needs its check first:
 - "NDS has no X" (yours, or the dev's "just use native X") → search the catalogs' `use_when` lines (the index names them).
 - "I cannot see the page" → a failed headless attempt (§Verify).
-- "The page is done" → both browser passes and a clean audit (§Verify).
+- "The page is done" → both browser passes and a clean audit (§Verify). The audit checks markup, never how the page looks.
 
 Ask the dev only what NDS does not answer: project paths and conventions, pacing, unresolved trade-offs.
 
@@ -117,21 +117,21 @@ Check response headers and middleware for a Content Security Policy once, projec
 - **Rebuild** clean, in place. Old work is a content, flow, and data reference, never a copy source. Remove its NDS footprint through the approved plan; rollback is git. The approval names the cost: unported pages run on the new runtime before their rebuild and may render worse.
 - **Second runtime:** only by explicit dev decision, with parallel files and a second assets folder, accepting the cost.
 
-When a plan is required, create `NDS-PLAN.md` at the project root, starting with `Managed by NDS IQ`, with columns for page, route, legacy libraries, NDS target, and status. Stop before building. Ask every project-wide decision in ONE review (porting strategy, prior-NDS split, CSP grant only when a CSP was found, pacing), each with options and a recommended default. Ask it through the host's question tool, the one that shows the dev options to pick from, when the host has one, in back-to-back calls if it caps how many questions one call holds. With no such tool, ask in one numbered message. Record the answers in the plan. Page-specific questions wait for that page's session. In every phase, the conversation asks and the plan records, and a question with options takes the question tool the same way.
+When a plan is required, create `NDS-PLAN.md` at the project root, starting with `Managed by NDS IQ`, with columns for page, route, legacy libraries, NDS target, and status. Stop before building. Ask every project-wide decision in ONE review (porting strategy, prior-NDS split, CSP grant only when a CSP was found, the digital stamp, pacing), each with options and a recommended default. Ask it through the host's question tool, the one that shows the dev options to pick from, when the host has one, in back-to-back calls if it caps how many questions one call holds. With no such tool, ask in one numbered message. Record the answers in the plan. Page-specific questions wait for that page's session. In every phase, the conversation asks and the plan records, and a question with options takes the question tool the same way.
 
 **The plan is cross-session memory.**
 
 - Statuses, in the Status column only: `Planned`, `In Progress`, `Awaiting Verification`, `Built and Verified`. Only dev confirmation sets `Built and Verified`.
 - `Awaiting Verification` means every agent-owned check passed with its evidence recorded. An unmet required check keeps the row `In Progress` with an open checkbox.
 - Every open question, check, fix, or deferred decision is a `- [ ]` item, resolved as `- [x]`, never deleted. Checkboxes are not status.
-- **Pacing:** `gate-by-gate` (default) or `whole plan`, which takes this file's defaults, verifies each page, and leaves rows `Awaiting Verification` until the dev confirms.
+- **Pacing:** `gate-by-gate` (default) or `whole plan`, which takes this file's defaults, verifies each page, and leaves rows `Awaiting Verification` until the dev confirms. `whole plan` still stops once after the first page of each page shape, for the dev to review that page in each of its states.
 - When every row is verified, retire the plan. A new multi-page effort or a dev-requested re-audit recreates it from current state: passing pages `Awaiting Verification`, drifted pages `Planned` with their deltas named.
 - **No-plan work** covers one named page: state its source paths and open questions first; the final report carries the verification evidence and any unmet check. If the dev waived a required plan, note once that cross-session memory is lost.
 - **`NDS-REPORT.md`** (optional) holds NDS findings only: a missing API or event, a canon/rule/doc contradiction, a reproducible bug, a rule gap. Give the NDS version, instruction version, component, and a generic repro; never project markup, routes, or data.
 
 ## Build
 
-**Build entry gate.** Reopen the page's plan row. Before markup, record the work mode, the chosen archetype, template, example, or custom case, and the doc sources (no-plan work states them). Resolve every open source or path question first.
+**Build entry gate.** Reopen the page's plan row. Before markup, record the work mode, the chosen archetype, template, example, or custom case, the doc sources, and the page's parts list (§Composition cascade) (no-plan work states them). Resolve every open source or path question first.
 
 **Chrome first.** Build each required page shape once, then its pages. The index names where the head, the page shapes, and the chrome parts are documented.
 
@@ -142,11 +142,11 @@ When a plan is required, create `NDS-PLAN.md` at the project root, starting with
    - Set both `<html lang>` and `dir`: Arabic → `ar`/`rtl`; others → `ltr`. A single-language site ships without the language switcher; a site in two languages keeps it.
 3. **Brand:** the project logo replaces the template's; drop the brand text when the logo already carries the name.
 
-**Copied chrome ships as-is:** the top bar, main navigation, footer, accessibility panel and its button, cookie notice, digital stamp, and dark-mode switch. Record removable items as plan checkboxes only the dev ticks; never infer affiliation. Before page #2, wire project-backed controls to real session, API, or route data; remove what the project cannot back. Never ship a fake identity or a dead widget.
+**Copied chrome ships as-is:** the top bar, main navigation, footer, accessibility panel and its button, cookie notice, digital stamp, and dark-mode switch. Record removable items as plan checkboxes only the dev ticks; never infer affiliation. The one exception is the digital stamp: it claims a government verification, so the plan review asks whether the site holds it, and it ships only if so. Before page #2, wire project-backed controls to real session, API, or route data; remove what the project cannot back. Never ship a fake identity or a dead widget.
 
 ### Composition cascade
 
-Match by `use_when` across the template, example, and component catalogs, never by title:
+Match by `use_when` across the template, example, and component catalogs, never by title. Read every `use_when` line, unfiltered: a keyword search may confirm a match, never pick the candidates. Then:
 
 1. A matching template → copy it.
 2. No template → the closest example.
@@ -154,7 +154,7 @@ Match by `use_when` across the template, example, and component catalogs, never 
 
 Keep the matched source's structure and put the project's content into every part; never rebuild it. It is a floor, not a ceiling: add the sections the project needs, matched through the catalogs. A family's `Built and Verified` archetype outranks the cascade for its siblings. Screens that share one app shell (one layout with the same navigation) keep that shell's page shape: a matched template supplies the content inside it, never a different page shape.
 
-At each page start, resolve its recorded questions, list every UI part, and match each against the component catalog: every field and control is a part, so a date field is matched like a table. Record the list under the page's plan row, one line per part: `part → component`, where the component is a catalog entry's name, never a bare HTML tag such as `select` (no-plan: in the final report).
+At each page start, resolve its recorded questions, list every UI part, and match each against the component catalog: every field, control and state is a part, so a date field is matched like a table, and so is each state the page can reach (signed out, empty, loading, failed, not found, denied, success). Name each part by the job it does, never by the legacy class or element it replaces. Record the list under the page's plan row before the first line of markup, one line per part: `part → component`, where the component is a catalog entry's name, never a bare HTML tag such as `select`, followed by every line of that component's doc that limits its use (never, only, do not) (no-plan: in the final report).
 
 ### Authority by concern
 
@@ -209,6 +209,7 @@ Never verify from code inspection. A page needs both browser passes:
 
 - **Behavioral:** load it, run the template's audit, and fix or name every finding. Exercise the wired behavior, including one request failure path. Submit every required field type empty, one by one: each type validates through its own code, so one passing proves nothing about the next.
 - **Visual:** compare your page with the built reference page at desktop and mobile widths, both served over HTTP (never `file://`, which floods the console with false errors). **The built page is the visual spec:** a difference you chose is a content swap; one you didn't is a bug. Inspect spacing, icons, width and sticky behavior, dark mode, and overall coherence. Measurements alone are not visual verification.
+- **Every state:** run both passes on each state in the parts list, not only the default one. Set each state up (session, data, failure) and name that setup beside its screenshots. A state with no built reference page is judged against its matched component's doc.
 
 **Drive both passes headlessly** with a browser your own tool loop controls. Keep temporary tooling outside the project; never change its lockfile. Behavioral proof is the console plus the audit; visual proof is screenshots you inspect at both widths.
 
@@ -232,6 +233,7 @@ Claim "cannot see the page" only after the headless attempt fails, and report th
 - the audit result, exercised behavior, and failure-path result;
 - the built reference page and the inspected desktop screenshot;
 - the mobile target width, the equal `window.innerWidth`, and the inspected mobile screenshot;
+- each state from the parts list, its setup, and its inspected screenshots at both widths;
 - the icon, dark-mode, and strict-CSP results that apply;
 - every unmet item.
 
