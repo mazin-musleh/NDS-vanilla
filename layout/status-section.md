@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.10.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "10/10/2026 - 04:26 PM"
 ---
 
 <section id="statusOverview" class="nds-content-section nds-doc-overview">
@@ -35,7 +35,7 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="status-icon" data-canon data-variants="statusVariantsTable">
+<script type="text/html" id="status-icon" data-canon data-preview="page" data-preview-height="fit" data-variants="statusVariantsTable">
 <section class="nds-content-section nds-status-section" data-status="success">
   <div class="nds-section-wrapper">
     <div class="nds-section-icon">

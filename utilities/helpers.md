@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "10/10/2026 - 04:18 PM"
 ---
 
 <section id="helpersOverview" class="nds-content-section nds-doc-overview">
@@ -39,24 +39,20 @@ Pick another component when:
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="helpers-all" data-canon data-variants="helpersVariantsTable">
-<section class="nds-content-section nds-ghost" dir="rtl" lang="ar">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-body">
-      <div class="nds-flex nds-center">
-        <div class="nds-card nds-stroke" id="helpers-card">
-          <div class="nds-card-content">
-            <div class="nds-card-text">
-              <span class="nds-card-title">تم استلام طلبك</span>
-              <p class="nds-card-description">رقم الطلب <span id="helpers-number">REQ-2026-4417</span>، وسيصلك رد خلال يومي عمل.</p>
-              <p class="nds-card-description">للاستفسار اتصل على <span id="helpers-phone">+966 11 456 7890</span></p>
-            </div>
-          </div>
-          <p class="nds-note">احتفظ برقم الطلب لمتابعة حالته.</p>
+<div dir="rtl" lang="ar">
+  <div class="nds-flex nds-center">
+    <div class="nds-card nds-stroke" id="helpers-card">
+      <div class="nds-card-content">
+        <div class="nds-card-text">
+          <span class="nds-card-title">تم استلام طلبك</span>
+          <p class="nds-card-description">رقم الطلب <span id="helpers-number">REQ-2026-4417</span>، وسيصلك رد خلال يومي عمل.</p>
+          <p class="nds-card-description">للاستفسار اتصل على <span id="helpers-phone">+966 11 456 7890</span></p>
         </div>
       </div>
+      <p class="nds-note">احتفظ برقم الطلب لمتابعة حالته.</p>
     </div>
   </div>
-</section>
+</div>
 </script>
     </div>
   </div>

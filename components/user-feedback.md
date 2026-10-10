@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 03:20 PM"
+last_edit: "10/10/2026 - 04:26 PM"
 hideFeedback: true
 ---
 
@@ -36,7 +36,7 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="uf-survey" data-canon data-form data-variants="userFeedbackVariantsTable">
+<script type="text/html" id="uf-survey" data-canon data-preview="page" data-preview-height="fit" data-form data-variants="userFeedbackVariantsTable">
 <section id="user-feedback" class="nds-user-feedback-section nds-content-section">
   <div class="nds-section-body">
     <form class="nds-form">

@@ -87,6 +87,14 @@ def check(path):
             ids[i] = ids.get(i, 0) + 1
     errs += [f'id "{i}" used {n} times across canons' for i, n in ids.items() if n > 1]
 
+    # A fit frame is as tall as the content, and an open menu, modal, tooltip or panel adds no height: it clips.
+    if any(attr(a, 'data-preview-height') == 'fit' for _, a, _ in canons):
+        for cid, _, body in canons:
+            for overlay in ('nds-dropmenu', 'nds-modal', 'data-modal-target', 'nds-tooltip', 'nds-panel', 'data-panel-toggle'):
+                if overlay in body:
+                    errs.append(f'canon #{cid}: {overlay} opens over the page, so a fit frame clips it. Set a data-preview-height that fits the open state')
+                    break
+
     known = {cid for cid, _, _ in canons}
     for cid, attrs, body in canons:
         if attr(attrs, 'data-js') and attr(attrs, 'data-js') not in known:

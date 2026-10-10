@@ -808,6 +808,7 @@
     // footer are left out: only the code shows them. Each render loads a fresh frame over the old
     // one and swaps when it is ready, so the preview never blanks.
     // data-preview-height sets the Desktop height (a short part, the top bar); a page is 800.
+    // "fit" sizes it to the content of each render, and follows the content as it grows.
     var PAGE = '1280x800';
     function pageFrame(card) {
         var dev = card.querySelector('.nds-doc-device');
@@ -832,6 +833,8 @@
             dev.querySelectorAll('iframe').forEach(function (x) { if (x !== f) x.remove(); });
             f.style.visibility = '';
             fit(card);
+            var top = f.contentDocument.body && f.contentDocument.body.firstElementChild;
+            if (top && canon.getAttribute('data-preview-height') === 'fit') new f.contentWindow.ResizeObserver(function () { fit(card); }).observe(top);
         };
         dev.appendChild(f);
         fit(card);
@@ -852,6 +855,7 @@
         var cs = getComputedStyle(card), room = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2 * b;
         var canon = document.getElementById(card.getAttribute('data-preview-of'));
         if (desk) h = +canon.getAttribute('data-preview-height') || h;
+        if (desk && canon.getAttribute('data-preview-height') === 'fit') h = contentHeight(dev, w) || h;
         // data-preview-light: the frame takes the card's width and its content's height, like a plain preview.
         if (desk && canon.hasAttribute('data-preview-light')) { w = room; h = contentHeight(dev, w) || h; }
         var s = Math.min(1, room / w);
