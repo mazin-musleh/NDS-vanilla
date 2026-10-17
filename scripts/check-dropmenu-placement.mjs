@@ -14,8 +14,8 @@
 //   CLAMP    a menu that fits NEITHER side used to overflow deliberately, on
 //            the reasoning that page scroll reveals it. False for a fixed menu:
 //            position:fixed carries the menu along with its trigger.
-//   NAV      outside a modal the sticky nav painted over a scrolled menu; in the
-//            top layer the menu would paint over the nav, so it closes there.
+//   NAV      a page scroll carries the open menu over the sticky nav (the top
+//            layer paints it there); it stays open, so a Filter keeps its ticks.
 //
 // The date picker is the probe because its calendar is the tallest menu in the
 // system AND has no inner .nds-dropmenu-scroll, so it is the only component
@@ -214,7 +214,7 @@ const table = await tablePage.evaluate(async () => {
     scrollBy({ top: 40, behavior: 'instant' });
     await new Promise((r) => setTimeout(r, 150));
     out.carried = { held: Math.abs(gapOf() - g0) < 1, untouched: menu.style.top === top0 };
-    // Scroll the trigger up under the sticky nav: the menu closes there.
+    // Scroll the menu up over the sticky nav: it stays open.
     const nav = document.querySelector('.nds-main-nav');
     // Twice: the topbar scrolls away on the first move, which moves the nav's bottom.
     for (let i = 0; i < 2; i++) {
@@ -222,7 +222,9 @@ const table = await tablePage.evaluate(async () => {
         await new Promise((r) => setTimeout(r, 200));
     }
     await new Promise((r) => setTimeout(r, 400));
-    out.navClose = !menu.matches(':popover-open') && !wrapper.ndsDropmenu.isOpen;
+    out.navStays = menu.matches(':popover-open') && wrapper.ndsDropmenu.isOpen;
+    wrapper.ndsDropmenu.close();
+    await new Promise((r) => setTimeout(r, 400));
     trigger.scrollIntoView({ block: 'center' });
     await new Promise((r) => setTimeout(r, 150));
     trigger.click();
@@ -248,7 +250,7 @@ if (table.skip) {
     ok('table: row menu is inside the viewport', table.inViewport);
     ok('page scroll: the menu moves with its trigger, no script writes', table.carried.held && table.carried.untouched,
         JSON.stringify(table.carried));
-    ok('nav: the menu closes when it reaches the sticky nav', table.navClose);
+    ok('nav: the menu stays open over the sticky nav', table.navStays);
     ok('bubbling: the box around the menu hears the item click', table.heard === 1, `heard ${table.heard}`);
     ok('dark area: the open menu stays dark', table.darkDiffers, table.darkBg);
 }

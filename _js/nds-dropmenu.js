@@ -30,8 +30,8 @@
  *   - data-position-vertical is written by the component (a CSS hook), never set it yourself.
  *   - The open menu sits in the browser's top layer (popover="manual", stamped at init):
  *     nothing clips it and it stays in place in the DOM, so closest(), bubbling and the
- *     wrapper's knobs and theme reach it. Page scroll carries it; it closes when its trigger
- *     leaves view or, outside a modal, when it reaches the sticky nav. Without popover support
+ *     wrapper's knobs and theme reach it. Page scroll carries it, over the sticky nav; it closes when its
+ *     trigger leaves view. Without popover support
  *     (Safari < 17, Firefox < 125) it is fixed and follows every scroll, so a scroll box cannot cut it.
  */
 
@@ -815,14 +815,10 @@
                 }
             }
 
-            // A modal covers the sticky nav; anywhere else the menu would paint over
-            // it, so placement keeps clear of it and the menu closes when it gets there.
+            // A modal covers the sticky nav; anywhere else placement keeps clear of it.
             // ponytail: a Panel raised over the nav with its own --panel-z is not
             // detected; read the trigger's layer if one ever needs it.
             this._respectNav = !this.trigger.closest('.nds-modal, dialog:modal');
-            const nav = this._respectNav && document.querySelector('.nds-main-nav');
-            this._nav = nav && !nav.contains(this.trigger)
-                && this.trigger.getBoundingClientRect().bottom > nav.getBoundingClientRect().top ? nav : null;
 
             this.menu.removeAttribute('hidden');
             NDS.topLayer(this.menu, true);
@@ -843,7 +839,8 @@
             const onScroll = (e) => { if (e.target === document ? fixed : e.target.contains?.(this.trigger)) reposition(); };
             document.addEventListener('scroll', onScroll, { capture: true, passive: true });
             this._offScroll = () => document.removeEventListener('scroll', onScroll, { capture: true });
-            // Close when the trigger leaves view (its scroll box hid it) or the menu reaches the sticky nav.
+            // Close when the trigger leaves view (its scroll box hid it). A page scroll carries the
+            // menu over the sticky nav, as the top layer paints it: closing there threw away a Filter's ticks.
             const leave = () => { if (this.isOpen) this.close(); };
             // Only a change counts: the first report is the state at open, and a script can
             // open a menu whose trigger is off screen (it never left view).
@@ -851,18 +848,6 @@
             this._offView = [NDS.onIntersect(this.trigger, (e) => {
                 if (e.isIntersecting) shown = true; else if (shown) leave();
             })];
-            if (this._nav) {
-                // The nav's stuck bottom: until it sticks it scrolls with the menu and never meets it.
-                // ponytail: a nav that hides on scroll would need a live line, not one read at open.
-                const navBottom = (parseFloat(getComputedStyle(this._nav).top) || 0) + this._nav.offsetHeight;
-                // Only the top edge counts: the huge margins keep the rest of the menu "in view".
-                // 0.99, not 1: mid-slide the box sits on a sub-pixel and reads 0.9999, which closed it.
-                let clear = false;
-                this._offView.push(NDS.onIntersect(this.menu, (e) => {
-                    if (e.intersectionRatio >= 0.99) clear = true; else if (clear) leave();
-                },
-                    { threshold: 0.99, rootMargin: `${-navBottom}px 100000px 100000px 100000px` }));
-            }
             // Resize-reposition (not close) — mobile browsers fire resize as
             // the address bar shows/hides during scroll, which would close
             // the menu mid-interaction otherwise. NDS.onResize is debounced

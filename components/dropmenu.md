@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 07:33 AM"
+last_edit: "17/10/2026 - 04:38 PM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -326,7 +326,7 @@ A lazy menu keeps its items in a `<template>`, so they are not in the page until
             <i class="hgi hgi-stroke hgi-layers-01"></i>
             <span class="nds-label">No Clipping</span>
           </span>
-          <p class="nds-item-desc">The open menu shows in the browser's top layer, so a modal, a scrolling table or a drawer never cuts it off. It stays inside its wrapper in the page, so a dark area, a click listener on a parent and <code class="nds-inline-code lang-js">closest()</code> still reach it. It moves with the page as you scroll, and closes when its trigger scrolls out of view or, outside a modal, when it reaches the sticky main navigation.</p>
+          <p class="nds-item-desc">The open menu shows in the browser's top layer, so a modal, a scrolling table or a drawer never cuts it off. It stays inside its wrapper in the page, so a dark area, a click listener on a parent and <code class="nds-inline-code lang-js">closest()</code> still reach it. It moves with the page as you scroll, over the sticky main navigation too, and closes when its trigger scrolls out of view.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
