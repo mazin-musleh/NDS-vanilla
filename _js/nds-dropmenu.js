@@ -845,14 +845,23 @@
             this._offScroll = () => document.removeEventListener('scroll', onScroll, { capture: true });
             // Close when the trigger leaves view (its scroll box hid it) or the menu reaches the sticky nav.
             const leave = () => { if (this.isOpen) this.close(); };
-            this._offView = [NDS.onIntersect(this.trigger, (e) => { if (!e.isIntersecting) leave(); })];
+            // Only a change counts: the first report is the state at open, and a script can
+            // open a menu whose trigger is off screen (it never left view).
+            let shown = false;
+            this._offView = [NDS.onIntersect(this.trigger, (e) => {
+                if (e.isIntersecting) shown = true; else if (shown) leave();
+            })];
             if (this._nav) {
                 // The nav's stuck bottom: until it sticks it scrolls with the menu and never meets it.
                 // ponytail: a nav that hides on scroll would need a live line, not one read at open.
                 const navBottom = (parseFloat(getComputedStyle(this._nav).top) || 0) + this._nav.offsetHeight;
                 // Only the top edge counts: the huge margins keep the rest of the menu "in view".
-                this._offView.push(NDS.onIntersect(this.menu, (e) => { if (e.intersectionRatio < 1) leave(); },
-                    { threshold: 1, rootMargin: `${-navBottom}px 100000px 100000px 100000px` }));
+                // 0.99, not 1: mid-slide the box sits on a sub-pixel and reads 0.9999, which closed it.
+                let clear = false;
+                this._offView.push(NDS.onIntersect(this.menu, (e) => {
+                    if (e.intersectionRatio >= 0.99) clear = true; else if (clear) leave();
+                },
+                    { threshold: 0.99, rootMargin: `${-navBottom}px 100000px 100000px 100000px` }));
             }
             // Resize-reposition (not close) — mobile browsers fire resize as
             // the address bar shows/hides during scroll, which would close
