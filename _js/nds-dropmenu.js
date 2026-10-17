@@ -1,5 +1,7 @@
 /* NDS.Dropmenu — public surface
  * Rides: (none — base component)
+ * Requires:
+ *   .nds-dropmenu-footer sits outside .nds-dropmenu-scroll — the footer scrolls away with the list, and search hides its buttons
  * Methods:
  *   NDS.Dropmenu.init() / .reinit()      scan + initialize dropmenu wrappers
  *   NDS.Dropmenu.create(el)              instance one .nds-dropmenu wrapper

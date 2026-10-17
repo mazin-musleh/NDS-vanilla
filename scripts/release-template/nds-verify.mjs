@@ -152,7 +152,28 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
         await Promise.race([Promise.allSettled(finite.map((a) => a.finished)), new Promise((r) => setTimeout(r, 3000))]);
     })()`);
     await sleep(400);
-    if (run) { await evaluate(`(async () => { ${run} })()`); await sleep(400); }
+    // Never captureBeyondViewport: it shifts an RTL page sideways. The viewport stretches to the page
+    // instead, before the state's script: one that grows right after a menu opens can close it.
+    // ponytail: a vh-sized box grows with it; scroll-and-stitch if that ever misleads.
+    let height = viewHeight;
+    const stretch = async () => {
+        const { cssContentSize } = await s('Page.getLayoutMetrics');
+        const h = Math.min(Math.ceil(cssContentSize.height), 8000);
+        if (h <= height) return;
+        height = h;
+        await s('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 768 });
+        // The whole page is in view now: what waited to be seen starts. Let it finish.
+        await evaluate(`new Promise((r) => (window.requestIdleCallback || setTimeout)(r, { timeout: 3000 }))`);
+        await sleep(300);
+    };
+    await stretch();
+    if (run) {
+        await evaluate(`(async () => { ${run} })()`);
+        await sleep(400);
+        // A first open can build its part on the click (a Filter menu, ~0.5 s): wait out the spinner.
+        await evaluate(`(async () => { for (let i = 0; i < 30 && document.querySelector('[data-state~="loading"]'); i++) await new Promise((r) => setTimeout(r, 100)); })()`);
+        await stretch();
+    }
 
     const status = await evaluate(`performance.getEntriesByType('navigation')[0]?.responseStatus || 0`);
     const revealed = await evaluate(`document.documentElement.hasAttribute('data-nds-loaded')`);
@@ -160,14 +181,6 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
     const overflow = await evaluate('document.documentElement.scrollWidth - innerWidth');
     // The console's CSP lines name no source and carry a fresh nonce per load; the event names the script.
     const csp = (await evaluate('window.__ndsCsp || []')) || [];
-    const { cssContentSize } = await s('Page.getLayoutMetrics');
-    const height = Math.min(Math.ceil(cssContentSize.height), 8000);
-    // Never captureBeyondViewport: it shifts an RTL page sideways. The viewport stretches to the page
-    // instead. ponytail: a vh-sized box grows with it; scroll-and-stitch if that ever misleads.
-    if (height > viewHeight) {
-        await s('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 768 });
-        await sleep(300);
-    }
     const { data } = await s('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width, height, scale: 1 } });
     // After the shot: the audit loads its own bundle into the page.
     const findings = audit ? await evaluate(`(async () => {

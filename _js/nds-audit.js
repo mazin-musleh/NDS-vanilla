@@ -692,6 +692,7 @@
         'needs': (el, s) => el.matches(s) || !!el.querySelector(s),
         'needs one': (el, s, per) => el.querySelectorAll(s).length >= el.querySelectorAll(per).length,
         'sits in': (el, s) => !!el.parentElement?.closest(s),
+        'sits outside': (el, s) => !el.parentElement?.closest(s),
         'is': (el, s) => el.matches(s),
         'with': (el, s) => !!document.querySelector(s),
         'points at': (el, s, attr) => {
@@ -705,10 +706,10 @@
             let missing;
             try { missing = ctx.find(host).filter(el => !REQUIRE[verb](el, arg, extra)); } catch (e) { continue; /* a selector this browser cannot parse */ }
             if (!missing.length) continue;
-            const need = { 'needs': arg, 'needs one': `one ${arg} per ${extra}`, 'sits in': `a ${arg} around it`,
+            const need = { 'needs': arg, 'needs one': `one ${arg} per ${extra}`, 'sits in': `a ${arg} around it`, 'sits outside': `no ${arg} around it`,
                 'is': `to be ${arg}`, 'with': `${arg} on the page`, 'points at': `its ${extra} to name a ${arg}` }[verb];
             ctx.report(missing[0], `${host} needs ${need}: ${why}${missing.length > 1 ? ` (${missing.length} elements; the first is shown)` : ''}.`,
-                `Copy the missing part from the ${name} canon.`, undefined, missing.length);
+                verb === 'sits outside' ? `Move it out of the ${arg}, as the ${name} canon has it.` : `Copy the missing part from the ${name} canon.`, undefined, missing.length);
         }
     } });
 

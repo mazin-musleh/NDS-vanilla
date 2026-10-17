@@ -278,9 +278,9 @@ class JSProcessor
     JSON.generate({ known: known, parts: parts, requires: requires_rows })
   end
 
-  # Each banner's Requires lines: "<host> needs|needs one X per|sits in|is|with|points at X via" … " — why".
+  # Each banner's Requires lines: "<host> needs|needs one X per|sits in|sits outside|is|with|points at X via" … " — why".
   # Rows: [component, host, verb, arg, extra, why]. A line that does not parse fails the build.
-  REQUIRES_LINE = /\A(.+?) (needs one|points at|sits in|needs|is|with) (.+?) — (.+)\z/
+  REQUIRES_LINE = /\A(.+?) (needs one|points at|sits outside|sits in|needs|is|with) (.+?) — (.+)\z/
   def requires_rows
     Dir.glob('_js/**/*.js').sort.flat_map do |f|
       head = File.read(f, encoding: 'utf-8')[/\A\/\*.*?\*\//m] || ''
