@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "17/10/2026 - 11:18 PM"
 ---
 
 <section id="sidemenu-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "13/10/2026 - 12:21 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-The side menu is a column of links on the start side of the content. It holds the pages of one part of the site, such as a documentation set or an admin console. A link can open a group of links, and a group can hold groups of its own. The list is a [Drawer](../components/drawer), and the side menu adds the column and a button that opens the menu on small screens.
+The side menu is a column of links on the start side of the content. It holds the pages of one part of the site, such as a documentation set or an admin console. A link can open a group of links, and a group can hold groups of its own. The list is a [Drawer](../components/drawer), and the side menu adds the column and a button that opens the menu on small screens. A search box above the links can filter a long menu.
 
 The side menu is a page shell part. The preview shows it in a frame of its own, so it does not clash with this page's own side menu.
 
@@ -376,6 +376,7 @@ The Small screens options change the menu below 960px only.
 | Peek button | Peek (default) (hint: The button hides at the screen edge until the mouse comes near) | `.nds-peek` | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle)` | In slide-in mode, the button stays mostly hidden at the screen edge. Not in top bar mode |
 | Peek button | Full button (hint: The button stays in full view) | — | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle)` | The button stays in full view at the screen edge |
 | Lined | Lined (hint: A line beside each open group) | `.nds-lined` | `.nds-drawer` | A line beside each open group, so the levels are easy to see |
+| Search | Search (hint: A search box above the links) | `[data-search]` | `.nds-drawer` | A search box that filters the links and opens each group with a match. For a long menu. See [Drawer](../components/drawer) for its options |
 | Many links | Many links (hint: The list does not fit, so the show more arrow appears) | canon `#sidemenu-more` | `.nds-drawer-list` | 24 more links. Shows how the list scrolls when it is taller than the screen |
 {: #sidemenu-variants-table .nds-table .nds-responsive}
 
@@ -404,6 +405,11 @@ Below 960px, the side menu moves off screen, and the menu button shows at the sc
 {: .nds-block-title}
 
 In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the screen edge, so it does not cover the content. It shows for a moment when the page loads, and comes out when the mouse moves near it. Without `nds-peek`, the button always shows in full.
+
+### Search
+{: .nds-block-title}
+
+`data-search` on `nav.nds-drawer` adds a search box above the links. The menu filters as the user types: a matching link stays, and each group with a match opens. Clearing the box opens the groups that were open before. Its options are on the [Drawer](../components/drawer) page.
 
 </div>
   </div>
@@ -482,6 +488,7 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
 - Name each group by what its pages share. Do not mix pages of other topics in one group.
 - Use two levels for most sites. A third level hides pages two clicks deep.
 - Pick Top bar for a short list, and Slide-in for a long one that people scroll.
+- Add Search to a menu of about 20 links or more, as this site's menu has.
 - Do not write color classes on the menu button. Each mode styles it.
 - On a page with no side menu, remove the `aside` and `nds-has-sidemenu` together.
 

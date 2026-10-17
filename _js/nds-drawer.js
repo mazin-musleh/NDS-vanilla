@@ -14,7 +14,15 @@
  *   data-state="always-open"   on the drawer: submenus open and close on their own
  *   data-state="open"          on an <li> and its <ul> (+ aria-expanded="true" on the
  *                              button): the submenu starts open, painted by CSS
+ *   data-search                on the drawer: a search box above the list, as Dropmenu's;
+ *                              data-search="20" adds it only at 20 items or more
+ *   data-search-empty="…"      on the drawer: the no-match text (default "No results")
+ *   data-search-style="…"      on the drawer: the box's field style, outline · lighter ·
+ *                              darker (default), as the Forms classes
+ *   data-search-value="…"      on an <li>: more words the item is found by
  * Gotchas:
+ *   - A search opens every branch with a match; clearing it restores the branches open
+ *     before it, so a branch the user toggled mid-search goes back too.
  *   - Opening a submenu closes its siblings — one open branch per level — unless always-open.
  *   - toggle() takes the BUTTON, not the <li>.
  *   - An <li> marked data-state="active" opens every ancestor branch at init; moving the
@@ -28,6 +36,14 @@
 
 (function () {
     'use strict';
+
+    // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const strings = NDS.i18n.strings('drawer', {
+        search: 'Search the menu',
+        search_placeholder: 'Search…',
+        clear_search: 'Clear search',
+        no_results: 'No results',
+    });
 
     const CONFIG = {
         selectors: {
@@ -243,6 +259,110 @@
     }
 
     // ==============================================
+    // SEARCH (opt-in: data-search, same API as Dropmenu's)
+    // ==============================================
+
+    // Case and accents ignored, as Dropmenu's search: "مطار" finds "المَطار".
+    const norm = (s) => (s || '').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
+
+    function setupSearch(drawer) {
+        const attr = drawer.getAttribute('data-search');
+        const list = drawer.querySelector('.nds-drawer-list');
+        if (attr === null || !list) return;
+        const leaves = () => [...list.querySelectorAll('li')].filter(li => !li.querySelector(':scope > ul'));
+        const threshold = parseInt(attr, 10) || 0;
+        if (threshold && leaves().length < threshold) return;
+
+        // The field styles Forms names: outline (none), lighter, darker (the default).
+        const style = { outline: '', lighter: ' nds-lighter' }[drawer.getAttribute('data-search-style')] ?? ' nds-darker';
+        drawer.insertAdjacentHTML('afterbegin', `<div class="nds-form-container${style} nds-drawer-search">
+                <div class="nds-form-control">
+                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                    <input type="text" class="nds-search-input">
+                    <div class="nds-form-action">
+                        <button type="button" class="nds-btn nds-subtle nds-clear nds-icon-only" hidden>
+                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="nds-empty-placeholder" data-nds-empty-placeholder hidden aria-live="polite">
+                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                <span class="nds-empty-message"></span>
+            </div>`);
+        const box = drawer.firstElementChild;
+        const empty = box.nextElementSibling;
+        const input = box.querySelector('.nds-search-input');
+        strings.set(input, 'aria-label', 'search');
+        strings.set(input, 'placeholder', 'search_placeholder');
+        strings.set(box.querySelector('.nds-clear'), 'aria-label', 'clear_search');
+        const msg = empty.querySelector('.nds-empty-message');
+        const customEmpty = drawer.getAttribute('data-search-empty');
+        if (customEmpty) msg.textContent = customEmpty; else strings.set(msg, 'text', 'no_results');
+        // Forms init ran before this injection: wire its clear button. A plain input without NDS.Forms.
+        NDS.Forms?.initializeContainer(box);
+
+        // Opens or closes a branch at once, with no height animation.
+        const setOpen = (li, open) => {
+            const btn = li.querySelector(':scope > .nds-btn');
+            const sub = li.querySelector(':scope > ul');
+            if (!btn || !sub || isOpen(li) === open) return;
+            setState(li, open ? CONFIG.states.open : CONFIG.states.closed);
+            setState(sub, open ? CONFIG.states.open : CONFIG.states.closed);
+            NDS.aria.expanded(btn, open);
+            if (open) setState(btn, CONFIG.states.active); else clearButton(li, btn);
+        };
+        // A label match shows the item and everything under it; a group stays, and opens, while anything inside matches.
+        const visit = (li, q, shown) => {
+            const sub = li.querySelector(':scope > ul');
+            const own = li.querySelector(':scope > :is(.nds-btn, a)');
+            // The label only: a group button's count tag must not match a digit.
+            const text = own ? (own.querySelector('.nds-label') || own).textContent : sub ? '' : li.textContent;
+            const match = shown || norm(text + ' ' + (li.getAttribute('data-search-value') || '')).includes(q);
+            let found = sub ? 0 : +match;
+            if (sub) for (const child of sub.children) found += visit(child, q, match);
+            li.hidden = !match && !found;
+            if (sub && q && found) setOpen(li, true);
+            return found;
+        };
+        // The branches open before the first query, so clearing the box puts the menu back as it was.
+        let before = null;
+        const filter = () => {
+            if (!drawer._searchTeardown) return; // a debounced call after destroy()
+            const q = norm(input.value.trim());
+            const groups = () => [...list.querySelectorAll('li')].filter(li => li.querySelector(':scope > ul'));
+            if (q && !before) before = groups().filter(isOpen);
+            let found = 0;
+            for (const li of list.children) found += visit(li, q, !q);
+            if (!q && before) {
+                groups().forEach(li => setOpen(li, before.includes(li)));
+                before = null;
+            }
+            empty.hidden = !q || found > 0;
+        };
+
+        const ac = new AbortController();
+        input.addEventListener('input', NDS.debounce(filter, 120), { signal: ac.signal });
+        input.addEventListener('keydown', (e) => {
+            // First Escape clears the query; the next one goes to the page.
+            if (e.key !== 'Escape' || !input.value) return;
+            e.stopPropagation();
+            input.value = '';
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            filter();
+        }, { signal: ac.signal });
+
+        drawer._searchTeardown = () => {
+            ac.abort();
+            input.value = '';
+            filter();
+            box.remove();
+            empty.remove();
+            drawer._searchTeardown = null;
+        };
+    }
+
+    // ==============================================
     // INITIALIZATION
     // ==============================================
 
@@ -252,6 +372,7 @@
         initOpenState(drawer);
         initToggles(drawer);
         initActiveStates(drawer);
+        setupSearch(drawer);
         watchActive();
 
         drawer.setAttribute('data-nds-drawer-initialized', 'true');
@@ -270,6 +391,7 @@
             drawer._togglesAC.abort();
             delete drawer._togglesAC;
         }
+        drawer._searchTeardown?.();
 
         drawer.removeAttribute('data-nds-drawer-initialized');
     }

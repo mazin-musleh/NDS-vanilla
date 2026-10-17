@@ -186,6 +186,12 @@
         "sa_mark": ".sa",
         "sa_desc": "جميع روابط المواقع الرسمية للأنشطة والمبادرات في المملكة العربية السعودية تنتهي بـ .sa"
     },
+    "drawer": {
+        "search": "البحث في القائمة",
+        "search_placeholder": "بحث…",
+        "clear_search": "مسح البحث",
+        "no_results": "لا توجد نتائج"
+    },
     "dropmenu": {
         "search": "البحث في العناصر",
         "search_placeholder": "بحث…",

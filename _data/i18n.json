@@ -864,6 +864,30 @@
   "ar": "جميع روابط المواقع الرسمية للأنشطة والمبادرات في المملكة العربية السعودية تنتهي بـ .sa"
  },
  {
+  "section": "drawer",
+  "key": "search",
+  "en": "Search the menu",
+  "ar": "البحث في القائمة"
+ },
+ {
+  "section": "drawer",
+  "key": "search_placeholder",
+  "en": "Search…",
+  "ar": "بحث…"
+ },
+ {
+  "section": "drawer",
+  "key": "clear_search",
+  "en": "Clear search",
+  "ar": "مسح البحث"
+ },
+ {
+  "section": "drawer",
+  "key": "no_results",
+  "en": "No results",
+  "ar": "لا توجد نتائج"
+ },
+ {
   "section": "dropmenu",
   "key": "search",
   "en": "Search items",

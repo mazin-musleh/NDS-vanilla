@@ -245,6 +245,18 @@
 }
 
 // ==============================================
+// SEARCH (data-search): JS injects the box and its empty message above the list
+// ==============================================
+
+.nds-drawer > .nds-drawer-search {
+    margin-block-end: var(--spacing-md);
+}
+
+.nds-drawer > .nds-empty-placeholder {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+}
+
+// ==============================================
 // SUBMENU - HEIGHT ANIMATION
 // ==============================================
 

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 03:22 AM"
+last_edit: "17/10/2026 - 11:18 PM"
 ---
 
 <section id="drawer-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "17/10/2026 - 03:22 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A drawer is a vertical list of links and buttons. An item can hold a submenu: a nested list that opens in place under it. The same list also holds flat links, or notification rows with a title and a description.
+A drawer is a vertical list of links and buttons. An item can hold a submenu: a nested list that opens in place under it. The same list also holds flat links, or notification rows with a title and a description. A search box above the list can filter a long menu.
 
 Pick another component when:
 
@@ -286,6 +286,12 @@ The current page's `<li>` carries `data-state="active"`. To open a submenu at lo
 | Card | Card | `.nds-card` | `.nds-drawer` | A card background and rounded corners, so the drawer sits in a grid of cards |
 | Stroke | Stroke | `.nds-stroke` | `.nds-drawer.nds-card` | A border around the card |
 | Always open | Always open (hint: Several submenus stay open at once) | `[data-state~="always-open"]` | `.nds-drawer:has(.nds-menu-btn)` | Several submenus stay open at once. Without it, opening a submenu closes the open one next to it |
+| Search | None (default) | — | — | No search box |
+| Search | Darker (hint: A search box with a darker fill) | `[data-search]` | `.nds-drawer` | A search box that filters the items as the user types, with a darker fill and no border. For a long menu. `data-search="20"` adds it only at 20 items or more |
+| Search | Lighter (hint: A search box with a light fill) | `[data-search]` | `.nds-drawer` | The search box with a light fill and no border, for a drawer on a white card. Write both attributes |
+| Search | Lighter (hint: A search box with a light fill) | `[data-search-style="lighter"]` | `.nds-drawer` | |
+| Search | Outline (hint: A search box with a border) | `[data-search]` | `.nds-drawer` | The search box with a border, the plain field look. Write both attributes |
+| Search | Outline (hint: A search box with a border) | `[data-search-style="outline"]` | `.nds-drawer` | |
 {: #drawer-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -323,6 +329,11 @@ A Notifications row measures its own width, not the screen. The tag floats at th
 {: .nds-block-title}
 
 A [Scroll More](../components/scroll-more) wrapper around the list holds the drawer to `--drawer-max-height`. While the list overflows, its end fades and the Show more button shows. The button scrolls the list. At the end, it turns to scroll back up.
+
+### Search
+{: .nds-block-title}
+
+`data-search` adds a search box above the list. The list filters as the user types: an item stays when its label matches, and each submenu with a match opens. A match on a submenu's own label keeps every item under it. A message shows when nothing matches. When the box is cleared, the submenus that were open before the search open again, and the rest close. The search ignores case and accents, as the [Dropmenu](../components/dropmenu) search does. `data-search-style` picks the box's field style from [Forms](../components/forms): darker (the default), lighter or outline.
 
 </div>
   </div>
@@ -397,6 +408,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
 - In a Notifications row, put `data-status` on the `<li>` and on the tag. The status on the `<li>` colors the icon. The tag does not take it from the `<li>`.
 - Leave the size class off the tag in a Notifications row. The drawer makes it XS, so it leaves the title its room.
 - Leave `nds-truncate` off the title in a Notifications row. A cut title cannot wrap under the tag, so it shows less text.
+- Add search to a menu of about 20 items or more. Use `data-search="20"` when the item count changes, so a short menu gets no box.
 - Use Divided when rows have two lines. Leave it off a list of short links, where the lines only add noise.
 - After you add a drawer to the page, call `NDS.Drawer.reinit()`. After you change the items of a drawer that started, call `NDS.Drawer.destroy(drawer)`, then `NDS.Drawer.create(drawer)`.
 
@@ -429,9 +441,13 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-state="always-open"` | `.nds-drawer` | Each submenu opens and closes on its own, at every level. Without it, opening a submenu closes the open one beside it |
+| `data-search` | `.nds-drawer` | Adds a search box above the list. A number, such as `data-search="20"`, adds it only when the drawer has that many items or more |
+| `data-search-empty` | `.nds-drawer` | The text shown when nothing matches. The default is "No results" |
+| `data-search-style` | `.nds-drawer` | The search box's field style: `darker` (the default), `lighter` or `outline`, as the Forms field styles |
 | `data-state="active"` | `<li>` | Marks the current page. Its line shows, and every submenu above it opens at load |
 | `data-state="open"` | `<li>` and its submenu `<ul>` | Opens the submenu at load, before the script runs. Set it on both, with `aria-expanded="true"` on the toggle button. The script keeps it in step: `opening` and `closing` during the slide, `open` while the submenu is open |
 | `data-status` | `<li>` | `success`, `info`, `warning`, `error` or `neutral`. Colors the featured icon in the row |
+| `data-search-value` | `<li>` | More words the item is found by, such as its name in another language |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties
