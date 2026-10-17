@@ -5,13 +5,13 @@
 //   --no-build   reuse the last build in tmp/doc-check/site
 //   --mobile     375px wide instead of 1280px
 //   --css="rule"  add a style rule to the page, to try a fix or to prove a check fires
+//   --open       an overlay page: click each preview's first button and shoot the window open
 //
 // Output: text findings, and tmp/doc-check/<page>-light.png / -dark.png.
 // Checks per state: console errors, an empty preview, a small component (button, chip, tag)
 // stretched to the full preview width, and a disabled control whose icon and label differ in
 // color. ponytail: the stretch and color checks are heuristics; widen them when a real bug slips by.
-// A dropmenu is also shot open. ponytail: other overlays (modal, drawer, tooltip) are shot
-// closed; open their trigger the same way when their page is converted.
+// A dropmenu is also shot open; other overlays only with --open.
 import { execSync } from 'node:child_process';
 import { createServer } from 'node:http';
 import { mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
@@ -24,6 +24,7 @@ const SITE = join(OUT, 'site');
 const args = process.argv.slice(2);
 const pages = args.filter((a) => !a.startsWith('--'));
 const WIDTH = args.includes('--mobile') ? 375 : 1280;
+const OPEN = args.includes('--open');
 const CSS = (args.find((a) => a.startsWith('--css=')) || '').slice(6);
 if (!pages.length) { console.error('usage: node scripts/doc-check.mjs <page.md> […] [--no-build] [--mobile]'); process.exit(1); }
 
@@ -196,6 +197,31 @@ for (const md of pages) {
                         await page.keyboard.press('Escape');
                         await page.evaluate(() => document.body.click());
                         await page.waitForTimeout(400);
+                    }
+                    // --open: an overlay page (panel, FAB, cookies) is shot open too, the whole window,
+                    // since the overlay sits outside the preview. Its first button opens it.
+                    if (OPEN) {
+                        const opened = await page.evaluate((id) => {
+                            const box = document.getElementById(id).nextElementSibling.nextElementSibling.nextElementSibling;
+                            // The card's own view toggles are not the demo.
+                            const btn = [...box.querySelectorAll('.nds-btn:not(.nds-dropmenu-trigger)')].find((b) => !b.closest('.nds-doc-view'));
+                            if (btn) btn.click();
+                            return !!btn;
+                        }, id);
+                        if (opened) {
+                            await page.setViewportSize({ width: WIDTH, height: 800 });
+                            await page.waitForTimeout(800);
+                            shots.push({ name: `${st.name} (open)`, png: (await page.screenshot()).toString('base64'), h: 40 + 800 * Math.min(1, 380 / WIDTH) * 2 });
+                            // Close it: Escape, the preview's other buttons (FAB's Clear), and any dialog left open.
+                            await page.keyboard.press('Escape');
+                            await page.evaluate((id) => {
+                                const box = document.getElementById(id).nextElementSibling.nextElementSibling.nextElementSibling;
+                                [...box.querySelectorAll('.nds-btn:not(.nds-dropmenu-trigger)')].filter((b) => !b.closest('.nds-doc-view')).forEach((b, i) => { if (i) b.click(); });
+                                document.querySelectorAll('dialog[open]').forEach((d) => d.close());
+                            }, id);
+                            await page.waitForTimeout(400);
+                            await page.setViewportSize({ width: WIDTH, height: vh });
+                        }
                     }
                     await page.evaluate((id) => { document.getElementById(id + '-options').style.visibility = ''; }, id);
                 }
