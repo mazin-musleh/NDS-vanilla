@@ -30,4 +30,4 @@ Every installed copy downloads `refs/heads/main/_includes/NDS-IQ.md`. So any edi
 
 1. DONE on `iq-v4`: the v4 file is the draft; `_includes/NDS-IQ.md` is main's v3.1 again.
 2. `iq-v4` merges into main any time: the v4 rules ride as the draft, and the guide's v4.0 row stays off the live site.
-3. Release day: `git tag -a IQv3.2 0d0e3a10` (branch `iq-v3.2`), `python scripts/publish-iq.py --apply`, then `git push origin main IQv3.2 IQv4.0`. `IQv3.2` may also go out earlier: it must only be online before v4 sends old projects to it.
+3. Release day: `IQv3.2` was tagged and pushed 2026-10-10. `python scripts/publish-iq.py --apply` before the build and `mkrelease.py`, then `git push origin main IQv4.0`.

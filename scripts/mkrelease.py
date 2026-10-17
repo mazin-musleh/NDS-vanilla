@@ -13,12 +13,14 @@ Output: dist/nds-vanilla-template-v<version>.zip, laid out as
     nds-vanilla-template-v<version>/
         CHANGELOG.md
         LICENSE
-        README.md          — human signpost: read-only reference, start at the guide
+        NDS-INDEX.md       — the agent's map: each need to this release's files
+        nds-verify.mjs     — the consumer's browser check, every page and state
+        README.md         — human signpost: read-only reference, start at the guide
         _site/             — the built HTML template (incl. guides/get-started.html,
                              the adoption guide)
 
 No _source/ tree ships: the consumer populates NDS_ROOT/_source/ from the tag's
-auto-generated Source code zip, per the population rule in the rules file. The
+auto-generated Source code zip, per NDS-INDEX.md's Install section. The
 paths it will hold are still checked here, against the repo working tree — the
 tag captures that tree, so a rename there dead-ends the consumer's copy.
 
@@ -119,9 +121,12 @@ def check_rules(block, name='_includes/NDS-IQ.md'):
     if '{%' in block or '{{' in block:
         sys.exit(f'{name} contains literal Liquid delimiters — it is a Jekyll '
                  'include (topbar + guide render it), so the build parses them and dies.')
+    # An installed copy accepts an update only when line 1 starts with this.
+    if not block.startswith('# NDS IQ'):
+        sys.exit(f'{name} line 1 does not start with "# NDS IQ" — every installed copy would reject it.')
     # Display only — nothing compares it. The pattern takes the decimal so it
     # can't stop at the "v0" of "v0.8" and match a stamp that isn't there.
-    m = re.search(r'instructions v([\d.]+)', block)
+    m = re.search(r'instructions v([\d.]+)', block.split('\n', 1)[0])
     if not m:
         sys.exit(f'{name} heading has no "instructions v<N>" stamp.')
     # The rules name NO template version, anywhere: they read the runtime's own
@@ -183,7 +188,7 @@ def verify(out, version, rules=None):
     if f'## [{version}]' not in changelog:
         sys.exit(f'CHANGELOG.md has no [{version}] section.')
 
-    # Anchor files for the canon the rules route reads to. The _source/ ones no
+    # Anchor files for the canon NDS-INDEX.md routes reads to. The _source/ ones no
     # longer ship — the consumer populates them from the tag's source zip — so
     # they are checked against the repo working tree the tag captures. Strip the
     # prefix: _source/ was a straight copy of these repo-root folders, and the

@@ -52,7 +52,7 @@ def collect_refs(block):
 GATE_CSS = '/* colors */ html{background-color:#fff}html :where(.nds-topbar){height:40px}'
 
 
-def build_stub_zip(version, refs_from, iq_bytes=None, gate_doc=None):
+def build_stub_zip(version, refs_from, gate_doc=None):
     """A zip carrying every name verify() reads.
 
     Paths come from `refs_from` (the PRE-mutation rules file), so a case that
@@ -63,10 +63,6 @@ def build_stub_zip(version, refs_from, iq_bytes=None, gate_doc=None):
     pkg = f'nds-vanilla-template-v{version}/'
     with open(IQ, encoding='utf8') as f:
         block = f.read()
-    # iq_bytes stages a deliberately corrupted offline copy. Every other case
-    # mutates the SOURCE, which build_stub_zip re-reads, so source and zip move
-    # together and can never break the byte-identical guard — that one needs the
-    # zip corrupted on its own.
     guide_html = '<h1>guide</h1>' + block   # the guides render the include
     buf, written = io.BytesIO(), set()
 
@@ -87,9 +83,9 @@ def build_stub_zip(version, refs_from, iq_bytes=None, gate_doc=None):
             + '&lt;/style&gt;&lt;script&gt;(function(){})()&lt;/script&gt;</code>')
         put(pkg + 'CHANGELOG.md', f'## [{version}]\n')
         put(pkg + 'README.md', 'see `_site/index.html`\n')
+        put(pkg + 'nds-verify.mjs')
         with open(os.path.join(ROOT, 'NDS-INDEX.md'), encoding='utf8') as f:
             put(pkg + 'NDS-INDEX.md', f.read())
-        put(pkg + 'NDS-IQ.md', iq_bytes if iq_bytes is not None else block)
         for name in ('get-started', 'integration-quality'):
             put(f'{pkg}_site/guides/{name}.html', guide_html)
         for p in sorted(collect_refs(refs_from)):
@@ -137,6 +133,17 @@ CASES = [
 
     # Versionless now — nothing compares it, so losing the phrase is the only
     # way it breaks, and consumer plan files are stamped from it.
+    # The published copy is a Jekyll include: a delimiter kills the build.
+    ('a Liquid delimiter lands in the prose',
+     lambda t: t + '\nUse {{ the value }}.\n', VERSION, 'Liquid'),
+
+    ('the heading loses its revision stamp',
+     lambda t: t.replace('(instructions v', '(rules v', 1), VERSION, 'stamp'),
+
+    # Installed copies accept an update only when line 1 starts "# NDS IQ".
+    ('line 1 no longer starts "# NDS IQ"',
+     lambda t: '\n' + t, VERSION, '# NDS IQ'),
+
     ('plan stamp phrase lost',
      lambda t: t.replace('Managed by NDS IQ', 'Managed by IQ'), VERSION, 'plan-stamp'),
 

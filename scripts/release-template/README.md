@@ -7,8 +7,9 @@ A versioned, read-only build of the National Design System (Saudi Arabia). Keep 
 ## Layout
 
 - NDS IQ (the rules your agent reads before any NDS work) is not in this zip — it versions independently. The guide's setup prompt installs the latest published copy at your project root.
+- `NDS-INDEX.md` — the map your agent opens first: which file in this release answers each need.
 - `_site/` — the built documentation site + all assets. Component docs (`_site/components/`) carry the canonical copy-ready markup; `_site/templates/` and `_site/examples/` are full pages to copy.
-- `_source/` — not in this zip; your agent populates it here on install, from this release tag's "Source code" zip (the NDS IQ rules say how). It holds the readable JS/SCSS behind the minified bundles, the raw doc/template/example page sources, and machine-readable catalogs in `_source/_data/content/`.
+- `_source/` — not in this zip; your agent populates it here on install, from this release tag's "Source code" zip (`NDS-INDEX.md`, Install, says how). It holds the readable JS/SCSS behind the minified bundles, the raw doc/template/example page sources, and machine-readable catalogs in `_source/_data/content/`.
 - `nds-verify.mjs` — screenshots, audit and console check for every page and state of your app, beside this release's built pages: `node nds-verify.mjs <config.json>` (the config is in its header).
 - `CHANGELOG.md` — release history. Read the "Migrating from" sections when upgrading.
 - `LICENSE` — license terms.

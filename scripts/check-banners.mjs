@@ -90,8 +90,9 @@ const SCOPE = [
     ['nds-voice-input.js', 'VoiceInput'],
 ];
 
-// Deliberately bannerless: two seasonal themes and the docs builder (no public surface).
+// Deliberately bannerless: two seasonal themes, the docs builder, and the dialog core Modal and Panel share (no public surface).
 const EXCLUDED = new Set([
+    'nds-dialog.js',
     'nds-docs.js',
     'nds-theme-foundation-day.js',
     'nds-theme-hajj.js',
