@@ -172,6 +172,12 @@
     font-weight: var(--font-weight-bold);
 }
 
+@include reduced-motion {
+    #nds-digital-stamp {
+        transition: none;
+    }
+}
+
 
 /*Hero Section*/
 
