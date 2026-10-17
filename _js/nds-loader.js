@@ -291,6 +291,19 @@
             selector: '[data-filter-target]',
             // Owner hook: a filter is keyed by its target and its UI sits outside the list.
             refresh: (root) => NDS.Filter?.refresh?.(root),
+            // Armed, never lazy: before its init a filter menu opens empty and fills while open,
+            // growing over its trigger. Clicks in the gap no-op and recover; after NDS.Init.ready
+            // nothing is blocked, so a filter that never starts keeps a working menu.
+            lazy: () => {
+                let done = false;
+                ready.then(() => { done = true; });
+                document.addEventListener('click', (e) => {
+                    if (done) return;
+                    const dm = e.target.closest?.('.nds-dropmenu-trigger')?.closest('[data-filter-target]');
+                    if (dm && !dm.hasAttribute('data-nds-filter-initialized')) e.stopPropagation();
+                }, true);
+            },
+            eager: () => true,
         },
         {
             // After Filter and Tables, so each claims its own list first. Owner hook: the buttons sit outside the list.
