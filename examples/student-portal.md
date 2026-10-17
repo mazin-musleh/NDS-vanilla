@@ -342,201 +342,89 @@ hideFeedback: true
                                 </a>
                             </div>
                             <span class="nds-card-title">My requests</span>
+                            <p class="nds-card-description">Two open, two closed.</p>
                         </div>
                     </div>
                     <div class="nds-card-content">
-                        <div class="nds-tabs nds-content-switcher nds-sm">
-                            <div class="nds-tab-list" role="tablist" aria-label="Request status">
-                                <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="true" aria-controls="req-all-panel" id="req-all-tab" tabindex="0">
-                                    <span class="nds-label">All · 4</span>
-                                </button>
-                                <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="false" aria-controls="req-open-panel" id="req-open-tab" tabindex="-1">
-                                    <span class="nds-label">Open · 2</span>
-                                </button>
-                                <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="false" aria-controls="req-closed-panel" id="req-closed-tab" tabindex="-1">
-                                    <span class="nds-label">Closed · 2</span>
-                                </button>
-                                <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="false" aria-controls="req-late-panel" id="req-late-tab" tabindex="-1">
-                                    <span class="nds-label">Late · 0</span>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel" role="tabpanel" id="req-all-panel" aria-labelledby="req-all-tab" tabindex="0">
-                                    <div class="nds-drawer nds-divided nds-breakout">
-                                        <ul class="nds-drawer-list" aria-label="All requests">
-                                            <li>
-                                                <a href="#" class="nds-btn nds-subtle">
-                                                    <span class="nds-featured-icon nds-sm">
-                                                        <i class="hgi hgi-stroke hgi-file-validation" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="nds-drawer-item">
-                                                        <span class="nds-drawer-item-head">
-                                                            <span class="nds-tag" data-status="warning">
-                                                                <span class="nds-label">In review</span>
-                                                            </span>
-                                                            <span class="nds-label">Exam absence excuse</span>
-                                                        </span>
-                                                        <span class="nds-meta">
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0412</span>
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 12 Oct 2026</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="nds-btn nds-subtle">
-                                                    <span class="nds-featured-icon nds-sm">
-                                                        <i class="hgi hgi-stroke hgi-task-edit-01" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="nds-drawer-item">
-                                                        <span class="nds-drawer-item-head">
-                                                            <span class="nds-tag" data-status="info">
-                                                                <span class="nds-label">Action needed</span>
-                                                            </span>
-                                                            <span class="nds-label">Change of section</span>
-                                                        </span>
-                                                        <span class="nds-meta">
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0398</span>
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 5 Oct 2026</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="nds-btn nds-subtle">
-                                                    <span class="nds-featured-icon nds-sm">
-                                                        <i class="hgi hgi-stroke hgi-mail-account-01" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="nds-drawer-item">
-                                                        <span class="nds-drawer-item-head">
-                                                            <span class="nds-tag" data-status="success">
-                                                                <span class="nds-label">Done</span>
-                                                            </span>
-                                                            <span class="nds-label">Enrollment letter</span>
-                                                        </span>
-                                                        <span class="nds-meta">
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0371</span>
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 28 Sep 2026</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="nds-btn nds-subtle">
-                                                    <span class="nds-featured-icon nds-sm">
-                                                        <i class="hgi hgi-stroke hgi-calendar-remove-01" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="nds-drawer-item">
-                                                        <span class="nds-drawer-item-head">
-                                                            <span class="nds-tag" data-status="error">
-                                                                <span class="nds-label">Rejected</span>
-                                                            </span>
-                                                            <span class="nds-label">Course withdrawal</span>
-                                                        </span>
-                                                        <span class="nds-meta">
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0355</span>
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 21 Sep 2026</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="req-open-panel" aria-labelledby="req-open-tab" tabindex="-1" hidden>
-                                    <div class="nds-drawer nds-divided nds-breakout">
-                                        <ul class="nds-drawer-list" aria-label="Open requests">
-                                            <li>
-                                                <a href="#" class="nds-btn nds-subtle">
-                                                    <span class="nds-featured-icon nds-sm">
-                                                        <i class="hgi hgi-stroke hgi-file-validation" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="nds-drawer-item">
-                                                        <span class="nds-drawer-item-head">
-                                                            <span class="nds-tag" data-status="warning">
-                                                                <span class="nds-label">In review</span>
-                                                            </span>
-                                                            <span class="nds-label">Exam absence excuse</span>
-                                                        </span>
-                                                        <span class="nds-meta">
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0412</span>
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 12 Oct 2026</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="nds-btn nds-subtle">
-                                                    <span class="nds-featured-icon nds-sm">
-                                                        <i class="hgi hgi-stroke hgi-task-edit-01" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="nds-drawer-item">
-                                                        <span class="nds-drawer-item-head">
-                                                            <span class="nds-tag" data-status="info">
-                                                                <span class="nds-label">Action needed</span>
-                                                            </span>
-                                                            <span class="nds-label">Change of section</span>
-                                                        </span>
-                                                        <span class="nds-meta">
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0398</span>
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 5 Oct 2026</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="req-closed-panel" aria-labelledby="req-closed-tab" tabindex="-1" hidden>
-                                    <div class="nds-drawer nds-divided nds-breakout">
-                                        <ul class="nds-drawer-list" aria-label="Closed requests">
-                                            <li>
-                                                <a href="#" class="nds-btn nds-subtle">
-                                                    <span class="nds-featured-icon nds-sm">
-                                                        <i class="hgi hgi-stroke hgi-mail-account-01" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="nds-drawer-item">
-                                                        <span class="nds-drawer-item-head">
-                                                            <span class="nds-tag" data-status="success">
-                                                                <span class="nds-label">Done</span>
-                                                            </span>
-                                                            <span class="nds-label">Enrollment letter</span>
-                                                        </span>
-                                                        <span class="nds-meta">
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0371</span>
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 28 Sep 2026</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="nds-btn nds-subtle">
-                                                    <span class="nds-featured-icon nds-sm">
-                                                        <i class="hgi hgi-stroke hgi-calendar-remove-01" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="nds-drawer-item">
-                                                        <span class="nds-drawer-item-head">
-                                                            <span class="nds-tag" data-status="error">
-                                                                <span class="nds-label">Rejected</span>
-                                                            </span>
-                                                            <span class="nds-label">Course withdrawal</span>
-                                                        </span>
-                                                        <span class="nds-meta">
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0355</span>
-                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 21 Sep 2026</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="req-late-panel" aria-labelledby="req-late-tab" tabindex="-1" hidden>
-                                    <div class="nds-drawer nds-breakout">
-                                        <ul class="nds-drawer-list nds-empty" aria-label="Late requests" data-empty-message="No late requests" data-empty-icon="hgi hgi-stroke hgi-checkmark-circle-02"></ul>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="nds-drawer nds-divided nds-breakout">
+                            <ul class="nds-drawer-list" aria-label="My requests">
+                                <li>
+                                    <a href="#" class="nds-btn nds-subtle">
+                                        <span class="nds-featured-icon nds-sm">
+                                            <i class="hgi hgi-stroke hgi-file-validation" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="nds-drawer-item">
+                                            <span class="nds-drawer-item-head">
+                                                <span class="nds-tag" data-status="warning">
+                                                    <span class="nds-label">In review</span>
+                                                </span>
+                                                <span class="nds-label">Exam absence excuse</span>
+                                            </span>
+                                            <span class="nds-meta">
+                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0412</span>
+                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 12 Oct 2026</span>
+                                            </span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="nds-btn nds-subtle">
+                                        <span class="nds-featured-icon nds-sm">
+                                            <i class="hgi hgi-stroke hgi-task-edit-01" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="nds-drawer-item">
+                                            <span class="nds-drawer-item-head">
+                                                <span class="nds-tag" data-status="info">
+                                                    <span class="nds-label">Action needed</span>
+                                                </span>
+                                                <span class="nds-label">Change of section</span>
+                                            </span>
+                                            <span class="nds-meta">
+                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0398</span>
+                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 5 Oct 2026</span>
+                                            </span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="nds-btn nds-subtle">
+                                        <span class="nds-featured-icon nds-sm">
+                                            <i class="hgi hgi-stroke hgi-mail-account-01" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="nds-drawer-item">
+                                            <span class="nds-drawer-item-head">
+                                                <span class="nds-tag" data-status="success">
+                                                    <span class="nds-label">Done</span>
+                                                </span>
+                                                <span class="nds-label">Enrollment letter</span>
+                                            </span>
+                                            <span class="nds-meta">
+                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0371</span>
+                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 28 Sep 2026</span>
+                                            </span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="nds-btn nds-subtle">
+                                        <span class="nds-featured-icon nds-sm">
+                                            <i class="hgi hgi-stroke hgi-calendar-remove-01" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="nds-drawer-item">
+                                            <span class="nds-drawer-item-head">
+                                                <span class="nds-tag" data-status="error">
+                                                    <span class="nds-label">Rejected</span>
+                                                </span>
+                                                <span class="nds-label">Course withdrawal</span>
+                                            </span>
+                                            <span class="nds-meta">
+                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0355</span>
+                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 21 Sep 2026</span>
+                                            </span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="nds-card-actions">
@@ -793,203 +681,95 @@ hideFeedback: true
             </a>
         </div>
         <div class="nds-section-body">
-            <div class="nds-tabs nds-content-switcher">
-                <div class="nds-tab-list" role="tablist" aria-label="Study level">
-                    <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="true" aria-controls="cal-bachelor-panel" id="cal-bachelor-tab" tabindex="0">
-                        <span class="nds-label">Bachelor</span>
-                    </button>
-                    <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="false" aria-controls="cal-postgrad-panel" id="cal-postgrad-tab" tabindex="-1">
-                        <span class="nds-label">Postgraduate</span>
-                    </button>
-                </div>
-                <div class="nds-tab-content">
-                    <div class="nds-tab-panel" role="tabpanel" id="cal-bachelor-panel" aria-labelledby="cal-bachelor-tab" tabindex="0">
-                        <div class="nds-card nds-stroke nds-full">
-                            <div class="nds-card-content">
-                                <div class="nds-drawer nds-divided nds-breakout">
-                                    <ul class="nds-drawer-list" aria-label="Bachelor calendar">
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle">
-                                                <time class="nds-date-tile" datetime="2026-08-30">
-                                                    <span class="nds-date-tile-weekday">Sun</span>
-                                                    <span class="nds-date-tile-day">30</span>
-                                                    <span class="nds-date-tile-month">Aug</span>
-                                                </time>
-                                                <span class="nds-drawer-item">
-                                                    <span class="nds-drawer-item-head">
-                                                        <span class="nds-tag" data-status="neutral">
-                                                            <span class="nds-label">Ended</span>
-                                                        </span>
-                                                        <span class="nds-label">Classes start</span>
-                                                    </span>
-                                                    <span class="nds-meta">
-                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>17 Rabiʻ I 1448 AH</span>
-                                                    </span>
-                                                    <span class="nds-description">First day of the first term.</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle">
-                                                <time class="nds-date-tile" datetime="2026-10-22">
-                                                    <span class="nds-date-tile-weekday">Thu</span>
-                                                    <span class="nds-date-tile-day">22</span>
-                                                    <span class="nds-date-tile-month">Oct</span>
-                                                </time>
-                                                <span class="nds-drawer-item">
-                                                    <span class="nds-drawer-item-head">
-                                                        <span class="nds-tag" data-status="warning">
-                                                            <span class="nds-label">Next week</span>
-                                                        </span>
-                                                        <span class="nds-label">Last day to withdraw from a course</span>
-                                                    </span>
-                                                    <span class="nds-meta">
-                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>11 Jumada I 1448 AH</span>
-                                                    </span>
-                                                    <span class="nds-description">After this day, a withdrawal counts as a fail.</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle">
-                                                <time class="nds-date-tile" datetime="2026-11-15">
-                                                    <span class="nds-date-tile-weekday">Sun</span>
-                                                    <span class="nds-date-tile-day">15</span>
-                                                    <span class="nds-date-tile-month">Nov</span>
-                                                </time>
-                                                <span class="nds-drawer-item">
-                                                    <span class="nds-drawer-item-head">
-                                                        <span class="nds-tag" data-status="info">
-                                                            <span class="nds-label">Upcoming</span>
-                                                        </span>
-                                                        <span class="nds-label">Registration opens for the second term</span>
-                                                    </span>
-                                                    <span class="nds-meta">
-                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>5 Jumada II 1448 AH</span>
-                                                    </span>
-                                                    <span class="nds-description">Pick your courses for the second term in the registration system.</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle">
-                                                <time class="nds-date-tile" datetime="2026-12-13">
-                                                    <span class="nds-date-tile-weekday">Sun</span>
-                                                    <span class="nds-date-tile-day">13</span>
-                                                    <span class="nds-date-tile-month">Dec</span>
-                                                </time>
-                                                <span class="nds-drawer-item">
-                                                    <span class="nds-drawer-item-head">
-                                                        <span class="nds-tag" data-status="info">
-                                                            <span class="nds-label">Upcoming</span>
-                                                        </span>
-                                                        <span class="nds-label">Final exams start</span>
-                                                    </span>
-                                                    <span class="nds-meta">
-                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>4 Rajab 1448 AH</span>
-                                                    </span>
-                                                    <span class="nds-description">The final exam period runs for one week.</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-tab-panel" role="tabpanel" id="cal-postgrad-panel" aria-labelledby="cal-postgrad-tab" tabindex="-1" hidden>
-                        <div class="nds-card nds-stroke nds-full">
-                            <div class="nds-card-content">
-                                <div class="nds-drawer nds-divided nds-breakout">
-                                    <ul class="nds-drawer-list" aria-label="Postgraduate calendar">
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle">
-                                                <time class="nds-date-tile" datetime="2026-08-30">
-                                                    <span class="nds-date-tile-weekday">Sun</span>
-                                                    <span class="nds-date-tile-day">30</span>
-                                                    <span class="nds-date-tile-month">Aug</span>
-                                                </time>
-                                                <span class="nds-drawer-item">
-                                                    <span class="nds-drawer-item-head">
-                                                        <span class="nds-tag" data-status="neutral">
-                                                            <span class="nds-label">Ended</span>
-                                                        </span>
-                                                        <span class="nds-label">Classes start</span>
-                                                    </span>
-                                                    <span class="nds-meta">
-                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>17 Rabiʻ I 1448 AH</span>
-                                                    </span>
-                                                    <span class="nds-description">First day of the first term.</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle">
-                                                <time class="nds-date-tile" datetime="2026-10-29">
-                                                    <span class="nds-date-tile-weekday">Thu</span>
-                                                    <span class="nds-date-tile-day">29</span>
-                                                    <span class="nds-date-tile-month">Oct</span>
-                                                </time>
-                                                <span class="nds-drawer-item">
-                                                    <span class="nds-drawer-item-head">
-                                                        <span class="nds-tag" data-status="info">
-                                                            <span class="nds-label">Upcoming</span>
-                                                        </span>
-                                                        <span class="nds-label">Thesis proposal deadline</span>
-                                                    </span>
-                                                    <span class="nds-meta">
-                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>18 Jumada I 1448 AH</span>
-                                                    </span>
-                                                    <span class="nds-description">Send your proposal to your supervisor through the research portal.</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle">
-                                                <time class="nds-date-tile" datetime="2026-11-22">
-                                                    <span class="nds-date-tile-weekday">Sun</span>
-                                                    <span class="nds-date-tile-day">22</span>
-                                                    <span class="nds-date-tile-month">Nov</span>
-                                                </time>
-                                                <span class="nds-drawer-item">
-                                                    <span class="nds-drawer-item-head">
-                                                        <span class="nds-tag" data-status="info">
-                                                            <span class="nds-label">Upcoming</span>
-                                                        </span>
-                                                        <span class="nds-label">Comprehensive exams start</span>
-                                                    </span>
-                                                    <span class="nds-meta">
-                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>12 Jumada II 1448 AH</span>
-                                                    </span>
-                                                    <span class="nds-description">Doctoral students sit the written comprehensive exam.</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle">
-                                                <time class="nds-date-tile" datetime="2026-12-13">
-                                                    <span class="nds-date-tile-weekday">Sun</span>
-                                                    <span class="nds-date-tile-day">13</span>
-                                                    <span class="nds-date-tile-month">Dec</span>
-                                                </time>
-                                                <span class="nds-drawer-item">
-                                                    <span class="nds-drawer-item-head">
-                                                        <span class="nds-tag" data-status="info">
-                                                            <span class="nds-label">Upcoming</span>
-                                                        </span>
-                                                        <span class="nds-label">Final exams start</span>
-                                                    </span>
-                                                    <span class="nds-meta">
-                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>4 Rajab 1448 AH</span>
-                                                    </span>
-                                                    <span class="nds-description">The final exam period runs for one week.</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+            <div class="nds-card nds-stroke nds-full">
+                <div class="nds-card-content">
+                    <div class="nds-drawer nds-divided nds-breakout">
+                        <ul class="nds-drawer-list" aria-label="Academic calendar">
+                            <li>
+                                <a href="#" class="nds-btn nds-subtle">
+                                    <time class="nds-date-tile" datetime="2026-08-30">
+                                        <span class="nds-date-tile-weekday">Sun</span>
+                                        <span class="nds-date-tile-day">30</span>
+                                        <span class="nds-date-tile-month">Aug</span>
+                                    </time>
+                                    <span class="nds-drawer-item">
+                                        <span class="nds-drawer-item-head">
+                                            <span class="nds-tag" data-status="neutral">
+                                                <span class="nds-label">Ended</span>
+                                            </span>
+                                            <span class="nds-label">Classes start</span>
+                                        </span>
+                                        <span class="nds-meta">
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>17 Rabiʻ I 1448 AH</span>
+                                        </span>
+                                        <span class="nds-description">First day of the first term.</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nds-btn nds-subtle">
+                                    <time class="nds-date-tile" datetime="2026-10-22">
+                                        <span class="nds-date-tile-weekday">Thu</span>
+                                        <span class="nds-date-tile-day">22</span>
+                                        <span class="nds-date-tile-month">Oct</span>
+                                    </time>
+                                    <span class="nds-drawer-item">
+                                        <span class="nds-drawer-item-head">
+                                            <span class="nds-tag" data-status="warning">
+                                                <span class="nds-label">Next week</span>
+                                            </span>
+                                            <span class="nds-label">Last day to withdraw from a course</span>
+                                        </span>
+                                        <span class="nds-meta">
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>11 Jumada I 1448 AH</span>
+                                        </span>
+                                        <span class="nds-description">After this day, a withdrawal counts as a fail.</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nds-btn nds-subtle">
+                                    <time class="nds-date-tile" datetime="2026-11-15">
+                                        <span class="nds-date-tile-weekday">Sun</span>
+                                        <span class="nds-date-tile-day">15</span>
+                                        <span class="nds-date-tile-month">Nov</span>
+                                    </time>
+                                    <span class="nds-drawer-item">
+                                        <span class="nds-drawer-item-head">
+                                            <span class="nds-tag" data-status="info">
+                                                <span class="nds-label">Upcoming</span>
+                                            </span>
+                                            <span class="nds-label">Registration opens for the second term</span>
+                                        </span>
+                                        <span class="nds-meta">
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>5 Jumada II 1448 AH</span>
+                                        </span>
+                                        <span class="nds-description">Pick your courses for the second term in the registration system.</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nds-btn nds-subtle">
+                                    <time class="nds-date-tile" datetime="2026-12-13">
+                                        <span class="nds-date-tile-weekday">Sun</span>
+                                        <span class="nds-date-tile-day">13</span>
+                                        <span class="nds-date-tile-month">Dec</span>
+                                    </time>
+                                    <span class="nds-drawer-item">
+                                        <span class="nds-drawer-item-head">
+                                            <span class="nds-tag" data-status="info">
+                                                <span class="nds-label">Upcoming</span>
+                                            </span>
+                                            <span class="nds-label">Final exams start</span>
+                                        </span>
+                                        <span class="nds-meta">
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>4 Rajab 1448 AH</span>
+                                        </span>
+                                        <span class="nds-description">The final exam period runs for one week.</span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
