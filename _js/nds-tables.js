@@ -598,11 +598,13 @@
         if (!rules.length) return;
 
         table.setAttribute('data-nds-align', scope);
+        // A constructed sheet, not a <style>: no CSP style-src governs it, so a
+        // nonce, hash or 'self' policy keeps the alignment.
         if (!alignSheet) {
-            alignSheet = document.createElement('style');
-            document.head.appendChild(alignSheet);
+            alignSheet = new CSSStyleSheet();
+            document.adoptedStyleSheets = [...document.adoptedStyleSheets, alignSheet];
         }
-        alignSheet.textContent += rules.join('');
+        rules.forEach(r => alignSheet.insertRule(r, alignSheet.cssRules.length));
     }
 
     // ── Sub-rows (master-detail expansion) ───────────────────────────
