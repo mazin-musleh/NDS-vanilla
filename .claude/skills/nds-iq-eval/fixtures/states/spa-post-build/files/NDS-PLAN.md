@@ -43,7 +43,7 @@ Re-run this sweep if a hosting layer adds one.
   the dev's named choice.
 - **Brand slot**: no logo file exists — the dev's call, recorded: text-only wordmark
   "Records Portal" in the brand slot; swap in a real file later.
-- **Pacing**: gate-by-gate — finish a gate, propose the next, wait for the dev's go.
+- **Pacing**: page-by-page — finish a page, report it, wait for the dev's go.
 
 ## Open items
 
@@ -53,4 +53,4 @@ Re-run this sweep if a hosting layer adds one.
 - [x] Self-verification (headless Chrome, `localhost:5183` static serve): `NDS.Init.audit()` clean (zero warnings) after fixing the two issues in the routing note above; exercised create/edit-open/delete/empty-submit-validation/dark-mode-toggle/cross-world-nav-both-ways — all correct; desktop (1440) and mobile (390) screenshots checked against the built `console-demo`/`manage-records` twins for spacing, icons, and coherence — matches. Icon names spot-checked against `icons.yml` (inline) and `_hgiRoundedStroke.scss` (font) — all present.
 - [ ] Accessibility panel (`ui-shell` a11y aside + `nds-accessibility.min.js`) not included this gate — not part of page-shell.md's canonical tree, add if the dev wants it.
 - [ ] Sidemenu carries only Records today; grow it as Reports/Home/About/Contact/Settings land — never link to a route that doesn't exist yet.
-- [ ] Next gate: propose after dev reviews Records list (pacing is gate-by-gate).
+- [ ] Next gate: propose after dev reviews Records list (pacing is page-by-page).

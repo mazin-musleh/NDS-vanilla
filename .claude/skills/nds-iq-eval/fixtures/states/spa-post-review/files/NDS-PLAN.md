@@ -36,7 +36,7 @@ Re-run this sweep if a hosting layer adds one.
   the dev's named choice.
 - **Brand slot**: no logo file exists — the dev's call, recorded: text-only wordmark
   "Records Portal" in the brand slot; swap in a real file later.
-- **Pacing**: gate-by-gate — finish a gate, propose the next, wait for the dev's go.
+- **Pacing**: page-by-page — finish a page, report it, wait for the dev's go.
 
 ## Open items
 

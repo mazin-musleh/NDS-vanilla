@@ -4,7 +4,7 @@
 - mode: comprehension
 - rules: Red line #3 ("A matched source ships every part; name any domain-required removal to the dev before the page is done."); §Build exit gate ("equal counts, or each difference named")
 - provenance: field report `nds-test-app-7` cycle 2, 2026-08-16, F6: composing the toolbar from `manage-records.md`, the agent silently dropped the `nds-search-btn` submit and the `nds-dropmenu nds-filter` control because legacy lacked them; grades completeness of the cited source at before-done.
-- setup: A React SPA (six route components, one `index.html`) after plan review: the approved plan (decisions recorded, open items boxed, gate-by-gate pacing). Its Records row reads: `Example match: "Manage Records" (_source/examples/manage-records.md), console/nds-full-width chrome shape`. `src/pages/Records.jsx` today is a live-filter search input with no submit button and a plain table, with no filter control.
+- setup: A React SPA (six route components, one `index.html`) after plan review: the approved plan (decisions recorded, open items boxed, page-by-page pacing). Its Records row reads: `Example match: "Manage Records" (_source/examples/manage-records.md), console/nds-full-width chrome shape`. `src/pages/Records.jsx` today is a live-filter search input with no submit button and a plain table, with no filter control.
 - prompt: "plan's approved — build the Records page."
 - rubric:
   - MUST: the shipped NDS Records page's control bar carries every member of the source's toolbar block — the search field WITH its submit button, the filter dropmenu, and the rest of the source's control members — copied from the source; any member deliberately cut is named to the dev as a scope question before the page is called done, never dropped silently.
