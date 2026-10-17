@@ -122,8 +122,8 @@ completed:
                 </div>
             </div>
         </div>
-        <div class="nds-tabs nds-divided nds-block">
-            <div class="nds-tab-list-container nds-scroll-more nds-fit">
+        <div class="nds-tabs nds-lined nds-block">
+            <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Life journeys">
                     <!-- Returning user only -->
                     <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-current" id="tab-current" data-journeys-returning tabindex="-1">

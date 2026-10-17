@@ -45,7 +45,7 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
   // Base rail for horizontal tabs. `.nds-vertical.nds-divided` below overrides
   // the geometry (inset-inline-end / height / width) to render a full-height
   // rail at the inline-end edge instead of a 3px bar at the bottom.
-  &.nds-divided {
+  &:is(.nds-divided, .nds-lined) {
     > .nds-tab-list-container::after {
       content: '';
       position: absolute;
@@ -93,7 +93,7 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
       @include btn-indicator('v');
     }
 
-    &.nds-divided {
+    &:is(.nds-divided, .nds-lined) {
       > #{$strip} .nds-tab {
         margin-bottom: unset;
         border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -410,8 +410,8 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
   flex-direction: row;
 }
 
-// Divided only: the strip, and its divider, only as wide as the tabs. It still scrolls once they overflow.
-.nds-tabs.nds-divided:not(.nds-vertical) > .nds-tab-list-container.nds-fit {
+// Lined: the strip, and its line, only as wide as the tabs. It still scrolls once they overflow.
+.nds-tabs.nds-lined:not(.nds-vertical) > .nds-tab-list-container {
   width: fit-content;
   max-width: 100%;
 }

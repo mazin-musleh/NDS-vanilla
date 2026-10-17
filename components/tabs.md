@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 10:37 PM"
+last_edit: "17/10/2026 - 08:49 PM"
 ---
 
 <section id="tabs-overview" class="nds-content-section nds-doc-overview">
@@ -230,7 +230,7 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
 | Card | Panel only (hint: Only the panels in a card) | `.nds-stroke` | `.nds-tab-content` | The same: gives the card its border |
 | Card | Panel only (hint: Only the panels in a card) | `.nds-shadow` | `.nds-tab-content` | The same: gives the card its shadow |
 | Divided | Divided (hint: A line between the tabs and the panels) | `.nds-divided` | `.nds-tabs` | A line between the tabs and the panels: under the row, or beside a vertical list |
-| Fit | Fit (hint: The divider ends after the last tab. Divided only) (limit: 1 row width) | `.nds-fit` | `.nds-tabs.nds-divided:not(.nds-vertical) > .nds-tab-list-container` | Horizontal and Divided only. The Divided line ends after the last tab instead of running the full width. The row still scrolls when the tabs do not fit. Not with Center |
+| Divided | Lined (hint: A line under the tabs only, as wide as the tabs) (limit: 1 row width) | `.nds-lined` | `.nds-tabs:not(.nds-vertical)` | Horizontal only. A line under the tab row that ends after the last tab, instead of a divider across the full width. The row still scrolls when the tabs do not fit. On vertical tabs it draws the Divided line. Not with Center |
 | Center | Center (limit: 1 row width) | `.nds-center` | `.nds-tab-list:not(.nds-vertical .nds-tab-list)` | Horizontal only. Centers a horizontal tab row while every tab fits. A row that scrolls starts at the edge |
 | Loading | Loading | `.nds-loading` | `.nds-tabs` | Gray bars in place of the labels and the panel content while the data loads. On `.nds-tab-list` it bars the labels only |
 {: #tabs-variants-table .nds-table .nds-responsive}
