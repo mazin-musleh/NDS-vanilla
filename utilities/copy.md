@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "17/10/2026 - 05:55 PM"
 ---
 
 <section id="copy-overview" class="nds-content-section nds-doc-overview">
@@ -47,8 +47,8 @@ Pick another component when:
   <div class="nds-definition-item">
     <dt>Reference Number</dt>
     <dd class="nds-item-action">
-      <span class="nds-label">REF-2026-04-19-7A3F</span>
-      <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy" data-copy="REF-2026-04-19-7A3F" aria-label="Copy reference number">
+      <span class="nds-label" id="copy-icon-ref">REF-2026-04-19-7A3F</span>
+      <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy" data-copy-target="#copy-icon-ref" aria-label="Copy reference number">
         <i class="nds-icon nds-hgi-copy-01"></i>
       </button>
     </dd>
