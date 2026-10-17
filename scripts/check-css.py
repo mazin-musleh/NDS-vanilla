@@ -17,6 +17,8 @@ SCSS source, because the file a declaration came from is gone after compiling.
                 lives in the token file's own dark block (AGENTS.md "Invariant")
   5. important  !important on transform, opacity or filter: Chrome runs an animation on an
                 !important property on the main thread only (the Panel slide, 2026-10-16)
+  6. selector   anything but a pseudo-class after a pseudo-element (`::after > *`): the
+                browser drops the whole rule without a word (v1.12.0 shipped one)
 
 The [data-state] tail check stays in check-data-state-tails.py (mkrelease runs it).
 """
@@ -37,6 +39,8 @@ COMPOSITED = {'transform', 'translate', 'scale', 'rotate', 'opacity', 'filter', 
 IMPORTANT_OK = {
     '.nds-progress-circle svg': 'a fixed rotation; the ring animates its stroke, never the svg',
 }
+# A pseudo-element (legacy one-colon forms too) followed by anything that is not a pseudo-class run.
+AFTER_PSEUDO_ELEMENT = re.compile(r'(?:::[\w-]+|:(?:before|after|first-line|first-letter))(?![\w-])(?!(?:\(\))?(?::[\w-]+(?:\(\))?)*$)')
 
 
 def rules(css):
@@ -118,6 +122,16 @@ def scss_blocks(text, opener):
         yield text[m.end():i - 1], text.count('\n', 0, m.start()) + 1
 
 
+def dead_selector(prelude):
+    """The first selector in a list the browser rejects for what follows a pseudo-element.
+    ponytail: one known shape, not a full selector parser; add a parser dependency if
+    another class of invalid selector ever ships."""
+    flat = prelude
+    while (nxt := re.sub(r'\([^()]*\)', '()', flat)) != flat:
+        flat = nxt  # :is()/:where() arms are forgiving, and parens hold no pseudo-element we judge
+    return next((s.strip() for s in flat.split(',') if AFTER_PSEUDO_ELEMENT.search(s.strip())), None)
+
+
 def required_classes(selector):
     """Classes a selector cannot match without: those outside any parens, so
     :not(.x) and the arms of :is()/:where() never make a rule look unused."""
@@ -185,6 +199,8 @@ def main():
         root_tokens[bundle] = set()
         for prelude, body, nested in rules(read(path)):
             on_root = not nested and ':root' in [s.strip() for s in prelude.split(',')]
+            if bad := dead_selector(prelude):
+                problems.append(('selector', bundle, prelude, f'{bad} — only a pseudo-class may follow a pseudo-element; the browser drops this whole rule'))
             seen = {}
             for prop, value in decls(body):
                 if prop.startswith('--'):

@@ -15,7 +15,7 @@ Apply this skill to: `$ARGUMENTS` (a component name or path; empty = `full-tree`
 Build first if `_site/assets/css/nds-main.min.css` is older than the newest `_sass/` edit (`bundle exec jekyll build`). Reuse a running `:4002` server. Its watcher keeps `_site` current.
 
 ```bash
-python scripts/check-css.py --report        # dangling · fallback · duplicate · dark re-bind; + unread component tokens
+python scripts/check-css.py --report        # dangling · fallback · duplicate · dark re-bind · important · selector; + unread component tokens
 python scripts/check-data-state-tails.py    # [data-state]/[data-status] tails (--report lists all)
 python scripts/check-css.py --unused        # on request: rules no built page or JS uses, by size
 ```
