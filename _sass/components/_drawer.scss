@@ -225,7 +225,7 @@
 
 @container nds-drawer-row (width < 400px) {
     // A default date tile steps down to SM.
-    .nds-drawer-list > li > .nds-btn > .nds-date-tile:not(.nds-sm, .nds-lg) {
+    .nds-drawer-list > li > .nds-btn > .nds-date-tile:not(.nds-sm, .nds-md, .nds-lg) {
         @include date-tile-sm;
     }
 }

@@ -8,14 +8,8 @@
    ======================================== */
 
 .nds-date-tile {
-    --_date-tile-width: var(--date-tile-width, 56px);
     --_date-tile-bg: var(--date-tile-bg, var(--background-primary-light));
     --_date-tile-color: var(--date-tile-color, var(--text-primary-strong));
-    --_date-tile-day-FS: var(--typo-text-xl-FS);
-    --_date-tile-day-LH: var(--typo-text-xl-LH);
-    --_date-tile-text-FS: var(--typo-text-xs-FS);
-    --_date-tile-text-LH: var(--typo-text-xs-LH);
-    --_date-tile-padding: var(--spacing-xs) var(--spacing-md);
 
     display: inline-flex;
     flex-direction: column;
@@ -30,6 +24,16 @@
     color: var(--_date-tile-color);
     text-align: center;
     white-space: nowrap;
+
+    &,
+    &.nds-md {
+        --_date-tile-width: var(--date-tile-width, 56px);
+        --_date-tile-day-FS: var(--typo-text-xl-FS);
+        --_date-tile-day-LH: var(--typo-text-xl-LH);
+        --_date-tile-text-FS: var(--typo-text-xs-FS);
+        --_date-tile-text-LH: var(--typo-text-xs-LH);
+        --_date-tile-padding: var(--spacing-xs) var(--spacing-md);
+    }
 
     &.nds-sm {
         @include date-tile-sm;

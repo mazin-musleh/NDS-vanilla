@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 03:22 AM"
+last_edit: "17/10/2026 - 02:34 PM"
 ---
 
 <section id="date-tile-overview" class="nds-content-section nds-doc-overview">
@@ -173,7 +173,7 @@ The Drawer row structure shows the tile at the start of a [Drawer](../components
 - Write the full date in `datetime`, in the `YYYY-MM-DD` form.
 - Use short names for the weekday and the month, such as "Sun" and "Dec". The tile is narrow.
 - Write the time and the place in the row's text, not in the tile.
-- Leave the size class off a tile in a drawer row. Below 400px of row width the drawer steps it down to SM. A size class keeps the size you wrote.
+- Leave the size class off a tile in a drawer row. Below 400px of row width the drawer steps it down to SM. A size class, `nds-md` included, keeps the size you wrote.
 - Put the tile and the item's title in one link or button. A screen reader then reads the date and the title together.
 - In a list, give every row a tile, or give none. A list with tiles on some rows does not line up.
 - Set a wider `--date-tile-width` when the text does not fit, such as a range or a long Hijri month like جمادى الآخرة. Set it on the list, so every tile in the list keeps the same width.
@@ -199,6 +199,7 @@ The Drawer row structure shows the tile at the start of a [Drawer](../components
 | `nds-date-tile-weekday` | `<span>` in the tile | The weekday, in small text. Optional |
 | `nds-date-tile-day` | `<span>` in the tile | The day number, in large bold text |
 | `nds-date-tile-month` | `<span>` in the tile | The month, in small text |
+| `nds-md` | `.nds-date-tile` | The same as no size class: 56px wide. In a drawer row it keeps that size below 400px |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes
