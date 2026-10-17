@@ -37,7 +37,7 @@ sidemenu_mode: false
                         <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
                     </button>
-                    <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                    <div class="nds-dropmenu-menu" hidden>
                         <div class="nds-dropmenu-scroll">
                             <div data-filter="category" data-filter-legend="Category" data-filter-type="checkbox"
                                 data-no-auto-close></div>

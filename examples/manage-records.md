@@ -114,7 +114,7 @@ hideFeedback: true
                             <i class="hgi hgi-stroke hgi-filter"></i>
                             <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
                         </button>
-                        <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                        <div class="nds-dropmenu-menu" hidden>
                             <div class="nds-dropmenu-scroll">
                                 <div data-filter="service" data-filter-type="checkbox"
                                     data-filter-legend="Service"

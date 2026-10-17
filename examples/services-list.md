@@ -39,7 +39,7 @@ last_edit: "13/10/2026 - 11:23 AM"
                         <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
                     </button>
-                    <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                    <div class="nds-dropmenu-menu" hidden>
                         <div class="nds-dropmenu-scroll">
                             <!-- Filter by Most Used -->
                             <div data-filter="most-used" data-filter-legend="Most Used"
