@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "17/10/2026 - 07:48 PM"
 ---
 
 <section id="scroll-more-overview" class="nds-content-section nds-doc-overview">
@@ -37,7 +37,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="sm-list" data-canon data-variants="sm-variants-table">
-<div class="nds-scroll-more" style="--scroll-max-height: 240px;">
+<div class="nds-scroll-more nds-fit">
   <ul class="nds-scroll-more-content">
     <li>Riyadh</li>
     <li>Jeddah</li>
@@ -59,8 +59,8 @@ Pick another component when:
 </div>
 </script>
 <script type="text/html" id="sm-row" data-canon>
-<div class="nds-scroll-more" style="--scroll-max-width: 480px;">
-  <div class="nds-scroll-more-content nds-flex" style="--align: center;">
+<div class="nds-scroll-more">
+  <div class="nds-scroll-more-content nds-flex">
     <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">All</span></button>
     <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Healthcare</span></button>
     <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Education</span></button>
@@ -69,6 +69,10 @@ Pick another component when:
     <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Employment</span></button>
     <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Social support</span></button>
     <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Justice</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Business</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Tourism</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Culture</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Sports</span></button>
   </div>
   <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
     <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
@@ -134,6 +138,92 @@ Pick another component when:
   </button>
 </div>
 </script>
+<script type="text/html" id="sm-grid" data-canon>
+<div class="nds-grid" style="--max-col: 2; --min-col: 1;">
+  <div class="nds-card nds-stroke">
+    <div class="nds-card-content">
+      <div class="nds-card-text">
+        <span class="nds-card-title">Main office</span>
+        <p class="nds-card-description">Visit us or get in touch.</p>
+      </div>
+      <dl class="nds-definition-list">
+        <div class="nds-definition-item">
+          <dt>
+            <i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>
+            <span class="nds-label">Hours</span>
+          </dt>
+          <dd>Sunday to Thursday, 8 AM to 3 PM</dd>
+        </div>
+        <div class="nds-definition-item">
+          <dt>
+            <i class="hgi hgi-stroke hgi-call" aria-hidden="true"></i>
+            <span class="nds-label">Phone</span>
+          </dt>
+          <dd>920 000 000</dd>
+        </div>
+        <div class="nds-definition-item">
+          <dt>
+            <i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>
+            <span class="nds-label">Address</span>
+          </dt>
+          <dd>King Fahd Road, Riyadh</dd>
+        </div>
+        <div class="nds-definition-item">
+          <dt>
+            <i class="hgi hgi-stroke hgi-mail-01" aria-hidden="true"></i>
+            <span class="nds-label">Email</span>
+          </dt>
+          <dd>info@example.gov.sa</dd>
+        </div>
+        <div class="nds-definition-item">
+          <dt>
+            <i class="hgi hgi-stroke hgi-car-parking-01" aria-hidden="true"></i>
+            <span class="nds-label">Parking</span>
+          </dt>
+          <dd>Free for visitors, at the north gate</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+  <div class="nds-card nds-stroke">
+    <div class="nds-card-header">
+      <div class="nds-card-text">
+        <span class="nds-card-title">Branches</span>
+      </div>
+    </div>
+    <div class="nds-card-content">
+      <div class="nds-scroll-more nds-fit">
+        <ul class="nds-scroll-more-content">
+          <li>Riyadh</li>
+          <li>Jeddah</li>
+          <li>Makkah</li>
+          <li>Madinah</li>
+          <li>Dammam</li>
+          <li>Khobar</li>
+          <li>Taif</li>
+          <li>Tabuk</li>
+          <li>Abha</li>
+          <li>Buraydah</li>
+          <li>Hail</li>
+          <li>Jazan</li>
+          <li>Najran</li>
+          <li>Al Baha</li>
+          <li>Arar</li>
+          <li>Sakaka</li>
+          <li>Yanbu</li>
+          <li>AlUla</li>
+          <li>Qatif</li>
+          <li>Al Kharj</li>
+        </ul>
+        <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+          <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+          <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
     </div>
   </div>
 </section>
@@ -145,13 +235,14 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Every row goes on the wrapper. The wrapper fits its content, but never grows wider than its container, so a wide row scrolls. A list scrolls only once `--scroll-max-height` limits its height.
+Every row goes on the wrapper. The wrapper fits its content, but never grows wider than its container, so a wide row scrolls. A list scrolls only once its height is limited: `nds-fit` gives it the height of its parent, or 240px.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Structure | Vertical list (default) | — | — | A list with a set height. The button stands under it |
-| Structure | Horizontal row | canon `#sm-row` | — | A row of buttons or chips with a set width. The button stands at the row's end, with its label written sideways |
+| Structure | Vertical list (default) | — | — | A list with `nds-fit`, 240px tall when alone. The button stands under it |
+| Structure | Horizontal row | canon `#sm-row` | — | A row of buttons or chips, as wide as its container. The button stands at the row's end, with its label written sideways |
 | Structure | Card track | canon `#sm-cards` | — | A row of cards wider than its container. The wrapper stops at the container's width, and the cards scroll inside it |
+| Structure | Fit (hint: A list that fills the height of its row) | canon `#sm-grid` | — | A vertical list with `nds-fit`, in a card beside a taller card. The list fills its card and scrolls in that height |
 | Divided | Divided | `.nds-divided` | `.nds-scroll-more` | A hairline between the content and the button, shown while the content overflows |
 | Snap | Snap (hint: Each click and drag stops at the start of an item) | `.nds-snap` | `.nds-scroll-more` | Each item's start snaps to the edge of the scrolling area |
 | Gap | Gap | `--scroll-gap: var(--spacing-md)` | `.nds-scroll-more` | Space between the content and the button. With Divided, the hairline sits in the gap |
@@ -237,7 +328,9 @@ Every row goes on the wrapper. The wrapper fits its content, but never grows wid
     <div class="nds-section-body nds-prose" markdown="1">
 
 - Use Scroll More to fit a long list, a row of chips or a card track into a set area, with every item still in reach.
-- Give a vertical list a height limit with `--scroll-max-height`. Without one, the list never overflows and the button never shows.
+- Give a vertical list a height limit: `nds-fit`, or a parent with a set height. Without one, the list never overflows and the button never shows.
+- For another height, set `--scroll-max-height` in your own stylesheet, not in a `style` attribute: a strict Content Security Policy blocks inline styles.
+- In a card beside a taller card, add `nds-fit`, so the list fills its card.
 - Keep the items the same size when you want even paging. The first item sets the step.
 - Keep the visible "Show more" label on the button. It names the button for screen readers.
 - Add `nds-snap` to a card track, so each click stops at the start of a card.
@@ -253,6 +346,14 @@ Every row goes on the wrapper. The wrapper fits its content, but never grows wid
       <h2 class="nds-section-title">API</h2>
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
+
+### Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `nds-fit` | A vertical `.nds-scroll-more` | Fills the height its parent gives it, and the items scroll in that height: a grid cell, a flex row, or a card beside a taller card. The parent must be a grid or a flex container. In a card, put the title in `.nds-card-header`: a `.nds-card-text` beside the list grows too and takes part of the height. With no height from the parent, such as stacked cards on a phone, the list takes `--scroll-max-height`. Not for a row or a card track: they already fill their container's width |
+{: .nds-table .nds-responsive}
 
 ### Data Attributes
 {: .nds-block-title}
@@ -272,7 +373,7 @@ Set these on the wrapper.
 
 | Property | Default | Controls |
 |---|---|---|
-| `--scroll-max-height` | `none` | Height limit of the wrapper, for vertical overflow |
+| `--scroll-max-height` | `none` | Height limit of the wrapper, for vertical overflow. With `nds-fit` it is the least height, `240px` when unset: the list grows past it to fill its parent |
 | `--scroll-max-width` | `100%` | Width limit of the wrapper, for horizontal overflow. The default stops it at its container's width |
 | `--scroll-fade` | `48px` | Length of the edge fade |
 | `--scroll-gap` | `0` | Space between the content and the button |

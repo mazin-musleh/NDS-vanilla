@@ -57,6 +57,17 @@
     }
 }
 
+// Fills its grid or flex parent's height: contain stops the items growing the parent. No parent height: --scroll-max-height.
+.nds-scroll-more.nds-fit {
+    flex: 1;
+    min-block-size: var(--scroll-max-height, 240px);
+    max-block-size: none;
+
+    > .nds-scroll-more-content {
+        contain: size;
+    }
+}
+
 .nds-scroll-more-content {
     // Bridge to the name used by the mask gradients below.
     --mask-fade-distance: var(--_scroll-fade);
