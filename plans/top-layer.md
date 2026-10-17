@@ -88,7 +88,7 @@ Committed (`c4b8a19a`): Dropmenu and Tooltip open with `popover="manual"` throug
 - **Until step 2:** a Modal opened from a menu item sits under the closing menu for its fade (about 250 ms): the old Modal is not in the top layer.
 - **Checked, Chrome and WebKit:** `check-dropmenu-placement.mjs` 16/16 (new cases: top layer, nav clip, nested close, dark area, bubbling), a sweep of 18 pages' menus and tooltips, `check-init-destroy.mjs` 36/36, `check-frameworks.mjs` all passed, `check-css.py` and `check-data-state-tails.py` clean, `check-docs.py` on the 9 edited pages, the audit flags a leftover `data-portal`.
 - **Not run yet:** the menu-open timing against the old code, and `doc-check.mjs` on the touched pages (owner's go-ahead).
-- **Owner:** `.claude/skills/nds-iq-eval/scenarios/S15-menu-clipping-in-modal.md` expects `data-portal` as the fix; it needs a rewrite before the next IQ eval run.
+- **Done 2026-10-17:** `.claude/skills/nds-iq-eval/scenarios/S15-menu-clipping-in-modal.md` is rewritten for the top layer: a clip is diagnosed, and `data-portal` is now a MUST NOT.
 
 ## Step 1 follow-up: absolute, not fixed (2026-10-16)
 

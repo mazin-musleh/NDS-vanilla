@@ -29,7 +29,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S12 | greenfield-brief-fabrication | c | brief fills template, trim don't pad, review step only for a form that needs confirmation | PASS 2026-10-13 scoped v4 form-kinds (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:protocol |
 | S13 | cold-spike-ask | c | spike = full ceremony: one parallel page, whole head unit | PASS 2026-10-10 full v4 post-cut (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:field · WATCH spike-vs-plan ×1 (2026-10-09, v1.12.0 root) |
 | S14 | server-driven-listing-wiring | c | filter/pagination banner-first composite wiring | PASS 2026-10-10 full v4 post-cut (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
-| S15 | menu-clipping-in-modal | c | dropmenu portal via banner Rides | PASS 2026-10-10 full v4 post-cut (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
+| S15 | menu-clipping-in-modal | c | top-layer menu via banner Rides: a clip is diagnosed, never patched | PASS 2026-10-17 solo scoped v4 (Sonnet 5.5) | floor:UNMEASURED · ev:field |
 | S17 | banner-first-install | c | banner-first restore, -dev report, flattened layout | PASS 2026-10-10 full v4 post-cut (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:field |
 | S18 | old-template-not-a-blocker | c | older template proceeds on the matching tag; _source population | SOFT 2026-10-10 full v4 post-cut (Sonnet 5.5): 2.3.0 restore right; the missing-banner gap and _source population unnamed | floor:FAIL v4 2026-10-09 · ev:field |
 | S19 | verification-channel-hunt | c | step 4: headless first (own browser or the project's harness), never the checklist while one is drivable | PASS 2026-10-10 full v4 post-cut (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · leak:C2-mild · ev:field |
