@@ -4,7 +4,7 @@
 //   node scripts/trace-click.mjs [page] [runs]    TAP=1 for a touch tap · needs the dev server on :4002 · Chromium only (CDP)
 import { launch, cdp } from './lib/browser.mjs';
 import { readFileSync, existsSync } from 'node:fs';
-const PAGE = process.argv[2] || 'utilities/divider.html';
+const PAGE = process.argv[2] || 'components/divider.html';
 const RUNS = +(process.argv[3] || 5);
 const TAP = !!process.env.TAP;
 const b = await launch();

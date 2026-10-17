@@ -3,7 +3,7 @@ layout: page
 title: Tokens
 hero_title: Tokens - National Design System
 hero_description: "The CSS custom properties behind NDS: the color palette, size scales, semantic meanings and component tokens that you read and override in your own CSS"
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Foundations", "/components/?shelf=Foundations"]]
 lang: en
 direction: ltr
 since: "1.2.0"
@@ -27,7 +27,7 @@ A token is a CSS custom property that NDS defines at `:root`, in four tiers. Sem
 
 Pick another page when:
 
-- you change the brand colors of the whole site: [Themes](../components/themes)
+- you change the brand colors of the whole site: [Themes](../foundations/themes)
 - you restyle one component: the Tokens table in that component's API
 - you style one element of a component: the CSS Custom Properties table in that component's API
 
@@ -198,7 +198,7 @@ A painted value goes down a chain from a knob to the palette. Change any token i
 ### Dark Mode
 {: .nds-block-title}
 
-`data-theme="dark"` on `<html>` switches the semantic and component tokens to their dark values. On any other element, it makes that element a dark area: both tiers are declared again on it, with dark values. Some components also have dark rules of their own. Switching and saving the mode is on the [Themes](../components/themes) page.
+`data-theme="dark"` on `<html>` switches the semantic and component tokens to their dark values. On any other element, it makes that element a dark area: both tiers are declared again on it, with dark values. Some components also have dark rules of their own. Switching and saving the mode is on the [Themes](../foundations/themes) page.
 
 ### Override Scope
 {: .nds-block-title}
@@ -244,7 +244,7 @@ To change a token on every page, set it in your own stylesheet, loaded after `nd
             <i class="hgi hgi-stroke hgi-accessibility"></i>
             <span class="nds-label">Font Sizing</span>
           </span>
-          <p class="nds-item-desc">Every font size and line height multiplies by <code class="nds-inline-code lang-css">--user-font-scale</code>, which the <a href="../components/accessibility">Accessibility</a> panel sets on <code class="nds-inline-code lang-html">&lt;html&gt;</code>. It works there only: the tokens resolve on the root.</p>
+          <p class="nds-item-desc">Every font size and line height multiplies by <code class="nds-inline-code lang-css">--user-font-scale</code>, which the <a href="../ui-shell/accessibility">Accessibility</a> panel sets on <code class="nds-inline-code lang-html">&lt;html&gt;</code>. It works there only: the tokens resolve on the root.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -279,7 +279,7 @@ To change a token on every page, set it in your own stylesheet, loaded after `nd
 - Pair each font size with its line height: `--typo-text-md-FS` with `--typo-text-md-LH`.
 - To restyle one component in one place, set its component tokens on a wrapper. Set every state of the family, or the hover color stays the old one.
 - Set palette tokens at `:root` only. On a wrapper, they do not reach the tokens that read them.
-- To change the brand colors, use a theme from the [Themes](../components/themes) page: seed colors, or a stylesheet that sets every step of a ramp. Do not change one step of a ramp alone.
+- To change the brand colors, use a theme from the [Themes](../foundations/themes) page: seed colors, or a stylesheet that sets every step of a ramp. Do not change one step of a ramp alone.
 
 </div>
   </div>
@@ -328,8 +328,8 @@ A semantic or component name says what the value is for. It never names a color 
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Themes](../components/themes): brand colors from seed colors, dark mode and dark areas.
-- [Accessibility](../components/accessibility): the Font Sizing setting behind `--user-font-scale`.
+- [Themes](../foundations/themes): brand colors from seed colors, dark mode and dark areas.
+- [Accessibility](../ui-shell/accessibility): the Font Sizing setting behind `--user-font-scale`.
 - [Button](../components/button): every button knob, in its API.
 
 </div>

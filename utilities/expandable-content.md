@@ -3,7 +3,7 @@ layout: page
 title: Expandable Content
 hero_title: Expandable Content - National Design System
 hero_description: A box that limits long content to a set height, with a Show More button that appears only when the content is taller
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Utilities", "/components/?shelf=Utilities"]]
 lang: en
 direction: ltr
 since: "1.0.0"

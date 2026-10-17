@@ -3,7 +3,7 @@ layout: page
 title: Tables
 hero_title: Tables - National Design System
 hero_description: A table shows records in rows and columns, with optional sorting, row selection, a column menu and expandable rows
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -748,7 +748,7 @@ Set these on `.nds-table`.
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every table inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every table inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `table` group in `_sass/tokens/_components.scss`.
 

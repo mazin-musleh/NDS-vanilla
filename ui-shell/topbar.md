@@ -3,7 +3,7 @@ layout: page
 title: Top Bar
 hero_title: Top Bar - National Design System
 hero_description: A slim bar above the main navigation with the DGA digital stamp, optional date, clock and weather widgets, and the dark mode toggle.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -354,7 +354,7 @@ The widgets also work outside the top bar, such as in a kiosk header or a dashbo
 | `data-city` | `#nds-city-name` | The Arabic city name, shown when `<html lang>` is `ar`, and on any other page when `data-city-en` is not set. With it, the script makes no lookup |
 | `data-city-en` | `#nds-city-name` | The English city name, shown when `<html lang>` is not `ar` |
 | `data-latitude`, `data-longitude` | `#nds-weather-info` | The coordinates for the weather, and for the city lookup. The default is Riyadh (24.7136, 46.6753) |
-| `data-theme-toggle` | A button | Makes it the dark mode button. See [Themes](../components/themes) |
+| `data-theme-toggle` | A button | Makes it the dark mode button. See [Themes](../foundations/themes) |
 | `aria-expanded` | `.nds-digital-stamp-tab` | Write `false` in the markup. The script sets `true` when the panel opens, and `false` when it closes |
 | `data-digital-stamp-domain` | `#nds-digital-stamp` | `gov.sa`, `edu.sa`, `sch.sa`, `med.sa`, `org.sa` or `sa`: the address card's wording. Without it, the site's address picks the card, and an address outside `.sa` shows `gov.sa` |
 | `data-state="expanded"` | `.nds-digital-stamp-tab` | The script sets it when the panel opens, and removes it when the panel closes |
@@ -417,7 +417,7 @@ The full API is in the banners of `_js/nds-digital-stamp.js`, `_js/nds-time-date
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Header](../ui-shell/header), [Main Navigation](../ui-shell/mainnav) and [Footer](../ui-shell/footer): the other parts of the page shell.
-- [Themes](../components/themes): dark mode.
+- [Themes](../foundations/themes): dark mode.
 - [Date](../core/date): the date and the clock use it, and its `data-timezone` sets their day.
 
 </div>

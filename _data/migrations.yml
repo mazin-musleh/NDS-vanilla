@@ -1,7 +1,7 @@
 # Names a site may still use that today's NDS renamed, removed or deprecated.
 # The audit's migration rule reads this file (nds-audit.js, bundled by js_processor.rb).
 # Built from scripts/surface-history.rb plus DEPRECATIONS.md; add rows at each release.
-# Keep the newest release first: core/migration.md groups the rows in this order.
+# Keep the newest release first: guides/migration.md groups the rows in this order.
 #   kind     class | attribute | property | id | global (a window setting) | event (events go to the docs only: a page cannot see a listener) | param (a URL query key; docs only: the server reads it)
 #   scope    the selector the old name lived under; a match must sit inside it (closest), or with a leading & match it itself
 #   status   renamed | removed (broken today) | deprecated (still works until the next major)

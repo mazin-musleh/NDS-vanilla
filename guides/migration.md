@@ -3,7 +3,7 @@ layout: page
 title: Migration
 hero_title: Migration - National Design System
 hero_description: Every class, attribute, id, custom property, window setting, event and URL parameter that an NDS release renamed or removed, with what to write instead
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Guides", "/guides"]]
 lang: en
 direction: ltr
 since: "1.12.x"

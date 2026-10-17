@@ -3,7 +3,7 @@ layout: page
 title: Sort
 hero_title: Sort - National Design System
 hero_description: Sort reorders items that are already on the page, such as cards, list rows or table rows
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

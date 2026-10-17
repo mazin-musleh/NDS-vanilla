@@ -3,7 +3,7 @@ layout: page
 title: Modal
 hero_title: Modal - National Design System
 hero_description: A modal is a dialog over the page that asks the user to confirm, decide or finish a short task before going on.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

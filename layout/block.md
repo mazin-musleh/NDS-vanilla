@@ -3,7 +3,7 @@ layout: page
 title: Block
 hero_title: Block Layout - National Design System
 hero_description: A block is a spacing unit for content and components, with an optional title
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en
 direction: ltr
 since: "1.0.0"

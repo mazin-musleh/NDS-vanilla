@@ -56,7 +56,7 @@ const MARK = /\b(data-i18n(?:-(?:aria-label|aria-description|title|alt|placehold
 const REF = /^([a-z][a-z0-9-]*)\.([A-Za-z0-9_]+)$/;
 const ENTITY = { amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'", nbsp: ' ' };
 const squash = (s) => s.replace(/&(amp|lt|gt|quot|#39|nbsp);/g, (_, e) => ENTITY[e]).replace(/\s+/g, ' ').trim();
-const MARKUP_DIRS = ['components', 'ui-shell', 'utilities', 'layout', 'core', 'templates', 'examples'];
+const MARKUP_DIRS = ['foundations', 'components', 'ui-shell', 'utilities', 'layout', 'core', 'guides', 'templates', 'examples'];
 const markupFiles = [
     ...MARKUP_DIRS.flatMap(d => readdirSync(join(ROOT, d)).filter(f => f.endsWith('.md')).map(f => join(d, f))),
     ...['_includes', '_layouts'].flatMap(d => readdirSync(join(ROOT, d)).filter(f => f.endsWith('.html')).map(f => join(d, f))),

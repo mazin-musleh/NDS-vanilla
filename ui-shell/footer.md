@@ -3,7 +3,7 @@ layout: page
 title: Footer
 hero_title: Footer - National Design System
 hero_description: The footer closes every page with secondary links, contact details, social and app links, legal notices and partner logos
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -166,7 +166,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
 | `.nds-footer-bottom` | `.nds-footer-meta` on the start side and `.nds-footer-logos` on the end side | Yes |
 | `.nds-footer-links` | A row of underlined links, such as a site map | No |
 | `.nds-footer-legal` | `.nds-footer-copyright`, then `.nds-footer-policy` | Yes |
-| `.nds-footer-policy` | The policy links, not underlined: privacy, terms and accessibility. Then the `button.nds-link[data-cookies-toggle]` that opens the [Cookies](../components/cookies) panel | Yes |
+| `.nds-footer-policy` | The policy links, not underlined: privacy, terms and accessibility. Then the `button.nds-link[data-cookies-toggle]` that opens the [Cookies](../ui-shell/cookies) panel | Yes |
 | `.nds-footer-logos` | Partner and government logos, each an `<img>`, alone or in a link | No |
 {: .nds-table .nds-responsive}
 

@@ -3,7 +3,7 @@ layout: page
 title: Status Section
 hero_title: Status Section - National Design System
 hero_description: A status section reports one outcome, such as a page that was not found or a request that went through
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en
 direction: ltr
 since: "1.10.0"

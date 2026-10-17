@@ -3,7 +3,7 @@ layout: page
 title: Hero
 hero_title: Hero - National Design System
 hero_description: The banner at the top of a page, with the page title, or a slider of full-width images on the home page.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -425,7 +425,7 @@ The main hero shows one slide at a time, and the Swiper script moves between the
 ### JavaScript
 {: .nds-block-title}
 
-The hero has no script of its own. The Swiper script runs the main hero, and the Share script runs the Share menu: see [Swiper](../components/swiper) and [Share](../utilities/share).
+The hero has no script of its own. The Swiper script runs the main hero, and the Share script runs the Share menu: see [Swiper](../components/swiper) and [Share](../components/share).
 
 </div>
   </div>

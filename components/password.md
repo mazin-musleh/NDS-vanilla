@@ -3,7 +3,7 @@ layout: page
 title: Password
 hero_title: Password - National Design System
 hero_description: A password field that checks the password rules as the user types, checks that a retyped password matches, and blocks the form submit until both pass
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.7.0"

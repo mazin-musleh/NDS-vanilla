@@ -3,7 +3,7 @@ layout: page
 title: Checkbox
 hero_title: Checkbox - National Design System
 hero_description: A checkbox turns one option on or off, alone or as one of several choices
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -245,7 +245,7 @@ Set these on `.nds-check-container`. The size classes set the first one.
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every checkbox inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every checkbox inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `checkbox` group in `_sass/tokens/_components.scss`.
 

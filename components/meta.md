@@ -3,7 +3,7 @@ layout: page
 title: Meta
 hero_title: Meta - National Design System
 hero_description: Meta is a line of short facts, each with an icon, such as a time, a place and a person
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.12.x"

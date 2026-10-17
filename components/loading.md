@@ -3,7 +3,7 @@ layout: page
 title: Loading
 hero_title: Loading - National Design System
 hero_description: A loading state dims the content of a container and shows a spinner over it while the content updates
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

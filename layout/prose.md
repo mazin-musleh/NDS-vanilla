@@ -3,7 +3,7 @@ layout: page
 title: Prose
 hero_title: Prose Layout - National Design System
 hero_description: Prose styles classless text, such as the output of a rich text editor or a CMS, inside one wrapper
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en
 direction: ltr
 since: "1.7.0"
@@ -227,7 +227,7 @@ Some elements are styled on every page, with or without `nds-prose`. Others are 
 | `ul`, `ol` | Everywhere: indent. Inside prose: a gap below, space between items, and 1., a., i. markers on nested `ol` |
 | `img` | Everywhere: full width at most. Inside prose: a gap above and below a direct child `img` or `picture` |
 | `a` | Everywhere: the [Link](../components/link) style |
-| `hr` | Everywhere: the [Divider](../utilities/divider). Inside prose: a wider gap above and below |
+| `hr` | Everywhere: the [Divider](../components/divider). Inside prose: a wider gap above and below |
 | `table` | Everywhere: the [Tables](../components/tables) style. Inside prose: a gap below |
 | `p`, `figure`, `pre` | Inside prose: a gap below |
 | `blockquote` | Inside prose: a gap below, a 3px side border and secondary text color. A [Quote](../components/quote)'s `blockquote` keeps its own look |

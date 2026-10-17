@@ -3,7 +3,7 @@ layout: page
 title: Multiselect
 hero_title: Multiselect - National Design System
 hero_description: A form field whose menu of checkboxes lets the user pick several options, shown in the field as removable chips
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

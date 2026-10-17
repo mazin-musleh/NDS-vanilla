@@ -3,7 +3,7 @@ layout: page
 title: Tabs
 hero_title: Tabs - National Design System
 hero_description: Group related content into a single surface where users switch between views without leaving the page
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

@@ -3,7 +3,7 @@ layout: page
 title: Radio Button
 hero_title: Radio Button - National Design System
 hero_description: A radio button picks one option from a set of choices
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -214,7 +214,7 @@ Set these on `.nds-radio-container`. The size classes set the first one.
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every radio inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every radio inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `radio` group in `_sass/tokens/_components.scss`.
 

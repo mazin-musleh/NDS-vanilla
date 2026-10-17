@@ -3,7 +3,7 @@ layout: page
 title: Main Navigation
 hero_title: Main Navigation - National Design System
 hero_description: The bar at the top of every page with the brand, the main links, dropdown menus and the action buttons.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.0"

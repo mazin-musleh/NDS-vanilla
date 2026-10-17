@@ -3,7 +3,7 @@ layout: page
 title: Persona
 hero_title: Persona - National Design System
 hero_description: Persona shows a person's avatar, name and role, with an optional row of actions or details
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

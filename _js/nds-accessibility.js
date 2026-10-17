@@ -46,7 +46,7 @@
  *     file, so the two download in parallel and a page that never arms fetches
  *     neither. Nothing here loads it. A saved-prefs return visit can still show a
  *     brief unstyled flash of its active modes until the sheet lands; a consumer
- *     who cares links it blocking in <head> (see components/accessibility.md).
+ *     who cares links it blocking in <head> (see ui-shell/accessibility.md).
  */
 // NDS Accessibility — site-wide a11y panel (FAB + slide-in disclosure)
 //

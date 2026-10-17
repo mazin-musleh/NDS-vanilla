@@ -8,7 +8,7 @@
 // Handles URL-encoding of the SVG for data URIs and inserts the token/alias
 // at the alphabetically correct position in its section. The SCSS file is
 // hand-editable — this script preserves existing structure. The alias is also
-// mirrored into _data/content/icons.yml, the catalog components/icons.md lists.
+// mirrored into _data/content/icons.yml, the catalog foundations/icons.md lists.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -145,7 +145,7 @@ lines.splice(aliasInsertAt, 0, aliasLine);
 
 fs.writeFileSync(OUT, lines.join('\n'));
 
-// --- Mirror the alias into the catalog data file (components/icons.md) ---
+// --- Mirror the alias into the catalog data file (foundations/icons.md) ---
 // Plain YAML, no Jekyll plugin: the doc page reads the list as shipped. The list
 // is grouped by family, so append and let a human file it under the right group.
 const yml = fs.readFileSync(DATA, 'utf8').split('\n');

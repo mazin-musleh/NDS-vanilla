@@ -7,12 +7,13 @@ lang: en
 direction: ltr
 sidemenu_mode: false
 ---
+{%- assign templates = site.data.catalog | where_exp: "e", "e.url contains '/templates/'" %}
 
 <section id="templates" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">All DGA Templates</h2>
-            <p class="nds-section-description">{{ site.data.content.templates | size }} canonical layouts for the most common government service screens.</p>
+            <p class="nds-section-description">{{ templates | size }} canonical layouts for the most common government service screens.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-toolbar">
@@ -68,7 +69,7 @@ sidemenu_mode: false
             <div id="templates_list" class="nds-paged-content nds-grid"
                 style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
-                {% for tpl in site.data.content.templates %}
+                {% for tpl in templates %}
                 <div class="nds-page-item nds-card nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">

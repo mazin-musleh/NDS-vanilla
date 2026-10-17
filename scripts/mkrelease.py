@@ -194,7 +194,7 @@ def verify(out, version, rules=None):
     # prefix: _source/ was a straight copy of these repo-root folders, and the
     # source zip reproduces them under its own wrapper folder.
     for anchor in ('_source/_js/nds-core.js', '_source/_sass/_mixins.scss',
-                   '_source/_data/content/components.yml',
+                   '_source/_data/catalog.yml',
                    '_source/components/multiselect.md',
                    '_source/templates/form-template.md',
                    '_source/examples/console-demo.md',
@@ -297,16 +297,16 @@ def verify(out, version, rules=None):
     def _read(p):
         with open(os.path.join(ROOT, p), encoding='utf8') as f:
             return f.read()
-    a11y_doc = _read('components/accessibility.md')
+    a11y_doc = _read('ui-shell/accessibility.md')
     def _canon(cid):
         m = re.search(r'<script type="text/html" id="' + cid + r'"[^>]*>(.*?)</script>', a11y_doc, re.S)
         return _markup(m.group(1)) if m else ''
     built = re.search(r'return `(<dialog.*?</dialog>)`', _read('_js/nds-accessibility.js'), re.S).group(1)
     if _canon('a11y-panel') != _markup('<template class="nds-panel-template">' + built.replace('${side}', 'end') + '</template>'):
-        sys.exit('Custom Panel in components/accessibility.md has drifted from panelMarkup() in '
+        sys.exit('Custom Panel in ui-shell/accessibility.md has drifted from panelMarkup() in '
                  '_js/nds-accessibility.js. Copy it from there.')
     if _canon('a11y-fab') != _markup(_read('_includes/accessibility-panel.html')):
-        sys.exit('FAB in components/accessibility.md has drifted from _includes/accessibility-panel.html.')
+        sys.exit('FAB in ui-shell/accessibility.md has drifted from _includes/accessibility-panel.html.')
 
     # The rules file's checks run against the PUBLISHED copy: the one the
     # guides render and raw main serves.

@@ -3,7 +3,7 @@ layout: page
 title: Side Info
 hero_title: Side Info - National Design System
 hero_description: A column beside the content of a section, for the facts of a service, the progress of a form, or a table of contents.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.0"

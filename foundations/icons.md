@@ -3,7 +3,7 @@ layout: page
 title: Icons
 hero_title: Icons - National Design System
 hero_description: "HugeIcons Stroke Rounded in two forms: a font with the whole set for page content, and a small set inside the NDS CSS that components show without waiting for the font."
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Foundations", "/components/?shelf=Foundations"]]
 lang: en
 direction: ltr
 since: "1.4.0"

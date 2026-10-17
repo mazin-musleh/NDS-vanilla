@@ -3,7 +3,7 @@ layout: page
 title: Swiper
 hero_title: Swiper - National Design System
 hero_description: A swiper is a horizontal row of slides that the user swipes, scrolls or pages through with arrows and bullets.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -431,7 +431,7 @@ Set these in the `style` of `.nds-swiper`. Set the bullet colors on the swiper o
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every swiper inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every swiper inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `swiper` group in `_sass/tokens/_components.scss`.
 

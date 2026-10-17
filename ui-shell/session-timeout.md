@@ -3,7 +3,7 @@ layout: page
 title: Session Timeout
 hero_title: Session Timeout - National Design System
 hero_description: A warning that opens before an idle session ends, counts down the time left, and lets the user stay signed in
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.12.x"

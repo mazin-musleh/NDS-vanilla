@@ -3,7 +3,7 @@ layout: page
 title: Date Tile
 hero_title: Date Tile - National Design System
 hero_description: A date tile shows one date in a small box, with the weekday, the day number and the month
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.12.x"

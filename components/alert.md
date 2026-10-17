@@ -3,7 +3,7 @@ layout: page
 title: Alert
 hero_title: Alert - National Design System
 hero_description: An alert shows a short status message, such as a success, a warning or an error, in the page or as a toast
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

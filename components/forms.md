@@ -3,7 +3,7 @@ layout: page
 title: Text Fields
 hero_title: Text Fields - National Design System
 hero_description: Form fields the user types in, with the label, messages and submit validation that every NDS field shares
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
 last_edit: "13/10/2026 - 12:21 AM"
@@ -637,7 +637,7 @@ The checks are the browser's own: write these standard attributes on the input. 
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every field inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every field inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `forms` group in `_sass/tokens/_components.scss`.
 

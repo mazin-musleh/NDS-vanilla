@@ -6,7 +6,7 @@ hero_description: A rich text field that turns a textarea into an editing surfac
 hero_tags:
   - label: Beta
     style: nds-yellow
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.4.0"

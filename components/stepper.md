@@ -3,7 +3,7 @@ layout: page
 title: Stepper
 hero_title: Stepper - National Design System
 hero_description: A stepper shows where the user is in a flow of steps, such as a service application, with the steps done, the current step and the steps to come.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -232,7 +232,7 @@ A breakpoint class picks the layout on one screen size: `nds-radial-sm` on a pho
 ### Divider Labels
 {: .nds-block-title}
 
-In a vertical stepper, a [Divider](../utilities/divider) at the start of a step's content labels the step: a date, a phase name, or the name of a group of steps. Its line meets the circle and runs on as the separator between steps. With `nds-dot` and `nds-reverse` it makes a timeline, such as a career history. Write the steps oldest first, and the newest shows on top.
+In a vertical stepper, a [Divider](../components/divider) at the start of a step's content labels the step: a date, a phase name, or the name of a group of steps. Its line meets the circle and runs on as the separator between steps. With `nds-dot` and `nds-reverse` it makes a timeline, such as a career history. Write the steps oldest first, and the newest shows on top.
 
 ### Card
 {: .nds-block-title}
@@ -417,7 +417,7 @@ Set these on `.nds-stepper`. The size classes set `--stepper-size` too, so set i
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every stepper inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every stepper inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `stepper` group in `_sass/tokens/_components.scss`.
 
@@ -482,7 +482,7 @@ The full API is in the banner of `_js/nds-stepper.js`.
 - [Journey Page Template](../templates/life-journey-page-template): a vertical stepper with a card on each step and a start button at the end of the current step.
 - [Life Journeys Template](../templates/life-journey-template): a static stepper with icons in an info alert, a row on a desktop and a column on phones.
 - [Faculty CV](../examples/faculty-cv): a career timeline with dots, divider labels and reverse order.
-- [Divider](../utilities/divider): the label at the start of a step.
+- [Divider](../components/divider): the label at the start of a step.
 
 </div>
   </div>

@@ -3,7 +3,7 @@ layout: page
 title: Accessibility
 hero_title: Accessibility - National Design System
 hero_description: A site-wide panel where visitors turn on accessibility modes, adjust text and pick a color filter, with every choice kept across pages
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.5"
@@ -22,7 +22,7 @@ The accessibility panel is a [Panel](../components/panels) that a [FAB](../compo
 
 Pick another component when:
 
-- the visitor only switches between light and dark: [Themes](../components/themes)
+- the visitor only switches between light and dark: [Themes](../foundations/themes)
 - the setting belongs to one form or page: [Switch](../components/switch)
 
 </div>

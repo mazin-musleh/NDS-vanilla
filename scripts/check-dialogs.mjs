@@ -258,7 +258,7 @@ const page2 = await newPage();
 const errors2 = [];
 page2.on('pageerror', (e) => { if (!/ResizeObserver loop/.test(e.message)) errors2.push(e.message); });
 page2.on('console', (m) => { if (m.type() === 'error') errors2.push(m.text()); });
-await page2.goto(`${BASE}/components/accessibility.html`, { waitUntil: 'load' });
+await page2.goto(`${BASE}/ui-shell/accessibility.html`, { waitUntil: 'load' });
 await page2.waitForFunction(() => window.NDS?.Init?.mount);
 const cookie = await page2.waitForSelector('#nds-cookies-panel[open]', { timeout: 10000 }).then(() => true, () => false);
 const c = await page2.evaluate(() => {

@@ -3,7 +3,7 @@ layout: page
 title: Link
 hero_title: Link - National Design System
 hero_description: Styled links for embedding references, calls to action, and external destinations within body text, alert messages, and content areas.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -138,7 +138,7 @@ Every row goes on the link. Inside a content section, a link is also underlined.
 - Keep the primary default for links in running text, so readers find them.
 - Add `nds-neutral` to a link that should stay quiet, such as a secondary link in a list or in metadata.
 - Add `nds-underline` in dense text outside a content section, where color alone does not mark the link.
-- On a deep primary or dark surface, primary and neutral links lack contrast. Add `nds-oncolor` for the white look, or give the surface `data-theme="dark"`. See [Dark Areas](../components/themes#dark-areas).
+- On a deep primary or dark surface, primary and neutral links lack contrast. Add `nds-oncolor` for the white look, or give the surface `data-theme="dark"`. See [Dark Areas](../foundations/themes#dark-areas).
 - Write link text that names the destination, such as "official guidelines". Avoid "click here".
 - Do not add `target="_blank"` to a link to another website: the script adds it. Add `rel="noreferrer"` yourself when the link must not send the page address.
 - Add `data-no-external` to a link or a container for a trusted partner site or an embedded widget that must open in the same tab.
@@ -192,7 +192,7 @@ Set these on the link, or on a container to reach every link inside it. The colo
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every link inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every link inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `link` group in `_sass/tokens/_components.scss`.
 

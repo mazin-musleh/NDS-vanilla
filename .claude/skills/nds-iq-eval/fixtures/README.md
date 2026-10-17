@@ -31,7 +31,7 @@ README, where no runner reads it.
   - `_source/_js/` = banner stubs (real banner comment + one stub line) for the
     banner-first scenarios (S6/S14/S15/S25). Frozen copies from the 1.7.0 cycle;
     refresh a stub if its real banner changes materially.
-  - `_source/{components,layout,ui-shell,utilities,core,templates,examples}/*.md`
+  - `_source/{foundations,components,layout,ui-shell,utilities,core,guides,templates,examples}/*.md`
     = doc `.md` source twins of the `_site` pages — markup reads go to the
     `.md` first. Mirror the real zip's folder set: the index takes the folder from
     the catalog entry's own `url`, so a folder the zip ships and this tree lacks

@@ -3,7 +3,7 @@ layout: page
 title: Init
 hero_title: Init - National Design System
 hero_description: How NDS starts the components on a page, and the calls that tell them a container changed after load
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Core", "/components/?shelf=Core"]]
 lang: en
 direction: ltr
 since: "1.7.0"

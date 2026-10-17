@@ -3,7 +3,7 @@ layout: page
 title: Slider
 hero_title: Slider - National Design System
 hero_description: A slider lets the user pick a number, or a range between two numbers, by dragging a thumb along a bar
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.2.0"
@@ -232,7 +232,7 @@ The script writes `--slider-fill-start` and `--slider-fill-end` on `.nds-slider-
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every slider inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens). The hovered thumb color also shows on keyboard focus.
+Set a token at `:root`, or on a wrapper to reach every slider inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens). The hovered thumb color also shows on keyboard focus.
 
 Source: the `slider` group in `_sass/tokens/_components.scss`.
 

@@ -3,7 +3,7 @@ layout: page
 title: Side Menu
 hero_title: Side Menu - National Design System
 hero_description: The menu beside the content that links the pages of one part of the site, in groups that open and close.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.0"

@@ -3,7 +3,7 @@ layout: page
 title: Featured Icons
 hero_title: Featured Icons - National Design System
 hero_description: Colored icon containers that draw attention to features, statuses, and categories across cards, lists, and page sections
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -188,7 +188,7 @@ Set these on the icon, in a `style` attribute or in your stylesheet. On a parent
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every featured icon inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every featured icon inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `featured-icons` group in `_sass/tokens/_components.scss`.
 

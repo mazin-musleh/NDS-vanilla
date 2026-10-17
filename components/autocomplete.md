@@ -3,7 +3,7 @@ layout: page
 title: Autocomplete
 hero_title: Autocomplete - National Design System
 hero_description: A text field that shows matching results from a JSON source as the user types
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -227,7 +227,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every autocomplete inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens). The highlight is the background of the matched text in a suggestion.
+Set a token at `:root`, or on a wrapper to reach every autocomplete inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens). The highlight is the background of the matched text in a suggestion.
 
 Source: the `autocomplete` group in `_sass/tokens/_components.scss`.
 

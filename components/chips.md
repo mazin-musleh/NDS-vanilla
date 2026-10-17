@@ -3,7 +3,7 @@ layout: page
 title: Chips
 hero_title: Chips - National Design System
 hero_description: A chip is a small button for a choice, a filter or a value the user can remove
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -157,7 +157,7 @@ A row on `.nds-chip` changes every chip. Selected goes on one chip: the builder 
 - Keep labels to one or two words. A label longer than 160px is cut with an ellipsis.
 - Add an icon only when it helps the user recognize the choice.
 - Give each chip `type="button"`, so a chip inside a form does not send the form.
-- On a deep primary or dark surface, add `nds-oncolor` for the DGA white look, or give the surface `data-theme="dark"` for the dark-mode chips. See [Dark Areas](../components/themes#dark-areas).
+- On a deep primary or dark surface, add `nds-oncolor` for the DGA white look, or give the surface `data-theme="dark"` for the dark-mode chips. See [Dark Areas](../foundations/themes#dark-areas).
 
 </div>
   </div>
@@ -207,7 +207,7 @@ Set these on the chip. The size classes set `--chip-size`, and the color classes
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every chip inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every chip inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `chips` group in `_sass/tokens/_components.scss`.
 

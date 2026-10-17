@@ -3,7 +3,7 @@ layout: page
 title: Filter
 hero_title: Filter - National Design System
 hero_description: Filter narrows a list to the items that match a search term and the options the user picks.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

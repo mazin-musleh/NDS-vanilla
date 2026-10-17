@@ -19,7 +19,7 @@ import { spawn } from 'node:child_process';
 
 const DIR = process.argv[2] || '_site';
 const PORT = 4198;
-const URL = `http://localhost:${PORT}/NDS-vanilla/components/tokens.html`;
+const URL = `http://localhost:${PORT}/NDS-vanilla/foundations/tokens.html`;
 
 const server = spawn(process.execPath, ['.claude/skills/nds-perf/gz-serve.mjs', DIR, String(PORT)], { stdio: 'ignore' });
 await new Promise((r) => setTimeout(r, 1200));

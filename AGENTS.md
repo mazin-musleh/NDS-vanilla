@@ -56,7 +56,7 @@ A seasonal skin applied by one `<script>` tag. Source is split three ways: the p
 JS in `_js/events/`, its SCSS in `_sass/themes/events/`, and the images plus built
 output in `docs-assets/events/<folder>/` (whose `.min.scss` is the Jekyll build
 entry). Registered in `_data/themes.yml` (drives the topbar switcher),
-`_data/content/events.yml` and `_data/sidemenu/sidemenu.yml`.
+`_data/catalog.yml` and `_data/sidemenu/sidemenu.yml`.
 
 **Rebuild the pack after changing its JS, SCSS or images** — `bundle exec jekyll build`,
 then `python scripts/mkevent.py <event>`, then build again to publish. `mkevent.py` owns the
@@ -237,19 +237,14 @@ Verify a whitespace change by rendered text, not by eyeballing: build before/aft
 
 **Phase 2: Document & register** — only after Phase 1 verifies behavior.
 
-5. Add documentation page: `components/[name].md` — follow `.claude/skills/nds-doc/SKILL.md` (Claude Code invokes it as `/nds-doc [name]`)
-6. Add to `_data/sidemenu/sidemenu.yml` under Components children
-7. Add to the matching index data file so the page appears on its landing grid. Match an existing neighbor entry's keys (title, description, icon, category, tags, url) exactly rather than guessing the schema:
-   - `components/` → `_data/content/components.yml`
-   - `layout/` → `_data/content/layouts.yml` (if present)
-   - `utilities/` → `_data/content/utilities.yml` (if present)
-   - `examples/` → `_data/content/examples.yml`
-   - `templates/` → `_data/content/templates.yml`
-   Whenever you create a new doc page, check for a sibling YAML in `_data/content/` and add the entry there too.
+5. Add documentation page in its shelf's folder — the placement rule heads `_data/catalog.yml` (most pages: `components/[name].md`) — following `.claude/skills/nds-doc/SKILL.md` (Claude Code invokes it as `/nds-doc [name]`)
+6. Add to `_data/sidemenu/sidemenu.yml` under its shelf (and group, for Components)
+7. Add its entry to `_data/catalog.yml`, in its shelf's block, so the page appears on the Library grid, in `llms.txt`, and in the agents' catalog. Match a neighbor entry's keys (title, description, use_when, icon, category, tags, url, js, scss) rather than guessing the schema. Templates, examples and event packs go in the same file, in their own blocks.
+   **A page that moves keeps its file name** — the 404 page forwards an old URL by file name.
 
 ## Component Doc Front Matter
 
-Every component/utility/layout doc page in `components/`, `layout/`, `utilities/`, `ui-shell/` carries three tracking fields alongside the usual `layout/title/hero_*/breadcrumb/lang/direction`:
+Every component/utility/layout doc page in `foundations/`, `components/`, `layout/`, `utilities/`, `ui-shell/` carries three tracking fields alongside the usual `layout/title/hero_*/breadcrumb/lang/direction`:
 
 ```yaml
 since: "1.0.0"                                    # version the doc first shipped (never changes)
@@ -284,7 +279,7 @@ last_edit: "15/07/2026 - 02:35 PM"  # timestamp of the most recent doc content e
 
 ## Content Skills
 
-Documentation pages under `components/`, `ui-shell/`, `layout/`, `utilities/`, and `core/` are created, refined, and audited per `.claude/skills/nds-doc/SKILL.md` — Claude Code invokes it as `/nds-doc [name]`; other agents follow the SKILL.md workflow directly.
+Documentation pages under `foundations/`, `components/`, `ui-shell/`, `layout/`, `utilities/`, and `core/` are created, refined, and audited per `.claude/skills/nds-doc/SKILL.md` — Claude Code invokes it as `/nds-doc [name]`; other agents follow the SKILL.md workflow directly.
 
 ## Writing
 

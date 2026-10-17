@@ -3,7 +3,7 @@ layout: page
 title: Divider
 hero_title: Divider - National Design System
 hero_description: A line that separates content, horizontal or vertical, with an optional label between two lines
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -165,7 +165,7 @@ A Spacing class sets the space above and below a line, or before and after a ver
 - Pick the smallest spacing that gives enough room. Keep `nds-3xl` and `nds-4xl` for major breaks.
 - Put a vertical divider only in a flex row. Outside one it has no height to stretch to.
 - Use the default color for most dividers. Use `nds-primary` only where the line is an accent.
-- On a deep primary or dark surface, add `nds-oncolor`, or give the surface `data-theme="dark"`. See [Dark Areas](../components/themes#dark-areas).
+- On a deep primary or dark surface, add `nds-oncolor`, or give the surface `data-theme="dark"`. See [Dark Areas](../foundations/themes#dark-areas).
 - To change the line color on a tinted surface, set `--divider-color` on that surface, not on `:root`.
 
 </div>

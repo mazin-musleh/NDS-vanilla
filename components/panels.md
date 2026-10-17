@@ -3,7 +3,7 @@ layout: page
 title: Panels
 hero_title: Panels - National Design System
 hero_description: A panel is a surface that slides in from an edge of the screen, for settings, filters or details the user opens on demand.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
 last_edit: "16/10/2026 - 02:34 PM"
@@ -378,7 +378,7 @@ The full API is in the banner of `_js/nds-panels.js`.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [FAB](../components/fab): a floating button that opens a panel on the same edge.
-- [Accessibility](../components/accessibility): the accessibility settings open in a lazy panel.
+- [Accessibility](../ui-shell/accessibility): the accessibility settings open in a lazy panel.
 
 </div>
   </div>

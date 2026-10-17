@@ -3,7 +3,7 @@ layout: page
 title: Empty
 hero_title: Empty - National Design System
 hero_description: Empty shows an icon and a short message in a container that has no items
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

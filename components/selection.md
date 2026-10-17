@@ -3,7 +3,7 @@ layout: page
 title: Selection
 hero_title: Selection - National Design System
 hero_description: Selection lets users pick items in any list, so one action can apply to all of them
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.4.0"

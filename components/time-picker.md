@@ -3,7 +3,7 @@ layout: page
 title: Time Picker
 hero_title: Time Picker - National Design System
 hero_description: A time field with lists of hours, minutes and seconds in a panel under it
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.12.x"

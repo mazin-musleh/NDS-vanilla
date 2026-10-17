@@ -10,7 +10,7 @@ argument-hint: "(no arguments)"
 
 The HGI icon font is served locally (not from the CDN) to avoid CORS issues. It is used **only in content markup** via `<i class="hgi hgi-stroke hgi-*">`. Component and chrome icons use the inline `mask-image` tier (`nds-icon nds-hgi-*`) and are unaffected.
 
-**Source:** `https://use.hugeicons.com/font/icons.css`, the icon font hugeicons.com documents. The older `cdn.hugeicons.com/font/hgi-stroke-rounded.css` froze on 2024-07-24; never go back to it. The docs (`components/icons.md`) send readers to hugeicons.com to pick icons, so the font must match that site, redrawn icons included.
+**Source:** `https://use.hugeicons.com/font/icons.css`, the icon font hugeicons.com documents. The older `cdn.hugeicons.com/font/hgi-stroke-rounded.css` froze on 2024-07-24; never go back to it. The docs (`foundations/icons.md`) send readers to hugeicons.com to pick icons, so the font must match that site, redrawn icons included.
 
 ### Files touched
 
@@ -50,4 +50,4 @@ It rewrites the SCSS (keeping our header and family names `hgi-stroke-rounded` a
 - `grep -rn "hgi-stroke hgi-<removed-name>"` over the repo; move this repo's own markup to the new names.
 - `bundle exec jekyll build`, then look at a page of content icons.
 - **The font's size moves the icon reveal:** measure an icon page before and after with `nds-perf` (`measure-lcp.mjs` prints `icons` per run). The 2026-09-23 update, 659 KB → 965 KB, moved icons from ~6.5 s to ~8.0 s on slow-4G with no change to LCP.
-- `components/icons.md` states the build and icon count from `_data/hgi.yml`, so it updates itself. The SCSS header line carries the same stamp.
+- `foundations/icons.md` states the build and icon count from `_data/hgi.yml`, so it updates itself. The SCSS header line carries the same stamp.

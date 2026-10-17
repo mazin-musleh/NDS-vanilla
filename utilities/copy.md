@@ -3,7 +3,7 @@ layout: page
 title: Copy
 hero_title: Copy - National Design System
 hero_description: A script that copies text to the clipboard when the user clicks a button, then shows a checkmark
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Utilities", "/components/?shelf=Utilities"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -23,7 +23,7 @@ Copy works on any button with `nds-copy`. The button copies the text in its `dat
 Pick another component when:
 
 - the text is a code sample: [Code](../components/code)
-- the user shares the page link to a social network: [Share](../utilities/share)
+- the user shares the page link to a social network: [Share](../components/share)
 
 </div>
   </div>
@@ -259,7 +259,7 @@ The full API is in the banner of `_js/nds-copy.js`.
 
 - [Contact Us Template](../templates/contact-us-template): copy buttons next to the phone numbers and the email address.
 - [Code](../components/code): the copy button in the action bar of a code block.
-- [Share](../utilities/share): the Copy Link item in the share menu.
+- [Share](../components/share): the Copy Link item in the share menu.
 - [Alert](../components/alert): an alert action with `copy` or `copyTarget` becomes a copy button.
 
 </div>

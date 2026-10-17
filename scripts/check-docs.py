@@ -15,7 +15,7 @@ import re
 import sys
 
 ORDER = ['overview', 'markup', 'parts', 'variants', 'behavior', 'frameworks', 'examples', 'features', 'practices', 'api', 'related']
-FOLDERS = ['components', 'ui-shell', 'layout', 'utilities', 'core']
+FOLDERS = ['foundations', 'components', 'ui-shell', 'layout', 'utilities', 'core']
 CANON_RE = re.compile(r'<script type="text/html"([^>]*)>(.*?)</script>', re.S)
 OLD_DEMO = ('nds-demo-card', 'demo-toggle-btn', 'data-toggler')
 

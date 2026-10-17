@@ -3,7 +3,7 @@ layout: page
 title: Helper Classes
 hero_title: Helper Classes - National Design System
 hero_description: Single-purpose CSS classes for the markup you write around NDS components, covering centering, spacing resets, direction isolation, brand-colored text, and small notes
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Utilities", "/components/?shelf=Utilities"]]
 lang: en
 direction: ltr
 since: "1.7.0"
@@ -156,7 +156,7 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
 - There is no class for the other direction. For right-to-left text in a left-to-right page, write `dir="rtl"` and `lang` on the element. Browsers, screen readers and translation tools read the attributes.
 - Do not use `nds-flush` for small spacing changes. It clears four properties with `!important`, so a later change is harder. Set the component's own custom property instead.
 - Do not build a layout from these classes. Use [Flex](../layout/flex) or [Grid](../layout/grid).
-- There are no margin or padding classes. Set `--gap` on the flex or grid that holds the items, or use a [spacing token](../components/tokens) in your own CSS.
+- There are no margin or padding classes. Set `--gap` on the flex or grid that holds the items, or use a [spacing token](../foundations/tokens) in your own CSS.
 - For a note under a table or a form, put `nds-block` on the element above it. The block's gap separates them.
 - Keep a required-fields note to one line above the first field. `data-required` on each field container marks the field.
 - Links are primary already. Use `nds-color-primary` only on text that is not a link.

@@ -3,7 +3,7 @@ layout: page
 title: Definition List
 hero_title: Definition List - National Design System
 hero_description: Pairs of a title and a value, with optional icons, in a stacked, table, row or grid layout
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

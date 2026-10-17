@@ -3,7 +3,7 @@ layout: page
 title: Custom Select
 hero_title: Custom Select - National Design System
 hero_description: A form field that opens a styled list, where the user picks one option
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.12.x"

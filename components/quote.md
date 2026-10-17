@@ -3,7 +3,7 @@ layout: page
 title: Quote
 hero_title: Quote - National Design System
 hero_description: A quote shows one quoted statement in a card, with an optional title and the name of the person who said it
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

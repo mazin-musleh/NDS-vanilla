@@ -10,7 +10,7 @@ require 'sass-embedded'
 
 ROOT = File.expand_path('..', __dir__)
 OUT = File.join(ROOT, 'tmp', 'surface')
-DOC_DIRS = %w[components layout utilities ui-shell core examples templates _includes _layouts].freeze
+DOC_DIRS = %w[foundations components layout utilities ui-shell core guides examples templates _includes _layouts].freeze
 SKIP_JS = /nds-(docs|showcase|code|audit)\b/  # docs-only or debug bundles: never a user's surface
 
 def git(*args) = IO.popen(['git', '-C', ROOT, *args], &:read)

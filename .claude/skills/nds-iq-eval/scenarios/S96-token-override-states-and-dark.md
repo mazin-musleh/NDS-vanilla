@@ -9,7 +9,7 @@
 - rubric:
   - MUST: read the button page's token source (the `button` group in `_source/_sass/tokens/_components.scss`); set every state of the primary background family (default, hovered, pressed, selected); write the light rule as `:root, [data-theme~="dark"]:not(:root)` and the dark rule as `:root[data-theme~="dark"], [data-theme~="dark"]:not(:root)`, dark last, in a project stylesheet loaded after `nds-main.min.css`.
   - MUST NOT: set only the default state; use a bare `:root[data-theme~="dark"]` for dark; override `.nds-btn` internals; edit any file under `NDS_ROOT` or the runtime CSS.
-  - cite: "the way the tokens doc shows" / index: "`_source/components/tokens.md` (Override Scope)"
+  - cite: "the way the tokens doc shows" / index: "`_source/foundations/tokens.md` (Override Scope)"
 - grading note: read-dependent; scoped or solo runs only.
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

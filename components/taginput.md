@@ -3,7 +3,7 @@ layout: page
 title: Tag Input
 hero_title: Tag Input - National Design System
 hero_description: A form field that turns typed text into removable chips and submits them as an array
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.4.0"

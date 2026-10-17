@@ -336,7 +336,7 @@ hero_float_actions:
                         <i class="hgi hgi-stroke hgi-exchange-01"></i>
                         <span class="nds-label">Theme Switcher Integration</span>
                     </span>
-                    <p class="nds-item-desc">The same pack plugs into the <a class="nds-color" href="{{ 'components/themes' | relative_url }}">theme switcher</a>: loads on demand, applies on selection, tears down on switch-away.</p>
+                    <p class="nds-item-desc">The same pack plugs into the <a class="nds-color" href="{{ 'foundations/themes' | relative_url }}">theme switcher</a>: loads on demand, applies on selection, tears down on switch-away.</p>
                 </div>
             </div>
         </div>
@@ -354,7 +354,7 @@ hero_float_actions:
             <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
-                    <li>Use an event pack for a <strong>temporary, site-wide skin</strong> tied to an occasion. For a permanent brand colour, use a <a class="nds-color" href="{{ 'components/themes' | relative_url }}">custom palette or stylesheet theme</a> instead.</li>
+                    <li>Use an event pack for a <strong>temporary, site-wide skin</strong> tied to an occasion. For a permanent brand colour, use a <a class="nds-color" href="{{ 'foundations/themes' | relative_url }}">custom palette or stylesheet theme</a> instead.</li>
                     <li>Add the tag to your shared <code class="nds-inline-code lang-html">&lt;head&gt;</code> on <strong>every page</strong>, not just the home page, so the decorations stay consistent.</li>
                     <li>Set <code class="nds-inline-code lang-html">data-image</code> to your own event photo when you have one, so the hero matches your campaign.</li>
                     <li>Host the pack folder yourself instead of hotlinking a third-party origin.</li>

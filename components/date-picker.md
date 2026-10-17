@@ -3,7 +3,7 @@ layout: page
 title: Date Picker
 hero_title: Date Picker - National Design System
 hero_description: A date field with a calendar for one day or a range, in the Gregorian or the Hijri calendar
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -278,7 +278,7 @@ Set them in a rule on `.nds-date-picker-menu`, the calendar.
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every date picker inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every date picker inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `date-picker` group in `_sass/tokens/_components.scss`.
 

@@ -3,7 +3,7 @@ layout: page
 title: Hidden
 hero_title: Hidden - National Design System
 hero_description: CSS utilities that hide an element always, at chosen screen widths, or on screen only while screen readers still read it
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Utilities", "/components/?shelf=Utilities"]]
 lang: en
 direction: ltr
 since: "1.4.0"

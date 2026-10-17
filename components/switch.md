@@ -3,7 +3,7 @@ layout: page
 title: Switch
 hero_title: Switch - National Design System
 hero_description: A switch turns one setting on or off, and the change applies at once
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -245,7 +245,7 @@ Set these on `.nds-switch-container`. The size classes set the first five.
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every switch inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every switch inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `switch` group in `_sass/tokens/_components.scss`.
 

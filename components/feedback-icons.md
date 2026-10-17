@@ -3,7 +3,7 @@ layout: page
 title: Feedback Icons
 hero_title: Feedback Icons - National Design System
 hero_description: A feedback icon shows a status as a colored icon, alone or before a short message.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -217,7 +217,7 @@ Set these on the `.nds-feedback-icon`, on the `.nds-feedback`, or on a parent. E
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every feedback icon inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every feedback icon inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `feedback` group in `_sass/tokens/_components.scss`.
 

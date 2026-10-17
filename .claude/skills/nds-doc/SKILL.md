@@ -1,6 +1,6 @@
 ---
 name: nds-doc
-description: Work with NDS documentation pages — create new pages, rewrite old-format pages into the one-source format (data-canon blocks, a generated builder, a hidden Variants table), refine or audit existing ones, rewrite their prose in plain English. Covers components/*.md, ui-shell/*.md, layout/*.md, utilities/*.md, and core/*.md. Use for any task on canon markup, builder options, Variants tables, reference tables, Built-in Features, Best Practices, or doc-page wording ("rewrite this doc", "simplify this doc", "add an option to the builder").
+description: Work with NDS documentation pages — create new pages, rewrite old-format pages into the one-source format (data-canon blocks, a generated builder, a hidden Variants table), refine or audit existing ones, rewrite their prose in plain English. Covers foundations/*.md, components/*.md, ui-shell/*.md, layout/*.md, utilities/*.md, and core/*.md. Use for any task on canon markup, builder options, Variants tables, reference tables, Built-in Features, Best Practices, or doc-page wording ("rewrite this doc", "simplify this doc", "add an option to the builder").
 argument-hint: "[name] [optional: specific task]"
 ---
 
@@ -32,7 +32,7 @@ A doc page has two readers. **People** browse it, try options in the builder and
 
 ## Phase 1: Resolve
 
-1. Glob for `$0.md` in `components/`, `ui-shell/`, `layout/`, `utilities/`, `core/`. Found: use it. Not found: a new page (default `components/`).
+1. Glob for `$0.md` in `foundations/`, `components/`, `ui-shell/`, `layout/`, `utilities/`, `core/`. Found: use it. Not found: a new page (default `components/`).
 2. Find the source files. **Never assume file names:** `sidemenu` → `_js/nds-sideMenu.js`, `truncate-text` → `_sass/_utilities.scss`, grid → `_sass/_grid.scss`. Try the exact name, then partial matches in `_sass/components/`, `_sass/layout/`, `_sass/` and `_js/`, then grep the root class (`.nds-$0`). The component's entry in `_js/nds-loader.js` names its namespace and init.
 3. Pick the page type:
 
@@ -162,7 +162,7 @@ The canon is the one copy of the markup. Both readers use it: the build renders 
   - **Part:** a small block that a row inserts, such as an icon or an actions row.
   - **JS:** `data-lang="js"`. `data-js="{id}"` on the base names its JS twin: the same component as one `create()` call, shown in a JS tab. `data-tab-label` on either canon renames its tab, and a twin with no `data-lang` shows as HTML (the head's Head and JS Library tabs). A JS-only structure (a toast) previews as a Run button that runs the code shown.
   - **Code-only:** `data-preview="none"`, for `<head>` and JS examples.
-  - **CSS twin:** a builder whose `data-js` twin is `data-lang="css"` shows that CSS alone as its code, and each Structure (or `Pack`) canon shows its own twin. The preview is a picture of the code (the token packs, `components/tokens.md`).
+  - **CSS twin:** a builder whose `data-js` twin is `data-lang="css"` shows that CSS alone as its code, and each Structure (or `Pack`) canon shows its own twin. The preview is a picture of the code (the token packs, `foundations/tokens.md`).
   - **Generated:** `data-generated`, for a canon whose body is build output: one Liquid output tag, such as `{{ site.data.tokens.packs.spacing.html }}`. `check-docs.py` allows the Liquid there.
   - **Run:** `data-preview="run"`, for markup that leaves the card (a FAB docks at the screen edge). The card holds Run (`data-run-label` renames it), which adds a copy of the code shown, and Clear. A choice rebuilds the last copy added.
   - **Panel:** `data-preview="panel"`, for markup that needs a page around it (a TOC over a long article, a shell). The card holds Preview (`data-run-label` renames it), which opens a tall, resizable bottom panel with the code shown mounted in it. The panel body zeroes `--nds-nav-height`, so sticky parts pin to its top. Add `data-preview-flush` when the markup brings its own padding (a section): the body gets `nds-flush`. Closing it removes the copy.

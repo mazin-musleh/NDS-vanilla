@@ -3,7 +3,7 @@ layout: page
 title: Cards
 hero_title: Cards - National Design System
 hero_description: A card groups one unit of content, such as a service, a product, an article, or a metric, into a single box
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

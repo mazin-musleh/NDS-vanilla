@@ -3,7 +3,7 @@ layout: page
 title: Progress
 hero_title: Progress - National Design System
 hero_description: A progress indicator shows how much of a task is done, as a circle or a bar
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

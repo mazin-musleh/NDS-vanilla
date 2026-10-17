@@ -3,7 +3,7 @@ layout: page
 title: Chart
 hero_title: Chart - National Design System
 hero_description: A bar, line, pie or donut chart that the script draws as SVG from your data
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

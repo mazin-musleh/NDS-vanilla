@@ -11,6 +11,9 @@ bundle_sizes:
   core_js: 43 # nds-main.min.js (loads on every page)
   total_js: 154 # every assets/js/*.min.js except nds-audit (full library, demand-loaded)
 ---
+{%- assign templates = site.data.catalog | where_exp: "e", "e.url contains '/templates/'" %}
+{%- assign examples = site.data.catalog | where_exp: "e", "e.url contains '/examples/'" %}
+{%- assign events = site.data.catalog | where_exp: "e", "e.url contains '/events/'" %}
 
 <section id="about" class="nds-content-section">
     <div class="nds-section-wrapper">
@@ -100,7 +103,7 @@ bundle_sizes:
                             <p class="nds-alert-description">The default visual identity is exclusive to Saudi Arabia government entities. It covers design tokens, colors, logos, and the digital-stamp component. Non-government projects must replace these with their own identity before they go live.</p>
                         </div>
                         <div class="nds-alert-actions">
-                            <a href="{{ '/components/themes.html' | relative_url }}" class="nds-link">Theming guide</a>
+                            <a href="{{ '/foundations/themes.html' | relative_url }}" class="nds-link">Theming guide</a>
                         </div>
                     </div>
                 </div>
@@ -126,7 +129,7 @@ bundle_sizes:
         <div class="nds-block">
             <div class="nds-swiper" data-swiper-loop style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:0px">
                 <div class="nds-swiper-wrapper">
-                    {% for tpl in site.data.content.templates %}
+                    {% for tpl in templates %}
                     <div class="nds-swiper-slide">
                         <div class="nds-card nds-stroke nds-shadow">
                             <div class="nds-card-header">
@@ -178,14 +181,14 @@ bundle_sizes:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Real-World Examples</h2>
-            <p class="nds-section-description">{{ site.data.content.examples | size }} full pages that show NDS components working together in government services.</p>
+            <p class="nds-section-description">{{ examples | size }} full pages that show NDS components working together in government services.</p>
         </div>
     </div>
     <div class="nds-section-body  nds-max-width">
         <div class="nds-block">
             <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
                 <div class="nds-swiper-wrapper">
-                    {% for ex in site.data.content.examples %}
+                    {% for ex in examples %}
                     <div class="nds-swiper-slide">
                         <div class="nds-card nds-stroke nds-shadow">
                             <div class="nds-card-header">
@@ -254,7 +257,7 @@ bundle_sizes:
         <div class="nds-block">
             <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:20px">
                 <div class="nds-swiper-wrapper">
-                    {% for ev in site.data.content.events %}
+                    {% for ev in events %}
                     <div class="nds-swiper-slide">
                         <div class="nds-card nds-stroke nds-shadow">
                             <div class="nds-card-header">
@@ -330,116 +333,7 @@ bundle_sizes:
 
 <section id="components" class="nds-content-section">
     <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Components ({{ site.data.content.components | size }})</h2>
-            <p class="nds-section-description">Each has its markup, styles, and JavaScript. All are built from scratch.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-toolbar">
-                <div class="nds-form-container nds-search-box" data-filter-target="components_list">
-                    <div class="nds-search-content">
-                        <div class="nds-form-control">
-                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                            <input id="component-search" type="text" class="nds-search-input" name="search" autocomplete="off"
-                                placeholder="Search components...">
-                            <div class="nds-form-action">
-                                <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="forms.clear_search"><i
-                                        class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
-                            </div>
-                        </div>
-                        <button class="nds-btn nds-primary nds-search-btn" type="button">
-                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                            <span class="nds-label" data-hidden="sm sr" data-i18n="filter.search">Search</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="nds-dropmenu nds-filter" data-filter-target="components_list">
-                    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                        <i class="hgi hgi-stroke hgi-filter"></i>
-                        <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
-                    </button>
-                    <div class="nds-dropmenu-menu" hidden>
-                        <div class="nds-dropmenu-scroll">
-                            <div data-filter="category" data-filter-legend="Category" data-filter-type="checkbox"
-                                data-no-auto-close></div>
-                            <hr class="nds-divider">
-                            <div data-filter="tech" data-filter-legend="Technology" data-filter-type="checkbox"
-                                data-no-auto-close></div>
-                            <hr class="nds-divider">
-                            <div data-filter="since" data-filter-legend="Added in" data-filter-type="checkbox"
-                                data-filter-accordion data-no-auto-close></div>
-                        </div>
-                        <div class="nds-dropmenu-footer">
-                            <hr class="nds-divider">
-                            <div class="nds-dropmenu-action">
-                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                    data-filter-action="clear" data-no-auto-close>
-                                    <span class="nds-label" data-i18n="filter.reset">Reset</span>
-                                </button>
-                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                    data-filter-action="apply">
-                                    <span class="nds-label" data-i18n="filter.filter">Filter</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="nds-filter-applied" data-filter-target="components_list" hidden>
-                    <span class="nds-label" data-i18n="filter.applied_filters">Applied Filters:</span>
-                    <div class="nds-chips"></div>
-                </div>
-            </div>
-            <div id="components_list" class="nds-paged-content nds-grid"
-                style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
-
-                {% for comp in site.data.content.components %}
-                <div class="nds-page-item nds-card nds-stroke">
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">{{ comp.title }}</span>
-                            <p class="nds-card-description">{{ comp.description }}</p>
-                        </div>
-                        <div class="nds-card-tags">
-                            <span class="nds-tag nds-blue nds-sm">
-                                <span class="nds-label" data-filter="category">{{ comp.category }}</span>
-                            </span>
-                            {% for tag in comp.tags %}
-                            <span class="nds-tag {{ tag.style | default: 'nds-gray' }} nds-sm">
-                                <span class="nds-label" data-filter="tech">{{ tag.name | default: tag }}</span>
-                            </span>
-                            {% endfor %}
-                            {%- assign comp_path = comp.url | split: "#" | first -%}
-                            {%- assign comp_page = site.pages | where: "url", comp_path | first -%}
-                            {%- if comp_page.since %}
-                            {%- comment %} Same dev-target test as _includes/since.html: while the docs run ahead of
-                               the release, a page stamped with the in-development target reads "Next release"
-                               rather than the 1.4.x placeholder. The label is also the filter facet value. {%- endcomment %}
-                            {%- assign _dev_target = site.version | remove: "-dev" %}
-                            {%- if comp_page.since == _dev_target and site.version != site.latest_release %}
-                            <span class="nds-tag nds-blue nds-sm">
-                                <span class="nds-label" data-filter="since">Next release</span>
-                            </span>
-                            {%- else %}
-                            <span class="nds-tag nds-green nds-sm">
-                                <span class="nds-label" data-filter="since">v{{ comp_page.since }}</span>
-                            </span>
-                            {%- endif %}
-                            {%- endif %}
-                        </div>
-                    </div>
-                    {% if comp.url %}
-                    <div class="nds-card-actions">
-                        <a href="{{ comp.url | relative_url }}" class="nds-btn nds-primary">
-                            <span class="nds-label">View Docs</span>
-                        </a>
-                    </div>
-                    {% endif %}
-                </div>
-                {% endfor %}
-
-            </div>
-            <nav class="nds-pagination" data-auto-pagination="components_list" aria-label="Pagination" data-i18n-aria-label="pagination.pagination"></nav>
-        </div>
+{% include library-list.html title="Library" description="Everything NDS ships, from design tokens to the JavaScript API. Filter by type or group, or search by name." %}
     </div>
 </section>
 

@@ -3,7 +3,7 @@ layout: page
 title: Date
 hero_title: Date - National Design System
 hero_description: Reads and writes dates as text in the two calendars of Saudi Arabia, Gregorian and Hijri (Umm al-Qura)
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Core", "/components/?shelf=Core"]]
 lang: en
 direction: ltr
 since: "1.12.x"

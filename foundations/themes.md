@@ -3,7 +3,7 @@ layout: page
 title: Themes
 hero_title: Themes - National Design System
 hero_description: Dark mode, a theme menu, and your own brand colors, from a few seed colors or a stylesheet that overrides the color tokens.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Foundations", "/components/?shelf=Foundations"]]
 lang: en
 direction: ltr
 since: "1.1.0"
@@ -22,7 +22,7 @@ Themes set the page's colors: light or dark mode, and a palette. The `data-theme
 
 Pick another component when:
 
-- you need the token names to use in your own CSS: [Tokens](../components/tokens)
+- you need the token names to use in your own CSS: [Tokens](../foundations/tokens)
 - one section needs a deep primary or dark background: [Section](../layout/section)
 
 </div>

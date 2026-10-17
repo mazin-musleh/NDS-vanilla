@@ -313,7 +313,7 @@
             ctx.report(el, '.nds-paged-content has no pagination nav — it stays skeleton-held and its data-paged-* slots never stamp.', 'Unpaged lists use a plain container + data-filter-count.'));
     } });
 
-    rule({ id: 'icon-unregistered', severity: 'error', docs: 'components/icons.html', check(ctx) {
+    rule({ id: 'icon-unregistered', severity: 'error', docs: 'foundations/icons.html', check(ctx) {
         ctx.find('i.nds-icon[class*="nds-hgi-"]').forEach(el => {
             // The glyph paints on ::before (mask: var(--nds-icon) …), so read the
             // pseudo — the element itself never carries a mask.
@@ -327,7 +327,7 @@
     } });
 
     // A font icon whose name the HGI sheet lacks gets no ::before glyph, so it paints nothing.
-    rule({ id: 'font-icon-unknown', severity: 'error', docs: 'components/icons.html', check(ctx) {
+    rule({ id: 'font-icon-unknown', severity: 'error', docs: 'foundations/icons.html', check(ctx) {
         if (![...document.querySelectorAll('link[href*="hgi-rounded-stroke-min.css"]')].some(l => l.sheet)) return;
         const bad = ctx.find('i.hgi[class*="hgi-"]').filter(el => {
             const c = getComputedStyle(el, '::before').content;
@@ -527,7 +527,7 @@
     const isToken = (nds, p) => nds.light.has(p) || nds.dark.has(p);
 
     // A site sheet before the NDS one loses every tie with it, so its overrides of NDS do nothing.
-    rule({ id: 'css-order', group: 'page', docs: 'components/tokens.html', check(ctx) {
+    rule({ id: 'css-order', group: 'page', docs: 'foundations/tokens.html', check(ctx) {
         const main = document.querySelector('link[rel="stylesheet"][href*="nds-main"]');
         const nds = main && ndsSheets();
         if (!nds) return;
@@ -542,7 +542,7 @@
     } });
 
     // An override is the last resort, and it names a project hook so it never restyles NDS everywhere.
-    rule({ id: 'nds-restyle', group: 'page', docs: 'components/tokens.html', check(ctx) {
+    rule({ id: 'nds-restyle', group: 'page', docs: 'foundations/tokens.html', check(ctx) {
         // A project class, an id, or a data-* that is not an NDS state names the site's own scope.
         selectorsBySheet(s => /\.(nds|hgi)-/.test(s) && !/\.(?!nds-|hgi-)-?[_a-zA-Z]|#|\[data-(?!state|status|theme|nds-)/.test(s)).forEach((sels, where) => ctx.report(null,
             `${where} restyles NDS classes with no project class in the selector (${[...new Set(sels)].slice(0, 3).join(', ')}${sels.length > 3 ? ', …' : ''}): ${sels.length} selector${sels.length > 1 ? 's' : ''}.`,
@@ -558,7 +558,7 @@
 
     // A token override follows the tokens doc: every state of a family, a dark value when NDS has one,
     // and the dark-area selector on both rules. Judged only when NDS's own sheets are readable.
-    rule({ id: 'token-dark', group: 'page', docs: 'components/tokens.html', check(ctx) {
+    rule({ id: 'token-dark', group: 'page', docs: 'foundations/tokens.html', check(ctx) {
         const nds = ndsSheets();
         if (!nds) return;
         const set = new Map();   // name → { light, dark, lightArea, darkArea }
@@ -731,7 +731,7 @@
     } });
 
     // The icon styles key on <i> (_icons.scss), so the same classes on any other tag paint nothing.
-    rule({ id: 'icon-tag', severity: 'error', docs: 'components/icons.html', check(ctx) {
+    rule({ id: 'icon-tag', severity: 'error', docs: 'foundations/icons.html', check(ctx) {
         const els = ctx.find('.nds-icon[class*="nds-hgi-"]:not(i)');
         if (els.length) ctx.report(els[0], `a UI icon on a <${els[0].tagName.toLowerCase()}>: the icon styles apply to <i> only, so it shows nothing${els.length > 1 ? ` (${els.length} elements; the first is shown)` : ''}.`,
             'Write it as <i class="nds-icon nds-hgi-…" aria-hidden="true">.', undefined, els.length);
@@ -796,7 +796,7 @@
         'a section inside a section', 'Divide the section body with .nds-block instead.');
     practice('card-actions-place', 'components/cards.html', '.nds-card-content .nds-card-actions',
         '.nds-card-actions inside .nds-card-content: in a modal, only the content scrolls', 'Put .nds-card-actions after .nds-card-content.');
-    practice('dark-nested', 'components/themes.html', '[data-theme~="dark"]:not(html) [data-theme~="dark"]',
+    practice('dark-nested', 'foundations/themes.html', '[data-theme~="dark"]:not(html) [data-theme~="dark"]',
         'data-theme="dark" inside a dark area, which is already dark', 'Write data-theme="dark" once, on the surface.');
     practice('prose-nested', 'layout/prose.html', '.nds-prose .nds-prose',
         '.nds-prose inside .nds-prose', 'Put nds-prose once, on the element the text renders into.');
@@ -832,13 +832,13 @@
         }
     } });
 
-    rule({ id: 'dark-selector', group: 'practice', severity: 'info', docs: 'components/themes.html', check(ctx) {
+    rule({ id: 'dark-selector', group: 'practice', severity: 'info', docs: 'foundations/themes.html', check(ctx) {
         const sels = siteRules().map(r => r.sel).filter(s => s.includes('[data-theme="dark"]'));
         if (sels.length) ctx.report(null, `[data-theme="dark"] in the site's CSS (${sels[0]}${sels.length > 1 ? ` and ${sels.length - 1} more` : ''}): it misses a data-theme with more than one value.`,
             'Write [data-theme~="dark"].', undefined, sels.length);
     } });
 
-    rule({ id: 'palette-scope', group: 'practice', severity: 'info', docs: 'components/tokens.html', check(ctx) {
+    rule({ id: 'palette-scope', group: 'practice', severity: 'info', docs: 'foundations/tokens.html', check(ctx) {
         const sels = siteRules().filter(r => [...r.style].some(p => p.startsWith('--colors-')) && selItems(r.sel).some(s => !/^(:root|html)\b/.test(s))).map(r => r.sel);
         if (sels.length) ctx.report(null, `a palette token (--colors-*) set below :root (${sels[0]}${sels.length > 1 ? ` and ${sels.length - 1} more` : ''}): the tokens built from the palette read it at :root, so they keep the NDS value.`,
             'Set palette tokens at :root. On a wrapper, set the token the component reads.', undefined, sels.length);

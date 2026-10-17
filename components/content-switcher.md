@@ -3,7 +3,7 @@ layout: page
 title: Content Switcher
 hero_title: Content Switcher - National Design System
 hero_description: A row of joined buttons that switches between views of the same content, in one place on the page
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.6.0"

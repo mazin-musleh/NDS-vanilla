@@ -3,7 +3,7 @@ layout: page
 title: Pagination
 hero_title: Pagination - National Design System
 hero_description: Pagination splits a long list into pages, with numbered buttons to move between them.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

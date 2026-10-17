@@ -3,7 +3,7 @@ layout: page
 title: Avatar
 hero_title: Avatar - National Design System
 hero_description: A round picture of a person or an account, with a photo, initials or an icon.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -248,7 +248,7 @@ The Link, Menu trigger and Button structures take any of the three contents: a p
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every avatar inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens). The border is the ring of a 3XL avatar and of each avatar in a stacked group.
+Set a token at `:root`, or on a wrapper to reach every avatar inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens). The border is the ring of a 3XL avatar and of each avatar in a stacked group.
 
 Source: the `avatar` group in `_sass/tokens/_components.scss`.
 

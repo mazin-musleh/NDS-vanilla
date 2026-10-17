@@ -3,7 +3,7 @@ layout: page
 title: Button
 hero_title: Button - National Design System
 hero_description: A button runs an action, such as save, submit or open a menu
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -290,7 +290,7 @@ Set these on the button itself. The size and variant classes set many of them on
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every button inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every button inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `button` group in `_sass/tokens/_components.scss`.
 

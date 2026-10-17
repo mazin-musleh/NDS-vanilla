@@ -3,7 +3,7 @@ layout: page
 title: Tooltip
 hero_title: Tooltip - National Design System
 hero_description: A tooltip is a small balloon of help text that opens beside a term, a field or a button
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -257,7 +257,7 @@ Set these on `.nds-tooltip-balloon`, or on `:root` for every tooltip. The balloo
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every tooltip inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every tooltip inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `tooltip` group in `_sass/tokens/_components.scss`.
 

@@ -3,7 +3,7 @@ layout: page
 title: Export
 hero_title: Export - National Design System
 hero_description: Export turns a table, a card list or any marked-up list into a CSV file, an Excel file or a printed PDF
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.1.0"

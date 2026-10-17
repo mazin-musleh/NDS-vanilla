@@ -7,12 +7,12 @@ The NDS IQ rules name no files. This index maps each need to this release's file
 - **Version:** the opening comment of `_site/assets/js/nds-main.min.js` and `_site/assets/css/nds-main.min.css` reads `Version:`.
 - **Runtime:** copy `_site/assets/` into `NDS_ASSETS` whole, every subfolder included. Never copy `_site/docs-assets/`: it serves the docs site. The one exception is an event skin the dev wants, with its script.
 - **Images:** a template's photos are in `_site/docs-assets/`, which serves the docs site, so they are not in `NDS_ASSETS`. A hero the project has no image for keeps the hero canon's `img/riyadhcenter_IQ.webp` and its `_md` and `_sm` sizes, which ship in `NDS_ASSETS`. Any other photo slot the project has no image for takes `img/placeholder.svg` from `NDS_ASSETS`, with a plan checkbox for the dev's photo. A signed-in person's avatar with no photo takes initials, never the placeholder: the avatar icon marks the guest. A project with no logo keeps the Main Navigation and Footer canons' `img/palm_swords.svg`, with the project's name in `.nds-brand-name` and a plan checkbox for the dev's logo. Never use the photo placeholder as a logo, and never draw one.
-- **Sources:** from this release tag's source zip, copy these folders into `_source/`: `_js`, `_sass`, `components`, `utilities`, `layout`, `ui-shell`, `core`, `templates`, `examples`, `_data/content`.
+- **Sources:** from this release tag's source zip, copy these into `_source/`: the folders `_js`, `_sass`, `foundations`, `components`, `utilities`, `layout`, `ui-shell`, `core`, `guides`, `templates`, `examples`, `_data/content`, and the file `_data/catalog.yml`.
 - **Release notes:** `CHANGELOG.md`.
 
 ## Read a doc page
 
-Component, layout, shell, utility and core docs live in `_source/<folder>/<name>.md`. Each page has the same sections: Overview, Markup, Variants, Behavior, Built-in Features, Best Practices, API, Related.
+Foundation, component, layout, shell, utility and core docs live in `_source/<folder>/<name>.md`. Each page has the same sections: Overview, Markup, Variants, Behavior, Built-in Features, Best Practices, API, Related.
 
 - **Canon:** each `<script type="text/html" data-canon>` block. Copy the block's body. The `<script>` tag around it is doc packaging and never ships. A block with `data-lang="js"` or `data-lang="css"` holds code for a real script or stylesheet.
 - **Escaped canon:** a block with `data-escaped` holds Liquid output. Copy its code from the capture block just above it.
@@ -25,17 +25,17 @@ Component, layout, shell, utility and core docs live in `_source/<folder>/<name>
 
 | Need | Read |
 |---|---|
-| Which component, example, or template fits | `use_when` in `_source/_data/content/components.yml`, `_source/_data/content/examples.yml`, `_source/_data/content/templates.yml`. Each entry's `url` names its folder. |
+| Which component, example, or template fits | `use_when` in `_source/_data/catalog.yml`: every library page, template, example and event pack. Each entry's `url` names its folder, and the folder is its shelf (the file's header gives the rule). |
 | The head, CSP | `_source/ui-shell/head.md`: Usage, Parts, and the API's Content Security Policy and Inline Knobs sections |
 | Page shapes, layout classes, framework apps | `_source/layout/page-layout.md`: the Overview table, Best Practices, and the API's Front Matter section |
 | Sections and spacing | `_source/layout/section.md`, `_source/layout/grid.md`, `_source/layout/flex.md`, `_source/layout/block.md` |
 | Chrome parts | the pages in `_source/ui-shell/` |
 | Forms and validation | `_source/components/forms.md` |
-| Tokens, knobs, dark mode | `_source/components/tokens.md` (Override Scope), `_source/_sass/tokens/_semantic.scss`, `_source/_sass/tokens/_components.scss`, the palette in `_source/_sass/themes/_dga.scss`. A component's knobs: its doc's API, CSS Custom Properties. |
-| Icons | `_source/components/icons.md`. The inline names: `_source/_data/content/icons.yml`. Font icon names have no list: the audit names one the font lacks |
+| Tokens, knobs, dark mode | `_source/foundations/tokens.md` (Override Scope), `_source/_sass/tokens/_semantic.scss`, `_source/_sass/tokens/_components.scss`, the palette in `_source/_sass/themes/_dga.scss`. A component's knobs: its doc's API, CSS Custom Properties. |
+| Icons | `_source/foundations/icons.md`. The inline names: `_source/_data/content/icons.yml`. Font icon names have no list: the audit names one the font lacks |
 | Page code that waits for components at load, content that changes after load, framework views | `_source/core/init.md` |
 | Requests, dates, text and languages | `_source/core/request.md`, `_source/core/date.md`, `_source/core/i18n.md`, and the banner of `_source/_js/nds-core.js` |
-| Renamed and removed names | `_source/core/migration.md` |
+| Renamed and removed names | `_source/guides/migration.md` |
 
 ## Page shapes
 

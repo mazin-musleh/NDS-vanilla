@@ -3,7 +3,7 @@ layout: page
 title: Drawer
 hero_title: Drawer - National Design System
 hero_description: A vertical list of links and buttons, with submenus that open in place
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

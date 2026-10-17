@@ -7,12 +7,13 @@ lang: en
 direction: ltr
 sidemenu_mode: false
 ---
+{%- assign examples = site.data.catalog | where_exp: "e", "e.url contains '/examples/'" %}
 
 <section id="examples" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">All Examples</h2>
-            <p class="nds-section-description">{{ site.data.content.examples | size }} full-page demos showing how NDS components work together in real government service contexts.</p>
+            <p class="nds-section-description">{{ examples | size }} full-page demos showing how NDS components work together in real government service contexts.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-toolbar">
@@ -68,7 +69,7 @@ sidemenu_mode: false
             <div id="examples_list" class="nds-paged-content nds-grid"
                 style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
-                {% for ex in site.data.content.examples %}
+                {% for ex in examples %}
                 <div class="nds-page-item nds-card nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">

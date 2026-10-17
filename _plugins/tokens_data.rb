@@ -3,7 +3,7 @@
 require 'cgi'
 
 # Parses the design-token SCSS partials at build time and exposes them as
-# `site.data.tokens.packs`, so components/tokens.md renders the token catalog
+# `site.data.tokens.packs`, so foundations/tokens.md renders the token catalog
 # without hand-copying values (which would drift from the SCSS). Each pack is
 # one builder choice on that page: `html` is its preview, `css` its code, the
 # pack's rules as the source writes them.
@@ -31,7 +31,7 @@ module NDS
     COLOR = /\A(#|var\(--(colors|background|text|border|icon|controls|focus|divider)-)/
 
     # Pack id => name pattern, first match wins; component tokens go by file.
-    # The ids are fixed: components/tokens.md names each pack's canons by them.
+    # The ids are fixed: foundations/tokens.md names each pack's canons by them.
     PACKS = {
       'spacing'    => /\A--spacing-/,
       'radius'     => /\A--radius-/,

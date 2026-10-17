@@ -3,7 +3,7 @@ layout: page
 title: Toolbar
 hero_title: Toolbar - National Design System
 hero_description: A controls bar above a table, list or grid, with result counts and filters at the start and actions at the end
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.4.0"
@@ -75,7 +75,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-The dashed boxes are [Content Placeholder](../utilities/content-placeholder) items. Put your own items in their place. The box below the bar stands for the content.
+The dashed boxes are [Content Placeholder](../components/content-placeholder) items. Put your own items in their place. The box below the bar stands for the content.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|

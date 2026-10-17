@@ -3,7 +3,7 @@ layout: page
 title: Header
 hero_title: Header - National Design System
 hero_description: The top of every page, which holds the top bar, the digital stamp panel and the main navigation.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.0"

@@ -3,7 +3,7 @@ layout: page
 title: TOC
 hero_title: TOC - National Design System
 hero_description: A table of contents for a long page, built from its headings, that marks the section the reader is on
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

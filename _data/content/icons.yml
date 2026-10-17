@@ -1,4 +1,4 @@
-# UI icons registered in _sass/_icons.scss, rendered as the catalog on components/icons.md.
+# UI icons registered in _sass/_icons.scss, rendered as the catalog on foundations/icons.md.
 # Ordered by family, not alphabetically: the catalog reads better when related glyphs sit together.
 # scripts/add-icon.mjs appends a new icon to the end of its list, so move it into the right group.
 

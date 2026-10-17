@@ -3,7 +3,7 @@ layout: page
 title: Section
 hero_title: Section - National Design System
 hero_description: A section is one titled block of page content, with an optional action, image and background color
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -305,7 +305,7 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
 
 ### Background Colors
 
-`nds-primary`, `nds-gradient-primary` and `nds-neutral` paint a dark background, and the section text takes the on-color text colors. Write `data-theme="dark"` on the same section, so the buttons, tags and other components inside take their dark-mode colors: see [Dark Areas](../components/themes). `nds-brand` paints a light tint and needs no dark area. The gradient runs at `-45deg`, and at `45deg` on an LTR page. A section with a background color is never striped: see [Page Layout](../layout/page-layout).
+`nds-primary`, `nds-gradient-primary` and `nds-neutral` paint a dark background, and the section text takes the on-color text colors. Write `data-theme="dark"` on the same section, so the buttons, tags and other components inside take their dark-mode colors: see [Dark Areas](../foundations/themes). `nds-brand` paints a light tint and needs no dark area. The gradient runs at `-45deg`, and at `45deg` on an LTR page. A section with a background color is never striped: see [Page Layout](../layout/page-layout).
 
 </div>
   </div>

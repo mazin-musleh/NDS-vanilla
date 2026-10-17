@@ -3,7 +3,7 @@ layout: page
 title: Breadcrumb
 hero_title: Breadcrumb - National Design System
 hero_description: A trail of links that shows where the current page sits in the site.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

@@ -3,7 +3,7 @@ layout: page
 title: Tags
 hero_title: Tags - National Design System
 hero_description: A tag is a small read-only label for a category, a status or metadata
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -167,7 +167,7 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 - Keep labels to one to three words. A label longer than 160px ends with an ellipsis.
 - Put related tags in one `nds-tags` group, so they share the gap and wrap together.
 - Keep the label of an icon-only tag, and give its icon `aria-hidden="true"`. Screen readers read the label.
-- On a deep primary or dark surface, give the surface `data-theme="dark"`: every tag inside takes its dark-mode colors, status tags included. See [Dark Areas](../components/themes#dark-areas). For the DGA white look on a standard tag, add `nds-oncolor` instead.
+- On a deep primary or dark surface, give the surface `data-theme="dark"`: every tag inside takes its dark-mode colors, status tags included. See [Dark Areas](../foundations/themes#dark-areas). For the DGA white look on a standard tag, add `nds-oncolor` instead.
 
 </div>
   </div>
@@ -218,7 +218,7 @@ Set these on the tag, or on a parent to reach every tag inside it. They win over
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every tag inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+Set a token at `:root`, or on a wrapper to reach every tag inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens).
 
 Source: the `tag` group in `_sass/tokens/_components.scss`.
 

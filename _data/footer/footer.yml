@@ -3,7 +3,7 @@ columns:
     links:
       - label: "Home"
         url: "/"
-      - label: "Components"
+      - label: "Library"
         url: "/components/"
       - label: "Templates"
         url: "/templates/"

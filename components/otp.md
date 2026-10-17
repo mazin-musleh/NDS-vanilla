@@ -3,7 +3,7 @@ layout: page
 title: OTP Input
 hero_title: OTP Input - National Design System
 hero_description: A row of one-digit boxes for a one-time code, where focus moves to the next box as the user types
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

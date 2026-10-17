@@ -239,7 +239,7 @@ class JSProcessor
   # The audit's anatomy: every nds- name the docs, includes, data and scripts use (known), and each
   # part that sits inside its component root in every canon (parts: part → root). A part inside
   # a -menu is left out: the menu may portal to <body>.
-  ANATOMY_DOCS = '{components,ui-shell,layout,utilities,core}/*.md'
+  ANATOMY_DOCS = '{foundations,components,ui-shell,layout,utilities,core}/*.md'
   ANATOMY_NAME = /(?<![\w-])nds-[a-z0-9]+(?:-[a-z0-9]+)*/
   VOID_TAGS = %w[area base br col embed hr img input link meta source track wbr].freeze
   def anatomy_sources

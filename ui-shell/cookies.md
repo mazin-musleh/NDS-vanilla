@@ -3,7 +3,7 @@ layout: page
 title: Cookies
 hero_title: Cookies - National Design System
 hero_description: A consent panel that asks the visitor which cookies to allow, stores the choice by category and sends it to your analytics setup
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.0"

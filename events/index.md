@@ -7,12 +7,13 @@ lang: en
 direction: ltr
 sidemenu_mode: false
 ---
+{%- assign events = site.data.catalog | where_exp: "e", "e.url contains '/events/'" %}
 
 <section id="events" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">All Events</h2>
-            <p class="nds-section-description">{{ site.data.content.events | size }} event theme packs, each applied with one script tag and a self-contained asset folder.</p>
+            <p class="nds-section-description">{{ events | size }} event theme packs, each applied with one script tag and a self-contained asset folder.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-toolbar">
@@ -68,7 +69,7 @@ sidemenu_mode: false
             <div id="events_list" class="nds-paged-content nds-grid"
                 style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
-                {% for ev in site.data.content.events %}
+                {% for ev in events %}
                 <div class="nds-page-item nds-card nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">

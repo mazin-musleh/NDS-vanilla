@@ -45,9 +45,10 @@ if (rootMode === 'mini') {
   fs.cpSync(path.join(FIX, 'mini-root'), nds, { recursive: true })
 } else {
   fs.cpSync(path.join(REPO, '_site'), path.join(nds, '_site'), { recursive: true })
-  for (const f of ['_js', '_sass', 'components', 'utilities', 'layout', 'ui-shell', 'core', 'templates', 'examples'])
+  for (const f of ['_js', '_sass', 'foundations', 'components', 'utilities', 'layout', 'ui-shell', 'core', 'guides', 'templates', 'examples'])
     fs.cpSync(path.join(REPO, f), path.join(nds, '_source', f), { recursive: true })
   fs.cpSync(path.join(REPO, '_data', 'content'), path.join(nds, '_source', '_data', 'content'), { recursive: true })
+  fs.cpSync(path.join(REPO, '_data', 'catalog.yml'), path.join(nds, '_source', '_data', 'catalog.yml'))
   fs.cpSync(path.join(REPO, 'CHANGELOG.md'), path.join(nds, 'CHANGELOG.md'))
   // v4 rules key on the index: without it a runner takes the IQv3.2 redirect.
   fs.cpSync(path.join(REPO, 'NDS-INDEX.md'), path.join(nds, 'NDS-INDEX.md'))

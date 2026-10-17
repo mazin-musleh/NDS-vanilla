@@ -3,7 +3,7 @@ layout: page
 title: Audit
 hero_title: Audit - National Design System
 hero_description: A check you run on a built page that lists NDS markup and CSS that fail with no error, and every name an NDS release changed
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Core", "/components/?shelf=Core"]]
 lang: en
 direction: ltr
 since: "1.12.x"
@@ -24,7 +24,7 @@ The audit reads a page after NDS starts and lists the problems that show no erro
 
 Pick another component when:
 
-- you need the list of changed names by release: [Migration](../core/migration)
+- you need the list of changed names by release: [Migration](../guides/migration)
 
 </div>
   </div>
@@ -244,7 +244,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `css-order` | page | warn | A site style sheet that styles NDS classes or tokens but loads before the NDS style sheet, so NDS wins every tie and the override does nothing |
 | `nds-restyle` | page | warn | A rule in the site's own CSS that restyles NDS classes with no project class, id or `data-*` attribute in its selector. One finding per sheet. It skips a rule that sets only custom properties |
 | `global-element-css` | page | warn | A rule in the site's own CSS on bare elements, such as `body`, `h1` or `a`: it reaches every NDS element on the page. One finding per sheet. It skips a rule that sets only custom properties |
-| `token-dark` | page | warn | A token override in the site's own CSS that has no dark value where NDS has one, sets only some states of a family, or misses the dark-area selector on a page with dark areas. See [Tokens](../components/tokens) |
+| `token-dark` | page | warn | A token override in the site's own CSS that has no dark value where NDS has one, sets only some states of a family, or misses the dark-area selector on a page with dark areas. See [Tokens](../foundations/tokens) |
 | `migration-markup` | migration | error, warn, info | A renamed or removed name (error) or a deprecated one (warn) in the markup, or an old window setting |
 | `migration-css` | migration | error, warn, info | The same names in the site's own CSS. Setting a custom property that NDS never read is info |
 | `unknown-class` | structure | warn | An `nds-` class that no NDS style sheet, doc or script has, so it gets no NDS style or behavior. An old name is left to `migration-markup` |
@@ -327,7 +327,7 @@ The full API is in the banner of `_js/nds-audit.js`.
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Migration](../core/migration): every changed name by release, the list the migration checks read.
+- [Migration](../guides/migration): every changed name by release, the list the migration checks read.
 - [Init](../core/init): `enableLogging` and the other loader settings.
 - [Internationalization](../core/i18n): the language file that `i18n-pack` checks.
 

@@ -3,7 +3,7 @@ layout: page
 title: Floating Action Button
 hero_title: Floating Action Button - National Design System
 hero_description: A floating action button (FAB) stays at an edge of the screen while the page scrolls, for a main action that the user needs on every part of the page.
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
 last_edit: "16/10/2026 - 02:34 PM"
@@ -353,7 +353,7 @@ The full API is in the banner of `_js/nds-fab.js`.
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Accessibility](../components/accessibility): the button that opens the accessibility panel on every page is a FAB.
+- [Accessibility](../ui-shell/accessibility): the button that opens the accessibility panel on every page is a FAB.
 - [Panels](../components/panels): the panel a FAB opens, and the edges it slides from.
 
 </div>

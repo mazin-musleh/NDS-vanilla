@@ -3,7 +3,7 @@ layout: page
 title: Share
 hero_title: Share - National Design System
 hero_description: A set of buttons that share a page link to X, LinkedIn, WhatsApp and other sites, or copy it to the clipboard
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"

@@ -3,7 +3,7 @@ layout: page
 title: File Upload
 hero_title: File Upload - National Design System
 hero_description: A file upload lets the user pick or drop files, checks each one, and sends them to your server or with a form
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
@@ -332,7 +332,7 @@ The token `disabled` in `data-state` on `.nds-file-upload` stops the user from a
 ### Tokens
 {: .nds-block-title}
 
-Set a token at `:root`, or on a wrapper to reach every upload inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens). The active drop zone background shows while a file is dragged over it.
+Set a token at `:root`, or on a wrapper to reach every upload inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens). The active drop zone background shows while a file is dragged over it.
 
 Source: the `upload` group in `_sass/tokens/_components.scss`.
 

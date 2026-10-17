@@ -3,7 +3,7 @@ layout: page
 title: Grid
 hero_title: Grid System - National Design System
 hero_description: A grid lays out its children in columns that adapt to the screen width
-breadcrumb: [["Components", "/components"]]
+breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en
 direction: ltr
 since: "1.0.0"

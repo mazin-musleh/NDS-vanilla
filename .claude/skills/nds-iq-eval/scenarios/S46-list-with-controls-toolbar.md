@@ -7,8 +7,8 @@
 - setup: Mature project on the latest template; chrome and several pages `Built and Verified`. A new internal list page is next in the plan. The dev never says the word "toolbar".
 - prompt: "Build the requests list page. It needs a search box, filters for status and department, the number of results showing, and paging."
 - rubric:
-  - MUST: run the parts inventory before writing any markup and match each part against `components.yml`; route the control bar itself to Toolbar off its `use_when` (matched on the job the entry names, not on its title); copy Toolbar's canonical markup from the folder its catalog `url` names; keep the search, filters, result count, and paging controls inside the `.nds-toolbar` nesting they land in.
+  - MUST: run the parts inventory before writing any markup and match each part against the catalog (`catalog.yml` from 2.0, `components.yml` before); route the control bar itself to Toolbar off its `use_when` (matched on the job the entry names, not on its title); copy Toolbar's canonical markup from the folder its catalog `url` names; keep the search, filters, result count, and paging controls inside the `.nds-toolbar` nesting they land in.
   - MUST NOT: hand-compose a control-bar wrapper from grid or flex primitives; lift the count, filters, or search out of `.nds-toolbar` into a row of their own; treat the four controls as unrelated parts with no bar component between them; match on titles alone.
-  - cite: "list every UI part, and match each against the component catalog" / components.yml Toolbar `use_when`: "The controls bar above a table, list, or grid: result counts and applied filters lead, search, export, and actions trail"
+  - cite: "list every UI part, and match each against the component catalog" / catalog Toolbar `use_when`: "The controls bar above a table, list, or grid: result counts and applied filters lead, search, export, and actions trail"
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).
