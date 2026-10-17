@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "17/10/2026 - 02:03 PM"
 ---
 
 <section id="topbar-overview" class="nds-content-section nds-doc-overview">
@@ -43,8 +43,8 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
     <span id="nds-digital-stamp-verify-text" class="nds-link nds-primary" data-i18n="digital-stamp.verify">How you know?</span>
   </button>
   <div class="nds-topbar-info">
-    <span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"></span>
-    <span id="nds-real-time-clock" class="nds-text-icon" data-hidden="sm"></span>
+    <span id="nds-date" class="nds-meta" data-calendar="hijri" data-hidden="sm md"></span>
+    <span id="nds-real-time-clock" class="nds-meta" data-hidden="sm"></span>
     <button class="nds-btn nds-subtle nds-icon-only nds-tooltip" data-tooltip-hover="500" data-theme-toggle title="Toggle dark mode" data-i18n-title="topbar.toggle_dark_mode" aria-label="Toggle dark mode" data-i18n-aria-label="topbar.toggle_dark_mode">
       <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
     </button>
@@ -124,14 +124,14 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
 </div>
 </script>
 <script type="text/html" id="topbar-date" data-canon>
-<span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"></span>
+<span id="nds-date" class="nds-meta" data-calendar="hijri" data-hidden="sm md"></span>
 </script>
 <script type="text/html" id="topbar-clock" data-canon>
-<span id="nds-real-time-clock" class="nds-text-icon" data-hidden="sm"></span>
+<span id="nds-real-time-clock" class="nds-meta" data-hidden="sm"></span>
 </script>
 <script type="text/html" id="topbar-weather" data-canon>
-<span id="nds-city-name" class="nds-text-icon" data-hidden="sm" data-city="الرياض" data-city-en="Riyadh"></span>
-<span id="nds-weather-info" class="nds-text-icon" data-hidden="sm" data-latitude="24.7136" data-longitude="46.6753"></span>
+<span id="nds-city-name" class="nds-meta" data-hidden="sm" data-city="الرياض" data-city-en="Riyadh"></span>
+<span id="nds-weather-info" class="nds-meta" data-hidden="sm" data-latitude="24.7136" data-longitude="46.6753"></span>
 </script>
 <script type="text/html" id="topbar-dark" data-canon>
 <button class="nds-btn nds-subtle nds-icon-only nds-tooltip" data-tooltip-hover="500" data-theme-toggle title="Toggle dark mode" data-i18n-title="topbar.toggle_dark_mode" aria-label="Toggle dark mode" data-i18n-aria-label="topbar.toggle_dark_mode">
@@ -154,7 +154,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
 | `.nds-topbar` | The whole bar. Add `nds-content-wrapper` to keep its content at the page width | Yes |
 | `button.nds-digital-stamp-tab` | The stamp tab: the flag, the long text (`.nds-digital-stamp-lg-text`), the short text (`.nds-digital-stamp-sm-text`) and `#nds-digital-stamp-verify-text`. Each text holds DGA's English with a marker (see [Stamp Text](#stamp-text)). `aria-controls` names the panel | Yes, on a government site |
 | `.nds-topbar-info` | The widgets and the buttons, on the end side. Never put it on the stamp tab: its wide gap stretches the tab's contents apart | No |
-| `span.nds-text-icon` with a widget id | One widget, empty in the markup. The script writes its icon and text | No |
+| `span.nds-meta` with a widget id | One widget, empty in the markup. The script writes a [Meta](../components/meta) fact in it: the icon and the text. The bar shows it at Meta's LG size; `nds-md` or `nds-sm` on the span picks a smaller one | No |
 | `button[data-theme-toggle]` | The dark mode button | No |
 | `#nds-digital-stamp` | The stamp panel, right after the bar. It ships `hidden` | Yes, with the tab |
 | `.nds-digital-stamp-notices` | Two `.nds-digital-stamp-card` notices: the site's address, then HTTPS | Yes, with the tab |

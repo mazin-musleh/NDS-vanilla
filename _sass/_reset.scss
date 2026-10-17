@@ -189,15 +189,6 @@ header {
    UTILITIES (Critical)
    ======================================== */
 
-.nds-text-icon {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    gap: var(--spacing-xs);
-    border: unset;
-    background-color: transparent;
-}
-
 .nds-sr-only {
     @include label-hidden;
 }

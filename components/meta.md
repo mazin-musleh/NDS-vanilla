@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 03:22 AM"
+last_edit: "17/10/2026 - 01:58 PM"
 ---
 
 <section id="meta-overview" class="nds-content-section nds-doc-overview">
@@ -239,6 +239,7 @@ The Drawer row and Card structures show where the line goes inside those compone
 |---|---|---|
 | `nds-meta` | `<span>` | The line: a row of facts that wraps |
 | `nds-meta-item` | `<span>` in the line | One fact: an icon and its text, side by side |
+| `nds-md` | `.nds-meta` | The same as no size class: 14px text and a 16px icon |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes

@@ -46,20 +46,20 @@
         const icon = document.createElement('i');
         icon.className = 'nds-icon ' + payload.icon;
         NDS.aria.hidden(icon, true);
-        const span = document.createElement('span');
-        span.className = 'text';
-        span.textContent = strings.text('weather', { desc: strings.text(payload.cond), temp: payload.temp });
-        parent.replaceChildren(icon, span);
+        const item = document.createElement('span');
+        item.className = 'nds-meta-item';
+        item.append(icon, strings.text('weather', { desc: strings.text(payload.cond), temp: payload.temp }));
+        parent.replaceChildren(item);
     }
 
     function renderCity(parent, city) {
         const icon = document.createElement('i');
         icon.className = 'nds-icon nds-hgi-location-01';
         NDS.aria.hidden(icon, true);
-        const span = document.createElement('span');
-        span.className = 'text';
-        span.textContent = city;
-        parent.replaceChildren(icon, span);
+        const item = document.createElement('span');
+        item.className = 'nds-meta-item';
+        item.append(icon, city);
+        parent.replaceChildren(item);
     }
 
     // The cache holds the condition key, not text, so one entry serves every language.

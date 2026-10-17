@@ -34,15 +34,13 @@
     }
     // Built imperatively: the text flows through textContent, never the HTML parser.
     function renderDate(parent, content) {
-        while (parent.firstChild) parent.removeChild(parent.firstChild);
         const icon = document.createElement('i');
         icon.className = 'nds-icon nds-hgi-calendar-03';
         NDS.aria.hidden(icon, true);
-        const span = document.createElement('span');
-        span.className = 'text';
-        span.textContent = content;
-        parent.appendChild(icon);
-        parent.appendChild(span);
+        const item = document.createElement('span');
+        item.className = 'nds-meta-item';
+        item.append(icon, content);
+        parent.replaceChildren(item);
     }
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
@@ -107,10 +105,10 @@
         icon.className = 'nds-icon nds-hgi-clock-01';
         NDS.aria.hidden(icon, true);
         clockText = document.createTextNode('');
-        const span = document.createElement('span');
-        span.className = 'text';
-        span.appendChild(clockText);
-        el.replaceChildren(icon, span);
+        const item = document.createElement('span');
+        item.className = 'nds-meta-item';
+        item.append(icon, clockText);
+        el.replaceChildren(item);
         return true;
     }
 
