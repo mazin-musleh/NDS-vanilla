@@ -1602,7 +1602,7 @@
     // Put a [popover] element in the browser's top layer (on) or take it out (off). It
     // escapes every clip and stacking context without leaving its place in the DOM, so
     // closest(), bubbling and inherited styles still work. No popover support (Safari < 17,
-    // Firefox < 125): it stays where it is, as a fixed element that an ancestor may clip.
+    // Firefox < 125): it stays where it is; the component's CSS decides what clips it.
     // Usage: NDS.topLayer(menu, true); … NDS.topLayer(menu, false);
     NDS.topLayer = (el, on) => {
         if (!el.showPopover || on === el.matches(':popover-open')) return;

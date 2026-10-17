@@ -4,7 +4,8 @@
 // click and a pick without closing the modal, stays in view low in the modal, and closes when its
 // trigger scrolls out of the scroll box. Plus: a modal closed with a menu open leaves none behind.
 //   node scripts/check-menus-in-modal.mjs [baseUrl]    ENGINE=webkit for Safari, PHONE=1 for a 390px sheet
-//   OLD_PW=<folder>  runs that folder's older playwright-core WebKit (1.38.1 = Safari 17.0); see plans/top-layer.md
+//   OLD_PW=<folder>  runs that folder's older playwright-core WebKit (1.38.1 = Safari 17.0, 1.34.3 = 16.4 with no popover); see plans/top-layer.md
+//   SHORT=1          a 300px modal, shorter than the menus: without popover a scroll box used to cut them off
 import { launch, ENGINE as E } from './lib/browser.mjs';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
@@ -12,6 +13,7 @@ const old = process.env.OLD_PW && (await import(pathToFileURL(resolve(process.en
 const ENGINE = old ? 'webkit (OLD_PW)' : E;
 const BASE = (process.argv[2] || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
 const PHONE = !!process.env.PHONE;
+const SHORT = !!process.env.SHORT;
 const browser = old ? await old.launch() : await launch();
 const page = await browser.newPage(PHONE ? { viewport: { width: 390, height: 844 }, isMobile: E === 'chromium' && !old ? true : undefined, hasTouch: true }
   : { viewport: { width: 1280, height: 800 } });
@@ -27,7 +29,7 @@ await page.addStyleTag({ content: '#nds-cookies-panel { display: none !important
 
 // Build the modal from the doc canons, each field between filler so the content scrolls.
 // flex: none — the card content is a flex column and would squash the filler to nothing.
-await page.evaluate(async (BASE) => {
+await page.evaluate(async ([BASE, SHORT]) => {
   const canon = async (pageUrl, id) => {
     const doc = new DOMParser().parseFromString(await (await fetch(`${BASE}/components/${pageUrl}.html`)).text(), 'text/html');
     return doc.getElementById(id).textContent;
@@ -44,16 +46,17 @@ await page.evaluate(async (BASE) => {
     <form class="nds-form"><div class="nds-card-content">${body}</div>
     <div class="nds-card-actions"><button type="button" class="nds-btn nds-primary" data-modal-close><span class="nds-label">Done</span></button></div></form>`;
   m.setAttribute('aria-labelledby', 'mm-t');
+  if (SHORT) m.style.maxHeight = '300px';
   document.body.append(m);
   NDS.Init.mount(m);
-}, BASE);
+}, [BASE, SHORT]);
 await wait(800);
 await page.evaluate(() => NDS.Modal.open('mm'));
 await wait(600);
 
 const H = await page.evaluate(() => {
   window.__content = document.querySelector('#mm .nds-card-content');
-  window.__newest = () => [...document.querySelectorAll('.nds-dropmenu-menu:popover-open')].pop() || null;
+  window.__newest = () => [...document.querySelectorAll('.nds-dropmenu-menu[data-state~="open"]')].pop() || null;
   // Gap between the menu and its trigger, below or above.
   window.__probe = () => {
     const m = __newest(); if (!m) return null;
@@ -62,7 +65,7 @@ const H = await page.evaluate(() => {
     const up = m.getAttribute('data-position-vertical') === 'top';
     const hit = document.elementFromPoint(Math.min(Math.max(mr.left + 10, 1), innerWidth - 2), Math.min(Math.max(mr.top + 10, 1), innerHeight - 2));
     return { up, gap: +(up ? tr.top - mr.bottom : mr.top - tr.bottom).toFixed(1), inView: mr.top >= -1 && mr.bottom <= innerHeight + 1 && mr.left >= -1 && mr.right <= innerWidth + 1,
-      onTop: !!hit && m.contains(hit), modal: document.getElementById('mm').open, count: document.querySelectorAll('.nds-dropmenu-menu:popover-open').length };
+      onTop: !!hit && m.contains(hit), modal: document.getElementById('mm').open, count: document.querySelectorAll('.nds-dropmenu-menu[data-state~="open"]').length };
   };
   window.__center = (sel) => { const el = document.querySelector(sel); const c = __content; c.scrollTop += el.getBoundingClientRect().top - c.getBoundingClientRect().top - c.clientHeight / 2 + 20; };
   window.__bottom = (sel) => { const el = document.querySelector(sel); const c = __content; c.scrollTop += el.getBoundingClientRect().bottom - c.getBoundingClientRect().bottom + 4; };
@@ -137,7 +140,7 @@ await page.locator('[data-case="date-picker"] .nds-month-dropmenu .nds-dropmenu-
 let n = await probe();
 ok('date picker: month menu opens over the calendar', n && n.count === 2 && n.onTop, JSON.stringify(n));
 await page.locator('[data-case="date-picker"] .nds-month-option').nth(3).click(); await wait();
-n = await page.evaluate(() => document.querySelectorAll('.nds-dropmenu-menu:popover-open').length);
+n = await page.evaluate(() => document.querySelectorAll('.nds-dropmenu-menu[data-state~="open"]').length);
 ok('date picker: picking a month keeps the calendar open', n === 1, `${n} open`);
 await page.keyboard.press('Escape'); await wait();
 ok('date picker: Escape then closes the calendar, modal stays', !(await probe()) && await page.evaluate(() => document.getElementById('mm').open));
@@ -152,7 +155,7 @@ if (hasUnit) {
   n = await probe();
   ok('time picker: hour select opens over its panel', n && n.count >= 2 && n.onTop, JSON.stringify(n));
   await page.locator('[data-case="time-picker"] .nds-select-option').nth(2).click(); await wait();
-  n = await page.evaluate(() => document.querySelectorAll('.nds-dropmenu-menu:popover-open').length);
+  n = await page.evaluate(() => document.querySelectorAll('.nds-dropmenu-menu[data-state~="open"]').length);
   ok('time picker: picking an hour keeps the panel open', n === 1, `${n} open`);
 } else ok('time picker: panel has unit selects', false, 'none found');
 await closeAll(); await wait(300);
@@ -160,7 +163,7 @@ await closeAll(); await wait(300);
 // Menu open, then the modal closes: no menu left behind in the top layer.
 await opener['custom-select'](); await wait();
 await page.evaluate(() => NDS.Modal.close()); await wait(600);
-ok('modal closed with a menu open: no menu left open', await page.evaluate(() => !document.querySelector('.nds-dropmenu-menu:popover-open')));
+ok('modal closed with a menu open: no menu left open', await page.evaluate(() => !document.querySelector('.nds-dropmenu-menu[data-state~="open"]')));
 
 ok('no page errors', !errors.length, errors.join(' | '));
 console.log(`\n${ENGINE}${PHONE ? ' phone' : ''}: ${fails ? fails + ' failed' : 'all passed'}`);

@@ -30,7 +30,7 @@
  *     nothing clips it and it stays in place in the DOM, so closest(), bubbling and the
  *     wrapper's knobs and theme reach it. Page scroll carries it; it closes when its trigger
  *     leaves view or, outside a modal, when it reaches the sticky nav. Without popover support
- *     (Safari < 17, Firefox < 125) it stays in its wrapper, where a clipping ancestor may cut it.
+ *     (Safari < 17, Firefox < 125) it is fixed and follows every scroll, so a scroll box cannot cut it.
  */
 
 /**
@@ -205,6 +205,9 @@
             // releases them atomically without touching consumer-attached listeners.
             this.abortController = new AbortController();
             this.menu.setAttribute('popover', 'manual');
+            // No popover (Safari < 17, Firefox < 125): fixed, so a scroll box cannot cut it off.
+            // Set here, not in CSS: Safari 16.4 parses :popover-open but has no popover.
+            if (!this.menu.showPopover) this.menu.style.position = 'fixed';
             this.setupAria();
             this.setupEventListeners();
             this.setupSelectMode();
@@ -832,8 +835,10 @@
 
             // Absolute in the top layer: page scroll carries the menu with no JS. Only a
             // scroll box around the trigger moves one without the other. rAF-throttled.
+            // Without popover the menu is fixed, so page scroll moves it too.
             const reposition = NDS.rafThrottle(() => this.trackPosition());
-            const onScroll = (e) => { if (e.target !== document && e.target.contains?.(this.trigger)) reposition(); };
+            const fixed = !this.menu.showPopover;
+            const onScroll = (e) => { if (e.target === document ? fixed : e.target.contains?.(this.trigger)) reposition(); };
             document.addEventListener('scroll', onScroll, { capture: true, passive: true });
             this._offScroll = () => document.removeEventListener('scroll', onScroll, { capture: true });
             // Close when the trigger leaves view (its scroll box hid it) or the menu reaches the sticky nav.
@@ -1157,6 +1162,7 @@
             // otherwise strip the new instance's expando and stamp.
             if (this.dropmenu.ndsDropmenu !== this) return;
             this.menu.removeAttribute('popover');
+            if (!this.menu.showPopover) this.menu.style.position = '';
             delete this.dropmenu.ndsDropmenu;
             this.dropmenu.removeAttribute('data-nds-dropmenu-initialized');
         }
