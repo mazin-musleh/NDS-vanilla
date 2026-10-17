@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.2"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 11:02 PM"
+last_edit: "17/10/2026 - 10:01 PM"
 ---
 
 <section id="metric-overview" class="nds-content-section nds-doc-overview">
@@ -140,7 +140,7 @@ Pick another component when:
 |---|---|---|---|---|
 | Structure | Positive (default) | — | — | A trend that is good news. `data-status="positive"` on the card uses the success colors, and the icons are `nds-hgi-trade-up` |
 | Structure | Negative (hint: A trend that is bad news) | canon `#metric-negative` | — | A trend that is bad news. `data-status="negative"` on the card uses the error colors, and the icons are `nds-hgi-trade-down` |
-| Layout | Compact (default) | — | — | The chart sits beside the value and takes 40% of the row, with the trend under the value. Below 400px of metric width, the chart moves under the value, so a card at its default 360px always stacks: give it `nds-full` in a wider grid cell. Use it for a row of several metrics |
+| Layout | Compact (default) | — | — | The chart sits beside the value and takes half the row, with the trend under the value. Below 480px of metric width, the chart moves under the value, so a card at its default 360px always stacks: give it `nds-full` in a wider grid cell. Use it for a row of several metrics |
 | Layout | Full (hint: The chart sits below the value, full width) | `.nds-full` | `.nds-card-metric` | The chart always sits below the value, across the full width. Use it for one metric that leads a section |
 | Arrow | Arrow (hint: A plain arrow instead of the trade icon) | `.nds-arrow` | `.nds-card-metric-trend` | Shows a plain arrow in the trend row. Keep the icon's class: `.nds-arrow` changes what the icon shows. The arrow follows the status, not the sign: `positive` points up, `negative` points down |
 | Stroke | Stroke (default) | `.nds-stroke` | `.nds-card` | A 1px border on the card |

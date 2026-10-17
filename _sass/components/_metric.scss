@@ -29,11 +29,10 @@
   }
 }
 
-// Wide: the stat and the chart share the row, the chart at 40%.
-@container (min-width: 400px) {
+// Wide: the stat and the chart share the row, half each.
+@container (min-width: 480px) {
   .nds-card-metric:not(.nds-full) {
-    > .nds-card-metric-info { flex: 3 1 0; min-width: 0; }
-    > .nds-card-metric-chart { flex: 2 1 0; min-width: 0; }
+    > :is(.nds-card-metric-info, .nds-card-metric-chart) { flex: 1 1 0; min-width: 0; }
   }
 }
 
@@ -61,13 +60,12 @@
 .nds-card-metric-trend {
   display: inline-flex;
   align-items: center;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: var(--spacing-md);
   margin: 0;
   font-size: var(--typo-text-sm-FS);
   line-height: var(--typo-text-sm-LH);
   color: var(--text-secondary-paragraph);
-  white-space: nowrap;
 
   > i {
     color: var(--_metric-trend-color);

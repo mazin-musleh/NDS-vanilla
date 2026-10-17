@@ -202,7 +202,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Loading** — A text bar hides its pseudo-elements, such as a required star or a divider line.
 - **Main Navigation** — a row-list menu stacks its links in a column below 960px; the brand gives way below 960px so the menu button stays on screen; the brand name and slogan have default colors; the drawer's show more arrow no longer covers the last link when every action is pinned; an avatar with initials in an icon-only item shows its initials; with auto-init off, the nav no longer switches to its phone layout before `initialize()`, so a framework hydrates the markup it rendered.
 - **Mark** — In dark mode `<mark>` takes the translucent primary in `--background-mark`. It kept the light highlight, which was hard to read.
-- **Metric** — The metric's own width picks its layout, so charts and spacing match across cards of one size.
+- **Metric** — The metric's own width picks its layout, so charts and spacing match across cards of one size. From 480px wide, the value and the chart take half the row each; below that, the chart sits under the value. A trend text that does not fit beside its number goes to its own line, where it ran into the chart.
 - **Modal** — Focus moves into the modal when it opens and back to its trigger when it closes.
 - **Multiselect** — a multiselect written with `data-state="disabled"` disables its menu button too.
 - **Multiselect** — A read-only multiselect's chips and Reset cannot change it. `destroy()` removes the chips. An icon-only menu button takes its name from `aria-label`.
