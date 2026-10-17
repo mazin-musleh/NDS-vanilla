@@ -124,8 +124,8 @@
         if (!fab) return null;
         // Mark where the FAB was authored before the first move, so destroy() can put it back
         // and a framework holding it still finds its spot. A re-register (a direction flip
-        // re-routes every FAB) keeps the first mark: relocate() skips a node already moved.
-        NDS.relocate(fab);
+        // re-routes every FAB) keeps the first mark: markHome() skips a node already moved.
+        NDS.markHome(fab);
         const d = dock(resolvePos(fab, override));
         d.appendChild(fab);
         [...d.children].sort((a, b) => order(a) - order(b)).forEach(c => d.appendChild(c));
@@ -275,7 +275,7 @@
             const fab = elOrRoot;
             if (!fab.hasAttribute(INIT_ATTR)) return 0;   // never routed — nothing was taken
             // Back to its marker: with a view the app already removed, it leaves with that view.
-            if (NDS.restore(fab)) fab.setAttribute('hidden', '');
+            if (NDS.sendHome(fab)) fab.setAttribute('hidden', '');
             fab.removeAttribute(INIT_ATTR);
             fab.removeAttribute('data-fab-riding');
             fab.style.removeProperty('--_fab-ride');

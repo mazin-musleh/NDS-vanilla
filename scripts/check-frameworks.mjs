@@ -695,7 +695,7 @@ const IDIOMORPH = 'idiomorph@0.7.3/dist/idiomorph.min.js';
 // ---- MOVED NODES ------------------------------------------------------------
 // NDS moves some nodes the app wrote: a FAB into its dock, an open menu to <body>, a pinned
 // nav item into the minimal bar. The framework still holds each one and may insert a
-// sibling before it or remove it. NDS.relocate keeps the node's old spot answering for it.
+// sibling before it or remove it. NDS.markHome keeps the node's old spot answering for it.
 const FAB = '<button type="button" class="nds-btn nds-fab nds-primary nds-circle nds-icon-only" id="f-fab" data-fab-pos="right" aria-label="Open" hidden><i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i></button>';
 async function fabRun(page, name, errors) {
     const state = () => page.evaluate(() => {
@@ -810,8 +810,8 @@ for (const v of REACT) {
     await page.close();
 }
 
-// React holds the moved node itself, so it is the framework these break. A node NDS.relocate
-// moved and an open menu in the top layer: React inserts a sibling before each, then drops it.
+// React holds the moved node itself, so it is the framework these break. A node NDS.markHome
+// marked and moved, and an open menu in the top layer: React inserts a sibling before each, then drops it.
 for (const v of REACT) {
     const R = 'React ' + major(v);
     const { page, errors } = await open(loadReact(v));
@@ -838,7 +838,7 @@ for (const v of REACT) {
         ReactDOM.createRoot(document.querySelector('.nds-section-body').appendChild(document.createElement('div'))).render(h(App));
     });
     await page.evaluate(() => window.__wait(600));
-    await page.evaluate(() => { const n = document.getElementById('mv-node'); NDS.relocate(n); document.body.appendChild(n); });
+    await page.evaluate(() => { const n = document.getElementById('mv-node'); NDS.markHome(n); document.body.appendChild(n); });
     await page.locator('#mv-dm .nds-dropmenu-trigger').click();
     await page.evaluate(() => window.__wait());
     const moved = await page.evaluate(() => ({

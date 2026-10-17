@@ -21,7 +21,7 @@
  *     NDS.afterPaint(fn) · NDS.onTransitionEnd(el, fn, opts) → cancel()
  *     NDS.transitionSpeed()            the token-sourced duration in ms
  *   DOM
- *     NDS.relocate(el) / .restore(el) / .homeOf(el)   move a node the app owns; its old spot answers for it
+ *     NDS.markHome(el) / .sendHome(el) / .homeOf(el)   move a node the app owns; its old spot answers for it
  *     NDS.topLayer(el, on)             show or hide a [popover] in the top layer, in place
  *     NDS.resolveEl(idOrElOrSel) · NDS.fromTemplate(id) · NDS.flipPosition(trigger, menu) · NDS.place(el, t, l)
  *     NDS.stickyHeaderBottom() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
@@ -849,7 +849,7 @@
                     for (let j = 0; j < m.removedNodes.length; j++)
                         if (m.removedNodes[j].nodeType === 1) removed.push(m.removedNodes[j]);
                 }
-                // A reparent (e.g. NDS.relocate, then appendChild elsewhere) emits
+                // A reparent (e.g. NDS.markHome, then appendChild elsewhere) emits
                 // both a remove and an add for the same node in one batch. Treat
                 // that as a move, not a lifecycle change — drop those nodes from
                 // both lists so subscribers (and any descendants matching their
@@ -1541,13 +1541,13 @@
         return () => document.removeEventListener('scroll', handler, { capture: true });
     };
 
-    // ── Relocate / Restore ───────────────────────────────────────────
+    // ── Mark home / Send home ───────────────────────────────────────────
     // A node NDS moves out of markup the app owns (a docked FAB, a pinned
     // nav item) leaves a comment marker in its place. While it is away, the old parent's
     // insertBefore / appendChild / removeChild take the marker for the node, so a framework
     // that still holds it (React inserts before it, or removes it) works on its old spot
     // instead of throwing "not a child of this node".
-    // Usage: NDS.relocate(menu); document.body.appendChild(menu); … NDS.restore(menu);
+    // Usage: NDS.markHome(menu); document.body.appendChild(menu); … NDS.sendHome(menu);
     // ponytail: only those three methods answer for the node; replaceChild or a textContent
     // write on the old parent still sees the move.
     const _home = new WeakMap();   // moved node → { mark, parent }
@@ -1561,7 +1561,7 @@
         parent.removeChild = function (node) {
             if (_standIn(this, node) === node) return _node.removeChild.call(this, node);
             // Back home first, through its owner's own exit, then out as the app asked.
-            NDS.restore(node);
+            NDS.sendHome(node);
             return _node.removeChild.call(this, node);
         };
     }
@@ -1573,7 +1573,7 @@
         delete parent.removeChild;
     }
 
-    NDS.relocate = (el) => {
+    NDS.markHome = (el) => {
         const parent = el?.parentNode;
         if (!parent || _home.has(el)) return;
         const mark = document.createComment(' moved by NDS ');   // no nds- prefix: the audit reads those as class names
@@ -1582,9 +1582,9 @@
         _guard(parent);
     };
 
-    // Put a relocated node back at its marker. True when it went home; when the marker is
+    // Put a node NDS.markHome marked back at its marker. True when it went home; when the marker is
     // gone it goes to the end of its old parent while that parent is on the page, else off it.
-    NDS.restore = (el) => {
+    NDS.sendHome = (el) => {
         const h = _home.get(el);
         if (!h) return false;
         _home.delete(el);
@@ -1596,7 +1596,7 @@
         return !!el.parentNode;
     };
 
-    // The element a relocated node was moved out of, or null.
+    // The element a marked node was moved out of, or null.
     NDS.homeOf = (el) => _home.get(el)?.parent || null;
 
     // Put a [popover] element in the browser's top layer (on) or take it out (off). It
