@@ -58,7 +58,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 ## Checks before claims
 
 Read the source before you ask or answer an NDS question or wire page JS. A claim needs its check first:
-- "NDS has no X" (yours, or the dev's "just use native X") → search the catalogs' `use_when` lines (the index names them).
+- "NDS has no X" (yours, or the dev's "just use native X") → read every `use_when` line in the catalogs (the index names them), as §Composition cascade says.
 - "I cannot see the page" → a failed headless attempt (§Verify).
 - "The page is done" → both browser passes and a clean audit (§Verify). The audit checks markup, never how the page looks.
 
@@ -125,7 +125,7 @@ When a plan is required, create `NDS-PLAN.md` at the project root, starting with
 - Statuses, in the Status column only: `Planned`, `In Progress`, `Awaiting Verification`, `Built and Verified`. Only dev confirmation sets `Built and Verified`.
 - `Awaiting Verification` means every agent-owned check passed with its evidence recorded. An unmet required check keeps the row `In Progress`, and you run it next. An open checkbox holds only what the dev must supply or decide, never a check you can run.
 - Every open question, check, fix, or deferred decision is a `- [ ]` item, resolved as `- [x]`, never deleted. Checkboxes are not status.
-- **Pacing:** `gate-by-gate` (default) or `whole plan`, which takes this file's defaults, verifies each page, and builds row after row without stopping until every row is at `Awaiting Verification` or blocked. Under `whole plan`, only a §Stop and ask state blocks. A missing asset or a question with a sensible default never does: ship the placeholder or the default, record it as an open checkbox, and go on. Before you end a turn, read the Status column: any other row means keep building, however long the plan. Under either pacing, a row reaches `Awaiting Verification` only when every agent-owned check passed. The row, not the agent, waits there for the dev.
+- **Pacing:** `gate-by-gate` (default) builds one row to `Awaiting Verification`, reports it, and waits for the dev's go before the next row. `whole plan` takes this file's defaults, verifies each page, and builds row after row without stopping until every row is at `Awaiting Verification` or blocked. Under `whole plan`, only a §Stop and ask state blocks. A missing asset or a question with a sensible default never does: ship the placeholder or the default, record it as an open checkbox, and go on. Under `whole plan`, before you end a turn, read the Status column: any other row means keep building, however long the plan. Under either pacing, a row reaches `Awaiting Verification` only when every agent-owned check passed. The row, not the agent, waits there for the dev.
 - When every row is verified, retire the plan. A new multi-page effort or a dev-requested re-audit recreates it from current state: passing pages `Awaiting Verification`, drifted pages `Planned` with their deltas named.
 - **No-plan work** covers one named page: state its source paths and open questions first; the final report carries the verification evidence and any unmet check. If the dev waived a required plan, note once that cross-session memory is lost.
 - **`NDS-REPORT.md`** holds NDS findings only: a missing API or event, a canon/rule/doc contradiction, a reproducible bug, a rule gap. Give the NDS version, instruction version, component, and a generic repro; never project markup, routes, or data.
@@ -140,7 +140,7 @@ When a plan is required, create `NDS-PLAN.md` at the project root, starting with
 2. **Page shape:** copy the shape's canon and swap the content; never recreate it from prose.
    - Layout state (the shape's classes) is in the first HTML the browser paints. One app serving two shapes (public pages and a console admin) sets each route's classes for that route only, before the framework mounts; never in a mount effect, never on every route.
    - A client-rendered app follows the page layout doc's framework rules for its mount element.
-   - Set both `<html lang>` and `dir`: Arabic → `ar`/`rtl`; others → `ltr`. A single-language site ships without the language switcher; a site in two languages keeps it.
+   - Set both `<html lang>` and `dir`: `rtl` for a right-to-left language (Arabic `ar`, Urdu `ur`, Persian `fa`), `ltr` for the rest. A single-language site ships without the language switcher; a site in two languages keeps it.
 3. **Brand:** the project logo replaces the template's; drop the brand text when the logo already carries the name.
 
 **Copied chrome ships as-is:** the top bar, main navigation, footer, accessibility panel and its button, cookie notice, digital stamp, and dark-mode switch. Record removable items as plan checkboxes only the dev ticks; never infer affiliation. The one exception is the digital stamp: it claims a government verification, so the plan review asks whether the site holds it, and it ships only if so. Before page #2, wire project-backed controls to real session, API, or route data; remove what the project cannot back. Never ship an invented identity or a dead widget: a copied link or control with no real target, such as a footer link with no page behind it, is removed even from chrome, with a plan checkbox naming it.

@@ -1,8 +1,8 @@
 ---
-title: Refresh
+title: Init
 ---
 
-# Refresh
+# Init
 
 One call that tells every live NDS component the contents of a container
 changed, so filters, counters, and controls follow the new content instead of

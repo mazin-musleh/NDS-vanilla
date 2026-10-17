@@ -26,14 +26,14 @@ README, where no runner reads it.
 
 - `mini-root/` = a fake extracted `NDS_ROOT` (template zip). Version banner in
   the bundle stubs is the mutable knob scenarios stamp (e.g. 1.3.0 for stale).
-  It defaults to the rules' floor so runs start unblocked; sub-floor states are
+  It defaults to a release the rules serve, so runs start unblocked; sub-floor states are
   a scenario `setup:` stamp, never the default.
   - `_source/_js/` = banner stubs (real banner comment + one stub line) for the
     banner-first scenarios (S6/S14/S15/S25). Frozen copies from the 1.7.0 cycle;
     refresh a stub if its real banner changes materially.
   - `_source/{components,layout,ui-shell,utilities,core,templates,examples}/*.md`
-    = doc `.md` source twins of the `_site` pages — v7 routes markup reads to
-    `.md` first. Mirror the real zip's folder set: rule #3 takes the folder from
+    = doc `.md` source twins of the `_site` pages — markup reads go to the
+    `.md` first. Mirror the real zip's folder set: the index takes the folder from
     the catalog entry's own `url`, so a folder the zip ships and this tree lacks
     sends a runner to a path that does not exist, and the run fails for a reason
     that has nothing to do with the rules.

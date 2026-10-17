@@ -26,7 +26,7 @@ Tests the consumer rules file in its draft, `_includes/NDS-IQ-draft.md`; `script
   4. the field rig
 
   Reaching for a costlier instrument when a cheaper one answers is a violation.
-- **Name the expected cost before every launch.** A single launch above ~300K tokens needs the owner's explicit go. Measured 2026-10-10 on Sonnet 5.5: a comprehension runner costs ~60K before its first scenario (its setup plus the rules file and the index), and ~80–120K for a batch of 10; `full` ~920K over 10 runners; `old` ~70K; a solo scenario ~60–70K; a behavior run on `mini-app` ~75K (S27 and S42, part (a) each).
+- **Name the expected cost before every launch.** A single launch above ~300K tokens needs the owner's explicit go. Measured 2026-10-10 on Sonnet 5.5: a comprehension runner costs ~60K before its first scenario (its setup plus the rules file and the index), and ~80–120K for a batch of 10; `full` ~920K over 10 runners at 97 scenarios (12 runners now, so ~1.1M); `old` ~70K; a solo scenario ~60–70K; a behavior run on `mini-app` ~75K (S27 and S42, part (a) each).
 - **One run per question.** A scenario with a standing verdict is re-run only if its rules text changed or a field report contradicts it.
 - **A behavior run grades everything its artifacts touch.** Use one small fixture for many verdicts. Reuse existing states; author a new one only when no state can host the run.
 - **Batch at most ~10 scenarios.** Every batch re-reads the rulebook, and big batches flatten tool effort: the 2026-08-12 full batch made zero routed reads. Never inflate a batch to save the re-read.
@@ -255,15 +255,16 @@ The fixtures stay skeletal on purpose: a bigger fixture is a slower run with no 
 - **Raw main's `_includes/NDS-IQ.md` is the publish channel, forever.** Every installed copy carries that link, so only `python scripts/publish-iq.py` writes it. Edit the draft and push it any time. To publish, write the revision's history row in `guides/integration-quality.md`, then run the script: a dry run checks the draft (`check_rules()`), the tag and the row; `--apply` copies, commits and tags `IQvX.Y`. Push main with the tag yourself. The tag is the lock link a dev can pin. `scripts/hooks/pre-push` refuses a main push whose published file differs from the newest `IQv` tag in main's history; an off-main tag (`IQv3.2`) never counts.
 - **The file names no template version.** It reads the runtime's own banner and the matching tag's sources, so it runs on any release.
 - **`check_rules()` in `scripts/mkrelease.py` fails** (on the draft at publish, on the published copy in the release `verify()`) if the file:
+  - holds a Liquid delimiter (it kills the build that renders it)
+  - stops starting `# NDS IQ` on line 1 (installed copies reject the update), or loses the revision stamp from that line
   - names an `x.y.z` literal
-  - loses its revision stamp, its `Managed by NDS IQ` plan stamp, its anchor-canon lines, or its Liquid-free state (Liquid delimiters kill the build that renders it)
-  - is no longer included by either guide
-  - names a literal path missing from the zip (`_site/…`) or the repo tree (`_source/…`)
+  - names a release fact outside the anchor and URLs: `_source/`, `_site/`, an `nds-*` class or an `NDS.X` API
+  - loses its `Managed by NDS IQ` plan stamp or its anchor-canon lines
 
-  After any edit to `check_rules()`, `verify()` or a sentence a guard keys on, run `python scripts/check-release-guards.py`. It breaks the draft once per case and asserts the guard notices.
+  `verify()` adds: both guides still include it, and every path the rules, guides and index name exists in the zip (`_site/…`) or the repo tree (`_source/…`). After any edit to `check_rules()`, `verify()` or a sentence a guard keys on, run `python scripts/check-release-guards.py`. It breaks the draft or the index once per `check_rules()` case and the dead index path; the guide-include and dead `_site/` path guards have no case.
 
 **What a sentence may say**
-- **IQ names no facts.** Each release's `NDS-INDEX.md`, docs and audit own every path, class, API and doc format. Outside the anchor, a sentence may name only `NDS_ROOT`, `NDS_ASSETS`, `NDS-PLAN.md`, `NDS-REPORT.md`, `NDS-IQ.md`, `NDS-INDEX.md`, the release and raw URLs, and the `IQv3.2` tag; `verify()` fails on anything else. A sentence routes by need ("the index names …"), never by path.
+- **IQ names no facts.** Each release's `NDS-INDEX.md`, docs and audit own every path, class, API and doc format. Outside the anchor, a sentence may name only `NDS_ROOT`, `NDS_ASSETS`, `NDS-PLAN.md`, `NDS-REPORT.md`, `NDS-IQ.md`, `NDS-INDEX.md`, the release and raw URLs, and the `IQv3.2` tag. `check_rules()` catches paths, classes and APIs; any other fact (a doc field such as `use_when`) is the author's to keep out. A sentence routes by need ("the index names …"), never by path.
 - **Every template the rules serve, never blocking.** A doc or runtime feature that only newer releases ship is enrichment. The sentence's action must work without it: report the gap and propose the upgrade, never stall.
 - **Attribution default (owner, 2026-08-14): a field failure is a SOURCE finding.**
   - Presume a doc, example, catalog entry or banner was unclear, and fix it there.

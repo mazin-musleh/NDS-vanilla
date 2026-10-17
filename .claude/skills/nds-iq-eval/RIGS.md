@@ -6,7 +6,7 @@ A field rig is a real legacy app that a fresh agent session ports to NDS, or a b
 
 ## Baselines
 
-The baselines live in `rigs/`, at their clean state. Rig N runs on port 300N, so all of them can run at once; `rig.py` prints the start command and the link. Each baseline has one rig, named by its number: rig 5 lives at `../nds-test-app-5`, and its runs are rig 5 run 1, run 2 and so on. Rigs 5 to 7 are the starters, legacy apps to port. Rigs 1 to 4 are designed to test NDS IQ on purpose: each covers a work mode or stack the starters miss. Field rigs are not the behavior-mode rigs R1 to R4 in `SKILL.md`.
+The baselines live in `rigs/`, at their clean state. Rig N runs on port 300N, so all of them can run at once; `rig.py` prints the start command and the link. Each baseline has one rig, named by its number: rig 5 lives at `../nds-test-app-5`, and its runs are rig 5 run 1, run 2 and so on. Rigs 5 to 7 are the starters, legacy apps to port. Rigs 1 to 4 are designed to test NDS IQ on purpose: each covers a work mode or stack the starters miss. Field rigs are not the behavior-mode rigs R1 to R7 in `SKILL.md`: write "rig N" for a field rig, "RN" for a behavior rig.
 
 | Rig | Baseline | App | Run | URL |
 |---|---|---|---|---|

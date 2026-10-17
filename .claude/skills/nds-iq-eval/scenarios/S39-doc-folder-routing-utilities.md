@@ -2,7 +2,7 @@
 
 
 - mode: comprehension
-- rules: rule #3's `<folder>` path sentence ("`<folder>` is the one the catalog entry's `url` names"); the Reference index's `_source/utilities/*.md` and `_source/ui-shell/*.md` lines
+- rules: the index's catalog line ("Each entry's `url` names its folder."; rule #3's `<folder>` sentence moved there in v4); the index's `_source/utilities/*.md` and `_source/ui-shell/*.md` lines
 - provenance: 2026-08-08 architecture review: rule #3 hardcoded `_source/components/<name>.md`, routing utilities, ui-shell and layout catalog entries to a path that does not exist.
 - setup: Mature project; chrome and several pages Built and Verified. You are building the ticket detail page. Each ticket shows a long reference number that staff constantly re-type into other systems.
 - prompt: "Put a one-click copy button next to the reference number. What does NDS give us, and where exactly do you copy the markup from? Give me the file path you read."

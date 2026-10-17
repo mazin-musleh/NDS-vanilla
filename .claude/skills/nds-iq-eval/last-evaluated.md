@@ -17,7 +17,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 
 **`NDS_ROOT`**: the flat contents of one template release from https://github.com/mazin-musleh/NDS-vanilla/releases. Default `.nds/` at the project root, gitignored, read-only. It is correct when `NDS_ROOT/NDS-INDEX.md` resolves directly; never keep the zip's versioned wrapper folder.
 
-**`NDS_ASSETS`**: the project's static folder for the NDS runtime; never under `NDS_ROOT`. Write it relative to the project root, as `NDS_ROOT` is: the anchor is committed and shared, so an absolute path breaks on every other machine.
+**`NDS_ASSETS`**: the project's static folder for the NDS runtime; never under `NDS_ROOT`. Write it relative to the project root, as `NDS_ROOT` is: the anchor travels with the project, so an absolute path breaks on every other machine.
 
 - Derive its folder and served URL from the stack, and confirm both with the dev as one question in the plan review, before §Setup copies the runtime (no plan: one question before the copy).
 - Placeholder path? NDS-side work waits for the answer: ask it in the plan review (no plan: ask now). Inventory and plan work continue; NDS targets stay `blocked on NDS_ROOT` until the sources resolve.
@@ -58,7 +58,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 ## Checks before claims
 
 Read the source before you ask or answer an NDS question or wire page JS. A claim needs its check first:
-- "NDS has no X" (yours, or the dev's "just use native X") → search the catalogs' `use_when` lines (the index names them).
+- "NDS has no X" (yours, or the dev's "just use native X") → read every `use_when` line in the catalogs (the index names them), as §Composition cascade says.
 - "I cannot see the page" → a failed headless attempt (§Verify).
 - "The page is done" → both browser passes and a clean audit (§Verify). The audit checks markup, never how the page looks.
 
@@ -115,7 +115,7 @@ Check response headers and middleware for a Content Security Policy once, projec
 
 - **Repeated families:** map one archetype; sibling rows read `same as <archetype>`.
 - **Prior NDS:** assess each page against current canon: conformant → `Awaiting Verification`; non-conformant → rebuild. Never silently resume an inherited plan.
-- **Rebuild** clean, in place. Old work is a content, flow, and data reference, never a copy source. Remove its NDS footprint through the approved plan; rollback is git. The approval names the cost: unported pages run on the new runtime before their rebuild and may render worse.
+- **Rebuild** clean, in place. Old work is a content, flow, and data reference, never a copy source. Remove its NDS footprint through the approved plan; rollback is the dev's version control. The approval names the cost: unported pages run on the new runtime before their rebuild and may render worse.
 - **Second runtime:** only by explicit dev decision, with parallel files and a second assets folder, accepting the cost.
 
 When a plan is required, create `NDS-PLAN.md` at the project root, starting with `Managed by NDS IQ`, with columns for page, route, legacy libraries, NDS target, and status. Stop before building only for this ONE review: ask every project-wide decision (the `NDS_ASSETS` folder and URL when unconfirmed, porting strategy, prior-NDS split, CSP grant only when a CSP was found, the digital stamp, pacing), each with options and a recommended default. Ask nothing the rules already settle: the rest of the chrome and the language switcher follow §Build. Ask it in the same turn you write the plan, never in a message that offers to ask, through the host's question tool, the one that shows the dev options to pick from, when the host has one, in back-to-back calls if it caps how many questions one call holds. With no such tool, ask in one numbered message. Record the answers in the plan. The answers approve the plan: start building in the same turn, even when the plan file is written after them, with no second stop. Page-specific questions wait for that page's session (under `whole plan`: a default and an open checkbox). In every phase, the conversation asks and the plan records, and a question with options takes the question tool the same way.
@@ -125,10 +125,10 @@ When a plan is required, create `NDS-PLAN.md` at the project root, starting with
 - Statuses, in the Status column only: `Planned`, `In Progress`, `Awaiting Verification`, `Built and Verified`. Only dev confirmation sets `Built and Verified`.
 - `Awaiting Verification` means every agent-owned check passed with its evidence recorded. An unmet required check keeps the row `In Progress`, and you run it next. An open checkbox holds only what the dev must supply or decide, never a check you can run.
 - Every open question, check, fix, or deferred decision is a `- [ ]` item, resolved as `- [x]`, never deleted. Checkboxes are not status.
-- **Pacing:** `gate-by-gate` (default) or `whole plan`, which takes this file's defaults, verifies each page, and builds row after row without stopping until every row is at `Awaiting Verification` or blocked. Under `whole plan`, only a §Stop and ask state blocks. A missing asset or a question with a sensible default never does: ship the placeholder or the default, record it as an open checkbox, and go on. Before you end a turn, read the Status column: any other row means keep building, however long the plan. Under either pacing, a row reaches `Awaiting Verification` only when every agent-owned check passed. The row, not the agent, waits there for the dev.
+- **Pacing:** `gate-by-gate` (default) builds one row to `Awaiting Verification`, reports it, and waits for the dev's go before the next row. `whole plan` takes this file's defaults, verifies each page, and builds row after row without stopping until every row is at `Awaiting Verification` or blocked. Under `whole plan`, only a §Stop and ask state blocks. A missing asset or a question with a sensible default never does: ship the placeholder or the default, record it as an open checkbox, and go on. Under `whole plan`, before you end a turn, read the Status column: any other row means keep building, however long the plan. Under either pacing, a row reaches `Awaiting Verification` only when every agent-owned check passed. The row, not the agent, waits there for the dev.
 - When every row is verified, retire the plan. A new multi-page effort or a dev-requested re-audit recreates it from current state: passing pages `Awaiting Verification`, drifted pages `Planned` with their deltas named.
 - **No-plan work** covers one named page: state its source paths and open questions first; the final report carries the verification evidence and any unmet check. If the dev waived a required plan, note once that cross-session memory is lost.
-- **`NDS-REPORT.md`** (optional) holds NDS findings only: a missing API or event, a canon/rule/doc contradiction, a reproducible bug, a rule gap. Give the NDS version, instruction version, component, and a generic repro; never project markup, routes, or data.
+- **`NDS-REPORT.md`** holds NDS findings only: a missing API or event, a canon/rule/doc contradiction, a reproducible bug, a rule gap. Give the NDS version, instruction version, component, and a generic repro; never project markup, routes, or data.
 
 ## Build
 
@@ -140,10 +140,10 @@ When a plan is required, create `NDS-PLAN.md` at the project root, starting with
 2. **Page shape:** copy the shape's canon and swap the content; never recreate it from prose.
    - Layout state (the shape's classes) is in the first HTML the browser paints. One app serving two shapes (public pages and a console admin) sets each route's classes for that route only, before the framework mounts; never in a mount effect, never on every route.
    - A client-rendered app follows the page layout doc's framework rules for its mount element.
-   - Set both `<html lang>` and `dir`: Arabic → `ar`/`rtl`; others → `ltr`. A single-language site ships without the language switcher; a site in two languages keeps it.
+   - Set both `<html lang>` and `dir`: `rtl` for a right-to-left language (Arabic `ar`, Urdu `ur`, Persian `fa`), `ltr` for the rest. A single-language site ships without the language switcher; a site in two languages keeps it.
 3. **Brand:** the project logo replaces the template's; drop the brand text when the logo already carries the name.
 
-**Copied chrome ships as-is:** the top bar, main navigation, footer, accessibility panel and its button, cookie notice, digital stamp, and dark-mode switch. Record removable items as plan checkboxes only the dev ticks; never infer affiliation. The one exception is the digital stamp: it claims a government verification, so the plan review asks whether the site holds it, and it ships only if so. Before page #2, wire project-backed controls to real session, API, or route data; remove what the project cannot back. Never ship a fake identity or a dead widget: a copied link or control with no real target, such as a footer link with no page behind it, is removed even from chrome, with a plan checkbox naming it.
+**Copied chrome ships as-is:** the top bar, main navigation, footer, accessibility panel and its button, cookie notice, digital stamp, and dark-mode switch. Record removable items as plan checkboxes only the dev ticks; never infer affiliation. The one exception is the digital stamp: it claims a government verification, so the plan review asks whether the site holds it, and it ships only if so. Before page #2, wire project-backed controls to real session, API, or route data; remove what the project cannot back. Never ship an invented identity or a dead widget: a copied link or control with no real target, such as a footer link with no page behind it, is removed even from chrome, with a plan checkbox naming it.
 
 ### Composition cascade
 
@@ -178,7 +178,7 @@ Map every part a matched source ships to the project's data: a two-state field i
 
 - An existing page without a hero gets the sub hero; a heavy-text page gets its flat variant. The hero slider stays on home and hub pages.
 - A different required presentation picks a documented NDS variant first; it never changes a component's canonical anatomy.
-- Forms default to TWO input steps, form and review; add more only when the flow needs them. A terminal confirmation is not an input step: keep the success step the source ships.
+- A form that needs a confirmation before it submits, such as an application, a booking or a payment, ends with a review step; add input steps only when the flow needs them. A simple form, such as a contact form, stays one screen and shows a status or redirects after it sends. A terminal confirmation is not an input step: keep the success step the source ships.
 - Greenfield only: remove a template section the brief does not cover; never invent content to fill one.
 - Data scale follows the existing API: an endpoint that returns the full set → fetch once and let the NDS components filter, sort, page, and export in the browser; an endpoint that pages, sorts, or filters on the server → wire the NDS controls to its parameters. A shape that misfits the data → report it; backend changes are the dev's.
 
@@ -189,7 +189,7 @@ Map every part a matched source ships to the project's data: a two-state field i
 Before listening on NDS elements or writing NDS-owned attributes, read the component's JS API (the index names where). If NDS ships a behavior, use its methods and events; never rebuild it. Before hand-writing fetch, debounce, resize, state, text, or date logic, read the core APIs the index names.
 
 - Every request needs a visible failure path (form or component status, or an alert), exercised in §Verify.
-- If NDS has no surface you need, direct code is allowed: comment what you checked and add the finding to `NDS-REPORT.md`.
+- If NDS has no surface you need, direct code is allowed: comment what you checked.
 
 **Build exit gate.** Before §Verify:
 
@@ -255,11 +255,11 @@ An unmet item keeps the row `In Progress`; no-plan work reports the page unverif
 
 ## This file
 
-Two pieces: **`NDS-IQ.md`** at the project root, committed and replaced whole on update, from `https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/NDS-IQ.md`; and **the anchor** in `CLAUDE.md` / `AGENTS.md`, holding the only project paths and the read trigger, installed once.
+Two pieces: **`NDS-IQ.md`** at the project root, replaced whole on update, from `https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/NDS-IQ.md`; and **the anchor** in `CLAUDE.md` / `AGENTS.md`, holding the only project paths and the read trigger, installed once.
 
 **Update:** compare raw main's content with the project-root copy; any difference is a newer revision, installed on dev approval (an explicit update request is approval). Download with curl or the stack's HTTP client, never a web-fetch tool. Accept it only if line 1 starts `# NDS IQ`; otherwise discard and retry once, and after a second failure report it and keep the installed copy. Replace the root copy whole (no merging, anchor untouched), then read it again before continuing.
 
-**First install:** download the raw file to the project root, add the anchor with `NDS_ROOT=.nds/` and `NDS_ASSETS` as a placeholder until the plan review confirms it, commit both, then run the §Plan inventory, create `NDS-PLAN.md`, and ask the review. §Setup copies the runtime once the answers confirm `NDS_ASSETS`.
+**First install:** download the raw file to the project root, add the anchor with `NDS_ROOT=.nds/` and `NDS_ASSETS` as a placeholder until the plan review confirms it, then run the §Plan inventory, create `NDS-PLAN.md`, and ask the review. §Setup copies the runtime once the answers confirm `NDS_ASSETS`.
 
 The anchor, with `NDS_ASSETS` set to the project's static folder, relative to the project root:
 
