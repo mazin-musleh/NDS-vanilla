@@ -1,6 +1,6 @@
 /* NDS.Modal — public surface
- * Rides: <dialog> showModal() (the top layer, the dim layer, an inert page, focus return)
- *        through NDS.dialog, the core it shares with Panel
+ * Rides: <dialog> through NDS.dialog, the core it shares with Panel (the top layer, the dim
+ *        layer, an inert page, focus return)
  * Requires:
  *   [data-modal-target] points at .nds-modal via data-modal-target — the click opens nothing
  * Methods:

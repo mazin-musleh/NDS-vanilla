@@ -1,7 +1,6 @@
 /* NDS.Panel — public surface
  * Rides: <dialog> — show() for a plain or static panel (it stays under the main nav),
- *        showModal() through NDS.dialog for a modal one (the top layer, the dim layer,
- *        an inert page)
+ *        NDS.dialog for a modal one (the top layer, the dim layer, an inert page)
  * Methods:
  *   NDS.Panel.init() / .reinit()   bind the delegated toggles; prepare every .nds-panel
  *   NDS.Panel.create(panel)        prepare one panel
@@ -26,8 +25,7 @@
  *                       aria-disabled
  *   data-panel-size     sm | md | lg | xl on the panel (default md) — width of a side
  *                       panel, height cap of a sheet. Set it in markup to start there
- *   data-panel-modal    open with showModal(): the page behind, main nav too, is dimmed
- *                       and inert
+ *   data-panel-modal    open modal: the page behind, main nav too, is dimmed and inert
  *   data-panel-static   no ESC, no click-outside — it closes only through your own call
  *                       or a [data-panel-close] control
  * Gotchas:

@@ -818,7 +818,7 @@
             // A modal covers the sticky nav; anywhere else placement keeps clear of it.
             // ponytail: a Panel raised over the nav with its own --panel-z is not
             // detected; read the trigger's layer if one ever needs it.
-            this._respectNav = !this.trigger.closest('.nds-modal, dialog:modal');
+            this._respectNav = !this.trigger.closest('.nds-modal, dialog[data-nds-modal]');
 
             this.menu.removeAttribute('hidden');
             NDS.topLayer(this.menu, true);

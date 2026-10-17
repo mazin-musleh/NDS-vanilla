@@ -7,7 +7,7 @@
 // `data-panel-side` picks the edge: start/end are LOGICAL (flip with dir),
 // left/right/top/bottom are PHYSICAL (fixed). The panel is a <dialog>: a plain
 // one opens with show() and keeps --panel-z (under the main nav); a modal one
-// opens with showModal(), so the top layer puts it over everything.
+// opens through NDS.dialog, so the top layer puts it over everything.
 
 @use '../mixins' as *;
 
@@ -72,7 +72,7 @@
     }
 
     // A modal panel covers the main nav, so it runs full height.
-    &:modal {
+    &[data-nds-modal] {
         --_panel-top: var(--panel-top, 0px);
     }
 

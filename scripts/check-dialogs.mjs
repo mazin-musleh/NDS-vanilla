@@ -3,10 +3,29 @@
 // a Modal over a modal panel (one dim layer), a panel opened over a modal (it opens modal too),
 // the scroll lock count, and destroy() while open.
 //   node scripts/check-dialogs.mjs [baseUrl]    ENGINE=webkit for Safari
+//   NO_POPOVER=1 plays a browser without popover (Safari < 17): no popover methods, :popover-open throws
 import { launch, ENGINE } from './lib/browser.mjs';
 const BASE = (process.argv[2] || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
+const NO_POPOVER = !!process.env.NO_POPOVER;
+const noPopover = () => {
+  for (const k of ['showPopover', 'hidePopover', 'togglePopover', 'popover']) delete HTMLElement.prototype[k];
+  const guard = (proto, name) => {
+    const fn = proto[name];
+    proto[name] = function (sel, ...rest) {
+      if (/:popover-open/.test(sel)) throw new DOMException(`'${sel}' is not a valid selector.`, 'SyntaxError');
+      return fn.call(this, sel, ...rest);
+    };
+  };
+  for (const proto of [Element.prototype, Document.prototype, DocumentFragment.prototype]) for (const n of ['querySelector', 'querySelectorAll']) guard(proto, n);
+  for (const n of ['matches', 'closest']) guard(Element.prototype, n);
+};
 const browser = await launch();
-const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+const newPage = async () => {
+  const p = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+  if (NO_POPOVER) await p.addInitScript(noPopover);
+  return p;
+};
+const page = await newPage();
 const errors = [];
 page.on('pageerror', (e) => { if (!/ResizeObserver loop/.test(e.message)) errors.push(e.message); });
 page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
@@ -42,7 +61,7 @@ await wait(800);
 
 const st = (id) => page.evaluate((id) => {
   const d = document.getElementById(id), r = d.getBoundingClientRect();
-  return { open: d.open, modal: d.matches(':modal'), state: d.getAttribute('data-state') || '', under: d.hasAttribute('data-nds-under'),
+  return { open: d.open, modal: d.hasAttribute('data-nds-modal') && (d.matches(':modal') || ('showPopover' in HTMLElement.prototype && d.matches(':popover-open'))), state: d.getAttribute('data-state') || '', under: d.hasAttribute('data-nds-under'),
     shown: getComputedStyle(d).display !== 'none', top: Math.round(r.top), left: Math.round(r.left), right: Math.round(r.right),
     locked: document.body.hasAttribute('data-nds-scroll-lock'), topDialog: NDS.dialog.top()?.id, focusIn: d.contains(document.activeElement) };
 }, id);
@@ -106,18 +125,23 @@ ok('static: its close control closes it', !(await st('ts')).open);
 await open('tmp');
 s = await st('tmp');
 ok('modal panel: showModal(), full height, scroll locked', s.modal && s.top === 0 && s.locked, JSON.stringify(s));
-ok('modal panel: the page behind is inert', await page.evaluate(() => {
-  const r = document.getElementById('tmp').getBoundingClientRect();
-  const el = document.elementFromPoint(r.left > 400 ? 60 : 1220, 500);
-  return el === document.getElementById('tmp');
-}));
+// Inert lands two frames after the open (the showModal() fallback: at once); wait() covers it.
+ok('modal panel: the page behind is inert', await page.evaluate(() =>
+  !!document.querySelector('main').closest('[inert]') || document.getElementById('tmp').matches(':modal')));
 await key();
 s = await st('tmp');
 ok('modal panel: Escape closes it and gives the scroll back', !s.open && !s.locked, JSON.stringify(s));
+await page.evaluate(() => { window.__behind = 0; document.querySelector('main').addEventListener('click', () => window.__behind++); });
 await open('tmp');
 await clickOutside('tmp');
 s = await st('tmp');
 ok('modal panel: a click on the dim layer closes it', !s.open && !s.locked, JSON.stringify(s));
+// Before the page is inert, the click must not reach it either.
+await page.evaluate(() => NDS.Panel.open('tmp'));
+await page.mouse.click(1220, 500);
+await wait();
+s = await st('tmp');
+ok('modal panel: a click in the first frame closes it, the page behind gets none', !s.open && await page.evaluate(() => window.__behind === 0), JSON.stringify(s));
 await open('tsm');
 await key();
 ok('static modal panel: Escape does not close it', (await st('tsm')).open);
@@ -230,7 +254,7 @@ ok('lazy: it closes and gives the scroll back', !s.open && !s.locked, JSON.strin
 ok('no page errors', errors.length === 0, errors.join(' | '));
 
 // Script-built panels, on a fresh page with the cookie script running.
-const page2 = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+const page2 = await newPage();
 const errors2 = [];
 page2.on('pageerror', (e) => { if (!/ResizeObserver loop/.test(e.message)) errors2.push(e.message); });
 page2.on('console', (m) => { if (m.type() === 'error') errors2.push(m.text()); });
@@ -239,7 +263,7 @@ await page2.waitForFunction(() => window.NDS?.Init?.mount);
 const cookie = await page2.waitForSelector('#nds-cookies-panel[open]', { timeout: 10000 }).then(() => true, () => false);
 const c = await page2.evaluate(() => {
   const d = document.getElementById('nds-cookies-panel');
-  return d && { tag: d.tagName, modal: d.matches(':modal'), shown: getComputedStyle(d).display !== 'none', focusIn: d.contains(document.activeElement) };
+  return d && { tag: d.tagName, modal: d.hasAttribute('data-nds-modal'), shown: getComputedStyle(d).display !== 'none', focusIn: d.contains(document.activeElement) };
 });
 ok('cookie panel: opens at idle as a plain <dialog>, focus left alone', cookie && c.tag === 'DIALOG' && !c.modal && c.shown && !c.focusIn, JSON.stringify(c));
 await page2.evaluate(() => { const d = document.getElementById('nds-cookies-panel'); NDS.Panel.destroy(d); d.remove(); });
@@ -254,6 +278,11 @@ ok('accessibility panel: built from its template on the first click, opens', a &
 await page2.keyboard.press('Escape');
 await page2.waitForTimeout(600);
 ok('accessibility panel: Escape closes it', !(await page2.evaluate(() => document.getElementById('nds-accessibility-panel').open)));
+await page2.click('main [data-panel-toggle="nds-accessibility-panel"]');
+await page2.waitForTimeout(800);
+ok('accessibility panel: it opens again after a close', await page2.evaluate(() => document.getElementById('nds-accessibility-panel').open));
+await page2.keyboard.press('Escape');
+await page2.waitForTimeout(600);
 ok('no page errors (script-built panels)', errors2.length === 0, errors2.join(' | '));
 console.log(`\n${ENGINE}: ${fails ? fails + ' failed' : 'all passed'}`);
 await browser.close();
