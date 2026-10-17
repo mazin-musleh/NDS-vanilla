@@ -25,12 +25,25 @@ hideFeedback: true
             <h2 class="nds-section-title">Sara Al-Otaibi</h2>
             <p class="nds-section-description">Bachelor of Accounting, level 6</p>
         </div>
-        <div class="nds-section-action">
-            <button type="button" class="nds-btn nds-secondary-outline" data-modal-target="standing-modal">
-                <span class="nds-label">Academic standing</span>
-            </button>
-        </div>
         <div class="nds-section-body">
+            <div class="nds-alert nds-card nds-block" data-status="success" role="alert">
+                <span class="nds-feedback nds-alert-icon nds-outline">
+                    <span class="nds-feedback-icon">
+                        <i class="nds-icon" aria-hidden="true"></i>
+                    </span>
+                </span>
+                <div class="nds-alert-content">
+                    <div class="nds-alert-text">
+                        <span class="nds-alert-title">No academic warnings</span>
+                        <p class="nds-alert-description">Your record has no warnings or suspensions.</p>
+                    </div>
+                    <div class="nds-alert-actions">
+                        <button type="button" class="nds-btn nds-subtle nds-sm" data-modal-target="standing-modal">
+                            <span class="nds-label">Academic standing</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
             <dl class="nds-definition-list nds-grid nds-highlight-value nds-sm" style="--max-col: 4; --mid-col: 2; --min-col: 1;">
                 <div class="nds-definition-item">
                     <dt>
@@ -103,71 +116,71 @@ hideFeedback: true
         <div class="nds-section-body">
             <div class="nds-grid" style="--max-col: 2; --min-col: 1;">
                 <div class="nds-card nds-stroke">
-                <div class="nds-card nds-full nds-flush" data-status="positive">
-                    <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-sm">
-                                <i class="hgi hgi-stroke hgi-mortarboard-01" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                        <div class="nds-card-text nds-md">
-                            <span class="nds-card-title">Cumulative GPA</span>
-                        </div>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-metric">
-                            <div class="nds-card-metric-info">
-                                <span class="nds-card-metric-value">3.42 / 4</span>
-                                <p class="nds-card-metric-trend">
-                                    <i class="nds-icon nds-hgi-trade-up" aria-hidden="true"></i>
-                                    <strong>+0.12</strong>
-                                    <span class="nds-card-metric-text">since last term</span>
-                                </p>
+                    <div class="nds-card nds-full nds-flush" data-status="positive">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-sm">
+                                    <i class="hgi hgi-stroke hgi-mortarboard-01" aria-hidden="true"></i>
+                                </span>
                             </div>
-                            <div class="nds-card-metric-chart">
-                                <div class="nds-chart"
-                                    data-chart-type="line"
-                                    data-chart-series='[{"name":"GPA","data":[3.05,3.12,3.2,3.18,3.3,3.42]}]'
-                                    data-chart-labels='["Term 1","Term 2","Term 3","Term 4","Term 5","Term 6"]'
-                                    data-chart-config='{"height":110,"legend":{"show":false},"xaxis":{"show":false},"yaxis":{"show":false},"line":{"smooth":true,"area":true,"dots":true},"grid":{"show":false},"padding":{"top":0,"bottom":0,"left":0,"right":0}}'>
+                            <div class="nds-card-text nds-md">
+                                <span class="nds-card-title">Cumulative GPA</span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-metric">
+                                <div class="nds-card-metric-info">
+                                    <span class="nds-card-metric-value">3.42 / 4</span>
+                                    <p class="nds-card-metric-trend">
+                                        <i class="nds-icon nds-hgi-trade-up" aria-hidden="true"></i>
+                                        <strong>+0.12</strong>
+                                        <span class="nds-card-metric-text">since last term</span>
+                                    </p>
+                                </div>
+                                <div class="nds-card-metric-chart">
+                                    <div class="nds-chart"
+                                        data-chart-type="line"
+                                        data-chart-series='[{"name":"GPA","data":[3.05,3.12,3.2,3.18,3.3,3.42]}]'
+                                        data-chart-labels='["Term 1","Term 2","Term 3","Term 4","Term 5","Term 6"]'
+                                        data-chart-config='{"height":110,"legend":{"show":false},"xaxis":{"show":false},"yaxis":{"show":false},"line":{"smooth":true,"area":true,"dots":true},"grid":{"show":false},"padding":{"top":0,"bottom":0,"left":0,"right":0}}'>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <hr class="nds-divider">
-                <div class="nds-card nds-full nds-flush" data-status="negative">
-                    <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-sm">
-                                <i class="hgi hgi-stroke hgi-chart-increase" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                        <div class="nds-card-text nds-md">
-                            <span class="nds-card-title">Last term GPA</span>
-                        </div>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-metric">
-                            <div class="nds-card-metric-info">
-                                <span class="nds-card-metric-value">3.28 / 4</span>
-                                <p class="nds-card-metric-trend">
-                                    <i class="nds-icon nds-hgi-trade-down" aria-hidden="true"></i>
-                                    <strong>-0.21</strong>
-                                    <span class="nds-card-metric-text">from the term before</span>
-                                </p>
+                    <hr class="nds-divider">
+                    <div class="nds-card nds-full nds-flush" data-status="negative">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-sm">
+                                    <i class="hgi hgi-stroke hgi-chart-increase" aria-hidden="true"></i>
+                                </span>
                             </div>
-                            <div class="nds-card-metric-chart">
-                                <div class="nds-chart"
-                                    data-chart-type="line"
-                                    data-chart-series='[{"name":"Term GPA","data":[3.05,3.2,3.36,3.12,3.49,3.28]}]'
-                                    data-chart-labels='["Term 1","Term 2","Term 3","Term 4","Term 5","Term 6"]'
-                                    data-chart-config='{"height":110,"legend":{"show":false},"xaxis":{"show":false},"yaxis":{"show":false},"line":{"smooth":true,"area":true,"dots":true},"grid":{"show":false},"padding":{"top":0,"bottom":0,"left":0,"right":0}}'>
+                            <div class="nds-card-text nds-md">
+                                <span class="nds-card-title">Last term GPA</span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-metric">
+                                <div class="nds-card-metric-info">
+                                    <span class="nds-card-metric-value">3.28 / 4</span>
+                                    <p class="nds-card-metric-trend">
+                                        <i class="nds-icon nds-hgi-trade-down" aria-hidden="true"></i>
+                                        <strong>-0.21</strong>
+                                        <span class="nds-card-metric-text">from the term before</span>
+                                    </p>
+                                </div>
+                                <div class="nds-card-metric-chart">
+                                    <div class="nds-chart"
+                                        data-chart-type="line"
+                                        data-chart-series='[{"name":"Term GPA","data":[3.05,3.2,3.36,3.12,3.49,3.28]}]'
+                                        data-chart-labels='["Term 1","Term 2","Term 3","Term 4","Term 5","Term 6"]'
+                                        data-chart-config='{"height":110,"legend":{"show":false},"xaxis":{"show":false},"yaxis":{"show":false},"line":{"smooth":true,"area":true,"dots":true},"grid":{"show":false},"padding":{"top":0,"bottom":0,"left":0,"right":0}}'>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
@@ -186,22 +199,24 @@ hideFeedback: true
                         </div>
                     </div>
                     <div class="nds-card-content">
-                        <div class="nds-grid" style="--max-track: auto 1fr; --min-track: 1fr; --align: center;">
-                            <div class="nds-progress-circle nds-lg" data-value="73" role="progressbar" aria-labelledby="degree-progress-title degree-progress-text">
-                                <svg width="160" height="160" viewBox="0 0 24 24">
-                                    <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
-                                    <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
-                                        stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
-                                </svg>
-                                <div class="nds-progress-info">
-                                    <span class="nds-progress-percentage">
-                                        <span class="nds-progress-number"></span>
-                                        <span class="nds-progress-symbol">%</span>
-                                    </span>
-                                    <span class="nds-progress-text" id="degree-progress-text">done</span>
+                        <div class="nds-flex nds-col" style="--gap: var(--spacing-2xl);">
+                            <div class="nds-flex nds-center">
+                                <div class="nds-progress-circle nds-xl" data-value="73" role="progressbar" aria-labelledby="degree-progress-title degree-progress-text">
+                                    <svg width="160" height="160" viewBox="0 0 24 24">
+                                        <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
+                                        <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
+                                    </svg>
+                                    <div class="nds-progress-info">
+                                        <span class="nds-progress-percentage">
+                                            <span class="nds-progress-number"></span>
+                                            <span class="nds-progress-symbol">%</span>
+                                        </span>
+                                        <span class="nds-progress-text" id="degree-progress-text">done</span>
+                                    </div>
                                 </div>
                             </div>
-                            <dl class="nds-definition-list nds-divided">
+                            <dl class="nds-definition-list nds-divided nds-highlight-value">
                                 <div class="nds-definition-item">
                                     <dt>
                                         <i class="hgi hgi-stroke hgi-library" aria-hidden="true"></i>
@@ -240,7 +255,7 @@ hideFeedback: true
             <p class="nds-section-description">Your classes for today and the requests you sent.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-grid" style="--max-col: 2; --min-col: 1;">
+            <div class="nds-grid" style="--max-track: 1fr 2fr; --mid-track: 1fr;">
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
@@ -260,73 +275,46 @@ hideFeedback: true
                         </div>
                     </div>
                     <div class="nds-card-content">
-                        <div class="nds-drawer nds-divided nds-fit nds-breakout">
-                            <ul class="nds-drawer-list" aria-label="Today's classes">
-                                <li data-status="warning">
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <span class="nds-featured-icon nds-sm">
-                                            <i class="hgi hgi-stroke hgi-laptop" aria-hidden="true"></i>
-                                        </span>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-tag" data-status="warning">
-                                                    <span class="nds-label">Now</span>
-                                                </span>
-                                                <span class="nds-label">ACCT 301 · Managerial Accounting</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>8:00 – 8:50 AM</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-teacher" aria-hidden="true"></i>Dr. Khalid Al-Harbi</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-computer" aria-hidden="true"></i>Online</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <span class="nds-featured-icon nds-sm">
-                                            <i class="hgi hgi-stroke hgi-presentation-01" aria-hidden="true"></i>
-                                        </span>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-tag" data-status="info">
-                                                    <span class="nds-label">Next</span>
-                                                </span>
-                                                <span class="nds-label">FIN 320 · Corporate Finance</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>10:00 – 11:15 AM</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-teacher" aria-hidden="true"></i>Dr. Nora Al-Qahtani</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Building 3, Room 214</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <span class="nds-featured-icon nds-sm">
-                                            <i class="hgi hgi-stroke hgi-presentation-01" aria-hidden="true"></i>
-                                        </span>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-tag" data-status="neutral">
-                                                    <span class="nds-label">Later</span>
-                                                </span>
-                                                <span class="nds-label">MGT 310 · Organizational Behavior</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>1:00 – 2:15 PM</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-teacher" aria-hidden="true"></i>Dr. Faisal Al-Dosari</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Building 1, Room 108</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
+                        <div class="nds-stepper nds-vertical nds-dot nds-empty" data-current="1" data-empty-message="No classes today" data-empty-icon="hgi hgi-stroke hgi-calendar-03">
+                            <div class="nds-stepper-step">
+                                <div class="nds-stepper-base">
+                                    <div class="nds-stepper-circle" data-step-text="1"></div>
+                                </div>
+                                <div class="nds-stepper-content nds-card">
+                                    <div class="nds-divider">8:00 – 8:50 AM</div>
+                                    <div class="nds-stepper-text">
+                                        <span class="nds-stepper-title">ACCT 301 · Managerial Accounting</span>
+                                        <span class="nds-stepper-description">Dr. Khalid Al-Harbi · Online</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-stepper-step">
+                                <div class="nds-stepper-base">
+                                    <div class="nds-stepper-circle" data-step-text="2"></div>
+                                </div>
+                                <div class="nds-stepper-content nds-card">
+                                    <div class="nds-divider">10:00 – 11:15 AM</div>
+                                    <div class="nds-stepper-text">
+                                        <span class="nds-stepper-title">FIN 320 · Corporate Finance</span>
+                                        <span class="nds-stepper-description">Dr. Nora Al-Qahtani · Building 3, Room 214</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-stepper-step">
+                                <div class="nds-stepper-base">
+                                    <div class="nds-stepper-circle" data-step-text="3"></div>
+                                </div>
+                                <div class="nds-stepper-content nds-card">
+                                    <div class="nds-divider">1:00 – 2:15 PM</div>
+                                    <div class="nds-stepper-text">
+                                        <span class="nds-stepper-title">MGT 310 · Organizational Behavior</span>
+                                        <span class="nds-stepper-description">Dr. Faisal Al-Dosari · Building 1, Room 108</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
@@ -346,86 +334,79 @@ hideFeedback: true
                         </div>
                     </div>
                     <div class="nds-card-content">
-                        <div class="nds-drawer nds-divided nds-breakout">
-                            <ul class="nds-drawer-list" aria-label="My requests">
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <span class="nds-featured-icon nds-sm">
-                                            <i class="hgi hgi-stroke hgi-file-validation" aria-hidden="true"></i>
+                        <table class="nds-table nds-empty" data-empty-message="You have not sent any requests">
+                            <thead>
+                                <tr>
+                                    <th>Request</th>
+                                    <th>Reference</th>
+                                    <th>Sent</th>
+                                    <th data-align="center">Status</th>
+                                    <th class="nds-actions-column">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Exam absence excuse</td>
+                                    <td>REQ-2026-0412</td>
+                                    <td>12/10/2026</td>
+                                    <td data-align="center">
+                                        <span class="nds-tag nds-sm" data-status="warning">
+                                            <span class="nds-label">In review</span>
                                         </span>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-tag" data-status="warning">
-                                                    <span class="nds-label">In review</span>
-                                                </span>
-                                                <span class="nds-label">Exam absence excuse</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0412</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 12 Oct 2026</span>
-                                            </span>
+                                    </td>
+                                    <td class="nds-actions-column">
+                                        <a href="#" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="Details of REQ-2026-0412">
+                                            <i class="hgi hgi-stroke hgi-view" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Change of section</td>
+                                    <td>REQ-2026-0398</td>
+                                    <td>05/10/2026</td>
+                                    <td data-align="center">
+                                        <span class="nds-tag nds-sm" data-status="info">
+                                            <span class="nds-label">Action needed</span>
                                         </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <span class="nds-featured-icon nds-sm">
-                                            <i class="hgi hgi-stroke hgi-task-edit-01" aria-hidden="true"></i>
+                                    </td>
+                                    <td class="nds-actions-column">
+                                        <a href="#" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="Details of REQ-2026-0398">
+                                            <i class="hgi hgi-stroke hgi-view" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Enrollment letter</td>
+                                    <td>REQ-2026-0371</td>
+                                    <td>28/09/2026</td>
+                                    <td data-align="center">
+                                        <span class="nds-tag nds-sm" data-status="success">
+                                            <span class="nds-label">Done</span>
                                         </span>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-tag" data-status="info">
-                                                    <span class="nds-label">Action needed</span>
-                                                </span>
-                                                <span class="nds-label">Change of section</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0398</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 5 Oct 2026</span>
-                                            </span>
+                                    </td>
+                                    <td class="nds-actions-column">
+                                        <a href="#" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="Details of REQ-2026-0371">
+                                            <i class="hgi hgi-stroke hgi-view" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Course withdrawal</td>
+                                    <td>REQ-2026-0355</td>
+                                    <td>21/09/2026</td>
+                                    <td data-align="center">
+                                        <span class="nds-tag nds-sm" data-status="error">
+                                            <span class="nds-label">Rejected</span>
                                         </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <span class="nds-featured-icon nds-sm">
-                                            <i class="hgi hgi-stroke hgi-mail-account-01" aria-hidden="true"></i>
-                                        </span>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-tag" data-status="success">
-                                                    <span class="nds-label">Done</span>
-                                                </span>
-                                                <span class="nds-label">Enrollment letter</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0371</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 28 Sep 2026</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <span class="nds-featured-icon nds-sm">
-                                            <i class="hgi hgi-stroke hgi-calendar-remove-01" aria-hidden="true"></i>
-                                        </span>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-tag" data-status="error">
-                                                    <span class="nds-label">Rejected</span>
-                                                </span>
-                                                <span class="nds-label">Course withdrawal</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>REQ-2026-0355</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-01" aria-hidden="true"></i>Sent 21 Sep 2026</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                                    </td>
+                                    <td class="nds-actions-column">
+                                        <a href="#" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="Details of REQ-2026-0355">
+                                            <i class="hgi hgi-stroke hgi-view" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="nds-card-actions">
                         <a href="#" class="nds-btn nds-secondary-outline nds-md">
@@ -439,20 +420,20 @@ hideFeedback: true
     </div>
 </section>
 
-<!-- Exams and calendar -->
-<section id="exams" class="nds-content-section">
+<!-- Coming up -->
+<section id="coming-up" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Exams</h2>
-            <p class="nds-section-description">Final exams for the first term of 2026–2027, and your midterm results.</p>
+            <h2 class="nds-section-title">Coming Up</h2>
+            <p class="nds-section-description">Your exams and the key dates of the first term, 2026–2027.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-grid" style="--max-col: 2; --min-col: 1;">
+            <div class="nds-grid" style="--max-track: 2fr 1fr; --mid-track: 1fr;">
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-sm">
-                        <i class="hgi hgi-stroke hgi-task-done-02" aria-hidden="true"></i>
+                                <i class="hgi hgi-stroke hgi-task-done-02" aria-hidden="true"></i>
                             </span>
                         </div>
                         <div class="nds-card-text nds-md">
@@ -462,101 +443,199 @@ hideFeedback: true
                                     <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                                 </a>
                             </div>
-                            <span class="nds-card-title">Final exams</span>
-                            <p class="nds-card-description">Four exams over five days.</p>
+                            <span class="nds-card-title">Exams</span>
+                            <p class="nds-card-description">Four finals over five days. Your midterms are graded.</p>
                         </div>
                     </div>
                     <div class="nds-card-content">
-                        <span class="nds-meta">
-                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-hourglass" aria-hidden="true"></i><span class="nds-countdown" data-countdown="2026-12-13T09:00">First exam in <span class="nds-countdown-value" data-unit="d">--</span> days</span></span>
-                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i>Exam period: 13 – 17 Dec 2026</span>
-                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Riyadh, women's campus</span>
-                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-identity-card" aria-hidden="true"></i>Bring your student ID card</span>
-                        </span>
-                        <div class="nds-drawer nds-divided nds-fit nds-breakout">
-                            <ul class="nds-drawer-list" aria-label="Final exams">
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <time class="nds-date-tile" datetime="2026-12-13">
-                                            <span class="nds-date-tile-weekday">Sun</span>
-                                            <span class="nds-date-tile-day">13</span>
-                                            <span class="nds-date-tile-month">Dec</span>
-                                        </time>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-tag" data-status="warning">
-                                                    <span class="nds-label">First</span>
-                                                </span>
-                                                <span class="nds-label">ACCT 301 · Managerial Accounting</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 – 11:00 AM, 2 hours</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Exam Hall A-12</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-identity-card" aria-hidden="true"></i>Seat 34</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <time class="nds-date-tile" datetime="2026-12-14">
-                                            <span class="nds-date-tile-weekday">Mon</span>
-                                            <span class="nds-date-tile-day">14</span>
-                                            <span class="nds-date-tile-month">Dec</span>
-                                        </time>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-label">FIN 320 · Corporate Finance</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>1:00 – 3:00 PM, 2 hours</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Exam Hall B-04</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-identity-card" aria-hidden="true"></i>Seat 17</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <time class="nds-date-tile" datetime="2026-12-16">
-                                            <span class="nds-date-tile-weekday">Wed</span>
-                                            <span class="nds-date-tile-day">16</span>
-                                            <span class="nds-date-tile-month">Dec</span>
-                                        </time>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-tag" data-status="info">
-                                                    <span class="nds-label">Online</span>
-                                                </span>
-                                                <span class="nds-label">MGT 310 · Organizational Behavior</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 – 10:30 AM, 90 minutes</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-computer" aria-hidden="true"></i>Online exam portal</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <time class="nds-date-tile" datetime="2026-12-17">
-                                            <span class="nds-date-tile-weekday">Thu</span>
-                                            <span class="nds-date-tile-day">17</span>
-                                            <span class="nds-date-tile-month">Dec</span>
-                                        </time>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-label">STAT 201 · Business Statistics</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 – 11:00 AM, 2 hours</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Exam Hall A-07</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-identity-card" aria-hidden="true"></i>Seat 52</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
+                        <div class="nds-tabs nds-content-switcher nds-sm">
+                            <div class="nds-tab-list" role="tablist" aria-label="Exam type">
+                                <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="true" aria-controls="exam-finals-panel" id="exam-finals-tab" tabindex="0">
+                                    <span class="nds-label">Finals</span>
+                                </button>
+                                <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="false" aria-controls="exam-midterms-panel" id="exam-midterms-tab" tabindex="-1">
+                                    <span class="nds-label">Midterms</span>
+                                </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel" role="tabpanel" id="exam-finals-panel" aria-labelledby="exam-finals-tab" tabindex="0">
+                                    <span class="nds-meta">
+                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-hourglass" aria-hidden="true"></i><span class="nds-countdown" data-countdown="2026-12-13T09:00">First exam in <span class="nds-countdown-value" data-unit="d">--</span> days</span></span>
+                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i>Exam period: 13 – 17 Dec 2026</span>
+                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Riyadh, women's campus</span>
+                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-identity-card" aria-hidden="true"></i>Bring your student ID card</span>
+                                    </span>
+                                    <div class="nds-drawer nds-divided nds-fit nds-breakout">
+                                        <ul class="nds-drawer-list nds-empty" aria-label="Final exams" data-empty-message="No final exams this term">
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle">
+                                                    <time class="nds-date-tile" datetime="2026-12-13">
+                                                        <span class="nds-date-tile-weekday">Sun</span>
+                                                        <span class="nds-date-tile-day">13</span>
+                                                        <span class="nds-date-tile-month">Dec</span>
+                                                    </time>
+                                                    <span class="nds-drawer-item">
+                                                        <span class="nds-drawer-item-head">
+                                                            <span class="nds-tag" data-status="warning">
+                                                                <span class="nds-label">First</span>
+                                                            </span>
+                                                            <span class="nds-label">ACCT 301 · Managerial Accounting</span>
+                                                        </span>
+                                                        <span class="nds-meta">
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 – 11:00 AM, 2 hours</span>
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Exam Hall A-12</span>
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-identity-card" aria-hidden="true"></i>Seat 34</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle">
+                                                    <time class="nds-date-tile" datetime="2026-12-14">
+                                                        <span class="nds-date-tile-weekday">Mon</span>
+                                                        <span class="nds-date-tile-day">14</span>
+                                                        <span class="nds-date-tile-month">Dec</span>
+                                                    </time>
+                                                    <span class="nds-drawer-item">
+                                                        <span class="nds-drawer-item-head">
+                                                            <span class="nds-label">FIN 320 · Corporate Finance</span>
+                                                        </span>
+                                                        <span class="nds-meta">
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>1:00 – 3:00 PM, 2 hours</span>
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Exam Hall B-04</span>
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-identity-card" aria-hidden="true"></i>Seat 17</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle">
+                                                    <time class="nds-date-tile" datetime="2026-12-16">
+                                                        <span class="nds-date-tile-weekday">Wed</span>
+                                                        <span class="nds-date-tile-day">16</span>
+                                                        <span class="nds-date-tile-month">Dec</span>
+                                                    </time>
+                                                    <span class="nds-drawer-item">
+                                                        <span class="nds-drawer-item-head">
+                                                            <span class="nds-tag" data-status="info">
+                                                                <span class="nds-label">Online</span>
+                                                            </span>
+                                                            <span class="nds-label">MGT 310 · Organizational Behavior</span>
+                                                        </span>
+                                                        <span class="nds-meta">
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 – 10:30 AM, 90 minutes</span>
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-computer" aria-hidden="true"></i>Online exam portal</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle">
+                                                    <time class="nds-date-tile" datetime="2026-12-17">
+                                                        <span class="nds-date-tile-weekday">Thu</span>
+                                                        <span class="nds-date-tile-day">17</span>
+                                                        <span class="nds-date-tile-month">Dec</span>
+                                                    </time>
+                                                    <span class="nds-drawer-item">
+                                                        <span class="nds-drawer-item-head">
+                                                            <span class="nds-label">STAT 201 · Business Statistics</span>
+                                                        </span>
+                                                        <span class="nds-meta">
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 – 11:00 AM, 2 hours</span>
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Exam Hall A-07</span>
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-identity-card" aria-hidden="true"></i>Seat 52</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="nds-tab-panel" role="tabpanel" id="exam-midterms-panel" aria-labelledby="exam-midterms-tab" tabindex="-1" hidden>
+                                    <div class="nds-progress-bar nds-md" data-value="88" role="progressbar" aria-labelledby="midterm-average">
+                                        <span class="nds-progress-label" id="midterm-average">Average: 70 of 80 marks, 88%</span>
+                                        <div class="nds-progress-track">
+                                            <div class="nds-progress-fill"></div>
+                                        </div>
+                                    </div>
+                                    <div class="nds-drawer nds-divided nds-fit nds-breakout">
+                                        <ul class="nds-drawer-list nds-empty" aria-label="Midterm results" data-empty-message="No midterm results yet">
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle">
+                                                    <time class="nds-date-tile" datetime="2026-10-04">
+                                                        <span class="nds-date-tile-weekday">Sun</span>
+                                                        <span class="nds-date-tile-day">4</span>
+                                                        <span class="nds-date-tile-month">Oct</span>
+                                                    </time>
+                                                    <span class="nds-drawer-item">
+                                                        <span class="nds-drawer-item-head">
+                                                            <span class="nds-label">ACCT 301 · Managerial Accounting</span>
+                                                        </span>
+                                                        <span class="nds-meta">
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-checkmark-badge-01" aria-hidden="true"></i>17 of 20</span>
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-percent-square" aria-hidden="true"></i>20% of the final grade</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle">
+                                                    <time class="nds-date-tile" datetime="2026-10-05">
+                                                        <span class="nds-date-tile-weekday">Mon</span>
+                                                        <span class="nds-date-tile-day">5</span>
+                                                        <span class="nds-date-tile-month">Oct</span>
+                                                    </time>
+                                                    <span class="nds-drawer-item">
+                                                        <span class="nds-drawer-item-head">
+                                                            <span class="nds-label">FIN 320 · Corporate Finance</span>
+                                                        </span>
+                                                        <span class="nds-meta">
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-checkmark-badge-01" aria-hidden="true"></i>18 of 20</span>
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-percent-square" aria-hidden="true"></i>20% of the final grade</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle">
+                                                    <time class="nds-date-tile" datetime="2026-10-06">
+                                                        <span class="nds-date-tile-weekday">Tue</span>
+                                                        <span class="nds-date-tile-day">6</span>
+                                                        <span class="nds-date-tile-month">Oct</span>
+                                                    </time>
+                                                    <span class="nds-drawer-item">
+                                                        <span class="nds-drawer-item-head">
+                                                            <span class="nds-label">MGT 310 · Organizational Behavior</span>
+                                                        </span>
+                                                        <span class="nds-meta">
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-checkmark-badge-01" aria-hidden="true"></i>16 of 20</span>
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-percent-square" aria-hidden="true"></i>20% of the final grade</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle">
+                                                    <time class="nds-date-tile" datetime="2026-10-07">
+                                                        <span class="nds-date-tile-weekday">Wed</span>
+                                                        <span class="nds-date-tile-day">7</span>
+                                                        <span class="nds-date-tile-month">Oct</span>
+                                                    </time>
+                                                    <span class="nds-drawer-item">
+                                                        <span class="nds-drawer-item-head">
+                                                            <span class="nds-label">STAT 201 · Business Statistics</span>
+                                                        </span>
+                                                        <span class="nds-meta">
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-checkmark-badge-01" aria-hidden="true"></i>19 of 20</span>
+                                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-percent-square" aria-hidden="true"></i>20% of the final grade</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -564,212 +643,159 @@ hideFeedback: true
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-sm">
-                                <i class="hgi hgi-stroke hgi-school-report-card" aria-hidden="true"></i>
+                                <i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i>
                             </span>
                         </div>
                         <div class="nds-card-text nds-md">
                             <div class="nds-card-corner">
                                 <a href="#" class="nds-btn nds-subtle nds-sm">
-                                    <span class="nds-label">All grades</span>
+                                    <span class="nds-label">Full calendar</span>
                                     <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                                 </a>
                             </div>
-                            <span class="nds-card-title">Midterm results</span>
-                            <p class="nds-card-description">All four exams are graded.</p>
+                            <span class="nds-card-title">Key dates</span>
+                            <p class="nds-card-description">First term, 1448 AH. Course withdrawal is open until 22 Oct.</p>
                         </div>
                     </div>
                     <div class="nds-card-content">
-                        <div class="nds-progress-bar nds-md" data-value="88" role="progressbar" aria-labelledby="midterm-average">
-                            <span class="nds-progress-label" id="midterm-average">Average: 70 of 80 marks, 88%</span>
-                            <div class="nds-progress-track">
-                                <div class="nds-progress-fill"></div>
+                        <div class="nds-scroll-more nds-fit">
+                            <div class="nds-scroll-more-content">
+                                <div class="nds-drawer nds-divided">
+                                    <ul class="nds-drawer-list nds-empty" aria-label="Key dates" data-empty-message="No key dates this term">
+                                        <li>
+                                            <a href="#" class="nds-btn nds-subtle">
+                                                <time class="nds-date-tile" datetime="2026-10-22">
+                                                    <span class="nds-date-tile-weekday">Thu</span>
+                                                    <span class="nds-date-tile-day">22</span>
+                                                    <span class="nds-date-tile-month">Oct</span>
+                                                </time>
+                                                <span class="nds-drawer-item">
+                                                    <span class="nds-drawer-item-head">
+                                                        <span class="nds-tag" data-status="warning">
+                                                            <span class="nds-label">Next week</span>
+                                                        </span>
+                                                        <span class="nds-label">Last day to withdraw from a course</span>
+                                                    </span>
+                                                    <span class="nds-meta">
+                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>11 Jumada I 1448 AH</span>
+                                                    </span>
+                                                    <span class="nds-description">After this day, a withdrawal counts as a fail.</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="nds-btn nds-subtle">
+                                                <time class="nds-date-tile" datetime="2026-11-01">
+                                                    <span class="nds-date-tile-weekday">Sun</span>
+                                                    <span class="nds-date-tile-day">1</span>
+                                                    <span class="nds-date-tile-month">Nov</span>
+                                                </time>
+                                                <span class="nds-drawer-item">
+                                                    <span class="nds-drawer-item-head">
+                                                        <span class="nds-tag" data-status="info">
+                                                            <span class="nds-label">Upcoming</span>
+                                                        </span>
+                                                        <span class="nds-label">Fee installments open</span>
+                                                    </span>
+                                                    <span class="nds-meta">
+                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>21 Jumada I 1448 AH</span>
+                                                    </span>
+                                                    <span class="nds-description">Split this term's fees into monthly payments.</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="nds-btn nds-subtle">
+                                                <time class="nds-date-tile" datetime="2026-11-15">
+                                                    <span class="nds-date-tile-weekday">Sun</span>
+                                                    <span class="nds-date-tile-day">15</span>
+                                                    <span class="nds-date-tile-month">Nov</span>
+                                                </time>
+                                                <span class="nds-drawer-item">
+                                                    <span class="nds-drawer-item-head">
+                                                        <span class="nds-tag" data-status="info">
+                                                            <span class="nds-label">Upcoming</span>
+                                                        </span>
+                                                        <span class="nds-label">Registration opens for the second term</span>
+                                                    </span>
+                                                    <span class="nds-meta">
+                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>5 Jumada II 1448 AH</span>
+                                                    </span>
+                                                    <span class="nds-description">Pick your courses for the second term in the registration system.</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="nds-btn nds-subtle">
+                                                <time class="nds-date-tile" datetime="2026-12-13">
+                                                    <span class="nds-date-tile-weekday">Sun</span>
+                                                    <span class="nds-date-tile-day">13</span>
+                                                    <span class="nds-date-tile-month">Dec</span>
+                                                </time>
+                                                <span class="nds-drawer-item">
+                                                    <span class="nds-drawer-item-head">
+                                                        <span class="nds-tag" data-status="info">
+                                                            <span class="nds-label">Upcoming</span>
+                                                        </span>
+                                                        <span class="nds-label">Final exams start</span>
+                                                    </span>
+                                                    <span class="nds-meta">
+                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>4 Rajab 1448 AH</span>
+                                                    </span>
+                                                    <span class="nds-description">The final exam period runs for one week.</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="nds-btn nds-subtle">
+                                                <time class="nds-date-tile" datetime="2026-12-24">
+                                                    <span class="nds-date-tile-weekday">Thu</span>
+                                                    <span class="nds-date-tile-day">24</span>
+                                                    <span class="nds-date-tile-month">Dec</span>
+                                                </time>
+                                                <span class="nds-drawer-item">
+                                                    <span class="nds-drawer-item-head">
+                                                        <span class="nds-tag" data-status="info">
+                                                            <span class="nds-label">Upcoming</span>
+                                                        </span>
+                                                        <span class="nds-label">Final results out</span>
+                                                    </span>
+                                                    <span class="nds-meta">
+                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>15 Rajab 1448 AH</span>
+                                                    </span>
+                                                    <span class="nds-description">Your grades show in your academic record.</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="nds-btn nds-subtle">
+                                                <time class="nds-date-tile" datetime="2026-12-27">
+                                                    <span class="nds-date-tile-weekday">Sun</span>
+                                                    <span class="nds-date-tile-day">27</span>
+                                                    <span class="nds-date-tile-month">Dec</span>
+                                                </time>
+                                                <span class="nds-drawer-item">
+                                                    <span class="nds-drawer-item-head">
+                                                        <span class="nds-tag" data-status="neutral">
+                                                            <span class="nds-label">Break</span>
+                                                        </span>
+                                                        <span class="nds-label">Mid-year break starts</span>
+                                                    </span>
+                                                    <span class="nds-meta">
+                                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>18 Rajab 1448 AH</span>
+                                                    </span>
+                                                    <span class="nds-description">Classes start again on 10 Jan 2027.</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+                            <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+                                <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+                                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
                         </div>
-                        <div class="nds-drawer nds-divided nds-fit nds-breakout">
-                            <ul class="nds-drawer-list" aria-label="Midterm results">
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <time class="nds-date-tile" datetime="2026-10-04">
-                                            <span class="nds-date-tile-weekday">Sun</span>
-                                            <span class="nds-date-tile-day">4</span>
-                                            <span class="nds-date-tile-month">Oct</span>
-                                        </time>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-label">ACCT 301 · Managerial Accounting</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-checkmark-badge-01" aria-hidden="true"></i>17 of 20</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-percent-square" aria-hidden="true"></i>20% of the final grade</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <time class="nds-date-tile" datetime="2026-10-05">
-                                            <span class="nds-date-tile-weekday">Mon</span>
-                                            <span class="nds-date-tile-day">5</span>
-                                            <span class="nds-date-tile-month">Oct</span>
-                                        </time>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-label">FIN 320 · Corporate Finance</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-checkmark-badge-01" aria-hidden="true"></i>18 of 20</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-percent-square" aria-hidden="true"></i>20% of the final grade</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <time class="nds-date-tile" datetime="2026-10-06">
-                                            <span class="nds-date-tile-weekday">Tue</span>
-                                            <span class="nds-date-tile-day">6</span>
-                                            <span class="nds-date-tile-month">Oct</span>
-                                        </time>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-label">MGT 310 · Organizational Behavior</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-checkmark-badge-01" aria-hidden="true"></i>16 of 20</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-percent-square" aria-hidden="true"></i>20% of the final grade</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nds-btn nds-subtle">
-                                        <time class="nds-date-tile" datetime="2026-10-07">
-                                            <span class="nds-date-tile-weekday">Wed</span>
-                                            <span class="nds-date-tile-day">7</span>
-                                            <span class="nds-date-tile-month">Oct</span>
-                                        </time>
-                                        <span class="nds-drawer-item">
-                                            <span class="nds-drawer-item-head">
-                                                <span class="nds-label">STAT 201 · Business Statistics</span>
-                                            </span>
-                                            <span class="nds-meta">
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-checkmark-badge-01" aria-hidden="true"></i>19 of 20</span>
-                                                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-percent-square" aria-hidden="true"></i>20% of the final grade</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Academic calendar -->
-<section id="calendar" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Academic Calendar</h2>
-            <p class="nds-section-description">First term of 2026–2027, 1448 AH. Open now: course withdrawal, until 22 Oct.</p>
-        </div>
-        <div class="nds-section-action">
-            <a href="#" class="nds-btn nds-secondary-outline">
-                <span class="nds-label">Full calendar</span>
-            </a>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-card nds-stroke nds-full">
-                <div class="nds-card-content">
-                    <div class="nds-drawer nds-divided nds-breakout">
-                        <ul class="nds-drawer-list" aria-label="Academic calendar">
-                            <li>
-                                <a href="#" class="nds-btn nds-subtle">
-                                    <time class="nds-date-tile" datetime="2026-08-30">
-                                        <span class="nds-date-tile-weekday">Sun</span>
-                                        <span class="nds-date-tile-day">30</span>
-                                        <span class="nds-date-tile-month">Aug</span>
-                                    </time>
-                                    <span class="nds-drawer-item">
-                                        <span class="nds-drawer-item-head">
-                                            <span class="nds-tag" data-status="neutral">
-                                                <span class="nds-label">Ended</span>
-                                            </span>
-                                            <span class="nds-label">Classes start</span>
-                                        </span>
-                                        <span class="nds-meta">
-                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>17 Rabiʻ I 1448 AH</span>
-                                        </span>
-                                        <span class="nds-description">First day of the first term.</span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="nds-btn nds-subtle">
-                                    <time class="nds-date-tile" datetime="2026-10-22">
-                                        <span class="nds-date-tile-weekday">Thu</span>
-                                        <span class="nds-date-tile-day">22</span>
-                                        <span class="nds-date-tile-month">Oct</span>
-                                    </time>
-                                    <span class="nds-drawer-item">
-                                        <span class="nds-drawer-item-head">
-                                            <span class="nds-tag" data-status="warning">
-                                                <span class="nds-label">Next week</span>
-                                            </span>
-                                            <span class="nds-label">Last day to withdraw from a course</span>
-                                        </span>
-                                        <span class="nds-meta">
-                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>11 Jumada I 1448 AH</span>
-                                        </span>
-                                        <span class="nds-description">After this day, a withdrawal counts as a fail.</span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="nds-btn nds-subtle">
-                                    <time class="nds-date-tile" datetime="2026-11-15">
-                                        <span class="nds-date-tile-weekday">Sun</span>
-                                        <span class="nds-date-tile-day">15</span>
-                                        <span class="nds-date-tile-month">Nov</span>
-                                    </time>
-                                    <span class="nds-drawer-item">
-                                        <span class="nds-drawer-item-head">
-                                            <span class="nds-tag" data-status="info">
-                                                <span class="nds-label">Upcoming</span>
-                                            </span>
-                                            <span class="nds-label">Registration opens for the second term</span>
-                                        </span>
-                                        <span class="nds-meta">
-                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>5 Jumada II 1448 AH</span>
-                                        </span>
-                                        <span class="nds-description">Pick your courses for the second term in the registration system.</span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="nds-btn nds-subtle">
-                                    <time class="nds-date-tile" datetime="2026-12-13">
-                                        <span class="nds-date-tile-weekday">Sun</span>
-                                        <span class="nds-date-tile-day">13</span>
-                                        <span class="nds-date-tile-month">Dec</span>
-                                    </time>
-                                    <span class="nds-drawer-item">
-                                        <span class="nds-drawer-item-head">
-                                            <span class="nds-tag" data-status="info">
-                                                <span class="nds-label">Upcoming</span>
-                                            </span>
-                                            <span class="nds-label">Final exams start</span>
-                                        </span>
-                                        <span class="nds-meta">
-                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i>4 Rajab 1448 AH</span>
-                                        </span>
-                                        <span class="nds-description">The final exam period runs for one week.</span>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -1280,7 +1306,7 @@ hideFeedback: true
             <span class="nds-card-title" id="fees-modal-title">Fees and payments</span>
             <p class="nds-card-description">First term 2026–2027. Pay the balance before 1 Nov 2026 to keep your registration.</p>
         </div>
-        <table class="nds-table">
+        <table class="nds-table nds-empty" data-empty-message="Nothing to pay this term">
             <thead>
                 <tr>
                     <th>Item</th>
@@ -1418,7 +1444,7 @@ hideFeedback: true
     </div>
     <div class="nds-panel-body">
         <nav class="nds-drawer nds-divided" aria-label="Common questions">
-            <ul class="nds-drawer-list">
+            <ul class="nds-drawer-list nds-empty" data-empty-message="No questions yet">
                 <li>
                     <a href="#" class="nds-btn nds-subtle nds-indicator">
                         <span class="nds-label">How do I join an online exam?</span>
