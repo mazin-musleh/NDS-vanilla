@@ -30,9 +30,9 @@
  *   - data-position-vertical is written by the component (a CSS hook), never set it yourself.
  *   - The open menu sits in the browser's top layer (popover="manual", stamped at init):
  *     nothing clips it and it stays in place in the DOM, so closest(), bubbling and the
- *     wrapper's knobs and theme reach it. Page scroll carries it, over the sticky nav; it closes when its
- *     trigger leaves view. Without popover support
- *     (Safari < 17, Firefox < 125) it is fixed and follows every scroll, so a scroll box cannot cut it.
+ *     wrapper's knobs and theme reach it. Page scroll carries it, over the sticky nav; it
+ *     closes when its trigger leaves view. Without popover support (Safari < 17,
+ *     Firefox < 125) it is fixed and follows every scroll, so a scroll box cannot cut it.
  */
 
 /**
