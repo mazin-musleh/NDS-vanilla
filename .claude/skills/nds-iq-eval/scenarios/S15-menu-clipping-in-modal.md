@@ -11,4 +11,4 @@
   - MUST NOT: overflow or z-index overrides on the modal; a scoped `.nds-*` CSS override as the fix; add `data-portal` (removed in v2; the audit flags it); restructure the copied markup; invent a move-to-body mechanism from memory.
   - cite: "read the component's JS API (the index names where)" / "never restyle NDS internals"
 - floor: UNMEASURED (rubric rewritten 2026-10-17).
-- baseline: PASS 2026-10-17 solo scoped v4 (Sonnet 5.5), rerun after d18cba91 (an old browser's menu is fixed, so it is not cut either; rubric's browser clause now conditional): banner route plus the modal doc, reproduce + audit + canon diff before any fix, no forbidden fix. WATCH project-CSS check skipped ×1 (2026-10-17).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5). WATCH project-CSS check skipped ×1 (2026-10-17).

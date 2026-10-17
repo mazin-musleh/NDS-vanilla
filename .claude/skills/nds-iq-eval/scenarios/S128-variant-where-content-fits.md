@@ -12,4 +12,4 @@
   - cite: the Cards Variants Use lines; the variant bullet in §Design choices; "Keep the matched source's structure".
 - grading note: the variant picks are the graded half; any reasonable intro part passes. A variant on Contact that the brief forces (none here) would pass.
 - floor: not run
-- baseline: PASS 2026-10-13 solo v4 current draft, before any edit (Sonnet 5.5): avatar header for people, statistic for figures, Contact template kept with content swapped and removals named. No rules edit: the field gap is agents not choosing, not the text. WATCH field-defaults ×1 (2026-10-13, rigs 2, 4, 5).
+- baseline: PASS 2026-10-17 solo v4 (Sonnet 5.5). WATCH field-defaults ×1 (2026-10-13, rigs 2, 4, 5).

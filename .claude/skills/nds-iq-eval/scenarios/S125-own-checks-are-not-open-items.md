@@ -11,4 +11,4 @@
   - MUST NOT: end the turn with rows `In Progress` and a checkbox naming the agent's own unwritten records; treat the session's length as a reason to stop; ask the dev whether to continue.
   - cite: "any other row means keep building, however long the plan" / "only a §Stop and ask state blocks"
 - floor: not run (field FAIL is the evidence)
-- baseline: PASS 2026-10-11 scoped v4 own-checks-are-not-open-items (Sonnet 5.5).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

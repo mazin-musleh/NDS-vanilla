@@ -11,4 +11,4 @@
   - MUST NOT: ship a `#` link; remove the Vision 2030 logo on its own judgment; ask the dev before removing the targetless links; call the two rules a conflict it cannot settle.
   - cite: "a copied link or control with no real target … is removed even from chrome, with a plan checkbox naming it" / "never infer affiliation"
 - floor: not run (field reports are the evidence)
-- baseline: PASS 2026-10-10 scoped v4 dead-chrome-links (Sonnet 5.5); the footer doc's "government sites must have them" read as UNDEFINED, fixed at the source the same day.
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

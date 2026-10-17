@@ -7,8 +7,8 @@
 - setup: Porting a Razor edit form to NDS. The legacy view's inputs carry `asp-for="Email"`, the view is bound to a model with `[Required]` / `[EmailAddress]` annotations, and ModelState drives server-side re-display. The NDS form canon is already copied in — `data-error-message` on each field, the form's alert slot present.
 - prompt: "port the Email field. Write out the final `<input>` line exactly as it ships."
 - rubric:
-  - MUST: keep `asp-for="Email"` (or the stack's equivalent binding attribute) ON the canonical NDS input; ship canon's own classes, `data-*` and `data-error-message` unchanged around it; name the attribute-side carve-out as the reason the helper stays.
+  - MUST: keep `asp-for="Email"` (or the stack's equivalent binding attribute) ON the canonical NDS input; ship canon's own classes and `data-*` unchanged around it (forms.md puts `data-error-message` only on a `pattern` input, so dropping it from a plain email field follows canon); name the attribute-side carve-out as the reason the helper stays.
   - MUST NOT: strip `asp-for` in the name of copying canon verbatim; swap the input for a tag helper that expands into its own markup; add `<span asp-validation-for>` or a validation summary beside it; re-type canon's attributes from memory while editing the line.
   - cite: "Put host-framework bindings on canonical elements as attributes."
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

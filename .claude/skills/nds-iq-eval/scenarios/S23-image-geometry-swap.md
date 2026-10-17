@@ -11,4 +11,4 @@
   - MUST NOT: keep the sample's 40×40; force the size with CSS instead of the attributes; silence the finding with `data-nds-audit-ignore`; keep the name span beside a wordmark logo.
   - cite: "drop the brand text when the logo already carries the name" / "fix or name every finding"
 - floor: not run (reframed 2026-10-10).
-- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

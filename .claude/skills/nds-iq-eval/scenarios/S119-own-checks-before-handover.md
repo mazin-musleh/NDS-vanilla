@@ -11,4 +11,4 @@
   - MUST NOT: set every row `Awaiting Verification` because the pacing is `whole plan` or because the dev has yet to review; hand the uninspected screenshots to the dev as their review.
   - cite: "a row reaches `Awaiting Verification` only when every agent-owned check passed. The row, not the agent, waits there for the dev" / "An unmet required check keeps the row `In Progress`"
 - floor: not run (field FAIL is the evidence)
-- baseline: PASS 2026-10-17 scoped v4 review-fixes (Sonnet 5.5).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

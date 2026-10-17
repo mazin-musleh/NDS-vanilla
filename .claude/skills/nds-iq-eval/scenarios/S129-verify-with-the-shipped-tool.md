@@ -12,4 +12,4 @@
   - cite: the index's Verify section / "An open checkbox holds only what the dev must supply or decide, never a check you can run."
 - grading note: a comprehension run cannot show the field failure, which was decay deep in a long session (leak class 4). A PASS here proves the route is clear; the field rig proves the cost fell.
 - floor: PASS 2026-10-17 (Sonnet 5.5): found the tool through the index alone; the test guards the index and the tool, not the rules.
-- baseline: PASS 2026-10-17 solo v4 (Sonnet 5.5), on the draft with the drafted sentence; the floor PASS cut it.
+- baseline: PASS 2026-10-17 solo v4 (Sonnet 5.5).

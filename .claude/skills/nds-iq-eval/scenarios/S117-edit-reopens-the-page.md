@@ -11,4 +11,4 @@
   - MUST NOT: leave the row at `Awaiting Verification` on the evidence recorded before the fix; claim the fix from code inspection; set `Built and Verified`.
   - cite: "a page with a plan row returns to `In Progress` until its checks pass again" / "After an edit: both passes and the audit run on each changed page, in the states the change touches."
 - floor: not run (field and owner evidence)
-- baseline: PASS 2026-10-10 scoped v4 edit-mode (Sonnet 5.5).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

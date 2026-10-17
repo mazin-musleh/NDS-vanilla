@@ -12,4 +12,4 @@
   - cite: the Session Timeout doc's Session End text, and the `NDS-REPORT.md` sentence in §Plan.
 - grading note: a report entry for a REAL gap the runner finds on the way (a doc that contradicts itself) is fine; only the two cases above are graded. 
 - floor: PASS 2026-10-12 on the code (Sonnet 5.5); the stub never names `NDS-REPORT.md`, so the floor cannot see the report half. The real file before the sentence filed the unsaved edits as a missing API, quoting §Build's "add the finding".
-- baseline: PASS 2026-10-13 scoped v4 report-trim (Sonnet 5.5): POST sign-out from `nds:session:end`, own dirty flag + `beforeunload`, no report entry; the workaround comment names what it checked.
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

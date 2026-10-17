@@ -11,4 +11,4 @@
   - MUST NOT: send a message that lists the questions and offers to ask them; ask about the language switcher (one language: it ships without it) or about removing other chrome (plan checkboxes, no question); ask about CSP.
   - cite: "Ask it in the same turn you write the plan, never in a message that offers to ask" / "Ask nothing the rules already settle"
 - floor: not run (field FAIL is the evidence)
-- baseline: PASS 2026-10-10 scoped v4 one-stop-install (Sonnet 5.5).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

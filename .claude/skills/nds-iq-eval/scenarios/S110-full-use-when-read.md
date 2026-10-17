@@ -11,4 +11,4 @@
   - MUST NOT: run keyword searches (`table`, `permission`, `denied`) as the way to find candidates; skip the template or the example catalog.
   - cite: "Read every `use_when` line, unfiltered: a keyword search may confirm a match, never pick the candidates."
 - floor: not run (the field FAIL on the v4.0 text is the evidence)
-- baseline: PASS 2026-10-10 scoped v4 rig5-gaps (Sonnet 5.5).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

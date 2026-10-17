@@ -11,4 +11,4 @@
   - MUST NOT: end the turn with a report on Home, ask the dev to review Home, or wait for a reply before the next row.
   - cite: "builds row after row without stopping" / "The row, not the agent, waits there for the dev"
 - floor: not run (field FAIL is the evidence)
-- baseline: PASS 2026-10-17 scoped v4 review-fixes (Sonnet 5.5).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

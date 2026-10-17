@@ -172,7 +172,7 @@ A conflict between the existing UI and a backend contract is the dev's decision:
 
 ### Design choices
 
-**NDS UI outranks the legacy UI.** The existing UI sets the content, fields, order, and outcomes a page carries, never how they are presented, and never a component's feature set: a legacy page that lacked a control is missing a default, not drawing a scope boundary. Search, sorting, filtering, export, counts, validation chrome, and responsive behavior are NDS defaults, not questions; they never change business rules or backend contracts.
+**NDS UI outranks the legacy UI.** The existing UI sets the content, fields, order, and outcomes a page carries, never how they are presented, and never a component's feature set: a legacy page that lacked a control is missing a default, not drawing a scope boundary. Search, sorting, filtering, export, counts, validation chrome (how a check shows, never which fields it requires), and responsive behavior are NDS defaults, not questions; they never change business rules or backend contracts.
 
 Map every part a matched source ships to the project's data: a two-state field is a single-choice facet, a numeric field a range. Legacy filtering by one thing is no reason to ship one facet.
 

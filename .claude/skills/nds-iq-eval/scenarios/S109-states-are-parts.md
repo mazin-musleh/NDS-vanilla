@@ -11,4 +11,4 @@
   - MUST NOT: list only the profile and the table; map the legacy Bootstrap alert to NDS Alert because both are "alerts"; leave a state unmatched or matched to a bare HTML tag.
   - cite: "every field, control and state is a part" / "Name each part by the job it does, never by the legacy class or element it replaces."
 - floor: not run (the field FAIL on the v4.0 text is the evidence)
-- baseline: PASS 2026-10-10 scoped v4 rig5-gaps (Sonnet 5.5).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

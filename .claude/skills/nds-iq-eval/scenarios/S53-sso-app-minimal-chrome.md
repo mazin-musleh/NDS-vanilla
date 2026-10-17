@@ -11,4 +11,4 @@
   - MUST NOT: hand the dev a full-vs-minimal-vs-hybrid chrome question; build a topbar, mainnav or footer these pages have no use for; copy markup from a built page; match the catalog on entry titles.
   - cite: "Match by `use_when` across the template, example, and component catalogs, never by title" / "Copied chrome ships as-is"
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-10 full v4 post-cut (Sonnet 5.5).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

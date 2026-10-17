@@ -116,7 +116,7 @@ The floor answers one question: does this sentence earn its place? A scenario th
 
 ## Harness prompt (comprehension)
 
-Keep it canonical, so runs stay comparable. Defaults: `{SRC}` = `{ROOT}` = `C:\Projects\NDS-vanilla`, `{SITE}` = `C:\Projects\NDS-vanilla\_site`, and `{ROOT_VERSION}` = the version the next release takes (2.0.0 while `_config.yml` reads 1.12.x-dev). `old` mode swaps all four. Fill `{SCENARIOS}` with setup + prompt only, never the rubric.
+Keep it canonical, so runs stay comparable. Defaults: `{SRC}` = `{ROOT}` = `C:\Projects\NDS-vanilla`, `{SITE}` = `C:\Projects\NDS-vanilla\_site`, `{VERIFY}` = `C:\Projects\NDS-vanilla\scripts\release-template\nds-verify.mjs` (the zip root's copy), and `{ROOT_VERSION}` = the version the next release takes (2.0.0 while `_config.yml` reads 1.12.x-dev). `old` mode swaps all five (`{VERIFY}` = `{ROOT}\nds-verify.mjs`, absent: no 1.x zip ships it). Fill `{SCENARIOS}` with setup + prompt only, never the rubric.
 
 ```
 You are simulating an AI coding agent working inside a CONSUMER web project
@@ -140,9 +140,10 @@ under NDS_ROOT, simulate it:
 - NDS_ROOT/_site/<path>  is  {SITE}\<path>, when it exists. If it does not,
   report the read as unavailable and continue — never substitute the _source
   twin for a _site read, or the reverse.
-- NDS_ROOT/NDS-INDEX.md  is  {ROOT}\NDS-INDEX.md, and NDS_ROOT/CHANGELOG.md
-  is  {ROOT}\CHANGELOG.md. No other file in {ROOT} is part of NDS_ROOT. A
-  file missing there is missing from NDS_ROOT.
+- NDS_ROOT/NDS-INDEX.md  is  {ROOT}\NDS-INDEX.md, NDS_ROOT/CHANGELOG.md
+  is  {ROOT}\CHANGELOG.md, and NDS_ROOT/nds-verify.mjs  is  {VERIFY}. No
+  other file in {ROOT} is part of NDS_ROOT. A file missing there is missing
+  from NDS_ROOT.
 
 If a routed read lands on a path that does not exist, say so explicitly and
 name the path you tried. Do not silently substitute a different file: a routing

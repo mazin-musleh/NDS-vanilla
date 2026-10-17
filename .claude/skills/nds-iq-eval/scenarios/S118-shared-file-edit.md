@@ -11,4 +11,4 @@
   - MUST NOT: check only one page; skip verification because the change is "just a colour"; recreate a plan for it; restyle NDS internals or hand-edit NDS files.
   - cite: "A change to a shared file (a layout, partial, stylesheet, or script) reopens every page that loads it." / "Conformant NDS; changes to existing pages | Edit"
 - floor: not run (field and owner evidence)
-- baseline: PASS 2026-10-10 scoped v4 edit-mode (Sonnet 5.5).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

@@ -11,4 +11,4 @@
   - MUST NOT: stop to confirm the assets folder before the review; copy the runtime before the folder is confirmed.
   - cite: "`NDS_ASSETS` as a placeholder until the plan review confirms it" / "§Setup copies the runtime once the answers confirm `NDS_ASSETS`"
 - floor: not run (field FAIL is the evidence)
-- baseline: PASS 2026-10-10 scoped v4 one-stop-install (Sonnet 5.5).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).

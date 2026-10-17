@@ -11,4 +11,4 @@
   - MUST NOT: end the turn to ask about the photos, the stamp number or the catalog actions; call any of them a blocker; stop because of the plan's length.
   - cite: "Only a §Stop and ask state blocks" / "ship the placeholder or the default, record it as an open checkbox, and go on" / "however long the plan"
 - floor: not run (field FAIL is the evidence)
-- baseline: PASS 2026-10-17 scoped v4 review-fixes (Sonnet 5.5).
+- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).
