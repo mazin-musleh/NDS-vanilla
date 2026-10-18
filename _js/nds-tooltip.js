@@ -390,7 +390,7 @@
             // than reusing p.spaceAbove because p.spaceAbove uses the
             // unclamped p.topEdge (which is 0 when no nav is present).
             const p = NDS.flipPosition(this.trigger, this.balloon);
-            const topEdge = Math.max(pad, p.topEdge);
+            const topEdge = Math.max(p.box.top + pad, p.topEdge);
             const bW = p.menuRect.width, bH = p.menuRect.height;
             const spaceBelow = p.spaceBelow - gap - pad;
             const spaceAbove = p.triggerRect.top - gap - topEdge;
@@ -405,10 +405,10 @@
             }
 
             let top = flipUp ? p.triggerRect.top - bH - gap : p.triggerRect.bottom + gap;
-            top = Math.max(topEdge, Math.min(top, p.viewportHeight - bH - pad));
+            top = Math.max(topEdge, Math.min(top, p.box.bottom - bH - pad));
 
             let left = p.triggerRect.left + (p.triggerRect.width / 2) - (bW / 2);
-            left = Math.max(edge, Math.min(left, p.viewportWidth - bW - edge));
+            left = Math.max(p.box.left + edge, Math.min(left, p.box.right - bW - edge));
 
             NDS.place(this.balloon, top, left);
 

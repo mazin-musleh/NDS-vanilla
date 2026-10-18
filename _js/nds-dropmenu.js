@@ -888,7 +888,14 @@
             // the address bar shows/hides during scroll, which would close
             // the menu mid-interaction otherwise. NDS.onResize is debounced
             // 150ms so the heavy applyPosition only runs once resize settles.
-            this._unsubResize = NDS.onResize(() => this.applyPosition());
+            // The visual viewport also resizes for the on-screen keyboard and a pinch zoom,
+            // which fire no window resize; the page-wide bus stays off them.
+            const vv = window.visualViewport;
+            if (vv) {
+                const onVV = NDS.debounce(() => this.applyPosition(), 150);
+                vv.addEventListener('resize', onVV);
+                this._unsubResize = () => { onVV.cancel(); vv.removeEventListener('resize', onVV); };
+            } else this._unsubResize = NDS.onResize(() => this.applyPosition());
             // Keep scroll momentum off the page (its scroll closes the menu), but only while
             // the list scrolls: on a list that fits, `contain` swallows the page's wheel.
             // Watched while open, since search, results and populate change its length.
@@ -1020,7 +1027,7 @@
             const p = NDS.flipPosition(this.trigger, this.menu, {
                 respectNav: this._respectNav
             });
-            const topEdge = Math.max(pad, p.topEdge);
+            const topEdge = Math.max(p.box.top + pad, p.topEdge);
             const spaceBelow = p.spaceBelow - gap - pad;
             // Recompute spaceAbove from triggerRect rather than reusing
             // p.spaceAbove because p.spaceAbove uses the unclamped p.topEdge
@@ -1071,9 +1078,9 @@
             // Matches trackPosition(), which never clamped.
             const top = flipUp ? p.triggerRect.top - mr2.height - gap : p.triggerRect.bottom + gap;
 
-            // Pass the vw read at the top — re-reading it here, after the
+            // Pass the box read at the top — re-reading it here, after the
             // data-position-vertical writes above, would force a second layout.
-            const leftPx = this._leftFor(p.triggerRect, mr2.width, vw, edge);
+            const leftPx = this._leftFor(p.triggerRect, mr2.width, p.box, edge);
 
             // Cache flip direction so the scroll-tracker can reuse it without
             // re-running flip math (and without re-clamping the menu to the
@@ -1104,17 +1111,18 @@
          * clamped inside the trigger's horizontal bounds so they never
          * overshoot its edges. Then clamp to the viewport.
          *
-         * `vw` is a parameter so a caller that already read it can avoid
-         * forcing a second layout.
+         * `box` (NDS.visibleBox) is a parameter so a caller that already read
+         * it can avoid forcing a second layout.
          */
-        _leftFor(triggerRect, menuWidth, vw = document.documentElement.clientWidth, pad = NDS.viewportPadding(this.menu)) {
+        _leftFor(triggerRect, menuWidth, box = NDS.visibleBox(), pad = NDS.viewportPadding(this.menu)) {
             const anchor = this.dropmenu.getAttribute('data-anchor');
+            const min = box.left + pad, max = box.right - pad;
             let left;
             if (anchor === 'start' || anchor === 'end') {
                 const startAtLeft = (getComputedStyle(this.trigger).direction !== 'rtl') === (anchor === 'start');
                 const primary = startAtLeft ? triggerRect.left : triggerRect.right - menuWidth;
                 const flipped = startAtLeft ? triggerRect.right - menuWidth : triggerRect.left;
-                const primaryFits = primary >= pad && primary + menuWidth <= vw - pad;
+                const primaryFits = primary >= min && primary + menuWidth <= max;
                 left = primaryFits ? primary : flipped;
             } else {
                 const anchorX = (this._lastClickX != null)
@@ -1125,7 +1133,7 @@
                     left = Math.max(triggerRect.left, Math.min(left, triggerRect.right - menuWidth));
                 }
             }
-            return Math.max(pad, Math.min(left, vw - menuWidth - pad));
+            return Math.max(min, Math.min(left, max - menuWidth));
         }
 
         // Placement while a scroll box around the trigger scrolls. Reuses the

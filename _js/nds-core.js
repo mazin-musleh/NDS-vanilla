@@ -24,7 +24,7 @@
  *     NDS.markHome(el) / .sendHome(el) / .homeOf(el)   move a node the app owns; its old spot answers for it
  *     NDS.topLayer(el, on)             show or hide a [popover] in the top layer, in place
  *     NDS.resolveEl(idOrElOrSel) · NDS.fromTemplate(id) · NDS.flipPosition(trigger, menu) · NDS.place(el, t, l)
- *     NDS.stickyHeaderBottom() · NDS.viewportPadding(el) · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
+ *     NDS.stickyHeaderBottom() · NDS.viewportPadding(el) · NDS.visibleBox() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
  *     NDS.gridLastRow.update(container) · NDS.trapFocus(getEl) · NDS.focusableSel
  *   data + text
  *     NDS.request(url, opts) → Promise<{isJson, data}>     the shared fetch wrapper
@@ -1135,6 +1135,14 @@
     NDS.viewportPadding = (el = document.documentElement) =>
         parseFloat(getComputedStyle(el).getPropertyValue('--nds-viewport-padding')) || 16;
 
+    // The part of the screen the visitor sees, in getBoundingClientRect() coords. A pinch
+    // zoom or an on-screen keyboard shrinks it; the layout viewport keeps its size. Internal.
+    NDS.visibleBox = () => {
+        const v = window.visualViewport, doc = document.documentElement;
+        const top = v ? v.offsetTop : 0, left = v ? v.offsetLeft : 0;
+        return { top, left, right: left + (v ? v.width : doc.clientWidth), bottom: top + (v ? v.height : doc.clientHeight) };
+    };
+
     // ── Scroll Below Sticky Nav ──────────────────────────────────────
     // Smooth-scroll `target` back into view below the sticky nav — no-op
     // when its top already clears the nav. The gap past the nav is read
@@ -1513,8 +1521,10 @@
         const doc = document.documentElement;
         const vw = doc.clientWidth;
         const vh = doc.clientHeight;
+        // Space is measured inside what the visitor sees, so a menu never opens under the keyboard.
+        const box = NDS.visibleBox();
 
-        let topEdge = 0;
+        let topEdge = box.top;
         if (respectNav) {
             if (_navEl === undefined || (_navEl && !_navEl.isConnected)) {
                 _navEl = document.querySelector('.nds-main-nav');
@@ -1528,13 +1538,13 @@
                 // a trigger INSIDE the nav (a nav-link tooltip): its popup opens
                 // in front of the nav, and the clamp pushed it navGap below it.
                 if (navRect.bottom > 0 && triggerRect.bottom > navRect.top && !_navEl.contains(trigger)) {
-                    topEdge = navRect.bottom + navGap;
+                    topEdge = Math.max(topEdge, navRect.bottom + navGap);
                 }
             }
         }
 
         const menuRect = menuEl.getBoundingClientRect();
-        const spaceBelow = vh - triggerRect.bottom;
+        const spaceBelow = box.bottom - triggerRect.bottom;
         const spaceAbove = triggerRect.top - topEdge;
 
         return {
@@ -1543,6 +1553,7 @@
             topEdge,
             triggerRect,
             menuRect,
+            box,
             viewportWidth: vw,
             viewportHeight: vh,
         };
