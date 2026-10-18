@@ -390,15 +390,15 @@ A `<form class="nds-form">` checks every visible field when the user submits it.
 </form>
 </script>
 
-`.nds-form` draws no box: give the fields a gapped wrapper such as `nds-flex nds-col`. On an element that is not a `<form>`, `.nds-form` checks nothing. Call `NDS.Forms.validateForm(step)` from your own button there, where `step` is that `.nds-form` element, and read `valid` in the result.
-
-### Status Messages
-{: .nds-block-title}
 A sent form takes no second submit, so a double click sends it once. Its submit button shows the spinner while the form waits:
 
 - A form with `method="post"` that loads the next page in the same tab waits until that page opens. Add `data-no-pending` to a POST form whose answer is a download, or no page: the button would spin until the page reloads.
 - A `data-ajax` form waits only when the `nds:formValid` listener passes its request to `event.detail.waitUntil()`. The form takes submits again when the request ends, whether it passed or failed. Call `waitUntil()` in the listener itself, not after an `await`.
 
+`.nds-form` draws no box: give the fields a gapped wrapper such as `nds-flex nds-col`. On an element that is not a `<form>`, `.nds-form` checks nothing. Call `NDS.Forms.validateForm(step)` from your own button there, where `step` is that `.nds-form` element, and read `valid` in the result.
+
+### Status Messages
+{: .nds-block-title}
 
 `NDS.Forms.setStatus()` shows a message under a field, such as an error the server returns. A field shows `error` or `help`. `help` is a hint in the neutral color with a "?" icon, not a validation result. Any other status shows the message in the neutral color, with no red outline. `setStatus()` never moves focus, so focus the first field with an error yourself. Focus also scrolls the field into view.
 
@@ -589,11 +589,11 @@ The eye button switches the field between hidden and plain text, and its label b
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-ajax` | `form.nds-form` | The script stops the page from reloading after a passing submit. Send the request from `nds:formValid` |
+| `data-no-pending` | `form.nds-form` with `method="post"` | A sent form takes submits again at once, and its button shows no spinner. For a form whose answer is a download or no page |
 | `novalidate` | `form.nds-form` | The script sets it at start, so the browser shows no popups |
 | `data-required` | `.nds-form-container` | Marks the field required. The script adds `required` and `aria-required="true"` to the input at start. It also sets or removes this attribute when the input's `required` changes, at the next edit or `syncState()` call |
 | `data-state` | `.nds-form-container` | Write `disabled` or `readonly`, or call `setState()`: the script sets that property on every input inside. `disabled` also disables the action buttons. The script writes them too when an input is disabled or readonly. The script sets `focus`, `active` and `typing` while the user is on the field, and removes them on blur and release. It sets `open` while a native select's list is open |
 | `data-state="loading"` | `.nds-form-container` or `.nds-form-group` | Shows the spinner in place of the action buttons. The `nds-loading` class does the same. Write either in the HTML or from a script (`NDS.State.add()`, the attribute, `classList`), and remove it the same way. Put it on the container, not on `.nds-form-control` or the input |
-| `data-no-pending` | `form.nds-form` with `method="post"` | A sent form takes submits again at once, and its button shows no spinner. For a form whose answer is a download or no page |
 | `data-status` | `.nds-form-container` | The script sets it with each message: `error`, `help` or `neutral`. Only `error` draws the red outline. `clearStatus()` and any edit to the field remove it |
 | `data-message` | `.nds-form-container` | The script writes the current message text with `data-status`. `getStatus()` reads it, and `clearStatus()` removes it |
 | `data-feedback-target` | `.nds-form-container` | A CSS selector for the element inside the field that holds its messages |
