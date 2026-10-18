@@ -318,6 +318,9 @@
         - label: "Tags"
           url: "/components/tags"
           href: "/components/tags.html"
+        - label: "Timeline"
+          url: "/components/timeline"
+          href: "/components/timeline.html"
     - label: "Forms"
       is_group: true
       children:

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 02:34 PM"
+last_edit: "18/10/2026 - 09:54 PM"
 ---
 
 <section id="date-tile-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "17/10/2026 - 02:34 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A date tile is a `<time>` element with the `nds-date-tile` class. Inside it are three `<span>` parts: the weekday, the day number and the month. All of them are inline elements, so the tile can sit inside a link or a button, such as the start of a drawer row in a list of exams or events.
+A date tile is a `<time>` element with the `nds-date-tile` class. Inside it are three `<span>` parts: the weekday, the day number and the month. All of them are inline elements, so the tile can sit inside a link or a button. The tile always sits beside the text of something else: a drawer row, a card header, or a timeline event. Each of them lays out the tile and its text, so the tile needs no wrapper of its own.
 
 Pick another component when:
 
@@ -82,6 +82,78 @@ Pick another component when:
   </ul>
 </div>
 </script>
+<script type="text/html" id="date-tile-card" data-canon>
+<div class="nds-card nds-stroke">
+  <div class="nds-card-header">
+    <time class="nds-date-tile" datetime="2026-12-13">
+      <span class="nds-date-tile-weekday">Sun</span>
+      <span class="nds-date-tile-day">13</span>
+      <span class="nds-date-tile-month">Dec</span>
+    </time>
+    <div class="nds-card-text">
+      <span class="nds-card-title">ACCT 301 · Managerial Accounting</span>
+      <p class="nds-card-description">9:00 – 11:00 AM, Exam Hall A-12</p>
+    </div>
+  </div>
+  <div class="nds-card-content">
+    <div class="nds-card-text">
+      <p class="nds-card-description">Bring your student ID. Phones stay outside the hall.</p>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="date-tile-timeline" data-canon>
+<div class="nds-stepper nds-vertical nds-dot" data-current="2">
+  <div class="nds-stepper-step">
+    <div class="nds-stepper-base">
+      <div class="nds-stepper-circle"></div>
+    </div>
+    <div class="nds-stepper-content nds-row nds-middle">
+      <time class="nds-date-tile" datetime="2026-12-13">
+        <span class="nds-date-tile-weekday">Sun</span>
+        <span class="nds-date-tile-day">13</span>
+        <span class="nds-date-tile-month">Dec</span>
+      </time>
+      <div class="nds-stepper-text">
+        <span class="nds-stepper-title">ACCT 301 · Managerial Accounting</span>
+        <span class="nds-stepper-description">9:00 – 11:00 AM, Exam Hall A-12</span>
+      </div>
+    </div>
+  </div>
+  <div class="nds-stepper-step">
+    <div class="nds-stepper-base">
+      <div class="nds-stepper-circle"></div>
+    </div>
+    <div class="nds-stepper-content nds-row nds-middle">
+      <time class="nds-date-tile" datetime="2026-12-14">
+        <span class="nds-date-tile-weekday">Mon</span>
+        <span class="nds-date-tile-day">14</span>
+        <span class="nds-date-tile-month">Dec</span>
+      </time>
+      <div class="nds-stepper-text">
+        <span class="nds-stepper-title">FIN 320 · Corporate Finance</span>
+        <span class="nds-stepper-description">1:00 – 3:00 PM, Exam Hall B-04</span>
+      </div>
+    </div>
+  </div>
+  <div class="nds-stepper-step">
+    <div class="nds-stepper-base">
+      <div class="nds-stepper-circle"></div>
+    </div>
+    <div class="nds-stepper-content nds-row nds-middle">
+      <time class="nds-date-tile" datetime="2026-12-16">
+        <span class="nds-date-tile-weekday">Wed</span>
+        <span class="nds-date-tile-day">16</span>
+        <span class="nds-date-tile-month">Dec</span>
+      </time>
+      <div class="nds-stepper-text">
+        <span class="nds-stepper-title">MKT 210 · Principles of Marketing</span>
+        <span class="nds-stepper-description">9:00 – 11:00 AM, Exam Hall A-12</span>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
 <script type="text/html" id="date-tile-range" data-canon>
 <time class="nds-date-tile" datetime="2026-12-13" style="--date-tile-width: 80px;">
   <span class="nds-date-tile-day">13–17</span>
@@ -99,12 +171,14 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-The Drawer row structure shows the tile at the start of a [Drawer](../components/drawer) row, in the place of a featured icon. Size and Status go on the `.nds-date-tile` element. In a drawer row, `data-status` can go on the `li` instead. It then colors the tile and any featured icon in that row.
+The Drawer row, Card header and Timeline structures show the tile beside the text of each host. In a drawer row and a card header, the tile takes the place of a featured icon. Size and Status go on the `.nds-date-tile` element. In a drawer row, `data-status` can go on the `li` instead. It then colors the tile and any featured icon in that row.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Tile (default) | — | — | One date on its own |
 | Structure | Drawer row | canon `#date-tile-drawer` | — | A list of dated items, such as exams, deadlines or events. Each row is one link that holds the tile and the title |
+| Structure | Card header | canon `#date-tile-card` | — | One dated item in a [Card](../components/cards), such as an exam or an event. The tile and `nds-card-text` share the header, and the header centers the text on the tile |
+| Structure | Timeline | canon `#date-tile-timeline` | — | Dated events in order, such as an exam schedule. `nds-row nds-middle` on each step's content puts the tile beside the text. The tile follows the step state. See [Timeline](../components/timeline) |
 | Structure | Range | canon `#date-tile-range` | — | A span of days in one month, such as an exam period. Its text is wider than one day, so the tile sets `--date-tile-width: 80px`. It has no weekday |
 | Size | SM | `.nds-sm` | `.nds-date-tile` | Smaller text, 48px wide, for a dense list |
 | Size | MD (default) | — | — | 56px wide, for a list row |
@@ -155,7 +229,7 @@ The Drawer row structure shows the tile at the start of a [Drawer](../components
             <i class="hgi hgi-stroke hgi-paint-board"></i>
             <span class="nds-label">Status from a Parent</span>
           </span>
-          <p class="nds-item-desc">A <code class="nds-inline-code lang-html">data-status</code> on the tile or on a parent, such as a drawer row, colors the tile, the same way it colors a featured icon.</p>
+          <p class="nds-item-desc">A <code class="nds-inline-code lang-html">data-status</code> on the tile or on a parent, such as a drawer row, colors the tile, the same way it colors a featured icon. In a timeline, the step state colors it: a solid fill for the current event, gray for the events to come.</p>
         </div>
       </div>
     </div>
@@ -172,7 +246,9 @@ The Drawer row structure shows the tile at the start of a [Drawer](../components
 - Use the tile for a date the user plans around, such as an exam or a deadline. Write a date in plain text when it only records when something happened.
 - Write the full date in `datetime`, in the `YYYY-MM-DD` form.
 - Use short names for the weekday and the month, such as "Sun" and "Dec". The tile is narrow.
-- Write the time and the place in the row's text, not in the tile.
+- Write the time and the place in the text beside the tile, not in the tile.
+- Put the tile in a drawer row, a card header or a timeline step. On its own, put it and its text in an element with `nds-flex nds-middle`.
+- In a timeline, leave `data-status` off the tile. A status on the tile wins over the step state.
 - Leave the size class off a tile in a drawer row. Below 400px of row width the drawer steps it down to SM. A size class, `nds-md` included, keeps the size you wrote.
 - Put the tile and the item's title in one link or button. A screen reader then reads the date and the title together.
 - In a list, give every row a tile, or give none. A list with tiles on some rows does not line up.
@@ -236,6 +312,8 @@ Set these on the tile, or on a parent to reach every tile inside it. A `data-sta
 
 - [Student Portal](../examples/student-portal): date tiles on the final exams and the academic calendar lists.
 - [Drawer](../components/drawer) and [Meta](../components/meta): the row that holds the tile, and the line of details under the title.
+- [Cards](../components/cards): the card header that holds the tile beside the title.
+- [Timeline](../components/timeline): the Agenda structure, with a tile on each event.
 - [Featured Icons](../components/featured-icons): the icon that a drawer row holds in the same place, with the same statuses.
 
 </div>

@@ -45,7 +45,7 @@
  * the stamped states in place. All of its work is cold (no layout reads):
  *   - data-state stamping on every .nds-stepper-step (radial CSS hides any
  *     non-current step via display:none — without this, radial paints EMPTY).
- *   - Progress display: the --progress-value style prop (Progress draws the arc) +
+ *   - Progress display: --progress-value on the ring, when there is one (Progress draws the arc) +
  *     .nds-progress-number + .nds-progress-steps text.
  *   - One delegated document click listener for [data-stepper-control] and one
  *     data-current/data-total NDS.onAttrChange observer, shared by every stepper.
@@ -116,6 +116,7 @@
         constructor(element) {
             this.element = element;
             this.steps = element.querySelectorAll('.nds-stepper-step');
+            this.ring = element.querySelector('.nds-progress-circle');
             this.progressNumber = element.querySelector('.nds-progress-number');
             this.progressText = element.querySelector('.nds-progress-steps');
 
@@ -160,7 +161,8 @@
             }
 
             const pct = Math.min(100, (this.currentStep / this.totalSteps) * 100);
-            this.element.style.setProperty('--progress-value', pct);
+            // Only the radial ring draws it, so a stepper with no ring carries no inline style.
+            if (this.ring) this.ring.style.setProperty('--progress-value', pct);
             if (this.progressNumber) this.progressNumber.textContent = Math.round(pct);
             if (this.progressText) this.progressText.textContent = `${Math.min(this.currentStep, this.totalSteps)} / ${this.totalSteps}`;
         }

@@ -212,8 +212,8 @@
   scss: _sass/components/_hero.scss
 
 - title: "Main Navigation"
-  description: "Primary navigation bar with branding, mega-menu dropdowns, utility actions, and a mobile drawer"
-  use_when: "The primary navigation bar of a site: branding, top-level links, mega-menu dropdowns in column, row or multi-column layouts, utility actions, and the mobile hamburger drawer. Use for main nav, top nav, navbar, site navigation, primary menu, or mega menu requests. For section navigation inside a page tree use Side Menu. For the government branding strip above it use Top Bar."
+  description: "Primary navigation bar with branding, mega-menu dropdowns, search and language actions, and a mobile drawer"
+  use_when: "The primary navigation bar of a site: branding, top-level links, mega-menu dropdowns in column, row or multi-column layouts, the site search, the language switch, and the mobile hamburger drawer. Use for main nav, top nav, navbar, site navigation, primary menu, mega menu, or language switcher requests. For section navigation inside a page tree use Side Menu. For the government branding strip above it use Top Bar."
   icon: '<i class="hgi hgi-stroke hgi-menu-02"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
@@ -380,7 +380,7 @@
 
 - title: "Stepper"
   description: "Sequential step indicators for multi-stage workflows"
-  use_when: "Show progress through a multi-stage flow: step indicator, wizard progress, numbered stages. For a timeline, such as a request's history with dates, use the vertical layout with Dot, Divider and Reverse. For a plain percentage bar use Progress."
+  use_when: "Show progress through a multi-stage flow: step indicator, wizard progress, numbered stages. For dated events, such as a request's history, use Timeline. For a plain percentage bar use Progress."
   icon: '<i class="hgi hgi-stroke hgi-right-to-left-list-number"></i>'
   category: "Navigation"
   tags: ["JS", "CSS", "API"]
@@ -449,8 +449,8 @@
   scss: _sass/components/_tooltip.scss
 
 - title: "Alert"
-  description: "Contextual messages for status, warnings, and notifications"
-  use_when: "An inline status message sitting in the page: success, error, warning, or info banner, form-level feedback, a dismissible notice. For a blocking message over the page use Modal. For a page or view the user cannot use (sign in first, no permission, not found, or a load that failed with nothing else to show) use Status Section, never an alert in its place."
+  description: "Contextual messages for status, warnings, and notifications, in the page or as a toast"
+  use_when: "An inline status message sitting in the page: success, error, warning, or info banner, form-level feedback, a dismissible notice. Also a toast or snackbar that floats over the page after an action such as save or delete, made with NDS.Alert.create(). For a blocking message over the page use Modal. For a page or view the user cannot use (sign in first, no permission, not found, or a load that failed with nothing else to show) use Status Section, never an alert in its place."
   icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
   category: "Feedback"
   tags: ["JS", "CSS", "API"]
@@ -555,7 +555,7 @@
 
 - title: "Date Tile"
   description: "One date in a small box, with the weekday, the day number and the month"
-  use_when: "A date shown as a small calendar box at the start of a list row: exam dates, deadlines, events, appointments, an academic calendar. For picking a date use Date Picker; for time left use Countdown."
+  use_when: "A date shown as a small calendar box beside its text: at the start of a list row, in a card header, or on a timeline event. Exam dates, deadlines, events, appointments, an academic calendar. For picking a date use Date Picker; for time left use Countdown."
   icon: '<i class="hgi hgi-stroke hgi-calendar-03"></i>'
   category: "Content"
   tags: ["CSS"]
@@ -653,6 +653,16 @@
   tags: ["CSS"]
   url: "/components/tags.html"
   scss: _sass/components/_tags.scss
+
+- title: "Timeline"
+  description: "Dated events in order, such as a request's history, with the events done, the current one and the ones to come"
+  use_when: "Dated events in order: a request or case history, status tracking, an activity log or audit trail, shipment or order tracking, an event agenda, project milestones, a career history. Built on the Stepper markup and script, with a dot or an icon on each event. For the steps of a flow the user moves through, such as a form, use Stepper; for dated items with no order between them, use Drawer rows with a Date Tile."
+  icon: '<i class="hgi hgi-stroke hgi-timeline"></i>'
+  category: "Content"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/timeline.html"
+  js: _js/nds-stepper.js
+  scss: _sass/components/_stepper.scss
 
 - title: "Autocomplete"
   description: "Type-ahead search with filtered suggestions"
@@ -803,7 +813,7 @@
 
 - title: "Text Inputs"
   description: "Single-line fields with labels, icons, and validation"
-  use_when: "Single-line form fields with labels, icons, helper text, and validation states. The base for most form work."
+  use_when: "Single-line form fields with labels, icons, helper text, and validation states: text, email, search box, phone number, National ID, and IBAN fields. The base for most form work."
   icon: '<i class="hgi hgi-stroke hgi-text-font"></i>'
   category: "Forms"
   tags: ["JS", "CSS"]
@@ -1177,7 +1187,7 @@
 
 - title: "404 Template"
   description: "Custom error page with illustration and back-to-home action."
-  use_when: "An error or dead-end page: 404 not found, 500, maintenance, or access denied. A centered illustration, a message, and a back-to-home action. It is built as a hero section, not from the empty-state component, and it ships its own centered wrapper with no content layout. It is a status section with no status set, so it shows the illustration. For any other outcome page - request submitted, payment failed, access granted - keep this shape, set data-status on the section, and swap the illustration for a feedback icon in nds-section-icon. See the Status Section layout page."
+  use_when: "An error or dead-end page: 404 not found, 500, maintenance, or access denied. A centered illustration, a message, and a back-to-home action. It is a status section, not the empty-state component, with its own centered wrapper and no content layout. It has no status set, so it shows the illustration. For any other outcome page - request submitted, payment failed, access granted - keep this shape, set data-status on the section, and swap the illustration for a feedback icon in nds-section-icon. See the Status Section layout page."
   icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
   category: "Service"
   tags: ["DGA", "Empty State"]
@@ -1187,7 +1197,7 @@
 
 - title: "Student Portal"
   description: "A student's home page with grades, today's classes, requests, exams and services."
-  use_when: "A personal home page that a signed-in user opens first. Use for a student, employee, patient, citizen or member portal, a my-account page, or any user dashboard. Each section maps to any portal: the profile is the person, with a photo, a status Alert (no warnings, account in good standing) and key details in a Definition List; My Studies is their key numbers, as metric tiles with a trend chart and a progress ring (an employee's leave balance, a patient's next checkup); Today is today's schedule as a timeline (a vertical Stepper with dots and a card on each step) beside the person's requests in a Table with status tags; Coming Up is dated items in a content switcher, upcoming and past (appointments and results), with a countdown and a progress bar, beside key dates in Scroll More with nds-fit, so the list fills its card; Quick Actions are the top tasks, each opening a modal; University Systems is a swiper of links to other systems; Student Services is the service catalog, where a closed service is a disabled card; a FAB opens a help panel. Column widths follow the content: two equal columns only for cards of about the same size, a narrow and a wide column (--max-track) when one side holds more. Every list and table carries nds-empty with its own data-empty-message, and a list that can grow sits in Scroll More, so the same markup holds no items or many. Lists of dated items are Drawer rows: one link per row with a Date Tile at the start, a title with a status tag, and a Meta line of icon facts. Full chrome with a sub hero, striped sections through content_class: nds-stripe, and no side menu."
+  use_when: "A personal home page that a signed-in user opens first. Use for a student, employee, patient, citizen or member portal, a my-account page, or any user dashboard. Each section maps to any portal: the profile is the person, with a photo, a status Alert (no warnings, account in good standing) and key details in a Definition List; My Studies is their key numbers, as metric tiles with a trend chart and a progress ring (an employee's leave balance, a patient's next checkup); Today is today's schedule as a Timeline (dots and a card on each step) beside the person's requests in a Table with status tags; Coming Up is dated items in a content switcher, upcoming and past (appointments and results), with a countdown and a progress bar, beside key dates in Scroll More with nds-fit, so the list fills its card; Quick Actions are the top tasks, each opening a modal; University Systems is a swiper of links to other systems; Student Services is the service catalog, where a closed service is a disabled card; a FAB opens a help panel. Column widths follow the content: two equal columns only for cards of about the same size, a narrow and a wide column (--max-track) when one side holds more. Every list and table carries nds-empty with its own data-empty-message, and a list that can grow sits in Scroll More, so the same markup holds no items or many. Lists of dated items are Drawer rows: one link per row with a Date Tile at the start, a title with a status tag, and a Meta line of icon facts. Full chrome with a sub hero, striped sections through content_class: nds-stripe, and no side menu."
   icon: '<i class="hgi hgi-stroke hgi-mortarboard-01"></i>'
   category: "Dashboard"
   tags: ["Drawer", "Date Tile", "Meta", "Countdown", "Content Switcher"]
@@ -1228,7 +1238,7 @@
 
 - title: "Faculty CV"
   description: "Long-form academic profile with a table of contents, a career timeline, qualifications, and paginated publications."
-  use_when: "A profile page read top to bottom instead of through tabs, with a sticky table of contents tracking the sections as you scroll: a portrait and name in the hero, a contact menu, a card grid of key fields, a prose block, a dated career timeline built from a reversed vertical stepper so the newest entry sits on top, qualification cards, and a long list of records split into pages. Use for a CV, resume, portfolio, staff bio, work history, or any person page whose sections are too long to hide behind tabs. The table of contents is the side info column, through nds-has-sideinfo on the content layout."
+  use_when: "A profile page read top to bottom instead of through tabs, with a sticky table of contents tracking the sections as you scroll: a portrait and name in the hero, a contact menu, a card grid of key fields, a prose block, a dated career Timeline with the newest entry on top, qualification cards, and a long list of records split into pages. Use for a CV, resume, portfolio, staff bio, work history, or any person page whose sections are too long to hide behind tabs. The table of contents is the side info column, through nds-has-sideinfo on the content layout."
   icon: '<i class="hgi hgi-stroke hgi-profile"></i>'
   category: "Content"
   tags: ["Stepper", "TOC", "Divider", "Pagination", "Cards"]

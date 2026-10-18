@@ -265,6 +265,11 @@
     }
 }
 
+// nds-row: the parts sit side by side from the start edge; the centering above is for a column.
+.nds-stepper .nds-stepper-content.nds-row {
+    justify-content: flex-start;
+}
+
 // No lift by default in three cases: a dot is small enough that the rule already meets
 // it, and a card on the content or a separated step gets its alignment from the card's
 // own lift or the content's own offset, so nudging the divider as well would double it.
@@ -308,15 +313,19 @@
     &[data-state~="upcoming"] { --_stepper-state-border: var(--stepper-button-upcoming); }
 }
 
-:is(.nds-stepper-step, .nds-stepper-content).nds-card {
-    --card-border: var(--_stepper-state-border);
+// A Date Tile in a step follows the step state, as the circle does.
+.nds-stepper-step {
+    &[data-state~="current"] { --date-tile-bg: var(--background-primary); --date-tile-color: var(--text-oncolor-primary); }
+    &[data-state~="upcoming"] { --date-tile-bg: var(--background-neutral-light); --date-tile-color: var(--stepper-text-tertiary); }
 }
 
-// Without nds-stroke the card's border is transparent and ignores that knob, so the step
-// paints the border itself.
-.nds-stepper-step.nds-card:not(.nds-stroke):is([data-state~="current"], [data-state~="completed"], [data-state~="upcoming"]),
-.nds-stepper-step:is([data-state~="current"], [data-state~="completed"], [data-state~="upcoming"]) > .nds-stepper-content.nds-card:not(.nds-stroke) {
-    border-color: var(--_stepper-state-border);
+// Static writes no step state, so its cards take the neutral border.
+.nds-stepper.nds-static > .nds-stepper-step { --_stepper-state-border: var(--stepper-button-upcoming); }
+
+// Without nds-stroke a card's border is transparent, so the step paints it in its state color.
+// With nds-stroke the card keeps its own border.
+:is(.nds-stepper-step, .nds-stepper-content).nds-card:not(.nds-stroke) {
+    border-color: var(--_stepper-state-border, transparent);
 }
 
 .nds-stepper-text {
@@ -791,7 +800,7 @@
     .nds-stepper-step.nds-card,
     .nds-stepper-content.nds-card {
         --card-bg: var(--colors-alpha-white-10);
-        --card-border: var(--_stepper-state-border, var(--colors-alpha-white-20));
+        --card-border: var(--colors-alpha-white-20);
         --card-text: var(--text-oncolor-primary);
     }
 
