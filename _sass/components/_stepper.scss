@@ -809,6 +809,11 @@
         &[data-state~="current"],
         &[data-state~="completed"] { --_stepper-state-border: var(--colors-alpha-white-40); }
         &[data-state~="upcoming"] { --_stepper-state-border: var(--colors-alpha-white-20); }
+
+        // A Date Tile takes the same white wash; the current one is solid, like its dot.
+        &[data-state~="completed"] { --date-tile-bg: var(--colors-alpha-white-20); --date-tile-color: var(--text-oncolor-primary); }
+        &[data-state~="current"] { --date-tile-bg: var(--background-surface-oncolor); --date-tile-color: var(--stepper-button-completed); }
+        &[data-state~="upcoming"] { --date-tile-bg: var(--colors-alpha-white-10); --date-tile-color: var(--colors-alpha-white-50); }
     }
 
     // One retune reaches every line rule, including the reverse variant's sibling
