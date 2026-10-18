@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 11:22 AM"
+last_edit: "18/10/2026 - 11:57 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -236,6 +236,9 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `minimal-action-icon` | structure | error | A button with no icon in an `nds-minimal` action: on phones its label hides and it shows an empty box |
 | `prose-section-title` | structure | warn | A heading inside `nds-prose` with `nds-section-title`: it renders at the page title's size, not the text's. Prose already styles a bare `h2` to `h6` |
 | `name-on-display` | structure | error | `name` on the text box of a Custom Select or Time Picker, or on an OTP digit box. The form then sends the text it shows, not the value |
+| `button-name` | structure | error | A button or link with no name: no text, `aria-label`, `aria-labelledby`, `title` or image `alt`, such as an icon-only button. A screen reader announces it with no words. It skips what a screen reader never reaches, such as an `aria-hidden` loop clone |
+| `field-label` | structure | error | A form field with no label: no `<label>`, `aria-label`, `aria-labelledby`, `title` or `placeholder`. A screen reader announces it with no name |
+| `img-alt` | structure | error | An `<img>` with no `alt`: a screen reader reads its file name. `alt=""` marks a picture that only decorates |
 | `nav-current` | structure | warn | A main nav link to the current page with no `data-state="current"` |
 | `id-reference` | structure | error | A `data-*-target`, `data-auto-pagination` or `data-copy-target` value that names no element. An id inside a `<template>` counts as present |
 | `aria-controls` | structure | warn | An `aria-controls` id that no element has, inside or outside a `<template>` |

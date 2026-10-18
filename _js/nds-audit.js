@@ -780,6 +780,40 @@
                 'Add data-required, or remove it: the count limits and a file still uploading have their own messages.'));
     } });
 
+    // ── names: what a screen reader announces ───────────────────────
+    // An element it never reaches (an aria-hidden loop clone, an inert background) needs no name.
+    const unread = (el) => !!el.closest('[aria-hidden="true"], [inert]') || /^(presentation|none)$/.test(el.getAttribute('role') || '');
+    const nameText = (el) => (el.getAttribute('aria-label') || el.textContent || '').trim();
+    // aria-labelledby, aria-label and title, in the order a browser reads them.
+    const ownName = (el) => (el.getAttribute('aria-labelledby') || '').split(/\s+/).filter(Boolean)
+        .map(id => document.getElementById(id)).filter(Boolean).map(nameText).join(' ').trim()
+        || (el.getAttribute('aria-label') || '').trim() || (el.getAttribute('title') || '').trim();
+    const firstOf = (els, what) => els.length > 1 ? ` (${els.length} ${what}; the first is shown)` : '';
+
+    // An icon-only control has no words of its own: the icon is aria-hidden or a CSS mask.
+    rule({ id: 'button-name', severity: 'error', docs: 'components/button.html', check(ctx) {
+        const els = ctx.find('button, a[href], [role="button"], input[type="button"], input[type="image"]').filter(el => !unread(el) && !(
+            ownName(el) || el.textContent.trim() || el.querySelector('img[alt]:not([alt=""]), svg[aria-label], svg title')
+            || (el.matches('input[type="button"]') && el.value.trim()) || (el.matches('img, input[type="image"]') && el.alt.trim())));
+        if (els.length) ctx.report(els[0], `a ${els[0].matches('a') ? 'link' : 'button'} with no name${firstOf(els, 'controls')}: a screen reader announces it with no words, so nobody knows what it does.`,
+            'Add aria-label with its action, or a label inside it with nds-label (hidden on icon-only buttons).', undefined, els.length);
+    } });
+
+    // A placeholder names a field in every browser, though it goes once typing starts.
+    rule({ id: 'field-label', severity: 'error', docs: 'components/forms.html', check(ctx) {
+        const els = ctx.find('input:not([type="hidden"], [type="button"], [type="submit"], [type="reset"], [type="image"]), select, textarea').filter(el => !unread(el) && !(
+            ownName(el) || [...(el.labels || [])].some(l => l.textContent.trim()) || (el.getAttribute('placeholder') || '').trim()));
+        if (els.length) ctx.report(els[0], `a form field with no label${firstOf(els, 'fields')}: a screen reader announces it with no name.`,
+            'Give it a <label for> with its name, as the field canons do, or aria-label when no label shows.', undefined, els.length);
+    } });
+
+    // With no alt a screen reader reads the file name; alt="" marks a picture that only decorates.
+    rule({ id: 'img-alt', severity: 'error', check(ctx) {
+        const els = ctx.find('img:not([alt])').filter(el => !unread(el));
+        if (els.length) ctx.report(els[0], `an <img> with no alt${firstOf(els, 'images')}: a screen reader reads its file name.`,
+            'Add alt with what the picture shows, or alt="" when it only decorates.', undefined, els.length);
+    } });
+
     rule({ id: 'content-layout-once', group: 'page', docs: 'layout/page-layout.html', check(ctx) {
         const all = ctx.find('.nds-content-layout');
         if (all.length > 1) ctx.report(all[1], `${all.length} .nds-content-layout elements on one page: the page grid is set once.`,
