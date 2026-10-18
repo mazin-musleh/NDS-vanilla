@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 08:27 AM"
+last_edit: "18/10/2026 - 01:01 PM"
 ---
 
 <section id="tooltip-overview" class="nds-content-section nds-doc-overview">
@@ -37,7 +37,10 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="tooltip-help" data-canon data-variants="tooltip-variants-table">
+<script type="text/html" id="tooltip-auto" data-canon data-variants="tooltip-variants-table">
+<span class="nds-tooltip" data-tooltip-title="Iqama number" data-tooltip-message="Residents enter the 10-digit number on their residence permit."></span>
+</script>
+<script type="text/html" id="tooltip-help" data-canon>
 <span class="nds-tooltip">
   <button type="button" class="nds-tooltip-trigger" aria-label="About the National ID">
     <span class="nds-feedback nds-sm">
@@ -58,9 +61,6 @@ Pick another component when:
     </span>
   </div>
 </span>
-</script>
-<script type="text/html" id="tooltip-auto" data-canon>
-<span class="nds-tooltip" data-tooltip-title="Iqama number" data-tooltip-message="Residents enter the 10-digit number on their residence permit."></span>
 </script>
 <script type="text/html" id="tooltip-term" data-canon>
 <p>Enter your <span class="nds-tooltip nds-term" data-tooltip-message="The 10-digit number on your national identity card.">National ID</span> to continue.</p>
@@ -83,8 +83,8 @@ Pick another component when:
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Structure | Manual (default) | — | — | A help icon next to a field label or a heading. You write every part |
-| Structure | Auto (hint: The script builds the trigger and the balloon) | canon `#tooltip-auto` | — | The same help icon from two attributes. The script builds the trigger and the balloon |
+| Structure | Auto (default) | — | — | A help icon next to a field label or a heading, from two attributes. The script builds the trigger and the balloon |
+| Structure | Manual (hint: You write every part) | canon `#tooltip-help` | — | The same help icon with every part written out. Use it for other content in the balloon |
 | Structure | Term (hint: A word in a sentence is the trigger) | canon `#tooltip-term` | — | A word in a sentence is the trigger, with a dotted underline |
 | Structure | Button (demo: + hover-500) | canon `#tooltip-button` | — | An icon-only button whose `title` becomes the message. Add `data-tooltip-hover="500"`: a button needs hover, so its own click still works. An `<a>` link takes the same classes and attributes |
 | Open on | Click (default) | — | `.nds-tooltip:not(.nds-btn)` | A click, a tap, or Enter on the trigger opens and closes the balloon |
