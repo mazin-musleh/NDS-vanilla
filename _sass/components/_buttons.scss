@@ -176,6 +176,18 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
     .nds-label {
       text-align: center;
     }
+
+    // The chevron stays on the label's row: icon row on top, label + chevron below.
+    &.nds-menu-btn {
+      display: inline-grid;
+      grid-template-columns: auto auto;
+      justify-content: center;
+      align-content: start;
+
+      > :not(.nds-label) { grid-column: 1 / -1; justify-self: center; }
+      // After the label in placement order, so the loading placeholder holds the chevron's cell.
+      &::before, &::after { order: 1; }
+    }
   }
 
   // ==============================================
