@@ -5,8 +5,9 @@
     // dropbox is a markup token; core mirrors it to .nds-dropbox (the loading
     // pattern) so these descendant rules stay off the shared data-state set (PERF-06).
     &.nds-dropbox {
+        // The zone shows the hint; the label stays the file input's name.
         .nds-form-header {
-            display: none;
+            @include label-hidden;
         }
 
         .nds-form-control {

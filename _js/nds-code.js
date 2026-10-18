@@ -21,6 +21,7 @@
  *   - data-nds-code-highlighted marks a highlighted block. It stays through
  *     NDS.Init.destroy(): the markup stays highlighted, so a re-mount skips it.
  *   - The copy button in the action bar belongs to nds-copy (.nds-copy), not to this file.
+ *   - A block that scrolls gets tabindex="0", so the keyboard can scroll it.
  *   - A CSS value that paints a color (a literal, or a var() that resolves to one on :root)
  *     gets an empty `.nds-code-swatch` span before it. Copy reads textContent, so it skips it.
  */
@@ -66,9 +67,22 @@
                 if (!entry.isIntersecting) return;
                 off();
                 processCodeElement(codeElement);
+                NDS.onElementResize(codeElement, () => scrollStop(codeElement));
             }, { rootMargin: '100% 0px' });
         });
         sizeActionButtons();
+    }
+
+    // A block that scrolls takes a tab stop so the keyboard can scroll it (Chrome
+    // does this itself, Safari does not). Returns the write, for onElementResize.
+    function scrollStop(el) {
+        if (el.hasAttribute('tabindex') && !el._ndsScrollStop) return;
+        const scrolls = el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1;
+        if (scrolls === !!el._ndsScrollStop) return;
+        return () => {
+            el._ndsScrollStop = scrolls;
+            if (scrolls) el.setAttribute('tabindex', '0'); else el.removeAttribute('tabindex');
+        };
     }
 
     // The action bar's button is component chrome, not content: a 32px icon

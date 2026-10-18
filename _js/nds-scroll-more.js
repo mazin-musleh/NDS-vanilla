@@ -21,6 +21,8 @@
  *   - One click scrolls about one viewport minus one item; a click at the end loops back
  *     to the start.
  *   - --mask-fade-distance on the content sets the edge fade the step allows for.
+ *   - Content that scrolls with nothing focusable inside gets tabindex="0", so the keyboard
+ *     can scroll it; an authored tabindex is left alone.
  */
 /**
  * NDS Scroll More Component
@@ -76,6 +78,15 @@
         if (atEnd)   addState(wrapper, CONFIG.overflow.atEnd);   else removeState(wrapper, CONFIG.overflow.atEnd);
     }
 
+    // A scroller with nothing focusable inside takes a tab stop so the keyboard can
+    // scroll it (Chrome does this itself, Safari does not). Only our own tabindex moves.
+    function scrollStop(content, on) {
+        if (content.hasAttribute('tabindex') && !content._ndsScrollStop) return;
+        on = on && !content.querySelector(NDS.focusableSel);
+        content._ndsScrollStop = on;
+        if (on) content.setAttribute('tabindex', '0'); else content.removeAttribute('tabindex');
+    }
+
     // Reads only; returns the writes, so the pooled ResizeObserver runs every
     // wrapper's reads before any write (a write between reads forces a layout
     // per wrapper — 68ms@6.6x on a page with 34 of them).
@@ -85,11 +96,13 @@
         const axis = detectAxis(content);
         if (!axis) return wrapper.hasAttribute('data-axis') ? Object.assign(() => {
             wrapper.removeAttribute('data-axis');
+            scrollStop(content, false);
             removeState(wrapper, CONFIG.overflow.hasMore, CONFIG.overflow.atStart, CONFIG.overflow.atEnd);
         }, { clears: true }) : undefined;
         const pos = scrollPos(content, axis), maxScroll = maxScrollOf(content, axis);
         return () => {
             wrapper.setAttribute('data-axis', axis);
+            scrollStop(content, true);
             addState(wrapper, CONFIG.overflow.hasMore);
             applyEdges(wrapper, pos, maxScroll);
         };
@@ -209,6 +222,7 @@
             wrapper._offResizeObs();
             delete wrapper._offResizeObs;
         }
+        if (wrapper._content) scrollStop(wrapper._content, false);
         delete wrapper._content;
         wrapper.removeAttribute('data-nds-scroll-more-initialized');
     }

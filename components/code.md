@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "19/10/2026 - 12:45 AM"
 ---
 
 <section id="code-overview" class="nds-content-section nds-doc-overview">
@@ -219,6 +219,13 @@ The language of every structure comes from the `lang-*` class on its `<code>`. T
             <span class="nds-label">Copy Button</span>
           </span>
           <p class="nds-item-desc">A <code class="nds-inline-code lang-html">nds-copy</code> button in the action bar copies the source text of its block, or of its own tab panel. The button shows a short confirmation after a copy. The script adds <code class="nds-inline-code lang-html">nds-icon-only nds-md</code> to the button, unless it has a visible label, so the markup needs neither class.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Keyboard Scroll</span>
+          </span>
+          <p class="nds-item-desc">A block that scrolls gets <code class="nds-inline-code lang-html">tabindex="0"</code>, so a keyboard user can tab to it and scroll it with the arrow keys.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 07:48 PM"
+last_edit: "19/10/2026 - 12:45 AM"
 ---
 
 <section id="scroll-more-overview" class="nds-content-section nds-doc-overview">
@@ -307,6 +307,13 @@ Every row goes on the wrapper. The wrapper fits its content, but never grows wid
             <span class="nds-label">Free-scroll Friendly</span>
           </span>
           <p class="nds-item-desc">Touch, trackpad and mouse-wheel scrolling work as usual. The scroll listener is passive and runs at most once a frame.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Keyboard Scroll</span>
+          </span>
+          <p class="nds-item-desc">Content that scrolls and holds no link or control gets <code class="nds-inline-code lang-html">tabindex="0"</code>, so a keyboard user can tab to it and scroll it with the arrow keys. A <code class="nds-inline-code lang-html">tabindex</code> in your markup stays as written.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
