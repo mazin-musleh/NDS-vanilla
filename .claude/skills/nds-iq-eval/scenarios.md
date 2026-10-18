@@ -20,7 +20,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S3 | block-refresh-runtime-current | c | standalone refresh: raw download, first-line check, whole replace | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:protocol |
 | S4 | refresh-with-runtime-behind | c | rules refresh unconditional when runtime behind | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:protocol |
 | S5 | keep-old-pages-serving | c | parallel-files exception, render-worse cost named | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5), re-keyed | floor:FAIL v4 2026-10-09 · WATCH weak-tier · ev:field |
-| S6 | form-region-swap | c | forms banner: initializeContainer/syncState, no form.reset | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:PASS v4 2026-10-09 · leak:C3-mild · ev:field |
+| S6 | form-region-swap | c | forms banner: initializeContainer/syncState | UNMEASURED 2026-10-18 (prompt changed) | floor:UNMEASURED · ev:field |
 | S7 | layout-coupled-copy-source | both | layout-coupled parts: copy the doc canon with its wrapper chain, never a built page | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S8 | update-check | c | banner-lines-only check, content compare, dev's go | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:protocol |
 | S9 | re-audit-request | c | dev-requested re-audit recreates the plan | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:FAIL v4 2026-10-09 · ev:protocol |

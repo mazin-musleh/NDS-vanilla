@@ -8,7 +8,7 @@
 - prompt: "Nested forms aren't legal, so our NDS fields live in a plain div inside the page's server form. Nothing validates on submit — no messages, no errors, nothing in the console. What's wrong and how do we validate?"
 - rubric:
   - MUST: read the forms banner; name the `<form>`-tags-only gate as the cause and its silence as expected, not a bug; keep `.nds-form` on the container as a marker; call `NDS.Forms.validateForm(container)` from the Submit button's own click handler and branch on the returned `{valid}`; state that `nds:formValid` will not fire, so nothing may be wired to it.
-  - MUST NOT: add a nested `<form>` tag; report the component broken or the markup wrong; hand-write per-field validation; wait on `nds:formValid` or `nds:formInvalid`; call `form.reset()` to clear.
+  - MUST NOT: add a nested `<form>` tag; report the component broken or the markup wrong; hand-write per-field validation; wait on `nds:formValid` or `nds:formInvalid`; call the outer `form.reset()` to clear the NDS fields (the server form holds the whole page).
   - cite: "read the component's JS API (the index names where)" / index: "Forms and validation" / forms banner: "That automatic wiring is <form>-tags only"
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).
