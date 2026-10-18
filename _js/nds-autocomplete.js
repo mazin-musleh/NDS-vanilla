@@ -37,6 +37,7 @@
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
     const strings = NDS.i18n.strings('autocomplete', {
         no_results: 'No results',
+        load_failed: 'Could not load suggestions',
     });
 
     // ==============================================
@@ -235,6 +236,8 @@
 
             // Keyboard navigation — stopPropagation prevents dropmenu's trigger keydown
             this.input.addEventListener('keydown', (e) => {
+                // An IME's Enter or arrows pick its own candidate, not a suggestion.
+                if (e.isComposing || e.keyCode === 229) return;
                 this._keyHeld = e.repeat;
                 this.handleKeydown(e);
             }, { signal });
@@ -266,9 +269,10 @@
                 }, { signal });
             }
 
-            // Open on focus if results exist
+            // Open on focus if results exist; a request that failed tries again.
             this.input.addEventListener('focus', () => {
-                if (this.results.length > 0 && !this.dropmenuInstance.isOpen && !this.selectedItem) {
+                if (this._fetchFailed) this._onInput();
+                else if (this.results.length > 0 && !this.dropmenuInstance.isOpen && !this.selectedItem) {
                     this.renderResults(this.results, this.input.value.trim());
                 }
             }, { signal });
@@ -312,6 +316,7 @@
                 var fetchUrl = this.url + separator + this.queryParam + '=' + encodeURIComponent(query);
                 var data = (await NDS.request(fetchUrl, { signal, json: true })).data;
                 this.results = this._extractResults(data);
+                this._fetchFailed = false;
                 if (this.customFilter) this.results = this.customFilter(this.results, query) || [];
                 this.renderResults(this.results, query);
                 this.emitEvent('nds:autocomplete:fetch', { query: query, results: this.results });
@@ -319,7 +324,7 @@
                 if (error.name !== 'AbortError') {
                     console.warn('NDS Autocomplete: Fetch failed', error);
                     this.results = [];
-                    this.close();
+                    this._loadFailed();
                 }
             } finally {
                 // Only the current request clears loading. A superseding keystroke
@@ -340,11 +345,12 @@
                 try {
                     var data = (await NDS.request(this.url, { signal, json: true })).data;
                     this.cache = this._extractResults(data);
+                    this._fetchFailed = false;
                 } catch (error) {
                     if (error.name !== 'AbortError') {
                         // No cache: the next input retries.
                         console.warn('NDS Autocomplete: Fetch failed', error);
-                        this.close();
+                        this._loadFailed();
                     }
                     return;
                 } finally {
@@ -370,12 +376,18 @@
         // Extract the array of results from a parsed JSON response, honoring
         // data-results-path if set.
         _extractResults(data) {
-            if (this.resultsPath) {
-                return this.resultsPath.split('.').reduce(function (obj, key) {
-                    return obj && obj[key];
-                }, data) || [];
-            }
-            return Array.isArray(data) ? data : (data.results || data.data || []);
+            var list = this.resultsPath
+                ? this.resultsPath.split('.').reduce(function (obj, key) { return obj && obj[key]; }, data)
+                : Array.isArray(data) ? data : (data && (data.results || data.data));
+            // One null row would throw in the renderer and drop the whole set.
+            return Array.isArray(list) ? list.filter(Boolean) : [];
+        }
+
+        // Silent failure looked like "no suggestions": say so, and try again on the next focus.
+        _loadFailed() {
+            this._fetchFailed = true;
+            this.close();
+            NDS.announce(strings.text('load_failed'));
         }
 
         // ==============================================
@@ -460,6 +472,8 @@
 
         open() {
             if (!this.dropmenuInstance || this.dropmenuInstance.isOpen) return;
+            // Results that land after focus left stay closed.
+            if (document.activeElement !== this.input) return;
             // Width tracks the form-control via the dropmenu's --dropmenu-min-width
             // hook (_autocomplete.scss), same as custom-select — no inline
             // width-fighting here (the dropmenu wipes inline styles on close).

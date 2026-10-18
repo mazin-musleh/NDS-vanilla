@@ -11,7 +11,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 05:43 AM"
+last_edit: "18/10/2026 - 08:38 AM"
 ---
 
 <section id="editor-overview" class="nds-content-section nds-doc-overview">
@@ -192,7 +192,7 @@ The image button inserts an image from a URL, with alt text, a width and a heigh
             <i class="hgi hgi-stroke hgi-shield-01"></i>
             <span class="nds-label">Safe Value</span>
           </span>
-          <p class="nds-item-desc">The editor cleans every paste and every source edit. It removes scripts, styles, event attributes and unsafe URLs such as <code class="nds-inline-code lang-html">javascript:</code>. A link that opens a new tab always gets <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code>.</p>
+          <p class="nds-item-desc">The editor cleans every paste, every drop and every source edit. It removes scripts, styles, event attributes and unsafe URLs such as <code class="nds-inline-code lang-html">javascript:</code>. A link that opens a new tab always gets <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

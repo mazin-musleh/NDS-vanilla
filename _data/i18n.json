@@ -396,6 +396,12 @@
   "ar": "لا توجد نتائج"
  },
  {
+  "section": "autocomplete",
+  "key": "load_failed",
+  "en": "Could not load suggestions",
+  "ar": "تعذر تحميل الاقتراحات"
+ },
+ {
   "section": "breadcrumb",
   "key": "more",
   "en": "More",

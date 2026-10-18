@@ -220,6 +220,7 @@
         var timeout = null;
         var input = null;
         var container = null;
+        var watch = null;
         var before = '', after = '';
 
         // Dictation goes in at the caret (or over the selection), like OS dictation;
@@ -254,6 +255,7 @@
                 recognition = null;
             }
             if (timeout) { clearTimeout(timeout); timeout = null; }
+            if (watch) { watch.abort(); watch = null; }
 
             if (container) NDS.State.remove(container, 'listening');
             NDS.aria.pressed(button, false);
@@ -276,6 +278,16 @@
             NDS.aria.label(button, strings.text('stop'));
             markInsertPoint();
             input.focus();
+            // Leaving the field or sending the form ends dictation. A press on the mic toggles it itself:
+            // Safari does not focus a pressed button, so the press flag tells that blur apart.
+            watch = new AbortController();
+            var pressing = false;
+            button.addEventListener('pointerdown', function () { pressing = true; }, { signal: watch.signal });
+            document.addEventListener('click', function () { pressing = false; }, { capture: true, signal: watch.signal });
+            input.addEventListener('blur', function (e) {
+                if (e.relatedTarget !== button && !pressing) stop();
+            }, { signal: watch.signal });
+            if (input.form) input.form.addEventListener('submit', stop, { signal: watch.signal });
 
             timeout = setTimeout(function() {
                 stop();

@@ -3,12 +3,14 @@
 // re-anchor. The symptom is a dead stop mid-swipe that clears only once the row fully
 // settles, so a rest-only re-anchor never sees it.
 //   node scripts/check-swiper-loop.mjs [/page.html] [baseUrl]
+//   NO_SCROLLEND=1 plays a browser without scrollend (Safari): the loop settles on its 150 ms fallback
 // Needs the dev server up. One line per swiper x direction; exit 1 on a pin.
 import { launch, cdp } from './lib/browser.mjs';
 
 const argv = process.argv.slice(2);
 const PAGE = argv.find((a) => a.startsWith('/')) || '/';
 const BASE = (argv.find((a) => a.startsWith('http')) || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
+const NO_SCROLLEND = !!process.env.NO_SCROLLEND;
 const FLICKS = 18, GAP = 250;   // faster than the settle: the burst that exhausts the budget
 
 const probe = await fetch(`${BASE}${PAGE}`).catch(() => null);
@@ -36,9 +38,15 @@ process.exit(failed ? 1 : 0);
 
 async function withPage(fn) {
     const page = await browser.newPage({ viewport: { width: 412, height: 915 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+    if (NO_SCROLLEND) await page.addInitScript(() => {
+        for (const p of [HTMLElement.prototype, Element.prototype, Document.prototype, Window.prototype]) delete p.onscrollend;
+    });
     page.cdp = await cdp(page);
     await page.cdp.send('Emulation.setCPUThrottlingRate', { rate: 6.6 });
     await page.goto(`${BASE}${PAGE}`, { waitUntil: 'networkidle' });
+    if (NO_SCROLLEND && await page.evaluate(() => 'onscrollend' in document.createElement('div'))) {
+        throw new Error('NO_SCROLLEND: scrollend is still there, so the fallback would go untested');
+    }
     await page.waitForSelector('.nds-swiper[data-nds-swiper-initialized]', { state: 'attached', timeout: 15000 });
     try { return await fn(page); } finally { await page.close(); }
 }

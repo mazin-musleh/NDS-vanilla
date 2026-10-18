@@ -75,7 +75,8 @@
         "close_alert": "إغلاق التنبيه"
     },
     "autocomplete": {
-        "no_results": "لا توجد نتائج"
+        "no_results": "لا توجد نتائج",
+        "load_failed": "تعذر تحميل الاقتراحات"
     },
     "breadcrumb": {
         "more": "المزيد",

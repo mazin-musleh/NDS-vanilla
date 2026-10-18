@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 05:43 AM"
+last_edit: "18/10/2026 - 08:38 AM"
 ---
 
 <section id="autocomplete-overview" class="nds-content-section nds-doc-overview">
@@ -144,7 +144,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
             <i class="hgi hgi-stroke hgi-loading-03"></i>
             <span class="nds-label">Debounced Fetching</span>
           </span>
-          <p class="nds-item-desc">A search starts 300 ms after the last keystroke. A new search cancels the request before it. A spinner replaces the clear button while a request runs.</p>
+          <p class="nds-item-desc">A search starts 300 ms after the last keystroke. A new search cancels the request before it. A spinner replaces the clear button while a request runs. A request that fails is announced, and the next focus on the field tries it again. Results that arrive after the user left the field do not open the menu.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

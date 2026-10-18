@@ -93,6 +93,7 @@
     // Table columns align per the table canon: data-align on the <th>.
     const COLUMN_ALIGN = new Set(['center', 'start', 'end']);
     const CMD_BLOCK_MAP = { h1: 'H1', h2: 'H2', h3: 'H3', h4: 'H4' };
+    const DRAG_TYPE = 'application/x-nds-editor';
     // Structural/formatting commands never touch an atom's content — it's a
     // label (+ icon), never a heading, a list, or formatted text. Native
     // execCommand doesn't understand the atom boundary any better here than
@@ -1009,6 +1010,9 @@
                 this._historyStep(e.inputType === 'historyUndo' ? -1 : 1);
             }, { signal });
             this.editable.addEventListener('paste', this._onPaste.bind(this), { signal });
+            // A drag from an NDS editor carries markup an editor already cleaned: it moves natively.
+            this.editable.addEventListener('dragstart', (e) => e.dataTransfer?.setData(DRAG_TYPE, '1'), { signal });
+            this.editable.addEventListener('drop', this._onDrop.bind(this), { signal });
             this.editable.addEventListener('cut', this._onCut.bind(this), { signal });
             this.editable.addEventListener('keydown', this._onKeydown.bind(this), { signal });
             document.addEventListener('selectionchange', this._scheduleToolbarSync.bind(this), { signal });
@@ -1617,6 +1621,22 @@
             this._syncColumnAlign();
             this._syncSource();
             this._updateToolbarState();
+        }
+
+        // Anything else dropped goes in like a paste, sanitized, at the drop point.
+        _onDrop(e) {
+            if (!e.dataTransfer || e.dataTransfer.types.includes(DRAG_TYPE)) return;
+            e.preventDefault();
+            const pos = document.caretPositionFromPoint?.(e.clientX, e.clientY);
+            const range = pos ? document.createRange() : document.caretRangeFromPoint?.(e.clientX, e.clientY);
+            if (pos) range.setStart(pos.offsetNode, pos.offset);
+            this.editable.focus({ preventScroll: true });
+            if (range && this.editable.contains(range.startContainer)) {
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+            this._onPaste({ preventDefault() {}, clipboardData: e.dataTransfer });
         }
 
         // Place pasted markup at the caret. Plain content rides

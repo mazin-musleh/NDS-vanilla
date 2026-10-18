@@ -458,6 +458,8 @@
                     action(e);
                 }
             }, { signal });
+            // A click with no pointer behind it (detail 0): .click(), voice control, a screen reader.
+            btn.addEventListener('click', (e) => { if (e.detail === 0) action(e); }, { signal });
         }
 
         // ==============================================

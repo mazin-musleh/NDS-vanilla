@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:31 AM"
+last_edit: "18/10/2026 - 08:38 AM"
 ---
 
 <section id="voice-overview" class="nds-content-section nds-doc-overview">
@@ -198,7 +198,7 @@ A button inside `.nds-form-control` dictates into that field's input or text are
             <i class="hgi hgi-stroke hgi-timer-02"></i>
             <span class="nds-label">Time Limit</span>
           </span>
-          <p class="nds-item-desc">The mic closes 30 seconds after it opens, and the field shows a timeout message. It also closes when the button is removed from the page.</p>
+          <p class="nds-item-desc">The mic closes 30 seconds after it opens, and the field shows a timeout message. It also closes when focus leaves the field, when the form is sent, or when the button is removed from the page.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
