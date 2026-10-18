@@ -1,11 +1,12 @@
 // NDS.date against Intl itself: every day 2018–2037 must round-trip gregory ↔ hijri
 // exactly, Arabic digits and bidi marks must parse, a day that does not exist must not.
-// Loads _js/nds-core.js into a blank page, so no build is needed. ENGINE=webkit runs it as Safari.
+// Loads _js/nds-core.js and _js/nds-date.js into a blank page, so no build is needed. ENGINE=webkit runs it as Safari.
 // Usage: node scripts/check-date.mjs
 import { join } from 'node:path';
 import { launch, ENGINE } from './lib/browser.mjs';
 
 const CORE = join(import.meta.dirname, '..', '_js', 'nds-core.js');
+const DATE = join(import.meta.dirname, '..', '_js', 'nds-date.js');
 
 const browser = await launch();
 const fails = [];
@@ -14,6 +15,7 @@ for (const timezoneId of ['Asia/Tokyo', 'America/Los_Angeles']) {
     const page = await (await browser.newContext({ timezoneId })).newPage();
     await page.setContent('<html lang="ar"><body></body></html>');
     await page.addScriptTag({ path: CORE });
+    await page.addScriptTag({ path: DATE });
     const out = await page.evaluate(() => {
         const D = NDS.date, bad = [];
         const uq = new Intl.DateTimeFormat('en', { calendar: 'islamic-umalqura', numberingSystem: 'latn', timeZone: 'UTC', year: 'numeric', month: 'numeric', day: 'numeric' });

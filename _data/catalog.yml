@@ -1033,13 +1033,13 @@
   js: _js/nds-audit.js
 
 - title: "Date"
-  description: "Parse, print and convert dates in Gregorian and Hijri (Umm al-Qura), in the site's timezone and date format"
-  use_when: "Read a date from text, print a date, convert between Gregorian and Hijri, or get today's date in the site's timezone. Use it for any date handled in JavaScript, and to set the site's timezone and date format on <html>. For a date field the user fills in use Date Picker; to sort a list by date use Sort."
+  description: "Show, parse, print and convert dates in Gregorian and Hijri (Umm al-Qura), in the site's timezone and date format"
+  use_when: "Read a date from text, print a date, convert between Gregorian and Hijri, or get today's date in the site's timezone. Use it for any date handled in JavaScript, to show a <time> in Hijri with data-date-to (an issue or expiry date in both calendars), and to set the site's timezone and date format on <html>. For a date field the user fills in use Date Picker; to sort a list by date use Sort."
   icon: '<i class="hgi hgi-stroke hgi-calendar-02"></i>'
   category: "Core"
   tags: ["JS", "API"]
   url: "/core/date.html"
-  js: _js/nds-core.js
+  js: _js/nds-date.js
 
 - title: "Init"
   description: "Starts every component at load, and the calls that tell them a container changed"

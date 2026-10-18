@@ -630,6 +630,12 @@
   "ar": "محرم · صفر · ربيع الأول · ربيع الثاني · جمادى الأولى · جمادى الآخرة · رجب · شعبان · رمضان · شوال · ذو القعدة · ذو الحجة"
  },
  {
+  "section": "date",
+  "key": "hijri_era",
+  "en": "AH",
+  "ar": "هـ"
+ },
+ {
   "section": "date-picker",
   "key": "select_month",
   "en": "Select month",

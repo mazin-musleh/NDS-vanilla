@@ -2,13 +2,13 @@
 layout: page
 title: Date
 hero_title: Date - National Design System
-hero_description: Reads and writes dates as text in the two calendars of Saudi Arabia, Gregorian and Hijri (Umm al-Qura)
+hero_description: Shows, reads and writes dates in the two calendars of Saudi Arabia, Gregorian and Hijri (Umm al-Qura)
 breadcrumb: [["Core", "/components/?shelf=Core"]]
 lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "12/10/2026 - 06:54 PM"
+last_edit: "19/10/2026 - 12:05 AM"
 ---
 
 <section id="date-overview" class="nds-content-section nds-doc-overview">
@@ -18,9 +18,9 @@ last_edit: "12/10/2026 - 06:54 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-`NDS.date` is a JavaScript API in the main bundle, so every page has it, with no init call. Three attributes on `<html>` go with it: `data-timezone` sets the site's timezone, `data-date-format` sets its date format, and `data-calendar` sets its calendar.
+NDS works with dates in two ways. In markup, a `<time>` with `data-date-to="hijri"` shows its date in Hijri, and one with its own `data-date-format` shows it in that format. You write no script. In JavaScript, `NDS.date` reads, writes and converts dates. It is in the main bundle, so every page has it, with no init call.
 
-A date here is a calendar day: a JavaScript `Date` at local midnight. `parse` returns one, and `format` reads one. The site's timezone changes only which day `today()` returns.
+Three attributes on `<html>` set the site's dates: `data-timezone` sets its timezone, `data-date-format` its date format, and `data-calendar` its calendar.
 
 Pick another component when:
 
@@ -34,9 +34,34 @@ Pick another component when:
 <section id="date-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Usage</h2>
+      <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
+
+<script type="text/html" id="date-time" data-canon data-variants="date-variants-table">
+<time datetime="2026-10-18">18/10/2026</time>
+</script>
+
+<script type="text/html" id="date-time-hijri" data-canon>
+<time datetime="2026-10-18" data-date-to="hijri">18/10/2026</time>
+</script>
+
+<script type="text/html" id="date-to" data-canon>
+<dl class="nds-definition-list nds-table-view">
+  <div class="nds-definition-item">
+    <dt><span class="nds-label">Issue date</span></dt>
+    <dd>
+      <div>
+        <time datetime="2026-10-18">18/10/2026</time>
+        <div class="nds-note"><time datetime="2026-10-18" data-date-to="hijri">18/10/2026</time></div>
+      </div>
+    </dd>
+  </div>
+</dl>
+</script>
+
+### Site Setup
+{: #date-setup}
 
 Set the site's timezone and date format on `<html>`. Without `data-timezone`, today is the visitor's day. Without `data-date-format`, the format is `DD/MM/YYYY`.
 
@@ -44,13 +69,16 @@ Set the site's timezone and date format on `<html>`. Without `data-timezone`, to
 <html lang="ar" dir="rtl" data-timezone="Asia/Riyadh" data-date-format="DD/MM/YYYY">
 </script>
 
-Give one part of the page its own date format with `data-date-format` on any element. The nearest one wins: in the section below, Date Picker and Sort read dates month first. The rest of the site reads them day first.
+Give one part of the page its own format with `data-date-format` on any element.
 
 <script type="text/html" id="date-scoped" data-canon data-preview="none">
 <section data-date-format="MM/DD/YYYY">
   <!-- A table here sorts 12/31/2026 as 31 December -->
 </section>
 </script>
+
+### Dates in JavaScript
+{: #date-in-js}
 
 Read a Hijri date from a field, and send it to the server as `YYYY-MM-DD`.
 
@@ -62,26 +90,70 @@ function hijriToIso(text) {
 }
 </script>
 
-Show a date to people in the page language.
+Show a date to people, convert it, or write the month's name.
 
-<script type="text/html" id="date-print" data-canon data-lang="js">
-// On an Arabic page: 'الخميس، 5 مارس 2026'
+<script type="text/html" id="date-show" data-canon data-lang="js">
+// In the page language. On an Arabic page: 'الخميس، 5 مارس 2026'
 NDS.date.format(new Date(2026, 2, 5), { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-</script>
 
-Convert a Gregorian date to Hijri.
-
-<script type="text/html" id="date-convert" data-canon data-lang="js">
-// '16/09/1447'
+// Gregorian to Hijri: '16/09/1447'
 NDS.date.convert('05/03/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', format: 'DD/MM/YYYY' });
-</script>
 
-Write the month's name with `MMMM`.
-
-<script type="text/html" id="date-month-name" data-canon data-lang="js">
-// On an Arabic page: '16 رمضان 1447'
+// The month's name with MMMM. On an Arabic page: '16 رمضان 1447'
 NDS.date.format(new Date(2026, 2, 5), { calendar: 'hijri', format: 'D MMMM YYYY' });
 </script>
+
+</div>
+  </div>
+</section>
+
+<section id="date-variants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
+    </div>
+    <div class="nds-section-body" markdown="1">
+
+Format goes on the `<time>` that shows the date: in Both Calendars, the Hijri one. Era goes on a Hijri `<time>`, so it needs Hijri or Both Calendars.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Gregorian (default) | — | — | The Gregorian date. With a Format, the script writes it in that format |
+| Structure | Hijri | canon `#date-time-hijri` | — | `data-date-to="hijri"`: the script writes the date from `datetime` in Umm al-Qura Hijri |
+| Structure | Both Calendars | canon `#date-to` | — | The Gregorian date with the Hijri date under it, such as an issue or expiry date. Write the date twice, and add `data-date-to="hijri"` to the second one |
+| Format | None (default) | — | — | The nearest `data-date-format` around the `<time>`, else the site's |
+| Format | Month Name | `[data-date-format="D MMMM YYYY"]` | `time:not(.nds-definition-list time:not([data-date-to]))` | The day, the month's name and the year, in the page language |
+| Format | ISO | `[data-date-format="YYYY-MM-DD"]` | `time:not(.nds-definition-list time:not([data-date-to]))` | Year, month and day, as a server reads them |
+| Era | Era Marker (hint: «هـ» or AH after the Hijri date) | `[data-date-era]` | `time[data-date-to]` | Adds «هـ» on an Arabic page, or AH on an English one, after the Hijri date. Leave it out where a label already says the date is Hijri |
+{: #date-variants-table .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="date-behavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Calendar Days
+{: #date-calendar-days}
+
+A date is a calendar day: a JavaScript `Date` at local midnight. `parse` returns one, and `format` reads one. No timezone moves it, so a day typed in Riyadh is the same day for a visitor in Tokyo. The site's timezone changes only which day `today()` returns.
+
+### Nearest Format
+{: #date-nearest-format}
+
+`data-date-format` and `data-calendar` on an element set the format and the calendar of the dates inside it. The nearest one wins over the one on `<html>`. Date Picker, Sort and `data-date-to` read them.
+
+### Markup Dates
+{: #date-markup-dates}
+
+The script reads the date from `datetime`, never from the text, and writes the text before the page shows, so the line does not shift. It writes a `<time>` with `data-date-to="hijri"`, or one with its own `data-date-format`. Any other `<time>` already reads right, so it stays as written.
+
+`datetime` holds `YYYY-MM-DD`, with or without a time. A time with a zone, such as `Z` or `+03:00`, counts in the site's timezone. A value that is not a full date is left as written, and without JavaScript the text you wrote stays. With `data-date-era`, a Hijri date ends in «هـ» on an Arabic page and AH on an English one.
 
 </div>
   </div>
@@ -129,13 +201,6 @@ NDS.date.format(new Date(2026, 2, 5), { calendar: 'hijri', format: 'D MMMM YYYY'
           </span>
           <p class="nds-item-desc"><code class="nds-inline-code lang-js">today()</code> returns today in the timezone that <code class="nds-inline-code lang-html">data-timezone</code> names. An invalid name logs one warning, and the visitor's timezone applies.</p>
         </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-calendar-02"></i>
-            <span class="nds-label">Calendar Days</span>
-          </span>
-          <p class="nds-item-desc">No timezone moves a parsed date. A day typed in Riyadh is the same day for a visitor in Tokyo or Los Angeles.</p>
-        </div>
       </div>
     </div>
   </div>
@@ -151,6 +216,7 @@ NDS.date.format(new Date(2026, 2, 5), { calendar: 'hijri', format: 'D MMMM YYYY'
 - Name the format when the text comes from a server or another site. `03/04/2026` is 3 April or 4 March, and `parse` never guesses.
 - Check the result of `parse` for `null` before you use it.
 - Send a date to a server as `YYYY-MM-DD`. Show the user any format or calendar.
+- Write a readable date as the text of a `<time>`, not an empty tag. It shows before the script runs, without JavaScript, and to search engines.
 - Use `today()` for today's date, not `new Date()`. `new Date()` is the visitor's clock and ignores `data-timezone`.
 - Set `data-timezone` when today must be the same day for every visitor, such as a deadline in Riyadh.
 - Do not pass `timeZone` to `format` for a parsed date. It moves the day for a visitor in another timezone. Pass it only for a moment in time, such as `new Date()` in a clock.
@@ -177,6 +243,9 @@ NDS.date.format(new Date(2026, 2, 5), { calendar: 'hijri', format: 'D MMMM YYYY'
 | `data-date-format` | `<html>` | The site's date format, in the tokens below. `parse` and `format` use it when you name no format. The default is `DD/MM/YYYY` |
 | `data-date-format` | any element | The date format of the content inside it. The nearest one wins over the one on `<html>`. A Date Picker without its own `data-format`, and Sort when it reads a date from text, use it |
 | `data-calendar` | `<html>`, or any element | `hijri` or `gregory`, the calendar of the dates inside it. The nearest one wins. Date Picker, the top bar date and Sort read it. The default is Gregorian, and the top bar date follows the page language |
+| `data-date-to` | a `<time>` with `datetime` | `hijri`: the `<time>` shows its date in Hijri, in the nearest `data-date-format`, its own included. Any other value is left as written. See [Markup Dates](#date-markup-dates) |
+| `data-date-format` | a `<time>` with `datetime`, without `data-date-to` | Written on the `<time>` itself: the script writes the Gregorian date from `datetime` in this format. A `<time>` with neither attribute is left as written |
+| `data-date-era` | a `<time>` with `data-date-to="hijri"` | Written bare. Adds the era word after the Hijri date: «هـ» on an Arabic page, AH on an English one, from the `date` section of the [string pack](../core/i18n) |
 {: .nds-table .nds-responsive}
 
 ### Format Tokens
@@ -186,7 +255,7 @@ NDS.date.format(new Date(2026, 2, 5), { calendar: 'hijri', format: 'D MMMM YYYY'
 |---|---|
 | `YYYY` | The year, 4 digits |
 | `YY` | The year, 2 digits. `parse` reads it as 2000 to 2099 |
-| `MMMM` | The month's name, in `locale` or the page language. Only for `format`: `parse` returns `null` for a format with it, so keep it out of `data-date-format` |
+| `MMMM` | The month's name, in `locale` or the page language. Only for `format`: `parse` returns `null` for a format with it. Keep it out of a `data-date-format` on `<html>` or a section, which Sort and Date Picker read back. On a `<time>`, the script only writes it |
 | `MM` | The month, 2 digits |
 | `M` | The month, 1 or 2 digits |
 | `DD` | The day, 2 digits |
@@ -221,6 +290,7 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 | `NDS.date.site` | Returns `{ timeZone, format }` from `<html>`. `timeZone` is `undefined` when the attribute is missing or invalid |
 | `NDS.date.monthNames(calendar, lang)` | Returns the 12 month names of `'gregory'` or `'hijri'`, in `lang` or the page's language. The Hijri names come from the `date` section of the [string pack](../core/i18n) |
 | `NDS.date.weekdayNames(lang)` | Returns the 7 short weekday names, Sunday first, in `lang` or the page's language |
+| `NDS.date.fill(root)` | Writes the text of every `<time>` in `root`, and of `root` itself, that has `data-date-to` or its own `data-date-format`. The loader runs it at load, and `NDS.Init.mount()` on markup added later |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="date-api-js" data-canon data-lang="js">
@@ -231,7 +301,7 @@ const [day, month, year] = NDS.date
   .map(Number);
 </script>
 
-The full API is in the banner of `_js/nds-core.js`, and in the comment above `NDS.date` there.
+The full API is in the banner of `_js/nds-date.js`.
 
 </div>
   </div>

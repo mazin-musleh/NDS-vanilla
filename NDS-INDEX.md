@@ -34,7 +34,7 @@ Foundation, component, layout, shell, utility and core docs live in `_source/<fo
 | Tokens, knobs, dark mode | `_source/foundations/tokens.md` (Override Scope), `_source/_sass/tokens/_semantic.scss`, `_source/_sass/tokens/_components.scss`, the palette in `_source/_sass/themes/_dga.scss`. A component's knobs: its doc's API, CSS Custom Properties. |
 | Icons | `_source/foundations/icons.md`. The inline names: `_source/_data/content/icons.yml`. Font icon names have no list: the audit names one the font lacks |
 | Page code that waits for components at load, content that changes after load, framework views | `_source/core/init.md` |
-| Requests, dates, text and languages | `_source/core/request.md`, `_source/core/date.md`, `_source/core/i18n.md`, and the banner of `_source/_js/nds-core.js` |
+| Requests, dates, text and languages | `_source/core/request.md`, `_source/core/date.md`, `_source/core/i18n.md`, and the banners of `_source/_js/nds-core.js` and `_source/_js/nds-date.js` |
 | Renamed and removed names | `_source/guides/migration.md` |
 
 ## Page shapes

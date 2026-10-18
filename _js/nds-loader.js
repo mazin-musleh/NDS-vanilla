@@ -174,6 +174,13 @@
             selector: '.nds-progress-circle, .nds-progress-bar',
         },
         {
+            // Critical: it rewrites a <time>'s text, and a date that changes length after the reveal would shift the line.
+            name: 'date',
+            selector: 'time[datetime][data-date-to], time[datetime][data-date-format]',
+            critical: true,
+            refresh: (root) => NDS.date?.fill?.(root),
+        },
+        {
             // Deferred: cosmetic on-scroll animation.
             name: 'Numbers',
             selector: '.nds-number-format, [data-counter]',
