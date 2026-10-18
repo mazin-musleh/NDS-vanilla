@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "12/10/2026 - 09:00 AM"
+last_edit: "18/10/2026 - 03:51 PM"
 ---
 
 <section id="checkbox-overview" class="nds-content-section nds-doc-overview">
@@ -223,7 +223,7 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
 | `data-min-checked` | `.nds-check-group` | The fewest options that must be checked. The message reads "Please select at least 2 options" |
 | `data-max-checked` | `.nds-check-group` | The most options that may be checked. The message reads "Please select no more than 3 options" |
 | `data-error-message` | `.nds-check-group` | Replaces the message when nothing is checked. The `data-min-checked` and `data-max-checked` messages stay |
-| `data-state~="disabled"` | `.nds-check-container`, `.nds-check-group` | Disables the option, or every option in the group. A group also turns half transparent |
+| `data-state~="disabled"` | `.nds-check-container`, `.nds-check-group` | Disables the option, or every option in the group. The group's title takes the disabled color |
 | `data-state~="readonly"` | `.nds-check-container` | The option cannot change. The tile shows a border only |
 | `data-state~="indeterminate"` | `.nds-check-container` | Set by `NDS.Forms.setIndeterminate()`. Do not set it yourself |
 | `data-feedback-target` | `.nds-form-header`, or an element inside the group | Receives the feedback message. Without one, the message goes at the end of the field or the group |

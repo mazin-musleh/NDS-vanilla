@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "18/10/2026 - 03:51 PM"
 ---
 
 <section id="radio-overview" class="nds-content-section nds-doc-overview">
@@ -194,7 +194,7 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
 |---|---|---|
 | `data-required` | `.nds-radio-group` | The user must pick an option before the form submits. It also adds the required mark to the legend |
 | `data-error-message` | `.nds-radio-group` | Replaces the default message, "Please select an option" |
-| `data-state~="disabled"` | `.nds-radio-group` | Half opacity and no pointer events. It also disables every input in the group |
+| `data-state~="disabled"` | `.nds-radio-group` | Disables every input in the group, and turns off pointer events. The group's title takes the disabled color |
 | `data-state~="readonly"` | `.nds-radio-container` | The option cannot change. The tile outline takes the disabled color |
 | `data-feedback-target` | an element inside the group | Receives the group's feedback message. Without one, the message goes at the end of the group |
 {: .nds-table .nds-responsive}

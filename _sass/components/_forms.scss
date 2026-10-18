@@ -620,9 +620,15 @@ fieldset {
         }
     }
 
+    // The group's own title. Unset, the var leaves the inherited color.
+    >:is(legend, .nds-label) {
+        color: var(--_header-color-forced);
+    }
+
+    // No opacity: each option already shows its own disabled look, and a fade doubled it.
     &[data-state~="disabled"] {
-        opacity: 0.5;
         pointer-events: none; // inherited by every container inside
+        --_header-color-forced: var(--text-default-disabled);
     }
 
     // The message reads --_feedback-display; its colour comes from the generic

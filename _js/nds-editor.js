@@ -1202,7 +1202,9 @@
             this.source.disabled = disabled;
             this.source.readOnly = readonly;
             if (this.toolbar) {
-                this.toolbar.querySelectorAll('[data-cmd]').forEach(btn => { btn.disabled = !editable; });
+                // Commands act on the visual view: off in source view too, as real disabled buttons.
+                const cmds = editable && !this.root.classList.contains('is-source');
+                this.toolbar.querySelectorAll('[data-cmd]').forEach(btn => { btn.disabled = !cmds; });
                 const srcBtn = this.toolbar.querySelector('[data-source-toggle]');
                 if (srcBtn) srcBtn.disabled = disabled; // readonly may still view source
                 this._syncRemoveState(); // remove stays caret-gated, not blanket-enabled
@@ -1354,6 +1356,7 @@
                 // switch into a min-height-sized textarea.
                 this.source.style.blockSize = `${this.editable.offsetHeight}px`;
                 this.root.classList.add('is-source');
+                this._applyAccessState();
                 this.source.removeAttribute('tabindex');
                 btn?.setAttribute('aria-pressed', 'true');
                 this.source.focus();
@@ -1371,6 +1374,7 @@
                 this._refreshLinks();
                 this._syncColumnAlign();
                 this.root.classList.remove('is-source');
+                this._applyAccessState();
                 this.source.setAttribute('tabindex', '-1');
                 btn?.setAttribute('aria-pressed', 'false');
                 this._syncSource();
@@ -2083,7 +2087,7 @@
         _syncRemoveState() {
             const rm = this.toolbar?.querySelector('[data-cmd="remove"]');
             if (!rm) return;
-            const node = this.editable.getAttribute('contenteditable') === 'true'
+            const node = this.editable.getAttribute('contenteditable') === 'true' && !this.root.classList.contains('is-source')
                 ? this._componentCaretNode() : null;
             rm.disabled = !(node && this._regionRootOf(node));
         }

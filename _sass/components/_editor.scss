@@ -126,9 +126,8 @@
     white-space: nowrap;
   }
 
-  // Source view: swap the editable for the textarea; formatting commands are inert.
+  // Source view: swap the editable for the textarea; the script disables the formatting commands.
   &.is-source .nds-editor-editable { display: none; }
-  &.is-source .nds-toolbar .nds-btn[data-cmd] { opacity: 0.5; pointer-events: none; }
 
   .nds-editor-source {
     // Code always reads LTR, even on an RTL page.

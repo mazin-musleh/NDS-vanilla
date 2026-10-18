@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 09:14 PM"
+last_edit: "18/10/2026 - 03:51 PM"
 ---
 
 <section id="switch-overview" class="nds-content-section nds-doc-overview">
@@ -218,7 +218,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-state~="disabled"` | `.nds-switch-container` | Not-allowed cursor and muted track and thumb. Also disables the input |
-| `data-state~="disabled"` | `.nds-switch-group` | Half opacity and no pointer events. Also disables every input in the group |
+| `data-state~="disabled"` | `.nds-switch-group` | Disables every input in the group, and turns off pointer events. The group's title takes the disabled color |
 | `data-required` | `.nds-switch-group` | At least one switch must be on before the form submits. It adds the required mark to the legend |
 | `data-min-checked`, `data-max-checked` | `.nds-switch-group` | The fewest and the most switches that may be on. The same rules as a [checkbox group](../components/checkbox) |
 | `data-error-message` | `.nds-switch-group` | Replaces the message when no switch is on. The `data-min-checked` and `data-max-checked` messages stay |
