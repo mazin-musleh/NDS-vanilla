@@ -263,7 +263,14 @@ module DocsCanon
     (r[:adds] || []).any? do |m|
       choice[:targets].any? do |t|
         part = negated ? t.scan(/:not\((.*?)\)(?=:|\s|\z)/).flatten.join(' ') : t.gsub(/:(?:not|has)\([^)]*\)/, '')
-        next part.scan(/\.([\w-]+)/).flatten.include?(m[1..]) if m.start_with?('.')
+        if m.start_with?('.')
+          compound = part.split(/[\s>+~]+/).find { |c| c.scan(/\.([\w-]+)/).flatten.include?(m[1..]) }
+          next false unless compound
+          next true if negated || bare || !r[:targets]
+          # The class must land on the element the target names: `.nds-card` on a step's content gives no `.nds-stepper.nds-card`.
+          rest = compound.scan(/\.([\w-]+)/).flatten - [m[1..]]
+          next r[:targets].any? { |rt| rt == '—' || (rest - rt.gsub(/:(?:not|has)\([^)]*\)/, '').split(/[\s>+~]+/).last.to_s.scan(/\.([\w-]+)/).flatten).empty? }
+        end
 
         part.include?(m) || ((negated || bare) && part.include?("[#{m[/\[([\w-]+)/, 1]}]"))
       end
@@ -404,7 +411,8 @@ module DocsCanon
       default = list.find { |r| r[:option].include?('(default)') }
       none = default && label(default[:option]) == 'None'
       chips = list.reject { |r| (none && r.equal?(default)) || label(r[:option]).include?(' + ') }
-      tone = none || list.any? { |r| label(r[:option]).include?(' + ') } ? 'neutral' : 'primary'
+      # Primary marks the main choice, the structure; every other option is neutral.
+      tone = structure?(group) ? 'primary' : 'neutral'
       row[group, chips.map { |r| chip[group, r, !none && r.equal?(default), tone] }]
     end
     body << row['More', single.map { |group, (r)| chip[group, r, r[:option].include?('(default)')] }] if single.any?
