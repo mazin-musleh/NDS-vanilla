@@ -18,6 +18,7 @@
  *     its position. Any other display needs a target to insert into.
  *   - duration is 0 by default (no auto-dismiss). A running toast pauses on hover or
  *     focus, and a CLICK pins the pause: it then stays until closed.
+ *   - An id that an alert already has replaces that alert, so a repeated toast never stacks.
  *   - title and description are escaped. An action's href is scheme-checked, and an
  *     unsafe one downgrades the action to a plain button.
  *   - An action is {label, variant, size, class, onClick, dismiss, href, target, copy, copyTarget};
@@ -215,6 +216,11 @@
                     }
                 });
             }
+
+            // One alert per id: a repeat (Saved, Saved…) replaces the last one.
+            // ponytail: a toast moved to another position leaves its old placeholder empty until the next dismiss there.
+            const old = id && document.getElementById(id);
+            if (old && old !== alert && old.classList.contains('nds-alert')) old.remove();
 
             // Insert into target or as toast
             if (display === 'toast') {

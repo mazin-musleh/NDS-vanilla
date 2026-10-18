@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "18/10/2026 - 11:47 AM"
 ---
 
 <section id="alert-overview" class="nds-content-section nds-doc-overview">
@@ -319,7 +319,7 @@ An alert is a card, so the card color properties (`--card-bg`, `--card-border` a
 | `closable` | `true` | Show the close button. A toast with a `duration` always has one |
 | `shadow` | `true` for a toast, else `false` | Add `.nds-shadow` |
 | `color` | `false` | Add `.nds-color` |
-| `id` | `null` | Id of the alert element |
+| `id` | `null` | Id of the alert element. The new alert replaces an alert in the page with the same id, so a repeated toast does not stack |
 | `position` | `'top'` | Toast position: `top` or `bottom`, with an optional `-start`, `-end`, `-left` or `-right`. `-start` and `-end` follow the text direction, so `-start` is the left in English and the right in Arabic. `top` and `bottom` alone sit at the end side |
 | `duration` | `0` | Toast auto-close time in ms. `0` never closes |
 | `actions` | `[]` | Action objects (next table) |

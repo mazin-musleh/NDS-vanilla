@@ -18,7 +18,8 @@
  *   NDS.Export.openPrint(data, opts)             open the print window (the PDF path)
  *   NDS.Export.download(data, format, opts)      serialize and save
  * Events:
- *   (none)
+ *   nds:export:start   on the source (bubbles, cancelable) — detail {format, scope, data, filename};
+ *                      before the file is made: edit data.rows, or preventDefault() to stop it
  * Hooks:
  *   on the button:      data-export="csv|xls|pdf" · data-export-target (selector)
  *                       data-export-scope
@@ -448,7 +449,10 @@
         const ext = format === 'pdf' ? 'pdf' : format === 'xls' ? 'xls' : 'csv';
         const filename = opts.filename || defaultFilename(el, ext);
         const title = opts.title || filename.replace(/\.[a-z]+$/i, '');
-        download(data, format, Object.assign({}, opts, { filename, title }));
+        const go = el.dispatchEvent(new CustomEvent('nds:export:start', {
+            bubbles: true, cancelable: true, detail: { format, scope: scope || 'auto', data, filename },
+        }));
+        if (go) download(data, format, Object.assign({}, opts, { filename, title }));
     }
 
     // ── Declarative button delegation ──────────────────────────────────

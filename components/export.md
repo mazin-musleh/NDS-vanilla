@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 08:26 PM"
+last_edit: "18/10/2026 - 11:47 AM"
 ---
 
 <section id="export-overview" class="nds-content-section nds-doc-overview">
@@ -440,7 +440,10 @@ A source is an element or a CSS selector. A scope is `"auto"` (the default), `"s
 | `dir` | the page's direction | The text direction of the Excel file and the printed PDF: `"rtl"` or `"ltr"` |
 {: .nds-table .nds-responsive}
 
-Export fires no events.
+| Event | Fired on | Detail |
+|---|---|---|
+| `nds:export:start` | the source (bubbles, cancelable) | `{ format, scope, data, filename }`. It fires before the file is made. A button, `export()`, `csv()`, `xls()` and `pdf()` fire it, and `download()` does not. Change `data.rows` to change the file. Call `preventDefault()` to stop the export |
+{: .nds-table .nds-responsive}
 
 <script type="text/html" id="export-js" data-canon data-lang="js">
 // Export every row, with a file name of your own

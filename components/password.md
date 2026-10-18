@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "18/10/2026 - 11:47 AM"
 ---
 
 <section id="password-overview" class="nds-content-section nds-doc-overview">
@@ -274,7 +274,7 @@ The chip is optional. Without it, leave out `.nds-password-rules` and the input'
             <i class="hgi hgi-stroke hgi-eye"></i>
             <span class="nds-label">Show Password</span>
           </span>
-          <p class="nds-item-desc">The eye button switches the field between hidden and plain text. Its label changes between "Show password" and "Hide password".</p>
+          <p class="nds-item-desc">The eye button switches the field between hidden and plain text. Its label changes between "Show password" and "Hide password". The script hides the password again when the form is sent or reset.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

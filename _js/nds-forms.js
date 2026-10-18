@@ -83,6 +83,7 @@
  *   - validateForm() is called synchronously at submit; keep it in the main bundle.
  *   - A native form reset (a reset button, form.reset(), React 19 after a form action) clears
  *     each field's status and re-syncs its chrome; each NDS field restores its own value.
+ *   - A valid submit (AJAX too) and a reset hide a shown password again.
  */
 
 // NDS Forms Controller - Form Control Logic
@@ -1261,6 +1262,14 @@
             });
         });
 
+        // A sent or reset form hides a shown password. An invalid .nds-form stops its submit before here.
+        ['submit', 'reset'].forEach(function(type) {
+            doc.addEventListener(type, function(e) {
+                if ((type === 'reset' && e.defaultPrevented) || !e.target.querySelectorAll) return;
+                e.target.querySelectorAll('.nds-toggle-password.show').forEach(function(t) { FormControls.showPassword(t, false); });
+            });
+        });
+
         // A rating group has no input to fire `input`, so its own event stands in
         // for the auto-clear above. Submit re-runs the rule, so clearing here is
         // only about dropping a stale message.
@@ -1358,15 +1367,16 @@
 
             passwordToggle.addEventListener('click', function(e) {
                 e.preventDefault();
-
-                var passwordInput = formControl.querySelector(':scope > input[type="password"], :scope > input[type="text"]');
-                if (!passwordInput) return;
-
-                var isPassword = passwordInput.type === 'password';
-                passwordInput.type = isPassword ? 'text' : 'password';
-                passwordToggle.classList.toggle('show', isPassword);
-                NDS.aria.label(passwordToggle, strings.text(isPassword ? 'hide_password' : 'show_password'));
+                FormControls.showPassword(passwordToggle, !passwordToggle.classList.contains('show'));
             });
+        },
+
+        showPassword: function(passwordToggle, show) {
+            var passwordInput = passwordToggle.closest('.nds-form-control').querySelector(':scope > input[type="password"], :scope > input[type="text"]');
+            if (!passwordInput) return;
+            passwordInput.type = show ? 'text' : 'password';
+            passwordToggle.classList.toggle('show', show);
+            NDS.aria.label(passwordToggle, strings.text(show ? 'hide_password' : 'show_password'));
         },
 
         initSwitchControls: function(formControl) {

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "18/10/2026 - 11:47 AM"
 ---
 
 <section id="rating-overview" class="nds-content-section nds-doc-overview">
@@ -142,7 +142,7 @@ The Menu structure puts a display rating and a vote count in a [Dropmenu](../com
 
 ### Required
 
-To require a score, put the rating in a `.nds-form-group` and add `data-required` to the group. [Forms](../components/forms) validation treats `data-rating="0"` as empty and focuses the first star. The stars are buttons, not inputs. Add a hidden input when the score must post with the form.
+To require a score, put the rating in a `.nds-form-group` and add `data-required` to the group. [Forms](../components/forms) validation treats `data-rating="0"` as empty and focuses the first star. The stars are buttons, not inputs. When the score must post with the form, put `<input type="hidden" class="nds-rating-value" name="…">` inside the `.nds-rating`. The script writes the score into it, and leaves it empty for 0. After a form reset, the script puts back the score the page loaded with.
 
 </div>
   </div>
@@ -243,6 +243,7 @@ To require a score, put the rating in a `.nds-form-group` and add `data-required
 | Class | Element | Effect |
 |---|---|---|
 | `.nds-rating-star` | a child of `.nds-rating` | One star. A `<button>` makes the rating interactive |
+| `.nds-rating-value` | a hidden `<input>` in `.nds-rating` | Holds the score for the form. The script writes it, empty for 0 |
 | `.nds-rating-menu` | `.nds-dropmenu-menu` | Centers the label and the stars of the vote item in a [Dropmenu](../components/dropmenu), and sets the menu padding |
 {: .nds-table .nds-responsive}
 

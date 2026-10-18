@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 08:23 PM"
+last_edit: "18/10/2026 - 11:47 AM"
 ---
 
 <section id="themes-overview" class="nds-content-section nds-doc-overview">
@@ -382,6 +382,8 @@ A theme menu option can load a stylesheet theme too. `data-theme-css` on the opt
 | `data-theme-css` | a theme option | A stylesheet URL. The script adds it as `<link id="nds-theme-stylesheet">` when the user picks the option, and removes it when the user picks another one |
 | `data-theme-js` | a theme option | A script URL. The script loads it once, the first time the user picks the option, or at load when it is the saved theme |
 {: .nds-table .nds-responsive}
+
+A `<meta name="theme-color">` in `<head>` sets the color of the browser bar on a phone. When the page has one, the script writes the top bar's background color into it, at load and on each mode or theme change. Without a top bar, it takes the main navigation's color, then the page's. A `theme-color` meta with a `media` attribute is yours, and the script leaves it alone.
 
 `?theme=name` in the page URL: see Theme Menu.
 

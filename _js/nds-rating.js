@@ -16,6 +16,8 @@
  * Hooks:
  *   data-rating   the current value on the root; the component writes the new value back
  *                 here on every pick
+ *   .nds-rating-value   a hidden input in the root: the component writes the score into it,
+ *                 empty for 0, so it posts with the form; a form reset restores the first score
  *   written by the component: data-value on each .nds-rating-star (its 1-based position)
  * Gotchas:
  *   - Interactive mode is auto-detected: <button> stars on a root that is not disabled
@@ -44,6 +46,9 @@
       this.rating = element;
       this.stars = element.querySelectorAll('.nds-rating-star');
       this.currentRating = parseFloat(element.dataset.rating) || 0;
+      this.startRating = this.currentRating;
+      this.valueInput = element.querySelector('input.nds-rating-value');
+      this.syncValue();
 
       // Set data-value on stars for delegation lookups
       for (let i = 0; i < this.stars.length; i++) {
@@ -90,7 +95,18 @@
         if (star && !hasState(this.rating, 'disabled')) this.handleKeyboard(e, +star.dataset.value);
       }, { signal });
 
+      // The browser restores the form after the reset event; a hidden input keeps what JS wrote.
+      const form = this.rating.closest('form');
+      if (form) form.addEventListener('reset', (e) => {
+        setTimeout(() => { if (!e.defaultPrevented) this.setRating(this.startRating); });
+      }, { signal });
+
       this.updateVisualState();
+    }
+
+    // Empty for 0: nothing picked, as Forms reads it.
+    syncValue() {
+      if (this.valueInput) this.valueInput.value = this.currentRating || '';
     }
 
     destroy() {
@@ -102,6 +118,7 @@
       if (value === this.currentRating) return;
       this.currentRating = value;
       this.rating.dataset.rating = value;
+      this.syncValue();
       this.updateVisualState();
 
       this.rating.dispatchEvent(new CustomEvent('nds:rating:change', {

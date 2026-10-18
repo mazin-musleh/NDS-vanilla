@@ -69,7 +69,7 @@
         {
             // Deferred: the inline head script stamps the saved theme pre-paint; init only syncs the toggle UI.
             name: 'Theme',
-            selector: '[data-theme-toggle], [data-theme-value]',
+            selector: '[data-theme-toggle], [data-theme-value], meta[name="theme-color"]',
         },
         {
             // Critical: init un-hides [hidden] form wrappers and reveals .nds-clear on pre-filled fields (CLS if late).

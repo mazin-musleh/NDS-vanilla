@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 09:48 AM"
+last_edit: "18/10/2026 - 11:47 AM"
 lang: en
 direction: ltr
 ---
@@ -462,7 +462,7 @@ The minus and plus buttons change the value by `step`, 1 by default. Hold a butt
 ### Password
 {: .nds-block-title}
 
-The eye button switches the field between hidden and plain text, and its label between "Show password" and "Hide password". A password field does not accept Arabic letters: the script removes one as it is typed and shows an error.
+The eye button switches the field between hidden and plain text, and its label between "Show password" and "Hide password". The script hides the password again when the form is sent, by AJAX too, or reset. A form that fails validation keeps it shown. A password field does not accept Arabic letters: the script removes one as it is typed and shows an error.
 
 </div>
   </div>

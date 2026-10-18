@@ -20,6 +20,8 @@
  *                       tint, font, weight-regular, weight-medium, weight-semibold,
  *                       weight-bold
  *   data-palette        marks a custom inline-seed theme
+ *   <meta name="theme-color">   without media="": the script writes the top bar's (else the
+ *                       main nav's, else the page's) background into it on init and on every change
  *   ?theme=<token>      in the page URL — applies that switcher option on init as if
  *                       clicked (persisted), ?theme= returns to the default; every
  *                       switcher choice rewrites it (none for the default), so the
@@ -91,6 +93,19 @@
         if (theme === 'dark') kept.push('dark');
         writeTheme(kept);
         updateToggles(theme);
+        syncThemeColor();
+    }
+    // A <meta name="theme-color"> takes the color at the top of the page, so the phone's
+    // browser bar matches it. One with media="" is the site's own per-scheme setup.
+    // ponytail: a stylesheet theme's CSS lands after this; its bar color updates on the next change.
+    function syncThemeColor() {
+        const meta = document.querySelector('meta[name="theme-color"]:not([media])');
+        if (!meta) return;
+        const top = document.querySelector('.nds-topbar, .nds-main-nav');
+        const clear = (c) => !c || c === 'rgba(0, 0, 0, 0)' || c === 'transparent';
+        let bg = top && getComputedStyle(top).backgroundColor;
+        if (clear(bg)) bg = getComputedStyle(document.body).backgroundColor;
+        if (!clear(bg)) meta.setAttribute('content', bg);
     }
     // Circular clip-path reveal (View Transitions) expanding from an origin element's
     // centre — shared by the dark toggle AND the theme switcher. Runs `apply` (the DOM
@@ -264,6 +279,7 @@
             }
             syncSwitcher(value);
             syncUrl(value);
+            syncThemeColor();
         }, el);
     }
 
@@ -340,6 +356,7 @@
 
         updateToggles(getTheme());
         reconcileSwitcher();
+        syncThemeColor();
 
         // ?theme=<token> applies that switcher option as if clicked (and persists
         // it); ?theme= (empty) returns to the default. The URL keeps the param so
