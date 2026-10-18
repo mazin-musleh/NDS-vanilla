@@ -28,7 +28,8 @@
 //   }
 //
 // Writes, per page: each state at each width and theme, and per state a sheet-<state>.png that
-// shows it under the reference. Prints the audit findings, console errors (a CSP one names its
+// shows it under the reference. The reference takes the state's lang and direction, so an Arabic
+// page compares with a right-to-left reference in Arabic. Prints the audit findings, console errors (a CSP one names its
 // source), failed loads, sideways scroll and a wrong window.innerWidth; exits 1 when there is
 // any. Inspect every sheet: the script cannot judge the look.
 import { spawn } from 'node:child_process';
@@ -66,11 +67,20 @@ const TYPES = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascrip
     '.woff2': 'font/woff2', '.ico': 'image/x-icon' };
 const server = createServer((req, res) => {
     const [root, rest] = req.url.startsWith('/__out/') ? [OUT, req.url.slice(6)] : [SITE, req.url];
-    let file = join(root, normalize(decodeURIComponent(rest.split('?')[0])));
+    const [path, query] = rest.split('?');
+    let file = join(root, normalize(decodeURIComponent(path)));
     if (!file.startsWith(root)) { res.writeHead(403).end(); return; }
     if (existsSync(join(file, 'index.html'))) file = join(file, 'index.html');
     if (!existsSync(file)) { res.writeHead(404).end(); return; }
-    res.writeHead(200, { 'content-type': TYPES[extname(file)] || 'application/octet-stream' }).end(readFileSync(file));
+    let body = readFileSync(file);
+    // A reference in the page's lang and dir: written into <html> before any script reads it.
+    const q = new URLSearchParams(query), lang = q.get('nds-lang') || '', dir = q.get('nds-dir');
+    if (extname(file) === '.html' && /^(ltr|rtl)$/.test(dir) && /^[\w-]{0,35}$/.test(lang)) {
+        body = Buffer.from(String(body).replace(/<html\b[^>]*>/i, (tag) => tag
+            .replace(lang ? /\s(lang|dir)\s*=\s*("[^"]*"|'[^']*'|\S+)/gi : /\sdir\s*=\s*("[^"]*"|'[^']*'|\S+)/gi, '')
+            .replace(/\s*>$/, `${lang ? ` lang="${lang}"` : ''} dir="${dir}">`)));
+    }
+    res.writeHead(200, { 'content-type': TYPES[extname(file)] || 'application/octet-stream' }).end(body);
 });
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const LOCAL = `http://127.0.0.1:${server.address().port}`;
@@ -177,6 +187,7 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
 
     const status = await evaluate(`performance.getEntriesByType('navigation')[0]?.responseStatus || 0`);
     const revealed = await evaluate(`document.documentElement.hasAttribute('data-nds-loaded')`);
+    const locale = await evaluate(`({ lang: document.documentElement.lang, dir: getComputedStyle(document.documentElement).direction })`);
     const innerWidth = await evaluate('innerWidth');
     const overflow = await evaluate('document.documentElement.scrollWidth - innerWidth');
     // The console's CSP lines name no source and carry a fresh nonce per load; the event names the script.
@@ -190,7 +201,7 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
     handlers.delete(sessionId);
     await send('Target.closeTarget', { targetId });
     await send('Target.disposeBrowserContext', { browserContextId }).catch(() => {});
-    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow,
+    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, ...locale,
         errors: [...errors.filter((e) => !/\[NDS\.Audit\]|Content Security Policy/.test(String(e))), ...csp], findings };
 }
 
@@ -211,50 +222,57 @@ const pool = async (jobs) => {
 // A reference shot is taken once per page, width and theme, and kept until that page's file changes.
 // ponytail: keyed on the page file only; a changed asset under the same _site needs the cache cleared.
 const refShot = new Map();
-const reference = (ref, w, t) => {
-    const key = `${ref}|${w}|${t}`;
+const reference = (ref, w, t, { lang, dir }) => {
+    const key = `${ref}|${w}|${t}|${lang}|${dir}`;
     if (!refShot.has(key)) refShot.set(key, (async () => {
         const file = join(SITE, normalize(ref));
         const stamp = existsSync(file) ? statSync(file).mtimeMs : 0;
         const cached = join(CACHE, createHash('sha1').update(`${SITE}|${key}|${stamp}`).digest('hex') + '.png');
-        if (existsSync(cached)) return { png: readFileSync(cached), status: 200 };
-        const r = await shoot(`${LOCAL}/${ref.replace(/^\/+/, '')}`, { width: w, theme: t });
-        if (r.status && r.status < 400) writeFileSync(cached, r.png);
+        if (existsSync(cached)) return { png: readFileSync(cached), status: 200, lang, dir };
+        const q = new URLSearchParams({ 'nds-lang': lang, 'nds-dir': dir });
+        const r = await shoot(`${LOCAL}/${ref.replace(/^\/+/, '')}?${q}`, { width: w, theme: t });
+        if (r.status && r.status < 400 && r.dir === dir) writeFileSync(cached, r.png);
         return r;
     })());
     return refShot.get(key);
 };
 try {
-    const shots = await pool(PAGES.flatMap((pg) => [
-        ...(pg.reference ? cols.map(({ w, t }) => () => reference(pg.reference, w, t)) : []),
-        ...(pg.states || [{ name: 'default' }]).flatMap((st) =>
-            cols.map(({ w, t }) => () => shoot(BASE + (st.path || pg.path), { ...st, width: w, theme: t, audit: true }))),
-    ]));
+    // The pages first: each state's reference takes the lang and direction its page showed.
+    const states = PAGES.flatMap((pg) => (pg.states || [{ name: 'default' }]).map((st) => ({ pg, st })));
+    const shots = await pool(states.flatMap(({ pg, st }) =>
+        cols.map(({ w, t }) => () => shoot(BASE + (st.path || pg.path), { ...st, width: w, theme: t, audit: true }))));
+    states.forEach((s, i) => { s.shots = shots.slice(i * cols.length, (i + 1) * cols.length); });
+    const withRef = states.filter(({ pg }) => pg.reference);
+    const refs = await pool(withRef.flatMap(({ pg, shots: [first] }) =>
+        cols.map(({ w, t }) => () => reference(pg.reference, w, t, { lang: first.lang || '', dir: first.dir === 'rtl' ? 'rtl' : 'ltr' }))));
+    withRef.forEach((s, i) => { s.refs = refs.slice(i * cols.length, (i + 1) * cols.length); });
     const sheets = [];
     for (const pg of PAGES) {
         const dir = join(OUT, slug(pg.path));
         mkdirSync(dir, { recursive: true });
         const rows = [];
-        if (pg.reference) {
-            const cells = [];
-            for (const { w, t } of cols) {
-                const r = shots.shift();
-                const file = `reference-${w}-${t}.png`;
-                writeFileSync(join(dir, file), r.png);
-                cells.push(file);
-                if (r.status >= 400 || !r.status) problems.push(`${pg.path}: reference ${pg.reference} did not load (${r.status})`);
-            }
-            rows.push({ name: `reference: ${pg.reference}`, cells });
-        }
-        for (const st of pg.states || [{ name: 'default' }]) {
-            const cells = [], seen = new Map();
+        for (const { st, shots, refs } of states.filter((s) => s.pg === pg)) {
             const at = `${pg.path} [${st.name}]`;
+            let ref = null;
+            if (refs) {
+                const { lang, dir: refDir } = refs[0], cells = [];
+                cols.forEach(({ w, t }, i) => {
+                    const r = refs[i];
+                    const file = `reference-${lang || 'nolang'}-${refDir || 'ltr'}-${w}-${t}.png`;
+                    writeFileSync(join(dir, file), r.png);
+                    cells.push(file);
+                    if (r.status >= 400 || !r.status) problems.push(`${at}: reference ${pg.reference} did not load (${r.status})`);
+                    else if (r.dir !== shots[i].dir) problems.push(`${at} ${w}px ${t}: the reference is ${r.dir}, the page ${shots[i].dir}: the reference could not take the page's direction`);
+                });
+                ref = { name: `reference: ${pg.reference}${lang ? ` (${lang}, ${refDir})` : ` (${refDir})`}`, cells };
+            }
+            const cells = [], seen = new Map();
             const note = (kind, text, shot) => {
                 const key = `${kind}: ${String(text).replace(/nonce-[\w+/=-]+/g, 'nonce-…').slice(0, 300)}`;
                 (seen.get(key) || seen.set(key, new Set()).get(key)).add(shot);
             };
-            for (const { w, t } of cols) {
-                const r = shots.shift();
+            for (const [i, { w, t }] of cols.entries()) {
+                const r = shots[i];
                 const file = `${slug(st.name)}-${w}-${t}.png`;
                 writeFileSync(join(dir, file), r.png);
                 cells.push(file);
@@ -270,12 +288,12 @@ try {
                 r.errors.forEach((e) => note('error', e, shot));
             }
             // Each distinct finding once per state, with the shots it showed in.
-            for (const [key, shots] of seen) {
-                const where = shots.size === cols.length ? 'every shot' : [...shots].join(', ');
+            for (const [key, hits] of seen) {
+                const where = hits.size === cols.length ? 'every shot' : [...hits].join(', ');
                 report.push(`    ${key} (${where})`);
                 problems.push(`${at} ${key.slice(0, 160)} (${where})`);
             }
-            rows.push({ name: st.name, cells });
+            rows.push({ name: st.name, cells, ref });
         }
         // One sheet per state, the reference row above it (a sheet of every state shrinks too far
         // to read): a column per width and theme, shown at 3/8 size.
@@ -284,14 +302,13 @@ try {
         const row = (r) => `<tr><th>${r.name}</th>${r.cells.map((c, i) =>
             `<td><div style="width:${cols[i].w * scale}px"><img src="${c}" style="width:100%"></div></td>`).join('')}</tr>`;
         const sheetWidth = Math.ceil(cols.reduce((n, { w }) => n + w * scale + 10, 160));
-        const ref = pg.reference ? rows.shift() : null;
         for (const r of rows) {
             const name = `sheet-${slug(r.name)}`;
             writeFileSync(join(dir, `${name}.html`), `<!doctype html><meta charset="utf-8"><style>
                 body { margin: 8px; font: 13px system-ui; background: #fff } table { border-collapse: collapse }
                 th, td { border: 1px solid #ccc; padding: 4px; vertical-align: top; text-align: start }
                 td div { max-height: 1400px; overflow: hidden }</style>
-                <h1 style="font-size:16px">${pg.path}: ${r.name}</h1><table><tr><th></th>${head}</tr>${ref ? row(ref) : ''}${row(r)}</table>`);
+                <h1 style="font-size:16px">${pg.path}: ${r.name}</h1><table><tr><th></th>${head}</tr>${r.ref ? row(r.ref) : ''}${row(r)}</table>`);
             sheets.push(async () => {
                 const sheet = await shoot(`${LOCAL}/__out/${slug(pg.path)}/${name}.html`, { width: sheetWidth, theme: 'light' });
                 writeFileSync(join(dir, `${name}.png`), sheet.png);
