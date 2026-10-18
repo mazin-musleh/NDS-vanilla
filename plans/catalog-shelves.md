@@ -1,6 +1,6 @@
 # Catalog + shelves (v2.0)
 
-**Status (2026-10-17):** built, uncommitted. Static checks pass (build, production build, check-docs, check-i18n, NDS-INDEX paths, every catalog url resolves, 404 map has no duplicate names). Not yet run: a browser check of the 404 forward and the `?shelf=` breadcrumb filter, and the S31/S39 eval scenarios. Open for the owner: the IQ draft says "the template, example, and component catalogs" (now one file); `layout/page-shell.md` is an old stub page the 404 map could replace.
+**Status (2026-10-19):** built and committed (`8c314f2b`). Static checks pass (build, production build, check-docs, check-i18n, NDS-INDEX paths, every catalog url resolves, 404 map has no duplicate names). Browser check passed 2026-10-19 (`tmp/shelves/check.mjs`): the 10 old URLs, with and without `.html`, forward with query and anchor kept, an unknown name stays on the 404; each `?shelf=` ticks its box and shows only that shelf; no page errors. S31 and S39 pass on Sonnet 5.5. Open for the owner: the IQ draft says "the template, example, and component catalogs" (now one file) (left for the next IQ edit batch). Done 2026-10-19: the `layout/page-shell.md` stub is deleted; `404.html` maps `page-shell` to Page Layout, and the browser check covers it.
 
 ## Goal
 

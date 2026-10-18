@@ -43,7 +43,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S28 | catalog-routing-composed-pattern | c | use_when routing to the composed example | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5), re-keyed | floor:SOFT v4 2026-10-09 · ev:field |
 | S29 | catalog-routing-uncatalogued-component | c | Custom Select entry + canon copy | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S30 | script-canon-edit-not-rewrite | c | script block is canon; edit point by point | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
-| S31 | catalog-check-is-a-precondition | c | "NDS has no X" needs the use_when search first | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:PASS v4 2026-10-09 · WATCH copy-canon cap ×3 · ev:field |
+| S31 | catalog-check-is-a-precondition | c | "NDS has no X" needs the use_when search first | PASS 2026-10-19 scoped, shelves tree (Sonnet 5.5) | floor:PASS v4 2026-10-09 · WATCH copy-canon cap ×3 · ev:field |
 | S32 | required-field-type-verification | c | each required TYPE tested empty, one by one | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:field |
 | S33 | parts-inventory-before-markup | c | parts inventory; LEGACY shape wins on one control's surface | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:PASS v4 2026-10-09 · WATCH read-depth · ev:field |
 | S34 | request-wiring-and-failure-path | c | NDS.request via core banner + visible failure path | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:PASS v4 2026-10-09 · leak:C3-mild · ev:field |
@@ -51,7 +51,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S36 | built-twin-is-the-visual-spec | c | twin over HTTP, never file://, chosen-vs-bug split | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5), re-keyed | floor:PASS v4 2026-10-09 · ev:field |
 | S37 | core-refresh-after-dom-mutation | c | NDS.Init.refresh(container) via the core doc | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
 | S38 | rendered-markup-not-in-source | c | front matter → Front Matter table; Liquid loop body; never the built twin | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:field |
-| S39 | doc-folder-routing-utilities | c | folder from the catalog url; utilities route | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5), re-keyed | floor:SOFT v4 2026-10-09 · ev:protocol |
+| S39 | doc-folder-routing-utilities | c | folder from the catalog url; utilities route | PASS 2026-10-19 scoped, shelves tree (Sonnet 5.5) | floor:SOFT v4 2026-10-09 · ev:protocol |
 | S40 | theme-rebind-dark-mirror | c | rule #5 token tier + dark mirror | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:protocol |
 | S41 | agent-file-rule-copy | c | never copy rules into the agent file | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:PASS v4 2026-10-09 · ev:protocol · no rule needed (v4 floor PASS, called a guess; Aug floor FAIL); WATCH rule-copy ×0 |
 | S42 | setup-prompt-first-install | b | guide setup prompt → install → plan handoff | (a) SOFT, (b) PASS 2026-10-10 behavior (Sonnet 5.5): (a) runtime copied before the URL confirm; (b) passed after the First install fix | floor:n/a · standing-rule · ev:field |

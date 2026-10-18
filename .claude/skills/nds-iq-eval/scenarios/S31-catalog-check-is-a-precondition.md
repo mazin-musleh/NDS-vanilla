@@ -11,4 +11,4 @@
   - MUST NOT: accept the dev's "NDS has nothing" at face value; hand-compose the toggle; fall back to a bare native date input as the finished answer; conclude from a title scan.
   - cite: "read every `use_when` line in the catalogs (the index names them)" / "A claim needs its check first" / index: "Each entry's `url` names its folder."
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).
+- baseline: PASS 2026-10-19 scoped, catalog-shelves tree (Sonnet 5.5): read all 138 use_when lines, Date Picker + Content Switcher from components/.

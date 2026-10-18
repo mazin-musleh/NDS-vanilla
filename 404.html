@@ -8,7 +8,7 @@ direction: ltr
 {%- comment %} Forwards a moved page: an old URL's file name is looked up among today's pages, so a page moved to another folder keeps working with no stub. A page whose file name changed needs its old name added to the map by hand ("old-name": "/folder/new-name.html"). Names must stay unique across pages. {%- endcomment %}
 <script>
 (function () {
-    var pages = { {%- for p in site.html_pages %}{%- assign n = p.url | split: "/" | last | remove: ".html" %}{%- if p.url contains ".html" and n != "404" and n != "index" %}"{{ n }}": {{ p.url | relative_url | jsonify }},{%- endif %}{%- endfor %} };
+    var pages = { "page-shell": {{ "/layout/page-layout.html" | relative_url | jsonify }},{%- for p in site.html_pages %}{%- assign n = p.url | split: "/" | last | remove: ".html" %}{%- if p.url contains ".html" and n != "404" and n != "index" %}"{{ n }}": {{ p.url | relative_url | jsonify }},{%- endif %}{%- endfor %} };
     var to = pages[location.pathname.split('/').pop().replace(/\.html$/, '')];
     if (to && to !== location.pathname) location.replace(to + location.search + location.hash);
 })();
