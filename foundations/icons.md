@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 11:18 PM"
+last_edit: "18/10/2026 - 04:57 PM"
 ---
 
 <section id="icons-overview" class="nds-content-section nds-doc-overview">
@@ -20,7 +20,7 @@ last_edit: "10/10/2026 - 11:18 PM"
 
 Icons in NDS are HugeIcons Stroke Rounded drawings, plus a few marks drawn for NDS. They come in two forms:
 
-- **Font icons** (`hgi hgi-stroke hgi-{name}`) hold the whole set: {{ site.data.hgi.icons }} icons in one font file, build {{ site.data.hgi.build }}. They are for page content. Find a name on [hugeicons.com](https://hugeicons.com/icons/stroke-rounded). `NDS.Init.audit()` names a font icon on the page that the set lacks.
+- **Font icons** (`hgi hgi-stroke hgi-{name}`) hold the whole set: {{ site.data.hgi.icons }} icons, build {{ site.data.hgi.build }}. The font comes in small files of 25 icons each, and a page downloads only the files that hold its icons. They are for page content. Find a name on [hugeicons.com](https://hugeicons.com/icons/stroke-rounded). `NDS.Init.audit()` names a font icon on the page that the set lacks.
 - **UI icons** (`nds-icon nds-hgi-{name}`) are {{ site.data.content.icons.hgi | size }} of those drawings, copied into the NDS CSS as SVG. Components and page chrome use them. The UI set also holds the custom marks (`nds-icon nds-icon-{name}`), drawn for NDS because HugeIcons does not have them.
 
 NDS keeps its own SVG copies for three reasons:

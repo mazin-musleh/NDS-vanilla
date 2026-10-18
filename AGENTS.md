@@ -18,6 +18,7 @@ node scripts/encode-webp.mjs <master>           # WebP at set widths, lowest qua
 node scripts/run-audit.mjs [page.html]          # print a built page's NDS.Init.audit() warnings
 bundle exec ruby scripts/surface-history.rb     # names every release had that today's code lacks → tmp/surface/candidates.json; new rows go in _data/migrations.yml
 node scripts/find-unused-icons.mjs              # UI icons nothing references
+python scripts/hgi-font-slices.py               # HGI content font → 25-icon slices in assets/fonts/hgi/ + their @font-face list (hgi-font-update.py --apply runs it)
 node scripts/check-date.mjs                     # NDS.date vs Intl: every day 2018–2037 round-trips gregory ↔ hijri; ENGINE=webkit for Safari
 node scripts/check-i18n.mjs [--build]           # every _i18n/ pack holds each English word (JS defaults + markers), markers match it, no Arabic in _js/; --build writes assets/i18n/ + _data/i18n.json (js_processor.rb runs it)
 python scripts/check-docs.py [page.md]          # one-source doc pages vs the nds-doc rules (no build needed)

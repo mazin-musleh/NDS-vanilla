@@ -16,8 +16,9 @@ The HGI icon font is served locally (not from the CDN) to avoid CORS issues. It 
 
 | File | Role |
 |------|------|
-| `_sass/_hgiRoundedStroke.scss` | `.hgi-stroke` base (family list ends in the `hgi-blank` placeholder) + every `.hgi-stroke.hgi-*` rule. NO `@font-face`: that lives in `_sass/_fonts.scss` (crit) |
-| `assets/fonts/hgi-stroke-rounded.woff2` | the font file |
+| `_sass/_hgiRoundedStroke.scss` | `.hgi-stroke` base (family list ends in the `hgi-blank` placeholder) + every `.hgi-stroke.hgi-*` rule. NO `@font-face`: the faces are in `_sass/_fonts-hgi-slices.scss` (main) |
+| `assets/fonts/hgi-stroke-rounded.woff2` | the full font: the master the slices are cut from. No page loads it |
+| `assets/fonts/hgi/*.woff2` + `_sass/_fonts-hgi-slices.scss` | 25-icon slices, one `@font-face` each, so a page fetches only the slices of the icons it shows. Written by `scripts/hgi-font-slices.py`, which `--apply` runs |
 | `scripts/hgi-font-update.py` | does the work |
 | `_data/hgi.yml` | the version the docs state (CDN build date, icon count). The font itself only says "Version 1.0"; the build stamp is the real version |
 
@@ -43,7 +44,7 @@ No alias is kept. For each removed name:
 python scripts/hgi-font-update.py --apply
 ```
 
-It rewrites the SCSS (keeping our header and family names `hgi-stroke-rounded` and `hgi-blank`, since the loader and the font faces key on them) and replaces the woff2. The `hgi-blank` face in `_sass/_fonts-hgi-blank.scss` is an invisible 1em placeholder over U+F0000–FFFFD with the icon font's metrics: rebuild it with `python scripts/hgi-blank-font.py` only if an update moves the icons off that plane or changes the metrics.
+It rewrites the SCSS (keeping our header and family names `hgi-stroke-rounded` and `hgi-blank`, since the loader and the font faces key on them) and replaces the woff2, then rebuilds the slices. The `hgi-blank` face in `_sass/_fonts-hgi-blank.scss` is an invisible 1em placeholder over U+F0000–FFFFD with the icon font's metrics: rebuild it with `python scripts/hgi-blank-font.py` only if an update moves the icons off that plane or changes the metrics.
 
 ## Step 4: Verify
 

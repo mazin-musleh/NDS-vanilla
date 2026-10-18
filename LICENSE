@@ -27,7 +27,8 @@ THIRD-PARTY NOTICES
 Hugeicons (free Stroke Rounded set)
 https://hugeicons.com/
 
-The bundled icon font (assets/fonts/hgi-stroke-rounded.woff2, with its classes in
+The bundled icon font (assets/fonts/hgi-stroke-rounded.woff2, its slices in
+assets/fonts/hgi/, and its classes in
 _sass/_hgiRoundedStroke.scss) is the free Hugeicons Stroke Rounded set, used under
 the MIT License reproduced below. Many of the inline SVG icons in _sass/_icons.scss
 come from that same free set; the rest (the filled feedback marks, brand and store

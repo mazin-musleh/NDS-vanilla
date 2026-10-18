@@ -6,9 +6,20 @@
    In main, not crit: icons render only once their post-reveal sheet lands, and main
    lands before the reveal, so the face costs first paint nothing and adds no
    font-cache rebuild after the reveal. */
+$src: url("data:font/woff2;base64,d09GMk9UVE8AAAFAAAkAAAAAAogAAAD8AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUYGYABQATYCJAMGBAYFZgcgG+EBAC4L4rHTqCrdyCqIuuROOJD3svnaq4vnecd+9237mEc8ZA4JD4lMJJEaNYmeTiSKhYgPanMHtmwrhmaQVxwLg5WpcH8tQtbLiOv+kugrDr6nx1ECiWQcYVvLEi850o2O98v1Jz359YbtoTxLzCW3cbRIMnai8TtQzsc/ldPeu6MkQ9OqjxXIaWQb/j6VXqnVj2SgMdjlLq32Xj+IR+2Ac6ugqIIF1Rg2NKtommC1d37XHwVMgkVATGO6jwjCWTG99UitH/D2kC8CqgJC/QCEoIh6+RAFzaaAGEVAMWxUlTYq5szUrZiyvml7I7VBk+GOHelaocjvdTwGAAA=") format("woff2");
+
 @font-face {
   font-family: "hgi-blank";
   font-display: block;
   unicode-range: U+20, U+F0000-FFFFD;
-  src: url("data:font/woff2;base64,d09GMk9UVE8AAAFAAAkAAAAAAogAAAD8AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUYGYABQATYCJAMGBAYFZgcgG+EBAC4L4rHTqCrdyCqIuuROOJD3svnaq4vnecd+9237mEc8ZA4JD4lMJJEaNYmeTiSKhYgPanMHtmwrhmaQVxwLg5WpcH8tQtbLiOv+kugrDr6nx1ECiWQcYVvLEi850o2O98v1Jz359YbtoTxLzCW3cbRIMnai8TtQzsc/ldPeu6MkQ9OqjxXIaWQb/j6VXqnVj2SgMdjlLq32Xj+IR+2Ac6ugqIIF1Rg2NKtommC1d37XHwVMgkVATGO6jwjCWTG99UitH/D2kC8CqgJC/QCEoIh6+RAFzaaAGEVAMWxUlTYq5szUrZiyvml7I7VBk+GOHelaocjvdTwGAAA=") format("woff2");
+  src: $src;
+}
+
+/* hgi-blank again, as U+20 of the icon family, declared after the slices (_fonts-hgi-slices.scss):
+   Safari sizes a line by the face that covers the space, and no slice does. Declared first,
+   Safari fetched the last slice on every page. */
+@font-face {
+  font-family: "hgi-stroke-rounded";
+  unicode-range: U+20;
+  src: $src;
 }

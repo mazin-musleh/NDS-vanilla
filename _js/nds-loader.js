@@ -712,8 +712,6 @@
             if (document.fonts) {
                 // Safari won't load the fallback face while the primary is loading.
                 document.fonts.load('1em "hgi-blank"', '\u{F0000}').catch(() => {});
-                // Icons that all start hidden (a closed tab panel) would never start the fetch.
-                document.fonts.load('1em "hgi-stroke-rounded"', '\u{F0000}').catch(() => {});
             }
             addSheet('hgi-rounded-stroke-min.css');
         }

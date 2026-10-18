@@ -42,7 +42,8 @@
 // Import base styles (dividers, links, interactive elements)
 @use 'base';
 
-// Invisible placeholder face for content icons (hgi-blank); main lands before the reveal
+// Content-icon faces: the sliced HGI font, then hgi-blank; main lands before the reveal
+@use 'fonts-hgi-slices';
 @use 'fonts-hgi-blank';
 
 // Import animations

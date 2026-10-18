@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 11:22 AM"
+last_edit: "18/10/2026 - 04:57 PM"
 ---
 
 <section id="head-overview" class="nds-content-section nds-doc-overview">
@@ -257,7 +257,7 @@ The inline script runs once, at page load. The stylesheet links it adds and the 
 | `nds.critical.min.css` | Tokens, palette, fonts, reset, section layout, hero and the gate | A preload behind the gate, or a blocking stylesheet |
 | `nds-main.min.css` | Every component and layout style | A preload. The page shows once it applies |
 | `nds-icons.min.css` | UI icons (`nds-icon`) | Added by the loader once the main CSS applies |
-| `hgi-rounded-stroke-min.css` | The content icon map (`hgi hgi-stroke`). The icon font face is in the critical CSS | Added by the loader when the page shows |
+| `hgi-rounded-stroke-min.css` | The content icon map (`hgi hgi-stroke`). The icon font faces are in the main CSS, one for each file of 25 icons | Added by the loader when the page shows |
 | `nds-main.min.js` | The loader and the components that paint the first screen | A `defer` script at the end of `<body>` |
 | `nds-delegated.min.js`, `nds-extras.min.js`, `nds-editor.min.js`, `nds-chart.min.js`, `nds-code.min.js`, `nds-cookie-consent.min.js` | The other components | Added by the loader after the page shows, when the page holds one of their components |
 | `nds-accessibility.min.js` and `nds-accessibility.min.css` | The accessibility panel. See [Accessibility](../ui-shell/accessibility) | Added by the loader on the first press of the accessibility button, or at load for a visitor with saved settings |

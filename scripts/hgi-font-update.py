@@ -7,8 +7,9 @@ Source: https://use.hugeicons.com/font/icons.css (the icon font hugeicons.com do
 The old cdn.hugeicons.com/font/hgi-stroke-rounded.css froze on 2024-07-24; do not go back to it.
 
 Keeps our own header (.hgi-stroke base, family list "hgi-stroke-rounded", "hgi-blank" —
-the CDN calls it "hugeicons-stroke-rounded"; the loader and _fonts.scss key on ours).
-Never writes @font-face here: the icon face lives in _sass/_fonts.scss (crit) and hgi-blank,
+the CDN calls it "hugeicons-stroke-rounded"; the loader and the font faces key on ours).
+Never writes @font-face here: --apply runs scripts/hgi-font-slices.py, which writes the sliced
+faces to _sass/_fonts-hgi-slices.scss (main); hgi-blank,
 the 1em invisible placeholder, in _sass/_fonts-hgi-blank.scss (main); it only changes if the icon
 font's metrics or code-point plane do.
 
@@ -18,6 +19,7 @@ the docs tell readers to pick icons on hugeicons.com, so the font must match it.
 """
 import os
 import re
+import subprocess
 import sys
 import urllib.request
 
@@ -80,6 +82,7 @@ def main():
         '# HGI content-icon font version. Written by scripts/hgi-font-update.py: do not edit.\n'
         'build: "%s"\nstamp: "%s"\nicons: "%s"\nsource: %s\n' % (build, stamp, format(len(rules), ','), CSS_URL))
     print('applied: %d icons; font %d bytes (%s)' % (len(rules), len(woff2), font_url))
+    subprocess.run([sys.executable, os.path.join(ROOT, 'scripts', 'hgi-font-slices.py')], check=True)
 
 
 if __name__ == '__main__':
