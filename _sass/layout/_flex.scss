@@ -21,6 +21,15 @@
   }
 }
 
+// Middle: the children line up on their middles across the row; .nds-center is along it.
+.nds-flex.nds-middle {
+  --align: center;
+}
+
+.nds-row.nds-middle {
+  align-items: center;
+}
+
 // Direction overrides — unscoped so components like .nds-card-actions
 // can flip direction with just .nds-row without wrapping in .nds-flex.
 .nds-row {

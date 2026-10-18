@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 08:09 PM"
+last_edit: "18/10/2026 - 09:28 PM"
 ---
 
 <section id="flex-overview" class="nds-content-section nds-doc-overview">
@@ -179,6 +179,7 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
 | `nds-col` | Any flex container, with or without `nds-flex` | Lays the children out in a column |
 | `nds-reverse` | `.nds-flex`, `.nds-row` or `.nds-col` | Shows the children in the opposite order. It also swaps the start and end edges, so `--justify: flex-start` puts them at the end |
 | `nds-center` | `.nds-flex` | Centers the children along the row, the same as `--justify: center`. With `nds-col` it also centers them across. It centers the text inside too |
+| `nds-middle` | `.nds-flex` or `.nds-row` | Lines the children up on their middles, top to bottom, the same as `--align: center`. `nds-center` centers them along the row instead |
 | `nds-wrap` | Any flex container | Lets the children flow onto new lines |
 | `nds-nowrap` | Any flex container | Keeps the children on one line. Children that do not fit overflow |
 {: .nds-table .nds-responsive}
