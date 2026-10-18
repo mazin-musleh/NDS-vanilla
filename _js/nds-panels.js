@@ -475,6 +475,8 @@
 
     function init() {
         bindToggles();
+        // Closed before the first open too, lazy panels' toggles included.
+        document.querySelectorAll('[data-panel-toggle]:not([aria-expanded])').forEach(btn => NDS.aria.expanded(btn, false));
         document.querySelectorAll(SELECTOR).forEach(panel => {
             if (panel.closest('code')) return;
             createPanel(panel);

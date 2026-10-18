@@ -37,6 +37,7 @@
   // English defaults; the assets/i18n/{lang}.json pack overrides them.
   const strings = NDS.i18n.strings('rating', {
     stars: { one: '{n} star', other: '{n} stars' },
+    score: '{n} of {total}',
   });
 
   // State helpers — delegated to NDS.State (nds-core.js)
@@ -52,14 +53,16 @@
       this.valueInput = (element.closest('.nds-form-group') || element).querySelector('input[data-rating-value]');
       this.syncValue();
 
-      // Set data-value on stars for delegation lookups
+      this.isButtons = this.stars[0]?.tagName === 'BUTTON';
+      // Set data-value on stars for delegation lookups; only a button star takes a name.
       for (let i = 0; i < this.stars.length; i++) {
         this.stars[i].dataset.value = i + 1;
-        strings.set(this.stars[i], 'aria-label', 'stars', { n: i + 1 });
+        if (this.isButtons) strings.set(this.stars[i], 'aria-label', 'stars', { n: i + 1 });
       }
+      this.labelScore();
 
       // Auto-detect interactive from button elements
-      if (this.stars[0]?.tagName === 'BUTTON' && !hasState(this.rating, 'disabled')) {
+      if (this.isButtons && !hasState(this.rating, 'disabled')) {
         addState(this.rating, 'interactive');
       }
 
@@ -122,12 +125,20 @@
       this.currentRating = value;
       this.rating.dataset.rating = value;
       this.syncValue();
+      this.labelScore();
       this.updateVisualState();
 
       this.rating.dispatchEvent(new CustomEvent('nds:rating:change', {
         detail: { rating: value, element: this.rating },
         bubbles: true
       }));
+    }
+
+    // A display rating reads as one image with its score: "3.5 of 5".
+    labelScore() {
+      if (this.isButtons) return;
+      if (!this.rating.hasAttribute('role')) this.rating.setAttribute('role', 'img');
+      strings.set(this.rating, 'aria-label', 'score', { n: this.currentRating, total: this.stars.length });
     }
 
     showPreview(value) {

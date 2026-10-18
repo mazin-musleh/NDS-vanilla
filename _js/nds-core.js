@@ -24,7 +24,7 @@
  *     NDS.markHome(el) / .sendHome(el) / .homeOf(el)   move a node the app owns; its old spot answers for it
  *     NDS.topLayer(el, on)             show or hide a [popover] in the top layer, in place
  *     NDS.resolveEl(idOrElOrSel) · NDS.fromTemplate(id) · NDS.flipPosition(trigger, menu) · NDS.place(el, t, l)
- *     NDS.stickyHeaderBottom() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
+ *     NDS.stickyHeaderBottom() · NDS.viewportPadding(el) · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
  *     NDS.gridLastRow.update(container) · NDS.trapFocus(getEl) · NDS.focusableSel
  *   data + text
  *     NDS.request(url, opts) → Promise<{isJson, data}>     the shared fetch wrapper
@@ -1291,6 +1291,12 @@
         const topbarBottom = topbar ? Math.max(0, topbar.getBoundingClientRect().bottom) : 0;
         return Math.max(navBottom, topbarBottom);
     };
+
+    // The page's side gutter in px. Menus and tooltips keep it from the screen's
+    // side edges, so they line up with the content. Internal. 16 where the browser
+    // has no @property and reads the token as a calc() string.
+    NDS.viewportPadding = (el = document.documentElement) =>
+        parseFloat(getComputedStyle(el).getPropertyValue('--nds-viewport-padding')) || 16;
 
     // ── Scroll Below Sticky Nav ──────────────────────────────────────
     // Smooth-scroll `target` back into view below the sticky nav — no-op

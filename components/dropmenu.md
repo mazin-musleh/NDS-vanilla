@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 01:38 PM"
+last_edit: "18/10/2026 - 07:55 PM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -443,7 +443,7 @@ Set these on the `.nds-dropmenu` wrapper. The menu inherits them.
 |---|---|---|
 | `--dropmenu-width` | `min-content` | Width of the menu |
 | `--dropmenu-min-width` | `max-content` | Least width of the menu. The default keeps each item on one line. `100%` makes the menu as wide as the wrapper |
-| `--dropmenu-max-width` | `calc(100vw - 16px)` | Most width of the menu |
+| `--dropmenu-max-width` | `calc(100vw - 2 * var(--nds-viewport-padding))` | Most width of the menu: the screen less the page gutter on each side |
 | `--menu-padding` | `var(--spacing-md)` | Space inside the menu |
 | `--dropmenu-slide` | `8px` | How far the menu slides as it opens. It slides the other way when the menu opens above the trigger |
 {: .nds-table .nds-responsive}

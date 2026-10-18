@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 04:02 PM"
+last_edit: "18/10/2026 - 07:43 PM"
 ---
 
 <section id="pagination-overview" class="nds-content-section nds-doc-overview">
@@ -84,7 +84,7 @@ Pick another component when:
 <nav class="nds-pagination" aria-label="Pagination" data-i18n-aria-label="pagination.pagination">
   <ul class="nds-pagination-list">
     <li class="nds-pagination-item nds-pagination-prev">
-      <a class="nds-btn nds-subtle nds-icon-only" aria-label="Previous page" aria-disabled="true">
+      <a class="nds-btn nds-subtle nds-icon-only" role="link" aria-label="Previous page" aria-disabled="true">
         <i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i>
       </a>
     </li>

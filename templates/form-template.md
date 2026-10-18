@@ -29,7 +29,7 @@ sidemenu_mode: false
                      STEP 1 — Identity Verification
                      ============================================================ -->
                 <div class="nds-flex nds-col" data-form-step="1">
-                    <div class="nds-grid nds-form-grid" style="--min-col: 1; --max-col: 2; --gap: var(--spacing-4xl);">
+                    <div class="nds-grid" style="--min-col: 1; --max-col: 2; --gap: var(--spacing-4xl);">
 
                         <div class="nds-form-container" data-required>
                             <div class="nds-form-header">
@@ -127,7 +127,7 @@ sidemenu_mode: false
                      STEP 2 — Personal Information
                      ============================================================ -->
                 <div class="nds-flex nds-col" data-form-step="2" hidden>
-                    <div class="nds-grid nds-form-grid" style="--min-col: 1; --max-col: 2;">
+                    <div class="nds-grid" style="--min-col: 1; --max-col: 2;">
 
                         <div class="nds-form-container" data-required>
                             <div class="nds-form-header">

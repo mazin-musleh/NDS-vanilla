@@ -499,7 +499,7 @@
 
     .nds-nav-menu.nds-fit {
         min-width: fit-content !important;
-        max-inline-size: calc(100vw - 16px);
+        max-inline-size: calc(100vw - 2 * var(--nds-viewport-padding));
         position: absolute !important;
         inset-inline: auto;
         left: 50%;

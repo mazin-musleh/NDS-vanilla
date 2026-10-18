@@ -761,3 +761,14 @@ fieldset {
         column-gap: var(--spacing-4xl);
     }
 }
+
+// Addresses and numbers read left to right in every language: "50 123 4567" showed as "4567 123 50" on
+// an Arabic page. Aligned to the page's side, as the other fields are.
+.nds-input:is([type="email"], [type="tel"], [type="url"]), .nds-phone {
+    direction: ltr;
+    text-align: right;
+
+    @include ltr {
+        text-align: left;
+    }
+}

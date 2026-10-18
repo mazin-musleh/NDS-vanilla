@@ -537,6 +537,8 @@
             formData.append(config.fieldName, fileData.file, sanitizeFileName(fileData.file.name));
 
             const xhr = new XMLHttpRequest();
+            // Open first: setRequestHeader() throws on an unopened request.
+            xhr.open('POST', config.uploadUrl);
 
             // Dispatch beforeUpload (cancelable, exposes xhr for custom headers)
             const allowed = this._dispatchEvent('nds:upload:beforeUpload', {
@@ -612,7 +614,6 @@
             xhr.addEventListener('error', () => fail('network_error'));
             xhr.addEventListener('timeout', () => fail('timed_out'));
 
-            xhr.open('POST', config.uploadUrl);
             xhr.timeout = config.uploadTimeout * 1000;
             xhr.send(formData);
         }

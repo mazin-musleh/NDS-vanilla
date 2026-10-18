@@ -1237,7 +1237,13 @@
         renderCalendarDates: function () {
             if (!this.elements.datesContainer) return;
 
-            this.elements.datesContainer.innerHTML = '';
+            var grid = this.elements.datesContainer;
+            var prevIdx = grid.contains(document.activeElement)
+                ? Array.prototype.indexOf.call(grid.querySelectorAll('button'), document.activeElement) : -1;
+            var sameMode = this._renderedMode === this.state.mode;
+            this._renderedMode = this.state.mode;
+
+            grid.innerHTML = '';
 
             // Month/year modes render a picker grid in place of day cells.
             if (this.state.mode === 'month') {
@@ -1252,6 +1258,19 @@
                 );
 
                 this.generateCalendarDates(calendarData);
+            }
+
+            // Emptying the grid dropped the focused cell: focus the one in its place, or the grid's tab stop.
+            if (prevIdx > -1) {
+                var btns = grid.querySelectorAll('button');
+                var target = (sameMode && btns[prevIdx]) || grid.querySelector('[tabindex="0"]') || btns[0];
+                if (target) {
+                    if (target.classList.contains('nds-date-cell')) {
+                        grid.querySelectorAll('.nds-date-cell').forEach(function (c) { c.tabIndex = -1; });
+                        target.tabIndex = 0;
+                    }
+                    target.focus();
+                }
             }
 
             this._reposition();

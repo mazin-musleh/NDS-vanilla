@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 02:34 PM"
+last_edit: "18/10/2026 - 07:43 PM"
 ---
 
 <section id="cookies-overview" class="nds-content-section nds-doc-overview">
@@ -331,9 +331,9 @@ The built panel reads its English from the script and its Arabic from the `cooki
 | Category | gtag keys | Cookies cleared when denied |
 |---|---|---|
 | `necessary` | — (always allowed) | — |
-| `performance` | `analytics_storage` | `_ga`, `_gid`, `_gat`, and `window['ga-disable-<id>']` is set |
+| `performance` | `analytics_storage` | Every name that starts with `_ga`, `_gid` or `_gat` (GA4's `_ga_<id>` too), and `window['ga-disable-<id>']` is set |
 | `functional` | `functionality_storage`, `personalization_storage` | — |
-| `targeting` | `ad_storage`, `ad_user_data`, `ad_personalization` | `_fbp`, `_fbc` |
+| `targeting` | `ad_storage`, `ad_user_data`, `ad_personalization` | Every name that starts with `_gcl`, `_fbp` or `_fbc` |
 {: .nds-table .nds-responsive}
 
 A category that is not in this table reaches only `allowed()` and the event.

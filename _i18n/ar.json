@@ -394,7 +394,8 @@
             "many": "{n} نجمة",
             "other": "{n} نجمة"
         },
-        "vote": "تصويت"
+        "vote": "تصويت",
+        "score": "{n} من {total}"
     },
     "scroll-more": {
         "show_more": "عرض المزيد"

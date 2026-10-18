@@ -32,8 +32,8 @@ body {
     font-weight: var(--font-weight-regular);
     background-color: var(--background-body);
     color: var(--text-default);
-    font-size: var(--typo-text-md-FS, 16px);
-    line-height: var(--typo-text-md-LH, 24px);
+    font-size: var(--typo-text-md-FS);
+    line-height: var(--typo-text-md-LH);
     min-height: 100dvh;
     display: flex;
     flex-direction: column;

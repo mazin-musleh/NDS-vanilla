@@ -89,7 +89,13 @@
             const stack = [list];
 
             for (const heading of headings) {
-                if (!heading.id) heading.id = this.slugify(heading.textContent);
+                if (!heading.id) {
+                    // Two headings with one text need two ids, or both links go to the first.
+                    const base = this.slugify(heading.textContent);
+                    let id = base;
+                    for (let n = 2; document.getElementById(id); n++) id = base + '-' + n;
+                    heading.id = id;
+                }
 
                 const depth = parseInt(heading.tagName[1], 10) - minLevel;
                 stack.length = depth + 1;

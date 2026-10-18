@@ -168,7 +168,8 @@
 }
 
 .nds-digital-stamp-highlight {
-    color: var(--text-primary);
+    // --text-primary measured 4.32:1 on the stamp in light mode.
+    color: var(--text-primary-strong);
     font-weight: var(--font-weight-bold);
 }
 

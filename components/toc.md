@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "18/10/2026 - 07:43 PM"
 ---
 
 <section id="toc-overview" class="nds-content-section nds-doc-overview">
@@ -175,6 +175,13 @@ Without `data-toc-source`, the script reads the links you write. Pick it for som
             <span class="nds-label">Auto-initialization</span>
           </span>
           <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-toc</code> on the page starts by itself, before the page shows.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-link-square-02"></i>
+            <span class="nds-label">Heading Ids</span>
+          </span>
+          <p class="nds-item-desc">A heading with no <code class="nds-inline-code lang-html">id</code> gets one from its text. Two headings with the same text get two ids, such as <code class="nds-inline-code lang-html">setup</code> and <code class="nds-inline-code lang-html">setup-2</code>, so each link goes to its own heading.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

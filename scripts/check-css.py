@@ -45,7 +45,8 @@ AFTER_PSEUDO_ELEMENT = re.compile(r'(?:::[\w-]+|:(?:before|after|first-line|firs
 
 def rules(css):
     """Yield (prelude, body, nested_in_at_rule) for every style rule."""
-    css = re.sub(r'/\*.*?\*/', '', css, flags=re.S)
+    # The BOM too: it glued onto the first prelude and hid a leading :root block.
+    css = re.sub(r'/\*.*?\*/', '', css.lstrip(chr(0xFEFF)), flags=re.S)
     stack, buf = [], []
     for c in css:
         if c == '{':

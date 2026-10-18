@@ -133,12 +133,12 @@
             if (digits.length === 1) {
                 var next = inputs[idx + 1];
                 if (next) next.focus();
-                // Checked on every box, not only the last: the boxes can be filled out of order.
-                if (isAllFilled(group)) dispatch(group, 'nds:otpComplete');
             }
         }
 
         syncHidden(group);
+        // After the sync, so a submit from the listener posts every digit. Checked on every box: they can be filled out of order.
+        if (digits.length === 1 && isAllFilled(group)) dispatch(group, 'nds:otpComplete');
         dispatch(group, 'nds:otpChange', { filled: isAllFilled(group) });
     }
 

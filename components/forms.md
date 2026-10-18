@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 01:23 PM"
+last_edit: "18/10/2026 - 07:43 PM"
 lang: en
 direction: ltr
 ---
@@ -497,6 +497,13 @@ The eye button switches the field between hidden and plain text, and its label b
             <span class="nds-label">Inline Messages</span>
           </span>
           <p class="nds-item-desc">Validation uses the browser's checks but shows no browser popup. The message appears under the field.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-text-align-left"></i>
+            <span class="nds-label">Left-to-Right Values</span>
+          </span>
+          <p class="nds-item-desc">An e-mail, phone or URL field, and a <code class="nds-inline-code lang-html">nds-phone</code> field, reads left to right on every page, so a phone number keeps its digit groups in order on an Arabic page. The value stays on the page side, as in the other fields.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

@@ -516,11 +516,17 @@
             setDefault(this.menu, 'role', 'menu');
             setDefault(this.menu, 'aria-hidden', 'true');
 
-            // Set role for menu items (skip form controls and groups)
+            this._stampItemRoles();
+        }
+
+        // Also on open: rows built in nds:dropmenu:prepare came after init.
+        _stampItemRoles() {
+            // Skip form controls and groups
             this._ownItems().forEach(item => {
-                if (!item.classList.contains('nds-form-control')
+                if (!item.hasAttribute('role')
+                    && !item.classList.contains('nds-form-control')
                     && !item.classList.contains('nds-dropmenu-group')) {
-                    setDefault(item, 'role', 'menuitem');
+                    item.setAttribute('role', 'menuitem');
                 }
             });
         }
@@ -562,6 +568,8 @@
                 this.menu.addEventListener('keydown', (e) => {
                     // A nested sub-menu's keys bubble here; that menu handles its own.
                     if (e.target.closest('.nds-dropmenu-menu') !== this.menu) return;
+                    // A control in the menu already used the key (a rating's arrows).
+                    if (e.defaultPrevented) return;
                     // For inputs: only handle Tab and Alt+Arrow
                     if (this.isInputElement(e.target)) {
                         const isNavKey = e.key === 'Tab'
@@ -650,6 +658,9 @@
             // Focusables are enumerated AFTER toggle()/open() — lazily-populated
             // menus (pagination's ellipsis, data-delay consumers) have no items
             // until open() has run.
+            // A button inside the trigger (Autocomplete's clear) keeps its own Enter and Space.
+            const control = e.target.closest('button, a[href]');
+            if (control && control !== this.trigger) return;
             switch (e.key) {
                 case 'Enter':
                 case ' ': {
@@ -844,6 +855,7 @@
             // detected; read the trigger's layer if one ever needs it.
             this._respectNav = !this.trigger.closest('.nds-modal, dialog[data-nds-modal]');
 
+            this._stampItemRoles();
             this.menu.removeAttribute('hidden');
             NDS.topLayer(this.menu, true);
 
@@ -935,7 +947,9 @@
             removeState(this.trigger, 'open');
             this.dropmenu.removeAttribute('data-position-vertical');
             this.menu.removeAttribute('data-position-vertical');
-            this.menu.style.cssText = '';
+            // Only what open() wrote: an authored style and the no-popover position stay.
+            ['top', 'left', 'width', 'max-height', 'overflow-y', '--dropmenu-width', '--dropmenu-min-width', '--dropmenu-max-width']
+                .forEach(p => this.menu.style.removeProperty(p));
             const scroll = this._ownFirst('.nds-dropmenu-scroll');
             if (scroll) scroll.style.maxHeight = '';
             NDS.aria.hidden(this.menu, true);
@@ -964,6 +978,8 @@
          */
         applyPosition() {
             const gap = 4, pad = 8;
+            // Kept for the scroll follower: a read there, after its own writes, would force a style pass.
+            const edge = this._edge = NDS.viewportPadding(this.menu);
 
             // Own scroll region only — a bare querySelector would grab a
             // NESTED dropmenu's scroll (the date-picker calendar contains
@@ -980,7 +996,7 @@
             this.menu.style.maxHeight = '';
             this.menu.style.overflowY = '';
             const vw = document.documentElement.clientWidth;
-            const w = Math.min(this.menu.offsetWidth, vw - pad * 2);
+            const w = Math.min(this.menu.offsetWidth, vw - edge * 2);
             this.menu.style.width = w + 'px';
 
             // NDS.flipPosition returns raw space values + topEdge using the
@@ -1049,7 +1065,7 @@
 
             // Pass the vw read at the top — re-reading it here, after the
             // data-position-vertical writes above, would force a second layout.
-            const leftPx = this._leftFor(p.triggerRect, mr2.width, vw);
+            const leftPx = this._leftFor(p.triggerRect, mr2.width, vw, edge);
 
             // Cache flip direction so the scroll-tracker can reuse it without
             // re-running flip math (and without re-clamping the menu to the
@@ -1083,8 +1099,7 @@
          * `vw` is a parameter so a caller that already read it can avoid
          * forcing a second layout.
          */
-        _leftFor(triggerRect, menuWidth, vw = document.documentElement.clientWidth) {
-            const pad = 8;
+        _leftFor(triggerRect, menuWidth, vw = document.documentElement.clientWidth, pad = NDS.viewportPadding(this.menu)) {
             const anchor = this.dropmenu.getAttribute('data-anchor');
             let left;
             if (anchor === 'start' || anchor === 'end') {
@@ -1122,7 +1137,7 @@
             // Same horizontal rule as the opening placement, including its
             // viewport clamp — users can't scroll sideways to recover
             // off-screen content.
-            NDS.place(this.menu, top, this._leftFor(tRect, mRect.width));
+            NDS.place(this.menu, top, this._leftFor(tRect, mRect.width, undefined, this._edge));
         }
 
         // ==============================================

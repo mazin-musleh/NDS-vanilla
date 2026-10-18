@@ -376,7 +376,7 @@
         }
 
         applyPosition() {
-            const gap = 8, pad = 8;
+            const gap = 8, pad = 8, edge = NDS.viewportPadding(this.balloon);
 
             // Reset inline placement so the balloon's natural size can be
             // measured before re-placing.
@@ -408,7 +408,7 @@
             top = Math.max(topEdge, Math.min(top, p.viewportHeight - bH - pad));
 
             let left = p.triggerRect.left + (p.triggerRect.width / 2) - (bW / 2);
-            left = Math.max(pad, Math.min(left, p.viewportWidth - bW - pad));
+            left = Math.max(edge, Math.min(left, p.viewportWidth - bW - edge));
 
             NDS.place(this.balloon, top, left);
 

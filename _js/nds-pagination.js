@@ -791,16 +791,17 @@
     }
     // url (when set) is a page→href function — the controls become navigable
     // anchors for no-JS, server-reload pagination (data-page-url). A disabled
-    // prev/next anchor drops its href; CSS pointer-events handles the rest.
+    // prev/next anchor drops its href and keeps role="link" (an <a> with no href
+    // has no role, so its label is prohibited); CSS pointer-events handles the rest.
     const _prevLi = (disabled, url, prevPage) => {
         const inner = url
-            ? `<a class="nds-btn nds-subtle nds-icon-only" aria-label="${html('prev')}" data-i18n-aria-label="pagination.prev"${disabled ? ' aria-disabled="true"' : ` href="${url(prevPage)}"`}><i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i></a>`
+            ? `<a class="nds-btn nds-subtle nds-icon-only" aria-label="${html('prev')}" data-i18n-aria-label="pagination.prev"${disabled ? ' role="link" aria-disabled="true"' : ` href="${url(prevPage)}"`}><i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i></a>`
             : `<button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="${html('prev')}" data-i18n-aria-label="pagination.prev"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i></button>`;
         return `<li class="nds-pagination-item nds-pagination-prev">${inner}</li>`;
     };
     const _nextLi = (disabled, url, nextPage) => {
         const inner = url
-            ? `<a class="nds-btn nds-subtle nds-icon-only" aria-label="${html('next')}" data-i18n-aria-label="pagination.next"${disabled ? ' aria-disabled="true"' : ` href="${url(nextPage)}"`}><i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i></a>`
+            ? `<a class="nds-btn nds-subtle nds-icon-only" aria-label="${html('next')}" data-i18n-aria-label="pagination.next"${disabled ? ' role="link" aria-disabled="true"' : ` href="${url(nextPage)}"`}><i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i></a>`
             : `<button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="${html('next')}" data-i18n-aria-label="pagination.next"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i></button>`;
         return `<li class="nds-pagination-item nds-pagination-next">${inner}</li>`;
     };

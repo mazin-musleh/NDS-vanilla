@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 09:21 AM"
+last_edit: "18/10/2026 - 07:55 PM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -271,8 +271,8 @@ Set them in a rule on `.nds-date-picker-menu`, the calendar.
 | Property | Default | Controls |
 |---|---|---|
 | `--dropmenu-width` | `100%` | The width of the calendar, as a share of the field |
-| `--dropmenu-min-width` | `350px` | The smallest width of the calendar |
-| `--dropmenu-max-width` | `500px` | The largest width of the calendar |
+| `--dropmenu-min-width` | `min(350px, 100vw - 2 * var(--nds-viewport-padding))` | The smallest width of the calendar. It never grows past the page gutters |
+| `--dropmenu-max-width` | `min(500px, 100vw - 2 * var(--nds-viewport-padding))` | The largest width of the calendar |
 {: .nds-table .nds-responsive}
 
 ### Tokens

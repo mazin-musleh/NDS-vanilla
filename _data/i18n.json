@@ -1747,6 +1747,12 @@
  },
  {
   "section": "rating",
+  "key": "score",
+  "en": "{n} of {total}",
+  "ar": "{n} من {total}"
+ },
+ {
+  "section": "rating",
   "key": "vote",
   "en": "Vote",
   "ar": "تصويت"

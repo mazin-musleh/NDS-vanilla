@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "12/10/2026 - 11:09 AM"
+last_edit: "18/10/2026 - 07:55 PM"
 ---
 
 <section id="tokens-overview" class="nds-content-section nds-doc-overview">
@@ -251,7 +251,7 @@ To change a token on every page, set it in your own stylesheet, loaded after `nd
             <i class="hgi hgi-stroke hgi-resize-field"></i>
             <span class="nds-label">Phone Padding</span>
           </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-css">--nds-viewport-padding</code> is 32px, and half of that below 600px.</p>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-css">--nds-viewport-padding</code> is 32px, and half of that below 600px. Menus and tooltips keep the same space from the sides of the screen, so they line up with the page content.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

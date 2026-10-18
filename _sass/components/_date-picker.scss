@@ -58,8 +58,9 @@
     // wrapper); min/max-width clamp it on narrow / wide screens. menu-padding
     // is 0 because the calendar sections supply their own internal padding.
     --dropmenu-width: 100%;
-    --dropmenu-min-width: 350px;
-    --dropmenu-max-width: 500px;
+    // A min-width beats max-width, so cap it at the viewport too: 350px overflowed a 320px phone.
+    --dropmenu-min-width: min(350px, calc(100vw - 2 * var(--nds-viewport-padding)));
+    --dropmenu-max-width: min(500px, calc(100vw - 2 * var(--nds-viewport-padding)));
     --menu-padding: 0;
     background-color: var(--form-field-background-default);
     border: 1px solid var(--form-field-border-default);

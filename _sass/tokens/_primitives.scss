@@ -6,6 +6,9 @@
 // ════════════════════════════════════════════════════════════════════════════
 @use '../mixins' as *;
 
+// A length, so scripts read it in px: floating layers keep it from the side edges.
+@property --nds-viewport-padding { syntax: '<length>'; inherits: true; initial-value: 32px; }
+
 :root {
     // Spacing — 4px grid. Comments = DGA Figma sheet numbers (spacing/{n}).
     --spacing-none: 0px;   // 0

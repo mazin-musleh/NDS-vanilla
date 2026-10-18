@@ -37,7 +37,8 @@
         functional: ['functionality_storage', 'personalization_storage'],
         targeting: ['ad_storage', 'ad_user_data', 'ad_personalization'],
     };
-    const TRACKERS = { performance: ['_ga', '_gid', '_gat'], targeting: ['_fbp', '_fbc'] };
+    // Name prefixes: GA4 sets _ga_<id>, Ads sets _gcl_au.
+    const TRACKERS = { performance: ['_ga', '_gid', '_gat'], targeting: ['_gcl', '_fbp', '_fbc'] };
 
     function set(name, value, days) {
         // NDS.cache keeps the nds_ prefix + {value, expires} envelope of earlier builds.
@@ -89,7 +90,10 @@
         const perf = allowed('performance');
         // The flag is in-memory only, so it is set again on every load.
         trackingIds().forEach(id => { window['ga-disable-' + id] = !perf; });
-        Object.keys(TRACKERS).forEach(c => { if (!allowed(c)) TRACKERS[c].forEach(del); });
+        const names = document.cookie.split(';').map(c => c.split('=')[0].trim());
+        Object.keys(TRACKERS).forEach(c => {
+            if (!allowed(c)) names.filter(n => TRACKERS[c].some(p => n.startsWith(p))).forEach(del);
+        });
         if (typeof gtag === 'function') {
             const update = {};
             Object.keys(GTAG).forEach(c => GTAG[c].forEach(k => { update[k] = allowed(c) ? 'granted' : 'denied'; }));

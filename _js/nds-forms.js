@@ -643,7 +643,8 @@
             options = options || { showMessage: true };
             var ti = tiElement.closest('.nds-taginput') || tiElement;
             var hasRequired = ti.hasAttribute('data-required') || ti.classList.contains('nds-required');
-            var count = ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
+            // The instance's tags: carriers exist only with a name. Before init, the server-rendered carriers.
+            var count = ti.ndsTagInput ? ti.ndsTagInput.tags.length : ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
             var isValid = !hasRequired || count > 0;
             var message = isValid ? '' : strings.text('tag_required');
             return this._finishGroupValidation(ti, options, isValid, message, { count: count }, count === 0);

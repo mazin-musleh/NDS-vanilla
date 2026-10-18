@@ -70,7 +70,7 @@
   --_dropmenu-slide: calc(var(--dropmenu-slide, 8px) * -1);
   --_dropmenu-width: var(--dropmenu-width, min-content);
   --_dropmenu-min-width: var(--dropmenu-min-width, max-content);
-  --_dropmenu-max-width: var(--dropmenu-max-width, calc(100vw - 16px));
+  --_dropmenu-max-width: var(--dropmenu-max-width, calc(100vw - 2 * var(--nds-viewport-padding)));
   --divider: var(--_menu-padding);
 
   display: none;

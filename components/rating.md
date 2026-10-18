@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 12:20 PM"
+last_edit: "18/10/2026 - 07:43 PM"
 ---
 
 <section id="rating-overview" class="nds-content-section nds-doc-overview">
@@ -180,6 +180,13 @@ The Menu structure puts a display rating and a vote count in a [Dropmenu](../com
             <span class="nds-label">Auto-initialization</span>
           </span>
           <p class="nds-item-desc">The script starts every <code class="nds-inline-code lang-html">.nds-rating</code> on the page, and every one added or removed later.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-accessibility"></i>
+            <span class="nds-label">Screen Reader Score</span>
+          </span>
+          <p class="nds-item-desc">A screen reader reads a display rating as one image with its score, such as "3.5 of 5", in the page's language. Each star of an interactive rating has its own name, such as "2 stars".</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

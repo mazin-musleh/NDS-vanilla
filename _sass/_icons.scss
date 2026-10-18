@@ -109,7 +109,7 @@
 }
 
 // The icon glyph lives in ::before so sibling children (e.g. .nds-badge)
-// are not clipped by the mask. `opacity: var(--nds-icons-opacity, 1)` is the
+// are not clipped by the mask. `opacity: var(--nds-icons-opacity)` is the
 // icons-sheet load gate — see _skeleton.scss / critical-inline.html. Every
 // masked-pseudo rule in the codebase mirrors this convention.
 i.nds-icon::before {
@@ -120,7 +120,7 @@ i.nds-icon::before {
   // --nds-icon-forced: a host (a status button) swaps every mask icon below it
   // without a descendant rule in the shared data-status invalidation set (PERF-06).
   mask: var(--nds-icon-forced, var(--nds-icon)) center / contain no-repeat;
-  opacity: var(--nds-icons-opacity, 1);
+  opacity: var(--nds-icons-opacity);
 }
 
 .nds-hgi-accessibility { --nds-icon: var(--nds-icon-accessibility); }
