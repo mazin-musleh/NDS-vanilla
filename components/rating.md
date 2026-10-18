@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 11:47 AM"
+last_edit: "18/10/2026 - 12:20 PM"
 ---
 
 <section id="rating-overview" class="nds-content-section nds-doc-overview">
@@ -36,7 +36,7 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="rating-display" data-canon data-variants="rating-variants-table">
+<script type="text/html" id="rating-display" data-canon data-variants="rating-variants-table" data-harness="form">
 <div class="nds-rating" data-rating="3.5">
   <span class="nds-rating-star"></span>
   <span class="nds-rating-star"></span>
@@ -53,6 +53,19 @@ Pick another component when:
   <button class="nds-rating-star" type="button"></button>
   <button class="nds-rating-star" type="button"></button>
 </div>
+</script>
+<script type="text/html" id="rating-form" data-canon>
+<fieldset class="nds-form-group">
+  <legend class="nds-label">How would you rate this service?</legend>
+  <div class="nds-rating" data-rating="0">
+    <button class="nds-rating-star" type="button"></button>
+    <button class="nds-rating-star" type="button"></button>
+    <button class="nds-rating-star" type="button"></button>
+    <button class="nds-rating-star" type="button"></button>
+    <button class="nds-rating-star" type="button"></button>
+  </div>
+  <input type="hidden" name="rating" value="0" data-rating-value>
+</fieldset>
 </script>
 <script type="text/html" id="rating-menu" data-canon>
 <div class="nds-dropmenu">
@@ -103,15 +116,17 @@ Pick another component when:
 |---|---|---|---|---|
 | Structure | Display (default) | — | — | A read-only score, such as the average of many reviews |
 | Structure | Interactive | canon `#rating-interactive` | — | The user picks a score |
+| Structure | Form (id: form) | canon `#rating-form` | — | An interactive rating in a form: a group with a question and a hidden input that sends the score |
 | Structure | Menu | canon `#rating-menu` | — | A score summary in a trigger, with the vote in a panel. Style, Value and Loading change the summary rating |
 | Size | XS | `.nds-xs` | `.nds-rating:not(.nds-xs):not(.nds-dropmenu .nds-rating)` | 16px stars. Inline next to a title or a list item |
 | Size | SM | `.nds-sm` | `.nds-rating:not(.nds-dropmenu .nds-rating)` | 24px stars. Inline, a little larger |
 | Size | MD (default) | — | — | 32px stars. Most layouts |
 | Size | LG | `.nds-lg` | `.nds-rating:not(.nds-dropmenu .nds-rating)` | 48px stars, 40px on phones. A featured review or a hero |
 | Style | Brand | `.nds-brand` | `.nds-rating` | Stars in the brand primary color, not the secondary color |
-| Value | Empty | `[data-rating="0"]` | `.nds-rating` | No star is filled. The start of a new vote |
-| Value | Whole (hint: 4 of 5 stars, no half star) | `[data-rating="4"]` | `.nds-rating` | A whole number fills that many stars |
-| Value | Half star (default) | — | — | A decimal of .3 or more fills half of the next star |
+| Value | Empty (not: form) | `[data-rating="0"]` | `.nds-rating` | No star is filled. The start of a new vote |
+| Value | Whole (hint: 4 of 5 stars, no half star) (not: form) | `[data-rating="4"]` | `.nds-rating` | A whole number fills that many stars |
+| Value | Half star (default) (not: form) | — | — | A decimal of .3 or more fills half of the next star |
+| Required | Required (hint: The user must pick a score before the form submits) | `[data-required]` | `.nds-form-group` | The form does not submit until the user picks a score |
 | State (any) | Loading | `.nds-loading` | `.nds-rating` | The stars pulse as placeholders while the score loads |
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-rating:has(> button):not(.nds-dropmenu .nds-rating)` | The user cannot pick a score now. Interactive only |
 | State (any) | Disabled | `[disabled]` | `button.nds-rating-star:not(.nds-dropmenu .nds-rating-star)` | Write both parts of this choice |
@@ -134,15 +149,19 @@ Stars built from `<span>` elements show `data-rating` and nothing else. They do 
 
 ### Interactive
 
-Stars built from `<button>` elements let the user pick a score. Hover shows the score a click would give. A click, Enter or Space sets the score. The script writes it back to `data-rating` and fires `nds:rating:change`. The script also writes an English `aria-label` on each star, such as `3 stars`, so the buttons need no label in the markup.
+Stars built from `<button>` elements let the user pick a score. Hover shows the score a click would give. A click, Enter or Space sets the score. The script writes it back to `data-rating` and fires `nds:rating:change`. The script also writes an `aria-label` on each star in the page's language, such as `3 stars`, so the buttons need no label in the markup.
 
-### Menu
+### Form
 
-The Menu structure puts a display rating and a vote count in a [Dropmenu](../components/dropmenu) trigger. The panel holds an interactive rating and a Vote button. Put `nds-rating-menu` on the `.nds-dropmenu-menu`, not on its parent. The menu moves to `<body>` while it is open, and the class goes with it. The page owns the vote: listen for `nds:rating:change`, and send the score from your own code.
+The Form structure puts an interactive rating in a `.nds-form-group`, with a `<legend>` that asks the question. The stars are buttons, not inputs, so the score posts through a hidden input with `data-rating-value`. The script writes the score into it on each pick, and 0 when no star is picked. After a form reset, the script puts back the score the page loaded with. [User Feedback](../components/user-feedback) uses the same input.
 
 ### Required
 
-To require a score, put the rating in a `.nds-form-group` and add `data-required` to the group. [Forms](../components/forms) validation treats `data-rating="0"` as empty and focuses the first star. The stars are buttons, not inputs. When the score must post with the form, put `<input type="hidden" class="nds-rating-value" name="…">` inside the `.nds-rating`. The script writes the score into it, and leaves it empty for 0. After a form reset, the script puts back the score the page loaded with.
+`data-required` on the `.nds-form-group` makes the score required. [Forms](../components/forms) validation treats `data-rating="0"` as empty: it shows "Please choose a rating" and focuses the first star.
+
+### Menu
+
+The Menu structure puts a display rating and a vote count in a [Dropmenu](../components/dropmenu) trigger. The panel holds an interactive rating and a Vote button. Put `nds-rating-menu` on the `.nds-dropmenu-menu`. The page owns the vote: listen for `nds:rating:change`, and send the score from your own code.
 
 </div>
   </div>
@@ -222,7 +241,7 @@ To require a score, put the rating in a `.nds-form-group` and add `data-required
 - Do not use a rating for a yes or no choice. Use a [Switch](../components/switch).
 - Do not use a rating to show progress. Use [Progress](../components/progress).
 - Use `nds-brand` where the secondary color does not fit the page identity.
-- Add a visible label near an interactive rating, such as "Rate this service". The script's star labels are English only.
+- Add a visible label near an interactive rating, such as "Rate this service". In a form, the group's `<legend>` is the label.
 - Put the rating in a [Dropmenu](../components/dropmenu) when a compact trigger collects the vote.
 - Do not write `nds-md`. The default size has no class.
 
@@ -243,7 +262,6 @@ To require a score, put the rating in a `.nds-form-group` and add `data-required
 | Class | Element | Effect |
 |---|---|---|
 | `.nds-rating-star` | a child of `.nds-rating` | One star. A `<button>` makes the rating interactive |
-| `.nds-rating-value` | a hidden `<input>` in `.nds-rating` | Holds the score for the form. The script writes it, empty for 0 |
 | `.nds-rating-menu` | `.nds-dropmenu-menu` | Centers the label and the stars of the vote item in a [Dropmenu](../components/dropmenu), and sets the menu padding |
 {: .nds-table .nds-responsive}
 
@@ -254,12 +272,13 @@ To require a score, put the rating in a `.nds-form-group` and add `data-required
 |---|---|---|
 | `data-rating` | `.nds-rating` | The score, from 0 to the number of stars. The script writes the new score here on every pick |
 | `data-state~="interactive"` | `.nds-rating` | The script sets it at load when the first star is a `<button>` and the rating is not disabled. It turns on hover, press and pointer styles |
-| `data-state~="disabled"` | `.nds-rating` | The script sets it in `setDisabled(true)` and removes it in `setDisabled(false)` |
+| `data-state~="disabled"` | `.nds-rating` | Write it, with `disabled` on each star, for a rating that starts disabled. The script also sets it in `setDisabled(true)` and removes it in `setDisabled(false)` |
 | `data-state~="selected"` | `.nds-rating-star` | The script sets it on the first N stars, where N is the whole part of the score, and removes it when the score drops |
 | `data-state~="half"` | `.nds-rating-star` | The script sets it on the star after the whole part when the decimal is .3 or more |
 | `data-state~="preview"` | `.nds-rating-star` | The script sets it on the stars up to the hovered star, and removes it when the pointer leaves |
 | `data-value` | `.nds-rating-star` | The script writes the 1-based position of the star |
 | `data-required` | `.nds-form-group` that holds a rating | The rating must be above 0 before the form submits |
+| `data-rating-value` | a hidden `<input>` in the `.nds-form-group`, or in `.nds-rating` | Holds the score for the form. The script writes it on each pick, and 0 when no star is picked |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties

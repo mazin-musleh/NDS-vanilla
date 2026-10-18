@@ -52,6 +52,7 @@ const CASES = [
       await page.locator('[data-case="Autocomplete (strict)"] .nds-dropmenu-item').first().click();
     } },
   { name: 'Rating', doc: 'rating', id: 'rating-interactive', value: true, change: async (root) => { await root.locator('.nds-rating-star').last().click(); } },
+  { name: 'Rating in a group', doc: 'rating', id: 'rating-interactive', group: true, change: async (root) => { await root.locator('.nds-rating-star').last().click(); } },
   { name: 'Dropmenu picker', doc: 'dropmenu', id: 'dm-picker', change: pick('.nds-dropmenu-trigger', '[data-case="Dropmenu picker"] .nds-dropmenu-item[data-value="KW"]') },
 ];
 
@@ -69,7 +70,7 @@ await page.goto(`${BASE}/components/forms.html`, { waitUntil: 'load' });
 await page.waitForFunction(() => window.NDS?.Init?.mount);
 
 const blocks = [];
-for (const c of CASES) blocks.push({ name: c.name, html: await canon(c.doc, c.id), required: !!c.required, strict: !!c.strict, value: !!c.value });
+for (const c of CASES) blocks.push({ name: c.name, html: await canon(c.doc, c.id), required: !!c.required, strict: !!c.strict, value: !!c.value, group: !!c.group });
 await page.evaluate(async (blocks) => {
   const form = document.createElement('form');
   form.id = 'reset-form';
@@ -83,7 +84,9 @@ await page.evaluate(async (blocks) => {
     const root = box.firstElementChild;
     if (b.required) root.setAttribute('data-required', '');
     if (b.strict) root.setAttribute('data-strict', '');
-    if (b.value) root.insertAdjacentHTML('beforeend', '<input type="hidden" class="nds-rating-value" name="score">');
+    if (b.value) root.insertAdjacentHTML('beforeend', '<input type="hidden" name="score" value="0" data-rating-value>');
+    // The Required layout, as User Feedback writes it: the input beside the rating in its group.
+    if (b.group) box.innerHTML = `<fieldset class="nds-form-group"><legend>Score</legend>${box.innerHTML}<input type="hidden" name="score2" value="0" data-rating-value></fieldset>`;
     form.append(box);
   });
   form.insertAdjacentHTML('beforeend', '<button type="reset" id="reset-btn" class="nds-btn nds-secondary"><span class="nds-label">Reset</span></button>');

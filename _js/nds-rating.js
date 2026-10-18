@@ -16,8 +16,9 @@
  * Hooks:
  *   data-rating   the current value on the root; the component writes the new value back
  *                 here on every pick
- *   .nds-rating-value   a hidden input in the root: the component writes the score into it,
- *                 empty for 0, so it posts with the form; a form reset restores the first score
+ *   data-rating-value   a hidden input in the root or its .nds-form-group: the component
+ *                 writes the score into it (0 for none), so it posts with the form; a form
+ *                 reset restores the first score. User Feedback shares the hook
  *   written by the component: data-value on each .nds-rating-star (its 1-based position)
  * Gotchas:
  *   - Interactive mode is auto-detected: <button> stars on a root that is not disabled
@@ -47,7 +48,8 @@
       this.stars = element.querySelectorAll('.nds-rating-star');
       this.currentRating = parseFloat(element.dataset.rating) || 0;
       this.startRating = this.currentRating;
-      this.valueInput = element.querySelector('input.nds-rating-value');
+      // ponytail: one input per group; two ratings in one .nds-form-group share the first.
+      this.valueInput = (element.closest('.nds-form-group') || element).querySelector('input[data-rating-value]');
       this.syncValue();
 
       // Set data-value on stars for delegation lookups
@@ -104,9 +106,10 @@
       this.updateVisualState();
     }
 
-    // Empty for 0: nothing picked, as Forms reads it.
+    // Through NDS.setValue, so a framework binding on the input hears it.
     syncValue() {
-      if (this.valueInput) this.valueInput.value = this.currentRating || '';
+      const v = String(this.currentRating);
+      if (this.valueInput && this.valueInput.value !== v) NDS.setValue(this.valueInput, v);
     }
 
     destroy() {

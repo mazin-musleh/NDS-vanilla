@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "18/10/2026 - 12:12 PM"
 hideFeedback: true
 ---
 
@@ -308,7 +308,7 @@ Yes or No opens the follow-up form with the reasons for that answer: `.nds-why-y
 
 ### Rating
 
-The widget shows the average score and the review count. The button opens a star rating with a comment. On submit, the script writes the chosen score into the hidden `data-rating-value` input, so the form sends it. It also writes the score into the recap, which replaces the question.
+The widget shows the average score and the review count. The button opens a star rating with a comment. The script writes the chosen score into the hidden `data-rating-value` input on each pick, so the form sends it. It also writes the score into the recap, which replaces the question.
 
 ### Submit
 
@@ -429,7 +429,7 @@ To send the data another way, listen for `nds:userfeedback:submit` and call `pre
 | `data-success-message` | `.nds-user-feedback` | Replaces the success message, as plain text, in every language. The default is "Your feedback is submitted!" or «تم استلام ملاحظتك!» |
 | `data-error-message` | `.nds-user-feedback` | Replaces the error message, as plain text, in every language. The default is "An error occurred, please try again" or «حدث خطأ، يرجى المحاولة مرة أخرى» |
 | `data-no-persist` | `.nds-user-feedback` | No cookie: the widget never shows a saved success and never saves one |
-| `data-rating-value` | a hidden input | Receives the chosen score on submit |
+| `data-rating-value` | a hidden input | Receives the chosen score on each pick. [Rating](../components/rating) shares it |
 | `data-rating-score` | an element in the recap | Shows the chosen score, as `(4.0)` |
 | `action`, `method` | the form | Where Submit sends the form data. The default method is `POST` |
 {: .nds-table .nds-responsive}
