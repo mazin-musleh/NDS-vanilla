@@ -205,6 +205,11 @@
             selector: '[data-export]',
         },
         {
+            // Main bundle: the light print of dark areas runs on every page. A [data-print-target] button starts init, which wires the click.
+            name: 'Print',
+            selector: '[data-print-target]',
+        },
+        {
             name: 'DatePicker',
             selector: '.nds-date-input',
         },

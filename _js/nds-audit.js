@@ -387,6 +387,7 @@
         'data-stepper-target': 'components/stepper.html', 'data-columns-target': 'components/tables.html',
         'data-voice-target': 'components/voice-input.html', 'data-copy-target': 'utilities/copy.html',
         'data-export-target': 'components/export.html', 'data-paged-target': 'components/pagination.html',
+        'data-print-target': 'utilities/print.html',
     };
     // A template-held modal or panel is real: NDS.fromTemplate moves it in on first open.
     const inTemplate = (id) => [...document.querySelectorAll('template')].some(t => t.content.getElementById(id));

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 11:47 AM"
+last_edit: "18/10/2026 - 08:36 PM"
 ---
 
 <section id="themes-overview" class="nds-content-section nds-doc-overview">
@@ -322,7 +322,7 @@ A theme menu option can load a stylesheet theme too. `data-theme-css` on the opt
             <i class="hgi hgi-stroke hgi-moon-02"></i>
             <span class="nds-label">Light and Dark</span>
           </span>
-          <p class="nds-item-desc">Every theme and custom palette has a dark mode, and every toggle on the page follows each change.</p>
+          <p class="nds-item-desc">Every theme and custom palette has a dark mode, and every toggle on the page follows each change. A page in dark mode, and every dark area on a page, prints in light colors, then returns to dark.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

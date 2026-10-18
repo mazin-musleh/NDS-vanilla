@@ -220,6 +220,83 @@
 }
 
 // ==============================================
+// PRINT
+// ==============================================
+
+// Paper keeps the page's own content and the site logo. The site chrome and the
+// screen-only controls go; data-hidden="print" hides anything else, and a
+// data-print-target button prints one element alone (nds-print.js writes the marks
+// below, and prints dark areas light).
+@include print-media {
+  // A default print drops background colours, and NDS paints its icons, ticks and
+  // colour bands with them: they printed blank. Exact prints the page as it looks.
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  // The page tint would cover every sheet; the paper is the background.
+  html,
+  body {
+    background-color: transparent;
+  }
+
+  [data-hidden~="print"],
+  [data-nds-print-skip],
+  .nds-skip-link,
+  .nds-topbar,
+  .nds-main-nav .nds-nav-container > :not(.nds-brand),
+  .nds-breadcrumb-nav,
+  .nds-sidemenu,
+  .nds-footer,
+  .nds-fab,
+  .nds-fab-dock,
+  .nds-cookies,
+  .nds-user-feedback-section {
+    display: none !important;
+  }
+
+  // The parents of a data-print-target element print as plain boxes: their
+  // backgrounds, frames and spacing would print around the target.
+  [data-nds-print-path] {
+    display: block !important;
+    position: static !important;
+    width: auto !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+
+    &::before,
+    &::after {
+      display: none !important;
+    }
+  }
+
+  // The target keeps its width on screen (nds-print.js measures it), narrowed to the sheet,
+  // in the middle of the sheet.
+  [data-nds-print-self] {
+    width: min(var(--nds-print-width), 100%) !important;
+    margin-inline: auto !important;
+  }
+
+  // The side menu is off the paper, so its grid column goes too: wide paper (landscape)
+  // put the content in the 260px menu column.
+  .nds-content-layout.nds-has-sidemenu {
+    grid-template-columns: 1fr;
+  }
+
+  // A sticky or fixed bar would repeat over the content of every page.
+  .nds-main-nav {
+    position: static !important;
+    box-shadow: none !important;
+  }
+}
+
+// ==============================================
 // CONTENT SLOT UTILITY
 // ==============================================
 

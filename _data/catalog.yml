@@ -993,6 +993,16 @@
   url: "/utilities/numbers.html"
   js: _js/nds-numbers.js
 
+- title: "Print"
+  description: "How a page prints, and a button that prints one part of the page alone"
+  use_when: "Printing a permit, receipt or certificate from the page, or keeping an element off the paper: print one element alone, hide screen-only controls on paper."
+  icon: '<i class="hgi hgi-stroke hgi-printer"></i>'
+  category: "Utilities"
+  tags: ["JS", "CSS"]
+  url: "/utilities/print.html"
+  js: _js/nds-print.js
+  scss: _sass/_utilities.scss
+
 - title: "Truncate Text"
   description: "Clips long text to a set number of lines"
   use_when: "Clip long text to a set number of lines with an ellipsis, such as a card title or description."
