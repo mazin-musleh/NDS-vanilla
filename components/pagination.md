@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 03:42 PM"
+last_edit: "18/10/2026 - 04:02 PM"
 ---
 
 <section id="pagination-overview" class="nds-content-section nds-doc-overview">
@@ -468,7 +468,7 @@ After a page change, the script scrolls the content back into view when its top 
     <div class="nds-section-body nds-prose" markdown="1">
 
 - Pick the structure by where the items are. Items already on the page: Card grid or Table. Items from a server: Data-driven, or Buttons for a few fixed pages. One URL per page: Links, or Data-driven with Page links.
-- Set `--per-page` in the container's `style`. The loading placeholder reads only that value: a value set only in a media query still pages, but the placeholder shows 6 items.
+- Set `--per-page` in the container's `style`, or in a class when a strict CSP blocks `style` attributes. Both page the list before it shows, so nothing jumps.
 - Match `--per-page` to the column count, so each page fills its rows.
 - Put `nds-paged-content` on the `<tbody>`, not on a wrapper around the table. A wrapper stays hidden until the script starts, but a `<tbody>` shows placeholder rows.
 - Do not mix up `nds-page-item` and `nds-pagination-item`. The first marks your content, the second a control in the nav.

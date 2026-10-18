@@ -30,7 +30,7 @@
  *   window.__NDS_BUNDLES   the build-generated bundle manifest — never hand-write it
  *   written by the loader: data-nds-loaded on <html> — the reveal stamp, set once the
  *                          main CSS has applied; data-paged-split on each .nds-paged-content
- *                          at init (items past its --per-page, else 6, get hidden), after
+ *                          at init (items past its --per-page, inline or from a class, else 6, get hidden), after
  *                          a picker's ?per-page= (data-per-page-param) set that --per-page
  *                          and its data-select-value — at init and on mount();
  *                          data-swiper-preset on each swiper, with --slides and the
@@ -583,13 +583,15 @@
         });
     }
 
-    // Hide items past each container's inline --per-page (else crit's 6) at init, not at
+    // Hide items past each container's --per-page (else crit's 6) at init, not at
     // the reveal: main CSS can land first, and the skeleton jumped from 6 to --per-page.
-    // Inline only — a computed read would force a recalc.
+    // A class value (strict CSP, media query) costs one recalc: every read runs before any write.
     function presplitPaged() {
-        document.querySelectorAll('.nds-paged-content:not([data-paged-initialized], [data-paged-split])').forEach(c => {
+        const sizes = Array.from(document.querySelectorAll('.nds-paged-content:not([data-paged-initialized], [data-paged-split])'), c =>
+            [c, c.style.getPropertyValue('--per-page') || getComputedStyle(c).getPropertyValue('--per-page')]);
+        sizes.forEach(([c, raw]) => {
             // A negative value would index items[-1] and throw before the reveal.
-            const v = parseInt(c.style.getPropertyValue('--per-page'), 10);
+            const v = parseInt(raw, 10);
             const n = v > 0 ? v : 6;
             // Pagination's _pagedItems: a tbody counts its own rows only (sub-rows ride their parent).
             const items = c.tagName === 'TBODY'
