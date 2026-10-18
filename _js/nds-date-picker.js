@@ -1532,10 +1532,17 @@
             // Check if today using calendar-aware method
             if (this.isTodayDate(date)) {
                 NDS.State.add(btn, 'today');
+                NDS.aria.current(btn, 'date');
             }
 
             // Check selection states
             this.applySelectionStates(btn, date);
+            // The grid shows the month, today and the pick by place and colour; the name says them.
+            NDS.aria.label(btn, NDS.date.format(date, {
+                dateStyle: 'full', locale: this.getLanguage(),
+                calendar: this.state.calendarType === 'hijri' ? 'hijri' : 'gregory',
+            }));
+            NDS.aria.pressed(btn, ['selected', 'range-start', 'range-end'].some(function (s) { return NDS.State.has(btn, s); }));
 
             // Out-of-range days paint disabled and skip the click handler entirely.
             if (!this.isDateAllowed(date)) {

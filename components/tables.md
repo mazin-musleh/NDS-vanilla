@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 05:43 AM"
+last_edit: "18/10/2026 - 09:21 AM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -617,7 +617,7 @@ Keep Selection only when the page has a bulk action that acts on the selected ro
             <i class="hgi hgi-stroke hgi-scroll-horizontal"></i>
             <span class="nds-label">Sideways Scroll</span>
           </span>
-          <p class="nds-item-desc">The script puts each table in a <code class="nds-inline-code lang-html">.nds-table-wrapper</code> that scrolls sideways when the columns do not fit. It checks again when the size changes or a hidden tab opens. A phone gets the same scroll: there is no stacked layout.</p>
+          <p class="nds-item-desc">The script puts each table in a <code class="nds-inline-code lang-html">.nds-table-wrapper</code> that scrolls sideways when the columns do not fit. It checks again when the size changes or a hidden tab opens. A phone gets the same scroll: there is no stacked layout. While it scrolls, the keyboard can reach the scroll box, and a table with a <code class="nds-inline-code lang-html">&lt;caption&gt;</code> or a label names it for a screen reader.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

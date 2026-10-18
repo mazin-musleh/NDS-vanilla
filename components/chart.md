@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "11/10/2026 - 03:19 PM"
+last_edit: "18/10/2026 - 09:21 AM"
 ---
 
 <section id="chart-overview" class="nds-content-section nds-doc-overview">
@@ -194,7 +194,7 @@ NDS.Chart.create('#chart-days-root', {
             <i class="hgi hgi-stroke hgi-printer"></i>
             <span class="nds-label">Print and Accessibility</span>
           </span>
-          <p class="nds-item-desc">The SVG has <code class="nds-inline-code lang-html">role="img"</code> and an <code class="nds-inline-code lang-html">aria-label</code>. The tooltip is hidden in print, and the hover transitions are off when the user asks for reduced motion.</p>
+          <p class="nds-item-desc">The SVG has <code class="nds-inline-code lang-html">role="img"</code> and an <code class="nds-inline-code lang-html">aria-label</code>: the chart element's own <code class="nds-inline-code lang-html">aria-label</code>, else the chart type. The tooltip is hidden in print, and the hover transitions are off when the user asks for reduced motion.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -220,7 +220,7 @@ NDS.Chart.create('#chart-days-root', {
 - Use a bar chart instead of a pie when the slices are close in size. Bars make small differences easier to see.
 - Set axis titles that name what the numbers count. Without them, only the legend explains the chart.
 - Set `dataLabels.format` when the values have a unit, such as `%` or SAR.
-- Put a heading above the chart, and the key numbers in text or a [table](../components/tables) near it. The SVG label only says "Bar chart", "Line chart" or "Chart", and the chart has no keyboard access.
+- Put a heading above the chart, and the key numbers in text or a [table](../components/tables) near it. Put an `aria-label` on the chart element that says what it shows, such as `aria-label="Visitors by month, 2026"`. Without one, the SVG label says only "Bar chart", "Line chart" or "Chart". The chart has no keyboard access.
 - Call `destroy()` before you remove a chart in a single-page app. It removes the chart's observers and listeners.
 
 </div>

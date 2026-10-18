@@ -232,6 +232,26 @@
                 this.needsScroll = false;
                 this.currentScrollState = null;
             }
+            this.setScrollFocus(this.needsScroll);
+        }
+
+        // A sideways scroll box the keyboard can reach: Safari never focuses one on its own.
+        // Named after the table, so a screen reader says what it scrolls. What the author wrote stays.
+        setScrollFocus(on) {
+            const w = this.wrapper;
+            if (on === !!this._scrollStamp) return;
+            if (!on) {
+                this._scrollStamp.forEach((a) => w.removeAttribute(a));
+                this._scrollStamp = null;
+                return;
+            }
+            const stamp = this._scrollStamp = [];
+            const set = (a, v) => { if (v && !w.hasAttribute(a)) { w.setAttribute(a, v); stamp.push(a); } };
+            set('tabindex', '0');
+            const name = this.table.getAttribute('aria-label') || this.table.caption?.textContent.trim();
+            const by = this.table.getAttribute('aria-labelledby');
+            if (name || by) set('role', 'region');
+            if (name) set('aria-label', name); else set('aria-labelledby', by);
         }
 
         handleScroll() {
@@ -302,6 +322,7 @@
             if (this._offIntersect) { this._offIntersect(); this._offIntersect = null; }
 
             NDS.State.clear(this.wrapper);
+            this.setScrollFocus(false);
             this.currentScrollState = null;
             this.needsScroll = false;
             this.table.removeAttribute('data-nds-tables-initialized');

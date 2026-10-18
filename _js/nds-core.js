@@ -1039,6 +1039,12 @@
                 mine.add(cls);
             } else if (!on && mine && mine.has(cls)) { el.classList.remove(cls); mine.delete(cls); }
         }
+        // Loading tells a screen reader too: wait for the content. An aria-busy the author wrote stays theirs.
+        if (cur.has('loading') && !el.hasAttribute('aria-busy')) {
+            el.setAttribute('aria-busy', 'true');
+            if (!mine) _mirrored.set(el, mine = new Set());
+            mine.add('aria-busy');
+        } else if (!cur.has('loading') && mine && mine.delete('aria-busy')) el.removeAttribute('aria-busy');
     };
     NDS.onAttrChange('*', ['data-state'], (els) => els.forEach(mirrorTokens));
     const MIRROR_SEL = Object.keys(MIRRORS).map(t => `[data-state~="${t}"]`).join(',');

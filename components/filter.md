@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 05:43 AM"
+last_edit: "18/10/2026 - 09:21 AM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -558,7 +558,7 @@ Sort is not a filter value and is never sent with the form. Decide by what the s
             <i class="hgi hgi-stroke hgi-tag-01"></i>
             <span class="nds-label">Filter Count Badge</span>
           </span>
-          <p class="nds-item-desc">The <code class="nds-inline-code lang-html">nds-filter-btn</code> trigger shows a badge with the number of applied values. The Apply button adds the number of picked values to its label.</p>
+          <p class="nds-item-desc">When a filter changes the count, a screen reader hears the count line, in your words. The <code class="nds-inline-code lang-html">nds-filter-btn</code> trigger shows a badge with the number of applied values. The Apply button adds the number of picked values to its label.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

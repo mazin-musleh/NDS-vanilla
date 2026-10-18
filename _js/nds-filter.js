@@ -1216,6 +1216,7 @@
             const totalAttr = this.targetContainer.getAttribute('data-total-count');
             if (totalAttr !== null && totalAttr !== '') {
                 countSlot.textContent = parseInt(totalAttr, 10) || 0;
+                this._announceCount(countSlot);
                 return;
             }
 
@@ -1224,6 +1225,7 @@
             // ever return items.length here) — this is the common first-load case.
             if (!this._hasActiveCriteria()) {
                 countSlot.textContent = this.items.length;
+                this._announceCount(countSlot);
                 return;
             }
 
@@ -1236,6 +1238,16 @@
                 if (!item.hasAttribute('data-filtered')) visible++;
             }
             countSlot.textContent = visible;
+            this._announceCount(countSlot);
+        }
+
+        // A screen reader hears the count line when a filter changes it, in the page's own words.
+        _announceCount(countSlot) {
+            const line = countSlot.closest('.nds-toolbar-text') || countSlot;
+            const text = line.textContent;
+            if (this._countLine === undefined || this._countLine === text) { this._countLine = text; return; }
+            this._countLine = text;
+            NDS.announce(line.innerText.trim());
         }
 
         // displayLabel may be a DOM node (range chips render formatted

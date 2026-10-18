@@ -1188,6 +1188,8 @@
     // set, so the count tracks active filters by construction. Sentence
     // structure and language stay in the author's markup. Manual/server
     // pagination doesn't route here — those slots stay author-owned.
+    // A screen reader hears the counter when a page or a filter changes it; the first stamp is the page loading.
+    const _counterText = new WeakMap();
     function stampRecordSlots(listId, from, to, count) {
         document.querySelectorAll(`[data-paged-target="${listId}"]`).forEach(wrap => {
             // querySelectorAll: a wrapper may repeat a slot across views
@@ -1196,6 +1198,10 @@
             stamp('[data-paged-from]', from);
             stamp('[data-paged-to]', to);
             stamp('[data-paged-count]', count);
+            const before = _counterText.get(wrap), text = wrap.textContent;
+            _counterText.set(wrap, text);
+            // innerText: only the line in view, not one a hidden view repeats.
+            if (before !== undefined && before !== text) NDS.announce(wrap.innerText.trim());
         });
     }
 

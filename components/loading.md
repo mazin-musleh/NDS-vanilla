@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "11/10/2026 - 09:24 AM"
+last_edit: "18/10/2026 - 09:21 AM"
 ---
 
 <section id="loading-overview" class="nds-content-section nds-doc-overview">
@@ -165,7 +165,7 @@ A component that has a skeleton, such as a card, a table or tabs, replaces its t
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Put `aria-busy="true"` on the container while it loads, and remove it with the class. The spinner is CSS only, so a screen reader does not announce it.
+- Put `aria-busy="true"` on the container while it loads, and remove it with the class. The spinner is CSS only, so a screen reader does not announce it. A component that shows its own loading state sets `aria-busy` itself.
 - Put the class on the smallest container that updates, not on the whole page.
 - Keep the content in place while it loads. The dim shows the user what is about to change.
 - Match the size to the container: `nds-xxs` or `nds-xs` in a table cell, `nds-xl` or `nds-2xl` over a whole page.

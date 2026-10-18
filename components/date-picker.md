@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 04:05 AM"
+last_edit: "18/10/2026 - 09:21 AM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -187,7 +187,7 @@ The picker checks the field at each `change`, typed text included. A date that d
             <i class="hgi hgi-stroke hgi-keyboard"></i>
             <span class="nds-label">Keyboard Navigation</span>
           </span>
-          <p class="nds-item-desc">Tab moves into the day grid on the chosen day, today, or the first day of the month. The arrow keys move a day or a week, and Page Up and Page Down change the month.</p>
+          <p class="nds-item-desc">Tab moves into the day grid on the chosen day, today, or the first day of the month. The arrow keys move a day or a week, and Page Up and Page Down change the month. A screen reader hears each day as a full date, in the field's calendar and language, and hears which day is today and which days are picked.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

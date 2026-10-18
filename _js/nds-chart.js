@@ -348,7 +348,8 @@
                 width: L.w, height: L.h,
                 class: 'nds-chart-svg',
                 role: 'img',
-                'aria-label': ariaLabel,
+                // The chart element's own aria-label names what it shows; the type is the fallback.
+                'aria-label': this.el.getAttribute('aria-label') || ariaLabel,
             });
         }
 
@@ -520,7 +521,7 @@
                 viewBox: `0 0 ${size} ${size}`,
                 class: 'nds-chart-svg',
                 role: 'img',
-                'aria-label': strings.text('chart'),
+                'aria-label': this.el.getAttribute('aria-label') || strings.text('chart'),
                 style: `max-height:${size}px`,
             });
 
