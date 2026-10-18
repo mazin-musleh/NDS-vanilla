@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 07:55 PM"
+last_edit: "18/10/2026 - 10:23 PM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -104,7 +104,7 @@ A Picker choice changes two elements: write `data-format` on `.nds-date-picker` 
 
 The calendar button, `.date-picker-toggle`, opens the calendar. A click in the text box only places the cursor, so the user can type.
 
-A pick shows in the calendar, but the field does not change until the user presses Save. Save writes the date in the field and fires native `input` and `change` events on it. Close, Escape or a click outside the calendar closes it and drops the pick. Today moves the calendar to this month and picks today. In Range, Today only moves the calendar. The Today button is off when today is outside the bounds.
+A pick shows in the calendar, but the field does not change until the user presses Save. Save writes the date in the field and fires native `input` and `change` events on it. Close, Escape or a click outside the calendar closes it and drops the pick. When the calendar closes with focus inside it, focus goes back to the calendar button. Today moves the calendar to this month and picks today. In Range, Today only moves the calendar. The Today button is off when today is outside the bounds.
 
 ### Date Range
 {: .nds-block-title}

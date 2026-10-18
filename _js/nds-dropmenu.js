@@ -916,7 +916,15 @@
             });
             this._lastClickX = null;
 
-            if (this.menu.contains(document.activeElement)) this.trigger.focus();
+            if (this.menu.contains(document.activeElement)) {
+                this.trigger.focus();
+                // A trigger that takes no focus (Date Picker's field box): its first own control,
+                // else let go. Focus left in the menu would sit under its aria-hidden.
+                if (this.menu.contains(document.activeElement)) {
+                    const own = [...this.trigger.querySelectorAll(NDS.focusableSel)].find(el => !this.menu.contains(el));
+                    if (own) own.focus(); else document.activeElement.blur();
+                }
+            }
 
             addState(this.dropmenu, 'closing');
             addState(this.menu,     'closing');
