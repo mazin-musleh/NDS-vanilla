@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 10:13 AM"
+last_edit: "18/10/2026 - 10:18 AM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -144,7 +144,7 @@ For the same reason, do not let a [Filter](../components/filter) `data-ajax` req
 ### HTML Swaps
 {: .nds-block-title}
 
-A library that replaces or morphs server HTML in place, such as Turbo, htmx or Livewire, takes the same two calls around each swap: `destroy(view)` before it and `mount(view)` after it. A morph keeps the nodes but writes the server's attributes back, so `refresh()` alone can start a second instance on a node that still holds the first.
+A library or your own script that replaces or morphs server HTML in place, such as Turbo, htmx or Livewire, takes the same two calls around each swap: `destroy(view)` before it and `mount(view)` after it. A morph keeps the nodes but writes the server's attributes back, so `refresh()` alone can start a second instance on a node that still holds the first.
 
 ### Hydration
 {: .nds-block-title}
