@@ -99,6 +99,8 @@
             this.tags = Array.from(
                 this.formControl.querySelectorAll(':scope > input[type="hidden"]')
             ).map(h => h.value).filter(Boolean);
+            // The page's own tags: what a form reset goes back to.
+            this._initialTags = [...this.tags];
             this.bindEvents();
             this.renderChips();
             // Registered here, not in the init sweep, so create() gets the backref
@@ -109,6 +111,12 @@
 
         bindEvents() {
             const { signal } = this.abortController;
+
+            this.root.closest('form')?.addEventListener('reset', (e) => setTimeout(() => {
+                if (e.defaultPrevented) return;
+                this.tags = [...this._initialTags];
+                this.renderChips();
+            }), { signal });
 
             // Assist mode — a root carrying data-url is ALSO an NDS.Autocomplete
             // host sharing this input. While its suggestion menu is open, a

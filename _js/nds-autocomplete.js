@@ -269,6 +269,15 @@
                 }, { signal });
             }
 
+            // A form reset: the restored text counts as picked, as at build, and old results go.
+            this.input.form?.addEventListener('reset', (e) => setTimeout(() => {
+                if (e.defaultPrevented) return;
+                this.selectedItem = null;
+                this.results = [];
+                if (this.carrier) this.carrier.value = this.input.value.trim();
+                this.close();
+            }), { signal });
+
             // Open on focus if results exist; a request that failed tries again.
             this.input.addEventListener('focus', () => {
                 if (this._fetchFailed) this._onInput();

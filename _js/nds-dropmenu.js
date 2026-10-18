@@ -442,7 +442,18 @@
                 initialItem = this._ownItems()
                     .find(el => NDS.State.has(el, 'selected')) || null;
             }
+            // The trigger's own text, before a pick replaces it: what a form reset with no first pick shows.
+            const triggerLabel = this.trigger !== this.dropmenu && (this.trigger.querySelector('.nds-label') || this.trigger);
+            const startLabel = triggerLabel ? triggerLabel.textContent : '';
             if (initialItem) this.applySelection(initialItem, { silent: true });
+            // A form reset never touches a hidden input or a label: go back to the first pick.
+            hidden.form?.addEventListener('reset', (e) => setTimeout(() => {
+                if (e.defaultPrevented) return;
+                if (initialItem) { this.applySelection(initialItem, { silent: true }); return; }
+                hidden.value = '';
+                this._ownItems().forEach((o) => NDS.State.clear(o));
+                if (triggerLabel) triggerLabel.textContent = startLabel;
+            }), { signal });
 
             this.menu.addEventListener('click', (e) => {
                 const item = e.target.closest('.nds-dropmenu-item');

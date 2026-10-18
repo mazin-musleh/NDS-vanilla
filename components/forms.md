@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "18/10/2026 - 09:48 AM"
 lang: en
 direction: ltr
 ---
@@ -545,7 +545,7 @@ The eye button switches the field between hidden and plain text, and its label b
 - Use MD only where space is short, such as a table filter. Keep one size in one form.
 - Put a form's Submit and Back buttons in `.nds-form-actions`, after the fields. The singular `.nds-form-action` is the button slot inside one field.
 - Set `input.value` from a script, then call `NDS.Forms.syncState(input)`. Setting the value alone does not update the Clear button or the field's state.
-- Do not call `form.reset()`. No NDS field listens for it: clear each field and call `syncState()` on it.
+- To clear a form, call `form.reset()` or use a reset button. Each NDS field goes back to the value the page shipped with, and its message clears.
 - Give an icon-only action button an `aria-label`, such as "Clear input".
 - Test each required field type empty, one at a time. A text field, a custom select, a multiselect and a tag input each check their own required state, so one passing proves nothing about the others.
 

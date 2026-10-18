@@ -81,8 +81,8 @@
  *     trigger (the button's click), and branch on its {valid} result — validation works the
  *     same; only the automatic submit lifecycle is absent.
  *   - validateForm() is called synchronously at submit; keep it in the main bundle.
- *   - Never call form.reset(): nothing in NDS listens for the native reset event. Clear
- *     per field and syncState() each.
+ *   - A native form reset (a reset button, form.reset(), React 19 after a form action) clears
+ *     each field's status and re-syncs its chrome; each NDS field restores its own value.
  */
 
 // NDS Forms Controller - Form Control Logic
@@ -1244,6 +1244,21 @@
             if (input.type === 'checkbox' && !input.indeterminate) {
                 FieldSync.setIndeterminate(input, false);
             }
+        });
+
+        // The browser restores the values after the reset event: re-sync then, unless it was cancelled.
+        doc.addEventListener('reset', function(e) {
+            var form = e.target;
+            setTimeout(function() {
+                if (e.defaultPrevented || !form.querySelectorAll) return;
+                form.querySelectorAll('.nds-form-container[data-status], .nds-form-group[data-status]').forEach(function(el) {
+                    StatusManager.clear(el);
+                });
+                form.querySelectorAll('.nds-form-control input, .nds-form-control textarea, .nds-form-control select').forEach(function(input) {
+                    NDS.Forms.syncState(input);
+                });
+                form.querySelectorAll('.nds-national-id, .nds-iban').forEach(stampIdentifier);
+            });
         });
 
         // A rating group has no input to fire `input`, so its own event stands in

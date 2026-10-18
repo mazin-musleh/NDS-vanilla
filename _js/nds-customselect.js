@@ -155,11 +155,16 @@
     // The full write sequence a user pick runs — shared by the delegated
     // click path and the public setValue/clear. `option` null = clear back to
     // placeholder.
-    function apply(formControl, option) {
+    // A hidden input's value IS its attribute, so a form reset cannot bring the first value back: keep it here.
+    var initial = new WeakMap();
+
+    // quiet: a form reset, which fires no input, change or select event.
+    function apply(formControl, option, quiet) {
         var selectInput = formControl.querySelector('.nds-select-input');
         if (!selectInput) return false;
 
         var hiddenInput = formControl.querySelector('.nds-select-value');
+        if (hiddenInput && !initial.has(hiddenInput)) initial.set(hiddenInput, hiddenInput.value);
         var value = option ? (option.dataset.value || '') : '';
         var text = option ? (optionLabel(option) || value) : '';
 
@@ -168,6 +173,12 @@
             else NDS.State.remove(o, 'selected');
         });
 
+        if (quiet) {
+            if (hiddenInput) hiddenInput.value = value;
+            selectInput.value = text;
+            NDS.Forms?.syncState(selectInput);
+            return true;
+        }
         // Dispatched input/change run forms' delegated field-state sync.
         // Value field first: the visible field's events then find both written.
         if (hiddenInput) NDS.setValue(hiddenInput, value);
@@ -210,12 +221,29 @@
         wireDocument();
     }
 
+    // Back to the value the field had before its first pick. Never picked, it still re-labels:
+    // the reset emptied the label restoreDisplay wrote.
+    function onReset(e) {
+        var form = e.target;
+        setTimeout(function () {
+            if (e.defaultPrevented || !form.querySelectorAll) return;
+            form.querySelectorAll('.nds-select-value').forEach(function (hidden) {
+                var formControl = hidden.closest('.nds-form-control');
+                var value = initial.has(hidden) ? initial.get(hidden) : hidden.value, match = null;
+                if (!formControl) return;
+                formControl.querySelectorAll('.nds-select-option').forEach(function (o) { if (o.dataset.value === value) match = o; });
+                apply(formControl, match, true);
+            });
+        });
+    }
+
     // A page with no select at load never runs init(), so create() wires these too.
     function wireDocument() {
         if (_initDone) return;
         _initDone = true;
         document.addEventListener('focusin', onFocusIn);
         document.addEventListener('click', onOptionClick);
+        document.addEventListener('reset', onReset);
     }
 
     NDS.CustomSelect = {

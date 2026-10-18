@@ -309,8 +309,9 @@
                 self._syncValueInputs();
             }, { signal: signal });
             // A form reset restores the field after this event, and a hidden input keeps what JS wrote.
+            // The old value's error goes too; Forms clears the message.
             var form = this.elements.input.form;
-            if (form) form.addEventListener('reset', function () { setTimeout(function () { self._syncValueInputs(); }); }, { signal: signal });
+            if (form) form.addEventListener('reset', function () { setTimeout(function () { self._validateInput(true); self._syncValueInputs(); }); }, { signal: signal });
         },
 
         // Adopt NDSDropmenu for the calendar's open/close/escape/outside-click

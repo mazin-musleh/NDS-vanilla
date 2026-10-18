@@ -318,6 +318,14 @@
             +  '</div>';
     }
 
+    // A form reset goes back to the time the page shipped: the hidden carrier keeps what a script wrote.
+    function resetWithForm(picker, field) {
+        const initial = picker.getValue();
+        field.form?.addEventListener('reset', (e) => setTimeout(() => {
+            if (!e.defaultPrevented) initial ? picker.setValue(initial) : picker.clear();
+        }), { signal: picker.instanceAbortController.signal });
+    }
+
     class TimePicker {
         constructor(input, formControl) {
             // Success signal — create() gates the expando on it, so a bailed
@@ -379,6 +387,7 @@
                 input.value = formatDisplay(seeded, this.format);
                 input.setCustomValidity(this._boundsError(seeded));
             } else if (input.value.trim()) this._validateInput(true);
+            resetWithForm(this, input);
 
             container.setAttribute('data-nds-time-picker-initialized', '');
             this.valid = true;
@@ -894,6 +903,7 @@
             const seeded = parse24(carrier && carrier.value.trim() ? carrier.value : hour.value + ':' + minute.value);
             if (seeded !== null) this._adopt(seeded);
             else this._sync(true);
+            resetWithForm(this, hour);
 
             group.setAttribute('data-nds-time-picker-initialized', '');
             this.valid = true;

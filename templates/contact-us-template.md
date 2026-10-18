@@ -482,20 +482,8 @@ sidemenu_mode: false
                         duration: 3000
                     });
                 }
-                // Not form.reset(): nothing in NDS listens for the native reset
-                // event, so it changes values behind the validation chrome's back.
-                // Reset per field and sync each through the Forms API instead. A hidden
-                // value or a read-only display is a component's (a country code, a custom
-                // select's choice): clearing it alone leaves the visible choice behind, so
-                // the choice stays and only what the user typed clears.
-                Array.prototype.forEach.call(form.elements, function (el) {
-                    if (el.type === 'button' || el.type === 'submit' || el.type === 'hidden' || el.readOnly) return;
-                    if (el.type === 'checkbox' || el.type === 'radio') el.checked = el.defaultChecked;
-                    else if (el.tagName === 'SELECT') Array.prototype.forEach.call(el.options, function (o) { o.selected = o.defaultSelected; });
-                    else if ('defaultValue' in el) el.value = el.defaultValue;
-                    NDS.Forms.syncState(el);
-                    NDS.Forms.clearStatus(el);
-                });
+                // Every NDS field, a custom select and a country code too, goes back with the form.
+                form.reset();
             });
         }
 

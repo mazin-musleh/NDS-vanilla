@@ -166,6 +166,13 @@
             var c = t.closest('.nds-slider-container');
             if (c) paint(c);
         });
+        // A form reset moves the thumb back without an input event.
+        document.addEventListener('reset', function (e) {
+            var form = e.target;
+            setTimeout(function () {
+                if (!e.defaultPrevented && form.querySelectorAll) form.querySelectorAll('.nds-slider-container').forEach(paint);
+            });
+        });
         // Browsers ignore readonly on a range input, so the keys would still move it.
         document.addEventListener('keydown', function (e) {
             var t = e.target;

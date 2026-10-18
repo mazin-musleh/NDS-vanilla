@@ -252,6 +252,11 @@
         group._ndsOtpAC = new AbortController();
         var signal = group._ndsOtpAC.signal;
 
+        // A form reset empties the boxes but not the hidden carrier: a hidden input's value is its attribute.
+        if (inputs[0].form) inputs[0].form.addEventListener('reset', function (e) {
+            setTimeout(function () { if (!e.defaultPrevented) syncHidden(group); });
+        }, { signal: signal });
+
         inputs.forEach(function (input, i) {
             // Each box says its place in the page's language; a label the page wrote itself stays.
             var vars = { n: i + 1, total: inputs.length };

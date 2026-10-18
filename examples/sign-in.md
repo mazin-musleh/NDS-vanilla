@@ -784,14 +784,8 @@ breadcrumb: [["Examples", "/examples"]]
 
     passwordForm.addEventListener('nds:formValid', function () {
       withLoading(passwordForm.querySelector('button[type="submit"]'), 1500, function () {
-        // Forms listens for no native reset event, so form.reset() would leave the
-        // clear buttons and validation paint stale. Clear each field and re-sync it.
-        passwordForm.querySelectorAll('input').forEach(function (input) {
-          input.value = '';
-          NDS.Forms.syncState(input);
-        });
-        // Repaint the chips and lift the submit block against the now-empty value.
-        passwordForm.querySelectorAll('.nds-password').forEach(NDS.Password.check);
+        // Each field, its rules and its message go back with the form.
+        passwordForm.reset();
         show('account');
         toast('success', 'Password updated', 'Use the new password the next time you sign in.');
       });
