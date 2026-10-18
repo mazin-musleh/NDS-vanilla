@@ -280,6 +280,9 @@ Pick another component when:
 <script type="text/html" id="field-info" data-canon>
 <span class="nds-info">More details about what to enter here</span>
 </script>
+<script type="text/html" id="field-help" data-canon>
+<span class="nds-tooltip" data-tooltip-title="Full name" data-tooltip-message="Write it as it shows on your national ID."></span>
+</script>
 <script type="text/html" id="field-hint" data-canon>
 <div class="nds-form-footer" data-feedback-target>
   <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
@@ -331,6 +334,7 @@ Each Structure is one field type. Options stack: a field can be MD, Lighter and 
 | State | Loading | `[data-state~="loading"]` | `.nds-form-container:not(.nds-select)` | A spinner in place of the action buttons, while a script checks the value. Set it with `NDS.State.add()` and remove it when the check ends |
 | Required | Required (id: required) | `[data-required]` | `.nds-form-container` | A red asterisk before the label. An empty field blocks the submit |
 | Info | Info (hint: Help text under the label) | canon `#field-info` | `label` | A line of help text under the label |
+| Help | Help (hint: A help icon beside the label) | canon `#field-help` | `.nds-form-header` | A [Tooltip](../components/tooltip) after the label, for optional help. It goes in the header, never in the `label`. Text the user needs to fill the field goes in Info |
 | Hint | Hint (hint: A message that stays under the field) | canon `#field-hint` | `.nds-form-container` | A hint under the field that stays. A validation message takes its place while it shows |
 {: #forms-variants-table .nds-table .nds-responsive}
 

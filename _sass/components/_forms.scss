@@ -38,6 +38,28 @@
             font-weight: var(--font-weight-medium);
             cursor: pointer;
         }
+
+        // A help tooltip sits after the label text, centred on its line. It cannot
+        // go inside the label (no second labelable element), so the label's parts
+        // join the header row: the info line wraps under both.
+        &:has(> .nds-tooltip) {
+            flex-flow: row wrap;
+            align-items: flex-start;
+            column-gap: var(--spacing-xs);
+
+            > label {
+                display: contents;
+
+                > :not(.nds-label) {
+                    flex-basis: 100%;
+                    order: 1;
+                }
+            }
+
+            > .nds-tooltip {
+                min-block-size: var(--typo-text-md-LH);
+            }
+        }
     }
 
     // Required field indicator — data-min-checked counts too (a bounded

@@ -199,7 +199,7 @@ With no `data-tooltip-message`, the root's `title` is the message. Until the scr
 
 - Put only optional help in a tooltip. Text the user needs to finish the task goes in the label or the info text.
 - Keep the message to one or two sentences. The balloon is at most 240px wide, and the text wraps.
-- Put the trigger right after the term or the label it explains.
+- Put the trigger right after the term or the label it explains. In a form field it goes in the field's header, after the `label`: see the Help option in [Forms](../components/forms).
 - Use the auto markup for plain text. Write the parts yourself only for other content in the balloon.
 - Give a help icon trigger an `aria-label` that names what it explains, such as "About the National ID". An auto trigger takes the title, or "More info" when there is no title.
 - Add `data-tooltip-hover` to a link or a button trigger, so its own click still works.
