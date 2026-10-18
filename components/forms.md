@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 11:47 AM"
+last_edit: "18/10/2026 - 01:23 PM"
 lang: en
 direction: ltr
 ---
@@ -394,6 +394,11 @@ A `<form class="nds-form">` checks every visible field when the user submits it.
 
 ### Status Messages
 {: .nds-block-title}
+A sent form takes no second submit, so a double click sends it once. Its submit button shows the spinner while the form waits:
+
+- A form with `method="post"` that loads the next page in the same tab waits until that page opens. Add `data-no-pending` to a POST form whose answer is a download, or no page: the button would spin until the page reloads.
+- A `data-ajax` form waits only when the `nds:formValid` listener passes its request to `event.detail.waitUntil()`. The form takes submits again when the request ends, whether it passed or failed. Call `waitUntil()` in the listener itself, not after an `await`.
+
 
 `NDS.Forms.setStatus()` shows a message under a field, such as an error the server returns. A field shows `error` or `help`. `help` is a hint in the neutral color with a "?" icon, not a validation result. Any other status shows the message in the neutral color, with no red outline. `setStatus()` never moves focus, so focus the first field with an error yourself. Focus also scrolls the field into view.
 
@@ -588,6 +593,7 @@ The eye button switches the field between hidden and plain text, and its label b
 | `data-required` | `.nds-form-container` | Marks the field required. The script adds `required` and `aria-required="true"` to the input at start. It also sets or removes this attribute when the input's `required` changes, at the next edit or `syncState()` call |
 | `data-state` | `.nds-form-container` | Write `disabled` or `readonly`, or call `setState()`: the script sets that property on every input inside. `disabled` also disables the action buttons. The script writes them too when an input is disabled or readonly. The script sets `focus`, `active` and `typing` while the user is on the field, and removes them on blur and release. It sets `open` while a native select's list is open |
 | `data-state="loading"` | `.nds-form-container` or `.nds-form-group` | Shows the spinner in place of the action buttons. The `nds-loading` class does the same. Write either in the HTML or from a script (`NDS.State.add()`, the attribute, `classList`), and remove it the same way. Put it on the container, not on `.nds-form-control` or the input |
+| `data-no-pending` | `form.nds-form` with `method="post"` | A sent form takes submits again at once, and its button shows no spinner. For a form whose answer is a download or no page |
 | `data-status` | `.nds-form-container` | The script sets it with each message: `error`, `help` or `neutral`. Only `error` draws the red outline. `clearStatus()` and any edit to the field remove it |
 | `data-message` | `.nds-form-container` | The script writes the current message text with `data-status`. `getStatus()` reads it, and `clearStatus()` removes it |
 | `data-feedback-target` | `.nds-form-container` | A CSS selector for the element inside the field that holds its messages |
@@ -680,7 +686,7 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 |---|---|---|
 | `nds:statusChange` | the field's container, and it bubbles | `{ status, message }`. Both are `null` after `clearStatus()` |
 | `nds:formValidate` | the form, and it bubbles | `{ valid, invalidFields, errors }`, after every `validateForm()`. Each error is `{ field, input, message }` |
-| `nds:formValid` | the form, and it bubbles | `{}`, when a submit passes |
+| `nds:formValid` | the form, and it bubbles | `{ waitUntil(promise) }`, when a submit passes. `waitUntil()` keeps the form from a second submit until the promise ends, and the submit button shows the spinner |
 | `nds:formInvalid` | the form, and it bubbles | `{ invalidFields, errors }`, when a submit is blocked |
 | `nds:switchChange` | `.nds-switch`, and it bubbles | `{ checked, value, input }`. See [Switch](../components/switch) |
 | `nds:indeterminateChange` | the checkbox, and it bubbles | `{ indeterminate }`. See [Checkbox](../components/checkbox) |
@@ -689,9 +695,10 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 <script type="text/html" id="forms-js" data-canon data-lang="js">
 var form = document.querySelector('#apply-form');
 
-// Send the request once every field passes (the form has data-ajax)
-form.addEventListener('nds:formValid', function () {
-  NDS.request(form.action, { method: 'POST', body: new FormData(form) });
+// Send the request once every field passes (the form has data-ajax).
+// waitUntil blocks a second submit until the request ends.
+form.addEventListener('nds:formValid', function (e) {
+  e.detail.waitUntil(NDS.request(form.action, { method: 'POST', body: new FormData(form) }));
 });
 
 // Fill a field from a script

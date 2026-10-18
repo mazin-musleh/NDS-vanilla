@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "18/10/2026 - 01:03 PM"
 ---
 
 <section id="btn-overview" class="nds-content-section nds-doc-overview">
@@ -223,7 +223,7 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 - Add `nds-oncolor` to a button on a deep primary or dark background. Without it, the button can be hard to see.
 - Write `type="submit"` on the button that sends a form. Write `type="button"` on every other button in a form, or it sends the form too.
 - Keep the `nds-label` span on an icon-only button. It is hidden on screen and names the button for screen readers. A button with no label element needs an `aria-label`.
-- Add `nds-loading` and `disabled` while a request runs, so a second press does not send it again.
+- Add `nds-loading` and `disabled` while a request runs, so a second press does not send it again. A `form.nds-form` does this for its submit button: see [Text Fields](../components/forms), Submit Validation.
 - Keep labels short: a verb and a noun, such as "Save draft". A long label does not wrap, except in a stacked button.
 - Use a status for feedback on the button itself, and remove it after about two seconds. For a message the user must read, use an [Alert](../components/alert).
 

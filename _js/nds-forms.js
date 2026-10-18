@@ -36,13 +36,13 @@
  *   nds:statusChange         detail {status, message} — from the form container
  *   nds:formValidate         detail {valid, invalidFields, errors} — from the form, every
  *                            validateForm() run
- *   nds:formValid            detail {} — from the form, on a passing submit
+ *   nds:formValid            detail {waitUntil(promise)} — from the form, on a passing submit
  *   nds:formInvalid          detail {invalidFields, errors} — from the form, on a blocked submit
  *   nds:switchChange         detail {checked, value, input} — from the .nds-switch element
  *   nds:indeterminateChange  detail {indeterminate} — from the checkbox
  * Hooks:
  *   data-required · data-min-checked · data-max-checked · data-error-message
- *   data-ajax · data-message · data-feedback-target · data-loading-slot
+ *   data-ajax · data-no-pending · data-message · data-feedback-target · data-loading-slot
  *   data-target · data-autofill-apply (auto-fill containers)
  * Gotchas:
  *   - Feedback needs no slot markup: setStatus creates the message element in the field's
@@ -84,6 +84,11 @@
  *   - A native form reset (a reset button, form.reset(), React 19 after a form action) clears
  *     each field's status and re-syncs its chrome; each NDS field restores its own value.
  *   - A valid submit (AJAX too) and a reset hide a shown password again.
+ *   - Pending: a sent form drops further submits and its submit button shows loading. A POST
+ *     that loads a page in this tab is pending until the page goes (a page restored from the
+ *     back cache is not); a POST answered by a download or a 204 never ends it, so that form
+ *     takes data-no-pending. Otherwise only a waitUntil(promise) from nds:formValid makes it
+ *     pending, until the promise settles; call it in the listener, not after an await.
  */
 
 // NDS Forms Controller - Form Control Logic
@@ -1270,6 +1275,23 @@
             });
         });
 
+        // A pending form drops the submit. Capture runs before the form's own listeners and a framework's root.
+        doc.addEventListener('submit', function(e) {
+            if (e.target._ndsPendingEnd) { e.preventDefault(); e.stopImmediatePropagation(); }
+        }, true);
+        // A POST that loads a page in this tab is pending until the page goes. On window, after every
+        // other listener: a script that cancelled the submit sends it itself. A GET twice does no harm.
+        window.addEventListener('submit', function(e) {
+            var form = e.target, sub = e.submitter;
+            if (!form._ndsFormInitialized || form._ndsPendingEnd || e.defaultPrevented || form.hasAttribute('data-no-pending')) return;
+            var attr = function(n) { return (sub && sub.getAttribute('form' + n)) || form.getAttribute(n) || ''; };
+            if (attr('method').toLowerCase() === 'post' && /^(_self)?$/i.test(attr('target'))) setPending(form, sub);
+        });
+        // Back on a page from the browser's cache: nothing it sent is pending.
+        window.addEventListener('pageshow', function(e) {
+            if (e.persisted) doc.querySelectorAll('form').forEach(function(f) { if (f._ndsPendingEnd) f._ndsPendingEnd(); });
+        });
+
         // A rating group has no input to fire `input`, so its own event stands in
         // for the auto-clear above. Submit re-runs the rule, so clearing here is
         // only about dropping a stale message.
@@ -1622,6 +1644,19 @@
     // ==============================================
     // FORM INITIALIZATION
     // ==============================================
+    // A sent form takes no second submit until `until` settles or the page goes; its submit button spins meanwhile.
+    function setPending(form, btn, until) {
+        var mine = !!btn && !NDS.State.has(btn, 'loading');
+        var end = function() {
+            if (form._ndsPendingEnd !== end) return;
+            form._ndsPendingEnd = null;
+            if (mine) NDS.State.remove(btn, 'loading');
+        };
+        form._ndsPendingEnd = end;
+        if (mine) NDS.State.add(btn, 'loading');
+        if (until) until.then(end);
+    }
+
     function initForm(formElement) {
         var form = formElement.closest('.nds-form') || formElement;
         // .nds-form is a validation hook, but consumers also use it as a
@@ -1647,10 +1682,12 @@
                 return false;
             }
 
+            var waits = [];
             form.dispatchEvent(new CustomEvent('nds:formValid', {
-                detail: {},
+                detail: { waitUntil: function(p) { waits.push(p); } },
                 bubbles: true
             }));
+            if (waits.length) setPending(form, e.submitter, Promise.allSettled(waits));
 
             if (form.hasAttribute('data-ajax')) {
                 e.preventDefault();
