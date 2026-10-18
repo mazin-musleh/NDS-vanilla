@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 09:21 AM"
+last_edit: "18/10/2026 - 02:22 PM"
 ---
 
 <section id="pagination-overview" class="nds-content-section nds-doc-overview">
@@ -36,7 +36,10 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="pg-buttons" data-canon data-variants="pagination-variants-table">
+<script type="text/html" id="pg-data" data-canon data-variants="pagination-variants-table">
+<nav class="nds-pagination" data-total-pages="12" aria-label="Pagination" data-i18n-aria-label="pagination.pagination"></nav>
+</script>
+<script type="text/html" id="pg-buttons" data-canon>
 <nav class="nds-pagination" aria-label="Pagination" data-i18n-aria-label="pagination.pagination">
   <ul class="nds-pagination-list">
     <li class="nds-pagination-item nds-pagination-prev">
@@ -107,9 +110,6 @@ Pick another component when:
     </li>
   </ul>
 </nav>
-</script>
-<script type="text/html" id="pg-data" data-canon>
-<nav class="nds-pagination" data-total-pages="12" aria-label="Pagination" data-i18n-aria-label="pagination.pagination"></nav>
 </script>
 <script type="text/html" id="pg-grid" data-canon>
 <div id="pg-cards" class="nds-grid nds-paged-content" style="--per-page: 3; --max-col: 3; --mid-col: 3; --min-col: 1;">
@@ -312,13 +312,13 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Every option goes on the `nds-pagination` nav. Pages and Page links work only on a data-driven nav (`data-total-pages`). The 2000 choice sets two attributes: write both.
+Every option goes on the `nds-pagination` nav. Pages and Page links need `data-total-pages`, so they do not fit Buttons or Links. The 2000 choice sets two attributes: write both.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Structure | Buttons (default) | — | — | You write one `<button>` per page, and your script loads the page's items on `nds:pagination:change`. More than 5 written pages fold into a menu only when the script starts, so the nav changes width once. For a long range, use Data-driven |
+| Structure | Data-driven (default) | — | — | An empty nav with a page count. The script builds the buttons, and your script loads the page's items on `nds:pagination:change`. For results from a server, where you know the count |
+| Structure | Buttons (hint: You write one button per page) | canon `#pg-buttons` | — | A short, fixed set of pages that you write as buttons. More than 5 written pages fold into a menu only when the script starts, so the nav changes width once. For a longer range, use Data-driven |
 | Structure | Links | canon `#pg-links` | — | Each page is its own URL. The server marks the current page with `aria-current="page"`. It works with no JavaScript |
-| Structure | Data-driven (hint: The script builds the buttons from a page count) | canon `#pg-data` | — | An empty nav with a page count. The script builds the buttons. For results from a server, where you know the count |
 | Structure | Card grid | canon `#pg-grid` | — | The script shows one page of the items that are already in the HTML. `--per-page` sets the page size |
 | Structure | Table | canon `#pg-table` | — | The same for table rows. `nds-paged-content` goes on the `<tbody>`, and `nds-page-item` on each `<tr>` |
 | Structure | Grid with toolbar | canon `#pg-toolbar` | — | A card grid with a records counter and a per-page picker above it |
@@ -463,7 +463,7 @@ After a page change, the script scrolls the content back into view when its top 
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Pick the structure by where the items are. Items already on the page: Card grid or Table. Items from a server: Buttons or Data-driven. One URL per page: Links, or Data-driven with Page links.
+- Pick the structure by where the items are. Items already on the page: Card grid or Table. Items from a server: Data-driven, or Buttons for a few fixed pages. One URL per page: Links, or Data-driven with Page links.
 - Set `--per-page` in the container's `style`. The loading placeholder reads only that value: a value set only in a media query still pages, but the placeholder shows 6 items.
 - Match `--per-page` to the column count, so each page fills its rows.
 - Put `nds-paged-content` on the `<tbody>`, not on a wrapper around the table. A wrapper stays hidden until the script starts, but a `<tbody>` shows placeholder rows.
