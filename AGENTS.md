@@ -27,6 +27,7 @@ node scripts/doc-check.mjs <page.md>            # clicks every builder option: f
 node scripts/check-menus-in-modal.mjs           # six menu components in a scrolling Modal: place, follow, close, pick; PHONE=1, ENGINE=webkit
 node scripts/check-dialogs.mjs                  # Modal + Panel on <dialog>: plain/static/modal, stacking, Escape, outside click, lazy panels; ENGINE=webkit, NO_POPOVER=1 (Safari < 17)
 node scripts/check-form-reset.mjs               # every form field's doc canon: a reset puts it back (value, message, chips, status), a cancelled one keeps the change; ENGINE=webkit, OLD_JS=<dir of old bundles> for an A/B
+node scripts/check-pagination-data.mjs          # data-driven Pagination in a server flow: focus kept, 0/1 page hides, placeholder releases, data-active-page + ?page= current, ?per-page= read before the split; ENGINE=webkit, OLD_JS=<dir>
 node scripts/check-mainnav.mjs                  # Main Navigation: menu placement, swap, scroll, outside click, phone drawer; ENGINE=webkit, TIMING=1
 node scripts/trace-click.mjs [page] [runs]      # one plain tap traced: every listener on pointer/mouse/click with its cost, and the other main-thread work; TAP=1
 node scripts/trace-busy.mjs [page …]            # long frames from load to quiet, with their scripts (LoAF); INITS=1 adds each component's init time

@@ -30,7 +30,9 @@
  *   window.__NDS_BUNDLES   the build-generated bundle manifest — never hand-write it
  *   written by the loader: data-nds-loaded on <html> — the reveal stamp, set once the
  *                          main CSS has applied; data-paged-split on each .nds-paged-content
- *                          at init (items past its --per-page, else 6, get hidden);
+ *                          at init (items past its --per-page, else 6, get hidden), after
+ *                          a picker's ?per-page= (data-per-page-param) set that --per-page
+ *                          and its data-select-value — at init and on mount();
  *                          data-swiper-preset on each swiper, with --slides and the
  *                          peek state its init will pick, and data-swiper-single when its
  *                          slides fit one page; in RTL each multi-page track is pinned to
@@ -563,6 +565,24 @@
         });
     }
 
+    // ?per-page= (data-per-page-param on a per-page picker), before anything reads the size:
+    // the picker starts on it and the split below uses it, so nothing jumps. A CSSOM write,
+    // which a strict CSP allows. Pagination reads _ndsPerPageDefault to drop the param.
+    function applyPerPageParams(root) {
+        const params = new URLSearchParams(location.search);
+        root.querySelectorAll('[data-per-page-param]').forEach(picker => {
+            if ('_ndsPerPageDefault' in picker) return;
+            picker._ndsPerPageDefault = picker.getAttribute('data-select-value');
+            const v = params.get(picker.getAttribute('data-per-page-param') || 'per-page');
+            // Only a size the menu offers: the address must not set 99999.
+            if (!v || !picker.querySelector(`.nds-dropmenu-item[data-value="${CSS.escape(v)}"]`)) return;
+            picker.setAttribute('data-select-value', v);
+            const ref = picker.getAttribute('data-per-page-target');
+            const content = ref && NDS.resolveEl(ref);
+            if (content && !content.hasAttribute('data-paged-initialized')) content.style.setProperty('--per-page', v);
+        });
+    }
+
     // Hide items past each container's inline --per-page (else crit's 6) at init, not at
     // the reveal: main CSS can land first, and the skeleton jumped from 6 to --per-page.
     // Inline only — a computed read would force a recalc.
@@ -596,6 +616,7 @@
         // Markers translate once the pack settles; here, so auto-init off holds them too.
         NDS.i18n.start();
         const startTime = performance.now();
+        applyPerPageParams(document);
         presplitPaged();
 
         let criticalComponents, deferredComponents, injectedGroups;
@@ -924,6 +945,7 @@
     // refresh. Loading every bundle would drag in audit, which must never auto-inject.
     function mountContainer(container) {
         const root = container || document;
+        applyPerPageParams(root);
         const needed = new Set();
         for (const c of COMPONENTS) {
             if (!c.selector) continue;

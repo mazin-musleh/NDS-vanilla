@@ -23,7 +23,7 @@
   // reveal — a data-driven nav ([data-total-pages]) reserves its one-row
   // height until its init stamp, so the insertion doesn't shift content
   // below. Init owns the outcome: it generates the list (any total-pages
-  // > 0), and a nav init leaves empty falls back to the empty-collapse
+  // > 1), and a nav init leaves empty falls back to the empty-collapse
   // above. Auto mode holds the same reserve until pagination stamps
   // data-paged-initialized on the adjacent content.
   // The placeholder is a centered row of six button blocks: one pseudo, a
@@ -146,16 +146,6 @@
 // page rows; anchored on the menu-content class, so it holds in every render mode.
 .nds-pagination-jump input {
   text-align: center;
-}
-
-// ==============================================
-// DISABLED STATE
-// ==============================================
-
-.nds-pagination-item .nds-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  pointer-events: none;
 }
 
 // ==============================================

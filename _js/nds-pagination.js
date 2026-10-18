@@ -16,7 +16,9 @@
  *                           page changes only
  * Hooks:
  *   data-auto-pagination · data-total-pages · data-paged-target · data-per-page-target
+ *   data-active-page (read at init; the script keeps it current on a data-driven nav)
  *   data-page-param · data-page-url · data-pagination-no-scroll
+ *   data-per-page-param (picker: ?per-page=; the loader reads it at load, before the split)
  *   data-paged-count · data-paged-from · data-paged-to (record slots the component fills)
  *   data-paged-split (loader-stamped at init: items past the inline --per-page, else 6, are hidden)
  * Gotchas:
@@ -24,6 +26,7 @@
  *   - scrollToContent() ignores data-pagination-no-scroll: the explicit call is the intent.
  *   - setTotalPages() is for manual / data-driven navs; on an auto-pagination it warns and
  *     no-ops — add/remove .nds-page-item items or call refresh() instead.
+ *   - A data-driven count of 0 or 1 builds no list, and CSS hides the nav.
  */
 
 /**
@@ -410,7 +413,8 @@
         const hasPaginationList = container.classList.contains('nds-pagination-list') ||
                                  container.querySelector('.nds-pagination-list');
 
-        if (totalPages && totalPages > 0 && !hasPaginationList) {
+        // One page or none builds nothing: CSS hides a nav with no list, as on an auto nav.
+        if (totalPages > 1 && !hasPaginationList) {
             // Auto-generate pagination HTML, collapsed directly (no
             // build-all-then-collapse round trip). data-page-url (a
             // "?page={page}" template) makes the controls navigable links
@@ -421,6 +425,8 @@
 
         // Only a valid construction stamps, so a bailed (empty) nav stays eligible.
         const inst = new NDSPagination(container);
+        // A data-driven nav left empty (0 or 1 page) is done too: the stamp releases its placeholder.
+        if (container.hasAttribute('data-total-pages')) container.setAttribute('data-nds-pagination-initialized', 'true');
 
         initializePaginationStates(container);
 
@@ -638,6 +644,7 @@
         _perPageWired = true;
         document.addEventListener('nds:dropmenu:selected', (e) => {
             const { dropmenu, value } = e.detail;
+            _writePerPageParam(dropmenu, value);
             const ref = dropmenu.getAttribute('data-per-page-target');
             if (!ref) return;
             const target = NDS.resolveEl(ref);
@@ -918,13 +925,31 @@
 
     function _writePageParam(nav, page) {
         const attr = nav.getAttribute('data-page-param');
-        if (attr == null) return;
+        if (attr != null) _writeParam(attr || 'page', page > 1 ? page : null);
+    }
+
+    // The loader read ?per-page= at load; a pick of the size the HTML wrote drops it.
+    function _writePerPageParam(picker, value) {
+        const attr = picker.getAttribute('data-per-page-param');
+        if (attr != null) _writeParam(attr || 'per-page', value === picker._ndsPerPageDefault ? null : value);
+    }
+
+    // null deletes the param.
+    function _writeParam(name, value) {
         const params = new URLSearchParams(window.location.search);
-        if (page > 1) params.set(attr || 'page', page);
-        else params.delete(attr || 'page');
+        if (value != null) params.set(name, value);
+        else params.delete(name);
         const qs = params.toString();
         // Keep the hash — a hash-routed app stores its route there.
         window.history.replaceState({}, '', (qs ? `${window.location.pathname}?${qs}` : window.location.pathname) + window.location.hash);
+    }
+
+    // Every manual page move ends here: the URL param, and on a data-driven nav
+    // data-active-page, which is where the app reads the open page back (a lazy
+    // nav holds it on no rendered button).
+    function _syncPage(nav, page) {
+        if (nav.hasAttribute('data-total-pages')) nav.dataset.activePage = page;
+        _writePageParam(nav, page);
     }
 
     // Land a manual nav on ?page=N at init, silently — no event (not user
@@ -940,6 +965,7 @@
         setActivePage(pagination, page);
         const { min, max } = pageBounds(getAllPageElements(pagination));
         updatePrevNextStates(pagination, page, min, max);
+        _syncPage(nav, page);
     }
 
     // ── Lazy ellipsis menu (windowed) ─────────────────────────────────────
@@ -1515,7 +1541,7 @@
         updatePrevNextStates(pagination, targetPageNum, min, max);
         _scrollOnPageChange(pagination);
         _dispatchPageChange(pagination, targetPageNum, previousPage, max);
-        _writePageParam(_navOf(pagination), targetPageNum);
+        _syncPage(_navOf(pagination), targetPageNum);
     }
 
     // Per-nav click handler for manual pagination. Scoped to the nav element,
@@ -1586,17 +1612,32 @@
             return;
         }
         totalPages = parseInt(totalPages);
-        if (!(totalPages > 0)) return;
+        if (!(totalPages >= 0)) return;
 
         const list = paginationNav.querySelector('.nds-pagination-list');
         const current = list ? getCurrentPage(list) : 1;
-        const target = Math.min(Math.max(1, parseInt(activePage) || current), totalPages);
+        const target = Math.min(Math.max(1, parseInt(activePage) || current), Math.max(1, totalPages));
 
-        paginationNav.dataset.totalPages = totalPages; // keep the attribute truthful
-        _destroyEllipsisMenu(paginationNav); // also closes a picker left open across the total change
-        paginationNav.innerHTML = generatePaginationHTML(totalPages, target, paginationNav.getAttribute('data-page-url'));
-        wireGeneratedPagination(paginationNav, target, totalPages); // ellipsis dropmenu + active stamp (prev/next come baked)
-        _wireManualNavClicks(paginationNav);
+        if (list && parseInt(paginationNav.dataset.totalPages) === totalPages) {
+            // Same count: move the page only — a rebuild drops the button the user just pressed.
+            if (target !== current) {
+                setActivePage(list, target);
+                updatePrevNextStates(list, target, 1, totalPages);
+            }
+        } else {
+            paginationNav.dataset.totalPages = totalPages; // keep the attribute truthful
+            _destroyEllipsisMenu(paginationNav); // also closes a picker left open across the total change
+            if (totalPages <= 1) {
+                paginationNav.replaceChildren(); // CSS hides a nav with no list
+            } else {
+                paginationNav.innerHTML = generatePaginationHTML(totalPages, target, paginationNav.getAttribute('data-page-url'));
+                wireGeneratedPagination(paginationNav, target, totalPages); // ellipsis dropmenu + active stamp (prev/next come baked)
+            }
+            _wireManualNavClicks(paginationNav);
+        }
+        // A nav init left empty (count known only after the first request) still holds its placeholder.
+        paginationNav.setAttribute('data-nds-pagination-initialized', 'true');
+        _syncPage(paginationNav, target);
     }
 
     // Expose global API for unified init system
@@ -1626,7 +1667,7 @@
             setActivePage(pagination, pageNumber);
             updatePrevNextStates(pagination, pageNumber, min, max);
             _scrollOnPageChange(pagination);
-            _writePageParam(_navOf(container), pageNumber);
+            _syncPage(_navOf(container), pageNumber);
         },
         // Manual scroll for consumers driving their own page changes. Ignores
         // data-pagination-no-scroll — the explicit call is the intent.
