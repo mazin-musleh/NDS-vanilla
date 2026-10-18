@@ -9,7 +9,7 @@
  *   NDS.Dropmenu.from(el)                the wrapper that owns any element inside it
  *   NDS.Dropmenu.menuOf(dropmenu)        the wrapper's menu
  * Events (bubble from the .nds-dropmenu wrapper):
- *   nds:dropmenu:prepare   detail {dropmenu, trigger, menu, isOpen} — before lazy content builds
+ *   nds:dropmenu:prepare   detail {dropmenu, trigger, menu, isOpen, waitUntil(promise)} — before lazy content builds
  *   nds:dropmenu:opened    detail {dropmenu, trigger, menu, isOpen}
  *   nds:dropmenu:closed    detail {dropmenu, trigger, menu, isOpen}
  *   nds:dropmenu:selected  detail {dropmenu, item, value}
@@ -24,6 +24,8 @@
  *     the DOM (replacing a table row, closing a view) leaks it and the detached subtree.
  *     Call destroy(el) first. reinit() covers the other side: wrappers you ADD.
  *   - nds:dropmenu:prepare is the lazy-content hook; opened fires after placement.
+ *     waitUntil(promise) keeps the spinner until it settles; call it in the listener, not
+ *     after an await. Cancelled meanwhile (click away, Escape), the next open waits on it again.
  *   - Opt-in lazy menu: an own <template> child holding the menu is stamped +
  *     constructed on the first trigger click. Self-owned menus only — never one
  *     that filter/share read at init or multiselect builds into.
@@ -763,6 +765,14 @@
             return true;
         }
 
+        // The content is ready: open, unless the user cancelled meanwhile.
+        _finishDelay() {
+            if (!this._delaying) return;
+            this._delaying = false;
+            removeState(this.trigger, 'loading');
+            this.open();
+        }
+
 
         open() {
             // Already open: a second open() would overwrite _offScroll and
@@ -772,23 +782,26 @@
             // Arrow keys. Reposition with applyPosition(), not a re-open.
             if (this.isOpen) return;
             // Delayed-first-open mode (opt-in via data-delay="<ms>"). The first
-            // open shows a loading state on the trigger, emits nds:dropmenu:prepare
-            // so a consumer can populate the menu, then opens after <ms>. One-shot:
+            // open shows a loading state on the trigger, waits <ms>, emits nds:dropmenu:prepare
+            // so a consumer can populate the menu (waitUntil(promise) holds the open), then opens. One-shot:
             // data-delay is removed once it fires, so later opens are immediate.
             // Lets components build menu content lazily without the open animation
             // racing a fast re-click or briefly showing an empty/mis-sized menu.
             if (this._delaying) return;   // a delayed open is already in flight
-            if (this.dropmenu.hasAttribute('data-delay')) {
-                const delay = parseInt(this.dropmenu.getAttribute('data-delay'), 10) || 0;
+            const delayed = this.dropmenu.hasAttribute('data-delay');
+            if (delayed || this._preparing) {
                 this._delaying = true;
                 this._listenDocument();
                 addState(this.trigger, 'loading');
+                // A cancelled open whose waitUntil() is still running waits for it again.
+                if (!delayed) return;
+                const delay = parseInt(this.dropmenu.getAttribute('data-delay'), 10) || 0;
                 this._delayTimer = setTimeout(() => {
-                    this._delaying = false;
                     this.dropmenu.removeAttribute('data-delay');
-                    this.emitEvent('nds:dropmenu:prepare');   // consumer builds content now
-                    removeState(this.trigger, 'loading');
-                    this.open();                              // real open — content is ready
+                    const waits = [];
+                    this.emitEvent('nds:dropmenu:prepare', { waitUntil: (p) => { waits.push(p); } });
+                    if (!waits.length) return this._finishDelay();
+                    this._preparing = Promise.allSettled(waits).then(() => { this._preparing = null; this._finishDelay(); });
                 }, delay);
                 return;
             }
@@ -1116,13 +1129,14 @@
         // EVENTS & CLEANUP
         // ==============================================
 
-        emitEvent(name) {
+        emitEvent(name, extra) {
             this.dropmenu.dispatchEvent(new CustomEvent(name, {
                 detail: {
                     dropmenu: this.dropmenu,
                     trigger: this.trigger,
                     menu: this.menu,
-                    isOpen: this.isOpen
+                    isOpen: this.isOpen,
+                    ...extra
                 },
                 bubbles: true
             }));

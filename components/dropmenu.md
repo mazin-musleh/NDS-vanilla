@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 04:38 PM"
+last_edit: "18/10/2026 - 01:38 PM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -291,6 +291,8 @@ The menu centers under its trigger by default. On a wide trigger, such as a full
 
 `data-delay` gives your script time to fill a menu the first time it opens, for items that come from a server or cost time to build. On the first click, the trigger shows a spinner for the given milliseconds. Then the dropmenu fires `nds:dropmenu:prepare`, and your script adds the items in that event. Later opens are immediate.
 
+For items that come from a request, pass the request to `event.detail.waitUntil()` in that event. The spinner stays until the request ends, whether it passed or failed, and then the menu opens. Use `data-delay="0"` to wait for the request only. If the user clicks away while the request runs, the menu does not open; the next click waits for the same request.
+
 ### Lazy Menu
 {: .nds-block-title}
 
@@ -465,13 +467,29 @@ Set these on the `.nds-dropmenu` wrapper. The menu inherits them.
 | `nds:dropmenu:opened` | `.nds-dropmenu` | `{ dropmenu, trigger, menu, isOpen }`, after the menu is placed |
 | `nds:dropmenu:closed` | `.nds-dropmenu` | `{ dropmenu, trigger, menu, isOpen }` |
 | `nds:dropmenu:selected` | `.nds-dropmenu` | `{ dropmenu, item, value }`, when a picker picks a value |
-| `nds:dropmenu:prepare` | `.nds-dropmenu` | `{ dropmenu, trigger, menu, isOpen }`, before a delayed first open. Fill the menu here |
+| `nds:dropmenu:prepare` | `.nds-dropmenu` | `{ dropmenu, trigger, menu, isOpen, waitUntil(promise) }`, before a delayed first open. Fill the menu here. `waitUntil()` keeps the menu closed until the promise ends |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="dm-js" data-canon data-lang="js">
 var picker = document.querySelector('[data-select-name="country"]');
 picker.addEventListener('nds:dropmenu:selected', function (e) {
   console.log('Country:', e.detail.value);
+});
+
+// A menu with data-delay="0": fill it from a request on the first open
+var branches = document.querySelector('#branches-menu');
+branches.addEventListener('nds:dropmenu:prepare', function (e) {
+  var scroll = e.detail.menu.querySelector('.nds-dropmenu-scroll');
+  e.detail.waitUntil(NDS.request('/api/branches').then(function (res) {
+    res.data.forEach(function (name) {
+      var item = document.createElement('button');
+      item.type = 'button';
+      item.className = 'nds-btn nds-subtle nds-dropmenu-item';
+      item.innerHTML = '<span class="nds-label"></span>';
+      item.firstChild.textContent = name;
+      scroll.appendChild(item);
+    });
+  }));
 });
 </script>
 
