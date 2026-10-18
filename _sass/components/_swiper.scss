@@ -548,3 +548,21 @@
 .nds-swiper.nds-loading {
     @include loading-skeleton-host;
 }
+
+// Paper cannot swipe: the page on screen prints, without its controls or the peek
+// (it printed the next card cut off at the edge).
+// ponytail: the other pages do not print; printing every slide needs their lazy images loaded first.
+@include print-media {
+    .nds-swiper {
+        --_peek: 0px;
+
+        :is(.nds-swiper-navigation, .nds-swiper-pagination, .nds-prev, .nds-next) {
+            display: none !important;
+        }
+    }
+
+    // Its side gutters hold the arrows.
+    .nds-swiper.nds-middle {
+        padding-inline: 0;
+    }
+}
