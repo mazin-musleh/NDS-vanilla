@@ -79,7 +79,7 @@
     });
 
     const pad = (n) => String(n).padStart(2, '0');
-    const latin = (s) => String(s).replace(/[٠-٩۰-۹]/g, (c) => c.charCodeAt(0) & 15);
+    const latin = NDS.latinDigits;
     const isPM = (token) => /^(PM|pm|م)$/.test(token);
 
     // Token presence drives the panel, so the format string stays the single

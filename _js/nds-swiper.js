@@ -97,6 +97,8 @@
         document.addEventListener('keydown', (e) => {
             if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' &&
                 e.key !== 'Home' && e.key !== 'End') return;
+            // A field in a slide owns its caret keys.
+            if (e.defaultPrevented || e.target.matches?.('input, textarea, select') || e.target.isContentEditable) return;
             const inst = _ownerOf(document.activeElement);
             if (inst) inst._handleKeydown(e);
         });

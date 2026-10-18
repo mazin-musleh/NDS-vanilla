@@ -484,11 +484,11 @@
     function stampIdentifier(input) {
         var original = input.value, clean, ok, msg;
         if (input.classList.contains('nds-national-id')) {
-            clean = original.replace(/[٠-٩]/g, function (c) { return c.charCodeAt(0) - 0x660; }).replace(/\D/g, '');
+            clean = NDS.latinDigits(original).replace(/\D/g, '');
             ok = isNationalId(clean);
             msg = strings.text('invalid_national_id');
         } else if (input.classList.contains('nds-iban')) {
-            clean = original.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            clean = NDS.latinDigits(original).toUpperCase().replace(/[^A-Z0-9]/g, '');
             // Banking apps copy a Saudi IBAN without its SA: a value starting with a digit gets it back.
             if (/^\d/.test(clean)) clean = 'SA' + clean;
             ok = isIban(clean);
@@ -1157,7 +1157,7 @@
         doc.addEventListener('beforeinput', function(e) {
             var c = resolveControl(e.target);
             if (!c || c.input.getAttribute('inputmode') !== 'numeric' || !e.data) return;
-            var latin = e.data.replace(/[٠-٩۰-۹]/g, function (d) { return d.charCodeAt(0) & 15; });
+            var latin = NDS.latinDigits(e.data);
             if (latin === e.data && !/\D/.test(latin)) return;
             e.preventDefault();
             if (/\D/.test(latin)) return;
@@ -1203,7 +1203,7 @@
             if (input.classList.contains('nds-phone')) {
                 var caret = input.selectionStart;
                 var original = input.value;
-                var stripped = original.replace(/\D/g, '').replace(/^0+/, '');
+                var stripped = NDS.latinDigits(original).replace(/\D/g, '').replace(/^0+/, '');
                 if (stripped !== original) {
                     var diff = original.length - stripped.length;
                     NDS.setValue(input, stripped, { change: false });

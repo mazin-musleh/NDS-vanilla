@@ -193,6 +193,8 @@
             const threshold = this.navOffset() + 1;
             let active = null;
             for (const e of this.entries) {
+                // A hidden heading (an inactive tab) has no box and reads top 0.
+                if (!e.target.getClientRects().length) continue;
                 if (e.target.getBoundingClientRect().top <= threshold) {
                     active = e;
                 } else {
@@ -224,7 +226,7 @@
         onClick(e) {
             const link = e.currentTarget;
             const entry = this.entries.find(x => x.link === link);
-            if (!entry) return;
+            if (!entry || !entry.target.getClientRects().length) return;
 
             e.preventDefault();
             this.setActive(entry);

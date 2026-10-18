@@ -210,6 +210,11 @@
         setUIHidden(hidden) {
             this.state.isUIHidden = hidden;
             this.el.overlay.classList.toggle('nds-ipv-ui-hidden', hidden);
+            // Focus on a control the hidden UI took away goes to the button that brings it back.
+            const focused = document.activeElement;
+            if (hidden && this.el.overlay.contains(focused) && !focused.getClientRects().length) {
+                this.el.overlay.querySelector('.nds-ipv-ui-toggle-btn')?.focus();
+            }
         }
 
         toggleUI() {
@@ -234,9 +239,15 @@
         updateNavButtons() {
             const { currentIndex, thumbnails } = this.state;
             const total = thumbnails.length;
+            const focused = document.activeElement;
 
             if (this.el.prevBtn) this.el.prevBtn.disabled = currentIndex === 0;
             if (this.el.nextBtn) this.el.nextBtn.disabled = currentIndex === total - 1;
+            // A disabled button drops focus: the other one, or Close, takes it.
+            if (focused?.disabled && (focused === this.el.prevBtn || focused === this.el.nextBtn)) {
+                const other = focused === this.el.prevBtn ? this.el.nextBtn : this.el.prevBtn;
+                (other && !other.disabled ? other : this.el.closeBtn)?.focus();
+            }
 
             // Hide nav + counter when there's only one image.
             if (this.el.navControls) this.el.navControls.hidden = total <= 1;

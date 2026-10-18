@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 06:10 AM"
+last_edit: "18/10/2026 - 08:27 AM"
 ---
 
 <section id="modal-overview" class="nds-content-section nds-doc-overview">
@@ -218,14 +218,14 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
             <i class="hgi hgi-stroke hgi-focus-point"></i>
             <span class="nds-label">Focus Management</span>
           </span>
-          <p class="nds-item-desc">Focus moves to the first close control when the modal opens, or to the modal when it has none. The modal itself shows no focus ring. The page behind the modal is inert: Tab, a click and a screen reader cannot reach it. Focus goes back to the trigger when it closes.</p>
+          <p class="nds-item-desc">Focus moves to the field with <code class="nds-inline-code lang-html">autofocus</code> when the modal opens, else to the first close control, or to the modal when it has neither. The modal itself shows no focus ring. The page behind the modal is inert: Tab, a click and a screen reader cannot reach it. Focus goes back to the trigger when it closes.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-keyboard"></i>
             <span class="nds-label">Keyboard Control</span>
           </span>
-          <p class="nds-item-desc">Escape closes the modal. When the modal itself has focus, Enter presses the first primary button in <code class="nds-inline-code lang-html">.nds-card-actions</code>.</p>
+          <p class="nds-item-desc">Escape closes the modal, wherever focus is. When the modal itself has focus, Enter presses the first primary button in <code class="nds-inline-code lang-html">.nds-card-actions</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

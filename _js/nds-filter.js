@@ -1121,7 +1121,10 @@
             const autoFillContainer = this.autoFillElement
                 || this.filterContainer.querySelector('.nds-auto-fill');
 
+            // A removed chip takes focus with it: the chip now in its place gets it, else the Filter button.
+            const focusAt = [...chipsContainer.children].findIndex(c => c.contains(document.activeElement));
             chipsContainer.innerHTML = '';
+            this._refocusChips(chipsContainer, focusAt);
 
             // When a [data-filter-query] slot is present, the search keyword is routed
             // into that slot (via updateFilterCount) instead of rendering as a chip here.
@@ -1174,6 +1177,16 @@
                     chipsContainer.appendChild(chip);
                 });
             }
+        }
+
+        _refocusChips(chipsContainer, at) {
+            if (at < 0) return;
+            // After the rebuild: the chips are back in the container by then.
+            queueMicrotask(() => {
+                const chips = chipsContainer.children;
+                const target = chips[Math.min(at, chips.length - 1)] || this._resolveFilterBtn();
+                target?.focus({ preventScroll: true });
+            });
         }
 
         // Whether anything is filtering right now. One derivation for both

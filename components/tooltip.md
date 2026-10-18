@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "11/10/2026 - 03:19 PM"
+last_edit: "18/10/2026 - 08:27 AM"
 ---
 
 <section id="tooltip-overview" class="nds-content-section nds-doc-overview">
@@ -162,7 +162,7 @@ With no `data-tooltip-message`, the root's `title` is the message. Until the scr
             <i class="hgi hgi-stroke hgi-keyboard"></i>
             <span class="nds-label">Dismissal</span>
           </span>
-          <p class="nds-item-desc">A click outside, a page scroll, or Escape closes the balloon. Escape also returns focus to the trigger. Only one tooltip is open at a time.</p>
+          <p class="nds-item-desc">A click outside, a page scroll, or Escape closes the balloon, wherever focus is, so a balloon opened by hover closes too. Escape on the trigger also returns focus to it. Only one tooltip is open at a time.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -238,7 +238,7 @@ With no `data-tooltip-message`, the root's `title` is the message. Until the scr
 |---|---|---|
 | Enter, Space | trigger | Opens or closes the balloon. On a text term, only in click mode |
 | Tab | trigger | In hover mode, focus opens the balloon and leaving closes it |
-| Escape | trigger | Closes the balloon and returns focus to the trigger |
+| Escape | anywhere | Closes the open balloon. On the trigger, also returns focus to it |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties

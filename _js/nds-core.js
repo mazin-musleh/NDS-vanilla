@@ -29,7 +29,7 @@
  *   data + text
  *     NDS.request(url, opts) → Promise<{isJson, data}>     the shared fetch wrapper
  *     NDS.cache.get / .clear (key) · .set (key, value, minutes)   localStorage with expiry
- *     NDS.formatNumber(n, opts) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
+ *     NDS.formatNumber(n, opts) · NDS.latinDigits(s) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
  *     NDS.date.parse(text, opts) · .format(date, opts) · .convert(text, from, to) · .today() · .site
  *     NDS.date.formatFor(el)           the nearest data-date-format (<html> is the site's)
  *     NDS.date.calendarFor(el, fb)     the nearest data-calendar: hijri | gregory (else fb, gregory)
@@ -528,6 +528,9 @@
         catch { return n.toLocaleString('en', opts); }
     };
 
+    // Arabic digits (both Unicode forms) → ASCII by their low nibble: what a field reads from a paste or autofill.
+    NDS.latinDigits = (s) => String(s ?? '').replace(/[٠-٩۰-۹]/g, (c) => c.charCodeAt(0) & 15);
+
     // ── Dates ────────────────────────────────────────────────────────
     // THE date rule: Date Picker, the topbar date and Export parse and print here.
     // A date is a calendar day: a Date at local midnight, never shifted by a timezone.
@@ -643,9 +646,8 @@
                     });
                     regs.set(format, re = { rx: new RegExp('^' + src + '$'), order });
                 }
-                // Arabic digits (both Unicode forms) → ASCII (low nibble), bidi marks Intl writes in Arabic out.
-                const s = String(text ?? '').replace(/[\u200e\u200f\u061c]/g, '')
-                    .replace(/[٠-٩۰-۹]/g, (c) => c.charCodeAt(0) & 15).trim();
+                // Arabic digits to ASCII, and the bidi marks Intl writes in Arabic out.
+                const s = NDS.latinDigits(text).replace(/[\u200e\u200f\u061c]/g, '').trim();
                 const match = s.match(re.rx);
                 if (!match) return null;
                 let y = null, m = 1, d = 1;

@@ -198,7 +198,18 @@
         _navBackdropOwner = owner;
         // `replace` swaps ownership atomically — no tear-down/re-init flicker
         // between sibling flyouts.
-        NDS.Backdrop.show({ zIndex: 999, onClick, replace: replacing });
+        NDS.Backdrop.show({ zIndex: 999, onClick: () => withFocusBack(owner, onClick), replace: replacing });
+    };
+
+    // Escape from inside a menu or the drawer hands focus back to its button, not <body>.
+    // An outside click moved focus off the nav first, so it keeps where it landed.
+    const withFocusBack = (owner, close) => {
+        const from = document.activeElement;
+        const btn = !DOM.nav?.contains(from) ? null
+            : owner === 'navbar' ? DOM.toggler?.querySelector('button[aria-controls="nds-nav-collapse"]')
+            : from.closest('.nds-has-menu')?.querySelector('.nds-nav-link');
+        close();
+        btn?.focus({ preventScroll: true });
     };
 
     const hideNavBackdrop = (owner) => {

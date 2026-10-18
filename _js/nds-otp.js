@@ -115,7 +115,7 @@
         var input = e.target;
         var inputs = getOtpInputs(group);
         var idx = inputs.indexOf(input);
-        var digits = input.value.replace(/\D/g, '');
+        var digits = NDS.latinDigits(input.value).replace(/\D/g, '');
 
         if (digits.length > 1) {
             input.value = '';
@@ -151,7 +151,7 @@
         if (data.length <= 1) return;
         e.preventDefault();
 
-        var digits = data.replace(/\D/g, '');
+        var digits = NDS.latinDigits(data).replace(/\D/g, '');
         if (!digits.length) return;
 
         var last = distributeDigits(group, digits, inputs.indexOf(input));
@@ -173,6 +173,8 @@
         var isRTL = NDS.isRTL;
 
         autoClearStatus(group);
+        // preventDefault still: WebKit reads Backspace in a read-only field as Back.
+        if (input.readOnly && (e.key === 'Backspace' || e.key === 'Delete')) { e.preventDefault(); return; }
 
         switch (e.key) {
             case 'Backspace':
@@ -308,7 +310,7 @@
 
         setValue: function (group, value) {
             clearInputs(group);
-            distributeDigits(group, String(value).replace(/\D/g, ''), 0);
+            distributeDigits(group, NDS.latinDigits(value).replace(/\D/g, ''), 0);
         },
 
         clear: function (group) {

@@ -188,6 +188,8 @@
             originalLabel: labelEl ? labelEl.textContent : '',
             // The end of the cycle must not enable a button the page had disabled.
             wasDisabled: btn.disabled,
+            // Disabling drops focus to <body>; it comes back when the button re-enables.
+            hadFocus: document.activeElement === btn,
             tickTimer: null
         };
 
@@ -232,6 +234,9 @@
         // so a request still in flight keeps its spinner past the countdown.
         NDS.State.remove(btn, 'cooldown');
         if (!ctx.wasDisabled) btn.disabled = false;
+        if (ctx.hadFocus && !btn.disabled && (!document.activeElement || document.activeElement === document.body)) {
+            btn.focus({ preventScroll: true });
+        }
         if (ctx.labelEl) {
             const resend = resendLabel(btn);
             ctx.labelEl.textContent = resend != null ? resend : ctx.originalLabel;

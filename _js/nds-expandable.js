@@ -98,6 +98,9 @@
                 NDS.State.remove(this.expandableContainer, 'expandable', 'expanded');
                 this.expandButton.style.display = 'none';
                 this.isExpanded = false; // Reset expanded state
+                // Content that grows past the clamp again shows a collapsed button.
+                NDS.aria.expanded(this.expandButton, false);
+                strings.set(this.expandButton.querySelector('.nds-label'), 'text', 'show_more');
                 // Remove max-height constraint when content fits
                 this.contentElement.style.maxHeight = 'none';
             }

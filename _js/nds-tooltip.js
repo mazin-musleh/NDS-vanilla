@@ -339,6 +339,9 @@
                 this.close();
             };
             document.addEventListener('click', this._onDocClick);
+            // A hover tooltip has no focus on its trigger; Escape still dismisses it (WCAG 1.4.13).
+            this._onDocKey = (e) => { if (e.key === 'Escape') this.close(); };
+            document.addEventListener('keydown', this._onDocKey);
 
             // Close on scroll: a scroll box around the trigger would leave it detached.
             // NDS.onOutsideScroll ignores scrolls inside the balloon itself.
@@ -360,6 +363,10 @@
             if (this._onDocClick) {
                 document.removeEventListener('click', this._onDocClick);
                 this._onDocClick = null;
+            }
+            if (this._onDocKey) {
+                document.removeEventListener('keydown', this._onDocKey);
+                this._onDocKey = null;
             }
             if (this._offScroll) { this._offScroll(); this._offScroll = null; }
 
