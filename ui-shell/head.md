@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "15/10/2026 - 10:08 AM"
+last_edit: "18/10/2026 - 11:22 AM"
 ---
 
 <section id="head-overview" class="nds-content-section nds-doc-overview">
@@ -333,7 +333,7 @@ A policy that allows no injected scripts can still run NDS: add each bundle's ow
 ### Inline Knobs
 {: .nds-block-title}
 
-Under a strict policy, a knob in a `style` attribute never applies, and the only warning is the browser's CSP error. Search your pages for `style="--`, and move each knob to a class in your own stylesheet:
+Under a strict policy, a knob in a `style` attribute never applies. The browser prints a CSP error, and `NDS.Init.audit()` counts the blocked attributes (`style-blocked`). Search your pages for `style="--`, and move each knob to a class in your own stylesheet:
 
 <script type="text/html" id="head-knob" data-canon data-preview="none">
 <!-- Before: dead under a strict CSP -->

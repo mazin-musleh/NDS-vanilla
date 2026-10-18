@@ -239,6 +239,14 @@
         });
     } });
 
+    // A CSP without 'unsafe-inline' in style-src drops every style attribute, so el.style reads empty;
+    // a style NDS or a framework sets through the CSSOM is never blocked, and its attribute reads back full.
+    rule({ id: 'style-blocked', group: 'page', docs: 'ui-shell/head.html', check(ctx) {
+        const dead = ctx.find('[style*="--"]').filter(el => !el.style.length);
+        if (dead.length) ctx.report(dead[0], `the page's Content Security Policy blocked ${dead.length} style attribute${dead.length > 1 ? 's' : ''} with a knob in ${dead.length > 1 ? 'them' : 'it'}: those knobs never apply.`,
+            'Move each knob to a class in your own stylesheet (Inline Knobs).', undefined, dead.length);
+    } });
+
     // A toolbar part lifted out of .nds-toolbar still lays out as a bar, so nothing else shows the
     // lost wrapper: stacked rows touch, and the bar loses its gap to the content below.
     // Every nds-toolbar-* class is a toolbar part. One finding per lost bar: a part inside a reported one is skipped.

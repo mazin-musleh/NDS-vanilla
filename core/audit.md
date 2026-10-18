@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "15/10/2026 - 01:05 AM"
+last_edit: "18/10/2026 - 11:22 AM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -220,6 +220,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `inline-defer` | page | warn | An inline `<script defer>`: without `src`, `defer` does nothing and the code runs before NDS loads |
 | `img-size` | page | warn | An `<img>` whose `width` and `height` give a different shape from the picture, so it stretches or the layout jumps. It skips images that have not loaded, and an SVG with no size of its own |
 | `native-date-time` | page | warn | A browser date or time field (`type="date"`, `month`, `week`, `datetime-local`, `time`) where the Date Picker or Time Picker belongs |
+| `style-blocked` | page | warn | A knob in a `style` attribute that the page's Content Security Policy blocked, so it never applies. One finding for the page, with the count |
 | `toolbar-part` | structure | warn | An `nds-toolbar-*` part (row, start, end, text) outside a `.nds-toolbar`: it still lays out as a bar, but stacked rows touch and the bar loses its gap. One finding per bar |
 | `toolbar-search-row` | structure | warn | A search box whose line holds more than one other item. The applied-filters and suggestion lines do not count: they take a line of their own |
 | `toolbar-applied` | structure | warn | Applied filters (`.nds-filter-applied`) outside a toolbar, above the search or filter they show, or in the same row as them |
