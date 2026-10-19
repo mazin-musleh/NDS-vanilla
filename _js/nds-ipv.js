@@ -125,8 +125,6 @@
                 nextBtn: document.querySelector('.nds-ipv-next-btn')
             };
 
-            this.el.overlay.setAttribute('data-nds-ipv-initialized', 'true');
-
             this.attachControlEvents();
             this.attachGlobalEvents();
         }
