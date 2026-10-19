@@ -26,6 +26,7 @@
  *     NDS.resolveEl(idOrElOrSel) · NDS.fromTemplate(id) · NDS.flipPosition(trigger, menu) · NDS.place(el, t, l)
  *     NDS.stickyHeaderBottom() · NDS.viewportPadding(el) · NDS.visibleBox() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
  *     NDS.gridLastRow.update(container) · NDS.trapFocus(getEl) · NDS.focusableSel
+ *     NDS.cellText(cell)               a table cell's own text, the value sort and export read
  *   data + text
  *     NDS.request(url, opts) → Promise<{isJson, data}>     the shared fetch wrapper
  *     NDS.writeUrlParams(params|string)   rewrite the URL's ?params in place; path, hash and history.state stay
@@ -1045,6 +1046,21 @@
         const byId = document.getElementById(ref.replace(/^#/, ''));
         if (byId) return byId;
         try { return document.querySelector(ref); } catch { return null; }
+    };
+
+    // ── Cell Text ────────────────────────────────────────────────────
+    // A table cell's own text: its direct text nodes, so a sort button, icon or badge
+    // inside it stays out; textContent when it has none. The one reader Sort, Export
+    // and the column toggle share — in core, so Export (extras) never waits on Tables.
+    // Usage: const label = NDS.cellText(th);
+    NDS.cellText = (cell) => {
+        if (!cell) return '';
+        const own = Array.from(cell.childNodes)
+            .filter(node => node.nodeType === Node.TEXT_NODE)
+            .map(node => node.textContent.trim())
+            .filter(Boolean)
+            .join(' ');
+        return own || cell.textContent.trim();
     };
 
     // ── Template Resolver ────────────────────────────────────────────

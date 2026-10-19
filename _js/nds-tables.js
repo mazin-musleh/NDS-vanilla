@@ -59,18 +59,8 @@
         column: 'Column {n}',
     });
 
-    // Shared cell-text reader. Prefer direct text nodes over textContent so
-    // nested sort buttons / icons / badges don't pollute the value used for
-    // sorting (NDS.Sort accessor) or exporting (NDS.Export tableAdapter).
-    function getCellText(cell) {
-        if (!cell) return '';
-        const textNode = Array.from(cell.childNodes)
-            .filter(node => node.nodeType === Node.TEXT_NODE)
-            .map(node => node.textContent.trim())
-            .filter(Boolean)
-            .join(' ');
-        return textNode || cell.textContent.trim();
-    }
+    // The shared cell-text reader lives in core: Export (extras) reads it before Tables loads.
+    const getCellText = NDS.cellText;
 
     // Sort keys are <th> cell indexes, never positions in the sort-button array:
     // a checkbox or actions column has no button, so the two index spaces diverge.

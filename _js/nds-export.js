@@ -1,6 +1,5 @@
 /* NDS.Export — public surface
- * Rides: nds-tables (the table adapter reads the header and body through getCellText;
- *        soft) · nds-pagination (a paged list still exports every page; soft)
+ * Rides: nds-pagination (a paged list still exports every page; soft)
  *      · nds-filter (rows the filter removed are left out; soft)
  *      · nds-selection (NDS.Selection.isSelected decides the selected scope; init() loads it)
  * Requires:
@@ -58,7 +57,7 @@
  *                    from [data-export-field="key"] descendants per row.
  *
  * Cell value precedence (both adapters):
- *   data-export-value > NDS.Tables.getCellText / textContent
+ *   data-export-value > NDS.cellText / textContent
  */
 (function () {
     'use strict';
@@ -97,7 +96,7 @@
                 // Skip the row-selection checkbox column (auto-detected)
                 if (th.querySelector('input[type="checkbox"].nds-check')) return;
                 const label = th.dataset.exportLabel
-                    || NDS.Tables.getCellText(th)
+                    || NDS.cellText(th)
                     || ('col_' + index);
                 cols.push({ index, key: 'c' + index, label });
             });
@@ -134,7 +133,7 @@
             // cells should hold raw numbers so CSV/Excel can do math on them.
             const override = td.getAttribute('data-export-value');
             if (override !== null) return override;
-            return NDS.Tables.getCellText(td);
+            return NDS.cellText(td);
         }
     };
 
