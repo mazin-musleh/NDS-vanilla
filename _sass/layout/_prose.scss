@@ -78,10 +78,14 @@
     // Ramped, not stepped: a flat gap costs a phone a tenth of its screen on
     // one break. Floor and ceiling are the rungs either side, the slope tops
     // out at the 1200px viewport the typo clamps top out at.
-    :where(h2) { margin-top: clamp(var(--spacing-6xl), 5.33vw, var(--spacing-7xl)); }
-    :where(h3) { margin-top: clamp(var(--spacing-4xl), 3.33vw, var(--spacing-5xl)); }
+    :where(h2) { --_heading-gap: clamp(var(--spacing-6xl), 5.33vw, var(--spacing-7xl)); }
+    :where(h3) { --_heading-gap: clamp(var(--spacing-4xl), 3.33vw, var(--spacing-5xl)); }
     // The reset's 12–15px sits under the 16px sibling gap; 1.5x reads as a break.
-    :where(h4, h5, h6) { margin-top: var(--spacing-3xl); }
+    :where(h4, h5, h6) { --_heading-gap: var(--spacing-3xl); }
+    :where(h2, h3, h4, h5, h6) { margin-top: var(--_heading-gap); }
+
+    // A heading that opens a later .nds-block keeps its gap: the reset's :first-child zero (0,1,1) would win.
+    :where(* + .nds-block) > :where(h2, h3, h4, h5, h6):first-child { margin-top: var(--_heading-gap); }
 
     > :where(*:first-child) {
         margin-block-start: 0;
