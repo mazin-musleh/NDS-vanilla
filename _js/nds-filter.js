@@ -259,11 +259,8 @@
             if (!this.targetContainer) return [];
             // The no-results alert is ours, not an item: it carries .nds-card, and in a table its row is a tr.
             const alertId = `nds-filter-no-results-${this.targetId}`;
-            const items = Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()))
+            return NDS.ownItems(this.targetContainer, this.targetContainer.querySelectorAll(this.getItemSelector()))
                 .filter(el => el.id !== alertId && !el.classList.contains('nds-filter-no-results-row'));
-            if (this.targetContainer.tagName !== 'TBODY') return items;
-            return items.filter(el =>
-                el.parentElement === this.targetContainer && !el.classList.contains('nds-sub'));
         }
 
         getItemSelector() {

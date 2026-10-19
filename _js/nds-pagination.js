@@ -107,16 +107,11 @@
     // THE paged-item set for a container: the .nds-page-item elements it owns,
     // minus anything a filter removed. Every scheduling, counting and records
     // path reads through here, so a sixth caller can't re-derive it differently.
-    // Container shape decides breadth, mirroring nds-filter.js resolveItems: a
-    // grid or list may legally nest its items under a wrapper, but a <tbody>
-    // owns only its direct <tr> children — a sub-row's nested paged table has
-    // its own .nds-paged-content and must not be paged by this nav.
+    // Breadth is NDS.ownItems': a sub-row's nested paged table has its own
+    // .nds-paged-content and must not be paged by this nav.
     function _pagedItems(content) {
-        const items = Array.from(content.querySelectorAll('.nds-page-item'))
+        return NDS.ownItems(content, content.querySelectorAll('.nds-page-item'))
             .filter(item => !item.hasAttribute('data-filtered'));
-        if (content.tagName !== 'TBODY') return items;
-        return items.filter(el =>
-            el.parentElement === content && !el.classList.contains('nds-sub'));
     }
 
     // THE page controls a nav owns. The ellipsis exclusion is load-bearing, not

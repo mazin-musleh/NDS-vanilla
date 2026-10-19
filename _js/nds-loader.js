@@ -607,10 +607,8 @@
             // A negative value would index items[-1] and throw before the reveal.
             const v = parseInt(raw, 10);
             const n = v > 0 ? v : 6;
-            // Pagination's _pagedItems: a tbody counts its own rows only (sub-rows ride their parent).
-            const items = c.tagName === 'TBODY'
-                ? Array.from(c.children).filter(el => el.classList.contains('nds-page-item') && !el.classList.contains('nds-sub'))
-                : c.querySelectorAll('.nds-page-item');
+            // Pagination's own item set: a tbody counts its own rows only (sub-rows ride their parent).
+            const items = NDS.ownItems(c, c.querySelectorAll('.nds-page-item'));
             for (let i = n; i < items.length; i++) items[i].hidden = true;
             c.setAttribute('data-paged-split', '');
         });

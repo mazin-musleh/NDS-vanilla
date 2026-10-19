@@ -52,11 +52,10 @@
     const boxOf = (item) => item.querySelector('input.nds-check');
     const isSelected = (item) => NDS.State.has(item, 'selected') || !!boxOf(item)?.checked;
 
-    // Pagination's rule: a <tbody> owns only its own rows, so a sub row's nested table stays its own list.
+    // A sub row's nested table stays its own list (NDS.ownItems).
     function itemsOf(list) {
         const paged = list.querySelectorAll('.nds-page-item');
-        return Array.from(paged.length ? paged : list.children)
-            .filter(el => !el.classList.contains('nds-sub') && (list.tagName !== 'TBODY' || el.parentElement === list));
+        return NDS.ownItems(list, paged.length ? paged : list.children);
     }
 
     // The list a select-all box drives, or null for an item box.

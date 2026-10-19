@@ -29,6 +29,7 @@
  *     NDS.gridLastRow.update(container) · NDS.trapFocus(getEl) · NDS.focusableSel
  *     NDS.cellText(cell)               a table cell's own text, the value sort and export read
  *     NDS.ownParts(root, sel, ownerSel)   root's own matches, not a nested instance's
+ *     NDS.ownItems(list, items)        a list's own items: never .nds-sub; a <tbody> keeps its direct rows
  *   data + text
  *     NDS.request(url, opts) → Promise<{isJson, data}>     the shared fetch wrapper
  *     NDS.writeUrlParams(params|string)   rewrite the URL's ?params in place; path, hash and history.state stay
@@ -1075,6 +1076,14 @@
         const owner = el.closest(ownerSel);
         return owner === root || !root.contains(owner);
     });
+
+    // ── Own Items ────────────────────────────────────────────────────
+    // A list's own items. A .nds-sub row is never one: it rides its parent row. A <tbody>
+    // owns only its direct rows, so a nested table in a sub row is a list of its own; a grid
+    // or list may nest items under a wrapper, so it keeps them all.
+    // Usage: const rows = NDS.ownItems(tbody, tbody.querySelectorAll('.nds-page-item'));
+    NDS.ownItems = (list, items) => [...items].filter(el => !el.classList.contains('nds-sub')
+        && (list.tagName !== 'TBODY' || el.parentElement === list));
 
     // ── Template Resolver ────────────────────────────────────────────
     // Resolve an id that may still sit inside a <template>. A modal or panel
