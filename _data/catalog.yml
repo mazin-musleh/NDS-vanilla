@@ -46,7 +46,7 @@
 # ── Foundations — values every part reads ─────────────────────────────────
 
 - title: "Icons"
-  description: "The HugeIcons Stroke Rounded font for content plus a curated inline SVG set for components and chrome, with sizing, color, and license guidance"
+  description: "Outline icons from the HugeIcons library, as a font with the full library for page content and a smaller built-in set for interface controls"
   use_when: "How icons work here: the HugeIcons font for page content, plus the curated inline SVG set for components and chrome, with sizing, colour, and licence guidance. Read before adding any icon."
   icon: '<i class="hgi hgi-stroke hgi-svg-01"></i>'
   category: "Foundations"

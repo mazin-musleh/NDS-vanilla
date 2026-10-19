@@ -2,13 +2,13 @@
 layout: page
 title: Icons
 hero_title: Icons - National Design System
-hero_description: "HugeIcons Stroke Rounded in two forms: a font with the whole set for page content, and a small set inside the NDS CSS that components show without waiting for the font."
+hero_description: "Outline icons from the HugeIcons library, as a font with the full library for page content and a smaller built-in set for interface controls."
 breadcrumb: [["Foundations", "/components/?shelf=Foundations"]]
 lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 04:57 PM"
+last_edit: "19/10/2026 - 07:42 AM"
 ---
 
 <section id="icons-overview" class="nds-content-section nds-doc-overview">
@@ -18,16 +18,9 @@ last_edit: "18/10/2026 - 04:57 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-Icons in NDS are HugeIcons Stroke Rounded drawings, plus a few marks drawn for NDS. They come in two forms:
+NDS icons come from [HugeIcons](https://hugeicons.com/icons/stroke-rounded), a free icon library, in its Stroke Rounded style: outline icons drawn with rounded line ends. Each icon takes the size and color of the text around it, so it matches the content it sits beside.
 
-- **Font icons** (`hgi hgi-stroke hgi-{name}`) hold the whole set: {{ site.data.hgi.icons }} icons, build {{ site.data.hgi.build }}. The font comes in small files of 25 icons each, and a page downloads only the files that hold its icons. They are for page content. Find a name on [hugeicons.com](https://hugeicons.com/icons/stroke-rounded). `NDS.Init.audit()` names a font icon on the page that the set lacks.
-- **UI icons** (`nds-icon nds-hgi-{name}`) are {{ site.data.content.icons.hgi | size }} of those drawings, copied into the NDS CSS as SVG. Components and page chrome use them. The UI set also holds the custom marks (`nds-icon nds-icon-{name}`), drawn for NDS because HugeIcons does not have them.
-
-NDS keeps its own SVG copies for three reasons:
-
-1. They load faster. They show as soon as the CSS loads, while the font loads after the page shows. A close button or a menu arrow never waits for the font.
-2. They stay the same when the font updates.
-3. NDS can change a drawing or improve how it looks, such as an arrow that flips with the reading direction.
+Icons come in two forms. **Font icons** give access to the full library of **{{ site.data.hgi.icons }} icons**, for page content such as cards, lists and feature grids. **UI icons** are a smaller set built into NDS, for interface controls such as buttons, menus and navigation. NDS also includes a few marks that HugeIcons does not offer, such as the Saudi riyal symbol and the app store logos.
 
 Pick another component when:
 
@@ -45,7 +38,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-An icon is one `<i>` element. Where it goes in a component, such as before a label or inside a field, is on that component's page.
+An icon is one `<i>` element. A font icon takes any name from the HugeIcons library. A UI icon takes a name from the catalog below. Where an icon goes in a component, such as before a label, is on that component's page.
 
 <script type="text/html" id="icons-content" data-canon data-variants="icons-variants-table" data-demo-size="24px">
 <i class="hgi hgi-stroke hgi-search-01" aria-hidden="true"></i>
@@ -56,10 +49,10 @@ An icon is one `<i>` element. Where it goes in a component, such as before a lab
 
 <div class="nds-block">
 <h3 class="nds-block-title" id="icons-catalog">UI Icon Catalog</h3>
-<p>The {{ site.data.content.icons.hgi | size }} UI icons from HugeIcons. Click a tile to copy its classes. The list is <code class="nds-inline-code lang-js">_data/content/icons.yml</code>.</p>
+<p>Click a tile to copy its markup.</p>
 <div class="nds-grid nds-doc-icons">
 {%- for name in site.data.content.icons.hgi %}
-<button type="button" class="nds-btn nds-subtle nds-copy" data-copy="nds-icon {{ name }}" data-copy-announce="{{ name }} class copied">
+<button type="button" class="nds-btn nds-subtle nds-copy" data-copy='<i class="nds-icon {{ name }}" aria-hidden="true"></i>' data-copy-announce="{{ name }} icon copied">
   <i class="nds-icon {{ name }}" aria-hidden="true"></i>
   <span class="nds-label">{{ name }}</span>
 </button>
@@ -69,10 +62,10 @@ An icon is one `<i>` element. Where it goes in a component, such as before a lab
 
 <div class="nds-block">
 <h3 class="nds-block-title">Custom Marks</h3>
-<p>The {{ site.data.content.icons.custom | size }} marks drawn for NDS: the store logos, the riyal symbol, and marks that components paint, such as the avatar placeholder and the checkbox tick. A mark is not the HugeIcons glyph of the same name: <code class="nds-inline-code lang-html">nds-icon-riyal</code> and <code class="nds-inline-code lang-html">hgi-riyal</code> differ.</p>
+<p>Components paint some of these marks, such as the avatar placeholder and the checkbox tick. A mark is not the HugeIcons glyph of the same name: <code class="nds-inline-code lang-html">nds-icon-riyal</code> and <code class="nds-inline-code lang-html">hgi-riyal</code> differ.</p>
 <div class="nds-grid nds-doc-icons">
 {%- for name in site.data.content.icons.custom %}
-<button type="button" class="nds-btn nds-subtle nds-copy" data-copy="nds-icon {{ name }}" data-copy-announce="{{ name }} class copied">
+<button type="button" class="nds-btn nds-subtle nds-copy" data-copy='<i class="nds-icon {{ name }}" aria-hidden="true"></i>' data-copy-announce="{{ name }} icon copied">
   <i class="nds-icon {{ name }}" aria-hidden="true"></i>
   <span class="nds-label">{{ name }}</span>
 </button>
@@ -98,8 +91,8 @@ Change the glyph name to the one you need: a font name from hugeicons.com, or a 
 | Structure | Font icon (default) | — | — | An icon from the font, for page content: cards, lists, feature grids and text |
 | Structure | UI icon | canon `#icons-ui` | — | An icon from the catalog, for controls and page chrome |
 | Glyph | Search (default) | `.nds-hgi-search-01` | `.nds-icon` | A sample glyph. Write the name you need |
-| Glyph | Next (hint: Points forward: left in Arabic, right in English) | `.nds-hgi-arrow-next-01` | `.nds-icon` | Points forward: left on an Arabic page, right on an English one |
-| Glyph | Back (hint: Points back: right in Arabic, left in English) | `.nds-hgi-arrow-prev-01` | `.nds-icon` | Points back: right on an Arabic page, left on an English one |
+| Glyph | Next (hint: Points forward: left in Arabic, right in English) | `.nds-hgi-arrow-next-01` | `.nds-icon` | The forward arrow. See Logical Arrows |
+| Glyph | Back (hint: Points back: right in Arabic, left in English) | `.nds-hgi-arrow-prev-01` | `.nds-icon` | The back arrow. See Logical Arrows |
 | Size | None (default) | — | — | The size of the text around it |
 | Size | 32px | `font-size: 32px;` | `i` | A larger icon. Set it on a parent to size the icon and its text together |
 | Size | 48px | `font-size: 48px;` | `i` | A large icon on its own, such as in an empty state |
@@ -125,7 +118,7 @@ Change the glyph name to the one you need: a font name from hugeicons.com, or a 
 ### Logical Arrows
 {: .nds-block-title}
 
-The next and back arrows follow the reading direction. `nds-hgi-arrow-next-01` points left on an Arabic page and right on an English one, and `nds-hgi-arrow-prev-01` points the other way. The `-01` arrows are chevrons, and the `-02` arrows have a shaft. The left, right, up and down arrows always point where their name says.
+The next and back arrows follow the reading direction. `nds-hgi-arrow-next-01` points left on an Arabic page and right on an English one, and `nds-hgi-arrow-prev-01` points the other way. The `-01` arrows are chevrons, and the `-02` arrows have a shaft.
 
 ### Glyph Swap
 {: .nds-block-title}
@@ -160,7 +153,21 @@ An `nds-icon` draws the glyph set in `--nds-icon`, and each UI icon has a token,
             <i class="hgi hgi-stroke hgi-rocket-01"></i>
             <span class="nds-label">Off the Critical Path</span>
           </span>
-          <p class="nds-item-desc">The page never waits on an icon to show. The font loads after the page shows, and the UI icon CSS loads right after the main CSS.</p>
+          <p class="nds-item-desc">The page never waits on an icon to show. The UI icon CSS loads right after the main CSS, so a close button or a menu arrow shows with the page. The font loads after the page shows.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-file-download"></i>
+            <span class="nds-label">On-Demand Font Files</span>
+          </span>
+          <p class="nds-item-desc">The font comes in small files of 25 icons each. A page downloads only the files that hold its icons, not the full library.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-pin"></i>
+            <span class="nds-label">Stable UI Set</span>
+          </span>
+          <p class="nds-item-desc">A UI icon is an SVG copy inside the NDS CSS. A font update does not change it, and NDS can adjust a drawing, such as an arrow that flips with the reading direction.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -175,8 +182,7 @@ An `nds-icon` draws the glyph set in `--nds-icon`, and each UI icon has a token,
             <span class="nds-label">Color and Size Inheritance</span>
           </span>
           <p class="nds-item-desc">An icon is a square one em wide, in the current text color. It matches the text around it with no extra class.</p>
-        </div>
-      </div>
+        </div>      </div>
     </div>
   </div>
 </section>
@@ -188,15 +194,14 @@ An `nds-icon` draws the glyph set in `--nds-icon`, and each UI icon has a token,
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Use the font for icons in content: cards, lists, feature grids and text.
-- Use a UI icon in controls and page chrome. Check its name in the catalog first: no other UI names exist. Use the font for any other glyph.
-- A font icon works in a button, but a button's success or error status swaps only a UI icon. Use a UI icon in a button that shows a status.
+- Use the font for a glyph the catalog does not have: no other UI names exist.
+- A font icon works in a button, but the button's success or error status swaps only a UI icon. Use a UI icon in a button that shows a status.
 - Write a UI icon as an `<i>` element. Its CSS matches only `i.nds-icon`, so a `<span>` shows nothing.
 - Copy a name exactly, with its number: `hgi-arrow-left-01`, not `hgi-arrow-left`. A name that does not exist shows nothing.
-- Use the next and back arrows for forward and back. Use the left and right arrows only for a fixed direction, such as a map.
+- Use the next and back arrows for forward and back. Use the left and right arrows only for a fixed direction, such as a map: they always point where their name says.
 - Size an icon with `font-size`, not `width` and `height`. Let its color come from the text around it.
 - Add `aria-hidden="true"` to an icon beside a label. An icon-only control still needs a name for screen readers: its component page shows how.
-- Take new font icons from the free Stroke Rounded style only. The other HugeIcons styles need a HugeIcons Pro license.
+- Take icons from the free Stroke Rounded style only. The solid, bulk, duotone, twotone and sharp styles need a [HugeIcons Pro license](https://hugeicons.com/license-agreement).
 
 </div>
   </div>
@@ -233,15 +238,7 @@ An `nds-icon` draws the glyph set in `--nds-icon`, and each UI icon has a token,
 ### License
 {: .nds-block-title}
 
-The MIT License permits commercial use, changes and redistribution. The HugeIcons notice ships in the NDS `LICENSE` file, so it goes wherever the icons go. Your pages need no credit line.
-
-| Asset | Source | License |
-|---|---|---|
-| Stroke Rounded icon font | HugeIcons free set | MIT, Copyright (c) 2025 Hugeicons |
-| UI icons from HugeIcons | HugeIcons free set | MIT, Copyright (c) 2025 Hugeicons |
-| Marks drawn for NDS | National Design System | MIT, part of NDS |
-| Solid, bulk, duotone, twotone and sharp styles | Not included | A [HugeIcons Pro license](https://hugeicons.com/license-agreement) |
-{: .nds-table .nds-responsive}
+The font and the UI icons from HugeIcons are under the MIT License, Copyright (c) 2025 Hugeicons. The marks drawn for NDS are under the MIT License as part of NDS. The MIT License permits commercial use, changes and redistribution. The HugeIcons notice ships in the NDS `LICENSE` file, so it goes wherever the icons go. Your pages need no credit line.
 
 </div>
   </div>
