@@ -27,6 +27,7 @@
  *     NDS.stickyHeaderBottom() · NDS.viewportPadding(el) · NDS.visibleBox() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
  *     NDS.gridLastRow.update(container) · NDS.trapFocus(getEl) · NDS.focusableSel
  *     NDS.cellText(cell)               a table cell's own text, the value sort and export read
+ *     NDS.ownParts(root, sel, ownerSel)   root's own matches, not a nested instance's
  *   data + text
  *     NDS.request(url, opts) → Promise<{isJson, data}>     the shared fetch wrapper
  *     NDS.writeUrlParams(params|string)   rewrite the URL's ?params in place; path, hash and history.state stay
@@ -1062,6 +1063,17 @@
             .join(' ');
         return own || cell.textContent.trim();
     };
+
+    // ── Own Parts ────────────────────────────────────────────────────
+    // The elements under root matching selector that root's own instance drives: a part
+    // whose nearest ownerSel is root, or sits outside root. A nested instance's parts are
+    // not root's. Never tests root.matches(ownerSel), so a create() on an element without
+    // the class still finds its parts.
+    // Usage: const buttons = NDS.ownParts(container, '.nds-accordion-btn', '.nds-accordion');
+    NDS.ownParts = (root, selector, ownerSel) => [...root.querySelectorAll(selector)].filter(el => {
+        const owner = el.closest(ownerSel);
+        return owner === root || !root.contains(owner);
+    });
 
     // ── Template Resolver ────────────────────────────────────────────
     // Resolve an id that may still sit inside a <template>. A modal or panel

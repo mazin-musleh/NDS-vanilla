@@ -38,14 +38,7 @@
     // so a nested .nds-accordion is legal — and its buttons/collapses match the
     // same selectors. An unguarded walk claims them: the outer controller wires
     // and index-pairs nodes the nested controller already drives.
-    // Anchored on the container only when it IS the root — create() is documented
-    // to take .nds-accordion, but an unfiltered fallback beats returning nothing.
-    const ownParts = (container, selector) => {
-        const all = Array.from(container.querySelectorAll(selector));
-        return container.matches('.nds-accordion')
-            ? all.filter(el => el.closest('.nds-accordion') === container)
-            : all;
-    };
+    const ownParts = (container, selector) => NDS.ownParts(container, selector, '.nds-accordion');
 
     class NDSAccordion {
         constructor(accordionContainer) {

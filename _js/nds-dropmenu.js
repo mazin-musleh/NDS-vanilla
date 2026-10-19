@@ -76,9 +76,9 @@
             // contains month/year sub-dropmenus, and a naive querySelector
             // would grab the first sub-trigger instead of falling back to the
             // wrapper). Same nesting-aware pattern as the menu click handler.
-            this.trigger = this._findOwnDescendant(dropmenuElement, '.nds-dropmenu-trigger')
+            this.trigger = _ownFirstIn(dropmenuElement, '.nds-dropmenu-trigger')
                 || dropmenuElement;
-            this.menu = this._findOwnDescendant(dropmenuElement, '.nds-dropmenu-menu');
+            this.menu = _ownFirstIn(dropmenuElement, '.nds-dropmenu-menu');
             this.isOpen = false;
 
             if (!this.menu) {
@@ -102,20 +102,6 @@
         // UTILITY METHODS
         // ==============================================
 
-        /** Find the first descendant matching `selector` whose nearest
-         *  `.nds-dropmenu` ancestor is `root` — i.e. it isn't inside a
-         *  nested sub-dropmenu. Wrapper-boundary form, for parts that live on
-         *  the WRAPPER: the constructor's trigger/menu lookup (`this.menu`
-         *  doesn't exist yet there) and select mode's hidden input. Everything
-         *  scoped to the MENU uses the menu-boundary readers below. */
-        _findOwnDescendant(root, selector) {
-            const candidates = root.querySelectorAll(selector);
-            for (let i = 0; i < candidates.length; i++) {
-                if (candidates[i].closest('.nds-dropmenu') === root) return candidates[i];
-            }
-            return null;
-        }
-
         // ── Ownership ─────────────────────────────────────────────
         // A menu may host a nested `.nds-dropmenu` whose parts match every
         // selector this component owns (the date-picker's calendar contains
@@ -132,16 +118,12 @@
 
         /** Every own element matching `selector`, in DOM order. */
         _ownItems(selector = '.nds-dropmenu-item') {
-            return Array.from(this.menu.querySelectorAll(selector)).filter(el => this._owns(el));
+            return NDS.ownParts(this.menu, selector, '.nds-dropmenu-menu');
         }
 
         /** First own element matching `selector`, or null. */
         _ownFirst(selector) {
-            const candidates = this.menu.querySelectorAll(selector);
-            for (let i = 0; i < candidates.length; i++) {
-                if (this._owns(candidates[i])) return candidates[i];
-            }
-            return null;
+            return this._ownItems(selector)[0] || null;
         }
 
         /** Check if an element is a text-entry input that consumes arrow/Home/End keys.
@@ -420,7 +402,7 @@
             // Wrapper-boundary lookup: a nested select-mode dropmenu keeps its
             // own hidden input inside our menu, and a bare querySelector would
             // adopt it (renaming the child's field) on a destroy → re-init.
-            let hidden = this._findOwnDescendant(this.dropmenu, 'input[type="hidden"][data-nds-select-value]');
+            let hidden = _ownFirstIn(this.dropmenu, 'input[type="hidden"][data-nds-select-value]');
             if (!hidden) {
                 hidden = document.createElement('input');
                 hidden.type = 'hidden';
@@ -1243,13 +1225,11 @@
     // ITS init (filter, share) or builds into (multiselect) must stay live,
     // and menu content is invisible to search engines until stamped.
 
-    // Module-level twin of _findOwnDescendant (needed before an instance exists).
+    // The first part on the WRAPPER that is this dropmenu's, not a nested sub-dropmenu's:
+    // trigger, menu, select mode's hidden input, and the scan before an instance exists.
+    // Everything scoped to the MENU uses the menu-boundary readers (_ownItems / _ownFirst).
     function _ownFirstIn(root, selector) {
-        const candidates = root.querySelectorAll(selector);
-        for (let i = 0; i < candidates.length; i++) {
-            if (candidates[i].closest('.nds-dropmenu') === root) return candidates[i];
-        }
-        return null;
+        return NDS.ownParts(root, selector, '.nds-dropmenu')[0] || null;
     }
 
     function _ownMenuTemplate(wrapper) {

@@ -326,7 +326,7 @@
     }
 
     // A panel's body is open content, so a nested panel's controls are not this panel's.
-    const ownControls = (panel, sel) => [...panel.querySelectorAll(sel)].filter(el => el.closest(SELECTOR) === panel);
+    const ownControls = (panel, sel) => NDS.ownParts(panel, sel, SELECTOR);
 
     // aria-disabled, not disabled: a disabled button drops the focus the user just clicked into.
     function syncResize(panel) {

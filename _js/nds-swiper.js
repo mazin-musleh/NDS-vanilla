@@ -155,14 +155,7 @@
             // hands us the nested swiper's controls. Slides are direct wrapper
             // children by contract (flex row; setupLoop inserts clones as siblings),
             // so :scope > is exact there; the rest are ownership-checked.
-            // Reject only what a swiper BELOW us owns — never test for `=== container`,
-            // which would strand a create() call on an element carrying no .nds-swiper.
-            const nested = (el) => {
-                const owner = el.closest('.nds-swiper');
-                return !!owner && owner !== container && container.contains(owner);
-            };
-            const own = (sel) =>
-                Array.from(container.querySelectorAll(sel)).find(el => !nested(el)) || null;
+            const own = (sel) => NDS.ownParts(container, sel, '.nds-swiper')[0] || null;
             this.slides = this.wrapper
                 ? Array.from(this.wrapper.querySelectorAll(':scope > .nds-swiper-slide'))
                 : [];

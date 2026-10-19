@@ -55,14 +55,7 @@
     // The two lists would then interleave differently (all outer tabs sit in the
     // tablist; nested panels sit INSIDE an outer panel), desynchronizing the
     // tabs[i] ↔ panels[i] pairing every method here depends on.
-    // Anchored on the container only when it IS the root — create() is documented
-    // to take .nds-tabs, but an unfiltered fallback beats returning nothing.
-    const ownParts = (container, selector) => {
-        const all = Array.from(container.querySelectorAll(selector));
-        return container.matches('.nds-tabs')
-            ? all.filter(el => el.closest('.nds-tabs') === container)
-            : all;
-    };
+    const ownParts = (container, selector) => NDS.ownParts(container, selector, '.nds-tabs');
 
     class NDSTabs {
         constructor(tabsContainer) {
