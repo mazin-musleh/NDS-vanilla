@@ -287,8 +287,7 @@
     function syncUrl(value) {
         const params = new URLSearchParams(location.search);
         if (value) params.set('theme', value); else params.delete('theme');
-        const q = params.toString();
-        history.replaceState(history.state, '', location.pathname + (q ? '?' + q : '') + location.hash);
+        NDS.writeUrlParams(params);
     }
 
     // Reconcile switcher state at init (post-paint): the pre-paint stamp set data-theme,

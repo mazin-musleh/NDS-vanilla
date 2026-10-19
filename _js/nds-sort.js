@@ -471,8 +471,7 @@
                 }
             }
 
-            const qs = params.toString();
-            window.history.replaceState({}, '', window.location.pathname + (qs ? `?${qs}` : '') + window.location.hash);
+            NDS.writeUrlParams(params);
         }
 
         destroy() {

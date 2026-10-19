@@ -995,7 +995,7 @@
 
             setTimeout(() => {
                 target.scrollIntoView({ behavior: _behavior(), block: 'start' });
-                history.replaceState(null, '', `#${hash}`);
+                history.replaceState(history.state, '', `#${hash}`);   // a router keeps its state
             }, delay);
         }, { signal });
 

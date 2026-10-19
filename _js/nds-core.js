@@ -28,6 +28,7 @@
  *     NDS.gridLastRow.update(container) · NDS.trapFocus(getEl) · NDS.focusableSel
  *   data + text
  *     NDS.request(url, opts) → Promise<{isJson, data}>     the shared fetch wrapper
+ *     NDS.writeUrlParams(params|string)   rewrite the URL's ?params in place; path, hash and history.state stay
  *     NDS.cache.get / .clear (key) · .set (key, value, minutes)   localStorage with expiry
  *     NDS.formatNumber(n, opts) · NDS.latinDigits(s) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
  *     NDS.date                         dates in Gregorian and Hijri: _js/nds-date.js
@@ -1112,6 +1113,17 @@
         } catch {
             return null;
         }
+    };
+
+    // ── URL params ───────────────────────────────────────────────────
+    // Rewrites the URL's ?params in place: the path, the hash and history.state all stay.
+    // A hash-routed app keeps its route in the hash, a router (React, Vue) its own state
+    // in history.state, and a filter or page change must not wipe either. A string is
+    // written as is (a leading ? is optional), so a snapshot is restored unre-encoded.
+    // Usage: const p = new URLSearchParams(location.search); p.set('page', 2); NDS.writeUrlParams(p);
+    NDS.writeUrlParams = (params) => {
+        const qs = String(params).replace(/^\?/, '');
+        history.replaceState(history.state, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
     };
 
     // ── Sticky Header Bottom ─────────────────────────────────────────

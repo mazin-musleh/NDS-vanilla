@@ -240,7 +240,7 @@
             this.box = this.findBox();
             const top = entry.target.getBoundingClientRect().top - this.navOffset();
             (this.box || window).scrollBy({ top, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
-            history.replaceState(null, '', link.getAttribute('href'));
+            history.replaceState(history.state, '', link.getAttribute('href'));   // a router keeps its state
         }
 
         destroy() {

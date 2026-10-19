@@ -717,9 +717,7 @@
          * applyUrlParams only sets what the params contain, it never unsets.
          */
         _rollbackApplied(appliedUrl) {
-            window.history.replaceState({}, '', (appliedUrl
-                ? `${window.location.pathname}${appliedUrl}`
-                : window.location.pathname) + window.location.hash);
+            NDS.writeUrlParams(appliedUrl || '');
 
             this._mirrorSearchInputs('');
             this.criteria.search = '';
@@ -918,13 +916,7 @@
                 }
             }
 
-            // Keep the hash: a hash-routed app stores its route there, and rebuilding
-            // the URL from pathname+search alone drops it on every filter change.
-            const newUrl = (params.toString()
-                ? `${window.location.pathname}?${params.toString()}`
-                : window.location.pathname) + window.location.hash;
-
-            window.history.replaceState({}, '', newUrl);
+            NDS.writeUrlParams(params);
         }
 
         setupActionButtons() {

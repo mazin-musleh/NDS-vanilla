@@ -940,9 +940,7 @@
         const params = new URLSearchParams(window.location.search);
         if (value != null) params.set(name, value);
         else params.delete(name);
-        const qs = params.toString();
-        // Keep the hash — a hash-routed app stores its route there.
-        window.history.replaceState({}, '', (qs ? `${window.location.pathname}?${qs}` : window.location.pathname) + window.location.hash);
+        NDS.writeUrlParams(params);
     }
 
     // Every manual page move ends here: the URL param, and on a data-driven nav
