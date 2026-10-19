@@ -38,7 +38,6 @@
 
 (function () {
     'use strict';
-    if (!window.NDS) window.NDS = {};
 
     var SENTINEL = 'data-nds-slider-initialized';
     var STEP_KEYS = /^(Arrow(Up|Down|Left|Right)|Home|End|Page(Up|Down))$/;

@@ -555,7 +555,8 @@
         }
     }
 
-    // Global tab change handler (single listener for all responsive tables)
+    // Global tab change handler (single listener for all responsive tables).
+    // On window, not a module let: a second copy of the bundle must not add a second listener.
     if (!window.ndsTabChangeHandlerInitialized) {
         window.ndsTabChangeHandlerInitialized = true;
         document.addEventListener('nds:tab:changed', (e) => {
@@ -856,6 +857,7 @@
     // Delegated on document: covers content injected later, needs no per-table
     // wiring, and is independent of the sort/checkbox-gated NDSTables instance —
     // a plain table with no sorting or selection can still carry sub-rows.
+    // On window for the same reason as ndsTabChangeHandlerInitialized above.
     if (!window.ndsTableSubHandlerInitialized) {
         window.ndsTableSubHandlerInitialized = true;
 

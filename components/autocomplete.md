@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 08:38 AM"
+last_edit: "19/10/2026 - 04:38 PM"
 ---
 
 <section id="autocomplete-overview" class="nds-content-section nds-doc-overview">
@@ -253,7 +253,7 @@ The response is a JSON array of objects, or an object that holds the array. Each
 |---|---|
 | `NDS.Autocomplete.init()` | Starts the page listener, once. The loader calls it |
 | `NDS.Autocomplete.reinit()` | The same as `init()` |
-| `NDS.Autocomplete.create(container, options)` | Starts one field now: pass its `.nds-form-container`. Use it to pass options, or for a field that code searches before the user focuses it. Call it before the first focus: on a field that has already started, it returns an instance that does nothing |
+| `NDS.Autocomplete.create(container, options)` | Starts one field now: pass its `.nds-form-container`. Use it to pass options, or for a field that code searches before the user focuses it. Returns the running instance when the field has already started, and `null` when it has no input. Call it before the first focus: a started field ignores the options |
 | `instance.destroy()` | Removes the menu, the listeners and the hidden input. The field starts again on its next focus |
 {: .nds-table .nds-responsive}
 

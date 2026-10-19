@@ -6,7 +6,8 @@
  *   .nds-toc[data-toc-source] needs .nds-drawer-list — the list is not built
  * Methods:
  *   NDS.Toc.init() / .reinit()   scan + initialize .nds-toc
- *   NDS.Toc.create(el)           instance one table of contents
+ *   NDS.Toc.create(el)           instance one table of contents — null when no link has a
+ *                                target; the live one if started
  *   NDS.Toc.destroy(el)          tear one down — the NDS.Init.destroy entry point
  *   instance.update()            re-pick the active entry now
  *   instance.destroy()
@@ -246,6 +247,8 @@
         destroy() {
             this.abortController?.abort();
             this.toc.removeAttribute('data-nds-toc-initialized');
+            // A surviving backref would hand create() this dead instance.
+            if (this.toc._ndsToc === this) delete this.toc._ndsToc;
         }
     }
 
@@ -262,17 +265,16 @@
     NDS.Toc = {
         init: initializeComponents,
         reinit: initializeComponents,
-        create: (el) => { const inst = new NDSToc(el); if (inst.valid) el._ndsToc = inst; return inst; },
+        create: (el) => {
+            if (el._ndsToc) return el._ndsToc;
+            const inst = new NDSToc(el);
+            if (!inst.valid) return null;
+            el._ndsToc = inst;
+            return inst;
+        },
         // NDS.Init.destroy's second shape — the underscore expando is invisible to the
-        // backref walk, so the registry opts in with destroyEach. Drops the expando too:
-        // destroy() leaves the instance unusable, and a surviving backref hands the next
-        // reader a dead one.
-        destroy: (el) => {
-            const inst = el?._ndsToc;
-            if (!inst) return;
-            inst.destroy();
-            delete el._ndsToc;
-        }
+        // backref walk, so the registry opts in with destroyEach.
+        destroy: (el) => el?._ndsToc?.destroy()
     };
 
 })();

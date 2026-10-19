@@ -597,9 +597,9 @@
         // On document only while open or opening: a closed menu has nothing to close, and a
         // page with a hundred menus ran a hundred listeners on every click and keypress.
         _listenDocument() {
-            if (this._docAC) return;
-            this._docAC = new AbortController();
-            const { signal } = this._docAC;
+            if (this.documentAbortController) return;
+            this.documentAbortController = new AbortController();
+            const { signal } = this.documentAbortController;
             // Outside click, at CAPTURE: another menu's trigger stops its click at bubble,
             // and that click must still close this one.
             document.addEventListener('click', (e) => {
@@ -620,8 +620,8 @@
         }
 
         _unlistenDocument() {
-            this._docAC?.abort();
-            this._docAC = null;
+            this.documentAbortController?.abort();
+            this.documentAbortController = null;
         }
 
         // ==============================================
@@ -855,7 +855,7 @@
             const reposition = NDS.rafThrottle(() => this.trackPosition());
             const fixed = !this.menu.showPopover;
             const onScroll = (e) => { if (e.target === document ? fixed : e.target.contains?.(this.trigger)) reposition(); };
-            const { signal } = this._docAC;   // close() aborts it with the other document listeners
+            const { signal } = this.documentAbortController;   // close() aborts it with the other document listeners
             document.addEventListener('scroll', onScroll, { capture: true, passive: true, signal });
             // Close when the trigger leaves view (its scroll box hid it). A page scroll carries the
             // menu over the sticky nav, as the top layer paints it: closing there threw away a Filter's ticks.

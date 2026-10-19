@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 10:25 PM"
+last_edit: "19/10/2026 - 04:38 PM"
 ---
 
 <section id="expandable-overview" class="nds-content-section nds-doc-overview">
@@ -247,7 +247,7 @@ The instance is on the box as `el.ndsExpandable`. It is there once the component
 | `NDS.Expandable.init()` | Starts every `.nds-expandable` on the page that has no instance. The loader calls it |
 | `NDS.Expandable.reinit()` | The same as `init()`. Call it after you add boxes to the page |
 | `NDS.Expandable.recheckHeights()` | Measures every box again. Call it after you change `--max-height` |
-| `NDS.Expandable.create(el)` | Starts one box, or returns its instance |
+| `NDS.Expandable.create(el)` | Starts one box and returns its instance. Returns the running one when the box already has one, and `null` when it has no `.nds-expandable-content` |
 | `instance.expandContent()` | Opens the box |
 | `instance.collapseContent()` | Closes the box |
 | `instance.toggleContent()` | Opens a closed box and closes an open one |

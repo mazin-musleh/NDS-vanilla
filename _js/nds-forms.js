@@ -1712,11 +1712,11 @@
         var applyOnFill = container.hasAttribute('data-autofill-apply');
 
         container.querySelectorAll('.nds-item').forEach(function(item) {
-            if (item._autoFillHandler) {
-                item.removeEventListener('click', item._autoFillHandler);
-            }
+            // Re-init replaces the listener: abort the previous one.
+            if (item._ndsAutoFillAC) item._ndsAutoFillAC.abort();
+            item._ndsAutoFillAC = new AbortController();
 
-            item._autoFillHandler = function(e) {
+            item.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -1739,9 +1739,7 @@
                         targetInput.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
                     }
                 }
-            };
-
-            item.addEventListener('click', item._autoFillHandler);
+            }, { signal: item._ndsAutoFillAC.signal });
         });
     }
 

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 07:43 PM"
+last_edit: "19/10/2026 - 04:38 PM"
 ---
 
 <section id="toc-overview" class="nds-content-section nds-doc-overview">
@@ -283,7 +283,7 @@ Without `data-toc-source`, the script reads the links you write. Pick it for som
 | Method | Effect |
 |---|---|
 | `NDS.Toc.init()` | Starts every TOC on the page that has not started yet. `reinit()` is the same |
-| `NDS.Toc.create(toc)` | Starts one TOC and returns its instance |
+| `NDS.Toc.create(toc)` | Starts one TOC and returns its instance. Returns the running one when `toc` already has one, and `null` when no link points at an element on the page |
 | `NDS.Toc.destroy(toc)` | Removes the listeners. The active link keeps its state. `NDS.Init.destroy()` calls it for every TOC in the container it releases |
 | `instance.update()` | Picks the active link again from the scroll position. Call it after the layout above the headings changes |
 {: .nds-table .nds-responsive}

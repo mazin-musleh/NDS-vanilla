@@ -38,7 +38,7 @@
 (function () {
     'use strict';
 
-    var _initDone = false;
+    var _documentWired = false;
 
     // Render a pre-selected value's display label. The hidden `.nds-select-value`
     // is the source of truth (it submits); the visible `.nds-select-input` is a
@@ -239,8 +239,8 @@
 
     // A page with no select at load never runs init(), so create() wires these too.
     function wireDocument() {
-        if (_initDone) return;
-        _initDone = true;
+        if (_documentWired) return;
+        _documentWired = true;
         document.addEventListener('focusin', onFocusIn);
         document.addEventListener('click', onOptionClick);
         document.addEventListener('reset', onReset);

@@ -4,7 +4,8 @@
  *      · nds-empty (the "no results" placeholder; soft — the menu just closes without it)
  * Methods:
  *   NDS.Autocomplete.init() / .reinit()      arm the delegated focusin builder
- *   NDS.Autocomplete.create(el, options)     build one field now; options {filter, renderItem}
+ *   NDS.Autocomplete.create(el, options)     build one field now; options {filter, renderItem}.
+ *                                            Null when the markup is incomplete; the live one if started
  * Events (bubble from the .nds-form-container):
  *   nds:autocomplete:fetch    detail {query, results} — after every result set is rendered
  *   nds:autocomplete:select   detail {item, text} — a suggestion was picked
@@ -652,7 +653,7 @@
         }
 
         destroy() {
-            // create() on an incomplete field hands back an instance that owns nothing.
+            // An incomplete field's constructor bails before it wires anything.
             if (!this.abortController) return;
             this.abortController.abort();
             this.fetchAbortController?.abort();
@@ -715,7 +716,13 @@
         reinit: initializeAutocompletes,
         // Programmatic construction. Pass { filter, renderItem } to override
         // the default substring match and dropdown-row renderer.
-        create: function (element, options) { return (element && element.ndsAutocomplete) || new NDSAutocomplete(element, options); }
+        create: function (element, options) {
+            if (!element) return null;
+            if (element.ndsAutocomplete) return element.ndsAutocomplete;
+            // The constructor sets the backref only once the field is complete.
+            var inst = new NDSAutocomplete(element, options);
+            return element.ndsAutocomplete === inst ? inst : null;
+        }
     };
 
 })();

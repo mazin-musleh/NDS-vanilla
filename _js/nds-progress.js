@@ -55,7 +55,7 @@
         const max = parseFloat(el.dataset.max);
         const outOf = !isNaN(num) && !isNaN(max) && max > 0;
         const top = outOf ? max : 100;
-        const now = el.dataset.status === 'success' ? top
+        const now = NDS.Status.get(el) === 'success' ? top
             : Math.max(0, outOf ? Math.min(num, max) : Math.min(parseFloat(el.dataset.value), 100));
         if (isNaN(now)) return;
         if (!el.hasAttribute('role')) el.setAttribute('role', 'progressbar');

@@ -303,21 +303,19 @@
             // Sync top offset to the sticky chrome's bottom edge. A topbar counts as
             // much as the nav and either can be absent, so the measurement is core's —
             // it takes whichever sits lower and clamps a scrolled-away one at 0.
-            if (position.startsWith('top') && !placeholder._scrollSync
+            if (position.startsWith('top') && !placeholder._ndsAlertAC
                 && document.querySelector('.nds-main-nav, .nds-topbar')) {
                 const update = () => placeholder.style.setProperty('--_toast-top', NDS.stickyHeaderBottom() + 'px');
                 update();
-                const sync = () => {
+                const ac = placeholder._ndsAlertAC = new AbortController();
+                window.addEventListener('scroll', NDS.rafThrottle(() => {
                     if (!placeholder.isConnected) {
-                        window.removeEventListener('scroll', throttledSync);
-                        placeholder._scrollSync = null;
+                        ac.abort();
+                        placeholder._ndsAlertAC = null;
                         return;
                     }
                     if (window.scrollY < 200) update();
-                };
-                const throttledSync = NDS.rafThrottle(sync);
-                window.addEventListener('scroll', throttledSync, { passive: true });
-                placeholder._scrollSync = throttledSync;
+                }), { passive: true, signal: ac.signal });
             }
 
             return placeholder;
@@ -339,10 +337,8 @@
                     NDS.onTransitionEnd(el, () => {
                         el.remove();
                         if (placeholder && !placeholder.children.length) {
-                            if (placeholder._scrollSync) {
-                                window.removeEventListener('scroll', placeholder._scrollSync);
-                                placeholder._scrollSync = null;
-                            }
+                            placeholder._ndsAlertAC?.abort();
+                            placeholder._ndsAlertAC = null;
                             placeholder.remove();
                         }
                     });

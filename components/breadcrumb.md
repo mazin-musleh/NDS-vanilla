@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "19/10/2026 - 04:38 PM"
 ---
 
 <section id="breadcrumb-overview" class="nds-content-section nds-doc-overview">
@@ -194,7 +194,7 @@ The instance is on the `.nds-breadcrumb-nav` as `ndsBreadcrumb`. It is there onc
 |---|---|
 | `NDS.Breadcrumb.init()` | Sets up every `.nds-breadcrumb-nav` that is not set up yet, and stores its instance in `nav.ndsBreadcrumb`. It runs on page load |
 | `NDS.Breadcrumb.reinit()` | The same as `init()`. Call it after you add a breadcrumb to the page |
-| `NDS.Breadcrumb.create(nav)` | Sets up one breadcrumb and returns its instance |
+| `NDS.Breadcrumb.create(nav)` | Sets up one breadcrumb and returns its instance. Returns the running one when `nav` already has one, and `null` when it has no items |
 | `instance.destroy()` | Removes the More menu and puts every level back |
 {: .nds-table .nds-responsive}
 

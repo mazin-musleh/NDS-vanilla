@@ -48,7 +48,6 @@
     // Last count per list: a DOM-driven resync fires the event only when the count moved.
     const _counts = new WeakMap();
 
-    const resolve = (list) => typeof list === 'string' ? document.getElementById(list) : list;
     // An item's own box is its FIRST input.nds-check, so a checklist inside a card never selects the card.
     const boxOf = (item) => item.querySelector('input.nds-check');
     const isSelected = (item) => NDS.State.has(item, 'selected') || !!boxOf(item)?.checked;
@@ -134,7 +133,7 @@
     }
 
     function recount(list) {
-        list = resolve(list);
+        list = NDS.resolveEl(list);
         if (!list) return;
         mirror(itemsOf(list));
         sync(list, false);
@@ -145,7 +144,7 @@
     }
 
     function selectAll(list, on = true, scope) {
-        list = resolve(list);
+        list = NDS.resolveEl(list);
         if (!list) return;
         const shown = scopeOf(itemsOf(list), scope === 'page');
         shown.forEach(item => { const box = boxOf(item); if (box) box.checked = on; });
@@ -155,7 +154,7 @@
 
     // Every item, filter-hidden and box-less ones too: the reset after a bulk action.
     function clear(list) {
-        list = resolve(list);
+        list = NDS.resolveEl(list);
         if (!list) return;
         itemsOf(list).forEach(item => {
             const box = boxOf(item);
@@ -166,7 +165,7 @@
     }
 
     function selected(list) {
-        list = resolve(list);
+        list = NDS.resolveEl(list);
         return list ? itemsOf(list).filter(isSelected) : [];
     }
 
@@ -189,7 +188,7 @@
     function onClick(e) {
         const btn = e.target instanceof Element && e.target.closest('[data-selection-all], [data-selection-clear]');
         const wrap = btn?.closest('[data-selection-target]');
-        const list = wrap && resolve(wrap.getAttribute('data-selection-target'));
+        const list = wrap && NDS.resolveEl(wrap.getAttribute('data-selection-target'));
         if (!list) return;
         if (btn.hasAttribute('data-selection-all')) selectAll(list);
         else clear(list);

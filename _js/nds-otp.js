@@ -33,7 +33,7 @@
     // and onDOMRemove push unconditionally with no (selector, fn) dedup in core.
     // The single init at page load wires the subscribers; subsequent .nds-otp-group
     // mutations are already handled by those long-lived subscribers.
-    var _initDone = false;
+    var _subscribed = false;
 
     var strings = NDS.i18n.strings('otp', { digit: 'Digit {n} of {total}' });
     // The English label with any numbers: a box copied from a shorter code still counts as unlabelled.
@@ -238,14 +238,14 @@
     // ==============================================
 
     function initOtpGroup(group) {
-        if (!group || group._ndsOtpInit) return;
+        if (!group || group.hasAttribute('data-nds-otp-initialized')) return;
 
         // Guard before stamping — a group whose inputs render late must stay
         // eligible for the onDOMAdd re-arm, and the AC must not leak unaborted.
         var inputs = getOtpInputs(group);
         if (!inputs.length) return;
 
-        group._ndsOtpInit = true;
+        group.setAttribute('data-nds-otp-initialized', '');
         group._ndsOtpAC = new AbortController();
         var signal = group._ndsOtpAC.signal;
 
@@ -280,8 +280,8 @@
     // ==============================================
 
     function init() {
-        if (_initDone) return;
-        _initDone = true;
+        if (_subscribed) return;
+        _subscribed = true;
         document.querySelectorAll('.nds-otp-group').forEach(initOtpGroup);
 
         NDS.onDOMAdd('.nds-otp-group', function (nodes) {
@@ -294,7 +294,7 @@
                     group._ndsOtpAC.abort();
                     group._ndsOtpAC = null;
                 }
-                group._ndsOtpInit = false;
+                group.removeAttribute('data-nds-otp-initialized');
             });
         });
     }
