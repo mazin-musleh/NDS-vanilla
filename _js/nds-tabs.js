@@ -64,7 +64,6 @@
             this.tabList = tabsContainer.querySelector('.nds-tab-list');
             this.tabs = ownParts(tabsContainer, '.nds-tab:not(.nds-show-more)');
             this.panels = ownParts(tabsContainer, '.nds-tab-panel');
-            this.dragState = { active: false, startX: 0, scrollLeft: 0, hasDragged: false };
 
             if (!this.tabList || this.tabs.length === 0 || this.panels.length === 0) {
                 console.warn('NDS Tabs: Invalid tab structure found');
@@ -133,48 +132,7 @@
         setupWheelAndDrag() {
             if (this.isVertical) return;
 
-            // Mouse wheel: convert vertical wheel delta to native smooth horizontal
-            // scroll (successive deltas compose; no frame-rate assumptions).
-            this.tabList.addEventListener('wheel', (e) => {
-                if (!this.needsScroll()) return;
-                if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
-
-                e.preventDefault();
-                this.tabList.scrollBy({ left: e.deltaY * (NDS.isRTL ? -0.8 : 0.8), behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
-            }, { passive: false, signal: this.abortController.signal });
-
-            // Drag scroll.
-            const handleMouseMove = (e) => {
-                e.preventDefault();
-                if (Math.abs(e.pageX - this.dragState.startX) > 3) {
-                    this.dragState.hasDragged = true;
-                }
-                this.tabList.scrollLeft = this.dragState.scrollLeft - (e.pageX - this.dragState.startX);
-            };
-
-            const handleMouseUp = () => {
-                this.dragState.active = false;
-                document.removeEventListener('mousemove', handleMouseMove);
-                document.removeEventListener('mouseup', handleMouseUp);
-                // Inline, so it outranks _tabs.scss — restore to the mode the user asked for.
-                Object.assign(this.tabList.style, { cursor: '', userSelect: '', scrollBehavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
-                if (this.dragState.hasDragged) {
-                    setTimeout(() => { this.dragState.hasDragged = false; }, 100);
-                }
-            };
-
-            this.tabList.addEventListener('mousedown', (e) => {
-                if (!this.needsScroll()) return;
-
-                this.dragState.active = true;
-                this.dragState.startX = e.pageX;
-                this.dragState.scrollLeft = this.tabList.scrollLeft;
-                this.dragState.hasDragged = false;
-
-                Object.assign(this.tabList.style, { cursor: 'grabbing', userSelect: 'none', scrollBehavior: 'auto' });
-                document.addEventListener('mousemove', handleMouseMove, { signal: this.abortController.signal });
-                document.addEventListener('mouseup', handleMouseUp, { signal: this.abortController.signal });
-            }, { signal: this.abortController.signal });
+            NDS.dragScroll(this.tabList, { canScroll: () => this.needsScroll(), signal: this.abortController.signal });
         }
 
         // ==============================================
@@ -184,15 +142,6 @@
         setupEventListeners() {
             this.tabs.forEach((tab, index) => {
                 tab.addEventListener('click', (e) => {
-                    // Drag guard: if the user was dragging, swallow the click so it
-                    // doesn't flip the active tab. stopImmediatePropagation blocks any
-                    // later same-target listeners; stopPropagation alone wouldn't.
-                    if (this.dragState.hasDragged) {
-                        e.preventDefault();
-                        e.stopImmediatePropagation();
-                        return;
-                    }
-
                     if (tab.tagName.toLowerCase() === 'a' && tab.getAttribute('href')) {
                         e.preventDefault();
                     }

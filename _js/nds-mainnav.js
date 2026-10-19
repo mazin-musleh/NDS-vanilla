@@ -830,48 +830,6 @@
         }
     }
 
-    function _bindWheelConversion(signal) {
-        // Inline, so it outranks any stylesheet — it must honour reduced motion here
-        // or every scrollTo below silently animates through its 'auto' branch.
-        DOM.primary.style.scrollBehavior = _behavior();
-
-        DOM.primary.addEventListener('wheel', (e) => {
-            if (e.target.closest('.nds-nav-menu') || state.isMinimal ||
-                Math.abs(e.deltaX) >= Math.abs(e.deltaY) ||
-                !hasState(DOM.primary, 'has-more')) return;
-
-            e.preventDefault();
-            // Native smooth scroll — successive deltas compose; no frame-rate assumptions.
-            DOM.primary.scrollBy({ left: e.deltaY * (NDS.isRTL ? -0.8 : 0.8), behavior: _behavior() });
-        }, { passive: false, signal });
-    }
-
-    function _bindDragScroll(signal) {
-        let drag = { active: false, startX: 0, scrollLeft: 0 };
-
-        const dragUp = () => {
-            drag.active = false;
-            document.removeEventListener('mousemove', dragMove);
-            document.removeEventListener('mouseup', dragUp);
-            Object.assign(DOM.primary.style, { cursor: '', userSelect: '', scrollBehavior: _behavior() });
-        };
-
-        const dragMove = (e) => {
-            if (state.isMinimal) { dragUp(); return; }
-            e.preventDefault();
-            DOM.primary.scrollLeft = drag.scrollLeft - (e.pageX - drag.startX);
-        };
-
-        DOM.primary.addEventListener('mousedown', (e) => {
-            if (state.isMinimal || !hasState(DOM.primary, 'has-more')) return;
-            drag = { active: true, startX: e.pageX, scrollLeft: DOM.primary.scrollLeft };
-            Object.assign(DOM.primary.style, { cursor: 'grabbing', userSelect: 'none', scrollBehavior: 'auto' });
-            e.preventDefault();
-            document.addEventListener('mousemove', dragMove, { signal });
-            document.addEventListener('mouseup', dragUp, { signal });
-        }, { signal });
-    }
-
     let _interactionsAbortController = null;
     function setupInteractions() {
         if (!DOM.primary) return;
@@ -884,8 +842,14 @@
 
         _bindShowMore(signal);
         _bindScrollTracking(signal);
-        _bindWheelConversion(signal);
-        _bindDragScroll(signal);
+        // Inline, so it outranks any stylesheet — it must honour reduced motion here
+        // or every scrollTo below silently animates through its 'auto' branch.
+        DOM.primary.style.scrollBehavior = _behavior();
+        // Not in minimal mode, only while the bar overflows, never from inside a dropdown menu.
+        NDS.dragScroll(DOM.primary, {
+            canScroll: (e) => !state.isMinimal && hasState(DOM.primary, 'has-more') && !e.target.closest('.nds-nav-menu'),
+            signal,
+        });
     }
 
     // ==============================================

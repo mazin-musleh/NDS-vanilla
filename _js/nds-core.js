@@ -25,6 +25,7 @@
  *     NDS.topLayer(el, on)             show or hide a [popover] in the top layer, in place
  *     NDS.resolveEl(idOrElOrSel) · NDS.fromTemplate(id) · NDS.flipPosition(trigger, menu) · NDS.place(el, t, l)
  *     NDS.stickyHeaderBottom() · NDS.viewportPadding(el) · NDS.visibleBox() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
+ *     NDS.dragScroll(el, { canScroll, signal })   wheel + mouse-drag sideways scroll; a drag swallows its click
  *     NDS.gridLastRow.update(container) · NDS.trapFocus(getEl) · NDS.focusableSel
  *     NDS.cellText(cell)               a table cell's own text, the value sort and export read
  *     NDS.ownParts(root, sel, ownerSel)   root's own matches, not a nested instance's
@@ -1203,6 +1204,43 @@
             top: targetTop + window.pageYOffset - navHeight - offset,
             behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth',
         });
+    };
+
+    // ── Drag Scroll ──────────────────────────────────────────────────
+    // A sideways scroller the mouse can work: the wheel scrolls it, a drag scrolls
+    // it, and a drag past 3px swallows the click it ends with, so it never follows
+    // a link or picks a tab. canScroll(e) gates the wheel and the drag start.
+    // Usage: NDS.dragScroll(list, { canScroll: () => list.scrollWidth > list.clientWidth, signal });
+    NDS.dragScroll = (el, { canScroll = () => true, signal } = {}) => {
+        const behavior = () => NDS.prefersReducedMotion ? 'auto' : 'smooth';
+        el.addEventListener('wheel', (e) => {
+            if (!canScroll(e) || Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
+            e.preventDefault();
+            el.scrollBy({ left: e.deltaY * (NDS.isRTL ? -0.8 : 0.8), behavior: behavior() });
+        }, { passive: false, signal });
+        // A link's native drag-and-drop would steal the gesture — only while el scrolls.
+        el.addEventListener('dragstart', (e) => { if (canScroll(e)) e.preventDefault(); }, { signal });
+        el.addEventListener('mousedown', (e) => {
+            if (e.button !== 0 || !canScroll(e)) return;
+            const startX = e.pageX, startLeft = el.scrollLeft;
+            let dragged = false;
+            const drag = new AbortController();
+            Object.assign(el.style, { cursor: 'grabbing', userSelect: 'none', scrollBehavior: 'auto' });
+            document.addEventListener('mousemove', (ev) => {
+                if (Math.abs(ev.pageX - startX) > 3) dragged = true;
+                el.scrollLeft = startLeft - (ev.pageX - startX);
+            }, { signal: drag.signal });
+            document.addEventListener('mouseup', () => {
+                drag.abort();
+                Object.assign(el.style, { cursor: '', userSelect: '', scrollBehavior: behavior() });
+                if (!dragged) return;
+                // Capture on el runs before any target inside it; a click that lands outside never comes.
+                const guard = new AbortController();
+                el.addEventListener('click', (ev) => { ev.preventDefault(); ev.stopImmediatePropagation(); },
+                    { capture: true, once: true, signal: guard.signal });
+                setTimeout(() => guard.abort(), 100);
+            }, { signal: drag.signal });
+        }, { signal });
     };
 
     // ── Transition Speed ─────────────────────────────────────────────
