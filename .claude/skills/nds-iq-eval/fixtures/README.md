@@ -45,8 +45,8 @@ README, where no runner reads it.
     entry and the stub together; a catalogued entry with no doc file is the same
     fake failure as a missing folder.
   - **Every `nds-hgi-*` used in fixture markup must be listed in `icons.yml`.**
-    Only registered names paint in the inline set, so a missing one is a silent
-    solid box that `NDS.Init.audit()` reports — an agent then correctly flags a
+    Only registered names paint in the inline set, so a missing one is a blank
+    box that `NDS.Init.audit()` reports — an agent then correctly flags a
     page that is actually fine, and the run pays attention to a harness fault.
   - **Doc format: old.** Its docs use the 1.x code tab and Modifier Classes
     table, and its names are 1.x names (as `mini-app`'s are). The default

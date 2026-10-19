@@ -21,6 +21,9 @@ hgi:
   # Navigation
   - nds-hgi-menu-01
   - nds-hgi-menu-02
+  - nds-hgi-home-01
+  - nds-hgi-dashboard-square-01
+  - nds-hgi-file-01
   - nds-hgi-more-horizontal
   - nds-hgi-more-vertical
   # Status
@@ -34,14 +37,20 @@ hgi:
   # Actions
   - nds-hgi-search-01
   - nds-hgi-plus-sign
+  - nds-hgi-minus-sign
   - nds-hgi-cancel-01
+  - nds-hgi-edit-02
+  - nds-hgi-delete-02
   - nds-hgi-copy-01
   - nds-hgi-share-01
   - nds-hgi-refresh
+  - nds-hgi-filter
+  - nds-hgi-download-04
+  - nds-hgi-upload-04
+  - nds-hgi-printer
   - nds-hgi-link-04
   - nds-hgi-link-square-02
   - nds-hgi-highlighter
-  - nds-hgi-door-01
   # View
   - nds-hgi-eye
   - nds-hgi-view-off
@@ -54,6 +63,8 @@ hgi:
   - nds-hgi-sort-by-down-02
   - nds-hgi-trade-up
   - nds-hgi-trade-down
+  - nds-hgi-chart-03
+  - nds-hgi-chart-no-axes-column
   # Appearance
   - nds-hgi-sun-03
   - nds-hgi-moon-02
@@ -75,14 +86,25 @@ hgi:
   - nds-hgi-linkedin-02
   - nds-hgi-whatsapp
   - nds-hgi-youtube
-  # Commerce and identity
-  - nds-hgi-cart
-  - nds-hgi-riyal-circular
-  - nds-hgi-award-05
+  # Account and privacy
+  - nds-hgi-user-circle
+  - nds-hgi-settings-01
+  - nds-hgi-login-01
+  - nds-hgi-logout-01
+  - nds-hgi-door-01
   - nds-hgi-identity-card
+  - nds-hgi-award-05
   - nds-hgi-lock-password
   - nds-hgi-square-lock-01
   - nds-hgi-cookie
+  # Commerce
+  - nds-hgi-cart
+  - nds-hgi-credit-card
+  - nds-hgi-wallet-01
+  - nds-hgi-riyal-circular
+  # Saved items
+  - nds-hgi-favourite
+  - nds-hgi-bookmark-01
   # Devices
   - nds-hgi-smart-phone-01
   - nds-hgi-mic-01
@@ -92,7 +114,6 @@ hgi:
   - nds-hgi-clock-01
   - nds-hgi-location-01
   - nds-hgi-mail-01
-  - nds-hgi-minus-sign
 
 
 custom:

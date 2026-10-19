@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 01:01 PM"
+last_edit: "19/10/2026 - 08:46 AM"
 ---
 
 <section id="tooltip-overview" class="nds-content-section nds-doc-overview">
@@ -67,7 +67,7 @@ Pick another component when:
 </script>
 <script type="text/html" id="tooltip-button" data-canon>
 <button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip" title="Print this page">
-  <i class="hgi hgi-stroke hgi-printer" aria-hidden="true"></i>
+  <i class="nds-icon nds-hgi-printer" aria-hidden="true"></i>
 </button>
 </script>
     </div>

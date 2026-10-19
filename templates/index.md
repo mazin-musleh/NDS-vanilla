@@ -35,7 +35,7 @@ sidemenu_mode: false
                 </div>
                 <div class="nds-dropmenu nds-filter" data-filter-target="templates_list">
                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                        <i class="hgi hgi-stroke hgi-filter"></i>
+                        <i class="nds-icon nds-hgi-filter"></i>
                         <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
                     </button>
                     <div class="nds-dropmenu-menu" hidden>

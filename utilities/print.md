@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 09:53 PM"
+last_edit: "19/10/2026 - 08:46 AM"
 ---
 
 <section id="print-overview" class="nds-content-section nds-doc-overview">
@@ -59,7 +59,7 @@ Pick another component when:
     </dl>
   </div>
   <button type="button" class="nds-btn nds-primary" data-print-target="print-permit">
-    <i class="hgi hgi-stroke hgi-printer"></i>
+    <i class="nds-icon nds-hgi-printer"></i>
     <span class="nds-label">Print permit</span>
   </button>
 </div>

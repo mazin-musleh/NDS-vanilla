@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 08:49 PM"
+last_edit: "19/10/2026 - 08:46 AM"
 ---
 
 <section id="tabs-overview" class="nds-content-section nds-doc-overview">
@@ -78,11 +78,11 @@ Pick another component when:
   <div class="nds-tab-list-container nds-scroll-more">
     <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Account">
       <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="i-panel-overview" id="i-tab-overview" tabindex="0">
-        <i class="hgi hgi-stroke hgi-home-01" aria-hidden="true"></i>
+        <i class="nds-icon nds-hgi-home-01" aria-hidden="true"></i>
         <span class="nds-label">Overview</span>
       </button>
       <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false" aria-controls="i-panel-documents" id="i-tab-documents" tabindex="-1">
-        <i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>
+        <i class="nds-icon nds-hgi-file-01" aria-hidden="true"></i>
         <span class="nds-label">Documents</span>
       </button>
       <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false" aria-controls="i-panel-messages" id="i-tab-messages" tabindex="-1">

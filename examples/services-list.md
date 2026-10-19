@@ -36,7 +36,7 @@ last_edit: "13/10/2026 - 11:23 AM"
                 </div>
                 <div class="nds-dropmenu nds-filter" data-filter-target="services_list_content">
                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                        <i class="hgi hgi-stroke hgi-filter"></i>
+                        <i class="nds-icon nds-hgi-filter"></i>
                         <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
                     </button>
                     <div class="nds-dropmenu-menu" hidden>

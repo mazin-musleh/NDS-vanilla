@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 09:21 AM"
+last_edit: "19/10/2026 - 08:46 AM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -57,7 +57,7 @@ Pick another component when:
   </div>
   <div class="nds-dropmenu nds-filter" data-filter-target="flt-items">
     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger" type="button">
-      <i class="hgi hgi-stroke hgi-filter"></i>
+      <i class="nds-icon nds-hgi-filter"></i>
       <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
     </button>
     <div class="nds-dropmenu-menu" hidden>
@@ -413,7 +413,7 @@ For results from a server, add a `<form>` with the same `data-filter-target` and
     </div>
     <div class="nds-dropmenu nds-filter" data-filter-target="services-results">
       <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger" type="button">
-        <i class="hgi hgi-stroke hgi-filter"></i>
+        <i class="nds-icon nds-hgi-filter"></i>
         <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
       </button>
       <div class="nds-dropmenu-menu" hidden>

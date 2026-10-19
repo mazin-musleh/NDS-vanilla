@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "19/10/2026 - 07:32 AM"
+last_edit: "19/10/2026 - 08:46 AM"
 ---
 
 <section id="migration-overview" class="nds-content-section nds-doc-overview">
@@ -64,7 +64,7 @@ Pick another component when:
           </div>
           <div class="nds-dropmenu nds-filter" data-filter-target="migration-rows">
             <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-              <i class="hgi hgi-stroke hgi-filter"></i>
+              <i class="nds-icon nds-hgi-filter"></i>
               <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
             </button>
             <div class="nds-dropmenu-menu" hidden>

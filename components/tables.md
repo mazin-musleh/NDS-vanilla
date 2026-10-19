@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 09:21 AM"
+last_edit: "19/10/2026 - 08:46 AM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -134,7 +134,7 @@ Pick another component when:
       </div>
       <div class="nds-dropmenu">
         <button class="nds-btn nds-secondary-outline nds-md nds-dropmenu-trigger" type="button">
-          <i class="hgi hgi-stroke hgi-download-04" aria-hidden="true"></i>
+          <i class="nds-icon nds-hgi-download-04" aria-hidden="true"></i>
           <span class="nds-label" data-hidden="sm sr" data-i18n="export.export">Export</span>
         </button>
         <div class="nds-dropmenu-menu" hidden>
@@ -173,7 +173,7 @@ Pick another component when:
     </div>
     <div class="nds-dropmenu nds-filter" data-filter-target="tbl-rec-rows">
       <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger" type="button">
-        <i class="hgi hgi-stroke hgi-filter" aria-hidden="true"></i>
+        <i class="nds-icon nds-hgi-filter" aria-hidden="true"></i>
         <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
       </button>
       <div class="nds-dropmenu-menu" hidden>
@@ -297,16 +297,16 @@ Pick another component when:
           </button>
           <div class="nds-dropmenu">
             <button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Actions for REQ-2026-118">
-              <i class="hgi hgi-stroke hgi-more-vertical" aria-hidden="true"></i>
+              <i class="nds-icon nds-hgi-more-vertical" aria-hidden="true"></i>
             </button>
             <div class="nds-dropmenu-menu" hidden>
               <div class="nds-dropmenu-scroll">
                 <button class="nds-btn nds-subtle nds-dropmenu-item" type="button">
-                  <i class="hgi hgi-stroke hgi-edit-02" aria-hidden="true"></i>
+                  <i class="nds-icon nds-hgi-edit-02" aria-hidden="true"></i>
                   <span class="nds-label">Edit</span>
                 </button>
                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button">
-                  <i class="hgi hgi-stroke hgi-delete-02" aria-hidden="true"></i>
+                  <i class="nds-icon nds-hgi-delete-02" aria-hidden="true"></i>
                   <span class="nds-label">Delete</span>
                 </button>
               </div>

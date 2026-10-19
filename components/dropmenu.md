@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 07:55 PM"
+last_edit: "19/10/2026 - 08:46 AM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -46,7 +46,7 @@ Pick another component when:
   <div class="nds-dropmenu-menu" hidden>
     <div class="nds-dropmenu-scroll">
       <button type="button" class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="hgi hgi-stroke hgi-edit-02" aria-hidden="true"></i>
+        <i class="nds-icon nds-hgi-edit-02" aria-hidden="true"></i>
         <span class="nds-label">Edit</span>
       </button>
       <button type="button" class="nds-btn nds-subtle nds-dropmenu-item">
@@ -59,7 +59,7 @@ Pick another component when:
       </button>
       <hr class="nds-divider">
       <button type="button" class="nds-btn nds-subtle nds-destructive nds-dropmenu-item">
-        <i class="hgi hgi-stroke hgi-delete-02" aria-hidden="true"></i>
+        <i class="nds-icon nds-hgi-delete-02" aria-hidden="true"></i>
         <span class="nds-label">Delete</span>
       </button>
     </div>
@@ -78,7 +78,7 @@ Pick another component when:
         <span class="nds-label">Profile</span>
       </a>
       <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="hgi hgi-stroke hgi-settings-01" aria-hidden="true"></i>
+        <i class="nds-icon nds-hgi-settings-01" aria-hidden="true"></i>
         <span class="nds-label">Settings</span>
       </a>
       <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
@@ -87,7 +87,7 @@ Pick another component when:
       </a>
       <hr class="nds-divider">
       <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="hgi hgi-stroke hgi-logout-01" aria-hidden="true"></i>
+        <i class="nds-icon nds-hgi-logout-01" aria-hidden="true"></i>
         <span class="nds-label">Sign out</span>
       </a>
     </div>

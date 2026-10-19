@@ -37,7 +37,7 @@ hideFeedback: true
                     </div>
                     <div class="nds-toolbar-end">
                         <button class="nds-btn nds-primary nds-destructive nds-md nds-lead-icon" id="bulk-delete" type="button" hidden>
-                            <i class="hgi hgi-stroke hgi-delete-02"></i>
+                            <i class="nds-icon nds-hgi-delete-02"></i>
                             <span class="nds-label">Delete selected</span>
                         </button>
                         <div class="nds-dropmenu"
@@ -71,7 +71,7 @@ hideFeedback: true
                         </div>
                         <div class="nds-dropmenu">
                             <button type="button" class="nds-btn nds-secondary-outline nds-md nds-dropmenu-trigger">
-                                <i class="hgi hgi-stroke hgi-download-04" aria-hidden="true"></i>
+                                <i class="nds-icon nds-hgi-download-04" aria-hidden="true"></i>
                                 <span class="nds-label" data-i18n="export.export">Export</span>
                             </button>
                             <div class="nds-dropmenu-menu" hidden>
@@ -111,7 +111,7 @@ hideFeedback: true
                     </div>
                     <div class="nds-dropmenu nds-filter" data-filter-target="requests-table-body">
                         <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                            <i class="hgi hgi-stroke hgi-filter"></i>
+                            <i class="nds-icon nds-hgi-filter"></i>
                             <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
                         </button>
                         <div class="nds-dropmenu-menu" hidden>
@@ -256,17 +256,17 @@ hideFeedback: true
                                     </button>
                                     <div class="nds-dropmenu">
                                         <button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Row actions">
-                                            <i class="hgi hgi-stroke hgi-more-vertical"></i>
+                                            <i class="nds-icon nds-hgi-more-vertical"></i>
                                         </button>
                                         <div class="nds-dropmenu-menu nds-record-menu" hidden>
                                             <div class="nds-dropmenu-scroll">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item" type="button" data-record-action="edit">
-                                                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                                    <i class="nds-icon nds-hgi-edit-02"></i>
                                                     <span class="nds-label">Edit</span>
                                                 </button>
                                                 <hr class="nds-divider">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button" data-record-action="delete">
-                                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                    <i class="nds-icon nds-hgi-delete-02"></i>
                                                     <span class="nds-label">Delete</span>
                                                 </button>
                                             </div>
@@ -342,17 +342,17 @@ hideFeedback: true
                                     </button>
                                     <div class="nds-dropmenu">
                                         <button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Row actions">
-                                            <i class="hgi hgi-stroke hgi-more-vertical"></i>
+                                            <i class="nds-icon nds-hgi-more-vertical"></i>
                                         </button>
                                         <div class="nds-dropmenu-menu nds-record-menu" hidden>
                                             <div class="nds-dropmenu-scroll">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item" type="button" data-record-action="edit">
-                                                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                                    <i class="nds-icon nds-hgi-edit-02"></i>
                                                     <span class="nds-label">Edit</span>
                                                 </button>
                                                 <hr class="nds-divider">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button" data-record-action="delete">
-                                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                    <i class="nds-icon nds-hgi-delete-02"></i>
                                                     <span class="nds-label">Delete</span>
                                                 </button>
                                             </div>
@@ -432,17 +432,17 @@ hideFeedback: true
                                     </button>
                                     <div class="nds-dropmenu">
                                         <button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Row actions">
-                                            <i class="hgi hgi-stroke hgi-more-vertical"></i>
+                                            <i class="nds-icon nds-hgi-more-vertical"></i>
                                         </button>
                                         <div class="nds-dropmenu-menu nds-record-menu" hidden>
                                             <div class="nds-dropmenu-scroll">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item" type="button" data-record-action="edit">
-                                                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                                    <i class="nds-icon nds-hgi-edit-02"></i>
                                                     <span class="nds-label">Edit</span>
                                                 </button>
                                                 <hr class="nds-divider">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button" data-record-action="delete">
-                                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                    <i class="nds-icon nds-hgi-delete-02"></i>
                                                     <span class="nds-label">Delete</span>
                                                 </button>
                                             </div>
@@ -482,17 +482,17 @@ hideFeedback: true
                                     </button>
                                     <div class="nds-dropmenu">
                                         <button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Row actions">
-                                            <i class="hgi hgi-stroke hgi-more-vertical"></i>
+                                            <i class="nds-icon nds-hgi-more-vertical"></i>
                                         </button>
                                         <div class="nds-dropmenu-menu nds-record-menu" hidden>
                                             <div class="nds-dropmenu-scroll">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item" type="button" data-record-action="edit">
-                                                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                                    <i class="nds-icon nds-hgi-edit-02"></i>
                                                     <span class="nds-label">Edit</span>
                                                 </button>
                                                 <hr class="nds-divider">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button" data-record-action="delete">
-                                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                    <i class="nds-icon nds-hgi-delete-02"></i>
                                                     <span class="nds-label">Delete</span>
                                                 </button>
                                             </div>
@@ -532,17 +532,17 @@ hideFeedback: true
                                     </button>
                                     <div class="nds-dropmenu">
                                         <button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Row actions">
-                                            <i class="hgi hgi-stroke hgi-more-vertical"></i>
+                                            <i class="nds-icon nds-hgi-more-vertical"></i>
                                         </button>
                                         <div class="nds-dropmenu-menu nds-record-menu" hidden>
                                             <div class="nds-dropmenu-scroll">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item" type="button" data-record-action="edit">
-                                                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                                    <i class="nds-icon nds-hgi-edit-02"></i>
                                                     <span class="nds-label">Edit</span>
                                                 </button>
                                                 <hr class="nds-divider">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button" data-record-action="delete">
-                                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                    <i class="nds-icon nds-hgi-delete-02"></i>
                                                     <span class="nds-label">Delete</span>
                                                 </button>
                                             </div>
@@ -582,17 +582,17 @@ hideFeedback: true
                                     </button>
                                     <div class="nds-dropmenu">
                                         <button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Row actions">
-                                            <i class="hgi hgi-stroke hgi-more-vertical"></i>
+                                            <i class="nds-icon nds-hgi-more-vertical"></i>
                                         </button>
                                         <div class="nds-dropmenu-menu nds-record-menu" hidden>
                                             <div class="nds-dropmenu-scroll">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item" type="button" data-record-action="edit">
-                                                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                                    <i class="nds-icon nds-hgi-edit-02"></i>
                                                     <span class="nds-label">Edit</span>
                                                 </button>
                                                 <hr class="nds-divider">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button" data-record-action="delete">
-                                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                    <i class="nds-icon nds-hgi-delete-02"></i>
                                                     <span class="nds-label">Delete</span>
                                                 </button>
                                             </div>
@@ -632,17 +632,17 @@ hideFeedback: true
                                     </button>
                                     <div class="nds-dropmenu">
                                         <button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Row actions">
-                                            <i class="hgi hgi-stroke hgi-more-vertical"></i>
+                                            <i class="nds-icon nds-hgi-more-vertical"></i>
                                         </button>
                                         <div class="nds-dropmenu-menu nds-record-menu" hidden>
                                             <div class="nds-dropmenu-scroll">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item" type="button" data-record-action="edit">
-                                                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                                    <i class="nds-icon nds-hgi-edit-02"></i>
                                                     <span class="nds-label">Edit</span>
                                                 </button>
                                                 <hr class="nds-divider">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button" data-record-action="delete">
-                                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                    <i class="nds-icon nds-hgi-delete-02"></i>
                                                     <span class="nds-label">Delete</span>
                                                 </button>
                                             </div>
@@ -682,17 +682,17 @@ hideFeedback: true
                                     </button>
                                     <div class="nds-dropmenu">
                                         <button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Row actions">
-                                            <i class="hgi hgi-stroke hgi-more-vertical"></i>
+                                            <i class="nds-icon nds-hgi-more-vertical"></i>
                                         </button>
                                         <div class="nds-dropmenu-menu nds-record-menu" hidden>
                                             <div class="nds-dropmenu-scroll">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item" type="button" data-record-action="edit">
-                                                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                                    <i class="nds-icon nds-hgi-edit-02"></i>
                                                     <span class="nds-label">Edit</span>
                                                 </button>
                                                 <hr class="nds-divider">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button" data-record-action="delete">
-                                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                    <i class="nds-icon nds-hgi-delete-02"></i>
                                                     <span class="nds-label">Delete</span>
                                                 </button>
                                             </div>
@@ -732,17 +732,17 @@ hideFeedback: true
                                     </button>
                                     <div class="nds-dropmenu">
                                         <button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Row actions">
-                                            <i class="hgi hgi-stroke hgi-more-vertical"></i>
+                                            <i class="nds-icon nds-hgi-more-vertical"></i>
                                         </button>
                                         <div class="nds-dropmenu-menu nds-record-menu" hidden>
                                             <div class="nds-dropmenu-scroll">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item" type="button" data-record-action="edit">
-                                                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                                    <i class="nds-icon nds-hgi-edit-02"></i>
                                                     <span class="nds-label">Edit</span>
                                                 </button>
                                                 <hr class="nds-divider">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button" data-record-action="delete">
-                                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                    <i class="nds-icon nds-hgi-delete-02"></i>
                                                     <span class="nds-label">Delete</span>
                                                 </button>
                                             </div>
@@ -782,17 +782,17 @@ hideFeedback: true
                                     </button>
                                     <div class="nds-dropmenu">
                                         <button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Row actions">
-                                            <i class="hgi hgi-stroke hgi-more-vertical"></i>
+                                            <i class="nds-icon nds-hgi-more-vertical"></i>
                                         </button>
                                         <div class="nds-dropmenu-menu nds-record-menu" hidden>
                                             <div class="nds-dropmenu-scroll">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item" type="button" data-record-action="edit">
-                                                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                                    <i class="nds-icon nds-hgi-edit-02"></i>
                                                     <span class="nds-label">Edit</span>
                                                 </button>
                                                 <hr class="nds-divider">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button" data-record-action="delete">
-                                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                    <i class="nds-icon nds-hgi-delete-02"></i>
                                                     <span class="nds-label">Delete</span>
                                                 </button>
                                             </div>
@@ -1066,16 +1066,16 @@ hideFeedback: true
             '</button>' +
             '<div class="nds-dropmenu">' +
               '<button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Row actions">' +
-                '<i class="hgi hgi-stroke hgi-more-vertical"></i>' +
+                '<i class="nds-icon nds-hgi-more-vertical"></i>' +
               '</button>' +
               '<div class="nds-dropmenu-menu nds-record-menu" hidden>' +
                 '<div class="nds-dropmenu-scroll">' +
                   '<button class="nds-btn nds-subtle nds-dropmenu-item" type="button" data-record-action="edit">' +
-                    '<i class="hgi hgi-stroke hgi-edit-02"></i><span class="nds-label">Edit</span>' +
+                    '<i class="nds-icon nds-hgi-edit-02"></i><span class="nds-label">Edit</span>' +
                   '</button>' +
                   '<hr class="nds-divider">' +
                   '<button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button" data-record-action="delete">' +
-                    '<i class="hgi hgi-stroke hgi-delete-02"></i><span class="nds-label">Delete</span>' +
+                    '<i class="nds-icon nds-hgi-delete-02"></i><span class="nds-label">Delete</span>' +
                   '</button>' +
                 '</div>' +
               '</div>' +

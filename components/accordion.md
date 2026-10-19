@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "15/10/2026 - 01:14 PM"
+last_edit: "19/10/2026 - 08:46 AM"
 ---
 
 <section id="accordion-overview" class="nds-content-section nds-doc-overview">
@@ -87,7 +87,7 @@ Pick another component when:
   <div class="nds-accordion-item">
     <h3 class="nds-accordion-header" id="topic-heading-1">
       <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" aria-expanded="true" data-state="open" aria-controls="topic-panel-1">
-        <i class="hgi hgi-stroke hgi-home-01" aria-hidden="true"></i>
+        <i class="nds-icon nds-hgi-home-01" aria-hidden="true"></i>
         <span class="nds-accordion-title">Housing</span>
       </button>
     </h3>

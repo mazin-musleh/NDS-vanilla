@@ -245,7 +245,7 @@ hideFeedback: true
                         </div>
                         <div class="nds-dropmenu">
                             <button type="button" class="nds-btn nds-secondary-outline nds-md nds-dropmenu-trigger">
-                                <i class="hgi hgi-stroke hgi-download-04" aria-hidden="true"></i>
+                                <i class="nds-icon nds-hgi-download-04" aria-hidden="true"></i>
                                 <span class="nds-label" data-i18n="export.export">Export</span>
                             </button>
                             <div class="nds-dropmenu-menu" hidden>
@@ -285,7 +285,7 @@ hideFeedback: true
                     </div>
                     <div class="nds-dropmenu nds-filter" data-filter-target="transactions-table-body">
                         <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                            <i class="hgi hgi-stroke hgi-filter"></i>
+                            <i class="nds-icon nds-hgi-filter"></i>
                             <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
                         </button>
                         <div class="nds-dropmenu-menu" hidden>
@@ -442,7 +442,7 @@ hideFeedback: true
                                 <td class="nds-actions-column">
                                     <div class="nds-dropmenu">
                                         <button class="nds-btn nds-subtle nds-sm nds-icon-only nds-dropmenu-trigger" aria-label="Row actions">
-                                            <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                            <i class="nds-icon nds-hgi-edit-02"></i>
                                         </button>
                                         <div class="nds-dropmenu-menu" hidden>
                                             <div class="nds-dropmenu-scroll">
@@ -451,7 +451,7 @@ hideFeedback: true
                                                     <span class="nds-label">View details</span>
                                                 </button>
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                                    <i class="hgi hgi-stroke hgi-download-04"></i>
+                                                    <i class="nds-icon nds-hgi-download-04"></i>
                                                     <span class="nds-label">Download receipt</span>
                                                 </button>
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item">
@@ -460,7 +460,7 @@ hideFeedback: true
                                                 </button>
                                                 <hr class="nds-divider">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
-                                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                    <i class="nds-icon nds-hgi-delete-02"></i>
                                                     <span class="nds-label">Delete</span>
                                                 </button>
                                             </div>
@@ -515,7 +515,7 @@ hideFeedback: true
                 </div>
                 <div class="nds-dropmenu nds-filter" data-filter-target="team-directory-grid">
                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                        <i class="hgi hgi-stroke hgi-filter"></i>
+                        <i class="nds-icon nds-hgi-filter"></i>
                         <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
                     </button>
                     <div class="nds-dropmenu-menu" hidden>

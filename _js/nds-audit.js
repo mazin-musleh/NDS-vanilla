@@ -323,14 +323,10 @@
 
     rule({ id: 'icon-unregistered', severity: 'error', docs: 'foundations/icons.html', check(ctx) {
         ctx.find('i.nds-icon[class*="nds-hgi-"]').forEach(el => {
-            // The glyph paints on ::before (mask: var(--nds-icon) …), so read the
-            // pseudo — the element itself never carries a mask.
-            const cs = getComputedStyle(el, '::before');
-            const masked = (cs.maskImage && cs.maskImage !== 'none')
-                || (cs.webkitMaskImage && cs.webkitMaskImage !== 'none');
-            if (masked) return;
+            // An unknown name leaves --nds-icon unset, and the mask falls back to transparent.
+            if (getComputedStyle(el).getPropertyValue('--nds-icon').trim()) return;
             const cls = [...el.classList].find(c => c.startsWith('nds-hgi-'));
-            ctx.report(el, `inline icon "${cls}" is not in the registered set and paints as a solid box.`, `Use the HGI font class: <i class="hgi hgi-stroke ${cls.replace('nds-', '')}">`);
+            ctx.report(el, `inline icon "${cls}" is not in the registered set and paints nothing.`, `Use the HGI font class: <i class="hgi hgi-stroke ${cls.replace('nds-', '')}">`);
         });
     } });
 
