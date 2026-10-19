@@ -4,7 +4,7 @@ dist/
 .jekyll-cache/
 .jekyll-metadata
 .bundle/
-vendor/
+/vendor/
 node_modules/
 *.gem
 *.rbc
