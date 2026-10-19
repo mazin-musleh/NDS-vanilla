@@ -233,7 +233,21 @@ Full-tree runs skip the 13 deep-read JSA rules and JSA-23 (c) (banner-disclosed 
 - document-wide collection fanout (`querySelectorAll` / `NDS.queryAll(document, …)` call count) — JSA-01/-07 exposure
 - DOM-construction density (`innerHTML` / `createElement` / `insertAdjacentHTML` sites) — JSA-11/-12 exposure
 
-Rank files on these signals (judgment, not a fixed formula — note WHICH signal drove each pick) and emit the top 3 as the Phase 4 "Deep-read triage" block. A high rank means "most likely to reward a single-file deep-read", never "has findings" — the triage is a pointer, not a verdict.
+Rank files by their **hotspot** count first (below), then by these signals (judgment, not a fixed formula — note WHICH hotspot or signal drove each pick), and emit the top 3 as the Phase 4 "Deep-read triage" block. A high rank means "most likely to reward a single-file deep-read", never "has findings" — the triage is a pointer, not a verdict.
+
+### Full-tree hotspots (every `js <group>` run)
+
+A full-tree run reports what it proves. A **hotspot** is what it suspects and cannot prove without a deep read: a suspected instance of an EXISTING rule. A Gap (Phase 3) is the other thing: a shape no rule covers, which feeds Phase 7. A hotspot is never dropped and never confirmed by a side trip outside this skill: it goes in the report's `## Hotspots` block, one row each, and the deep-read triage ranks on it. Two sources:
+
+- **A greppable match the run cannot settle.** The match needs whole-function context to confirm or to rule out (a JSA-23 (b) candidate whose public entry's call tree the run did not trace, a JSS-01 sink whose value source is two calls away).
+- **A deep-read rule's cheap signal**, collected during the scan the run already performs:
+  - JSA-03: a module-scope `Map` / `Set` / object written with `.set` / `.add` / a key write, and no `.delete` / `.clear` in the file
+  - JSA-14: an interaction listener (`click` / `input` / `change` / `keydown` / `submit`) whose body runs `querySelectorAll(…).forEach` or builds DOM in a loop
+  - JSA-15: `style.height` / `style.maxHeight` written from `scrollHeight` / `getBoundingClientRect()`, or a `scroll` handler that only toggles a class
+  - JSA-24: a `close` / `toggle` listener with no `.open` / `newState` / `:popover-open` read in its body
+  - JSA-23 (b): `init()` wires a document listener or an `NDS.on*` pool that a public `create` / `open` / `set` does not visibly call
+
+A hotspot is closed by a single-file deep read (`/nds-js-audit nds-<file>.js <group>`), which turns it into a finding or clears it, or by an annotation comment naming why the code is right (annotation exemption (global)), which keeps it out of the next run. Nothing is stored between runs: the code and its annotations are the ledger.
 
 ### Consumer reach (pre-recommendation)
 
@@ -266,7 +280,7 @@ Use this structure verbatim:
 > Skipped: JSD-16 frozen-flag dead code (full-tree mode — needs whole-file scope analysis) — run `/nds-js-audit nds-<file>.js dry` for a specific component.
 
 > Skipped: JSA deep-read rules JSA-03, -07–-12, -14–-17, -20, -23 (c), -24 (full-tree mode — per-file analysis exceeds the full-tree budget) — run `/nds-js-audit nds-<file>.js architecture` for a specific component.
-> Deep-read triage (full-tree `architecture` only): 1. `_js/nds-<a>.js` — {driving signals, e.g. "1.9k lines, 31 interaction listeners, ~120-line validateForm"}; 2. `_js/nds-<b>.js` — {…}; 3. `_js/nds-<c>.js` — {…}. Start with `/nds-js-audit nds-<a>.js architecture`.
+> Deep-read triage (full-tree `architecture` only): 1. `_js/nds-<a>.js` — {driving hotspots, then signals, e.g. "2 hotspots (JSA-23 b, JSA-03); 1.9k lines, 31 interaction listeners"}; 2. `_js/nds-<b>.js` — {…}; 3. `_js/nds-<c>.js` — {…}. Start with `/nds-js-audit nds-<a>.js architecture`.
 
 ## HIGH
 ### _js/nds-alert.js
@@ -315,6 +329,9 @@ user to decide, and a large solution may be saved as a plan and linked.)
   Reach: 2 call sites + _js/nds-core.js — broad-surface change; recommend coordinating via per-candidate `promote` approval, not a plain `fix`.
   Rationale: both files implement focus containment with near-identical logic; a shared helper would remove ~90 lines of duplication and let future components opt in trivially.
 
+## Hotspots (full-tree only — suspected, needs a deep read)
+- {file}:{line} [{rule}] {what looks wrong} — confirm: {the one question a deep read answers}. Run `/nds-js-audit nds-<file>.js <group>`.
+
 ## Gaps observed (no rule matched)
 - {file-a}:{line} — {short description of the pattern that looks wrong}. The same shape also appears at {file-b}:{line} and {file-c}:{line}. No existing rule covers it. Proposed: new rule {group}-{next-id} "{short rule name}".
 - {file}:{line} — {different gap}. Proposed: {extension of existing rule or brand-new rule}.
@@ -332,8 +349,9 @@ Other options:
 1. `fix all` — apply every catalog finding marked `Type: actionable` (for JSA findings) plus every JSP/JSD/JSS finding in the report. Excludes JSD-05 promotion candidates (those go through `promote <api-name>` with per-candidate approval) and every JSA finding marked `Type: tradeoff` (those are acknowledged, not auto-fixed) — tradeoffs are skipped regardless of severity.
 2. `promote <api-name>` — apply one JSD-05 promotion: edit `_js/nds-core.js` to add the proposed helper, migrate every call site listed in the report, and follow the file-by-file rhythm (rebundle + agent review + pause between files). Only offered when the report has "Promotion candidates (JSD-05)" entries.
 3. `apply solution` — apply the `Proposed solution:` from a `tradeoff → recommend solving` finding inline (or `save the plan` if it's a larger refactor saved under `~/.claude/plans/`). Only offered when the report has a `tradeoff → recommend solving` finding.
-4. `evolve` — apply the surfaced catalog/persona refinement candidates from the `## Catalog evolved — candidates` block (`evolve <RULE>` for one). Only offered when candidates exist; the skill files are untouched until this explicit go.
-5. `skip` — end the audit here; nothing is written, nothing is changed.
+4. `deep-read <file>` — run the single-file audit on the file holding the most hotspots, in this run's group; it confirms or clears each one. Only offered on a full-tree run with hotspots.
+5. `evolve` — apply the surfaced catalog/persona refinement candidates from the `## Catalog evolved — candidates` block (`evolve <RULE>` for one). Only offered when candidates exist; the skill files are untouched until this explicit go.
+6. `skip` — end the audit here; nothing is written, nothing is changed.
 
 (Catalog/persona evolution is suggest-only — Phase 7 turns any concrete Gap / Dead-rule / Persona-drift refinement that clears the quality bars into a fully-drafted candidate and appends a `## Catalog evolved — candidates` block to the report. NOTHING is written to the skill files until the user replies `evolve` — concurrent audit sessions share these files, and a mid-run write from one session conflicts with another's run.)
 
@@ -344,7 +362,7 @@ Finer-grained fix filters (type the literal, no number):
 - `fix all then promote <api-name>` — chain a plain fix batch and a promotion application in one session (each still follows its own file-by-file rhythm and user pauses)
 ```
 
-When emitting the Next Step block at the end of a real report, include only options available for THIS run: omit `promote <api-name>` when there are no JSD-05 promotion candidates; omit `apply solution` when there are no `tradeoff → recommend solving` findings; omit `evolve` when Phase 7 surfaced no candidates; omit `fix all` on a clean run. Renumber so the user never sees a no-op choice.
+When emitting the Next Step block at the end of a real report, include only options available for THIS run: omit `promote <api-name>` when there are no JSD-05 promotion candidates; omit `apply solution` when there are no `tradeoff → recommend solving` findings; omit `deep-read <file>` when the run has no hotspots; omit `evolve` when Phase 7 surfaced no candidates; omit `fix all` on a clean run. Renumber so the user never sees a no-op choice.
 
 Follow **Numbered-reply discipline** (see Response style): every available primary action gets a number including the recommended one, renumber to drop no-op options, and literal filter commands (`fix HIGH`, `fix _js/nds-foo.js`) sit below the numbered block.
 
@@ -357,6 +375,7 @@ Recommend the substantive next step the findings call for; when there is none, r
 | Has "Promotion candidates (JSD-05)" entries | `promote <api>` | "applies the {N} JSD-05 promotion(s) file-by-file with per-candidate approval" |
 | Has catalog findings with ≥1 `Type: actionable` (JSA) or any JSP / JSD / JSS finding | `fix all` | "applies the {N} actionable finding(s) file-by-file — narrow with `fix HIGH` / `fix <file>` / `fix JSA`" |
 | Has a `tradeoff → recommend solving` finding (any severity) | `apply solution` | "the {N} `recommend solving` tradeoff(s) carry a high-leverage `Proposed solution:` — apply it inline, or `save the plan` for a larger refactor" |
+| Full-tree run with hotspots AND no findings to act on | `/nds-js-audit nds-<top>.js <group>` | "{N} hotspot(s) need a deep read — `nds-<top>.js` holds the most" |
 | Phase 7 surfaced refinement candidates AND no findings to act on | `evolve` | "applies the {N} surfaced catalog/persona refinement(s) — skill files stay untouched until you say so" |
 | JSA tradeoff-only findings (all plain-accepted), no other findings | `skip` | "the {N} JSA tradeoff finding(s) document deliberate design choices — nothing to apply" |
 | Clean run — zero findings | `skip` | "nothing to fix" |
