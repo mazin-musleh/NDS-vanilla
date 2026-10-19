@@ -8,7 +8,7 @@ breadcrumb:
 hero_title: "Government Services"
 hero_description: "Browse all available government digital services"
 sidemenu_mode: false
-last_edit: "13/10/2026 - 11:23 AM"
+last_edit: "19/10/2026 - 11:26 PM"
 ---
 
 <section id="services-list" class="nds-content-section">
@@ -17,7 +17,7 @@ last_edit: "13/10/2026 - 11:23 AM"
             <div class="nds-toolbar">
                 <div class="nds-form-container nds-search-box" data-filter-target="services_list_content"
                     data-url="{{ '/docs-assets/data/services-autocomplete.json' | relative_url }}" data-name="Title"
-                    data-query-param="q">
+                    data-fetch="once">
                     <div class="nds-search-content">
                         <div class="nds-form-control">
                             <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
