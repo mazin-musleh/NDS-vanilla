@@ -166,6 +166,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Chart** — A resize redraws before the next paint, so the old drawing never shows at the new width. Hidden x-axis labels take no room, so a sparkline fills its box.
 - **Chips** — A chip fits its content in a column layout, and a disabled chip's icon takes the disabled colour.
 - **Chips** — A chip in a container narrower than the chip cuts its label with "…" and stays inside.
+- **Code** — On a fast load, the copy button no longer shrinks and the code no longer moves up a line when the code script lands.
 - **Code and Scroll More** — A block or list that scrolls takes a tab stop, so a keyboard user in Safari can scroll it with the arrow keys.
 - **Content Placeholder** — It fills a centering parent's width, and `nds-sm` is one control tall, with roomier padding.
 - **Cookies** — Reject clears trackers set on a parent domain (`_ga` on `.example.com` survived a Reject on `www.`). A denied category clears every cookie that starts with a tracker's name, so GA4's `_ga_<id>` and Ads' `_gcl_au` go too.
@@ -201,6 +202,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Editor** — Content dropped into the editor is cleaned like a paste and goes in at the drop point. In the source view the formatting buttons are disabled; they were only faded, and a screen reader announced them as active.
 - **Empty** — The placeholder spans every column of an `.nds-grid`, and `refresh()` updates a table placeholder's `colspan` when the columns change. An empty table's message stays in view while the table scrolls sideways.
 - **Event themes** — Switching theme removes the real event slide, not a loop clone, and the pack's tab labels keep their bold selected look.
+- **Examples** — The Services List search fetches its list once and filters it. Every search showed the whole list.
 - **Expandable Content** — The Show More / Show Less text is the button's accessible name, in the page language. `recheckHeight()` reads a runtime change to `--max-height`. A box added after page load gets its fade and button at once, and the fade no longer shows behind the button. Content that fits and then grows past its height again shows Show More; it kept Show Less.
 - **Export** — the date in a file name is today in the site's timezone, not the UTC date.
 - **Export** — A negative number stays a number in CSV and Excel, so the column sums.
@@ -213,6 +215,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **File Upload** — `nds:upload:beforeUpload` comes after the request opens, so `setRequestHeader()` in it works, as the docs say; it threw. A screen reader names the file field in the drop zone layout; it had no name.
 - **Filter** — a form-mode filter without `data-ajax` now submits the form when a chip is removed, on the menu's Reset and on `reset()`. A generated radio group submits as `filter-{name}`, like checkbox and switch groups. `data-search` on a filter menu narrows the generated options. `setFilterValues()` works on a group whose menu was never opened. After an AJAX swap, the new results start and the old ones stop. The no-results message no longer counts as an item, so an empty result shows it.
 - **Filter** — A screen reader hears the count line, in the page's words, when a filter changes it, and the count takes the page's number format. Removing an applied-filter chip moves focus to the next chip, or to the Filter button.
+- **Filter** — Filter starts on a page with a search box in Chrome below 105 and Firefox below 121. It failed there.
 - **Forms** — a required field with a picker in its prefix (a phone number with a country code) is checked again.
 - **Forms** — A read-only checkbox, radio or switch holds its value against Space and the arrow keys. A disabled one, and a disabled field's buttons in dark mode, take the disabled colours. `data-state="loading"` written in the HTML shows the spinner from the start, in its own slot.
 - **Forms** — A required `data-strict` Autocomplete submitted empty shows its "required" message: the strict check cleared it, leaving the form blocked with no message.
@@ -328,6 +331,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **[Init](https://mazin-musleh.github.io/NDS-vanilla/core/init.html)** — Framework Views: a hydrating app writes `data-nds-auto-init="false"` on `<html>` and starts NDS once hydration ends, whichever of the two loads first. A Filter `data-ajax` answer is JSON, not HTML, so the framework renders the results. A framework that renders `<html>` puts `suppressHydrationWarning` on it.
 - **[Drawer](https://mazin-musleh.github.io/NDS-vanilla/components/drawer.html)** — A tag in a rich row's title carries no size class: the drawer sizes it.
 - **[Expandable Content](https://mazin-musleh.github.io/NDS-vanilla/utilities/expandable-content.html)** — `NDS.Expandable.recheckHeights()` is for a changed `--max-height` only: a hidden box measures itself again when it shows.
+- **[Get Started](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html)** — A Browser Support section states the floor. Every component works in browsers from 2022 (Chrome 98, Safari 15.4, Firefox 98). Older browsers lose Modal, Panel and Filter's Apply button, and below Chrome 85, Safari 14 and Firefox 79 no NDS JavaScript runs.
 
 ### Migrating from v1.12.0
 - Replace the runtime: copy `_site/assets/` over your assets folder.
