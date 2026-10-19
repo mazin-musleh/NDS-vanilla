@@ -47,7 +47,10 @@
 
   // A menu inside is a popover of its own: closing the dialog leaves it open in the top layer.
   // Without popover there is none, and Safari 16 throws on the selector.
-  const hideMenus = (dlg) => POPOVER && dlg.querySelectorAll(':popover-open').forEach((p) => p.hidePopover());
+  // No popover: the menus are plain fixed boxes, so close them through their instance.
+  const hideMenus = (dlg) => POPOVER
+    ? dlg.querySelectorAll(':popover-open').forEach((p) => p.hidePopover())
+    : dlg.querySelectorAll('.nds-dropmenu').forEach((d) => d.ndsDropmenu?.isOpen && d.ndsDropmenu.close());
 
   // The fallback's dim layer is the dialog itself, outside its box; the popover's lets the click through.
   const outside = (dlg, e) => {

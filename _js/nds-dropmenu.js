@@ -628,9 +628,9 @@
                 if (this.isOpen) this.close();
             }, { capture: true, signal });
             // Safari leaves focus on the page or the modal around a clicked trigger: Escape there closes
-            // the newest open menu, before a <dialog> around it reads the key as its own close.
+            // the newest open menu, or cancels a pending open, before a <dialog> around it reads the key as its own close.
             document.addEventListener('keydown', (e) => {
-                if (e.key !== 'Escape' || [..._openDropmenus].pop() !== this.dropmenu
+                if (e.key !== 'Escape' || (!this._delaying && [..._openDropmenus].pop() !== this.dropmenu)
                     || this.dropmenu.contains(e.target) || !e.target.contains?.(this.dropmenu)) return;
                 e.stopImmediatePropagation();
                 this._onEscape(e);
@@ -1027,8 +1027,11 @@
             const p = NDS.flipPosition(this.trigger, this.menu, {
                 respectNav: this._respectNav
             });
-            const topEdge = Math.max(p.box.top + pad, p.topEdge);
-            const spaceBelow = p.spaceBelow - gap - pad;
+            // No popover (Safari 16): the part of a fixed menu outside the modal's scroll box takes
+            // no clicks, so the menu flips and shrinks inside that box.
+            const clip = this.menu.showPopover ? null : this._modalClip();
+            const topEdge = Math.max(p.box.top + pad, p.topEdge, clip ? clip.top + pad : -Infinity);
+            const spaceBelow = (clip ? Math.min(p.spaceBelow, clip.bottom - p.triggerRect.bottom) : p.spaceBelow) - gap - pad;
             // Recompute spaceAbove from triggerRect rather than reusing
             // p.spaceAbove because p.spaceAbove uses the unclamped p.topEdge
             // (which is 0 when no nav is present); we need the clamped value.
@@ -1089,6 +1092,17 @@
             this._flipUp = flipUp;
 
             NDS.place(this.menu, top, leftPx);
+        }
+
+        // The nearest scroll box around the menu inside an open <dialog>, or null.
+        // ponytail: vertical only; a menu wider than a narrow modal can still overhang its sides.
+        _modalClip() {
+            const dlg = this.dropmenu.closest('dialog[open]');
+            if (!dlg) return null;
+            for (let el = this.dropmenu.parentElement; el && el !== dlg.parentElement; el = el.parentElement) {
+                if (/auto|scroll|hidden/.test(getComputedStyle(el).overflowY)) return el.getBoundingClientRect();
+            }
+            return null;
         }
 
         /**
