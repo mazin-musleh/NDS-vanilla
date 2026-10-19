@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 11:18 PM"
+last_edit: "19/10/2026 - 05:26 PM"
 ---
 
 <section id="drawer-overview" class="nds-content-section nds-doc-overview">
@@ -488,7 +488,7 @@ Set them on `.nds-drawer`, in its `style` attribute.
 | `nds:drawer:hidden` | `.nds-drawer`, after a submenu closes, and it bubbles | `item` (the `<li>`), `drawer` |
 {: .nds-table .nds-responsive}
 
-The events fire when a person or `toggle()` opens or closes a submenu. They do not fire for the submenus that open at load.
+The events fire when a person or `toggle()` opens or closes a submenu. They do not fire for the submenus that open at load, or for the submenus a search opens and closes.
 
 <script type="text/html" id="drawer-api-js" data-canon data-lang="js">
 var drawer = document.querySelector('.nds-drawer');

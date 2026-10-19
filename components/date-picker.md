@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 10:23 PM"
+last_edit: "19/10/2026 - 05:25 PM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -306,6 +306,7 @@ Source: the `date-picker` group in `_sass/tokens/_components.scss`.
 | `NDS.DatePicker.init()` | Starts every `.nds-date-input` that has not started. The loader calls it on load. Call it again after you add a field to the page |
 | `NDS.DatePicker.reinit()` | The same as `init()` |
 | `NDS.DatePicker.create(input, formControl)` | Starts one field, and returns its instance. `formControl` is optional: the default is the input's `.nds-form-control`. On a field that has started, it returns the same instance. It returns `null` when the input has no `.nds-form-control` or no `.nds-form-container` |
+| `NDS.DatePicker.destroy(input)` | Runs `instance.destroy()` on the field's picker. `NDS.Init.destroy()` calls it |
 | `instance.destroy()` | Removes the calendar and its listeners. `create()` can start the field again. Call it before you remove the field from the page |
 | `NDS.DatePicker.CalendarConfig.gregorian`, `.hijri` | The two calendars. Each has `formatDate(date, format)` and `parseDate(text, format)` |
 {: .nds-table .nds-responsive}
