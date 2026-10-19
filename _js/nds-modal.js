@@ -63,7 +63,6 @@
     activeModal = modal;
 
     // The from-state paints first, so the CSS transition runs.
-    modal.offsetHeight;
     NDS.afterPaint(() => {
       if (activeModal !== modal) return;
       NDS.State.set(modal, 'open');
@@ -72,14 +71,15 @@
 
     const isStatic = () => modal.hasAttribute('data-modal-static');
     const onEscape = (e) => {
-      if ((e.key !== 'Escape' && e.key !== 'Esc') || e.defaultPrevented) return;
+      // A dialog above it (a modal panel inside) answers instead.
+      if ((e.key !== 'Escape' && e.key !== 'Esc') || e.defaultPrevented || NDS.dialog.top() !== modal) return;
       // The native close skips the fade.
       e.preventDefault();
       if (!isStatic()) close();
     };
     // Focus on <body> (a click on plain text) never reaches the dialog's own listener.
     document.addEventListener('keydown', (e) => {
-      if (!modal.contains(e.target) && NDS.dialog.top() === modal) onEscape(e);
+      if (!modal.contains(e.target)) onEscape(e);
     }, { signal });
     // On the dialog, not document: a menu inside that handles Escape stops it first.
     modal.addEventListener('keydown', (e) => {
@@ -164,9 +164,9 @@
     }, { signal });
 
     // A dialog closed without close(): a <form method="dialog">, or Chrome's repeat Escape.
-    // close does not bubble, so capture hears it.
+    // close does not bubble, so capture hears it. It is queued: a modal open again by then is stale.
     document.addEventListener('close', (e) => {
-      if (e.target !== activeModal) return;
+      if (e.target !== activeModal || e.target.open) return;
       activeModal = null;
       openAbortController?.abort();
       finish(e.target);

@@ -70,7 +70,7 @@
     const stack = [];
     const top = () => stack[stack.length - 1];
     // A modal dialog above (a Modal, or a newer modal panel) answers instead.
-    const isTop = (panel) => top() === panel && (!NDS.dialog.top() || NDS.dialog.top() === panel);
+    const isTop = (panel) => (NDS.dialog.top() ? NDS.dialog.top() === panel : top() === panel);
     // Static panels kept off the screen by another; the newest returns once none is open.
     const waiting = [];
     const drop = (list, panel) => {
@@ -143,8 +143,8 @@
             // Guards the opener explicitly: the DOM spec says a listener added
             // mid-dispatch isn't called for that same event, but relying on it
             // would make the opening click close the panel if that ever shifted.
-            // A click on a modal panel's dim layer lands on the panel: onOutside() above owns it.
-            document.addEventListener('click', (e) => {
+            // A modal panel needs none: NDS.dialog stops every outside click and onOutside() above closes it.
+            if (!panel._modal) document.addEventListener('click', (e) => {
                 // A Modal closes before its click reaches here, so its parts are named too.
                 if (!isTop(panel) || panel.contains(e.target)
                     || e.target.closest('.nds-modal, .nds-backdrop, [data-modal-target]')) return;
@@ -205,6 +205,9 @@
         // A string ref that missed may name a template-wrapped panel.
         if (!panel && typeof ref === 'string') panel = NDS.fromTemplate(ref.replace(/^#/, ''));
         if (!panel) return;
+        // A panel added after load without NDS.Init.mount: its close controls are wired here.
+        createPanel(panel);
+        if (!panel.hasAttribute(INIT_ATTR)) return;
         // On the panel, not a local: a swap opens it later from close()'s cleanup.
         if (focus) delete panel._noFocus; else panel._noFocus = true;
 
@@ -390,8 +393,9 @@
         const { signal } = panel._panelAC;
 
         // Closed without close(): a <form method="dialog">, or Chrome's repeat Escape on a modal panel.
+        // The event is queued: open again by the time it lands (a re-open mid-close), it is stale.
         panel.addEventListener('close', () => {
-            if (!hasState(panel, 'open') || hasState(panel, 'closing')) return;
+            if (panel.open || !hasState(panel, 'open') || hasState(panel, 'closing')) return;
             NDS.dialog.close(panel);
             close(panel);
         }, { signal });

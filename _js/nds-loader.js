@@ -348,7 +348,7 @@
             selector: '.nds-alert',
         },
         {
-            // Delegated: the panel ships [hidden]; toggle clicks in the gap no-op and recover.
+            // Delegated: a closed <dialog> paints nothing without JS; toggle clicks in the gap no-op and recover.
             name: 'Panel',
             selector: '.nds-panel, .nds-panel-template',
             destroyEach: true,

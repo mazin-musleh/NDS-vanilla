@@ -21,7 +21,7 @@
 
   const POPOVER = 'showPopover' in HTMLElement.prototype;
   const open = []; // modal dialogs, bottom to top
-  let inerted = []; // what this core made inert
+  let inerted = new Set(); // what this core made inert
   const SKIP = new Set(['SCRIPT', 'TEMPLATE', 'STYLE', 'LINK', 'NOSCRIPT']);
 
   const top = () => open[open.length - 1];
@@ -33,12 +33,12 @@
     const want = new Set();
     for (let n = top(); n && n !== document.body && n.parentElement; n = n.parentElement) {
       for (const sib of n.parentElement.children) {
-        if (sib !== n && !SKIP.has(sib.tagName) && (!sib.inert || inerted.includes(sib))) want.add(sib);
+        if (sib !== n && !SKIP.has(sib.tagName) && (!sib.inert || inerted.has(sib))) want.add(sib);
       }
     }
     inerted.forEach((el) => { if (!want.has(el)) el.inert = false; });
     want.forEach((el) => { el.inert = true; });
-    inerted = [...want];
+    inerted = want;
   }
 
   // ponytail: Main Navigation, Side Menu and the image viewer still dim through NDS.Backdrop; a dialog
@@ -78,7 +78,7 @@
     if (dlg.open) return;
     if (!POPOVER) { dlg.showModal(); return; }
     // The dialog under it may have made this one inert; focus cannot move in until it is not.
-    inerted = inerted.filter((el) => !el.contains(dlg) || (el.inert = false));
+    inerted.forEach((el) => { if (el.contains(dlg)) { el.inert = false; inerted.delete(el); } });
     dlg.setAttribute('popover', 'manual');
     dlg.show();
     NDS.topLayer(dlg, true);
