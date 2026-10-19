@@ -39,8 +39,8 @@
 // inline custom seeds, and stylesheet themes), with localStorage persistence.
 //
 // Lives in the MAIN bundle so it runs on every page the topbar renders on (the
-// switcher markup is global; showcase.js is doc-pages-only). data-theme is a token
-// list — "dark crimson" — carrying the mode token (dark; light = default, no token)
+// switcher markup is global). data-theme is a token list — "dark crimson" —
+// carrying the mode token (dark; light = default, no token)
 // and an optional predefined-theme token, matched per-token by [data-theme~="…"].
 //
 // Storage: nds-theme = the full data-theme string (mode + token); nds-palette = a
@@ -122,12 +122,13 @@
         const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
 
         const t = document.startViewTransition(apply);
+        // A skipped transition (hidden tab, a second click) rejects ready; apply still ran.
         t.ready.then(() => {
             root.animate(
                 { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
                 { duration: 500, easing: 'ease-in-out', pseudoElement: '::view-transition-new(root)' }
             );
-        });
+        }, () => {});
     }
     function setTheme(theme, el) {
         reveal(() => applyTheme(theme), el);
@@ -219,7 +220,7 @@
         catch (e) { /* storage blocked */ }
     }
     function syncSwitcher(active) {
-        if (active == null) active = curTokens().filter(t => themeNames().indexOf(t) !== -1)[0] || '';
+        _active = active;
         const els = document.querySelectorAll(SWITCH_SEL);
         for (let i = 0; i < els.length; i++) {
             const on = (els[i].getAttribute('data-theme-value') || '') === active;
@@ -231,6 +232,7 @@
     }
 
     let _sheet = '';   // active stylesheet theme value ('' otherwise)
+    let _active = '';  // the switcher value marked current, for a switcher mounted later
     // Apply a clicked switcher item — inside the shared reveal so a theme change ripples
     // from the clicked item, exactly like the dark toggle. (Predefined/custom recolour
     // synchronously inside the transition; a stylesheet theme's CSS loads async, so it
@@ -269,12 +271,9 @@
                 }
                 root.setAttribute('data-palette', '');
                 savePalette({ value: value, seeds: seeds });
-            } else if (value) {
-                removeStylesheet(); clearInline(); savePalette(null);
-                setThemeToken(value);                       // predefined seed theme → toggle the token
             } else {
                 removeStylesheet(); clearInline(); savePalette(null);
-                setThemeToken('');                          // DGA
+                setThemeToken(value);                       // predefined seed theme, or '' for DGA
             }
             syncSwitcher(value);
             syncUrl(value);
@@ -294,8 +293,6 @@
     // so here we load any active stylesheet theme's assets, re-apply a saved custom
     // palette, and sync aria. A click landing in the pre-init gap no-ops, recovers next click.
     function reconcileSwitcher() {
-        if (!document.querySelector(SWITCH_SEL)) return;
-
         let palette = null;
         try { const s = localStorage.getItem(PALETTE_KEY); if (s) palette = JSON.parse(s); } catch (e) { /* ignore */ }
 
@@ -309,7 +306,6 @@
             }
             root.setAttribute('data-palette', '');
             syncSwitcher(palette.value || '');
-            wireSwitcher();
             return;
         }
 
@@ -324,9 +320,37 @@
             runHook(active, 'inject');
         }
         syncSwitcher(active);
-        wireSwitcher();
     }
-    function wireSwitcher() {
+
+    // Init: sync the toggles, the switcher and the bar color, then wire delegation. The
+    // loader runs it on a toggle, a switcher or the theme-color meta, and mount()/refresh()
+    // run it again for a later view: the sync runs every time, the restore and the
+    // listeners once. First paint is owned by the pre-paint FOUC script.
+    let _wired = false, _reconciled = false;
+    function init() {
+        updateToggles(getTheme());
+        if (_reconciled) syncSwitcher(_active);
+        else if (document.querySelector(SWITCH_SEL)) {
+            _reconciled = true;
+            reconcileSwitcher();
+
+            // ?theme=<token> applies that switcher option as if clicked (and persists
+            // it); ?theme= (empty) returns to the default. The URL keeps the param so
+            // the link can be copied; while it is there a reload re-applies it. Lands
+            // after first paint, so the saved theme shows for a frame first.
+            const params = new URLSearchParams(location.search);
+            if (params.has('theme')) {
+                const want = params.get('theme');
+                const option = Array.from(document.querySelectorAll(SWITCH_SEL))
+                    .find(el => (el.getAttribute('data-theme-value') || '') === want);
+                if (option && option.getAttribute('aria-current') !== 'true') applySelection(option);
+            }
+        }
+        syncThemeColor();
+
+        if (_wired) return;
+        _wired = true;
+
         // A switcher item is usually a button (click); it can also be a switch — then
         // the input's 'change' drives it, so skip the click to avoid a double-toggle.
         document.addEventListener('click', (e) => {
@@ -339,31 +363,6 @@
             const el = e.target.closest(SWITCH_SEL);
             if (el) applySelection(el);   // applySelection toggles on the item's current state
         });
-    }
-
-    // Init: sync toggle UI + reconcile the switcher, then wire delegation. The loader
-    // gates this on a toggle OR a switcher being present. First paint is owned by the
-    // pre-paint FOUC script, independent of this init.
-    let _initDone = false;
-    function init() {
-        if (_initDone) return;
-        _initDone = true;
-
-        updateToggles(getTheme());
-        reconcileSwitcher();
-        syncThemeColor();
-
-        // ?theme=<token> applies that switcher option as if clicked (and persists
-        // it); ?theme= (empty) returns to the default. The URL keeps the param so
-        // the link can be copied; while it is there a reload re-applies it. Lands
-        // after first paint, so the saved theme shows for a frame first.
-        const params = new URLSearchParams(location.search);
-        if (params.has('theme')) {
-            const want = params.get('theme');
-            const option = Array.from(document.querySelectorAll(SWITCH_SEL))
-                .find(el => (el.getAttribute('data-theme-value') || '') === want);
-            if (option && option.getAttribute('aria-current') !== 'true') applySelection(option);
-        }
 
         // Mode toggle — button click delegation
         document.addEventListener('click', e => {
