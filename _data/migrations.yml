@@ -10,11 +10,9 @@
 #   inert    a property NDS never read: setting it never had an effect
 - { kind: class, name: actions-column, scope: .nds-table, status: renamed, use: nds-actions-column, since: "2.0.0", fix: "Use nds-actions-column." }
 - { kind: class, name: checkbox-column, scope: .nds-table, status: renamed, use: nds-checkbox-column, since: "2.0.0", fix: "Use nds-checkbox-column." }
-- { kind: class, name: code-example, scope: .nds-tabs.nds-code, status: removed, since: "2.0.0", fix: "Remove it: a panel in .nds-tabs.nds-code needs no class." }
 - { kind: class, name: external, scope: ".nds-sidemenu li", status: removed, since: "2.0.0", fix: "Remove it: the side menu no longer styles li.redirect.external." }
 - { kind: class, name: filter-btn, scope: .nds-filter, status: renamed, use: nds-filter-btn, since: "2.0.0", fix: "Use nds-filter-btn on the filter menu trigger." }
 - { kind: class, name: focus, scope: .nds-form-control, status: removed, since: "2.0.0", fix: "Remove it: the field styles its own focus." }
-- { kind: class, name: generalInfo, scope: .nds-topbar, status: removed, since: "2.0.0", fix: "Remove it: the top bar rule is gone and no markup used it." }
 - { kind: class, name: hgi-arrange-by-numbers-1-9, scope: .hgi, status: renamed, use: hgi-arrange-by-numbers-one-9, since: "2.0.0", fix: "Use hgi-arrange-by-numbers-one-9." }
 - { kind: class, name: hgi-arrange-by-numbers-9-1, scope: .hgi, status: renamed, use: hgi-arrange-by-numbers-nine-1, since: "2.0.0", fix: "Use hgi-arrange-by-numbers-nine-1." }
 - { kind: class, name: hgi-cplusplus, scope: .hgi, status: renamed, use: hgi-cpp, since: "2.0.0", fix: "Use hgi-cpp." }
@@ -39,7 +37,6 @@
 - { kind: class, name: nds-card-checkbox, scope: .nds-card, status: removed, since: "2.0.0", fix: "Put the checkbox in .nds-card-corner, written first in .nds-card-text." }
 - { kind: class, name: nds-card-price, status: renamed, use: nds-card-value, since: "2.0.0", fix: "Use nds-card-value." }
 - { kind: class, name: nds-card-status, scope: .nds-card, status: removed, since: "2.0.0", fix: "Put the status tag in .nds-card-corner, written first in .nds-card-text. With a checkbox, both go in one corner, the checkbox last." }
-- { kind: class, name: nds-card-view, scope: "&.nds-stepper", status: removed, since: "2.0.0", fix: "Remove it and put nds-card on every step, on every step's content, or on the stepper. The card border takes the step state color." }
 - { kind: class, name: nds-cardView, scope: "&.nds-content-layout", status: renamed, use: nds-card-view, since: "2.0.0", fix: "Use nds-card-view." }
 - { kind: class, name: nds-cardView, scope: "&.nds-stepper", status: removed, since: "2.0.0", fix: "Remove it and put nds-card on every step, on every step's content, or on the stepper. The card border takes the step state color." }
 - { kind: class, name: nds-collapse, scope: .nds-main-nav, status: renamed, use: nds-nav-collapse, since: "2.0.0", fix: "Use nds-nav-collapse." }
@@ -161,7 +158,7 @@
 - { kind: id, name: ndsMainNav, status: renamed, use: nds-main-nav, since: "2.0.0", fix: "Use id nds-main-nav (and the menu button's aria-controls)." }
 - { kind: id, name: ndsNavCollapse, status: renamed, use: nds-nav-collapse, since: "2.0.0", fix: "Use id nds-nav-collapse (and the menu button's aria-controls)." }
 - { kind: id, name: ndsThemeToggle, status: renamed, use: data-theme-toggle, since: "2.0.0", fix: "Use data-theme-toggle on the toggle." }
-- { kind: property, name: --backdrop-z-index, status: removed, since: "2.0.0", fix: "Remove it: it never applied; each component sets its own backdrop z-index." }
+- { kind: property, name: --backdrop-z-index, status: removed, since: "2.0.0", fix: "Remove it: it never applied; each component sets its own backdrop z-index.", inert: true }
 - { kind: property, name: --drawer-indicator-active, scope: .nds-drawer, status: removed, since: "2.0.0", fix: "Remove it: the drawer uses the button indicator. Set --btn-indicator-selected on .nds-drawer .nds-btn instead." }
 - { kind: property, name: --drawer-indicator-hover, scope: .nds-drawer, status: removed, since: "2.0.0", fix: "Remove it: the drawer uses the button indicator. Set --btn-indicator-color on .nds-drawer .nds-btn instead." }
 - { kind: property, name: --nds-content-MaxWidth, status: renamed, use: --nds-content-max-width, since: "2.0.0", fix: "Use --nds-content-max-width." }
@@ -175,7 +172,7 @@
 - { kind: property, name: --main-gap, scope: .nds-content, status: renamed, use: --content-gap, since: "2.0.0", fix: "Use --content-gap." }
 - { kind: property, name: --main-padding-block, scope: .nds-content, status: renamed, use: --content-padding-block, since: "2.0.0", fix: "Use --content-padding-block." }
 - { kind: property, name: --main-padding-inline, scope: .nds-content, status: renamed, use: --content-padding-inline, since: "2.0.0", fix: "Use --content-padding-inline." }
-- { kind: property, name: --section-image-MB, scope: .nds-content-section, status: removed, since: "2.0.0", fix: "Remove it: nothing read it." }
+- { kind: property, name: --section-image-MB, scope: .nds-content-section, status: removed, since: "2.0.0", fix: "Remove it: nothing read it.", inert: true }
 - { kind: property, name: --section-shape-size, scope: .nds-content-section, status: renamed, use: --section-icon-size, since: "2.0.0", fix: "Use --section-icon-size." }
 - { kind: property, name: --toggle-height, scope: .nds-sidemenu, status: renamed, use: --nds-sidemenu-toggle-height, since: "2.0.0", fix: "Use --nds-sidemenu-toggle-height." }
 - { kind: property, name: --toggle-transform, scope: .nds-sidemenu, status: removed, since: "2.0.0", fix: "Remove it: the component sets the side menu toggle position." }
@@ -695,7 +692,7 @@
 - { kind: property, name: --tooltip-text-heading-light, scope: .nds-tooltip, status: renamed, use: --tooltip-text-heading-default, since: "1.1.0", fix: "Use --tooltip-text-heading-default. Set the dark-mode value under :root[data-theme~=\"dark\"]." }
 - { kind: property, name: --tooltip-text-paragraph-dark, scope: .nds-tooltip, status: renamed, use: --tooltip-text-paragraph-default, since: "1.1.0", fix: "Set --tooltip-text-paragraph-default under :root[data-theme~=\"dark\"] instead." }
 - { kind: property, name: --tooltip-text-paragraph-light, scope: .nds-tooltip, status: renamed, use: --tooltip-text-paragraph-default, since: "1.1.0", fix: "Use --tooltip-text-paragraph-default. Set the dark-mode value under :root[data-theme~=\"dark\"]." }
-- { kind: class, name: article-tags, scope: .nds-group, status: removed, since: "1.0.5", fix: "Delete it, it had no styles." }
+- { kind: class, name: article-tags, scope: .nds-group, status: removed, since: "1.0.5", fix: "Delete it; set your own bottom margin if you need the space." }
 - { kind: class, name: nds-group, status: renamed, use: nds-tags, since: "1.0.5", fix: "Use nds-tags for a tag list." }
 - { kind: class, name: nds-hero-content, status: removed, since: "1.0.5", fix: "Delete it, the hero no longer uses this wrapper." }
 - { kind: property, name: --table-background-tr-selected, scope: .nds-table, status: renamed, use: --table-background-row-selected, since: "1.0.5", fix: "Use --table-background-row-selected." }
