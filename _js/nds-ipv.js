@@ -87,10 +87,7 @@
             // Element focused before opening, restored on close().
             this.lastFocused = null;
 
-            // Tab focus trap — added on open, removed on close (mirrors nds-modal).
-            // Open-lifecycle, so it sits outside the AbortController below: close()
-            // already detaches it per cycle, and a signal would duplicate that
-            // bookkeeping without shortening the listener's life.
+            // Tab focus trap. It lives for one open, on openAbortController.
             this.trapFocus = NDS.trapFocus(() => this.el.overlay);
 
             // One controller for every instance-lifetime listener; destroy() detaches all.
@@ -409,7 +406,9 @@
 
                 // Move focus into the dialog, trap Tab, and remember where to return.
                 this.lastFocused = document.activeElement;
-                document.addEventListener('keydown', this.trapFocus);
+                this.openAbortController?.abort();
+                this.openAbortController = new AbortController();
+                document.addEventListener('keydown', this.trapFocus, { signal: this.openAbortController.signal });
                 if (this.el.closeBtn) this.el.closeBtn.focus();
             }
 
@@ -427,7 +426,7 @@
             }
 
             // Release the trap and return focus to the triggering thumbnail.
-            document.removeEventListener('keydown', this.trapFocus);
+            this.openAbortController?.abort();
             if (this.lastFocused && typeof this.lastFocused.focus === 'function') {
                 this.lastFocused.focus();
             }
@@ -519,7 +518,7 @@
             if (this.el.overlay && this.el.overlay.classList.contains('nds-ipv-active')) this.close();
             this.abortController.abort();
             this._offResize();
-            document.removeEventListener('keydown', this.trapFocus);
+            this.openAbortController?.abort();
             if (this.el.overlay) this.el.overlay.remove();
             this.el = {};
             // Free the singleton slot so init() can build a fresh viewer.
