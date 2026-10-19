@@ -382,13 +382,21 @@
     // it; the marker is deferred by one rAF so the browser commits
     // setupInitialState's state change in a paint where the CSS gate
     // (.nds-accordion:not([data-nds-accordion-initialized])) still applies,
-    // suppressing the init-time animation.
+    // suppressing the init-time animation. The timer races the rAF: a hidden
+    // tab runs no rAF, and the stamp also releases the skeleton.
     function activate(container, instance) {
         if (!instance.valid) return;
         container.ndsAccordion = instance;
-        requestAnimationFrame(() => {
+        let stamped = false;
+        const stamp = () => {
+            // A destroy() in between owns the root now.
+            if (stamped || container.ndsAccordion !== instance) return;
+            stamped = true;
             container.setAttribute('data-nds-accordion-initialized', 'true');
-        });
+        };
+        requestAnimationFrame(stamp);
+        // Hidden only: on a busy visible page the timer could beat the first paint.
+        if (document.hidden) setTimeout(stamp, 100);
     }
 
     // Assigned at module eval so the loader's lazy stub resolves.

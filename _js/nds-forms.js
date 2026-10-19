@@ -1666,6 +1666,8 @@
         if (form.tagName !== 'FORM') return;
         if (form._ndsFormInitialized) return;
         form._ndsFormInitialized = true;
+        // The pending-submit guard is delegated: see initializeContainer.
+        installFormDelegation();
         form.setAttribute('novalidate', '');
 
         form.addEventListener('submit', function(e) {
@@ -1783,6 +1785,9 @@
 
     function initializeContainer(container) {
         if (!container) return;
+        // A page with no field at load never ran init(): a direct call wires the page-wide part too.
+        installFormDelegation();
+        initDynamicContentObserver();
 
         // Initialize form controls
         var formControls = selfAndInner(container, '.nds-form-control');

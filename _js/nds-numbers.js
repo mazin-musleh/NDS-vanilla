@@ -112,15 +112,15 @@
         const reduced = NDS.prefersReducedMotion;
         document.querySelectorAll(COUNTER).forEach(el => {
             // reinit() re-arms: release a subscription that has not fired yet.
-            if (el._ndsCounterOff) el._ndsCounterOff();
-            delete el._ndsCounterOff;
+            el.ndsCounter?.destroy();
             if (el.closest('code') || el.hasAttribute('data-animated') || el._ndsCounting) return;
-            el._ndsCounterOff = NDS.onIntersect(el, (entry) => {
+            // A backref, so NDS.Init.destroy(view) releases a counter that never scrolled into view.
+            const off = NDS.onIntersect(el, (entry) => {
                 if (!entry.isIntersecting) return;
-                el._ndsCounterOff();
-                delete el._ndsCounterOff;
+                el.ndsCounter.destroy();
                 count(el, reduced);
             }, { threshold: 0.5 });
+            el.ndsCounter = { destroy() { off(); delete el.ndsCounter; } };
         });
     }
 
