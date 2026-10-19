@@ -32,15 +32,17 @@ Important notes:
 - [NDS IQ]({{ "/guides/integration-quality.html" | absolute_url }}): The instruction system itself — how it is built, tested, versioned, and kept current, with the full revision history.
 - [NDS IQ rules (raw)]({{ site.repository_url | replace: "github.com", "raw.githubusercontent.com" }}/refs/heads/main/_includes/NDS-IQ.md): The installable rules file, latest published revision — download the raw file itself (curl or equivalent, never a summarizing web-fetch: a re-rendered copy is corrupt), save it as `NDS-IQ.md` at the project root, then follow its own "This file" section, which adds the anchor to the agent instruction file. Read it top to bottom, once per session, before any NDS work.
 {%- assign library = site.data.catalog | where_exp: "e", "e.url contains '/foundations/' or e.url contains '/layout/' or e.url contains '/ui-shell/' or e.url contains '/components/' or e.url contains '/utilities/' or e.url contains '/core/' or e.url contains '/guides/'" -%}
-{%- assign cats = "Foundations,Layout,UI Shell,Actions,Navigation,Overlays,Feedback,Content,Forms,Data,Utilities,Core,Guides" | split: "," -%}
-{%- assign labels = "Foundations,Layout,UI shell,Components: actions,Components: navigation,Components: overlays,Components: feedback,Components: content,Components: forms,Components: data,Utilities,Core (JavaScript API),Reference" | split: "," -%}
+{%- assign cats = "Guides,Foundations,Layout,UI Shell,Actions,Navigation,Overlays,Feedback,Content,Forms,Data,Utilities,Core" | split: "," -%}
+{%- assign labels = "Guides,Foundations,Layout,UI shell,Components: actions,Components: navigation,Components: overlays,Components: feedback,Components: content,Components: forms,Components: data,Utilities,Core (JavaScript API)" | split: "," -%}
 {%- assign catlast = cats.size | minus: 1 -%}
 {%- for ci in (0..catlast) -%}
 {%- assign cat = cats[ci] -%}
 {%- assign items = library | where: "category", cat | sort: "title" -%}
 {%- if items.size > 0 %}
+{%- unless cat == "Guides" %}{% comment %} joins the hand-listed guides above {% endcomment %}
 
 ## {{ labels[ci] }}
+{%- endunless %}
 {%- for c in items %}
 - [{{ c.title }}]({{ c.url | absolute_url }}){% if c.description and c.description != "" %}: {{ c.description }}{% endif %}{% if c.tags and c.tags.size > 0 %} ({{ c.tags | join: ", " }}){% endif %}{% if c.use_when and c.use_when != "" %} **Use when:** {{ c.use_when }}{% endif %}{% if c.js or c.scss %} — source:{% if c.js %} [JS]({{ rawbase }}/{{ c.js }}){% endif %}{% if c.js and c.scss %} ·{% endif %}{% if c.scss %} [SCSS]({{ rawbase }}/{{ c.scss }}){% endif %}{% endif %}
 {%- endfor %}

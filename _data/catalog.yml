@@ -972,7 +972,7 @@
 # ── Guides — something you read ───────────────────────────────────────────
 
 - title: "Migration"
-  description: "Every class, attribute, id, custom property, window setting and event that an NDS release renamed or removed, with what to write instead"
+  description: "Every class, attribute, id, custom property, window setting, event and URL parameter that an NDS release renamed or removed, with what to write instead"
   use_when: "Upgrade a site to a newer NDS release: read what changed in each release after yours, and what to write instead. The Audit finds these names on a page for you. Old JavaScript method names are in each release's notes."
   category: "Guides"
   tags: ["JS", "CSS"]
