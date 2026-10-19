@@ -57,6 +57,11 @@ $prose-langs: '.lang-markdown, .lang-md, .language-markdown, .language-md, .lang
     align-items: center;
     gap: var(--spacing-xs);
     padding: var(--spacing-sm);
+
+    // NDS.Code stamps nds-md after the reveal; CSS holds the size from the first paint.
+    .nds-btn.nds-icon-only:not(.nds-sm, .nds-lg) {
+      @include btn-md;
+    }
   }
 
   // The .nds-tag NDS.Code stamps from the authored lang-* class — opposite the
@@ -144,6 +149,15 @@ $prose-langs: '.lang-markdown, .lang-md, .language-markdown, .language-md, .lang
     // Gutter width reserved unconditionally — digits sit in this padding
     // (absolutely positioned) instead of being laid out inline.
     padding-inline: var(--_code-gutter) var(--spacing-2xl);
+
+    // The newline after <code> paints a blank first line until NDS.Code strips it
+    // after the reveal: give that line's height back so the text does not jump.
+    // ponytail: assumes the source opens on a new line, as the canon does; one that
+    // does not sits a line high until highlighted.
+    &:not([data-nds-code-highlighted="true"]) {
+      padding-block-start: calc(var(--spacing-6xl) - var(--typo-text-sm-LH));
+    }
+
     // One stripe for the whole block, painted from server markup. A background
     // (not a pseudo-element) because `code` is the scroll container: an abspos
     // stripe is sized to the visible box, so it leaves the gutter unpainted past

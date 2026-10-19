@@ -140,12 +140,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   --btn-indicator-size: 3px;
 
   &.nds-md {
-    --btn-size: 32px;
-    --btn-gap: var(--spacing-sm);
-    --btn-indicator-size: 3px;
-    // Pin label typography to text-sm so LH matches the design system (20, not the calc's 21)
-    --btn-FS: var(--typo-text-sm-FS);
-    --btn-LH: var(--typo-text-sm-LH);
+    @include btn-md;
   }
 
   &.nds-sm {

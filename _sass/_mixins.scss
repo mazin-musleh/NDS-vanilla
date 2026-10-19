@@ -218,6 +218,16 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // BUTTON BASE MIXINS
 // ==============================================
 
+// Button MD step: the .nds-md class and a parent's own rule share it.
+@mixin btn-md {
+  --btn-size: 32px;
+  --btn-gap: var(--spacing-sm);
+  --btn-indicator-size: 3px;
+  // Pin label typography to text-sm so LH matches the design system (20, not the calc's 21)
+  --btn-FS: var(--typo-text-sm-FS);
+  --btn-LH: var(--typo-text-sm-LH);
+}
+
 @mixin btn-base {
   --_btn-bg: var(--btn-bg, transparent);
   --_btn-bg-hover: var(--btn-bg-hover, var(--_btn-bg));
