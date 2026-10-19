@@ -71,7 +71,7 @@
   function handleEscape(e) {
     const cfg = top();
     // defaultPrevented: a Modal above handled it.
-    if ((e.key === 'Escape' || e.key === 'Esc') && !e.defaultPrevented && cfg?.onClick) {
+    if (e.key === 'Escape' && !e.defaultPrevented && cfg?.onClick) {
       cfg.onClick();
     }
   }

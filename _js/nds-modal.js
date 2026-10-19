@@ -72,7 +72,7 @@
     const isStatic = () => modal.hasAttribute('data-modal-static');
     const onEscape = (e) => {
       // A dialog above it (a modal panel inside) answers instead.
-      if ((e.key !== 'Escape' && e.key !== 'Esc') || e.defaultPrevented || NDS.dialog.top() !== modal) return;
+      if (e.key !== 'Escape' || e.defaultPrevented || NDS.dialog.top() !== modal) return;
       // The native close skips the fade.
       e.preventDefault();
       if (!isStatic()) close();

@@ -490,7 +490,7 @@
             // Global Esc closes the mask, unless something open owns the key: a modal, a panel
             // (this one included) or a menu, or a handler that already used it.
             document.addEventListener('keydown', (e) => {
-                if (e.key !== 'Escape' && e.key !== 'Esc') return;
+                if (e.key !== 'Escape') return;
                 // Showing, not "no hidden attribute": a closed menu may be hidden by CSS alone.
                 if (e.defaultPrevented || [...document.querySelectorAll('.nds-modal, .nds-panel, .nds-dropmenu-menu')].some(el => el.getClientRects().length)) return;
                 e.preventDefault();

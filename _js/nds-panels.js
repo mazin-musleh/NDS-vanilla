@@ -135,7 +135,7 @@
         if (!isStatic) {
             document.addEventListener('keydown', (e) => {
                 // defaultPrevented: the Modal's own Escape closed it a moment ago.
-                if ((e.key !== 'Escape' && e.key !== 'Esc') || e.defaultPrevented || !isTop(panel)) return;
+                if (e.key !== 'Escape' || e.defaultPrevented || !isTop(panel)) return;
                 e.preventDefault();
                 close(panel);
             }, { signal });
