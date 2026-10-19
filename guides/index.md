@@ -94,6 +94,31 @@ sidemenu_mode: false
                     </div>
                 </div>
 
+                <div class="nds-card nds-stroke">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
+                                <i class="hgi hgi-stroke hgi-shield-01"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Content Security Policy</span>
+                            <p class="nds-card-description">Run NDS under a strict policy: what each inline part needs, a policy that covers it all, and how to move inline knobs to classes.</p>
+                        </div>
+                        <div class="nds-card-tags">
+                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Reference</span></span>
+                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Security</span></span>
+                        </div>
+                    </div>
+                    <div class="nds-card-actions">
+                        <a href="{{ 'ui-shell/head' | relative_url }}#csp" class="nds-btn nds-primary">
+                            <span class="nds-label">Read Section</span>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
