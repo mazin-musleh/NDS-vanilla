@@ -285,7 +285,7 @@ Use this structure verbatim:
 ## HIGH
 ### _js/nds-alert.js
 - L219 [JSP-01] Raw window scroll listener
-  Fix: Replace with RAF-throttled handler; store unsubscribe. See _js/nds-scroll-more.js:140-157.
+  Fix: Replace with RAF-throttled handler; store unsubscribe. See the `checkScrollPosition` scroll listener in _js/nds-scroll-more.js (~L190).
 
 ### _js/nds-accordion.js
 - L42 [JSD-01] dataset.state assignment clobbers other state tokens
