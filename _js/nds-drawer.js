@@ -119,22 +119,33 @@
         }
     }
 
+    // The end-of-animation step a submenu is waiting on. A reversal cancels it: two queued
+    // ends would both run, and the open one would leave the <li> marked open.
+    const pendingEnd = new WeakMap();
+    function cancelPending(submenu) {
+        pendingEnd.get(submenu)?.();
+        pendingEnd.delete(submenu);
+    }
+
     function showSubmenu(listItem, button, submenu) {
+        cancelPending(submenu);
         setState(submenu, CONFIG.states.opening);
         setState(listItem, CONFIG.states.opening);
         NDS.aria.expanded(button, true);
         setState(button, CONFIG.states.active);
         submenu.style.height = submenu.scrollHeight + 'px';
 
-        NDS.onTransitionEnd(submenu, () => {
+        pendingEnd.set(submenu, NDS.onTransitionEnd(submenu, () => {
+            pendingEnd.delete(submenu);
             setState(submenu, CONFIG.states.open);
             setState(listItem, CONFIG.states.open);
             submenu.style.height = '';
             dispatchDrawerEvent(listItem, 'shown');
-        });
+        }));
     }
 
     function hideSubmenu(listItem, button, submenu) {
+        cancelPending(submenu);
         submenu.style.height = submenu.scrollHeight + 'px';
         submenu.offsetHeight; // Force reflow
         setState(submenu, CONFIG.states.closing);
@@ -143,11 +154,28 @@
         NDS.aria.expanded(button, false);
         clearButton(listItem, button);
 
-        NDS.onTransitionEnd(submenu, () => {
+        pendingEnd.set(submenu, NDS.onTransitionEnd(submenu, () => {
+            pendingEnd.delete(submenu);
             setState(submenu, CONFIG.states.closed);
             submenu.style.height = '';
             dispatchDrawerEvent(listItem, 'hidden');
-        });
+        }));
+    }
+
+    // Opens or closes a branch at once, with no animation; drops one in flight, or its end would undo this.
+    function paintBranch(listItem, open) {
+        const button = listItem.querySelector(':scope > .nds-btn');
+        const submenu = listItem.querySelector(':scope > ul');
+        setState(listItem, open ? CONFIG.states.open : CONFIG.states.closed);
+        if (submenu) {
+            cancelPending(submenu);
+            submenu.style.height = '';
+            setState(submenu, open ? CONFIG.states.open : CONFIG.states.closed);
+        }
+        if (button) {
+            NDS.aria.expanded(button, open);
+            if (open) setState(button, CONFIG.states.active); else clearButton(listItem, button);
+        }
     }
 
     function dispatchDrawerEvent(listItem, eventType) {
@@ -164,24 +192,9 @@
 
     function initOpenState(drawer) {
         drawer.querySelectorAll('.nds-drawer-list li').forEach(item => {
-            const submenu = item.querySelector(':scope > ul');
-            if (!submenu) return;
-
-            const button = item.querySelector(':scope > .nds-btn');
-            if (!button) return;
-
-            // Opened in the markup
-            if (hasState(item, CONFIG.states.open)) {
-                setState(item, CONFIG.states.open);
-                setState(submenu, CONFIG.states.open);
-                NDS.aria.expanded(button, true);
-                setState(button, CONFIG.states.active);
-            } else {
-                setState(item, CONFIG.states.closed);
-                setState(submenu, CONFIG.states.closed);
-                NDS.aria.expanded(button, false);
-                clearButton(item, button);
-            }
+            if (!item.querySelector(':scope > ul') || !item.querySelector(':scope > .nds-btn')) return;
+            // Open where the markup says so
+            paintBranch(item, hasState(item, CONFIG.states.open));
         });
     }
 
@@ -226,14 +239,8 @@
         }
         closed.forEach(item => {
             const btn = item.querySelector(':scope > .nds-btn');
-            const submenu = item.querySelector(':scope > ul');
-            if (animate) { if (btn && submenu) toggleSubmenu(btn); return; }
-            setState(item, CONFIG.states.open);
-            if (btn) {
-                NDS.aria.expanded(btn, true);
-                setState(btn, CONFIG.states.active);
-            }
-            if (submenu) setState(submenu, CONFIG.states.open);
+            if (!animate) return paintBranch(item, true);
+            if (btn && item.querySelector(':scope > ul')) toggleSubmenu(btn);
         });
     }
 
@@ -302,15 +309,9 @@
         // Forms init ran before this injection: wire its clear button. A plain input without NDS.Forms.
         NDS.Forms?.initializeContainer(box);
 
-        // Opens or closes a branch at once, with no height animation.
         const setOpen = (li, open) => {
-            const btn = li.querySelector(':scope > .nds-btn');
-            const sub = li.querySelector(':scope > ul');
-            if (!btn || !sub || isOpen(li) === open) return;
-            setState(li, open ? CONFIG.states.open : CONFIG.states.closed);
-            setState(sub, open ? CONFIG.states.open : CONFIG.states.closed);
-            NDS.aria.expanded(btn, open);
-            if (open) setState(btn, CONFIG.states.active); else clearButton(li, btn);
+            if (!li.querySelector(':scope > .nds-btn') || !li.querySelector(':scope > ul') || isOpen(li) === open) return;
+            paintBranch(li, open);
         };
         // A label match shows the item and everything under it; a group stays, and opens, while anything inside matches.
         const visit = (li, q, shown) => {
