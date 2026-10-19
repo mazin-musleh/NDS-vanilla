@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "10/10/2026 - 08:35 PM"
+last_edit: "19/10/2026 - 09:21 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -255,7 +255,7 @@ Upgrade the NDS template to the latest release.
                     <li>Replaces <code class="nds-inline-code lang-html">NDS-IQ.md</code> with the latest revision.</li>
                     <li>Reports new features you may want.</li>
                 </ul>
-                <p>Your anchor and paths do not change.</p>
+                <p>Your anchor and paths do not change. To check a page yourself, see <a class="nds-color" href="{{ 'guides/migration' | relative_url }}">Migration</a>.</p>
 
                 <h3 id="update-rules">Rules Update</h3>
                 <p>To update only the rules, paste:</p>

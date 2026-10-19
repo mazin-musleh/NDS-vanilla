@@ -35,7 +35,7 @@ Foundation, component, layout, shell, utility and core docs live in `_source/<fo
 | Icons (the icon catalog) | `_source/foundations/icons.md`. The inline names: `_source/_data/content/icons.yml`. Font icon names have no list: the audit names one the font lacks |
 | Page code that waits for components at load, content that changes after load, framework views | `_source/core/init.md` |
 | Requests, dates, text and languages | `_source/core/request.md`, `_source/core/date.md`, `_source/core/i18n.md`, and the banners of `_source/_js/nds-core.js` and `_source/_js/nds-date.js` |
-| Renamed and removed names | `_source/guides/migration.md` |
+| Renamed and removed names | `_source/_data/migrations.yml`: one row per name, with its fix. `_source/guides/migration.md` explains the columns |
 
 ## Page shapes
 
