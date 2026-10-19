@@ -57,8 +57,6 @@ main {
         padding-inline: var(--_content-padding-inline);
         gap: var(--_content-gap);
         min-width: 0;
-        // The skip link's target: land below the sticky main nav, not under it.
-        scroll-margin-block-start: var(--nds-nav-height);
 
         // Basis auto, not 0: with a 0 basis the pre-stamp layout (cv holds, definite
         // column) gave every section the same height, so a restored scroll landed

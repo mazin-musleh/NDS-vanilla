@@ -4,6 +4,8 @@
 // where it comes back — the reset sits in crit, so it cannot do this.
 html {
     overflow-anchor: auto;
+    // A #hash jump, skip link or scrollIntoView lands below the sticky main nav, not under it.
+    scroll-padding-block-start: calc(var(--nds-nav-height) + var(--spacing-md));
 }
 
 /* ========================================
