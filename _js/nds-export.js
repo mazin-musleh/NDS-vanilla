@@ -292,7 +292,11 @@
             if (light) root.setAttribute('data-theme', light); else root.removeAttribute('data-theme');
         }
         const cs = getComputedStyle(root);
-        const v = (name, fallback) => cs.getPropertyValue(name).trim() || fallback;
+        // Only a real colour reaches the print <style>: a saved palette seed flows into these tokens.
+        const v = (name, fallback) => {
+            const x = cs.getPropertyValue(name).trim();
+            return x && CSS.supports('color', x) ? x : fallback;
+        };
         const tokens = {
             border:    v('--table-cell-border',           '#ddd'),
             headBg:    v('--table-background-header',     '#f3f3f3'),

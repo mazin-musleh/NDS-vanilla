@@ -1270,7 +1270,7 @@
         _buildToolbar() {
             const spec = (this.root.dataset.editorToolbar || TOOLBAR_DEFAULT).trim();
             if (spec === 'none') return null;
-            const html = buildToolbarHtml(spec, this._idBase);
+            const html = buildToolbarHtml(spec, NDS.escapeHtml(this._idBase));
             if (!html) return null;
             const anchor = this.editable.closest('.nds-form-control') || this.editable;
             anchor.insertAdjacentHTML('beforebegin', html);

@@ -1065,7 +1065,7 @@
     function panelMarkup(side) {
         return `<dialog id="nds-accessibility-panel"
        class="nds-panel nds-accessibility-panel"
-       data-panel-side="${side}"
+       data-panel-side="${NDS.escapeHtml(side)}"
        aria-label="Accessibility settings"
        data-i18n-aria-label="accessibility.panel_label"
        data-accessibility-panel>

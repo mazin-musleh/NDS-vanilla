@@ -189,7 +189,9 @@
     // Only what the collapse owns is re-stamped: the dropdown marker class,
     // aria-current, and data-state (NDS.State-managed, never a literal attribute).
     // data-page-url template ("?page={page}") → page-to-href function, or null.
-    const _urlFn = pageUrl => pageUrl ? (p => NDS.escapeHtml(pageUrl.replace('{page}', p))) : null;
+    // A javascript: template gives buttons. Fixed base, not the page: a relative template must pass on file:// too.
+    const _safeTemplate = (u) => { try { return /^(https?|mailto|tel):$/.test(new URL(u, 'http://x/').protocol); } catch { return false; } };
+    const _urlFn = pageUrl => pageUrl && _safeTemplate(pageUrl) ? (p => NDS.escapeHtml(pageUrl.replace('{page}', p))) : null;
 
     // Capture the ordered page-control set from a manual nav's list, whether it
     // is currently flat or already collapsed (visible buttons + ellipsis
