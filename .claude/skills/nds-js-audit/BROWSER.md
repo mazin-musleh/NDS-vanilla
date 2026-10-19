@@ -52,10 +52,13 @@ Never use `file://` — NDS fetches (i18n JSON, autocomplete) fail under CORS th
 
 Write a throwaway ESM script to the repo's `tmp/nds-browser-{name}.mjs`, run it with `node` from the project root, parse its single-line JSON verdict, then delete it.
 
+Turn the HTTP cache off before `goto`: `await page.route('**/*.js*', (r) => r.continue());`. A bundle's `?ver=` is fixed at server start, so a cached copy is the pre-fix bundle and the after-fix run silently tests old code.
+
 ```js
 import { launch } from '../scripts/lib/browser.mjs';
 const browser = await launch();
 const page = await browser.newPage();
+await page.route('**/*.js*', (r) => r.continue()); // cache off — see above
 const errors = [];
 page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
 page.on('pageerror', e => errors.push(String(e)));
