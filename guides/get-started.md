@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "19/10/2026 - 10:53 PM"
+last_edit: "19/10/2026 - 11:42 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -69,8 +69,8 @@ sidemenu_mode: false
                 <h3 id="browsers">Browser Support</h3>
                 <p>NDS keeps no list of supported browsers. A missing browser feature removes that feature only, down to the floor below.</p>
                 <ul>
-                    <li><strong>Browsers from 2022 and newer</strong> (Chrome 98, Safari 15.4, Firefox 98): every NDS component works.</li>
-                    <li><strong>Browsers from late 2020 to 2021</strong>: Modal and Panel do not open, and Filter's Apply button fails.</li>
+                    <li><strong>Browsers from 2022 and newer</strong> (Chrome 98, Safari 16, Firefox 98): every NDS component works. Some style details need Chrome 105 or Firefox 121.</li>
+                    <li><strong>Browsers from late 2020 to 2021</strong>: Filter's Apply button and the Digital Stamp fail. In Safari and Firefox, Modal and Panel do not open. Filter also fails in Safari 15.4 to 15.6.</li>
                     <li><strong>Browsers before late 2020</strong> (below Chrome 85, Safari 14, Firefox 79): no NDS JavaScript runs.</li>
                 </ul>
 

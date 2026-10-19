@@ -1552,9 +1552,9 @@
             const searchContainer = searchInput.closest('.nds-search-box, .nds-form-control')?.parentElement ||
                                    searchInput.closest('.nds-search-content')?.parentElement ||
                                    searchInput.parentElement;
-            const searchBtn = searchContainer?.querySelector(
-                'button.nds-search-btn, button[type="submit"], button:has(.nds-hgi-search-01)'
-            );
+            // closest(), not button:has(): :has() in a selector throws below Chrome 105 / Firefox 121.
+            const searchBtn = searchContainer?.querySelector('button.nds-search-btn, button[type="submit"]') ||
+                              searchContainer?.querySelector('button .nds-hgi-search-01')?.closest('button');
             this.directSearchBtn = searchBtn || null;
 
             searchInput.addEventListener('input', () => {
