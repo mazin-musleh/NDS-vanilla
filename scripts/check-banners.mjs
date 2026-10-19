@@ -42,6 +42,7 @@ const SCOPE = [
     ['nds-countdown.js', 'Countdown'],
     ['nds-core.js', null],
     ['nds-customselect.js', 'CustomSelect'],
+    ['nds-date.js', 'date'],
     ['nds-date-picker.js', 'DatePicker'],
     ['nds-digital-stamp.js', 'DigitalStamp'],
     ['nds-drawer.js', 'Drawer'],
@@ -65,6 +66,7 @@ const SCOPE = [
     ['nds-pagination.js', 'Pagination'],
     ['nds-panels.js', 'Panel'],
     ['nds-password.js', 'Password'],
+    ['nds-print.js', 'Print'],
     ['nds-progress.js', 'Progress'],
     ['nds-rating.js', 'Rating'],
     ['nds-scroll-more.js', 'ScrollMore'],
@@ -192,7 +194,7 @@ function keysFromBlock(lines, start) {
 }
 
 // Resolves the `NDS.<ns> = …` surface: direct object literal, alias to a
-// `const X = {…}`, or IIFE (keys read from its last `return {`).
+// `const X = {…}`, or IIFE (keys read from its last `return {` or `return X;`).
 function extractKeys(source, ns) {
     const lines = stripSource(source);
     const assignRe = new RegExp(`(?:window\\.)?NDS\\.${ns}\\s*=\\s*(.*)`);
@@ -212,6 +214,11 @@ function extractKeys(source, ns) {
             let at = -1;
             for (let j = i; j < lines.length; j++) {
                 if (/^\s*return\s*\{/.test(lines[j])) at = j; // last return wins
+                const alias = lines[j].match(/^\s*return\s+([A-Za-z_$][\w$]*)\s*;?\s*$/);
+                if (alias) {
+                    const def = lines.findIndex((l) => new RegExp(`(?:const|let|var)\\s+${alias[1]}\\s*=\\s*\\{`).test(l));
+                    if (def !== -1) at = def;
+                }
             }
             if (at !== -1) {
                 keys = /\}/.test(lines[at])
@@ -337,6 +344,7 @@ function verifyFile(file, ns, source) {
         } else {
             // Multi-namespace file: every NDS.<x> the banner names must exist in source.
             for (const m of methods.text.matchAll(/NDS\.([A-Za-z_$][\w$]*)/g)) {
+                if (SCOPE.some(([f, n]) => n === m[1] && f !== file)) continue; // checked in its own file
                 const root = new RegExp(`NDS\\.${m[1]}\\s*=|NDS\\.${m[1]}\\.[\\w$]+\\s*=|Object\\.defineProperty\\(\\s*NDS\\s*,\\s*['"]${m[1]}['"]`);
                 if (!root.test(source)) issues.push(`banner names NDS.${m[1]} but no such assignment in source`);
             }
