@@ -55,7 +55,7 @@ Read every time:
 - **The JS, whole:** init, every public method, every event and its `detail`, keyboard handling, every `data-*` it reads, every state it writes. The banner at the top of the file is the public surface.
 - **The shared files it rides, banner only:** `_js/nds-forms.js` and `_sass/components/_forms.scss` for fields, `_js/nds-core.js` for `NDS.State` and `NDS.Status`. Read further only for a fact the banner does not answer: each JS file is ~86 KB.
 - **`_data/sidemenu/sidemenu.yml`:** confirm every part you link exists.
-- **The page's entry in `_data/content/*.yml`:** its catalog card must agree with the hero description.
+- **The page's entry in `_data/catalog.yml`:** its card must agree with the hero description.
 - **The model page** for this page type.
 
 **Delegated components** (loaded after first paint, e.g. accordion) ship their first-paint state in the canon: a default-open accordion item has `data-state="open"` on both the toggle and the collapse.
@@ -298,7 +298,7 @@ Build the page only from NDS components. If the page looks wrong, the gap is in 
 ### Registration (new pages only)
 
 1. Add the page to `_data/sidemenu/sidemenu.yml`.
-2. Add its catalog entry to the matching `_data/content/*.yml`, copying a neighbor entry's keys.
+2. Add its entry to `_data/catalog.yml`, in its shelf's block, copying a neighbor entry's keys.
 3. Set the breadcrumb for its category.
 
 ---

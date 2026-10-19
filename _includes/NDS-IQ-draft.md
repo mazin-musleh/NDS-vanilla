@@ -58,7 +58,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 ## Checks before claims
 
 Read the source before you ask or answer an NDS question or wire page JS. A claim needs its check first:
-- "NDS has no X" (yours, or the dev's "just use native X") → read every `use_when` line in the catalogs (the index names them), as §Composition cascade says.
+- "NDS has no X" (yours, or the dev's "just use native X") → read every `use_when` line in the catalog (the index names it), as §Composition cascade says.
 - "I cannot see the page" → a failed headless attempt (§Verify).
 - "The page is done" → both browser passes and a clean audit (§Verify). The audit checks markup, never how the page looks.
 
@@ -106,7 +106,7 @@ NDS is a UI layer; the host project (frontend and backend) serves it. NDS IQ nev
 | Existing non-NDS UI | Port: keep requirements and project contracts; replace UI structure with NDS canon. | Required; an explicit waiver permits one parallel page |
 | Conformant NDS; one new page | Extend: its verified family archetype, then the composition cascade. | None; Build and Verify gates apply |
 | Conformant NDS; several new pages | Inventory the named pages and their shared shapes. | Required |
-| Conformant NDS; changes to existing pages | Edit: match each new or changed part through the catalogs and copy its canon; verify each changed page (§Verify). | None; a page with a plan row returns to `In Progress` until its checks pass again |
+| Conformant NDS; changes to existing pages | Edit: match each new or changed part through the catalog and copy its canon; verify each changed page (§Verify). | None; a page with a plan row returns to `In Progress` until its checks pass again |
 | Prior NDS conformance unknown | Assess the current pages first. | Required |
 
 **Plan entry gate.** Choose the work mode first. When a plan applies, list routes, layouts, shared partials, pages and views (one row per client-side view), and legacy UI libraries; map every page through the §Build cascade and record its page shape. Greenfield lists only the pages the dev named. No-plan work inspects only the named page, its shared layout, its global files, and the project contracts.
@@ -147,13 +147,13 @@ When a plan is required, create `NDS-PLAN.md` at the project root, starting with
 
 ### Composition cascade
 
-Match by `use_when` across the template, example, and component catalogs, never by title. Read every `use_when` line, unfiltered: a keyword search may confirm a match, never pick the candidates. Then:
+Match by `use_when` across the catalog's templates, examples, and components, never by title. Read every `use_when` line, unfiltered: a keyword search may confirm a match, never pick the candidates. Then:
 
 1. A matching template → copy it.
 2. No template → the closest example.
 3. No match → a custom scaffold inside red line #4, reusing canonical wiring patterns.
 
-Keep the matched source's structure and put the project's content into every part; never rebuild it. It is a floor, not a ceiling: add the sections the project needs, matched through the catalogs. A family's `Built and Verified` archetype outranks the cascade for its siblings. Screens that share one app shell (one layout with the same navigation) keep that shell's page shape: a matched template supplies the content inside it, never a different page shape.
+Keep the matched source's structure and put the project's content into every part; never rebuild it. It is a floor, not a ceiling: add the sections the project needs, matched through the catalog. A family's `Built and Verified` archetype outranks the cascade for its siblings. Screens that share one app shell (one layout with the same navigation) keep that shell's page shape: a matched template supplies the content inside it, never a different page shape.
 
 At each page start, resolve its recorded questions, list every UI part, and match each against the component catalog: every field, control and state is a part, so a date field is matched like a table, and so is each state the page can reach (signed out, empty, loading, failed, not found, denied, success). Name each part by the job it does, never by the legacy class or element it replaces. Record the list under the page's plan row before the first line of markup, one line per part: `part → component`, where the component is a catalog entry's name, never a bare HTML tag such as `select`, followed by every line of that component's doc that limits its use (never, only, do not) (no-plan: in the final report).
 
@@ -182,7 +182,7 @@ Map every part a matched source ships to the project's data: a two-state field i
 - Greenfield only: remove a template section the brief does not cover; never invent content to fill one.
 - Data scale follows the existing API: an endpoint that returns the full set → fetch once and let the NDS components filter, sort, page, and export in the browser; an endpoint that pages, sorts, or filters on the server → wire the NDS controls to its parameters. A shape that misfits the data → report it; backend changes are the dev's.
 
-**Replacing a legacy library:** name the capability, search the catalogs, compose NDS components if needed, and port its callbacks through NDS methods and events. Truly uncovered → vanilla JS inside red line #4; never the legacy library for one widget.
+**Replacing a legacy library:** name the capability, search the catalog, compose NDS components if needed, and port its callbacks through NDS methods and events. Truly uncovered → vanilla JS inside red line #4; never the legacy library for one widget.
 
 ### JS wiring
 
@@ -194,7 +194,7 @@ Before listening on NDS elements or writing NDS-owned attributes, read the compo
 **Build exit gate.** Before §Verify:
 
 - Name the canonical page source and the doc sources used.
-- Point to the recorded parts list: every part, state, and behavior matched through the catalogs and the docs, each part with its use-limit lines.
+- Point to the recorded parts list: every part, state, and behavior matched through the catalog and the docs, each part with its use-limit lines.
 - List the matched source's facets, controls, and columns beside the page's: equal counts, or each difference named.
 - Confirm every structural change is one of red line #3's allowed edits.
 - Check every icon name in the page HTML and its JS against the icon catalog: the audit cannot see names inside JS strings.

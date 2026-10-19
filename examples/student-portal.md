@@ -13,6 +13,11 @@ hide_share_page: true
 hideFeedback: true
 ---
 
+<!-- Layout rules:
+     - Column widths follow the content: two equal columns only for cards of about the same size, a narrow and a wide one (--max-track) when one side holds more.
+     - Every list and table carries nds-empty with its own data-empty-message, and a list that can grow sits in Scroll More, so the same markup holds no items or many.
+     - A list of dated items is Drawer rows: one link per row, a Date Tile at the start, a title with a status tag, and a Meta line of icon facts. -->
+
 <!-- Profile -->
 <section id="profile" class="nds-content-section">
     <div class="nds-section-wrapper">

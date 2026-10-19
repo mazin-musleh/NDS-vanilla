@@ -75,4 +75,4 @@ Common legacy libraries and their NDS replacements in this release.
 | Bootstrap | the layout primitives: grid, flex, block |
 | jQuery | vanilla JS and the NDS APIs |
 
-The catalogs' `use_when` lines name more.
+The catalog's `use_when` lines name more.

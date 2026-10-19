@@ -243,7 +243,7 @@ Verify a whitespace change by rendered text, not by eyeballing: build before/aft
 
 5. Add documentation page in its shelf's folder — the placement rule heads `_data/catalog.yml` (most pages: `components/[name].md`) — following `.claude/skills/nds-doc/SKILL.md` (Claude Code invokes it as `/nds-doc [name]`)
 6. Add to `_data/sidemenu/sidemenu.yml` under its shelf (and group, for Components)
-7. Add its entry to `_data/catalog.yml`, in its shelf's block, so the page appears on the Library grid, in `llms.txt`, and in the agents' catalog. Match a neighbor entry's keys (title, description, use_when, icon, category, tags, url, js, scss) rather than guessing the schema. Templates, examples and event packs go in the same file, in their own blocks.
+7. Add its entry to `_data/catalog.yml`, in its shelf's block, so the page appears on the Library grid, in `llms.txt`, and in the agents' catalog. Match a neighbor entry's keys (title, description, use_when, category, tags, url, js, scss; templates, examples and events add icon) rather than guessing the schema. Templates, examples and event packs go in the same file, in their own blocks.
    **A page that moves keeps its file name** — the 404 page forwards an old URL by file name.
 
 ## Component Doc Front Matter

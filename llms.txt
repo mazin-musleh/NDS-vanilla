@@ -63,6 +63,14 @@ Composed pages showing NDS components working together in real government-servic
 - [{{ e.title }}]({{ e.url | absolute_url }}){% if e.description and e.description != "" %}: {{ e.description }}{% endif %}{% if e.use_when and e.use_when != "" %} **Use when:** {{ e.use_when }}{% endif %}
 {%- endfor %}
 
+## Event themes
+
+Seasonal theme packs: one script tag re-skins the whole site for a national or religious occasion.
+{%- assign events = site.data.catalog | where_exp: "e", "e.url contains '/events/'" %}
+{%- for ev in events %}
+- [{{ ev.title }}]({{ ev.url | absolute_url }}){% if ev.description and ev.description != "" %}: {{ ev.description }}{% endif %}{% if ev.use_when and ev.use_when != "" %} **Use when:** {{ ev.use_when }}{% endif %}
+{%- endfor %}
+
 ## Optional
 
 - [Live site & full documentation]({{ "/" | absolute_url }})

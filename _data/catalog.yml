@@ -1,4 +1,6 @@
 # NDS catalog: every library page, template, example and event pack, one entry each.
+# Not here: the Get Started and NDS IQ guides (setup, not parts; llms.txt links them),
+#   and the two Life Journey sub-pages, which the hub's use_when names.
 # The home page, /components/ (Library), /templates/, /examples/, /events/, llms.txt
 # and the SEO meta all read this one file.
 #
@@ -43,9 +45,8 @@
 #                and preloads, no component JS). A JS tag with no js: is that case,
 #                not a missing value. Two entries may share one file (Numbers,
 #                Counter Animation and Currency all point at _js/nds-numbers.js).
-# icon:          printed on template, example and event cards. Library cards do not
-#                print it today; the field is kept ready for the same use. Keep every
-#                value distinct and registered in _sass/_hgiRoundedStroke.scss.
+# icon:          template, example and event cards only; library entries carry none.
+#                Keep every value distinct and registered in _sass/_hgiRoundedStroke.scss.
 # thumbnail / theme (events): the card image, and the _data/themes.yml value that
 #                drives the live Preview button. Each event also ships a switcher entry
 #                in _data/themes.yml and a folder under docs-assets/events/<event>/.
@@ -55,7 +56,6 @@
 - title: "Icons"
   description: "Outline icons from the HugeIcons library, as a font with the full library for page content and a smaller built-in set for interface controls"
   use_when: "How icons work here: the HugeIcons font for page content, plus the curated inline SVG set for components and chrome, with sizing, colour, and licence guidance. Read before adding any icon."
-  icon: '<i class="hgi hgi-stroke hgi-svg-01"></i>'
   category: "Foundations"
   tags: ["CSS"]
   url: "/foundations/icons.html"
@@ -63,7 +63,6 @@
 - title: "Themes"
   description: "Light and dark mode, plus brand theming: generate a full palette from OKLCH seed colours, or override the design tokens with a stylesheet theme"
   use_when: "Light and dark mode, plus brand theming: generate a full palette from OKLCH seed colours, or override the design tokens with a stylesheet. Read this before applying any brand colour."
-  icon: '<i class="hgi hgi-stroke hgi-paint-bucket"></i>'
   category: "Foundations"
   tags: ["CSS", "JS"]
   url: "/foundations/themes.html"
@@ -72,7 +71,6 @@
 - title: "Tokens"
   description: "The CSS custom properties behind NDS: the color palette, size scales, semantic meanings and component tokens, with a preview of each"
   use_when: "The CSS custom properties behind NDS: the color palette, size scales, semantic meanings and component tokens. Read this before writing any hardcoded colour, spacing, or radius value."
-  icon: '<i class="hgi hgi-stroke hgi-cube"></i>'
   category: "Foundations"
   tags: ["CSS"]
   url: "/foundations/tokens.html"
@@ -82,7 +80,6 @@
 - title: "Block"
   description: "Spacing unit for content and components, with an optional title"
   use_when: "Space out the parts of a section body. Put it straight on a block component such as a stepper, tab set, or table to give it the standard gap, or wrap paragraphs, lists, and tables that belong together under one optional heading. Use when content needs separation, or a heading, but not its own Section."
-  icon: '<i class="hgi hgi-stroke hgi-search-list-01"></i>'
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/block.html"
@@ -91,7 +88,6 @@
 - title: "Flex"
   description: "Quick alignment, direction, and wrapping with custom-property overrides"
   use_when: "Quick alignment, direction, and wrapping without writing CSS: row or column layouts, centering, spacing between items."
-  icon: '<i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>'
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/flex.html"
@@ -100,7 +96,6 @@
 - title: "Grid"
   description: "Responsive column system with flexible breakpoints"
   use_when: "A responsive column layout: card grids, two, three, or four column sections, breakpoint-driven column counts. The default for laying out repeated items."
-  icon: '<i class="hgi hgi-stroke hgi-grid"></i>'
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/grid.html"
@@ -109,7 +104,6 @@
 - title: "Page Layout"
   description: "The body structure every page shares, with the classes that switch chrome shape"
   use_when: "Build the page skeleton before any content: the body structure, the chrome regions, and the classes that switch between the home, content page, minimal, and console shapes. Read this when you start a new page, pick a chrome shape, or mount a framework app inside NDS markup. It also covers the two ways a page gets its chrome: a layout injects the header, hero, and footer, or the page writes them itself. For a whole page in one file, copy the Home Page Template."
-  icon: '<i class="hgi hgi-stroke hgi-layout-01"></i>'
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/page-layout.html"
@@ -118,7 +112,6 @@
 - title: "Prose"
   description: "Default styling for classless flowing content from editors and CMSs"
   use_when: "Style classless HTML you do not control: CMS output, rich text editor content, markdown, imported articles. Wrap it once and the headings, paragraphs, lists, quotes, and tables inside read correctly."
-  icon: '<i class="hgi hgi-stroke hgi-text-align-left"></i>'
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/prose.html"
@@ -127,7 +120,6 @@
 - title: "Section"
   description: "Page content sections with head, body, and action areas"
   use_when: "The wrapper every page region uses, with head, body, and action areas. Read this before building any page: all NDS page content sits inside sections."
-  icon: '<i class="hgi hgi-stroke hgi-layout-03"></i>'
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/section.html"
@@ -135,8 +127,7 @@
 
 - title: "Status Section"
   description: "Whole-page or inline outcome message with a status icon, a title, and one action"
-  use_when: "Report one outcome on its own page or as a section: page not found, 404, 500, access denied, no permission, sign in required, request submitted, thank-you or confirmation page, payment failed, order received, form sent. A centered icon or illustration over a title, a short message, and a way out. For a message inside a form or a page region use Alert; for a status icon on its own use Feedback Icons."
-  icon: '<i class="hgi hgi-stroke hgi-alert-circle"></i>'
+  use_when: "Report one outcome on its own page or as a section: page not found, 404, 500, access denied, no permission, sign in required, request submitted, thank-you or confirmation page, payment failed, order received, form sent. A centered icon or illustration over a title, a short message, and a way out. For a message inside a form or a page region use Alert; for a status icon on its own use Feedback Icons. For a full 404 or error page, copy the 404 Template."
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/status-section.html"
@@ -147,7 +138,6 @@
 - title: "Accessibility"
   description: "Site-wide panel for accessibility presets, typography tuning, and visual filters"
   use_when: "The dev asks for an accessibility widget, a11y toolbar, font-size controls, high contrast mode, colour-blind filters, or a WCAG preferences panel. Site-wide panel opened by a FAB on every page; its script loads on the first press."
-  icon: '<i class="hgi hgi-stroke hgi-accessibility"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS", "Add-on", "API"]
   url: "/ui-shell/accessibility.html"
@@ -157,7 +147,6 @@
 - title: "Clock"
   description: "Real-time clock with Hijri/Gregorian date"
   use_when: "A live clock with Hijri and Gregorian date. One of the top bar widgets."
-  icon: '<i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>'
   category: "UI Shell"
   tags: ["JS", "API"]
   url: "/ui-shell/topbar.html#topbar-widgets"
@@ -167,7 +156,6 @@
 - title: "Cookies"
   description: "A consent panel that stores the visitor's cookie choice by category"
   use_when: "A cookie consent notice, or a place for visitors to change their cookie choice."
-  icon: '<i class="hgi hgi-stroke hgi-cookie"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
   url: "/ui-shell/cookies.html"
@@ -177,7 +165,6 @@
 - title: "DGA Digital Stamp"
   description: "Government authority verification panel"
   use_when: "The government authority verification panel for the top bar. Government sites only; remove it on any site that does not hold that verification."
-  icon: '<i class="hgi hgi-stroke hgi-shield-01"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS"]
   url: "/ui-shell/topbar.html#digital-stamp"
@@ -187,7 +174,6 @@
 - title: "Document Head"
   description: "Critical CSS, deferred bundles, and the inline gate every page loads in its head"
   use_when: "What every page must load in its head: critical CSS, the deferred bundles, and the inline reveal gate. Read this before writing the first page of an integration; a page missing it renders unstyled."
-  icon: '<i class="hgi hgi-stroke hgi-html-5"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS"]
   url: "/ui-shell/head.html"
@@ -195,7 +181,6 @@
 - title: "Footer"
   description: "Multi-column footer on the brand surface or light"
   use_when: "The site footer: multi-column links, contact details, and legal links, on the brand surface (default) or light."
-  icon: '<i class="hgi hgi-stroke hgi-layout-bottom"></i>'
   category: "UI Shell"
   tags: ["CSS"]
   url: "/ui-shell/footer.html"
@@ -204,7 +189,6 @@
 - title: "Header"
   description: "The region at the top of the page where the top bar, digital stamp panel, and main navigation compose"
   use_when: "How the top bar, the DGA digital stamp panel, and the main navigation compose into one header region: their order, and why the header draws no box. Copy each part from its own page. For the navigation bar itself, its dropdown menus and its JS API, use Main Navigation. For the government branding strip use Top Bar."
-  icon: '<i class="hgi hgi-stroke hgi-navigation-01"></i>'
   category: "UI Shell"
   tags: ["CSS"]
   url: "/ui-shell/header.html"
@@ -212,7 +196,6 @@
 - title: "Hero"
   description: "Full-width page banners with slider and call-to-action"
   use_when: "The banner at the top of a page: page hero, sub-hero, homepage slider, title block with a call-to-action. A sub hero on most pages, a main hero slider on a home page."
-  icon: '<i class="hgi hgi-stroke hgi-image-02"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS"]
   url: "/ui-shell/hero.html"
@@ -221,7 +204,6 @@
 - title: "Main Navigation"
   description: "Primary navigation bar with branding, mega-menu dropdowns, search and language actions, and a mobile drawer"
   use_when: "The primary navigation bar of a site: branding, top-level links, mega-menu dropdowns in column, row or multi-column layouts, the site search, the language switch, and the mobile hamburger drawer. Use for main nav, top nav, navbar, site navigation, primary menu, mega menu, or language switcher requests. For section navigation inside a page tree use Side Menu. For the government branding strip above it use Top Bar."
-  icon: '<i class="hgi hgi-stroke hgi-menu-02"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
   url: "/ui-shell/mainnav.html"
@@ -230,7 +212,6 @@
 - title: "Session Timeout"
   description: "Warning before an idle session ends, with a countdown and a way to stay signed in"
   use_when: "A signed-in service whose server ends idle sessions: warn the user before the logout and let them extend the session (WCAG 2.2.1). Activity renews it, tabs share one deadline, and the end opens a sign-in modal or goes to the logout URL. For a deadline shown on the page use Countdown."
-  icon: '<i class="hgi hgi-stroke hgi-timer-02"></i>'
   category: "UI Shell"
   tags: ["JS", "API"]
   url: "/ui-shell/session-timeout.html"
@@ -239,7 +220,6 @@
 - title: "Side Info"
   description: "Companion column for service details, progress, and in-page navigation"
   use_when: "The companion column beside main content: service details, progress, a contact card, in-page navigation. Its parent needs `nds-has-sideinfo`: see Page Layout."
-  icon: '<i class="hgi hgi-stroke hgi-layout-right"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
   url: "/ui-shell/sideinfo.html"
@@ -249,7 +229,6 @@
 - title: "Side Menu"
   description: "Collapsible nested sidebar navigation"
   use_when: "The collapsible nested sidebar for section navigation, common on admin screens and documentation. Its parent needs `nds-has-sidemenu`, or the menu stays hidden: see Page Layout."
-  icon: '<i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS"]
   url: "/ui-shell/sidemenu.html"
@@ -259,7 +238,6 @@
 - title: "Top Bar"
   description: "Government branding bar with date, weather, and dark mode toggle"
   use_when: "The government branding bar above the header, carrying the date, weather, and the dark mode toggle."
-  icon: '<i class="hgi hgi-stroke hgi-layout-top"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS"]
   url: "/ui-shell/topbar.html"
@@ -268,7 +246,6 @@
 - title: "Weather Widget"
   description: "Live weather display from GPS coordinates"
   use_when: "Live weather from GPS coordinates. One of the top bar widgets."
-  icon: '<i class="nds-icon nds-hgi-sun-cloud-01" aria-hidden="true"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
   url: "/ui-shell/topbar.html#topbar-widgets"
@@ -280,7 +257,6 @@
 - title: "Buttons"
   description: "Interactive actions with multiple variants, sizes, and states"
   use_when: "Any clickable action: primary, secondary, destructive, subtle, and icon-only variants, with sizes and states. The base for most interactive markup."
-  icon: '<i class="hgi hgi-stroke hgi-cursor-pointer-01"></i>'
   category: "Actions"
   tags: ["CSS"]
   url: "/components/button.html"
@@ -289,7 +265,6 @@
 - title: "Chips"
   description: "Compact labels for tags, filters, and selections"
   use_when: "Small pills the user acts on: removable filter chips, selected-value chips, choice chips. For read-only labels use Tags; for a field that turns typed text into chips use Tag Input."
-  icon: '<i class="hgi hgi-stroke hgi-tag-01"></i>'
   category: "Actions"
   tags: ["CSS"]
   url: "/components/chips.html"
@@ -298,7 +273,6 @@
 - title: "Cooldown Button"
   description: "Click-disabled countdown button for resend, retry, and rate-limited actions"
   use_when: "A button that disables itself and counts down before it can be pressed again: resend OTP, resend email, retry, or any rate-limited action."
-  icon: '<i class="hgi hgi-stroke hgi-timer-02"></i>'
   category: "Actions"
   tags: ["JS", "CSS", "API"]
   url: "/components/cooldown-button.html"
@@ -308,7 +282,6 @@
 - title: "Dropmenu"
   description: "Toggle-activated overlay for actions and navigation"
   use_when: "A menu opened from a trigger: dropdown menu, action menu, kebab or overflow menu, context actions, a sort or filter popover. The shared engine behind most NDS menus."
-  icon: '<i class="hgi hgi-stroke hgi-more-vertical"></i>'
   category: "Actions"
   tags: ["JS", "CSS", "API"]
   url: "/components/dropmenu.html"
@@ -318,7 +291,6 @@
 - title: "Floating Action Button"
   description: "FAB that pins to an edge of the viewport and stacks with others"
   use_when: "A button pinned to an edge of the viewport: FAB, floating add button, back-to-top, or a stack of quick actions."
-  icon: '<i class="hgi hgi-stroke hgi-add-circle"></i>'
   category: "Actions"
   tags: ["JS", "CSS", "API"]
   url: "/components/fab.html"
@@ -328,7 +300,6 @@
 - title: "Link"
   description: "Inline navigation with color variants and automatic external-link detection"
   use_when: "An inline text link with colour variants, and automatic detection and marking of external links."
-  icon: '<i class="hgi hgi-stroke hgi-link-01"></i>'
   category: "Actions"
   tags: ["CSS", "JS"]
   url: "/components/link.html"
@@ -338,7 +309,6 @@
 - title: "Share"
   description: "Share buttons for X, LinkedIn, WhatsApp, other sites, and copy link, in a menu or a row"
   use_when: "Share this page or one item on it: a share menu or a row of buttons for X, LinkedIn, WhatsApp, or any site with a share link, plus copy link."
-  icon: '<i class="hgi hgi-stroke hgi-share-08"></i>'
   category: "Actions"
   tags: ["JS", "CSS"]
   url: "/components/share.html"
@@ -348,7 +318,6 @@
 - title: "Breadcrumb"
   description: "Hierarchical path showing the current page location"
   use_when: "The path trail showing where the current page sits: breadcrumbs, hierarchy path, back-navigation trail."
-  icon: '<i class="hgi hgi-stroke hgi-arrow-right-double"></i>'
   category: "Navigation"
   tags: ["JS", "CSS", "API"]
   url: "/components/breadcrumb.html"
@@ -358,7 +327,6 @@
 - title: "Content Switcher"
   description: "Toggle between content sections within the same space on the screen"
   use_when: "Toggle between content sections in the same space with a segmented control: view switcher, segmented buttons. Same engine as Tabs; choose Tabs when the control should read as a tab strip. For view buttons with no panels, such as a grid-or-list toggle on one list, use a button group (Buttons)."
-  icon: '<i class="hgi hgi-stroke hgi-exchange-01"></i>'
   category: "Navigation"
   tags: ["JS", "CSS", "API"]
   url: "/components/content-switcher.html"
@@ -368,7 +336,6 @@
 - title: "Drawer"
   description: "Collapsible navigation lists with accordion groups"
   use_when: "A vertical list container for sidebar navigation, submenus, quick links, and inline notifications, in compact or expanded layouts. Also a tree view of nested items, such as folders or categories: add `.nds-lined` to show depth and `data-state=\"always-open\"` to keep branches open. For a surface that slides in over the page use Panels; for the main collapsible sidebar use Side Menu."
-  icon: '<i class="hgi hgi-stroke hgi-sidebar-right"></i>'
   category: "Navigation"
   tags: ["JS", "CSS", "API"]
   url: "/components/drawer.html"
@@ -378,7 +345,6 @@
 - title: "Pagination"
   description: "Page-by-page navigation for large data sets"
   use_when: "Page-by-page navigation for long lists and tables, with a per-page picker. Pairs with Tables and Filter."
-  icon: '<i class="hgi hgi-stroke hgi-paragraph-bullets-point-01"></i>'
   category: "Navigation"
   tags: ["JS", "CSS", "API"]
   url: "/components/pagination.html"
@@ -388,7 +354,6 @@
 - title: "Stepper"
   description: "Sequential step indicators for multi-stage workflows"
   use_when: "Show progress through a multi-stage flow: step indicator, wizard progress, numbered stages. For dated events, such as a request's history, use Timeline. For a plain percentage bar use Progress."
-  icon: '<i class="hgi hgi-stroke hgi-right-to-left-list-number"></i>'
   category: "Navigation"
   tags: ["JS", "CSS", "API"]
   url: "/components/stepper.html"
@@ -398,7 +363,6 @@
 - title: "Tabs"
   description: "Switchable content panels with horizontal tab navigation"
   use_when: "Switch between panels of content with a tab strip, without leaving the page. For a segmented-control look use Content Switcher; to expand panels in place instead of switching use Accordion."
-  icon: '<i class="hgi hgi-stroke hgi-browser"></i>'
   category: "Navigation"
   tags: ["JS", "CSS", "API"]
   url: "/components/tabs.html"
@@ -408,7 +372,6 @@
 - title: "TOC"
   description: "Auto-populated in-page table of contents with active-section tracking"
   use_when: "An auto-built on-this-page table of contents that tracks the active section while the user scrolls. Use on long articles, policies, and guides."
-  icon: '<i class="hgi hgi-stroke hgi-menu-square"></i>'
   category: "Navigation"
   tags: ["JS", "CSS", "API"]
   url: "/components/toc.html"
@@ -418,7 +381,6 @@
 - title: "Image Popup Viewer"
   description: "Opens a thumbnail full screen, with zoom, pan and gallery navigation"
   use_when: "Click an image to open it fullscreen: lightbox, image preview, gallery viewer, with zoom and next and previous navigation."
-  icon: '<i class="hgi hgi-stroke hgi-zoom-in-area"></i>'
   category: "Overlays"
   tags: ["JS", "CSS", "API"]
   url: "/components/ipv.html"
@@ -428,7 +390,6 @@
 - title: "Modal"
   description: "Focused dialog overlays for confirmations and forms"
   use_when: "A dialog over the page: modal, popup, confirmation prompt, a form in an overlay, a delete confirmation. For a surface that slides in from an edge use Panels."
-  icon: '<i class="hgi hgi-stroke hgi-layers-01"></i>'
   category: "Overlays"
   tags: ["JS", "CSS", "API"]
   url: "/components/modal.html"
@@ -438,7 +399,6 @@
 - title: "Panels"
   description: "Content-agnostic surface that slides in from any edge of the viewport"
   use_when: "A surface that slides in from any edge of the viewport: slide-over, off-canvas panel, side sheet, detail panel, filter panel. For a dialog centred over the page use Modal; for a sidebar navigation list use Drawer."
-  icon: '<i class="hgi hgi-stroke hgi-square-arrow-up-01"></i>'
   category: "Overlays"
   tags: ["JS", "CSS", "API"]
   url: "/components/panels.html"
@@ -446,9 +406,8 @@
   scss: _sass/components/_panels.scss
 
 - title: "Tooltip"
-  description: "Click-activated balloon for contextual help next to a term or field"
-  use_when: "A small balloon of help text beside a term or field, opened on click."
-  icon: '<i class="hgi hgi-stroke hgi-help-circle"></i>'
+  description: "A balloon of contextual help next to a term, a field or a button, opened on click or on hover"
+  use_when: "A small balloon of help text beside a term, a field or an icon button: a tooltip, info hint, help icon, or what-is-this popup. Opens on click by default, or on hover and keyboard focus with data-tooltip-hover. For a longer message in the page use Alert."
   category: "Overlays"
   tags: ["JS", "CSS", "API"]
   url: "/components/tooltip.html"
@@ -458,7 +417,6 @@
 - title: "Alert"
   description: "Contextual messages for status, warnings, and notifications, in the page or as a toast"
   use_when: "An inline status message sitting in the page: success, error, warning, or info banner, form-level feedback, a dismissible notice. Also a toast or snackbar that floats over the page after an action such as save or delete, made with NDS.Alert.create(). For a blocking message over the page use Modal. For a page or view the user cannot use (sign in first, no permission, not found, or a load that failed with nothing else to show) use Status Section, never an alert in its place."
-  icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
   category: "Feedback"
   tags: ["JS", "CSS", "API"]
   url: "/components/alert.html"
@@ -468,7 +426,6 @@
 - title: "Countdown"
   description: "Live count of the time left to a deadline or the end of a duration, as text or cards"
   use_when: "Time left until a deadline or the end of a duration: an application window, a one-time code expiry, an event start. For a warning before an idle session ends use Session Timeout."
-  icon: '<i class="hgi hgi-stroke hgi-hourglass"></i>'
   category: "Feedback"
   tags: ["JS", "CSS", "API"]
   url: "/components/countdown.html"
@@ -478,7 +435,6 @@
 - title: "Empty"
   description: "Parent-adaptive placeholder for containers with no content"
   use_when: "The no-data state: empty table, no search results, zero state, nothing-here placeholder. Adapts its markup to the parent container."
-  icon: '<i class="hgi hgi-stroke hgi-desert"></i>'
   category: "Feedback"
   tags: ["JS", "CSS", "API"]
   url: "/components/empty.html"
@@ -487,8 +443,7 @@
 
 - title: "Feedback Icons"
   description: "Semantic status icons for success, error, and info"
-  use_when: "Small semantic status icons for success, error, and info states."
-  icon: '<i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>'
+  use_when: "A status shown as a coloured icon, alone or before a short message: error, success, warning, info, neutral, or help, inside a field, a row, an alert, or an outcome page. For a decorative icon in a shaped box use Featured Icons; for a whole outcome page use Status Section."
   category: "Feedback"
   tags: ["CSS"]
   url: "/components/feedback-icons.html"
@@ -497,7 +452,6 @@
 - title: "Loading"
   description: "Spinners and skeleton placeholders for loading states"
   use_when: "Loading states: spinner, skeleton placeholder, shimmer, or a busy indicator while content is fetched. For a container that finished loading with nothing in it use Empty."
-  icon: '<i class="hgi hgi-stroke hgi-loading-03"></i>'
   category: "Feedback"
   tags: ["CSS"]
   url: "/components/loading.html"
@@ -506,7 +460,6 @@
 - title: "Progress"
   description: "A circle or a bar that shows how much of a task is done"
   use_when: "Show completion: progress bar, percentage indicator, upload progress. For labelled step-by-step stages use Stepper."
-  icon: '<i class="hgi hgi-stroke hgi-loading-01"></i>'
   category: "Feedback"
   tags: ["JS", "CSS", "API"]
   url: "/components/progress.html"
@@ -516,7 +469,6 @@
 - title: "Accordion"
   description: "Expandable content panels with nested group support"
   use_when: "Expand and collapse panels in place: FAQ lists, collapsible sections, show-hide groups, disclosure widgets. Supports nested groups. To switch between panels in one space instead of expanding, use Tabs or Content Switcher."
-  icon: '<i class="hgi hgi-stroke hgi-arrow-shrink-02"></i>'
   category: "Content"
   tags: ["JS", "CSS", "API"]
   url: "/components/accordion.html"
@@ -526,7 +478,6 @@
 - title: "Avatar"
   description: "Profile images, initials, and group stacks"
   use_when: "A user picture, profile photo, initials circle, or a stacked group of member avatars."
-  icon: '<i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>'
   category: "Content"
   tags: ["CSS"]
   url: "/components/avatar.html"
@@ -535,7 +486,6 @@
 - title: "Cards"
   description: "Versatile content containers for articles, profiles, and actions"
   use_when: "A boxed content container: article teasers, profile cards, service tiles, dashboard panels, grid items. The default building block for any card grid or listing."
-  icon: '<i class="hgi hgi-stroke hgi-dashboard-square-01"></i>'
   category: "Content"
   tags: ["CSS"]
   url: "/components/cards.html"
@@ -544,7 +494,6 @@
 - title: "Code"
   description: "Formatted code blocks with syntax highlighting and copy"
   use_when: "Show source code on the page: syntax-highlighted code blocks, snippets, a copy-to-clipboard code sample."
-  icon: '<i class="hgi hgi-stroke hgi-source-code"></i>'
   category: "Content"
   tags: ["JS", "CSS", "API"]
   url: "/components/code.html"
@@ -554,7 +503,6 @@
 - title: "Content Placeholder"
   description: "Dashed stand-in marking a region a real component will replace"
   use_when: "A dashed stand-in marking a region a real component will fill later. Use while scaffolding so an unfinished area reads as deliberate rather than broken."
-  icon: '<i class="hgi hgi-stroke hgi-puzzle"></i>'
   category: "Content"
   tags: ["CSS"]
   url: "/components/content-placeholder.html"
@@ -563,7 +511,6 @@
 - title: "Date Tile"
   description: "One date in a small box, with the weekday, the day number and the month"
   use_when: "A date shown as a small calendar box beside its text: at the start of a list row, in a card header, or on a timeline event. Exam dates, deadlines, events, appointments, an academic calendar. For picking a date use Date Picker; for time left use Countdown."
-  icon: '<i class="hgi hgi-stroke hgi-calendar-03"></i>'
   category: "Content"
   tags: ["CSS"]
   url: "/components/date-tile.html"
@@ -572,7 +519,6 @@
 - title: "Definition List"
   description: "Structured key-value pairs in grid or list layouts"
   use_when: "Key-value pairs in a grid or list: detail views, summary panels, specification tables, review-your-answers screens, profile field lists."
-  icon: '<i class="hgi hgi-stroke hgi-list-view"></i>'
   category: "Content"
   tags: ["CSS"]
   url: "/components/definition-list.html"
@@ -581,7 +527,6 @@
 - title: "Divider"
   description: "Horizontal or vertical rule with optional centered label"
   use_when: "A horizontal or vertical rule between content, with an optional centered label such as OR."
-  icon: '<i class="hgi hgi-stroke hgi-minus-sign"></i>'
   category: "Content"
   tags: ["CSS"]
   url: "/components/divider.html"
@@ -589,7 +534,6 @@
 - title: "Featured Icons"
   description: "Decorative icon containers with shape and color options"
   use_when: "A decorative icon in a shaped container: circled icons on cards, feature-list bullets, step icons, support-channel tiles."
-  icon: '<i class="hgi hgi-stroke hgi-sparkles"></i>'
   category: "Content"
   tags: ["CSS"]
   url: "/components/featured-icons.html"
@@ -598,7 +542,6 @@
 - title: "Meta"
   description: "A line of short facts, each with an icon, such as a time, a place and a person"
   use_when: "A row of short icon-and-text details under a title: class time, room and teacher, a request's reference and date, an event's place. Fits inside a link, a button, a drawer row or a card. For labeled values use Definition List; for a status use Tags."
-  icon: '<i class="hgi hgi-stroke hgi-left-to-right-list-bullet"></i>'
   category: "Content"
   tags: ["CSS"]
   url: "/components/meta.html"
@@ -607,7 +550,6 @@
 - title: "Persona"
   description: "Identity block with avatar, name, role, and optional action row"
   use_when: "An identity block: avatar with name, role, and an optional row of actions. Use for user menus, author bylines, contact cards, and team member entries."
-  icon: '<i class="hgi hgi-stroke hgi-profile"></i>'
   category: "Content"
   tags: ["CSS"]
   url: "/components/persona.html"
@@ -616,7 +558,6 @@
 - title: "Quote"
   description: "Semantic quotation block with optional title and author attribution"
   use_when: "A pulled quotation block, with an optional title and author attribution."
-  icon: '<i class="hgi hgi-stroke hgi-quote-up-square"></i>'
   category: "Content"
   tags: ["CSS"]
   url: "/components/quote.html"
@@ -625,7 +566,6 @@
 - title: "Rating"
   description: "Star-based display and input for user ratings"
   use_when: "Star ratings, both read-only display and user input: a review score, a product or service rating, a rate-this field. For a full survey or was-this-helpful prompt use User Feedback."
-  icon: '<i class="hgi hgi-stroke hgi-star"></i>'
   category: "Content"
   tags: ["JS", "CSS", "API"]
   url: "/components/rating.html"
@@ -635,7 +575,6 @@
 - title: "Scroll More"
   description: "Overflow wrapper with edge mask-fade and sticky show-more button"
   use_when: "Wrap content that overflows its container: a scrollable region with faded edges and a sticky show-more button. Auto-detects whether it scrolls horizontally or vertically."
-  icon: '<i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>'
   category: "Content"
   tags: ["JS", "CSS", "API"]
   url: "/components/scroll-more.html"
@@ -645,7 +584,6 @@
 - title: "Swiper"
   description: "Touch-enabled carousel for images and content slides"
   use_when: "A carousel or slideshow: touch-enabled image slider, content slides, testimonial rotator."
-  icon: '<i class="hgi hgi-stroke hgi-sliders-horizontal"></i>'
   category: "Content"
   tags: ["JS", "CSS", "API"]
   url: "/components/swiper.html"
@@ -655,7 +593,6 @@
 - title: "Tags"
   description: "Small read-only labels for categories, status, and metadata"
   use_when: "Small read-only labels: status badges, category labels, metadata pills. For labels the user can remove or click use Chips."
-  icon: '<i class="hgi hgi-stroke hgi-tags"></i>'
   category: "Content"
   tags: ["CSS"]
   url: "/components/tags.html"
@@ -664,7 +601,6 @@
 - title: "Timeline"
   description: "Dated events in order, such as a request's history, with the events done, the current one and the ones to come"
   use_when: "Dated events in order: a request or case history, status tracking, an activity log or audit trail, shipment or order tracking, an event agenda, project milestones, a career history. Built on the Stepper markup and script, with a dot or an icon on each event. For the steps of a flow the user moves through, such as a form, use Stepper; for dated items with no order between them, use Drawer rows with a Date Tile."
-  icon: '<i class="hgi hgi-stroke hgi-timeline"></i>'
   category: "Content"
   tags: ["JS", "CSS", "API"]
   url: "/components/timeline.html"
@@ -674,7 +610,6 @@
 - title: "Autocomplete"
   description: "Type-ahead search with filtered suggestions"
   use_when: "A type-ahead field: search suggestions, live search, combobox, async option loading, city or name lookup. Adds suggestions to a search box too. To pick several values use Multiselect; for free typed values use Tag Input."
-  icon: '<i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/autocomplete.html"
@@ -684,7 +619,6 @@
 - title: "Checkbox"
   description: "Multi-select toggles for options and preferences"
   use_when: "Multi-select toggles: checkbox groups, opt-in boxes, terms agreement, filter option lists."
-  icon: '<i class="hgi hgi-stroke hgi-checkmark-square-01"></i>'
   category: "Forms"
   tags: ["CSS"]
   url: "/components/checkbox.html"
@@ -693,7 +627,6 @@
 - title: "Custom Select"
   description: "Styled single-choice dropdown with custom option markup and a JS API, built on dropmenu"
   use_when: "A styled single-choice dropdown built on Dropmenu, for any select a native one cannot style: custom option markup, icons or descriptions in options, and a JS API (NDS.CustomSelect.create, .setValue, .clear, plus a change event). The default for any in-form choice field, whatever the option count — small fixed lists included. For type-ahead search use Autocomplete; for several choices use Multiselect; use Selects only when the dev, knowing this default, wants the browser's native control."
-  icon: '<i class="hgi hgi-stroke hgi-arrow-down-01"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/custom-select.html"
@@ -703,7 +636,6 @@
 - title: "Date Picker"
   description: "Hijri/Gregorian calendar with dual date conversion"
   use_when: "Any date field: calendar picker, date range, Hijri or Gregorian selection, date of birth, appointment booking. Converts between both calendars."
-  icon: '<i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/date-picker.html"
@@ -713,7 +645,6 @@
 - title: "Editor"
   description: "Rich text field that submits clean NDS markup, converting Word, Google Docs, and web pastes and keeping pasted NDS components"
   use_when: "A rich text editor or WYSIWYG field. Submits clean NDS markup and converts pastes from Word, Google Docs, and web pages. Use it to replace TinyMCE, CKEditor, Quill, or similar."
-  icon: '<i class="hgi hgi-stroke hgi-quill-write-02"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API", { name: "Beta", style: "nds-yellow" }]
   url: "/components/editor.html"
@@ -723,7 +654,6 @@
 - title: "File Upload"
   description: "File field with a drop zone, file checks and upload status"
   use_when: "Any file input: attachment field, document upload, drag-and-drop area, with file checks and per-file upload status."
-  icon: '<i class="hgi hgi-stroke hgi-upload-04"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/upload.html"
@@ -733,7 +663,6 @@
 - title: "Multiselect"
   description: "Multi-option select over a native checkbox group: removable chips, JSON-populated options, staged or instant commit"
   use_when: "Pick several options from a list: multi-select dropdown, checkbox dropdown, grouped option lists, selections shown as removable chips. Submits natively as a checkbox array. For free typed values use Tag Input; for one choice use Custom Select."
-  icon: '<i class="hgi hgi-stroke hgi-checkmark-square-02"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/multiselect.html"
@@ -743,7 +672,6 @@
 - title: "Number Input"
   description: "Numeric field with increment and decrement controls, min/max, and step"
   use_when: "A numeric field with plus and minus controls, min, max, and step: quantity picker, spinner, numeric stepper."
-  icon: '<i class="hgi hgi-stroke hgi-calculator"></i>'
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/forms.html#number-input"
@@ -753,7 +681,6 @@
 - title: "OTP Input"
   description: "Segmented one-time password fields with auto-advance"
   use_when: "Segmented one-time code fields with auto-advance: OTP, verification code, PIN entry, two-factor code. Pair with Cooldown Button for the resend action."
-  icon: '<i class="hgi hgi-stroke hgi-key-01"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/otp.html"
@@ -763,7 +690,6 @@
 - title: "Password"
   description: "Password field with live strength rules and confirm-match checking"
   use_when: "Choosing a new password: sign-up, change password, password reset. Rule chips update per keystroke and block submit until they pass. Pair with Text Fields for the rest of the form."
-  icon: '<i class="hgi hgi-stroke hgi-square-lock-01"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/password.html"
@@ -773,7 +699,6 @@
 - title: "Radio"
   description: "Single-choice selection within a group"
   use_when: "Single-choice selection within a group: radio buttons, either-or options, one-of-many questions."
-  icon: '<i class="hgi hgi-stroke hgi-radio"></i>'
   category: "Forms"
   tags: ["CSS"]
   url: "/components/radio.html"
@@ -782,7 +707,6 @@
 - title: "Selects"
   description: "Native dropdown menus for choosing from a list"
   use_when: "A single-choice dropdown rendered by the browser itself — only when the dev explicitly wants the native control (the OS picker on mobile). In-form choice fields default to Custom Select, whatever the option count: a native select beside styled NDS fields breaks the form's look. If the dev suggests a plain select to keep things simple, offer Custom Select first; use native only if the dev still wants it. For type-ahead search use Autocomplete; for several choices use Multiselect."
-  icon: '<i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>'
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/forms.html"
@@ -792,7 +716,6 @@
 - title: "Slider"
   description: "Numeric range input with single-thumb and dual-thumb modes for picking a value or a min–max span"
   use_when: "A range input dragged along a track: a single value, or dual thumbs for a min-max span such as a price or date range."
-  icon: '<i class="hgi hgi-stroke hgi-arrow-left-right"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/slider.html"
@@ -802,7 +725,6 @@
 - title: "Switch"
   description: "Binary on/off toggles for settings and preferences"
   use_when: "A binary on-off toggle for a setting or preference. For switching between two content views use Content Switcher."
-  icon: '<i class="hgi hgi-stroke hgi-toggle-on"></i>'
   category: "Forms"
   tags: ["CSS"]
   url: "/components/switch.html"
@@ -811,7 +733,6 @@
 - title: "Tag Input"
   description: "Free-text tags committed as removable chips while typing, posted natively as an array"
   use_when: "A field where typed free text becomes removable chips, committing on Enter or comma and submitting natively as an array. Use for keywords, skills, or email recipients. To pick from a fixed list instead use Multiselect."
-  icon: '<i class="hgi hgi-stroke hgi-tag-02"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/taginput.html"
@@ -821,7 +742,6 @@
 - title: "Text Inputs"
   description: "Single-line fields with labels, icons, and validation"
   use_when: "Single-line form fields with labels, icons, helper text, and validation states: text, email, search box, phone number, National ID, and IBAN fields. The base for most form work."
-  icon: '<i class="hgi hgi-stroke hgi-text-font"></i>'
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/forms.html"
@@ -831,7 +751,6 @@
 - title: "Textareas"
   description: "Resizable multi-line text fields"
   use_when: "A resizable multi-line text field for comments, messages, and descriptions."
-  icon: '<i class="hgi hgi-stroke hgi-paragraph"></i>'
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/forms.html"
@@ -841,7 +760,6 @@
 - title: "Time Picker"
   description: "Time field with hour, minute and second pickers in a dropdown panel"
   use_when: "Any time-of-day field: appointment time, opening hours, shift start, cut-off time. Type it or pick it, 12 or 24-hour, optional seconds, minute steps, and min/max bounds. Submits a stable 24-hour value whatever the display language. For a date use Date Picker."
-  icon: '<i class="hgi hgi-stroke hgi-clock-01"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/time-picker.html"
@@ -851,7 +769,6 @@
 - title: "User Feedback"
   description: "Satisfaction surveys and inline rating forms"
   use_when: "Ask the user what they think: satisfaction survey, was-this-helpful widget, inline rating form, feedback prompt."
-  icon: '<i class="hgi hgi-stroke hgi-message-edit-01"></i>'
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/user-feedback.html"
@@ -861,7 +778,6 @@
 - title: "Voice Input"
   description: "A microphone button that types what the user says into a text field, in the page language"
   use_when: "A microphone button that types speech into a text field. Recognition uses the page language."
-  icon: '<i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>'
   category: "Forms"
   tags: ["JS", "API"]
   url: "/components/voice-input.html"
@@ -870,7 +786,6 @@
 - title: "Chart"
   description: "Lightweight SVG charts: bar, line, pie, and donut"
   use_when: "Data visualisation: bar, line, pie, and donut charts, graphs, plots. SVG-based with no charting library. For one number with a trend line use Metric."
-  icon: '<i class="hgi hgi-stroke hgi-chart"></i>'
   category: "Data"
   tags: ["JS", "CSS", "API"]
   url: "/components/chart.html"
@@ -880,7 +795,6 @@
 - title: "Export"
   description: "Declarative CSV, Excel, and PDF downloads from any table, card list, or marked-up container"
   use_when: "Download what is on the page as a file: export to CSV or Excel, print or save a table as PDF, download a report. Works on any table, card list, or marked-up container, and honours the current selection and pagination."
-  icon: '<i class="hgi hgi-stroke hgi-file-export"></i>'
   category: "Data"
   tags: ["JS", "CSS", "API"]
   url: "/components/export.html"
@@ -890,7 +804,6 @@
 - title: "Filter"
   description: "Applied filters with search, URL sync, and remote data"
   use_when: "Narrow a list down: faceted filters, checkbox and range filters, applied-filter chips, URL-synced filtering, remote filtering. Pairs with Tables and Pagination on data screens."
-  icon: '<i class="hgi hgi-stroke hgi-filter"></i>'
   category: "Data"
   tags: ["JS", "CSS", "API"]
   url: "/components/filter.html"
@@ -900,7 +813,6 @@
 - title: "Metric"
   description: "Dashboard tile pairing a key statistic with an inline sparkline"
   use_when: "A dashboard tile pairing one key number with an inline sparkline, so a value and its trend read at a glance. For full charts use Chart."
-  icon: '<i class="hgi hgi-stroke hgi-chart-line-data-01"></i>'
   category: "Data"
   tags: ["CSS"]
   url: "/components/metric.html"
@@ -909,7 +821,6 @@
 - title: "Selection"
   description: "Lets users pick items in any list, so one action can apply to all of them"
   use_when: "Users pick several items for one bulk action (export, delete, assign) in any list: table rows, cards, or a plain checkbox list. Covers select-all, a 5-selected-of-48 counter, and a bulk button that follows the selection."
-  icon: '<i class="hgi hgi-stroke hgi-check-list"></i>'
   category: "Data"
   tags: ["JS", "API"]
   url: "/components/selection.html"
@@ -918,7 +829,6 @@
 - title: "Sort"
   description: "DOM-reorder engine for lists, grids, and tables with type auto-detect and URL sync"
   use_when: "Reorder items already in the DOM: sortable table columns, a sort dropdown over a card grid, A-to-Z or newest-first ordering, with type auto-detect and URL sync. This is the engine Tables sorting uses; for a list or grid, point sort buttons at it with data-sort-target, no JS."
-  icon: '<i class="hgi hgi-stroke hgi-sorting-05"></i>'
   category: "Data"
   tags: ["JS", "CSS", "API"]
   url: "/components/sort.html"
@@ -928,7 +838,6 @@
 - title: "Tables"
   description: "Data grids with sorting, pagination, and expandable rows"
   use_when: "Any tabular data: data grid, data table, sortable table, expandable sub-rows, column visibility, records list. The starting point for replacing DataTables, jTable, ag-Grid, or a similar plugin. Pair it with Filter, Pagination, Sort, Selection, and Export; the Manage Records example shows all of them working together."
-  icon: '<i class="hgi hgi-stroke hgi-table-02"></i>'
   category: "Data"
   tags: ["JS", "CSS", "API"]
   url: "/components/tables.html"
@@ -938,7 +847,6 @@
 - title: "Toolbar"
   description: "Controls bar above a table, list, or grid: result counts and applied filters lead, export and actions trail"
   use_when: "The controls bar above a table, list, or grid: result counts and applied filters lead, search, export, and actions trail. Use it so every data screen shares one layout."
-  icon: '<i class="hgi hgi-stroke hgi-more-horizontal"></i>'
   category: "Data"
   tags: ["CSS"]
   url: "/components/toolbar.html"
@@ -949,7 +857,6 @@
 - title: "Copy"
   description: "One-click clipboard copy with checkmark feedback and screen reader announcement"
   use_when: "One-click copy to clipboard with a checkmark confirmation and a screen reader announcement. Use for reference numbers, links, codes, and IDs."
-  icon: '<i class="hgi hgi-stroke hgi-copy-01"></i>'
   category: "Utilities"
   tags: ["JS", "CSS", "API"]
   url: "/utilities/copy.html"
@@ -959,7 +866,6 @@
 - title: "Counter Animation"
   description: "Scroll-triggered animated counters that count up to a target value"
   use_when: "Numbers that count up to their value when scrolled into view: animated statistics, KPI counters, impact figures."
-  icon: '<i class="hgi hgi-stroke hgi-chart-increase"></i>'
   category: "Utilities"
   tags: ["JS"]
   url: "/utilities/numbers.html#counter-animation"
@@ -968,7 +874,6 @@
 - title: "Currency"
   description: "SAR and international currency symbols appended automatically via data attribute"
   use_when: "Append a currency symbol automatically from a data attribute. Covers SAR and international symbols on prices, fees, and totals."
-  icon: '<i class="hgi hgi-stroke hgi-coins-dollar"></i>'
   category: "Utilities"
   tags: ["JS", "CSS"]
   url: "/utilities/numbers.html#currency-format"
@@ -976,8 +881,7 @@
 
 - title: "Expandable Content"
   description: "Show more/less toggle for long content blocks"
-  use_when: "A show more and show less toggle on a long block of content."
-  icon: '<i class="hgi hgi-stroke hgi-arrow-expand-02"></i>'
+  use_when: "A show more and show less toggle on a long block of content: the box stops at a set height, and the button appears only when the content is taller. To clip text to a few lines use Truncate Text; for a scrolling region use Scroll More; for titled panels that open one at a time use Accordion."
   category: "Utilities"
   tags: ["JS", "CSS"]
   url: "/utilities/expandable-content.html"
@@ -986,7 +890,6 @@
 - title: "Helper Classes"
   description: "Single-purpose classes for your own markup: centering, spacing reset, direction isolation, brand text color, and notes"
   use_when: "Single-purpose classes for your own markup: centering, spacing reset, direction isolation, brand text colour, and notes. Check here before writing a one-off CSS rule."
-  icon: '<i class="hgi hgi-stroke hgi-magic-wand-01"></i>'
   category: "Utilities"
   tags: ["CSS"]
   url: "/utilities/helpers.html"
@@ -995,7 +898,6 @@
 - title: "Hidden"
   description: "CSS utilities that hide an element always, at chosen screen widths, or on screen only while screen readers still read it"
   use_when: "Hiding things: the hidden attribute honoured everywhere, breakpoint-exact responsive hiding with data-hidden, and screen-reader-only text with the sr token or nds-sr-only. Use this instead of writing your own display-none rule."
-  icon: '<i class="hgi hgi-stroke hgi-view-off-slash"></i>'
   category: "Utilities"
   tags: ["CSS"]
   url: "/utilities/hidden.html"
@@ -1004,7 +906,6 @@
 - title: "Numbers"
   description: "Locale-aware thousand separators for any number on the page"
   use_when: "Locale-aware thousand separators applied to any number already on the page."
-  icon: '<i class="hgi hgi-stroke hgi-math"></i>'
   category: "Utilities"
   tags: ["JS", "API"]
   url: "/utilities/numbers.html"
@@ -1013,7 +914,6 @@
 - title: "Print"
   description: "How a page prints, and a button that prints one part of the page alone"
   use_when: "Printing a permit, receipt or certificate from the page, or keeping an element off the paper: print one element alone, hide screen-only controls on paper."
-  icon: '<i class="hgi hgi-stroke hgi-printer"></i>'
   category: "Utilities"
   tags: ["JS", "CSS"]
   url: "/utilities/print.html"
@@ -1023,7 +923,6 @@
 - title: "Truncate Text"
   description: "Clips long text to a set number of lines"
   use_when: "Clip long text to a set number of lines with an ellipsis, such as a card title or description."
-  icon: '<i class="hgi hgi-stroke hgi-text-wrap"></i>'
   category: "Utilities"
   tags: ["CSS"]
   url: "/utilities/truncate-text.html"
@@ -1033,7 +932,6 @@
 - title: "Audit"
   description: "A check you run on a built page that lists NDS markup and CSS that fail with no error, and every name an NDS release changed"
   use_when: "Check a page you built or upgraded: a filter that binds to nothing, an id a target names that does not exist, a missing skip link, a language file that did not load, and old class, attribute or custom property names in the markup and in your own CSS. It returns the findings as an array, for a test or an AI coding agent. For the list of changed names by release use Migration."
-  icon: '<i class="hgi hgi-stroke hgi-file-validation"></i>'
   category: "Core"
   tags: ["JS", "API"]
   url: "/core/audit.html"
@@ -1042,7 +940,6 @@
 - title: "Date"
   description: "Show, parse, print and convert dates in Gregorian and Hijri (Umm al-Qura), in the site's timezone and date format"
   use_when: "Read a date from text, print a date, convert between Gregorian and Hijri, or get today's date in the site's timezone. Use it for any date handled in JavaScript, to show a <time> in Hijri with data-date-to (an issue or expiry date in both calendars), and to set the site's timezone and date format on <html>. For a date field the user fills in use Date Picker; to sort a list by date use Sort."
-  icon: '<i class="hgi hgi-stroke hgi-calendar-02"></i>'
   category: "Core"
   tags: ["JS", "API"]
   url: "/core/date.html"
@@ -1051,7 +948,6 @@
 - title: "Init"
   description: "Starts every component at load, and the calls that tell them a container changed"
   use_when: "Page code must wait until the components on the page have started, or you added, removed, or replaced rows, cards, or list items with JavaScript and the filters, counters, or controls around them are now stale. One call updates every affected component instead of calling each one with its own argument. Reach for it on any CRUD screen, after an AJAX list swap, or whenever content arrives after page load. Server-driven lists are deliberately left alone."
-  icon: '<i class="hgi hgi-stroke hgi-refresh"></i>'
   category: "Core"
   tags: ["JS", "API"]
   url: "/core/init.html"
@@ -1060,7 +956,6 @@
 - title: "Internationalization"
   description: "The text NDS components write, in one file per language that the page loads and a site can change or extend"
   use_when: "Change the text a component writes (a message, a button label, a screen reader label), add a language, or give your own component text in the page's language. The page's language comes from lang on <html>. For dates in the page's language use Date."
-  icon: '<i class="hgi hgi-stroke hgi-translate"></i>'
   category: "Core"
   tags: ["JS", "API"]
   url: "/core/i18n.html"
@@ -1069,7 +964,6 @@
 - title: "Request"
   description: "Fetch wrapper with a timeout, a response size cap, and errors you can branch on"
   use_when: "Call an API from the browser: a fetch wrapper applying a timeout, a response size cap, and a status check, handing back parsed JSON or raw text with errors you can branch on. Use it anywhere you would reach for fetch. NDS components never fetch for you; wire data through this."
-  icon: '<i class="hgi hgi-stroke hgi-connect"></i>'
   category: "Core"
   tags: ["JS", "API"]
   url: "/core/request.html"
@@ -1080,7 +974,6 @@
 - title: "Migration"
   description: "Every class, attribute, id, custom property, window setting and event that an NDS release renamed or removed, with what to write instead"
   use_when: "Upgrade a site to a newer NDS release: read what changed in each release after yours, and what to write instead. The Audit finds these names on a page for you. Old JavaScript method names are in each release's notes."
-  icon: '<i class="hgi hgi-stroke hgi-git-compare"></i>'
   category: "Guides"
   tags: ["JS", "CSS"]
   url: "/guides/migration.html"
@@ -1106,7 +999,7 @@
 
 - title: "Form Template"
   description: "Multi-step form layout with grouped text inputs, side stepper (vertical on desktop, radial on mobile), and a flat sub-hero."
-  use_when: "Any multi-step form or wizard: service application, request submission, registration workflow, onboarding, or checkout. Carries the grouped input types and a progress stepper that runs vertically beside the form on desktop and as a radial dial on mobile. The stepper column is the side info arrangement, through nds-has-sideinfo on the content layout."
+  use_when: "Any multi-step form or wizard: service application, request submission, onboarding, or checkout. To create an account or sign in, use the Registration or Sign In example instead. Carries the grouped input types and a progress stepper that runs vertically beside the form on desktop and as a radial dial on mobile. The stepper column is the side info arrangement, through nds-has-sideinfo on the content layout."
   icon: '<i class="hgi hgi-stroke hgi-file-edit"></i>'
   category: "Form"
   tags: ["DGA", "Forms", "Stepper", "Side Info", "Grid"]
@@ -1114,7 +1007,7 @@
 
 - title: "Service Page Template"
   description: "Government digital service with side info, breadcrumbs, and structured content layout."
-  use_when: "The landing page for a single government service: what it is, who is eligible, the steps, the fees, and the start-service action. The side-info column, breadcrumbs, hero tags, and the rating widget are all switched on from front matter (layout_class: nds-has-sideinfo, breadcrumb, rating)."
+  use_when: "The landing page for a single government service: what it is, who is eligible, the steps, the fees, and the start-service action. Its side-info column is nds-has-sideinfo on the content layout; the breadcrumb, hero tags and rating menu sit in the sub hero, and a star-rating strip closes the page. The page source sets them in front matter: the Front Matter table on Page Layout maps each key to its markup."
   icon: '<i class="hgi hgi-stroke hgi-menu-square"></i>'
   category: "Service"
   tags: ["DGA", "Tabs", "Side Info", "Rating"]
@@ -1122,7 +1015,7 @@
 
 - title: "Contact Us Template"
   description: "Contact page with two-column form, country-code prefix, select, textarea, file upload, and a side info card with emergency contacts."
-  use_when: "A contact or enquiry page: a two-column message form with a country-code phone prefix, select, textarea, and file upload, beside a card listing phone, email, and emergency contacts. Use for contact us, feedback, support request, or get-in-touch pages. The contacts card is the side info column (nds-has-sideinfo)."
+  use_when: "A contact or enquiry page: a two-column message form with a country-code phone prefix, a Custom Select, a textarea, and a file upload, beside a card listing phone, email, and emergency contacts. Use for contact us, feedback, support request, or get-in-touch pages. The contacts card is the side info column (nds-has-sideinfo)."
   icon: '<i class="hgi hgi-stroke hgi-mail-01"></i>'
   category: "Service"
   tags: ["DGA", "Forms", "Upload", "Side Info", "Grid"]
@@ -1204,7 +1097,7 @@
 
 - title: "Student Portal"
   description: "A student's home page with grades, today's classes, requests, exams and services."
-  use_when: "A personal home page that a signed-in user opens first. Use for a student, employee, patient, citizen or member portal, a my-account page, or any user dashboard. Each section maps to any portal: the profile is the person, with a photo, a status Alert (no warnings, account in good standing) and key details in a Definition List; My Studies is their key numbers, as metric tiles with a trend chart and a progress ring (an employee's leave balance, a patient's next checkup); Today is today's schedule as a Timeline (dots and a card on each step) beside the person's requests in a Table with status tags; Coming Up is dated items in a content switcher, upcoming and past (appointments and results), with a countdown and a progress bar, beside key dates in Scroll More with nds-fit, so the list fills its card; Quick Actions are the top tasks, each opening a modal; University Systems is a swiper of links to other systems; Student Services is the service catalog, where a closed service is a disabled card; a FAB opens a help panel. Column widths follow the content: two equal columns only for cards of about the same size, a narrow and a wide column (--max-track) when one side holds more. Every list and table carries nds-empty with its own data-empty-message, and a list that can grow sits in Scroll More, so the same markup holds no items or many. Lists of dated items are Drawer rows: one link per row with a Date Tile at the start, a title with a status tag, and a Meta line of icon facts. Full chrome with a sub hero, striped sections through content_class: nds-stripe, and no side menu."
+  use_when: "A personal home page that a signed-in user opens first. Use for a student, employee, patient, citizen or member portal, a my-account page, or any user dashboard. Each section maps to any portal: a profile with a status Alert and a Definition List; key numbers as metric tiles, a trend chart and a progress ring; today's schedule as a Timeline beside the person's requests in a Table; upcoming and past dated items in a Content Switcher, with a countdown, beside key dates in Scroll More; quick actions that open modals; a swiper of links to other systems; a service catalog where a closed service is a disabled card; a FAB that opens a help panel. Full chrome with a sub hero, striped sections (nds-stripe on .nds-content), and no side menu. The page's opening comment gives its layout rules."
   icon: '<i class="hgi hgi-stroke hgi-mortarboard-01"></i>'
   category: "Dashboard"
   tags: ["Drawer", "Date Tile", "Meta", "Countdown", "Content Switcher"]
