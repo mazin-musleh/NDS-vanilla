@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 08:36 PM"
+last_edit: "19/10/2026 - 10:35 AM"
 ---
 
 <section id="themes-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "18/10/2026 - 08:36 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-Themes set the page's colors: light or dark mode, and a palette. The `data-theme` attribute on `<html>` holds both, as a list of words. `dark` turns on dark mode, and a theme name such as `crimson` picks a palette: `data-theme="dark crimson"`. With no attribute, the page shows the DGA palette in light mode. A dark mode button and a theme menu write the attribute for the user, and save the choice. Dark mode is experimental: it is not checked against the DGA standards yet.
+The `data-theme` attribute on `<html>` sets the page's colors. It holds a list of words: `dark` for dark mode and a theme name for the palette, as in `data-theme="dark crimson"`. With no attribute, the page shows the DGA palette in light mode. A dark mode toggle and a theme menu write the attribute for the user. Your own brand colors come from a custom palette or a stylesheet theme. Dark mode is experimental: it is not checked against the DGA standards yet.
 
 Pick another component when:
 
@@ -115,16 +115,14 @@ The preview controls the real page: a click changes the look of this whole page,
 ### Theme Menu
 {: .nds-block-title}
 
-A click on an option writes its `data-theme-value` into `data-theme` and keeps the `dark` word. A second click on the chosen option goes back to the DGA default. NDS ships three themes: `crimson`, `corporate` (Cairo font) and `sunset` (Readex Pro font). NDS loads a theme's font only when the theme is on.
+NDS ships three themes: `crimson`, `corporate` (Cairo font) and `sunset` (Readex Pro font). A click on an option writes its `data-theme-value` into `data-theme` and keeps the `dark` word. A second click on the chosen option goes back to the DGA default.
 
-Each pick also writes `?theme=name` in the address bar, so the user can copy the link. A page that opens with `?theme=name` applies that option, and `?theme=` with no name applies the default. The theme must be an option in a menu on that page.
+Each pick also writes `?theme=name` in the address bar. A page that opens with that link applies the option, if a menu on the page has it.
 
 ### Custom Palette
 {: .nds-block-title}
 
-Set `data-palette` and the seed colors on `<html>`, and NDS builds the whole palette from them. `--brand-primary` is the only seed you must set. It becomes the 600 step of the primary colors, and NDS builds the other steps, the tints and the dark mode colors from it. Each step keeps the seed's hue, takes its lightness from the DGA scale, and scales the seed's color strength (chroma). The gray scale takes a little of its hue: `--neutral-tint` sets how much.
-
-NDS uses CSS relative colors in OKLCH. Chrome 119, Safari 16.4 and Firefox 128 support them. An older browser shows the DGA palette.
+Set `data-palette` and the seed colors on `<html>`, and NDS builds the whole palette from them, dark mode included. `--brand-primary` is the only seed you must set. The palette needs Chrome 119, Safari 16.4 or Firefox 128. An older browser shows the DGA palette.
 
 <script type="text/html" id="theme-palette-html" data-canon data-preview="none" data-js="theme-palette-css">
 <html lang="ar" dir="rtl" data-palette style="--brand-primary: #7c3aed; --brand-secondary: #ec4899; --neutral-tint: 0.4;">
@@ -137,7 +135,7 @@ NDS uses CSS relative colors in OKLCH. Chrome 119, Safari 16.4 and Firefox 128 s
 }
 </script>
 
-A theme option with `data-seed-*` in place of a theme name applies a custom palette on click, and saves it. Click the button to see this page in the palette, and click it again to go back to DGA. In a theme menu, the option is one more `nds-dropmenu-item`.
+A theme option with `data-seed-*` attributes applies a custom palette on click, and saves it. Click the button to see this page in the palette. Click it again to go back to the DGA default.
 
 <script type="text/html" id="theme-custom-option" data-canon data-screens="none">
 <button class="nds-btn nds-primary" data-theme-value="violet" data-seed-primary="#7c3aed" data-seed-secondary="#ec4899" data-seed-tint="0.4">
@@ -148,13 +146,13 @@ A theme option with `data-seed-*` in place of a theme name applies a custom pale
 ### Stylesheet Themes
 {: .nds-block-title}
 
-A stylesheet theme is your own CSS file that sets the color tokens at `:root`. Load it with a `<link>` in the `<head>`, after the NDS CSS, so it applies before first paint. Do not load it from a script. The semantic and component tokens follow the colors you set.
+A stylesheet theme is your own CSS file that sets the color tokens at `:root`. Load it with a `<link>` in the `<head>`, after the NDS CSS, so it applies before first paint.
 
 <script type="text/html" id="theme-sheet-html" data-canon data-preview="none" data-js="theme-sheet-css">
 <link rel="stylesheet" href="assets/themes/my-brand.css">
 </script>
 <script type="text/html" id="theme-sheet-css" data-canon data-lang="css" data-tab-label="Theme CSS">
-/* DGA values shown: replace them with your brand ramp. The status and base colors stay DGA. */
+/* DGA values shown: replace them with your brand colors. The status and base colors stay DGA. */
 :root {
   /* Primary ramp: your brand color is the 600 step */
   --colors-primary-25:  #f7fdf9;
@@ -180,49 +178,7 @@ A stylesheet theme is your own CSS file that sets the color tokens at `:root`. L
   --colors-primary-alpha-80: #1b8354cc;
   --colors-primary-alpha-90: #1b8354e5;
 
-  /* Secondary ramp */
-  --colors-secondary-25:  #fffef7;
-  --colors-secondary-50:  #fffef2;
-  --colors-secondary-100: #fffce6;
-  --colors-secondary-200: #fcf3bd;
-  --colors-secondary-300: #fae996;
-  --colors-secondary-400: #f7d54d;
-  --colors-secondary-500: #f5bd02;
-  --colors-secondary-600: #dba102;
-  --colors-secondary-700: #b87b02;
-  --colors-secondary-800: #945c01;
-  --colors-secondary-900: #6e3c00;
-  --colors-secondary-950: #472400;
-
-  /* Tertiary ramp: your color is the 500 step */
-  --colors-tertiary-25:  #fefcff;
-  --colors-tertiary-50:  #f9f5fa;
-  --colors-tertiary-100: #f2e9f5;
-  --colors-tertiary-200: #e1cce8;
-  --colors-tertiary-300: #ccadd9;
-  --colors-tertiary-400: #a57bba;
-  --colors-tertiary-500: #80519f;
-  --colors-tertiary-600: #6d428f;
-  --colors-tertiary-700: #532d75;
-  --colors-tertiary-800: #3d1d5e;
-  --colors-tertiary-900: #281047;
-  --colors-tertiary-950: #16072e;
-
-  /* Neutral ramp: NDS adds 750 and 850 for dark mode; the DGA palette does not have them */
-  --colors-neutral-25:  #fcfcfd;
-  --colors-neutral-50:  #f9fafb;
-  --colors-neutral-100: #f3f4f6;
-  --colors-neutral-200: #e5e7eb;
-  --colors-neutral-300: #d2d6db;
-  --colors-neutral-400: #9da4ae;
-  --colors-neutral-500: #6c727e;
-  --colors-neutral-600: #4d5761;
-  --colors-neutral-700: #384250;
-  --colors-neutral-750: #2b3643;
-  --colors-neutral-800: #1f2a37;
-  --colors-neutral-850: #18212f;
-  --colors-neutral-900: #111927;
-  --colors-neutral-950: #0c111b;
+  /* Set the secondary, tertiary (500 step) and neutral ramps the same way. The names are on the Tokens page */
 
   /* Deep brand surfaces: hero, footer, image overlay */
   --background-primary-strong: var(--colors-primary-900);
@@ -238,12 +194,12 @@ A stylesheet theme is your own CSS file that sets the color tokens at `:root`. L
 }
 </script>
 
-A theme menu option can load a stylesheet theme too. `data-theme-css` on the option names the CSS file, and `data-theme-js` names a script. Each attribute works on its own: an option can carry one or both. The script loads them when the user picks the option, and removes the stylesheet when the user picks another one. The [event themes](../events/) are stylesheet themes that load from one script tag.
+A theme option can load a stylesheet theme on click: `data-theme-css` names the CSS file, and `data-theme-js` names a script. The [event themes](../events/) are stylesheet themes that load from one script tag.
 
 ### Dark Areas
 {: .nds-block-title #dark-areas}
 
-`data-theme="dark"` on any element renders it and everything inside it in dark mode. The rest of the page stays as it is. Put it on a dark surface, such as a deep primary section, the footer or a card on a photo. In the preview, the second card carries it. Status tags keep their status colors. Only the `dark` word works on an element: a theme name works only on `<html>`.
+`data-theme="dark"` on any element renders it and everything inside it in dark mode. Put it on a dark surface, such as a deep primary section, the footer or a card on a photo. In the preview, the second card carries it.
 
 <script type="text/html" id="theme-dark-area" data-canon data-preview="page" data-preview-light data-preview-height="260" data-preview-style="body{padding:24px}">
 <div class="nds-grid" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
@@ -294,21 +250,21 @@ A theme menu option can load a stylesheet theme too. `data-theme-css` on the opt
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">The script listens for clicks on the whole page. A toggle or a theme menu works as soon as it is in the page, with no setup code. The script starts when the page has one at load. On a page with none at load, call <code class="nds-inline-code lang-js">NDS.Init.refresh()</code> after you add the first one.</p>
+          <p class="nds-item-desc">A toggle or a theme menu works with no setup code. On a page that has none at load, call <code class="nds-inline-code lang-js">NDS.Init.refresh()</code> after you add the first one.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-database"></i>
             <span class="nds-label">Preference Persistence</span>
           </span>
-          <p class="nds-item-desc">The script saves the mode and the theme in <code class="nds-inline-code lang-js">localStorage</code>, and every page restores them. The key is <code class="nds-inline-code lang-js">nds-theme</code>, and <code class="nds-inline-code lang-js">nds-palette</code> for a custom palette.</p>
+          <p class="nds-item-desc">The script saves the mode and the theme in <code class="nds-inline-code lang-js">localStorage</code> (<code class="nds-inline-code lang-js">nds-theme</code>, and <code class="nds-inline-code lang-js">nds-palette</code> for a custom palette). Every page restores them.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-paint-bucket"></i>
             <span class="nds-label">Zero-Flash</span>
           </span>
-          <p class="nds-item-desc">A script in the <a href="../ui-shell/head">head</a> writes the saved mode and theme name before first paint, so the page does not show the wrong colors first. A saved custom palette comes back after first paint, so it can flash on load.</p>
+          <p class="nds-item-desc">A script in the <a href="../ui-shell/head">head</a> writes the saved mode and theme before first paint. A saved custom palette comes back after first paint, so it can flash on load.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -322,7 +278,7 @@ A theme menu option can load a stylesheet theme too. `data-theme-css` on the opt
             <i class="hgi hgi-stroke hgi-moon-02"></i>
             <span class="nds-label">Light and Dark</span>
           </span>
-          <p class="nds-item-desc">Every theme and custom palette has a dark mode, and every toggle on the page follows each change. A page in dark mode, and every dark area on a page, prints in light colors, then returns to dark.</p>
+          <p class="nds-item-desc">Every theme and custom palette has a dark mode. Dark pages and dark areas print in light colors.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -343,15 +299,12 @@ A theme menu option can load a stylesheet theme too. `data-theme-css` on the opt
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Add nothing for the DGA look: it is the default.
-- Put the dark mode button in the [Top Bar](../ui-shell/topbar). Use the switch toggle on a settings page.
 - Use a custom palette for a brand color with dark mode built for you. Use a stylesheet theme for exact colors, older browsers, or styles beyond color.
-- Check the contrast of a custom palette: 4.5:1 for text and 3:1 for controls, on white. The seed is exact, but NDS does not check the steps it builds.
+- Check the contrast of a custom palette: 4.5:1 for text and 3:1 for controls, on white. NDS does not check the steps it builds.
 - Change the mode with `NDS.Theme.set()` or `toggle()`, not by writing `data-theme`. They keep the theme name, save the choice and update the toggles.
-- Use semantic tokens in your own CSS, such as `--background-card` and `--text-default`. A hard-coded color follows neither dark mode nor the theme.
-- Write your own dark rules with `[data-theme~="dark"] .your-class`, never `[data-theme="dark"]`. The attribute can hold a theme name too, and the `~=` rule also matches inside a dark area.
+- Use semantic tokens in your own CSS, such as `--background-card`. A hard-coded color follows neither dark mode nor the theme.
+- Write your own dark rules with `[data-theme~="dark"]`, never `[data-theme="dark"]`. The attribute can hold a theme name too.
 - Put `data-theme="dark"` on the dark surface, not on each component inside it.
-- Test every new surface in both modes and in each theme you ship.
 
 </div>
   </div>
@@ -369,23 +322,20 @@ A theme menu option can load a stylesheet theme too. `data-theme-css` on the opt
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-theme` | `<html>` | The mode and the theme, as words: `dark`, a theme name, or both. Light mode has no word. The script writes it when the user picks a mode or a theme. The head script writes the saved value before first paint |
+| `data-theme` | `<html>` | The mode and the theme, as words: `dark`, a theme name, or both. Light mode has no word. The script writes it on each pick, and the head script writes the saved value before first paint |
 | `data-palette` | `<html>` | Builds the palette from the `--brand-*` seeds. The script sets it when the user picks an option with `data-seed-primary`, and removes it when the user picks another option |
 | `data-theme="dark"` | any element except `<html>` | Renders the element and everything inside it in dark mode. A theme name does nothing here |
 | `data-theme-toggle` | a button, or a `.nds-switch-container` | Makes it a dark mode toggle |
-| `aria-pressed` | a dark mode toggle | Write `false` in the markup. The script sets `true` in dark mode and `false` in light mode, at load and on each change. It also swaps the icon between `nds-hgi-moon-02` and `nds-hgi-sun-03`, and checks the switch in dark mode |
+| `aria-pressed` | a dark mode toggle | Write `false` in the markup. The script sets `true` in dark mode and `false` in light mode. It also swaps the moon and sun icons, and checks the switch in dark mode |
 | `data-theme-value` | a theme option: a button, or a `.nds-switch-container` | The theme name the option applies. Leave it empty for the DGA default |
-| `aria-current` | a theme option | The script sets `true` on the chosen option and `false` on the others, at load and on each pick. It also checks the switch of the chosen option |
-| `data-seed-primary` | a theme option | Makes it a custom palette option, with this primary seed. The script saves the palette |
-| `data-seed-secondary`, `data-seed-tertiary`, `data-seed-tint`, `data-seed-font` | a theme option with `data-seed-primary` | Set `--brand-secondary`, `--brand-tertiary`, `--neutral-tint` and `--nds-font-brand` |
-| `data-seed-weight-regular`, `-medium`, `-semibold`, `-bold` | a theme option with `data-seed-primary` | Set the four `--font-weight-*` values, for a font that looks lighter or heavier than IBM Plex |
+| `aria-current` | a theme option | The script sets `true` on the chosen option and `false` on the others. It also checks the switch of the chosen option |
+| `data-seed-primary` | a theme option | Makes it a custom palette option, with this primary seed |
+| `data-seed-secondary`, `-tertiary`, `-tint`, `-font`, `-weight-regular`, `-weight-medium`, `-weight-semibold`, `-weight-bold` | a theme option with `data-seed-primary` | Set `--brand-secondary`, `--brand-tertiary`, `--neutral-tint`, `--nds-font-brand` and the four `--font-weight-*` values, in that order |
 | `data-theme-css` | a theme option | A stylesheet URL. The script adds it as `<link id="nds-theme-stylesheet">` when the user picks the option, and removes it when the user picks another one |
-| `data-theme-js` | a theme option | A script URL. The script loads it once, the first time the user picks the option, or at load when it is the saved theme |
+| `data-theme-js` | a theme option | A script URL. The script loads it once: on the first pick, or at load when it is the saved theme |
 {: .nds-table .nds-responsive}
 
-A `<meta name="theme-color">` in `<head>` sets the color of the browser bar on a phone. When the page has one, the script writes the top bar's background color into it, at load and on each mode or theme change. Without a top bar, it takes the main navigation's color, then the page's. A `theme-color` meta with a `media` attribute is yours, and the script leaves it alone.
-
-`?theme=name` in the page URL: see Theme Menu.
+A `<meta name="theme-color">` sets the color of the browser bar on a phone. The script writes the top bar's background color into it, unless the meta has a `media` attribute.
 
 ### CSS Custom Properties
 {: .nds-block-title}
@@ -409,7 +359,7 @@ Set the `--brand-*` seeds and `--neutral-tint` on `<html>` with `data-palette`. 
 ### JavaScript
 {: .nds-block-title}
 
-`NDS.Theme` controls the mode. It works on every page, with or without a toggle. It fires no events.
+`NDS.Theme` controls the mode on every page, with or without a toggle. It fires no events.
 
 | Method | Effect |
 |---|---|
