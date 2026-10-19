@@ -17,6 +17,13 @@
 #   name. Templates and examples: Service · Form · Content · Dashboard. Events: Theme.
 #   It feeds the Library filter, the card tags, the side menu and llms.txt.
 #
+# Order: the Library list sorts its cards A–Z by title itself. Everywhere else, file
+#   order is display order, here and in _data/sidemenu/sidemenu.yml. Inside a library
+#   shelf or Components group, A–Z by title; the side menu goes A–Z by its label,
+#   except Foundations, Layout and UI Shell, which it curates. Templates, examples and
+#   events are curated, newest showcase first, and the side menu lists them in the
+#   same order as here.
+#
 # use_when: match a request against THIS field first, not against the title. Titles
 #   name the subject; use_when names the JOB the entry does, in the words developers
 #   use for it. Never conclude NDS lacks something until every use_when here has

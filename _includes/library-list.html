@@ -1,5 +1,5 @@
 {%- comment %} The library browse list: every catalog entry outside templates, examples and events, with search, a Type (shelf) and a Group filter, and paging. Shared by index.md and components/index.md (params: title, description). The shelf is the first folder of the entry's url; a doc page's breadcrumb links here as ?shelf=<label>. {%- endcomment %}
-{%- assign library = site.data.catalog | where_exp: "e", "e.url contains '/foundations/' or e.url contains '/layout/' or e.url contains '/ui-shell/' or e.url contains '/components/' or e.url contains '/utilities/' or e.url contains '/core/' or e.url contains '/guides/'" %}
+{%- assign library = site.data.catalog | where_exp: "e", "e.url contains '/foundations/' or e.url contains '/layout/' or e.url contains '/ui-shell/' or e.url contains '/components/' or e.url contains '/utilities/' or e.url contains '/core/' or e.url contains '/guides/'" | sort_natural: "title" %}
         <div class="nds-section-head">
             <h2 class="nds-section-title">{{ include.title }}</h2>
             <p class="nds-section-description">{{ include.description }}</p>
