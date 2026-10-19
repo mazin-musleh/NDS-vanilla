@@ -2,7 +2,7 @@
 
 
 - mode: comprehension
-- rules: §Composition cascade (parts match through the catalog; "Match by `use_when` across the template, example, and component catalogs, never by title"); red line #3 ("Keep every canonical part, in order."; "Edit a copied script point by point against its source; never rewrite it.")
+- rules: §Composition cascade (parts match through the catalog; "Match by `use_when` across the catalog's templates, examples, and components, never by title"); red line #3 ("Keep every canonical part, in order."; "Edit a copied script point by point against its source; never rewrite it.")
 - provenance: rig 6 (2026-08-14) corrections 2.1+2.2: the agent read `examples/sign-in.md` but never `examples/registration.md`, invented a Tabs switcher, and lost field spacing in a bare `.nds-form`.
 - setup: Mature project; chrome `Built and Verified`. The plan's next row is the auth page. The project has its own username/password auth plus account creation, no SSO.
 - prompt: "Build the login page — sign-in by default, plus a link that swaps to a create-account form on the same page, no navigation. Sketch the page skeleton first — both forms' wrappers and whatever makes the swap work, not the full fields."

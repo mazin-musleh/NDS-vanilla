@@ -118,7 +118,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S108 | verify-per-page-reference | c | a row moves to Awaiting Verification only with its own reference comparison; never handed to the dev | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | floor:PASS 2026-10-10 · ev:field |
 
 | S109 | states-are-parts | c | each state the page reaches is a part, matched through the catalog; parts named by job, never by legacy class | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | ev:field (rig 5 run 2) |
-| S110 | full-use-when-read | c | read every use_when line unfiltered; keyword search confirms, never picks | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | ev:field (rig 5 run 2) |
+| S110 | full-use-when-read | c | read every use_when line unfiltered; keyword search confirms, never picks | PASS 2026-10-19 scoped, one catalog (Sonnet 5.5) | ev:field (rig 5 run 2) |
 | S111 | parts-list-before-markup | c | the parts list is recorded under the row before the first line of markup | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | ev:field (rig 5 run 2) |
 | S112 | component-use-limits | c | each part carries its doc's use limits (never, only, do not); live figures are no counter | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | read-dep · ev:field (rig 5 run 2) |
 | S113 | verify-every-state | c | both passes on every state in the parts list, setup named; no-reference state judged by its doc | PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5) | ev:field (rig 5 run 2) |

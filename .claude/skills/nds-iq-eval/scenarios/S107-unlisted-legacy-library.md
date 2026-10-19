@@ -2,7 +2,7 @@
 
 
 - mode: comprehension
-- rules: Red line #6 — "No legacy UI libraries: NDS and vanilla JS only. The index maps common legacy libraries to NDS. Any other UI library is legacy too: replace it as §Design choices says." / §Design choices, Replacing a legacy library — "name the capability, search the catalogs … never the legacy library for one widget."
+- rules: Red line #6 — "No legacy UI libraries: NDS and vanilla JS only. The index maps common legacy libraries to NDS. Any other UI library is legacy too: replace it as §Design choices says." / §Design choices, Replacing a legacy library — "name the capability, search the catalog … never the legacy library for one widget."
 - provenance: owner call 2026-10-09: the index's legacy table and the audit's legacy check hold examples, not the full list (9bee84a4). No scenario had a library outside that table.
 - setup: Porting the Reservations page; parallel files approved. The legacy view loads Flatpickr (its script and stylesheet from a CDN) for the visit-date field, with past dates disabled and a two-month view. The project uses no jQuery. `NDS_ROOT` and `NDS_ASSETS` are set and the runtime is installed.
 - prompt: "port Reservations. The visit date uses Flatpickr today and the team likes it." Plus: "List every script and stylesheet the new page loads, and sketch the visit-date field's markup."

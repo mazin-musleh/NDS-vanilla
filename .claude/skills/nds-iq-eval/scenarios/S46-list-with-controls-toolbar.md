@@ -2,7 +2,7 @@
 
 
 - mode: comprehension
-- rules: §Composition cascade ("list every UI part, and match each against the component catalog"; "Match by `use_when` across the template, example, and component catalogs, never by title"); index "Which component, example, or template fits" row
+- rules: §Composition cascade ("list every UI part, and match each against the component catalog"; "Match by `use_when` across the catalog's templates, examples, and components, never by title"); index "Which component, example, or template fits" row
 - provenance: Field triage 2026-08-10 proposed a rules sentence routing control bars to Toolbar; written as a gate scenario (2026-08-11) because Toolbar's `use_when` already names the job.
 - setup: Mature project on the latest template; chrome and several pages `Built and Verified`. A new internal list page is next in the plan. The dev never says the word "toolbar".
 - prompt: "Build the requests list page. It needs a search box, filters for status and department, the number of results showing, and paging."
