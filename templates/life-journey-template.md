@@ -15,6 +15,7 @@ hero_float_actions:
   class: nds-minimal
   items:
     - html: >-
+        <!-- Demo only: previews both modes. Delete in production, with the demo script at the end of the page. -->
         <div class="nds-form-container nds-switch-container nds-stacked" style="align-items: center;">
         <div class="nds-form-header" data-feedback-target><label for="first-visit-toggle"><span class="nds-note">First visit</span></label></div>
         <div class="nds-form-control"><div class="nds-switch"><input type="checkbox" id="first-visit-toggle" class="nds-switch-input"><div class="nds-switch-track"><div class="nds-switch-thumb"></div></div></div></div>
@@ -209,6 +210,7 @@ completed:
                 <!-- Returning user only -->
                 <div class="nds-tab-panel nds-flush-inline" role="tabpanel" id="panel-completed" aria-labelledby="tab-completed" tabindex="-1" hidden>
                     <div id="completed-list" class="nds-paged-content nds-grid" style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
+                        <!-- Demo only: ?status=completed opens the journey page in its completed state. In production, link to the user's own journey. -->
                         {% for journey in page.completed %}
                         <div class="nds-page-item nds-card nds-stroke nds-horizontal nds-reverse">
                             <div class="nds-card-header">
