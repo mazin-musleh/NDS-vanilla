@@ -164,7 +164,7 @@
          * @returns {boolean} Success
          */
         dismiss(feedback) {
-            const el = typeof feedback === 'string' ? document.querySelector(feedback) : feedback;
+            const el = NDS.resolveEl(feedback);
             if (!el) return false;
 
             // Store target element before removal
@@ -211,7 +211,7 @@
          * @param {string|HTMLElement} container - Container selector or element
          */
         dismissAll(container) {
-            const el = typeof container === 'string' ? document.querySelector(container) : container;
+            const el = NDS.resolveEl(container);
             if (!el) return;
 
             el.querySelectorAll('.nds-feedback').forEach(feedback => {
@@ -229,7 +229,7 @@
          * @private
          */
         _attachToTarget(feedback, target, position) {
-            const targetEl = typeof target === 'string' ? document.querySelector(target) : target;
+            const targetEl = NDS.resolveEl(target);
             if (!targetEl) {
                 console.warn('NDS Feedback: target element not found', target);
                 return false;

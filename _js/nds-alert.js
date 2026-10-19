@@ -270,7 +270,7 @@
                     run();
                 }
             } else if (target) {
-                const targetEl = typeof target === 'string' ? document.querySelector(target) : target;
+                const targetEl = NDS.resolveEl(target);
                 if (targetEl) {
                     if (prepend) {
                         targetEl.prepend(alert);
@@ -327,7 +327,7 @@
          * Dismiss an alert
          */
         dismiss(alert) {
-            const el = typeof alert === 'string' ? document.querySelector(alert) : alert;
+            const el = NDS.resolveEl(alert);
             if (el) {
                 const placeholder = el.closest('.nds-alert-placeholder');
 
@@ -356,7 +356,7 @@
          * Dismiss all alerts in a container or by ID pattern
          */
         dismissAll(container) {
-            const el = typeof container === 'string' ? document.querySelector(container) : container;
+            const el = NDS.resolveEl(container);
             if (el) {
                 el.querySelectorAll('.nds-alert').forEach(a => this.dismiss(a));
             }

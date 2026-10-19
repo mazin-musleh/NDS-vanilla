@@ -97,10 +97,6 @@
         console.warn('NDS Upload: ' + message);
     }
 
-    function resolve(container) {
-        return typeof container === 'string' ? document.querySelector(container) : container;
-    }
-
     // Canonical file-item markup (mirrors components/upload.md). Cloned when a
     // consumer omits the hidden .nds-file-item-template, so a bare
     // .nds-file-upload still renders file rows. A supplied template still wins.
@@ -838,7 +834,7 @@
         init: initializeUploads,
         reinit: initializeUploads,
         create: (container, options) => {
-            container = resolve(container);
+            container = NDS.resolveEl(container);
             if (!container) { warn('create: container not found'); return null; }
             if (container.ndsUpload) {                              // already built → merge, return it
                 if (options) container.ndsUpload._setOptions(options);
@@ -849,11 +845,11 @@
         },
 
         getInstance: (container) => {
-            return resolve(container)?.ndsUpload || null;
+            return NDS.resolveEl(container)?.ndsUpload || null;
         },
 
         whenReady: (container, callback) => {
-            container = resolve(container);
+            container = NDS.resolveEl(container);
             if (!container) return;
 
             if (container.ndsUpload) {
