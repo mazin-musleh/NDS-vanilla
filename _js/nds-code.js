@@ -67,12 +67,17 @@
         document.querySelectorAll('.nds-code code').forEach(function(codeElement) {
             if (watched.has(codeElement)) return;
             watched.add(codeElement);
+            let offSize = null;
             const off = NDS.onIntersect(codeElement, function(entry) {
                 if (!entry.isIntersecting) return;
                 off();
                 processCodeElement(codeElement);
-                NDS.onElementResize(codeElement, () => scrollStop(codeElement));
+                offSize = NDS.onElementResize(codeElement, () => scrollStop(codeElement));
             }, { rootMargin: '100% 0px' });
+            // NDS.Init.destroy() finds this: core's pools hold the block until it is released.
+            codeElement.ndsCode = {
+                destroy() { off(); if (offSize) offSize(); watched.delete(codeElement); },
+            };
         });
         sizeActionButtons();
     }
