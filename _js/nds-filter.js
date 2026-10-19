@@ -1215,7 +1215,7 @@
             //   2. DOM enumeration: visible (non-`[data-filtered]`) items
             const totalAttr = this.targetContainer.getAttribute('data-total-count');
             if (totalAttr !== null && totalAttr !== '') {
-                countSlot.textContent = parseInt(totalAttr, 10) || 0;
+                countSlot.textContent = NDS.formatNumber(parseInt(totalAttr, 10) || 0);
                 this._announceCount(countSlot);
                 return;
             }
@@ -1224,7 +1224,7 @@
             // is just the item total. Skip the per-item scan (it would only
             // ever return items.length here) — this is the common first-load case.
             if (!this._hasActiveCriteria()) {
-                countSlot.textContent = this.items.length;
+                countSlot.textContent = NDS.formatNumber(this.items.length);
                 this._announceCount(countSlot);
                 return;
             }
@@ -1237,7 +1237,7 @@
             for (const item of this.items) {
                 if (!item.hasAttribute('data-filtered')) visible++;
             }
-            countSlot.textContent = visible;
+            countSlot.textContent = NDS.formatNumber(visible);
             this._announceCount(countSlot);
         }
 

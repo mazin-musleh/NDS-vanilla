@@ -29,8 +29,8 @@ hideFeedback: true
                 <div class="nds-toolbar-row">
                     <div class="nds-toolbar-start">
                         <span class="nds-toolbar-text" data-paged-target="requests-table-body" data-selection-target="requests-table-body">
-                            <span class="nds-records-view">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> request(s)</span>
-                            <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>0</b> request(s)</span>
+                            <span class="nds-records-view">Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>5</b> of <b data-paged-count>10</b> request(s)</span>
+                            <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>10</b> request(s)</span>
                             <button type="button" data-selection-all hidden>(<b data-i18n="selection.select_all">Select all</b>)</button>
                             <button type="button" data-selection-clear hidden>(<b data-i18n="selection.clear_all">Clear all</b>)</button>
                         </span>

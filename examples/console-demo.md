@@ -205,8 +205,8 @@ hideFeedback: true
                 <div class="nds-toolbar-row">
                     <div class="nds-toolbar-start">
                         <span class="nds-toolbar-text" data-paged-target="transactions-table-body" data-selection-target="transactions-table-body">
-                            <span class="nds-records-view">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> transaction(s)</span>
-                            <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>0</b> transaction(s)</span>
+                            <span class="nds-records-view">Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>{{ site.data.content.transactions | size | at_most: 10 }}</b> of <b data-paged-count>{{ site.data.content.transactions | size }}</b> transaction(s)</span>
+                            <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>{{ site.data.content.transactions | size }}</b> transaction(s)</span>
                             <button type="button" data-selection-all hidden>(<b data-i18n="selection.select_all">Select all</b>)</button>
                             <button type="button" data-selection-clear hidden>(<b data-i18n="selection.clear_all">Clear all</b>)</button>
                         </span>
@@ -493,6 +493,11 @@ hideFeedback: true
         </div>
         <div class="nds-section-body">
             <div class="nds-toolbar">
+                <div class="nds-toolbar-row">
+                    <div class="nds-toolbar-start">
+                        <span class="nds-toolbar-text" data-paged-target="team-directory-grid">Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>{{ site.data.content.users | size | at_most: 6 }}</b> of <b data-paged-count>{{ site.data.content.users | size }}</b> member(s)</span>
+                    </div>
+                </div>
                 <div class="nds-form-container nds-search-box" data-filter-target="team-directory-grid">
                     <div class="nds-search-content">
                         <div class="nds-form-control">

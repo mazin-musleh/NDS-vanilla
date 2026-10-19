@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "19/10/2026 - 07:32 AM"
 ---
 
 <section id="migration-overview" class="nds-content-section nds-doc-overview">
@@ -42,7 +42,7 @@ Pick another component when:
         <div class="nds-toolbar-row">
           <div class="nds-toolbar-start">
             <span class="nds-toolbar-text" data-paged-target="migration-rows">
-              <span class="nds-records-view">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> names</span>
+              Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>{{ site.data.migrations | size | at_most: 25 }}</b> of <b data-paged-count>{{ site.data.migrations | size }}</b> names
             </span>
           </div>
         </div>

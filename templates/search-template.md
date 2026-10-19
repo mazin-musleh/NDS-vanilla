@@ -19,7 +19,7 @@ sidemenu_mode: false
             <div class="nds-toolbar">
                 <div class="nds-toolbar-row">
                     <div class="nds-toolbar-start">
-                        <span class="nds-toolbar-text" data-paged-target="search_results_content">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> result(s)</span>
+                        <span class="nds-toolbar-text" data-paged-target="search_results_content">Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>{{ site.data.content["search-results"] | size | at_most: 10 }}</b> of <b data-paged-count>{{ site.data.content["search-results"] | size }}</b> result(s)</span>
                     </div>
                     <div class="nds-toolbar-end">
                         <div class="nds-dropmenu">
