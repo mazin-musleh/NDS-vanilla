@@ -11,7 +11,7 @@ Cleaned 2026-10-19: finished items and their release notes left (all in `CHANGEL
 
 ### v2.0.0 release
 
-- **NDS IQ v4.0 on release day** (plan and status in `plans/iq-v4.md`; `IQv3.2` is already tagged and pushed, off main). [ ] `python scripts/publish-iq.py --apply` BEFORE the build and `mkrelease.py` (`verify()` checks the published copy and the guides' v4.0 render), `git push origin main IQv4.0`, then `nds-iq-eval` `evolve`. [ ] Optional, owner go: the S101 behavior run, rigs R3 and R4.
+- **NDS IQ v4.0 on release day** (plan and status in `plans/iq-v4.md`; `IQv3.2` is already tagged and pushed, off main). [ ] `python scripts/publish-iq.py --apply` BEFORE the build and `mkrelease.py` (`verify()` checks the published copy and the guides' v4.0 render), `git push origin main IQv4.0`, then `nds-iq-eval` `evolve`. [ ] Optional, owner go: the S101 behavior run, rig R4 again (below).
 - **Migration rows, owner call (found 2026-10-19).** `surface-history.rb` lists public names that 1.12.0 had, that are gone now, and that have no row in `_data/migrations.yml`: the accessibility panel ids `a11y-mode-*` (7) and `a11yAccordion`, `data-mode-id` and `data-visual-id`; the Digital Stamp ids `domain-title`, `domain-desc`, `https-title`, `https-desc`, `big-screen-text`, `small-screen-text` and `register-text`; the demo ids `loginForm`, `loginSubmitBtn`, `logoutBtn` and `mainSearch`. A site with a custom Accessibility panel or Digital Stamp may use them. Rows, or internal?
 - **v2.0.0 is the window for breaking improvements.** A major is the one time a wrong name or a split API can be fixed rather than aliased. For each find: add a sub-item here with the problem, the fix and its migration line, then decide build or drop with the owner. Every landed break gets a Migrating entry in `CHANGELOG.md`.
 
@@ -22,6 +22,14 @@ Cleaned 2026-10-19: finished items and their release notes left (all in `CHANGEL
 - **Safari logs "ResizeObserver loop completed with undelivered notifications" on load (2026-10-11).** Playwright WebKit, 1280×800: components/tables 8/8, Forms 6/8, home and 404 0/8; Chrome 0/8. No NDS RO callback resizes a watched element; a WebKit timing quirk, harmless. Pick it up only if a real page misbehaves.
 
 ### NDS IQ, from the field rigs
+
+- **Behavior rigs R1–R7 on the v4.0 draft (2026-10-19, Sonnet 5.5).** Pass: R1, R2, R3, R5, R6. R7 passing on what it built (`nds/records.html`, legacy byte-identical, no jQuery on the NDS page, 7/7 members), left unfinished; it named `whole plan` the default pacing, the rules say `page-by-page`. R4 kept its status right but saved no verify evidence: `nds-verify` hung both runs (item below). No finding in the rules text. Open:
+  - [ ] Commit the `nds-verify.mjs` fix: from an admin shell Chrome relaunched itself de-elevated, dropping headless, profile and pipe, and opened a window in the user's own profile. `--disable-features=AutoDeElevate` and `--edge-skip-compat-layer-relaunch` (Playwright's flags) stop it; retested clean.
+  - [ ] Rerun R4 now that `nds-verify` runs.
+  - [ ] Rig harness: R1–R7 have no stored prompts and no stamp step; this run used a scratch `prep.py` (preview zip `_site` stamped 2.0.0, R5 at 1.8.1, own-runtime states reset to their seeded bundles). Move it into `fixtures/tools/` with the prompts. Build the preview with the dev server stopped: its rebuild left `/NDS-vanilla/` links in the zip's `_site` (the published 1.12.0 zip is relative).
+  - [ ] `chrome-regions.mjs`: the cookie pattern `/nds-cookie/` misses the `data-cookies-toggle` trigger. `no-legacy-on-nds.mjs` scans the whole project; point it at the NDS folder.
+  - [ ] State `spa-broken-hook` describes a symptom its files cannot show: Records has no NDS markup and `index.html` loads no NDS.
+  - [ ] Catalog: Manage Records' `use_when` promises a date filter; the example ships checkbox, radio and slider.
 
 - **No trim pass (owner 2026-10-17).** Size is never the goal: a sentence goes only when a shipped mechanism (the audit, `nds-verify.mjs`, the index, a doc) took over its job and the next rig run passes without it. Candidate: the own-checks text, now that `nds-verify.mjs` ships.
 - **Own checks left open or claimed done (S125), repeat** in rig 4 run 1, rig 1 run 2 and rig 2 run 2: plan rows left `In Progress`, reference and phone comparisons written as done before they ran. `nds-verify.mjs` ships for it: check the next rig run.

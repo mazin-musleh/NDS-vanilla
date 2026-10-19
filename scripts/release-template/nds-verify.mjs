@@ -96,7 +96,10 @@ const CHROME = [process.env.CHROME_PATH,
 ].find((p) => p && existsSync(p));
 if (!CHROME) { console.error('No Chrome or Edge found: set CHROME_PATH.'); process.exit(2); }
 const profile = mkdtempSync(join(tmpdir(), 'nds-verify-profile-'));
+// From an admin shell, Chrome and Edge relaunch themselves de-elevated: the relaunch drops every flag
+// (headless, profile, pipe) and opens a window in the user's own profile. These two stop it.
 const chrome = spawn(CHROME, ['--headless=new', '--remote-debugging-pipe', `--user-data-dir=${profile}`,
+    '--disable-features=AutoDeElevate', '--edge-skip-compat-layer-relaunch',
     '--no-first-run', '--no-default-browser-check', '--hide-scrollbars', 'about:blank'],
     { stdio: ['ignore', 'ignore', 'ignore', 'pipe', 'pipe'] });
 
