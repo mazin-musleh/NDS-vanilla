@@ -88,6 +88,7 @@
             // Extras: the field paints complete with no JS; the panel is built on first open.
             name: 'TimePicker',
             selector: '.nds-time-input, .nds-time-fields',
+            destroyEach: true,
         },
         {
             // Deferred: input wiring fires on typing; an autofocus restore lands one idle slot later.
@@ -219,6 +220,7 @@
         {
             name: 'DatePicker',
             selector: '.nds-date-input',
+            destroyEach: true,
         },
         {
             // Critical: tags external links with no layout reads. Keep it read-free — a
@@ -930,12 +932,12 @@
             if (root.matches?.(selector)) owned.unshift(root);
             for (const el of owned) {
                 // Count only a destroy that released a stamp (not one already released above,
-                // never initialized, or stamped for paint alone).
+                // never initialized, or stamped for paint alone), or that says so: an instance
+                // marked by its backref alone returns true.
                 const stamps = () => el.getAttributeNames().filter((n) => n.startsWith('data-nds-') && n.endsWith('-initialized')).length;
                 const before = stamps();
                 try {
-                    ns.destroy(el);
-                    if (stamps() < before) destroyed++;
+                    if (ns.destroy(el) === true || stamps() < before) destroyed++;
                 } catch (error) {
                     console.warn(`[NDS:destroy] ${component.name} failed:`, error);
                 }

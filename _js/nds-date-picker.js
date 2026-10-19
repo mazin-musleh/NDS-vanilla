@@ -7,6 +7,7 @@
  *   NDS.DatePicker.init() / .reinit()          attach a calendar to every .nds-date-input
  *   NDS.DatePicker.create(input, formControl)  build/return one instance — idempotent, null on
  *                                              bad markup; formControl is optional
+ *   NDS.DatePicker.destroy(input)              tear one down — the NDS.Init.destroy entry point
  *   NDS.DatePicker.CalendarConfig              the gregorian + hijri engines
  *                                              (parseDate / formatDate, on NDS.date)
  *   NDS.DatePicker.DatePickerCalendar          the instance prototype (extension use)
@@ -2031,7 +2032,14 @@
         CalendarConfig,
         init: initializeCalendar,
         reinit: initializeCalendar,
-        create: createInstance
+        create: createInstance,
+        // NDS.Init.destroy's second shape: the underscore expando is invisible to the backref walk.
+        destroy: (input) => {
+            const instance = input?._ndsDatePicker;
+            if (!instance) return false;
+            instance.destroy();
+            return true;
+        }
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

@@ -7,6 +7,7 @@
  *                                               and every .nds-time-fields group
  *   NDS.TimePicker.create(input, formControl)   build/return one instance — idempotent,
  *                                               null on bad markup; formControl is optional
+ *   NDS.TimePicker.destroy(el)                  tear one down — the NDS.Init.destroy entry point
  *   NDS.TimePicker.setValue(el, '14:30')        commit a 24h value — false when unparsable
  *                                               or outside data-min-time/data-max-time
  *   NDS.TimePicker.getValue(el)                 the 24h value, '' until the time is complete
@@ -1085,6 +1086,13 @@
         init: init,
         reinit: init,
         create: create,
+        // NDS.Init.destroy's second shape: the underscore expando is invisible to the backref walk.
+        destroy: (el) => {
+            const instance = instanceOf(el);
+            if (!instance) return false;
+            instance.destroy();
+            return true;
+        },
         setValue: (el, value) => { const i = instanceOf(el); return i ? i.setValue(value) : false; },
         getValue: (el) => { const i = instanceOf(el); return i ? i.getValue() : ''; },
         clear: (el) => { const i = instanceOf(el); return i ? i.clear() : false; }
