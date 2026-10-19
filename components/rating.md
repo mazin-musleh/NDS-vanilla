@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 07:43 PM"
+last_edit: "19/10/2026 - 01:54 PM"
 ---
 
 <section id="rating-overview" class="nds-content-section nds-doc-overview">
@@ -325,7 +325,7 @@ The instance is on the element as `el.ndsRating`. It is there once the component
 | `el.ndsRating.getRating()` | Return the score |
 | `el.ndsRating.setDisabled(bool)` | Disable or enable the rating |
 | `el.ndsRating.enable()`, `el.ndsRating.isDisabled()` | Enable the rating, or return whether it is disabled |
-| `el.ndsRating.destroy()` | Remove the listeners |
+| `el.ndsRating.destroy()` | Remove the listeners and `el.ndsRating`. `NDS.Rating.create(el)` then starts a new one |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |

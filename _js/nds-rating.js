@@ -118,6 +118,7 @@
     destroy() {
       if (this.abortController) { this.abortController.abort(); this.abortController = null; }
       this._initialized = false;
+      if (this.rating.ndsRating === this) delete this.rating.ndsRating;   // create() then builds a fresh one
     }
 
     setRating(value) {
@@ -258,41 +259,24 @@
     }
   }
 
+  const create = (element) => element.ndsRating || (element.ndsRating = new NDSRating(element));
+
   function initializeRatings() {
-    const ratings = document.querySelectorAll('.nds-rating');
-    for (let i = 0; i < ratings.length; i++) {
-      if (!ratings[i].ndsRating) ratings[i].ndsRating = new NDSRating(ratings[i]);
-    }
+    document.querySelectorAll('.nds-rating').forEach(create);
   }
 
   function enableRating(element) {
-    if (!element.ndsRating) element.ndsRating = new NDSRating(element);
-    element.ndsRating.enable();
+    create(element).enable();
   }
 
   NDS.Rating = {
     init: initializeRatings,
     reinit: initializeRatings,
-    create: (element) => {
-      if (!element.ndsRating) element.ndsRating = new NDSRating(element);
-      return element.ndsRating;
-    },
+    create,
     enableRating,
   };
 
-  NDS.onDOMAdd('.nds-rating', (nodes) => {
-    for (let i = 0; i < nodes.length; i++) {
-      if (!nodes[i].ndsRating) nodes[i].ndsRating = new NDSRating(nodes[i]);
-    }
-  });
+  NDS.onDOMAdd('.nds-rating', (nodes) => nodes.forEach(create));
 
-  NDS.onDOMRemove('.nds-rating', (nodes) => {
-    for (let i = 0; i < nodes.length; i++) {
-      const instance = nodes[i].ndsRating;
-      if (instance) {
-        instance.destroy();
-        nodes[i].ndsRating = null;
-      }
-    }
-  });
+  NDS.onDOMRemove('.nds-rating', (nodes) => nodes.forEach((el) => el.ndsRating?.destroy()));
 })();
