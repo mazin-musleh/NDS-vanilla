@@ -1024,7 +1024,7 @@
 
         destroy() {
             this.instanceAbortController.abort();
-            // As in field mode: nothing is left to clear the picker's own error.
+            // As in field mode: nothing is left to clear the picker's own error. Soft dependency, as in _validateInput.
             if (this.elements.hour.validity.customError) {
                 this.elements.hour.setCustomValidity('');
                 NDS.Forms?.clearStatus?.(this.elements.container);
