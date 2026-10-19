@@ -317,9 +317,7 @@
 
         // Adopt NDSDropmenu for the calendar's open/close/escape/outside-click
         // lifecycle. The form-control becomes the dropmenu wrapper and the
-        // dropdown becomes the dropmenu menu; the instance's `applyPosition`
-        // is swapped for the calendar's own (width-matched, no viewport clamp,
-        // simple flip).
+        // dropdown becomes the dropmenu menu, placed by the dropmenu's own applyPosition.
         setupDropmenu: function () {
             var self = this;
             var formControl = this.elements.formControl;
@@ -336,7 +334,7 @@
 
             this.dropmenuInstance = NDS.Dropmenu.create(formControl);
 
-            // Calendar lifecycle hooks (replace the old toggleDropdown branches).
+            // Calendar lifecycle hooks.
             // Guard `e.target !== formControl` — these events bubble, so the
             // inner month/year sub-dropmenus' open/close events would otherwise
             // re-init or tear down the calendar every time the user picks a
@@ -350,10 +348,8 @@
             formControl.addEventListener('nds:dropmenu:opened', function (e) {
                 if (e.target !== formControl) return;
                 NDS.State.add(self.elements.container, 'open');
+                // Its render places the panel against the built grid (_reposition).
                 self.initializeCalendar();
-                // Calendar grid was empty when applyPosition first ran; re-run
-                // after content is built so flip direction reflects real height.
-                self.dropmenuInstance.applyPosition();
             }, { signal: signal });
 
             formControl.addEventListener('nds:dropmenu:closed', function (e) {
@@ -411,8 +407,6 @@
                         '</button>' +
                         // Clear is opt-in via data-clearable on the container
                         // (or automatic in range mode — typical use case).
-                        // Wiped in cacheElements when not enabled so the handler
-                        // simply skips it.
                         '<button class="nds-btn nds-subtle clear-btn" type="button">' +
                             '<span class="nds-label"></span>' +
                         '</button>' +
@@ -476,7 +470,6 @@
 
             // Optional elements
             var optionalSelectors = {
-                toggleBtn: UIConfig.selectors.toggleBtn,
                 monthDropmenu: UIConfig.selectors.monthDropmenu,
                 yearDropmenu: UIConfig.selectors.yearDropmenu,
                 monthDropdownBtn: UIConfig.selectors.monthDropdownBtn,
@@ -510,11 +503,13 @@
                 }
             }
 
-            // Conditional element — .clear-btn is removed from the DOM by
-            // createDropdownDOM when the picker isn't clearable. Absence is
-            // expected, so cache silently (no warn).
+            // Conditional elements, cached silently: .clear-btn is removed by
+            // createDropdownDOM when the picker isn't clearable, and a field with
+            // no toggle button opens from the input.
             var clearEl = container.querySelector(UIConfig.selectors.clearBtn);
             if (clearEl) elements.clearBtn = clearEl;
+            var toggleEl = container.querySelector(UIConfig.selectors.toggleBtn);
+            if (toggleEl) elements.toggleBtn = toggleEl;
 
             return elements;
         },
@@ -773,12 +768,9 @@
             this.updateNavArrows();
         },
 
-        // Panel teardown on close — instance state only; module-shared refs stay live.
+        // Panel teardown on close — instance state only.
         cleanup: function () {
-            // One abort releases every calendar-panel listener. This replaced two
-            // hand-maintained parallel arrays walked by a shared counter: inserting a
-            // handler into one shifted the pairing for every entry after it, silently
-            // removing the wrong listener from the wrong element.
+            // One abort releases every calendar-panel listener: no per-listener bookkeeping to keep paired.
             if (this.panelAbortController) this.panelAbortController.abort();
 
             // Close dropmenu instances — keep alive, reused on next calendar open
@@ -978,24 +970,17 @@
                     e.preventDefault();
                     this.focusDayCell(btn, 7);
                     break;
-                case 'Home': {
-                    e.preventDefault();
-                    // First day of the week the focused cell is on. Walk
-                    // back until index % 7 === 0 (Sunday in the grid).
-                    var cells = Array.from(this.elements.datesContainer.querySelectorAll('.nds-date-cell'));
-                    var idx = cells.indexOf(btn);
-                    if (idx === -1) return;
-                    var weekStart = idx - (idx % 7);
-                    cells[weekStart].focus();
-                    break;
-                }
+                case 'Home':
                 case 'End': {
                     e.preventDefault();
-                    var cells2 = Array.from(this.elements.datesContainer.querySelectorAll('.nds-date-cell'));
-                    var idx2 = cells2.indexOf(btn);
-                    if (idx2 === -1) return;
-                    var weekEnd = idx2 - (idx2 % 7) + 6;
-                    cells2[Math.min(cells2.length - 1, weekEnd)].focus();
+                    // First / last day of the focused cell's week row (the grid starts on Sunday).
+                    // Through focusDayCell, so the Tab stop moves with the focus.
+                    var cells = this.elements.datesContainer.querySelectorAll('.nds-date-cell');
+                    var idx = Array.prototype.indexOf.call(cells, btn);
+                    if (idx === -1) return;
+                    var weekStart = idx - (idx % 7);
+                    var target = e.key === 'Home' ? weekStart : Math.min(cells.length - 1, weekStart + 6);
+                    this.focusDayCell(btn, target - idx);
                     break;
                 }
                 case 'PageUp': {
@@ -1005,9 +990,7 @@
                     // rendering per step built and discarded 11 grids.
                     var stepsUp = e.shiftKey ? 12 : 1;
                     for (var u = 0; u < stepsUp; u++) if (!this._stepMonth(-1)) break;
-                    this.updateDropdowns();
-                    this.renderCalendarDates();
-                    this.updateNavArrows();
+                    this._refreshView();
                     this.focusFirstCurrentMonthDay();
                     break;
                 }
@@ -1015,9 +998,7 @@
                     e.preventDefault();
                     var stepsDn = e.shiftKey ? 12 : 1;
                     for (var d = 0; d < stepsDn; d++) if (!this._stepMonth(1)) break;
-                    this.updateDropdowns();
-                    this.renderCalendarDates();
-                    this.updateNavArrows();
+                    this._refreshView();
                     this.focusFirstCurrentMonthDay();
                     break;
                 }
@@ -1071,6 +1052,11 @@
         // Navigate month (unified for Gregorian and Hijri)
         navigateMonth: function (direction) {
             if (!this._stepMonth(direction)) return;
+            this._refreshView();
+        },
+
+        // After the viewed month or year moves: header labels, the grid, and the prev/next limits.
+        _refreshView: function () {
             this.updateDropdowns();
             this.renderCalendarDates();
             this.updateNavArrows();
@@ -1179,7 +1165,7 @@
                 this.state.rangeEnd = copyDateWithHijri(this.state.rangeStart);
             }
             // Commit pending state to the input on every save (day / month /
-            // year / range) — selectDate + selectToday no longer auto-commit.
+            // year / range): selectDate and selectToday only change pending state.
             this.updateInput();
             if (this.dropmenuInstance && this.dropmenuInstance.isOpen) {
                 this.dropmenuInstance.close();
@@ -1280,8 +1266,8 @@
          * month does not: the day grid always fills 42 cells. Switching MODE
          * does — the month grid is 3x4 and the year grid its own size — and
          * placement was decided against the height at open, so without this the
-         * panel keeps the old side and gap. No-op until the panel is open: the
-         * build renders once before there is anything to place.
+         * panel keeps the old side and gap. It is also the first placement against
+         * the built grid: the opened handler renders with the dropmenu already open.
          */
         _reposition: function () {
             if (this.dropmenuInstance && this.dropmenuInstance.isOpen) {
@@ -1418,8 +1404,7 @@
             // month/year cell was allowed (some day in it is in range), so
             // snap the committed date to the nearest bound.
             this.state.selectedDate = this._clampToRange(this.state.selectedDate);
-            this.updateDropdowns();
-            this.renderCalendarDates();
+            this._refreshView();
         },
 
         // Prev/next dispatch — day mode nudges month, month mode nudges year,
@@ -1439,11 +1424,10 @@
             } else {
                 var newYearG = this.state.currentDate.getFullYear() + direction;
                 if (newYearG < range.start || newYearG > range.end) return;
-                this.state.currentDate.setFullYear(newYearG);
+                // Day 1 in the same call — 29 February would roll into March in a non-leap year.
+                this.state.currentDate.setFullYear(newYearG, this.state.currentDate.getMonth(), 1);
             }
-            this.updateDropdowns();
-            this.renderCalendarDates();
-            this.updateNavArrows();
+            this._refreshView();
         },
 
         // Disable prev/next when the next step would go outside the year range.
@@ -1653,8 +1637,7 @@
             }
             this.state.currentDate = isHijri ? fromHijri(today._hijriYear, today._hijriMonth, 1) : new Date(today);
 
-            this.updateDropdowns();
-            this.renderCalendarDates();
+            this._refreshView();
             // Today only mutates state; Save commits (matches selectDate).
         },
 
@@ -1797,8 +1780,7 @@
                             self.state.currentDate.setMonth(monthValue, 1);
                         }
 
-                        self.updateDropdowns();
-                        self.renderCalendarDates();
+                        self._refreshView();
                     });
                 }
 
@@ -1868,8 +1850,7 @@
                         self.state.currentDate.setFullYear(yearValue);
                     }
 
-                    self.updateDropdowns();
-                    self.renderCalendarDates();
+                    self._refreshView();
                 });
 
                 self.elements.yearDropdownMenu.appendChild(btn);
@@ -2041,7 +2022,5 @@
             return true;
         }
     };
-
-    // Note: Initialization now handled by nds-loader.js unified system
 
 })();
