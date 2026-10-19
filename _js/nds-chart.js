@@ -957,9 +957,7 @@
                     if (e.pointerType !== 'mouse') {
                         e.preventDefault();
                         tapStartIdx = lastIdx; // remember the pin (if any) before this touch, for toggle-on-tap
-                        if (overlay.setPointerCapture) {
-                            try { overlay.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ }
-                        }
+                        try { overlay.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ }
                     }
                     update(e); // show on a press/click even without an x move
                 }, { signal });

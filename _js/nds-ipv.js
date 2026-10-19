@@ -527,11 +527,6 @@
             // Free the singleton slot so init() can build a fresh viewer.
             if (window.ndsIPV === this) window.ndsIPV = null;
         }
-
-        // Static factory method
-        static create() {
-            return new NDSImagePopupViewer();
-        }
     }
 
     // Inject the overlay markup once. Its English sits beside data-i18n markers, which core

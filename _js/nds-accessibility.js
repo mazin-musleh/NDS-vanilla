@@ -1409,7 +1409,7 @@
             tpl.innerHTML = panelMarkup((toggleBtn && toggleBtn.dataset.panelSide) || 'end');
             document.body.appendChild(tpl);
         }
-        const injected = NDS.fromTemplate?.(id);
+        const injected = NDS.fromTemplate(id);
         if (injected) wireInjected(injected);
         // Accordion/Panel/Fab live in an injected bundle (delegated, low-priority,
         // never gated on the reveal) that may still be a lazy stub the instant
@@ -1419,7 +1419,7 @@
         // mount() loads the bundles this panel's own markup needs and nothing
         // else; it used to ask for every bundle in the manifest, which dragged
         // in extras and audit on a page that wanted neither.
-        if (injected) NDS.Init?.mount?.(injected);
+        if (injected) NDS.Init.mount(injected);
         return injected;
     }
 

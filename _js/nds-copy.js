@@ -34,7 +34,6 @@
     const strings = NDS.i18n.strings('copy', {
         copied: 'Copied',
     });
-    window.NDS = window.NDS || {};
 
     const DEFAULT_FLASH_MS = 2000;
     const CHECKMARK_CLASS = 'nds-hgi-checkmark-circle-01';

@@ -113,8 +113,8 @@
             if (!all || all.hasAttribute('data-selection-target')) return;
             this.tbody.id ||= NDS.uniqueId('nds-rows-');
             all.setAttribute('data-selection-target', this.tbody.id);
-            NDS.Selection?.init?.();
-            NDS.Selection?.recount?.(this.tbody);
+            NDS.Selection.init();
+            NDS.Selection.recount(this.tbody);
         }
 
         // ── Sort (delegated to NDS.Sort) ─────────────────────────────────

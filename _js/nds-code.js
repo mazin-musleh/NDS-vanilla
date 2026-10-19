@@ -61,8 +61,12 @@
     // Each block highlights one viewport before it scrolls in, not in one init
     // sweep: ten blocks at once was the page's largest style recalc. A block in a
     // hidden tab panel intersects when its tab opens.
+    // Every NDS.Init.refresh re-runs this; a block already watched keeps its one subscription.
+    const watched = new WeakSet();
     function initializeCodeProcessing() {
         document.querySelectorAll('.nds-code code').forEach(function(codeElement) {
+            if (watched.has(codeElement)) return;
+            watched.add(codeElement);
             const off = NDS.onIntersect(codeElement, function(entry) {
                 if (!entry.isIntersecting) return;
                 off();
@@ -270,7 +274,7 @@
     let rootStyle;
     function swatch(value) {
         const v = value.trim();
-        if (!COLOR_START.test(v) || typeof CSS === 'undefined' || !CSS.supports) return '';
+        if (!COLOR_START.test(v)) return '';
         const name = v.match(/^var\((--[\w-]+)\)$/);
         rootStyle = rootStyle || getComputedStyle(document.documentElement);
         const paint = name ? rootStyle.getPropertyValue(name[1]).trim() : v;

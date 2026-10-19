@@ -786,7 +786,7 @@
 
 
         open() {
-            // Already open: a second open() would overwrite _offScroll and
+            // Already open: a second open() would overwrite _offView and
             // _unsubResize, stranding the pooled subscribers the first one
             // registered (close() only releases the last pair). Reachable via
             // handleTriggerKeydown, which calls open() unconditionally on
@@ -826,7 +826,7 @@
             // dropmenu; opening a sub-dropmenu must not close its parent.
             _openDropmenus.forEach(el => {
                 if (el === this.dropmenu) return;
-                if (this._isNestedIn(el)) return; // ancestor — keep open
+                if (el.contains(this.dropmenu)) return; // ancestor — keep open
                 if (el.ndsDropmenu) el.ndsDropmenu.close();
             });
 
@@ -873,8 +873,8 @@
             const reposition = NDS.rafThrottle(() => this.trackPosition());
             const fixed = !this.menu.showPopover;
             const onScroll = (e) => { if (e.target === document ? fixed : e.target.contains?.(this.trigger)) reposition(); };
-            document.addEventListener('scroll', onScroll, { capture: true, passive: true });
-            this._offScroll = () => document.removeEventListener('scroll', onScroll, { capture: true });
+            const { signal } = this._docAC;   // close() aborts it with the other document listeners
+            document.addEventListener('scroll', onScroll, { capture: true, passive: true, signal });
             // Close when the trigger leaves view (its scroll box hid it). A page scroll carries the
             // menu over the sticky nav, as the top layer paints it: closing there threw away a Filter's ticks.
             const leave = () => { if (this.isOpen) this.close(); };
@@ -893,8 +893,8 @@
             const vv = window.visualViewport;
             if (vv) {
                 const onVV = NDS.debounce(() => this.applyPosition(), 150);
-                vv.addEventListener('resize', onVV);
-                this._unsubResize = () => { onVV.cancel(); vv.removeEventListener('resize', onVV); };
+                vv.addEventListener('resize', onVV, { signal });
+                this._unsubResize = onVV.cancel;
             } else this._unsubResize = NDS.onResize(() => this.applyPosition());
             // Keep scroll momentum off the page (its scroll closes the menu), but only while
             // the list scrolls: on a list that fits, `contain` swallows the page's wheel.
@@ -937,7 +937,6 @@
             addState(this.menu,     'closing');
             NDS.aria.expanded(this.trigger, false);
 
-            if (this._offScroll) { this._offScroll(); this._offScroll = null; }
             if (this._offView) { this._offView.forEach((off) => off()); this._offView = null; }
             if (this._unsubResize) { this._unsubResize(); this._unsubResize = null; }
             if (this._offListSize) { this._offListSize(); this._offListSize = null; }
@@ -974,11 +973,6 @@
             this.menu.setAttribute('hidden', '');
             this.emitEvent('nds:dropmenu:closed');
             this._cancelClose = null;
-        }
-
-        /** Is this dropmenu nested inside `el`? */
-        _isNestedIn(el) {
-            return el.contains(this.dropmenu);
         }
 
         // ==============================================
@@ -1200,7 +1194,7 @@
             // stuck there after a destroy mid-delay.
             this._cancelDelayedOpen();
             // Drain the open-lifecycle subscriptions before releasing the rest.
-            // close() releases this._offScroll, this._offView (NDS.onIntersect) and
+            // close() aborts the document listeners, releases this._offView (NDS.onIntersect) and
             // this._unsubResize (NDS.onResize) synchronously at the top of its
             // body — without this guard, destroy-while-open strands both pooled
             // subscribers for the page lifetime.

@@ -2364,9 +2364,10 @@
             // component reads its .nds-label (raw textContent carries the
             // markup's indentation).
             if (textInput) {
-                textInput.value = asOpaque ? '' : !target ? selected
-                    : asComponent ? (target.querySelector('.nds-label') || target).textContent.trim()
-                    : target.textContent;
+                if (asOpaque) textInput.value = '';
+                else if (!target) textInput.value = selected;
+                else if (asComponent) textInput.value = (target.querySelector('.nds-label') || target).textContent.trim();
+                else textInput.value = target.textContent;
                 textInput.closest('.nds-form-container').hidden = asOpaque;
             }
             if (urlInput) urlInput.value = existing?.getAttribute('href') || 'https://';
@@ -2916,7 +2917,6 @@
         });
     }
 
-    window.NDS = window.NDS || {};
     NDS.Editor = {
         init: initializeEditors,
         reinit: initializeEditors,

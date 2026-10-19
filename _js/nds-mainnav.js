@@ -126,11 +126,9 @@
 
         get isMinimal() { return _mqMinimal.matches; },
 
-        get reducedMotion() { return NDS.prefersReducedMotion; },
-
         _durations: new WeakMap(),
         getDuration(el) {
-            if (!el || this.reducedMotion) return 0;
+            if (!el || NDS.prefersReducedMotion) return 0;
             let cached = this._durations.get(el);
             if (cached === undefined) {
                 cached = parseFloat(getComputedStyle(el).transitionDuration) || 0;
@@ -252,7 +250,7 @@
             state.pendingOverflowCheck = setTimeout(() => {
                 state.pendingOverflowCheck = null;
                 this.check();
-            }, state.reducedMotion ? 0 : ms);
+            }, NDS.prefersReducedMotion ? 0 : ms);
         },
 
         check() {
@@ -634,7 +632,7 @@
             } else {
                 removeState(DOM.toggler, 'open');
                 NDS.aria.expanded(toggleButton, false);
-                const closeDelay = state.reducedMotion ? 0 : dropdown.closeAll();
+                const closeDelay = NDS.prefersReducedMotion ? 0 : dropdown.closeAll();
 
                 afterDelay(closeDelay, () => {
                     animate.run(DOM.collapse, false, {
@@ -675,7 +673,7 @@
                     });
                 });
 
-                const dropdownCloseDelay = state.reducedMotion ? 0 : dropdown.closeAll();
+                const dropdownCloseDelay = NDS.prefersReducedMotion ? 0 : dropdown.closeAll();
                 const collapseContent = DOM.collapseContent;
                 const totalNavbarDuration = dropdownCloseDelay + state.getDuration(collapseContent || DOM.collapse);
 

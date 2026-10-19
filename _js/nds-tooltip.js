@@ -91,16 +91,11 @@
             }
 
             this.isOpen = false;
-            this._onDocClick = null;
             this._offScroll = null;
-            // One AbortController per instance — every addEventListener in
-            // bindEvents() passes its signal so destroy() can detach all
-            // trigger listeners atomically. Open-lifecycle subscriptions
-            // (this._onDocClick, this._offScroll) sit outside this AbortController
-            // because they're already torn down by close() per open/close
-            // cycle, so adding a signal would duplicate the bookkeeping
-            // close() already does.
+            // Two lifetimes: abortController holds the trigger listeners until destroy();
+            // openAbortController holds the document listeners of one open, aborted by close().
             this.abortController = new AbortController();
+            this.openAbortController = null;
 
             this.init();
         }
@@ -334,14 +329,14 @@
             this.applyPosition();
 
             // The balloon is inside the root, so one containment check covers both.
-            this._onDocClick = (e) => {
+            this.openAbortController = new AbortController();
+            const { signal } = this.openAbortController;
+            document.addEventListener('click', (e) => {
                 if (this.root.contains(e.target)) return;
                 this.close();
-            };
-            document.addEventListener('click', this._onDocClick);
+            }, { signal });
             // A hover tooltip has no focus on its trigger; Escape still dismisses it (WCAG 1.4.13).
-            this._onDocKey = (e) => { if (e.key === 'Escape') this.close(); };
-            document.addEventListener('keydown', this._onDocKey);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') this.close(); }, { signal });
 
             // Close on scroll: a scroll box around the trigger would leave it detached.
             // NDS.onOutsideScroll ignores scrolls inside the balloon itself.
@@ -360,14 +355,8 @@
             this.root.removeAttribute('data-position-vertical');
             this.balloon.removeAttribute('data-position-vertical');
 
-            if (this._onDocClick) {
-                document.removeEventListener('click', this._onDocClick);
-                this._onDocClick = null;
-            }
-            if (this._onDocKey) {
-                document.removeEventListener('keydown', this._onDocKey);
-                this._onDocKey = null;
-            }
+            this.openAbortController?.abort();
+            this.openAbortController = null;
             if (this._offScroll) { this._offScroll(); this._offScroll = null; }
 
             NDS.topLayer(this.balloon, false);
@@ -435,8 +424,8 @@
         }
 
         // Drain open-lifecycle subscriptions before tearing the instance
-        // down. close() releases this._onDocClick (document click listener)
-        // and this._offScroll (NDS.onOutsideScroll) and takes the balloon
+        // down. close() aborts openAbortController (document click + keydown)
+        // and releases this._offScroll (NDS.onOutsideScroll) and takes the balloon
         // out of the top layer. Without the close() drain, destroy-while-open would
         // strand the document listener and the pooled scroll subscriber for
         // the page lifetime.

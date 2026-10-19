@@ -52,7 +52,6 @@
     'use strict';
 
     const root = document.documentElement;
-    window.NDS = window.NDS || {};
     // Key is duplicated in the pre-paint FOUC script (head-inline-scripts.html) —
     // a runtime override could only desync the two, so it's a plain const.
     const STORAGE_KEY = 'nds-theme';            // full data-theme string ("dark crimson")
@@ -328,10 +327,7 @@
         syncSwitcher(active);
         wireSwitcher();
     }
-    let _switcherWired = false;
     function wireSwitcher() {
-        if (_switcherWired) return;
-        _switcherWired = true;
         // A switcher item is usually a button (click); it can also be a switch — then
         // the input's 'change' drives it, so skip the click to avoid a double-toggle.
         document.addEventListener('click', (e) => {

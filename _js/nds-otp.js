@@ -75,10 +75,7 @@
     }
 
     function dispatch(group, eventName, extra) {
-        var detail = { value: getValue(group) };
-        if (extra) {
-            for (var k in extra) detail[k] = extra[k];
-        }
+        var detail = Object.assign({ value: getValue(group) }, extra);
         group.dispatchEvent(new CustomEvent(eventName, { detail: detail, bubbles: true }));
     }
 
@@ -309,9 +306,7 @@
     NDS.OTP = {
         init: init,
 
-        getValue: function (group) {
-            return getValue(group);
-        },
+        getValue: getValue,
 
         setValue: function (group, value) {
             clearInputs(group);

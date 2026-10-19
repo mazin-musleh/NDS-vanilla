@@ -53,7 +53,7 @@
   }
 
   function isPlaceholder(el) {
-    return el.nodeType === 1 && el.hasAttribute(PLACEHOLDER_ATTR);
+    return el.hasAttribute(PLACEHOLDER_ATTR);
   }
 
   function realChildCount(container) {
@@ -221,6 +221,5 @@
     refresh: evaluate,
   };
 
-  window.NDS = window.NDS || {};
   window.NDS.Empty = NDSEmpty;
 })();

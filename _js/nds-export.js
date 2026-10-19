@@ -408,9 +408,8 @@
     // chars so a runaway data-export-name doesn't trip filesystem limits.
     function sanitizeFilename(name) {
         if (!name) return 'nds-export';
-        let s = String(name).replace(/[\\/:*?"<>|\x00-\x1f]/g, '_').replace(/^\.+/, '');
-        if (s.length > 64) s = s.slice(0, 64);
-        return s || 'nds-export';
+        const s = String(name).replace(/[\\/:*?"<>|\x00-\x1f]/g, '_').replace(/^\.+/, '');
+        return s.slice(0, 64) || 'nds-export';
     }
 
     // The site's day (<html data-timezone>), not toISOString's UTC day.

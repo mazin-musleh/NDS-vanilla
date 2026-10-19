@@ -77,7 +77,7 @@
     function initAudioContext() {
         if (!audioContext) {
             try {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                audioContext = new AudioContext();
             } catch (e) {
                 audioContext = null;
             }
@@ -135,7 +135,6 @@
 
         recognition.onstart = function() {
             tone.start();
-            if (callbacks.onStart) callbacks.onStart();
         };
         recognition.onresult = function(event) {
             var interimTranscript = '';
@@ -144,21 +143,19 @@
                 if (event.results[i].isFinal) finalTranscript += transcript;
                 else interimTranscript += transcript;
             }
-            if (callbacks.onResult) {
-                callbacks.onResult({
-                    final: finalTranscript,
-                    interim: interimTranscript,
-                    isFinal: event.results[event.results.length - 1].isFinal
-                });
-            }
+            callbacks.onResult({
+                final: finalTranscript,
+                interim: interimTranscript,
+                isFinal: event.results[event.results.length - 1].isFinal
+            });
         };
         recognition.onerror = function(event) {
             tone.error();
-            if (callbacks.onError) callbacks.onError(event.error);
+            callbacks.onError(event.error);
         };
         recognition.onend = function() {
             tone.end();
-            if (callbacks.onEnd) callbacks.onEnd(finalTranscript);
+            callbacks.onEnd(finalTranscript);
         };
         recognition.start();
     }
@@ -191,7 +188,7 @@
             setTimeout(function() { NDS.Feedback.dismiss(el); }, 4000);
             return;
         }
-        var prev = { status: container.getAttribute('data-status'), message: container.getAttribute('data-message') };
+        var prev = { status: NDS.Status.get(container), message: container.getAttribute('data-message') };
         NDS.Forms.setStatus({ element: input, status: 'neutral', message: message });
         setTimeout(function() {
             if (container.getAttribute('data-message') !== message) return; // validation wrote since
@@ -344,7 +341,6 @@
         });
     }
 
-    window.NDS = window.NDS || {};
     NDS.VoiceInput = {
         init: init,
         reinit: init,

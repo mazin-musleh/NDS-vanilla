@@ -450,10 +450,13 @@
     rows.forEach(r => ((byKind[r.kind] ||= new Map()).get(r.name) || byKind[r.kind].set(r.name, []).get(r.name)).push(r));
     const SEVERITY = { renamed: 'error', removed: 'error', deprecated: 'warn' };
     const label = { class: 'class', attribute: 'attribute', property: 'property', id: 'id', global: 'window setting' };
-    const say = (r, inCss) => r.status === 'deprecated'
-        ? `${label[r.kind]} "${r.name}" is deprecated since ${r.since}: it still works, until the next major release.`
-        : `${label[r.kind]} "${r.name}" was ${r.status} in ${r.since}` + (inCss ? '.'
-            : `, so ${r.kind === 'global' ? 'NDS no longer reads it' : 'this part gets no NDS style or behavior'}.`);
+    const say = (r, inCss) => {
+        const what = `${label[r.kind]} "${r.name}"`;
+        if (r.status === 'deprecated') return `${what} is deprecated since ${r.since}: it still works, until the next major release.`;
+        if (inCss) return `${what} was ${r.status} in ${r.since}.`;
+        const effect = r.kind === 'global' ? 'NDS no longer reads it' : 'this part gets no NDS style or behavior';
+        return `${what} was ${r.status} in ${r.since}, so ${effect}.`;
+    };
     // A name NDS never read had no effect when set, so it is a note, not a break.
     const reportRow = (ctx, r, el, msg, inert, count) => ctx.report(el, msg,
         inert ? `${r.fix} Setting the old name never had an effect.` : r.fix, inert ? 'info' : SEVERITY[r.status], count);
@@ -865,7 +868,7 @@
             col.get(td.cellIndex).push(tag);
         });
         for (const col of cols.values()) for (const tags of col.values()) {
-            const plain = tags.filter(t => !t.hasAttribute('data-status'));
+            const plain = tags.filter(t => !NDS.Status.get(t));
             if (plain.length && plain.length < tags.length) ctx.report(plain[0], `a table column shows a status tag on some rows and a standard tag on others (${plain.length} of ${tags.length} standard).`,
                 'Give every tag in the column data-status. A state that needs no color takes "neutral".', undefined, plain.length);
         }

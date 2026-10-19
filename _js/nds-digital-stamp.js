@@ -86,7 +86,7 @@
         let domain = (panel.getAttribute('data-digital-stamp-domain') || domainOfHost()).replace(/^\./, '');
         if (domain !== 'sa') domain = domain.replace(/\.sa$/, '');
         if (!DOMAINS.includes(domain)) {
-            console.warn('[NDS DigitalStamp] data-digital-stamp-domain "' + domain + '" is not one of ' + DOMAINS.join(', ') + '; showing gov');
+            console.warn('NDS DigitalStamp: data-digital-stamp-domain "' + domain + '" is not one of ' + DOMAINS.join(', ') + '; showing gov');
             domain = 'gov';
         }
         if (domain === 'gov') return;

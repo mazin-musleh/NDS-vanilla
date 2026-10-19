@@ -21,7 +21,6 @@
  */
 (function () {
     'use strict';
-    window.NDS = window.NDS || {};
 
     // Image/icon-only links (e.g. `<a><img></a>`, `<a><i class="hgi …"></i></a>`)
     // skip auto-tagging because the trailing badge clashes visually. Authors can

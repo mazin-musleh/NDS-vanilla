@@ -125,17 +125,16 @@
     }
 
     // Exposed at once: the loader's init system calls it.
+    function init() {
+        formatNumbers();
+        setupCounterAnimations();
+    }
+
     NDS.Numbers = {
         format,
         formatNumbers,
         setupCounterAnimations,
-        init() {
-            formatNumbers();
-            setupCounterAnimations();
-        },
-        reinit() {
-            formatNumbers();
-            setupCounterAnimations();
-        }
+        init,
+        reinit: init
     };
 })();

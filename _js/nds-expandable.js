@@ -311,11 +311,6 @@
         });
     }
 
-    // Re-initialize when new content is added
-    function reinitializeExpandableContent() {
-        initializeExpandableContent();
-    }
-
     // Recheck height for all initialized expandable elements
     function recheckAllHeights() {
         // Keyed on the instance, not the sweep's stamp, so create()-built
@@ -331,7 +326,7 @@
     // Assigned at module eval so the loader's lazy stub resolves.
     NDS.Expandable = {
         init: initializeExpandableContent,
-        reinit: reinitializeExpandableContent,
+        reinit: initializeExpandableContent,
         recheckHeights: recheckAllHeights,
         create: (container) => container.ndsExpandable || new NDSExpandable(container)
     };

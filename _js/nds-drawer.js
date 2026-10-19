@@ -150,10 +150,10 @@
         });
     }
 
-    function dispatchDrawerEvent(listItem, eventType, data = {}) {
+    function dispatchDrawerEvent(listItem, eventType) {
         const drawer = listItem.closest(CONFIG.selectors.drawer);
         drawer?.dispatchEvent(new CustomEvent(`nds:drawer:${eventType}`, {
-            detail: { item: listItem, drawer, ...data },
+            detail: { item: listItem, drawer },
             bubbles: true
         }));
     }

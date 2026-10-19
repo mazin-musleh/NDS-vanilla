@@ -22,7 +22,6 @@
  */
 (function () {
     'use strict';
-    window.NDS = window.NDS || {};
 
     const POPUP_FEATURES = 'width=600,height=400';
 
@@ -100,8 +99,6 @@
         document.addEventListener('click', (e) => {
             const button = e.target.closest(TARGET_SELECTOR);
             if (!button) return;
-            const wrapper = button.closest('.nds-share');
-            if (!wrapper) return;
             handleClick(button);
         }, { signal: _abortController.signal });
     }

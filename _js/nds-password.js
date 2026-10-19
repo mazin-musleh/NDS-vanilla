@@ -145,10 +145,9 @@
             if (this.statusEl) {
                 var self = this;
                 // Debounced: a polite live region rewritten on every keystroke queues
-                // announcements instead of replacing them. Skips after destroy —
-                // NDS.debounce has no cancel and a pending timer would repaint text.
+                // announcements instead of replacing them. destroy() cancels a pending one.
                 this._announce = NDS.debounce(function (text) {
-                    if (self.abortController) self.statusEl.textContent = text;
+                    self.statusEl.textContent = text;
                 }, 500);
             }
 
@@ -242,6 +241,7 @@
 
         destroy() {
             if (this.abortController) { this.abortController.abort(); this.abortController = null; }
+            if (this._announce) this._announce.cancel();
             // Lift the submit gate and repaint chips — a stale customValidity
             // has no owner left to clear it and would block the form forever.
             this.input.setCustomValidity('');

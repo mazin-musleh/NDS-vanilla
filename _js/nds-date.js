@@ -168,10 +168,12 @@
                 const cal = calOf(calendar);
                 if (format || !Object.keys(intl).length) {
                     const { y, m, d } = toCal(date, cal);
-                    const out = (format || siteFormat()).replace(TOKENS, (t) =>
-                        t === 'YYYY' ? String(y) : t === 'YY' ? String(y).slice(-2)
-                        : t === 'MMMM' ? monthNames(calendar === 'hijri' ? 'hijri' : 'gregory', locale)[m - 1]
-                        : String(t[0] === 'M' ? m : d).padStart(t.length, '0'));
+                    const out = (format || siteFormat()).replace(TOKENS, (t) => {
+                        if (t === 'YYYY') return String(y);
+                        if (t === 'YY') return String(y).slice(-2);
+                        if (t === 'MMMM') return monthNames(calendar === 'hijri' ? 'hijri' : 'gregory', locale)[m - 1];
+                        return String(t[0] === 'M' ? m : d).padStart(t.length, '0');
+                    });
                     if (!numerals || numerals === 'latn') return out;
                     // The numbering system's zero, then offset: its digits are contiguous.
                     const zero = (0).toLocaleString('en-u-nu-' + numerals).charCodeAt(0);
@@ -207,7 +209,7 @@
         }
         const t = new Date(v);
         if (isNaN(t)) return null;
-        const tz = document.documentElement.dataset.timezone;
+        const tz = NDS.date.site.timeZone;   // validated: a mistyped zone falls back, never throws
         if (!tz) return new Date(t.getFullYear(), t.getMonth(), t.getDate());
         const p = {};
         new Intl.DateTimeFormat('en', { timeZone: tz, year: 'numeric', month: 'numeric', day: 'numeric' })

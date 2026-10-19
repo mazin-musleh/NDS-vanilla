@@ -79,17 +79,19 @@
   // Rebind listeners and zIndex to the current top-of-stack config. Called on
   // every push and after every non-terminal pop so the backdrop always speaks
   // for its actual current owner.
+  let topAbortController = null; // the current owner's listeners; replaced on every applyTop()
   function applyTop() {
     const cfg = top();
     if (!cfg) return;
-    backdropElement.removeEventListener('click', handleClick);
-    document.removeEventListener('keydown', handleEscape);
+    topAbortController?.abort();
+    topAbortController = new AbortController();
+    const { signal } = topAbortController;
     backdropElement.style.zIndex = cfg.zIndex;
     if (cfg.clickToClose) {
-      backdropElement.addEventListener('click', handleClick);
+      backdropElement.addEventListener('click', handleClick, { signal });
     }
     if (cfg.escapeClose) {
-      document.addEventListener('keydown', handleEscape);
+      document.addEventListener('keydown', handleEscape, { signal });
     }
   }
 
@@ -158,8 +160,8 @@
     }
 
     // Last owner leaving — full teardown
-    backdropElement.removeEventListener('click', handleClick);
-    document.removeEventListener('keydown', handleEscape);
+    topAbortController?.abort();
+    topAbortController = null;
 
     isActive = false;
 

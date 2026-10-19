@@ -1094,7 +1094,6 @@
 
             if (this.elements.monthDropmenu && !this.monthDropmenuInstance) {
                 this.monthDropmenuInstance = NDS.Dropmenu.create(this.elements.monthDropmenu);
-                this.elements.monthDropmenu.ndsDropmenu = this.monthDropmenuInstance;
                 this.elements.monthDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderMonthOptions();
                     self.scrollToSelected(self.elements.monthDropdownMenu, '.nds-month-option');
@@ -1107,7 +1106,6 @@
 
             if (this.elements.yearDropmenu && !this.yearDropmenuInstance) {
                 this.yearDropmenuInstance = NDS.Dropmenu.create(this.elements.yearDropmenu);
-                this.elements.yearDropmenu.ndsDropmenu = this.yearDropmenuInstance;
                 this.elements.yearDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderYearOptions();
                     self.scrollToSelected(self.elements.yearDropdownMenu, '.nds-year-option');

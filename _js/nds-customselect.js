@@ -123,7 +123,7 @@
         // rotation rule (`.nds-form-container[data-state~="open"]`) keeps working.
         formControl.addEventListener('nds:dropmenu:opened', function () {
             NDS.State.add(formContainer, 'open');
-            (dropdown.querySelector('.nds-select-option[data-state~="selected"]') || options[0]).focus();
+            (Array.prototype.find.call(options, function (o) { return NDS.State.has(o, 'selected'); }) || options[0]).focus();
         });
         formControl.addEventListener('nds:dropmenu:closed', function () {
             NDS.State.remove(formContainer, 'open');
@@ -176,7 +176,7 @@
         if (quiet) {
             if (hiddenInput) hiddenInput.value = value;
             selectInput.value = text;
-            NDS.Forms?.syncState(selectInput);
+            NDS.Forms.syncState(selectInput);
             return true;
         }
         // Dispatched input/change run forms' delegated field-state sync.
