@@ -266,7 +266,7 @@ Flag any of these signal-less shapes in a file WITHOUT the documented two-phase-
 
 Files with the documented two-phase shape pass.
 
-**Two-controller split, not a two-phase carve-out.** When a subset of listeners has a genuinely shorter lifetime than the instance, prefer a second domain-named controller over per-handler bookkeeping — both lifetimes stay atomic. Cite: `_js/nds-modal.js` `trapAbortController`, re-armed on every open / aborted in `close()` and `destroy()`, alongside the init-lifetime `initAbortController`. The entry-2 `cleanup()`+`destroy()` carve-out remains for the case a split can't serve — `_js/nds-date-picker.js`, where the two phases share individual handlers rather than partitioning cleanly.
+**Two-controller split, not a two-phase carve-out.** When a subset of listeners has a genuinely shorter lifetime than the instance, prefer a second domain-named controller over per-handler bookkeeping — both lifetimes stay atomic. Cite: `_js/nds-modal.js` `openAbortController`, re-armed on every open / aborted in `close()` and `destroy()`, alongside the init-lifetime `initAbortController`. The entry-2 `cleanup()`+`destroy()` carve-out remains for the case a split can't serve — `_js/nds-date-picker.js`, where the two phases share individual handlers rather than partitioning cleanly.
 
 ---
 
