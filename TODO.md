@@ -23,9 +23,8 @@ Cleaned 2026-10-19: finished items and their release notes left (all in `CHANGEL
 
 ### NDS IQ, from the field rigs
 
-- **Behavior rigs R1–R7 on the v4.0 draft (2026-10-19, Sonnet 5.5).** Pass: R1, R2, R3, R5, R6. R7 passing on what it built (`nds/records.html`, legacy byte-identical, no jQuery on the NDS page, 7/7 members), left unfinished; it named `whole plan` the default pacing, the rules say `page-by-page`. R4 kept its status right but saved no verify evidence: `nds-verify` hung both runs (item below). No finding in the rules text. Open:
-  - [ ] Commit the `nds-verify.mjs` fix: from an admin shell Chrome relaunched itself de-elevated, dropping headless, profile and pipe, and opened a window in the user's own profile. `--disable-features=AutoDeElevate` and `--edge-skip-compat-layer-relaunch` (Playwright's flags) stop it; retested clean.
-  - [ ] Rerun R4 now that `nds-verify` runs.
+- **Behavior rigs R1–R7 on the v4.0 draft (2026-10-19, Sonnet 5.5).** Pass: R1, R2, R3, R5, R6. R7 passing on what it built (`nds/records.html`, legacy byte-identical, no jQuery on the NDS page, 7/7 members), left unfinished on the slow machine; it named `whole plan` the default pacing, the rules say `page-by-page`. R4 kept its status right but saved no verify evidence: `nds-verify` hung both runs. Cause: from an admin shell Chrome relaunched itself de-elevated (541c807b), and the script then waited on the dead pipe with no error (fixed with the review of 2026-10-19). No finding in the rules text. Open:
+  - [ ] Rerun R4 and finish R7 with the fixed `nds-verify`; on the slow machine pass `--jobs 1`.
   - [ ] Rig harness: R1–R7 have no stored prompts and no stamp step; this run used a scratch `prep.py` (preview zip `_site` stamped 2.0.0, R5 at 1.8.1, own-runtime states reset to their seeded bundles). Move it into `fixtures/tools/` with the prompts. Build the preview with the dev server stopped: its rebuild left `/NDS-vanilla/` links in the zip's `_site` (the published 1.12.0 zip is relative).
   - [ ] `chrome-regions.mjs`: the cookie pattern `/nds-cookie/` misses the `data-cookies-toggle` trigger. `no-legacy-on-nds.mjs` scans the whole project; point it at the NDS folder.
   - [ ] State `spa-broken-hook` describes a symptom its files cannot show: Records has no NDS markup and `index.html` loads no NDS.

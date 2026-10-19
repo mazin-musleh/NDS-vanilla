@@ -105,6 +105,9 @@ const chrome = spawn(CHROME, ['--headless=new', '--remote-debugging-pipe', `--us
 
 let nextId = 1, buffer = '';
 const pending = new Map(), handlers = new Map();
+// A Chrome that dies mid-run would leave every pending call waiting forever.
+chrome.on('exit', (code) => { for (const { reject } of pending.values()) reject(new Error(`Chrome exited (${code})`)); pending.clear(); });
+chrome.stdio[4].setEncoding('utf8'); // a multi-byte char split across chunks decodes whole
 chrome.stdio[4].on('data', (chunk) => {
     const parts = (buffer + chunk).split('\0');
     buffer = parts.pop();
@@ -138,7 +141,7 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
         else if (method === 'Runtime.exceptionThrown') errors.push(p.exceptionDetails.exception?.description || p.exceptionDetails.text);
         else if (method === 'Runtime.consoleAPICalled' && p.type === 'error') errors.push(p.args.map((a) => a.value ?? a.description).join(' '));
         else if (method === 'Log.entryAdded' && p.entry.level === 'error' && !(fail && p.entry.url?.includes(fail))) errors.push(p.entry.text + (p.entry.url ? ` (${p.entry.url})` : ''));
-        else if (method === 'Fetch.requestPaused') s('Fetch.failRequest', { requestId: p.requestId, errorReason: 'Failed' });
+        else if (method === 'Fetch.requestPaused') s('Fetch.failRequest', { requestId: p.requestId, errorReason: 'Failed' }).catch(() => {}); // the request may have ended first
     });
     await Promise.all(['Page.enable', 'Runtime.enable', 'Log.enable', 'Network.enable'].map((m) => s(m)));
     const viewHeight = width < 768 ? 844 : 900;
@@ -154,7 +157,12 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
     const nav = await s('Page.navigate', { url });
     if (nav.errorText) errors.push(`load failed: ${nav.errorText}`);
     await Promise.race([onLoad, sleep(30000)]);
-    const evaluate = async (expression) => (await s('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true })).result.value;
+    // A script that throws (a state's run, the audit) is an error of the shot, never a silent undefined.
+    const evaluate = async (expression) => {
+        const { result, exceptionDetails } = await s('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true });
+        if (exceptionDetails) errors.push(`script failed: ${exceptionDetails.exception?.description || exceptionDetails.text}`);
+        return result?.value;
+    };
     // The reveal, the fonts and every stylesheet, so the icons and the audit read the real page.
     await evaluate(`(async () => {
         for (let i = 0; i < 100 && !document.documentElement.hasAttribute('data-nds-loaded'); i++) await new Promise((r) => setTimeout(r, 100));
@@ -197,10 +205,10 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
     const csp = (await evaluate('window.__ndsCsp || []')) || [];
     const { data } = await s('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width, height, scale: 1 } });
     // After the shot: the audit loads its own bundle into the page.
-    const findings = audit ? await evaluate(`(async () => {
+    const findings = audit ? (await evaluate(`(async () => {
         if (!window.NDS?.Init?.audit) return null;
         return ((await NDS.Init.audit()) || []).map((f) => \`\${f.severity} \${f.rule}: \${f.message}\`);
-    })()`) : [];
+    })()`)) ?? null : [];
     handlers.delete(sessionId);
     await send('Target.closeTarget', { targetId });
     await send('Target.disposeBrowserContext', { browserContextId }).catch(() => {});
@@ -234,7 +242,7 @@ const reference = (ref, w, t, { lang, dir }) => {
         if (existsSync(cached)) return { png: readFileSync(cached), status: 200, lang, dir };
         const q = new URLSearchParams({ 'nds-lang': lang, 'nds-dir': dir });
         const r = await shoot(`${LOCAL}/${ref.replace(/^\/+/, '')}?${q}`, { width: w, theme: t });
-        if (r.status && r.status < 400 && r.dir === dir) writeFileSync(cached, r.png);
+        if (r.status && r.status < 400 && r.revealed && r.dir === dir) writeFileSync(cached, r.png);
         return r;
     })());
     return refShot.get(key);
@@ -265,6 +273,7 @@ try {
                     writeFileSync(join(dir, file), r.png);
                     cells.push(file);
                     if (r.status >= 400 || !r.status) problems.push(`${at}: reference ${pg.reference} did not load (${r.status})`);
+                    else if (r.revealed === false) problems.push(`${at} ${w}px ${t}: the reference never revealed (no data-nds-loaded): its assets did not load, so the sheet shows a blank reference. Point NDS_SITE at a release's _site.`);
                     else if (r.dir !== shots[i].dir) problems.push(`${at} ${w}px ${t}: the reference is ${r.dir}, the page ${shots[i].dir}: the reference could not take the page's direction`);
                 });
                 ref = { name: `reference: ${pg.reference}${lang ? ` (${lang}, ${refDir})` : ` (${refDir})`}`, cells };
@@ -307,7 +316,8 @@ try {
         const sheetWidth = Math.ceil(cols.reduce((n, { w }) => n + w * scale + 10, 160));
         for (const r of rows) {
             const name = `sheet-${slug(r.name)}`;
-            writeFileSync(join(dir, `${name}.html`), `<!doctype html><meta charset="utf-8"><style>
+            // data-nds-loaded up front: the shot's reveal wait would otherwise run out its 10 s.
+            writeFileSync(join(dir, `${name}.html`), `<!doctype html><html data-nds-loaded><meta charset="utf-8"><style>
                 body { margin: 8px; font: 13px system-ui; background: #fff } table { border-collapse: collapse }
                 th, td { border: 1px solid #ccc; padding: 4px; vertical-align: top; text-align: start }
                 td div { max-height: 1400px; overflow: hidden }</style>
@@ -321,8 +331,9 @@ try {
     }
     await pool(sheets);
 } finally {
-    chrome.kill();
     server.close();
+    // Chrome still holds profile files for a moment after kill(): on Windows the delete fails, so wait it out.
+    if (chrome.exitCode === null) await new Promise((r) => { chrome.once('exit', r); chrome.kill(); });
     try { rmSync(profile, { recursive: true, force: true }); } catch {}
 }
 
