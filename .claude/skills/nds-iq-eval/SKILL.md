@@ -221,7 +221,7 @@ The rigs below are small fixtures. A **field rig** is a real legacy app a fresh 
 
 Each grader in `fixtures/tools/grade/` is a REPORTER, not a verdict. Its header says what it reads.
 
-The fixtures stay skeletal on purpose: a bigger fixture is a slower run with no extra signal. `fixtures/README.md` maps what each file stands for. When a setup says a surface exists, the fixture must ship it.
+The fixtures stay skeletal on purpose: a bigger fixture is a slower run with no extra signal. `fixtures/README.md` maps what each file stands for. When a setup says a surface exists, the fixture must ship it. `assemble.mjs` copies the repo's `_site`: build it fresh, with the dev server stopped, before a rig run (a stale build showed runners icons the canon names and the sheet lacks).
 
 ## Scenario files
 

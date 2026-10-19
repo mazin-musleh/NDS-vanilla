@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "19/10/2026 - 09:21 PM"
+last_edit: "19/10/2026 - 10:53 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -17,7 +17,7 @@ sidemenu_mode: false
 <section id="get-started-guide" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <aside class="nds-sideinfo nds-sticky nds-top" aria-label="On this page">
-            <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 14"
+            <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 15"
                 data-toc-source="#get-started-guide article" data-toc-levels="h2, h3">
                 <div class="nds-toc-head">
                     <span class="nds-label">On this page</span>
@@ -65,6 +65,14 @@ sidemenu_mode: false
                         </div>
                     </div>
                 </div>
+
+                <h3 id="browsers">Browser Support</h3>
+                <p>NDS keeps no list of supported browsers. A missing browser feature removes that feature only, down to the floor below.</p>
+                <ul>
+                    <li><strong>Browsers from 2022 and newer</strong> (Chrome 98, Safari 15.4, Firefox 98): every NDS component works.</li>
+                    <li><strong>Browsers from late 2020 to 2021</strong>: Modal and Panel do not open, and Filter's Apply button fails.</li>
+                    <li><strong>Browsers before late 2020</strong> (below Chrome 85, Safari 14, Firefox 79): no NDS JavaScript runs.</li>
+                </ul>
 
                 <h2 id="setup">1. Setup</h2>
                 <p>Setup runs once. The agent installs NDS IQ, downloads the template, writes a plan, and asks you its questions once. Then it builds.</p>

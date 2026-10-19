@@ -12,7 +12,7 @@ const REGIONS = [
   ['main navigation', /nds-main-nav/],
   ['footer', /nds-footer/],
   ['accessibility panel', /nds-accessibility/],
-  ['cookie popup', /nds-cookie/],
+  ['cookie popup', /nds-cookie|data-cookies-toggle/],
   ['DGA digital stamp', /nds-digitalStamp/],
 ]
 
