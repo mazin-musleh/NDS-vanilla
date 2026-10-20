@@ -3,9 +3,17 @@
 Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (section 7); rules landed in
 AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Facts measured on `main` at `9fd54151`.
 
-**Resume here.** Order steps 1–2 are done, and so are changes #1 (1, 1b, 1c, 1d), #2 and #4 (#3 was dropped; the "Landed" notes
-under section 3's Mechanical checks). Change #4b is done (owner, 2026-10-20: every gap in its inventory note fixed, one commit each), and so are #5 to #8.
-**Next: change #9**, the field and validation bases and the Form split (section 5); show the owner the design first.
+**Resume here.** Changes #1, #2, #4, #4b, #5 to #8 are done (#3 dropped), and #9 steps 9a to 9e (the "Landed" notes
+under section 3's Mechanical checks). **Next: finish 9f**, then #10.
+- 9f so far (2026-10-21), against `448fa728` (before the Form split): `check-form-validate` differs only in the 17
+  intended "disabled" cases; `check-form-interact` showed 1 difference in one of two runs, not yet read: rerun
+  `BASE=448fa728 node scripts/check-form-interact.mjs` and read it. Speed (`check-form-speed`, median of 9, x6.6):
+  init and create even or faster; one field click: a first click 11.4 → 14.6 ms, a later one 3.7 → 4.6 ms
+  (+0.5 / +0.14 ms on a phone: every click now passes the delegated parts), a keystroke about +0.3 ms on a phone.
+  Report these to the owner; then `doc-check.mjs` on form.md, checkbox.md, radio.md, switch.md after the owner's
+  go-ahead (AGENTS.md). The doc pass for form pages (A6 outcomes, NDS.field, NDS.Grid, core/init `pending`) waits
+  for the docs plan.
+- Guards: `check-form-validate`, `check-form-interact`, `check-form-speed`.
 
 ## Goal
 
