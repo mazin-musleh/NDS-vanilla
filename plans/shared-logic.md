@@ -4,8 +4,8 @@ Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (se
 AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Facts measured on `main` at `9fd54151`.
 
 **Resume here.** Order steps 1–2 are done, and so are changes #1 (1, 1b, 1c, 1d), #2 and #4 (#3 was dropped; the "Landed" notes
-under section 3's Mechanical checks). Change #4b is done (owner, 2026-10-20: every gap in its inventory note fixed, one commit each), and so are #5, #6 and #7.
-**Next: change #8**, `NDS.init.pending(el)` and the registry's "has a rule" flag (A6).
+under section 3's Mechanical checks). Change #4b is done (owner, 2026-10-20: every gap in its inventory note fixed, one commit each), and so are #5 to #8.
+**Next: change #9**, the field and validation bases and the Form split (section 5); show the owner the design first.
 
 ## Goal
 
@@ -318,6 +318,11 @@ was a Definition List, its only reader; owner, the same day: grids are the most 
 plain `.nds-grid.nds-divided` now draws lines between items with gap decorations (`row-rule`, `column-rule`,
 `rule-visibility-items: between`; none in Safari 26, which degrades to no lines). A later grid feature widens the loader
 selector to `.nds-grid` and keeps its own opt-in. Doc pass: `layout/grid.md` gets the divided option and `NDS.Grid`.
+
+**Landed 2026-10-20 (change #8):** `NDS.init.pending(el)`; registry field `rule`: `true` waits for the instance
+(`el.nds{Name}`: Rating, Upload, Time Picker), `'loaded'` for the bundle only (Autocomplete, which builds on first focus).
+Keyed on the instance, not the init stamp: Rating writes none. The loader remembers a bundle that failed, so its field
+is never pending. Nothing calls it yet: #9 wires Form. Doc pass: `core/init.md` gets `pending` and `rule`.
 
 ## 4. Owner decisions
 

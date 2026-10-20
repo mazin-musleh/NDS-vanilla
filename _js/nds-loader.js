@@ -9,7 +9,9 @@
  *                              + optional eager() to opt an instance back in;
  *                              + optional refresh(root) — owner hook for NDS.init.refresh;
  *                              + optional destroy(root) / destroyEach / destroySelector —
- *                              NDS.init.destroy hooks for components with no element backref)
+ *                              NDS.init.destroy hooks for components with no element backref;
+ *                              + optional rule — its field has a validity rule NDS.init.pending
+ *                              waits for: true, its instance (el.nds{Name}); 'loaded', its bundle)
  *   NDS.init.config            the resolved config
  *   NDS.init.audit()           run the debug audits (nds-audit.js). First call loads the
  *                              audit bundle and returns a promise; later calls are synchronous.
@@ -19,6 +21,9 @@
  *                              needs, then init them against it → Promise
  *   NDS.init.destroy(el)       tear down every instance inside el before it leaves the page.
  *                              Returns how many instances it destroyed
+ *   NDS.init.pending(el)       true while el holds a field whose rule has not started: its
+ *                              bundle on the way, or its instance not built yet. A bundle that
+ *                              failed to load is not pending, so it never blocks for good
  *   NDS.init.ready             Promise: every component found at load has started, late
  *                              bundles included. Page code that runs at load waits on it
  *   NDS.loadBundle(name)       load one injected bundle on demand → Promise
@@ -88,6 +93,7 @@
             // Extras: the field paints complete with no JS; the panel is built on first open.
             name: 'TimePicker',
             selector: '.nds-time-input, .nds-time-fields',
+            rule: true,
         },
         {
             // Deferred: input wiring fires on typing; an autofocus restore lands one idle slot later.
@@ -127,6 +133,7 @@
         {
             name: 'Upload',
             selector: '.nds-upload',
+            rule: true,
         },
         {
             // Deferred: recognition starts on click, so a late wire lands first.
@@ -244,6 +251,7 @@
             // Deferred: stars paint from markup; nothing else reads NDS.Rating.
             name: 'Rating',
             selector: '.nds-rating',
+            rule: true,
         },
         {
             // Deferred: the native range works with no JS; init only paints the fill and <output>.
@@ -284,9 +292,10 @@
             critical: true,
         },
         {
-            // Deferred: results fetch on typing.
+            // Deferred: results fetch on typing. It builds on first focus, so only its bundle is awaited.
             name: 'Autocomplete',
             selector: '.nds-form-container[data-url]',
+            rule: 'loaded',
         },
         {
             // Own bundle: the _editor.scss skeleton holds the field until the stamp lands.
@@ -475,6 +484,8 @@
     const MAP = window.__NDS_BUNDLES || {};
     const nsToBundle = {};
     for (const b in MAP) for (const ns of (MAP[b].ns || [])) nsToBundle[ns] = b;
+    // A bundle that failed stops counting as pending; a later load that succeeds clears it.
+    const _failedBundles = new Set();
 
     // Trusted Types sink for script.src. A policy name the consumer did not allowlist
     // falls back to a plain string for their default policy.
@@ -544,9 +555,10 @@
             s.src = _ttPolicy ? _ttPolicy.createScriptURL(url) : url;
             s.fetchPriority = 'low';
             if (SELF && SELF.nonce) s.nonce = SELF.nonce;
-            s.onload = resolve;
+            s.onload = () => { _failedBundles.delete(name); resolve(); };
             s.onerror = () => {
                 console.warn(`[NDS] bundle '${name}' failed to load (${url})`);
+                _failedBundles.add(name);
                 s.remove();
                 delete _bundlePromises[name];
                 resolve();
@@ -856,6 +868,21 @@
 
     NDS.loadBundle = loadBundle;
 
+    // Does el hold a field whose rule has not started? Only flagged entries count, so a
+    // Tooltip or Copy inside a field never blocks it; a lazy component is never flagged.
+    function pending(el) {
+        const root = el || document;
+        return COMPONENTS.some((c) => {
+            if (!c.rule || c.lazy) return false;
+            const found = [...(root.matches?.(c.selector) ? [root] : []), ...root.querySelectorAll(c.selector)];
+            if (!found.length) return false;
+            const ns = NDS[c.name];
+            if (!ns || _failedBundles.has(nsToBundle[c.name])) return false;   // nothing is coming
+            if (ns.__ndsStub) return true;                                     // its bundle is on the way
+            return c.rule === true && found.some((f) => !f['nds' + c.name]);
+        });
+    }
+
     // "This container's contents changed." Walks the registry, so a component is
     // refreshed because it is REGISTERED, not because the caller remembered it.
     //   - owners (a `refresh` hook) drive the container from outside it; their hook runs
@@ -982,6 +1009,7 @@
         refresh: refreshContainer,
         mount: mountContainer,
         destroy: destroyContainer,
+        pending,
         ready,
     };
 
