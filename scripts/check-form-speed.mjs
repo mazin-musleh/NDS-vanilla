@@ -5,7 +5,7 @@
 // Needs the dev server on :4002. Chromium only (CDP). The past commit's bundles are served in place of today's.
 import { launch, cdp } from './lib/browser.mjs';
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const ROOT = join(import.meta.dirname, '..');
@@ -31,13 +31,12 @@ async function open(variant, url, opts = {}) {
     const page = await ctx.newPage();
     await page.route('**/nds-cookies.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
     await page.route('**/nds-audit.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
-    if (variant === 'base') {
-        await page.route('**/assets/js/*.min.js*', (r) => {
-            const name = new URL(r.request().url()).pathname.split('/').pop();
-            return bundles.some((f) => f.endsWith('/' + name))
-                ? r.fulfill({ path: join(oldDir, name), contentType: 'text/javascript' }) : r.continue();
-        });
-    }
+    // Both sides served from disk the same way: a fulfilled script lands at another time than a fetched one.
+    const dir = variant === 'base' ? oldDir : join(ROOT, 'assets', 'js');
+    await page.route('**/assets/js/*.min.js*', (r) => {
+        const name = new URL(r.request().url()).pathname.split('/').pop();
+        return existsSync(join(dir, name)) ? r.fulfill({ path: join(dir, name), contentType: 'text/javascript' }) : r.continue();
+    });
     const inits = [];
     if (opts.inits) {
         await page.addInitScript(() => { window.NDSInitConfig = { enableLogging: true, enableTiming: true }; });

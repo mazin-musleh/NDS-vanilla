@@ -37,6 +37,7 @@ node scripts/trace-click.mjs [page] [runs]      # one plain tap traced: every li
 node scripts/trace-busy.mjs [page …]            # long frames from load to quiet, with their scripts (LoAF); INITS=1 adds each component's init time
 node scripts/check-form-speed.mjs                # Form speed, a past commit (BASE=, default HEAD) vs today, interleaved: init on real pages, create() × 20/50/100, one keystroke and one click; RUNS=, CPU=
 node scripts/check-form-validate.mjs             # what NDS.Form.validate says for every field canon in four states (written, required, filled, disabled), a past commit (BASE=) vs today; ONLY=<page>, DUMP=1
+node scripts/check-form-interact.mjs             # how every field canon reacts to real clicks and keys (focus, typing, clear, number buttons and hold, password toggle, select, boxes, switch, submit, reset), a past commit (BASE=) vs today; a difference counts only when a rerun repeats it
 node scripts/profile-load.mjs [page] [ms]       # V8 CPU profile of a page load: self/total time per function in the NDS bundles
 node scripts/release-template/nds-verify.mjs <config.json>  # consumer verify tool, shipped at the zip root: every page and state, both widths, light and dark, audit + console + a sheet beside the reference; to try it here, NDS_SITE=<a release zip's _site>
 ```
