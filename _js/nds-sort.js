@@ -4,6 +4,7 @@
  *   NDS.Sort.init()                     wire every list a [data-sort-target] button names
  *   NDS.Sort.refresh(root)              wire new lists, re-sort the wired ones inside root
  *   NDS.Sort.create(root, options)      factory → instance (one per root, reused)
+ *   NDS.Sort.destroy(root)              undo create()
  *   NDS.Sort.getInstance(rootOrSel)     the existing instance, or null
  *   NDS.Sort.detectType(sampleValues, dateFormat, calendar)   'number' | 'date' | 'string'
  *   NDS.Sort.parseValue(raw, type, dateFormat, calendar)      pure helper
@@ -476,8 +477,9 @@
 
         destroy() {
             this.abortController.abort();
+            // The sorted-* states, aria-sort and the trigger icon stay: the rows stay in that order, and a re-create seeds from them.
             if (this.root) {
-                this.root.ndsSort = null;
+                delete this.root.ndsSort;
                 this.root.removeAttribute('data-nds-sort-initialized');
             }
         }
@@ -530,6 +532,8 @@
             root.setAttribute('data-nds-sort-initialized', 'true');
             return instance;
         },
+
+        destroy: (root) => (typeof root === 'string' ? document.querySelector(root) : root)?.ndsSort?.destroy(),
 
         getInstance: (root) => {
             if (typeof root === 'string') root = document.querySelector(root);

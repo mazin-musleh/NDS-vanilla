@@ -9,6 +9,7 @@
  *   NDS.Table.create(table)                    sort controls for one table
  *   NDS.Table.createResponsive(table)          the scroll wrapper only
  *   NDS.Table.createColumnToggle(root)         one [data-columns-target] menu
+ *   NDS.Table.destroy(el)                      undo whichever of the three lives on el
  *   NDS.Table.row(tr)                          per-row handle {el, sub}; the sub row itself
  *                                               is accepted too
  *   ↳ handle.sub.el                             the <tr class="nds-sub">, or null
@@ -100,6 +101,7 @@
         setupSelectAll() {
             const all = this.thead.querySelector('th input.nds-checkbox-input');
             if (!all || all.hasAttribute('data-selection-target')) return;
+            this._ownSelect = { box: all, id: !this.tbody.id };
             this.tbody.id ||= NDS.uniqueId('nds-rows-');
             all.setAttribute('data-selection-target', this.tbody.id);
             NDS.Selection.init();
@@ -160,7 +162,13 @@
 
         destroy() {
             this.sort?.destroy();
-            this.table.ndsTableControls = null;   // the table stays initialized; only its controls go
+            // Selection is delegated: the header box leaves it with the link it was given.
+            if (this._ownSelect) {
+                this._ownSelect.box.removeAttribute('data-selection-target');
+                if (this._ownSelect.id) this.tbody.removeAttribute('id');
+                this._ownSelect = null;
+            }
+            delete this.table.ndsTableControls;   // the table stays initialized; only its controls go
         }
     }
 
@@ -189,6 +197,7 @@
             if (this.table.parentElement.classList.contains('nds-table-wrapper')) {
                 this.wrapper = this.table.parentElement;
             } else {
+                this._builtWrapper = true;
                 this.wrapper = document.createElement('div');
                 this.wrapper.className = 'nds-table-wrapper';
                 this.table.parentElement.insertBefore(this.wrapper, this.table);
@@ -204,8 +213,9 @@
             // recalc of the just-reparented table (~46ms@6.6x on a 100-row table)
             // to read a value that's almost always unset.
             const tableMaxWidth = this.table.style.getPropertyValue('--max-width');
-            if (tableMaxWidth && tableMaxWidth.trim()) {
+            if (tableMaxWidth && tableMaxWidth.trim() && !this.wrapper.style.getPropertyValue('--max-width')) {
                 this.wrapper.style.setProperty('--max-width', tableMaxWidth.trim());
+                this._ownMaxWidth = true;
             }
         }
 
@@ -314,8 +324,11 @@
             this.setScrollFocus(false);
             this.currentScrollState = null;
             this.needsScroll = false;
+            // A wrapper this built goes, the table back in its place; an authored one keeps its own style.
+            if (this._builtWrapper) this.wrapper.replaceWith(this.table);
+            else if (this._ownMaxWidth) this.wrapper.style.removeProperty('--max-width');
             this.table.removeAttribute('data-nds-table-initialized');
-            this.table.ndsTableResponsive = null;
+            delete this.table.ndsTableResponsive;
         }
     }
 
@@ -936,6 +949,11 @@
         createColumnToggle: (root) => {
             if (!root.ndsColumnToggle) new NDSColumnToggle(root);
             return root.ndsColumnToggle || null;
+        },
+        destroy: (el) => {
+            el?.ndsTableControls?.destroy();
+            el?.ndsTableResponsive?.destroy();
+            el?.ndsColumnToggle?.destroy();
         },
         row: rowHandle,
         setColumnHidden

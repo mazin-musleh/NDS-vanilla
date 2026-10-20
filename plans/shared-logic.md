@@ -295,8 +295,8 @@ before it is fixed. Base first: Dropmenu's fix reaches every component that ride
   (`user-feedback:253, 320`); ~~Upload's per-file tooltips are not destroyed (`upload:675`)~~ (confirmed on every list redraw, fixed).
 - Leftovers: ~~Date Picker `data-picker-mode` (`:517`)~~ (fixed); ~~Autocomplete forces `autocomplete="on"` and strips authored
   role/aria (`:671`)~~ (fixed; "on" is right, it is what the builder matches); ~~Tooltip leaves its built trigger, balloon, `aria-describedby`, `tabindex`, `role`, the stripped
-  `title` (`:432`)~~ (fixed: the markup comes back as authored); Table leaves `data-selection-target` and `tbody.id` (`:100`); Sort leaves `aria-sort`/`aria-pressed`,
-  states and the trigger icon class, and nulls its backref (`:477`); Scroll More leaves `data-axis` and its states
+  `title` (`:432`)~~ (fixed: the markup comes back as authored); ~~Table leaves `data-selection-target` and `tbody.id` (`:100`)~~ (fixed, with the wrapper it built); ~~Sort leaves `aria-sort`/`aria-pressed`,
+  states and the trigger icon class, and nulls its backref (`:477`)~~ (backref fixed; the sort states stay: they are the rows' order, and a re-create seeds from them); Scroll More leaves `data-axis` and its states
   (`:216`); an empty TOC gets no backref (`toc:57`, possible).
 - API pairs: a namespace `destroy(el)` is missing on Autocomplete, Breadcrumb, Filter, Sort, Table, Tabs, Tooltip,
   Upload; Progress has no destroy at all; Form's goes with #9. Alert and Feedback build new elements: no destroy needed.
