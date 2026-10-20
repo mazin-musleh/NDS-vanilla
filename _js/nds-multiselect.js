@@ -76,6 +76,7 @@
                 return;
             }
             // Rule: every owned menu names itself.
+            this._ownMenuClass = !this.menu.classList.contains('nds-multiselect-menu');
             this.menu.classList.add('nds-multiselect-menu');
 
             this.name = root.getAttribute('data-multiselect-name') || '';
@@ -89,13 +90,12 @@
             // Multiselect menus read as an extension of the field, so line them
             // up with the field's start edge instead of the default centered
             // anchor. Author can override with data-anchor="center|end".
-            if (!this.dropmenu.hasAttribute('data-anchor')) {
-                this.dropmenu.setAttribute('data-anchor', 'start');
-            }
-            // Soft dependency — NDS.Dropmenu ships in the main bundle (present
-            // during the critical pass), so this normally runs; the guard just keeps
-            // the unbuilt-but-functional fallback if it's ever absent.
-            if (NDS.Dropmenu && !this.dropmenu.ndsDropmenu) NDS.Dropmenu.create(this.dropmenu);
+            // Written here, not through Dropmenu.create's options: the page sweep may have built the menu already.
+            this._ownAnchor = !this.dropmenu.hasAttribute('data-anchor');
+            if (this._ownAnchor) this.dropmenu.setAttribute('data-anchor', 'start');
+            // destroy() takes the menu down only when this built it.
+            this._ownDropmenu = !this.dropmenu.ndsDropmenu;
+            if (this._ownDropmenu) NDS.Dropmenu.create(this.dropmenu);
             // An icon-only trigger names itself in aria-label: read it, and give it back on destroy().
             this.triggerAriaOriginal = this.trigger?.getAttribute('aria-label') || '';
             this.triggerLabelOriginal = (
@@ -355,6 +355,10 @@
             this.chipsEl.replaceChildren();
             NDS.state.remove(this.root, 'filled');
             NDS.aria.label(this.trigger, this.triggerAriaOriginal);
+            // The checkbox names stay: they carry the field's value to the form.
+            if (this._ownDropmenu) NDS.Dropmenu.destroy(this.dropmenu);
+            if (this._ownAnchor) this.dropmenu.removeAttribute('data-anchor');
+            if (this._ownMenuClass) this.menu.classList.remove('nds-multiselect-menu');
             this.root.removeAttribute('data-nds-multiselect-initialized');
             delete this.root.ndsMultiselect;
         }
