@@ -127,7 +127,7 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
 | Disabled | Disabled | `[disabled]` | `.nds-check` | The user cannot change these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group |
 | Readonly | Readonly | `[data-state~="readonly"]` | `.nds-check-container` | The options show their value but cannot change, by pointer or by keyboard. The tile shows a border only, and a checked tile keeps its mark |
 | Layout | Row | `.nds-horizontal` | `.nds-check-group` | The options sit side by side and wrap |
-| Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #checkbox-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -201,7 +201,7 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
 - Use the indeterminate state only for a checkbox that controls other checkboxes, such as "select all".
 - Use `nds-neutral` when the choice is not a brand action.
 - To lock a whole group, put `data-state="readonly"` on every option's container.
-- For the label, info text and feedback, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text and feedback, see [Forms](../components/form). They work the same on every field.
 
 </div>
   </div>
@@ -286,7 +286,7 @@ var result = NDS.Forms.validateCheckboxGroup(document.querySelector('.nds-check-
 // { valid: false, checked: 1, min: 2, max: 3, message: 'Please select at least 2 options' }
 </script>
 
-The full API is in the banner of `_js/nds-forms.js`.
+The full API is in the banner of `_js/nds-form.js`.
 
 </div>
   </div>
@@ -300,7 +300,7 @@ The full API is in the banner of `_js/nds-forms.js`.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Multiselect](../components/multiselect): checkbox options in a dropdown, with the same minimum and maximum rules.
-- [Forms](../components/forms): labels, feedback and validation for every field.
+- [Forms](../components/form): labels, feedback and validation for every field.
 
 </div>
   </div>

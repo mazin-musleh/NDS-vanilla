@@ -23,7 +23,7 @@ A table is a `<table class="nds-table">` with a `<thead>` and a `<tbody>`. Marku
 Pick another component when:
 
 - the content is label and value pairs: [Definition List](../components/definition-list)
-- each record is a tile with an image or actions: [Cards](../components/cards) in a [Grid](../layout/grid)
+- each record is a tile with an image or actions: [Cards](../components/card) in a [Grid](../layout/grid)
 - one number with a trend is the content: [Metric](../components/metric)
 
 </div>
@@ -805,7 +805,7 @@ table.addEventListener('nds:table:sub-request', function (e) {
 });
 </script>
 
-The full API is in the banner of `_js/nds-tables.js`.
+The full API is in the banner of `_js/nds-table.js`.
 
 </div>
   </div>

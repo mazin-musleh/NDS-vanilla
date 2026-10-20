@@ -197,7 +197,7 @@
             selector: '.nds-copy',
         },
         {
-            // nds-tables starts it for a table's header select-all, stamped after detection.
+            // nds-table starts it for a table's header select-all, stamped after detection.
             name: 'Selection',
             selector: '[data-selection-target]',
             // Owner hook: counters and select-all boxes live OUTSIDE the list they count.

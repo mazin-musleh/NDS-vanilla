@@ -24,7 +24,7 @@ Pick another component when:
 
 - the user picks several values: [Multiselect](../components/multiselect)
 - the user types free values as chips: [Tag Input](../components/taginput)
-- the list is short and fixed: a select in [Forms](../components/forms)
+- the list is short and fixed: a select in [Forms](../components/form)
 
 </div>
   </div>
@@ -76,7 +76,7 @@ The canon carries `data-fetch="once"` because the demo data is a static file. Fo
 | Strict | Strict (hint: Accepts only a value picked from the list) | `[data-strict]` | `.nds-form-container` | The form accepts only text the user picked from the list, and the menu shows "No results" when nothing matches. Not for a search field, where any text is a valid search |
 | Custom empty message | Custom empty message (hint: Replaces the "No results" text) | `[data-empty-message="No matching services"]` | `.nds-form-container[data-strict]` | Replaces the "No results" text that a strict field shows when nothing matches |
 | Required | Required (hint: Press Validate with the field empty) | `[data-required]` | `.nds-form-container` | The form needs text in the field. Use it when the field is required |
-| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #autocomplete-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -183,7 +183,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 - Lower `data-min-chars` only when a short query gives a useful list. With `each`, a lower number sends more requests.
 - Use `data-strict` when the server accepts only a known value, such as a city code. Leave it off a search field.
 - Write the placeholder or the info text as a hint of what to type, such as "Type part of a service name".
-- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
 
 </div>
   </div>

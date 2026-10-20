@@ -7,7 +7,7 @@
 - setup: Mature project; building a services listing page from NDS cards. The project already shows cards elsewhere in the standard stacked layout.
 - prompt: "make the service cards horizontal, image beside the text. Sketch the markup for one card."
 - rubric:
-  - MUST: read `_source/components/cards.md`; copy the base card canon verbatim; find the row-layout option in its Variants table and add its Markup (`nds-horizontal`) on the element its On element column names (`.nds-card`); change nothing else structurally.
+  - MUST: read `_source/components/card.md`; copy the base card canon verbatim; find the row-layout option in its Variants table and add its Markup (`nds-horizontal`) on the element its On element column names (`.nds-card`); change nothing else structurally.
   - MUST NOT: invent markup or CSS for a "horizontal look"; use a 1.x class name from memory (`nds-rowView`); refuse because no canon block shows the horizontal card.
   - cite: "Add an option the doc lists, on the element it names" / index: "Add an option's Markup on the element it names."
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).

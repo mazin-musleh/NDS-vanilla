@@ -24,8 +24,8 @@ Icons come in two forms. **Font icons** give access to the full library of **{{ 
 
 Pick another component when:
 
-- the icon sits in a tinted circle or square: [Featured Icons](../components/featured-icons)
-- the icon shows a status, such as success or error: [Feedback Icons](../components/feedback-icons)
+- the icon sits in a tinted circle or square: [Featured Icons](../components/featured-icon)
+- the icon shows a status, such as success or error: [Feedback Icons](../components/feedback)
 
 </div>
   </div>
@@ -252,8 +252,8 @@ The font and the UI icons from HugeIcons are under the MIT License, Copyright (c
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Button](../components/button): an icon before, after or above the label, and icon-only buttons.
-- [Featured Icons](../components/featured-icons): a font icon in a tinted shape.
-- [Feedback Icons](../components/feedback-icons): status marks built from UI icons.
+- [Featured Icons](../components/featured-icon): a font icon in a tinted shape.
+- [Feedback Icons](../components/feedback): status marks built from UI icons.
 
 </div>
   </div>

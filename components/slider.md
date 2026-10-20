@@ -22,7 +22,7 @@ A slider is a native `<input type="range">` in a form field. The field holds a l
 
 Pick another component when:
 
-- the user must type an exact number: a number field in [Forms](../components/forms)
+- the user must type an exact number: a number field in [Forms](../components/form)
 - the user picks one of a few fixed values: [Radio buttons](../components/radio)
 - the setting is on or off: [Switch](../components/switch)
 
@@ -95,7 +95,7 @@ Currency makes two changes on a `.nds-slider-value`: write both. A range slider 
 | Stacked | Stacked (hint: The value sits above a full-width bar) | `.nds-stacked` | `.nds-slider-container` | The value moves above the bar, and the bar takes the full width. Use it for a wide value, such as a currency |
 | Currency | Currency | `[data-currency="SAR"]` | `.nds-slider-value` | A currency symbol on the value |
 | Loading | Loading | `.nds-loading` | `.nds-slider-container` | A skeleton while the script loads the bounds or the value |
-| Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #slider-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -201,7 +201,7 @@ The `nds-loading` class shows the bar and the value as a skeleton, and hides the
 - Use Stacked with Currency, so a wide value does not shorten the bar.
 - After you set `input.value` from a script, fire an `input` event on the input. The bar and the value then update.
 - After you change `min` or `max` from a script, call `NDS.Slider.reinit(container)`. The value width is measured again for the new bounds.
-- For the label, info text and feedback, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text and feedback, see [Forms](../components/form). They work the same on every field.
 
 </div>
   </div>

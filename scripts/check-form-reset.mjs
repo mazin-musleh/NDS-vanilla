@@ -66,7 +66,7 @@ if (OLD_JS) await page.route('**/assets/js/*.min.js*', (r) => {
   return existsSync(file) ? r.fulfill({ body: readFileSync(file), contentType: 'text/javascript' }) : r.continue();
 });
 // A page under components/ so a canon's relative data-url resolves.
-await page.goto(`${BASE}/components/forms.html`, { waitUntil: 'load' });
+await page.goto(`${BASE}/components/form.html`, { waitUntil: 'load' });
 await page.waitForFunction(() => window.NDS?.Init?.mount);
 
 const blocks = [];

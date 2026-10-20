@@ -25,13 +25,13 @@ columns:
       - label: "Buttons"
         url: "/components/button"
       - label: "Forms"
-        url: "/components/forms"
+        url: "/components/form"
       - label: "Cards"
-        url: "/components/cards"
+        url: "/components/card"
       - label: "Modal"
         url: "/components/modal"
       - label: "Tables"
-        url: "/components/tables"
+        url: "/components/table"
 
   - heading: "Contact & Support"
     links:

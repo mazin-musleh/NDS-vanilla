@@ -1,4 +1,4 @@
-// Modal and Panel on <dialog> (plans/top-layer.md steps 2–3), built as fixtures on components/panels.html:
+// Modal and Panel on <dialog> (plans/top-layer.md steps 2–3), built as fixtures on components/panel.html:
 // plain / static / modal panels, swap, Escape, click outside, <form method="dialog">, { focus: false },
 // a Modal over a modal panel (one dim layer), a panel opened over a modal (it opens modal too),
 // the scroll lock count, and destroy() while open.
@@ -35,7 +35,7 @@ const wait = (ms = 600) => page.waitForTimeout(ms);
 
 // The cookie panel opens itself at idle, into the panel stack these cases count on.
 await page.route('**/nds-cookie-consent.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
-await page.goto(`${BASE}/components/panels.html`, { waitUntil: 'load' });
+await page.goto(`${BASE}/components/panel.html`, { waitUntil: 'load' });
 await page.waitForFunction(() => window.NDS?.Init?.mount);
 await page.evaluate(() => {
   // No navigation from a stray outside click.

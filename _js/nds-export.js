@@ -86,7 +86,7 @@
     // own thead/tbody, and a descendant walk sweeps the inner table's headers and
     // rows into the outer export. .cells (not .children / a th-filtered list) is
     // what keeps a column's position equal to cellIndex — the space getCell's
-    // row.cells[col.index] and nds-tables.js's hide/show writes both address.
+    // row.cells[col.index] and nds-table.js's hide/show writes both address.
     const tableAdapter = {
         getColumns(source) {
             const ths = Array.from(source.querySelector(':scope > thead > tr')?.cells || []);

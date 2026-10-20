@@ -740,7 +740,7 @@ In form mode, each setter submits the form. Setters in one script run share one 
 | `nds:filter:request` | the same | `{ criteria, form, hiddenInputsContainer, rollback }`, before an AJAX request. `preventDefault()` stops the request. Add your own fields to `hiddenInputsContainer` here |
 | `nds:filter:success` | the same | `{ success, isJson, data, html, form }`, after an AJAX response. `data` is the JSON, `html` the new container's HTML, `form` the element the event fires on |
 | `nds:filter:error` | the same | `{ error, form }`, after a network error, an error status, a timeout, or a response without the item container. `preventDefault()` stops the error toast |
-| `nds:form:valid`, `nds:form:invalid` | the same | As in [Forms](../components/forms), for a submission form without `data-ajax` |
+| `nds:form:valid`, `nds:form:invalid` | the same | As in [Forms](../components/form), for a submission form without `data-ajax` |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="filter-api-js" data-canon data-lang="js" data-preview="none">

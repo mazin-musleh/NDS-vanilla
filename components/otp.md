@@ -23,7 +23,7 @@ An OTP (one-time password) input is a `<fieldset>` with the `nds-otp-group` clas
 Pick another component when:
 
 - the user picks a new password: [Password](../components/password)
-- the value is a number with no fixed length: a number field in [Forms](../components/forms)
+- the value is a number with no fixed length: a number field in [Forms](../components/form)
 
 </div>
   </div>
@@ -123,7 +123,7 @@ For another code length, copy a box and give it a unique `id`. The script number
 | Size | MD (default) | — | — | 40px boxes |
 | Size | LG | `.nds-lg` | `.nds-otp-group` | 48px boxes with larger digits, 44px on phones, for a page that holds only the code |
 | No separator | No separator | remove | `.nds-otp-separator` | Six boxes in one set. Keep the separator for a code the user reads as two sets |
-| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #otp-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -220,7 +220,7 @@ For another code length, copy a box and give it a unique `id`. The script number
 - Check the code on the server. The OTP input checks only that every box is full.
 - Put `autofocus` on the first box only when the code is the one task on the page, such as a verification step.
 - After you send a new code, empty the boxes with `NDS.OTP.clear()`, so the user cannot send the old code.
-- For the label, info text and feedback, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text and feedback, see [Forms](../components/form). They work the same on every field.
 
 </div>
   </div>
@@ -295,7 +295,7 @@ The full API is in the banner of `_js/nds-otp.js`.
 
 - [Create your account](../examples/registration): a 4-digit code step after sign-up, with a resend button.
 - [Sign in](../examples/sign-in): a 5-digit code step after the password, with a resend button.
-- [Cooldown Button](../components/cooldown-button): the resend button that counts down before the user can ask again.
+- [Cooldown Button](../components/cooldown): the resend button that counts down before the user can ask again.
 
 </div>
   </div>

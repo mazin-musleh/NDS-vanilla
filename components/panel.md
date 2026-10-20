@@ -364,7 +364,7 @@ document.addEventListener('nds:panel:closed', function (e) {
 NDS.Panel.open('settings-panel');
 </script>
 
-The full API is in the banner of `_js/nds-panels.js`.
+The full API is in the banner of `_js/nds-panel.js`.
 
 </div>
   </div>

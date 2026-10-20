@@ -22,7 +22,7 @@ A featured icon is a `<span>` with the `nds-featured-icon` class around one icon
 
 Pick another component when:
 
-- the icon reports the result of a form field or a message: [Feedback Icons](../components/feedback-icons)
+- the icon reports the result of a form field or a message: [Feedback Icons](../components/feedback)
 - the image is a person or an organization: [Avatar](../components/avatar)
 
 </div>
@@ -208,7 +208,7 @@ Source: the `featured-icons` group in `_sass/tokens/_components.scss`.
 - [Home Page Template](../templates/home-template): extra-large circle icons on the statistic cards.
 - [Form Template](../templates/form-template): a dark success icon on the confirmation card after the form is sent.
 - [Admin Console Demo](../examples/console-demo): circle icons on the figure cards.
-- [Cards](../components/cards), [Drawer](../components/drawer), [Metric](../components/metric) and [Modal](../components/modal): the components that place a featured icon in their own parts.
+- [Cards](../components/card), [Drawer](../components/drawer), [Metric](../components/metric) and [Modal](../components/modal): the components that place a featured icon in their own parts.
 
 </div>
   </div>

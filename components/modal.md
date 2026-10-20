@@ -18,12 +18,12 @@ last_edit: "18/10/2026 - 08:27 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A modal is a `<dialog>` [card](../components/cards) with the `nds-modal` class. A button with `data-modal-target` opens it. The modal keeps the card's parts: a header with a featured icon and a close button, the content, and the actions.
+A modal is a `<dialog>` [card](../components/card) with the `nds-modal` class. A button with `data-modal-target` opens it. The modal keeps the card's parts: a header with a featured icon and a close button, the content, and the actions.
 
 Pick another component when:
 
 - the message does not stop the user: [Alert](../components/alert)
-- the content supports the page and the user may keep working beside it: [Panels](../components/panels)
+- the content supports the page and the user may keep working beside it: [Panels](../components/panel)
 - the task has several steps or needs a lot of space: a page of its own, with a [Stepper](../components/stepper)
 
 </div>
@@ -188,7 +188,7 @@ Every option goes on the `nds-modal` element. On a lazy modal, write it on the `
 ### Panels Below
 {: .nds-block-title}
 
-A modal opens above any open [panel](../components/panels) and leaves it open. When the modal closes, the panel is where the user left it.
+A modal opens above any open [panel](../components/panel) and leaves it open. When the modal closes, the panel is where the user left it.
 
 ### Lazy Modal
 {: .nds-block-title}
@@ -325,7 +325,7 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
 | `nds-modal-template` | `<template>` | Holds a lazy modal |
 {: .nds-table .nds-responsive}
 
-The card parts, colors and `nds-center` are on the [Cards](../components/cards) page.
+The card parts, colors and `nds-center` are on the [Cards](../components/card) page.
 
 ### Data Attributes
 {: .nds-block-title}
@@ -335,7 +335,7 @@ The card parts, colors and `nds-center` are on the [Cards](../components/cards) 
 | `data-modal-target` | any button on the page | Opens the modal whose `id` is its value |
 | `data-modal-close` | any element in the modal | Closes the modal |
 | `data-modal-static` | `.nds-modal` | Escape and a click on the overlay do not close the modal |
-| `data-status` | `.nds-modal` | The status color: `success`, `error`, `warning`, `info`, `critical` or `neutral`. See [Cards](../components/cards) |
+| `data-status` | `.nds-modal` | The status color: `success`, `error`, `warning`, `info`, `critical` or `neutral`. See [Cards](../components/card) |
 | `data-state` | `.nds-modal` | The script writes `open` while the modal is open and `closing` while it animates out. Do not set it yourself |
 {: .nds-table .nds-responsive}
 

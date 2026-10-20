@@ -459,7 +459,7 @@ Each Structure is one use of the timeline, with its order and its labels written
 | Size | MD (default) | — | — | 32px circles. A dot has one size: 16px |
 | Size | LG | `.nds-lg` | `.nds-stepper:not(.nds-dot)` | 40px circles. Not with dots |
 | Size | XL | `.nds-xl` | `.nds-stepper:not(.nds-dot)` | 48px circles. Not with dots |
-| Card (any) | Timeline (hint: The whole timeline in one card. Turns on Stroke) (limit: 1 card) (demo: + stroke) | `.nds-card` | `.nds-stepper` | The whole timeline in one [Card](../components/cards). For a timeline in a side column or a dashboard panel. Write Stroke too |
+| Card (any) | Timeline (hint: The whole timeline in one card. Turns on Stroke) (limit: 1 card) (demo: + stroke) | `.nds-card` | `.nds-stepper` | The whole timeline in one [Card](../components/card). For a timeline in a side column or a dashboard panel. Write Stroke too |
 | Card (any) | Content (hint: Each event in a card beside its dot, with the line kept) (limit: 1 card) | `.nds-card` | `.nds-stepper-content` | The content of each event in a card beside its dot. The line stays, and the card border takes the color of the event's state. Put the class on every step's content. Add Stroke for the card's own border color |
 | Card (any) | Stroke (hint: A border in the card's own color) (id: stroke) | `.nds-stroke` | `.nds-stepper.nds-card` | A border around the timeline card |
 | Card (any) | Stroke (hint: A border in the card's own color) (id: stroke) | `.nds-stroke` | `.nds-stepper-content.nds-card` | On every content card: the card's own border color in place of the event's state color |

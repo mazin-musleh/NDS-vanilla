@@ -157,7 +157,7 @@ The Form structure puts an interactive rating in a `.nds-form-group`, with a `<l
 
 ### Required
 
-`data-required` on the `.nds-form-group` makes the score required. [Forms](../components/forms) validation treats `data-rating="0"` as empty: it shows "Please choose a rating" and focuses the first star.
+`data-required` on the `.nds-form-group` makes the score required. [Forms](../components/form) validation treats `data-rating="0"` as empty: it shows "Please choose a rating" and focuses the first star.
 
 ### Menu
 
@@ -357,7 +357,7 @@ The full API is in the banner of `_js/nds-rating.js`.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [User Feedback](../components/user-feedback): a rating inside a short form at the end of a page.
-- [Cards](../components/cards): a display rating in a card.
+- [Cards](../components/card): a display rating in a card.
 
 </div>
   </div>

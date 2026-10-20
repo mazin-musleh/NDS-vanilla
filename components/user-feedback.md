@@ -24,7 +24,7 @@ User feedback is a widget at the end of a page. It asks the visitor what they th
 Pick another component when:
 
 - the user gives a star score inside a form or a card: [Rating](../components/rating)
-- the user reports a problem or sends a request: a form built from [Forms](../components/forms)
+- the user reports a problem or sends a request: a form built from [Forms](../components/form)
 
 </div>
   </div>
@@ -288,7 +288,7 @@ Each structure is the whole page section, form included. Submit validates the fo
 | Structure | Rating | canon `#uf-rating` | — | A star score for a service, with a comment. Service pages |
 | Statistic | No statistic | remove | `.nds-user-feedback-statistic` | Leave it out when you have no real numbers to show |
 | Memory | Ask every visit (hint: No cookie saves the answer) | `[data-no-persist]` | `.nds-user-feedback` | No cookie: the widget asks again on every visit |
-| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #user-feedback-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -434,7 +434,7 @@ To send the data another way, listen for `nds:user-feedback:submit` and call `pr
 | `action`, `method` | the form | Where Submit sends the form data. The default method is `POST` |
 {: .nds-table .nds-responsive}
 
-The field rules (`data-required`, `data-min-checked`) and `data-feedback-target` work as on every field. See [Forms](../components/forms).
+The field rules (`data-required`, `data-min-checked`) and `data-feedback-target` work as on every field. See [Forms](../components/form).
 
 ### CSS Custom Properties
 {: .nds-block-title}

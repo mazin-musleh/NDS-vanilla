@@ -133,7 +133,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
 | Disabled | Disabled | `[disabled]` | `.nds-switch-input` | The user cannot change the setting now |
 | Stacked | Stacked (hint: The label above the switch. Single only) | `.nds-stacked` | `.nds-switch-container:not(.nds-switch-group > *)` | The label above the switch, not beside it. For a narrow column, such as a page header action. Single only: a switch in a group ignores it |
 | Layout | Row | `.nds-horizontal` | `.nds-switch-group` | Group only. The switches sit side by side and wrap |
-| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #switch-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -198,7 +198,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
 - Apply the change as soon as the switch moves. Do not add a Save button for a switch.
 - Use `nds-sm` in dense forms and tables, and `nds-lg` on touch-first screens.
 - Use `nds-neutral` when the setting is not a brand action.
-- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
 - If the change fails, turn the switch back and show feedback on the field.
 
 </div>
@@ -259,7 +259,7 @@ Source: the `switch` group in `_sass/tokens/_components.scss`.
 | `nds:switch:change` | `.nds-switch` (bubbles) | `{ checked, value, input }` |
 {: .nds-table .nds-responsive}
 
-To change a switch from code, set `checked` on the input and dispatch `change`. The full API is in the banner of `_js/nds-forms.js`.
+To change a switch from code, set `checked` on the input and dispatch `change`. The full API is in the banner of `_js/nds-form.js`.
 
 <script type="text/html" id="switch-js" data-canon data-lang="js">
 document.querySelector('.nds-switch').addEventListener('nds:switch:change', function (e) {

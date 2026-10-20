@@ -23,7 +23,7 @@ A meta line is a `<span>` with the `nds-meta` class. Each fact in it is a `<span
 Pick another component when:
 
 - each value needs a visible label, such as "Email" or "Mobile": [Definition List](../components/definition-list)
-- the fact is a category or a status: [Tags](../components/tags)
+- the fact is a category or a status: [Tags](../components/tag)
 
 </div>
   </div>
@@ -216,7 +216,7 @@ The Drawer row and Card structures show where the line goes inside those compone
 - Pick an icon that names the fact, such as a clock for a time. A reader who sees only the icon must know what the text is.
 - Give each icon `aria-hidden="true"`. The text names the fact for screen readers.
 - Use the same facts in the same order on every row of a list, so the reader can scan down a column.
-- Put the status of the whole item in a [Tag](../components/tags). Use `data-status` on a fact only when that one fact needs attention, such as a late due date.
+- Put the status of the whole item in a [Tag](../components/tag). Use `data-status` on a fact only when that one fact needs attention, such as a late due date.
 - Use `nds-sm` in a table cell and `nds-lg` under a page title. Keep the default in list rows and cards.
 - Put a link inside a fact, such as an email address, only when the line is not inside a link or a button. A link inside a link is not valid HTML.
 - Write a time or a phone number inside `<span dir="ltr">` on an Arabic page, so its digits keep their order.

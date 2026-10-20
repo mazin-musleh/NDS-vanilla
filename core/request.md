@@ -241,7 +241,7 @@ The full API is in the banner of `_js/nds-core.js`, and in the comment above `ND
 
 - [Filter](../components/filter): the `nds:filter:request` event lets you send the search yourself. Its `rollback()` puts the chips, the badge and the URL back when your request fails.
 - [User Feedback](../components/user-feedback): Submit sends the form with `NDS.request`.
-- [Cooldown Button](../components/cooldown-button): a resend request that resets the cooldown when it fails.
+- [Cooldown Button](../components/cooldown): a resend request that resets the cooldown when it fails.
 - [Autocomplete](../components/autocomplete): loads its results with `NDS.request`.
 
 </div>

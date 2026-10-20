@@ -22,7 +22,7 @@ Truncate Text is one class, `nds-truncate`, and one custom property, `--truncate
 
 Pick another component when:
 
-- the user must be able to open the full text on the page: [Expandable Content](../utilities/expandable-content)
+- the user must be able to open the full text on the page: [Expandable Content](../utilities/expandable)
 
 </div>
   </div>

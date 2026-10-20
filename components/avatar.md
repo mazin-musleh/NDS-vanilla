@@ -23,7 +23,7 @@ An avatar is an element with the `nds-avatar` class that holds one item: a photo
 Pick another component when:
 
 - the picture sits beside a name and a role: [Persona](../components/persona)
-- the icon marks a status or a type, not a person: [Featured Icons](../components/featured-icons)
+- the icon marks a status or a type, not a person: [Featured Icons](../components/featured-icon)
 
 </div>
   </div>
@@ -268,7 +268,7 @@ Source: the `avatar` group in `_sass/tokens/_components.scss`.
 - [Admin Console Demo](../examples/console-demo): a 2XL avatar in each card of the team directory, with an icon when there is no photo.
 - [Faculty Profile](../examples/faculty): a 3XL photo with an image border beside the page title.
 - [Faculty CV](../examples/faculty-cv): a photo avatar in the hero, set by `hero_avatar`.
-- [Cards](../components/cards): an avatar in the card header.
+- [Cards](../components/card): an avatar in the card header.
 - [Persona](../components/persona): an avatar beside a name and a role.
 - [Quote](../components/quote): the avatar of the person quoted.
 - [Section](../layout/section): an avatar as the section image.

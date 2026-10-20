@@ -601,7 +601,7 @@
     }
 
     // A cell's column header: the last thead row carries the column's
-    // data-align. Positional, like nds-tables.js — a colspan shifts it.
+    // data-align. Positional, like nds-table.js — a colspan shifts it.
     function columnHead(cell) {
         const rows = cell.closest('table')?.tHead?.rows;
         return rows?.length ? rows[rows.length - 1].cells[cell.cellIndex] || null : null;
@@ -2284,7 +2284,7 @@
         }
 
         // Live preview of body-cell alignment. On the published page
-        // nds-tables.js does this from the same data-align; here the inline
+        // nds-table.js does this from the same data-align; here the inline
         // style is editing-only — sanitize strips it from the value.
         _syncColumnAlign() {
             for (const table of this.editable.querySelectorAll('table')) {

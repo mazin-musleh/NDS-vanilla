@@ -18,7 +18,7 @@ direction: ltr
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A FAB is a [Button](../components/button), or a button group, with the `nds-fab` class. The script moves it out of the page into a dock at the left, right or bottom edge of the screen. FABs on the same edge stack in one dock. A FAB usually opens a [Panel](../components/panels) with `data-panel-toggle`.
+A FAB is a [Button](../components/button), or a button group, with the `nds-fab` class. The script moves it out of the page into a dock at the left, right or bottom edge of the screen. FABs on the same edge stack in one dock. A FAB usually opens a [Panel](../components/panel) with `data-panel-toggle`.
 
 Pick another component when:
 
@@ -255,7 +255,7 @@ A button group with `nds-fab` docks as one item, with one shadow around the whol
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Keep FABs few: one for the main action, such as add, compose, filters or chat. Put more actions in a [Panel](../components/panels) that the FAB opens.
+- Keep FABs few: one for the main action, such as add, compose, filters or chat. Put more actions in a [Panel](../components/panel) that the FAB opens.
 - Write the `hidden` attribute on every FAB. The script removes it once the FAB is in its dock, so the FAB never shows at the place you wrote it.
 - Leave out `data-fab-pos` on a FAB that opens a panel, so the FAB stays on the panel's edge.
 - Use `start` and `end` so the edge follows the reading direction. Use `left` or `right` only for an action that must stay on one side in every language.
@@ -292,7 +292,7 @@ A button group with `nds-fab` docks as one item, with one shadow around the whol
 | `data-fab-pos` | `.nds-fab` | The edge: `auto` (the default), `start`, `end`, `left`, `right` or `bottom`. See Edge under Behavior |
 | `data-fab-order` | `.nds-fab` | The place in the stack. A lower number sits nearer the edge. The default is `0` |
 | `data-fab-gap` | `.nds-fab` | Extra space between the FAB and the one before it: `sm` (8px), `md` (16px) or `lg` (32px). See Gap under Behavior |
-| `data-panel-toggle` | `.nds-fab`, or a button in a group | The `id` of the [Panel](../components/panels) it opens. The FAB docks on that panel's edge |
+| `data-panel-toggle` | `.nds-fab`, or a button in a group | The `id` of the [Panel](../components/panel) it opens. The FAB docks on that panel's edge |
 | `data-fab-dock-pos` | `.nds-fab-dock` | The edge of a dock you write yourself: `left`, `right` (the default) or `bottom` |
 | `data-fab-riding` | `.nds-fab-thumb` | The script writes it while the thumb moves aside for its panel |
 | `data-fab-tucked` | `<html>` | The script writes it while the docks slide out, near the page end or over a hero |
@@ -354,7 +354,7 @@ The full API is in the banner of `_js/nds-fab.js`.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Accessibility](../ui-shell/accessibility): the button that opens the accessibility panel on every page is a FAB.
-- [Panels](../components/panels): the panel a FAB opens, and the edges it slides from.
+- [Panels](../components/panel): the panel a FAB opens, and the edges it slides from.
 
 </div>
   </div>

@@ -160,7 +160,7 @@
   tags: ["JS", "CSS", "API"]
   url: "/ui-shell/cookies.html"
   js: _js/nds-cookies.js
-  scss: _sass/components/_cookie.scss
+  scss: _sass/components/_cookies.scss
 
 - title: "DGA Digital Stamp"
   description: "Government authority verification panel"
@@ -206,8 +206,8 @@
   use_when: "The primary navigation bar of a site: branding, top-level links, mega-menu dropdowns in column, row or multi-column layouts, the site search, the language switch, and the mobile hamburger drawer. Use for main nav, top nav, navbar, site navigation, primary menu, mega menu, or language switcher requests. For section navigation inside a page tree use Side Menu. For the government branding strip above it use Top Bar."
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
-  url: "/ui-shell/mainnav.html"
-  js: _js/nds-mainnav.js
+  url: "/ui-shell/main-nav.html"
+  js: _js/nds-main-nav.js
 
 - title: "Session Timeout"
   description: "Warning before an idle session ends, with a countdown and a way to stay signed in"
@@ -275,9 +275,9 @@
   use_when: "A button that disables itself and counts down before it can be pressed again: resend OTP, resend email, retry, or any rate-limited action."
   category: "Actions"
   tags: ["JS", "CSS", "API"]
-  url: "/components/cooldown-button.html"
-  js: _js/nds-cooldown-button.js
-  scss: _sass/components/_cooldown-button.scss
+  url: "/components/cooldown.html"
+  js: _js/nds-cooldown.js
+  scss: _sass/components/_cooldown.scss
 
 - title: "Dropmenu"
   description: "Toggle-activated overlay for actions and navigation"
@@ -401,9 +401,9 @@
   use_when: "A surface that slides in from any edge of the viewport: slide-over, off-canvas panel, side sheet, detail panel, filter panel. For a dialog centred over the page use Modal; for a sidebar navigation list use Drawer."
   category: "Overlays"
   tags: ["JS", "CSS", "API"]
-  url: "/components/panels.html"
-  js: _js/nds-panels.js
-  scss: _sass/components/_panels.scss
+  url: "/components/panel.html"
+  js: _js/nds-panel.js
+  scss: _sass/components/_panel.scss
 
 - title: "Tooltip"
   description: "A balloon of contextual help next to a term, a field or a button, opened on click or on hover"
@@ -446,8 +446,8 @@
   use_when: "A status shown as a coloured icon, alone or before a short message: error, success, warning, info, neutral, or help, inside a field, a row, an alert, or an outcome page. For a decorative icon in a shaped box use Featured Icons; for a whole outcome page use Status Section."
   category: "Feedback"
   tags: ["CSS"]
-  url: "/components/feedback-icons.html"
-  scss: _sass/components/_feedback-icons.scss
+  url: "/components/feedback.html"
+  scss: _sass/components/_feedback.scss
 
 - title: "Loading"
   description: "Spinners and skeleton placeholders for loading states"
@@ -488,8 +488,8 @@
   use_when: "A boxed content container: article teasers, profile cards, service tiles, dashboard panels, grid items. The default building block for any card grid or listing."
   category: "Content"
   tags: ["CSS"]
-  url: "/components/cards.html"
-  scss: _sass/components/_cards.scss
+  url: "/components/card.html"
+  scss: _sass/components/_card.scss
 
 - title: "Code"
   description: "Formatted code blocks with syntax highlighting and copy"
@@ -536,8 +536,8 @@
   use_when: "A decorative icon in a shaped container: circled icons on cards, feature-list bullets, step icons, support-channel tiles."
   category: "Content"
   tags: ["CSS"]
-  url: "/components/featured-icons.html"
-  scss: _sass/components/_featured-icons.scss
+  url: "/components/featured-icon.html"
+  scss: _sass/components/_featured-icon.scss
 
 - title: "Meta"
   description: "A line of short facts, each with an icon, such as a time, a place and a person"
@@ -595,8 +595,8 @@
   use_when: "Small read-only labels: status badges, category labels, metadata pills. For labels the user can remove or click use Chips."
   category: "Content"
   tags: ["CSS"]
-  url: "/components/tags.html"
-  scss: _sass/components/_tags.scss
+  url: "/components/tag.html"
+  scss: _sass/components/_tag.scss
 
 - title: "Timeline"
   description: "Dated events in order, such as a request's history, with the events done, the current one and the ones to come"
@@ -630,8 +630,8 @@
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/custom-select.html"
-  js: _js/nds-customselect.js
-  scss: _sass/components/_forms.scss
+  js: _js/nds-custom-select.js
+  scss: _sass/components/_form.scss
 
 - title: "Date Picker"
   description: "Hijri/Gregorian calendar with dual date conversion"
@@ -674,9 +674,9 @@
   use_when: "A numeric field with plus and minus controls, min, max, and step: quantity picker, spinner, numeric stepper."
   category: "Forms"
   tags: ["JS", "CSS"]
-  url: "/components/forms.html#number-input"
-  js: _js/nds-forms.js
-  scss: _sass/components/_forms.scss
+  url: "/components/form.html#number-input"
+  js: _js/nds-form.js
+  scss: _sass/components/_form.scss
 
 - title: "OTP Input"
   description: "Segmented one-time password fields with auto-advance"
@@ -709,9 +709,9 @@
   use_when: "A single-choice dropdown rendered by the browser itself — only when the dev explicitly wants the native control (the OS picker on mobile). In-form choice fields default to Custom Select, whatever the option count: a native select beside styled NDS fields breaks the form's look. If the dev suggests a plain select to keep things simple, offer Custom Select first; use native only if the dev still wants it. For type-ahead search use Autocomplete; for several choices use Multiselect."
   category: "Forms"
   tags: ["JS", "CSS"]
-  url: "/components/forms.html"
-  js: _js/nds-forms.js
-  scss: _sass/components/_forms.scss
+  url: "/components/form.html"
+  js: _js/nds-form.js
+  scss: _sass/components/_form.scss
 
 - title: "Slider"
   description: "Numeric range input with single-thumb and dual-thumb modes for picking a value or a min–max span"
@@ -744,18 +744,18 @@
   use_when: "Single-line form fields with labels, icons, helper text, and validation states: text, email, search box, phone number, National ID, and IBAN fields. The base for most form work."
   category: "Forms"
   tags: ["JS", "CSS"]
-  url: "/components/forms.html"
-  js: _js/nds-forms.js
-  scss: _sass/components/_forms.scss
+  url: "/components/form.html"
+  js: _js/nds-form.js
+  scss: _sass/components/_form.scss
 
 - title: "Textareas"
   description: "Resizable multi-line text fields"
   use_when: "A resizable multi-line text field for comments, messages, and descriptions."
   category: "Forms"
   tags: ["JS", "CSS"]
-  url: "/components/forms.html"
-  js: _js/nds-forms.js
-  scss: _sass/components/_forms.scss
+  url: "/components/form.html"
+  js: _js/nds-form.js
+  scss: _sass/components/_form.scss
 
 - title: "Time Picker"
   description: "Time field with hour, minute and second pickers in a dropdown panel"
@@ -840,9 +840,9 @@
   use_when: "Any tabular data: data grid, data table, sortable table, expandable sub-rows, column visibility, records list. The starting point for replacing DataTables, jTable, ag-Grid, or a similar plugin. Pair it with Filter, Pagination, Sort, Selection, and Export; the Manage Records example shows all of them working together."
   category: "Data"
   tags: ["JS", "CSS", "API"]
-  url: "/components/tables.html"
-  js: _js/nds-tables.js
-  scss: _sass/components/_tables.scss
+  url: "/components/table.html"
+  js: _js/nds-table.js
+  scss: _sass/components/_table.scss
 
 - title: "Toolbar"
   description: "Controls bar above a table, list, or grid: result counts and applied filters lead, export and actions trail"
@@ -884,7 +884,7 @@
   use_when: "A show more and show less toggle on a long block of content: the box stops at a set height, and the button appears only when the content is taller. To clip text to a few lines use Truncate Text; for a scrolling region use Scroll More; for titled panels that open one at a time use Accordion."
   category: "Utilities"
   tags: ["JS", "CSS"]
-  url: "/utilities/expandable-content.html"
+  url: "/utilities/expandable.html"
   js: _js/nds-expandable.js
 
 - title: "Helper Classes"

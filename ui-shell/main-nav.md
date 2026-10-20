@@ -703,7 +703,7 @@ nav.addEventListener('nds:mainnav:closed', () => video.play());
 NDS.Mainnav.destroy();
 </script>
 
-The full API is in the banner of `_js/nds-mainnav.js`.
+The full API is in the banner of `_js/nds-main-nav.js`.
 
 </div>
   </div>

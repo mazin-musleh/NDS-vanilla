@@ -172,7 +172,7 @@
 
     // A sub follows its parent, so when filter or the pager removes the parent
     // the sub goes with it whatever its own open state — pure cascade, no JS.
-    // Adjacency is the pairing contract (one sub per row); nds-tables.js restores
+    // Adjacency is the pairing contract (one sub per row); nds-table.js restores
     // it after a sort reorder.
     tr[data-filtered] + tr.nds-sub,
     tr[hidden] + tr.nds-sub {
@@ -197,7 +197,7 @@
     }
 
     // Column alignment, declared once on the header: data-align="center|start|end".
-    // The header aligns here (it paints before JS); nds-tables.js emits the matching
+    // The header aligns here (it paints before JS); nds-table.js emits the matching
     // nth-child rule for the body cells, which sit under the skeleton until it runs.
     th[data-align="center"] {
         text-align: center;

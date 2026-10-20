@@ -23,7 +23,7 @@ Scroll More fits long content into a set height or width. The wrapper is `nds-sc
 Pick another component when:
 
 - the items are tabs: [Tabs](../components/tabs), which scroll their own tab row
-- a "Show all" button is enough and paging is not needed: [Expandable Content](../utilities/expandable-content)
+- a "Show all" button is enough and paging is not needed: [Expandable Content](../utilities/expandable)
 - the content is a menu with levels: [Drawer](../components/drawer)
 
 </div>

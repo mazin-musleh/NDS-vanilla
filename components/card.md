@@ -18,7 +18,7 @@ last_edit: "16/10/2026 - 11:02 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A card holds one unit in a set, such as a service tile, a product, an article preview or a dashboard number. The optional header holds an icon, an image or an avatar. In a panel card, it holds the title too. The content holds a title and text, and optional actions go after it. The whole card can be one link. To let the text expand in place, see [Expandable Content](../utilities/expandable-content).
+A card holds one unit in a set, such as a service tile, a product, an article preview or a dashboard number. The optional header holds an icon, an image or an avatar. In a panel card, it holds the title too. The content holds a title and text, and optional actions go after it. The whole card can be one link. To let the text expand in place, see [Expandable Content](../utilities/expandable).
 
 Pick another component when:
 

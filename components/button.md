@@ -25,7 +25,7 @@ A button can also open a [Dropmenu](../components/dropmenu) or copy text with [C
 Pick another component when:
 
 - the click only switches the view on the page: [Content Switcher](../components/content-switcher)
-- the action must wait before the next press, such as resend code: [Cooldown Button](../components/cooldown-button)
+- the action must wait before the next press, such as resend code: [Cooldown Button](../components/cooldown)
 
 </div>
   </div>
@@ -223,7 +223,7 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 - Add `nds-oncolor` to a button on a deep primary or dark background. Without it, the button can be hard to see.
 - Write `type="submit"` on the button that sends a form. Write `type="button"` on every other button in a form, or it sends the form too.
 - Keep the `nds-label` span on an icon-only button. It is hidden on screen and names the button for screen readers. A button with no label element needs an `aria-label`.
-- Add `nds-loading` and `disabled` while a request runs, so a second press does not send it again. A `form.nds-form` does this for its submit button: see [Text Fields](../components/forms), Submit Validation.
+- Add `nds-loading` and `disabled` while a request runs, so a second press does not send it again. A `form.nds-form` does this for its submit button: see [Text Fields](../components/form), Submit Validation.
 - Keep labels short: a verb and a noun, such as "Save draft". A long label does not wrap, except in a stacked button.
 - Use a status for feedback on the button itself, and remove it after about two seconds. For a message the user must read, use an [Alert](../components/alert).
 
@@ -331,7 +331,7 @@ save().then(function () {
 
 - [Sign In](../examples/sign-in): full-width submit buttons, a link styled as a button, and a button group.
 - [Home Page Template](../templates/home-template): on-color buttons over the hero.
-- [Cooldown Button](../components/cooldown-button): a button that waits before the next press.
+- [Cooldown Button](../components/cooldown): a button that waits before the next press.
 - [Dropmenu](../components/dropmenu) and [Toolbar](../components/toolbar): menu buttons and rows of icon buttons.
 
 </div>

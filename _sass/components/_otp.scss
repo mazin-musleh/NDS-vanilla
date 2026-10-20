@@ -94,9 +94,9 @@
     // ==============================================
 
     // setStatus targets the group, so data-status lands one level above the
-    // .nds-otp-container that _forms.scss styles from; cascade it down or the
+    // .nds-otp-container that _form.scss styles from; cascade it down or the
     // boxes stay neutral while the feedback text says the code is wrong.
-    // Error only, per the binary-outline rule in _forms.scss.
+    // Error only, per the binary-outline rule in _form.scss.
 
     &[data-status="error"] {
         --_control-border-forced: var(--form-field-border-error);

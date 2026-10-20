@@ -18,7 +18,7 @@ last_edit: "18/10/2026 - 07:43 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-The consent panel is a bottom [Panel](../components/panels) on every page. It has three views. The Notice view holds Accept, Reject and Manage Cookies. The Manage view holds one switch for each cookie category. The Done view confirms the choice. You add no markup: the script builds the panel when it is first needed. A trigger button with `data-cookies-toggle` opens it again at any time.
+The consent panel is a bottom [Panel](../components/panel) on every page. It has three views. The Notice view holds Accept, Reject and Manage Cookies. The Manage view holds one switch for each cookie category. The Done view confirms the choice. You add no markup: the script builds the panel when it is first needed. A trigger button with `data-cookies-toggle` opens it again at any time.
 
 Pick another component when:
 

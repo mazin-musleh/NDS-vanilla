@@ -18,11 +18,11 @@ last_edit: "19/10/2026 - 08:46 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A tooltip holds short, optional help. Its trigger is a help icon from [Feedback Icons](../components/feedback-icons), a word in a sentence, or a button. The balloon holds a message, with an optional title and a help icon, and an arrow points at the trigger. You write the markup yourself, or put the text in data attributes and the script builds the parts.
+A tooltip holds short, optional help. Its trigger is a help icon from [Feedback Icons](../components/feedback), a word in a sentence, or a button. The balloon holds a message, with an optional title and a help icon, and an arrow points at the trigger. You write the markup yourself, or put the text in data attributes and the script builds the parts.
 
 Pick another component when:
 
-- the user must read the text to finish the task: the info text of a field, see [Forms](../components/forms)
+- the user must read the text to finish the task: the info text of a field, see [Forms](../components/form)
 - the message must stay in view: [Alert](../components/alert)
 - the user must make a decision: [Modal](../components/modal)
 - the trigger opens a list of actions: [Dropmenu](../components/dropmenu)
@@ -199,7 +199,7 @@ With no `data-tooltip-message`, the root's `title` is the message. Until the scr
 
 - Put only optional help in a tooltip. Text the user needs to finish the task goes in the label or the info text.
 - Keep the message to one or two sentences. The balloon is at most 240px wide, and the text wraps.
-- Put the trigger right after the term or the label it explains. In a form field it goes in the field's header, after the `label`: see the Help option in [Forms](../components/forms).
+- Put the trigger right after the term or the label it explains. In a form field it goes in the field's header, after the `label`: see the Help option in [Forms](../components/form).
 - Use the auto markup for plain text. Write the parts yourself only for other content in the balloon.
 - Give a help icon trigger an `aria-label` that names what it explains, such as "About the National ID". An auto trigger takes the title, or "More info" when there is no title.
 - Add `data-tooltip-hover` to a link or a button trigger, so its own click still works.
@@ -307,7 +307,7 @@ The full API is in the banner of `_js/nds-tooltip.js`.
 
 - [Footer](../ui-shell/footer): hover tooltips on the social icon buttons, and text terms on tags.
 - [Top Bar](../ui-shell/topbar): hover tooltips from `title` on the theme and dark mode buttons.
-- [Main Navigation](../ui-shell/mainnav): hover tooltips on the icon-only actions.
+- [Main Navigation](../ui-shell/main-nav): hover tooltips on the icon-only actions.
 
 </div>
   </div>

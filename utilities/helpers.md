@@ -26,7 +26,7 @@ Pick another component when:
 - the items sit in columns that change with the screen width: [Grid](../layout/grid)
 - the element hides at one screen size: [Hidden](../utilities/hidden)
 - long text stops after a number of lines: [Truncate Text](../utilities/truncate-text)
-- the message needs an icon, a box or a close button: [Feedback Icons](../components/feedback-icons) or [Alert](../components/alert)
+- the message needs an icon, a box or a close button: [Feedback Icons](../components/feedback) or [Alert](../components/alert)
 
 </div>
   </div>

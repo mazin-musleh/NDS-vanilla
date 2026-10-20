@@ -624,7 +624,7 @@
 
     // The toggle spins while the consumer resolves a sub-request. add/remove, not
     // set/clear, so an existing state token survives. _loading.scss makes loading
-    // pointer-events:none and _tables.scss re-enables it here so a second click
+    // pointer-events:none and _table.scss re-enables it here so a second click
     // cancels — every exit path below still has to clear it or the spinner never
     // stops: setContent() on success, close() on error or abort.
     const setToggleLoading = (tr, on) => rowToggles(tr).forEach(btn => {
@@ -916,7 +916,7 @@
         });
     }
 
-    // Public API — the loader calls init(); see components/tables.md for the surface.
+    // Public API — the loader calls init(); see components/table.md for the surface.
     NDS.Tables = {
         init: initializeTables,
         reinit: initializeTables,

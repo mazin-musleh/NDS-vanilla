@@ -320,7 +320,7 @@ The widgets also work outside the top bar, such as in a kiosk header or a dashbo
 - Put `data-hidden` on every widget, so the bar stays readable on a phone: `"sm md"` on the date, `"sm"` on the clock, and `"sm"` on both the city and the weather. A widget without it shows at every width and crowds the stamp tab.
 - Keep the stamp's markers. NDS writes DGA's wording in the page language; a word whose marker you remove stays as you wrote it.
 - On a test server, write `data-digital-stamp-domain` with the site's own domain, so the address card matches the live site.
-- Do not add other buttons to the top bar. Site actions belong in the [Main Navigation](../ui-shell/mainnav).
+- Do not add other buttons to the top bar. Site actions belong in the [Main Navigation](../ui-shell/main-nav).
 
 </div>
   </div>
@@ -416,7 +416,7 @@ The full API is in the banners of `_js/nds-digital-stamp.js`, `_js/nds-time-date
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Header](../ui-shell/header), [Main Navigation](../ui-shell/mainnav) and [Footer](../ui-shell/footer): the other parts of the page shell.
+- [Header](../ui-shell/header), [Main Navigation](../ui-shell/main-nav) and [Footer](../ui-shell/footer): the other parts of the page shell.
 - [Themes](../foundations/themes): dark mode.
 - [Date](../core/date): the date and the clock use it, and its `data-timezone` sets their day.
 

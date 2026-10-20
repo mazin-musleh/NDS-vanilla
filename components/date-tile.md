@@ -177,7 +177,7 @@ The Drawer row, Card header and Timeline structures show the tile beside the tex
 |---|---|---|---|---|
 | Structure | Tile (default) | — | — | One date on its own |
 | Structure | Drawer row | canon `#date-tile-drawer` | — | A list of dated items, such as exams, deadlines or events. Each row is one link that holds the tile and the title |
-| Structure | Card header | canon `#date-tile-card` | — | One dated item in a [Card](../components/cards), such as an exam or an event. The tile and `nds-card-text` share the header, and the header centers the text on the tile |
+| Structure | Card header | canon `#date-tile-card` | — | One dated item in a [Card](../components/card), such as an exam or an event. The tile and `nds-card-text` share the header, and the header centers the text on the tile |
 | Structure | Timeline | canon `#date-tile-timeline` | — | Dated events in order, such as an exam schedule. `nds-row nds-middle` on each step's content puts the tile beside the text. The tile follows the step state. See [Timeline](../components/timeline) |
 | Structure | Range | canon `#date-tile-range` | — | A span of days in one month, such as an exam period. Its text is wider than one day, so the tile sets `--date-tile-width: 80px`. It has no weekday |
 | Size | SM | `.nds-sm` | `.nds-date-tile` | Smaller text, 48px wide, for a dense list |
@@ -312,9 +312,9 @@ Set these on the tile, or on a parent to reach every tile inside it. A `data-sta
 
 - [Student Portal](../examples/student-portal): date tiles on the final exams and the academic calendar lists.
 - [Drawer](../components/drawer) and [Meta](../components/meta): the row that holds the tile, and the line of details under the title.
-- [Cards](../components/cards): the card header that holds the tile beside the title.
+- [Cards](../components/card): the card header that holds the tile beside the title.
 - [Timeline](../components/timeline): the Agenda structure, with a tile on each event.
-- [Featured Icons](../components/featured-icons): the icon that a drawer row holds in the same place, with the same statuses.
+- [Featured Icons](../components/featured-icon): the icon that a drawer row holds in the same place, with the same statuses.
 
 </div>
   </div>

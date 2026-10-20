@@ -30,7 +30,7 @@ Foundation, component, layout, shell, utility and core docs live in `_source/<fo
 | Page shapes, layout classes, framework apps | `_source/layout/page-layout.md`: the Overview table, Best Practices, and the API's Front Matter section |
 | Sections and spacing | `_source/layout/section.md`, `_source/layout/grid.md`, `_source/layout/flex.md`, `_source/layout/block.md` |
 | Chrome parts | the pages in `_source/ui-shell/` |
-| Forms and validation | `_source/components/forms.md` |
+| Forms and validation | `_source/components/form.md` |
 | Tokens, knobs, dark mode | `_source/foundations/tokens.md` (Override Scope), `_source/_sass/tokens/_semantic.scss`, `_source/_sass/tokens/_components.scss`, the palette in `_source/_sass/themes/_dga.scss`. A component's knobs: its doc's API, CSS Custom Properties. |
 | Icons (the icon catalog) | `_source/foundations/icons.md`. The inline names: `_source/_data/content/icons.yml`. Font icon names have no list: the audit names one the font lacks |
 | Page code that waits for components at load, content that changes after load, framework views | `_source/core/init.md` |
@@ -45,7 +45,7 @@ Foundation, component, layout, shell, utility and core docs live in `_source/<fo
 
 ## View the built site
 
-Each doc, example and template has a built page at the same path under `_site/`, such as `_site/components/cards.html`: the visual reference for a page you build. Serve `_site/` with a static HTTP server and open its pages by URL.
+Each doc, example and template has a built page at the same path under `_site/`, such as `_site/components/card.html`: the visual reference for a page you build. Serve `_site/` with a static HTTP server and open its pages by URL.
 
 ## Verify
 

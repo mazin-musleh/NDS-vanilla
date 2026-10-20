@@ -301,7 +301,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Header](../ui-shell/header), [Main Navigation](../ui-shell/mainnav) and [Side Menu](../ui-shell/sidemenu): the other parts of the page shell.
+- [Header](../ui-shell/header), [Main Navigation](../ui-shell/main-nav) and [Side Menu](../ui-shell/sidemenu): the other parts of the page shell.
 - [Tooltip](../components/tooltip): the hover labels on the icon buttons.
 
 </div>

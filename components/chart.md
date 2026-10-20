@@ -23,7 +23,7 @@ A chart is an empty `.nds-chart` element that the script fills with an SVG drawi
 Pick another component when:
 
 - one number with a small trend line is the focus: [Metric](../components/metric).
-- users must read or compare exact values: [Tables](../components/tables).
+- users must read or compare exact values: [Tables](../components/table).
 - the value is progress toward a target: [Progress](../components/progress).
 
 </div>
@@ -220,7 +220,7 @@ NDS.Chart.create('#chart-days-root', {
 - Use a bar chart instead of a pie when the slices are close in size. Bars make small differences easier to see.
 - Set axis titles that name what the numbers count. Without them, only the legend explains the chart.
 - Set `dataLabels.format` when the values have a unit, such as `%` or SAR.
-- Put a heading above the chart, and the key numbers in text or a [table](../components/tables) near it. Put an `aria-label` on the chart element that says what it shows, such as `aria-label="Visitors by month, 2026"`. Without one, the SVG label says only "Bar chart", "Line chart" or "Chart". The chart has no keyboard access.
+- Put a heading above the chart, and the key numbers in text or a [table](../components/table) near it. Put an `aria-label` on the chart element that says what it shows, such as `aria-label="Visitors by month, 2026"`. Without one, the SVG label says only "Bar chart", "Line chart" or "Chart". The chart has no keyboard access.
 - Call `destroy()` before you remove a chart in a single-page app. It removes the chart's observers and listeners.
 
 </div>

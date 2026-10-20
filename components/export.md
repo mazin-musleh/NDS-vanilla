@@ -23,7 +23,7 @@ Export adds download buttons to a list. A `.nds-export` button group holds one b
 Pick another component when:
 
 - users pick the rows that an action changes: [Selection](../components/selection)
-- users hide or sort the columns on the screen: [Tables](../components/tables)
+- users hide or sort the columns on the screen: [Tables](../components/table)
 - users send a file to your server: [File Upload](../components/upload)
 
 </div>
@@ -249,7 +249,7 @@ A Scope option goes on every export button of the list. The Column hide target i
 | Scope | Auto (default) (hint: Selected rows if any are selected, else every row) | — | — | The selected rows when any row is selected, else every row |
 | Scope | Selected | `[data-export-scope="selected"]` | `[data-export]` | Only the selected rows. With nothing selected, the file has only the header |
 | Scope | All | `[data-export-scope="all"]` | `[data-export]` | Every row, selected or not |
-| Column hide | Column hide (hint: Adds a Columns menu, and hidden columns stay out of the file) | canon `#export-columns` | `.nds-toolbar-end:has([data-export-target="#export-orders"])` (start) | The [Tables](../components/tables) column menu. A column the user hides drops out of the file |
+| Column hide | Column hide (hint: Adds a Columns menu, and hidden columns stay out of the file) | canon `#export-columns` | `.nds-toolbar-end:has([data-export-target="#export-orders"])` (start) | The [Tables](../components/table) column menu. A column the user hides drops out of the file |
 {: #export-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -286,7 +286,7 @@ When your server sends one page of rows at a time, the page holds only those row
 ### Hidden Columns
 {: .nds-block-title}
 
-When a user hides a column with the [Tables](../components/tables) column menu, the column drops out of the file. Put the menu in the toolbar's `.nds-toolbar-end`, before the export group, and give its `data-columns-target` the table's id. Tables sets `data-export-skip` on its header cell, and removes it when the column shows again. A `data-export-skip` that you write stays. A table with an id keeps its hidden columns for the next visit, so the next export leaves them out too.
+When a user hides a column with the [Tables](../components/table) column menu, the column drops out of the file. Put the menu in the toolbar's `.nds-toolbar-end`, before the export group, and give its `data-columns-target` the table's id. Tables sets `data-export-skip` on its header cell, and removes it when the column shows again. A `data-export-skip` that you write stays. A table with an id keeps its hidden columns for the next visit, so the next export leaves them out too.
 
 </div>
   </div>
@@ -408,7 +408,7 @@ A button with no `data-export-target` exports the table or `[data-export-rows]` 
 | `data-export-rows="selector"` | a list that is not a table | Selects its rows. Without it, the rows are the list's direct children |
 | `data-export-skip="keys"` | a list that is not a table | Leaves out the fields with these keys. Separate the keys with spaces |
 | `data-export-label` | a `<th>` | The column name in the file. The default is the header text |
-| `data-export-skip` | a `<th>` | Leaves out the column. [Tables](../components/tables) also sets it while a user hides the column. It has no effect on a `<td>` |
+| `data-export-skip` | a `<th>` | Leaves out the column. [Tables](../components/table) also sets it while a user hides the column. It has no effect on a `<td>` |
 | `data-export-field="key"` | an element in a row | Makes the element a field: its text goes in the column with this key |
 | `data-export-label` | an element with `data-export-field` | The column name in the file. The default is the key. Write it once per key: the first one wins |
 | `data-export-skip` | an element with `data-export-field` | Leaves out this one field |

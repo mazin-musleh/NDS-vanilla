@@ -983,7 +983,7 @@
         // overflow flag — `.nds-nav-primary`'s clientWidth changes whenever
         // the container shrinks, and only `overflow.check()` flips has-more
         // (which un-hides `.nds-show-more` via the sibling selector at
-        // _mainnav.scss:281). Without this call, resizing past the items'
+        // _main-nav.scss:281). Without this call, resizing past the items'
         // intrinsic width leaves the nav scroll-only with no show-more.
         const onNavResize = NDS.debounce(() => {
             _primaryMaxHeightCached = null;

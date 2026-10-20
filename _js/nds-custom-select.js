@@ -108,7 +108,7 @@
         options.forEach(function (o) { o.classList.add('nds-dropmenu-item'); });
 
         // Menu width is set via the dropmenu's own `--dropmenu-min-width` CSS
-        // custom property (see _forms.scss) — not an inline style here, which
+        // custom property (see _form.scss) — not an inline style here, which
         // the dropmenu wipes via `menu.style.cssText = ''` on close.
 
         // Mark the initially-selected option (display text is in markup).

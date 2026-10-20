@@ -23,7 +23,7 @@ A status section is a content section or a hero section with the `nds-status-sec
 Pick another component when:
 
 - the message sits inside a form or a region of the page: [Alert](../components/alert)
-- the status needs only an icon and a line of text: [Feedback Icons](../components/feedback-icons)
+- the status needs only an icon and a line of text: [Feedback Icons](../components/feedback)
 
 </div>
   </div>
@@ -183,7 +183,7 @@ Pick another component when:
 
 | Property | Default | Controls |
 |---|---|---|
-| `--feedback-size` | `56px` | The diameter of the feedback chip. Set it in the `style` of the section or of the chip. See [Feedback Icons](../components/feedback-icons) |
+| `--feedback-size` | `56px` | The diameter of the feedback chip. Set it in the `style` of the section or of the chip. See [Feedback Icons](../components/feedback) |
 {: .nds-table .nds-responsive}
 
 </div>

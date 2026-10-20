@@ -3,7 +3,7 @@
 // The panel lives inside `.nds-form-control` (which nds-time-picker.js promotes
 // to an NDSDropmenu wrapper) and carries both `.nds-time-picker-menu` and
 // `.nds-dropmenu-menu`, so dropmenu's own surface, width and positioning apply.
-// The unit pickers inside it are stock `.nds-select`s — _forms.scss styles those.
+// The unit pickers inside it are stock `.nds-select`s — _form.scss styles those.
 // Only the panel width and the row that holds the units belong here.
 
 .nds-time-picker {
@@ -87,7 +87,7 @@
         font-weight: var(--font-weight-semibold);
     }
 
-    // The status lands on the group, a level above the containers _forms.scss styles from.
+    // The status lands on the group, a level above the containers _form.scss styles from.
     &[data-status="error"] {
         --_control-border-forced: var(--form-field-border-error);
         --_control-underline-forced: var(--form-field-border-error);

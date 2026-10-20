@@ -4,7 +4,7 @@
 //      first press's build finishing (open-then-close a second later)
 //   2. the FAB's capture listener must swallow the click ONLY while cold —
 //      swallowing a warm click also kills the document-bubble outside-click
-//      close in nds-panels.js, so other open panels stayed open
+//      close in nds-panel.js, so other open panels stayed open
 //   3. a visitor who never arms the panel must never fetch its sheet OR its JS,
 //      and when they do press, the paired sheet starts WITH the bundle rather
 //      than a round trip behind it
@@ -36,7 +36,7 @@ const note = (ok, name, detail) => {
     console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? `  (${detail})` : ''}`);
 };
 
-// Bundles carry nds-fab.js (unhides the FAB) and nds-panels.js (open/close).
+// Bundles carry nds-fab.js (unhides the FAB) and nds-panel.js (open/close).
 // Everything EXCEPT accessibility — that one is the subject: pulling it here
 // would pre-warm the very thing each check is measuring.
 const settle = async (page) => {

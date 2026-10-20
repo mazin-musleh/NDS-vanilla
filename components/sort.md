@@ -23,11 +23,11 @@ Sort reorders the items of a list when the user picks a trigger. Each trigger na
 - Direct mode: each trigger sets one key and one order. Use it for the options of a dropmenu.
 - Cycle mode: one trigger steps through ascending, descending and the original order. Use it for one button per key.
 
-[Filter](../components/filter) and [Tables](../components/tables) start Sort for their own sort buttons.
+[Filter](../components/filter) and [Tables](../components/table) start Sort for their own sort buttons.
 
 Pick another component when:
 
-- the items are table rows with sortable columns: [Tables](../components/tables).
+- the items are table rows with sortable columns: [Tables](../components/table).
 - the items are also filtered or searched: [Filter](../components/filter).
 
 </div>
@@ -293,7 +293,7 @@ In `create()`, set `urlSync: { keyParam, orderParam }` and the sort key and orde
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Used by Filter and Tables</span>
           </span>
-          <p class="nds-item-desc"><a class="nds-color" href="../components/filter">Filter</a> starts Sort for its <code class="nds-inline-code lang-html">[data-sort]</code> buttons. <a class="nds-color" href="../components/tables">Tables</a> starts it for its sortable column headers. Neither needs a <code class="nds-inline-code lang-html">data-sort-target</code>.</p>
+          <p class="nds-item-desc"><a class="nds-color" href="../components/filter">Filter</a> starts Sort for its <code class="nds-inline-code lang-html">[data-sort]</code> buttons. <a class="nds-color" href="../components/table">Tables</a> starts it for its sortable column headers. Neither needs a <code class="nds-inline-code lang-html">data-sort-target</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -475,7 +475,7 @@ The full API is in the banner of `_js/nds-sort.js`.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Filter](../components/filter): sort buttons for a filtered list.
-- [Tables](../components/tables): sortable column headers.
+- [Tables](../components/table): sortable column headers.
 - [Dropmenu](../components/dropmenu): the menu a direct mode sort sits in.
 
 </div>

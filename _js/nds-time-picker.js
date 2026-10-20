@@ -293,7 +293,7 @@
 
     // No .nds-select-value carrier on purpose — see the banner. The picks live
     // in JS; these selects are the view.
-    // nds-darker: the filled form-container variant (.nds-darker in _forms.scss). The units
+    // nds-darker: the filled form-container variant (.nds-darker in _form.scss). The units
     // sit on the panel's own surface, so a bordered field on it reads as a box in
     // a box — the filled style separates them without extra CSS.
     // The id is not decoration: a form field with neither id nor name trips HTML

@@ -22,7 +22,7 @@ A chip is a small `<button>` with the `nds-chip` class, a color class and a labe
 
 Pick another component when:
 
-- the label only describes something and cannot be clicked: [Tags](../components/tags)
+- the label only describes something and cannot be clicked: [Tags](../components/tag)
 - the chips are the values of a field the user types into: [Tag Input](../components/taginput)
 - the choices filter a list of items: [Filter](../components/filter), which draws its own chips
 
@@ -150,7 +150,7 @@ A row on `.nds-chip` changes every chip. Selected goes on one chip: the builder 
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Use chips for choices the user clicks: filters, categories and picked values. For a label that only describes something, use a [Tag](../components/tags).
+- Use chips for choices the user clicks: filters, categories and picked values. For a label that only describes something, use a [Tag](../components/tag).
 - Use one color for every chip of a choice. The selected state shows which one is on, so do not use a second color for it.
 - When a chip turns on and off, set `data-state="selected"` and `aria-pressed="true"` together, and `aria-pressed="false"` when it is off.
 - Put related chips in one `nds-chips` group, so they share the gap and wrap together.
@@ -246,7 +246,7 @@ The full API is in the banner of `_js/nds-core.js`.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Filter](../components/filter), [Multiselect](../components/multiselect) and [Tag Input](../components/taginput): the removable chips that `NDS.buildChip()` builds.
-- [Tags](../components/tags): labels that describe, and cannot be clicked.
+- [Tags](../components/tag): labels that describe, and cannot be clicked.
 
 </div>
   </div>

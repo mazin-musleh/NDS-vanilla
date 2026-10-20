@@ -22,7 +22,7 @@ Numbers is a class and an attribute. `nds-number-format` formats the number in a
 
 Pick another component when:
 
-- the user types a number: [Number Input](../components/forms#number-input)
+- the user types a number: [Number Input](../components/form#number-input)
 - the user picks a number in a range: [Slider](../components/slider)
 
 </div>
@@ -165,7 +165,7 @@ The counter reads `data-counter` when the count starts, not when the page loads.
 - Keep `data-counter-duration` between 800 and 2000 ms. A shorter count is too fast to see, and a longer one delays the figure.
 - For a free price, write the label, such as "Free" or "مجاني", with no `data-currency`.
 - Give a counter with a currency or a unit the `nds-number-format` class too: `<span class="nds-number-format" data-currency="SAR" data-counter="1250">0</span>`.
-- Put a counter in a [statistic card](../components/cards) for a headline number with a label: a centered card, with the counter on its `nds-card-number`.
+- Put a counter in a [statistic card](../components/card) for a headline number with a label: a centered card, with the counter on its `nds-card-number`.
 
 </div>
   </div>

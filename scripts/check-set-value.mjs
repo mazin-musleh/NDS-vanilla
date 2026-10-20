@@ -43,7 +43,7 @@ const log = (page) => page.evaluate(() => window.__log.splice(0));
 // ---- REACT ---------------------------------------------------------------
 for (const v of REACT) {
     const R = 'React ' + major(v);
-    const page = await open('components/forms.html');
+    const page = await open('components/form.html');
     await loadReact(v)(page);
     const res = await page.evaluate(async () => {
         const h = React.createElement, out = {};
@@ -138,7 +138,7 @@ for (const v of REACT) {
     ok('Switch: click flips it and fires input + change', sw && sw.flipped
         && sw.log.filter((l) => /checkbox|switch/.test(l)).length >= 2, JSON.stringify(sw));
     await page.close();
-    page = await open('components/forms.html');
+    page = await open('components/form.html');
 
     // Clear button: empties the field with input + change.
     const clr = await page.evaluate(() => {
@@ -262,7 +262,7 @@ for (const v of REACT) {
 // input or change event carries. A field NDS rewrites must end with the binding
 // holding what the field shows.
 {
-    const page = await open('components/forms.html');
+    const page = await open('components/form.html');
     // The doc demos live in canon blocks, so the fields are built here from the canon markup.
     await page.evaluate(() => {
         const field = (input, pre = '', post = '') => '<div class="nds-form-container"><div class="nds-form-control">'
@@ -339,7 +339,7 @@ for (const v of REACT) {
 // v-model on the field each component's docs name; NDS wires the markup after Vue mounts it.
 for (const ver of VUE) {
     const V = 'Vue ' + ver.split('.').slice(0, 2).join('.');
-    const page = await open('components/forms.html');
+    const page = await open('components/form.html');
     await loadVue(ver)(page);
     await page.evaluate(() => {
         const host = document.querySelector('.nds-section-body').appendChild(document.createElement('div'));
@@ -407,7 +407,7 @@ for (const ver of VUE) {
 
 // ---- NATIVE SELECT --------------------------------------------------------
 for (const [i, rv] of REACT.entries()) {
-    const page = await open('components/forms.html');
+    const page = await open('components/form.html');
     await loadReact(rv)(page);
     await loadVue(VUE[i])(page);
     const tag = `React ${major(rv)}, Vue ${VUE[i].split('.').slice(0, 2).join('.')}`;
@@ -441,7 +441,7 @@ for (const [i, rv] of REACT.entries()) {
 // ---- VUE, MORE FIELDS -----------------------------------------------------
 for (const ver of VUE) {
     const V = 'Vue ' + ver.split('.').slice(0, 2).join('.');
-    const page = await open('components/forms.html');
+    const page = await open('components/form.html');
     await loadVue(ver)(page);
     await page.evaluate(() => {
         const host = document.querySelector('.nds-section-body').appendChild(document.createElement('div'));
@@ -543,7 +543,7 @@ for (const ver of VUE) {
 
 // ---- USER FEEDBACK RESET --------------------------------------------------
 {
-    const page = await open('components/forms.html');
+    const page = await open('components/form.html');
     const uf = page.locator('.nds-user-feedback').first();
     await uf.scrollIntoViewIfNeeded();
     await uf.locator('[data-answer="Yes"]').click();
@@ -614,7 +614,7 @@ function checkModel(name, m) {
 const KEYS = ['region', 'date', 'time', 'phone', 'text', 'agree', 'sw'];
 
 for (const v of SVELTE) {
-    const page = await open('components/forms.html');
+    const page = await open('components/form.html');
     await page.evaluate(async ([markup, SVELTE_APP, v]) => {
         const props = 'export let region = "", date = "", time = "", phone = "", text = "", agree = false, sw = false;';
         const src = `<script>${props}
@@ -630,7 +630,7 @@ for (const v of SVELTE) {
 
 for (const [v, zone] of ANGULAR) {
     const A = 'Angular ' + major(v);
-    const page = await open('components/forms.html');
+    const page = await open('components/form.html');
     const booted = await page.evaluate(async ([markup, v, zone, ANGULAR_LOAD]) => {
         const ng = await eval(ANGULAR_LOAD)(v, zone);
         const { Component, ElementRef, inject } = ng.core;

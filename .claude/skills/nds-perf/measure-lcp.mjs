@@ -11,7 +11,7 @@
 //
 // USAGE (run from the project root; the browser launches through scripts/lib/browser.mjs):
 //   node .claude/skills/nds-perf/measure-lcp.mjs                 # home, _site, 3 runs
-//   node .claude/skills/nds-perf/measure-lcp.mjs components/ components/forms.html
+//   node .claude/skills/nds-perf/measure-lcp.mjs components/ components/form.html
 //   node .claude/skills/nds-perf/measure-lcp.mjs https://mazin-musleh.github.io/NDS-vanilla/
 //   node .claude/skills/nds-perf/measure-lcp.mjs --dir=_site --runs=5 --no-throttle
 //   node .claude/skills/nds-perf/measure-lcp.mjs --baseurl=/NDS-vanilla --chrome="C:\path\chrome.exe"

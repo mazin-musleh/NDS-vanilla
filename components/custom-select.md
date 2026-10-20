@@ -24,7 +24,7 @@ Pick another component when:
 
 - the user types to search a long list: [Autocomplete](../components/autocomplete)
 - the user picks more than one option: [Multiselect](../components/multiselect)
-- the design asks for the phone's own picker: the native select in [Text Fields](../components/forms)
+- the design asks for the phone's own picker: the native select in [Text Fields](../components/form)
 
 </div>
   </div>
@@ -135,7 +135,7 @@ Pick another component when:
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-select:not([data-state~="readonly"])` | The user cannot open the list, and the value does not post. Not with Read-only |
 | State (any) | Read-only | `[data-state~="readonly"]` | `.nds-select:not([data-state~="disabled"])` | The user sees the value but cannot change it. The value posts. Not with Disabled |
 | Validation | Required (hint: Press Validate with no option picked) | `[data-required]` | `.nds-select` | The form needs a pick. It does not submit while the field is empty |
-| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Text Fields](../components/forms) |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Text Fields](../components/form) |
 {: #custom-select-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -231,7 +231,7 @@ To show a saved value, write it in the `value` of `.nds-select-value`, and leave
 - Keep a description to one short line.
 - Write `aria-hidden="true"` on an option's icon. The label names the option.
 - To change the value from a script, use `setValue()` or `clear()`. They update the label, the value and the `selected` state together.
-- For the label, info text, feedback and the required mark, see [Text Fields](../components/forms). They work the same on every field.
+- For the label, info text, feedback and the required mark, see [Text Fields](../components/form). They work the same on every field.
 
 </div>
   </div>
@@ -321,7 +321,7 @@ field.addEventListener('nds:customselect:change', function (e) {
 NDS.CustomSelect.setValue(field, 'makkah');
 </script>
 
-The full API is in the banner of `_js/nds-customselect.js`.
+The full API is in the banner of `_js/nds-custom-select.js`.
 
 </div>
   </div>

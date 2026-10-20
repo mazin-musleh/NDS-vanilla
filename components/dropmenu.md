@@ -23,7 +23,7 @@ A dropmenu is a `nds-dropmenu` wrapper that holds a trigger button (`nds-dropmen
 Pick another component when:
 
 - the choice is a field in a form: [Custom Select](../components/custom-select)
-- the menu holds the site's main links: [Main Navigation](../ui-shell/mainnav)
+- the menu holds the site's main links: [Main Navigation](../ui-shell/main-nav)
 - the content needs more room, or steps: [Modal](../components/modal) or [Drawer](../components/drawer)
 - the element shows a short hint on hover: [Tooltip](../components/tooltip)
 - the control turns one setting on or off: [Switch](../components/switch)
@@ -507,7 +507,7 @@ The full API is in the banner of `_js/nds-dropmenu.js`.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Pagination](../components/pagination): a picker with `data-per-page-target` sets the number of items per page.
-- [Forms](../components/forms): a picker in an input prefix, for a phone country code.
+- [Forms](../components/form): a picker in an input prefix, for a phone country code.
 - [Contact Us Template](../templates/contact-us-template): the phone field with a country-code picker.
 - [Manage Records](../examples/manage-records): a per-page picker beside a table.
 - [Search Template](../templates/search-template): the filter menu is a dropmenu with groups and a footer.

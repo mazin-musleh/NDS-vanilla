@@ -23,7 +23,7 @@ An accordion is a stack of items. Each item has a heading with a button, and a p
 Pick another component when:
 
 - people switch between views in one space, and see one at a time: [Tabs](../components/tabs)
-- people must compare the content side by side: [Cards](../components/cards)
+- people must compare the content side by side: [Cards](../components/card)
 - the panel opens over the page, not in it: [Dropmenu](../components/dropmenu)
 
 </div>

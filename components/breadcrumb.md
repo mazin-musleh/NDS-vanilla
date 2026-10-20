@@ -22,7 +22,7 @@ A breadcrumb is a `<nav>` that holds an ordered list: one item per level, from H
 
 Pick another component when:
 
-- the links are the site's navigation: [Main Navigation](../ui-shell/mainnav) or [Side Menu](../ui-shell/sidemenu)
+- the links are the site's navigation: [Main Navigation](../ui-shell/main-nav) or [Side Menu](../ui-shell/sidemenu)
 - the links move between the steps of one task: [Stepper](../components/stepper)
 - the links switch views on one page: [Tabs](../components/tabs)
 

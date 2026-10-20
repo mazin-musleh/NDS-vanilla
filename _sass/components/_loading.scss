@@ -18,7 +18,7 @@
 // ==============================================
 
 // Form-scope elements own their own loading UX (spinner shell in the
-// .nds-form-action, sibling swap — see nds-forms.js loading state hook),
+// .nds-form-action, sibling swap — see nds-form.js loading state hook),
 // so exempt them from the whole-container overlay to avoid double spinners.
 // :where() keeps the exemption at zero specificity — a plain :not() would
 // lift the whole rule to (0,2,0) and beat consumers' own (0,1,0) rules.

@@ -23,7 +23,7 @@ A tag input is a text field that holds its values as [Chips](../components/chips
 Pick another component when:
 
 - the user picks from a fixed list: [Multiselect](../components/multiselect)
-- the user types one value: a text field in [Forms](../components/forms)
+- the user types one value: a text field in [Forms](../components/form)
 - the user picks one value from suggestions: [Autocomplete](../components/autocomplete)
 
 </div>
@@ -88,7 +88,7 @@ Prefilled tags inserts two hidden inputs right after the text box `#taginput-ski
 | State (any) | Disabled (demo: + prefilled) | `[data-state~="disabled"]` | `.nds-taginput:not([data-state~="readonly"])` | The user cannot type or remove a chip, and the tags do not post. Not with Read-only |
 | State (any) | Read-only (demo: + prefilled) | `[data-state~="readonly"]` | `.nds-taginput:not([data-state~="disabled"])` | The user sees the tags but cannot change them. The tags post. Not with Disabled |
 | Validation | Required (hint: Press Validate with no tags) | `[data-required]` | `.nds-taginput` | The form needs at least one tag. See Validation |
-| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #taginput-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -218,7 +218,7 @@ A form that edits saved data shows the tags the user saved before. For each tag,
 - The field rejects a repeat in any letter case, but keeps the case the user typed. Change the case on the server if the stored values must match.
 - Add Suggestions when tags must match a shared list. The user then picks an existing tag instead of typing a new spelling.
 - Say a limit in the label, such as "Topics (up to 3)", not in the placeholder.
-- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
 
 </div>
   </div>

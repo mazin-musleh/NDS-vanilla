@@ -44,7 +44,7 @@ The code shows the outer element of each part. Copy each part whole from its own
     <!-- The stamp panel: ../ui-shell/topbar -->
   </div>
   <nav class="nds-main-nav nds-content-wrapper" id="nds-main-nav" aria-label="Primary navigation" data-i18n-aria-label="mainnav.primary_navigation">
-    <!-- The brand, the links and the actions: ../ui-shell/mainnav -->
+    <!-- The brand, the links and the actions: ../ui-shell/main-nav -->
   </nav>
 </header>
 </script>
@@ -65,7 +65,7 @@ The code shows the outer element of each part. Copy each part whole from its own
 | `header` | The three parts below | Yes |
 | `.nds-topbar` | The top bar: the stamp tab, the widgets and the dark mode button. See [Top Bar](../ui-shell/topbar) | Yes, on a government site |
 | `#nds-digital-stamp` | The stamp panel, right after the top bar. The stamp tab opens it. See [Top Bar](../ui-shell/topbar#digital-stamp) | Yes, with the stamp tab |
-| `nav.nds-main-nav` | The main navigation: the brand, the links, the dropdowns and the actions. See [Main Navigation](../ui-shell/mainnav) | Yes |
+| `nav.nds-main-nav` | The main navigation: the brand, the links, the dropdowns and the actions. See [Main Navigation](../ui-shell/main-nav) | Yes |
 {: .nds-table .nds-responsive}
 
 </div>
@@ -122,7 +122,7 @@ The code shows the outer element of each part. Copy each part whole from its own
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Top Bar](../ui-shell/topbar) and [Main Navigation](../ui-shell/mainnav): the parts of the header, with their options and APIs.
+- [Top Bar](../ui-shell/topbar) and [Main Navigation](../ui-shell/main-nav): the parts of the header, with their options and APIs.
 - [Page Layout](../layout/page-layout): where the header sits in `body`, and the page shapes without one.
 - [Home Page Template](../templates/home-template): the header in a complete page.
 - [Footer](../ui-shell/footer): the other end of the page shell.

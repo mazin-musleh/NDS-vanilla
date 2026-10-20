@@ -18,11 +18,11 @@ last_edit: "12/10/2026 - 12:00 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A countdown shows the time left until a deadline, such as the day applications close, or until a duration ends, such as a session or a one-time code. You write the units and their boxes in the markup. The script writes the numbers, and the unit word into an empty label. A `<div>` root lays its units out in one row: each number over its word in one banner card, or a [Card](../components/cards) for each unit. A `<span>` root is a run of text.
+A countdown shows the time left until a deadline, such as the day applications close, or until a duration ends, such as a session or a one-time code. You write the units and their boxes in the markup. The script writes the numbers, and the unit word into an empty label. A `<div>` root lays its units out in one row: each number over its word in one banner card, or a [Card](../components/card) for each unit. A `<span>` root is a run of text.
 
 Pick another component when:
 
-- a button must wait before it can be pressed again: [Cooldown Button](../components/cooldown-button)
+- a button must wait before it can be pressed again: [Cooldown Button](../components/cooldown)
 - the page shows the current date and time: [Top Bar](../ui-shell/topbar)
 
 </div>
@@ -146,7 +146,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-`.nds-countdown` is the root in every structure. In Banner, it sits in the card, between the text and the actions. Size and the card options need Cards or Banner. Layout and End action need Banner. A card option goes on every `.nds-card`. The rest of the card options are on [Cards](../components/cards). The target date is sample content: set your own deadline.
+`.nds-countdown` is the root in every structure. In Banner, it sits in the card, between the text and the actions. Size and the card options need Cards or Banner. Layout and End action need Banner. A card option goes on every `.nds-card`. The rest of the card options are on [Cards](../components/card). The target date is sample content: set your own deadline.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|

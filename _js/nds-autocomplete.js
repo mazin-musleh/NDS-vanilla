@@ -405,7 +405,7 @@
         // ==============================================
 
         setLoading(isLoading) {
-            // Delegated to forms' state hook — see nds-forms.js loading branch.
+            // Delegated to forms' state hook — see nds-form.js loading branch.
             if (isLoading) addState(this.container, 'loading');
             else removeState(this.container, 'loading');
         }

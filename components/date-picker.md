@@ -23,7 +23,7 @@ A date picker is a text field with a calendar under it. The user types a date, o
 Pick another component when:
 
 - the user picks a time of day: [Time Picker](../components/time-picker)
-- the user types a date they know by heart, such as a birth date, and a calendar does not help: a text field in [Forms](../components/forms)
+- the user types a date they know by heart, such as a birth date, and a calendar does not help: a text field in [Forms](../components/form)
 
 </div>
   </div>
@@ -85,7 +85,7 @@ A Picker choice changes two elements: write `data-format` on `.nds-date-picker` 
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-date-picker:not([data-state~="readonly"])` | The user cannot type or open the calendar, and the date does not post. Not with Read-only |
 | State (any) | Read-only | `[data-state~="readonly"]` | `.nds-date-picker:not([data-state~="disabled"])` | The user sees the date but cannot change it. The date posts. Not with Disabled |
 | State (any) | Required (hint: Press Validate with the field empty) | `[data-required]` | `.nds-date-picker` | The form needs a date. See Validation |
-| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #date-picker-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -231,7 +231,7 @@ The picker checks the field at each `change`, typed text included. A date that d
 - Add a `.nds-date-value` when the server needs one format, such as a Gregorian `YYYY-MM-DD` from a Hijri field.
 - Read `data-converted-date` when the server needs the date in both calendars.
 - Do not put a date picker inside another dropmenu. The calendar is a dropmenu itself.
-- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
 
 </div>
   </div>

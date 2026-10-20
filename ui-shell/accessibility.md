@@ -18,7 +18,7 @@ last_edit: "16/10/2026 - 02:34 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-The accessibility panel is a [Panel](../components/panels) that a [FAB](../components/fab) opens on every page. It has three groups. Accessibility Modes are switches that turn on several settings at once. Readable Experience holds tiles for text size, spacing, alignment, highlights, motion and the reading mask. Visually Pleasing Experience holds the color filters. Each choice writes a token on `<html>`, and CSS changes the page from that token.
+The accessibility panel is a [Panel](../components/panel) that a [FAB](../components/fab) opens on every page. It has three groups. Accessibility Modes are switches that turn on several settings at once. Readable Experience holds tiles for text size, spacing, alignment, highlights, motion and the reading mask. Visually Pleasing Experience holds the color filters. Each choice writes a token on `<html>`, and CSS changes the page from that token.
 
 Pick another component when:
 
@@ -553,7 +553,7 @@ The panel reads its English from the script and its Arabic from the `accessibili
 |---|---|---|
 | `nds-accessibility-toggle` | the FAB | Names the FAB for your own CSS. NDS gives it no styles, and `nds-fab` docks it |
 | `nds-accessibility-panel` | the panel `<dialog>` | Fixes the panel's text sizes, so Font Sizing and the dyslexia font do not change the panel. Pair it with `nds-panel` |
-| `nds-panel-template` | a `<template>` | Holds your own panel. See [Panels](../components/panels) |
+| `nds-panel-template` | a `<template>` | Holds your own panel. See [Panels](../components/panel) |
 | `nds-accessibility-modes` | the accordion in the panel | Sets the padding of the mode switches |
 | `nds-accessibility-quick` | a row in the panel body | The row of quick buttons, such as the theme button |
 | `nds-accessibility-tile-bars` | a span in a tile with levels | Holds the level bars. The script adds one `nds-accessibility-tile-bar` for each level |
@@ -566,7 +566,7 @@ The panel reads its English from the script and its Arabic from the `accessibili
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-accessibility-toggle` | the FAB, or any button outside the panel | The first press loads the script and builds the panel. Pair it with `data-panel-toggle` |
-| `data-panel-toggle` | the same button | `="nds-accessibility-panel"`. Opens and closes the built panel and sets `aria-expanded`. The script adds `aria-controls` once it builds the panel, so the markup leaves it out. See [Panels](../components/panels) |
+| `data-panel-toggle` | the same button | `="nds-accessibility-panel"`. Opens and closes the built panel and sets `aria-expanded`. The script adds `aria-controls` once it builds the panel, so the markup leaves it out. See [Panels](../components/panel) |
 | `data-panel-side` | every `data-accessibility-toggle` button | The edge the panel slides from: `end` (default), `start`, `left` or `right`. `start` and `end` flip with the text direction. The script copies it from the first button pressed onto the panel it builds |
 | `data-fab-pos` | the FAB | The FAB's edge: `start`, `end`, `left`, `right` or `bottom`. `auto` docks on the FAB's `data-panel-side`. See [FAB](../components/fab) |
 | `data-state~="loading"` | the pressed button | The script sets it while the panel loads, and removes it about one second later |
@@ -599,7 +599,7 @@ The panel reads its English from the script and its Arabic from the `accessibili
 | `--user-word-spacing` | `0` | The word spacing of body text. The script writes it on `<html>` |
 {: .nds-table .nds-responsive}
 
-The panel's width and top come from [Panels](../components/panels). The FAB's distance from the edge comes from [FAB](../components/fab).
+The panel's width and top come from [Panels](../components/panel). The FAB's distance from the edge comes from [FAB](../components/fab).
 
 ### Modes
 {: .nds-block-title}

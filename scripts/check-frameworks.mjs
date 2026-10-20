@@ -60,7 +60,7 @@ async function open(libs) {
     const errors = [];
     // WebKit's harmless ResizeObserver loop notice: TODO.md, Watch.
     page.on('pageerror', (e) => { if (!/ResizeObserver loop/.test(e.message)) errors.push(e.message); });
-    await page.goto(`${BASE}/components/forms.html`, { waitUntil: 'load' });
+    await page.goto(`${BASE}/components/form.html`, { waitUntil: 'load' });
     await page.waitForFunction(() => window.NDS?.Init?.mount, null, { timeout: 15000 });
     // The cookie panel can open mid-run and take the clicks meant for a menu.
     await page.addStyleTag({ content: '#nds-cookies-panel { display: none !important; }' });
@@ -338,7 +338,7 @@ async function hydrationRun(name, serverHtml, hydrate, manual) {
         if (manual) body = body.replace(/<html([^>]*)>/, '<html$1 data-nds-auto-init="false">');
         await route.fulfill({ response: res, body });
     });
-    await page.goto(`${BASE}/components/forms.html`, { waitUntil: 'load' });
+    await page.goto(`${BASE}/components/form.html`, { waitUntil: 'load' });
     await page.waitForFunction(() => window.NDS?.Init, null, { timeout: 15000 });
     if (!manual) await page.evaluate(() => window.NDS.Init.ready);
     await hydrate(page, manual);
@@ -388,7 +388,7 @@ for (const v of REACT) {
 // React rendering <html> too (the Next.js App Router shape) hydrates the whole document, with
 // the built page's gate, inline script, CSS and main bundle. The clock NDS fills makes the
 // mismatch: React renders again and drops data-nds-loaded with <html>'s other attributes.
-const built = await (await fetch(`${BASE}/components/forms.html`)).text();
+const built = await (await fetch(`${BASE}/components/form.html`)).text();
 const HEAD = {
     gate: built.match(/<head[\s\S]*?<style>([\s\S]*?)<\/style>/)[1],
     inline: built.match(/<head[\s\S]*?<script>([\s\S]*?)<\/script>/)[1],
@@ -883,7 +883,7 @@ for (const v of REACT) {
         const res = await route.fetch();
         await route.fulfill({ response: res, body: (await res.text()).replace(/<html([^>]*)>/, '<html$1 data-cookies="false">') });
     });
-    await page.goto(`${BASE}/components/forms.html`, { waitUntil: 'load' });
+    await page.goto(`${BASE}/components/form.html`, { waitUntil: 'load' });
     await page.waitForFunction(() => window.NDS?.Init?.mount, null, { timeout: 15000 });
     await loadReact(v)(page);
     await page.evaluate(() => {

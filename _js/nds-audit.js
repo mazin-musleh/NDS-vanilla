@@ -345,12 +345,12 @@
     } });
 
     // Current-page nav marking. The highlight keys off data-state~="current"
-    // (_mainnav.scss); aria-current="page" alone drives no CSS. Two triggers,
+    // (_main-nav.scss); aria-current="page" alone drives no CSS. Two triggers,
     // one warning per link: an href that resolves to this page, or
     // aria-current without the token. A page genuinely absent from the nav
     // fires neither — silence is correct there, not a miss.
     const normalizePath = (p) => p.replace(/\/index\.html$/, '/');
-    rule({ id: 'nav-current', docs: 'ui-shell/mainnav.html', check(ctx) {
+    rule({ id: 'nav-current', docs: 'ui-shell/main-nav.html', check(ctx) {
         const here = normalizePath(location.pathname);
         ctx.find('.nds-main-nav .nds-nav-primary a.nds-nav-link').forEach(a => {
             if (a.matches('[data-state~="current"]')) return;
@@ -380,7 +380,7 @@
         'data-filter-target': 'components/filter.html', 'data-selection-target': 'components/selection.html',
         'data-sort-target': 'components/sort.html', 'data-per-page-target': 'components/pagination.html',
         'data-auto-pagination': 'components/pagination.html', 'data-modal-target': 'components/modal.html',
-        'data-stepper-target': 'components/stepper.html', 'data-columns-target': 'components/tables.html',
+        'data-stepper-target': 'components/stepper.html', 'data-columns-target': 'components/table.html',
         'data-voice-target': 'components/voice-input.html', 'data-copy-target': 'utilities/copy.html',
         'data-export-target': 'components/export.html', 'data-paged-target': 'components/pagination.html',
         'data-print-target': 'utilities/print.html',
@@ -760,17 +760,17 @@
         });
     } });
 
-    // Forms wires submit checks on .nds-form only (nds-forms.js initForm), and .nds-form is display:contents,
-    // which a modal's flex column needs (_forms.scss). A filter's submission form is the filter's own.
-    rule({ id: 'form-class', docs: 'components/forms.html', check(ctx) {
+    // Forms wires submit checks on .nds-form only (nds-form.js initForm), and .nds-form is display:contents,
+    // which a modal's flex column needs (_form.scss). A filter's submission form is the filter's own.
+    rule({ id: 'form-class', docs: 'components/form.html', check(ctx) {
         ctx.find('form:not(.nds-form, [data-filter-submit])').filter(f => f.querySelector('.nds-form-container, .nds-form-group')).forEach(el =>
             ctx.report(el, 'a <form> with NDS fields but no nds-form class: its fields are not checked on submit, and in a modal it breaks the layout.',
                 'Add class="nds-form" to the form.'));
     } });
 
-    // data-error-message has one job per host (nds-forms.js getMessage, _finishGroupValidation): a field's
+    // data-error-message has one job per host (nds-form.js getMessage, _finishGroupValidation): a field's
     // pattern, a group's "nothing picked". On a host that can never fail that way it never shows.
-    rule({ id: 'error-message-unused', docs: 'components/forms.html', check(ctx) {
+    rule({ id: 'error-message-unused', docs: 'components/form.html', check(ctx) {
         ctx.find('input[data-error-message]:not([pattern]), textarea[data-error-message], select[data-error-message]').forEach(el =>
             ctx.report(el, 'data-error-message on a field with no pattern: it shows only when the value does not match pattern, so it never shows.',
                 'Add the pattern it describes, or remove it: every other check has its own message.'));
@@ -799,7 +799,7 @@
     } });
 
     // A placeholder names a field in every browser, though it goes once typing starts.
-    rule({ id: 'field-label', severity: 'error', docs: 'components/forms.html', check(ctx) {
+    rule({ id: 'field-label', severity: 'error', docs: 'components/form.html', check(ctx) {
         const els = ctx.find('input:not([type="hidden"], [type="button"], [type="submit"], [type="reset"], [type="image"]), select, textarea').filter(el => !unread(el) && !(
             ownName(el) || [...(el.labels || [])].some(l => l.textContent.trim()) || (el.getAttribute('placeholder') || '').trim()));
         if (els.length) ctx.report(els[0], `a form field with no label${firstOf(els, 'fields')}: a screen reader announces it with no name.`,
@@ -832,11 +832,11 @@
         const els = ctx.find(sel);
         if (els.length) ctx.report(els[0], message + (els.length > 1 ? ` (${els.length} elements; the first is shown).` : '.'), fix, undefined, els.length);
     } });
-    practice('card-link-nested', 'components/cards.html', ':is(a, button).nds-card :is(a, button)',
+    practice('card-link-nested', 'components/card.html', ':is(a, button).nds-card :is(a, button)',
         'a link or a button inside a clickable card', 'Keep one control: make the card a plain .nds-card, or drop the inner link.');
     practice('section-nested', 'layout/section.html', '.nds-content-section .nds-content-section',
         'a section inside a section', 'Divide the section body with .nds-block instead.');
-    practice('card-actions-place', 'components/cards.html', '.nds-card-content .nds-card-actions',
+    practice('card-actions-place', 'components/card.html', '.nds-card-content .nds-card-actions',
         '.nds-card-actions inside .nds-card-content: in a modal, only the content scrolls', 'Put .nds-card-actions after .nds-card-content.');
     practice('dark-nested', 'foundations/themes.html', '[data-theme~="dark"]:not(html) [data-theme~="dark"]',
         'data-theme="dark" inside a dark area, which is already dark', 'Write data-theme="dark" once, on the surface.');
@@ -857,7 +857,7 @@
     } });
 
     // One table column is one field: a status tag on some rows and a standard tag on others shows one state two ways.
-    rule({ id: 'tag-kind-mix', group: 'practice', severity: 'info', docs: 'components/tags.html', check(ctx) {
+    rule({ id: 'tag-kind-mix', group: 'practice', severity: 'info', docs: 'components/tag.html', check(ctx) {
         const cols = new Map();
         ctx.find('td .nds-tag').forEach(tag => {
             const td = tag.closest('td'), key = td.closest('table');

@@ -22,7 +22,7 @@ A multiselect is a form field with a [Dropmenu](../components/dropmenu) at its s
 
 Pick another component when:
 
-- the user picks one option: a custom select in [Forms](../components/forms)
+- the user picks one option: a custom select in [Forms](../components/form)
 - the user types free values as chips: [Tag Input](../components/taginput)
 - a few options fit on the page with no menu: a checkbox group in [Checkbox](../components/checkbox)
 
@@ -218,7 +218,7 @@ A row on `.nds-check-container` changes every option row. A Reset or Apply row i
 | Validation (any) | Required (hint: Press Validate with nothing checked) | `[data-required]` | `.nds-multiselect` | At least one option must be checked before the form submits. Say the rule in the label |
 | Validation (any) | At least 2 (hint: Press Validate with one option checked) | `[data-min-checked="2"]` | `.nds-multiselect` | At least 2 options must be checked. Say the rule in the label |
 | Validation (any) | At most 3 (hint: Check four options, then press Validate) | `[data-max-checked="3"]` | `.nds-multiselect` | No more than 3 options may be checked. Say the rule in the label |
-| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #multiselect-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -348,7 +348,7 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
 - Keep the placeholder to two to four words. It shows only while no option is checked.
 - Add `data-search` for a list longer than about 15 options.
 - Say a count rule in the label, such as "Interests (2 to 4)", not in the placeholder.
-- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
 
 </div>
   </div>

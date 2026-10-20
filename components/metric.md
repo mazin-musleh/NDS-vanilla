@@ -18,11 +18,11 @@ last_edit: "17/10/2026 - 10:01 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A metric goes inside a [card](../components/cards). It holds a large value, a trend row and a small line chart. The trend row shows the change and its comparison period, such as "+24% vs last week".
+A metric goes inside a [card](../components/card). It holds a large value, a trend row and a small line chart. The trend row shows the change and its comparison period, such as "+24% vs last week".
 
 Pick another component when:
 
-- the value has no comparison period: a [statistic card](../components/cards), a centered card with `nds-card-number`
+- the value has no comparison period: a [statistic card](../components/card), a centered card with `nds-card-number`
 - the chart is the focus, or it has more than one series: [Chart](../components/chart)
 
 </div>

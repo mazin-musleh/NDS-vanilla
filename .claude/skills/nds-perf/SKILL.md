@@ -34,7 +34,7 @@ Three traps this harness avoids — all have produced wrong answers before:
    node .claude/skills/nds-perf/measure-lcp.mjs
 
    # specific pages (paths relative to the baseurl root; NO leading slash)
-   node .claude/skills/nds-perf/measure-lcp.mjs components/ components/forms.html
+   node .claude/skills/nds-perf/measure-lcp.mjs components/ components/form.html
 
    # against a different build dir, more runs, or unthrottled
    node .claude/skills/nds-perf/measure-lcp.mjs --dir=_site-after --runs=5

@@ -235,7 +235,7 @@
             if (threshold && items().length < threshold) return;
 
             // Search box — canonical `.nds-form-container > .nds-form-control` so
-            // nds-forms.js wires the .nds-clear button (auto show/hide + reset)
+            // nds-form.js wires the .nds-clear button (auto show/hide + reset)
             // for free. The `nds-dropmenu-search` modifier is a menu-scoped
             // padding/border tweak, not a new component.
             const searchHTML = `<div class="nds-form-container nds-dropmenu-search">
@@ -330,7 +330,7 @@
                 this._teardownSearch = null;
             };
 
-            // nds-forms.js's clear button dispatches an `input` event on the
+            // nds-form.js's clear button dispatches an `input` event on the
             // field, so this same handler covers both typing AND clear-click.
             // Debounced: filter() re-walks every item and normalizes its text
             // (NFD + \p{Diacritic}), and the search box only appears once the

@@ -22,7 +22,7 @@ Voice input is a microphone (mic) button for a text field. The user clicks it an
 
 Pick another component when:
 
-- the field takes a fixed format, such as a phone number, a postcode or an ID: a plain text field in [Forms](../components/forms)
+- the field takes a fixed format, such as a phone number, a postcode or an ID: a plain text field in [Forms](../components/form)
 
 </div>
   </div>
@@ -128,7 +128,7 @@ Pick another component when:
 | Structure | Text area | canon `#voice-textarea` | — | Long free text, such as a message. Each dictation adds at the caret |
 | Structure | Search box | canon `#voice-search-box` | — | A search field with a Search button, at the top of a results page |
 | Structure | Linked button | canon `#voice-linked` | — | The button sits outside the field and names it in `data-voice-target` |
-| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #voice-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -226,7 +226,7 @@ A button inside `.nds-form-control` dictates into that field's input or text are
 - Keep the `nds-hgi-mic-01` icon as an `<i>` directly inside the button. The color animation styles only that element.
 - The browser asks for permission to use the mic the first time. When voice input is a main part of a service, say why in the info text.
 - To hide voice input on a browser without speech recognition, remove the button when `NDS.VoiceInput.isSupported()` returns `false`. The JavaScript example below does this.
-- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
 
 </div>
   </div>
@@ -310,7 +310,7 @@ The script shows these under the field for 4 seconds, in the page language. They
 - [Search Template](../templates/search-template): a search box with clear and voice buttons above the results.
 - [FAQ Template](../templates/faq-template): a search box that filters the questions. A click on the voice button also opens the All tab.
 - [Services List](../examples/services-list): a search box with suggestions that filters the service cards.
-- [Main Navigation](../ui-shell/mainnav): the site search panel has a voice button.
+- [Main Navigation](../ui-shell/main-nav): the site search panel has a voice button.
 
 </div>
   </div>

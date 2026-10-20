@@ -5,7 +5,7 @@ layout: shell
 # in order. It does not show the chrome markup: those are includes.
 #
 # Copy each chrome region from its own page: ui-shell/head, ui-shell/header (with
-# ui-shell/topbar and ui-shell/mainnav), ui-shell/hero, ui-shell/footer.
+# ui-shell/topbar and ui-shell/main-nav), ui-shell/hero, ui-shell/footer.
 # The built page _site/templates/home-template.html shows the result.
 title: Home Page Template
 lang: en

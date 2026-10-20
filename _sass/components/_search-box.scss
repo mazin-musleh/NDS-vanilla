@@ -53,9 +53,9 @@
     // ==============================================
 
     // .nds-search-content sits between the container and the control, so
-    // _forms.scss's `[data-status="error"] > .nds-form-control` never reaches
+    // _form.scss's `[data-status="error"] > .nds-form-control` never reaches
     // it. Cascade it down, same as the OTP group. Error only, per the
-    // binary-outline rule in _forms.scss.
+    // binary-outline rule in _form.scss.
     &[data-status="error"] {
         --_control-border-forced: var(--form-field-border-error);
         --_control-underline-forced: var(--form-field-border-error);

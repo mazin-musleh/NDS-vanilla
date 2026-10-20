@@ -24,7 +24,7 @@ Pick another component when:
 
 - the parts are components, not text, and each needs space below it: [Block](../layout/block)
 - the quote is a featured quote with a title and an author: [Quote](../components/quote)
-- the table needs sorting, pages or sub-rows: [Tables](../components/tables)
+- the table needs sorting, pages or sub-rows: [Tables](../components/table)
 
 </div>
   </div>
@@ -194,7 +194,7 @@ Pick another component when:
 - Start the headings inside prose at `h2`. The page title is the hero's `h1`.
 - Do not add `nds-section-title` or `nds-block-title` to a heading inside prose. Bare headings are already styled. Those classes give the heading a page-level size.
 - Use the [Quote](../components/quote) component for a featured quote with an author. A bare `blockquote` is a quote inside the text.
-- Use the [Tables](../components/tables) component for a table that needs sorting, pages or a phone layout. A bare `table` is a static table.
+- Use the [Tables](../components/table) component for a table that needs sorting, pages or a phone layout. A bare `table` is a static table.
 - Give every image an `alt` text.
 
 </div>
@@ -228,7 +228,7 @@ Some elements are styled on every page, with or without `nds-prose`. Others are 
 | `img` | Everywhere: full width at most. Inside prose: a gap above and below a direct child `img` or `picture` |
 | `a` | Everywhere: the [Link](../components/link) style |
 | `hr` | Everywhere: the [Divider](../components/divider). Inside prose: a wider gap above and below |
-| `table` | Everywhere: the [Tables](../components/tables) style. Inside prose: a gap below |
+| `table` | Everywhere: the [Tables](../components/table) style. Inside prose: a gap below |
 | `p`, `figure`, `pre` | Inside prose: a gap below |
 | `blockquote` | Inside prose: a gap below, a 3px side border and secondary text color. A [Quote](../components/quote)'s `blockquote` keeps its own look |
 | `figcaption` | Inside prose: small, secondary text below the image. A Quote's author line keeps its own look |

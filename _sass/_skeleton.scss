@@ -35,7 +35,7 @@ html {
 
     /* ── Brand (nav logo + name) ──
        Paint the brand identity from first byte — it's often the LCP
-       element above the fold. Mirrors layout/_mainnav.scss .nds-brand. */
+       element above the fold. Mirrors layout/_main-nav.scss .nds-brand. */
     :where(.nds-main-nav .nds-brand) {
         display: flex;
         align-items: center;
@@ -198,7 +198,7 @@ html:not([data-nds-loaded]) :where(.nds-form-control,
 /* Held accordions, card grids and table bodies are exempt from the
    visibility hold above once the loader's split has stamped them: they
    paint their skeleton placeholders instead (main — _accordion.scss /
-   _cards.scss / _tables.scss, the same rules as the .nds-loading
+   _card.scss / _table.scss, the same rules as the .nds-loading
    processing state), so pre-init shows shimmer rather than a blank
    region. Not before the split: main CSS can land ahead of the bundle,
    and the "first 6" fallback below then painted six bars that jumped to

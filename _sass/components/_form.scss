@@ -1,6 +1,6 @@
 @use '../mixins' as *;
 
-// .nds-form is a validation hook — wiring lives in _js/nds-forms.js initForm().
+// .nds-form is a validation hook — wiring lives in _js/nds-form.js initForm().
 // It owns no layout: children carry their own layout classes (.nds-flex.nds-col,
 // .nds-grid, etc.), and `display: contents` removes the <form> from the box tree
 // so parent layout rules (e.g. .nds-content's flex column) reach those
@@ -95,7 +95,7 @@
     // FORM CONTAINER STATE (data-state attribute)
     // ==============================================
 
-    // Focus state (not readonly). nds-forms.js stamps `target` on the
+    // Focus state (not readonly). nds-form.js stamps `target` on the
     // container's OWN control (State.onAdd hook); the container keeps the
     // focus/active state, `target` just gates the descendant match to that one
     // control — so it reaches through any layout wrapper (.nds-search-content…)
@@ -632,7 +632,7 @@ fieldset {
     }
 
     // The message reads --_feedback-display; its colour comes from the generic
-    // [data-status] host rules in _feedback-icons.scss (PERF-06: no tails).
+    // [data-status] host rules in _feedback.scss (PERF-06: no tails).
     &[data-status] {
         --_feedback-display: flex;
     }
@@ -641,7 +641,7 @@ fieldset {
 
 // A field carries error or help — nothing else tints it. setStatus folds every
 // other status to neutral, but a hand-authored data-status on the container
-// still reaches its feedback through the ancestor rules in _feedback-icons.scss
+// still reaches its feedback through the ancestor rules in _feedback.scss
 // ([data-status="success"] .nds-feedback). Undo it for both container types.
 // `initial` sends each knob back to the neutral default the private vars
 // already fall back to, so no neutral values are copied here.

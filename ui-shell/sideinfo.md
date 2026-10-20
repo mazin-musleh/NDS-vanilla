@@ -25,7 +25,7 @@ The preview shows it in a frame of its own, with a hero above it, so the column 
 Pick another component when:
 
 - the links go to the pages of one part of the site: [Side Menu](../ui-shell/sidemenu)
-- the reader opens the extra information and closes it again: [Panels](../components/panels)
+- the reader opens the extra information and closes it again: [Panels](../components/panel)
 - the facts belong in the content, with no column: [Definition List](../components/definition-list)
 
 The side info is the side column of a standard page. The other page columns are on [Page Layout](../layout/page-layout).

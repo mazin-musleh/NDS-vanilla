@@ -239,7 +239,7 @@ Source: the `tag` group in `_sass/tokens/_components.scss`.
 - [Admin Console Demo](../examples/console-demo): status tags beside the figures.
 - [Faculty CV](../examples/faculty-cv): small tags for the type and the year of each publication.
 - [Service Page Template](../templates/service-template): tags for a popular service and the system that runs it.
-- [Cards](../components/cards): the status tag in the card header.
+- [Cards](../components/card): the status tag in the card header.
 - [Chips](../components/chips): labels the user clicks or removes.
 
 </div>

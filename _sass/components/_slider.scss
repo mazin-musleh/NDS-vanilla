@@ -36,8 +36,8 @@
     &.nds-md { --_thumb-size: 16px; --_bar-size: 8px; }
 
     // Form-field focus underline + 40px row height don't fit a slider. Other
-    // chrome (bg/border/padding/shadow) is dropped by the shared rule in _forms.scss.
-    // The legacy `.nds-md > .nds-form-control` rule in _forms.scss shrinks text
+    // chrome (bg/border/padding/shadow) is dropped by the shared rule in _form.scss.
+    // The legacy `.nds-md > .nds-form-control` rule in _form.scss shrinks text
     // to text-sm (intended for 32px-row inputs); slider's md means a bigger
     // thumb, not denser text — pin text-md so values stay readable across sizes.
     .nds-form-control {
@@ -167,7 +167,7 @@
 }
 
 // Forms disabled state (container data-state — the shared forms-system disable):
-// the bar/value use their own color tokens, so _forms.scss's color dim doesn't
+// the bar/value use their own color tokens, so _form.scss's color dim doesn't
 // reach them. Dim the track + value — NOT the input: a full-opacity thumb stays
 // distinct from the dimmed bar instead of blending into it.
 .nds-slider-container[data-state~="disabled"] {

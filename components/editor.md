@@ -27,8 +27,8 @@ The editor is in beta. Its API and its markup can change before it is stable.
 
 Pick another component when:
 
-- the value is plain text: a textarea in [Forms](../components/forms)
-- the value is one line: a text field in [Forms](../components/forms)
+- the value is plain text: a textarea in [Forms](../components/form)
+- the value is one line: a text field in [Forms](../components/form)
 - the value is a list of words: [Tag Input](../components/taginput)
 
 </div>
@@ -95,7 +95,7 @@ Every state row goes on the field's `<textarea>`. The editor reads it from there
 | State (any) | Read-only | `[readonly]` | `textarea:not([disabled])` | The user can read and copy the text, and open the source view if the toolbar has it, but cannot change it. The value submits. Not with Disabled |
 | State (any) | Disabled | `[disabled]` | `textarea:not([readonly])` | The field is off and its value does not submit. Not with Read-only |
 | State (any) | Required (hint: Press Validate with the field empty) | `[required]` | `textarea` | The form needs text in the field. The forms script adds the required mark |
-| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #editor-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -249,7 +249,7 @@ The image button inserts an image from a URL, with alt text, a width and a heigh
 - Clean the value on your server too. The editor cleans what the user enters, but a request can skip it.
 - Send image uploads to your server with `data-editor-upload-url`. Use `embed` only when there is no upload server: a `data:` URL makes the value about a third larger than the file, and the browser cannot cache it.
 - Set `--editor-max-size` on a tall field. The text then scrolls inside the field, and the toolbar stays in view.
-- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
 
 </div>
   </div>

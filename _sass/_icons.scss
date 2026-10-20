@@ -3,7 +3,7 @@
 // Append new icons via `node scripts/add-icon.mjs <name>`, or edit by hand.
 //
 // The status symbols (--nds-icon-alert/cancel/checkmark-solid/disc/help/info)
-// are token-only on purpose: _feedback-icons.scss layers a symbol over the disc
+// are token-only on purpose: _feedback.scss layers a symbol over the disc
 // to build one mark. Alone they are half an icon, so they get no alias class.
 
 @use 'mixins' as *;

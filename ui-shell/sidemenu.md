@@ -29,7 +29,7 @@ Pick another component when:
 - the links go to the headings of one long page: [Table of Contents](../components/toc)
 - the list is not the site's menu: [Drawer](../components/drawer)
 
-The main links of the site belong in the [Main Navigation](../ui-shell/mainnav), and the links at the end of the page in the [Footer](../ui-shell/footer).
+The main links of the site belong in the [Main Navigation](../ui-shell/main-nav), and the links at the end of the page in the [Footer](../ui-shell/footer).
 
 </div>
   </div>
@@ -570,7 +570,7 @@ The full API is in the banner of `_js/nds-sidemenu.js`.
 - [Page Layout](../layout/page-layout): the content layout, and the console page with a side menu.
 - [Drawer](../components/drawer): the list inside the side menu, and its other classes.
 - [Faculty](../examples/faculty): a page with the side menu in top bar mode.
-- [Header](../ui-shell/header), [Main Navigation](../ui-shell/mainnav) and [Footer](../ui-shell/footer): the other parts of the page shell.
+- [Header](../ui-shell/header), [Main Navigation](../ui-shell/main-nav) and [Footer](../ui-shell/footer): the other parts of the page shell.
 
 </div>
   </div>

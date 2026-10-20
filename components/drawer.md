@@ -22,11 +22,11 @@ A drawer is a vertical list of links and buttons. An item can hold a submenu: a 
 
 Pick another component when:
 
-- the list is the site's main navigation: [Main Navigation](../ui-shell/mainnav)
+- the list is the site's main navigation: [Main Navigation](../ui-shell/main-nav)
 - the list is the site's main side menu, which collapses to a rail: [Side Menu](../ui-shell/sidemenu)
 - the menu opens from one button, over the page: [Dropmenu](../components/dropmenu)
 - each item opens a panel of content, not a list of links: [Accordion](../components/accordion)
-- the surface slides in over the page: [Panels](../components/panels)
+- the surface slides in over the page: [Panels](../components/panel)
 
 </div>
   </div>
@@ -333,7 +333,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
 ### Search
 {: .nds-block-title}
 
-`data-search` adds a search box above the list. The list filters as the user types: an item stays when its label matches, and each submenu with a match opens. A match on a submenu's own label keeps every item under it. A message shows when nothing matches. When the box is cleared, the submenus that were open before the search open again, and the rest close. The search ignores case and accents, as the [Dropmenu](../components/dropmenu) search does. `data-search-style` picks the box's field style from [Forms](../components/forms): darker (the default), lighter or outline.
+`data-search` adds a search box above the list. The list filters as the user types: an item stays when its label matches, and each submenu with a match opens. A match on a submenu's own label keeps every item under it. A message shows when nothing matches. When the box is cleared, the submenus that were open before the search open again, and the rest close. The search ignores case and accents, as the [Dropmenu](../components/dropmenu) search does. `data-search-style` picks the box's field style from [Forms](../components/form): darker (the default), lighter or outline.
 
 </div>
   </div>
@@ -513,7 +513,7 @@ The full API is in the banner of `_js/nds-drawer.js`.
 
 - [Table of Contents](../components/toc): holds a lined drawer that the script fills from the page's headings.
 - [Side Menu](../ui-shell/sidemenu): the site's side menu is a divided, lined drawer.
-- [Main Navigation](../ui-shell/mainnav): the notifications menu uses Notifications rows in a Scrolling list.
+- [Main Navigation](../ui-shell/main-nav): the notifications menu uses Notifications rows in a Scrolling list.
 - [Content template](../templates/content-template): uses a lined drawer as the page's table of contents.
 
 </div>

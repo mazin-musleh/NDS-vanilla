@@ -690,7 +690,7 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 | `status` | — | `error`, `help` or any other value, which shows as `neutral`. An empty value clears the field |
 | `message` | — | The text. An empty string removes the message and keeps the status |
 | `permanent` | `false` | The message stays as a hint, as `data-permanent` does |
-| `size`, `style`, `position` | `sm`, `outline`, `append` | Passed to `NDS.Feedback.create()`. See [Feedback](../components/feedback-icons) |
+| `size`, `style`, `position` | `sm`, `outline`, `append` | Passed to `NDS.Feedback.create()`. See [Feedback](../components/feedback) |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |
@@ -721,7 +721,7 @@ NDS.Forms.syncState(email);
 NDS.Forms.setState(email, 'required', true);
 </script>
 
-The full API is in the banner of `_js/nds-forms.js`.
+The full API is in the banner of `_js/nds-form.js`.
 
 </div>
   </div>

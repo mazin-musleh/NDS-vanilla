@@ -138,7 +138,7 @@ Pick another component when:
 - Keep the title to one to six words. Leave it out rather than write a long one.
 - Do not use a quote for help text or for the words of the interface. Write them as plain text.
 - Keep the Persona at `nds-sm`. A larger Persona takes attention from the quote.
-- Do not stack quotes one under another. For several testimonials, use a [Swiper](../components/swiper) or a grid of [Cards](../components/cards).
+- Do not stack quotes one under another. For several testimonials, use a [Swiper](../components/swiper) or a grid of [Cards](../components/card).
 
 </div>
   </div>

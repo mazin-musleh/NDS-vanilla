@@ -22,7 +22,7 @@ A password field is a form field with the `nds-password` class, for a user who p
 
 Pick another component when:
 
-- the user signs in with a password they already have: a plain password field in [Forms](../components/forms)
+- the user signs in with a password they already have: a plain password field in [Forms](../components/form)
 - the user types a one-time code: [OTP Input](../components/otp)
 
 </div>
@@ -211,7 +211,7 @@ A Min length choice sets `minlength` on the input and swaps the length chip for 
 | Validation (any) | Symbol | canon `#password-rule-special` | `#first-password-rules` | The same, on the first field of Confirm |
 | Validation (any) | No spaces | canon `#password-rule-space` | `#new-password-rules` | A chip whose rule is the regular expression in `data-rule-pattern`. It needs no `addRule()` call |
 | Validation (any) | No spaces | canon `#password-rule-space` | `#first-password-rules` | The same, on the first field of Confirm |
-| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #password-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -325,7 +325,7 @@ The chip is optional. Without it, leave out `.nds-password-rules` and the input'
 - Use `data-rule-pattern` for a one-off rule, not `addRule()`. The expression then sits next to the message the user reads.
 - Add a hidden username field with `autocomplete="username"` above the password fields, so a password manager saves the right account.
 - Do not treat the strength value as a security measure. It counts chips, not how hard the password is to guess.
-- For the label, info text and feedback, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text and feedback, see [Forms](../components/form). They work the same on every field.
 
 </div>
   </div>
@@ -404,7 +404,7 @@ The full API is in the banner of `_js/nds-password.js`.
 
 - [Create your account](../examples/registration): a password field with a retype field in a sign-up form.
 - [Sign in](../examples/sign-in): the change-password step, with rule chips and a retype field.
-- [Forms](../components/forms): labels, feedback and validation for every field.
+- [Forms](../components/form): labels, feedback and validation for every field.
 
 </div>
   </div>

@@ -21,7 +21,7 @@ A doc page has two readers. **People** browse it, try options in the builder and
 | Page | Shows |
 |---|---|
 | `components/switch.md` | a simple component, a JS event table, the Forms dedup link |
-| `components/cards.md` | structure canons, part inserts, combo rows, many groups |
+| `components/card.md` | structure canons, part inserts, combo rows, many groups |
 | `components/alert.md` | a JS twin (`data-js`), `create()` rows, a JS-only structure with a Run button |
 | `components/button.md` | many structures, `:not()` targets that disable bad combinations |
 | `ui-shell/topbar.md` | a shell page: a part canon framed with `data-preview="page"`, a Parts table |
@@ -53,7 +53,7 @@ Read every time:
 - **`EDITORIAL.md`.**
 - **The SCSS, whole:** every class, modifier, knob (`--x` and its `var()` fallback), state selector, media rule, and the accessibility mixins.
 - **The JS, whole:** init, every public method, every event and its `detail`, keyboard handling, every `data-*` it reads, every state it writes. The banner at the top of the file is the public surface.
-- **The shared files it rides, banner only:** `_js/nds-forms.js` and `_sass/components/_forms.scss` for fields, `_js/nds-core.js` for `NDS.State` and `NDS.Status`. Read further only for a fact the banner does not answer: each JS file is ~86 KB.
+- **The shared files it rides, banner only:** `_js/nds-form.js` and `_sass/components/_form.scss` for fields, `_js/nds-core.js` for `NDS.State` and `NDS.Status`. Read further only for a fact the banner does not answer: each JS file is ~86 KB.
 - **`_data/sidemenu/sidemenu.yml`:** confirm every part you link exists.
 - **The page's entry in `_data/catalog.yml`:** its card must agree with the hero description.
 - **The model page** for this page type.
@@ -223,7 +223,7 @@ A short paragraph above the table explains any target that is not obvious (what 
 
 **Use cell:** when to pick it, one or two sentences, and what not to combine it with.
 
-**Not in the builder:** state that a script sets for a moment (a button's `data-status` flash) goes in the API table, not the Variants table. Field states shared with every field are one reference row that links to Forms, with `—` in Markup and On element, so it gets no chip: `| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |`.
+**Not in the builder:** state that a script sets for a moment (a button's `data-status` flash) goes in the API table, not the Variants table. Field states shared with every field are one reference row that links to Forms, with `—` in Markup and On element, so it gets no chip: `| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |`.
 
 ### Behavior
 

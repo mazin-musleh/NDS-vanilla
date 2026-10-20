@@ -37,11 +37,11 @@ const SCOPE = [
     ['nds-code.js', 'Code'],
     ['nds-cookie-consent.js', 'CookieConsent'],
     ['nds-cookies.js', 'Cookies'],
-    ['nds-cooldown-button.js', 'CooldownButton'],
+    ['nds-cooldown.js', 'CooldownButton'],
     ['nds-copy.js', 'Copy'],
     ['nds-countdown.js', 'Countdown'],
     ['nds-core.js', null],
-    ['nds-customselect.js', 'CustomSelect'],
+    ['nds-custom-select.js', 'CustomSelect'],
     ['nds-date.js', 'date'],
     ['nds-date-picker.js', 'DatePicker'],
     ['nds-digital-stamp.js', 'DigitalStamp'],
@@ -54,17 +54,17 @@ const SCOPE = [
     ['nds-fab.js', 'Fab'],
     ['nds-feedback.js', 'Feedback'],
     ['nds-filter.js', 'Filter'],
-    ['nds-forms.js', 'Forms'],
+    ['nds-form.js', 'Forms'],
     ['nds-ipv.js', 'Ipv'],
     ['nds-link.js', 'Link'],
     ['nds-loader.js', 'Init'],
-    ['nds-mainnav.js', 'Mainnav'],
+    ['nds-main-nav.js', 'Mainnav'],
     ['nds-modal.js', 'Modal'],
     ['nds-multiselect.js', 'Multiselect'],
     ['nds-numbers.js', 'Numbers'],
     ['nds-otp.js', 'OTP'],
     ['nds-pagination.js', 'Pagination'],
-    ['nds-panels.js', 'Panel'],
+    ['nds-panel.js', 'Panel'],
     ['nds-password.js', 'Password'],
     ['nds-print.js', 'Print'],
     ['nds-progress.js', 'Progress'],
@@ -79,7 +79,7 @@ const SCOPE = [
     ['nds-sort.js', 'Sort'],
     ['nds-stepper.js', 'Stepper'],
     ['nds-swiper.js', 'Swiper'],
-    ['nds-tables.js', 'Tables'],
+    ['nds-table.js', 'Tables'],
     ['nds-tabs.js', 'Tabs'],
     ['nds-taginput.js', 'TagInput'],
     ['nds-theme.js', 'Theme'],
@@ -104,7 +104,7 @@ const EXCLUDED = new Set([
 // Every shipped event now carries the nds: prefix, so verifyFile's gate covers them all.
 const EVENT_EXCEPTIONS = {
     // Listened for through a name array, so clause 1 of extractEvents can't see the listener.
-    'nds-forms.js': ['nds:upload:select', 'nds:upload:success', 'nds:upload:error'],
+    'nds-form.js': ['nds:upload:select', 'nds:upload:success', 'nds:upload:error'],
 };
 
 // A dispatched literal ending in ':' is a concatenation prefix, not an event name —

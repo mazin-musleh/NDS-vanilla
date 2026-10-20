@@ -52,7 +52,7 @@
  *
  * Opening plain B while plain A is open closes A first and defers B's open
  * until A's close transition finishes — mirroring the mainnav dropdown swap
- * (nds-mainnav.js closeAll/_scheduleDropdownOpen), minus the duration
+ * (nds-main-nav.js closeAll/_scheduleDropdownOpen), minus the duration
  * arithmetic: the incoming open chains off the outgoing panel's
  * onTransitionEnd cleanup instead.
  */

@@ -6,7 +6,7 @@
    img rules in `_reset.scss` (critical: they must paint pre-reveal), link
    styling in `components/_link.scss`, bare <hr> via the divider in
    `_base.scss`, bare <table> via the table component in
-   `components/_tables.scss`. This file adds what is only safe SCOPED —
+   `components/_table.scss`. This file adds what is only safe SCOPED —
    paragraph and list rhythm, quotes, captions — the shapes text editors
    and CMSs emit as classless markup.
 

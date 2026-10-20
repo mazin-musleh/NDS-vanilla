@@ -23,7 +23,7 @@ A code block is a `nds-code` wrapper around a `<code>` element. A `lang-*` class
 Pick another component when:
 
 - the text is a value to copy, such as a reference number or a link: [Copy](../utilities/copy)
-- the text is long prose that needs a "Show more" button, not code: [Expandable Content](../utilities/expandable-content)
+- the text is long prose that needs a "Show more" button, not code: [Expandable Content](../utilities/expandable)
 
 </div>
   </div>

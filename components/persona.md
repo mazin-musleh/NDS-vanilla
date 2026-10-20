@@ -22,7 +22,7 @@ A Persona holds an [Avatar](../components/avatar) and up to three lines of text:
 
 Pick another component when:
 
-- the person is one of many items in a grid or a list: [Cards](../components/cards), with an avatar header.
+- the person is one of many items in a grid or a list: [Cards](../components/card), with an avatar header.
 - you show only a photo or initials: [Avatar](../components/avatar).
 - the person is the author of a quotation: [Quote](../components/quote), which holds its own small Persona.
 
@@ -226,7 +226,7 @@ MD takes every text one step down the type scale, and SM two steps.
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Main Navigation](../ui-shell/mainnav): the user menu is a small Persona with no avatar and an action row.
+- [Main Navigation](../ui-shell/main-nav): the user menu is a small Persona with no avatar and an action row.
 - [Quote](../components/quote): the author under a quotation is a small Persona.
 
 </div>

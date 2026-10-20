@@ -226,7 +226,7 @@ NDS.CooldownButton.start(btn, { silent: true });
 NDS.CooldownButton.start(btn, { seconds: 20, silent: true });
 </script>
 
-The full API is in the banner of `_js/nds-cooldown-button.js`.
+The full API is in the banner of `_js/nds-cooldown.js`.
 
 </div>
   </div>

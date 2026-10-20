@@ -111,7 +111,7 @@ Pick another component when:
     <div class="nds-section-body nds-prose" markdown="1">
 
 - Use it in a page template to mark a region that a real component replaces later. Reviewers can then check the layout before the content exists.
-- Put it inside a surface that is still in design, such as a [Panel](../components/panels) body, a [Modal](../components/modal) or a [Card](../components/cards). Reviewers then see the surface at its real size.
+- Put it inside a surface that is still in design, such as a [Panel](../components/panel) body, a [Modal](../components/modal) or a [Card](../components/card). Reviewers then see the surface at its real size.
 - Name the component that goes there, not "content here". The person who fills in the template then knows what to add.
 - Remove every placeholder before the page goes live.
 - Keep the text to one or two lines. The layout sets the size of the box, not the text.

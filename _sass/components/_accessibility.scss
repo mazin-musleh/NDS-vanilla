@@ -52,7 +52,7 @@
 }
 
 // Mirror the source-rule structure so each override wins specificity
-// over _accordion.scss / _forms.scss without !important.
+// over _accordion.scss / _form.scss without !important.
 .nds-accessibility-panel .nds-accordion .nds-accordion-btn,
 .nds-accessibility-panel .nds-form-container.nds-switch-container .nds-form-header .nds-label {
     font-size: var(--a11y-section-FS);
@@ -71,7 +71,7 @@
 
 // ----------------------------------------------
 // Panel — the surface is an .nds-panel; position, width, z-index, the
-// header offset and the slide all come from components/panels. `end` is the
+// header offset and the slide all come from components/panel. `end` is the
 // default side, and data-panel-side on the element picks any other. Only the
 // a11y-specific chrome lives here.
 // ----------------------------------------------

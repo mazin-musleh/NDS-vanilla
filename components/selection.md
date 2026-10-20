@@ -364,7 +364,7 @@ The list is the element with the id that `data-selection-target` names. Its item
 | `data-selection-count` | an element in a counter | The script writes the number of selected items into it. Write the count at page load in it (usually `0`), so the line shows a number before the script runs |
 | `data-selection-total` | an element in a counter | The script writes the number of items in the list into it. On a paged list, `data-paged-count` from [Pagination](../components/pagination) can take its place: it counts only the items that match the filter |
 | `data-state~="has-selection"` | a counter | The script sets it while anything is selected |
-| `data-selection-target="id"` | an `input.nds-check` | Makes the checkbox the list's select-all. It acts on the current page only. [Tables](../components/tables) add it to the header checkbox, and give the `<tbody>` an id if it has none |
+| `data-selection-target="id"` | an `input.nds-check` | Makes the checkbox the list's select-all. It acts on the current page only. [Tables](../components/table) add it to the header checkbox, and give the `<tbody>` an id if it has none |
 | `data-state~="selected"` | an item | The script sets it when the item's checkbox is checked, and removes it when the box is cleared. Set it yourself on an item with no checkbox. `clear()` removes it from every item |
 {: .nds-table .nds-responsive}
 
@@ -424,7 +424,7 @@ When you replace the list's content, call `NDS.Init.refresh(container)`: it upda
 - [Manage Records](../examples/manage-records): the records swap and a bulk delete over a filtered, paged table with export.
 - [Admin Console Demo](../examples/console-demo): the records swap over a transactions table.
 - [Export](../components/export): exports the selected items.
-- [Tables](../components/tables): the header checkbox that becomes the table's select-all.
+- [Tables](../components/table): the header checkbox that becomes the table's select-all.
 
 </div>
   </div>

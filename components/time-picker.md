@@ -26,7 +26,7 @@ A time picker is a field for a time of day. It comes in two structures:
 Pick another component when:
 
 - the user picks a day: [Date Picker](../components/date-picker)
-- the user enters a duration, such as 2 hours 30 minutes: number fields in [Forms](../components/forms)
+- the user enters a duration, such as 2 hours 30 minutes: number fields in [Forms](../components/form)
 
 </div>
   </div>
@@ -121,7 +121,7 @@ A Format or Seconds choice changes two elements: write `data-format` on `.nds-ti
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-time-picker:not([data-state~="readonly"])` | The user cannot type or open the panel, and the time does not post. Not with Read-only |
 | State (any) | Read-only | `[data-state~="readonly"]` | `.nds-time-picker:not([data-state~="disabled"])` | The user sees the time but cannot change it. The time posts. Not with Disabled |
 | State (any) | Required (hint: Press Validate with the field empty) | `[data-required]` | `.nds-time-picker` | The form needs a time. It does not submit while the field is empty |
-| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #time-picker-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -252,7 +252,7 @@ Any other character stays as written. `ss` adds a Second list, and `A` or `a` ad
 - To show a saved time, write it in the `value` of `.nds-time-value`, in 24-hour form. In Boxes, the script fills both boxes from it.
 - Give the clock button an `aria-label`, such as "Pick a time". It shows only an icon.
 - Do not put a time picker inside another dropmenu. The panel is a dropmenu itself.
-- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
 
 </div>
   </div>
@@ -295,7 +295,7 @@ Any other character stays as written. `ss` adds a Second list, and `A` or `a` ad
 |---|---|---|
 | Enter, Space | clock button | Opens or closes the panel |
 | Tab, Shift + Tab | panel | Moves between the lists |
-| Enter, Space, arrow keys | a list | Opens the list and moves through its options, as in any select in [Forms](../components/forms) |
+| Enter, Space, arrow keys | a list | Opens the list and moves through its options, as in any select in [Forms](../components/form) |
 | Escape | an open list | Closes the list. The panel stays open |
 | Escape | text box or panel | Closes the panel |
 | Arrow Up, Arrow Down | the hour box or the minute box | Adds or takes away one. The hour goes from 23 to 00, and the minute from 59 to 00 |

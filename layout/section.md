@@ -24,7 +24,7 @@ Pick another component when:
 
 - the content is a group inside a section, with no background of its own: [Block](../layout/block)
 - the section shows an outcome, such as a page not found: [Status Section](../layout/status-section)
-- the content is one item in a set: [Cards](../components/cards)
+- the content is one item in a set: [Cards](../components/card)
 - the content folds open and closed: [Accordion](../components/accordion)
 
 </div>
@@ -228,7 +228,7 @@ The standard action goes right after the head. The float action goes first in th
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Standard (default) (id: standard) | — | — | A wrapper that holds the head and the body. Start here |
-| Structure | Title icon (id: icon) | canon `#section-icon` | — | A [featured icon](../components/featured-icons) before the title text. Wrap the text in a `<span>` |
+| Structure | Title icon (id: icon) | canon `#section-icon` | — | A [featured icon](../components/featured-icon) before the title text. Wrap the text in a `<span>` |
 | Structure | Horizontal (id: horizontal) | canon `#section-horizontal` | — | The head beside the body on a desktop. The action goes in the head, after the description |
 | Structure | Stacked (id: stacked) (hint: Several titled parts in one section) | canon `#section-stacked` | — | Several wrappers in one section, on one background |
 | Structure | Profile (id: profile) | canon `#section-profile` | — | A person: a photo in `nds-section-image`, the name as the title, the role, a contact action and the details in a [definition list](../components/definition-list) |

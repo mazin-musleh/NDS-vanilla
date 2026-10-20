@@ -83,7 +83,7 @@ Button mode removes `.nds-upload-zone` and the `dropbox` token. Single adds the 
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-file-upload` | The user cannot add or remove files. See Disabled |
 | State (any) | Required (hint: Press Validate with no file) | `[data-required]` | `.nds-file-upload` | The form needs at least one file that passed the checks. See File Checks |
 | Max files | Max files | `[data-max-files="3"]` | `.nds-file-upload:not([data-state~="single"])` | The list takes 3 files at most. Not with Single. See File Checks |
-| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #upload-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -284,7 +284,7 @@ The token `disabled` in `data-state` on `.nds-file-upload` stops the user from a
 - Keep the Browse button in the drop zone. The zone takes no keyboard focus, so keyboard users need the button.
 - Keep `aria-live="polite"` on `.nds-file-list`, so a screen reader announces each new row and its error.
 - Do not use the upload for files that need a resumable or a chunked upload. It sends each file in one request.
-- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
 
 </div>
   </div>

@@ -18,7 +18,7 @@ last_edit: "15/10/2026 - 05:45 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A swiper is a `.nds-swiper-wrapper` of `.nds-swiper-slide` items, which scroll and snap with CSS. A slide holds any content, usually a [Card](../components/cards) or an image. The optional navigation row holds the previous and next buttons and the pagination bullets, which the script builds. A hero swiper fills a [Hero](../ui-shell/hero) section, and a spotlight keeps one slide in the middle with smaller slides at its sides.
+A swiper is a `.nds-swiper-wrapper` of `.nds-swiper-slide` items, which scroll and snap with CSS. A slide holds any content, usually a [Card](../components/card) or an image. The optional navigation row holds the previous and next buttons and the pagination bullets, which the script builds. A hero swiper fills a [Hero](../ui-shell/hero) section, and a spotlight keeps one slide in the middle with smaller slides at its sides.
 
 Pick another component when:
 

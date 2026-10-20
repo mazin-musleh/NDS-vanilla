@@ -24,7 +24,7 @@ Pick another component when:
 
 - the user can pick more than one option: [Checkbox](../components/checkbox)
 - the choice is one setting that takes effect at once: [Switch](../components/switch)
-- the list of options is long: a select, in [Forms](../components/forms)
+- the list of options is long: a select, in [Forms](../components/form)
 
 </div>
   </div>
@@ -98,7 +98,7 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
 | Disabled | Disabled | `[disabled]` | `.nds-radio` | The user cannot pick these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group |
 | Readonly | Readonly | `[data-state~="readonly"]` | `.nds-radio-container` | The group shows its value but cannot change, by pointer or by keyboard. Put it on every option's container. The tile outline takes the disabled color, and the fill stays |
 | Layout | Row | `.nds-horizontal` | `.nds-radio-group` | The options sit side by side and wrap |
-| Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/forms) |
+| Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #radio-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -174,7 +174,7 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
 - Use `nds-neutral` when the choice is not a brand action.
 - To lock a whole group, put `data-state="readonly"` on every option's container.
 - Use the default size in dense forms and tables, `nds-md` in most forms, and `nds-lg` on touch-first screens.
-- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
+- For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
 
 </div>
   </div>
@@ -241,7 +241,7 @@ radio.checked = true;
 NDS.Forms.syncState(radio);
 </script>
 
-The full API is in the banner of `_js/nds-forms.js`.
+The full API is in the banner of `_js/nds-form.js`.
 
 </div>
   </div>
@@ -255,7 +255,7 @@ The full API is in the banner of `_js/nds-forms.js`.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Filter](../components/filter): single-choice filter options drawn with the same radio tiles.
-- [Forms](../components/forms): labels, feedback and validation for every field.
+- [Forms](../components/form): labels, feedback and validation for every field.
 
 </div>
   </div>

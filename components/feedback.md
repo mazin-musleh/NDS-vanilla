@@ -22,9 +22,9 @@ Feedback is a `nds-feedback` element with a `data-status`. It holds a status ico
 
 Pick another component when:
 
-- the message is about a form field: `NDS.Forms.setStatus()` in [Forms](../components/forms), which also marks the field
+- the message is about a form field: `NDS.Forms.setStatus()` in [Forms](../components/form), which also marks the field
 - the message is for the whole page or needs a title or actions: [Alert](../components/alert)
-- the status is a label on an item, such as "Approved": [Tags](../components/tags)
+- the status is a label on an item, such as "Approved": [Tags](../components/tag)
 
 </div>
   </div>
@@ -285,7 +285,7 @@ The full API is in the banner of `_js/nds-feedback.js`.
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Forms](../components/forms): `NDS.Forms.setStatus()` shows field messages with it.
+- [Forms](../components/form): `NDS.Forms.setStatus()` shows field messages with it.
 - [Alert](../components/alert): the status icon at the start of every alert.
 - [User Feedback](../components/user-feedback): the thank-you message after a vote.
 - [Upload](../components/upload): the status of each file.

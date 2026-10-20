@@ -22,7 +22,7 @@ A definition list shows pairs of a title and a value, such as the fields of a pr
 
 Pick another component when:
 
-- the data has several values for each row, or the user sorts it: [Tables](../components/tables)
+- the data has several values for each row, or the user sorts it: [Tables](../components/table)
 - the items are links to other pages: [Link](../components/link) in a plain list
 - the items start actions: [Dropmenu](../components/dropmenu)
 

@@ -194,7 +194,7 @@ Most classes go on `.nds-stepper`. The Card rows put `nds-card` on the stepper, 
 | Action (any) | At end (hint: Beside the title, on the end side. Vertical only) | `.nds-end` | `.nds-stepper.nds-vertical-sm .nds-stepper-action` | Moves the action to the end of the step's first row, beside the text. A phone stacks it under the text. `--stepper-action-width` caps the column |
 | Action (any) | At end (hint: Beside the title, on the end side. Vertical only) | `.nds-end` | `.nds-stepper.nds-vertical-md .nds-stepper-action` | Moves the action to the end of the step's first row, beside the text. A phone stacks it under the text. `--stepper-action-width` caps the column |
 | Card | None (default) | — | — | No card. The stepper has no surface of its own |
-| Card | Stepper (hint: The whole stepper in one card) | `.nds-card` | `.nds-stepper` | The whole stepper in one [Card](../components/cards). The usual use is a radial stepper, with the ring and the step on one surface. See Card under Behavior |
+| Card | Stepper (hint: The whole stepper in one card) | `.nds-card` | `.nds-stepper` | The whole stepper in one [Card](../components/card). The usual use is a radial stepper, with the ring and the step on one surface. See Card under Behavior |
 | Card | Step (hint: Each step in a card, with the line removed. Not radial) | `.nds-card` | `.nds-stepper:not(.nds-radial) .nds-stepper-step` | Each step in its own card, with the circle inside it. See Card under Behavior. Put the class on every step |
 | Card | Content (hint: The text in a card beside the circle, with the line kept. Not radial) | `.nds-card` | `.nds-stepper:not(.nds-radial) .nds-stepper-content` | The text of each step in a card beside its circle. The line stays. Put the class on every step's content |
 | Stroke | Stroke (hint: A border in the card's own color) | `.nds-stroke` | `.nds-stepper.nds-card` | A border around the stepper card |
@@ -237,7 +237,7 @@ In a vertical stepper, a [Divider](../components/divider) at the start of a step
 ### Card
 {: .nds-block-title}
 
-`nds-card` on a part of the stepper gives that part the [Card](../components/cards) surface, with its options such as the shadow. On the stepper it makes one card around everything. On every step it puts the circle inside a card. On every step's content it puts a card beside the circle and keeps the line. Put the class on every step, not on some.
+`nds-card` on a part of the stepper gives that part the [Card](../components/card) surface, with its options such as the shadow. On the stepper it makes one card around everything. On every step it puts the circle inside a card. On every step's content it puts a card beside the circle and keeps the line. Put the class on every step, not on some.
 
 A card on a step needs no other class. The line goes away, the spacing and the text change to fit, and the content fills the card. In a horizontal stepper, the cards share one height. It works with Dot, `nds-reverse` and divider labels. The border takes the color of the step state: the primary color for the current and the completed steps, the neutral color for the upcoming ones and on a static stepper. With `nds-stroke`, the card keeps its own border color in place of the state color.
 
@@ -256,7 +256,7 @@ A stepper with On color gives its cards the translucent white surface and the on
 ### Static
 {: .nds-block-title}
 
-`nds-static` makes the stepper a plain list of steps in order, such as a how-it-works row. The script writes no step state, so `data-current`, the methods and the control buttons change nothing on screen. Every circle takes the light tint of a [Featured Icon](../components/featured-icons), and the line is neutral. Inside a status, such as an info [Alert](../components/alert), the circles take that status color.
+`nds-static` makes the stepper a plain list of steps in order, such as a how-it-works row. The script writes no step state, so `data-current`, the methods and the control buttons change nothing on screen. Every circle takes the light tint of a [Featured Icon](../components/featured-icon), and the line is neutral. Inside a status, such as an info [Alert](../components/alert), the circles take that status color.
 
 ### Step Action
 {: .nds-block-title}

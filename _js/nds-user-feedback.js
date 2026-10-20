@@ -38,7 +38,7 @@
  * Dependencies:
  * - nds-feedback.js (NDSFeedback API for displaying feedback messages)
  * - nds-cookies.js (for persisting feedback submission status)
- * - nds-forms.js (required when the component lives inside a form; provides NDS.Forms.validateForm)
+ * - nds-form.js (required when the component lives inside a form; provides NDS.Forms.validateForm)
  *
  * Language Detection:
  * Automatically detects page language from <html lang="..."> or <body lang="..."> attribute
