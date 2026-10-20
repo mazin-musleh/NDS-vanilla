@@ -28,3 +28,18 @@
     visibility: hidden;
   }
 }
+
+// Icon-only: an empty label rests hidden, and the countdown takes the icon's place
+// in the same square. The label goes before the icon so `~` can reach it.
+.nds-cooldown.nds-icon-only .nds-label:not(:empty) {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+
+  & ~ :is(i, svg, img) {
+    display: none;
+  }
+}
