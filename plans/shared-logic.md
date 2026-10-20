@@ -286,12 +286,12 @@ before it is fixed. Base first: Dropmenu's fix reaches every component that ride
   (fixed; a re-create set it again, so nothing showed); ~~the column toggle builds a second Reset footer (`table:478`)~~ (fixed); ~~Side Menu's toggle stays shown and
   dead (`sidemenu:212`)~~ (fixed); ~~Taginput's chips still drive the dead instance (`taginput:307`)~~ (fixed: `NDS.buildChip` takes the owner's `signal`); ~~Filter's `_ndsFilterObserver`
   stays true, so later options are never wired (`filter:1690`)~~ (fixed); ~~Session Timeout reuses its dialogs with the old links
-  (`session-timeout:95`)~~ (fixed); Date Picker may keep its error and block the form (`date-picker:605`, possible).
+  (`session-timeout:95`)~~ (fixed); ~~Date Picker may keep its error and block the form (`date-picker:605`)~~ (confirmed, fixed).
 - Leaks: Pagination's ellipsis Dropmenu is not destroyed and `el.ndsPagination` has no `destroy()`; its stamps survive
   (`pagination:156-178, 271, 340-368, 450`); Multiselect's destroy leaves its Dropmenu live and its stamps
   (`multiselect:79, 93, 139, 350`); User Feedback has no backref, so `NDS.init.destroy` misses it, and its message stays
   (`user-feedback:253, 320`); Upload's per-file tooltips are not destroyed (`upload:675`, possible).
-- Leftovers: Date Picker `data-picker-mode` (`:517`); Autocomplete forces `autocomplete="on"` and strips authored
+- Leftovers: ~~Date Picker `data-picker-mode` (`:517`)~~ (fixed); Autocomplete forces `autocomplete="on"` and strips authored
   role/aria (`:671`); Tooltip leaves its built trigger, balloon, `aria-describedby`, `tabindex`, `role`, the stripped
   `title` (`:432`); Table leaves `data-selection-target` and `tbody.id` (`:100`); Sort leaves `aria-sort`/`aria-pressed`,
   states and the trigger icon class, and nulls its backref (`:477`); Scroll More leaves `data-axis` and its states

@@ -1936,6 +1936,15 @@
             // without this the handlers keep it — and the calendar — reachable.
             this.instanceAbortController.abort();
 
+            var container = this.elements.container, input = this.elements.input;
+            if (container) container.removeAttribute('data-picker-mode');
+            // Nothing is left to clear the picker's own error, so it would block submit for good.
+            // Only that one: a status forms or the page set stays.
+            if (input && input.validity.customError) {
+                input.setCustomValidity('');
+                NDS.Form.clearStatus(container);
+            }
+
             // Drop the back-ref on the input so the DatePickerCalendar can
             // be GC'd. Without this the input retains a chain to all the
             // detached DOM nodes the calendar held.
