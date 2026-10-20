@@ -109,21 +109,6 @@
     // ==============================================
 
     var FORM_SCOPE = '.nds-form-container, .nds-form-group';
-    // Fields whose visible input never holds the value: required is checked on the wrapper, never stamped on the input.
-    var NO_REQUIRED_STAMP = '.nds-taginput, .nds-upload';
-
-    function _setDisabled(el, on) {
-        el.querySelectorAll('input, textarea, select').forEach(function(inp) { inp.disabled = on; });
-        // Chips are built after load: their component re-applies with NDS.state.apply after a render.
-        el.querySelectorAll('.nds-form-action .nds-btn, button.nds-chip').forEach(function(btn) {
-            NDS.aria.disabled(btn, on);
-            if (btn.tagName === 'BUTTON') btn.disabled = on;
-        });
-    }
-
-    function _setReadonly(el, on) {
-        el.querySelectorAll('input, textarea, select').forEach(function(inp) { inp.readOnly = on; });
-    }
 
     // ── Loading state — form-scope opt-in ──────────────────────────────
     // Any consumer (autocomplete, remote-validate, custom fetch) can flip
@@ -193,16 +178,8 @@
         });
     }
 
-    // A field state changes inputs and buttons, so it needs script however it is written.
     // nds-loading is the canon on every container, so the class spells loading too.
-    NDS.state.effect('disabled', FORM_SCOPE, _setDisabled);
-    NDS.state.effect('readonly', FORM_SCOPE, _setReadonly);
     NDS.state.effect('loading', FORM_SCOPE, _setLoading, 'nds-loading');
-
-    // Init runs before the load scan, and FieldSync reads the inputs right after.
-    function _syncStates(el) {
-        NDS.state.apply(el, 'disabled', 'readonly', 'loading');
-    }
 
     // ==============================================
     // UTILITY FUNCTIONS
@@ -233,20 +210,8 @@
         return container;
     }
 
-    // A form-container's OWN field — skips fields living inside a NESTED
-    // form-container (the editor's link-popover URL input precedes the carrier
-    // textarea in DOM order; a multiselect option checkbox belongs to its
-    // .nds-checkbox, not the wrapper being validated). Groups/feedback keep
-    // the legacy first-match behavior.
-    function ownField(container) {
-        // Never a hidden carrier: a picker in the prefix slot puts one before the real input.
-        var fields = container.querySelectorAll('input:not([type="hidden"]), textarea, select');
-        if (!container.classList.contains('nds-form-container')) return fields[0] || null;
-        for (var i = 0; i < fields.length; i++) {
-            if (fields[i].closest('.nds-form-container') === container) return fields[i];
-        }
-        return null;
-    }
+    // A container's own field, never a nested container's (NDS.field).
+    var ownField = NDS.field.ownInput;
 
     // Keep the field's aria-describedby pointing at its CURRENT message only: strip
     // our earlier tokens, keep the consumer's, append `id` when given.
@@ -303,7 +268,7 @@
                     // No slot: right after the field's control row, not the container's end,
                     // so a row the field carries below it (a search box's suggestions) stays below.
                     var position = 'append';
-                    var row = target === container && container.classList.contains('nds-form-container') && ownControl(container);
+                    var row = target === container && container.classList.contains('nds-form-container') && NDS.field.ownControl(container);
                     while (row && row.parentNode !== container) row = row.parentNode;
                     if (row) { target = row; position = 'after'; }
 
@@ -496,8 +461,10 @@
     // A field that shows an error is checked again after its rule's events, so the message
     // follows the fix. One document listener per event name, added the first time a rule asks,
     // a rule from a later bundle included.
-    var _recheckOn = {};
+    var _recheckOn = null;
     function wireRechecks() {
+        if (_recheckOn) return;
+        _recheckOn = {};
         NDS.validation.onRule(function(rule) {
             rule.on.forEach(function(type) {
                 if (_recheckOn[type]) return;
@@ -528,664 +495,375 @@
     }
 
     // ==============================================
-    // FIELD STATE SYNC
+    // FIELD PARTS (plugged into NDS.field)
     // ==============================================
-    // Derives a field's container chrome from its input's DOM state — which
-    // data-state tokens apply (disabled/readonly/required), clear-button
-    // visibility, validation. The data-state token CRUD lives in core
-    // (NDS.state); this is the form-specific policy layered on top of it.
-    var FieldSync = {
-        update: function(input, formControl, skipValidation) {
-            var hasValue = (input.type === 'checkbox' || input.type === 'radio')
-                ? input.checked
-                : input.value.trim() !== '';
+    // Form's parts of every field, in the order they run after the base's own sync: digits, the
+    // number stepper, the password, the native select, the clear button, then the messages. Each
+    // handler sees every event of its name and checks the target itself.
+    var isActive = NDS.field.isActive;
 
-            var formContainer = formControl.closest('.nds-form-container');
+    // The clear button shows while the field holds a value.
+    function syncClear(input, fc) {
+        var clearButton = fc.querySelector('.nds-clear');
+        if (clearButton && input.type !== 'radio' && input.type !== 'checkbox') {
+            clearButton.toggleAttribute('hidden', input.value.trim() === '');
+        }
+    }
 
-            // Update data-state on container
-            if (formContainer) {
-                input.disabled ? NDS.state.add(formContainer, 'disabled') : NDS.state.remove(formContainer, 'disabled');
-                // Skip readonly sync for select-input — its readonly prevents typing, not interaction
-                if (!input.classList.contains('nds-select-input')) {
-                    input.readOnly ? NDS.state.add(formContainer, 'readonly') : NDS.state.remove(formContainer, 'readonly');
-                }
-                // Skip required propagation for radios/checkboxes — managed at group level.
-                // Skip for taginput and upload too: the wrapper's data-required is authoritative,
-                // the input's required attr isn't (and mustn't be — see NO_REQUIRED_STAMP).
-                // Same for custom selects: the readonly display input never carries
-                // required — syncing from it would strip the container's authored attr.
-                if (input.type !== 'radio' && input.type !== 'checkbox' && !formContainer.matches(NO_REQUIRED_STAMP)
-                    && !input.classList.contains('nds-select-input')) {
-                    formContainer.toggleAttribute('data-required', input.required);
-                }
-            }
+    // A field's own message from its input: shown when invalid, dropped once valid. A field in a
+    // group answers with its group, at submit.
+    function validateInput(input, fc) {
+        var container = fc.closest('.nds-form-container');
+        if (container && container.closest('.nds-form-group')) return;
+        var isInvalid = input.validity && !input.validity.valid;
+        // Clear custom validation when HTML5 validation passes
+        if (!isInvalid && input.validationMessage) input.setCustomValidity('');
+        if (!container) return;
+        if (isInvalid) {
+            StatusManager.set({ element: container, status: 'error', message: NDS.validation.message(input) });
+        } else if (NDS.status.get(container) === 'error') {
+            StatusManager.clear(container);
+        }
+    }
 
-            // Show/hide clear button
-            var clearButton = formControl.querySelector('.nds-clear');
-            if (clearButton && input.type !== 'radio' && input.type !== 'checkbox') {
-                clearButton.toggleAttribute('hidden', !hasValue);
-            }
-
-            if (skipValidation) return;
-
-            // Skip per-input validation for groups — validated at group level
-            if (formContainer && formContainer.closest('.nds-form-group')) return;
-
-            var isInvalid = input.validity && !input.validity.valid;
-
-            // Clear custom validation when HTML5 validation passes
-            if (!isInvalid && input.validationMessage) {
-                input.setCustomValidity('');
-            }
-
-            // Update error message
-            if (!formContainer) return;
-
-            if (isInvalid) {
-                StatusManager.set({ element: formContainer, status: 'error', message: NDS.validation.message(input) });
-            } else {
-                var currentStatus = NDS.status.get(formContainer);
-                if (currentStatus === 'error') {
-                    StatusManager.clear(formContainer);
-                }
-            }
-        },
-
-        setIndeterminate: function(checkbox, value) {
-            if (!checkbox || checkbox.type !== 'checkbox') return;
-
-            checkbox.indeterminate = !!value;
-
-            var formContainer = checkbox.closest('.nds-form-container');
-            if (formContainer) {
-                value ? NDS.state.add(formContainer, 'indeterminate') : NDS.state.remove(formContainer, 'indeterminate');
-            }
-
-            checkbox.dispatchEvent(new CustomEvent('nds:checkbox:indeterminate', {
-                detail: { indeterminate: !!value },
-                bubbles: true
-            }));
-        },
-
-        updateRadioGroup: function(changedRadio) {
-            if (changedRadio.type !== 'radio' || !changedRadio.name) return;
-
-            var radioGroupContainer = changedRadio.closest('.nds-form-group');
-            if (!radioGroupContainer) return;
-
-            var radioGroup = radioGroupContainer.querySelectorAll('input[type="radio"][name="' + CSS.escape(changedRadio.name) + '"]');
-            radioGroup.forEach(function(radio) {
-                if (radio !== changedRadio) {
-                    var radioFormControl = radio.closest('.nds-form-control');
-                    if (radioFormControl) {
-                        FieldSync.update(radio, radioFormControl);
+    // Digits: inputmode="numeric" takes Arabic digits as 0-9 and blocks the rest; .nds-phone keeps a
+    // local number without its leading zero; .nds-national-id and .nds-iban stamp their checksum.
+    NDS.field.addType('digits', {
+        init: function(input) { stampIdentifier(input); },
+        on: {
+            beforeinput: function(e, c) {
+                if (!c || c.input.getAttribute('inputmode') !== 'numeric' || !e.data) return;
+                var latin = NDS.latinDigits(e.data);
+                if (latin === e.data && !/\D/.test(latin)) return;
+                e.preventDefault();
+                if (/\D/.test(latin)) return;
+                var input = c.input;
+                // A script insert skips maxlength, so trim to it here.
+                if (input.maxLength >= 0) latin = latin.slice(0, Math.max(0, input.maxLength - input.value.length + (input.selectionEnd - input.selectionStart)));
+                if (!latin) return;
+                // A type="number" input has no selection API: the digit stays blocked there, as before.
+                try { input.setRangeText(latin, input.selectionStart, input.selectionEnd, 'end'); } catch (_) { return; }
+                input.dispatchEvent(new InputEvent('input', { inputType: e.inputType, data: latin, bubbles: true }));
+            },
+            input: function(e, c) {
+                if (!c || e._ndsArabicStripped) return;
+                var input = c.input;
+                // Digits only (a paste may bring spaces, dashes or +), no leading zero: the country code
+                // is already prepended. The browser enforces any maxlength.
+                if (input.classList.contains('nds-phone')) {
+                    var caret = input.selectionStart;
+                    var original = input.value;
+                    var stripped = NDS.latinDigits(original).replace(/\D/g, '').replace(/^0+/, '');
+                    if (stripped !== original) {
+                        var diff = original.length - stripped.length;
+                        NDS.setValue(input, stripped, { change: false });
+                        try { input.setSelectionRange(Math.max(0, caret - diff), Math.max(0, caret - diff)); } catch (_) {}
                     }
                 }
-            });
+                stampIdentifier(input);
+            },
+            reset: function(e) {
+                var form = e.target;
+                // After the reset restore: the browser puts the values back after the reset event.
+                setTimeout(function() {
+                    if (e.defaultPrevented || !form.querySelectorAll) return;
+                    form.querySelectorAll('.nds-national-id, .nds-iban').forEach(stampIdentifier);
+                });
+            }
         }
+    });
+
+    // Number stepper: the buttons step, a held button repeats and speeds up, and blur clamps to min/max.
+    var STEP_TIERS = [[0, 1, 75], [1500, 10, 50]];   // [held for (ms), step multiplier, interval (ms)]
+    var hold = null;
+    function stepValue(btn, multiplier) {
+        var fc = btn.closest('.nds-form-control');
+        var input = fc && fc.querySelector('input');
+        if (!input || input.disabled || input.readOnly) return false;
+        var current = parseInt(input.value) || 0;
+        var min = input.hasAttribute('min') ? parseInt(input.min) : -Infinity;
+        var max = input.hasAttribute('max') ? parseInt(input.max) : Infinity;
+        var step = (parseInt(input.step) || 1) * (multiplier || 1);
+        var isIncrement = btn.classList.contains('nds-number-increment');
+        var next = Math.max(min, Math.min(max, isIncrement ? current + step : current - step));
+        var container = fc.closest('.nds-form-container');
+        if (next !== current) {
+            if (container && NDS.status.get(container) === 'error') StatusManager.clear(container);
+            NDS.setValue(input, next, { change: false });
+            return true;
+        }
+        if (container && NDS.status.get(container) !== 'error') {
+            var msg = Validator.getNumberRangeMessage(isIncrement ? 'max' : 'min', isIncrement ? max : min);
+            StatusManager.set({ element: container, status: 'error', message: msg });
+        }
+        return false;
+    }
+    function stopHold() {
+        if (!hold) return;
+        clearTimeout(hold.start);
+        clearInterval(hold.repeat);
+        hold.tiers.forEach(clearTimeout);
+        hold = null;
+    }
+    // Simple class selectors first: every click on the page passes through these parts.
+    var stepButton = function(t) {
+        var btn = t && t.closest && t.closest('.nds-number-increment, .nds-number-decrement');
+        return btn && btn.closest('.nds-form-control') ? btn : null;
     };
-
-    // ==============================================
-    // INPUT EVENT DELEGATION
-    // ==============================================
-    // Generic per-input chrome (active/focus/typing data-state, value
-    // sanitize, validation) is wired ONCE at the document level rather than
-    // per element — see installFormDelegation(). Each handler re-resolves the
-    // owning form-control from the event target, reproducing the original
-    // binding scope (a direct-child input/textarea/select of a non-code
-    // `.nds-form-control`). Specialized controls (custom-select, number-input,
-    // switch, password toggle, clear button, groups) keep their own
-    // per-element wiring; only the generic chrome moved here.
-    var _delegationInstalled = false;
-
-    // The select-input is `readonly` to prevent typing but is still
-    // interactive (click opens the dropdown), so treat it as active for
-    // state-visualization. Recomputed per event — never cached.
-    function statesActive(input) {
-        return !input.readOnly || input.classList.contains('nds-select-input');
-    }
-
-    // Resolve the form-control an event belongs to, matching the original
-    // `:scope > input/textarea/select` of a `.nds-form-control` not inside a
-    // code sample. Returns null (handler no-ops) otherwise.
-    function resolveControl(target) {
-        if (!target || !target.matches || !target.matches('input, textarea, select')) return null;
-        var formControl = target.parentElement;
-        if (!formControl || !formControl.classList || !formControl.classList.contains('nds-form-control')) return null;
-        if (formControl.closest('code')) return null;
-        return { input: target, formControl: formControl, formContainer: formControl.closest('.nds-form-container') };
-    }
-
-    // A container's OWN control — the first .nds-form-control whose nearest
-    // form-container ancestor IS this container (skips controls belonging to
-    // nested containers, e.g. an editor's toolbar popover fields).
-    function ownControl(container) {
-        var controls = container.querySelectorAll('.nds-form-control');
-        for (var i = 0; i < controls.length; i++) {
-            if (controls[i].closest('.nds-form-container') === container) return controls[i];
-        }
-        return null;
-    }
-
-    function installFormDelegation() {
-        if (_delegationInstalled) return;
-        _delegationInstalled = true;
-        wireRechecks();
-        var doc = document;
-
-        // While a form-container is focus/active, mark its OWN control with a
-        // single `target` gate. The container keeps the real state; `target`
-        // just lets the CSS descendant match (container[state] .control[target])
-        // reach that one control — through any layout wrapper, at any depth,
-        // never a nested container's control. Fires for EVERY stamper (generic
-        // delegation, editor, multiselect) since all go through NDS.state.
-        var syncTarget = function(container) {
-            var f = ownControl(container);
-            if (!f) return;
-            if (NDS.state.has(container, 'focus') || NDS.state.has(container, 'active'))
-                NDS.state.add(f, 'target');
-            else
-                NDS.state.remove(f, 'target');
-        };
-        NDS.state.effect('focus', '.nds-form-container', syncTarget);
-        NDS.state.effect('active', '.nds-form-container', syncTarget);
-
-        // Mouse press → `active` token. mousedown adds; mouseup/mouseout
-        // remove. mouseout stands in for the old per-element mouseleave —
-        // inputs have no element children, so mouseout fires only when the
-        // pointer actually leaves the control.
-        doc.addEventListener('mousedown', function(e) {
-            var c = resolveControl(e.target);
-            if (c && c.formContainer && statesActive(c.input)) NDS.state.add(c.formContainer, 'active');
-        });
-        ['mouseup', 'mouseout'].forEach(function(evt) {
-            doc.addEventListener(evt, function(e) {
-                var c = resolveControl(e.target);
-                if (c && c.formContainer && statesActive(c.input)) NDS.state.remove(c.formContainer, 'active');
-            });
-        });
-
-        // Focus / blur via the bubbling focusin / focusout.
-        doc.addEventListener('focusin', function(e) {
-            var c = resolveControl(e.target);
-            if (c && c.formContainer && statesActive(c.input)) NDS.state.add(c.formContainer, 'focus');
-        });
-        doc.addEventListener('focusout', function(e) {
-            var c = resolveControl(e.target);
-            if (!c) return;
-            var input = c.input, formControl = c.formControl, formContainer = c.formContainer;
-            if (formContainer && statesActive(input)) {
-                NDS.state.remove(formContainer, 'focus');
-                NDS.state.remove(formContainer, 'typing');
-            }
-            // Clamp number input value to min/max on blur
-            if (formControl.querySelector('.nds-number-increment, .nds-number-decrement')) {
+    NDS.field.addType('number', {
+        on: {
+            click: function(e) { var btn = stepButton(e.target); if (btn) stepValue(btn); },
+            pointerdown: function(e) {
+                var btn = stepButton(e.target);
+                if (!btn || e.button !== 0) return;
+                stopHold();
+                var h = hold = { btn: btn, tiers: [], repeat: null };
+                // Step at one tier's pace, replacing the pace before; a later tier takes over at its time.
+                var repeat = function(multiplier, speed) {
+                    clearInterval(h.repeat);
+                    h.repeat = setInterval(function() { stepValue(btn, multiplier); }, speed);
+                };
+                h.start = setTimeout(function() {
+                    repeat(STEP_TIERS[0][1], STEP_TIERS[0][2]);
+                    STEP_TIERS.slice(1).forEach(function(tier) {
+                        h.tiers.push(setTimeout(function() { repeat(tier[1], tier[2]); }, tier[0]));
+                    });
+                }, 400);
+            },
+            pointerup: stopHold,
+            // pointerleave does not bubble: a pointerout to outside the held button stands in for it.
+            pointerout: function(e) { if (hold && e.target.closest && e.target.closest('.nds-btn') === hold.btn && !hold.btn.contains(e.relatedTarget)) stopHold(); },
+            focusout: function(e, c) {
+                if (!c || !c.control.querySelector('.nds-number-increment, .nds-number-decrement')) return;
+                var input = c.input;
                 var val = parseInt(input.value);
-                if (isNaN(val)) { if (input.value || input.validity.badInput) NDS.setValue(input, ''); }
-                else {
-                    var rangeError = Utils.validateNumberRange(input);
-                    if (rangeError) {
-                        NDS.setValue(input, rangeError.clamped);
-                        StatusManager.set({ element: formContainer, status: 'error', message: rangeError.message });
-                    }
+                if (isNaN(val)) { if (input.value || input.validity.badInput) NDS.setValue(input, ''); return; }
+                var rangeError = Utils.validateNumberRange(input);
+                if (rangeError) {
+                    NDS.setValue(input, rangeError.clamped);
+                    StatusManager.set({ element: c.container, status: 'error', message: rangeError.message });
                 }
             }
-            // Only validate on blur if the field already has an error (to clear it when fixed)
-            var hasError = formContainer && NDS.status.get(formContainer) === 'error';
-            if (statesActive(input)) FieldSync.update(input, formControl, !hasError);
-        });
+        }
+    });
 
-        // Typing state - indicates real user input
-        doc.addEventListener('keydown', function(e) {
-            var c = resolveControl(e.target);
-            if (c && c.formContainer && statesActive(c.input)) NDS.state.add(c.formContainer, 'typing');
-        });
-        // The browser ignores readOnly on a checkbox or a radio, and the readonly CSS blocks only
-        // the pointer: cancel the click that Space or an arrow key sends, so the value stays.
-        doc.addEventListener('click', function(e) {
-            var t = e.target;
-            if (t.readOnly && (t.type === 'checkbox' || t.type === 'radio')) e.preventDefault();
-        }, true);
-        doc.addEventListener('paste', function(e) {
-            var c = resolveControl(e.target);
-            if (c && c.formContainer) NDS.state.add(c.formContainer, 'typing');
-        });
-
-        // Numeric-only enforcement for inputmode="numeric". Arabic digits (an Arabic keyboard or
-        // keypad) go in as 0-9 instead of being blocked.
-        doc.addEventListener('beforeinput', function(e) {
-            var c = resolveControl(e.target);
-            if (!c || c.input.getAttribute('inputmode') !== 'numeric' || !e.data) return;
-            var latin = NDS.latinDigits(e.data);
-            if (latin === e.data && !/\D/.test(latin)) return;
-            e.preventDefault();
-            if (/\D/.test(latin)) return;
-            var input = c.input;
-            // A script insert skips maxlength, so trim to it here.
-            if (input.maxLength >= 0) latin = latin.slice(0, Math.max(0, input.maxLength - input.value.length + (input.selectionEnd - input.selectionStart)));
-            if (!latin) return;
-            // A type="number" input has no selection API: the digit stays blocked there, as before.
-            try { input.setRangeText(latin, input.selectionStart, input.selectionEnd, 'end'); } catch (_) { return; }
-            input.dispatchEvent(new InputEvent('input', { inputType: e.inputType, data: latin, bubbles: true }));
-        });
-
-        // Strip Arabic characters from password fields. Capture phase: runs before the field's own
-        // input listeners, so Password never counts a stripped letter as a symbol.
-        doc.addEventListener('input', function(e) {
-            var c = resolveControl(e.target);
-            if (!c || (c.input.type !== 'password' && c.input.dataset.type !== 'password')) return;
-            var input = c.input;
-            var cleaned = input.value.replace(/[\u0600-\u06FF]/g, '');
-            if (cleaned === input.value) return;
-            NDS.setValue(input, cleaned, { change: false });
-            e._ndsArabicStripped = true;
-            var fc = c.formControl.closest('.nds-form-container');
-            if (fc) {
-                var msg = strings.text('no_arabic');
-                StatusManager.set({ element: fc, status: 'error', message: msg });
-            }
-        }, true);
-
-        // Input changes - clear errors but don't validate while typing
-        doc.addEventListener('input', function(e) {
-            var c = resolveControl(e.target);
-            // A stripped letter keeps its error message up.
-            if (!c || e._ndsArabicStripped) return;
-            var input = c.input, formControl = c.formControl;
-
-            // .nds-phone — local-format phone input paired with a separate
-            // country-code prefix:
-            //   1. allow only digits — strips spaces/dashes/+ from paste
-            //   2. strip leading zero(s) — the local-format leading 0 is
-            //      redundant when the country code is already prepended
-            // The browser enforces any maxlength on the input itself.
-            if (input.classList.contains('nds-phone')) {
-                var caret = input.selectionStart;
-                var original = input.value;
-                var stripped = NDS.latinDigits(original).replace(/\D/g, '').replace(/^0+/, '');
-                if (stripped !== original) {
-                    var diff = original.length - stripped.length;
-                    NDS.setValue(input, stripped, { change: false });
-                    try {
-                        input.setSelectionRange(Math.max(0, caret - diff), Math.max(0, caret - diff));
-                    } catch (_) {}
-                }
-            }
-
-            stampIdentifier(input);
-
-            FieldSync.update(input, formControl, true);
-
-            var formContainer = formControl.closest('.nds-form-container');
-            if (formContainer && NDS.status.get(formContainer) !== '') {
-                StatusManager.clear(formContainer);
-            }
-
-            // Auto-clear group-level status on input (skip groups with own validation)
-            var formGroup = formControl.closest('.nds-form-group');
-            if (formGroup && NDS.status.get(formGroup) !== ''
-                && !formGroup.hasAttribute('data-min-checked')
-                && !formGroup.hasAttribute('data-max-checked')
-                && !formGroup.hasAttribute('data-required')) {
-                StatusManager.clear(formGroup);
-            }
-        });
-
-        // Change event - update state only, validate on submit
-        doc.addEventListener('change', function(e) {
-            var c = resolveControl(e.target);
-            if (!c) return;
-            var input = c.input, formControl = c.formControl, formContainer = c.formContainer;
-            var hasError = formContainer && NDS.status.get(formContainer) === 'error';
-            FieldSync.update(input, formControl, !hasError);
-            FieldSync.updateRadioGroup(input);
-            // Auto-clear indeterminate on user interaction
-            if (input.type === 'checkbox' && !input.indeterminate) {
-                FieldSync.setIndeterminate(input, false);
-            }
-        });
-
-        // The browser restores the values after the reset event: re-sync then, unless it was cancelled.
-        doc.addEventListener('reset', function(e) {
-            var form = e.target;
-            setTimeout(function() {
-                if (e.defaultPrevented || !form.querySelectorAll) return;
-                form.querySelectorAll('.nds-form-container[data-status], .nds-form-group[data-status]').forEach(function(el) {
-                    StatusManager.clear(el);
-                });
-                form.querySelectorAll('.nds-form-control input, .nds-form-control textarea, .nds-form-control select').forEach(function(input) {
-                    NDS.Form.syncState(input);
-                });
-                form.querySelectorAll('.nds-national-id, .nds-iban').forEach(stampIdentifier);
-            });
-        });
-
-        // A sent or reset form hides a shown password. An invalid .nds-form stops its submit before here.
-        ['submit', 'reset'].forEach(function(type) {
-            doc.addEventListener(type, function(e) {
-                if ((type === 'reset' && e.defaultPrevented) || !e.target.querySelectorAll) return;
-                e.target.querySelectorAll('.nds-toggle-password.show').forEach(function(t) { FormControls.showPassword(t, false); });
-            });
-        });
-
-        // A pending form drops the submit. Capture runs before the form's own listeners and a framework's root.
-        doc.addEventListener('submit', function(e) {
-            if (e.target._ndsPendingEnd) { e.preventDefault(); e.stopImmediatePropagation(); }
-        }, true);
-        // A POST that loads a page in this tab is pending until the page goes. On window, after every
-        // other listener: a script that cancelled the submit sends it itself. A GET twice does no harm.
-        window.addEventListener('submit', function(e) {
-            var form = e.target, sub = e.submitter;
-            if (!form._ndsFormInitialized || form._ndsPendingEnd || e.defaultPrevented || form.hasAttribute('data-no-pending')) return;
-            var attr = function(n) { return (sub && sub.getAttribute('form' + n)) || form.getAttribute(n) || ''; };
-            if (attr('method').toLowerCase() === 'post' && /^(_self)?$/i.test(attr('target'))) setPending(form, sub);
-        });
-        // Back on a page from the browser's cache: nothing it sent is pending.
-        window.addEventListener('pageshow', function(e) {
-            if (e.persisted) doc.querySelectorAll('form').forEach(function(f) { if (f._ndsPendingEnd) f._ndsPendingEnd(); });
-        });
-
-        // A rating group has no input to fire `input`, so its own event stands in
-        // for the auto-clear above. Submit re-runs the rule, so clearing here is
-        // only about dropping a stale message.
-        doc.addEventListener('nds:rating:change', function(e) {
-            var group = e.target.closest && e.target.closest('.nds-form-group');
-            if (group && NDS.status.get(group) !== '') StatusManager.clear(group);
-        });
-        // A pick answers "add a file"; a finished upload answers "wait".
-        ['nds:upload:select', 'nds:upload:success', 'nds:upload:error'].forEach(function(name) {
-            doc.addEventListener(name, function(e) {
-                if (NDS.status.get(e.target) !== '') StatusManager.clear(e.target);
-            });
-        });
+    // Password: the toggle shows the typed value; Arabic letters are stripped with a message. A sent or
+    // reset form hides a shown password again (an invalid .nds-form stops its submit before here).
+    function showPassword(toggle, show) {
+        var input = toggle.closest('.nds-form-control').querySelector(':scope > input[type="password"], :scope > input[type="text"]');
+        if (!input) return;
+        input.type = show ? 'text' : 'password';
+        toggle.classList.toggle('show', show);
+        NDS.aria.label(toggle, strings.text(show ? 'hide_password' : 'show_password'));
     }
-
-    // ==============================================
-    // FORM CONTROLS INITIALIZATION
-    // ==============================================
-    var FormControls = {
-        initializeInput: function(input, formControl) {
-            if (input._ndsInitialized) return;
-            input._ndsInitialized = true;
-
-            // Remember original type for password fields
-            if (input.type === 'password') input.dataset.type = 'password';
-
-            // Auto-add required and aria-required if container has data-required attribute.
-            // Taginput's typing field isn't the carrier — never stamp `required` on it
-            // (would false-fail checkValidity even when tags exist); aria-required still
-            // announces requiredness on the interactive input.
-            var formContainer = formControl.closest('.nds-form-container');
-            if (formContainer && (formContainer.hasAttribute('data-required') || formContainer.classList.contains('nds-required'))) {
-                if (!formContainer.matches(NO_REQUIRED_STAMP) && !input.hasAttribute('required')) {
-                    input.setAttribute('required', '');
-                }
-                input.setAttribute('aria-required', 'true');
-            }
-
-            // Generic input listeners (active/focus/typing, sanitize,
-            // validation) are wired once at the document level — see
-            // installFormDelegation(). Only the initial sync + specialized
-            // control dispatch is per-element.
-            this._syncInitialState(input, formControl, formContainer);
-        },
-
-        // Two-way initial sync + specialized control dispatch.
-        _syncInitialState: function(input, formControl, formContainer) {
-            // Container → input: propagate pre-existing data-state
-            if (formContainer) {
-                _syncStates(formContainer);
-            }
-            // Input → container: sync current input state to data-state
-            FieldSync.update(input, formControl, true);
-
-            // Initialize specialized controls
-            if (input.tagName.toLowerCase() === 'select') {
-                this.initSelectDropdown(input, formControl);
-            }
-            // Custom selects (.nds-select-input) and date inputs (.nds-date-input)
-            // are wired by their own loader-driven components (NDS.CustomSelect,
-            // NDS.DatePicker) — forms no longer reaches into them.
-        },
-
-        initSelectDropdown: function(selectElement, formControl) {
-            var formContainer = formControl.closest('.nds-form-container') || formControl;
-
-            selectElement.addEventListener('mousedown', function() {
-                NDS.state.has(formContainer, 'open')
-                    ? NDS.state.remove(formContainer, 'open')
-                    : NDS.state.add(formContainer, 'open');
-            });
-
-            selectElement.addEventListener('keydown', function(e) {
-                var openKeys = ['ArrowDown', 'ArrowUp', 'Enter', ' '];
-                var closeKeys = ['Escape', 'Tab'];
-
-                if (openKeys.includes(e.key) && !NDS.state.has(formContainer, 'open')) {
-                    NDS.state.add(formContainer, 'open');
-                } else if (closeKeys.includes(e.key)) {
-                    NDS.state.remove(formContainer, 'open');
-                }
-            });
-
-            ['blur', 'change'].forEach(function(event) {
-                selectElement.addEventListener(event, function() {
-                    NDS.state.remove(formContainer, 'open');
-                });
-            });
-        },
-
-        initPasswordToggle: function(formControl) {
-            var passwordToggle = formControl.querySelector('.nds-form-action .nds-toggle-password');
-            if (!passwordToggle || passwordToggle._ndsPasswordToggle) return;
-            passwordToggle._ndsPasswordToggle = true;
-
-            passwordToggle.addEventListener('click', function(e) {
+    var hideShown = function(e) {
+        if ((e.type === 'reset' && e.defaultPrevented) || !e.target.querySelectorAll) return;
+        e.target.querySelectorAll('.nds-toggle-password.show').forEach(function(t) { showPassword(t, false); });
+    };
+    NDS.field.addType('password', {
+        // Remember the original type: the toggle swaps it.
+        init: function(input) { if (input.type === 'password') input.dataset.type = 'password'; },
+        on: {
+            click: function(e) {
+                var toggle = e.target.closest && e.target.closest('.nds-toggle-password');
+                if (!toggle || !toggle.closest('.nds-form-control .nds-form-action')) return;
                 e.preventDefault();
-                FormControls.showPassword(passwordToggle, !passwordToggle.classList.contains('show'));
-            });
-        },
+                showPassword(toggle, !toggle.classList.contains('show'));
+            },
+            // Capture: runs before the field's own input listeners, so Password never counts a stripped letter.
+            'input:capture': function(e, c) {
+                if (!c || (c.input.type !== 'password' && c.input.dataset.type !== 'password')) return;
+                var input = c.input;
+                var cleaned = input.value.replace(/[؀-ۿ]/g, '');
+                if (cleaned === input.value) return;
+                NDS.setValue(input, cleaned, { change: false });
+                e._ndsArabicStripped = true;
+                if (c.container) StatusManager.set({ element: c.container, status: 'error', message: strings.text('no_arabic') });
+            },
+            submit: hideShown,
+            reset: hideShown
+        }
+    });
 
-        showPassword: function(passwordToggle, show) {
-            var passwordInput = passwordToggle.closest('.nds-form-control').querySelector(':scope > input[type="password"], :scope > input[type="text"]');
-            if (!passwordInput) return;
-            passwordInput.type = show ? 'text' : 'password';
-            passwordToggle.classList.toggle('show', show);
-            NDS.aria.label(passwordToggle, strings.text(show ? 'hide_password' : 'show_password'));
-        },
+    // Native select: the container's `open` state follows the menu, which the browser draws.
+    var nativeSelect = function(c) { return c && c.input.tagName === 'SELECT' ? (c.container || c.control) : null; };
+    NDS.field.addType('select', {
+        on: {
+            mousedown: function(e, c) {
+                var container = nativeSelect(c);
+                if (container) NDS.state.has(container, 'open') ? NDS.state.remove(container, 'open') : NDS.state.add(container, 'open');
+            },
+            keydown: function(e, c) {
+                var container = nativeSelect(c);
+                if (!container) return;
+                if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key) && !NDS.state.has(container, 'open')) NDS.state.add(container, 'open');
+                else if (e.key === 'Escape' || e.key === 'Tab') NDS.state.remove(container, 'open');
+            },
+            focusout: function(e, c) { var container = nativeSelect(c); if (container) NDS.state.remove(container, 'open'); },
+            change: function(e, c) { var container = nativeSelect(c); if (container) NDS.state.remove(container, 'open'); }
+        }
+    });
 
-        initSwitchControls: function(formControl) {
-            var switchElements = formControl.querySelectorAll('.nds-switch-toggle');
-            if (!switchElements.length) return;
-
-            switchElements.forEach(function(switchElement) {
-                var switchInput = switchElement.querySelector('.nds-switch-input');
-                var switchTrack = switchElement.querySelector('.nds-switch-track');
-
-                if (!switchInput || !switchTrack || switchTrack._switchInitialized) return;
-                switchTrack._switchInitialized = true;
-
-                var formContainer = formControl.closest('.nds-form-container');
-
-                // Toggle + notify — shared by track-click, keyboard, and label-click.
-                function toggleSwitch() {
-                    if (switchInput.disabled || switchInput.readOnly || switchElement.classList.contains('disabled')) return;
-                    NDS.setValue(switchInput, !switchInput.checked);
-                    FieldSync.update(switchInput, formControl);
-                    switchElement.dispatchEvent(new CustomEvent('nds:switch:change', {
-                        detail: { checked: switchInput.checked, value: switchInput.value, input: switchInput },
-                        bubbles: true
-                    }));
-                }
-
-                switchTrack.addEventListener('mousedown', function() {
-                    if (!switchInput.disabled && !switchElement.classList.contains('disabled')) {
-                        if (formContainer) {
-                            NDS.state.add(formContainer, 'active');
-                        }
-                    }
-                });
-
-                ['mouseup', 'mouseleave'].forEach(function(event) {
-                    switchTrack.addEventListener(event, function() {
-                        if (formContainer) {
-                            NDS.state.remove(formContainer, 'active');
-                        }
-                    });
-                });
-
-                switchTrack.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    toggleSwitch();
-                });
-
-                switchInput.addEventListener('keydown', function(e) {
-                    if (e.key === ' ' || e.key === 'Enter') {
-                        e.preventDefault();
-                        toggleSwitch();
-                    }
-                });
-
-                var label = formControl.querySelector('label[for="' + CSS.escape(switchInput.id) + '"]');
-                if (label && !switchElement.contains(label)) {
-                    label.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        toggleSwitch();
-                    });
-                }
-
-                FieldSync.update(switchInput, formControl, true);
-            });
-        },
-
-        initNumberInput: function(formControl) {
-            var buttons = formControl.querySelectorAll('.nds-number-increment, .nds-number-decrement');
-            if (!buttons.length) return;
-
-            function stepValue(btn, multiplier) {
-                var input = formControl.querySelector('input');
-                if (!input || input.disabled || input.readOnly) return false;
-
-                var current = parseInt(input.value) || 0;
-                var min = input.hasAttribute('min') ? parseInt(input.min) : -Infinity;
-                var max = input.hasAttribute('max') ? parseInt(input.max) : Infinity;
-                var step = (parseInt(input.step) || 1) * (multiplier || 1);
-                var next = btn.classList.contains('nds-number-increment') ? current + step : current - step;
-
-                next = Math.max(min, Math.min(max, next));
-                var formContainer = formControl.closest('.nds-form-container');
-                if (next !== current) {
-                    if (formContainer && NDS.status.get(formContainer) === 'error') {
-                        StatusManager.clear(formContainer);
-                    }
-                    NDS.setValue(input, next, { change: false });
-                    return true;
-                }
-                if (formContainer && NDS.status.get(formContainer) !== 'error') {
-                    var isIncrement = btn.classList.contains('nds-number-increment');
-                    var msg = isIncrement ? Validator.getNumberRangeMessage('max', max) : Validator.getNumberRangeMessage('min', min);
-                    StatusManager.set({ element: formContainer, status: 'error', message: msg });
-                }
-                return false;
-            }
-
-            // Acceleration tiers: [duration held (ms), step multiplier, interval (ms)]
-            var tiers = [
-                [0,    1,  75],
-                [1500, 10, 50]
-            ];
-
-            buttons.forEach(function(btn) {
-                if (btn._ndsNumberInit) return;
-                btn._ndsNumberInit = true;
-
-                var holdTimer = null;
-                var holdInterval = null;
-                var tierTimers = [];
-
-                btn.addEventListener('click', function() { stepValue(btn); });
-
-                // Step at one tier's pace, replacing the pace before.
-                function repeat(multiplier, speed) {
-                    clearInterval(holdInterval);
-                    holdInterval = setInterval(function() { stepValue(btn, multiplier); }, speed);
-                }
-                // A later tier takes over at its own time into the hold.
-                function upgradeLater(tier) {
-                    tierTimers.push(setTimeout(function() { repeat(tier[1], tier[2]); }, tier[0]));
-                }
-
-                btn.addEventListener('pointerdown', function(e) {
-                    if (e.button !== 0) return;
-                    holdTimer = setTimeout(function() {
-                        repeat(tiers[0][1], tiers[0][2]);
-                        tiers.slice(1).forEach(upgradeLater);
-                    }, 400);
-                });
-
-                function stopHold() {
-                    clearTimeout(holdTimer);
-                    clearInterval(holdInterval);
-                    tierTimers.forEach(clearTimeout);
-                    holdTimer = null;
-                    holdInterval = null;
-                    tierTimers = [];
-                }
-
-                btn.addEventListener('pointerup', stopHold);
-                btn.addEventListener('pointerleave', stopHold);
-            });
-        },
-
-        initClearButton: function(formControl, inputElements) {
-            var clearButton = formControl.querySelector('.nds-form-action .nds-clear');
-            if (!clearButton) return;
-            if (clearButton._ndsClearInit) return;
-            clearButton._ndsClearInit = true;
-
-            clearButton.addEventListener('click', function(e) {
+    // Clear button: empties the field and hands focus back to it, since the button hides itself.
+    NDS.field.addType('clear', {
+        on: {
+            click: function(e) {
+                var btn = e.target.closest && e.target.closest('.nds-clear');
+                if (!btn || !btn.closest('.nds-form-control .nds-form-action')) return;
                 e.preventDefault();
-
-                inputElements.forEach(function(input) {
-                    // Hidden inputs are component-owned carriers (taginput
-                    // tags, restore seeds) — clear resets the visible field,
-                    // never the committed values.
+                var fc = btn.closest('.nds-form-control');
+                var inputs = fc.querySelectorAll(':scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input');
+                inputs.forEach(function(input) {
+                    // Hidden inputs are component-owned carriers (taginput tags, restore seeds): clear resets
+                    // the visible field, never the committed values.
                     if (input.type === 'hidden') return;
                     NDS.setValue(input, input.type === 'checkbox' || input.type === 'radio' ? false : '');
-                    // Skip validation: clearing is an edit like typing, so it must
-                    // not raise "required" on a field the user just emptied. The
-                    // input event above already cleared any error being shown.
-                    FieldSync.update(input, formControl, true);
+                    // No validation: clearing is an edit like typing, and must not raise "required".
+                    NDS.field.refresh(input);
                 });
-
-                // The clear button hides itself once the field is empty, which
-                // would drop focus to <body>. Hand it back to the field so the
-                // user can keep typing.
-                for (var i = 0; i < inputElements.length; i++) {
-                    if (inputElements[i].type === 'hidden' || inputElements[i].disabled) continue;
-                    inputElements[i].focus();
+                for (var i = 0; i < inputs.length; i++) {
+                    if (inputs[i].type === 'hidden' || inputs[i].disabled) continue;
+                    inputs[i].focus();
                     break;
                 }
-            });
+            }
         }
-    };
+    });
 
-    // ==============================================
-    // GROUP STATE MANAGEMENT
-    // ==============================================
-    function initGroupState(group) {
+    // Checkbox and radio (their own files take these in the next step): a pick clears a checkbox's
+    // indeterminate state, and a radio repaints its name group.
+    function repaintRadioGroup(changed) {
+        if (changed.type !== 'radio' || !changed.name) return;
+        var group = changed.closest('.nds-form-group');
         if (!group) return;
+        group.querySelectorAll('input[type="radio"][name="' + CSS.escape(changed.name) + '"]').forEach(function(radio) {
+            if (radio !== changed && radio.closest('.nds-form-control')) NDS.field.refresh(radio, { validate: true });
+        });
+    }
 
-        // Groups (radio/checkbox/switch) validate as a whole, so we deliberately
-        // do NOT propagate data-required to individual inputs — that would make
-        // HTML5 validation flag each input separately.
+    // Messages: typing drops a message, leaving the field checks it again once it shows an error,
+    // and a reset clears every message. The clear button follows the value.
+    NDS.field.addType('status', {
+        init: function(input, fc) { syncClear(input, fc); },
+        refresh: function(input, fc, opts) {
+            syncClear(input, fc);
+            if (opts.validate) validateInput(input, fc);
+            if (input.type === 'radio' && input.checked) repaintRadioGroup(input);
+        },
+        on: {
+            focusout: function(e, c) {
+                if (!c || !isActive(c.input)) return;
+                syncClear(c.input, c.control);
+                if (c.container && NDS.status.get(c.container) === 'error') validateInput(c.input, c.control);
+            },
+            input: function(e, c) {
+                // A stripped letter keeps its message up.
+                if (!c || e._ndsArabicStripped) return;
+                syncClear(c.input, c.control);
+                if (c.container && NDS.status.get(c.container) !== '') StatusManager.clear(c.container);
+                // A group without its own rule drops its message on input too.
+                var group = c.control.closest('.nds-form-group');
+                if (group && NDS.status.get(group) !== ''
+                    && !group.hasAttribute('data-min-checked') && !group.hasAttribute('data-max-checked') && !group.hasAttribute('data-required')) {
+                    StatusManager.clear(group);
+                }
+            },
+            change: function(e, c) {
+                if (!c) return;
+                syncClear(c.input, c.control);
+                if (c.container && NDS.status.get(c.container) === 'error') validateInput(c.input, c.control);
+                repaintRadioGroup(c.input);
+                // A pick clears the indeterminate state.
+                if (c.input.type === 'checkbox' && !c.input.indeterminate) setIndeterminate(c.input, false);
+            },
+            reset: function(e) {
+                var form = e.target;
+                // After the reset restore: the browser puts the values back after the reset event.
+                setTimeout(function() {
+                    if (e.defaultPrevented || !form.querySelectorAll) return;
+                    form.querySelectorAll('.nds-form-container[data-status], .nds-form-group[data-status]').forEach(function(el) {
+                        StatusManager.clear(el);
+                    });
+                });
+            }
+        }
+    });
 
-        _syncStates(group);
+    function setIndeterminate(checkbox, value) {
+        if (!checkbox || checkbox.type !== 'checkbox') return;
+        checkbox.indeterminate = !!value;
+        var container = checkbox.closest('.nds-form-container');
+        if (container) value ? NDS.state.add(container, 'indeterminate') : NDS.state.remove(container, 'indeterminate');
+        checkbox.dispatchEvent(new CustomEvent('nds:checkbox:indeterminate', {
+            detail: { indeterminate: !!value },
+            bubbles: true
+        }));
+    }
+
+    // Auto-fill: a chip fills its target field; data-autofill-apply also submits the search
+    // (it sends Enter to the target).
+    NDS.field.addType('autofill', {
+        on: {
+            click: function(e) {
+                var item = e.target.closest && e.target.closest('.nds-item');
+                if (!item || !item.closest('.nds-auto-fill[data-target]')) return;
+                e.preventDefault();
+                e.stopPropagation();
+                var container = item.closest('.nds-auto-fill');
+                var targetId = container.getAttribute('data-target');
+                var itemText = item.textContent.trim().replace(/\s+/g, ' ');
+                var target = document.getElementById(targetId)
+                    || document.querySelector('[name="' + CSS.escape(targetId) + '"]')
+                    || document.querySelector('[data-name="' + CSS.escape(targetId) + '"]');
+                if (!target || !itemText) return;
+                target.focus();
+                NDS.setValue(target, itemText);
+                NDS.field.refresh(target, { validate: true });
+                if (container.hasAttribute('data-autofill-apply')) {
+                    target.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+                }
+            }
+        }
+    });
+
+    // Switch (its own file takes this in the next step): the track, Space or Enter, and an outside label toggle it.
+    function initSwitches(fc) {
+        fc.querySelectorAll('.nds-switch-toggle').forEach(function(switchElement) {
+            var switchInput = switchElement.querySelector('.nds-switch-input');
+            var switchTrack = switchElement.querySelector('.nds-switch-track');
+            if (!switchInput || !switchTrack || switchTrack._switchInitialized) return;
+            switchTrack._switchInitialized = true;
+            var container = fc.closest('.nds-form-container');
+
+            function toggleSwitch() {
+                if (switchInput.disabled || switchInput.readOnly || switchElement.classList.contains('disabled')) return;
+                NDS.setValue(switchInput, !switchInput.checked);
+                NDS.field.refresh(switchInput, { validate: true });
+                switchElement.dispatchEvent(new CustomEvent('nds:switch:change', {
+                    detail: { checked: switchInput.checked, value: switchInput.value, input: switchInput },
+                    bubbles: true
+                }));
+            }
+            switchTrack.addEventListener('mousedown', function() {
+                if (!switchInput.disabled && !switchElement.classList.contains('disabled') && container) NDS.state.add(container, 'active');
+            });
+            ['mouseup', 'mouseleave'].forEach(function(event) {
+                switchTrack.addEventListener(event, function() { if (container) NDS.state.remove(container, 'active'); });
+            });
+            switchTrack.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); toggleSwitch(); });
+            switchInput.addEventListener('keydown', function(e) {
+                if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggleSwitch(); }
+            });
+            var label = fc.querySelector('label[for="' + CSS.escape(switchInput.id) + '"]');
+            if (label && !switchElement.contains(label)) {
+                label.addEventListener('click', function(e) { e.preventDefault(); toggleSwitch(); });
+            }
+            NDS.field.refresh(switchInput);
+        });
     }
 
     // ==============================================
-    // FORM INITIALIZATION
+    // FORMS
     // ==============================================
     // A sent form takes no second submit until `until` settles or the page goes; its submit button spins meanwhile.
     function setPending(form, btn, until) {
@@ -1200,223 +878,79 @@
         if (until) until.then(end);
     }
 
+    // The submit listener stays on each <form>: a document one would change which of the page's own
+    // submit listeners still run when the form is invalid.
     function initForm(formElement) {
         var form = formElement.closest('.nds-form') || formElement;
-        // .nds-form is a validation hook, but consumers also use it as a
-        // layout-only marker on non-form elements (e.g. wizard step divs).
-        // Only real <form>s get novalidate + a submit listener.
-        if (form.tagName !== 'FORM') return;
-        if (form._ndsFormInitialized) return;
+        // .nds-form is also a layout marker on non-form elements (wizard step divs): only a real
+        // <form> gets novalidate and a submit listener.
+        if (form.tagName !== 'FORM' || form._ndsFormInitialized) return;
         form._ndsFormInitialized = true;
-        // The pending-submit guard is delegated: see initializeContainer.
-        installFormDelegation();
         form.setAttribute('novalidate', '');
 
         form.addEventListener('submit', function(e) {
             var result = Validator.validateForm(form, { showMessages: true, focusFirst: true });
-
             if (!result.valid) {
                 e.preventDefault();
                 e.stopPropagation();
-
                 form.dispatchEvent(new CustomEvent('nds:form:invalid', {
                     detail: { invalidFields: result.invalidFields, errors: result.errors },
                     bubbles: true
                 }));
-
                 return false;
             }
-
             var waits = [];
             form.dispatchEvent(new CustomEvent('nds:form:valid', {
                 detail: { waitUntil: function(p) { waits.push(p); } },
                 bubbles: true
             }));
             if (waits.length) setPending(form, e.submitter, Promise.allSettled(waits));
+            if (form.hasAttribute('data-ajax')) e.preventDefault();
+        });
+    }
 
-            if (form.hasAttribute('data-ajax')) {
-                e.preventDefault();
+    var _windowWired = false;
+    // The el itself counts: a sweep can start on a form, a group or a field.
+    var selfAndInner = function(el, sel) {
+        var inner = Array.from(el.querySelectorAll(sel));
+        return el.matches && el.matches(sel) ? [el].concat(inner) : inner;
+    };
+    NDS.field.addType('forms', {
+        create: function(el) {
+            // A switch's input sits in its track, not in the control: switches start per control.
+            selfAndInner(el, '.nds-form-control').forEach(function(fc) { if (!fc.closest('code')) initSwitches(fc); });
+            selfAndInner(el, '.nds-form').forEach(initForm);
+            wireRechecks();
+            if (_windowWired) return;
+            _windowWired = true;
+            // A POST that loads a page in this tab is pending until the page goes. On window, after every
+            // other listener: a script that cancelled the submit sends it itself. A GET twice does no harm.
+            window.addEventListener('submit', function(e) {
+                var form = e.target, sub = e.submitter;
+                if (!form._ndsFormInitialized || form._ndsPendingEnd || e.defaultPrevented || form.hasAttribute('data-no-pending')) return;
+                var attr = function(n) { return (sub && sub.getAttribute('form' + n)) || form.getAttribute(n) || ''; };
+                if (attr('method').toLowerCase() === 'post' && /^(_self)?$/i.test(attr('target'))) setPending(form, sub);
+            });
+            // Back on a page from the browser's cache: nothing it sent is pending.
+            window.addEventListener('pageshow', function(e) {
+                if (e.persisted) document.querySelectorAll('form').forEach(function(f) { if (f._ndsPendingEnd) f._ndsPendingEnd(); });
+            });
+        },
+        on: {
+            // A pending form drops the submit. Capture runs before the form's own listeners and a framework's root.
+            'submit:capture': function(e) {
+                if (e.target._ndsPendingEnd) { e.preventDefault(); e.stopImmediatePropagation(); }
             }
-        });
-    }
-
-    // ==============================================
-    // AUTO-FILL INITIALIZATION
-    // ==============================================
-    function initAutoFillContainer(container) {
-        if (!container) return;
-
-        var targetId = container.getAttribute('data-target');
-        if (!targetId) return;
-
-        // Opt-in: data-autofill-apply makes a chip click also submit the search
-        // (simulates Enter on the target) instead of only filling the field.
-        var applyOnFill = container.hasAttribute('data-autofill-apply');
-
-        container.querySelectorAll('.nds-item').forEach(function(item) {
-            // Re-init replaces the listener: abort the previous one.
-            if (item._ndsAutoFillAC) item._ndsAutoFillAC.abort();
-            item._ndsAutoFillAC = new AbortController();
-
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                var itemText = item.textContent.trim().replace(/\s+/g, ' ');
-
-                var targetInput = document.getElementById(targetId) ||
-                    document.querySelector('[name="' + CSS.escape(targetId) + '"]') ||
-                    document.querySelector('[data-name="' + CSS.escape(targetId) + '"]');
-
-                if (targetInput && itemText) {
-                    targetInput.focus();
-                    NDS.setValue(targetInput, itemText);
-
-                    var formControl = targetInput.closest('.nds-form-control');
-                    if (formControl) {
-                        FieldSync.update(targetInput, formControl);
-                    }
-
-                    if (applyOnFill) {
-                        targetInput.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
-                    }
-                }
-            }, { signal: item._ndsAutoFillAC.signal });
-        });
-    }
-
-    // ==============================================
-    // DYNAMIC CONTENT OBSERVER
-    // ==============================================
-    function initDynamicContentObserver() {
-        if (NDS.Form._dynamicObserver) return;
-
-        // Sweep only the outermost form, group or field around each added control:
-        // a page-wide sweep cost 63 ms per added row at 1,000 fields (6.6x CPU).
-        NDS.onDOMAdd('.nds-form-control', function(controls) {
-            var roots = new Set();
-            controls.forEach(function(control) {
-                var root = control;
-                for (var n = control; n; n = n.parentElement) {
-                    if (n.matches('.nds-form, .nds-form-group, .nds-form-container')) root = n;
-                }
-                roots.add(root);
-            });
-            roots.forEach(function(root) {
-                for (var other of roots) if (other !== root && other.contains(root)) return;
-                initializeContainer(root);
-            });
-        });
-        NDS.onDOMAdd('.nds-auto-fill', function() { initInputAutoFill(); });
-        NDS.Form._dynamicObserver = true;
-    }
-
-    // ==============================================
-    // CONTAINER INITIALIZATION
-    // ==============================================
-    // Elements the init tail (autofocus, FOUC reveal) has already handled.
-    var _initTail = new WeakSet();
-
-    // The container itself counts: the sweep can start on a form, a group or a field.
-    function selfAndInner(container, sel) {
-        var inner = Array.from(container.querySelectorAll(sel));
-        return container.matches && container.matches(sel) ? [container].concat(inner) : inner;
-    }
-
-    function initializeContainer(container) {
-        if (!container) return;
-        // A page with no field at load never ran init(): a direct call wires the page-wide part too.
-        installFormDelegation();
-        initDynamicContentObserver();
-
-        // Initialize form controls
-        var formControls = selfAndInner(container, '.nds-form-control');
-
-        formControls.forEach(function(formControl) {
-            if (formControl.closest('code')) return;
-
-            // A slider's inputs sit in its track, one level down.
-            var inputElements = formControl.querySelectorAll(':scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input');
-
-            inputElements.forEach(function(input) {
-                FormControls.initializeInput(input, formControl);
-                stampIdentifier(input);
-            });
-
-            FormControls.initPasswordToggle(formControl);
-            FormControls.initNumberInput(formControl);
-            FormControls.initClearButton(formControl, inputElements);
-            FormControls.initSwitchControls(formControl);
-        });
-
-        // Initialize auto-fill containers
-        var autoFillContainers = selfAndInner(container, '.nds-auto-fill');
-
-        autoFillContainers.forEach(initAutoFillContainer);
-
-        // Initialize form groups
-        selfAndInner(container, '.nds-form-group').forEach(function(group) {
-            initGroupState(group);
-        });
-
-
-        // Initialize forms
-        var forms = selfAndInner(container, '.nds-form');
-
-        forms.forEach(initForm);
-
-        // Restore autofocus — browser native autofocus may be lost during init.
-        // preventScroll: a plain focus() scrolls the element into view, which
-        // forces a synchronous layout in the middle of the component-init burst.
-        // Once per element: the dynamic-content observer re-runs this sweep on every
-        // added control, and a re-run would pull focus from the field the user is in.
-        var autofocusEl = container.querySelector('input[autofocus], textarea[autofocus], select[autofocus]');
-        if (autofocusEl && !_initTail.has(autofocusEl)) {
-            _initTail.add(autofocusEl);
-            autofocusEl.focus({ preventScroll: true });
-            var fc = autofocusEl.closest('.nds-form-container');
-            if (fc) NDS.state.add(fc, 'focus');
         }
-
-        // Reveal [hidden] FOUC-guard wrappers now their controls carry state — on a
-        // wrapper's first sweep only, so one hidden later by the page or a component stays hidden.
-        selfAndInner(container, '.nds-form-group, .nds-form-container, .nds-form-action').forEach(function(el) {
-            if (_initTail.has(el)) return;
-            _initTail.add(el);
-            el.removeAttribute('hidden');
-        });
-    }
-
-    // ==============================================
-    // MAIN INITIALIZATION
-    // ==============================================
-    function initFormControlClasses() {
-        initializeContainer(document.body);
-    }
-
-    function initInputAutoFill() {
-        document.querySelectorAll('.nds-auto-fill[data-target]').forEach(initAutoFillContainer);
-    }
-
-    function initializeAllForms() {
-        // initFormControlClasses() -> initializeContainer(document.body) already
-        // sweeps .nds-auto-fill, so a separate initInputAutoFill() pass here would
-        // re-init every auto-fill container at startup. The standalone pass stays
-        // wired to the dynamic-content observer (initDynamicContentObserver) for
-        // .nds-auto-fill nodes added after load.
-        strings.load();
-        installFormDelegation();
-        initFormControlClasses();
-        initDynamicContentObserver();
-    }
+    });
 
     // ==============================================
     // PUBLIC API
     // ==============================================
     NDS.Form = {
         // Core initialization
-        init: initializeAllForms,
-        create: initializeContainer,
+        init: function() { strings.load(); NDS.field.create(document.body); },
+        create: NDS.field.create,
 
         // Status Management API
         setStatus: function(element, status, options) {
@@ -1432,8 +966,9 @@
             if (stateName === 'required') {
                 if (add) container.setAttribute('data-required', '');
                 else container.removeAttribute('data-required');
-                // Propagate to inputs, skip radios (always in groups, validated at group level)
-                if (!container.matches(NO_REQUIRED_STAMP)) container.querySelectorAll('input, textarea, select').forEach(function(input) {
+                // Propagate to inputs, skip radios (always in groups, validated at group level). A field whose
+                // value a component owns never stamps required.
+                if (!NDS.validation.owns(container)) container.querySelectorAll('input, textarea, select').forEach(function(input) {
                     if (input.type !== 'radio') input.required = add;
                 });
             } else {
@@ -1447,16 +982,10 @@
         // raw assignment alone no longer notifies the field. Dispatches nothing
         // itself, so it can't re-enter a caller's own input handler. No-op outside
         // a form-control.
-        syncState: function(input) {
-            if (!input || !input.closest) return;
-            var formControl = input.closest('.nds-form-control');
-            if (!formControl) return;
-            FieldSync.update(input, formControl, true);
-            if (input.type === 'radio' && input.checked) FieldSync.updateRadioGroup(input);
-        },
+        syncState: function(input) { NDS.field.refresh(input); },
 
         // Checkbox Indeterminate State
-        setIndeterminate: FieldSync.setIndeterminate.bind(FieldSync),
+        setIndeterminate: setIndeterminate,
 
         // Form Validation
         validate: Validator.validateForm.bind(Validator),

@@ -11,7 +11,9 @@
  *                              + optional destroy(root) / destroyEach / destroySelector —
  *                              NDS.init.destroy hooks for components with no element backref;
  *                              + optional rule — its field has a validity rule NDS.init.pending
- *                              waits for: true, its instance (el.nds{Name}); 'loaded', its bundle)
+ *                              waits for: true, its instance (el.nds{Name}); 'loaded', its bundle;
+ *                              + optional owns — the field's value lives in the component, not its
+ *                              input: no required stamp and no native check, before its bundle too)
  *   NDS.init.config            the resolved config
  *   NDS.init.audit()           run the debug audits (nds-audit.js). First call loads the
  *                              audit bundle and returns a promise; later calls are synchronous.
@@ -21,6 +23,7 @@
  *                              needs, then init them against it → Promise
  *   NDS.init.destroy(el)       tear down every instance inside el before it leaves the page.
  *                              Returns how many instances it destroyed
+ *   NDS.init.owns(el)          el is a field whose value an owns entry keeps (see the registry)
  *   NDS.init.pending(el)       true while el holds a field whose rule has not started: its
  *                              bundle on the way, or its instance not built yet. A bundle that
  *                              failed to load is not pending, so it never blocks for good
@@ -134,6 +137,8 @@
             name: 'Upload',
             selector: '.nds-upload',
             rule: true,
+            // The script empties the file input after each pick: a required stamp would block every submit.
+            owns: true,
         },
         {
             // Deferred: recognition starts on click, so a late wire lands first.
@@ -1009,6 +1014,7 @@
         refresh: refreshContainer,
         mount: mountContainer,
         destroy: destroyContainer,
+        owns: (el) => COMPONENTS.some((c) => c.owns && el.matches(c.selector)),
         pending,
         ready,
     };

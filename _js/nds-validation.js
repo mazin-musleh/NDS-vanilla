@@ -16,6 +16,7 @@
  *   NDS.validation.isVisible(el, form)   no [hidden] and no display:none up to form
  *   NDS.validation.rules              the registered rules, to read: {selector, fn, on, owns}
  *   NDS.validation.onRule(fn)         fn(rule) for every rule, now and as later bundles register theirs
+ *   NDS.validation.owns(container)    a rule owns the container's value: no native check, no required stamp
  * Events:
  *   (none)
  * Hooks:
@@ -79,6 +80,9 @@
         else if (validity.customError) return input.validationMessage;
         return strings.text('invalid');
     }
+
+    // A rule says so, or the loader's registry does for a component whose bundle has not landed.
+    const owns = (container) => rules.some((r) => r.owns && r.owns(container)) || NDS.init.owns(container);
 
     const watchers = [];
     function addRule(selector, fn, opts = {}) {
@@ -146,7 +150,7 @@
         form.querySelectorAll('.nds-form-container').forEach((container) => {
             if (!isVisible(container, form)) return;
             if (container.classList.contains('nds-otp-container') || container.closest('.nds-form-group')) return;
-            if (rules.some((r) => r.owns && r.owns(container))) return;
+            if (owns(container)) return;
             const input = ownField(container);
             if (!input || input.disabled) return;
             const msg = !input.checkValidity() ? message(input) : opts.extra && opts.extra(container, input);
@@ -180,5 +184,5 @@
         return acc;
     }
 
-    NDS.validation = { addRule, onRule, check, run, message, isVisible, isRequired, checkedCount, rules };
+    NDS.validation = { addRule, onRule, owns, check, run, message, isVisible, isRequired, checkedCount, rules };
 })();

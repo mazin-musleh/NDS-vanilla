@@ -273,6 +273,9 @@
         var valid = !NDS.validation.isRequired(container) || !!(carrier && carrier.value.trim());
         return { valid: valid, message: valid ? '' : strings.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
     }
+    // The readonly display input opens the menu: it still takes the active and focus states.
+    NDS.field.addType('custom-select', { readonlyActive: function (input) { return input.classList.contains('nds-select-input'); } });
+
     // Keyed on the carrier: a native <select> shares the .nds-select shell and stays with the native pass.
     // Re-checked on the carrier's change: a pick writes it and dispatches input and change.
     NDS.validation.addRule('.nds-select[data-required], .nds-select.nds-required', function (cs) {

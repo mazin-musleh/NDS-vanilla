@@ -62,7 +62,7 @@ class JSProcessor
       # otp (auto-advance/paste is first-interaction-critical on OTP/2FA pages).
       # They stay so they wire on the local idle pass, not after an injected
       # bundle. Reveal is gated on this bundle, so it's kept lean.
-      'nds-main.min.js' => ['nds-core.js', 'nds-date.js', 'nds-theme.js', 'nds-main-nav.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-consent.js', 'nds-validation.js', 'nds-form.js', 'nds-checkbox.js', 'nds-radio.js', 'nds-otp.js', 'nds-dropmenu.js', 'nds-custom-select.js', 'nds-multiselect.js', 'nds-taginput.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-grid.js', 'nds-cooldown.js', 'nds-link.js', 'nds-print.js', 'nds-loader.js'],
+      'nds-main.min.js' => ['nds-core.js', 'nds-date.js', 'nds-theme.js', 'nds-main-nav.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-consent.js', 'nds-validation.js', 'nds-field.js', 'nds-form.js', 'nds-checkbox.js', 'nds-radio.js', 'nds-otp.js', 'nds-dropmenu.js', 'nds-custom-select.js', 'nds-multiselect.js', 'nds-taginput.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-grid.js', 'nds-cooldown.js', 'nds-link.js', 'nds-print.js', 'nds-loader.js'],
       # Delegated — deferred components verified safe to load late. Injected by
       # nds-loader.js AFTER the critical pass (never a render-blocking defer tag), so
       # its download never gates the reveal. Components migrate in here over time

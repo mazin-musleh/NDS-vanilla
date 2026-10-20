@@ -340,6 +340,18 @@ showing an error on its own events (owner: all of them), through `NDS.validation
 heard too, and a picker's status is read from the field that holds it. The check words moved to their components'
 sections (`validation`, `radio`, `custom-select` are new). Release-notes lines: the four outcomes above and page order.
 
+**Landed 2026-10-21 (change #9, step 9c):** `check-form-interact.mjs` (216 steps of real input on every field canon;
+every form check now serves both sides from disk, as a fetched and a fulfilled script land at different times).
+`nds-field.js`, `NDS.field`: one document listener per event name, the field states (active, focus, typing, the
+container's disabled / readonly / required, `target`), the disabled and readonly effects, the first-paint pass,
+the added-markup sweep and the reset re-sync; parts plug in with `addType(name, {on, init, create, refresh,
+readonlyActive})`, and each handler gets the field (`control()`) looked up once per event. Form's parts: digits,
+number stepper, password, native select, clear, messages, auto-fill and forms, every listener delegated except
+each `<form>`'s submit (a document one would change which page listeners run on an invalid submit). The loader
+registry's `owns` (Upload) keeps a required stamp off a value-owning field before its bundle lands. Parity: 144
+validate cases and 216 interaction steps, all the same. Speed (median of 9, x6.6): init and create even, a warm
+click +0.9 ms (the number part's pointer listeners), a first click even. Switch, Checkbox and Radio move in 9d.
+
 ## 4. Owner decisions
 
 1. **A7 renames: all four, decided 2026-10-20.** One naming pattern with no exceptions lets an agent guess a
