@@ -136,7 +136,8 @@
 
     function _setDisabled(el, on) {
         el.querySelectorAll('input, textarea, select').forEach(function(inp) { inp.disabled = on; });
-        el.querySelectorAll('.nds-form-action .nds-btn').forEach(function(btn) {
+        // Chips are built after load: their component re-applies with NDS.state.apply after a render.
+        el.querySelectorAll('.nds-form-action .nds-btn, button.nds-chip').forEach(function(btn) {
             NDS.aria.disabled(btn, on);
             if (btn.tagName === 'BUTTON') btn.disabled = on;
         });
@@ -214,31 +215,16 @@
         });
     }
 
-    // A field state changes inputs and buttons, so it needs script however it is written:
-    // the hooks keep every NDS.state write synchronous, the observer catches a bare attribute
-    // or the class. _applied holds what each field has entered, so an effect runs once and a
-    // native <input disabled> is never re-enabled by an unrelated token change.
-    var FIELD_STATES = { disabled: _setDisabled, readonly: _setReadonly, loading: _setLoading };
-    var _applied = new WeakMap();
+    // A field state changes inputs and buttons, so it needs script however it is written.
+    // nds-loading is the canon on every container, so the class spells loading too.
+    NDS.state.effect('disabled', FORM_SCOPE, _setDisabled);
+    NDS.state.effect('readonly', FORM_SCOPE, _setReadonly);
+    NDS.state.effect('loading', FORM_SCOPE, _setLoading, 'nds-loading');
 
+    // Init runs before the load scan, and FieldSync reads the inputs right after.
     function _syncStates(el) {
-        var cur = NDS.state.parse(el);
-        var on = _applied.get(el);
-        for (var token in FIELD_STATES) {
-            // nds-loading is the canon on every container; the token is mirrored onto it.
-            var has = cur.has(token) || (token === 'loading' && el.classList.contains('nds-loading'));
-            if (has === !!(on && on.has(token))) continue;
-            if (!on) _applied.set(el, on = new Set());
-            if (has) on.add(token); else on.delete(token);
-            FIELD_STATES[token](el, has);
-        }
+        NDS.state.apply(el, 'disabled', 'readonly', 'loading');
     }
-
-    Object.keys(FIELD_STATES).forEach(function(token) {
-        NDS.state.onAdd(token, FORM_SCOPE, _syncStates);
-        NDS.state.onRemove(token, FORM_SCOPE, _syncStates);
-    });
-    NDS.onAttrChange(FORM_SCOPE, ['data-state', 'class'], function(els) { els.forEach(_syncStates); });
 
     // ==============================================
     // UTILITY FUNCTIONS
@@ -1085,10 +1071,8 @@
             else
                 NDS.state.remove(f, 'target');
         };
-        ['focus', 'active'].forEach(function(state) {
-            NDS.state.onAdd(state, '.nds-form-container', syncTarget);
-            NDS.state.onRemove(state, '.nds-form-container', syncTarget);
-        });
+        NDS.state.effect('focus', '.nds-form-container', syncTarget);
+        NDS.state.effect('active', '.nds-form-container', syncTarget);
 
         // Mouse press → `active` token. mousedown adds; mouseup/mouseout
         // remove. mouseout stands in for the old per-element mouseleave —

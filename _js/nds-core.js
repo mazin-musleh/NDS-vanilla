@@ -6,6 +6,8 @@
  *                                     the data-state token list
  *     NDS.state.parse(el)              the tokens as a Set
  *     NDS.state.onAdd / .onRemove (token, scope, fn)   react to a token; returns off()
+ *     NDS.state.effect(token, scope, fn, cls)  fn(el, on) once per real change, however the token
+ *                                     was written; cls also spells the token; returns off()
  *     NDS.status.set / .get / .clear (el, status)      the data-status value
  *     NDS.aria.expanded / .hidden / .pressed / .selected / .disabled / .label / .current
  *              / .sort (el, value)     write an ARIA attribute (null removes it)
@@ -774,9 +776,10 @@
     //        NDS.state.set(el, 'open')     → replaces all tokens
     //        NDS.state.get(el)            → 'open active' (raw string)
     //        NDS.state.clear(el)           → removes data-state entirely
-    //        NDS.state.apply(el, ...states) → fire onAdd hooks for existing states (init-time)
+    //        NDS.state.apply(el, ...states) → re-run the effects and onAdd hooks for the states el holds (after a render)
     //        NDS.state.onAdd(state, scope, fn)    → register hook: fn(el) fires when state added on el matching scope; returns off()
     //        NDS.state.onRemove(state, scope, fn) → register hook: fn(el) fires when state removed; returns off()
+    //        NDS.state.effect(state, scope, fn, cls) → fn(el, on) once per real change, whoever wrote it; returns off()
     NDS.state = (() => {
         // Null prototype: a token named like an Object.prototype key ('constructor') has no hooks.
         const _onAdd = Object.create(null);    // { 'disabled': [{ scope, fn }, ...] }
@@ -789,6 +792,48 @@
 
         const parse = el => new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
 
+        // Effects: an NDS.state write runs them synchronously (Form relies on it); a bare attribute,
+        // markup at load and added markup in the observers' microtask. `on` remembers each element an
+        // effect has entered, so it runs once per real change and never undoes what it did not do.
+        const _effects = [], _effectTokens = new Set(), _effectSels = new Set(), _pending = new Set();
+        let _offAdded;
+        const _holds = (e, el, cur) => (cur.has(e.token) || (!!e.cls && el.classList.contains(e.cls))) && el.matches(e.scope);
+        const _run = (el) => {
+            const cur = parse(el);
+            each(_effects, e => {
+                const now = _holds(e, el, cur);
+                if (now === e.on.has(el)) return;
+                now ? e.on.add(el) : e.on.delete(el);
+                e.fn(el, now);
+            });
+        };
+        const _sync = (el, tokens) => { if (tokens.some(t => _effectTokens.has(t))) _run(el); };
+        const _scan = () => {
+            const sel = [..._pending].join(',');
+            _pending.clear();
+            document.querySelectorAll(sel).forEach(_run);
+        };
+        NDS.onAttrChange('*', ['data-state'], els => els.forEach(_run));
+
+        const effect = (state, scope, fn, cls) => {
+            const sel = `[data-state~="${state}"]` + (cls ? `,.${cls}` : '');
+            _effectTokens.add(state);
+            if (cls) NDS.onAttrChange(scope, ['class'], els => els.forEach(_run));
+            // One pooled selector for added markup, re-subscribed as it grows.
+            if (!_effectSels.has(sel)) {
+                _effectSels.add(sel);
+                _offAdded?.();
+                _offAdded = NDS.onDOMAdd([..._effectSels].join(','), els => els.forEach(_run));
+            }
+            // A registration after load (an injected bundle) scans once for its token.
+            if (!_pending.size) {
+                if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _scan, { once: true });
+                else queueMicrotask(_scan);
+            }
+            _pending.add(sel);
+            return subscribe(_effects, { token: state, scope, fn, cls, on: new WeakSet() });
+        };
+
         const add = (el, ...states) => {
             if (!el) return;
             const cur = parse(el);
@@ -798,6 +843,7 @@
             }
             if (!added.length) return;
             el.setAttribute('data-state', [...cur].join(' '));
+            _sync(el, added);
             for (let i = 0; i < added.length; i++) _fire(_onAdd, added[i], el);
         };
 
@@ -811,6 +857,7 @@
             if (!removed.length) return;
             cur.size ? el.setAttribute('data-state', [...cur].join(' '))
                      : el.removeAttribute('data-state');
+            _sync(el, removed);
             for (let i = 0; i < removed.length; i++) _fire(_onRemove, removed[i], el);
         };
 
@@ -825,6 +872,7 @@
         // set and clear replace the list, so the hooks hear each token that left or arrived.
         const _swap = (el, before) => {
             const after = parse(el);
+            _sync(el, [...before, ...after]);
             before.forEach(t => { if (!after.has(t)) _fire(_onRemove, t, el); });
             after.forEach(t => { if (!before.has(t)) _fire(_onAdd, t, el); });
         };
@@ -847,6 +895,9 @@
         const apply = (el, ...states) => {
             if (!el) return;
             const cur = parse(el);
+            each(_effects, e => {
+                if (states.includes(e.token) && _holds(e, el, cur)) { e.on.add(el); e.fn(el, true); }
+            });
             for (let i = 0; i < states.length; i++) {
                 if (cur.has(states[i])) _fire(_onAdd, states[i], el);
             }
@@ -855,7 +906,7 @@
         const onAdd = (state, scope, fn) => subscribe(_onAdd[state] ||= [], { scope, fn });
         const onRemove = (state, scope, fn) => subscribe(_onRemove[state] ||= [], { scope, fn });
 
-        return { parse, add, remove, has, get, set, clear, apply, onAdd, onRemove };
+        return { parse, add, remove, has, get, set, clear, apply, onAdd, onRemove, effect };
     })();
 
     // ── Token mirrors ────────────────────────────────────────────────
@@ -866,35 +917,22 @@
     // must reach descendants — loading's `> *`, the drawer's and upload's `.nds-btn`
     // / `.nds-form-control` rules, the table stripe's `of` list — key on their
     // class, whose set only they touch.
-    // The observer catches State writes and bare setAttribute alike, in a microtask —
-    // before the next paint, not inside the write. The scan covers markup that ships
-    // with a token and runs before the reveal (0.2ms at 6.6x for loading).
+    // A class or aria-busy the author wrote stays theirs: _mirrored holds only what this wrote.
     const MIRRORS = { loading: 'nds-loading', hidden: 'nds-hidden', 'has-more': 'nds-has-more', 'always-open': 'nds-always-open', dropbox: 'nds-dropbox' };
     const _mirrored = new WeakMap();
-    const mirrorTokens = (el) => {
-        const cur = NDS.state.parse(el);
-        let mine = _mirrored.get(el);
-        for (const token in MIRRORS) {
-            const cls = MIRRORS[token], on = cur.has(token);
-            if (on && !el.classList.contains(cls)) {
-                el.classList.add(cls);
-                if (!mine) _mirrored.set(el, mine = new Set());
-                mine.add(cls);
-            } else if (!on && mine && mine.has(cls)) { el.classList.remove(cls); mine.delete(cls); }
-        }
-        // Loading tells a screen reader too: wait for the content. An aria-busy the author wrote stays theirs.
-        if (cur.has('loading') && !el.hasAttribute('aria-busy')) {
-            el.setAttribute('aria-busy', 'true');
-            if (!mine) _mirrored.set(el, mine = new Set());
-            mine.add('aria-busy');
-        } else if (!cur.has('loading') && mine && mine.delete('aria-busy')) el.removeAttribute('aria-busy');
-    };
-    NDS.onAttrChange('*', ['data-state'], (els) => els.forEach(mirrorTokens));
-    const MIRROR_SEL = Object.keys(MIRRORS).map(t => `[data-state~="${t}"]`).join(',');
-    const scanTokens = () => document.querySelectorAll(MIRROR_SEL).forEach(mirrorTokens);
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scanTokens, { once: true }); else scanTokens();
-    // Markup added later with the token already written fires no attribute change.
-    NDS.onDOMAdd(MIRROR_SEL, (els) => els.forEach(mirrorTokens));
+    const mine = (el) => _mirrored.get(el) || _mirrored.set(el, new Set()).get(el);
+    for (const token in MIRRORS) {
+        const cls = MIRRORS[token];
+        NDS.state.effect(token, '*', (el, on) => {
+            if (on && !el.classList.contains(cls)) { el.classList.add(cls); mine(el).add(cls); }
+            else if (!on && _mirrored.get(el)?.delete(cls)) el.classList.remove(cls);
+        });
+    }
+    // Loading tells a screen reader too: wait for the content.
+    NDS.state.effect('loading', '*', (el, on) => {
+        if (on && !el.hasAttribute('aria-busy')) { el.setAttribute('aria-busy', 'true'); mine(el).add('aria-busy'); }
+        else if (!on && _mirrored.get(el)?.delete('aria-busy')) el.removeAttribute('aria-busy');
+    });
 
     // ── Status Management (data-status) ─────────────────────────────
     // Single-value management for data-status attribute

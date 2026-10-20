@@ -655,13 +655,10 @@
             && !editable.querySelector('ul, ol, h1, h2, h3, h4, table, img, [class*="nds-"]');
     }
 
-    // The editable and toolbar buttons aren't native form controls, so the
-    // forms disabled/readonly hooks don't reach them (same rationale as the
-    // taginput chip hooks) — react to the container state tokens instead.
-    ['disabled', 'readonly'].forEach(token => {
-        NDS.state.onAdd(token, '.nds-editor', el => el.ndsEditor?._applyAccessState());
-        NDS.state.onRemove(token, '.nds-editor', el => el.ndsEditor?._applyAccessState());
-    });
+    // The editable and toolbar aren't native form controls, so the field's
+    // disabled/readonly effects don't reach them.
+    ['disabled', 'readonly'].forEach(token =>
+        NDS.state.effect(token, '.nds-editor', el => el.ndsEditor?._applyAccessState()));
 
     // ---------- Toolbar generation ----------
 

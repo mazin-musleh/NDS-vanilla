@@ -55,13 +55,6 @@
         strict: 'Choose from the suggestions',
     });
 
-    // Chips are buttons outside .nds-form-action, so the forms disabled hook
-    // doesn't reach them (same rationale as the multiselect hook).
-    NDS.state.onAdd('disabled', '.nds-taginput', el =>
-        el.querySelectorAll('.nds-chip').forEach(c => { c.disabled = true; }));
-    NDS.state.onRemove('disabled', '.nds-taginput', el =>
-        el.querySelectorAll('.nds-chip').forEach(c => { c.disabled = false; }));
-
     class NDSTagInput {
         constructor(root) {
             this.root = root;
@@ -282,6 +275,8 @@
             this.tags.forEach(value => {
                 this.formControl.insertBefore(this.buildChip(value), this.input);
             });
+            // New chips take the field's disabled.
+            NDS.state.apply(this.root, 'disabled');
             this._syncHiddenInputs();
             // 'filled' is the field's public styling hook (multiselect parity)
             // — consumers style it; no in-repo reader by design.

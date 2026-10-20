@@ -295,6 +295,13 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         }
     }
 
+    // JSD-01 (d) an onAdd and an onRemove on one token: one effect written twice.
+    const hooksOn = (method) => [...code.matchAll(new RegExp(`${stateCall([method])}\\s*\\(\\s*([^,]+?)\\s*,`, 'g'))];
+    const removes = new Set(hooksOn('onRemove').map((m) => m[1]));
+    for (const m of hooksOn('onAdd')) {
+        if (removes.has(m[1])) hit('JSD-01d', m.index, m[0], 'register one NDS.state.effect unless the two hooks run different work');
+    }
+
     // JSD-02 data-status outside NDS.status, read or write.
     for (const m of code.matchAll(/\.(?:set|get|remove|has)Attribute\(\s*(['"])data-status\1|\.dataset\.status\b/g)) hit('JSD-02', m.index, m[0]);
 
@@ -1156,6 +1163,8 @@ const CASES = [
     [`NDS.state.add(b, 'open'); el.innerHTML = '<button data-state="open">';`, ['JSD-01c']],
     [`el.innerHTML = '<div data-state="open">';`, []], // another component's canon
     [`NDS.state.add(a, 'active'); report('uses data-state="active" here');`, []], // prose
+    [`NDS.state.onAdd('disabled', '.x', on); NDS.state.onRemove('disabled', '.x', off);`, ['JSD-01d?']],
+    [`NDS.state.onAdd('open', '.x', f);`, []], // no pair
     [`el.setAttribute('data-status', 'error');`, ['JSD-02']],
     [`if (el.dataset.status === 'success') x();`, ['JSD-02']],
     [`window.addEventListener('resize', fn);`, ['JSP-01']],

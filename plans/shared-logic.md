@@ -3,9 +3,8 @@
 Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (section 7); rules landed in
 AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Facts measured on `main` at `9fd54151`.
 
-**Resume here.** Order steps 1–2 are done, and so is all of change #1 (1, 1b, 1c, 1d; the "Landed" notes
-under section 3's Mechanical checks). **Next: change #2**, the state mechanism in core: section 5 "State",
-S1–S4. Land the held-back `state.onAdd` / `onRemove` pair check in `check-js-rules.mjs` with it.
+**Resume here.** Order steps 1–2 are done, and so are changes #1 (1, 1b, 1c, 1d) and #2 (the "Landed" notes
+under section 3's Mechanical checks). **Next: change #4**, Date Picker + Time Picker on `NDS.Dropmenu.create`.
 Open question for the owner, raised in #1b's note: Switch's field class `.nds-switch-container`.
 
 ## Goal
@@ -264,6 +263,13 @@ field itself (entry 9: one name per component).
 `save`), `nds-cookie-consent.js` → `nds-cookies.js` (`NDS.Cookies`: `init`, `open`, `close`, bundle
 `nds-cookies.min.js`), core `NDS.cookie`. The stored cookie names stay, so no visitor is asked again.
 The bundle's new name needed a docs-only `kind: file` in `migrations.yml`.
+
+**Landed 2026-10-20 (change #2):** `NDS.state.effect(token, scope, fn, cls)` in core; `cls` is a class that
+spells the token too (Form's `nds-loading`). Core's mirrors, Form's field states and its `target` sync (S4's
+effect, still in Form until #9), Multiselect, Taginput and Editor run on it. `apply()` re-runs the effects, so
+Multiselect and Taginput call it after each chip render, and the field's disabled effect reaches `button.nds-chip`.
+New: a field that ships `data-state="disabled"` in markup, or is mounted with it, now disables its inputs.
+JSD-01 (d) flags an `onAdd` / `onRemove` pair on one token (it found all 5 old sites).
 
 ## 4. Owner decisions
 

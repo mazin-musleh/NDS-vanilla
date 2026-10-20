@@ -53,14 +53,6 @@
         applied: 'Applied {value}',
     });
 
-    // Chips are buttons outside .nds-form-action, so the forms disabled hook
-    // doesn't reach them — without this they stay tab-focusable (and removable)
-    // on a disabled field.
-    NDS.state.onAdd('disabled', '.nds-multiselect', el =>
-        el.querySelectorAll('.nds-chip').forEach(c => { c.disabled = true; }));
-    NDS.state.onRemove('disabled', '.nds-multiselect', el =>
-        el.querySelectorAll('.nds-chip').forEach(c => { c.disabled = false; }));
-
     class NDSMultiselect {
         constructor(root) {
             this.root = root;
@@ -91,8 +83,6 @@
             this.abortController = new AbortController();
             this.valid = true;
             this.init();
-            // Forms applies an authored disabled through the field's input, and a multiselect's inputs sit in its menu.
-            NDS.state.apply(root, 'disabled');
         }
 
         init() {
@@ -448,6 +438,8 @@
             const selected = this.getSelected();
             this.chipsEl.replaceChildren();
             selected.forEach(value => { this.chipsEl.appendChild(this.buildChip(value)); });
+            // New chips take the field's disabled.
+            NDS.state.apply(this.root, 'disabled');
             NDS.state[selected.length ? 'add' : 'remove'](this.root, 'filled');
 
             if (this.trigger && this.triggerLabelOriginal) {
