@@ -541,9 +541,9 @@
                 // Before create(): custom-select reads the input while building.
                 el.querySelector('.nds-select-input').id = this.uid + '-' + u;
                 NDS.CustomSelect.create(el);
-                // nds:customselect:change fires on the form-control and does NOT
+                // nds:custom-select:change fires on the form-control and does NOT
                 // bubble, so it binds per unit, never on the panel.
-                el.querySelector('.nds-form-control').addEventListener('nds:customselect:change', (e) => {
+                el.querySelector('.nds-form-control').addEventListener('nds:custom-select:change', (e) => {
                     this.onUnitChange(u, e.detail.value);
                 }, { signal });
             });
@@ -781,7 +781,7 @@
 
         // Constraint-validation bridge: a hand-typed value bypasses the panel's
         // disabled options, so every change stamps setCustomValidity and
-        // NDS.Forms.validateForm / checkValidity gate the submit. `silent` skips
+        // NDS.Form.validateForm / checkValidity gate the submit. `silent` skips
         // the footer paint — used at construction.
         _validateInput(silent, value = this.elements.input.value) {
             const input = this.elements.input;
@@ -791,7 +791,7 @@
             if (msg && !silent) {
                 // Soft dependency — forms ships in the main bundle; this no-ops if
                 // a consumer bundle excludes it.
-                NDS.Forms?.setStatus?.({ element: this.elements.container, status: 'error', message: msg });
+                NDS.Form?.setStatus?.({ element: this.elements.container, status: 'error', message: msg });
             }
         }
 
@@ -874,7 +874,7 @@
             if (this.elements.input.validity.customError) {
                 this.elements.input.setCustomValidity('');
                 // Soft dependency — as in _validateInput.
-                NDS.Forms?.clearStatus?.(this.elements.container);
+                NDS.Form?.clearStatus?.(this.elements.container);
             }
             this.elements.container.removeAttribute('data-nds-time-picker-initialized');
             delete this.elements.input._ndsTimePicker;
@@ -998,8 +998,8 @@
                 if (carrier) NDS.setValue(carrier, value);
             }
             // An error paints on leaving the group; a fixed value clears it at once. Soft dependency, as in field mode.
-            if (msg && !silent) NDS.Forms?.setStatus?.({ element: container, status: 'error', message: msg });
-            else if (!msg && NDS.Status.get(container) === 'error') NDS.Forms?.clearStatus?.(container);
+            if (msg && !silent) NDS.Form?.setStatus?.({ element: container, status: 'error', message: msg });
+            else if (!msg && NDS.Status.get(container) === 'error') NDS.Form?.clearStatus?.(container);
         }
 
         getValue() { return this.value; }
@@ -1027,7 +1027,7 @@
             // As in field mode: nothing is left to clear the picker's own error. Soft dependency, as in _validateInput.
             if (this.elements.hour.validity.customError) {
                 this.elements.hour.setCustomValidity('');
-                NDS.Forms?.clearStatus?.(this.elements.container);
+                NDS.Form?.clearStatus?.(this.elements.container);
             }
             this.elements.container.removeAttribute('data-nds-time-picker-initialized');
             delete this.elements.container._ndsTimePicker;

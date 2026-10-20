@@ -551,7 +551,7 @@
     // validation can be tried again.
     document.addEventListener('reset', function (e) {
         var slot = e.target.querySelector && e.target.querySelector('[data-demo-slot]');
-        if (slot) slot.querySelectorAll('[data-status]').forEach(function (el) { NDS.Forms.clearStatus(el); });
+        if (slot) slot.querySelectorAll('[data-status]').forEach(function (el) { NDS.Form.clearStatus(el); });
         if (slot) dropAlert(e.target);
     });
 

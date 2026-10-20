@@ -1320,193 +1320,193 @@
   "ar": "روابط التذييل"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "required",
   "en": "This field is required",
   "ar": "هذا الحقل مطلوب"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "invalid",
   "en": "Invalid input",
   "ar": "مدخل غير صحيح"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "invalid_email",
   "en": "Please enter a valid email address",
   "ar": "يرجى إدخال عنوان بريد إلكتروني صحيح"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "invalid_url",
   "en": "Please enter a valid URL",
   "ar": "يرجى إدخال رابط صحيح"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "pattern",
   "en": "Please match the requested format",
   "ar": "يرجى مطابقة التنسيق المطلوب"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "too_short",
   "en": "Input is too short (minimum {n} characters)",
   "ar": "المدخل قصير جدًا (الحد الأدنى {n})"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "too_long",
   "en": "Input is too long (maximum {n} characters)",
   "ar": "المدخل طويل جدًا (الحد الأقصى {n})"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "range_under",
   "en": "Value must be at least {n}",
   "ar": "القيمة يجب أن تكون على الأقل {n}"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "range_over",
   "en": "Value must be no more than {n}",
   "ar": "القيمة يجب ألا تزيد على {n}"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "min_value",
   "en": "Minimum value is {n}",
   "ar": "الحد الأدنى {n}"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "max_value",
   "en": "Maximum value is {n}",
   "ar": "الحد الأقصى {n}"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "invalid_national_id",
   "en": "Invalid national ID number",
   "ar": "رقم الهوية غير صحيح"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "invalid_iban",
   "en": "Invalid IBAN",
   "ar": "رقم الآيبان غير صحيح"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "no_arabic",
   "en": "Arabic characters are not allowed",
   "ar": "الأحرف العربية غير مسموح بها"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "select_option",
   "en": "Please select an option",
   "ar": "يرجى اختيار خيار"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "select_at_least",
   "en": "one: Please select at least 1 option · other: Please select at least {n} options",
   "ar": "one: يرجى اختيار خيار واحد على الأقل · two: يرجى اختيار خيارين على الأقل · few: يرجى اختيار {n} خيارات على الأقل · many: يرجى اختيار {n} خيارًا على الأقل · other: يرجى اختيار {n} خيار على الأقل"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "select_at_most",
   "en": "one: Please select no more than 1 option · other: Please select no more than {n} options",
   "ar": "one: يرجى اختيار خيار واحد كحد أقصى · two: يرجى اختيار خيارين كحد أقصى · few: يرجى اختيار {n} خيارات كحد أقصى · many: يرجى اختيار {n} خيارًا كحد أقصى · other: يرجى اختيار {n} خيار كحد أقصى"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "rating_required",
   "en": "Please choose a rating",
   "ar": "يرجى اختيار تقييم"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "tag_required",
   "en": "Please add at least one tag",
   "ar": "يرجى إضافة وسم واحد على الأقل"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "file_required",
   "en": "Please add a file",
   "ar": "يرجى إرفاق ملف"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "upload_pending",
   "en": "Please wait for the upload to finish",
   "ar": "يرجى الانتظار حتى يكتمل الرفع"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "pick_suggestion",
   "en": "Choose from the suggestions",
   "ar": "اختر من الاقتراحات"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "otp_incomplete",
   "en": "Please enter all {n} digits",
   "ar": "يرجى إدخال جميع الأرقام"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "loading",
   "en": "Loading",
   "ar": "جارٍ التحميل"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "show_password",
   "en": "Show password",
   "ar": "إظهار كلمة المرور"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "hide_password",
   "en": "Hide password",
   "ar": "إخفاء كلمة المرور"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "clear_input",
   "en": "Clear input",
   "ar": "مسح المدخل"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "clear_search",
   "en": "Clear search",
   "ar": "مسح البحث"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "suggestions",
   "en": "Suggestions:",
   "ar": "اقتراحات:"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "decrease_value",
   "en": "Decrease value",
   "ar": "تقليل القيمة"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "increase_value",
   "en": "Increase value",
   "ar": "زيادة القيمة"
  },
  {
-  "section": "forms",
+  "section": "form",
   "key": "clear",
   "en": "Clear",
   "ar": "مسح"
@@ -1602,13 +1602,13 @@
   "ar": "• ESC للإغلاق"
  },
  {
-  "section": "mainnav",
+  "section": "main-nav",
   "key": "primary_navigation",
   "en": "Primary navigation",
   "ar": "التنقل الرئيسي"
  },
  {
-  "section": "mainnav",
+  "section": "main-nav",
   "key": "toggle_menu",
   "en": "Toggle navigation menu",
   "ar": "فتح/إغلاق قائمة التنقل"
@@ -1710,19 +1710,19 @@
   "ar": "ترقيم الصفحات"
  },
  {
-  "section": "panels",
+  "section": "panel",
   "key": "close_panel",
   "en": "Close panel",
   "ar": "إغلاق اللوحة"
  },
  {
-  "section": "panels",
+  "section": "panel",
   "key": "make_smaller",
   "en": "Make panel smaller",
   "ar": "تصغير اللوحة"
  },
  {
-  "section": "panels",
+  "section": "panel",
   "key": "make_larger",
   "en": "Make panel larger",
   "ar": "تكبير اللوحة"
@@ -1890,31 +1890,31 @@
   "ar": "الشريحة التالية"
  },
  {
-  "section": "tables",
+  "section": "table",
   "key": "reset",
   "en": "Reset",
   "ar": "إعادة تعيين"
  },
  {
-  "section": "tables",
+  "section": "table",
   "key": "column",
   "en": "Column {n}",
   "ar": "العمود {n}"
  },
  {
-  "section": "tables",
+  "section": "table",
   "key": "columns",
   "en": "Columns",
   "ar": "الأعمدة"
  },
  {
-  "section": "tables",
+  "section": "table",
   "key": "visible_columns",
   "en": "Visible columns",
   "ar": "الأعمدة المرئية"
  },
  {
-  "section": "tables",
+  "section": "table",
   "key": "toggle_details",
   "en": "Toggle details",
   "ar": "إظهار/إخفاء التفاصيل"

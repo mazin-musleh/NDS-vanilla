@@ -38,7 +38,7 @@
  * Dependencies:
  * - nds-feedback.js (NDSFeedback API for displaying feedback messages)
  * - nds-cookies.js (for persisting feedback submission status)
- * - nds-form.js (required when the component lives inside a form; provides NDS.Forms.validateForm)
+ * - nds-form.js (required when the component lives inside a form; provides NDS.Form.validateForm)
  *
  * Language Detection:
  * Automatically detects page language from <html lang="..."> or <body lang="..."> attribute
@@ -273,11 +273,11 @@ NDS.UserFeedback = (() => {
             submitButton.addEventListener('click', function (e) {
                 e.preventDefault();
 
-                // Find the parent form and validate. `NDS.Forms.validateForm` is unconditionally
+                // Find the parent form and validate. `NDS.Form.validateForm` is unconditionally
                 // attached when the Forms module loads, so no guard beyond the form lookup is needed.
                 const form = feedbackComponent.closest('.nds-form') || feedbackComponent.closest('form');
                 if (form) {
-                    const result = NDS.Forms.validateForm(form, { showMessages: true, focusFirst: true });
+                    const result = NDS.Form.validateForm(form, { showMessages: true, focusFirst: true });
                     if (!result.valid) {
                         return; // Don't show success if validation fails
                     }

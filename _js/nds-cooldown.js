@@ -1,11 +1,11 @@
-/* NDS.CooldownButton — public surface
+/* NDS.Cooldown — public surface
  * Rides: (none — base component)
  * Methods:
- *   NDS.CooldownButton.init()        wire every .nds-cooldown, now and later
- *   NDS.CooldownButton.start(btn, opts?)  begin the cycle by hand
+ *   NDS.Cooldown.init()        wire every .nds-cooldown, now and later
+ *   NDS.Cooldown.start(btn, opts?)  begin the cycle by hand
  *                                    opts.seconds  run this long instead of data-cooldown
  *                                    opts.silent   skip nds:cooldown:start
- *   NDS.CooldownButton.reset(btn)    end it early and restore the button
+ *   NDS.Cooldown.reset(btn)    end it early and restore the button
  * Events (bubble from the button):
  *   nds:cooldown:start       the countdown starts — issue your request here
  *   nds:cooldown:tick        detail {remaining} — once a second during the countdown
@@ -62,10 +62,10 @@
  *   </button>
  *
  * Programmatic:
- *   NDS.CooldownButton.start(btn);
- *   NDS.CooldownButton.start(btn, { silent: true });        // send already happened
- *   NDS.CooldownButton.start(btn, { seconds: 20, silent: true });  // resume a remainder
- *   NDS.CooldownButton.reset(btn);
+ *   NDS.Cooldown.start(btn);
+ *   NDS.Cooldown.start(btn, { silent: true });        // send already happened
+ *   NDS.Cooldown.start(btn, { seconds: 20, silent: true });  // resume a remainder
+ *   NDS.Cooldown.reset(btn);
  *
  * Events (fired on the button, bubble):
  *   nds:cooldown:start      — cooldown starts; issue the request here
@@ -96,7 +96,7 @@
     'use strict';
 
     const SEL = '.nds-cooldown';
-    const WIRED_ATTR = 'data-nds-cooldown-button-initialized';
+    const WIRED_ATTR = 'data-nds-cooldown-initialized';
     const DEFAULT_TEMPLATE = '{s}';
     // Global: a bilingual label names the token once per language.
     const TOKEN = /\{s\}/g;
@@ -255,11 +255,11 @@
     // /g flag, so there is no lastIndex to carry between buttons.
     function warnNoCountdown(btn) {
         if (!btn.querySelector('.nds-label')) {
-            console.warn('NDS CooldownButton: the button has no <span class="nds-label">, so the countdown will not show.', btn);
+            console.warn('NDS Cooldown: the button has no <span class="nds-label">, so the countdown will not show.', btn);
         }
         const label = btn.getAttribute('data-cooldown-label');
         if (label && label.search(TOKEN) === -1) {
-            console.warn('NDS CooldownButton: data-cooldown-label has no {s} token, so the countdown will not show. Label: ' + JSON.stringify(label), btn);
+            console.warn('NDS Cooldown: data-cooldown-label has no {s} token, so the countdown will not show. Label: ' + JSON.stringify(label), btn);
         }
     }
 
@@ -300,5 +300,5 @@
         reset
     };
 
-    NDS.CooldownButton = CooldownButton;
+    NDS.Cooldown = CooldownButton;
 })();

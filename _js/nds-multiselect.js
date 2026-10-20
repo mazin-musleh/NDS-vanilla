@@ -340,7 +340,7 @@
             // A submit racing the open panel (Enter key, requestSubmit, or
             // the async close gap after clicking Submit — the closed event
             // fires deferred) must post/validate the APPLIED set, not staged
-            // toggles. Capture phase beats NDS.Forms' submit validation.
+            // toggles. Capture phase beats NDS.Form' submit validation.
             // A form reset ticks the boxes back without a change event.
             this.root.closest('form')?.addEventListener('reset', (e) => setTimeout(() => {
                 if (e.defaultPrevented) return;

@@ -43,7 +43,7 @@ The code shows the outer element of each part. Copy each part whole from its own
   <div id="nds-digital-stamp" role="region" aria-label="Digital government stamp" data-i18n-aria-label="digital-stamp.label" hidden>
     <!-- The stamp panel: ../ui-shell/topbar -->
   </div>
-  <nav class="nds-main-nav nds-content-wrapper" id="nds-main-nav" aria-label="Primary navigation" data-i18n-aria-label="mainnav.primary_navigation">
+  <nav class="nds-main-nav nds-content-wrapper" id="nds-main-nav" aria-label="Primary navigation" data-i18n-aria-label="main-nav.primary_navigation">
     <!-- The brand, the links and the actions: ../ui-shell/main-nav -->
   </nav>
 </header>

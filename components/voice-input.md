@@ -45,7 +45,7 @@ Pick another component when:
     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
     <input type="text" id="voice-search" name="search" placeholder="Search services...">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear search" data-i18n-aria-label="forms.clear_search" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear search" data-i18n-aria-label="form.clear_search" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
       <button class="nds-btn nds-subtle nds-voice-input nds-icon-only" type="button" aria-label="Start voice input" data-i18n-aria-label="voice-input.start_voice_input" aria-pressed="false">
@@ -79,7 +79,7 @@ Pick another component when:
       <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
       <input type="text" id="voice-query" class="nds-search-input" name="q" placeholder="Search..." aria-label="Search" data-i18n-aria-label="filter.search">
       <div class="nds-form-action">
-        <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear search" data-i18n-aria-label="forms.clear_search" hidden>
+        <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear search" data-i18n-aria-label="form.clear_search" hidden>
           <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
         <button class="nds-btn nds-subtle nds-voice-input nds-icon-only" type="button" aria-label="Start voice input" data-i18n-aria-label="voice-input.start_voice_input" aria-pressed="false">

@@ -9,7 +9,7 @@
  *   NDS.CustomSelect.setValue(el, value)   pick by option value; false when no option carries it
  *   NDS.CustomSelect.clear(el)             back to placeholder
  * Events (fire ON the .nds-form-control — this one does NOT bubble):
- *   nds:customselect:change   detail {value, text} — every pick, by click or by
+ *   nds:custom-select:change   detail {value, text} — every pick, by click or by
  *                             setValue()/clear()
  * Hooks:
  *   (none — the field is markup: one .nds-select-option per choice, .nds-select-value the
@@ -176,7 +176,7 @@
         if (quiet) {
             if (hiddenInput) hiddenInput.value = value;
             selectInput.value = text;
-            NDS.Forms.syncState(selectInput);
+            NDS.Form.syncState(selectInput);
             return true;
         }
         // Dispatched input/change run forms' delegated field-state sync.
@@ -184,7 +184,7 @@
         if (hiddenInput) NDS.setValue(hiddenInput, value);
         NDS.setValue(selectInput, text);
 
-        formControl.dispatchEvent(new CustomEvent('nds:customselect:change', {
+        formControl.dispatchEvent(new CustomEvent('nds:custom-select:change', {
             detail: { value: value, text: text }
         }));
         return true;
@@ -261,7 +261,7 @@
         },
         // Programmatic pick: the same write sequence as a user click (display
         // label, hidden value, selected markers, input/change events,
-        // nds:customselect:change). Returns false when no option carries the value —
+        // nds:custom-select:change). Returns false when no option carries the value —
         // display and value are never desynced. Works before the dropmenu is built.
         setValue: function (el, value) {
             var formControl = formControlOf(el);

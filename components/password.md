@@ -49,7 +49,7 @@ Pick another component when:
       <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
-      <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="forms.show_password">
+      <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
         <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
       </button>
     </div>
@@ -79,7 +79,7 @@ Pick another component when:
       <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
-      <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="forms.show_password">
+      <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
         <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
       </button>
     </div>
@@ -107,7 +107,7 @@ Pick another component when:
       <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
-      <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="forms.show_password">
+      <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
         <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
       </button>
     </div>

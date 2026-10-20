@@ -50,7 +50,7 @@ Pick another component when:
   <div class="nds-form-control">
     <input type="text" id="full-name" name="full-name" class="nds-input" placeholder="Enter your full name" autocomplete="name">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -89,7 +89,7 @@ Pick another component when:
       <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
-      <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="forms.show_password">
+      <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
         <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
       </button>
     </div>
@@ -107,7 +107,7 @@ Pick another component when:
     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
     <input type="text" id="search-services" name="search" class="nds-search-input" placeholder="Search services">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear search" data-i18n-aria-label="forms.clear_search" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear search" data-i18n-aria-label="form.clear_search" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
       <button class="nds-btn nds-subtle nds-voice-input nds-icon-only" type="button" aria-label="Voice input" data-i18n-aria-label="voice-input.voice_input">
@@ -126,13 +126,13 @@ Pick another component when:
   </div>
   <div class="nds-form-control">
     <div class="nds-form-action nds-prefix">
-      <button class="nds-btn nds-subtle nds-number-decrement nds-icon-only" type="button" aria-label="Decrease value" data-i18n-aria-label="forms.decrease_value">
+      <button class="nds-btn nds-subtle nds-number-decrement nds-icon-only" type="button" aria-label="Decrease value" data-i18n-aria-label="form.decrease_value">
         <i class="nds-icon nds-hgi-minus-sign" aria-hidden="true"></i>
       </button>
     </div>
     <input type="text" id="quantity" name="quantity" class="nds-input nds-center" inputmode="numeric" value="1" min="1" max="20" step="1">
     <div class="nds-form-action nds-suffix">
-      <button class="nds-btn nds-subtle nds-number-increment nds-icon-only" type="button" aria-label="Increase value" data-i18n-aria-label="forms.increase_value">
+      <button class="nds-btn nds-subtle nds-number-increment nds-icon-only" type="button" aria-label="Increase value" data-i18n-aria-label="form.increase_value">
         <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
       </button>
     </div>
@@ -152,7 +152,7 @@ Pick another component when:
     </div>
     <input type="tel" id="mobile" name="mobile" class="nds-input nds-phone" placeholder="5XX XXX XXX" autocomplete="tel-national" inputmode="numeric" maxlength="9">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -196,7 +196,7 @@ Pick another component when:
     </div>
     <input type="tel" id="phone" name="phone" class="nds-input nds-phone" placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -213,7 +213,7 @@ Pick another component when:
   <div class="nds-form-control">
     <input type="text" id="national-id" name="national-id" class="nds-input nds-national-id" placeholder="1XXXXXXXXX" inputmode="numeric" maxlength="10" autocomplete="off">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -230,7 +230,7 @@ Pick another component when:
   <div class="nds-form-control">
     <input type="text" id="iban" name="iban" class="nds-input nds-iban" placeholder="SA0000000000000000000000" maxlength="34" autocomplete="off" spellcheck="false">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -399,12 +399,12 @@ A sent form takes no second submit, so a double click sends it once. Its submit 
 - A form with `method="post"` that loads the next page in the same tab waits until that page opens. Add `data-no-pending` to a POST form whose answer is a download, or no page: the button would spin until the page reloads.
 - A `data-ajax` form waits only when the `nds:form:valid` listener passes its request to `event.detail.waitUntil()`. The form takes submits again when the request ends, whether it passed or failed. Call `waitUntil()` in the listener itself, not after an `await`.
 
-`.nds-form` draws no box: give the fields a gapped wrapper such as `nds-flex nds-col`. On an element that is not a `<form>`, `.nds-form` checks nothing. Call `NDS.Forms.validateForm(step)` from your own button there, where `step` is that `.nds-form` element, and read `valid` in the result.
+`.nds-form` draws no box: give the fields a gapped wrapper such as `nds-flex nds-col`. On an element that is not a `<form>`, `.nds-form` checks nothing. Call `NDS.Form.validateForm(step)` from your own button there, where `step` is that `.nds-form` element, and read `valid` in the result.
 
 ### Status Messages
 {: .nds-block-title}
 
-`NDS.Forms.setStatus()` shows a message under a field, such as an error the server returns. A field shows `error` or `help`. `help` is a hint in the neutral color with a "?" icon, not a validation result. Any other status shows the message in the neutral color, with no red outline. `setStatus()` never moves focus, so focus the first field with an error yourself. Focus also scrolls the field into view.
+`NDS.Form.setStatus()` shows a message under a field, such as an error the server returns. A field shows `error` or `help`. `help` is a hint in the neutral color with a "?" icon, not a validation result. Any other status shows the message in the neutral color, with no red outline. `setStatus()` never moves focus, so focus the first field with an error yourself. Focus also scrolls the field into view.
 
 <script type="text/html" id="forms-status-js" data-canon data-lang="js" data-preview="none">
 // Errors the server returned, in field order
@@ -417,7 +417,7 @@ var first = null;
 errors.forEach(function (error) {
   var field = document.getElementById(error.field);
   if (!field) return;
-  NDS.Forms.setStatus({ element: field, status: 'error', message: error.message });
+  NDS.Form.setStatus({ element: field, status: 'error', message: error.message });
   if (!first) first = field;
 });
 
@@ -442,7 +442,7 @@ async function checkUsername(name) {
   NDS.State.add(field, 'loading');
   try {
     var { data } = await NDS.request('/api/username?name=' + encodeURIComponent(name), { json: true });
-    NDS.Forms.setStatus({
+    NDS.Form.setStatus({
       element: field,
       status: data.available ? 'neutral' : 'error',
       message: data.available ? 'This username is free' : 'This username is taken'
@@ -466,7 +466,7 @@ The minus and plus buttons change the value by `step`, 1 by default. Hold a butt
 ### National ID and IBAN
 {: .nds-block-title}
 
-`.nds-national-id` keeps only digits as the user types or pastes, and turns Arabic-Indic digits into Latin ones. The field fails when the value is not a Saudi national ID or iqama number: 10 digits, the first 1 or 2, and a correct check digit. `.nds-iban` removes spaces and other separators and writes the letters as capitals. A value that starts with a digit, as some banking apps copy a Saudi IBAN, gets `SA` in front. The field fails when the value is not an IBAN: two letters for the country, two check digits, then 11 to 30 letters or digits, with a correct check sum. Both checks run at blur and at submit, and an empty field passes unless it is required. The same rules are `NDS.Forms.isNationalId(value)` and `NDS.Forms.isIban(value)`, for a check in your own code.
+`.nds-national-id` keeps only digits as the user types or pastes, and turns Arabic-Indic digits into Latin ones. The field fails when the value is not a Saudi national ID or iqama number: 10 digits, the first 1 or 2, and a correct check digit. `.nds-iban` removes spaces and other separators and writes the letters as capitals. A value that starts with a digit, as some banking apps copy a Saudi IBAN, gets `SA` in front. The field fails when the value is not an IBAN: two letters for the country, two check digits, then 11 to 30 letters or digits, with a correct check sum. Both checks run at blur and at submit, and an empty field passes unless it is required. The same rules are `NDS.Form.isNationalId(value)` and `NDS.Form.isIban(value)`, for a check in your own code.
 
 ### Password
 {: .nds-block-title}
@@ -489,7 +489,7 @@ The eye button switches the field between hidden and plain text, and its label b
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">Every field on the page starts when the page loads, and a field added later starts on its own. Call <code class="nds-inline-code lang-js">NDS.Forms.initializeContainer()</code> only to start a part of the page at once.</p>
+          <p class="nds-item-desc">Every field on the page starts when the page loads, and a field added later starts on its own. Call <code class="nds-inline-code lang-js">NDS.Form.initializeContainer()</code> only to start a part of the page at once.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -560,7 +560,7 @@ The eye button switches the field between hidden and plain text, and its label b
 - Put a unit, a currency or a short code in a prefix or suffix. The slot also takes a button or a [Dropmenu](../components/dropmenu), such as an amount with a currency picker.
 - Use MD only where space is short, such as a table filter. Keep one size in one form.
 - Put a form's Submit and Back buttons in `.nds-form-actions`, after the fields. The singular `.nds-form-action` is the button slot inside one field.
-- Set `input.value` from a script, then call `NDS.Forms.syncState(input)`. Setting the value alone does not update the Clear button or the field's state.
+- Set `input.value` from a script, then call `NDS.Form.syncState(input)`. Setting the value alone does not update the Clear button or the field's state.
 - To clear a form, call `form.reset()` or use a reset button. Each NDS field goes back to the value the page shipped with, and its message clears.
 - Give an icon-only action button an `aria-label`, such as "Clear input".
 - Test each required field type empty, one at a time. A text field, a custom select, a multiselect and a tag input each check their own required state, so one passing proves nothing about the others.
@@ -665,23 +665,23 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 
 | Method | Effect |
 |---|---|
-| `NDS.Forms.init()` | Starts every field and form on the page. It runs at page load |
-| `NDS.Forms.initializeContainer(el)` | Starts every field and form inside `el` |
-| `NDS.Forms.initForm(form)` | Turns on submit validation for one `<form class="nds-form">` |
-| `NDS.Forms.setStatus(options)` | Shows a message under a field. Options below. Returns `false` when the element is not in a field |
-| `NDS.Forms.clearStatus(el)` | Removes the field's message and status. A permanent message comes back |
-| `NDS.Forms.getStatus(el)` | Returns `{ status, message, isValid }`. `isValid` is `false` only for `error` |
-| `NDS.Forms.setState(el, name, add)` | Adds or removes (`add: false`) a state on the field. `'required'` sets `data-required` and the inputs' `required` |
-| `NDS.Forms.syncState(input)` | Updates the field after a script sets its value or `checked`. It fires no event |
-| `NDS.Forms.validateForm(el, options)` | Checks every visible field in the form that holds `el`, and returns `{ valid, invalidFields, errors }`. `options` is `{ showMessages, focusFirst }`, both `true` by default. Pass both: an object with one key turns the other off |
-| `NDS.Forms.validateCheckboxGroup(group)` | Checks a checkbox group's `data-required`, `data-min-checked` and `data-max-checked` |
-| `NDS.Forms.validateRadioGroup(group)` | Checks that a required radio group has a choice |
-| `NDS.Forms.validateOtpGroup(group)` | Checks that every OTP box has a digit |
-| `NDS.Forms.validateMultiselect(el)` | Checks a [Multiselect](../components/multiselect)'s required and count rules |
-| `NDS.Forms.validateTaginput(el)` | Checks that a required [Tag Input](../components/taginput) has a tag |
-| `NDS.Forms.initCheckboxGroupValidation(group)`, `initRadioGroupValidation(group)`, `initMultiselectValidation(el)` | Checks the group again on each change once it shows a message. `init()` does this for every group |
-| `NDS.Forms.setIndeterminate(checkbox, value)` | Sets a checkbox's mixed state. See [Checkbox](../components/checkbox) |
-| `NDS.Forms.isNationalId(value)`, `isIban(value)` | Return `true` when the string passes the `.nds-national-id` or `.nds-iban` check. They take the clean value: digits only, or capitals with no spaces |
+| `NDS.Form.init()` | Starts every field and form on the page. It runs at page load |
+| `NDS.Form.initializeContainer(el)` | Starts every field and form inside `el` |
+| `NDS.Form.initForm(form)` | Turns on submit validation for one `<form class="nds-form">` |
+| `NDS.Form.setStatus(options)` | Shows a message under a field. Options below. Returns `false` when the element is not in a field |
+| `NDS.Form.clearStatus(el)` | Removes the field's message and status. A permanent message comes back |
+| `NDS.Form.getStatus(el)` | Returns `{ status, message, isValid }`. `isValid` is `false` only for `error` |
+| `NDS.Form.setState(el, name, add)` | Adds or removes (`add: false`) a state on the field. `'required'` sets `data-required` and the inputs' `required` |
+| `NDS.Form.syncState(input)` | Updates the field after a script sets its value or `checked`. It fires no event |
+| `NDS.Form.validateForm(el, options)` | Checks every visible field in the form that holds `el`, and returns `{ valid, invalidFields, errors }`. `options` is `{ showMessages, focusFirst }`, both `true` by default. Pass both: an object with one key turns the other off |
+| `NDS.Form.validateCheckboxGroup(group)` | Checks a checkbox group's `data-required`, `data-min-checked` and `data-max-checked` |
+| `NDS.Form.validateRadioGroup(group)` | Checks that a required radio group has a choice |
+| `NDS.Form.validateOtpGroup(group)` | Checks that every OTP box has a digit |
+| `NDS.Form.validateMultiselect(el)` | Checks a [Multiselect](../components/multiselect)'s required and count rules |
+| `NDS.Form.validateTaginput(el)` | Checks that a required [Tag Input](../components/taginput) has a tag |
+| `NDS.Form.initCheckboxGroupValidation(group)`, `initRadioGroupValidation(group)`, `initMultiselectValidation(el)` | Checks the group again on each change once it shows a message. `init()` does this for every group |
+| `NDS.Form.setIndeterminate(checkbox, value)` | Sets a checkbox's mixed state. See [Checkbox](../components/checkbox) |
+| `NDS.Form.isNationalId(value)`, `isIban(value)` | Return `true` when the string passes the `.nds-national-id` or `.nds-iban` check. They take the clean value: digits only, or capitals with no spaces |
 {: .nds-table .nds-responsive}
 
 | Option | Default | Effect |
@@ -715,10 +715,10 @@ form.addEventListener('nds:form:valid', function (e) {
 // Fill a field from a script
 var email = document.querySelector('#applicant-email');
 email.value = 'name@example.com';
-NDS.Forms.syncState(email);
+NDS.Form.syncState(email);
 
 // Mark a field required after load
-NDS.Forms.setState(email, 'required', true);
+NDS.Form.setState(email, 'required', true);
 </script>
 
 The full API is in the banner of `_js/nds-form.js`.

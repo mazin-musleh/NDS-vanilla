@@ -211,7 +211,7 @@ Each shape below matches its form to what it actually guards, so none is diverge
 - **Per-element scope, non-attribute form.** The marker lives on the element without being an attribute when the structure justifies it: a JS property on a document-sweeping controller (`_js/nds-form.js` `_ndsInitialized` / `_ndsFormInitialized` / `_switchInitialized`) — per-element, just not CSS-selectable, so re-sweeps check inline; the instance expando where `create(el)` is idempotent through the back-ref (`_js/nds-date-picker.js` `_ndsDatePicker`) — the instance IS the init state and a parallel attribute channel could drift, so it must be gated on successful construction (JSD-18); or init's own DOM mutation as the marker (`_js/nds-custom-select.js` `build()` checks the `.nds-dropmenu` class it stamps). A *registered* factory with a per-instance selector still prefers the attribute form so loader rescans can selector-filter — see Audit behavior step 7.
 - **Resource scope, no flag at all.** When init is idempotent or deliberately re-armable, the resource IS the guard: `_js/nds-selection.js` `_controller` (nulled by `destroy()` so `init()` re-arms by design — a one-way flag would break the cycle), `_js/nds-share.js` `init()` (documented abort-and-rebind of its own `_abortController`).
 - **Bundle-scope listener, window flag.** A document listener wired at module eval has no per-element target, and a module-scope flag resets if a second copy of the bundle evaluates; the flag that stops a second listener belongs on `window`: `_js/nds-table.js` `window.ndsTabChangeHandlerInitialized` (~L560) and `window.ndsTableSubHandlerInitialized` (~L861), covering tab-change events and the document-delegated sub-row toggle (independent of the sort/checkbox-gated `NDSTables` instance). Requires the inline comment named in Audit behavior step 4.
-- **Sub-concern latch, named for what it latches.** A guard gating one arm of init — narrower than the module's own guard, so it carries a descriptive name instead of `_initDone`. Three shapes: one-time page-level setup inside a factory (document delegation, singleton observers, a body-appended sentinel) — `runtimeSet` guarding `setupRuntime` (`_js/nds-fab.js` ~L195), `togglesBound` guarding `bindToggles` (`_js/nds-panel.js` ~L462), both files carrying the canonical attribute for their own init; and per-branch latches in a singleton wiring independently-present widgets — `_js/nds-time-date.js` `_dateInitDone` / `_clockInitDone`, whose declaration documents the reasoning ("The date and clock topbar widgets can appear independently, so the latches are separate — a page that ships only one widget can still wire the other if it's injected later"). One shared `_initDone` would latch on the first widget and strand the second. A singleton whose `init()` re-runs on purpose has no module-wide latch at all, only its arms': `_js/nds-theme.js` `_wired` (listeners) / `_reconciled` (saved-palette restore) — its `init()` comment: "the sync runs every time, the restore and the listeners once", so `mount()` / `refresh()` reach a later view's toggles. And the attribute form of the same idea — a second `data-nds-<sub-mode>-initialized` on the SAME element beside the component's canonical guard, gating an init arm the canonical one doesn't cover: `_js/nds-pagination.js` `data-nds-auto-pagination-initialized` (guards `setupAutoContainer`, while `data-nds-pagination-initialized` guards the manual sweep) and `_js/nds-table.js` `data-nds-columns-initialized` (guards the column-toggle arm beside `data-nds-tables-initialized`). Discriminator for the attribute shape: the component's canonical guard is present on the element, and the second attribute names an init path it does not cover. Step 5's name check governs a singleton module's OWN guard only, and step 6's `data-nds-<name>-initialized` check governs the component's OWN guard only — neither fires on these.
+- **Sub-concern latch, named for what it latches.** A guard gating one arm of init — narrower than the module's own guard, so it carries a descriptive name instead of `_initDone`. Three shapes: one-time page-level setup inside a factory (document delegation, singleton observers, a body-appended sentinel) — `runtimeSet` guarding `setupRuntime` (`_js/nds-fab.js` ~L195), `togglesBound` guarding `bindToggles` (`_js/nds-panel.js` ~L462), both files carrying the canonical attribute for their own init; and per-branch latches in a singleton wiring independently-present widgets — `_js/nds-time-date.js` `_dateInitDone` / `_clockInitDone`, whose declaration documents the reasoning ("The date and clock topbar widgets can appear independently, so the latches are separate — a page that ships only one widget can still wire the other if it's injected later"). One shared `_initDone` would latch on the first widget and strand the second. A singleton whose `init()` re-runs on purpose has no module-wide latch at all, only its arms': `_js/nds-theme.js` `_wired` (listeners) / `_reconciled` (saved-palette restore) — its `init()` comment: "the sync runs every time, the restore and the listeners once", so `mount()` / `refresh()` reach a later view's toggles. And the attribute form of the same idea — a second `data-nds-<sub-mode>-initialized` on the SAME element beside the component's canonical guard, gating an init arm the canonical one doesn't cover: `_js/nds-pagination.js` `data-nds-auto-pagination-initialized` (guards `setupAutoContainer`, while `data-nds-pagination-initialized` guards the manual sweep) and `_js/nds-table.js` `data-nds-columns-initialized` (guards the column-toggle arm beside `data-nds-table-initialized`). Discriminator for the attribute shape: the component's canonical guard is present on the element, and the second attribute names an init path it does not cover. Step 5's name check governs a singleton module's OWN guard only, and step 6's `data-nds-<name>-initialized` check governs the component's OWN guard only — neither fires on these.
 - **CSS-contract reveal stamp on a foreign element.** An attribute a component writes on an element it does not own, consumed by critical CSS as a paint-release hook, is not that component's init guard — it names the region being revealed, so step 6's `data-nds-<name>-initialized` check must not fire on it. Cite: `_js/nds-pagination.js` `data-paged-initialized`, stamped on the paged CONTENT container (file header documents the crit-CSS hold it releases) while the component's own canonical `data-nds-pagination-initialized` stays on the nav. Discriminator: the attribute is written to a different element than the one the sweep guard reads.
 
 **Audit behavior**
@@ -321,7 +321,7 @@ Run (or mirror) `node scripts/check-banners.mjs --verify <file>`: missing banner
 
 - **Component** — the component's class root without `nds-`: `nds-digital-stamp` → `digital-stamp`, `nds-taginput` → `taginput`, `nds-user-feedback` → `user-feedback`. An event a shared module fires for another component takes that component's name (`nds-form.js` fires `nds:switch:change`, `nds:checkbox:indeterminate`).
 - **Action** — the tense says when it fires. The first that fits:
-  1. `change` for a new value — the DOM's word (`nds:tab:change`, `nds:otp:change`).
+  1. `change` for a new value — the DOM's word (`nds:tabs:change`, `nds:otp:change`).
   2. A past participle only when the component's state change is already done, from the entry-3 verb that caused it: `open()` → `opened`/`closed`, `showSubmenu()` → `shown`/`hidden`, `expand()` → `expanded`/`collapsed`, `create()` → `created` (the message is in place).
   3. A present verb for anything that fires before the change, can be cancelled, asks for something, or reports an act at the moment it happens: `prepare`, `submit`, `start`, `request`, `select`, `clear`, `tick`, `end`, `complete`, `dismiss` (Feedback fires it before the message leaves the page).
   4. A result word for an outcome: `ready`, `success`/`error`, `valid`/`invalid`, `progress`, `status`.
@@ -337,7 +337,42 @@ One grammar lets a consumer guess an event from the component and what happened,
 
 **Audit behavior**
 
-Flag any dispatched `nds:` literal (a `new CustomEvent(` name or a string passed to a component's dispatch helper) that does not match the regex → MEDIUM. `scripts/check-release-guards.py` runs the same regex and fails the release. Flag a tense against the rules above → LOW, as a migration target for the next major: a rename is a breaking change.
+Flag any dispatched `nds:` literal (a `new CustomEvent(` name or a string passed to a component's dispatch helper) that does not match the regex → MEDIUM. `scripts/check-banners.mjs` runs the same regex and fails the release. Flag a tense against the rules above → LOW, as a migration target for the next major: a rename is a breaking change.
+
+---
+
+### 9. One name per component
+
+**Canonical**
+
+A component has one singular kebab name `x`, taken from its root class `.nds-x`, and every surface uses it:
+
+| Surface | Form | Example (`.nds-user-feedback`) |
+|---|---|---|
+| JS file | `_js/nds-x.js` | `nds-user-feedback.js` |
+| SCSS partial | `_sass/components/_x.scss` | `_user-feedback.scss` |
+| Doc page | `<shelf>/x.md` | `components/user-feedback.md` |
+| Init stamp | `data-nds-x-initialized` | `data-nds-user-feedback-initialized` |
+| Events | `nds:x:{action}` (entry 8) | `nds:user-feedback:submit` |
+| Namespace | `NDS.X`: `x` split at its hyphens, each part capitalized | `NDS.UserFeedback` |
+| Instance | `el.ndsX` | `el.ndsUserFeedback` |
+
+A component without one of these surfaces skips it. A part of a component stamps and names its own part (`data-nds-columns-initialized`, `data-paged-initialized`). An acronym is one word: `.nds-otp` → `NDS.Otp`, `el.ndsIpv`.
+
+**Why (and rejected alternatives)**
+
+The class is in every consumer page, so it is the costliest name to change and the one the others follow. With one name, a reader or an agent who knows the class can work out the file, the events and the namespace without the docs. Rejected: the namespace from the JS file alone (`8c139004`, then `999997de`), which let the file, class and events drift apart (`nds-tables.js`, `.nds-table`, `NDS.Tables`); acronyms in capitals (`NDS.OTP`, `toCSV`), which need a list of what counts as an acronym; a hyphen in the namespace, which a JS property cannot hold.
+
+**Carve-outs (NOT divergence)**
+
+- `.nds-btn` is the Button component (an abbreviation on every page).
+- Numbers (`.nds-number-format`), and the core modules (`Init`, `Audit`, `Backdrop`, `Feedback`, `Cookies`, `State`, `Status` in PascalCase; `date`, `i18n`, `aria`, `dialog`, `cache` in lowercase) have no single component class.
+- A part's property is named for the part (`el.ndsTableControls`, `el.ndsColumnToggle`, `el.ndsCounter`).
+- `foundations/themes.md` documents theming, not the Theme switch.
+
+**Audit behavior**
+
+For each loader-registered component: the JS file suffix, the registry `name` turned back into kebab case, the SCSS partial and doc page when they exist, the event segment and the init stamp must all be the same name → MEDIUM on any mismatch.
 
 ---
 

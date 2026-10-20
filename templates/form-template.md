@@ -40,7 +40,7 @@ sidemenu_mode: false
                                     placeholder="10-digit ID number" inputmode="numeric" maxlength="10"
                                     autocomplete="off" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -81,7 +81,7 @@ sidemenu_mode: false
                                     placeholder="5XX XXX XXX" autocomplete="tel-national"
                                     inputmode="numeric" maxlength="9" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -137,7 +137,7 @@ sidemenu_mode: false
                                 <input type="text" id="ft-first-name" name="firstName" class="nds-input"
                                     placeholder="As written on your ID" autocomplete="given-name" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -152,7 +152,7 @@ sidemenu_mode: false
                                 <input type="text" id="ft-father-name" name="fatherName" class="nds-input"
                                     placeholder="As written on your ID" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -167,7 +167,7 @@ sidemenu_mode: false
                                 <input type="text" id="ft-grandfather-name" name="grandfatherName" class="nds-input"
                                     placeholder="Optional">
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -182,7 +182,7 @@ sidemenu_mode: false
                                 <input type="text" id="ft-family-name" name="familyName" class="nds-input"
                                     placeholder="As written on your ID" autocomplete="family-name" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -198,7 +198,7 @@ sidemenu_mode: false
                                 <input type="email" id="ft-email" name="email" class="nds-input"
                                     placeholder="name@example.com" autocomplete="email" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -216,7 +216,7 @@ sidemenu_mode: false
                                 <input type="text" id="ft-city" name="city" autocomplete="on"
                                     placeholder="Type to search Saudi cities" required>
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -542,7 +542,7 @@ sidemenu_mode: false
         // fields in a hidden panel, so this checks the step on screen.
         formSection.querySelectorAll('[data-ft-continue]').forEach(btn => {
             btn.addEventListener('click', () => {
-                if (NDS.Forms.validateForm(btn).valid) NDS.Stepper.next('form-stepper');
+                if (NDS.Form.validateForm(btn).valid) NDS.Stepper.next('form-stepper');
             });
         });
 
@@ -570,6 +570,6 @@ sidemenu_mode: false
         }
 
         // OTP Resend: loading, cooldown, countdown, and success toast are all
-        // owned by NDS.CooldownButton via data-* attrs on the button.
+        // owned by NDS.Cooldown via data-* attrs on the button.
     })();
 </script>

@@ -51,7 +51,7 @@ Pick another component when:
       <p class="nds-panel-description">Adjust how this page behaves.</p>
     </div>
     <div class="nds-panel-action">
-      <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="Close panel" data-i18n-aria-label="panels.close_panel">
+      <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="Close panel" data-i18n-aria-label="panel.close_panel">
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -71,13 +71,13 @@ Pick another component when:
 </script>
 <script type="text/html" id="panel-resize" data-canon>
 <div class="nds-btn-group nds-seamless">
-  <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" data-panel-resize="shrink" aria-label="Make panel smaller" data-i18n-aria-label="panels.make_smaller">
+  <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" data-panel-resize="shrink" aria-label="Make panel smaller" data-i18n-aria-label="panel.make_smaller">
     <i class="nds-icon nds-hgi-minus-sign" aria-hidden="true"></i>
   </button>
-  <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" data-panel-resize="grow" aria-label="Make panel larger" data-i18n-aria-label="panels.make_larger">
+  <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" data-panel-resize="grow" aria-label="Make panel larger" data-i18n-aria-label="panel.make_larger">
     <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
   </button>
-  <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" data-panel-close aria-label="Close panel" data-i18n-aria-label="panels.close_panel">
+  <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" data-panel-close aria-label="Close panel" data-i18n-aria-label="panel.close_panel">
     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
   </button>
 </div>
@@ -97,7 +97,7 @@ Pick another component when:
         <p class="nds-panel-description">This panel joins the page on the first click.</p>
       </div>
       <div class="nds-panel-action">
-        <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="Close panel" data-i18n-aria-label="panels.close_panel">
+        <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="Close panel" data-i18n-aria-label="panel.close_panel">
           <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
       </div>

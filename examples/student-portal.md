@@ -1442,7 +1442,7 @@ hideFeedback: true
             <p class="nds-panel-description">Answers to the questions students ask most before an exam.</p>
         </div>
         <div class="nds-panel-action">
-            <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="Close panel" data-i18n-aria-label="panels.close_panel">
+            <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="Close panel" data-i18n-aria-label="panel.close_panel">
                 <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
             </button>
         </div>

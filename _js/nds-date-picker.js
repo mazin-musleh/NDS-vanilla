@@ -598,7 +598,7 @@
 
         // Constraint-validation bridge: hand-typed values bypass the picker
         // UI (disabled cells, bounds clamps), so every input 'change' stamps
-        // setCustomValidity — NDS.Forms.validateForm / checkValidity then
+        // setCustomValidity — NDS.Form.validateForm / checkValidity then
         // gate the submit. Invalid commits also paint immediate footer
         // feedback (taginput's rejection shape) instead of waiting for
         // submit; clearing is owned by the forms layer (typing clears, blur
@@ -611,9 +611,9 @@
             var msg = raw ? this._validationError(raw) : '';
             input.setCustomValidity(msg);
             if (msg && !silent) {
-                // Soft dependency — NDS.Forms ships in the main bundle; the
+                // Soft dependency — NDS.Form ships in the main bundle; the
                 // footer feedback no-ops if a consumer bundle excludes it.
-                NDS.Forms?.setStatus?.({ element: this.elements.container, status: 'error', message: msg });
+                NDS.Form?.setStatus?.({ element: this.elements.container, status: 'error', message: msg });
             }
         },
 

@@ -233,12 +233,12 @@ hideFeedback: true
                         <div class="nds-dropmenu" data-columns-target="console-transactions">
                             <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
                                 <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
-                                <span class="nds-label" data-i18n="tables.columns">Columns</span>
+                                <span class="nds-label" data-i18n="table.columns">Columns</span>
                             </button>
                             <div class="nds-dropmenu-menu" hidden>
                                 <div class="nds-dropmenu-scroll">
                                     <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
-                                        <legend class="nds-label" data-i18n="tables.visible_columns">Visible columns</legend>
+                                        <legend class="nds-label" data-i18n="table.visible_columns">Visible columns</legend>
                                     </fieldset>
                                 </div>
                             </div>
@@ -274,7 +274,7 @@ hideFeedback: true
                                 <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                                 <input type="text" class="nds-search-input" placeholder="Search transactions...">
                                 <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="forms.clear_search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="form.clear_search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                                 </div>
                             </div>
                             <button class="nds-btn nds-primary nds-search-btn" type="button">
@@ -504,7 +504,7 @@ hideFeedback: true
                             <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                             <input type="text" class="nds-search-input" placeholder="Search team members...">
                             <div class="nds-form-action">
-                                <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="forms.clear_search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                                <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="form.clear_search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                             </div>
                         </div>
                         <button class="nds-btn nds-primary nds-search-btn" type="button">

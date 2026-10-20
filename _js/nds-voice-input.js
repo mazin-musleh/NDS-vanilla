@@ -20,7 +20,7 @@
  *   - Interim words are written into the input as they arrive; only the final result
  *     dispatches input/change.
  *   - Messages (no speech, permission, timeout) are a neutral field message for 4 seconds,
- *     through NDS.Forms.setStatus, so they sit where the field's validation message does;
+ *     through NDS.Form.setStatus, so they sit where the field's validation message does;
  *     a message they cover comes back after.
  */
 // NDS Voice Input — voice-dictation for a text field.
@@ -189,11 +189,11 @@
             return;
         }
         var prev = { status: NDS.Status.get(container), message: container.getAttribute('data-message') };
-        NDS.Forms.setStatus({ element: input, status: 'neutral', message: message });
+        NDS.Form.setStatus({ element: input, status: 'neutral', message: message });
         setTimeout(function() {
             if (container.getAttribute('data-message') !== message) return; // validation wrote since
-            if (prev.status && prev.message) NDS.Forms.setStatus({ element: input, status: prev.status, message: prev.message });
-            else NDS.Forms.clearStatus(input);
+            if (prev.status && prev.message) NDS.Form.setStatus({ element: input, status: prev.status, message: prev.message });
+            else NDS.Form.clearStatus(input);
         }, 4000);
     }
 

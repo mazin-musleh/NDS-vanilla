@@ -35,7 +35,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="mainnav-canon" data-canon data-form data-preview="page" data-preview-height="440" data-variants="mainnav-variants-table">
-<nav class="nds-main-nav nds-content-wrapper" id="nds-main-nav" aria-label="Primary navigation" data-i18n-aria-label="mainnav.primary_navigation">
+<nav class="nds-main-nav nds-content-wrapper" id="nds-main-nav" aria-label="Primary navigation" data-i18n-aria-label="main-nav.primary_navigation">
   <div class="nds-nav-container">
     <a href="../" class="nds-brand">
       <img class="nds-brand-logo" src="../assets/img/palm_swords.svg" width="40" height="40" loading="lazy" alt="National Portal logo">
@@ -45,7 +45,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
     </a>
     <ul class="nds-nav-minimal" hidden>
       <li class="nds-nav-toggler nds-nav-item">
-        <button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" data-i18n-aria-label="mainnav.toggle_menu" aria-expanded="false" aria-controls="nds-nav-collapse">
+        <button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" data-i18n-aria-label="main-nav.toggle_menu" aria-expanded="false" aria-controls="nds-nav-collapse">
           <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
         </button>
       </li>
@@ -148,7 +148,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
                         <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                         <input id="main-search" type="text" class="nds-search-input" name="q" placeholder="Search..." aria-label="Search" data-i18n-aria-label="filter.search">
                         <div class="nds-form-action">
-                          <button type="button" class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="forms.clear_search">
+                          <button type="button" class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="form.clear_search">
                             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -310,7 +310,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
               <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
               <input id="main-search" type="text" class="nds-search-input" name="q" placeholder="Search..." aria-label="Search" data-i18n-aria-label="filter.search">
               <div class="nds-form-action">
-                <button type="button" class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="forms.clear_search">
+                <button type="button" class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="form.clear_search">
                   <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                 </button>
               </div>
@@ -668,39 +668,39 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
 
 | Method | Effect |
 |---|---|
-| `NDS.Mainnav.init()` | Starts the main navigation. It runs on page load, and a second call does nothing |
-| `NDS.Mainnav.reinit()` | Finds the main navigation again and starts it. Call it when the nav itself is new: rendered after the NDS script ran, or replaced by a route change. `NDS.Init.refresh()` calls it too |
-| `NDS.Mainnav.destroy()` | Removes every listener and observer, and the backdrop. The markup stays, and `reinit()` starts it again |
-| `NDS.Mainnav.open()` | Opens the drawer |
-| `NDS.Mainnav.close()` | Closes the drawer |
-| `NDS.Mainnav.toggle()` | Opens or closes the drawer |
-| `NDS.Mainnav.openMenu(trigger)` | Opens the menu of the `li.nds-has-menu` that holds `trigger`, and closes any other open menu |
-| `NDS.Mainnav.closeMenus()` | Closes every open menu |
+| `NDS.MainNav.init()` | Starts the main navigation. It runs on page load, and a second call does nothing |
+| `NDS.MainNav.reinit()` | Finds the main navigation again and starts it. Call it when the nav itself is new: rendered after the NDS script ran, or replaced by a route change. `NDS.Init.refresh()` calls it too |
+| `NDS.MainNav.destroy()` | Removes every listener and observer, and the backdrop. The markup stays, and `reinit()` starts it again |
+| `NDS.MainNav.open()` | Opens the drawer |
+| `NDS.MainNav.close()` | Closes the drawer |
+| `NDS.MainNav.toggle()` | Opens or closes the drawer |
+| `NDS.MainNav.openMenu(trigger)` | Opens the menu of the `li.nds-has-menu` that holds `trigger`, and closes any other open menu |
+| `NDS.MainNav.closeMenus()` | Closes every open menu |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:mainnav:opened` | `#nds-nav-collapse` or an `li.nds-has-menu` | None. Fires when the drawer or the menu starts to open. It bubbles, so one listener on the nav hears both |
-| `nds:mainnav:closed` | The same element | None. Fires after the drawer or the menu has closed |
+| `nds:main-nav:opened` | `#nds-nav-collapse` or an `li.nds-has-menu` | None. Fires when the drawer or the menu starts to open. It bubbles, so one listener on the nav hears both |
+| `nds:main-nav:closed` | The same element | None. Fires after the drawer or the menu has closed |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="mainnav-js" data-canon data-lang="js" data-preview="none">
 // A framework rendered the header after the NDS script ran
-NDS.Mainnav.reinit();
+NDS.MainNav.reinit();
 
 // Open the drawer from a link in the page
 document.querySelector('#menu-link').addEventListener('click', (e) => {
   e.preventDefault();
-  NDS.Mainnav.open();
+  NDS.MainNav.open();
 });
 
 // Pause a video while the drawer or a menu is open
 const nav = document.querySelector('.nds-main-nav');
-nav.addEventListener('nds:mainnav:opened', () => video.pause());
-nav.addEventListener('nds:mainnav:closed', () => video.play());
+nav.addEventListener('nds:main-nav:opened', () => video.pause());
+nav.addEventListener('nds:main-nav:closed', () => video.play());
 
 // A framework removes the header: release the nav first
-NDS.Mainnav.destroy();
+NDS.MainNav.destroy();
 </script>
 
 The full API is in the banner of `_js/nds-main-nav.js`.

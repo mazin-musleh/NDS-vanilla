@@ -285,7 +285,7 @@
         "site_footer": "تذييل الموقع",
         "footer_navigation": "روابط التذييل"
     },
-    "forms": {
+    "form": {
         "required": "هذا الحقل مطلوب",
         "invalid": "مدخل غير صحيح",
         "invalid_email": "يرجى إدخال عنوان بريد إلكتروني صحيح",
@@ -348,7 +348,7 @@
         "instructionsToggle": "• المفتاح H لإظهار/إخفاء الأدوات",
         "instructionsClose": "• ESC للإغلاق"
     },
-    "mainnav": {
+    "main-nav": {
         "primary_navigation": "التنقل الرئيسي",
         "toggle_menu": "فتح/إغلاق قائمة التنقل"
     },
@@ -376,7 +376,7 @@
         "jump": "الانتقال إلى صفحة",
         "pagination": "ترقيم الصفحات"
     },
-    "panels": {
+    "panel": {
         "close_panel": "إغلاق اللوحة",
         "make_smaller": "تصغير اللوحة",
         "make_larger": "تكبير اللوحة"
@@ -433,7 +433,7 @@
         "previous_slide": "الشريحة السابقة",
         "next_slide": "الشريحة التالية"
     },
-    "tables": {
+    "table": {
         "reset": "إعادة تعيين",
         "column": "العمود {n}",
         "columns": "الأعمدة",

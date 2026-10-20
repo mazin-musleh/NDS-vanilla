@@ -1,4 +1,4 @@
-/* NDS.Mainnav — public surface
+/* NDS.MainNav — public surface
  * Rides: nds-backdrop (dims the page behind an open drawer or dropdown; soft)
  * Requires:
  *   .nds-main-nav needs #nds-nav-collapse — the nav does nothing
@@ -7,18 +7,18 @@
  *   .nds-has-menu needs :scope > .nds-nav-link — the menu has no trigger
  *   .nds-has-menu needs .nds-nav-menu — the trigger opens nothing
  * Methods:
- *   NDS.Mainnav.init()               wire the one nav on the page
- *   NDS.Mainnav.reinit()             re-resolve the markup and wire it again — for a nav
+ *   NDS.MainNav.init()               wire the one nav on the page
+ *   NDS.MainNav.reinit()             re-resolve the markup and wire it again — for a nav
  *                                    that mounted after the bundle ran, or was replaced by
  *                                    a route change. NDS.Init.refresh() calls it
- *   NDS.Mainnav.destroy()            release every listener, observer and the backdrop; the
+ *   NDS.MainNav.destroy()            release every listener, observer and the backdrop; the
  *                                    markup stays, and reinit() wires it again
- *   NDS.Mainnav.open() / close()     open or close the drawer (toggle() flips it)
- *   NDS.Mainnav.openMenu(trigger)    open the menu of the .nds-has-menu that holds trigger
- *   NDS.Mainnav.closeMenus()         close every open menu
+ *   NDS.MainNav.open() / close()     open or close the drawer (toggle() flips it)
+ *   NDS.MainNav.openMenu(trigger)    open the menu of the .nds-has-menu that holds trigger
+ *   NDS.MainNav.closeMenus()         close every open menu
  * Events:
- *   nds:mainnav:opened   on #nds-nav-collapse or an li.nds-has-menu, as it starts to open; bubbles
- *   nds:mainnav:closed   on the same element, once it has closed
+ *   nds:main-nav:opened   on #nds-nav-collapse or an li.nds-has-menu, as it starts to open; bubbles
+ *   nds:main-nav:closed   on the same element, once it has closed
  * Hooks:
  *   (none — the nav is class-driven markup: .nds-main-nav holds .nds-nav-primary and
  *    .nds-nav-actions, .nds-nav-toggler opens #nds-nav-collapse, and a
@@ -418,7 +418,7 @@
         DOM.collapseContent?.toggleAttribute('data-nav-actions-open', openIn(DOM.secondary));
     }
     // The drawer or a menu (its li): opened as it starts to open, closed once it has closed.
-    const emit = (el, name) => el.dispatchEvent(new CustomEvent(`nds:mainnav:${name}`, { bubbles: true }));
+    const emit = (el, name) => el.dispatchEvent(new CustomEvent(`nds:main-nav:${name}`, { bubbles: true }));
 
     // ==============================================
     // ANIMATION SYSTEM
@@ -1139,7 +1139,7 @@
 
     const drawerOpen = () => hasState(DOM.collapse, 'open');
 
-    NDS.Mainnav = {
+    NDS.MainNav = {
         init,
         reinit,
         destroy,

@@ -1,11 +1,11 @@
-/* NDS.TagInput — public surface
+/* NDS.Taginput — public surface
  * Rides: nds-autocomplete (a root with data-url shares the input; a picked suggestion commits
  *        as a tag; soft — typing alone works without it)
  *      · nds-forms (field status feedback for duplicate / max / strict rejections; soft)
  * Methods:
- *   NDS.TagInput.init() / .reinit()   scan + initialize .nds-taginput fields
- *   NDS.TagInput.create(el)           instance one field — null when the markup is incomplete
- *   NDS.TagInput.destroy(el)          tear one field down
+ *   NDS.Taginput.init() / .reinit()   scan + initialize .nds-taginput fields
+ *   NDS.Taginput.create(el)           instance one field — null when the markup is incomplete
+ *   NDS.Taginput.destroy(el)          tear one field down
  *   instance.getValues()              the tags, in order
  *   instance.addTag(value)            commit one tag (rejects duplicates and over-max)
  *   instance.removeTag(value)         remove one tag
@@ -65,7 +65,7 @@
     class NDSTagInput {
         constructor(root) {
             this.root = root;
-            // Success signal — init() only runs (and registers root.ndsTagInput)
+            // Success signal — init() only runs (and registers root.ndsTaginput)
             // when construction succeeds, so a bail below never hands consumers
             // a half-built instance.
             this.valid = false;
@@ -75,7 +75,7 @@
             this.input = this.formControl && this.formControl.querySelector(':scope > input:not([type="hidden"])');
 
             if (!this.formControl || !this.input) {
-                console.warn('NDS TagInput: missing required elements', root);
+                console.warn('NDS Taginput: missing required elements', root);
                 return;
             }
 
@@ -105,7 +105,7 @@
             this.renderChips();
             // Registered here, not in the init sweep, so create() gets the backref
             // destroy() reads — every guard has passed by the time init() runs.
-            this.root.ndsTagInput = this;
+            this.root.ndsTaginput = this;
             this.root.setAttribute('data-nds-taginput-initialized', 'true');
         }
 
@@ -196,7 +196,7 @@
 
         destroy() {
             this.abortController?.abort();
-            delete this.root.ndsTagInput;
+            delete this.root.ndsTaginput;
             this.root.removeAttribute('data-nds-taginput-initialized');
         }
 
@@ -214,7 +214,7 @@
         // duplicate/max rejections in addTag (incl. the macrotask deferral).
         _strictReject() {
             const msg = strings.text('strict');
-            setTimeout(() => NDS.Forms?.setStatus?.({ element: this.root, status: 'error', message: msg }), 0);
+            setTimeout(() => NDS.Form?.setStatus?.({ element: this.root, status: 'error', message: msg }), 0);
             NDS.announce(msg);
         }
 
@@ -224,7 +224,7 @@
             if (!value) return;
             // Rejections get VISIBLE feedback in the field footer, not just
             // the live-region announce — cleared on the next successful commit.
-            // Soft dependency — NDS.Forms ships in the main bundle; the footer
+            // Soft dependency — NDS.Form ships in the main bundle; the footer
             // feedback no-ops if a consumer bundle excludes it.
             // Deferred a macrotask: when the rejection comes from a typed
             // separator, the forms layer's document-level 'input' listener
@@ -233,13 +233,13 @@
             // whole event dispatch has finished.
             if (this.tags.length >= this.maxTags) {
                 const msg = strings.text('max', { n: this.maxTags });
-                setTimeout(() => NDS.Forms?.setStatus?.({ element: this.root, status: 'error', message: msg }), 0);
+                setTimeout(() => NDS.Form?.setStatus?.({ element: this.root, status: 'error', message: msg }), 0);
                 NDS.announce(msg);
                 return;
             }
             if (this.tags.some(t => t.toLowerCase() === value.toLowerCase())) {
                 // Same macrotask deferral as the max rejection above.
-                setTimeout(() => NDS.Forms?.setStatus?.({ element: this.root, status: 'error', message: strings.text('duplicate') }), 0);
+                setTimeout(() => NDS.Form?.setStatus?.({ element: this.root, status: 'error', message: strings.text('duplicate') }), 0);
                 NDS.announce(strings.text('duplicate'));
                 return;
             }
@@ -315,8 +315,8 @@
         emitChange() {
             // Every successful commit clears rejection/validation feedback —
             // the user is actively fixing the field. Soft dependency on
-            // NDS.Forms, same as the rejection path.
-            NDS.Forms?.clearStatus?.(this.root);
+            // NDS.Form, same as the rejection path.
+            NDS.Form?.clearStatus?.(this.root);
             this.root.dispatchEvent(new CustomEvent('nds:taginput:change', {
                 detail: { name: this.name, values: this.getValues() },
                 bubbles: true
@@ -332,16 +332,16 @@
         });
     }
 
-    NDS.TagInput = {
+    NDS.Taginput = {
         init: initializeTagInputs,
         reinit: initializeTagInputs,
         // Construction fails (missing required elements, or the root is already
         // initialized) → null, never a dud instance whose every method throws.
         create: (element) => {
-            if (element.ndsTagInput) return element.ndsTagInput;
+            if (element.ndsTaginput) return element.ndsTaginput;
             const inst = new NDSTagInput(element);
             return inst.valid ? inst : null;
         },
-        destroy: (element) => element.ndsTagInput?.destroy()
+        destroy: (element) => element.ndsTaginput?.destroy()
     };
 })();

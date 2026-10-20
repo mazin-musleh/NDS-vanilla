@@ -1,4 +1,4 @@
-/* NDS.Forms — public surface
+/* NDS.Form — public surface
  * Rides: (none — base component)
  * Requires:
  *   .nds-form-control:not(:has(> .nds-switch)):not(.nds-multiselect .nds-form-control) needs :scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input — the field gets no states, required mark or clear button
@@ -8,30 +8,30 @@
  *   .nds-auto-fill needs .nds-item — nothing is wired
  *   .nds-form is form — submit validation runs only on a <form>
  * Methods:
- *   NDS.Forms.init()                       scan + initialize every .nds-form-container
- *   NDS.Forms.initializeContainer(el)      initialize one container
- *   NDS.Forms.initForm(form)               wire one .nds-form (submit validation)
- *   NDS.Forms.setStatus({element, status, message, permanent})   set field status
+ *   NDS.Form.init()                       scan + initialize every .nds-form-container
+ *   NDS.Form.initializeContainer(el)      initialize one container
+ *   NDS.Form.initForm(form)               wire one .nds-form (submit validation)
+ *   NDS.Form.setStatus({element, status, message, permanent})   set field status
  *                                          (a field carries 'error', 'help' or
  *                                          nothing; anything else renders neutral)
- *   NDS.Forms.clearStatus(el)              clear it
- *   NDS.Forms.getStatus(el)                read {status, message}
- *   NDS.Forms.setState(el, name, add)      add/remove a field state ('required' also
+ *   NDS.Form.clearStatus(el)              clear it
+ *   NDS.Form.getStatus(el)                read {status, message}
+ *   NDS.Form.setState(el, name, add)      add/remove a field state ('required' also
  *                                          flips the inputs' required property)
- *   NDS.Forms.syncState(input)             re-sync a control's chrome after setting
+ *   NDS.Form.syncState(input)             re-sync a control's chrome after setting
  *                                          value/checked from JS
- *   NDS.Forms.setIndeterminate(cb, value)  set a checkbox's indeterminate state
- *   NDS.Forms.validateForm(el, opts)       validate everything → {valid, invalidFields, errors};
+ *   NDS.Form.setIndeterminate(cb, value)  set a checkbox's indeterminate state
+ *   NDS.Form.validateForm(el, opts)       validate everything → {valid, invalidFields, errors};
  *                                          el is the .nds-form or anything inside it — works on
  *                                          a non-<form> container too (see the Gotcha below)
- *   NDS.Forms.validateCheckboxGroup(group, opts)
- *   NDS.Forms.validateRadioGroup(group, opts)
- *   NDS.Forms.validateMultiselect(el, opts)
- *   NDS.Forms.validateTaginput(el, opts)
- *   NDS.Forms.validateOtpGroup(el, opts)
- *   NDS.Forms.initCheckboxGroupValidation(group) / .initRadioGroupValidation(group)
- *   NDS.Forms.initMultiselectValidation(el)      live-validation wiring for a group
- *   NDS.Forms.isNationalId(str) / .isIban(str)   the checksum rules behind .nds-national-id / .nds-iban
+ *   NDS.Form.validateCheckboxGroup(group, opts)
+ *   NDS.Form.validateRadioGroup(group, opts)
+ *   NDS.Form.validateMultiselect(el, opts)
+ *   NDS.Form.validateTaginput(el, opts)
+ *   NDS.Form.validateOtpGroup(el, opts)
+ *   NDS.Form.initCheckboxGroupValidation(group) / .initRadioGroupValidation(group)
+ *   NDS.Form.initMultiselectValidation(el)      live-validation wiring for a group
+ *   NDS.Form.isNationalId(str) / .isIban(str)   the checksum rules behind .nds-national-id / .nds-iban
  * Events:
  *   nds:form:status             detail {status, message} — from the form container
  *   nds:form:validate           detail {valid, invalidFields, errors} — from the form, every
@@ -77,7 +77,7 @@
  *   - That automatic wiring is <form>-tags only: on any other element .nds-form is a layout
  *     marker (wizard step divs use it that way) and initForm() skips it — no submit validation,
  *     no nds:form:valid, silently. Can't use a <form> tag (one outer server form, a fragment)?
- *     Keep .nds-form on the container, call NDS.Forms.validateForm(container) from your own
+ *     Keep .nds-form on the container, call NDS.Form.validateForm(container) from your own
  *     trigger (the button's click), and branch on its {valid} result — validation works the
  *     same; only the automatic submit lifecycle is absent.
  *   - validateForm() is called synchronously at submit; keep it in the main bundle.
@@ -97,7 +97,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    var strings = NDS.i18n.strings('forms', {
+    var strings = NDS.i18n.strings('form', {
         required:            'This field is required',
         invalid:             'Invalid input',
         invalid_email:       'Please enter a valid email address',
@@ -644,7 +644,7 @@
             var ti = tiElement.closest('.nds-taginput') || tiElement;
             var hasRequired = ti.hasAttribute('data-required') || ti.classList.contains('nds-required');
             // The instance's tags: carriers exist only with a name. Before init, the server-rendered carriers.
-            var count = ti.ndsTagInput ? ti.ndsTagInput.tags.length : ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
+            var count = ti.ndsTaginput ? ti.ndsTaginput.tags.length : ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
             var isValid = !hasRequired || count > 0;
             var message = isValid ? '' : strings.text('tag_required');
             return this._finishGroupValidation(ti, options, isValid, message, { count: count }, count === 0);
@@ -1262,7 +1262,7 @@
                     StatusManager.clear(el);
                 });
                 form.querySelectorAll('.nds-form-control input, .nds-form-control textarea, .nds-form-control select').forEach(function(input) {
-                    NDS.Forms.syncState(input);
+                    NDS.Form.syncState(input);
                 });
                 form.querySelectorAll('.nds-national-id, .nds-iban').forEach(stampIdentifier);
             });
@@ -1747,7 +1747,7 @@
     // DYNAMIC CONTENT OBSERVER
     // ==============================================
     function initDynamicContentObserver() {
-        if (NDS.Forms._dynamicObserver) return;
+        if (NDS.Form._dynamicObserver) return;
 
         // Sweep only the outermost form, group or field around each added control:
         // a page-wide sweep cost 63 ms per added row at 1,000 fields (6.6x CPU).
@@ -1766,7 +1766,7 @@
             });
         });
         NDS.onDOMAdd('.nds-auto-fill', function() { initInputAutoFill(); });
-        NDS.Forms._dynamicObserver = true;
+        NDS.Form._dynamicObserver = true;
     }
 
     // ==============================================
@@ -1874,7 +1874,7 @@
     // ==============================================
     // PUBLIC API
     // ==============================================
-    NDS.Forms = {
+    NDS.Form = {
         // Core initialization
         init: initializeAllForms,
         initializeContainer: initializeContainer,

@@ -452,7 +452,7 @@ A stepper in the page starts by itself. The instance is on the element as `el.nd
 // Continue: move only when the step on screen is valid.
 // The button sits in the form. validateForm() skips the fields in a hidden step.
 document.getElementById('continue-button').addEventListener('click', function (e) {
-  if (NDS.Forms.validateForm(e.currentTarget).valid) NDS.Stepper.next('application-stepper');
+  if (NDS.Form.validateForm(e.currentTarget).valid) NDS.Stepper.next('application-stepper');
 });
 
 // Change something outside the stepper with the step

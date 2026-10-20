@@ -12,7 +12,7 @@
  *   instance.getActivePanel()        the active .nds-tab-panel
  *   instance.destroy()
  * Events (bubble from the .nds-tabs):
- *   nds:tab:change   detail {tabIndex, tab, panel, previousTab, previousPanel}
+ *   nds:tabs:change   detail {tabIndex, tab, panel, previousTab, previousPanel}
  * Hooks:
  *   (none — the structure is markup: .nds-tab items in a .nds-tab-list, .nds-tab-panel
  *    items in a .nds-tab-content, matched BY POSITION)
@@ -259,7 +259,7 @@
         }
 
         dispatchTabChangeEvent(index, previousTab, newTab) {
-            this.tabsContainer.dispatchEvent(new CustomEvent('nds:tab:change', {
+            this.tabsContainer.dispatchEvent(new CustomEvent('nds:tabs:change', {
                 detail: {
                     tabIndex: index,
                     tab: newTab,

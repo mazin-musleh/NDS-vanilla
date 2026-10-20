@@ -219,7 +219,7 @@ For another code length, copy a box and give it a unique `id`. The script number
 - Keep `data-required` on the group. Without it, the form does not check the code.
 - Check the code on the server. The OTP input checks only that every box is full.
 - Put `autofocus` on the first box only when the code is the one task on the page, such as a verification step.
-- After you send a new code, empty the boxes with `NDS.OTP.clear()`, so the user cannot send the old code.
+- After you send a new code, empty the boxes with `NDS.Otp.clear()`, so the user cannot send the old code.
 - For the label, info text and feedback, see [Forms](../components/form). They work the same on every field.
 
 </div>
@@ -240,7 +240,7 @@ For another code length, copy a box and give it a unique `id`. The script number
 |---|---|---|
 | `data-required` | `.nds-otp-group` | A form submit checks that every box holds a digit. It also adds the required mark to the legend |
 | `data-error-message` | `.nds-otp-group` | Replaces the message when every box is empty. A code with some digits missing keeps the default message |
-| `data-status` | `.nds-otp-group` | The forms script writes it. `error` turns every box red. To set it yourself, call `NDS.Forms.setStatus()` |
+| `data-status` | `.nds-otp-group` | The forms script writes it. `error` turns every box red. To set it yourself, call `NDS.Form.setStatus()` |
 {: .nds-table .nds-responsive}
 
 ### JavaScript
@@ -250,18 +250,18 @@ Each method takes the `.nds-otp-group` element.
 
 | Method | Effect |
 |---|---|
-| `NDS.OTP.getValue(group)` | Returns the digits as one string. An empty box adds nothing |
-| `NDS.OTP.setValue(group, value)` | Fills the boxes from the first, and removes characters that are not digits. It fires no event |
-| `NDS.OTP.clear(group)` | Empties the boxes, focuses the first box and fires `nds:otp:clear`. It does not remove an error: call `NDS.Forms.clearStatus(group)` for that |
-| `NDS.OTP.init()` | Starts every group on the page. It runs once at page load, and a group added later starts on its own |
-| `NDS.Forms.validateOtpGroup(group)` | Checks that every box holds a digit, shows the error when one is empty, and returns `{ valid, message, filled }` |
+| `NDS.Otp.getValue(group)` | Returns the digits as one string. An empty box adds nothing |
+| `NDS.Otp.setValue(group, value)` | Fills the boxes from the first, and removes characters that are not digits. It fires no event |
+| `NDS.Otp.clear(group)` | Empties the boxes, focuses the first box and fires `nds:otp:clear`. It does not remove an error: call `NDS.Form.clearStatus(group)` for that |
+| `NDS.Otp.init()` | Starts every group on the page. It runs once at page load, and a group added later starts on its own |
+| `NDS.Form.validateOtpGroup(group)` | Checks that every box holds a digit, shows the error when one is empty, and returns `{ valid, message, filled }` |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |
 |---|---|---|
 | `nds:otp:change` | `.nds-otp-group`, and it bubbles | `{ value, filled }`. It fires on each typed, pasted or deleted digit. `filled` is `true` when every box holds a digit |
 | `nds:otp:complete` | `.nds-otp-group`, and it bubbles | `{ value }`. It fires when the last empty box gets a digit, in any order. Use it to submit the code |
-| `nds:otp:clear` | `.nds-otp-group`, and it bubbles | `{ value }`. It fires from `NDS.OTP.clear()` only |
+| `nds:otp:clear` | `.nds-otp-group`, and it bubbles | `{ value }`. It fires from `NDS.Otp.clear()` only |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="otp-js" data-canon data-lang="js">
@@ -273,11 +273,11 @@ group.addEventListener('nds:otp:complete', function () {
 });
 
 // Show the server's answer on the boxes
-NDS.Forms.setStatus({ element: group, status: 'error', message: 'This code is not correct' });
+NDS.Form.setStatus({ element: group, status: 'error', message: 'This code is not correct' });
 
 // Empty the boxes after you send a new code
-NDS.OTP.clear(group);
-NDS.Forms.clearStatus(group);
+NDS.Otp.clear(group);
+NDS.Form.clearStatus(group);
 </script>
 
 The full API is in the banner of `_js/nds-otp.js`.

@@ -1,4 +1,4 @@
-<nav class="nds-main-nav nds-content-wrapper" id="nds-main-nav" aria-label="Primary navigation" data-i18n-aria-label="mainnav.primary_navigation">
+<nav class="nds-main-nav nds-content-wrapper" id="nds-main-nav" aria-label="Primary navigation" data-i18n-aria-label="main-nav.primary_navigation">
     <div class="nds-nav-container">
         {%- assign nav_data_file = page.mainnav | default: site.mainnav | default: "mainnav" %}
         {%- assign nav_data = site.data.mainnav[nav_data_file] %}
@@ -26,7 +26,7 @@
         </a>
         <ul class="nds-nav-minimal" hidden>
             <li class="nds-nav-toggler nds-nav-item">
-                <button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" data-i18n-aria-label="mainnav.toggle_menu"
+                <button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" data-i18n-aria-label="main-nav.toggle_menu"
                     aria-expanded="false" aria-controls="nds-nav-collapse">
                     <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
                 </button>

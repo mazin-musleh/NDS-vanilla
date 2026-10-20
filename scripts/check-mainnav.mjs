@@ -17,7 +17,7 @@ async function open(dev) {
   page.on('pageerror', (e) => { if (!/ResizeObserver loop/.test(e.message)) errors.push(e.message); });
   await page.route('**/nds-cookie-consent.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
   await page.goto(URL, { waitUntil: 'load' });
-  await page.waitForFunction(() => window.NDS?.Mainnav);
+  await page.waitForFunction(() => window.NDS?.MainNav);
   await page.waitForTimeout(1500);
   // The first two menus of the primary list.
   await page.evaluate(() => [...document.querySelectorAll('.nds-nav-primary > .nds-has-menu')].slice(0, 2).forEach((li, i) => { li.dataset.check = 'p' + (i + 1); }));
@@ -103,9 +103,9 @@ async function timedClick(page, sel, label) {
   await page.click(`${P1} > .nds-nav-link`);
   await wait();
   ok('desktop: destroy() with a menu open leaves nothing in the top layer', await page.evaluate(() => {
-    NDS.Mainnav.destroy();
+    NDS.MainNav.destroy();
     const left = document.querySelectorAll('.nds-main-nav :popover-open').length;
-    NDS.Mainnav.reinit();
+    NDS.MainNav.reinit();
     return left === 0;
   }));
   ok('desktop: no page errors', !errors.length, errors.join(' | '));

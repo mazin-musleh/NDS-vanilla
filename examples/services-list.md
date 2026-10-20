@@ -24,7 +24,7 @@ last_edit: "19/10/2026 - 11:26 PM"
                             <input id="filter-search" type="text" class="nds-search-input" name="search" autocomplete="on"
                                 placeholder="Search in services...">
                             <div class="nds-form-action">
-                                <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="forms.clear_search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                                <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="form.clear_search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                                 <button class="nds-btn nds-subtle nds-voice-input nds-icon-only" aria-label="Voice input" data-i18n-aria-label="voice-input.voice_input"><i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i></button>
                             </div>
                         </div>

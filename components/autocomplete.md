@@ -48,7 +48,7 @@ Pick another component when:
     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
     <input type="text" id="service-search" name="service" class="nds-input" autocomplete="on" placeholder="Search services">
     <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input" hidden>
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>

@@ -59,14 +59,14 @@
     // Each `critical` / deferred note says why the component is safe (or not) to init late.
     const COMPONENTS = [
         {
-            name: 'Mainnav',
+            name: 'MainNav',
             selector: '.nds-main-nav',
             // The nav paints with no script, but its toggle and menus need one: idle, they
             // stayed dead for ~2 s after the reveal on a busy phone (iu.edu.sa, CPU ×6.6).
             critical: true,
             // Owner hook: the container passed is usually the view INSIDE the chrome, and
             // a plain init() would no-op on the stale guard after a route change.
-            refresh: () => NDS.Mainnav?.reinit?.(),
+            refresh: () => NDS.MainNav?.reinit?.(),
         },
         {
             // Deferred: the inline head script stamps the saved theme pre-paint; init only syncs the toggle UI.
@@ -75,7 +75,7 @@
         },
         {
             // Critical: init un-hides [hidden] form wrappers and reveals .nds-clear on pre-filled fields (CLS if late).
-            name: 'Forms',
+            name: 'Form',
             selector: '.nds-form-control',
             critical: true,
         },
@@ -92,7 +92,7 @@
         },
         {
             // Deferred: input wiring fires on typing; an autofocus restore lands one idle slot later.
-            name: 'OTP',
+            name: 'Otp',
             selector: '.nds-otp-group',
         },
         {
@@ -107,7 +107,7 @@
         {
             // Deferred: the wrapper reparent is layout-neutral; clicks in the gap no-op and recover.
             // No refresh hook on purpose: re-applying a sort would re-order a server-sorted page by cell text.
-            name: 'Tables',
+            name: 'Table',
             selector: '.nds-table',
         },
         {
@@ -284,7 +284,7 @@
         },
         {
             // Critical: restored chips CLS if late, and in a pre-bundle gap Enter native-submits the form.
-            name: 'TagInput',
+            name: 'Taginput',
             selector: '.nds-taginput',
             critical: true,
         },
@@ -376,7 +376,7 @@
         },
         {
             // Critical: a click in the deferred gap would bypass the single-submit cooldown.
-            name: 'CooldownButton',
+            name: 'Cooldown',
             selector: '.nds-cooldown',
             critical: true,
         },

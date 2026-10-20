@@ -1,26 +1,26 @@
-/* NDS.Tables — public surface
+/* NDS.Table — public surface
  * Rides: nds-sort (the sort engine — column cycling, reordering, aria-sort)
  *      · nds-dropmenu (column-visibility menu; a sub-row toggle authored inside a menu item)
  *      · nds-selection (the header select-all)
  *      · nds-pagination (refreshed after a sort re-orders a paged table; soft)
  * Methods:
- *   NDS.Tables.init() / .reinit()               scan .nds-table and [data-columns-target] menus
- *   NDS.Tables.recheckWidths()                  re-measure every table's responsive scroll state
- *   NDS.Tables.create(table)                    sort controls for one table
- *   NDS.Tables.createResponsive(table)          the scroll wrapper only
- *   NDS.Tables.createColumnToggle(root)         one [data-columns-target] menu
- *   NDS.Tables.row(tr)                          per-row handle {el, sub}; the sub row itself
+ *   NDS.Table.init() / .reinit()               scan .nds-table and [data-columns-target] menus
+ *   NDS.Table.recheckWidths()                  re-measure every table's responsive scroll state
+ *   NDS.Table.create(table)                    sort controls for one table
+ *   NDS.Table.createResponsive(table)          the scroll wrapper only
+ *   NDS.Table.createColumnToggle(root)         one [data-columns-target] menu
+ *   NDS.Table.row(tr)                          per-row handle {el, sub}; the sub row itself
  *                                               is accepted too
  *   ↳ handle.sub.el                             the <tr class="nds-sub">, or null
  *   ↳ handle.sub.setContent(htmlOrNode)         put YOUR markup in the sub (chainable)
  *   ↳ handle.sub.open() / .close() / .toggle()  show / hide it (chainable)
- *   NDS.Tables.setColumnHidden(table, i, bool)  hide or show a column by cell index
- *   NDS.Tables.getCellText(cell)                the cell-text reader sort and export use
+ *   NDS.Table.setColumnHidden(table, i, bool)  hide or show a column by cell index
+ *   NDS.Table.getCellText(cell)                the cell-text reader sort and export use
  * Events (bubble from the <table>):
  *   nds:table:columns      detail {table, index, hidden, restored} — restored:true is a saved
  *                          hide replayed at init, not a user action
  *   nds:table:sub-request  detail {row, sub, table, signal} — there is nothing to show yet.
- *                          Fetch, then answer: NDS.Tables.row(row).sub.setContent(html).open().
+ *                          Fetch, then answer: NDS.Table.row(row).sub.setContent(html).open().
  *                          Pass detail.signal to fetch / NDS.request so a cancel drops it
  *   nds:table:sub-opened   detail {row, sub, table}
  *   nds:table:sub-closed   detail {row, sub, table}
@@ -54,7 +54,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('tables', {
+    const strings = NDS.i18n.strings('table', {
         reset: 'Reset',
         column: 'Column {n}',
     });
@@ -78,7 +78,7 @@
             this.sortButtons = Array.from(this.thead?.querySelectorAll('.nds-sort-btn') || []);
 
             if (!this.thead || !this.tbody) {
-                console.warn('NDS Tables: Invalid table structure found');
+                console.warn('NDS Table: Invalid table structure found');
                 return;
             }
 
@@ -178,7 +178,7 @@
             // sweep, reinit() and programmatic createResponsive() — is reachable and stamped.
             tableElement.ndsTableResponsive = this;
             this.init();
-            tableElement.setAttribute('data-nds-tables-initialized', 'true');
+            tableElement.setAttribute('data-nds-table-initialized', 'true');
         }
 
         init() {
@@ -315,7 +315,7 @@
             this.setScrollFocus(false);
             this.currentScrollState = null;
             this.needsScroll = false;
-            this.table.removeAttribute('data-nds-tables-initialized');
+            this.table.removeAttribute('data-nds-table-initialized');
             this.table.ndsTableResponsive = null;
         }
     }
@@ -403,7 +403,7 @@
             this.list = root.querySelector('[data-columns-list]');
 
             if (!this.table || !this.list) {
-                console.warn('NDS Tables: column toggle needs a [data-columns-target] table and a [data-columns-list] host', root);
+                console.warn('NDS Table: column toggle needs a [data-columns-target] table and a [data-columns-list] host', root);
                 return;
             }
 
@@ -727,7 +727,7 @@
         });
     }
 
-    // NDS.Tables.row(tr) — per-row handle. Accepts the sub row itself too, so a
+    // NDS.Table.row(tr) — per-row handle. Accepts the sub row itself too, so a
     // collapse control inside the expanded content uses the same call shape as
     // the chevron up in the parent row.
     function rowHandle(tr) {
@@ -860,7 +860,7 @@
             // until the consumer answers nds:table:sub-request.
             const target = btn.getAttribute('aria-controls');
             if (target && !handle.sub.el && !document.getElementById(target)) {
-                console.warn(`NDS Tables: [data-sub-toggle] aria-controls="${target}" matches no element.`, btn);
+                console.warn(`NDS Table: [data-sub-toggle] aria-controls="${target}" matches no element.`, btn);
             }
 
             handle.sub.toggle();
@@ -917,7 +917,7 @@
     }
 
     // Public API — the loader calls init(); see components/table.md for the surface.
-    NDS.Tables = {
+    NDS.Table = {
         init: initializeTables,
         reinit: initializeTables,
         recheckWidths: recheckAllWidths,

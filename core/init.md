@@ -172,7 +172,7 @@ React 19 resets a `<form>` after its form action succeeds. The NDS fields in it 
 ### Events
 {: .nds-block-title}
 
-Listen for NDS events with `addEventListener`, through a ref, on the element that the component's API table names. Template event syntax cannot always name them, because their names hold colons, such as `nds:customselect:change`. React has no prop for them, and Angular reads the part before the first colon as a target, as in `(window:resize)`.
+Listen for NDS events with `addEventListener`, through a ref, on the element that the component's API table names. Template event syntax cannot always name them, because their names hold colons, such as `nds:custom-select:change`. React has no prop for them, and Angular reads the part before the first colon as a target, as in `(window:resize)`.
 
 ### Content Security Policy
 {: .nds-block-title}

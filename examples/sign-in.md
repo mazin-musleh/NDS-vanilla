@@ -85,7 +85,7 @@ breadcrumb: [["Examples", "/examples"]]
                   <input type="text" id="national-id" name="national-id" class="nds-input nds-national-id" inputmode="numeric"
                     maxlength="10" placeholder="10 digits" autocomplete="username" required>
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -107,7 +107,7 @@ breadcrumb: [["Examples", "/examples"]]
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
-                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="forms.show_password">
+                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
                       <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -137,7 +137,7 @@ breadcrumb: [["Examples", "/examples"]]
                     maxlength="5" placeholder="Type the code shown below" autocomplete="off" required
                     data-error-message="Enter the 5 digits shown below">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -354,7 +354,7 @@ breadcrumb: [["Examples", "/examples"]]
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
-                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="forms.show_password">
+                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
                       <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -376,7 +376,7 @@ breadcrumb: [["Examples", "/examples"]]
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
-                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="forms.show_password">
+                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
                       <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -433,7 +433,7 @@ breadcrumb: [["Examples", "/examples"]]
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
-                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="forms.show_password">
+                    <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
                       <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -491,7 +491,7 @@ breadcrumb: [["Examples", "/examples"]]
                     pattern="05[0-9]{8}" maxlength="10" placeholder="05XXXXXXXX" value="0501234419" autocomplete="tel" required
                     data-error-message="Enter a 10-digit number that starts with 05">
                   <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="forms.clear_input">
+                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -679,7 +679,7 @@ breadcrumb: [["Examples", "/examples"]]
       var captchaField = captchaInput.closest('.nds-form-container');
       if (captchaInput.value !== captchaCode) {
         // A wrong code is a field error: pin it to the input, not a form banner
-        NDS.Forms.setStatus({
+        NDS.Form.setStatus({
           element: captchaField,
           status: 'error',
           message: 'Wrong code. Enter the new code shown below.'
@@ -690,12 +690,12 @@ breadcrumb: [["Examples", "/examples"]]
         // when the countdown started, under a user already retyping it. reset() first
         // because start() is a no-op while a countdown is still running.
         var refresh = document.getElementById('captcha-refresh');
-        NDS.CooldownButton.reset(refresh);
-        NDS.CooldownButton.start(refresh);
+        NDS.Cooldown.reset(refresh);
+        NDS.Cooldown.start(refresh);
         captchaInput.focus();
         return;
       }
-      NDS.Forms.clearStatus(captchaField);
+      NDS.Form.clearStatus(captchaField);
       withLoading(credForm.querySelector('button[type="submit"]'), 1500, function () {
         show('delivery');
       });
@@ -707,8 +707,8 @@ breadcrumb: [["Examples", "/examples"]]
       expectedCode = String(Math.floor(10000 + Math.random() * 90000));
       // Empties the boxes, syncs the hidden carrier, and focuses the first box.
       // Call it with the card already visible or the focus has nowhere to land.
-      NDS.OTP.clear(otpGroup);
-      NDS.Forms.clearStatus(otpGroup);
+      NDS.Otp.clear(otpGroup);
+      NDS.Form.clearStatus(otpGroup);
       if (destination) document.getElementById('otp-destination').textContent = destination;
       document.getElementById('otp-demo-code').textContent = expectedCode;
     }
@@ -742,8 +742,8 @@ breadcrumb: [["Examples", "/examples"]]
     });
 
     otpForm.addEventListener('nds:form:valid', function () {
-      if (NDS.OTP.getValue(otpGroup) !== expectedCode) {
-        NDS.Forms.setStatus({
+      if (NDS.Otp.getValue(otpGroup) !== expectedCode) {
+        NDS.Form.setStatus({
           element: otpGroup,
           status: 'error',
           message: 'That code is not right. Try again.'

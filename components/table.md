@@ -122,12 +122,12 @@ Pick another component when:
       <div class="nds-dropmenu" data-columns-target="tbl-rec-requests">
         <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
           <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
-          <span class="nds-label" data-hidden="sm sr" data-i18n="tables.columns">Columns</span>
+          <span class="nds-label" data-hidden="sm sr" data-i18n="table.columns">Columns</span>
         </button>
         <div class="nds-dropmenu-menu" hidden>
           <div class="nds-dropmenu-scroll">
             <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
-              <legend class="nds-label" data-i18n="tables.visible_columns">Visible columns</legend>
+              <legend class="nds-label" data-i18n="table.visible_columns">Visible columns</legend>
             </fieldset>
           </div>
         </div>
@@ -160,7 +160,7 @@ Pick another component when:
           <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
           <input type="text" class="nds-search-input" placeholder="Search requests..." aria-label="Search requests">
           <div class="nds-form-action">
-            <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" hidden aria-label="Clear search" data-i18n-aria-label="forms.clear_search">
+            <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" hidden aria-label="Clear search" data-i18n-aria-label="form.clear_search">
               <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
             </button>
           </div>
@@ -557,7 +557,7 @@ To start one open, leave out its `hidden` attribute. Write `aria-expanded="true"
 ### Sub-Rows on Demand
 {: .nds-block-title}
 
-A toggle whose row has no sub-row yet shows a spinner and fires `nds:table:sub-request`. Your code fetches the detail and calls `NDS.Tables.row(row).sub.setContent(html).open()`. On an error, call `close()`, or the spinner keeps turning. A second click on a spinning toggle cancels the request through `detail.signal`. NDS never fetches the detail itself. The content stays, so the next open shows it with no new request. `setContent()` starts a table inside the content: for any other component in it, call `NDS.Init.mount(sub)`.
+A toggle whose row has no sub-row yet shows a spinner and fires `nds:table:sub-request`. Your code fetches the detail and calls `NDS.Table.row(row).sub.setContent(html).open()`. On an error, call `close()`, or the spinner keeps turning. A second click on a spinning toggle cancels the request through `detail.signal`. NDS never fetches the detail itself. The content stays, so the next open shows it with no new request. `setContent()` starts a table inside the content: for any other component in it, call `NDS.Init.mount(sub)`.
 
 ### Column Alignment
 {: .nds-block-title}
@@ -645,7 +645,7 @@ Keep Selection only when the page has a bulk action that acts on the selected ro
             <i class="hgi hgi-stroke hgi-text-font"></i>
             <span class="nds-label">Clean Cell Text</span>
           </span>
-          <p class="nds-item-desc">Sort and export read the cell's own text, not the text of the icons or buttons in it. <code class="nds-inline-code lang-js">NDS.Tables.getCellText()</code> gives the same value to your code.</p>
+          <p class="nds-item-desc">Sort and export read the cell's own text, not the text of the icons or buttons in it. <code class="nds-inline-code lang-js">NDS.Table.getCellText()</code> gives the same value to your code.</p>
         </div>
       </div>
     </div>
@@ -759,15 +759,15 @@ Source: the `table` group in `_sass/tokens/_components.scss`.
 
 | Method | Effect |
 |---|---|
-| `NDS.Tables.init()` | Starts every table and column menu that has not started yet |
-| `NDS.Tables.reinit()` | The same as `init()`. Call it after you add a new table. When only the rows change, call `NDS.Init.refresh(tbody)`: see [Init](../core/init) |
-| `NDS.Tables.recheckWidths()` | Measures every scroll box again, after a change the script cannot see |
-| `NDS.Tables.create(table)` | Starts sorting and selection on one table, and returns its instance, or the instance it already has. Returns `null` when the table has no `<thead>` or `<tbody>` |
-| `NDS.Tables.createResponsive(table)` | Adds the scroll box to one table and returns its instance |
-| `NDS.Tables.createColumnToggle(menu)` | Starts one column menu, and returns its instance, or the instance it already has. Returns `null` when the table or `[data-columns-list]` is missing |
-| `NDS.Tables.setColumnHidden(table, index, hidden)` | Hides or shows the column at this index: it sets `hidden` on the header cell and on its cell in every row, and fires `nds:table:columns`. The menu does not save this change |
-| `NDS.Tables.getCellText(cell)` | The cell's own text, the value sort and export read |
-| `NDS.Tables.row(tr).sub` | The handle of a row's sub-row. `tr` is the row or its sub-row |
+| `NDS.Table.init()` | Starts every table and column menu that has not started yet |
+| `NDS.Table.reinit()` | The same as `init()`. Call it after you add a new table. When only the rows change, call `NDS.Init.refresh(tbody)`: see [Init](../core/init) |
+| `NDS.Table.recheckWidths()` | Measures every scroll box again, after a change the script cannot see |
+| `NDS.Table.create(table)` | Starts sorting and selection on one table, and returns its instance, or the instance it already has. Returns `null` when the table has no `<thead>` or `<tbody>` |
+| `NDS.Table.createResponsive(table)` | Adds the scroll box to one table and returns its instance |
+| `NDS.Table.createColumnToggle(menu)` | Starts one column menu, and returns its instance, or the instance it already has. Returns `null` when the table or `[data-columns-list]` is missing |
+| `NDS.Table.setColumnHidden(table, index, hidden)` | Hides or shows the column at this index: it sets `hidden` on the header cell and on its cell in every row, and fires `nds:table:columns`. The menu does not save this change |
+| `NDS.Table.getCellText(cell)` | The cell's own text, the value sort and export read |
+| `NDS.Table.row(tr).sub` | The handle of a row's sub-row. `tr` is the row or its sub-row |
 | `.sub.setContent(html)` | Puts your markup or node in the sub-row. It builds the sub-row when there is none, and stops the spinner. It returns the handle |
 | `.sub.open()`, `.close()`, `.toggle()` | Opens, closes or flips the sub-row. `open()` with no sub-row fires `nds:table:sub-request`. Each returns the handle |
 | `.sub.el` | The `tr.nds-sub`, or `null` |
@@ -797,10 +797,10 @@ var table = document.getElementById('requests');
 table.addEventListener('nds:table:sub-request', function (e) {
   var row = e.detail.row;
   NDS.request('/requests/' + row.dataset.id + '/details', { signal: e.detail.signal })
-    .then(function (res) { NDS.Tables.row(row).sub.setContent(res.data).open(); })
+    .then(function (res) { NDS.Table.row(row).sub.setContent(res.data).open(); })
     .catch(function (err) {
       // A cancel already stopped the spinner. Any other error must close it.
-      if (err.name !== 'AbortError') NDS.Tables.row(row).sub.close();
+      if (err.name !== 'AbortError') NDS.Table.row(row).sub.close();
     });
 });
 </script>

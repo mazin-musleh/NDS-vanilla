@@ -142,7 +142,7 @@ The first button is open in the markup: its `aria-selected` is `true`, and every
             <i class="hgi hgi-stroke hgi-notification-square"></i>
             <span class="nds-label">Change Events</span>
           </span>
-          <p class="nds-item-desc">Every switch fires <code class="nds-inline-code lang-js">nds:tab:change</code> with the new and the previous button and panel.</p>
+          <p class="nds-item-desc">Every switch fires <code class="nds-inline-code lang-js">nds:tabs:change</code> with the new and the previous button and panel.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -223,12 +223,12 @@ The [Tabs](../components/tabs) controller, `NDS.Tabs`, runs the content switcher
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:tab:change` | `.nds-content-switcher`, and it bubbles | `tabIndex`, `tab`, `panel`, `previousTab`, `previousPanel` |
+| `nds:tabs:change` | `.nds-content-switcher`, and it bubbles | `tabIndex`, `tab`, `panel`, `previousTab`, `previousPanel` |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="switcher-js" data-canon data-lang="js">
 var switcher = document.querySelector('#request-status');
-switcher.addEventListener('nds:tab:change', function (e) {
+switcher.addEventListener('nds:tabs:change', function (e) {
   console.log('Opened view', e.detail.tabIndex);
 });
 switcher.ndsTabs.switchTo(2);

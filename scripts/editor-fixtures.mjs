@@ -2205,7 +2205,7 @@ try {
 
         // 5 — embed mode still enforces the size cap on screenshot paste
         // (container's live-read NDS.Upload config; generated default 2MB).
-        NDS.Forms?.clearStatus?.(root);
+        NDS.Form?.clearStatus?.(root);
         editable.innerHTML = '<p><br></p>';
         editable.focus();
         const bigDt = new DataTransfer();
@@ -2237,7 +2237,7 @@ try {
 
         // 7 — paste parity beyond size: a disallowed extension is rejected
         // through the same live validateFile() gates.
-        NDS.Forms?.clearStatus?.(root);
+        NDS.Form?.clearStatus?.(root);
         editable.innerHTML = '<p><br></p>';
         editable.focus();
         const bmpDt = new DataTransfer();
@@ -2363,7 +2363,7 @@ try {
             && !urlInput.closest('.nds-form-container').hasAttribute('data-status');
         menu.querySelector('[data-editor-image-cancel]').click();
         await new Promise(r => setTimeout(r, 250));
-        NDS.Forms?.clearStatus?.(root);
+        NDS.Form?.clearStatus?.(root);
         const dt = new DataTransfer();
         dt.items.add(new File([new Uint8Array([137, 80, 78, 71])], 's.png', { type: 'image/png' }));
         editable.focus();
@@ -2427,7 +2427,7 @@ try {
             menu.querySelector('[data-editor-image-confirm]').click();
             const text = urlInput.closest('.nds-form-container').querySelector('[data-feedback-target]')?.textContent || '';
             up.ndsUpload.removeFile(id);
-            NDS.Forms?.clearStatus?.(urlInput.closest('.nds-form-container'));
+            NDS.Form?.clearStatus?.(urlInput.closest('.nds-form-container'));
             menu.querySelector('[data-editor-image-cancel]').click();
             await new Promise(r => setTimeout(r, 250));
             return text;

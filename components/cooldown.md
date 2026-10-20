@@ -137,7 +137,7 @@ The variants and sizes are the [Button](../components/button) ones. The cooldown
 - Put the button text in a `<span class="nds-label">`. The countdown writes into that span. A button without one never counts down and logs a console warning.
 - Omit `data-resend-label` when the action reads the same every time, such as "Try again". The button then returns to its first label.
 - Keep the countdown text short, such as "Resend in 30s". Stable Width holds the button at its longest text, so a long countdown makes it wide at rest too. Shorten the wording, not the CSS.
-- Call `NDS.CooldownButton.reset()` when the request fails. The user can then retry at once, instead of waiting out a cooldown for a send that failed.
+- Call `NDS.Cooldown.reset()` when the request fails. The user can then retry at once, instead of waiting out a cooldown for a send that failed.
 
 </div>
   </div>
@@ -166,9 +166,9 @@ The variants and sizes are the [Button](../components/button) ones. The cooldown
 
 | Method | Effect |
 |---|---|
-| `NDS.CooldownButton.init()` | Wires every `.nds-cooldown` on the page, now and later. Runs once at load. Call it only if you disabled the loader |
-| `NDS.CooldownButton.start(btn, opts?)` | Starts a cooldown by hand. Does nothing while a cooldown is already running |
-| `NDS.CooldownButton.reset(btn)` | Ends the cooldown early and restores the button, as a finished cooldown does |
+| `NDS.Cooldown.init()` | Wires every `.nds-cooldown` on the page, now and later. Runs once at load. Call it only if you disabled the loader |
+| `NDS.Cooldown.start(btn, opts?)` | Starts a cooldown by hand. Does nothing while a cooldown is already running |
+| `NDS.Cooldown.reset(btn)` | Ends the cooldown early and restores the button, as a finished cooldown does |
 {: .nds-table .nds-responsive}
 
 | Option | Default | Effect |
@@ -208,7 +208,7 @@ btn.addEventListener('nds:cooldown:start', async () => {
     });
     // Let the user retry at once, instead of waiting out a cooldown
     // for a send that failed.
-    NDS.CooldownButton.reset(btn);
+    NDS.Cooldown.reset(btn);
   } finally {
     NDS.State.remove(btn, 'loading');
   }
@@ -216,14 +216,14 @@ btn.addEventListener('nds:cooldown:start', async () => {
 
 // Start a cooldown by hand, such as after a form submit elsewhere.
 // Use one of these forms. A call during a running cooldown does nothing.
-NDS.CooldownButton.start(btn);
+NDS.Cooldown.start(btn);
 
 // Or: the send already happened. Start the cooldown without firing
 // nds:cooldown:start again.
-NDS.CooldownButton.start(btn, { silent: true });
+NDS.Cooldown.start(btn, { silent: true });
 
 // Or: resume a cooldown after a page reload, with 20 of 30 seconds left.
-NDS.CooldownButton.start(btn, { seconds: 20, silent: true });
+NDS.Cooldown.start(btn, { seconds: 20, silent: true });
 </script>
 
 The full API is in the banner of `_js/nds-cooldown.js`.

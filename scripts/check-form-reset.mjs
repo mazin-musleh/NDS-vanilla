@@ -24,13 +24,13 @@ const pick = (trigger, option) => async (root, page) => { await root.locator(tri
 
 // change(root, page) must leave the field different from how it shipped.
 const CASES = [
-  { name: 'text', doc: 'forms', id: 'field-text', change: type('input', 'changed') },
-  { name: 'required, failed check', doc: 'forms', id: 'field-email', required: true, change: async (root, page) => { await root.locator('input').fill(''); await page.evaluate(() => document.getElementById('reset-form').requestSubmit()); } },
-  { name: 'phone', doc: 'forms', id: 'field-phone', change: type('input', '0551234567') },
-  { name: 'national ID, invalid', doc: 'forms', id: 'field-national-id', change: type('input', '1234567890') },
-  { name: 'IBAN, invalid', doc: 'forms', id: 'field-iban', change: type('input', 'SA0380000000608010167518') },
-  { name: 'textarea', doc: 'forms', id: 'field-textarea', change: type('textarea', 'changed') },
-  { name: 'select', doc: 'forms', id: 'field-select', change: async (root) => { const s = root.locator('select'); await s.selectOption({ index: (await s.locator('option').count()) - 1 }); } },
+  { name: 'text', doc: 'form', id: 'field-text', change: type('input', 'changed') },
+  { name: 'required, failed check', doc: 'form', id: 'field-email', required: true, change: async (root, page) => { await root.locator('input').fill(''); await page.evaluate(() => document.getElementById('reset-form').requestSubmit()); } },
+  { name: 'phone', doc: 'form', id: 'field-phone', change: type('input', '0551234567') },
+  { name: 'national ID, invalid', doc: 'form', id: 'field-national-id', change: type('input', '1234567890') },
+  { name: 'IBAN, invalid', doc: 'form', id: 'field-iban', change: type('input', 'SA0380000000608010167518') },
+  { name: 'textarea', doc: 'form', id: 'field-textarea', change: type('textarea', 'changed') },
+  { name: 'select', doc: 'form', id: 'field-select', change: async (root) => { const s = root.locator('select'); await s.selectOption({ index: (await s.locator('option').count()) - 1 }); } },
   { name: 'Slider', doc: 'slider', id: 'slider-single', change: keys('input[type="range"]', 'ArrowRight', 3) },
   { name: 'Slider range', doc: 'slider', id: 'slider-range', change: keys('.nds-slider-min', 'ArrowRight', 3) },
   { name: 'Custom Select', doc: 'custom-select', id: 'custom-select-field', change: pick('.nds-select-input', '[data-case="Custom Select"] .nds-select-option[data-value="makkah"]') },

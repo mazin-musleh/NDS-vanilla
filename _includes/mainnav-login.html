@@ -41,7 +41,7 @@
                 <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password" hidden>
                     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                 </button>
-                <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="forms.show_password">
+                <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
                     <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                 </button>
             </div>
@@ -110,11 +110,11 @@
 
         // Login (inside modal) — submit event covers both button-click and
         // Enter-in-field. novalidate on the form disables native browser
-        // popups; NDS.Forms.validateForm handles validation + error display.
+        // popups; NDS.Form.validateForm handles validation + error display.
         var loginBtn = document.getElementById('login-submit-btn');
         loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            if (!NDS.Forms.validateForm(loginForm).valid) return;
+            if (!NDS.Form.validateForm(loginForm).valid) return;
             loginBtn.dataset.state = 'loading';
             setTimeout(function () {
                 loginBtn.removeAttribute('data-state');

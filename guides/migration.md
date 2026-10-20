@@ -55,7 +55,7 @@ sidemenu_mode: false
                                     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                                     <input type="text" class="nds-search-input" placeholder="Search names and fixes">
                                     <div class="nds-form-action">
-                                        <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="forms.clear_search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                                        <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="form.clear_search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                                 <button class="nds-btn nds-primary nds-search-btn" type="button">

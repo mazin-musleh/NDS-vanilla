@@ -318,14 +318,14 @@ ok('an empty required field fails validateForm', await (async () => {
         form.className = 'nds-form';
         el.parentNode.insertBefore(form, el);
         form.appendChild(el);
-        return NDS.Forms.validateForm(form, { showMessages: false, focusFirst: false }).valid === false;
+        return NDS.Form.validateForm(form, { showMessages: false, focusFirst: false }).valid === false;
     });
 })());
 
 ok('a filled required field passes validateForm', await page.evaluate(() => {
     const el = document.getElementById('req');
     NDS.TimePicker.setValue(el, '14:30');
-    return NDS.Forms.validateForm(el.closest('form'), { showMessages: false, focusFirst: false }).valid === true;
+    return NDS.Form.validateForm(el.closest('form'), { showMessages: false, focusFirst: false }).valid === true;
 }));
 
 // ---- LOCALIZATION ------------------------------------------------------

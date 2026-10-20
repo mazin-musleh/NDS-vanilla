@@ -252,11 +252,11 @@ A form that edits saved data shows the tags the user saved before. For each tag,
 
 | Method | Effect |
 |---|---|
-| `NDS.TagInput.init()` | Starts every `.nds-taginput` that has not started. The loader calls it on load. Call it again after you add a field to the page |
-| `NDS.TagInput.reinit()` | The same as `init()` |
-| `NDS.TagInput.create(el)` | Starts one field, and returns its instance. On a field that has started, it returns the same instance. It returns `null` when the field has no `.nds-form-control` or no text box in it |
-| `NDS.TagInput.destroy(el)` | Removes the listeners. The chips and the hidden inputs stay, and `init()` can start the field again. Call it before you remove the field from the page |
-| `el.ndsTagInput` | The instance of a field that has started |
+| `NDS.Taginput.init()` | Starts every `.nds-taginput` that has not started. The loader calls it on load. Call it again after you add a field to the page |
+| `NDS.Taginput.reinit()` | The same as `init()` |
+| `NDS.Taginput.create(el)` | Starts one field, and returns its instance. On a field that has started, it returns the same instance. It returns `null` when the field has no `.nds-form-control` or no text box in it |
+| `NDS.Taginput.destroy(el)` | Removes the listeners. The chips and the hidden inputs stay, and `init()` can start the field again. Call it before you remove the field from the page |
+| `el.ndsTaginput` | The instance of a field that has started |
 | `instance.getValues()` | Returns the tags, in the order they were added |
 | `instance.addTag(value)` | Adds one tag. It trims spaces and commas, and rejects a repeat or a tag past the limit with the same message as typing |
 | `instance.removeTag(value)` | Removes the tag with this exact text |
@@ -277,7 +277,7 @@ field.addEventListener('nds:taginput:change', function (e) {
 });
 
 // Add a tag from code
-field.ndsTagInput.addTag('Accessibility');
+field.ndsTaginput.addTag('Accessibility');
 </script>
 
 The full API is in the banner of `_js/nds-taginput.js`.

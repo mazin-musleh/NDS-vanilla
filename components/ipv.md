@@ -231,7 +231,7 @@ One viewer serves the whole page. The viewer fires no events.
 |---|---|
 | `NDS.Ipv.init()` | Starts the viewer. The loader calls it when the page has a thumbnail |
 | `NDS.Ipv.reinit()` | Gives thumbnails added since the last call `tabindex` and `role`. Call it after you add thumbnails |
-| `NDS.Ipv.create()` | Starts the viewer and returns it. `window.ndsIPV` holds the same viewer |
+| `NDS.Ipv.create()` | Starts the viewer and returns it. `window.ndsIpv` holds the same viewer |
 | `viewer.open(img)` | Opens the viewer on that thumbnail |
 | `viewer.close()` | Closes the viewer and returns focus to the thumbnail |
 | `viewer.showPrev()`, `viewer.showNext()` | Moves to the previous or the next thumbnail |

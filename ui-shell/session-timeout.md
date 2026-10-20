@@ -48,8 +48,8 @@ Pick another component when:
 // closes the ended modal.
 (function () {
   var count = function (btn) {
-    NDS.CooldownButton.reset(btn);
-    NDS.CooldownButton.start(btn, { seconds: 30, silent: true });
+    NDS.Cooldown.reset(btn);
+    NDS.Cooldown.start(btn, { seconds: 30, silent: true });
   };
   // The page and its screens share localStorage, as tabs do, so two demos would warn together. One runs at a time.
   var stopOthers = function () {
@@ -58,7 +58,7 @@ Pick another component when:
       if (w === window || !w || !w.NDS || !w.NDS.SessionTimeout || w.NDS.SessionTimeout.__ndsStub) return;
       w.NDS.SessionTimeout.destroy();
       var b = w.document.querySelector('[data-session-demo]');
-      if (b) w.NDS.CooldownButton.reset(b);
+      if (b) w.NDS.Cooldown.reset(b);
     });
   };
   if (window !== top) stopOthers();

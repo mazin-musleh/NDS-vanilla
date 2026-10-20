@@ -203,10 +203,14 @@
 - { kind: event, name: nds:upload:beforeUpload, status: renamed, use: nds:upload:start, since: "2.0.0", fix: "Listen for nds:upload:start." }
 - { kind: event, name: nds:upload:maxFilesReached, status: renamed, use: nds:upload:max-files, since: "2.0.0", fix: "Listen for nds:upload:max-files." }
 - { kind: event, name: nds:upload:validationError, status: renamed, use: nds:upload:invalid, since: "2.0.0", fix: "Listen for nds:upload:invalid." }
+- { kind: event, name: nds:customselect:change, status: renamed, use: nds:custom-select:change, since: "2.0.0", fix: "Listen for nds:custom-select:change." }
+- { kind: event, name: nds:tab:change, status: renamed, use: nds:tabs:change, since: "2.0.0", fix: "Listen for nds:tabs:change." }
 - { kind: event, name: nds:cooldown:triggered, status: renamed, use: nds:cooldown:start, since: "2.0.0", fix: "Listen for nds:cooldown:start." }
 - { kind: event, name: nds:table:sub-close, status: renamed, use: nds:table:sub-closed, since: "2.0.0", fix: "Listen for nds:table:sub-closed." }
 - { kind: event, name: nds:table:sub-open, status: renamed, use: nds:table:sub-opened, since: "2.0.0", fix: "Listen for nds:table:sub-opened." }
 - { kind: event, name: nds:upload:selected, status: renamed, use: nds:upload:select, since: "2.0.0", fix: "Listen for nds:upload:select." }
+- { kind: attribute, name: data-nds-cooldown-button-initialized, status: renamed, use: data-nds-cooldown-initialized, since: "2.0.0", fix: "NDS writes data-nds-cooldown-initialized; read that one." }
+- { kind: attribute, name: data-nds-tables-initialized, status: renamed, use: data-nds-table-initialized, since: "2.0.0", fix: "NDS writes data-nds-table-initialized; read that one." }
 - { kind: attribute, name: data-sort-dir, status: renamed, use: data-sort-order, since: "2.0.0", fix: "Use data-sort-order." }
 - { kind: attribute, name: data-portal, scope: "&.nds-dropmenu", status: removed, since: "2.0.0", fix: "Remove it: an open menu sits in the browser's top layer, so nothing clips it and it stays inside its wrapper." }
 - { kind: attribute, name: data-no-portal, scope: "&.nds-dropmenu", status: removed, since: "2.0.0", fix: "Remove it: an open menu never leaves its wrapper now, so CSS and DOM walks scoped under the wrapper reach it." }

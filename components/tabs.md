@@ -293,7 +293,7 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
             <i class="hgi hgi-stroke hgi-notification-square"></i>
             <span class="nds-label">Tab Change Events</span>
           </span>
-          <p class="nds-item-desc">Every switch fires <code class="nds-inline-code lang-js">nds:tab:change</code> with the new and the previous tab and panel.</p>
+          <p class="nds-item-desc">Every switch fires <code class="nds-inline-code lang-js">nds:tabs:change</code> with the new and the previous tab and panel.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -376,12 +376,12 @@ The instance lives on the element as `ndsTabs`. It is there once the component s
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:tab:change` | `.nds-tabs`, and it bubbles | `tabIndex`, `tab`, `panel`, `previousTab`, `previousPanel` |
+| `nds:tabs:change` | `.nds-tabs`, and it bubbles | `tabIndex`, `tab`, `panel`, `previousTab`, `previousPanel` |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="tabs-js" data-canon data-lang="js">
 var tabs = document.querySelector('#service-tabs');
-tabs.addEventListener('nds:tab:change', function (e) {
+tabs.addEventListener('nds:tabs:change', function (e) {
   console.log('Opened tab', e.detail.tabIndex);
 });
 tabs.ndsTabs.switchTo(2);

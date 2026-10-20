@@ -113,7 +113,7 @@
   }
 
   // Source textarea: clip-hidden in editor mode — NOT [hidden]/display:none, which
-  // NDS.Forms isFieldVisible treats as invisible (required validation would skip it).
+  // NDS.Form isFieldVisible treats as invisible (required validation would skip it).
   &:not(.is-source) .nds-editor-source {
     position: absolute;
     inline-size: 1px;

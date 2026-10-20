@@ -331,7 +331,7 @@ async function hydrationRun(name, serverHtml, hydrate, manual) {
     const logs = [];
     // Vue's build notice names its hydration flag; it is not a mismatch.
     page.on('console', (m) => { if (MISMATCH.test(m.text()) && !/^Feature flags/.test(m.text())) logs.push(m.text().slice(0, 140)); });
-    await page.route(/components\/forms\.html/, async (route) => {
+    await page.route(/components\/form\.html/, async (route) => {
         const res = await route.fetch();
         let body = await res.text();
         body = body.replace(/<body([^>]*)>/, `<body$1><div id="ssr-root">${serverHtml}</div>`);
@@ -879,7 +879,7 @@ for (const v of REACT) {
     const errors = [];
     page.on('pageerror', (e) => { if (!/ResizeObserver loop/.test(e.message)) errors.push(e.message); });
     // data-cookies="false": no built panel races the app's own; open() still loads the bundle.
-    await page.route(/components\/forms\.html/, async (route) => {
+    await page.route(/components\/form\.html/, async (route) => {
         const res = await route.fetch();
         await route.fulfill({ response: res, body: (await res.text()).replace(/<html([^>]*)>/, '<html$1 data-cookies="false">') });
     });

@@ -304,8 +304,8 @@ To show a saved value, write it in the `value` of `.nds-select-value`, and leave
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:customselect:change` | `.nds-form-control`. It does not bubble | `{ value, text }`: the picked option's `data-value` and label. Empty strings after `clear()`. It fires at each pick, `setValue()` and `clear()` |
-| `input`, `change` | `.nds-select-input` and `.nds-select-value`, and they bubble | Native events, with no detail. They fire with `nds:customselect:change` |
+| `nds:custom-select:change` | `.nds-form-control`. It does not bubble | `{ value, text }`: the picked option's `data-value` and label. Empty strings after `clear()`. It fires at each pick, `setValue()` and `clear()` |
+| `input`, `change` | `.nds-select-input` and `.nds-select-value`, and they bubble | Native events, with no detail. They fire with `nds:custom-select:change` |
 | `nds:dropmenu:opened`, `nds:dropmenu:closed` | `.nds-form-control`, and they bubble | The list opened or closed. See [Dropmenu](../components/dropmenu) |
 {: .nds-table .nds-responsive}
 
@@ -313,7 +313,7 @@ To show a saved value, write it in the `value` of `.nds-select-value`, and leave
 var field = document.querySelector('#custom-select-region').closest('.nds-form-control');
 
 // Log each pick
-field.addEventListener('nds:customselect:change', function (e) {
+field.addEventListener('nds:custom-select:change', function (e) {
   console.log(e.detail.value, e.detail.text);
 });
 

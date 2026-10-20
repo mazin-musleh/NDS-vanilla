@@ -54,7 +54,7 @@ sidemenu_mode: false
                                 <input id="search-results-input" type="text" class="nds-search-input" name="q" autocomplete="on"
                                     placeholder="Search...">
                                 <div class="nds-form-action">
-                                    <button type="button" class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear" data-i18n-aria-label="forms.clear">
+                                    <button type="button" class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear" data-i18n-aria-label="form.clear">
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                     <button type="button" class="nds-btn nds-subtle nds-voice-input nds-icon-only" aria-label="Voice input" data-i18n-aria-label="voice-input.voice_input">

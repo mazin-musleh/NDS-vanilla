@@ -3,7 +3,7 @@
  * Methods:
  *   NDS.Ipv.init() / .reinit()   wire the thumbnails (the overlay builds on first open);
  *                                a repeat call gives later thumbnails tabindex + role
- *   NDS.Ipv.create()             build it and return the instance (window.ndsIPV)
+ *   NDS.Ipv.create()             build it and return the instance (window.ndsIpv)
  *   instance.open(thumb)         open the viewer on a thumbnail element
  *   instance.close()
  *   instance.destroy()           detach every listener and remove the overlay; init() builds anew
@@ -19,7 +19,7 @@
  *   - The overlay (#nds-ipv-popup-overlay) is built by the component on the FIRST open —
  *     a page where no thumbnail is clicked carries zero overlay DOM and none of the
  *     document-level listeners.
- *   - The instance is a page singleton at window.ndsIPV.
+ *   - The instance is a page singleton at window.ndsIpv.
  */
 /**
  * NDS Image Popup Viewer (IPV)
@@ -522,7 +522,7 @@
             if (this.el.overlay) this.el.overlay.remove();
             this.el = {};
             // Free the singleton slot so init() can build a fresh viewer.
-            if (window.ndsIPV === this) window.ndsIPV = null;
+            if (window.ndsIpv === this) window.ndsIpv = null;
         }
     }
 
@@ -585,8 +585,8 @@
     // the instance's first open, so the singleton guard is the instance itself.
     // A repeat call gives thumbnails added since then keyboard access.
     function initializeIPV() {
-        if (window.ndsIPV) window.ndsIPV.enhanceThumbnails();
-        else window.ndsIPV = new NDSImagePopupViewer();
+        if (window.ndsIpv) window.ndsIpv.enhanceThumbnails();
+        else window.ndsIpv = new NDSImagePopupViewer();
     }
 
     // Public API for the unified init system
@@ -595,7 +595,7 @@
         reinit: initializeIPV,
         create: () => {
             initializeIPV();
-            return window.ndsIPV;
+            return window.ndsIpv;
         }
     };
 })();

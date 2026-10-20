@@ -1093,9 +1093,9 @@
             </div>
         </div>`);
         const box = menu.firstElementChild;
-        // Soft dependency — the jump box stays a plain input if NDS.Forms isn't
+        // Soft dependency — the jump box stays a plain input if NDS.Form isn't
         // bundled (no clear button, no container interaction states).
-        NDS.Forms?.initializeContainer(box);
+        NDS.Form?.initializeContainer(box);
         const input = box.querySelector('input');
 
         input.addEventListener('input', () => {

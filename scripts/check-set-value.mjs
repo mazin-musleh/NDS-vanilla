@@ -201,7 +201,7 @@ for (const v of REACT) {
         const group = Array.from(document.querySelectorAll('.nds-otp-group')).find((g) => g.querySelector('.nds-otp-value'));
         if (!group) return null;
         window.__log.length = 0;
-        NDS.OTP.setValue(group, '1234');
+        NDS.Otp.setValue(group, '1234');
         return { value: group.querySelector('.nds-otp-value').value, log: window.__log.filter((l) => l.endsWith('nds-otp-value')) };
     });
     ok('OTP: .nds-otp-value gets the digits with input + change', res && res.value.startsWith('12')
@@ -488,7 +488,7 @@ for (const ver of VUE) {
     let r = { shown: await page.evaluate(() => document.querySelector('#v2-slider .nds-slider-min').value), model: await vm('lo') };
     ok(`${V}: a clamped slider thumb reaches v-model`, r.shown === '60000' && r.model === '60000', JSON.stringify(r));
 
-    await page.evaluate(() => NDS.OTP.setValue(document.getElementById('v2-otp'), '1234'));
+    await page.evaluate(() => NDS.Otp.setValue(document.getElementById('v2-otp'), '1234'));
     ok(`${V}: OTP reaches v-model on .nds-otp-value`, (await vm('otp')) === '1234', await vm('otp'));
 
     await page.locator('#v2-dm .nds-dropmenu-trigger').scrollIntoViewIfNeeded();

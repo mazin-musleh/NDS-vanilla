@@ -218,12 +218,12 @@ Pick another component when:
 <div class="nds-dropmenu" data-columns-target="export-orders">
   <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
     <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
-    <span class="nds-label" data-i18n="tables.columns">Columns</span>
+    <span class="nds-label" data-i18n="table.columns">Columns</span>
   </button>
   <div class="nds-dropmenu-menu" hidden>
     <div class="nds-dropmenu-scroll">
       <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
-        <legend class="nds-label" data-i18n="tables.visible_columns">Visible columns</legend>
+        <legend class="nds-label" data-i18n="table.visible_columns">Visible columns</legend>
       </fieldset>
     </div>
   </div>

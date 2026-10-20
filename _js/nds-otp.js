@@ -1,12 +1,12 @@
-/* NDS.OTP — public surface
+/* NDS.Otp — public surface
  * Rides: nds-forms (clears the field status as the user types; soft)
  * Requires:
  *   .nds-otp-group needs .nds-otp-container input — the group is not wired
  * Methods:
- *   NDS.OTP.init()                  wire every .nds-otp-group, and self-arm for late ones
- *   NDS.OTP.getValue(group)         the digits, joined
- *   NDS.OTP.setValue(group, value)  fill the boxes (non-digits stripped)
- *   NDS.OTP.clear(group)            empty the boxes, focus the first
+ *   NDS.Otp.init()                  wire every .nds-otp-group, and self-arm for late ones
+ *   NDS.Otp.getValue(group)         the digits, joined
+ *   NDS.Otp.setValue(group, value)  fill the boxes (non-digits stripped)
+ *   NDS.Otp.clear(group)            empty the boxes, focus the first
  * Events (bubble from the .nds-otp-group; every detail carries `value`):
  *   nds:otp:change     detail {value, filled} — on every edit
  *   nds:otp:complete   detail {value} — the moment every box holds a digit
@@ -99,7 +99,7 @@
 
     function autoClearStatus(group) {
         if (NDS.Status.get(group) !== '') {
-            NDS.Forms.clearStatus(group);
+            NDS.Form.clearStatus(group);
         }
     }
 
@@ -303,7 +303,7 @@
     // PUBLIC API
     // ==============================================
 
-    NDS.OTP = {
+    NDS.Otp = {
         init: init,
 
         getValue: getValue,

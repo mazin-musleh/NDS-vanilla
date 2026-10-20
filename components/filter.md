@@ -44,7 +44,7 @@ Pick another component when:
         <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
         <input type="text" id="flt-search-input" class="nds-search-input" placeholder="Search services..." aria-label="Search services">
         <div class="nds-form-action">
-          <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" hidden aria-label="Clear search" data-i18n-aria-label="forms.clear_search">
+          <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" hidden aria-label="Clear search" data-i18n-aria-label="form.clear_search">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
           </button>
         </div>
@@ -198,7 +198,7 @@ Pick another component when:
       <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
       <input type="text" id="flt-search-input" class="nds-search-input" placeholder="Search services..." aria-label="Search services">
       <div class="nds-form-action">
-        <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" hidden aria-label="Clear search" data-i18n-aria-label="forms.clear_search">
+        <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" hidden aria-label="Clear search" data-i18n-aria-label="form.clear_search">
           <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
       </div>
@@ -277,7 +277,7 @@ Pick another component when:
 </script>
 <script type="text/html" id="filter-part-suggest" data-canon>
 <div class="nds-auto-fill" data-target="flt-search-input" data-filter-target="flt-items" data-autofill-apply>
-  <span class="nds-label" data-i18n="forms.suggestions">Suggestions:</span>
+  <span class="nds-label" data-i18n="form.suggestions">Suggestions:</span>
   <div class="nds-chips">
     <button type="button" class="nds-chip nds-neutral nds-rounded nds-item">
       <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>

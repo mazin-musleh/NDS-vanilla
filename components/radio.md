@@ -120,7 +120,7 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
 ### Required Group
 {: .nds-block-title}
 
-`data-required` on the group makes the user pick an option. The form checks it on submit, and once it shows an error, each change checks it again. Call `NDS.Forms.clearStatus(group)` to clear it.
+`data-required` on the group makes the user pick an option. The form checks it on submit, and once it shows an error, each change checks it again. Call `NDS.Form.clearStatus(group)` to clear it.
 
 </div>
   </div>
@@ -225,20 +225,20 @@ Source: the `radio` group in `_sass/tokens/_components.scss`.
 
 | Method | Effect |
 |---|---|
-| `NDS.Forms.validateRadioGroup(group, options)` | Checks the group and returns `{ valid, selected, message }`: `selected` is `true` when an option is checked. Pass `{ showMessage: false }` to check without a message |
-| `NDS.Forms.syncState(input)` | Updates the field after you set `.checked` from code. It fires no event |
-| `NDS.Forms.setStatus({ element: group, status, message })` | Shows a status and a message on the group, such as an error from the server |
-| `NDS.Forms.clearStatus(group)` | Removes the group's feedback message |
+| `NDS.Form.validateRadioGroup(group, options)` | Checks the group and returns `{ valid, selected, message }`: `selected` is `true` when an option is checked. Pass `{ showMessage: false }` to check without a message |
+| `NDS.Form.syncState(input)` | Updates the field after you set `.checked` from code. It fires no event |
+| `NDS.Form.setStatus({ element: group, status, message })` | Shows a status and a message on the group, such as an error from the server |
+| `NDS.Form.clearStatus(group)` | Removes the group's feedback message |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="radio-js" data-canon data-lang="js">
 var group = document.querySelector('.nds-radio-group');
-var result = NDS.Forms.validateRadioGroup(group);
+var result = NDS.Form.validateRadioGroup(group);
 // { valid: false, selected: false, message: 'Please select an option' }
 
 var radio = document.querySelector('#radio-2');
 radio.checked = true;
-NDS.Forms.syncState(radio);
+NDS.Form.syncState(radio);
 </script>
 
 The full API is in the banner of `_js/nds-form.js`.
