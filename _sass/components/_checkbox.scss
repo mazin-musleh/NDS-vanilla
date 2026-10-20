@@ -5,23 +5,15 @@
 
 @use '../mixins' as *;
 
-// ==============================================
-// CHECKBOX CONTAINER
-// ==============================================
-
-// Container head (sizes, label, focus) shared with radio in _form.scss.
+// Container head (sizes, label, focus) and group are shared with radio in _form.scss.
 // Public colour tokens read inline below: --checkbox-tile-bg, --checkbox-tile-border, --checkbox-glyph-bg
-
-// ==============================================
-// CHECKBOX GROUP — only component-specific overrides
-// (shared group rules live in _form.scss on .nds-form-group)
-// ==============================================
 
 // ==============================================
 // CHECKBOX INPUT
 // ==============================================
 
-.nds-checkbox .nds-form-control input[type="checkbox"] {
+// Two classes: `.nds-form-control > input` (_form.scss) sizes every input to 100%.
+.nds-checkbox .nds-checkbox-input {
     width:  var(--nds-input-size, 16px);
     height: var(--nds-input-size, 16px);
     appearance: none;

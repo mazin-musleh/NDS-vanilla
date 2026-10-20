@@ -82,15 +82,6 @@
 }
 
 // ==============================================
-// SWITCH GROUP — only component-specific override
-// (shared group rules live in _form.scss on .nds-form-group)
-// ==============================================
-
-.nds-switch-group {
-    column-gap: var(--spacing-6xl);
-}
-
-// ==============================================
 // SWITCH COMPONENT
 // ==============================================
 
