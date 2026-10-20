@@ -408,6 +408,12 @@
             this._updateFileList();
         }
 
+        // Tooltips first: one open on a row holds document listeners its removal would strand.
+        _clearList() {
+            this._fileList.querySelectorAll('.nds-tooltip').forEach(el => el.ndsTooltip?.destroy());
+            this._fileList.innerHTML = '';
+        }
+
         destroy() {
             this.abortController?.abort();
             NDS.state.remove(this._dropZone, 'drag-over');
@@ -416,7 +422,7 @@
             this._files.forEach(f => { if (f._xhr) f._xhr.abort(); });
 
             // Clean DOM
-            this._fileList.innerHTML = '';
+            this._clearList();
             this.container.removeAttribute('data-nds-upload-initialized');
             delete this.container.ndsUpload;
         }
@@ -623,7 +629,7 @@
         // ==============================================
 
         _updateFileList() {
-            this._fileList.innerHTML = '';
+            this._clearList();
             this._files.forEach(fileData => this._fileList.appendChild(this._createFileItem(fileData)));
         }
 

@@ -291,7 +291,7 @@ before it is fixed. Base first: Dropmenu's fix reaches every component that ride
   (fixed; `data-paged-initialized` stays, it releases the crit hold) —
   (`pagination:156-178, 271, 340-368, 450`); ~~Multiselect's destroy leaves its Dropmenu live and its stamps
   (`multiselect:79, 93, 139, 350`)~~ (fixed; the checkbox names stay, they carry the value); ~~User Feedback has no backref, so `NDS.init.destroy` misses it~~ (fixed; its message stays: it is the result, and a re-create shows it again)
-  (`user-feedback:253, 320`); Upload's per-file tooltips are not destroyed (`upload:675`, possible).
+  (`user-feedback:253, 320`); ~~Upload's per-file tooltips are not destroyed (`upload:675`)~~ (confirmed on every list redraw, fixed).
 - Leftovers: ~~Date Picker `data-picker-mode` (`:517`)~~ (fixed); Autocomplete forces `autocomplete="on"` and strips authored
   role/aria (`:671`); Tooltip leaves its built trigger, balloon, `aria-describedby`, `tabindex`, `role`, the stripped
   `title` (`:432`); Table leaves `data-selection-target` and `tbody.id` (`:100`); Sort leaves `aria-sort`/`aria-pressed`,
