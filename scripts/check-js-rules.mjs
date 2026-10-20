@@ -1050,26 +1050,30 @@ let docCache;
 const DOC_SOURCES = () => docCache ||= PAGE_DIRS
     .flatMap((d) => readdirSync(join(REPO, d)).filter((f) => f.endsWith('.md')).map((f) => readFileSync(join(REPO, d, f), 'utf8')));
 
-async function checkTree(files) {
+async function checkTree(files, read = (f) => readFileSync(f, 'utf8')) {
     const out = [];
-    const sources = files.map((f) => ({ file: basename(f), source: readFileSync(f, 'utf8') })).map((x) => ({ ...x, ...scan(x.source) }));
+    const sources = files.map((f) => ({ file: basename(f), source: read(f) })).map((x) => ({ ...x, ...scan(x.source) }));
     const add = (rule, x, at, what, verify) => out.push({ rule, file: x.file, line: lineOf(x.source, at), what, verify });
 
-    // JSD-05 (a) one helper written twice: the same name in two component files, ~70% the same body.
-    const byName = new Map();
+    // JSD-05 (a) one helper written twice: a function or method in two component files, ~70% the
+    // same body, under any name. The initialize* sweeps share one shape on purpose.
+    const defs = [];
     for (const x of sources) {
-        for (const m of x.code.matchAll(/\bfunction\s+([\w$]+)\s*\([^)]*\)\s*\{/g)) {
-            if (GENERIC.has(m[1]) || CORE_FNS.has(m[1])) continue;
+        for (const m of x.bare.matchAll(/\bfunction\s+([\w$]+)\s*\([^)]*\)\s*\{|^[ \t]+(?:async\s+)?([\w$]+)\s*\([^)]*\)\s*\{|\b([\w$]+)\s*[:=]\s*(?:function\s*)?\([^)]*\)\s*(?:=>\s*)?\{/gm)) {
+            const fname = m[1] || m[2] || m[3];
+            if (GENERIC.has(fname) || CORE_FNS.has(fname) || /^(?:if|for|while|switch|catch|function)$|^initiali[sz]e/.test(fname)) continue;
             const open = m.index + m[0].length - 1;
-            (byName.get(m[1]) || byName.set(m[1], []).get(m[1])).push({ x, at: m.index, body: tokens(x.code.slice(open, blockEnd(x.bare, open))) });
+            const body = x.code.slice(open, blockEnd(x.bare, open));
+            const n = (body.match(/[\w$]+|[^\s\w$]/g) || []).length;
+            if (n >= 60) defs.push({ x, at: m.index, fname, n, body: tokens(body) }); // smaller bodies are one-liners: JSD-05's body gate
         }
     }
-    for (const [fname, defs] of byName) {
-        const files = new Set(defs.map((d) => d.x.file));
-        if (files.size < 2) continue;
-        const [a, ...rest] = defs;
-        const twin = rest.find((d) => d.x.file !== a.x.file && overlap(a.body, d.body) >= 0.7);
-        if (twin) add('JSD-05a', a.x, a.at, `${fname}() also in ${twin.x.file}`, 'a promotion candidate when core has no equivalent and the body is worth sharing');
+    for (let i = 0; i < defs.length; i++) {
+        for (let j = i + 1; j < defs.length; j++) {
+            const a = defs[i], b = defs[j];
+            if (a.x === b.x || Math.max(a.n, b.n) > 1.6 * Math.min(a.n, b.n) || overlap(a.body, b.body) < 0.7) continue;
+            add('JSD-05a', a.x, a.at, `${a.fname}() ≈ ${b.fname}() in ${b.x.file}:${lineOf(b.x.source, b.at)}`, 'a promotion candidate when core has no equivalent and the body is worth sharing');
+        }
     }
     // JSD-05 (b) the HTML-escape idiom inline in three or more files.
     const escapers = sources.filter((x) => /\.replace\(\s*\/&\/g[\s\S]{0,200}\.replace\(\s*\/</.test(x.code) && !/NDS\.escapeHtml\s*=/.test(x.code));
@@ -1244,7 +1248,11 @@ if (args[0] === '--self-test') {
     const block = Array(10).fill('const one = first.value + other;').join('\n');
     const rep = checkFile('case.js', `(function(){\n${block}\n}\nfunction b() {\n${block}\n})();`).find((f) => f.rule === 'JSA-09');
     if (rep?.line !== 14) { failed++; console.log(`FAIL  JSA-09 line: want 14 got ${rep?.line}`); }
-    console.log(`${CASES.length + 1 - failed}/${CASES.length + 1} cases pass`);
+    // JSD-05a pairs a helper copied under another name.
+    const twin = (n) => `(function(){ function ${n}(p, c) { const i = document.createElement('i'); i.className = 'nds-icon'; NDS.aria.hidden(i, true); const s = document.createElement('span'); s.className = 'nds-meta-item'; s.append(i, c); p.replaceChildren(s); } })();`;
+    const pairs = (await checkTree(['a.js', 'b.js'], (f) => twin(f === 'a.js' ? 'renderCity' : 'renderDate'))).filter((f) => f.rule === 'JSD-05a');
+    if (pairs.length !== 1) { failed++; console.log(`FAIL  JSD-05a twins: want 1 got ${pairs.length}`); }
+    console.log(`${CASES.length + 2 - failed}/${CASES.length + 2} cases pass`);
     process.exit(failed ? 1 : 0);
 }
 const files = args.length
