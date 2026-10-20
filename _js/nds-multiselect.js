@@ -453,9 +453,8 @@
             return NDS.buildChip(this.labelFor(value), {
                 chipClass: this.chipClass,
                 data: { multiselectValue: value },
-                // Chips built while the field is disabled (init/reinit) — the
-                // State hook above only covers runtime toggles.
                 disabled: NDS.state.has(this.root, 'disabled'),
+                signal: this.abortController.signal,
                 onRemove: (e) => {
                     e.stopPropagation();
                     if (this.isReadonly()) return;

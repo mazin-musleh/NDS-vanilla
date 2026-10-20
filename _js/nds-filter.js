@@ -1247,6 +1247,7 @@
                 chipClass: this.chipClass,
                 data: { filterType: type, filterValue: value },
                 onRemove,
+                signal: this.abortController.signal,
             });
         }
 

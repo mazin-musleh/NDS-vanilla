@@ -1027,6 +1027,7 @@
     //   opts.data      — { camelKey: value } map stamped onto dataset
     //   opts.onRemove  — click handler; the click is preventDefault'ed
     //   opts.disabled  — initial disabled state
+    //   opts.signal    — the owner's teardown: a chip that outlives it no longer calls onRemove
     // Usage: chipsEl.appendChild(NDS.buildChip('AI & ML', {
     //            chipClass: 'nds-primary nds-sm',
     //            data: { taginputValue: 'ai' },
@@ -1050,7 +1051,7 @@
 
         chip.append(text, icon);
         if (opts.onRemove) {
-            chip.addEventListener('click', (e) => { e.preventDefault(); opts.onRemove(e); });
+            chip.addEventListener('click', (e) => { e.preventDefault(); opts.onRemove(e); }, { signal: opts.signal });
         }
         return chip;
     };

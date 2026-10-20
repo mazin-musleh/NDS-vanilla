@@ -305,6 +305,7 @@
                 data: { taginputValue: value },
                 disabled: NDS.state.has(this.root, 'disabled'),
                 onRemove: () => { if (!this.isReadonly()) this.removeTag(value); },
+                signal: this.abortController.signal,
             });
         }
 
