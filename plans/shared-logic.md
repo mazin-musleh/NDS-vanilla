@@ -287,7 +287,8 @@ before it is fixed. Base first: Dropmenu's fix reaches every component that ride
   dead (`sidemenu:212`)~~ (fixed); ~~Taginput's chips still drive the dead instance (`taginput:307`)~~ (fixed: `NDS.buildChip` takes the owner's `signal`); ~~Filter's `_ndsFilterObserver`
   stays true, so later options are never wired (`filter:1690`)~~ (fixed); ~~Session Timeout reuses its dialogs with the old links
   (`session-timeout:95`)~~ (fixed); ~~Date Picker may keep its error and block the form (`date-picker:605`)~~ (confirmed, fixed).
-- Leaks: Pagination's ellipsis Dropmenu is not destroyed and `el.ndsPagination` has no `destroy()`; its stamps survive
+- Leaks: ~~Pagination's ellipsis Dropmenu is not destroyed and `el.ndsPagination` has no `destroy()`; its stamps survive~~
+  (fixed; `data-paged-initialized` stays, it releases the crit hold) —
   (`pagination:156-178, 271, 340-368, 450`); Multiselect's destroy leaves its Dropmenu live and its stamps
   (`multiselect:79, 93, 139, 350`); User Feedback has no backref, so `NDS.init.destroy` misses it, and its message stays
   (`user-feedback:253, 320`); Upload's per-file tooltips are not destroyed (`upload:675`, possible).

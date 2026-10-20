@@ -174,6 +174,13 @@
             // dynamic watcher uses, so the markup-preserving collapse logic lives
             // in exactly one place.
             reconcileCollapse(this.paginationNav);
+            // A re-create after destroy() finds the ellipsis built but its menu torn down.
+            const dm = this.paginationNav.querySelector('.nds-pagination-ellipsis .nds-dropmenu');
+            if (dm) NDS.Dropmenu.create(dm);
+        }
+
+        destroy() {
+            _destroyPaginationNav(this.paginationNav);
         }
     }
 
@@ -362,6 +369,12 @@
             delete content._offResize;
         }
 
+        // An open menu's document listeners would outlive the nav; the signature would
+        // make a re-create skip its collapse.
+        _destroyEllipsisMenu(nav);
+        delete nav._ndsCollapseSig;
+        // data-paged-initialized stays on the content: it releases the crit hold, so
+        // removing it would hide the items.
         delete nav.ndsPagination;
         nav.removeAttribute('data-nds-pagination-initialized');
         nav.removeAttribute('data-nds-auto-pagination-initialized');
