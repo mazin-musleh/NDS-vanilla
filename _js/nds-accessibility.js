@@ -1122,7 +1122,7 @@
                         <div class="nds-accordion-body">
                             <fieldset class="nds-form-group nds-switch-group">
 
-                                <div class="nds-form-container nds-switch-container">
+                                <div class="nds-form-container nds-switch">
                                     <div class="nds-form-header">
                                         <label for="a11y-mode-epilepsy-safe">
                                             <span class="nds-label" data-i18n="accessibility.mode_epilepsy_safe">Epilepsy Safe Mode</span>
@@ -1130,14 +1130,14 @@
                                         </label>
                                     </div>
                                     <div class="nds-form-control">
-                                        <div class="nds-switch">
+                                        <div class="nds-switch-toggle">
                                             <input type="checkbox" id="a11y-mode-epilepsy-safe" class="nds-switch-input" data-a11y-mode="epilepsy-safe">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="nds-form-container nds-switch-container">
+                                <div class="nds-form-container nds-switch">
                                     <div class="nds-form-header">
                                         <label for="a11y-mode-visually-impaired">
                                             <span class="nds-label" data-i18n="accessibility.mode_visually_impaired">Visually Impaired Mode</span>
@@ -1145,14 +1145,14 @@
                                         </label>
                                     </div>
                                     <div class="nds-form-control">
-                                        <div class="nds-switch">
+                                        <div class="nds-switch-toggle">
                                             <input type="checkbox" id="a11y-mode-visually-impaired" class="nds-switch-input" data-a11y-mode="visually-impaired">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="nds-form-container nds-switch-container">
+                                <div class="nds-form-container nds-switch">
                                     <div class="nds-form-header">
                                         <label for="a11y-mode-cognitive-disability">
                                             <span class="nds-label" data-i18n="accessibility.mode_cognitive_disability">Cognitive Disability Mode</span>
@@ -1160,14 +1160,14 @@
                                         </label>
                                     </div>
                                     <div class="nds-form-control">
-                                        <div class="nds-switch">
+                                        <div class="nds-switch-toggle">
                                             <input type="checkbox" id="a11y-mode-cognitive-disability" class="nds-switch-input" data-a11y-mode="cognitive-disability">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="nds-form-container nds-switch-container">
+                                <div class="nds-form-container nds-switch">
                                     <div class="nds-form-header">
                                         <label for="a11y-mode-motor-impaired">
                                             <span class="nds-label" data-i18n="accessibility.mode_motor_impaired">Motor Impaired Mode</span>
@@ -1175,14 +1175,14 @@
                                         </label>
                                     </div>
                                     <div class="nds-form-control">
-                                        <div class="nds-switch">
+                                        <div class="nds-switch-toggle">
                                             <input type="checkbox" id="a11y-mode-motor-impaired" class="nds-switch-input" data-a11y-mode="motor-impaired">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="nds-form-container nds-switch-container">
+                                <div class="nds-form-container nds-switch">
                                     <div class="nds-form-header">
                                         <label for="a11y-mode-colorblind">
                                             <span class="nds-label" data-i18n="accessibility.mode_colorblind">Colorblind Mode</span>
@@ -1190,14 +1190,14 @@
                                         </label>
                                     </div>
                                     <div class="nds-form-control">
-                                        <div class="nds-switch">
+                                        <div class="nds-switch-toggle">
                                             <input type="checkbox" id="a11y-mode-colorblind" class="nds-switch-input" data-a11y-mode="colorblind">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="nds-form-container nds-switch-container">
+                                <div class="nds-form-container nds-switch">
                                     <div class="nds-form-header">
                                         <label for="a11y-mode-dyslexia-friendly">
                                             <span class="nds-label" data-i18n="accessibility.mode_dyslexia_friendly">Dyslexia Friendly Mode</span>
@@ -1205,14 +1205,14 @@
                                         </label>
                                     </div>
                                     <div class="nds-form-control">
-                                        <div class="nds-switch">
+                                        <div class="nds-switch-toggle">
                                             <input type="checkbox" id="a11y-mode-dyslexia-friendly" class="nds-switch-input" data-a11y-mode="dyslexia-friendly">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="nds-form-container nds-switch-container">
+                                <div class="nds-form-container nds-switch">
                                     <div class="nds-form-header">
                                         <label for="a11y-mode-adhd-friendly">
                                             <span class="nds-label" data-i18n="accessibility.mode_adhd_friendly">ADHD Friendly Mode</span>
@@ -1220,7 +1220,7 @@
                                         </label>
                                     </div>
                                     <div class="nds-form-control">
-                                        <div class="nds-switch">
+                                        <div class="nds-switch-toggle">
                                             <input type="checkbox" id="a11y-mode-adhd-friendly" class="nds-switch-input" data-a11y-mode="adhd-friendly">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>

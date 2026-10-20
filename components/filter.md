@@ -663,7 +663,7 @@ Sort is not a filter value and is never sent with the form. Decide by what the s
 | `data-filter-type` | a group | `checkbox`, `radio`, `switch` or `slider`: the script builds the options. Without it, the script uses the inputs you write in the group, or the options of `populateFilter()` |
 | `data-filter-legend` | a group | The group's heading |
 | `data-filter-values` | a group with `checkbox`, `radio` or `switch` | The options as JSON: an array of values, or an object of value-label pairs. The script reads no items for this group |
-| `data-filter-variant` | a group | A class the script adds to each input (on a switch, to its `.nds-switch`), such as `nds-primary` |
+| `data-filter-variant` | a group | A class the script adds to each input (on a switch, to its `.nds-switch-toggle`), such as `nds-primary` |
 | `data-filter-all-label` | a radio group | The label of the All option. The default is All, or الكل on an Arabic page |
 | `data-filter-no-all` | a radio group | No All option |
 | `data-filter-accordion` | a group | Makes it a collapsible [Accordion](../components/accordion) item |

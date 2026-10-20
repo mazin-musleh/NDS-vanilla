@@ -5,7 +5,6 @@ AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Fa
 
 **Resume here.** Order steps 1–2 are done, and so are changes #1 (1, 1b, 1c, 1d) and #2 (the "Landed" notes
 under section 3's Mechanical checks). **Next: change #4**, Date Picker + Time Picker on `NDS.Dropmenu.create`.
-Open question for the owner, raised in #1b's note: Switch's field class `.nds-switch-container`.
 
 ## Goal
 
@@ -253,9 +252,9 @@ audit. Left on the old names: `.claude/skills/nds-iq-eval/` (scenarios and fixtu
 **Landed 2026-10-20 (change #1b):** `.nds-radio` was already the radio input's class, so the inputs took
 part names, as Switch's `.nds-switch-input` already is: `.nds-check` → `.nds-checkbox-input`, `.nds-radio` → `.nds-radio-input`, and
 `.nds-check-group` → `.nds-checkbox-group`, with the two container renames. The old `nds-radio` row is
-scoped `&input`, so the audit never flags the new container. Open: Switch's field is
-`.nds-switch-container` and `.nds-switch` is the widget inside it, while Checkbox and Radio now name the
-field itself (entry 9: one name per component).
+scoped `&input`, so the audit never flags the new container. Switch followed, decided 2026-10-20: `.nds-switch-container` → `.nds-switch`, and the widget that held
+the input and track → `.nds-switch-toggle` (its old row is scoped `&:not(.nds-form-container)`). `nds:switch:change`
+still fires from the widget and bubbles through the field.
 
 **Landed 2026-10-20 (change #1c):** both modals carry `.nds-session-timeout`; `CASE_PENDING` is empty.
 

@@ -20,9 +20,9 @@ hero_float_actions:
   items:
     - html: >-
         <!-- Demo only: previews both states. Delete in production, with the demo script at the end of the page. -->
-        <div class="nds-form-container nds-switch-container nds-stacked" style="align-items: center;">
+        <div class="nds-form-container nds-switch nds-stacked" style="align-items: center;">
         <div class="nds-form-header"><label for="journey-done-toggle"><span class="nds-note">Completed</span></label></div>
-        <div class="nds-form-control"><div class="nds-switch"><input type="checkbox" id="journey-done-toggle" class="nds-switch-input"><div class="nds-switch-track"><div class="nds-switch-thumb"></div></div></div></div>
+        <div class="nds-form-control"><div class="nds-switch-toggle"><input type="checkbox" id="journey-done-toggle" class="nds-switch-input"><div class="nds-switch-track"><div class="nds-switch-thumb"></div></div></div></div>
         </div>
 last_edit: "04/12/2020 - 04:13 PM"
 steps:

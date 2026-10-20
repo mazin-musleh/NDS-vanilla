@@ -1,7 +1,7 @@
 /* NDS.Form — public surface
  * Rides: (none — base component)
  * Requires:
- *   .nds-form-control:not(:has(> .nds-switch)):not(.nds-multiselect .nds-form-control) needs :scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input — the field gets no states, required mark or clear button
+ *   .nds-form-control:not(:has(> .nds-switch-toggle)):not(.nds-multiselect .nds-form-control) needs :scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input — the field gets no states, required mark or clear button
  *   .nds-form-control sits in .nds-form-container — no state, status or error shows
  *   .nds-form-control .nds-clear sits in .nds-form-action — the clear button is never wired
  *   .nds-form-control .nds-toggle-password sits in .nds-form-action — the show-password button is never wired
@@ -38,7 +38,7 @@
  *                               validate() run
  *   nds:form:valid              detail {waitUntil(promise)} — from the form, on a passing submit
  *   nds:form:invalid            detail {invalidFields, errors} — from the form, on a blocked submit
- *   nds:switch:change           detail {checked, value, input} — from the .nds-switch element
+ *   nds:switch:change           detail {checked, value, input} — from the .nds-switch-toggle element
  *   nds:checkbox:indeterminate  detail {indeterminate} — from the checkbox
  * Hooks:
  *   data-required · data-min-checked · data-max-checked · data-error-message
@@ -1379,7 +1379,7 @@
         },
 
         initSwitchControls: function(formControl) {
-            var switchElements = formControl.querySelectorAll('.nds-switch');
+            var switchElements = formControl.querySelectorAll('.nds-switch-toggle');
             if (!switchElements.length) return;
 
             switchElements.forEach(function(switchElement) {

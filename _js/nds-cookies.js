@@ -1,6 +1,6 @@
 /* NDS.Cookies — public surface
  * Rides: nds-panel (the bottom sheet) · NDS.consent (the consent store) · nds-scroll-more
- *        · nds-switch (the categories)
+ *        · nds-switch-toggle (the categories)
  * Methods:
  *   NDS.Cookies.init()                     open the panel after 6 seconds when no choice is
  *                                          stored and the visitor did not close it lately
@@ -76,12 +76,12 @@
         <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
       </button>
     </div>`;
-    const category = (name, locked) => `<div class="nds-form-container nds-switch-container">
+    const category = (name, locked) => `<div class="nds-form-container nds-switch">
             <div class="nds-form-header">
               <label for="nds-cookies-${name}"><span class="nds-label">${html(name)}</span>${locked ? `<span class="nds-info">${html(name + '_info')}</span>` : ''}</label>
             </div>
             <div class="nds-form-control">
-              <div class="nds-switch">
+              <div class="nds-switch-toggle">
                 <input type="checkbox" id="nds-cookies-${name}" class="nds-switch-input" data-cookies-category="${name}"${locked ? ' checked disabled' : ''}>
                 <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
               </div>

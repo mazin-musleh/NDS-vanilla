@@ -54,7 +54,7 @@
 // Mirror the source-rule structure so each override wins specificity
 // over _accordion.scss / _form.scss without !important.
 .nds-accessibility-panel .nds-accordion .nds-accordion-btn,
-.nds-accessibility-panel .nds-form-container.nds-switch-container .nds-form-header .nds-label {
+.nds-accessibility-panel .nds-form-container.nds-switch .nds-form-header .nds-label {
     font-size: var(--a11y-section-FS);
     line-height: var(--a11y-section-LH);
 }
@@ -234,7 +234,7 @@
 }
 
 // Mode switch row inside the accordion.
-.nds-accessibility-modes .nds-switch-container {
+.nds-accessibility-modes .nds-switch {
     padding-block: var(--spacing-sm);
 }
 

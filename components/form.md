@@ -694,7 +694,7 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 | `nds:form:validate` | the form, and it bubbles | `{ valid, invalidFields, errors }`, after every `validate()`. Each error is `{ field, input, message }` |
 | `nds:form:valid` | the form, and it bubbles | `{ waitUntil(promise) }`, when a submit passes. `waitUntil()` keeps the form from a second submit until the promise ends, and the submit button shows the spinner |
 | `nds:form:invalid` | the form, and it bubbles | `{ invalidFields, errors }`, when a submit is blocked |
-| `nds:switch:change` | `.nds-switch`, and it bubbles | `{ checked, value, input }`. See [Switch](../components/switch) |
+| `nds:switch:change` | `.nds-switch-toggle`, and it bubbles | `{ checked, value, input }`. See [Switch](../components/switch) |
 | `nds:checkbox:indeterminate` | the checkbox, and it bubbles | `{ indeterminate }`. See [Checkbox](../components/checkbox) |
 {: .nds-table .nds-responsive}
 

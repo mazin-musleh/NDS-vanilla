@@ -85,45 +85,45 @@ Pick another component when:
         <div class="nds-scroll-more-content nds-panel-body nds-flex nds-col">
           <p>When you visit any website, it may store or retrieve information on your browser, mostly in the form of cookies. This information might be about you, your preferences or your device, and is mostly used to make the site work as you expect it to. The information does not usually identify you directly, but it can give you a more personalized web experience. Because we respect your right to privacy, you can choose not to allow some types of cookies. However, blocking some types of cookies may affect your experience of the site and the services we are able to offer.</p>
           <fieldset class="nds-form-group nds-switch-group" aria-label="Cookie types">
-            <div class="nds-form-container nds-switch-container">
+            <div class="nds-form-container nds-switch">
               <div class="nds-form-header">
                 <label for="nds-cookies-necessary"><span class="nds-label">Necessary Cookies</span><span class="nds-info">Always active</span></label>
               </div>
               <div class="nds-form-control">
-                <div class="nds-switch">
+                <div class="nds-switch-toggle">
                   <input type="checkbox" id="nds-cookies-necessary" class="nds-switch-input" data-cookies-category="necessary" checked disabled>
                   <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                 </div>
               </div>
             </div>
-            <div class="nds-form-container nds-switch-container">
+            <div class="nds-form-container nds-switch">
               <div class="nds-form-header">
                 <label for="nds-cookies-performance"><span class="nds-label">Performance Cookies</span></label>
               </div>
               <div class="nds-form-control">
-                <div class="nds-switch">
+                <div class="nds-switch-toggle">
                   <input type="checkbox" id="nds-cookies-performance" class="nds-switch-input" data-cookies-category="performance">
                   <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                 </div>
               </div>
             </div>
-            <div class="nds-form-container nds-switch-container">
+            <div class="nds-form-container nds-switch">
               <div class="nds-form-header">
                 <label for="nds-cookies-functional"><span class="nds-label">Functional Cookies</span></label>
               </div>
               <div class="nds-form-control">
-                <div class="nds-switch">
+                <div class="nds-switch-toggle">
                   <input type="checkbox" id="nds-cookies-functional" class="nds-switch-input" data-cookies-category="functional">
                   <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                 </div>
               </div>
             </div>
-            <div class="nds-form-container nds-switch-container">
+            <div class="nds-form-container nds-switch">
               <div class="nds-form-header">
                 <label for="nds-cookies-targeting"><span class="nds-label">Targeting Cookies</span></label>
               </div>
               <div class="nds-form-control">
-                <div class="nds-switch">
+                <div class="nds-switch-toggle">
                   <input type="checkbox" id="nds-cookies-targeting" class="nds-switch-input" data-cookies-category="targeting">
                   <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                 </div>

@@ -36,7 +36,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="switch-single" data-canon data-variants="switch-variants-table" data-harness="form">
-<div class="nds-form-container nds-switch-container">
+<div class="nds-form-container nds-switch">
   <div class="nds-form-header" data-feedback-target>
     <label for="switch-1">
       <span class="nds-label">Enable notifications</span>
@@ -44,7 +44,7 @@ Pick another component when:
     </label>
   </div>
   <div class="nds-form-control">
-    <div class="nds-switch">
+    <div class="nds-switch-toggle">
       <input type="checkbox" id="switch-1" name="notifications" value="enabled" class="nds-switch-input">
       <div class="nds-switch-track">
         <div class="nds-switch-thumb"></div>
@@ -56,14 +56,14 @@ Pick another component when:
 <script type="text/html" id="switch-group" data-canon>
 <fieldset class="nds-form-group nds-switch-group">
   <legend class="nds-label">Notification preferences</legend>
-  <div class="nds-form-container nds-switch-container">
+  <div class="nds-form-container nds-switch">
     <div class="nds-form-header">
       <label for="switch1">
         <span class="nds-label">Email alerts</span>
       </label>
     </div>
     <div class="nds-form-control">
-      <div class="nds-switch">
+      <div class="nds-switch-toggle">
         <input type="checkbox" id="switch1" name="notifications" value="email" class="nds-switch-input">
         <div class="nds-switch-track">
           <div class="nds-switch-thumb"></div>
@@ -71,7 +71,7 @@ Pick another component when:
       </div>
     </div>
   </div>
-  <div class="nds-form-container nds-switch-container">
+  <div class="nds-form-container nds-switch">
     <div class="nds-form-header">
       <label for="switch2">
         <span class="nds-label">Push notifications</span>
@@ -79,7 +79,7 @@ Pick another component when:
       </label>
     </div>
     <div class="nds-form-control">
-      <div class="nds-switch">
+      <div class="nds-switch-toggle">
         <input type="checkbox" id="switch2" name="notifications" value="push" class="nds-switch-input">
         <div class="nds-switch-track">
           <div class="nds-switch-thumb"></div>
@@ -87,14 +87,14 @@ Pick another component when:
       </div>
     </div>
   </div>
-  <div class="nds-form-container nds-switch-container">
+  <div class="nds-form-container nds-switch">
     <div class="nds-form-header">
       <label for="switch3">
         <span class="nds-label">SMS alerts</span>
       </label>
     </div>
     <div class="nds-form-control">
-      <div class="nds-switch">
+      <div class="nds-switch-toggle">
         <input type="checkbox" id="switch3" name="notifications" value="sms" class="nds-switch-input">
         <div class="nds-switch-track">
           <div class="nds-switch-thumb"></div>
@@ -121,17 +121,17 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
 |---|---|---|---|---|
 | Structure | Single (default) | — | — | One setting on its own |
 | Structure | Group | canon `#switch-group` | — | Related settings under one legend |
-| Size | SM | `.nds-sm` | `.nds-switch-container` | 36×18px track, 12px thumb. Dense forms and tables |
+| Size | SM | `.nds-sm` | `.nds-switch` | 36×18px track, 12px thumb. Dense forms and tables |
 | Size | MD (default) | — | — | 48×24px track, 16px thumb. Most forms |
-| Size | LG | `.nds-lg` | `.nds-switch-container` | 56×28px track, 20px thumb. Touch-first screens |
-| Color | Neutral (demo: + checked) | `.nds-neutral` | `.nds-switch` | The on state uses the neutral color, not the primary color. Use it when the setting is not a brand action. The color shows only when the switch is on, so the demo also turns on Checked |
+| Size | LG | `.nds-lg` | `.nds-switch` | 56×28px track, 20px thumb. Touch-first screens |
+| Color | Neutral (demo: + checked) | `.nds-neutral` | `.nds-switch-toggle` | The on state uses the neutral color, not the primary color. Use it when the setting is not a brand action. The color shows only when the switch is on, so the demo also turns on Checked |
 | Checked | Checked (id: checked) | `[checked]` | `#switch-1` | The switch is on when the page loads |
 | Checked | Checked (id: checked) | `[checked]` | `#switch1` | The same, on the first switch of a group |
 | Validation (any) | Required (hint: Press Validate with every switch off) | `[data-required]` | `.nds-switch-group` | At least one switch must be on before the form submits. Group only |
 | Validation (any) | At least 2 (hint: Press Validate with one switch on) | `[data-min-checked="2"]` | `.nds-switch-group` | At least 2 switches must be on. Group only. Say the rule in the legend |
 | Validation (any) | At most 2 (hint: Turn on all three switches, then press Validate) | `[data-max-checked="2"]` | `.nds-switch-group` | No more than 2 switches may be on. Group only. Say the rule in the legend |
 | Disabled | Disabled | `[disabled]` | `.nds-switch-input` | The user cannot change the setting now |
-| Stacked | Stacked (hint: The label above the switch. Single only) | `.nds-stacked` | `.nds-switch-container:not(.nds-switch-group > *)` | The label above the switch, not beside it. For a narrow column, such as a page header action. Single only: a switch in a group ignores it |
+| Stacked | Stacked (hint: The label above the switch. Single only) | `.nds-stacked` | `.nds-switch:not(.nds-switch-group > *)` | The label above the switch, not beside it. For a narrow column, such as a page header action. Single only: a switch in a group ignores it |
 | Layout | Row | `.nds-horizontal` | `.nds-switch-group` | Group only. The switches sit side by side and wrap |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #switch-variants-table .nds-table .nds-responsive}
@@ -217,7 +217,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-state~="disabled"` | `.nds-switch-container` | Not-allowed cursor and muted track and thumb. Also disables the input |
+| `data-state~="disabled"` | `.nds-switch` | Not-allowed cursor and muted track and thumb. Also disables the input |
 | `data-state~="disabled"` | `.nds-switch-group` | Disables every input in the group, and turns off pointer events. The group's title takes the disabled color |
 | `data-required` | `.nds-switch-group` | At least one switch must be on before the form submits. It adds the required mark to the legend |
 | `data-min-checked`, `data-max-checked` | `.nds-switch-group` | The fewest and the most switches that may be on. The same rules as a [checkbox group](../components/checkbox) |
@@ -228,7 +228,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set these on `.nds-switch-container`. The size classes set the first five.
+Set these on `.nds-switch`. The size classes set the first five.
 
 | Property | Default | Controls |
 |---|---|---|
@@ -256,13 +256,13 @@ Source: the `switch` group in `_sass/tokens/_components.scss`.
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:switch:change` | `.nds-switch` (bubbles) | `{ checked, value, input }` |
+| `nds:switch:change` | `.nds-switch-toggle` (bubbles) | `{ checked, value, input }` |
 {: .nds-table .nds-responsive}
 
 To change a switch from code, set `checked` on the input and dispatch `change`. The full API is in the banner of `_js/nds-form.js`.
 
 <script type="text/html" id="switch-js" data-canon data-lang="js">
-document.querySelector('.nds-switch').addEventListener('nds:switch:change', function (e) {
+document.querySelector('.nds-switch-toggle').addEventListener('nds:switch:change', function (e) {
   console.log(e.detail.checked, e.detail.value);
 });
 

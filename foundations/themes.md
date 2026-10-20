@@ -41,7 +41,7 @@ Pick another component when:
 </button>
 </script>
 <script type="text/html" id="theme-switch" data-canon>
-<div class="nds-form-container nds-switch-container" data-theme-toggle>
+<div class="nds-form-container nds-switch" data-theme-toggle>
   <div class="nds-form-header" data-feedback-target>
     <label for="theme-dark-switch">
       <span class="nds-label">Dark mode</span>
@@ -49,7 +49,7 @@ Pick another component when:
     </label>
   </div>
   <div class="nds-form-control">
-    <div class="nds-switch nds-neutral">
+    <div class="nds-switch-toggle nds-neutral">
       <input type="checkbox" id="theme-dark-switch" class="nds-switch-input" role="switch">
       <div class="nds-switch-track">
         <div class="nds-switch-thumb"></div>
@@ -325,9 +325,9 @@ A theme option can load a stylesheet theme on click: `data-theme-css` names the 
 | `data-theme` | `<html>` | The mode and the theme, as words: `dark`, a theme name, or both. Light mode has no word. The script writes it on each pick, and the head script writes the saved value before first paint |
 | `data-palette` | `<html>` | Builds the palette from the `--brand-*` seeds. The script sets it when the user picks an option with `data-seed-primary`, and removes it when the user picks another option |
 | `data-theme="dark"` | any element except `<html>` | Renders the element and everything inside it in dark mode. A theme name does nothing here |
-| `data-theme-toggle` | a button, or a `.nds-switch-container` | Makes it a dark mode toggle |
+| `data-theme-toggle` | a button, or a `.nds-switch` | Makes it a dark mode toggle |
 | `aria-pressed` | a dark mode toggle | Write `false` in the markup. The script sets `true` in dark mode and `false` in light mode. It also swaps the moon and sun icons, and checks the switch in dark mode |
-| `data-theme-value` | a theme option: a button, or a `.nds-switch-container` | The theme name the option applies. Leave it empty for the DGA default |
+| `data-theme-value` | a theme option: a button, or a `.nds-switch` | The theme name the option applies. Leave it empty for the DGA default |
 | `aria-current` | a theme option | The script sets `true` on the chosen option and `false` on the others. It also checks the switch of the chosen option |
 | `data-seed-primary` | a theme option | Makes it a custom palette option, with this primary seed |
 | `data-seed-secondary`, `-tertiary`, `-tint`, `-font`, `-weight-regular`, `-weight-medium`, `-weight-semibold`, `-weight-bold` | a theme option with `data-seed-primary` | Set `--brand-secondary`, `--brand-tertiary`, `--neutral-tint`, `--nds-font-brand` and the four `--font-weight-*` values, in that order |

@@ -146,7 +146,7 @@ The canon is the one copy of the markup. Both readers use it: the build renders 
 
 ```html
 <script type="text/html" id="switch-single" data-canon data-variants="switch-variants-table">
-<div class="nds-form-container nds-switch-container">
+<div class="nds-form-container nds-switch">
   …
 </div>
 </script>
@@ -191,7 +191,7 @@ The builder is generated from this table, and agents read it as the list of ever
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Size | SM (default) | — | — | … |
-| Size | LG | `.nds-lg` | `.nds-switch-container` | … |
+| Size | LG | `.nds-lg` | `.nds-switch` | … |
 {: #switch-variants-table .nds-table .nds-responsive}
 ```
 

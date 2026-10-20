@@ -659,7 +659,7 @@ fieldset {
 // SHARED SELECTION-CONTROL CONTAINER (checkbox / radio / switch)
 // ==============================================
 
-:is(.nds-checkbox, .nds-radio, .nds-switch-container) {
+:is(.nds-checkbox, .nds-radio, .nds-switch) {
     &.nds-form-container {
         flex-direction: row-reverse;
         width: fit-content;
@@ -685,7 +685,7 @@ fieldset {
 // (selection controls + slider). The control wrapper is just a layout slot.
 // !important on bg/shadow beats the focus/active state rules above (which
 // re-stamp both at higher specificity via [data-state~=…]).
-:is(.nds-checkbox, .nds-radio, .nds-switch-container, .nds-slider-container).nds-form-container .nds-form-control {
+:is(.nds-checkbox, .nds-radio, .nds-switch, .nds-slider-container).nds-form-container .nds-form-control {
     padding: 0;
     border: 0;
     box-shadow: unset !important;
@@ -744,7 +744,7 @@ fieldset {
 // ==============================================
 
 @include mobile {
-    :is(.nds-checkbox, .nds-radio, .nds-switch-container) {
+    :is(.nds-checkbox, .nds-radio, .nds-switch) {
         gap: var(--spacing-sm);
 
         &.nds-md {

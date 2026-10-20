@@ -127,14 +127,14 @@ Pick another component when:
     <div class="nds-dropmenu-scroll">
       <fieldset class="nds-dropmenu-group nds-form-group nds-switch-group">
         <legend class="nds-label">Send me</legend>
-        <div class="nds-form-container nds-switch-container">
+        <div class="nds-form-container nds-switch">
           <div class="nds-form-header">
             <label for="dm-email">
               <span class="nds-label">Email</span>
             </label>
           </div>
           <div class="nds-form-control">
-            <div class="nds-switch">
+            <div class="nds-switch-toggle">
               <input type="checkbox" id="dm-email" name="channels" value="email" class="nds-switch-input" checked>
               <div class="nds-switch-track">
                 <div class="nds-switch-thumb"></div>
@@ -142,14 +142,14 @@ Pick another component when:
             </div>
           </div>
         </div>
-        <div class="nds-form-container nds-switch-container">
+        <div class="nds-form-container nds-switch">
           <div class="nds-form-header">
             <label for="dm-sms">
               <span class="nds-label">Text message</span>
             </label>
           </div>
           <div class="nds-form-control">
-            <div class="nds-switch">
+            <div class="nds-switch-toggle">
               <input type="checkbox" id="dm-sms" name="channels" value="sms" class="nds-switch-input">
               <div class="nds-switch-track">
                 <div class="nds-switch-thumb"></div>

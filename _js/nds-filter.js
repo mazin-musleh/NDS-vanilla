@@ -2294,7 +2294,7 @@
 
             const formContainer = document.createElement('div');
             formContainer.className = inputType === 'switch'
-                ? 'nds-form-container nds-switch-container'
+                ? 'nds-form-container nds-switch'
                 : inputType === 'radio'
                     ? 'nds-form-container nds-radio'
                     : 'nds-form-container nds-checkbox';
@@ -2319,7 +2319,7 @@
 
             if (inputType === 'switch') {
                 const switchWrapper = document.createElement('div');
-                switchWrapper.className = 'nds-switch';
+                switchWrapper.className = 'nds-switch-toggle';
                 if (variant) {
                     switchWrapper.classList.add(variant);
                 }

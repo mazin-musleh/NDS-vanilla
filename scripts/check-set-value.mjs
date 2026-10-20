@@ -83,7 +83,7 @@ for (const v of REACT) {
         function Switch() {
             const [on, setOn] = React.useState(false);
             return h('div', { className: 'nds-form-container', id: 'r-sw-box' }, h('div', { className: 'nds-form-control' },
-                h('div', { className: 'nds-switch' },
+                h('div', { className: 'nds-switch-toggle' },
                     h('input', { type: 'checkbox', id: 'r-sw', className: 'nds-switch-input', checked: on, onChange: (e) => setOn(e.target.checked) }),
                     h('div', { className: 'nds-switch-track' }, h('div', { className: 'nds-switch-thumb' }))),
                 h('b', { id: 'r-sw-state' }, String(on))));
@@ -363,7 +363,7 @@ for (const ver of VUE) {
                 + '<div class="nds-form-container"><div class="nds-form-control"><input type="tel" id="v-phone" class="nds-input nds-phone" v-model="phone"></div></div>'
                 + '<div class="nds-form-container"><div class="nds-form-control"><input type="text" id="v-text" class="nds-input" v-model="text"></div></div>'
                 + '<input type="checkbox" id="v-agree" v-model="agree">'
-                + '<div class="nds-form-container" id="v-sw-box"><div class="nds-form-control"><div class="nds-switch">'
+                + '<div class="nds-form-container" id="v-sw-box"><div class="nds-form-control"><div class="nds-switch-toggle">'
                 + '<input type="checkbox" id="v-sw" class="nds-switch-input" v-model="sw">'
                 + '<div class="nds-switch-track"><div class="nds-switch-thumb"></div></div></div></div></div>'
         }).mount(host);
@@ -580,7 +580,7 @@ const FIELDS = (p, bind) => {
         + `<div class="nds-form-container"><div class="nds-form-control"><input type="tel" id="${p}-phone" class="nds-input nds-phone" ${bind('phone')}></div></div>`
         + `<div class="nds-form-container"><div class="nds-form-control"><input type="text" id="${p}-text" class="nds-input" ${bind('text')}></div></div>`
         + `<input type="checkbox" id="${p}-agree" ${bind('agree', true)}>`
-        + `<div class="nds-form-container" id="${p}-sw-box"><div class="nds-form-control"><div class="nds-switch">`
+        + `<div class="nds-form-container" id="${p}-sw-box"><div class="nds-form-control"><div class="nds-switch-toggle">`
         + `<input type="checkbox" id="${p}-sw" class="nds-switch-input" ${bind('sw', true)}>`
         + '<div class="nds-switch-track"><div class="nds-switch-thumb"></div></div></div></div></div>';
 };
