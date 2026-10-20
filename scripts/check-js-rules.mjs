@@ -243,7 +243,7 @@ const POOLS = 'Resize|ElementResize|Intersect|OutsideScroll|AttrChange|DOMAdd|DO
 const CORE_UTILS = ['state', 'status', 'breakpoints', 'lang', 'isRTL', 'isArabic', 'langKey', 'escapeHtml', 'debounce',
     'rafThrottle', 'onResize', 'onElementResize', 'onIntersect', 'onDOMAdd', 'onDOMRemove', 'onChildrenChange',
     'onAttrChange', 'onOutsideScroll', 'trapFocus', 'scrollLock', 'cache', 'i18n', 'topLayer', 'place', 'flipPosition',
-    'uniqueId', 'transitionSpeed', 'focusableSel', 'gridLastRow', 'onIdle'];
+    'uniqueId', 'transitionSpeed', 'focusableSel', 'onIdle'];
 // JSD-10: core functions a component must not re-declare.
 const CORE_FNS = new Set(['escapeHtml', 'debounce', 'rafThrottle', 'uniqueId', 'transitionSpeed', 'onIdle', 'trapFocus', 'flipPosition', 'safeUrl', 'safeMerge', 'setValue', 'announce']);
 const CORE_VALUES = new Set(['lang', 'isRTL', 'isArabic', 'langKey', 'focusableSel']);

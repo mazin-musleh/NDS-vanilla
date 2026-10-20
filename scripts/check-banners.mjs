@@ -51,6 +51,7 @@ const SCOPE = [
     ['nds-dropmenu.js', 'Dropmenu'],
     ['nds-editor.js', 'Editor'],
     ['nds-empty.js', 'Empty'],
+    ['nds-grid.js', 'Grid'],
     ['nds-expandable.js', 'Expandable'],
     ['nds-export.js', 'Export'],
     ['nds-fab.js', 'Fab'],

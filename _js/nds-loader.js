@@ -359,6 +359,13 @@
             selector: '.nds-chart',
         },
         {
+            // Critical: a late mark flashes the line under a divided grid's last row.
+            name: 'Grid',
+            selector: '.nds-divided.nds-grid',
+            critical: true,
+            destroyEach: true,
+        },
+        {
             // Critical: init BUILDS the placeholder into empty containers (CLS if late).
             name: 'Empty',
             selector: '.nds-empty',

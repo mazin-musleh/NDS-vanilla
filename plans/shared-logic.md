@@ -4,8 +4,8 @@ Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (se
 AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Facts measured on `main` at `9fd54151`.
 
 **Resume here.** Order steps 1–2 are done, and so are changes #1 (1, 1b, 1c, 1d), #2 and #4 (#3 was dropped; the "Landed" notes
-under section 3's Mechanical checks). Change #4b is done (owner, 2026-10-20: every gap in its inventory note fixed, one commit each), and so are #5 and #6.
-**Next: change #7**, `NDS.gridLastRow` → `_js/nds-grid.js`, `NDS.Grid`.
+under section 3's Mechanical checks). Change #4b is done (owner, 2026-10-20: every gap in its inventory note fixed, one commit each), and so are #5, #6 and #7.
+**Next: change #8**, `NDS.init.pending(el)` and the registry's "has a rule" flag (A6).
 
 ## Goal
 
@@ -311,6 +311,13 @@ nested in the container, by the same field rule `create()` already used for repl
 
 **Landed 2026-10-20 (change #6):** core `NDS.keepChipFocus(chips, render, fallback)`, beside `buildChip`; Taginput
 and Multiselect pass their chip list, their re-render and their own control.
+
+**Landed 2026-10-20 (change #7):** `_js/nds-grid.js`, `NDS.Grid` (`init`, `refresh(el)`, `destroy(el)`), a critical
+main entry on `.nds-divided.nds-grid`; `NDS.gridLastRow.update` → `NDS.Grid.refresh` (`kind: api` row). Every divided grid
+was a Definition List, its only reader; owner, the same day: grids are the most used component, so Grid owns it, and a
+plain `.nds-grid.nds-divided` now draws lines between items with gap decorations (`row-rule`, `column-rule`,
+`rule-visibility-items: between`; none in Safari 26, which degrades to no lines). A later grid feature widens the loader
+selector to `.nds-grid` and keeps its own opt-in. Doc pass: `layout/grid.md` gets the divided option and `NDS.Grid`.
 
 ## 4. Owner decisions
 

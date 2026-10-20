@@ -72,6 +72,16 @@
   &.nds-center {
     --justify: center;
   }
+
+  // Divided: a line between items, in the middle of each gap, only where items sit on both
+  // sides. The browser draws it (gap decorations), so no row or column needs a mark.
+  // ponytail: no line where gap decorations are missing (Safari 26); the grid still lays out.
+  // Definition List draws its own lines under each item.
+  &.nds-divided:not(.nds-definition-list) {
+    row-rule: 1px solid var(--divider-color);
+    column-rule: 1px solid var(--divider-color);
+    rule-visibility-items: between;
+  }
 }
 
 // Container-query opt-in — grid's companion. Add to any ancestor to make

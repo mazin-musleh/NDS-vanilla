@@ -97,9 +97,10 @@
   description: "Responsive column system with flexible breakpoints"
   use_when: "A responsive column layout: card grids, two, three, or four column sections, breakpoint-driven column counts. The default for laying out repeated items."
   category: "Layout"
-  tags: ["CSS"]
+  tags: ["CSS", "JS"]
   url: "/layout/grid.html"
   scss: _sass/_grid.scss
+  js: _js/nds-grid.js
 
 - title: "Page Layout"
   description: "The body structure every page shares, with the classes that switch chrome shape"
