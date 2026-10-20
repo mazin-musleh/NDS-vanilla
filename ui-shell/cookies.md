@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 07:43 PM"
+last_edit: "20/10/2026 - 05:38 PM"
 ---
 
 <section id="cookies-overview" class="nds-content-section nds-doc-overview">
@@ -343,23 +343,22 @@ A category that is not in this table reaches only `allowed()` and the event.
 
 | Method | Effect |
 |---|---|
-| `NDS.Cookies.getConsent()` | `'accepted'`, `'declined'`, `'custom'` (some categories) or `null` (no choice yet) |
-| `NDS.Cookies.allowed(category)` | `true` when the visitor allowed the category. `'necessary'` is always `true` |
-| `NDS.Cookies.save(choice)` | Stores `true` (all), `false` (none) or an array of categories, applies it and fires the event. Use it from your own consent UI |
-| `NDS.Cookies.show(view)` | Opens the panel on `'notice'` (default) or `'manage'` |
-| `NDS.Cookies.set(name, value, days)` | Writes a cookie with `path=/` and `SameSite=Lax`. It does not check consent, so use it for necessary values only |
-| `NDS.Cookies.get(name)` | Reads a cookie, or `null` |
-| `NDS.Cookies.delete(name)` | Removes a cookie on this host and every parent domain |
-| `NDS.CookieConsent.open(view, opener)` | Opens the panel. Focus goes back to `opener` when it closes |
-| `NDS.CookieConsent.close()` | Closes the panel |
+| `NDS.Cookies.open(view, opener)` | Opens the panel on `'notice'` (default) or `'manage'`. Focus goes back to `opener` when it closes |
+| `NDS.Cookies.close()` | Closes the panel |
+| `NDS.consent.get()` | `'accepted'`, `'declined'`, `'custom'` (some categories) or `null` (no choice yet) |
+| `NDS.consent.allowed(category)` | `true` when the visitor allowed the category. `'necessary'` is always `true` |
+| `NDS.consent.save(choice)` | Stores `true` (all), `false` (none) or an array of categories, applies it and fires the event. Use it from your own consent UI |
+| `NDS.cookie.set(name, value, days)` | Writes a cookie with `path=/` and `SameSite=Lax`. It does not check consent, so use it for necessary values only |
+| `NDS.cookie.get(name)` | Reads a cookie, or `null` |
+| `NDS.cookie.delete(name)` | Removes a cookie on this host and every parent domain |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:cookies:consent` | `document` | `{ consent, categories }`. `consent` is the `getConsent()` value. `categories` maps each category to `true` or `false`. Closing the panel is not a choice, so it fires no event |
+| `nds:cookies:consent` | `document` | `{ consent, categories }`. `consent` is the `NDS.consent.get()` value. `categories` maps each category to `true` or `false`. Closing the panel is not a choice, so it fires no event |
 {: .nds-table .nds-responsive}
 
-The choice is stored in the `cookieConsent` cookie as `accepted`, `declined` or the allowed categories joined with commas. The close button writes `cookieConsentDismissed` for 30 minutes, which is never read as consent. To ask again, call `NDS.Cookies.delete('cookieConsent')`, then `NDS.Cookies.show()`.
+The choice is stored in the `cookieConsent` cookie as `accepted`, `declined` or the allowed categories joined with commas. The close button writes `cookieConsentDismissed` for 30 minutes, which is never read as consent. To ask again, call `NDS.cookie.delete('cookieConsent')`, then `NDS.Cookies.open()`.
 
 Put this script in `<head>`, before the gtag.js tag and the NDS scripts:
 
@@ -407,19 +406,19 @@ gtag('config', 'G-XXXXXXXXXX');
 Start a tool that NDS does not know only when its category is allowed. Put this in a `defer` script after the NDS scripts:
 
 <script type="text/html" id="cookies-js" data-canon data-lang="js">
-if (NDS.Cookies.allowed('performance')) startClarity();
+if (NDS.consent.allowed('performance')) startClarity();
 
 document.addEventListener('nds:cookies:consent', function (e) {
   if (e.detail.categories.performance) {
     startClarity();
   } else {
-    NDS.Cookies.delete('_clck');
-    NDS.Cookies.delete('_clsk');
+    NDS.cookie.delete('_clck');
+    NDS.cookie.delete('_clsk');
   }
 });
 </script>
 
-The full API is in the banners of `_js/nds-cookies.js` and `_js/nds-cookie-consent.js`.
+The full API is in the banners of `_js/nds-cookies.js` (the panel), `_js/nds-consent.js` (the stored choice) and `_js/nds-core.js` (`NDS.cookie`).
 
 </div>
   </div>

@@ -36,7 +36,7 @@ const SCOPE = [
     ['nds-chart.js', 'Chart'],
     ['nds-city-weather.js', 'CityWeather'],
     ['nds-code.js', 'Code'],
-    ['nds-cookie-consent.js', 'CookieConsent'],
+    ['nds-consent.js', 'consent'],
     ['nds-cookies.js', 'Cookies'],
     ['nds-cooldown.js', 'Cooldown'],
     ['nds-copy.js', 'Copy'],
@@ -118,7 +118,6 @@ const EVENT_NAME = /^nds:[a-z]+(-[a-z]+)*:[a-z]+(-[a-z]+)*$/;
 // One name per component (PERSONA entry 9): carve-outs, each a surface the component documents elsewhere.
 const DOC_ELSEWHERE = {
     'theme': 'foundations/themes.md',
-    'cookie-consent': 'ui-shell/cookies.md',
     'digital-stamp': 'ui-shell/topbar.md',
     'city-weather': 'ui-shell/topbar.md',
     'time-date': 'ui-shell/topbar.md',

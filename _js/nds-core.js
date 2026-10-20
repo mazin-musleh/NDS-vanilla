@@ -34,6 +34,7 @@
  *     NDS.request(url, opts) → Promise<{isJson, data}>     the shared fetch wrapper
  *     NDS.writeUrlParams(params|string)   rewrite the URL's ?params in place; path, hash and history.state stay
  *     NDS.cache.get / .clear (key) · .set (key, value, minutes)   localStorage with expiry
+ *     NDS.cookie.get / .delete (name) · .set (name, value, days)   a cookie, no consent check; delete covers parent domains
  *     NDS.formatNumber(n, opts) · NDS.latinDigits(s) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
  *     NDS.Date                         dates in Gregorian and Hijri: _js/nds-date.js
  *     NDS.announce(text)               say something in the shared live region
@@ -1432,6 +1433,37 @@
             clear(key) {
                 try { localStorage.removeItem(PREFIX + key); } catch {}
             }
+        };
+    })();
+
+    // ── Cookies ────────────────────────────────────────────────────────
+    // Plain reads and writes, no consent check: essential values only. Under file:// there
+    // are no cookies, so values fall back to NDS.cache (its nds_ prefix and envelope).
+    NDS.cookie = (() => {
+        const isLocalFile = window.location.protocol === 'file:';
+        return {
+            get(name) {
+                if (isLocalFile) return NDS.cache.get(name);
+                const prefix = name + '=';
+                const hit = document.cookie.split(';').map(c => c.trim()).find(c => c.startsWith(prefix));
+                return hit ? hit.slice(prefix.length) : null;
+            },
+            set(name, value, days) {
+                if (isLocalFile) return NDS.cache.set(name, value, days * 1440);
+                const expires = new Date(Date.now() + days * 864e5).toUTCString();
+                document.cookie = `${name}=${value};expires=${expires};path=/;SameSite=Lax`;
+            },
+            delete(name) {
+                if (isLocalFile) return NDS.cache.clear(name);
+                const expired = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+                document.cookie = expired;
+                // Trackers set theirs on the root domain (_ga on .example.com), which a delete on
+                // www. alone misses. The browser ignores the bare public suffix.
+                const labels = window.location.hostname.split('.');
+                for (let i = 0; i < labels.length - 1; i++) {
+                    document.cookie = expired + '; domain=' + labels.slice(i).join('.');
+                }
+            },
         };
     })();
 

@@ -10,7 +10,7 @@ const FILTER = process.env.FILTER || '';
 const b = await launch();
 const ctx = await b.newContext({ viewport: { width: 412, height: 915 }, deviceScaleFactor: 2.6, isMobile: true, hasTouch: true });
 const page = await ctx.newPage();
-await page.route('**/nds-cookie-consent.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
+await page.route('**/nds-cookies.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
 const s = await cdp(page);
 await s.send('Emulation.setCPUThrottlingRate', { rate: 6.6 });
 await s.send('Profiler.enable');

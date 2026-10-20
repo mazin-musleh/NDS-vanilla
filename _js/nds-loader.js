@@ -225,20 +225,20 @@
             critical: true,
         },
         {
-            // Lazy, every page: a visitor with a stored choice fetches nothing. Consent itself is NDS.Cookies in main.
-            name: 'CookieConsent',
+            // Lazy, every page: a visitor with a stored choice fetches nothing. The store, NDS.consent, is in main.
+            name: 'Cookies',
             selector: null,
             lazy: () => {
                 document.addEventListener('click', (e) => {
                     const btn = e.target.closest('[data-cookies-toggle]');
                     if (!btn) return;
                     e.preventDefault();
-                    NDS.CookieConsent.open(btn.dataset.cookiesToggle || undefined, btn);
+                    NDS.Cookies.open(btn.dataset.cookiesToggle || undefined, btn);
                 });
             },
             // A page with <html data-cookies="false"> (a kiosk, a TV) skips the bundle until a toggle press.
             eager: () => document.documentElement.getAttribute('data-cookies') !== 'false'
-                && !NDS.Cookies.getConsent() && !NDS.Cookies.get('cookieConsentDismissed'),
+                && !NDS.consent.get() && !NDS.cookie.get('cookieConsentDismissed'),
         },
         {
             // Deferred: stars paint from markup; nothing else reads NDS.Rating.

@@ -88,13 +88,13 @@ NDS.UserFeedback = (() => {
     // They prevent duplicate submissions and maintain form state
     function saveFeedbackStatus(status = 'submitted') {
         const cookieName = getFeedbackCookieName();
-        NDS.Cookies.set(cookieName, status, 365); // Save for 365 days
+        NDS.cookie.set(cookieName, status, 365); // Save for 365 days
     }
 
     // Get feedback status from cookie
     function getFeedbackStatus() {
         const cookieName = getFeedbackCookieName();
-        return NDS.Cookies.get(cookieName);
+        return NDS.cookie.get(cookieName);
     }
 
     // Initialize a single .nds-user-feedback element. Idempotent — bails if

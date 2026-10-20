@@ -906,14 +906,14 @@ for (const v of REACT) {
     });
     await page.waitForTimeout(300);
     const opened = await page.evaluate(async () => {
-        await NDS.CookieConsent.open();
+        await NDS.Cookies.open();
         await NDS.Modal.open('rt-modal');
         await new Promise((r) => setTimeout(r, 400));
         const host = document.getElementById('rt-host');
         return { cookies: host.contains(document.getElementById('nds-cookies-panel')), modal: NDS.Modal.isOpen() };
     });
     ok(`${R} templates: setup, the own cookie panel and the modal unpack in the app's tree`, opened.cookies && opened.modal, JSON.stringify(opened));
-    await page.evaluate(() => { NDS.Modal.close(); NDS.CookieConsent.close(); return new Promise((r) => setTimeout(r, 400)); });
+    await page.evaluate(() => { NDS.Modal.close(); NDS.Cookies.close(); return new Promise((r) => setTimeout(r, 400)); });
 
     let before = errors.length;
     await page.evaluate(() => { window.__tplSet('before', true); return new Promise((r) => setTimeout(r, 300)); });

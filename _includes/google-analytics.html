@@ -5,10 +5,10 @@
        block is omitted from the source output entirely.
     2. `site.google_analytics` non-empty — set the Measurement ID in _config.yml.
 
-  Consent: defaults to denied (Consent Mode v2). `_js/nds-cookies.js` reads
+  Consent: defaults to denied (Consent Mode v2). `_js/nds-consent.js` reads
   `window.GA_TRACKING_ID` and calls `gtag('consent', 'update', …)` when the user
   accepts/declines the cookie banner. The stored choice is applied here too (the
-  same mapping as nds-cookies.js), so GA never runs ahead of the deferred bundle.
+  same mapping as nds-consent.js), so GA never runs ahead of the deferred bundle.
 
   Perf: placed in <head> so consent default (Consent Mode v2) lands at the
   earliest possible moment — required for GDPR/PDPL compliance. dataLayer +

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:24 PM"
+last_edit: "20/10/2026 - 05:38 PM"
 hideFeedback: true
 ---
 
@@ -265,7 +265,7 @@ Pick another component when:
 // Demo only: the preview forgets each submit, so the next render asks again.
 document.addEventListener('nds:user-feedback:submit', function () {
   setTimeout(function () {
-    NDS.Cookies.delete('nds-feedback' + location.pathname.replace(/\//g, '_').replace(/\./g, '-'));
+    NDS.cookie.delete('nds-feedback' + location.pathname.replace(/\//g, '_').replace(/\./g, '-'));
   });
 });
 </script>

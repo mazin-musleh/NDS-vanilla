@@ -15,7 +15,7 @@ async function open(dev) {
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', (e) => { if (!/ResizeObserver loop/.test(e.message)) errors.push(e.message); });
-  await page.route('**/nds-cookie-consent.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
+  await page.route('**/nds-cookies.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
   await page.goto(URL, { waitUntil: 'load' });
   await page.waitForFunction(() => window.NDS?.MainNav);
   await page.waitForTimeout(1500);

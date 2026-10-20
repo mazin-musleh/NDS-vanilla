@@ -58,11 +58,11 @@ class JSProcessor
       # synchronously, a lazy stub can't bridge that; forms shows Feedback at
       # submit), every critical component, dropmenu (deferred, but a
       # critical-init dependency of multiselect), and deferred components
-      # deliberately kept in main: cookies (consent is applied at eval, before analytics), customselect (JS-derived label would flash if async),
+      # deliberately kept in main: consent (applied at eval, before analytics), customselect (JS-derived label would flash if async),
       # otp (auto-advance/paste is first-interaction-critical on OTP/2FA pages).
       # They stay so they wire on the local idle pass, not after an injected
       # bundle. Reveal is gated on this bundle, so it's kept lean.
-      'nds-main.min.js' => ['nds-core.js', 'nds-date.js', 'nds-theme.js', 'nds-main-nav.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-cookies.js', 'nds-form.js', 'nds-otp.js', 'nds-dropmenu.js', 'nds-custom-select.js', 'nds-multiselect.js', 'nds-taginput.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown.js', 'nds-link.js', 'nds-print.js', 'nds-loader.js'],
+      'nds-main.min.js' => ['nds-core.js', 'nds-date.js', 'nds-theme.js', 'nds-main-nav.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-consent.js', 'nds-form.js', 'nds-otp.js', 'nds-dropmenu.js', 'nds-custom-select.js', 'nds-multiselect.js', 'nds-taginput.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown.js', 'nds-link.js', 'nds-print.js', 'nds-loader.js'],
       # Delegated — deferred components verified safe to load late. Injected by
       # nds-loader.js AFTER the critical pass (never a render-blocking defer tag), so
       # its download never gates the reveal. Components migrate in here over time
@@ -94,9 +94,9 @@ class JSProcessor
       # No <script> tag: dropping this file is the opt-out, and loadBundle
       # resolves on error.
       'nds-accessibility.min.js' => ['nds-accessibility.js'],
-      # Cookie consent UI — lazy the same way: fetched for a visitor with no stored
-      # choice, or on the first [data-cookies-toggle] press. The consent store stays in main.
-      'nds-cookie-consent.min.js' => ['nds-cookie-consent.js']
+      # Cookies, the consent UI — lazy the same way: fetched for a visitor with no stored
+      # choice, or on the first [data-cookies-toggle] press. The store, NDS.consent, stays in main.
+      'nds-cookies.min.js' => ['nds-cookies.js']
     }
     # Sheets a bundle owns. nds-loader.js requests these in parallel with the
     # bundle's JS, so a lazily-loaded component's styles are not a second round
@@ -256,10 +256,11 @@ class JSProcessor
 
   # _data/migrations.yml as the audit's rows: [kind, name, scope, status, use, since, fix, inert],
   # 0 for an empty field. A fix that only says "Use <use>." is rebuilt at runtime. Events, URL
-  # params and JS APIs stay out: a page cannot see a listener, a call or what its server reads.
+  # params, JS APIs and file names stay out: a page cannot see a listener, a call, a bundle list or
+  # what its server reads.
   MIGRATIONS = '_data/migrations.yml'
   def migrations_js
-    rows = YAML.load_file(MIGRATIONS).reject { |r| %w[event param api].include?(r['kind']) }.map do |r|
+    rows = YAML.load_file(MIGRATIONS).reject { |r| %w[event param api file].include?(r['kind']) }.map do |r|
       fix = r['fix'] == "Use #{r['use']}." ? 0 : r['fix']
       [r['kind'], r['name'], r['scope'] || 0, r['status'], r['use'] || 0, r['since'].to_s, fix || 0, r['inert'] ? 1 : 0]
     end

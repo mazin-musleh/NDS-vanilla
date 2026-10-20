@@ -34,7 +34,7 @@ const ok = (name, pass, detail = '') => { if (!pass) fails++; console.log(`${pas
 const wait = (ms = 600) => page.waitForTimeout(ms);
 
 // The cookie panel opens itself at idle, into the panel stack these cases count on.
-await page.route('**/nds-cookie-consent.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
+await page.route('**/nds-cookies.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
 await page.goto(`${BASE}/components/panel.html`, { waitUntil: 'load' });
 await page.waitForFunction(() => window.NDS?.init?.mount);
 await page.evaluate(() => {

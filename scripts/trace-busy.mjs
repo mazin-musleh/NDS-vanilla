@@ -12,7 +12,7 @@ const b = await launch();
 for (const pg of PAGES) {
   const ctx = await b.newContext({ viewport: { width: 412, height: 915 }, deviceScaleFactor: 2.6, isMobile: true, hasTouch: true });
   const page = await ctx.newPage();
-  await page.route('**/nds-cookie-consent.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
+  await page.route('**/nds-cookies.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
   const inits = [];
   if (INITS) {
     // The loader's own per-component timing; logging would also pull the audit bundle, so it is blocked.

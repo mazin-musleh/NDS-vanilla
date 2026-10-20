@@ -375,7 +375,7 @@ The class is in every consumer page, so it is the costliest name to change and t
 
 **Audit behavior**
 
-For each loader-registered component: the JS file suffix, the registry `name` turned back into kebab case, the SCSS partial and doc page when they exist, the event segment and the init stamp must all be the same name → MEDIUM on any mismatch. `scripts/check-banners.mjs --all` checks the file, namespace, SCSS class prefix and doc page, and that every stamp and banner event names a real component, and fails the release. Flag a namespace whose case breaks the rule above → MEDIUM. Until the 2.0.0 renames land (`plans/shared-logic.md` A7), `State`, `Status`, `Init`, `Audit` and `date` are migration targets, as are the cookie names (the panel is CookieConsent's, the store holds `NDS.Cookies`) and Session Timeout's dialogs, which gain the root class `.nds-session-timeout`.
+For each loader-registered component: the JS file suffix, the registry `name` turned back into kebab case, the SCSS partial and doc page when they exist, the event segment and the init stamp must all be the same name → MEDIUM on any mismatch. `scripts/check-banners.mjs --all` checks the file, namespace, SCSS class prefix and doc page, and that every stamp and banner event names a real component, and fails the release. Flag a namespace whose case breaks the rule above → MEDIUM.
 
 ---
 
@@ -448,7 +448,7 @@ Direction keeps a change local: a base that knows no user changes without breaki
 
 - The loader's registry names every component: the one place allowed to, as data, never as code.
 - The two cross-bundle sync reads with a commented stub check: `panelIsOpen` in `nds-accessibility.js`, `isSelected` in `nds-export.js`.
-- An opt-out bundle (accessibility, cookie-consent) is guarded by its callers.
+- An opt-out bundle (accessibility, cookies) is guarded by its callers.
 
 **Audit behavior**
 

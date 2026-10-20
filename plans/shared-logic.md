@@ -1,7 +1,12 @@
 # Shared logic: one architecture for v2
 
 Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (section 7); rules landed in
-AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Nothing is built. Facts measured on `main` at `9fd54151`.
+AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Facts measured on `main` at `9fd54151`.
+
+**Resume here.** Order steps 1–2 are done, and so is all of change #1 (1, 1b, 1c, 1d; the "Landed" notes
+under section 3's Mechanical checks). **Next: change #2**, the state mechanism in core: section 5 "State",
+S1–S4. Land the held-back `state.onAdd` / `onRemove` pair check in `check-js-rules.mjs` with it.
+Open question for the owner, raised in #1b's note: Switch's field class `.nds-switch-container`.
 
 ## Goal
 
@@ -235,7 +240,7 @@ The bundle map comes from `js_processor.rb`; the call graph that `tmp/xgraph.mjs
 `check-js-rules.mjs` (31 dead guards and 7 cross-bundle calls reported on today's tree); the case rule
 (`CASE_PENDING` lists the names a step still renames) and the catalog `js:` check in `check-banners.mjs`;
 `assert_layers!` and lowercase `scan_namespaces` in `js_processor.rb` (today's tree passes: `NDS.dialog`
-sits with Modal and Panel). Held back: the `State.onAdd` / `onRemove` pair check lands with S1
+sits with Modal and Panel). Held back: the `state.onAdd` / `onRemove` pair check lands with S1
 (change #2), since it would point at an API that does not exist yet.
 
 **Landed 2026-10-20 (change #1):** the five A7 renames, five `kind: api` rows, the manifest's `audit`
@@ -254,6 +259,11 @@ scoped `&input`, so the audit never flags the new container. Open: Switch's fiel
 field itself (entry 9: one name per component).
 
 **Landed 2026-10-20 (change #1c):** both modals carry `.nds-session-timeout`; `CASE_PENDING` is empty.
+
+**Landed 2026-10-20 (change #1d):** `nds-cookies.js` → `nds-consent.js` (`NDS.consent`: `get`, `allowed`,
+`save`), `nds-cookie-consent.js` → `nds-cookies.js` (`NDS.Cookies`: `init`, `open`, `close`, bundle
+`nds-cookies.min.js`), core `NDS.cookie`. The stored cookie names stay, so no visitor is asked again.
+The bundle's new name needed a docs-only `kind: file` in `migrations.yml`.
 
 ## 4. Owner decisions
 

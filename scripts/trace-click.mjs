@@ -10,7 +10,7 @@ const TAP = !!process.env.TAP;
 const b = await launch();
 const ctx = await b.newContext({ viewport: { width: 412, height: 915 }, deviceScaleFactor: 2.6, isMobile: true, hasTouch: true });
 const page = await ctx.newPage();
-await page.route('**/nds-cookie-consent.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
+await page.route('**/nds-cookies.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
 await page.goto(`http://localhost:4002/NDS-vanilla/${PAGE}`, { waitUntil: 'load' });
 await page.waitForTimeout(4000);
 const s = await cdp(page);

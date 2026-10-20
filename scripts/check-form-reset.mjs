@@ -60,7 +60,7 @@ const browser = await launch();
 const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
 const errors = [];
 page.on('pageerror', (e) => { if (!/ResizeObserver loop/.test(e.message)) errors.push(e.message); });
-await page.route('**/nds-cookie-consent.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
+await page.route('**/nds-cookies.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
 if (OLD_JS) await page.route('**/assets/js/*.min.js*', (r) => {
   const file = `${OLD_JS}/${new URL(r.request().url()).pathname.split('/').pop()}`;
   return existsSync(file) ? r.fulfill({ body: readFileSync(file), contentType: 'text/javascript' }) : r.continue();

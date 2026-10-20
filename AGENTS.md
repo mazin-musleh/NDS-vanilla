@@ -241,7 +241,7 @@ Verify a whitespace change by rendered text, not by eyeballing: build before/aft
 - **Component**: has a root class or a loader entry. The loader sits beside core and names components only through its registry.
 - **Where a shared piece goes, first yes wins:** one component's contract → that component's API, if it loads no later than every caller; a family's job with no UI → a base; it knows no component, two or more files call it and it passes JSD-05's body gate → core; otherwise keep the copies. The two-caller bar is for promotion into core, never for eviction from it.
 - **Bundles.** Main runs first. The injected bundles land in parallel, in no order, and before one lands `NDS.X` is a stub whose every property is truthy, so `?.` cannot see it. A callee loads no later than every caller that uses its result synchronously; a call between two injected bundles ignores or awaits its result, or carries the one-line stub check with its comment.
-- **Guards.** Never guard a namespace in main: NDS serves its bundles as built, so it is always there. Only an opt-out bundle (accessibility, cookie-consent) is guarded by its callers.
+- **Guards.** Never guard a namespace in main: NDS serves its bundles as built, so it is always there. Only an opt-out bundle (accessibility, cookies) is guarded by its callers.
 - **Undo.** What `create()` stamps on an element that outlives the instance, `destroy()` removes, and only that.
 
 ## Adding New Components

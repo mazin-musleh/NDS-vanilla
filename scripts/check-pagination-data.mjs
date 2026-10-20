@@ -12,7 +12,7 @@ const browser = await launch();
 const page = await browser.newPage();
 const errors = [];
 page.on('pageerror', (e) => { if (!/ResizeObserver loop/.test(e.message)) errors.push(e.message); });
-await page.route('**/nds-cookie-consent.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
+await page.route('**/nds-cookies.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
 if (OLD_JS) await page.route('**/assets/js/*.min.js*', (r) => {
   const file = `${OLD_JS}/${new URL(r.request().url()).pathname.split('/').pop()}`;
   r.fulfill({ path: file, contentType: 'text/javascript' });
@@ -97,7 +97,7 @@ const fixture = (p) => `<div id="${p}-wrap">
 </div>`;
 const pp = await browser.newPage();
 pp.on('pageerror', (e) => { if (!/ResizeObserver loop/.test(e.message)) errors.push(e.message); });
-await pp.route('**/nds-cookie-consent.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
+await pp.route('**/nds-cookies.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
 if (OLD_JS) await pp.route('**/assets/js/*.min.js*', (r) => {
   r.fulfill({ path: `${OLD_JS}/${new URL(r.request().url()).pathname.split('/').pop()}`, contentType: 'text/javascript' });
 });
