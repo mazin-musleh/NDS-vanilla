@@ -6,6 +6,7 @@
  * Methods:
  *   NDS.CustomSelect.init() / .reinit()    arm the delegated listeners; paint pre-selected labels
  *   NDS.CustomSelect.create(el)            build one select now — pass the input or its form-control
+ *   NDS.CustomSelect.destroy(el)           undo create() before you discard the field
  *   NDS.CustomSelect.setValue(el, value)   pick by option value; false when no option carries it
  *   NDS.CustomSelect.clear(el)             back to placeholder
  * Events (fire ON the .nds-form-control — this one does NOT bubble):
@@ -78,11 +79,11 @@
     }
 
     // Build the dropmenu for one select (first focus). Idempotent via the
-    // .nds-dropmenu class we stamp here.
+    // instance it leaves on the form-control.
     function build(selectInput) {
         if (!selectInput || !selectInput.closest) return;
         var formControl = selectInput.closest('.nds-form-control');
-        if (!formControl || formControl.classList.contains('nds-dropmenu')) return;
+        if (!formControl || formControl.ndsCustomSelect || formControl.classList.contains('nds-dropmenu')) return;
         var dropdown = formControl.querySelector('.nds-select-dropdown');
         var options = formControl.querySelectorAll('.nds-select-option');
         if (!dropdown || !options.length) return;
@@ -96,12 +97,11 @@
         // Augment the author markup with NDS.Dropmenu hooks. No
         // data-dropmenu-no-click / -no-keys: the dropmenu's native click-toggle
         // and keyboard nav drive open/close — we don't re-implement them.
-        formControl.classList.add('nds-dropmenu');
         selectInput.classList.add('nds-dropmenu-trigger');
         // role="combobox" so the aria-expanded / aria-haspopup the dropmenu
         // stamps on the trigger are valid on an <input>.
-        selectInput.setAttribute('role', 'combobox');
-        dropdown.classList.add('nds-dropmenu-menu', 'nds-select-menu');
+        var ownRole = !selectInput.hasAttribute('role');
+        if (ownRole) selectInput.setAttribute('role', 'combobox');
         dropdown.removeAttribute('hidden');
         var optionsContainer = dropdown.querySelector('.nds-select-options');
         if (optionsContainer) optionsContainer.classList.add('nds-dropmenu-scroll');
@@ -121,13 +121,14 @@
 
         // Mirror dropmenu open/close onto the form-container so the arrow
         // rotation rule (`.nds-form-container[data-state~="open"]`) keeps working.
+        var controller = new AbortController(), signal = controller.signal;
         formControl.addEventListener('nds:dropmenu:opened', function () {
             NDS.state.add(formContainer, 'open');
             (Array.prototype.find.call(options, function (o) { return NDS.state.has(o, 'selected'); }) || options[0]).focus();
-        });
+        }, { signal: signal });
         formControl.addEventListener('nds:dropmenu:closed', function () {
             NDS.state.remove(formContainer, 'open');
-        });
+        }, { signal: signal });
 
         // Readonly CSS stops the pointer only; this stops the keyboard open.
         // Added before the dropmenu's own trigger listener, so it runs first.
@@ -136,10 +137,24 @@
                 e.preventDefault();
                 e.stopImmediatePropagation();
             }
-        });
+        }, { signal: signal });
+
+        // Takes back what build() wrote on the author's markup, so a later focus builds again.
+        formControl.ndsCustomSelect = {
+            destroy: function () {
+                controller.abort();
+                NDS.Dropmenu.destroy(formControl);
+                selectInput.classList.remove('nds-dropmenu-trigger');
+                if (ownRole) selectInput.removeAttribute('role');
+                if (optionsContainer) optionsContainer.classList.remove('nds-dropmenu-scroll');
+                options.forEach(function (o) { o.classList.remove('nds-dropmenu-item'); });
+                NDS.state.remove(formContainer, 'open');
+                delete formControl.ndsCustomSelect;
+            }
+        };
 
         // Hand off all behaviour to the dropmenu.
-        NDS.Dropmenu.create(formControl);
+        NDS.Dropmenu.create(formControl, { menu: dropdown, menuClass: 'nds-select-menu' });
     }
 
     // First focus of a select → build its dropmenu, then let the dropmenu's
@@ -258,6 +273,11 @@
             if (!input) return;
             wireDocument();
             build(input);
+        },
+        // Undo create(): pass the input, its form-control, or a container holding one.
+        destroy: function (el) {
+            var formControl = formControlOf(el);
+            if (formControl && formControl.ndsCustomSelect) formControl.ndsCustomSelect.destroy();
         },
         // Programmatic pick: the same write sequence as a user click (display
         // label, hidden value, selected markers, input/change events,

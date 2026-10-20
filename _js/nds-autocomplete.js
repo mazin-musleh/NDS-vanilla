@@ -148,9 +148,6 @@
         }
 
         setupDropmenu() {
-            // Autocomplete dropmenu is scoped to form-control
-            this.formControl.classList.add('nds-dropmenu');
-
             // Create and append the menu
             var menu = document.createElement('div');
             menu.className = 'nds-dropmenu-menu nds-autocomplete-menu';
@@ -179,9 +176,8 @@
             this.scroll = scroll;
             this.menuId = menuId;
 
-            // Initialize NDSDropmenu on form-control (no click-to-toggle, open/close is programmatic)
-            this.formControl.setAttribute('data-dropmenu-no-click', '');
-            this.dropmenuInstance = NDS.Dropmenu.create(this.formControl);
+            // The form-control is the wrapper; open/close is programmatic, so no click-to-toggle.
+            this.dropmenuInstance = NDS.Dropmenu.create(this.formControl, { click: false });
         }
 
         setupAria() {
@@ -671,8 +667,6 @@
                 this.carrier.parentNode.removeChild(this.carrier);
             }
 
-            this.formControl.classList.remove('nds-dropmenu', 'nds-dropmenu-trigger');
-            this.formControl.removeAttribute('data-dropmenu-no-click');
             // Restore the markup the focusin builder matches, so the field can build again.
             this.input.setAttribute('autocomplete', 'on');
             ['role', 'aria-expanded', 'aria-autocomplete', 'aria-controls', 'aria-activedescendant']

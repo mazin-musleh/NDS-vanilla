@@ -4,8 +4,9 @@
  *   .nds-dropmenu-footer sits outside .nds-dropmenu-scroll — the footer scrolls away with the list, and search hides its buttons
  * Methods:
  *   NDS.Dropmenu.init() / .reinit()      scan + initialize dropmenu wrappers
- *   NDS.Dropmenu.create(el)              instance one .nds-dropmenu wrapper; null when it has no menu
- *   NDS.Dropmenu.destroy(el)             tear one down before you discard its wrapper
+ *   NDS.Dropmenu.create(el, opts?)       instance one .nds-dropmenu wrapper; null when it has no menu.
+ *                                        opts adopt a field: {menu, menuClass, click, keys, anchor}
+ *   NDS.Dropmenu.destroy(el)             tear one down before you discard its wrapper; undoes what opts wrote
  *   NDS.Dropmenu.from(el)                the wrapper that owns any element inside it
  *   NDS.Dropmenu.menuOf(dropmenu)        the wrapper's menu
  * Events (bubble from the .nds-dropmenu wrapper):
@@ -1207,7 +1208,28 @@
             if (!this.menu.showPopover) this.menu.style.position = '';
             delete this.dropmenu.ndsDropmenu;
             this.dropmenu.removeAttribute('data-nds-dropmenu-initialized');
+            this._unstamp?.();
         }
+    }
+
+    // create(el, opts) adopts a field another component owns. What it writes, destroy()
+    // takes back; a class or flag the author wrote stays.
+    function _stampField(el, { menu, menuClass, click = true, keys = true, anchor } = {}) {
+        const undo = [];
+        const addClass = (node, cls) => {
+            if (!node.classList.contains(cls)) { node.classList.add(cls); undo.push(() => node.classList.remove(cls)); }
+        };
+        const setFlag = (name, value = '') => {
+            if (!el.hasAttribute(name)) { el.setAttribute(name, value); undo.push(() => el.removeAttribute(name)); }
+        };
+        addClass(el, 'nds-dropmenu');
+        if (menu) addClass(menu, 'nds-dropmenu-menu');
+        if (menu && menuClass) addClass(menu, menuClass);
+        if (!click) setFlag('data-dropmenu-no-click');
+        if (!keys) setFlag('data-dropmenu-no-keys');
+        if (anchor === 'cursor') setFlag('data-anchor-cursor');
+        else if (anchor) setFlag('data-anchor', anchor);
+        return () => undo.forEach(fn => fn());
     }
 
     // ==============================================
@@ -1299,16 +1321,21 @@
     NDS.Dropmenu = {
         init: initializeDropmenus,
         reinit: initializeDropmenus,
-        create: (element) => {
+        create: (element, opts) => {
+            if (!element) return null;
+            if (element.ndsDropmenu) return element.ndsDropmenu;
+            const unstamp = opts && _stampField(element, opts);
             // A templated menu stamps immediately on programmatic creation —
             // the consumer is instancing NOW, so there is nothing to defer.
-            if (element && !_ownFirstIn(element, '.nds-dropmenu-menu')) _stampMenuTemplate(element);
-            if (!element) return null;
-            // Prefer the live instance: refresh inside the stamp (or an earlier
-            // create) may already have constructed this wrapper. The constructor
-            // publishes el.ndsDropmenu only on success → null on a bail.
+            if (!_ownFirstIn(element, '.nds-dropmenu-menu')) _stampMenuTemplate(element);
+            // Prefer the live instance: refresh inside the stamp may already have
+            // constructed this wrapper. The constructor publishes el.ndsDropmenu
+            // only on success → null on a bail.
             if (!element.ndsDropmenu) new NDSDropmenu(element);
-            return element.ndsDropmenu || null;
+            const instance = element.ndsDropmenu || null;
+            if (unstamp && instance) instance._unstamp = unstamp;
+            else if (unstamp) unstamp();
+            return instance;
         },
         destroy: (element) => element?.ndsDropmenu?.destroy(),
         from: (el) => el?.closest('.nds-dropmenu') || null,

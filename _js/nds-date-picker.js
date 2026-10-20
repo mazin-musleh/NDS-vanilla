@@ -323,16 +323,9 @@
             var formControl = this.elements.formControl;
             var dropdown = this.elements.dropdown;
 
-            formControl.classList.add('nds-dropmenu');
-            formControl.setAttribute('data-dropmenu-no-click', '');
-            formControl.setAttribute('data-dropmenu-no-keys', '');
-            // Opt into cursor anchoring via the dropmenu's uniform flag. The
-            // native click handler is skipped here (no-click), so the toggle
-            // handler stashes _lastClickX itself — gated on this same attribute.
-            formControl.setAttribute('data-anchor-cursor', '');
-            dropdown.classList.add('nds-dropmenu-menu');
-
-            this.dropmenuInstance = NDS.Dropmenu.create(formControl);
+            // Cursor anchoring: the native click handler is skipped (no click), so the
+            // toggle handler stashes _lastClickX itself, gated on data-anchor-cursor.
+            this.dropmenuInstance = NDS.Dropmenu.create(formControl, { menu: dropdown, click: false, keys: false, anchor: 'cursor' });
 
             // Calendar lifecycle hooks.
             // Guard `e.target !== formControl` — these events bubble, so the
@@ -1942,16 +1935,6 @@
             // formControl (setupDropmenu). That element outlives the instance, so
             // without this the handlers keep it — and the calendar — reachable.
             this.instanceAbortController.abort();
-
-            // Un-stamp what setupDropmenu wrote onto the consumer's formControl, so
-            // a later NDS.Dropmenu.reinit() can't adopt it as a menu with no calendar.
-            var fc = this.elements.formControl;
-            if (fc) {
-                fc.classList.remove('nds-dropmenu');
-                fc.removeAttribute('data-dropmenu-no-click');
-                fc.removeAttribute('data-dropmenu-no-keys');
-                fc.removeAttribute('data-anchor-cursor');
-            }
 
             // Drop the back-ref on the input so the DatePickerCalendar can
             // be GC'd. Without this the input retains a chain to all the

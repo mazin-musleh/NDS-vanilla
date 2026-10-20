@@ -466,22 +466,17 @@
         }
 
         // Adopt NDSDropmenu for the panel's open/close/escape/outside-click.
-        // `data-dropmenu-no-click` — the input and toggle drive the toggle, and a
-        //   native click-toggle would fight the text caret.
-        // `data-dropmenu-no-keys` — the panel's keyboard belongs to the unit
-        //   selects inside it; dropmenu's flat trigger keys would swallow typing.
+        // No click: the input and toggle drive the toggle, and a native click-toggle
+        //   would fight the text caret.
+        // No keys: the panel's keyboard belongs to the unit selects inside it;
+        //   dropmenu's flat trigger keys would swallow typing.
+        // Anchor start: the panel is content-width, and centred under a full-width
+        //   field it reads as a mistake.
         setupDropmenu() {
             const formControl = this.elements.formControl;
-            formControl.classList.add('nds-dropmenu');
-            formControl.setAttribute('data-dropmenu-no-click', '');
-            formControl.setAttribute('data-dropmenu-no-keys', '');
-            // The panel is content-width, and dropmenu centres on the trigger by
-            // default — which reads as a mistake under a full-width field. Anchor
-            // it to the field's leading edge; dropmenu resolves that per direction.
-            formControl.setAttribute('data-anchor', 'start');
-            this.elements.panel.classList.add('nds-dropmenu-menu', 'nds-time-picker-menu');
-
-            this.dropmenuInstance = NDS.Dropmenu.create(formControl);
+            this.dropmenuInstance = NDS.Dropmenu.create(formControl, {
+                menu: this.elements.panel, menuClass: 'nds-time-picker-menu', click: false, keys: false, anchor: 'start',
+            });
 
             // Guard `e.target !== formControl`: these bubble, so the unit selects'
             // own open/close events would otherwise re-run this on every pick.
@@ -558,7 +553,7 @@
                 const fc = el && el.querySelector('.nds-form-control');
                 // Each unit's dropmenu holds a document-level click listener, so
                 // it is destroyed before its wrapper is discarded.
-                if (fc) NDS.Dropmenu.destroy(fc);
+                if (fc) NDS.CustomSelect.destroy(fc);
             });
             this.unitEls = {};
             if (this.elements.panel) this.elements.panel.remove();
@@ -860,13 +855,6 @@
                 this._offLangChange = null;
             }
             this.cleanup();
-            // Un-stamp the dropmenu hooks so a later NDS.Dropmenu.reinit() does not
-            // adopt the form-control as an orphaned menu.
-            const fc = this.elements.formControl;
-            fc.classList.remove('nds-dropmenu');
-            fc.removeAttribute('data-dropmenu-no-click');
-            fc.removeAttribute('data-dropmenu-no-keys');
-            fc.removeAttribute('data-anchor');
             if (this._ownInputMode) this.elements.input.removeAttribute('inputmode');
             NDS.state.remove(this.elements.container, 'open');
             // Nothing is left to clear the picker's own error, so it would block submit for good.

@@ -3,8 +3,8 @@
 Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (section 7); rules landed in
 AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Facts measured on `main` at `9fd54151`.
 
-**Resume here.** Order steps 1–2 are done, and so are changes #1 (1, 1b, 1c, 1d) and #2 (the "Landed" notes
-under section 3's Mechanical checks). **Next: change #4**, Date Picker + Time Picker on `NDS.Dropmenu.create`.
+**Resume here.** Order steps 1–2 are done, and so are changes #1 (1, 1b, 1c, 1d), #2 and #4 (#3 was dropped; the "Landed" notes
+under section 3's Mechanical checks). **Next: change #4b**, the inventory of components that ride another (owner, 2026-10-20).
 
 ## Goal
 
@@ -215,6 +215,7 @@ against entry 9 in the same pass (`kind: class` rows, which `migrations.yml` and
 | 2 | The state mechanism in core (S1) and the field's disabled / readonly effects (S2); core's mirrors, Multiselect, Taginput, Editor and Form's `FIELD_STATES` move onto it | A2.3 | `check-data-state-tails.py`, form, multiselect, taginput and editor demos |
 | 3 | (dropped 2026-10-20: `nds-dialog.js` stays in delegated with Modal and Panel, per A3) | | |
 | 4 | Date Picker + Time Picker: `NDS.Dropmenu.create(fc, opts)` stamps the field flags and menu class; `destroy()` removes them. Check Custom Select and Autocomplete against the same options | A2.1, A5, entry 10 | `check-menus-in-modal.mjs`, the picker docs |
+| 4b | Every component that rides another (Dropmenu, Form, Custom Select, Modal …): a `create(el)` has its `destroy(el)`, and that `destroy` takes down the inner instances it built and every stamp, its own and theirs. Inventory first, then one fix per component | A5, entry 10, Framework Hosts | `NDS.init.destroy` + re-mount per component, `check-menus-in-modal.mjs` |
 | 5 | Form `dismissOwn` → Feedback `dismissAll(container, opts)` with an ownership option | A2.1 | `check-form-reset.mjs` |
 | 6 | The chip-removal focus handoff (Multiselect, Taginput) → core, beside `buildChip` | A2.3 | a11y Tab walk on both docs |
 | 7 | `NDS.gridLastRow` → `_js/nds-grid.js`, `NDS.Grid`, in main (a late mark flashes the last row's border); `update(container)` → `refresh(el)`; its catalog `js:` row; a Migration line | A2.1, A7 | the grid doc page |
@@ -269,6 +270,13 @@ effect, still in Form until #9), Multiselect, Taginput and Editor run on it. `ap
 Multiselect and Taginput call it after each chip render, and the field's disabled effect reaches `button.nds-chip`.
 New: a field that ships `data-state="disabled"` in markup, or is mounted with it, now disables its inputs.
 JSD-01 (d) flags an `onAdd` / `onRemove` pair on one token (it found all 5 old sites).
+
+**Landed 2026-10-20 (change #4):** `NDS.Dropmenu.create(el, {menu, menuClass, click, keys, anchor})` writes the
+wrapper class, the menu classes and the `data-dropmenu-no-*` / `data-anchor` flags, skipping any the author wrote;
+`destroy()` takes back only those. Date Picker, Time Picker, Autocomplete and Custom Select pass options instead of
+stamping by hand. Multiselect keeps its own `data-anchor` write: its authored wrapper may already be built by the sweep,
+and `create()` on a live instance writes nothing. Custom Select gained `destroy(el)` (entry 10's pair): its build
+leaves `formControl.ndsCustomSelect`, so `NDS.init.destroy` reaches it too, and Time Picker's unit selects use it.
 
 ## 4. Owner decisions
 
