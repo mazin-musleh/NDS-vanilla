@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 04:09 AM"
+last_edit: "20/10/2026 - 09:51 AM"
 ---
 
 <section id="ipv-overview" class="nds-content-section nds-doc-overview">
@@ -173,7 +173,7 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
 - Keep thumbnails small, about 400px wide.
 - Write `alt` on every thumbnail. The viewer copies it to the full image, and it names the thumbnail for screen readers.
 - In a gallery, put a `nds-ipv-image-title` under each image, so people know what it shows before they open it.
-- Every thumbnail on the page is in one gallery, in page order. Leave `nds-ipv-thumbnail` off an image that does not belong in it.
+- For more than one gallery on a page, give each thumbnail a `data-ipv-gallery` name. The arrows page through the thumbnails with the same name, in page order. Thumbnails without a name form one gallery together.
 - Do not add your own click handler to a thumbnail. The viewer already opens on a click, Enter and Space.
 - Do not open a modal while the viewer is open. The modal opens on top of the viewer.
 
@@ -206,6 +206,7 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
 |---|---|---|
 | `data-ipv-full` | `img.nds-ipv-thumbnail` | The URL of the image the viewer loads |
 | `data-src` | `img.nds-ipv-thumbnail` | The viewer loads this URL when the image has no `data-ipv-full`. With neither, it loads the image's `src` |
+| `data-ipv-gallery` | `img.nds-ipv-thumbnail` | A gallery name. The arrows and the counter cover only the thumbnails with the same name |
 {: .nds-table .nds-responsive}
 
 ### Keyboard
@@ -225,26 +226,24 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
 ### JavaScript
 {: .nds-block-title}
 
-One viewer serves the whole page. The viewer fires no events.
+One viewer serves the whole page. The methods below drive it. The viewer fires no events.
 
 | Method | Effect |
 |---|---|
 | `NDS.Ipv.init()` | Starts the viewer. The loader calls it when the page has a thumbnail |
 | `NDS.Ipv.reinit()` | Gives thumbnails added since the last call `tabindex` and `role`. Call it after you add thumbnails |
-| `NDS.Ipv.create()` | Starts the viewer and returns it. `window.ndsIpv` holds the same viewer |
-| `viewer.open(img)` | Opens the viewer on that thumbnail |
-| `viewer.close()` | Closes the viewer and returns focus to the thumbnail |
-| `viewer.showPrev()`, `viewer.showNext()` | Moves to the previous or the next thumbnail |
-| `viewer.resetTransform()` | Resets the zoom and the position |
-| `viewer.toggleUI()` | Does what the eye button does |
-| `viewer.destroy()` | Removes the viewer and every listener it added. `NDS.Ipv.init()` starts a new one |
+| `NDS.Ipv.open(img)` | Opens the viewer on that thumbnail |
+| `NDS.Ipv.close()` | Closes the viewer and returns focus to the thumbnail |
+| `NDS.Ipv.prev()`, `NDS.Ipv.next()` | Moves to the previous or the next thumbnail in its gallery |
+| `NDS.Ipv.resetZoom()` | Resets the zoom and the position |
+| `NDS.Ipv.toggleControls()` | Does what the eye button does |
+| `NDS.Ipv.destroy()` | Removes the viewer and every listener it added. `NDS.Ipv.init()` starts a new one |
 {: .nds-table .nds-responsive}
 
 The full API is in the banner of `_js/nds-ipv.js`.
 
 <script type="text/html" id="ipv-js" data-canon data-lang="js">
-var viewer = NDS.Ipv.create();
-viewer.open(document.querySelector('.nds-ipv-thumbnail'));
+NDS.Ipv.open(document.querySelector('.nds-ipv-thumbnail'));
 
 // After you add thumbnails to the page
 NDS.Ipv.reinit();

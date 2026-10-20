@@ -355,9 +355,9 @@ A component has one singular kebab name `x`, taken from its root class `.nds-x`,
 | Init stamp | `data-nds-x-initialized` | `data-nds-user-feedback-initialized` |
 | Events | `nds:x:{action}` (entry 8) | `nds:user-feedback:submit` |
 | Namespace | `NDS.X`: `x` split at its hyphens, each part capitalized | `NDS.UserFeedback` |
-| Instance | `el.ndsX` | `el.ndsUserFeedback` |
+| Instance | `el.ndsX`, for a component with one instance per element | `el.ndsUserFeedback` |
 
-A component without one of these surfaces skips it. A part of a component stamps and names its own part (`data-nds-columns-initialized`, `data-paged-initialized`). An acronym is one word: `.nds-otp` → `NDS.Otp`, `el.ndsIpv`.
+A component with one instance per page (Main Nav, Digital Stamp, Backdrop, Image Popup Viewer) keeps it private and exposes namespace methods (`NDS.Ipv.open(img)`), never a `window` global. A component without one of these surfaces skips it. A part of a component stamps and names its own part (`data-nds-columns-initialized`, `data-paged-initialized`). An acronym is one word: `.nds-otp` → `NDS.Otp`, `el.ndsIpv`.
 
 **Why (and rejected alternatives)**
 

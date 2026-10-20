@@ -3,23 +3,26 @@
  * Methods:
  *   NDS.Ipv.init() / .reinit()   wire the thumbnails (the overlay builds on first open);
  *                                a repeat call gives later thumbnails tabindex + role
- *   NDS.Ipv.create()             build it and return the instance (window.ndsIpv)
- *   instance.open(thumb)         open the viewer on a thumbnail element
- *   instance.close()
- *   instance.destroy()           detach every listener and remove the overlay; init() builds anew
+ *   NDS.Ipv.open(thumb)          open the viewer on a thumbnail element
+ *   NDS.Ipv.close()
+ *   NDS.Ipv.next() / .prev()     move to the next or previous image in the gallery
+ *   NDS.Ipv.resetZoom()          reset the zoom and the position
+ *   NDS.Ipv.toggleControls()     what the eye button does
+ *   NDS.Ipv.destroy()            detach every listener and remove the overlay; init() builds anew
  * Events:
  *   (none)
  * Hooks:
  *   .nds-ipv-thumbnail   class on any image that should open in the viewer
  *   data-ipv-full        the full-size URL for that thumbnail (falls back to data-src,
  *                        then the img's own src)
+ *   data-ipv-gallery     a gallery name: the arrows page through the thumbnails with the
+ *                        same name; thumbnails without one form one gallery together
  * Gotchas:
- *   - One viewer serves the whole page; the thumbnails form a single gallery you can page
- *     through with the arrow controls.
+ *   - One viewer serves the whole page, like Backdrop: it is private, and the namespace
+ *     methods drive it.
  *   - The overlay (#nds-ipv-popup-overlay) is built by the component on the FIRST open —
  *     a page where no thumbnail is clicked carries zero overlay DOM and none of the
  *     document-level listeners.
- *   - The instance is a page singleton at window.ndsIpv.
  */
 /**
  * NDS Image Popup Viewer (IPV)
@@ -51,6 +54,9 @@
 
     // Zoom limits and step factors — shared by buttons, keys, wheel, and pinch.
     const ZOOM = { min: 0.1, max: 10, step: 1.5, wheelIn: 1.1, wheelOut: 0.9 };
+
+    // The page's one viewer, built by init().
+    let viewer = null;
 
     class NDSImagePopupViewer {
         constructor() {
@@ -395,7 +401,7 @@
 
             // First open (not gallery prev/next): start a fresh modal session.
             if (!skipIndexUpdate) {
-                this.state.thumbnails = this.collectThumbnails();
+                this.state.thumbnails = this.collectThumbnails(thumb);
                 this.state.currentIndex = this.state.thumbnails.indexOf(thumb);
                 this._containerRect = null; // recompute against the now-visible overlay
 
@@ -439,11 +445,13 @@
         }
 
         // ── Event attachment ─────────────────────────────────────────────
-        // Thumbnails on the page now, minus any inside code examples. Read at open,
-        // so a thumbnail added after init joins the gallery with no reinit.
-        collectThumbnails() {
-            return Array.from(document.querySelectorAll('.nds-ipv-thumbnail'))
-                .filter(thumb => !thumb.closest('code'));
+        // Thumbnails on the page now, minus any inside code examples; with a thumb,
+        // only its gallery. Read at open, so a thumbnail added after init joins
+        // the gallery with no reinit.
+        collectThumbnails(thumb) {
+            const all = Array.from(document.querySelectorAll('.nds-ipv-thumbnail'))
+                .filter(t => !t.closest('code'));
+            return thumb ? all.filter(t => t.dataset.ipvGallery === thumb.dataset.ipvGallery) : all;
         }
 
         // Make each thumbnail keyboard-operable without changing authored markup.
@@ -521,8 +529,8 @@
             this.openAbortController?.abort();
             if (this.el.overlay) this.el.overlay.remove();
             this.el = {};
-            // Free the singleton slot so init() can build a fresh viewer.
-            if (window.ndsIpv === this) window.ndsIpv = null;
+            // Free the slot so init() can build a fresh viewer.
+            if (viewer === this) viewer = null;
         }
     }
 
@@ -585,17 +593,19 @@
     // the instance's first open, so the singleton guard is the instance itself.
     // A repeat call gives thumbnails added since then keyboard access.
     function initializeIPV() {
-        if (window.ndsIpv) window.ndsIpv.enhanceThumbnails();
-        else window.ndsIpv = new NDSImagePopupViewer();
+        if (viewer) viewer.enhanceThumbnails();
+        else viewer = new NDSImagePopupViewer();
     }
 
-    // Public API for the unified init system
     NDS.Ipv = {
         init: initializeIPV,
         reinit: initializeIPV,
-        create: () => {
-            initializeIPV();
-            return window.ndsIpv;
-        }
+        open: (thumb) => { if (!viewer) initializeIPV(); viewer.open(thumb); },
+        close: () => viewer?.close(),
+        next: () => viewer?.showNext(),
+        prev: () => viewer?.showPrev(),
+        resetZoom: () => viewer?.resetTransform(),
+        toggleControls: () => viewer?.toggleUI(),
+        destroy: () => viewer?.destroy(),
     };
 })();
