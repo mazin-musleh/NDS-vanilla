@@ -2,7 +2,7 @@
 
 The project's chosen conventions for `_js/nds-*.js` component files, documented as concrete canonical forms backed by principle reasoning. Consulted by `nds-js-audit` so JSD-15 ("cross-file pattern consistency") works in single-file mode and so the audit measures code against deliberate choices instead of against the loudest accidental majority.
 
-**Scope:** the component files under `_js/nds-*.js`. Excludes `nds-core.js` (publishes the shared utility surface, different conventions), `nds-loader.js` (orchestration shape), `nds-docs.js` (docs-site builder). Exception: entry 7 (public-surface banner) uses its own wider scope — the `SCOPE` array in `scripts/check-banners.mjs`, which includes `nds-core.js` and `nds-loader.js`.
+**Scope:** the component files under `_js/nds-*.js`. Excludes `nds-core.js` (publishes the shared utility surface, different conventions), `nds-loader.js` (orchestration shape), `nds-docs.js` (docs-site builder). Exception: entry 7 (public-surface banner) uses its own wider scope — the `SCOPE` array in `scripts/check-banners.mjs`, which includes `nds-core.js` and `nds-loader.js`. Entry 11 (layers) covers `nds-core.js`, the bases and the loader as well.
 
 ---
 
@@ -319,7 +319,7 @@ Run (or mirror) `node scripts/check-banners.mjs --verify <file>`: missing banner
 
 `nds:{component}:{action}`, every segment lowercase kebab: `^nds:[a-z]+(-[a-z]+)*:[a-z]+(-[a-z]+)*$`.
 
-- **Component** — the component's class root without `nds-`: `nds-digital-stamp` → `digital-stamp`, `nds-taginput` → `taginput`, `nds-user-feedback` → `user-feedback`. An event a shared module fires for another component takes that component's name (`nds-form.js` fires `nds:switch:change`, `nds:checkbox:indeterminate`).
+- **Component** — the component's class root without `nds-`: `nds-digital-stamp` → `digital-stamp`, `nds-taginput` → `taginput`, `nds-user-feedback` → `user-feedback`. An event a shared module fires for another component takes that component's name (`nds:checkbox:indeterminate`, whichever file fires it).
 - **Action** — the tense says when it fires. The first that fits:
   1. `change` for a new value — the DOM's word (`nds:tabs:change`, `nds:otp:change`).
   2. A past participle only when the component's state change is already done, from the entry-3 verb that caused it: `open()` → `opened`/`closed`, `showSubmenu()` → `shown`/`hidden`, `expand()` → `expanded`/`collapsed`, `create()` → `created` (the message is in place).
@@ -333,7 +333,7 @@ One grammar lets a consumer guess an event from the component and what happened,
 **Carve-outs (NOT divergence)**
 
 - `nds:session:*` names what ends, not the Session Timeout component, which has no class root of its own (its dialogs are `.nds-modal`).
-- `nds:cookies:consent` comes from the `NDS.Cookies` utility, which has no class.
+- `nds:cookies:consent` is fired by the consent store, a base (`NDS.consent` from 2.0.0), for the Cookies component, by the rule above.
 
 **Audit behavior**
 
@@ -359,20 +359,23 @@ A component has one singular kebab name `x`, taken from its root class `.nds-x`,
 
 A component with one instance per page (Main Nav, Digital Stamp, Backdrop, Image Popup Viewer) keeps it private and exposes namespace methods (`NDS.Ipv.open(img)`), never a `window` global. A component without one of these surfaces skips it. A part of a component stamps and names its own part (`data-nds-columns-initialized`, `data-paged-initialized`). An acronym is one word: `.nds-otp` → `NDS.Otp`, `el.ndsIpv`.
 
+**The case tells the layer** (entry 11). A component, which has a root class or a loader entry, is PascalCase, named from its class; one with a loader entry and no root class takes its registry name (`NDS.Sort`, `NDS.Print`). Every other namespace is lowercase: a core module, a helper set, a base, the loader's API (`NDS.state`, `NDS.aria`, `NDS.dialog`, `NDS.init`). A function on `NDS` is camelCase per entry 10 (`NDS.badge`, `NDS.debounce`), whatever it builds.
+
 **Why (and rejected alternatives)**
 
-The class is in every consumer page, so it is the costliest name to change and the one the others follow. With one name, a reader or an agent who knows the class can work out the file, the events and the namespace without the docs. Rejected: the namespace from the JS file alone (`8c139004`, then `999997de`), which let the file, class and events drift apart (`nds-tables.js`, `.nds-table`, `NDS.Tables`); acronyms in capitals (`NDS.OTP`, `toCSV`), which need a list of what counts as an acronym; a hyphen in the namespace, which a JS property cannot hold.
+The class is in every consumer page, so it is the costliest name to change and the one the others follow. With one name, a reader or an agent who knows the class can work out the file, the events and the namespace without the docs. Rejected: the namespace from the JS file alone (`8c139004`, then `999997de`), which let the file, class and events drift apart (`nds-tables.js`, `.nds-table`, `NDS.Tables`); acronyms in capitals (`NDS.OTP`, `toCSV`), which need a list of what counts as an acronym; a hyphen in the namespace, which a JS property cannot hold. The case says which layer a name belongs to before anyone opens the file, and a script can check it. Rejected for the case: "PascalCase for one with its own UI or lifecycle" (`96425c4e`), which nobody could check, so `State`, `Status` and `Init` kept PascalCase under it; a doc page as the test, since the `core/` shelf documents modules.
 
 **Carve-outs (NOT divergence)**
 
 - `.nds-btn` is the Button component (an abbreviation on every page).
-- Numbers (`.nds-number-format`), and the core modules (`Init`, `Audit`, `Backdrop`, `Feedback`, `Cookies`, `State`, `Status` in PascalCase; `date`, `i18n`, `aria`, `dialog`, `cache` in lowercase) have no single component class.
+- Numbers keeps its registry name over its class (`.nds-number-format`).
+- A type part (Checkbox, Radio, Switch) has no `init()` and no loader entry: it registers with `NDS.field` at load (entry 11). It is still a component, with one name across its class, file, doc page and namespace.
 - A part's property is named for the part (`el.ndsTableControls`, `el.ndsColumnToggle`, `el.ndsCounter`).
 - `foundations/themes.md` documents theming, not the Theme switch.
 
 **Audit behavior**
 
-For each loader-registered component: the JS file suffix, the registry `name` turned back into kebab case, the SCSS partial and doc page when they exist, the event segment and the init stamp must all be the same name → MEDIUM on any mismatch. `scripts/check-banners.mjs --all` checks the file, namespace, SCSS class prefix and doc page, and that every stamp and banner event names a real component, and fails the release.
+For each loader-registered component: the JS file suffix, the registry `name` turned back into kebab case, the SCSS partial and doc page when they exist, the event segment and the init stamp must all be the same name → MEDIUM on any mismatch. `scripts/check-banners.mjs --all` checks the file, namespace, SCSS class prefix and doc page, and that every stamp and banner event names a real component, and fails the release. Flag a namespace whose case breaks the rule above → MEDIUM. Until the 2.0.0 renames land (`plans/shared-logic.md` A7), `State`, `Status`, `Init`, `Audit` and `date` are migration targets, as are the cookie names (the panel is CookieConsent's, the store holds `NDS.Cookies`) and Session Timeout's dialogs, which gain the root class `.nds-session-timeout`.
 
 ---
 
@@ -411,10 +414,45 @@ A name a reader or an agent can guess from another component, or from the DOM an
 - `Filter.getByTarget(id)` takes a different key from `getInstance`; `Dropmenu.from(el)` returns an element, not an instance.
 - A loader-hook name (`init`, `reinit`, `refresh`, `destroy`) keeps the loader's meaning.
 - A markup value is not a method: `data-stepper-control="previous"` stays.
+- `NDS.init` is the loader's namespace (entry 9), not the `init()` verb; its methods keep the loader-hook meanings (`mount`, `refresh`, `destroy`).
 
 **Audit behavior**
 
 Flag a public method whose verb is a synonym the table replaces (`recheck…`, `recount`, `checkOverflow`, `setDisabled`, `previous`, `switchTo`, `slideTo`, `initialize…`, `setup…`), a name that repeats its namespace, or two public names that call the same code → LOW, as a migration target for the next major.
+
+---
+
+### 11. Layers: where shared code lives
+
+**Canonical**
+
+Shared code sits in one of three layers, and a lower layer never names a higher one: core ← base ← component. The loader sits beside core and names components only through its registry.
+
+| Layer | What it is | Name (entry 9) | Bundle | Example |
+|---|---|---|---|---|
+| core | a page-wide utility that knows no component | lowercase | main | `NDS.debounce`, `NDS.aria` |
+| base | one job a family shares, no UI of its own | lowercase | main, evaluated before any file that registers with it | `NDS.dialog` (Modal, Panel) |
+| component | has a root class or a loader entry | PascalCase | its own | `NDS.Modal` |
+
+- A base creates no markup and shows no message. It may write state and attributes (`NDS.dialog` writes `inert` and `data-nds-modal`), but it returns data, and the component that called it renders.
+- A base serves its users through arguments, callbacks and registries of functions. A registry holds functions and selectors, never elements.
+- Where a shared piece goes, first yes wins: (1) one component's contract → that component's API, if it loads no later than every caller; (2) a family's job with no UI → a base; (3) it knows no component, two or more files call it and it passes JSD-05's body gate → core; (4) otherwise keep the copies.
+- A namespace in main is never guarded. A call between two injected bundles ignores or awaits its result, or carries the one-line stub check with its comment.
+- What `create()` stamps on an element that outlives the instance, `destroy()` removes, and only that.
+
+**Why (and rejected alternatives)**
+
+Direction keeps a change local: a base that knows no user changes without breaking one, and a component that adds a rule or a type touches only its own file. Bases live in main because a stub cannot answer a synchronous call and every property of a stub is truthy; the two failed bundle splits of 2026-05 each grew a chain of late edges until main held almost everything, and the delegated tier worked once the shared dependencies stayed in main. Rejected: Form validating other components' markup (it knew ten, and seven called it back); a base that renders, which would have to name the component that renders it; a component split into an eager shell and a lazy half (removed 2026-06-04, AGENTS.md); a component split into plain files by doc page, which scatters code that runs together and adds a `document` listener per file (the Checkbox, Radio and Switch study, 2026-10-20); `?.` guards on main namespaces, which never fire.
+
+**Carve-outs (NOT divergence)**
+
+- The loader's registry names every component: the one place allowed to, as data, never as code.
+- The two cross-bundle sync reads with a commented stub check: `panelIsOpen` in `nds-accessibility.js`, `isSelected` in `nds-export.js`.
+- An opt-out bundle (accessibility, cookie-consent) is guarded by its callers.
+
+**Audit behavior**
+
+`check-js-rules.mjs` (built in `plans/shared-logic.md` step 2): a guard on a main namespace → finding; a call from one injected bundle into another → verify; core or a base naming a component namespace → finding. `js_processor.rb` fails the build on a base outside main, or listed after a file that registers with it. Until the plan lands, today's tree diverges in known ways (Form validates other components; `NDS.dialog` is in delegated): migration targets, not revisions.
 
 ---
 

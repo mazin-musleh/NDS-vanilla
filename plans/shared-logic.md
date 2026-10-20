@@ -1,7 +1,7 @@
 # Shared logic: one architecture for v2
 
-Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (section 7); every owner
-decision taken (section 4). Nothing is built. Facts measured on `main` at `9fd54151`.
+Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (section 7); rules landed in
+AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Nothing is built. Facts measured on `main` at `9fd54151`.
 
 ## Goal
 
@@ -204,6 +204,8 @@ against entry 9 in the same pass (`kind: class` rows, which `migrations.yml` and
 |---|---|---|---|
 | 1 | Build guards and `scan_namespaces` (A3), then the renames (A7) by script, with `kind: api` rows; `NDS.date` → `NDS.Date` with them | A3, A7 | build, the manifest test, `check-banners.mjs --all`, `run-audit.mjs` |
 | 1b | The class renames `.nds-check-container` → `.nds-checkbox`, `.nds-radio-container` → `.nds-radio`: markup in every page, SCSS, JS (Multiselect's options included), the audit's canon names, `kind: class` rows | A7, entry 9 | build, `check-css.py`, `run-audit.mjs`, the checkbox, radio and multiselect demos |
+| 1c | Session Timeout's dialogs carry `.nds-session-timeout` (decision 6) | A7 | the session-timeout demo |
+| 1d | Cookies names (decision 7): the UI → `NDS.Cookies`, the store → `NDS.consent`, cookie read and write → core `NDS.cookie`, `show()` removed, the bundle renamed | A1, A2, A7 | the cookies demo, a first-visit and a stored-choice load, `check-banners.mjs --all` |
 | 2 | The state mechanism in core (S1) and the field's disabled / readonly effects (S2); core's mirrors, Multiselect, Taginput, Editor and Form's `FIELD_STATES` move onto it | A2.3 | `check-data-state-tails.py`, form, multiselect, taginput and editor demos |
 | 3 | `nds-dialog.js` → main | A3 | `check-dialogs.mjs`, `ENGINE=webkit` |
 | 4 | Date Picker + Time Picker: `NDS.Dropmenu.create(fc, opts)` stamps the field flags and menu class; `destroy()` removes them. Check Custom Select and Autocomplete against the same options | A2.1, A5, entry 10 | `check-menus-in-modal.mjs`, the picker docs |
@@ -238,6 +240,23 @@ The bundle map comes from `js_processor.rb`; the call graph that `tmp/xgraph.mjs
    `.nds-checkbox` and `.nds-radio` (A7), so the files are `nds-checkbox.js` and `nds-radio.js`.
 5. **A component has a root class or a loader entry, decided 2026-10-20.** That covers every registered
    namespace with no exception, and renames `NDS.date` to `NDS.Date`.
+6. **Session Timeout gets a root class, decided 2026-10-20.** A check of every namespace against decision 5
+   found `NDS.SessionTimeout` with no root class and no loader entry (a page script calls `init(options)`;
+   it builds two `.nds-modal` dialogs). Its dialogs now carry `.nds-session-timeout`: no rename, and a
+   styling hook as well. Every other namespace passes; `NDS.badge` is a function, which entry 10 names.
+7. **Cookies: the names follow the class, decided 2026-10-20.** The 2026-09-30 split stays (a store in main,
+   a lazy UI); only the names move. `NDS.Cookies` passed decision 5 by accident: `.nds-cookies` is the
+   panel's class, and the panel is `NDS.CookieConsent`'s; the store's `show()` opened the UI, a base naming a
+   component (A1).
+   - The panel UI becomes `NDS.Cookies` (`nds-cookies.js`, its own lazy bundle), so its class, doc page
+     (`ui-shell/cookies.md`), SCSS, `data-cookies-*` hooks, `nds:cookies:*` event and i18n section share one name.
+   - The store becomes a base, `NDS.consent` (`nds-consent.js`, main): `get()`, `allowed()`, `save()`, the
+     gtag signals and tracker clearing. It fires `nds:cookies:consent` for the Cookies component (entry 8).
+   - The plain cookie read and write moves to core as `NDS.cookie` (`get`, `set`, `delete`), beside
+     `NDS.cache`: Tables and User Feedback call it, and it knows no component.
+   - `show()` goes; `NDS.Cookies.open()` replaces it.
+   - Migration lines: every `NDS.Cookies.*` and `NDS.CookieConsent.*` method, and the lazy bundle's file
+     name, which a site that self-hosts its bundles under a strict CSP lists by hand (`ui-shell/head.md`).
 
 ## 5. Form under the architecture
 
