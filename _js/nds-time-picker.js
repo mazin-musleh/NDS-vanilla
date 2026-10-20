@@ -877,7 +877,7 @@
                 NDS.Form?.clearStatus?.(this.elements.container);
             }
             this.elements.container.removeAttribute('data-nds-time-picker-initialized');
-            delete this.elements.input._ndsTimePicker;
+            delete this.elements.input.ndsTimePicker;
         }
     }
 
@@ -1030,7 +1030,7 @@
                 NDS.Form?.clearStatus?.(this.elements.container);
             }
             this.elements.container.removeAttribute('data-nds-time-picker-initialized');
-            delete this.elements.container._ndsTimePicker;
+            delete this.elements.container.ndsTimePicker;
         }
     }
 
@@ -1051,15 +1051,15 @@
     function create(input, formControl) {
         const group = groupOf(input);
         if (group) {
-            if (!group._ndsTimePicker) {
+            if (!group.ndsTimePicker) {
                 const instance = new TimeFields(group);
-                if (instance.valid) group._ndsTimePicker = instance;
+                if (instance.valid) group.ndsTimePicker = instance;
             }
-            return group._ndsTimePicker || null;
+            return group.ndsTimePicker || null;
         }
         const el = inputOf(input) || (input && input.closest ? input.closest('.nds-form-container')?.querySelector('.nds-time-input') : null);
         if (!el) return null;
-        if (el._ndsTimePicker) return el._ndsTimePicker;
+        if (el.ndsTimePicker) return el.ndsTimePicker;
         const fc = formControl || el.closest('.nds-form-control');
         if (!fc) {
             console.warn('NDS TimePicker: .nds-form-control not found');
@@ -1067,7 +1067,7 @@
         }
         const instance = new TimePicker(el, fc);
         if (!instance.valid) return null;
-        el._ndsTimePicker = instance;
+        el.ndsTimePicker = instance;
         return instance;
     }
 
@@ -1077,16 +1077,15 @@
 
     const instanceOf = (el) => {
         const group = groupOf(el);
-        if (group) return group._ndsTimePicker || null;
+        if (group) return group.ndsTimePicker || null;
         const input = inputOf(el);
-        return input ? input._ndsTimePicker || null : null;
+        return input ? input.ndsTimePicker || null : null;
     };
 
     NDS.TimePicker = {
         init: init,
         reinit: init,
         create: create,
-        // NDS.Init.destroy's second shape: the underscore expando is invisible to the backref walk.
         destroy: (el) => {
             const instance = instanceOf(el);
             if (!instance) return false;

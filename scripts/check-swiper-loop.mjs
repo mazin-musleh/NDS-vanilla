@@ -57,7 +57,7 @@ async function run(page, which, dir) {
     const info = await page.evaluate((w) => {
         const el = document.querySelectorAll('.nds-swiper[data-swiper-loop]')[w];
         el.scrollIntoView({ block: 'center' });
-        const s = el._ndsSwiper, wrap = s.wrapper;
+        const s = el.ndsSwiper, wrap = s.wrapper;
         const hits = window.__hits = [];
         (function tick() {
             const max = wrap.scrollWidth - wrap.clientWidth, sl = Math.abs(wrap.scrollLeft);

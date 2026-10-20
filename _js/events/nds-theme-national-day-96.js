@@ -302,8 +302,12 @@
     }
 
     // ── Hero slide ──────────────────────────────────────────────────────────
+    // _ndsSwiper: runtimes before 2.0.
+    function instOf(swiper) { return swiper && (swiper.ndsSwiper || swiper._ndsSwiper); }
+
     function reinit(swiper) {
-        if (swiper._ndsSwiper) swiper._ndsSwiper.destroy();
+        var old = instOf(swiper);
+        if (old) old.destroy();
         if (!(window.NDS && NDS.Swiper)) return;
         var inst = NDS.Swiper.create(swiper);
         // A fresh instance detects its index from the re-used DOM's scroll position,
@@ -586,7 +590,7 @@
 
     function advance() {
         var swiper = document.querySelector(SWIPER_SEL);
-        var inst = swiper && swiper._ndsSwiper;
+        var inst = instOf(swiper);
         if (inst) inst.goTo((_current + 1) % SLIDES.length);   // by index: wraps with or without loop (the text switch is instant)
     }
 
@@ -632,7 +636,7 @@
     // fan still wrap by index), the stacked-layout drag, and an instant text
     // switch.
     function adoptDeck(swiper) {
-        var inst = swiper._ndsSwiper;
+        var inst = instOf(swiper);
         if (!inst || inst._nd96Adopted) return;
         inst._nd96Adopted = true;
         var cards = Array.prototype.slice.call(swiper.querySelectorAll('.nds-swiper-card'));
@@ -716,7 +720,7 @@
                 x0 = null;
                 deck.classList.remove('nds-dragging');
                 deck.style.removeProperty('--drag');
-                var live = swiper._ndsSwiper;
+                var live = instOf(swiper);
                 if (!live) return;
                 // By index, so the ends wrap on a runtime without loop too.
                 if (Math.abs(dx) >= 40) { var fwd = (window.NDS && NDS.isRTL) ? dx > 0 : dx < 0; live.goTo((real() + (fwd ? 1 : n - 1)) % n); return; }
@@ -726,7 +730,7 @@
             deck.addEventListener('pointercancel', release, { signal: sig });
             cards.forEach(function (card, i) {
                 card.addEventListener('keydown', function (e) {
-                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); var live = swiper._ndsSwiper; if (live) live.goTo(i); }
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); var live = instOf(swiper); if (live) live.goTo(i); }
                 }, { signal: sig });
             });
         }

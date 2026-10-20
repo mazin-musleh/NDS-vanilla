@@ -440,7 +440,7 @@ Source: the `swiper` group in `_sass/tokens/_components.scss`.
 ### JavaScript
 {: .nds-block-title}
 
-A swiper in the page starts by itself. The instance is on the element as `el._ndsSwiper`. Indexes count real slides only, never loop copies.
+A swiper in the page starts by itself. The instance is on the element as `el.ndsSwiper`. Indexes count real slides only, never loop copies.
 
 | Method | Effect |
 |---|---|
@@ -459,7 +459,7 @@ A swiper in the page starts by itself. The instance is on the element as `el._nd
 
 <script type="text/html" id="swiper-js" data-canon data-lang="js">
 var el = document.querySelector('.nds-swiper');
-var swiper = el._ndsSwiper;
+var swiper = el.ndsSwiper;
 
 swiper.goTo(3);        // animated
 swiper.goTo(0, false); // at once

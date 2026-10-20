@@ -19,11 +19,7 @@ Cleaned 2026-10-19: finished items and their release notes left (all in `CHANGEL
       - `Form.create(el)` is the old `initializeContainer` (it already wires every form inside);
       - Expandable `expand()`/`collapse()` now do nothing when already in that state;
       - Swiper's public `goTo(i, animate)` is the old `slideTo`, and the old `goTo` is internal `_goToSlide`.
-    - **2b checks so far:** `check-banners` 65/65, `check-docs` 0 problems, `check-i18n` clean; `check-swiper-loop`, `check-pagination-data` and `check-set-value` pass; a browser smoke test of the renamed methods passed. `check-form-reset` caught `t.closest is not a function`. The cause was six `NDS.Form?.setStatus?.({…})` calls (Date Picker, Tag Input, Time Picker) the sweep missed. They are fixed and the bundles rebuilt, but nothing was re-run after the fix. **Next:** re-run `check-form-reset`, `check-frameworks` and `check-dialogs` with `http://127.0.0.1:4002/NDS-vanilla` as the base argument (`localhost` is flaky on this machine), then add a follow-up commit (`ad8db5c8` is pushed: never amend it). `scripts/check-ipv.mjs` covers the Image Popup Viewer.
-    - **Owner call before committing 2b:** rename the underscore instances `el._ndsSwiper`, `_ndsDatePicker`, `_ndsTimePicker`, `_ndsToc` and `_ndsSideInfo` to `el.ndsSwiper`, `ndsDatePicker`, `ndsTimePicker`, `ndsToc` and `ndsSideinfo` (recommended; fold into 2b).
-      - The event packs read `swiper._ndsSwiper` and must run on older runtimes: read `swiper.ndsSwiper || swiper._ndsSwiper`, then rebuild them with `mkevent.py`.
-      - Once renamed, the loader's property scan also destroys these before their `destroyEach` hook runs: check that a second `destroy` is harmless.
-      - The CHANGELOG "JavaScript names" entry gets the four shipped ones (Time Picker is new in 2.0).
+    - **2b follow-up (2026-10-20):** the six missed `setStatus` calls are fixed, and the underscore instances are renamed (`el.ndsSwiper`, `ndsDatePicker`, `ndsTimePicker`, `ndsToc`, `ndsSideinfo`; the event packs fall back to `_ndsSwiper` and are rebuilt). The loader's backref walk now reaches them, so their `destroyEach` flags are gone. Passing: `check-form-reset`, `check-frameworks`, `check-dialogs`, `check-init-destroy`, `check-swiper-loop`, `check-time-picker`, `check-set-value`, `check-ipv`, `check-banners` 65/65.
     - **Still to build:**
       - Commit 3: `.nds-file-upload` → `.nds-upload`, with a `kind: class` row.
       - Commit 4: the release check that compares each component's names.

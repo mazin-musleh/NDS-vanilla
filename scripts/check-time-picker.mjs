@@ -75,7 +75,7 @@ const build = (id, attrs = {}, seed = '', typed = '') => page.evaluate(([id, att
 // Every lookup goes via the instance, which holds the panel.
 await page.evaluate(() => {
     window.__tp = {
-        inst: (id) => document.querySelector('#' + id + ' .nds-time-input')._ndsTimePicker,
+        inst: (id) => document.querySelector('#' + id + ' .nds-time-input').ndsTimePicker,
         panel: (id) => window.__tp.inst(id).elements.panel,
         unitFc: (id, u) => window.__tp.panel(id)
             .querySelector('[data-time-picker-unit="' + u + '"] .nds-form-control'),
@@ -376,7 +376,7 @@ const buildProbe = (boxCss, filler = true, open = true) => page.evaluate(([boxCs
 }, [boxCss, filler, open]);
 
 const probeGeom = () => page.evaluate(() => {
-    const tp = document.querySelector('#probe .nds-time-input')._ndsTimePicker;
+    const tp = document.querySelector('#probe .nds-time-input').ndsTimePicker;
     const panel = tp.elements.panel;
     const f = tp.elements.formControl.getBoundingClientRect();
     const r = panel.getBoundingClientRect();
@@ -521,8 +521,8 @@ ok('unit ids survive a panel rebuild', await page.evaluate(async () => {
 
 ok('destroy() removes the panel, the sentinel and the dropmenu hooks', await page.evaluate(() => {
     const el = document.getElementById('h24');
-    el.querySelector('.nds-time-input')._ndsTimePicker.destroy();
-    return !el.querySelector('.nds-time-input')._ndsTimePicker
+    el.querySelector('.nds-time-input').ndsTimePicker.destroy();
+    return !el.querySelector('.nds-time-input').ndsTimePicker
         && !el.hasAttribute('data-nds-time-picker-initialized')
         && !el.querySelector('.nds-form-control').classList.contains('nds-dropmenu');
 }));
@@ -531,8 +531,8 @@ ok('create() after destroy() rebuilds once, not twice', await page.evaluate(() =
     const el = document.getElementById('h24');
     NDS.TimePicker.create(el);
     NDS.TimePicker.create(el);
-    return !!el.querySelector('.nds-time-input')._ndsTimePicker
-        && !el.querySelector('.nds-time-input')._ndsTimePicker.isPanelCreated;
+    return !!el.querySelector('.nds-time-input').ndsTimePicker
+        && !el.querySelector('.nds-time-input').ndsTimePicker.isPanelCreated;
 }));
 
 ok('init() is idempotent over an already-built field', await page.evaluate(() => {

@@ -188,7 +188,8 @@
 
     // ── Hero slide ──────────────────────────────────────────────────────────
     function reinit(swiper) {
-        if (swiper._ndsSwiper) swiper._ndsSwiper.destroy();
+        var old = swiper.ndsSwiper || swiper._ndsSwiper; // _ndsSwiper: runtimes before 2.0
+        if (old) old.destroy();
         if (!(window.NDS && NDS.Swiper)) return;
         var inst = NDS.Swiper.create(swiper);
         // A fresh instance detects its index from the re-used DOM's scroll position,

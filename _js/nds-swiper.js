@@ -47,7 +47,7 @@
  *     the wrapper's scroll-behavior (smooth by default; set auto for an instant switch).
  *   - The markup is .nds-swiper-wrapper holding .nds-swiper-slide items, plus optional
  *     .nds-swiper-navigation (with .nds-prev / .nds-next) and .nds-swiper-pagination.
- *   - The instance lives on the element as el._ndsSwiper.
+ *   - The instance lives on the element as el.ndsSwiper.
  *   - A looping swiper sets its track's scrollLeft at init, which fires one scroll event
  *     on the wrapper. A "first interaction" gate that listens for scroll in capture
  *     mode counts it — listen without capture, or ignore element scrolls.
@@ -110,7 +110,7 @@
     function _ownerOf(active) {
         for (let el = active && active.closest('.nds-swiper'); el;
              el = el.parentElement && el.parentElement.closest('.nds-swiper')) {
-            if (_activeSwipers.has(el._ndsSwiper)) return el._ndsSwiper;
+            if (_activeSwipers.has(el.ndsSwiper)) return el.ndsSwiper;
         }
         // Nothing focused inside a swiper — fall back to the innermost hovered one,
         // but only when nothing else holds focus: a field elsewhere owns its arrows.
@@ -907,7 +907,7 @@
         _lazyIn(slide, sel) {
             return Array.from(slide.querySelectorAll(sel)).filter(el => {
                 const owner = el.closest('.nds-swiper');
-                return !owner || owner === this.container || !owner._ndsSwiper?._offLazyLoad;
+                return !owner || owner === this.container || !owner.ndsSwiper?._offLazyLoad;
             });
         }
 
@@ -1016,7 +1016,7 @@
             if (this._offLazyLoad) { this._offLazyLoad.forEach(off => off()); this._offLazyLoad = null; }
             if (this.abortController) { this.abortController.abort(); this.abortController = null; }
 
-            delete this.container._ndsSwiper;
+            delete this.container.ndsSwiper;
         }
     }
 
@@ -1033,7 +1033,7 @@
             const instance = new NDSSwiper(swiper);
             // Expando only on successful construction — retries must not inherit
             // a half-built instance.
-            if (instance.valid) swiper._ndsSwiper = instance;
+            if (instance.valid) swiper.ndsSwiper = instance;
         });
     }
 
@@ -1041,17 +1041,14 @@
         init: initializeComponents,
         reinit: initializeComponents,
         create: (element) => {
-            if (element._ndsSwiper) return element._ndsSwiper;
+            if (element.ndsSwiper) return element.ndsSwiper;
             const instance = new NDSSwiper(element);
             if (!instance.valid) return null;
-            element._ndsSwiper = instance;
+            element.ndsSwiper = instance;
             return instance;
         },
-        // NDS.Init.destroy's second shape. The expando is underscore-prefixed and
-        // documented as such, so the walk that scans for `nds*` backrefs cannot see it —
-        // the registry opts in with destroyEach and hands each .nds-swiper here.
         destroy: (element) => {
-            const instance = element?._ndsSwiper;
+            const instance = element?.ndsSwiper;
             if (!instance) return;
             instance.destroy();
         }

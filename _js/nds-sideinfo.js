@@ -15,7 +15,7 @@
  *     the viewport is desktop-width. Otherwise the card just follows content start.
  *   - The sticky classes are REMOVED automatically while the card is taller than the viewport,
  *     and restored when it fits again — do not treat the class as fixed.
- *   - The instance lives on the element as el._ndsSideInfo.
+ *   - The instance lives on the element as el.ndsSideinfo.
  */
 /**
  * NDS Side Info Component
@@ -179,7 +179,7 @@
             if (!element.hasAttribute('data-nds-sideinfo-initialized')) {
                 const instance = new NDSSideInfo(element);
                 // Expando only on successful construction (sentinel is stamped post-guard by init()).
-                if (instance.valid) element._ndsSideInfo = instance;
+                if (instance.valid) element.ndsSideinfo = instance;
             }
         });
     }
@@ -189,21 +189,18 @@
         init: initializeComponents,
         reinit: initializeComponents,
         create: (element) => {
-            if (element._ndsSideInfo) return element._ndsSideInfo;
+            if (element.ndsSideinfo) return element.ndsSideinfo;
             const instance = new NDSSideInfo(element);
             if (!instance.valid) return null;
-            element._ndsSideInfo = instance;
+            element.ndsSideinfo = instance;
             return instance;
         },
-        // NDS.Init.destroy's second shape — the underscore expando is invisible to the
-        // backref walk, so the registry opts in with destroyEach. Drops the expando too:
-        // destroy() leaves the instance unusable, and a surviving backref hands the next
-        // reader a dead one.
+        // Drops the expando too: a surviving backref hands the next reader a dead instance.
         destroy: (element) => {
-            const instance = element?._ndsSideInfo;
+            const instance = element?.ndsSideinfo;
             if (!instance) return;
             instance.destroy();
-            delete element._ndsSideInfo;
+            delete element.ndsSideinfo;
         }
     };
 

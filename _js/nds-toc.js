@@ -26,7 +26,7 @@
  *     replaces the URL hash without a history entry.
  *   - Headings inside a scrolling box (a panel or modal body) track and scroll that box,
  *     with the box's top in place of the nav.
- *   - The instance lives on the element as el._ndsToc.
+ *   - The instance lives on the element as el.ndsToc.
  */
 /**
  * NDS TOC (Table of Contents)
@@ -248,7 +248,7 @@
             this.abortController?.abort();
             this.toc.removeAttribute('data-nds-toc-initialized');
             // A surviving backref would hand create() this dead instance.
-            if (this.toc._ndsToc === this) delete this.toc._ndsToc;
+            if (this.toc.ndsToc === this) delete this.toc.ndsToc;
         }
     }
 
@@ -258,7 +258,7 @@
             if (toc.hasAttribute('data-nds-toc-initialized')) return;
             const instance = new NDSToc(toc);
             // Expando only on successful construction (sentinel is stamped post-guard by init()).
-            if (instance.valid) toc._ndsToc = instance;
+            if (instance.valid) toc.ndsToc = instance;
         });
     }
 
@@ -266,15 +266,13 @@
         init: initializeComponents,
         reinit: initializeComponents,
         create: (el) => {
-            if (el._ndsToc) return el._ndsToc;
+            if (el.ndsToc) return el.ndsToc;
             const inst = new NDSToc(el);
             if (!inst.valid) return null;
-            el._ndsToc = inst;
+            el.ndsToc = inst;
             return inst;
         },
-        // NDS.Init.destroy's second shape — the underscore expando is invisible to the
-        // backref walk, so the registry opts in with destroyEach.
-        destroy: (el) => el?._ndsToc?.destroy()
+        destroy: (el) => el?.ndsToc?.destroy()
     };
 
 })();

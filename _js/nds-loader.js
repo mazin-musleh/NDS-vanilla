@@ -88,7 +88,6 @@
             // Extras: the field paints complete with no JS; the panel is built on first open.
             name: 'TimePicker',
             selector: '.nds-time-input, .nds-time-fields',
-            destroyEach: true,
         },
         {
             // Deferred: input wiring fires on typing; an autofocus restore lands one idle slot later.
@@ -124,7 +123,6 @@
             // Delegated: crit + presetSwipers reserve the final row, so init releases into reserved space.
             name: 'Swiper',
             selector: '.nds-swiper',
-            destroyEach: true,
         },
         {
             name: 'Upload',
@@ -145,7 +143,6 @@
             // Critical: the hero-aside variant jumps from its -180px placeholder if positioned late.
             name: 'Sideinfo',
             selector: '.nds-sideinfo',
-            destroyEach: true,
             critical: true,
         },
         {
@@ -159,7 +156,6 @@
             // Critical: data-toc-source builds the list at init; its height is unknown, so no skeleton can reserve it.
             name: 'Toc',
             selector: '.nds-toc',
-            destroyEach: true,
             critical: true,
         },
         {
@@ -220,7 +216,6 @@
         {
             name: 'DatePicker',
             selector: '.nds-date-input',
-            destroyEach: true,
         },
         {
             // Critical: tags external links with no layout reads. Keep it read-free — a

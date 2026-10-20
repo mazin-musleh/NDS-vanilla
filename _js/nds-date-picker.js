@@ -1956,8 +1956,8 @@
             // Drop the back-ref on the input so the DatePickerCalendar can
             // be GC'd. Without this the input retains a chain to all the
             // detached DOM nodes the calendar held.
-            if (this.elements.input && this.elements.input._ndsDatePicker === this) {
-                delete this.elements.input._ndsDatePicker;
+            if (this.elements.input && this.elements.input.ndsDatePicker === this) {
+                delete this.elements.input.ndsDatePicker;
             }
 
             // cleanup() first — it releases listeners on the dropdown's children,
@@ -1974,14 +1974,14 @@
 
     function createInstance(dateInput, formControl) {
         if (!dateInput) return null;
-        if (dateInput._ndsDatePicker) return dateInput._ndsDatePicker;
+        if (dateInput.ndsDatePicker) return dateInput.ndsDatePicker;
         formControl = formControl || dateInput.closest('.nds-form-control');
         if (!formControl) return null;
         // A page with no picker at load never runs init(), so create() wires the bounds watch too.
         watchBounds();
         var instance = new DatePickerCalendar(dateInput, formControl);
         if (!instance.valid) return null;
-        dateInput._ndsDatePicker = instance;
+        dateInput.ndsDatePicker = instance;
         return instance;
     }
 
@@ -1997,7 +1997,7 @@
         boundsWatched = true;
         // A new bound re-checks the value silently (submit shows the error) and redraws an open calendar.
         NDS.onAttrChange('.nds-date-input', ['data-min-date', 'data-max-date'], (inputs) => inputs.forEach((input) => {
-            var inst = input._ndsDatePicker;
+            var inst = input.ndsDatePicker;
             if (!inst) return;
             inst._readBounds();
             inst._validateInput(true);
@@ -2014,9 +2014,8 @@
         init: initializeCalendar,
         reinit: initializeCalendar,
         create: createInstance,
-        // NDS.Init.destroy's second shape: the underscore expando is invisible to the backref walk.
         destroy: (input) => {
-            const instance = input?._ndsDatePicker;
+            const instance = input?.ndsDatePicker;
             if (!instance) return false;
             instance.destroy();
             return true;

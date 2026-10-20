@@ -369,7 +369,7 @@ for (const ver of VUE) {
         }).mount(host);
         NDS.Init.mount(host);
     });
-    await page.waitForFunction(() => document.querySelector('#v-dp .nds-date-input')?._ndsDatePicker
+    await page.waitForFunction(() => document.querySelector('#v-dp .nds-date-input')?.ndsDatePicker
         || window.NDS?.DatePicker?.create, null, { timeout: 10000 });
     const res = await page.evaluate(async () => {
         const vm = window.__vue;
