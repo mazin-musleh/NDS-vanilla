@@ -19,6 +19,7 @@ Foundation, component, layout, shell, utility and core docs live in `_source/<fo
 - **Options:** the Variants table (Group, Option, Markup, On element, Use). Add an option's Markup on the element it names. The table is hidden on the site and visible in the `.md`.
 - **Live demos:** the demo card and the builder preview on a doc page.
 - **JS API:** the banner at the top of each JS file the doc names under `_source/_js/`: Rides, Methods, Events, Hooks, Gotchas. Most components load after the page shows: until then a call loads the component and returns a Promise of its result, so `await` a call whose result you use.
+- **Names:** a component's names come from its root class `.nds-x`. The file `nds-x.js` and the events `nds:x:action` keep `x` as written. For the namespace `NDS.X` and the instance `el.ndsX`, capitalize the first letter of each part between hyphens and join the parts: `.nds-main-nav` → `NDS.MainNav`, `el.ndsMainNav`; `.nds-taginput` → `NDS.Taginput`; `.nds-otp` → `NDS.Otp`, never `NDS.OTP`. Use them to find the banner, then read it: never call a method the banner does not list.
 - **Whole pages:** `_source/examples/*.md` and `_source/templates/*.md` hold a page's content as plain HTML. Their front matter builds the rest: the Front Matter table in `_source/layout/page-layout.md` maps each key to its markup, and the hero's keys are in `_source/ui-shell/hero.md`. A Liquid loop repeats one block: its body is the markup, and its fields take the project's content.
 
 ## Need → file
