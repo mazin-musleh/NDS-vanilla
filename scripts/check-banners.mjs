@@ -115,6 +115,20 @@ const isPrefix = (name) => name.endsWith(':');
 // The event grammar, PERSONA entry 8.
 const EVENT_NAME = /^nds:[a-z]+(-[a-z]+)*:[a-z]+(-[a-z]+)*$/;
 
+// One name per component (PERSONA entry 9): carve-outs, each a surface the component documents elsewhere.
+const DOC_ELSEWHERE = {
+    'theme': 'foundations/themes.md',
+    'cookie-consent': 'ui-shell/cookies.md',
+    'digital-stamp': 'ui-shell/topbar.md',
+    'city-weather': 'ui-shell/topbar.md',
+    'time-date': 'ui-shell/topbar.md',
+};
+const DOC_SHELVES = ['components', 'layout', 'utilities', 'ui-shell', 'foundations', 'core'];
+// A part stamps its own name, not its component's.
+const STAMP_PARTS = new Set(['columns', 'auto-pagination']);
+// Classless: nds:session:* names what ends (Session Timeout), nds:template:ready is core's NDS.fromTemplate.
+const EVENT_SCOPES = new Set(['session', 'template']);
+
 const SECTIONS = ['Rides', 'Methods', 'Events', 'Hooks', 'Gotchas'];
 // Optional, after Rides: the markup the script needs to work, baked into the audit's required-part rule.
 const ORDER = ['Rides', 'Requires', 'Methods', 'Events', 'Hooks', 'Gotchas'];
@@ -380,6 +394,50 @@ function verifyFile(file, ns, source) {
     return issues;
 }
 
+// ── one name per component ──────────────────────────────────────────────────
+
+// MainNav → main-nav, Taginput → taginput, date → date.
+const kebab = (ns) => ns.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
+function checkNames() {
+    const issues = [];
+    const loader = readFileSync(join(REPO, '_js', 'nds-loader.js'), 'utf8');
+    const registered = [...loader.matchAll(/^\s*name: '([^']+)'/gm)].map((m) => m[1]);
+    const stems = new Set(SCOPE.map(([f]) => f.replace(/^nds-|\.js$/g, '')));
+    const partials = new Set(readdirSync(join(REPO, '_sass', 'components')).map((f) => f.replace(/^_|\.scss$/g, '')));
+
+    for (const ns of registered) {
+        const x = kebab(ns);
+        const file = `nds-${x}.js`;
+        const entry = SCOPE.find(([f]) => f === file);
+        if (!entry) { issues.push(`NDS.${ns}: no _js/${file}`); continue; }
+        if (entry[1] !== ns) issues.push(`NDS.${ns}: _js/${file} is in SCOPE as NDS.${entry[1]}`);
+        const scss = join(REPO, '_sass', 'components', `_${x}.scss`);
+        if (existsSync(scss) && !new RegExp(`\\.nds-${x}(?![\\w])`).test(readFileSync(scss, 'utf8'))) {
+            issues.push(`NDS.${ns}: _${x}.scss has no .nds-${x} class`);
+        }
+        const doc = DOC_ELSEWHERE[x];
+        if (doc ? !existsSync(join(REPO, doc)) : !DOC_SHELVES.some((s) => existsSync(join(REPO, s, `${x}.md`)))) {
+            issues.push(`NDS.${ns}: no doc page ${doc || `<shelf>/${x}.md`}`);
+        }
+    }
+
+    // A file may fire or stamp for another component, never for a name no component has.
+    const known = new Set([...registered.map(kebab), ...stems, ...partials]);
+    for (const [file] of SCOPE) {
+        const source = readFileSync(join(REPO, '_js', file), 'utf8');
+        for (const m of source.matchAll(/data-nds-([a-z-]+)-initialized/g)) {
+            if (!known.has(m[1]) && !STAMP_PARTS.has(m[1])) issues.push(`${file}: stamp data-nds-${m[1]}-initialized names no component`);
+        }
+        const events = parseBanner(source)?.sections.find((s) => s.label === 'Events');
+        for (const name of events ? bannerEventNames(events.text) : []) {
+            const x = name.split(':')[1];
+            if (name.startsWith('nds:') && x && !known.has(x) && !EVENT_SCOPES.has(x)) issues.push(`${file}: event ${name} names no component`);
+        }
+    }
+    return [...new Set(issues)];
+}
+
 // ── generate ────────────────────────────────────────────────────────────────
 
 function generate(file, ns, source) {
@@ -451,8 +509,11 @@ if (mode === '--all') {
             console.log(`${file.padEnd(28)} ok`);
         }
     }
+    const names = checkNames();
+    for (const issue of names) console.log(`names                        ${issue}`);
     console.log(`\n${SCOPE.length} files in scope, ${SCOPE.length - bad} ok, ${bad} with findings`);
-    process.exit(bad ? 1 : 0);
+    console.log(names.length ? `one name per component: ${names.length} findings` : 'one name per component: ok');
+    process.exit(bad || names.length ? 1 : 0);
 } else if (mode === '--verify' && arg) {
     const { file, ns, source } = resolve(arg);
     const issues = verifyFile(file, ns, source);

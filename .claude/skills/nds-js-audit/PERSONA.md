@@ -372,7 +372,7 @@ The class is in every consumer page, so it is the costliest name to change and t
 
 **Audit behavior**
 
-For each loader-registered component: the JS file suffix, the registry `name` turned back into kebab case, the SCSS partial and doc page when they exist, the event segment and the init stamp must all be the same name → MEDIUM on any mismatch.
+For each loader-registered component: the JS file suffix, the registry `name` turned back into kebab case, the SCSS partial and doc page when they exist, the event segment and the init stamp must all be the same name → MEDIUM on any mismatch. `scripts/check-banners.mjs --all` checks the file, namespace, SCSS class prefix and doc page, and that every stamp and banner event names a real component, and fails the release.
 
 ---
 
