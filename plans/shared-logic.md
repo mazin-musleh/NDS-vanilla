@@ -278,6 +278,27 @@ stamping by hand. Multiselect keeps its own `data-anchor` write: its authored wr
 and `create()` on a live instance writes nothing. Custom Select gained `destroy(el)` (entry 10's pair): its build
 leaves `formControl.ndsCustomSelect`, so `NDS.init.destroy` reaches it too, and Time Picker's unit selects use it.
 
+**#4b inventory, 2026-10-20 (Sonnet, read-only; line numbers as of `e035b198`).** Each gap is checked in a browser
+before it is fixed. Base first: Dropmenu's fix reaches every component that rides it.
+- Base: Dropmenu `destroy()` leaves `aria-haspopup`, `aria-expanded`, `role=menu`, `role=menuitem` (`:497-500, 512`),
+  the select-mode hidden input and trigger label (`:411-414, 473-475`), and the lazy-template once-listener (`:1285-1296`).
+- Visible after a re-create: Filter and Table column toggle leave `data-delay="500"` (`filter:1450`, `table:492`: first
+  open waits, empty); the column toggle builds a second Reset footer (`table:478`); Side Menu's toggle stays shown and
+  dead (`sidemenu:212`); Taginput's chips still drive the dead instance (`taginput:307`); Filter's `_ndsFilterObserver`
+  stays true, so later options are never wired (`filter:1690`); Session Timeout reuses its dialogs with the old links
+  (`session-timeout:95`); Date Picker may keep its error and block the form (`date-picker:605`, possible).
+- Leaks: Pagination's ellipsis Dropmenu is not destroyed and `el.ndsPagination` has no `destroy()`; its stamps survive
+  (`pagination:156-178, 271, 340-368, 450`); Multiselect's destroy leaves its Dropmenu live and its stamps
+  (`multiselect:79, 93, 139, 350`); User Feedback has no backref, so `NDS.init.destroy` misses it, and its message stays
+  (`user-feedback:253, 320`); Upload's per-file tooltips are not destroyed (`upload:675`, possible).
+- Leftovers: Date Picker `data-picker-mode` (`:517`); Autocomplete forces `autocomplete="on"` and strips authored
+  role/aria (`:671`); Tooltip leaves its built trigger, balloon, `aria-describedby`, `tabindex`, `role`, the stripped
+  `title` (`:432`); Table leaves `data-selection-target` and `tbody.id` (`:100`); Sort leaves `aria-sort`/`aria-pressed`,
+  states and the trigger icon class, and nulls its backref (`:477`); Scroll More leaves `data-axis` and its states
+  (`:216`); an empty TOC gets no backref (`toc:57`, possible).
+- API pairs: a namespace `destroy(el)` is missing on Autocomplete, Breadcrumb, Filter, Sort, Table, Tabs, Tooltip,
+  Upload; Progress has no destroy at all; Form's goes with #9. Alert and Feedback build new elements: no destroy needed.
+
 ## 4. Owner decisions
 
 1. **A7 renames: all four, decided 2026-10-20.** One naming pattern with no exceptions lets an agent guess a

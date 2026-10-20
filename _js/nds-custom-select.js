@@ -102,6 +102,7 @@
         // stamps on the trigger are valid on an <input>.
         var ownRole = !selectInput.hasAttribute('role');
         if (ownRole) selectInput.setAttribute('role', 'combobox');
+        var wasHidden = dropdown.hidden;
         dropdown.removeAttribute('hidden');
         var optionsContainer = dropdown.querySelector('.nds-select-options');
         if (optionsContainer) optionsContainer.classList.add('nds-dropmenu-scroll');
@@ -144,6 +145,8 @@
             destroy: function () {
                 controller.abort();
                 NDS.Dropmenu.destroy(formControl);
+                // The markup ships the list hidden; a select never opened has no close to restore it.
+                dropdown.hidden = wasHidden;
                 selectInput.classList.remove('nds-dropmenu-trigger');
                 if (ownRole) selectInput.removeAttribute('role');
                 if (optionsContainer) optionsContainer.classList.remove('nds-dropmenu-scroll');
