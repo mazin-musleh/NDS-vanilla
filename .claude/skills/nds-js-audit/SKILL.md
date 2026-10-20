@@ -170,7 +170,7 @@ NDS uses no per-component eager-shell + lazy-behavior splits — the chosen patt
 
 ## Phase 3: ANALYZE
 
-First run `node scripts/check-js-rules.mjs <files>` (no argument: the full tree): it decides the mechanical rules (JSD-01, JSD-02, JSP-01, JSS-02, JSA-05's registry sub-shape) with their carve-outs, so judge only what it prints and never re-grep them. Then run the rest of the rule catalog (the per-group `RULES-*.md` file(s) read in Phase 2) file-by-file. Each match is recorded as: file, line, rule ID, offending snippet (≤120 characters), suggested fix pointing to the exact `NDS.*` call. Dedupe findings whose line ranges overlap so the same handler is not triple-flagged.
+First run `node scripts/check-js-rules.mjs <files>` (no argument: the full tree): it decides the mechanical rules (JSD-01, JSD-02, JSD-12, JSP-01, JSP-03, JSP-04 (a)(b), JSP-05, JSS-02, JSA-05's registry sub-shape) with their carve-outs, so never re-grep them. A `finding` line is decided; a `verify` line names the one carve-out left to read. Then run the rest of the rule catalog (the per-group `RULES-*.md` file(s) read in Phase 2) file-by-file. Each match is recorded as: file, line, rule ID, offending snippet (≤120 characters), suggested fix pointing to the exact `NDS.*` call. Dedupe findings whose line ranges overlap so the same handler is not triple-flagged.
 
 ### Ponytail overlay (final lens — every run unless `no-pony`)
 
