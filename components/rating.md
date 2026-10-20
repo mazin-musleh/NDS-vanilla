@@ -320,11 +320,11 @@ The instance is on the element as `el.ndsRating`. It is there once the component
 |---|---|
 | `NDS.Rating.init()`, `NDS.Rating.reinit()` | Start every `.nds-rating` that has no instance |
 | `NDS.Rating.create(el)` | Start one rating and return its instance. It returns the existing instance when there is one |
-| `NDS.Rating.enableRating(el)` | Start the rating if needed, then take it out of disabled |
+| `NDS.Rating.enable(el)` | Start the rating if needed, then take it out of disabled |
 | `el.ndsRating.setValue(v)` | Set the score, from 0 to the star count. The event fires only when the score changes |
-| `el.ndsRating.getRating()` | Return the score |
-| `el.ndsRating.setDisabled(bool)` | Disable or enable the rating |
-| `el.ndsRating.enable()`, `el.ndsRating.isDisabled()` | Enable the rating, or return whether it is disabled |
+| `el.ndsRating.getValue()` | Return the score |
+| `el.ndsRating.enable()`, `el.ndsRating.disable()` | Enable or disable the rating |
+| `el.ndsRating.isDisabled()` | Return whether the rating is disabled |
 | `el.ndsRating.destroy()` | Remove the listeners and `el.ndsRating`. `NDS.Rating.create(el)` then starts a new one |
 {: .nds-table .nds-responsive}
 

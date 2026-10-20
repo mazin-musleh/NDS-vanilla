@@ -354,9 +354,7 @@ breadcrumb: [["Examples", "/examples"]]
     // Step 2 — Verify
     form2.addEventListener('nds:form:valid', function () {
       if (NDS.Otp.getValue(otpGroup) !== expectedCode) {
-        NDS.Form.setStatus({
-          element: otpGroup,
-          status: 'error',
+        NDS.Form.setStatus(otpGroup, 'error', {
           message: 'Invalid code. Please try again.'
         });
         return;

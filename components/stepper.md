@@ -329,7 +329,7 @@ When something can refuse the move, such as validation or a request, call `NDS.S
             <i class="hgi hgi-stroke hgi-target-01"></i>
             <span class="nds-label">Programmatic Control</span>
           </span>
-          <p class="nds-item-desc">A script moves a stepper with <code class="nds-inline-code lang-js">NDS.Stepper.next(id)</code>, <code class="nds-inline-code lang-js">NDS.Stepper.previous(id)</code> and <code class="nds-inline-code lang-js">NDS.Stepper.goTo(id, step)</code>.</p>
+          <p class="nds-item-desc">A script moves a stepper with <code class="nds-inline-code lang-js">NDS.Stepper.next(id)</code>, <code class="nds-inline-code lang-js">NDS.Stepper.prev(id)</code> and <code class="nds-inline-code lang-js">NDS.Stepper.goTo(id, step)</code>.</p>
         </div>
       </div>
     </div>
@@ -428,17 +428,17 @@ Source: the `stepper` group in `_sass/tokens/_components.scss`.
 ### JavaScript
 {: .nds-block-title}
 
-A stepper in the page starts by itself. The instance is on the element as `el.ndsStepper`, and `NDS.Stepper.get(id)` returns it. It is there once the component starts: code that runs at page load waits for [`NDS.Init.ready`](../core/init#instance-lookup).
+A stepper in the page starts by itself. The instance is on the element as `el.ndsStepper`, and `NDS.Stepper.getInstance(idOrEl)` returns it. It is there once the component starts: code that runs at page load waits for [`NDS.Init.ready`](../core/init#instance-lookup).
 
 | Method | Effect |
 |---|---|
 | `NDS.Stepper.init()` | Starts every `.nds-stepper` that has not started. `reinit()` is the same |
 | `NDS.Stepper.create(el)` | Starts one stepper, such as one added after load, and returns its instance |
-| `NDS.Stepper.get(id)` | Returns the instance of the stepper with that id in the page |
-| `NDS.Stepper.next(id)`, `NDS.Stepper.previous(id)` | Moves one step. On the last step, `next()` completes the flow |
-| `NDS.Stepper.goTo(id, step)` | Moves to a step number. One past the last step completes the flow. Returns `false` for any other number outside the steps |
-| `NDS.Stepper.control(id, action, value)` | What a control button calls. `action` is `next`, `previous` or `goto`, and `value` is the step for `goto` |
-| `instance.next()`, `instance.previous()`, `instance.goTo(step)` | The same moves on one instance |
+| `NDS.Stepper.getInstance(idOrEl)` | Returns the instance of the stepper with that id, or on that element. `null` when there is none |
+| `NDS.Stepper.next(idOrEl)`, `NDS.Stepper.prev(idOrEl)` | Moves one step. On the last step, `next()` completes the flow |
+| `NDS.Stepper.goTo(idOrEl, step)` | Moves to a step number. One past the last step completes the flow. Returns `false` for any other number outside the steps |
+| `NDS.Stepper.control(idOrEl, action, value)` | What a control button calls. `action` is `next`, `previous` or `goto`, and `value` is the step for `goto` |
+| `instance.next()`, `instance.prev()`, `instance.goTo(step)` | The same moves on one instance |
 | `instance.current`, `instance.total`, `instance.progress` | The current step, the number of steps, and the percent done. `current` is one past the last step when the flow is completed |
 | `instance.destroy()` | Removes the instance and its start marks, so `init()` can start the stepper again |
 {: .nds-table .nds-responsive}
@@ -450,9 +450,9 @@ A stepper in the page starts by itself. The instance is on the element as `el.nd
 
 <script type="text/html" id="stepper-js" data-canon data-lang="js">
 // Continue: move only when the step on screen is valid.
-// The button sits in the form. validateForm() skips the fields in a hidden step.
+// The button sits in the form. validate() skips the fields in a hidden step.
 document.getElementById('continue-button').addEventListener('click', function (e) {
-  if (NDS.Form.validateForm(e.currentTarget).valid) NDS.Stepper.next('application-stepper');
+  if (NDS.Form.validate(e.currentTarget).valid) NDS.Stepper.next('application-stepper');
 });
 
 // Change something outside the stepper with the step

@@ -214,7 +214,7 @@
         // duplicate/max rejections in addTag (incl. the macrotask deferral).
         _strictReject() {
             const msg = strings.text('strict');
-            setTimeout(() => NDS.Form?.setStatus?.({ element: this.root, status: 'error', message: msg }), 0);
+            setTimeout(() => NDS.Form?.setStatus?.(this.root, 'error', { message: msg }), 0);
             NDS.announce(msg);
         }
 
@@ -233,13 +233,13 @@
             // whole event dispatch has finished.
             if (this.tags.length >= this.maxTags) {
                 const msg = strings.text('max', { n: this.maxTags });
-                setTimeout(() => NDS.Form?.setStatus?.({ element: this.root, status: 'error', message: msg }), 0);
+                setTimeout(() => NDS.Form?.setStatus?.(this.root, 'error', { message: msg }), 0);
                 NDS.announce(msg);
                 return;
             }
             if (this.tags.some(t => t.toLowerCase() === value.toLowerCase())) {
                 // Same macrotask deferral as the max rejection above.
-                setTimeout(() => NDS.Form?.setStatus?.({ element: this.root, status: 'error', message: strings.text('duplicate') }), 0);
+                setTimeout(() => NDS.Form?.setStatus?.(this.root, 'error', { message: strings.text('duplicate') }), 0);
                 NDS.announce(strings.text('duplicate'));
                 return;
             }

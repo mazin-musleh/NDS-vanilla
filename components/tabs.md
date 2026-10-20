@@ -368,7 +368,7 @@ The instance lives on the element as `ndsTabs`. It is there once the component s
 |---|---|
 | `NDS.Tabs.init()` | Starts every `.nds-tabs` on the page that has not started yet. `reinit()` is the same |
 | `NDS.Tabs.create(element)` | Starts one tab set and returns its instance, or the instance it already has. Returns `null` when the tab set has no tab list, tabs or panels |
-| `instance.switchTo(index)` | Opens a tab by its position, from 0 |
+| `instance.goTo(index)` | Opens a tab by its position, from 0 |
 | `instance.getActiveTabIndex()` | Returns the position of the open tab |
 | `instance.getActiveTab()`, `instance.getActivePanel()` | Return the open tab and its panel |
 | `instance.destroy()` | Removes the listeners. The markup stays as it is |
@@ -384,7 +384,7 @@ var tabs = document.querySelector('#service-tabs');
 tabs.addEventListener('nds:tabs:change', function (e) {
   console.log('Opened tab', e.detail.tabIndex);
 });
-tabs.ndsTabs.switchTo(2);
+tabs.ndsTabs.goTo(2);
 </script>
 
 The full API is in the banner of `_js/nds-tabs.js`.

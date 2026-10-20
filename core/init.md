@@ -297,7 +297,7 @@ Most components load after the page shows, so the property is missing until the 
 
 <script type="text/html" id="init-ready-js" data-canon data-lang="js">
 NDS.Init.ready.then(function () {
-  document.querySelector('#service-tabs').ndsTabs.switchTo(2);
+  document.querySelector('#service-tabs').ndsTabs.goTo(2);
 });
 </script>
 

@@ -289,7 +289,7 @@ Set these in the `style` of the circle or the bar. The size classes set `--progr
 | `NDS.Progress.init()` | Starts every indicator on the page. Call it after you add indicators |
 | `NDS.Progress.setValue(el, value)` | Sets `data-value` |
 | `NDS.Progress.setOutOf(el, num, max)` | Sets `data-num` and `data-max` |
-| `NDS.Progress.initCircle(el)` | Draws one indicator from its attributes now, with no wait for scroll |
+| `NDS.Progress.create(el)` | Draws one indicator from its attributes now, with no wait for scroll |
 {: .nds-table .nds-responsive}
 
 The component fires no events. The methods only write the attributes, so writing them yourself works the same. The full API is in the banner of `_js/nds-progress.js`.

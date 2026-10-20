@@ -538,11 +538,11 @@ sidemenu_mode: false
         });
 
         // Continue is a GATED move, so JS drives it — data-stepper-control is the
-        // unconditional mover and would advance an invalid step. validateForm() skips
+        // unconditional mover and would advance an invalid step. validate() skips
         // fields in a hidden panel, so this checks the step on screen.
         formSection.querySelectorAll('[data-ft-continue]').forEach(btn => {
             btn.addEventListener('click', () => {
-                if (NDS.Form.validateForm(btn).valid) NDS.Stepper.next('form-stepper');
+                if (NDS.Form.validate(btn).valid) NDS.Stepper.next('form-stepper');
             });
         });
 

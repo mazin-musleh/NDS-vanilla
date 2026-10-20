@@ -310,7 +310,7 @@ ok('setValue refuses a value outside bounds', await page.evaluate(() =>
 // The visible input is a real, native, typeable field, so data-required works
 // through forms unmodified — no per-unit propagation, and no error message
 // stranded inside a closed panel.
-ok('an empty required field fails validateForm', await (async () => {
+ok('an empty required field fails validate', await (async () => {
     await build('req', { 'data-format': 'hh:mm A', 'data-required': '' });
     return page.evaluate(() => {
         const el = document.getElementById('req');
@@ -318,14 +318,14 @@ ok('an empty required field fails validateForm', await (async () => {
         form.className = 'nds-form';
         el.parentNode.insertBefore(form, el);
         form.appendChild(el);
-        return NDS.Form.validateForm(form, { showMessages: false, focusFirst: false }).valid === false;
+        return NDS.Form.validate(form, { showMessages: false, focusFirst: false }).valid === false;
     });
 })());
 
-ok('a filled required field passes validateForm', await page.evaluate(() => {
+ok('a filled required field passes validate', await page.evaluate(() => {
     const el = document.getElementById('req');
     NDS.TimePicker.setValue(el, '14:30');
-    return NDS.Form.validateForm(el.closest('form'), { showMessages: false, focusFirst: false }).valid === true;
+    return NDS.Form.validate(el.closest('form'), { showMessages: false, focusFirst: false }).valid === true;
 }));
 
 // ---- LOCALIZATION ------------------------------------------------------

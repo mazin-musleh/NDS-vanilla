@@ -781,7 +781,7 @@
 
         // Constraint-validation bridge: a hand-typed value bypasses the panel's
         // disabled options, so every change stamps setCustomValidity and
-        // NDS.Form.validateForm / checkValidity gate the submit. `silent` skips
+        // NDS.Form.validate / checkValidity gate the submit. `silent` skips
         // the footer paint — used at construction.
         _validateInput(silent, value = this.elements.input.value) {
             const input = this.elements.input;
@@ -791,7 +791,7 @@
             if (msg && !silent) {
                 // Soft dependency — forms ships in the main bundle; this no-ops if
                 // a consumer bundle excludes it.
-                NDS.Form?.setStatus?.({ element: this.elements.container, status: 'error', message: msg });
+                NDS.Form?.setStatus?.(this.elements.container, 'error', { message: msg });
             }
         }
 
@@ -998,7 +998,7 @@
                 if (carrier) NDS.setValue(carrier, value);
             }
             // An error paints on leaving the group; a fixed value clears it at once. Soft dependency, as in field mode.
-            if (msg && !silent) NDS.Form?.setStatus?.({ element: container, status: 'error', message: msg });
+            if (msg && !silent) NDS.Form?.setStatus?.(container, 'error', { message: msg });
             else if (!msg && NDS.Status.get(container) === 'error') NDS.Form?.clearStatus?.(container);
         }
 

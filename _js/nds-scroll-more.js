@@ -5,7 +5,7 @@
  * Methods:
  *   NDS.ScrollMore.init() / .reinit()      scan + initialize .nds-scroll-more
  *   NDS.ScrollMore.create(wrapper)         initialize one wrapper
- *   NDS.ScrollMore.checkOverflow(wrapper)  re-measure it now
+ *   NDS.ScrollMore.refresh(wrapper)        re-measure it now
  *   NDS.ScrollMore.destroy(wrapper)        detach and un-stamp
  * Events:
  *   (none — read the state the component writes, below)
@@ -231,7 +231,7 @@
         init: initAll,
         reinit: initAll,
         create: initElement,
-        checkOverflow,
+        refresh: checkOverflow,
         destroy
     };
 

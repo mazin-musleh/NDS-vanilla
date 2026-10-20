@@ -380,9 +380,8 @@ The script starts on its own. Call `recount()` or `reinit()` after a change that
 | `NDS.Selection.clear(list)` | Clears every item, including items a filter hides and items with no checkbox. Call it after a bulk action |
 | `NDS.Selection.selected(list)` | Returns the selected items, in page order |
 | `NDS.Selection.isSelected(item)` | Returns `true` when the item is selected. [Export](../components/export) uses it to pick the selected rows |
-| `NDS.Selection.recount(list)` | Updates one list's states, select-all and counters |
 | `NDS.Selection.reinit()` | Updates every list |
-| `NDS.Selection.refresh()` | Adds the listeners if they are missing, then updates every list. `NDS.Init.refresh()` calls it |
+| `NDS.Selection.refresh(list)` | Updates one list's states, select-all and counters. With no list, it adds the listeners if they are missing and updates every list. `NDS.Init.refresh()` calls it that way |
 | `NDS.Selection.destroy()` | Removes the listeners. Use it when a single-page app tears the view down |
 {: .nds-table .nds-responsive}
 

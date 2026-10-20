@@ -207,8 +207,8 @@ The counter reads `data-counter` when the count starts, not when the page loads.
 | `NDS.Numbers.init()` | Formats every number and gets every counter ready to count when it scrolls into view. The loader calls it |
 | `NDS.Numbers.reinit()` | The same as `init()`. Call it after you add numbers or counters to the page |
 | `NDS.Numbers.format(el)` | Formats one `.nds-number-format` element |
-| `NDS.Numbers.formatNumbers()` | Formats every `.nds-number-format` on the page |
-| `NDS.Numbers.setupCounterAnimations()` | Gets every counter ready to count when it scrolls into view. It skips a counter with `data-animated` |
+| `NDS.Numbers.formatAll()` | Formats every `.nds-number-format` on the page |
+| `NDS.Numbers.initCounters()` | Gets every counter ready to count when it scrolls into view. It skips a counter with `data-animated` |
 {: .nds-table .nds-responsive}
 
 Numbers fires no events. To format a number in your own script, use `NDS.formatNumber(n, options)`: it uses the `lang` of the page and Latin digits. The full API is in the banner of `_js/nds-numbers.js`.

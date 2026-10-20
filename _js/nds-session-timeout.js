@@ -121,7 +121,7 @@
                 warnEl = build(WARN_ID, warningMarkup);
                 // Before the focus, so a screen reader reads the real time left.
                 const countdown = warnEl.querySelector('.nds-countdown');
-                if (countdown) NDS.Countdown.set(countdown, Math.ceil(left / 1000));
+                if (countdown) NDS.Countdown.setTarget(countdown, Math.ceil(left / 1000));
                 NDS.Modal.open(warnEl);
                 // Opened by a timer, not the user: focus the box (no ring), so Tab is what shows one.
                 warnEl.tabIndex = -1;

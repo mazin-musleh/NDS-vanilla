@@ -332,14 +332,14 @@ The script colors every code block on the page by itself. Call it again for a co
 | Method | Effect |
 |---|---|
 | `NDS.Code.init()` | Colors every `.nds-code code` on the page that is not colored yet, as it nears the screen. Call it after you add code blocks |
-| `NDS.Code.reprocessCodeElement(codeEl)` | Colors one `<code>` again from its text. Call it after you change the text. It is safe to call more than once |
+| `NDS.Code.highlight(codeEl)` | Colors one `<code>` again from its text. Call it after you change the text. It is safe to call more than once |
 | `NDS.Code.detectLanguage(codeEl, source)` | Returns the language the block gets: `html`, `css`, `javascript`, `markdown` or `prompt`. Returns `null` for a `lang-*` class with no colors |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="code-js" data-canon data-lang="js">
 var code = document.querySelector('#request-sample code');
 code.textContent = "NDS.Alert.dismissAll(document.body);";
-NDS.Code.reprocessCodeElement(code);
+NDS.Code.highlight(code);
 </script>
 
 The full API is in the banner of `_js/nds-code.js`.

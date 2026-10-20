@@ -417,12 +417,12 @@
             [[codeHtml, out], [codeJs, js], [codeCss, css]].forEach(function (pair) {
                 if (!pair[0] || !pair[1]) return;
                 pair[0].textContent = pair[1];
-                if (pair[0].dataset.ndsCodeHighlighted) NDS.Code.reprocessCodeElement(pair[0]);
+                if (pair[0].dataset.ndsCodeHighlighted) NDS.Code.highlight(pair[0]);
             });
             if (tabHtml) {
                 tabHtml.hidden = !html;
                 // Through the Tabs API: a synthetic click lands outside an open options panel and closes it.
-                if (!html && tabHtml.getAttribute('aria-selected') === 'true' && block.ndsTabs) block.ndsTabs.switchTo(1);
+                if (!html && tabHtml.getAttribute('aria-selected') === 'true' && block.ndsTabs) block.ndsTabs.goTo(1);
             }
 
             // The frame goes dark too, so a dark component is not shown on a light card.

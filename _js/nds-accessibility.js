@@ -11,9 +11,9 @@
  *   NDS.Accessibility.cycleSetting(key, values) step a graded setting to its next value
  *   NDS.Accessibility.reset()                 back to defaults at once (only the button confirms)
  *   NDS.Accessibility.state                   a deep CLONE of the saved state — read-only
- *   NDS.Accessibility.ready                   true once the panel is built AND wired; false
+ *   NDS.Accessibility.isReady                 true once the panel is built AND wired; false
  *                                             while the bundle loads or the panel builds
- *   NDS.Accessibility.started                 true once init() ran, by a press or the loader
+ *   NDS.Accessibility.isStarted               true once init() ran, by a press or the loader
  * Events:
  *   (none)
  * Hooks:
@@ -1515,9 +1515,9 @@
         // stamps partway through the cold build — the boot gate has to tell
         // "still building" (swallow the click) from "done" (let Panel's own
         // delegated toggle have it) and the attribute answers yes to both.
-        get ready() { return _initDone && !_arming && !!panel; },
+        get isReady() { return _initDone && !_arming && !!panel; },
         // Started, by a press or by the loader: the loader then skips its own init().
-        get started() { return _initDone; },
+        get isStarted() { return _initDone; },
         get state() { return structuredClone(state); },
     };
 })();

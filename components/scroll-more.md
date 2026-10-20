@@ -395,14 +395,14 @@ Set these on the wrapper.
 |---|---|
 | `NDS.ScrollMore.init()` | Starts every `.nds-scroll-more` on the page that has not started yet. `reinit()` is the same |
 | `NDS.ScrollMore.create(wrapper)` | Starts one wrapper. It does nothing on a wrapper that has started |
-| `NDS.ScrollMore.checkOverflow(wrapper)` | Checks the overflow again. Call it after you add or remove items while the wrapper keeps its size |
+| `NDS.ScrollMore.refresh(wrapper)` | Checks the overflow again. Call it after you add or remove items while the wrapper keeps its size |
 | `NDS.ScrollMore.destroy(wrapper)` | Removes the listeners. Call it before you remove the wrapper |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="sm-js" data-canon data-lang="js">
 var wrapper = document.querySelector('.nds-scroll-more');
 wrapper.querySelector('.nds-scroll-more-content').insertAdjacentHTML('beforeend', '<li>Jazan</li>');
-NDS.ScrollMore.checkOverflow(wrapper);
+NDS.ScrollMore.refresh(wrapper);
 </script>
 
 The full API is in the banner of `_js/nds-scroll-more.js`.

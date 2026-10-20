@@ -669,7 +669,7 @@ The toolbar's size buttons change the band's height in 40px steps, from 40px to 
 | `NDS.Accessibility.cycleSetting(key, values)` | Sets `key` to the value after its current one in `values` |
 | `NDS.Accessibility.reset()` | Resets every setting at once, with no second press |
 | `NDS.Accessibility.state` | A copy of the saved settings. Changing it changes nothing |
-| `NDS.Accessibility.ready` | `true` once the panel is built and wired |
+| `NDS.Accessibility.isReady` | `true` once the panel is built and wired |
 | `NDS.Accessibility.init(trigger)` | Builds and wires the panel. The first press calls it, so you rarely need it |
 {: .nds-table .nds-responsive}
 

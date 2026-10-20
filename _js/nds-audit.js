@@ -438,7 +438,7 @@
     // `button` with no type IS submit-typed inside a form.
     rule({ id: 'stepper-submit', docs: 'components/stepper.html', check(ctx) {
         ctx.find('form :is(button:not([type="button"]):not([type="reset"]), input[type="submit"])[data-stepper-control]').forEach(el =>
-            ctx.report(el, 'submit-typed button with data-stepper-control — the stepper hands this click to the form and does not move, so the attribute does nothing.', 'A form step is gated, so drive it from JS: call NDS.Stepper.next() after NDS.Form.validateForm() passes, or from nds:form:valid once your request succeeds.'));
+            ctx.report(el, 'submit-typed button with data-stepper-control — the stepper hands this click to the form and does not move, so the attribute does nothing.', 'A form step is gated, so drive it from JS: call NDS.Stepper.next() after NDS.Form.validate() passes, or from nds:form:valid once your request succeeds.'));
     } });
 
     // ── migration ────────────────────────────────────────────────────
@@ -760,7 +760,7 @@
         });
     } });
 
-    // Forms wires submit checks on .nds-form only (nds-form.js initForm), and .nds-form is display:contents,
+    // Forms wires submit checks on .nds-form only (NDS.Form.create), and .nds-form is display:contents,
     // which a modal's flex column needs (_form.scss). A filter's submission form is the filter's own.
     rule({ id: 'form-class', docs: 'components/form.html', check(ctx) {
         ctx.find('form:not(.nds-form, [data-filter-submit])').filter(f => f.querySelector('.nds-form-container, .nds-form-group')).forEach(el =>

@@ -9,9 +9,9 @@
  *   .nds-form is form — submit validation runs only on a <form>
  * Methods:
  *   NDS.Form.init()                       scan + initialize every .nds-form-container
- *   NDS.Form.initializeContainer(el)      initialize one container
- *   NDS.Form.initForm(form)               wire one .nds-form (submit validation)
- *   NDS.Form.setStatus({element, status, message, permanent})   set field status
+ *   NDS.Form.create(el)                   initialize every field and form in el (el too);
+ *                                          a <form class="nds-form"> gets submit validation
+ *   NDS.Form.setStatus(el, status, {message, permanent})   set field status
  *                                          (a field carries 'error', 'help' or
  *                                          nothing; anything else renders neutral)
  *   NDS.Form.clearStatus(el)              clear it
@@ -21,7 +21,7 @@
  *   NDS.Form.syncState(input)             re-sync a control's chrome after setting
  *                                          value/checked from JS
  *   NDS.Form.setIndeterminate(cb, value)  set a checkbox's indeterminate state
- *   NDS.Form.validateForm(el, opts)       validate everything → {valid, invalidFields, errors};
+ *   NDS.Form.validate(el, opts)           validate everything → {valid, invalidFields, errors};
  *                                          el is the .nds-form or anything inside it — works on
  *                                          a non-<form> container too (see the Gotcha below)
  *   NDS.Form.validateCheckboxGroup(group, opts)
@@ -35,7 +35,7 @@
  * Events:
  *   nds:form:status             detail {status, message} — from the form container
  *   nds:form:validate           detail {valid, invalidFields, errors} — from the form, every
- *                               validateForm() run
+ *                               validate() run
  *   nds:form:valid              detail {waitUntil(promise)} — from the form, on a passing submit
  *   nds:form:invalid            detail {invalidFields, errors} — from the form, on a blocked submit
  *   nds:switch:change           detail {checked, value, input} — from the .nds-switch element
@@ -50,7 +50,7 @@
  *     placement (a permanent position — footer below, header above); the container may instead
  *     carry data-feedback-target="<selector>" to pick the target. Hidden targets unhide while
  *     a message shows and re-hide when the last one clears.
- *   - Singleton shape: init() and initializeContainer() only — no reinit(), no create().
+ *   - Singleton shape: init() and create(el) only — no reinit().
  *   - A required custom select is validated through its hidden .nds-select-value carrier:
  *     author data-required on the .nds-select container. The readonly display input is
  *     never constraint-validated, so required on it does nothing.
@@ -75,12 +75,12 @@
  *   - Forms owns the submit listener on every real <form class="nds-form">. data-ajax makes it
  *     preventDefault() after validation — the request is yours to send from nds:form:valid.
  *   - That automatic wiring is <form>-tags only: on any other element .nds-form is a layout
- *     marker (wizard step divs use it that way) and initForm() skips it — no submit validation,
+ *     marker (wizard step divs use it that way) and create() skips it — no submit validation,
  *     no nds:form:valid, silently. Can't use a <form> tag (one outer server form, a fragment)?
- *     Keep .nds-form on the container, call NDS.Form.validateForm(container) from your own
+ *     Keep .nds-form on the container, call NDS.Form.validate(container) from your own
  *     trigger (the button's click), and branch on its {valid} result — validation works the
  *     same; only the automatic submit lifecycle is absent.
- *   - validateForm() is called synchronously at submit; keep it in the main bundle.
+ *   - validate() is called synchronously at submit; keep it in the main bundle.
  *   - A native form reset (a reset button, form.reset(), React 19 after a form action) clears
  *     each field's status and re-syncs its chrome; each NDS field restores its own value.
  *   - A valid submit (AJAX too) and a reset hide a shown password again.
@@ -615,7 +615,7 @@
             var rating = group.querySelector('.nds-rating');
             var value = 0;
             if (rating) {
-                value = rating.ndsRating ? rating.ndsRating.getRating() : Number(rating.dataset.rating) || 0;
+                value = rating.ndsRating ? rating.ndsRating.getValue() : Number(rating.dataset.rating) || 0;
             }
 
             var isRequired = group.hasAttribute('data-required') || group.classList.contains('nds-required');
@@ -1877,10 +1877,12 @@
     NDS.Form = {
         // Core initialization
         init: initializeAllForms,
-        initializeContainer: initializeContainer,
+        create: initializeContainer,
 
         // Status Management API
-        setStatus: StatusManager.set.bind(StatusManager),
+        setStatus: function(element, status, options) {
+            return StatusManager.set(Object.assign({}, options, { element: element, status: status }));
+        },
         clearStatus: StatusManager.clear.bind(StatusManager),
         getStatus: StatusManager.get.bind(StatusManager),
 
@@ -1936,8 +1938,7 @@
         validateOtpGroup: Validator.validateOtpGroup.bind(Validator),
 
         // Form Validation
-        validateForm: Validator.validateForm.bind(Validator),
-        initForm: initForm,
+        validate: Validator.validateForm.bind(Validator),
 
         // Identifier checks (the .nds-national-id / .nds-iban rules, for your own code)
         isNationalId: isNationalId,

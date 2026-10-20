@@ -428,8 +428,8 @@ A source is an element or a CSS selector. A scope is `"auto"` (the default), `"s
 | `NDS.Export.csv(source, scope, options)` | Exports the source as CSV. `xls()` and `pdf()` work the same way |
 | `NDS.Export.collect(source, scope)` | Returns `{ columns, rows }` and downloads nothing. `columns` holds `{ key, label }` items. Each row maps a key to its value |
 | `NDS.Export.download(data, format, options)` | Downloads a `collect()` result, or opens the print dialog for `"pdf"` |
-| `NDS.Export.toCSV(data)` | Returns a `collect()` result as CSV text, with a UTF-8 byte order mark at the start |
-| `NDS.Export.toXLSHtml(data, options)` | Returns a `collect()` result as the HTML that Excel opens |
+| `NDS.Export.toCsv(data)` | Returns a `collect()` result as CSV text, with a UTF-8 byte order mark at the start |
+| `NDS.Export.toXlsHtml(data, options)` | Returns a `collect()` result as the HTML that Excel opens |
 | `NDS.Export.openPrint(data, options)` | Opens the print dialog on a `collect()` result |
 {: .nds-table .nds-responsive}
 

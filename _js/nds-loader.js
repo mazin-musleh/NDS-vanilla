@@ -427,7 +427,7 @@
             eager: () => { try { return !!localStorage.getItem('nds-a11y'); } catch (e) { return false; } },
             // A press may already have started it (and opened the panel) while this group waited:
             // init() would tear that down and close the panel.
-            init: () => { const ns = NDS.Accessibility; if (ns && !ns.__ndsStub && !ns.started) ns.init(); },
+            init: () => { const ns = NDS.Accessibility; if (ns && !ns.__ndsStub && !ns.isStarted) ns.init(); },
         },
     ];
     for (const c of COMPONENTS) c.init ||= () => NDS[c.name]?.init?.();

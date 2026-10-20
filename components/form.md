@@ -399,7 +399,7 @@ A sent form takes no second submit, so a double click sends it once. Its submit 
 - A form with `method="post"` that loads the next page in the same tab waits until that page opens. Add `data-no-pending` to a POST form whose answer is a download, or no page: the button would spin until the page reloads.
 - A `data-ajax` form waits only when the `nds:form:valid` listener passes its request to `event.detail.waitUntil()`. The form takes submits again when the request ends, whether it passed or failed. Call `waitUntil()` in the listener itself, not after an `await`.
 
-`.nds-form` draws no box: give the fields a gapped wrapper such as `nds-flex nds-col`. On an element that is not a `<form>`, `.nds-form` checks nothing. Call `NDS.Form.validateForm(step)` from your own button there, where `step` is that `.nds-form` element, and read `valid` in the result.
+`.nds-form` draws no box: give the fields a gapped wrapper such as `nds-flex nds-col`. On an element that is not a `<form>`, `.nds-form` checks nothing. Call `NDS.Form.validate(step)` from your own button there, where `step` is that `.nds-form` element, and read `valid` in the result.
 
 ### Status Messages
 {: .nds-block-title}
@@ -417,7 +417,7 @@ var first = null;
 errors.forEach(function (error) {
   var field = document.getElementById(error.field);
   if (!field) return;
-  NDS.Form.setStatus({ element: field, status: 'error', message: error.message });
+  NDS.Form.setStatus(field, 'error', { message: error.message });
   if (!first) first = field;
 });
 
@@ -442,9 +442,7 @@ async function checkUsername(name) {
   NDS.State.add(field, 'loading');
   try {
     var { data } = await NDS.request('/api/username?name=' + encodeURIComponent(name), { json: true });
-    NDS.Form.setStatus({
-      element: field,
-      status: data.available ? 'neutral' : 'error',
+    NDS.Form.setStatus(field, data.available ? 'neutral' : 'error', {
       message: data.available ? 'This username is free' : 'This username is taken'
     });
   } finally {
@@ -489,7 +487,7 @@ The eye button switches the field between hidden and plain text, and its label b
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">Every field on the page starts when the page loads, and a field added later starts on its own. Call <code class="nds-inline-code lang-js">NDS.Form.initializeContainer()</code> only to start a part of the page at once.</p>
+          <p class="nds-item-desc">Every field on the page starts when the page loads, and a field added later starts on its own. Call <code class="nds-inline-code lang-js">NDS.Form.create()</code> only to start a part of the page at once.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -666,14 +664,13 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 | Method | Effect |
 |---|---|
 | `NDS.Form.init()` | Starts every field and form on the page. It runs at page load |
-| `NDS.Form.initializeContainer(el)` | Starts every field and form inside `el` |
-| `NDS.Form.initForm(form)` | Turns on submit validation for one `<form class="nds-form">` |
-| `NDS.Form.setStatus(options)` | Shows a message under a field. Options below. Returns `false` when the element is not in a field |
+| `NDS.Form.create(el)` | Starts every field and form inside `el`, and `el` itself. A `<form class="nds-form">` gets submit validation |
+| `NDS.Form.setStatus(el, status, options)` | Shows a message under the field that holds `el`. `status` is `error`, `help` or any other value, which shows as `neutral`; an empty value clears the field. Options below. Returns `false` when `el` is not in a field |
 | `NDS.Form.clearStatus(el)` | Removes the field's message and status. A permanent message comes back |
 | `NDS.Form.getStatus(el)` | Returns `{ status, message, isValid }`. `isValid` is `false` only for `error` |
 | `NDS.Form.setState(el, name, add)` | Adds or removes (`add: false`) a state on the field. `'required'` sets `data-required` and the inputs' `required` |
 | `NDS.Form.syncState(input)` | Updates the field after a script sets its value or `checked`. It fires no event |
-| `NDS.Form.validateForm(el, options)` | Checks every visible field in the form that holds `el`, and returns `{ valid, invalidFields, errors }`. `options` is `{ showMessages, focusFirst }`, both `true` by default. Pass both: an object with one key turns the other off |
+| `NDS.Form.validate(el, options)` | Checks every visible field in the form that holds `el`, and returns `{ valid, invalidFields, errors }`. `options` is `{ showMessages, focusFirst }`, both `true` by default. Pass both: an object with one key turns the other off |
 | `NDS.Form.validateCheckboxGroup(group)` | Checks a checkbox group's `data-required`, `data-min-checked` and `data-max-checked` |
 | `NDS.Form.validateRadioGroup(group)` | Checks that a required radio group has a choice |
 | `NDS.Form.validateOtpGroup(group)` | Checks that every OTP box has a digit |
@@ -686,8 +683,6 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 
 | Option | Default | Effect |
 |---|---|---|
-| `element` | — | The field's container, or any element inside it |
-| `status` | — | `error`, `help` or any other value, which shows as `neutral`. An empty value clears the field |
 | `message` | — | The text. An empty string removes the message and keeps the status |
 | `permanent` | `false` | The message stays as a hint, as `data-permanent` does |
 | `size`, `style`, `position` | `sm`, `outline`, `append` | Passed to `NDS.Feedback.create()`. See [Feedback](../components/feedback) |
@@ -696,7 +691,7 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 | Event | Fired on | Detail |
 |---|---|---|
 | `nds:form:status` | the field's container, and it bubbles | `{ status, message }`. Both are `null` after `clearStatus()` |
-| `nds:form:validate` | the form, and it bubbles | `{ valid, invalidFields, errors }`, after every `validateForm()`. Each error is `{ field, input, message }` |
+| `nds:form:validate` | the form, and it bubbles | `{ valid, invalidFields, errors }`, after every `validate()`. Each error is `{ field, input, message }` |
 | `nds:form:valid` | the form, and it bubbles | `{ waitUntil(promise) }`, when a submit passes. `waitUntil()` keeps the form from a second submit until the promise ends, and the submit button shows the spinner |
 | `nds:form:invalid` | the form, and it bubbles | `{ invalidFields, errors }`, when a submit is blocked |
 | `nds:switch:change` | `.nds-switch`, and it bubbles | `{ checked, value, input }`. See [Switch](../components/switch) |

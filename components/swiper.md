@@ -448,8 +448,7 @@ A swiper in the page starts by itself. The instance is on the element as `el._nd
 | `NDS.Swiper.create(el)` | Starts one swiper and returns its instance, or the instance it already has. Returns `null` when the swiper has no wrapper or no slides |
 | `NDS.Swiper.destroy(el)` | Stops one swiper and puts its markup back as written. `NDS.Init.destroy()` calls it |
 | `instance.next()`, `instance.prev()` | Moves one page |
-| `instance.goTo(index)` | Moves to a slide |
-| `instance.slideTo(index, animate)` | Moves to a slide, no further than the last page. A looping swiper has no last page, so it moves to any slide. `false` for `animate` moves at once |
+| `instance.goTo(index, animate)` | Moves to a slide, no further than the last page. A looping swiper has no last page, so it moves to any slide. `false` for `animate` moves at once |
 | `instance.destroy()` | The same as `NDS.Swiper.destroy(el)` |
 {: .nds-table .nds-responsive}
 
@@ -462,8 +461,8 @@ A swiper in the page starts by itself. The instance is on the element as `el._nd
 var el = document.querySelector('.nds-swiper');
 var swiper = el._ndsSwiper;
 
-swiper.goTo(3);           // animated
-swiper.slideTo(0, false); // at once
+swiper.goTo(3);        // animated
+swiper.goTo(0, false); // at once
 
 // Change something outside the swiper with the slide
 el.addEventListener('nds:swiper:change', function (e) {

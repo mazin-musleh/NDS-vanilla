@@ -2616,7 +2616,7 @@
         // the notice is silently dropped if NDS.Form isn't bundled.
         _notice(message) {
             if (!NDS.Form?.setStatus) return;
-            NDS.Form.setStatus({ element: this.root, status: 'neutral', message });
+            NDS.Form.setStatus(this.root, 'neutral', { message });
             this._clearNotice ||= NDS.debounce(() => NDS.Form.clearStatus(this.root), 5000);
             this._clearNotice();
         }
@@ -2627,7 +2627,7 @@
         _fieldError(input, message) {
             const field = input?.closest('.nds-form-container');
             if (!field) return;
-            if (NDS.Form?.setStatus) NDS.Form.setStatus({ element: field, status: 'error', message });
+            if (NDS.Form?.setStatus) NDS.Form.setStatus(field, 'error', { message });
             const primary = input.closest('.nds-dropmenu-menu')?.querySelector('[data-dropmenu-primary]');
             if (primary) primary.disabled = true;
         }

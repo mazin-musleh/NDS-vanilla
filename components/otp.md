@@ -273,7 +273,7 @@ group.addEventListener('nds:otp:complete', function () {
 });
 
 // Show the server's answer on the boxes
-NDS.Form.setStatus({ element: group, status: 'error', message: 'This code is not correct' });
+NDS.Form.setStatus(group, 'error', { message: 'This code is not correct' });
 
 // Empty the boxes after you send a new code
 NDS.Otp.clear(group);

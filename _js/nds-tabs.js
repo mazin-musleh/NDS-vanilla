@@ -6,7 +6,7 @@
  * Methods:
  *   NDS.Tabs.init() / .reinit()      scan + initialize .nds-tabs
  *   NDS.Tabs.create(container)       instance one tab set
- *   instance.switchTo(index)         activate a tab by index
+ *   instance.goTo(index)             activate a tab by index
  *   instance.getActiveTabIndex()     the active index
  *   instance.getActiveTab()          the active .nds-tab
  *   instance.getActivePanel()        the active .nds-tab-panel
@@ -278,7 +278,7 @@
         getActiveTabIndex() { return this.currentTabIndex; }
         getActiveTab() { return this.tabs[this.currentTabIndex]; }
         getActivePanel() { return this.panels[this.currentTabIndex]; }
-        switchTo(index) { this.switchToTab(index); }
+        goTo(index) { this.switchToTab(index); }
 
         destroy() {
             if (this.abortController) this.abortController.abort();

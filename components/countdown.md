@@ -201,7 +201,7 @@ Pick another component when:
 ### Duration
 {: .nds-block-title}
 
-`data-countdown-seconds` counts down from the moment the countdown starts. A reload starts it again. To resume a timer after a reload, render the seconds left on the server, or call `NDS.Countdown.set()` with them.
+`data-countdown-seconds` counts down from the moment the countdown starts. A reload starts it again. To resume a timer after a reload, render the seconds left on the server, or call `NDS.Countdown.setTarget()` with them.
 
 ### Units
 {: .nds-block-title}
@@ -329,7 +329,7 @@ At zero, the root gets `data-state="ended"`. A `.nds-countdown-ended` element an
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-countdown` | `.nds-countdown` | The deadline: `YYYY-MM-DD`, with an optional `THH:mm` or `THH:mm:ss` and an optional offset. No offset means the site timezone. A value that is not a date logs a console warning. Empty, the countdown shows its placeholders and waits for `NDS.Countdown.set()`: no timer and no events until then |
+| `data-countdown` | `.nds-countdown` | The deadline: `YYYY-MM-DD`, with an optional `THH:mm` or `THH:mm:ss` and an optional offset. No offset means the site timezone. A value that is not a date logs a console warning. Empty, the countdown shows its placeholders and waits for `NDS.Countdown.setTarget()`: no timer and no events until then |
 | `data-countdown-seconds` | `.nds-countdown` | A duration in seconds, counted from the moment the countdown starts. It wins over `data-countdown` |
 | `data-countdown-warn` | `.nds-countdown` | Seconds left at which the script adds `warning` to `data-state` |
 | `data-countdown-now` | `.nds-countdown`, or any element around it, such as `<html>` | The server's current time, in the format of `data-countdown`. The script reads it once, when the countdown starts |
@@ -362,7 +362,7 @@ Set them on the root of Cards or Banner. Each one beats the size class.
 | Method | Effect |
 |---|---|
 | `NDS.Countdown.init()` | Starts every `.nds-countdown` on the page that has not started yet. Runs at load. `reinit()` does the same |
-| `NDS.Countdown.set(el, target)` | Starts the countdown again with a new target: a date string, a `Date`, or a number of seconds from now |
+| `NDS.Countdown.setTarget(el, target)` | Starts the countdown again with a new target: a date string, a `Date`, or a number of seconds from now |
 {: .nds-table .nds-responsive}
 
 All events bubble.
@@ -383,7 +383,7 @@ timer.addEventListener('nds:countdown:end', () => {
 });
 
 // A new code was sent: count down its 5 minutes again.
-NDS.Countdown.set(timer, 300);
+NDS.Countdown.setTarget(timer, 300);
 </script>
 
 The full API is in the banner of `_js/nds-countdown.js`.

@@ -260,7 +260,7 @@ Source: the `checkbox` group in `_sass/tokens/_components.scss`.
 | `NDS.Form.validateCheckboxGroup(group, options)` | Checks the group and returns `{ valid, checked, min, max, message }`. Pass `{ showMessage: false }` to check without a message |
 | `NDS.Form.initCheckboxGroupValidation(group)` | Checks a group again on each change once it shows an error. The forms script calls it for groups on the page; call it for a group you add later |
 | `NDS.Form.syncState(input)` | Updates the field after you set `.checked` from code. It fires no event |
-| `NDS.Form.setStatus({ element, status, message })` | Shows a status and a message on a field or a group, such as an error from the server |
+| `NDS.Form.setStatus(element, status, { message })` | Shows a status and a message on a field or a group, such as an error from the server |
 | `NDS.Form.clearStatus(element)` | Removes the feedback message |
 {: .nds-table .nds-responsive}
 

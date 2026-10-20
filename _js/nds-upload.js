@@ -23,7 +23,7 @@
  *   instance.validateFile(file)                  [] when it passes, [messages] when it fails —
  *                                                checks without staging anything
  *   instance.getConfig()                         the resolved, frozen config
- *   instance.setDisabled(bool) / .refreshUI() / .destroy()
+ *   instance.enable() / .disable() / .refreshUI() / .destroy()
  * Events (bubble from the .nds-file-upload container):
  *   nds:upload:ready             detail {instance}
  *   nds:upload:select            detail {files, allFiles, fileData} — files that passed checks
@@ -396,8 +396,12 @@
         // ==============================================
 
         // Forms disables the input and buttons on the token; the drop handlers read it per event.
-        setDisabled(disabled) {
-            NDS.State[disabled ? 'add' : 'remove'](this.container, 'disabled');
+        enable() {
+            NDS.State.remove(this.container, 'disabled');
+        }
+
+        disable() {
+            NDS.State.add(this.container, 'disabled');
         }
 
         refreshUI() {

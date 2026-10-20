@@ -316,7 +316,7 @@ After the checks pass, Submit sends the form data to the form's `action` with [N
 
 ### Your Own Request
 
-To send the data another way, listen for `nds:user-feedback:submit` and call `preventDefault()`. Send `e.detail.data`, then call `NDS.UserFeedback.showStatus()` with `'success'` or `'error'`. The messages work as they do for an `action`, but the spinner is yours to show. The example is in the API section.
+To send the data another way, listen for `nds:user-feedback:submit` and call `preventDefault()`. Send `e.detail.data`, then call `NDS.UserFeedback.setStatus()` with `'success'` or `'error'`. The messages work as they do for an `action`, but the spinner is yours to show. The example is in the API section.
 
 `e.detail.data` holds each checked box as its own entry with the same name. For a JSON body, read a group with `data.getAll('why-yes')`: `Object.fromEntries()` keeps only the last box.
 
@@ -452,7 +452,7 @@ The field rules (`data-required`, `data-min-checked`) and `data-feedback-target`
 | `NDS.UserFeedback.init()` | Starts every `.nds-user-feedback` that is not started. `reinit()` does the same |
 | `NDS.UserFeedback.create(el)` | Starts one widget |
 | `NDS.UserFeedback.destroy(el)` | Removes the widget's listeners, so `create()` can start it again |
-| `NDS.UserFeedback.showStatus(el, status)` | Ends a send that your listener took over: `'success'` (default) or `'error'` |
+| `NDS.UserFeedback.setStatus(el, status)` | Ends a send that your listener took over: `'success'` (default) or `'error'` |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |
@@ -470,9 +470,9 @@ document.addEventListener('nds:user-feedback:submit', function (e) {
     body: e.detail.data,
     headers: { 'X-CSRF-Token': csrfToken }
   }).then(function () {
-    NDS.UserFeedback.showStatus(widget, 'success');
+    NDS.UserFeedback.setStatus(widget, 'success');
   }, function () {
-    NDS.UserFeedback.showStatus(widget, 'error');
+    NDS.UserFeedback.setStatus(widget, 'error');
   });
 });
 </script>

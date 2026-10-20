@@ -6,10 +6,10 @@
  *   NDS.Rating.init() / .reinit()   scan + initialize .nds-rating
  *   NDS.Rating.create(el)           instance one rating (returns the live one if there is
  *                                   already one)
- *   NDS.Rating.enableRating(el)     build it if needed, then take it out of disabled
+ *   NDS.Rating.enable(el)           build it if needed, then take it out of disabled
  *   instance.setValue(v)            set the rating (fires the event)
- *   instance.getRating()            the current value
- *   instance.setDisabled(bool) / .enable() / .isDisabled()
+ *   instance.getValue()             the current value
+ *   instance.enable() / .disable() / .isDisabled()
  *   instance.destroy()
  * Events (bubble from the .nds-rating):
  *   nds:rating:change   detail {rating, element} — on every pick that changes the value
@@ -222,7 +222,7 @@
       }
     }
 
-    getRating() {
+    getValue() {
       return this.currentRating;
     }
 
@@ -232,7 +232,7 @@
       }
     }
 
-    setDisabled(disabled) {
+    _setDisabled(disabled) {
       for (let i = 0; i < this.stars.length; i++) {
         this.stars[i].disabled = disabled;
         if (disabled) NDS.aria.disabled(this.stars[i], true);
@@ -250,7 +250,11 @@
     }
 
     enable() {
-      this.setDisabled(false);
+      this._setDisabled(false);
+    }
+
+    disable() {
+      this._setDisabled(true);
     }
 
     isDisabled() {
@@ -273,7 +277,7 @@
     init: initializeRatings,
     reinit: initializeRatings,
     create,
-    enableRating,
+    enable: enableRating,
   };
 
   NDS.onDOMAdd('.nds-rating', (nodes) => nodes.forEach(create));

@@ -13,7 +13,7 @@
  *                                                opts {filename, title, dir}
  *   NDS.Export.csv / .xls / .pdf (source, scope, opts)   the same, per format
  *   NDS.Export.collect(source, scope)            → {columns, rows} without downloading
- *   NDS.Export.toCSV(data) / .toXLSHtml(data, opts)   serialize a collect() result
+ *   NDS.Export.toCsv(data) / .toXlsHtml(data, opts)   serialize a collect() result
  *   NDS.Export.openPrint(data, opts)             open the print window (the PDF path)
  *   NDS.Export.download(data, format, opts)      serialize and save
  * Events:
@@ -507,8 +507,8 @@
         xls: (source, scope, opts) => exportFrom(source, 'xls', scope, opts),
         pdf: (source, scope, opts) => exportFrom(source, 'pdf', scope, opts),
         collect,
-        toCSV,
-        toXLSHtml,
+        toCsv: toCSV,
+        toXlsHtml: toXLSHtml,
         openPrint,
         download
     };

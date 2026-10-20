@@ -26,6 +26,7 @@ python scripts/publish-iq.py [--apply]          # NDS IQ draft → the file inst
 python scripts/rig.py new|stage|reset ...       # field rigs: a legacy app a fresh agent ports with the draft rules — guide in .claude/skills/nds-iq-eval/RIGS.md
 node scripts/doc-check.mjs <page.md>            # clicks every builder option: findings + one contact sheet per theme in tmp/doc-check/ — owner's go-ahead first
 node scripts/check-menus-in-modal.mjs           # six menu components in a scrolling Modal: place, follow, close, pick; PHONE=1, ENGINE=webkit
+node scripts/check-ipv.mjs                      # Image Popup Viewer: NDS.Ipv methods, no window global, data-ipv-gallery grouping, rebuild after destroy
 node scripts/check-dialogs.mjs                  # Modal + Panel on <dialog>: plain/static/modal, stacking, Escape, outside click, lazy panels; ENGINE=webkit, NO_POPOVER=1 (Safari < 17)
 node scripts/check-a11y.mjs [page.html …]       # axe (WCAG A/AA) + a Tab walk (visible stop, focus ring, no trap) on every built page, LTR and RTL; --dir, --no-keys, ENGINE=webkit
 node scripts/check-form-reset.mjs               # every form field's doc canon: a reset puts it back (value, message, chips, status), a cancelled one keeps the change; ENGINE=webkit, OLD_JS=<dir of old bundles> for an A/B
@@ -279,7 +280,7 @@ last_edit: "15/07/2026 - 02:35 PM"  # timestamp of the most recent doc content e
 
 **Build guard fails on violation** — a `critical` component's code can't ship in an injected bundle (`assert_no_critical_in_injected!`): fix by dropping `critical: true` or moving the file back to the main list.
 
-**Keep EAGER (never defer):** anything affecting first paint (CLS-prevention state stamps, FOUC-guard removal), the component's PRIMARY interaction, or a synchronous cross-component API (e.g. `NDS.Form.validateForm` is read synchronously at submit). Defer only secondary/late paths.
+**Keep EAGER (never defer):** anything affecting first paint (CLS-prevention state stamps, FOUC-guard removal), the component's PRIMARY interaction, or a synchronous cross-component API (e.g. `NDS.Form.validate` is read synchronously at submit). Defer only secondary/late paths.
 
 ## Content Skills
 

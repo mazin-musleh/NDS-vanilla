@@ -5,7 +5,7 @@
  *      · nds-pagination (refreshed after a sort re-orders a paged table; soft)
  * Methods:
  *   NDS.Table.init() / .reinit()               scan .nds-table and [data-columns-target] menus
- *   NDS.Table.recheckWidths()                  re-measure every table's responsive scroll state
+ *   NDS.Table.refresh()                        re-measure every table's responsive scroll state
  *   NDS.Table.create(table)                    sort controls for one table
  *   NDS.Table.createResponsive(table)          the scroll wrapper only
  *   NDS.Table.createColumnToggle(root)         one [data-columns-target] menu
@@ -15,7 +15,6 @@
  *   ↳ handle.sub.setContent(htmlOrNode)         put YOUR markup in the sub (chainable)
  *   ↳ handle.sub.open() / .close() / .toggle()  show / hide it (chainable)
  *   NDS.Table.setColumnHidden(table, i, bool)  hide or show a column by cell index
- *   NDS.Table.getCellText(cell)                the cell-text reader sort and export use
  * Events (bubble from the <table>):
  *   nds:table:columns      detail {table, index, hidden, restored} — restored:true is a saved
  *                          hide replayed at init, not a user action
@@ -104,7 +103,7 @@
             this.tbody.id ||= NDS.uniqueId('nds-rows-');
             all.setAttribute('data-selection-target', this.tbody.id);
             NDS.Selection.init();
-            NDS.Selection.recount(this.tbody);
+            NDS.Selection.refresh(this.tbody);
         }
 
         // ── Sort (delegated to NDS.Sort) ─────────────────────────────────
@@ -920,7 +919,7 @@
     NDS.Table = {
         init: initializeTables,
         reinit: initializeTables,
-        recheckWidths: recheckAllWidths,
+        refresh: recheckAllWidths,
         // The constructors publish their expando only on success → null on a bail.
         create: (table) => {
             if (!table.ndsTableControls) new NDSTables(table);
@@ -932,7 +931,6 @@
             return root.ndsColumnToggle || null;
         },
         row: rowHandle,
-        setColumnHidden,
-        getCellText
+        setColumnHidden
     };
 })();

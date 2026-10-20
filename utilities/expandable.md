@@ -197,7 +197,7 @@ Put `nds-expand-all` on the parent of several expandable boxes. Show More on one
 - Set a max height that shows enough text for the user to decide whether to read more. Below 80px, the first paragraph can be hidden.
 - Use a group for related items that the user compares, such as a comparison grid or a set of policy summaries.
 - After you add expandable boxes to the page, call `NDS.Expandable.reinit()`.
-- After your script changes `--max-height`, call `NDS.Expandable.recheckHeights()`. A hidden box measures itself again when it is shown.
+- After your script changes `--max-height`, call `NDS.Expandable.refresh()`. A hidden box measures itself again when it is shown.
 
 </div>
   </div>
@@ -233,7 +233,7 @@ Put `nds-expand-all` on the parent of several expandable boxes. Show More on one
 
 | Property | Default | Controls |
 |---|---|---|
-| `--max-height` | `300px` | The height of the content while it is limited. Set it on `.nds-expandable-content` or on a parent, in px only. After you change it, call `recheckHeight()` |
+| `--max-height` | `300px` | The height of the content while it is limited. Set it on `.nds-expandable-content` or on a parent, in px only. After you change it, call `refresh()` |
 | `--mask-fade-percentage` | `35%` | The length of the fade, as a share of the max height. The fade ends above the button. Set it on `.nds-expandable` |
 {: .nds-table .nds-responsive}
 
@@ -246,12 +246,12 @@ The instance is on the box as `el.ndsExpandable`. It is there once the component
 |---|---|
 | `NDS.Expandable.init()` | Starts every `.nds-expandable` on the page that has no instance. The loader calls it |
 | `NDS.Expandable.reinit()` | The same as `init()`. Call it after you add boxes to the page |
-| `NDS.Expandable.recheckHeights()` | Measures every box again. Call it after you change `--max-height` |
+| `NDS.Expandable.refresh()` | Measures every box again. Call it after you change `--max-height` |
 | `NDS.Expandable.create(el)` | Starts one box and returns its instance. Returns the running one when the box already has one, and `null` when it has no `.nds-expandable-content` |
-| `instance.expandContent()` | Opens the box |
-| `instance.collapseContent()` | Closes the box |
-| `instance.toggleContent()` | Opens a closed box and closes an open one |
-| `instance.recheckHeight()` | Reads `--max-height` and measures the box again |
+| `instance.expand()` | Opens the box. Does nothing on an open box |
+| `instance.collapse()` | Closes the box. Does nothing on a closed box |
+| `instance.toggle()` | Opens a closed box and closes an open one |
+| `instance.refresh()` | Reads `--max-height` and measures the box again |
 | `instance.getState()` | Returns `isExpanded`, `hasButton` (the script built the button, shown or hidden), `maxHeight` (px) and `actualHeight` (the full content height in px) |
 | `instance.destroy()` | Removes the button, the states and the size watch |
 {: .nds-table .nds-responsive}
@@ -267,7 +267,7 @@ Both events bubble. In a group, each box fires its own event.
 <script type="text/html" id="expandable-api-js" data-canon data-lang="js">
 var box = document.querySelector('#policy-summary');
 var expandable = NDS.Expandable.create(box);
-expandable.expandContent();
+expandable.expand();
 
 box.addEventListener('nds:expandable:collapsed', function (e) {
   console.log('Closed:', e.detail.content);

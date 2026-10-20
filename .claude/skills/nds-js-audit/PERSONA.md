@@ -376,6 +376,48 @@ For each loader-registered component: the JS file suffix, the registry `name` tu
 
 ---
 
+### 10. Method names
+
+**Canonical** — for namespace methods (`NDS.X.method`) and instance methods (`el.ndsX.method`) alike:
+
+1. camelCase, verb first. A true/false value starts with `is` or `has`. A class exposed on a namespace is PascalCase (`DatePicker.Calendar`). A name starting with `_` is internal.
+2. The noun after the verb names what the method acts on, never the namespace: `Form.validate`, not `validateForm`. Leave it out for the component itself (`Modal.open()`); name the part for a child (`openItem(i)`, `addFile`).
+3. An acronym is one word (`toCsv`, `isIban`), as in entry 9.
+4. One verb per meaning:
+
+| Meaning | Verb |
+|---|---|
+| Wire every element / wire one / undo | `init()` / `create(el, opts?)` / `destroy(el?)` |
+| Something changed: read or measure again | `refresh(el?)` — the component does what it needs, so a caller never tells a content change from a size change |
+| Open and close | entry 3 |
+| A value | `getValue` / `setValue` / `clear`; several values `getValues`; anything else `getX` / `setX` |
+| On and off | `enable()` / `disable()` (Bootstrap, Swiper, Choices.js) |
+| Items in a list | `addX` / `removeX` |
+| Find an instance / wait for one | `getInstance(elOrSelOrId)` → the instance or `null` (Bootstrap) / `whenReady(el, cb)` (as `customElements.whenDefined`) |
+| Move | `goTo(i)`, `next()`, `prev()` (Bootstrap's carousel) |
+| Check | `validate(el)` → `{ valid, … }` |
+
+5. Arguments: the element first, then the values, then one options object. More than two values go in the options object. A name used in two places takes the same arguments in both (`Form.setStatus(el, status, opts)`, `UserFeedback.setStatus(el, status)`, `NDS.Status.set(el, status)`).
+6. A namespace method and its instance method use the same verb; the namespace one takes the element first (`NDS.Rating.enable(el)` mirrors `el.ndsRating.enable()`).
+7. `create` returns the instance, `getInstance` the instance or `null`, a check its result, and a method that waits a Promise.
+
+**Why (and rejected alternatives)**
+
+A name a reader or an agent can guess from another component, or from the DOM and Bootstrap, is a name nobody looks up. The verbs come from the libraries people already know, so a guess lands. Rejected: `measure()` for a size change (no library uses it; a caller should not have to know which kind of change it made); `setDisabled(bool)` (the common pair is `enable()` / `disable()`); `previous()` (the common pair is `next()` / `prev()`); acronyms in capitals (`toCSV`), which need a list of what counts as one.
+
+**Carve-outs (NOT divergence)**
+
+- `Print.print` and `Export.export`: the verb is the module.
+- `Filter.getByTarget(id)` takes a different key from `getInstance`; `Dropmenu.from(el)` returns an element, not an instance.
+- A loader-hook name (`init`, `reinit`, `refresh`, `destroy`) keeps the loader's meaning.
+- A markup value is not a method: `data-stepper-control="previous"` stays.
+
+**Audit behavior**
+
+Flag a public method whose verb is a synonym the table replaces (`recheck…`, `recount`, `checkOverflow`, `setDisabled`, `previous`, `switchTo`, `slideTo`, `initialize…`, `setup…`), a name that repeats its namespace, or two public names that call the same code → LOW, as a migration target for the next major.
+
+---
+
 ## Audit integration
 
 When `nds-js-audit` runs:

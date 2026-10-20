@@ -189,10 +189,10 @@
             return;
         }
         var prev = { status: NDS.Status.get(container), message: container.getAttribute('data-message') };
-        NDS.Form.setStatus({ element: input, status: 'neutral', message: message });
+        NDS.Form.setStatus(input, 'neutral', { message });
         setTimeout(function() {
             if (container.getAttribute('data-message') !== message) return; // validation wrote since
-            if (prev.status && prev.message) NDS.Form.setStatus({ element: input, status: prev.status, message: prev.message });
+            if (prev.status && prev.message) NDS.Form.setStatus(input, prev.status, { message: prev.message });
             else NDS.Form.clearStatus(input);
         }, 4000);
     }

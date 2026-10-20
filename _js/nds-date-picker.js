@@ -10,7 +10,7 @@
  *   NDS.DatePicker.destroy(input)              tear one down — the NDS.Init.destroy entry point
  *   NDS.DatePicker.CalendarConfig              the gregorian + hijri engines
  *                                              (parseDate / formatDate, on NDS.date)
- *   NDS.DatePicker.DatePickerCalendar          the instance prototype (extension use)
+ *   NDS.DatePicker.Calendar                    the instance prototype (extension use)
  * Events:
  *   (none — a pick writes the input and dispatches a native `change`; listen on the input)
  * Hooks:
@@ -598,7 +598,7 @@
 
         // Constraint-validation bridge: hand-typed values bypass the picker
         // UI (disabled cells, bounds clamps), so every input 'change' stamps
-        // setCustomValidity — NDS.Form.validateForm / checkValidity then
+        // setCustomValidity — NDS.Form.validate / checkValidity then
         // gate the submit. Invalid commits also paint immediate footer
         // feedback (taginput's rejection shape) instead of waiting for
         // submit; clearing is owned by the forms layer (typing clears, blur
@@ -613,7 +613,7 @@
             if (msg && !silent) {
                 // Soft dependency — NDS.Form ships in the main bundle; the
                 // footer feedback no-ops if a consumer bundle excludes it.
-                NDS.Form?.setStatus?.({ element: this.elements.container, status: 'error', message: msg });
+                NDS.Form?.setStatus?.(this.elements.container, 'error', { message: msg });
             }
         },
 
@@ -2009,7 +2009,7 @@
     // calls init() itself. Not the critical tier — this ships in nds-extras.min.js,
     // injected after the reveal.
     NDS.DatePicker = {
-        DatePickerCalendar,
+        Calendar: DatePickerCalendar,
         CalendarConfig,
         init: initializeCalendar,
         reinit: initializeCalendar,

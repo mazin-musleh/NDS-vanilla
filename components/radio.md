@@ -227,7 +227,7 @@ Source: the `radio` group in `_sass/tokens/_components.scss`.
 |---|---|
 | `NDS.Form.validateRadioGroup(group, options)` | Checks the group and returns `{ valid, selected, message }`: `selected` is `true` when an option is checked. Pass `{ showMessage: false }` to check without a message |
 | `NDS.Form.syncState(input)` | Updates the field after you set `.checked` from code. It fires no event |
-| `NDS.Form.setStatus({ element: group, status, message })` | Shows a status and a message on the group, such as an error from the server |
+| `NDS.Form.setStatus(group, status, { message })` | Shows a status and a message on the group, such as an error from the server |
 | `NDS.Form.clearStatus(group)` | Removes the group's feedback message |
 {: .nds-table .nds-responsive}
 

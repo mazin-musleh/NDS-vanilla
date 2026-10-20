@@ -362,7 +362,7 @@ A file is an object `{ file, id, status, progress, error, response }`. `file` is
 | `instance.setFileProgress(id, percent)` | Sets the progress ring. At `100`, an uploading file goes to `processing` |
 | `instance.validateFile(file)` | Runs the checks on a `File` without adding it. Returns `[]` when it passes, or an array of messages |
 | `instance.getConfig()` | Returns the settings in use, from the attributes and the `create()` options, as a frozen object |
-| `instance.setDisabled(disabled)` | `true` disables the field, and `false` enables it |
+| `instance.enable()`, `instance.disable()` | Enables or disables the field |
 | `instance.refreshUI()` | Draws every row again |
 | `instance.destroy()` | Removes the listeners, stops the uploads and empties the list |
 {: .nds-table .nds-responsive}

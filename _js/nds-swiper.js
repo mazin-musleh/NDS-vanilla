@@ -5,8 +5,7 @@
  *   NDS.Swiper.create(el)           instance one swiper
  *   NDS.Swiper.destroy(el)          tear one down — the NDS.Init.destroy entry point
  *   instance.next() / .prev()       move by one page
- *   instance.goTo(index)            move to a slide index
- *   instance.slideTo(index, animate = true)  move to a slide index, clamped to the
+ *   instance.goTo(index, animate = true)  move to a slide index, clamped to the
  *                                   last page (a loop has none); false = instant
  *   instance.destroy()
  * Events:
@@ -26,7 +25,7 @@
  *   data-swiper-loop                             endless row: clones at both ends, a silent
  *                                                jump when the scroll rests on one. Needs
  *                                                more slides than the largest tier's count,
- *                                                else ignored. goTo/slideTo indices stay real
+ *                                                else ignored. goTo() indices stay real
  *   on a slide's <img>: data-src · data-srcset   lazy sources, written to src/srcset when
  *                                                the slide nears the viewport; once the
  *                                                images on screen finish, the page either
@@ -470,9 +469,9 @@
         prev() { this._goToFull(this.currentIndex - this.slidesPerView); }
         next() { this._goToFull(this.currentIndex + this.slidesPerView); }
 
-        // Public: the index counts real slides. Internally the row may carry clones
+        // The index counts real slides. Internally the row may carry clones
         // at both ends, so every scroll target is a full-list index.
-        goTo(index) {
+        _goToSlide(index) {
             // Clamp in real slides: a loop's full-list clamp spans the clones, so an
             // out-of-range index would wrap onto an arbitrary slide.
             index = Math.max(0, Math.min(index, this._real - 1));
@@ -756,7 +755,7 @@
                 this._attachActivation(this.pagination, (e) => {
                     const bullet = e.target.closest('.nds-bullet');
                     if (bullet && this.pagination.contains(bullet)) {
-                        this.goTo(this._pageStart(Number(bullet.dataset.page)));
+                        this._goToSlide(this._pageStart(Number(bullet.dataset.page)));
                     }
                 });
             }
@@ -828,11 +827,11 @@
                     break;
                 case 'Home':
                     e.preventDefault();
-                    this.goTo(0);
+                    this._goToSlide(0);
                     break;
                 case 'End':
                     e.preventDefault();
-                    this.goTo(this._pageStart(this._pageCount - 1));
+                    this._goToSlide(this._pageStart(this._pageCount - 1));
                     break;
             }
         }
@@ -969,7 +968,7 @@
         // PUBLIC API
         // ==============================================
 
-        slideTo(index, animate = true) {
+        goTo(index, animate = true) {
             // Real index in, clamped to the last real page. A loop has no last page, so
             // any slide goes — the index nds:swiper:change reports must restore.
             index = Math.max(0, Math.min(index, this._real - (this._loop ? 1 : this.slidesPerView)));

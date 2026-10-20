@@ -5,10 +5,10 @@
  * Methods:
  *   NDS.Stepper.init() / .reinit()        instance every stepper, wire the delegated control listener
  *   NDS.Stepper.create(el)                instance one stepper
- *   NDS.Stepper.get(id)                   the instance of the stepper with that id in the page
- *   NDS.Stepper.next(id) / .previous(id)  move one step
- *   NDS.Stepper.goTo(id, step)            move to a step number; one past the last completes the flow
- *   NDS.Stepper.control(id, action, val)  the same entry point the buttons use
+ *   NDS.Stepper.getInstance(idOrEl)       the stepper's instance, or null
+ *   NDS.Stepper.next(idOrEl) / .prev(idOrEl)  move one step
+ *   NDS.Stepper.goTo(idOrEl, step)        move to a step number; one past the last completes the flow
+ *   NDS.Stepper.control(idOrEl, action, val)  the same entry point the buttons use
  *                                         (action: next | previous | goto)
  * Events (bubble from the .nds-stepper):
  *   nds:stepper:change   detail {currentStep, totalSteps, progressPercentage}
@@ -197,7 +197,7 @@
             return this.goTo(this.currentStep + 1);
         }
 
-        previous() {
+        prev() {
             return this.goTo(this.currentStep - 1);
         }
 
@@ -219,17 +219,17 @@
     }
 
     // Read off the element, so an unmounted stepper (a framework removing it without destroy()) is gone.
-    function get(id) {
-        return document.getElementById(id)?.ndsStepper;
+    function getInstance(target) {
+        return (typeof target === 'string' ? document.getElementById(target) : target)?.ndsStepper || null;
     }
 
-    function control(id, action, value) {
-        const stepper = get(id);
+    function control(target, action, value) {
+        const stepper = getInstance(target);
         if (!stepper) return false;
 
         switch (action) {
             case 'next': return stepper.next();
-            case 'previous': return stepper.previous();
+            case 'previous': return stepper.prev();
             case 'goto': return stepper.goTo(parseInt(value));
             default: return false;
         }
@@ -257,10 +257,10 @@
         // init is idempotent (the sweep skips started steppers, _wireGlobals runs once).
         reinit:      init,
         create,
-        get,
-        next:        (id) => control(id, 'next'),
-        previous:    (id) => control(id, 'previous'),
-        goTo:        (id, step) => control(id, 'goto', step),
+        getInstance,
+        next:        (target) => control(target, 'next'),
+        prev:        (target) => control(target, 'previous'),
+        goTo:        (target, step) => control(target, 'goto', step),
         control,
     };
 })();

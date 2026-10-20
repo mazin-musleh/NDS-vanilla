@@ -2,12 +2,12 @@
  * Rides: (none — base component)
  * Methods:
  *   NDS.Expandable.init() / .reinit()   scan + initialize .nds-expandable
- *   NDS.Expandable.recheckHeights()     re-measure every initialized container — call this
+ *   NDS.Expandable.refresh()            re-measure every initialized container — call this
  *                                       after changing --max-height at runtime
  *   NDS.Expandable.create(container)    instance one container — null when the markup is
  *                                       incomplete; the live one if started
- *   instance.expandContent() / .collapseContent() / .toggleContent()
- *   instance.recheckHeight()            re-measure this one
+ *   instance.expand() / .collapse() / .toggle()   a no-op when already in that state
+ *   instance.refresh()                  re-measure this one
  *   instance.getState()                 {isExpanded, hasButton, maxHeight, actualHeight}
  *   instance.destroy()
  * Events (bubble from the .nds-expandable):
@@ -19,7 +19,7 @@
  * Gotchas:
  *   - The Show More / Show Less button is BUILT by the component. Do not author one.
  *   - --max-height on the content sets the clamp (default 300px). px only: it is parsed
- *     with parseInt. It is cached, so changing it at runtime needs a recheckHeight().
+ *     with parseInt. It is cached, so changing it at runtime needs a refresh().
  *   - A container that is not rendered measures 0 and is left clamped until it becomes
  *     visible; its size watcher re-measures it then (a tab panel shown, a section opened).
  *   - The instance lives on the root as el.ndsExpandable.
@@ -108,7 +108,7 @@
         }
 
         getMaxHeight() {
-            // Cached for resize checks; recheckHeight() clears it
+            // Cached for resize checks; refresh() clears it
             if (this._cachedMaxHeight === undefined) {
                 const computedStyle = getComputedStyle(this.contentElement);
                 const maxHeightValue = computedStyle.getPropertyValue('--max-height') || '300px';
@@ -148,6 +148,7 @@
         }
 
         expand(syncSiblings = true) {
+            if (this.isExpanded) return;
             this.isExpanded = true;
 
             // Add expanded state to container
@@ -169,6 +170,7 @@
         }
 
         collapse(syncSiblings = true) {
+            if (!this.isExpanded) return;
             this.isExpanded = false;
 
             // Remove expanded state from container
@@ -244,29 +246,12 @@
             this.expandableContainer.dispatchEvent(event);
         }
 
-        // Public API methods
-        expandContent() {
-            if (!this.isExpanded) {
-                this.expand();
-            }
-        }
-
-        recheckHeight() {
+        refresh() {
             // Force recheck of content height (useful when element becomes visible)
             this._cachedMaxHeight = undefined;
             this.checkContentHeight();
         }
 
-
-        collapseContent() {
-            if (this.isExpanded) {
-                this.collapse();
-            }
-        }
-
-        toggleContent() {
-            this.toggle();
-        }
 
         getState() {
             return {
@@ -318,8 +303,8 @@
         // containers are rechecked too.
         const expandableContainers = document.querySelectorAll('.nds-expandable');
         expandableContainers.forEach(container => {
-            if (container.ndsExpandable && container.ndsExpandable.recheckHeight) {
-                container.ndsExpandable.recheckHeight();
+            if (container.ndsExpandable && container.ndsExpandable.refresh) {
+                container.ndsExpandable.refresh();
             }
         });
     }
@@ -328,7 +313,7 @@
     NDS.Expandable = {
         init: initializeExpandableContent,
         reinit: initializeExpandableContent,
-        recheckHeights: recheckAllHeights,
+        refresh: recheckAllHeights,
         create: (container) => {
             if (container.ndsExpandable) return container.ndsExpandable;
             const inst = new NDSExpandable(container);
@@ -355,9 +340,9 @@
  * const expandableInstance = NDS.Expandable.create(expandableElement);
  *
  * // Programmatic control
- * expandableInstance.expandContent();    // Expand content
- * expandableInstance.collapseContent();  // Collapse content
- * expandableInstance.toggleContent();    // Toggle state
+ * expandableInstance.expand();    // Expand content
+ * expandableInstance.collapse();  // Collapse content
+ * expandableInstance.toggle();    // Toggle state
  *
  * // Get current state
  * const state = expandableInstance.getState();

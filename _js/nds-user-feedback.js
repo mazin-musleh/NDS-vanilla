@@ -1,6 +1,6 @@
 /* NDS.UserFeedback — public surface
  * Rides: nds-feedback (renders the success / error message) · nds-cookies (remembers a
- *        submission per page) · nds-forms (validateForm when the widget sits in a form)
+ *        submission per page) · nds-form (validate when the widget sits in a form)
  * Requires:
  *   .nds-user-feedback needs .nds-user-feedback-answer-btn .nds-btn[data-answer] — the details step never opens
  *   .nds-user-feedback needs .nds-user-feedback-submit-btn — nothing is sent
@@ -8,12 +8,12 @@
  *   NDS.UserFeedback.init() / .reinit()   scan + initialize .nds-user-feedback
  *   NDS.UserFeedback.create(el)           initialize one widget (idempotent)
  *   NDS.UserFeedback.destroy(el)          release one widget's listeners + init marker
- *   NDS.UserFeedback.showStatus(el, status)  end a send a submit listener took over:
+ *   NDS.UserFeedback.setStatus(el, status)  end a send a submit listener took over:
  *                                         'success' (default) or 'error'
  * Events:
  *   nds:user-feedback:submit  on the root, bubbles, cancelable — detail { form, data }
  *                             (data is the form's FormData). Fires after validation.
- *                             Cancel it to send the data yourself, then call showStatus().
+ *                             Cancel it to send the data yourself, then call setStatus().
  * Hooks:
  *   action · method (the form's)                Submit posts the FormData there with
  *                                               NDS.request and shows success or error.
@@ -38,7 +38,7 @@
  * Dependencies:
  * - nds-feedback.js (NDSFeedback API for displaying feedback messages)
  * - nds-cookies.js (for persisting feedback submission status)
- * - nds-form.js (required when the component lives inside a form; provides NDS.Form.validateForm)
+ * - nds-form.js (required when the component lives inside a form; provides NDS.Form.validate)
  *
  * Language Detection:
  * Automatically detects page language from <html lang="..."> or <body lang="..."> attribute
@@ -120,7 +120,7 @@ NDS.UserFeedback = (() => {
         const savedStatus = persist ? getFeedbackStatus() : null;
         if (savedStatus === 'submitted') {
             // User already submitted feedback, show success status
-            showStatus('success');
+            setStatus('success');
             // Mark as initialized
             feedbackComponent.setAttribute('data-nds-user-feedback-initialized', 'true');
             return; // Don't initialize interaction handlers
@@ -145,7 +145,7 @@ NDS.UserFeedback = (() => {
         }
 
         // Show status state with success/error using NDSFeedback API
-        function showStatus(status = 'success') {
+        function setStatus(status = 'success') {
             const ok = status === 'success';
             // An error keeps the form open, so the visitor can send it again.
             if (ok) NDS.State.set(feedbackComponent, 'status');
@@ -187,7 +187,7 @@ NDS.UserFeedback = (() => {
 
         // The message the send ended with, then the widget back in view.
         function finish(status) {
-            showStatus(status);
+            setStatus(status);
             // Sticky-nav-aware scroll — no-op when the target is already
             // below the sticky nav, so short forms don't jump on submit.
             NDS.scrollBelowNav(feedbackComponent.closest('section') || feedbackComponent, {
@@ -203,7 +203,7 @@ NDS.UserFeedback = (() => {
             const picked = feedbackComponent.querySelector('.nds-user-feedback-details .nds-rating');
             if (!picked) return;
 
-            const value = picked.ndsRating ? picked.ndsRating.getRating() : Number(picked.dataset.rating) || 0;
+            const value = picked.ndsRating ? picked.ndsRating.getValue() : Number(picked.dataset.rating) || 0;
 
             const field = feedbackComponent.querySelector('[data-rating-value]');
             if (field) NDS.setValue(field, value);
@@ -273,11 +273,11 @@ NDS.UserFeedback = (() => {
             submitButton.addEventListener('click', function (e) {
                 e.preventDefault();
 
-                // Find the parent form and validate. `NDS.Form.validateForm` is unconditionally
+                // Find the parent form and validate. `NDS.Form.validate` is unconditionally
                 // attached when the Forms module loads, so no guard beyond the form lookup is needed.
                 const form = feedbackComponent.closest('.nds-form') || feedbackComponent.closest('form');
                 if (form) {
-                    const result = NDS.Form.validateForm(form, { showMessages: true, focusFirst: true });
+                    const result = NDS.Form.validate(form, { showMessages: true, focusFirst: true });
                     if (!result.valid) {
                         return; // Don't show success if validation fails
                     }
@@ -285,7 +285,7 @@ NDS.UserFeedback = (() => {
 
                 mirrorRating();
 
-                // A listener that cancels the event sends the data itself, then calls showStatus().
+                // A listener that cancels the event sends the data itself, then calls setStatus().
                 const data = form && form.tagName === 'FORM' ? new FormData(form) : new FormData();
                 const go = feedbackComponent.dispatchEvent(new CustomEvent('nds:user-feedback:submit', {
                     bubbles: true, cancelable: true, detail: { form, data },
@@ -325,9 +325,9 @@ NDS.UserFeedback = (() => {
     }
 
     // Ends a send that a nds:user-feedback:submit listener took over.
-    function showStatus(feedbackComponent, status = 'success') {
+    function setStatus(feedbackComponent, status = 'success') {
         feedbackComponent._ndsUfFinish?.(status);
     }
 
-    return { init, reinit: init, create, destroy, showStatus };
+    return { init, reinit: init, create, destroy, setStatus };
 })();

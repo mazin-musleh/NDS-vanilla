@@ -440,7 +440,7 @@
          */
         handleFormSubmit(e) {
             // Validate the submission form (may differ from the anchor)
-            const result = NDS.Form.validateForm(this.submissionForm, {
+            const result = NDS.Form.validate(this.submissionForm, {
                 showMessages: true,
                 focusFirst: true
             });

@@ -679,9 +679,7 @@ breadcrumb: [["Examples", "/examples"]]
       var captchaField = captchaInput.closest('.nds-form-container');
       if (captchaInput.value !== captchaCode) {
         // A wrong code is a field error: pin it to the input, not a form banner
-        NDS.Form.setStatus({
-          element: captchaField,
-          status: 'error',
+        NDS.Form.setStatus(captchaField, 'error', {
           message: 'Wrong code. Enter the new code shown below.'
         });
         captchaInput.value = '';
@@ -743,9 +741,7 @@ breadcrumb: [["Examples", "/examples"]]
 
     otpForm.addEventListener('nds:form:valid', function () {
       if (NDS.Otp.getValue(otpGroup) !== expectedCode) {
-        NDS.Form.setStatus({
-          element: otpGroup,
-          status: 'error',
+        NDS.Form.setStatus(otpGroup, 'error', {
           message: 'That code is not right. Try again.'
         });
         return;

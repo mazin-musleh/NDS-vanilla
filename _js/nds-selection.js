@@ -3,9 +3,8 @@
  * Methods:
  *   NDS.Selection.init()                    wire the document listeners (the loader calls this)
  *   NDS.Selection.reinit()                  resync every list after the DOM changed
- *   NDS.Selection.refresh()                 same resync, as the NDS.Init.refresh hook — takes no
- *                                           container, because counters sit outside the list
- *   NDS.Selection.recount(list)             resync one list (its id or the element)
+ *   NDS.Selection.refresh(list?)            resync one list (its id or the element); with no
+ *                                           list, every list — the NDS.Init.refresh hook
  *   NDS.Selection.selectAll(list, on=true, scope)  check or clear every item a filter shows;
  *                                           scope 'page' = only the items on the current page
  *   NDS.Selection.clear(list)               clear EVERY item, filter-hidden and box-less too
@@ -243,7 +242,7 @@
     // the walk dispatches an owner's refresh INSTEAD of its init: on a page with no list at
     // load, the listener was never wired.
     NDS.Selection = {
-        init, reinit: recountAll, refresh: () => { init(); recountAll(); },
-        recount, selectAll, clear, selected, isSelected, destroy
+        init, reinit: recountAll, refresh: (list) => { if (list) return recount(list); init(); recountAll(); },
+        selectAll, clear, selected, isSelected, destroy
     };
 })();

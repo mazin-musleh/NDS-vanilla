@@ -261,7 +261,7 @@
             // so the injected .nds-form-control needs its own pass. Soft
             // dependency — the search box stays a plain input if NDS.Form
             // isn't bundled (no clear button, no container interaction states).
-            NDS.Form?.initializeContainer(searchBox);
+            NDS.Form?.create(searchBox);
 
             // Empty state — reuses .nds-empty-placeholder for the visual grammar
             // (shared with NDS.Empty via _empty.scss) and carries

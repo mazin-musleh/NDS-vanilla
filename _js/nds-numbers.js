@@ -3,8 +3,8 @@
  * Methods:
  *   NDS.Numbers.init() / .reinit()        format every number and arm every counter
  *   NDS.Numbers.format(el)                format one .nds-number-format element
- *   NDS.Numbers.formatNumbers()           format all of them
- *   NDS.Numbers.setupCounterAnimations()  re-arm the counters only
+ *   NDS.Numbers.formatAll()               format all of them
+ *   NDS.Numbers.initCounters()            re-arm the counters only
  * Events:
  *   (none)
  * Hooks:
@@ -132,8 +132,8 @@
 
     NDS.Numbers = {
         format,
-        formatNumbers,
-        setupCounterAnimations,
+        formatAll: formatNumbers,
+        initCounters: setupCounterAnimations,
         init,
         reinit: init
     };

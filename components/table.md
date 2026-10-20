@@ -645,7 +645,7 @@ Keep Selection only when the page has a bulk action that acts on the selected ro
             <i class="hgi hgi-stroke hgi-text-font"></i>
             <span class="nds-label">Clean Cell Text</span>
           </span>
-          <p class="nds-item-desc">Sort and export read the cell's own text, not the text of the icons or buttons in it. <code class="nds-inline-code lang-js">NDS.Table.getCellText()</code> gives the same value to your code.</p>
+          <p class="nds-item-desc">Sort and export read the cell's own text, not the text of the icons or buttons in it. <code class="nds-inline-code lang-js">NDS.cellText()</code> gives the same value to your code.</p>
         </div>
       </div>
     </div>
@@ -761,12 +761,11 @@ Source: the `table` group in `_sass/tokens/_components.scss`.
 |---|---|
 | `NDS.Table.init()` | Starts every table and column menu that has not started yet |
 | `NDS.Table.reinit()` | The same as `init()`. Call it after you add a new table. When only the rows change, call `NDS.Init.refresh(tbody)`: see [Init](../core/init) |
-| `NDS.Table.recheckWidths()` | Measures every scroll box again, after a change the script cannot see |
+| `NDS.Table.refresh()` | Measures every scroll box again, after a change the script cannot see |
 | `NDS.Table.create(table)` | Starts sorting and selection on one table, and returns its instance, or the instance it already has. Returns `null` when the table has no `<thead>` or `<tbody>` |
 | `NDS.Table.createResponsive(table)` | Adds the scroll box to one table and returns its instance |
 | `NDS.Table.createColumnToggle(menu)` | Starts one column menu, and returns its instance, or the instance it already has. Returns `null` when the table or `[data-columns-list]` is missing |
 | `NDS.Table.setColumnHidden(table, index, hidden)` | Hides or shows the column at this index: it sets `hidden` on the header cell and on its cell in every row, and fires `nds:table:columns`. The menu does not save this change |
-| `NDS.Table.getCellText(cell)` | The cell's own text, the value sort and export read |
 | `NDS.Table.row(tr).sub` | The handle of a row's sub-row. `tr` is the row or its sub-row |
 | `.sub.setContent(html)` | Puts your markup or node in the sub-row. It builds the sub-row when there is none, and stops the spinner. It returns the handle |
 | `.sub.open()`, `.close()`, `.toggle()` | Opens, closes or flips the sub-row. `open()` with no sub-row fires `nds:table:sub-request`. Each returns the handle |

@@ -4,7 +4,7 @@
  *   NDS.Progress.init()                    wire every indicator and watch its attributes
  *   NDS.Progress.setValue(el, value)       set the percentage (0–100)
  *   NDS.Progress.setOutOf(el, num, max)    set the "out of" display and the matching value
- *   NDS.Progress.initCircle(el)            paint one element from its attributes right now
+ *   NDS.Progress.create(el)                paint one element from its attributes right now
  * Events:
  *   (none)
  * Hooks:
@@ -129,5 +129,5 @@
         _watch();
     }
 
-    NDS.Progress = { init, initCircle: el => { _watch(); syncFromData(el); }, setValue, setOutOf };
+    NDS.Progress = { init, create: el => { _watch(); syncFromData(el); }, setValue, setOutOf };
 })();

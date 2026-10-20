@@ -215,7 +215,7 @@ The [Tabs](../components/tabs) controller, `NDS.Tabs`, runs the content switcher
 |---|---|
 | `NDS.Tabs.init()` | Starts every switcher and tab set on the page that has not started yet. `reinit()` is the same |
 | `NDS.Tabs.create(element)` | Starts one switcher and returns its instance, or the instance it already has. Returns `null` when the switcher has no tab list, tabs or panels |
-| `instance.switchTo(index)` | Opens a view by its position, from 0 |
+| `instance.goTo(index)` | Opens a view by its position, from 0 |
 | `instance.getActiveTabIndex()` | Returns the position of the open button |
 | `instance.getActiveTab()`, `instance.getActivePanel()` | Return the open button and its panel |
 | `instance.destroy()` | Removes the listeners. The markup stays as it is |
@@ -231,7 +231,7 @@ var switcher = document.querySelector('#request-status');
 switcher.addEventListener('nds:tabs:change', function (e) {
   console.log('Opened view', e.detail.tabIndex);
 });
-switcher.ndsTabs.switchTo(2);
+switcher.ndsTabs.goTo(2);
 </script>
 
 The full API is in the banner of `_js/nds-tabs.js`.

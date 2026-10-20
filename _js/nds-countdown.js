@@ -2,7 +2,7 @@
  * Rides: (none — base component)
  * Methods:
  *   NDS.Countdown.init() / .reinit()     wire every .nds-countdown not yet wired
- *   NDS.Countdown.set(el, target)        a new target: ISO text, a Date, or seconds from now (number)
+ *   NDS.Countdown.setTarget(el, target)  a new target: ISO text, a Date, or seconds from now (number)
  * Events:
  *   nds:countdown:tick   detail {remaining} — every second, from the element
  *   nds:countdown:warn   detail {remaining} — once, when remaining reaches data-countdown-warn
@@ -34,7 +34,7 @@
  *   - The largest unit written absorbs what is above it (h m shows 2 days as 48 h), and a skipped
  *     unit in the middle carries into the next one written.
  *   - data-countdown-seconds counts from wire time, so a reload restarts it. For a resumed timer
- *     the server renders the remainder, or the page calls set(el, seconds).
+ *     the server renders the remainder, or the page calls setTarget(el, seconds).
  *   - With no dir of its own, the root gets dir="auto": digits and separators alone (05:12:09) read
  *     left to right in every language, and Arabic unit words make it right to left. The ended
  *     message gets dir="auto" too, so its words never turn the numbers around.
@@ -274,6 +274,6 @@
     NDS.Countdown = {
         init,
         reinit: init,
-        set(el, target) { if (el) { bindVisibility(); track(el, target); } }
+        setTarget(el, target) { if (el) { bindVisibility(); track(el, target); } }
     };
 })();

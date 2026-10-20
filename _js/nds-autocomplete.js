@@ -16,7 +16,7 @@
  *   data-empty-message · data-empty-icon · data-strict (typed text must match a pick)
  * Gotchas:
  *   - data-strict adds a hidden NAMELESS .nds-autocomplete-value carrier at build: a pick
- *     fills it, typing or clear empties it, and NDS.Form.validateForm() rejects text that
+ *     fills it, typing or clear empties it, and NDS.Form.validate() rejects text that
  *     doesn't match it ("Choose from the suggestions"). It never changes what submits.
  *     Text already in the field when it builds (server-prefilled) counts as picked.
  *   - Activates on an input[autocomplete="on"] inside .nds-form-container[data-url], built
