@@ -40,6 +40,7 @@
   const strings = NDS.i18n.strings('rating', {
     stars: { one: '{n} star', other: '{n} stars' },
     score: '{n} of {total}',
+    rating_required: 'Please choose a rating',
   });
 
   // State helpers — delegated to NDS.state (nds-core.js)
@@ -276,17 +277,17 @@
   }
 
   // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
-  const formWords = NDS.i18n.strings('form', { rating_required: 'Please choose a rating' });
   // The stars are buttons, not form controls: the score lives on the .nds-rating root. Zero = nothing picked.
   const fieldCheck = (group) => {
     const rating = group.querySelector('.nds-rating');
     const value = rating ? (rating.ndsRating ? rating.ndsRating.getValue() : Number(rating.dataset.rating) || 0) : 0;
     const valid = !NDS.validation.isRequired(group) || value > 0;
-    return { valid, message: valid ? '' : formWords.text('rating_required'), empty: value === 0, rating: value };
+    return { valid, message: valid ? '' : strings.text('rating_required'), empty: value === 0, rating: value };
   };
   // The stars are buttons, so focus lands on the first one.
   NDS.validation.addRule('.nds-form-group[data-min-checked], .nds-form-group[data-max-checked], .nds-form-group[data-required], .nds-form-group.nds-required',
-    (group) => (group.querySelector('.nds-rating') ? Object.assign(fieldCheck(group), { focus: group.querySelector('.nds-rating-star') }) : null));
+    (group) => (group.querySelector('.nds-rating') ? Object.assign(fieldCheck(group), { focus: group.querySelector('.nds-rating-star') }) : null),
+    { on: ['nds:rating:change'] });
 
   NDS.Rating = {
     init: initializeRatings,

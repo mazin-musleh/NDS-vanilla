@@ -93,6 +93,8 @@
         cancelled: 'Upload cancelled',
         failed: 'Upload failed',
         remove_file: 'Remove file',
+        file_required: 'Please add a file',
+        upload_pending: 'Please wait for the upload to finish',
     });
 
     function warn(message) {
@@ -843,19 +845,18 @@
     // ==============================================
 
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
-    const formWords = NDS.i18n.strings('form', { file_required: 'Please add a file', upload_pending: 'Please wait for the upload to finish' });
     // The file input is emptied after each pick: required counts the staged rows, a rejected one not counted.
     // A row still uploading blocks every upload field: the submit would go without that file.
     const fieldCheck = (up) => {
         const count = up.querySelectorAll('.nds-file-list .nds-file-item:not([data-status="error"])').length;
         const pending = !!up.querySelector('.nds-file-list .nds-file-item:is([data-state~="uploading"], [data-state~="processing"])');
         const valid = !pending && (!NDS.validation.isRequired(up) || count > 0);
-        return { valid, message: valid ? '' : formWords.text(pending ? 'upload_pending' : 'file_required'),
+        return { valid, message: valid ? '' : strings.text(pending ? 'upload_pending' : 'file_required'),
             empty: !pending && count === 0, count, pending };
     };
     NDS.validation.addRule('.nds-upload',
         (up) => Object.assign(fieldCheck(up), { focus: up.querySelector('.nds-browse-btn') || up.querySelector('input[type="file"]') }),
-        { owns: (c) => c.classList.contains('nds-upload') });
+        { owns: (c) => c.classList.contains('nds-upload'), on: ['nds:upload:select', 'nds:upload:success', 'nds:upload:error', 'nds:upload:removed'] });
 
     NDS.Upload = {
         init: initializeUploads,

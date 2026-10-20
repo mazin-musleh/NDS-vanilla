@@ -15,7 +15,7 @@
 (() => {
     'use strict';
 
-    const strings = NDS.i18n.strings('form', {
+    const strings = NDS.i18n.strings('radio', {
         select_option: 'Please select an option',
     });
 

@@ -402,6 +402,12 @@
   "ar": "تعذر تحميل الاقتراحات"
  },
  {
+  "section": "autocomplete",
+  "key": "pick_suggestion",
+  "en": "Choose from the suggestions",
+  "ar": "اختر من الاقتراحات"
+ },
+ {
   "section": "breadcrumb",
   "key": "more",
   "en": "More",
@@ -622,6 +628,12 @@
   "key": "copy_code",
   "en": "Copy code",
   "ar": "نسخ الشيفرة"
+ },
+ {
+  "section": "custom-select",
+  "key": "select_option",
+  "en": "Please select an option",
+  "ar": "يرجى اختيار خيار"
  },
  {
   "section": "date",
@@ -922,6 +934,12 @@
   "key": "no_results",
   "en": "No results",
   "ar": "لا توجد نتائج"
+ },
+ {
+  "section": "dropmenu",
+  "key": "select_option",
+  "en": "Please select an option",
+  "ar": "يرجى اختيار خيار"
  },
  {
   "section": "editor",
@@ -1321,18 +1339,6 @@
  },
  {
   "section": "form",
-  "key": "pick_suggestion",
-  "en": "Choose from the suggestions",
-  "ar": "اختر من الاقتراحات"
- },
- {
-  "section": "form",
-  "key": "select_option",
-  "en": "Please select an option",
-  "ar": "يرجى اختيار خيار"
- },
- {
-  "section": "form",
   "key": "min_value",
   "en": "Minimum value is {n}",
   "ar": "الحد الأدنى {n}"
@@ -1378,102 +1384,6 @@
   "key": "hide_password",
   "en": "Hide password",
   "ar": "إخفاء كلمة المرور"
- },
- {
-  "section": "form",
-  "key": "otp_incomplete",
-  "en": "Please enter all {n} digits",
-  "ar": "يرجى إدخال جميع الأرقام"
- },
- {
-  "section": "form",
-  "key": "rating_required",
-  "en": "Please choose a rating",
-  "ar": "يرجى اختيار تقييم"
- },
- {
-  "section": "form",
-  "key": "tag_required",
-  "en": "Please add at least one tag",
-  "ar": "يرجى إضافة وسم واحد على الأقل"
- },
- {
-  "section": "form",
-  "key": "required",
-  "en": "This field is required",
-  "ar": "هذا الحقل مطلوب"
- },
- {
-  "section": "form",
-  "key": "file_required",
-  "en": "Please add a file",
-  "ar": "يرجى إرفاق ملف"
- },
- {
-  "section": "form",
-  "key": "upload_pending",
-  "en": "Please wait for the upload to finish",
-  "ar": "يرجى الانتظار حتى يكتمل الرفع"
- },
- {
-  "section": "form",
-  "key": "invalid",
-  "en": "Invalid input",
-  "ar": "مدخل غير صحيح"
- },
- {
-  "section": "form",
-  "key": "invalid_email",
-  "en": "Please enter a valid email address",
-  "ar": "يرجى إدخال عنوان بريد إلكتروني صحيح"
- },
- {
-  "section": "form",
-  "key": "invalid_url",
-  "en": "Please enter a valid URL",
-  "ar": "يرجى إدخال رابط صحيح"
- },
- {
-  "section": "form",
-  "key": "pattern",
-  "en": "Please match the requested format",
-  "ar": "يرجى مطابقة التنسيق المطلوب"
- },
- {
-  "section": "form",
-  "key": "too_short",
-  "en": "Input is too short (minimum {n} characters)",
-  "ar": "المدخل قصير جدًا (الحد الأدنى {n})"
- },
- {
-  "section": "form",
-  "key": "too_long",
-  "en": "Input is too long (maximum {n} characters)",
-  "ar": "المدخل طويل جدًا (الحد الأقصى {n})"
- },
- {
-  "section": "form",
-  "key": "range_under",
-  "en": "Value must be at least {n}",
-  "ar": "القيمة يجب أن تكون على الأقل {n}"
- },
- {
-  "section": "form",
-  "key": "range_over",
-  "en": "Value must be no more than {n}",
-  "ar": "القيمة يجب ألا تزيد على {n}"
- },
- {
-  "section": "form",
-  "key": "select_at_least",
-  "en": "one: Please select at least 1 option · other: Please select at least {n} options",
-  "ar": "one: يرجى اختيار خيار واحد على الأقل · two: يرجى اختيار خيارين على الأقل · few: يرجى اختيار {n} خيارات على الأقل · many: يرجى اختيار {n} خيارًا على الأقل · other: يرجى اختيار {n} خيار على الأقل"
- },
- {
-  "section": "form",
-  "key": "select_at_most",
-  "en": "one: Please select no more than 1 option · other: Please select no more than {n} options",
-  "ar": "one: يرجى اختيار خيار واحد كحد أقصى · two: يرجى اختيار خيارين كحد أقصى · few: يرجى اختيار {n} خيارات كحد أقصى · many: يرجى اختيار {n} خيارًا كحد أقصى · other: يرجى اختيار {n} خيار كحد أقصى"
  },
  {
   "section": "form",
@@ -1674,6 +1584,12 @@
   "ar": "الرقم {n} من {total}"
  },
  {
+  "section": "otp",
+  "key": "otp_incomplete",
+  "en": "Please enter all {n} digits",
+  "ar": "يرجى إدخال جميع الأرقام"
+ },
+ {
   "section": "pagination",
   "key": "prev",
   "en": "Previous page",
@@ -1746,6 +1662,12 @@
   "ar": "مسح كلمة المرور"
  },
  {
+  "section": "radio",
+  "key": "select_option",
+  "en": "Please select an option",
+  "ar": "يرجى اختيار خيار"
+ },
+ {
   "section": "rating",
   "key": "stars",
   "en": "one: {n} star · other: {n} stars",
@@ -1756,6 +1678,12 @@
   "key": "score",
   "en": "{n} of {total}",
   "ar": "{n} من {total}"
+ },
+ {
+  "section": "rating",
+  "key": "rating_required",
+  "en": "Please choose a rating",
+  "ar": "يرجى اختيار تقييم"
  },
  {
   "section": "rating",
@@ -1962,6 +1890,12 @@
   "ar": "اختر من الاقتراحات"
  },
  {
+  "section": "taginput",
+  "key": "tag_required",
+  "en": "Please add at least one tag",
+  "ar": "يرجى إضافة وسم واحد على الأقل"
+ },
+ {
   "section": "time-date",
   "key": "hijri_date",
   "en": "{month} {day}, {year} AH",
@@ -2032,6 +1966,12 @@
   "key": "after_max",
   "en": "Latest allowed time is {time}",
   "ar": "آخر وقت مسموح به {time}"
+ },
+ {
+  "section": "time-picker",
+  "key": "required",
+  "en": "This field is required",
+  "ar": "هذا الحقل مطلوب"
  },
  {
   "section": "toc",
@@ -2125,6 +2065,18 @@
  },
  {
   "section": "upload",
+  "key": "file_required",
+  "en": "Please add a file",
+  "ar": "يرجى إرفاق ملف"
+ },
+ {
+  "section": "upload",
+  "key": "upload_pending",
+  "en": "Please wait for the upload to finish",
+  "ar": "يرجى الانتظار حتى يكتمل الرفع"
+ },
+ {
+  "section": "upload",
   "key": "drag_drop",
   "en": "Drag and drop files here to upload",
   "ar": "اسحب الملفات وأفلتها هنا للرفع"
@@ -2146,6 +2098,78 @@
   "key": "error",
   "en": "An error occurred, please try again",
   "ar": "حدث خطأ، يرجى المحاولة مرة أخرى"
+ },
+ {
+  "section": "validation",
+  "key": "required",
+  "en": "This field is required",
+  "ar": "هذا الحقل مطلوب"
+ },
+ {
+  "section": "validation",
+  "key": "invalid",
+  "en": "Invalid input",
+  "ar": "مدخل غير صحيح"
+ },
+ {
+  "section": "validation",
+  "key": "invalid_email",
+  "en": "Please enter a valid email address",
+  "ar": "يرجى إدخال عنوان بريد إلكتروني صحيح"
+ },
+ {
+  "section": "validation",
+  "key": "invalid_url",
+  "en": "Please enter a valid URL",
+  "ar": "يرجى إدخال رابط صحيح"
+ },
+ {
+  "section": "validation",
+  "key": "pattern",
+  "en": "Please match the requested format",
+  "ar": "يرجى مطابقة التنسيق المطلوب"
+ },
+ {
+  "section": "validation",
+  "key": "too_short",
+  "en": "Input is too short (minimum {n} characters)",
+  "ar": "المدخل قصير جدًا (الحد الأدنى {n})"
+ },
+ {
+  "section": "validation",
+  "key": "too_long",
+  "en": "Input is too long (maximum {n} characters)",
+  "ar": "المدخل طويل جدًا (الحد الأقصى {n})"
+ },
+ {
+  "section": "validation",
+  "key": "range_under",
+  "en": "Value must be at least {n}",
+  "ar": "القيمة يجب أن تكون على الأقل {n}"
+ },
+ {
+  "section": "validation",
+  "key": "range_over",
+  "en": "Value must be no more than {n}",
+  "ar": "القيمة يجب ألا تزيد على {n}"
+ },
+ {
+  "section": "validation",
+  "key": "select_at_least",
+  "en": "one: Please select at least 1 option · other: Please select at least {n} options",
+  "ar": "one: يرجى اختيار خيار واحد على الأقل · two: يرجى اختيار خيارين على الأقل · few: يرجى اختيار {n} خيارات على الأقل · many: يرجى اختيار {n} خيارًا على الأقل · other: يرجى اختيار {n} خيار على الأقل"
+ },
+ {
+  "section": "validation",
+  "key": "select_at_most",
+  "en": "one: Please select no more than 1 option · other: Please select no more than {n} options",
+  "ar": "one: يرجى اختيار خيار واحد كحد أقصى · two: يرجى اختيار خيارين كحد أقصى · few: يرجى اختيار {n} خيارات كحد أقصى · many: يرجى اختيار {n} خيارًا كحد أقصى · other: يرجى اختيار {n} خيار كحد أقصى"
+ },
+ {
+  "section": "validation",
+  "key": "still_loading",
+  "en": "Still loading. Try again in a moment",
+  "ar": "جارٍ التحميل، يرجى المحاولة بعد قليل"
  },
  {
   "section": "voice-input",

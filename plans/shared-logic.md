@@ -159,8 +159,8 @@ A field component reports its own validity; the validation base reads it and nam
   is not pending (the field answers as it does with no rule, so it is never blocked for good); a lazy
   component is not flagged. A **required** pending field blocks the submit with a "still loading" message,
   and Form calls `NDS.init.mount(form)`. Each new outcome is a Migration line.
-- Messages move into each component's own `strings` section; each moved key is a Migration line, since a
-  consumer pack served from `NDS_I18N_PATH` falls back to English for it (`check-i18n.mjs`).
+- Messages move into each component's own `strings` section. No Migration line: the language packs never
+  shipped in a release (owner, 2026-10-20).
 
 | Component | Path | Rule or stamp | Re-check on | Focus and anchor (unchanged) |
 |---|---|---|---|---|
@@ -332,6 +332,13 @@ parts come in 9d). Owner, 2026-10-20: errors and focus follow page order (a rele
 went to the plain fields first). The re-check runs on one document listener per event, so a group added later is
 re-checked too, and a `.nds-required` checkbox group (no `data-required`) now re-checks as well. The check words stay
 in the `form` section until 9b4. Parity: all 144 the same after each step.
+
+**Landed 2026-10-20 (change #9, step 9b4):** a disabled field never fails (17 parity cases flip to valid, the only
+differences); a required field whose rule has not started fails with "still loading" (`validation.still_loading`) and
+the submit calls `NDS.init.mount(form)`; Taginput checks `data-max-tags` at submit; every component re-checks a field
+showing an error on its own events (owner: all of them), through `NDS.validation.onRule`, so a later bundle's rule is
+heard too, and a picker's status is read from the field that holds it. The check words moved to their components'
+sections (`validation`, `radio`, `custom-select` are new). Release-notes lines: the four outcomes above and page order.
 
 ## 4. Owner decisions
 

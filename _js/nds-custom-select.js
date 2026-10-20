@@ -266,17 +266,18 @@
     }
 
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
-    var formWords = NDS.i18n.strings('form', { select_option: 'Please select an option' });
+    var strings = NDS.i18n.strings('custom-select', { select_option: 'Please select an option' });
     // The readonly display input is barred from constraint validation: required reads the carrier.
     function fieldCheck(container) {
         var carrier = container.querySelector('.nds-select-value');
         var valid = !NDS.validation.isRequired(container) || !!(carrier && carrier.value.trim());
-        return { valid: valid, message: valid ? '' : formWords.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
+        return { valid: valid, message: valid ? '' : strings.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
     }
     // Keyed on the carrier: a native <select> shares the .nds-select shell and stays with the native pass.
+    // Re-checked on the carrier's change: a pick writes it and dispatches input and change.
     NDS.validation.addRule('.nds-select[data-required], .nds-select.nds-required', function (cs) {
         return cs.querySelector('.nds-select-value') ? Object.assign(fieldCheck(cs), { focus: cs.querySelector('.nds-select-input') }) : null;
-    }, { owns: function (c) { return !!c.querySelector('.nds-select-value'); } });
+    }, { owns: function (c) { return !!c.querySelector('.nds-select-value'); }, on: ['change'] });
 
     NDS.CustomSelect = {
         init: init,

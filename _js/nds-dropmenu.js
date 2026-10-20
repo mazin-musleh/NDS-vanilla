@@ -55,6 +55,7 @@
         search_placeholder: 'Search…',
         clear_search: 'Clear search',
         no_results: 'No results',
+        select_option: 'Please select an option',
     });
 
     // State helpers — delegated to NDS.state (nds-core.js)
@@ -1338,15 +1339,15 @@
 
     // Expose global API (called by nds-loader.js unified system)
     // A select-mode picker's check: NDS.validation runs it at submit, validate(el) is its public face.
-    const formWords = NDS.i18n.strings('form', { select_option: 'Please select an option' });
     // The pick lives in a hidden carrier; its own only, a picker nested in its menu holds its own.
     const fieldCheck = (dm) => {
         const carrier = Array.prototype.find.call(dm.querySelectorAll('input[data-nds-select-value]'), (el) => el.closest('.nds-dropmenu') === dm);
         const valid = !!(carrier && carrier.value.trim());
-        return { valid, message: valid ? '' : formWords.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
+        return { valid, message: valid ? '' : strings.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
     };
     NDS.validation.addRule('.nds-dropmenu[data-select-name][data-required]',
-        (dm) => Object.assign(fieldCheck(dm), { focus: dm.querySelector('.nds-dropmenu-trigger') || dm }));
+        (dm) => Object.assign(fieldCheck(dm), { focus: dm.querySelector('.nds-dropmenu-trigger') || dm }),
+        { on: ['nds:dropmenu:select'] });
 
     NDS.Dropmenu = {
         init: initializeDropmenus,

@@ -78,6 +78,7 @@
         incomplete: 'Enter the hour and the minute',
         before_min: 'Earliest allowed time is {time}',
         after_max: 'Latest allowed time is {time}',
+        required: 'This field is required',
     });
 
     const pad = (n) => String(n).padStart(2, '0');
@@ -1073,18 +1074,19 @@
 
     // The boxes' check: NDS.validation runs it at submit, validate(el) is its public face. A field-mode
     // picker stamps setCustomValidity on its input, so the native pass covers it.
-    const formWords = NDS.i18n.strings('form', { required: 'This field is required' });
     // The picker stamps a typed error on the hour box.
     const fieldCheck = (group) => {
         const hour = group.querySelector('.nds-time-hour');
         const carrier = group.querySelector('.nds-time-value');
         const typedError = hour ? hour.validationMessage : '';
         const empty = !typedError && !(carrier && carrier.value);
-        const msg = typedError || (empty && NDS.validation.isRequired(group) ? formWords.text('required') : '');
+        const msg = typedError || (empty && NDS.validation.isRequired(group) ? strings.text('required') : '');
         return { valid: !msg, message: msg, empty };
     };
     NDS.validation.addRule('.nds-form-group.nds-time-fields',
-        (group) => Object.assign(fieldCheck(group), { focus: group.querySelector('.nds-time-hour') }));
+        (group) => Object.assign(fieldCheck(group), { focus: group.querySelector('.nds-time-hour') }),
+        // A pick and typing both write the boxes and dispatch input and change.
+        { on: ['input', 'change'] });
 
     NDS.TimePicker = {
         init: init,

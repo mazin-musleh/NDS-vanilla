@@ -54,6 +54,7 @@
         max: 'Maximum limit {n}',
         cleared: 'All tags removed',
         strict: 'Choose from the suggestions',
+        tag_required: 'Please add at least one tag',
     });
 
     class NDSTagInput {
@@ -325,17 +326,19 @@
     }
 
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
-    const formWords = NDS.i18n.strings('form', { tag_required: 'Please add at least one tag' });
     // The instance's tags (carriers exist only with a name); before init, the server-rendered carriers.
+    // data-max-tags blocks a submit too: tags written in the markup or set by a script skip the add-time check.
     const fieldCheck = (ti) => {
         const count = ti.ndsTaginput ? ti.ndsTaginput.tags.length : ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
-        const valid = !NDS.validation.isRequired(ti) || count > 0;
-        return { valid, message: valid ? '' : formWords.text('tag_required'), empty: count === 0, count };
+        const max = parseInt(ti.getAttribute('data-max-tags'), 10);
+        const over = max > 0 && count > max;
+        const valid = !over && (!NDS.validation.isRequired(ti) || count > 0);
+        return { valid, message: valid ? '' : strings.text(over ? 'max' : 'tag_required', { n: max }), empty: count === 0, count };
     };
-    NDS.validation.addRule('.nds-taginput[data-required], .nds-taginput.nds-required',
+    NDS.validation.addRule('.nds-taginput[data-required], .nds-taginput.nds-required, .nds-taginput[data-max-tags]',
         (ti) => Object.assign(fieldCheck(ti), { focus: ti.querySelector('.nds-form-control > input:not([type="hidden"])') }),
         // The typing field is empty at submit even with tags: the native pass leaves the field to this rule.
-        { owns: (c) => c.classList.contains('nds-taginput') });
+        { owns: (c) => c.classList.contains('nds-taginput'), on: ['nds:taginput:change'] });
 
     NDS.Taginput = {
         init: initializeTagInputs,

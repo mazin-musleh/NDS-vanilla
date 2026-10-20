@@ -15,6 +15,7 @@
  *   NDS.validation.message(input)     the native message for an invalid input
  *   NDS.validation.isVisible(el, form)   no [hidden] and no display:none up to form
  *   NDS.validation.rules              the registered rules, to read: {selector, fn, on, owns}
+ *   NDS.validation.onRule(fn)         fn(rule) for every rule, now and as later bundles register theirs
  * Events:
  *   (none)
  * Hooks:
@@ -24,12 +25,14 @@
  *   - Rules hold functions and selectors, never elements, so the registry outlives no view.
  *   - A field answers once: to the native pass, or to the first rule that answers for it.
  *   - run() reports in page order, so the first error is the first failing field from the top.
+ *   - A disabled field never fails, as in native constraint validation.
+ *   - A required field whose rule has not started (NDS.init.pending) fails with "still loading":
+ *     run() then reports pending: true, and the caller loads what it waits for.
  */
 (() => {
     'use strict';
 
-    // The words Form has always shown; the section stays 'form' so no pack changes.
-    const strings = NDS.i18n.strings('form', {
+    const strings = NDS.i18n.strings('validation', {
         required:       'This field is required',
         invalid:        'Invalid input',
         invalid_email:  'Please enter a valid email address',
@@ -41,6 +44,7 @@
         range_over:     'Value must be no more than {n}',
         select_at_least: { one: 'Please select at least 1 option', other: 'Please select at least {n} options' },
         select_at_most:  { one: 'Please select no more than 1 option', other: 'Please select no more than {n} options' },
+        still_loading:   'Still loading. Try again in a moment',
     });
 
     const rules = [];
@@ -76,9 +80,19 @@
         return strings.text('invalid');
     }
 
+    const watchers = [];
     function addRule(selector, fn, opts = {}) {
-        rules.push({ selector, fn, on: opts.on || [], owns: opts.owns });
+        const rule = { selector, fn, on: opts.on || [], owns: opts.owns };
+        rules.push(rule);
+        watchers.forEach((w) => w(rule));
     }
+    function onRule(fn) {
+        watchers.push(fn);
+        rules.forEach(fn);
+    }
+
+    // As native constraint validation bars a disabled control.
+    const isDisabled = (el, focus) => NDS.state.has(el, 'disabled') || !!el.closest('fieldset:disabled') || !!(focus && focus.disabled);
 
     // The shared parts once: an empty field's own wording.
     function finish(el, result) {
@@ -102,13 +116,13 @@
     }
 
     function check(el, fn) {
-        if (fn) return finish(el, fn(el));
-        for (const rule of rules) {
-            if (!el.matches(rule.selector)) continue;
-            const result = finish(el, rule.fn(el));
-            if (result) return result;
+        let result = null;
+        if (fn) result = finish(el, fn(el));
+        else for (const rule of rules) {
+            if (el.matches(rule.selector) && (result = finish(el, rule.fn(el)))) break;
         }
-        return null;
+        if (result && !result.valid && isDisabled(el, result.focus)) Object.assign(result, { valid: true, message: '' });
+        return result;
     }
 
     // A form-container's own field: never one inside a nested container, never a hidden carrier.
@@ -147,9 +161,18 @@
                 const result = finish(el, rule.fn(el));
                 if (!result) return;
                 answered.add(el);
-                if (!result.valid) fail(el, result.focus || null, result.message);
+                if (!result.valid && !isDisabled(el, result.focus)) fail(el, result.focus || null, result.message);
             });
         }
+
+        // A required field whose rule has not started gets no verdict from its markup. The innermost
+        // pending field answers; Form's field classes are the structure every component sits in.
+        const waiting = [...form.querySelectorAll('.nds-form-container, .nds-form-group')].filter((f) =>
+            !answered.has(f) && isVisible(f, form) && !isDisabled(f) && (isRequired(f) || f.querySelector('[required]')) && NDS.init.pending(f));
+        waiting.filter((f) => !waiting.some((g) => g !== f && f.contains(g))).forEach((f) => {
+            fail(f, f.querySelector(NDS.focusableSel), strings.text('still_loading'));
+            acc.pending = true;
+        });
         // Page order, whatever order the rules registered in.
         const order = (a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
         acc.errors.sort((a, b) => order(a.field, b.field));
@@ -157,5 +180,5 @@
         return acc;
     }
 
-    NDS.validation = { addRule, check, run, message, isVisible, isRequired, checkedCount, rules };
+    NDS.validation = { addRule, onRule, check, run, message, isVisible, isRequired, checkedCount, rules };
 })();

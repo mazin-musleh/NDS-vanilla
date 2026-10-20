@@ -36,7 +36,10 @@
     // mutations are already handled by those long-lived subscribers.
     var _subscribed = false;
 
-    var strings = NDS.i18n.strings('otp', { digit: 'Digit {n} of {total}' });
+    var strings = NDS.i18n.strings('otp', {
+        digit: 'Digit {n} of {total}',
+        otp_incomplete: 'Please enter all {n} digits',
+    });
     // The English label with any numbers: a box copied from a shorter code still counts as unlabelled.
     var DEFAULT_LABEL = new RegExp('^' + strings.defaults.digit.replace(/\{\w+\}/g, '\\d+') + '$');
 
@@ -305,15 +308,15 @@
     // ==============================================
 
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
-    var formWords = NDS.i18n.strings('form', { otp_incomplete: 'Please enter all {n} digits' });
     function fieldCheck(group) {
         var inputs = Array.from(group.querySelectorAll('.nds-otp-container input'));
         var filled = inputs.length > 0 && inputs.every(function (i) { return i.value.length === 1; });
-        return { valid: filled, message: filled ? '' : formWords.text('otp_incomplete', { n: inputs.length }),
+        return { valid: filled, message: filled ? '' : strings.text('otp_incomplete', { n: inputs.length }),
             empty: inputs.every(function (i) { return !i.value; }), filled: filled };
     }
     NDS.validation.addRule('.nds-form-group.nds-otp-group[data-min-checked], .nds-form-group.nds-otp-group[data-max-checked], .nds-form-group.nds-otp-group[data-required], .nds-form-group.nds-otp-group.nds-required',
-        function (group) { return Object.assign(fieldCheck(group), { focus: group.querySelector('.nds-otp-container input') }); });
+        function (group) { return Object.assign(fieldCheck(group), { focus: group.querySelector('.nds-otp-container input') }); },
+        { on: ['input'] });
 
     NDS.Otp = {
         init: init,

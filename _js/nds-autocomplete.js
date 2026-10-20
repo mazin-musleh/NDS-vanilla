@@ -43,6 +43,7 @@
     const strings = NDS.i18n.strings('autocomplete', {
         no_results: 'No results',
         load_failed: 'Could not load suggestions',
+        pick_suggestion: 'Choose from the suggestions',
     });
 
     // ==============================================
@@ -712,7 +713,6 @@
     // ==============================================
 
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
-    const formWords = NDS.i18n.strings('form', { pick_suggestion: 'Choose from the suggestions' });
     // data-strict: typed text must match a picked suggestion. The carrier holds the last pick and exists
     // only on a built field; no carrier, so its text is the prefilled pick. Empty text is required's business.
     const fieldCheck = (container) => {
@@ -720,11 +720,12 @@
         const input = container.ndsAutocomplete?.input;
         const text = input ? input.value.trim() : '';
         const valid = !carrier || text === '' || carrier.value === text;
-        return { valid, message: valid ? '' : formWords.text('pick_suggestion'), picked: !!(carrier && carrier.value) };
+        return { valid, message: valid ? '' : strings.text('pick_suggestion'), picked: !!(carrier && carrier.value) };
     };
     // Taginput in assist mode shares the container and owns its own rejection at add time.
     NDS.validation.addRule('.nds-form-container[data-strict]',
-        (ac) => (ac.classList.contains('nds-taginput') ? null : Object.assign(fieldCheck(ac), { focus: ac.ndsAutocomplete?.input || null })));
+        (ac) => (ac.classList.contains('nds-taginput') ? null : Object.assign(fieldCheck(ac), { focus: ac.ndsAutocomplete?.input || null })),
+        { on: ['input'] });
 
     NDS.Autocomplete = {
         init: initializeAutocompletes,

@@ -469,6 +469,8 @@
             options = options || { showMessages: true, focusFirst: true };
             var form = formElement.closest('.nds-form') || formElement;
             var acc = NDS.validation.run(form, { extra: numberRange });
+            // A field still waiting for its component: load what it waits for, so the next submit can pass.
+            if (acc.pending) NDS.init.mount(form);
 
             if (options.showMessages) {
                 acc.errors.forEach(function(e) { StatusManager.set({ element: e.field, status: 'error', message: e.message }); });
@@ -492,10 +494,11 @@
     };
 
     // A field that shows an error is checked again after its rule's events, so the message
-    // follows the fix. One document listener per event name, added the first time a rule asks.
+    // follows the fix. One document listener per event name, added the first time a rule asks,
+    // a rule from a later bundle included.
     var _recheckOn = {};
     function wireRechecks() {
-        NDS.validation.rules.forEach(function(rule) {
+        NDS.validation.onRule(function(rule) {
             rule.on.forEach(function(type) {
                 if (_recheckOn[type]) return;
                 _recheckOn[type] = true;
@@ -508,7 +511,9 @@
                         var el = t.closest(r.selector);
                         if (!el || seen.indexOf(el) !== -1) return;
                         seen.push(el);
-                        if (NDS.status.get(el) !== '') Validator.validateField(el);
+                        // The status sits on the field that holds el: a picker shows its message there.
+                        var holder = el.closest('.nds-form-container, .nds-form-group') || el;
+                        if (NDS.status.get(holder) !== '') Validator.validateField(el);
                     });
                 });
             });
@@ -663,9 +668,9 @@
     }
 
     function installFormDelegation() {
-        wireRechecks();
         if (_delegationInstalled) return;
         _delegationInstalled = true;
+        wireRechecks();
         var doc = document;
 
         // While a form-container is focus/active, mark its OWN control with a
