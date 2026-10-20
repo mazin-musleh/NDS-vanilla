@@ -716,47 +716,44 @@
     // ----------------------------------------------
     // Mutators — every change goes through these so apply() + save() stay paired.
     // ----------------------------------------------
+    // Restore snapshotted settings only where the current value still matches what
+    // the bundle wrote (the user didn't re-cycle the tile mid-session).
+    function deactivateBundle(name, i) {
+        state.bundles.splice(i, 1);
+        const snapshot = state.settingsSnapshots[name];
+        if (!snapshot) return;
+        const { settings: bundleSettings } = bundleRecipe(name);
+        for (const k in snapshot) {
+            if (bundleSettings && state.settings[k] !== bundleSettings[k]) continue;
+            state.settings[k] = snapshot[k];
+        }
+        delete state.settingsSnapshots[name];
+    }
+
+    // Clear the user's exclusions on this bundle's primitives, so re-toggling is a fresh
+    // activation, not a silent "minus N effects". Then snapshot the current values and
+    // apply the bundle defaults, but ONLY where the user is still at default.
+    function activateBundle(name) {
+        state.bundles.push(name);
+        const { primitives, settings } = bundleRecipe(name);
+        if (primitives.length && state.excluded.length) {
+            state.excluded = state.excluded.filter(p => !primitives.includes(p));
+        }
+        if (!settings) return;
+        const defaults = defaultState().settings;
+        const snapshot = {};
+        for (const k in settings) {
+            snapshot[k] = state.settings[k];
+            if (state.settings[k] === defaults[k]) state.settings[k] = settings[k];
+        }
+        state.settingsSnapshots[name] = snapshot;
+    }
+
     function toggleMode(name) {
         if (MODE_BUNDLES[name]) {
             const i = state.bundles.indexOf(name);
-            if (i >= 0) {
-                // Deactivate. Restore snapshotted settings only where the
-                // current value still matches what the bundle wrote (i.e.,
-                // the user didn't manually re-cycle the tile mid-session).
-                state.bundles.splice(i, 1);
-                const snapshot = state.settingsSnapshots[name];
-                if (snapshot) {
-                    const { settings: bundleSettings } = bundleRecipe(name);
-                    for (const k in snapshot) {
-                        if (bundleSettings && state.settings[k] !== bundleSettings[k]) continue;
-                        state.settings[k] = snapshot[k];
-                    }
-                    delete state.settingsSnapshots[name];
-                }
-            } else {
-                // Activate. Clear any user-side exclusions on this bundle's
-                // primitives so re-toggling is a fresh activation, not a
-                // silent "minus N effects" customization.
-                state.bundles.push(name);
-                const { primitives, settings } = bundleRecipe(name);
-                if (primitives.length && state.excluded.length) {
-                    state.excluded = state.excluded.filter(p => !primitives.includes(p));
-                }
-                // Snapshot current values + apply bundle defaults — but
-                // ONLY where the user is still at default (don't clobber
-                // user tuning).
-                if (settings) {
-                    const defaults = defaultState().settings;
-                    const snapshot = {};
-                    for (const k in settings) {
-                        snapshot[k] = state.settings[k];
-                        if (state.settings[k] === defaults[k]) {
-                            state.settings[k] = settings[k];
-                        }
-                    }
-                    state.settingsSnapshots[name] = snapshot;
-                }
-            }
+            if (i >= 0) deactivateBundle(name, i);
+            else activateBundle(name);
         } else {
             // PRIMITIVE — four supply slots: state.modes (user-direct),
             // state.excluded (user-direct removal), bundle, OS. Effective

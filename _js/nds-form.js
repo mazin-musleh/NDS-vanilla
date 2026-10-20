@@ -269,6 +269,20 @@
         });
     }
 
+    // Where a field's message goes: its data-feedback-target selector, else the first marked
+    // target it owns, else the field itself.
+    function feedbackTargetOf(container) {
+        var selector = container.getAttribute('data-feedback-target');
+        if (selector) return container.querySelector(selector) || container;
+        // Own the marked target — skip footers of NESTED form-containers (the editor's popover
+        // fields sit in the toolbar BEFORE the field's own footer; same rationale as ownField).
+        var marked = container.querySelectorAll('[data-feedback-target]');
+        for (var t = 0; t < marked.length; t++) {
+            if (marked[t].closest('.nds-form-container, .nds-form-group, .nds-feedback') === container) return marked[t];
+        }
+        return container;
+    }
+
     function ownField(container) {
         // Never a hidden carrier: a picker in the prefix slot puts one before the real input.
         var fields = container.querySelectorAll('input:not([type="hidden"]), textarea, select');
@@ -329,29 +343,7 @@
                 if (message) {
                     container.setAttribute('data-message', message);
 
-                    // Create feedback using NDSFeedback API.
-                    // Dynamic target selection using data-feedback-target attribute
-                    var targetSelector = container.getAttribute('data-feedback-target');
-                    var target = container;
-
-                    if (targetSelector) {
-                        var foundTarget = container.querySelector(targetSelector);
-                        if (foundTarget) {
-                            target = foundTarget;
-                        }
-                    } else {
-                        // Own the marked target — skip footers of NESTED
-                        // form-containers (the editor's popover fields sit in
-                        // the toolbar BEFORE the field's own footer; same
-                        // rationale as ownField above).
-                        var marked = container.querySelectorAll('[data-feedback-target]');
-                        for (var t = 0; t < marked.length; t++) {
-                            if (marked[t].closest('.nds-form-container, .nds-form-group, .nds-feedback') === container) {
-                                target = marked[t];
-                                break;
-                            }
-                        }
-                    }
+                    var target = feedbackTargetOf(container);
 
                     // No slot: right after the field's control row, not the container's end,
                     // so a row the field carries below it (a search box's suggestions) stays below.
@@ -1514,24 +1506,21 @@
 
                 btn.addEventListener('click', function() { stepValue(btn); });
 
+                // Step at one tier's pace, replacing the pace before.
+                function repeat(multiplier, speed) {
+                    clearInterval(holdInterval);
+                    holdInterval = setInterval(function() { stepValue(btn, multiplier); }, speed);
+                }
+                // A later tier takes over at its own time into the hold.
+                function upgradeLater(tier) {
+                    tierTimers.push(setTimeout(function() { repeat(tier[1], tier[2]); }, tier[0]));
+                }
+
                 btn.addEventListener('pointerdown', function(e) {
                     if (e.button !== 0) return;
-                    var currentMultiplier = tiers[0][1];
-                    var currentSpeed = tiers[0][2];
-
                     holdTimer = setTimeout(function() {
-                        holdInterval = setInterval(function() { stepValue(btn, currentMultiplier); }, currentSpeed);
-
-                        // Schedule tier upgrades. let-scoped `tier` gives each
-                        // iteration its own binding — no closure-capture IIFE.
-                        for (let t = 1; t < tiers.length; t++) {
-                            const tier = tiers[t];
-                            tierTimers.push(setTimeout(function() {
-                                currentMultiplier = tier[1];
-                                clearInterval(holdInterval);
-                                holdInterval = setInterval(function() { stepValue(btn, currentMultiplier); }, tier[2]);
-                            }, tier[0]));
-                        }
+                        repeat(tiers[0][1], tiers[0][2]);
+                        tiers.slice(1).forEach(upgradeLater);
                     }, 400);
                 });
 

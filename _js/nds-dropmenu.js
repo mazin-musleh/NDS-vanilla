@@ -4,7 +4,7 @@
  *   .nds-dropmenu-footer sits outside .nds-dropmenu-scroll — the footer scrolls away with the list, and search hides its buttons
  * Methods:
  *   NDS.Dropmenu.init() / .reinit()      scan + initialize dropmenu wrappers
- *   NDS.Dropmenu.create(el)              instance one .nds-dropmenu wrapper
+ *   NDS.Dropmenu.create(el)              instance one .nds-dropmenu wrapper; null when it has no menu
  *   NDS.Dropmenu.destroy(el)             tear one down before you discard its wrapper
  *   NDS.Dropmenu.from(el)                the wrapper that owns any element inside it
  *   NDS.Dropmenu.menuOf(dropmenu)        the wrapper's menu
@@ -1303,9 +1303,12 @@
             // A templated menu stamps immediately on programmatic creation —
             // the consumer is instancing NOW, so there is nothing to defer.
             if (element && !_ownFirstIn(element, '.nds-dropmenu-menu')) _stampMenuTemplate(element);
+            if (!element) return null;
             // Prefer the live instance: refresh inside the stamp (or an earlier
-            // create) may already have constructed this wrapper.
-            return element?.ndsDropmenu || new NDSDropmenu(element);
+            // create) may already have constructed this wrapper. The constructor
+            // publishes el.ndsDropmenu only on success → null on a bail.
+            if (!element.ndsDropmenu) new NDSDropmenu(element);
+            return element.ndsDropmenu || null;
         },
         destroy: (element) => element?.ndsDropmenu?.destroy(),
         from: (el) => el?.closest('.nds-dropmenu') || null,

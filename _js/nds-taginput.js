@@ -112,6 +112,7 @@
         bindEvents() {
             const { signal } = this.abortController;
 
+            // The browser restores the form after the reset event: wait for it, unless it was cancelled.
             this.root.closest('form')?.addEventListener('reset', (e) => setTimeout(() => {
                 if (e.defaultPrevented) return;
                 this.tags = [...this._initialTags];

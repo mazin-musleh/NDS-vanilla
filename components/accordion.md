@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 07:46 AM"
+last_edit: "20/10/2026 - 01:31 PM"
 ---
 
 <section id="accordion-overview" class="nds-content-section nds-doc-overview">
@@ -311,7 +311,7 @@ The instance lives on `.nds-accordion` as `ndsAccordion`. It is there once the c
 | Method | Effect |
 |---|---|
 | `NDS.Accordion.init()` | Starts every accordion on the page that has not started yet. On an accordion that already started, it picks up the new items. `reinit()` is the same |
-| `NDS.Accordion.create(element)` | Starts one accordion and returns its instance, or the instance it already has |
+| `NDS.Accordion.create(element)` | Starts one accordion and returns its instance, or the instance it already has. Returns `null` when it has no buttons |
 | `instance.openItem(index)`, `instance.closeItem(index)`, `instance.toggleItem(index)` | Open, close or toggle an item by its position |
 | `instance.closeAll()` | Closes every open item |
 | `instance.getOpenItems()` | Returns the open items, each as `{ index, button, collapse, isOpen }` |

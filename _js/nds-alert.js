@@ -202,20 +202,14 @@
             }
 
             // Action button handlers
-            if (actions && actions.length > 0) {
-                actions.forEach((action, index) => {
-                    const btn = alert.querySelector(`[data-action-index="${index}"]`);
-                    if (btn && (action.onClick || action.dismiss)) {
-                        btn.addEventListener('click', () => {
-                            if (action.onClick) action.onClick(alert);
-                            // Auto dismiss if action.dismiss is true (default: false)
-                            if (action.dismiss) {
-                                this.dismiss(alert);
-                            }
-                        });
-                    }
+            (actions || []).forEach((action, index) => {
+                const btn = alert.querySelector(`[data-action-index="${index}"]`);
+                if (!btn || !(action.onClick || action.dismiss)) return;
+                btn.addEventListener('click', () => {
+                    if (action.onClick) action.onClick(alert);
+                    if (action.dismiss) this.dismiss(alert); // auto dismiss; default false
                 });
-            }
+            });
 
             // One alert per id: a repeat (Saved, Saved…) replaces the last one.
             // ponytail: a toast moved to another position leaves its old placeholder empty until the next dismiss there.

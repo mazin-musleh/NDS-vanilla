@@ -238,39 +238,31 @@
             const hiddenPermanent = [];
             const newIsPermanent = feedback.hasAttribute('data-permanent');
 
+            // A message already there makes way: a permanent one hides under a transient
+            // newcomer, anything else leaves.
+            const makeWay = (existing) => {
+                if (existing.hasAttribute('data-permanent') && !newIsPermanent) {
+                    existing.setAttribute('hidden', '');
+                    hiddenPermanent.push(existing);
+                    return;
+                }
+                existing._hiddenPermanent = null;
+                this.dismiss(existing);
+            };
+
             // Handle existing feedback from target area before adding new one
             if (position === 'prepend' || position === 'append') {
                 // A group's message leaves the messages of the fields inside it.
                 const FIELD = '.nds-form-container, .nds-form-group';
                 const owner = targetEl.closest(FIELD);
                 targetEl.querySelectorAll('.nds-feedback').forEach(existingFeedback => {
-                    if (!existingFeedback.closest('code') && existingFeedback.parentElement.closest(FIELD) === owner) {
-                        if (existingFeedback.hasAttribute('data-permanent') && !newIsPermanent) {
-                            existingFeedback.setAttribute('hidden', '');
-                            hiddenPermanent.push(existingFeedback);
-                        } else {
-                            existingFeedback._hiddenPermanent = null;
-                            this.dismiss(existingFeedback);
-                        }
-                    }
+                    if (!existingFeedback.closest('code') && existingFeedback.parentElement.closest(FIELD) === owner) makeWay(existingFeedback);
                 });
             } else {
                 const parent = targetEl.parentNode;
-                if (parent) {
-                    parent.querySelectorAll('.nds-feedback').forEach(existingFeedback => {
-                        if (!existingFeedback.closest('code')) {
-                            if (existingFeedback.parentNode === parent) {
-                                if (existingFeedback.hasAttribute('data-permanent') && !newIsPermanent) {
-                                    existingFeedback.setAttribute('hidden', '');
-                                    hiddenPermanent.push(existingFeedback);
-                                } else {
-                                    existingFeedback._hiddenPermanent = null;
-                                    this.dismiss(existingFeedback);
-                                }
-                            }
-                        }
-                    });
-                }
+                parent?.querySelectorAll('.nds-feedback').forEach(existingFeedback => {
+                    if (!existingFeedback.closest('code') && existingFeedback.parentNode === parent) makeWay(existingFeedback);
+                });
             }
 
             // Store references to hidden permanent feedback on the new feedback element

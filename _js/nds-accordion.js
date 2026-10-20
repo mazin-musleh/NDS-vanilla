@@ -5,7 +5,7 @@
  * Methods:
  *   NDS.Accordion.init() / .reinit()   scan .nds-accordion; a live root adopts new items
  *   NDS.Accordion.create(container)    instance one accordion — returns the live controller
- *                                      when there already is one
+ *                                      when there already is one, null when it has no buttons
  *   instance.openItem(i) / .closeItem(i) / .toggleItem(i)
  *   instance.closeAll()
  *   instance.getOpenItems()            [{index, button, collapse, isOpen}]
@@ -412,7 +412,7 @@
             if (container.ndsAccordion) return container.ndsAccordion;
             const instance = new NDSAccordion(container);
             activate(container, instance);
-            return instance;
+            return instance.valid ? instance : null;
         }
     };
 

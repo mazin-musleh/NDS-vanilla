@@ -898,6 +898,28 @@
                     this._hideTooltip();
                 };
 
+                // Build the tip as DOM so caller-supplied colors[] flow through
+                // marker.style.backgroundColor (a CSSOM setter) instead of an
+                // HTML style-attribute interpolation.
+                const fillTip = (idx) => {
+                    this._tooltip.replaceChildren();
+                    const title = document.createElement('strong');
+                    title.textContent = catLabels[idx] ?? '';
+                    this._tooltip.appendChild(title);
+                    for (let si = 0; si < seriesArr.length; si++) {
+                        const s = seriesArr[si];
+                        const v = s.data[idx];
+                        if (v === undefined) continue;
+                        this._tooltip.appendChild(document.createElement('br'));
+                        const marker = document.createElement('span');
+                        marker.className = 'nds-chart-tip-marker';
+                        marker.style.backgroundColor = colors[si];
+                        this._tooltip.appendChild(marker);
+                        this._tooltip.appendChild(document.createTextNode(s.name + ': ' + this._fmtVal(v)));
+                    }
+                    this._tooltip.classList.add('nds-chart-tooltip--visible');
+                };
+
                 // Snap the crosshair to the nearest x-index under the pointer.
                 const update = (e) => {
                     const rect = svg.getBoundingClientRect();
@@ -910,42 +932,20 @@
                         if (d < minDist) { minDist = d; nearest = i; }
                     }
 
-                    if (nearest !== lastIdx) {
-                        lastIdx = nearest;
-                        crosshair.setAttribute('x1', xPositions[nearest]);
-                        crosshair.setAttribute('x2', xPositions[nearest]);
-                        crosshair.style.display = '';
+                    if (nearest === lastIdx) { positionTip(e, xPositions[lastIdx]); return; }
+                    lastIdx = nearest;
+                    crosshair.setAttribute('x1', xPositions[nearest]);
+                    crosshair.setAttribute('x2', xPositions[nearest]);
+                    crosshair.style.display = '';
 
-                        for (let i = 0; i < dotsByIdx.length; i++) {
-                            const action = i === nearest ? 'add' : 'remove';
-                            dotsByIdx[i].forEach(d => d.classList[action]('nds-chart-dot--active'));
-                        }
+                    for (let i = 0; i < dotsByIdx.length; i++) {
+                        const action = i === nearest ? 'add' : 'remove';
+                        dotsByIdx[i].forEach(d => d.classList[action]('nds-chart-dot--active'));
+                    }
 
-
-                        if (this.opts.tooltip?.show !== false && this._tooltip) {
-                            // Build tip as DOM so caller-supplied colors[] flow through
-                            // marker.style.backgroundColor (a CSSOM setter) instead of an
-                            // HTML style-attribute interpolation.
-                            this._tooltip.replaceChildren();
-                            const title = document.createElement('strong');
-                            title.textContent = catLabels[nearest] ?? '';
-                            this._tooltip.appendChild(title);
-                            for (let si = 0; si < seriesArr.length; si++) {
-                                const s = seriesArr[si];
-                                const v = s.data[nearest];
-                                if (v === undefined) continue;
-                                this._tooltip.appendChild(document.createElement('br'));
-                                const marker = document.createElement('span');
-                                marker.className = 'nds-chart-tip-marker';
-                                marker.style.backgroundColor = colors[si];
-                                this._tooltip.appendChild(marker);
-                                this._tooltip.appendChild(document.createTextNode(s.name + ': ' + this._fmtVal(v)));
-                            }
-                            this._tooltip.classList.add('nds-chart-tooltip--visible');
-                            positionTip(e, xPositions[nearest]);
-                        }
-                    } else {
-                        positionTip(e, xPositions[lastIdx]);
+                    if (this.opts.tooltip?.show !== false && this._tooltip) {
+                        fillTip(nearest);
+                        positionTip(e, xPositions[nearest]);
                     }
                 };
 

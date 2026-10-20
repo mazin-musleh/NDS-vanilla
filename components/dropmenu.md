@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 07:46 AM"
+last_edit: "20/10/2026 - 01:31 PM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -454,7 +454,7 @@ Set these on the `.nds-dropmenu` wrapper. The menu inherits them.
 | Method | Effect |
 |---|---|
 | `NDS.Dropmenu.init()` | Starts every `.nds-dropmenu` on the page that has not started yet. `reinit()` is the same |
-| `NDS.Dropmenu.create(wrapper)` | Starts one wrapper and returns its instance |
+| `NDS.Dropmenu.create(wrapper)` | Starts one wrapper and returns its instance, or `null` when it has no menu |
 | `NDS.Dropmenu.destroy(wrapper)` | Removes its listeners. Call it before you remove the wrapper from the page: otherwise its listener on the document keeps the removed wrapper in memory |
 | `NDS.Dropmenu.from(el)` | Returns the wrapper of any element in the dropmenu |
 | `NDS.Dropmenu.menuOf(wrapper)` | Returns the menu of a wrapper |
