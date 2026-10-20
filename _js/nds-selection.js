@@ -100,7 +100,7 @@
             const on = shown.filter(b => b.checked).length;
             alls.forEach(box => {
                 box.checked = on > 0 && on === shown.length;
-                NDS.Form.setIndeterminate(box, on > 0 && on < shown.length);
+                NDS.Checkbox.setIndeterminate(box, on > 0 && on < shown.length);
             });
         }
 

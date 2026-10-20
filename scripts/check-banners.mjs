@@ -50,6 +50,7 @@ const SCOPE = [
     ['nds-field.js', 'field'],
     ['nds-checkbox.js', 'Checkbox'],
     ['nds-radio.js', 'Radio'],
+    ['nds-switch.js', 'Switch'],
     ['nds-digital-stamp.js', 'DigitalStamp'],
     ['nds-drawer.js', 'Drawer'],
     ['nds-dropmenu.js', 'Dropmenu'],

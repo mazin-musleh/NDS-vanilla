@@ -20,7 +20,6 @@
  *                                          flips the inputs' required property)
  *   NDS.Form.syncState(input)             re-sync a control's chrome after setting
  *                                          value/checked from JS
- *   NDS.Form.setIndeterminate(cb, value)  set a checkbox's indeterminate state
  *   NDS.Form.validate(el, opts)           validate everything → {valid, invalidFields, errors};
  *                                          el is the .nds-form or anything inside it — works on
  *                                          a non-<form> container too (see the Gotcha below)
@@ -34,8 +33,6 @@
  *                               validate() run
  *   nds:form:valid              detail {waitUntil(promise)} — from the form, on a passing submit
  *   nds:form:invalid            detail {invalidFields, errors} — from the form, on a blocked submit
- *   nds:switch:change           detail {checked, value, input} — from the .nds-switch-toggle element
- *   nds:checkbox:indeterminate  detail {indeterminate} — from the checkbox
  * Hooks:
  *   data-required · data-min-checked · data-max-checked · data-error-message
  *   data-ajax · data-no-pending · data-message · data-feedback-target · data-loading-slot
@@ -730,17 +727,6 @@
         }
     });
 
-    // Checkbox and radio (their own files take these in the next step): a pick clears a checkbox's
-    // indeterminate state, and a radio repaints its name group.
-    function repaintRadioGroup(changed) {
-        if (changed.type !== 'radio' || !changed.name) return;
-        var group = changed.closest('.nds-form-group');
-        if (!group) return;
-        group.querySelectorAll('input[type="radio"][name="' + CSS.escape(changed.name) + '"]').forEach(function(radio) {
-            if (radio !== changed && radio.closest('.nds-form-control')) NDS.field.refresh(radio, { validate: true });
-        });
-    }
-
     // Messages: typing drops a message, leaving the field checks it again once it shows an error,
     // and a reset clears every message. The clear button follows the value.
     NDS.field.addType('status', {
@@ -748,7 +734,6 @@
         refresh: function(input, fc, opts) {
             syncClear(input, fc);
             if (opts.validate) validateInput(input, fc);
-            if (input.type === 'radio' && input.checked) repaintRadioGroup(input);
         },
         on: {
             focusout: function(e, c) {
@@ -772,9 +757,6 @@
                 if (!c) return;
                 syncClear(c.input, c.control);
                 if (c.container && NDS.status.get(c.container) === 'error') validateInput(c.input, c.control);
-                repaintRadioGroup(c.input);
-                // A pick clears the indeterminate state.
-                if (c.input.type === 'checkbox' && !c.input.indeterminate) setIndeterminate(c.input, false);
             },
             reset: function(e) {
                 var form = e.target;
@@ -788,17 +770,6 @@
             }
         }
     });
-
-    function setIndeterminate(checkbox, value) {
-        if (!checkbox || checkbox.type !== 'checkbox') return;
-        checkbox.indeterminate = !!value;
-        var container = checkbox.closest('.nds-form-container');
-        if (container) value ? NDS.state.add(container, 'indeterminate') : NDS.state.remove(container, 'indeterminate');
-        checkbox.dispatchEvent(new CustomEvent('nds:checkbox:indeterminate', {
-            detail: { indeterminate: !!value },
-            bubbles: true
-        }));
-    }
 
     // Auto-fill: a chip fills its target field; data-autofill-apply also submits the search
     // (it sends Enter to the target).
@@ -825,42 +796,6 @@
             }
         }
     });
-
-    // Switch (its own file takes this in the next step): the track, Space or Enter, and an outside label toggle it.
-    function initSwitches(fc) {
-        fc.querySelectorAll('.nds-switch-toggle').forEach(function(switchElement) {
-            var switchInput = switchElement.querySelector('.nds-switch-input');
-            var switchTrack = switchElement.querySelector('.nds-switch-track');
-            if (!switchInput || !switchTrack || switchTrack._switchInitialized) return;
-            switchTrack._switchInitialized = true;
-            var container = fc.closest('.nds-form-container');
-
-            function toggleSwitch() {
-                if (switchInput.disabled || switchInput.readOnly || switchElement.classList.contains('disabled')) return;
-                NDS.setValue(switchInput, !switchInput.checked);
-                NDS.field.refresh(switchInput, { validate: true });
-                switchElement.dispatchEvent(new CustomEvent('nds:switch:change', {
-                    detail: { checked: switchInput.checked, value: switchInput.value, input: switchInput },
-                    bubbles: true
-                }));
-            }
-            switchTrack.addEventListener('mousedown', function() {
-                if (!switchInput.disabled && !switchElement.classList.contains('disabled') && container) NDS.state.add(container, 'active');
-            });
-            ['mouseup', 'mouseleave'].forEach(function(event) {
-                switchTrack.addEventListener(event, function() { if (container) NDS.state.remove(container, 'active'); });
-            });
-            switchTrack.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); toggleSwitch(); });
-            switchInput.addEventListener('keydown', function(e) {
-                if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggleSwitch(); }
-            });
-            var label = fc.querySelector('label[for="' + CSS.escape(switchInput.id) + '"]');
-            if (label && !switchElement.contains(label)) {
-                label.addEventListener('click', function(e) { e.preventDefault(); toggleSwitch(); });
-            }
-            NDS.field.refresh(switchInput);
-        });
-    }
 
     // ==============================================
     // FORMS
@@ -917,8 +852,6 @@
     };
     NDS.field.addType('forms', {
         create: function(el) {
-            // A switch's input sits in its track, not in the control: switches start per control.
-            selfAndInner(el, '.nds-form-control').forEach(function(fc) { if (!fc.closest('code')) initSwitches(fc); });
             selfAndInner(el, '.nds-form').forEach(initForm);
             wireRechecks();
             if (_windowWired) return;
@@ -983,9 +916,6 @@
         // itself, so it can't re-enter a caller's own input handler. No-op outside
         // a form-control.
         syncState: function(input) { NDS.field.refresh(input); },
-
-        // Checkbox Indeterminate State
-        setIndeterminate: setIndeterminate,
 
         // Form Validation
         validate: Validator.validateForm.bind(Validator),

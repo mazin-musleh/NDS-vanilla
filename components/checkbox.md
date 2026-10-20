@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:24 PM"
+last_edit: "21/10/2026 - 12:53 AM"
 ---
 
 <section id="checkbox-overview" class="nds-content-section nds-doc-overview">
@@ -154,7 +154,7 @@ A row on `.nds-checkbox-input` (every `<input>`) or `.nds-checkbox` changes ever
 ### Indeterminate
 {: .nds-block-title}
 
-`NDS.Form.setIndeterminate()` shows a dash, for a "select all" checkbox. A click by the user clears it. Each change fires `nds:checkbox:indeterminate`.
+`NDS.Checkbox.setIndeterminate()` shows a dash, for a "select all" checkbox. A click by the user clears it. Each change fires `nds:checkbox:indeterminate`.
 
 </div>
   </div>
@@ -225,7 +225,7 @@ A row on `.nds-checkbox-input` (every `<input>`) or `.nds-checkbox` changes ever
 | `data-error-message` | `.nds-checkbox-group` | Replaces the message when nothing is checked. The `data-min-checked` and `data-max-checked` messages stay |
 | `data-state~="disabled"` | `.nds-checkbox`, `.nds-checkbox-group` | Disables the option, or every option in the group. The group's title takes the disabled color |
 | `data-state~="readonly"` | `.nds-checkbox` | The option cannot change. The tile shows a border only |
-| `data-state~="indeterminate"` | `.nds-checkbox` | Set by `NDS.Form.setIndeterminate()`. Do not set it yourself |
+| `data-state~="indeterminate"` | `.nds-checkbox` | Set by `NDS.Checkbox.setIndeterminate()`. Do not set it yourself |
 | `data-feedback-target` | `.nds-form-header`, or an element inside the group | Receives the feedback message. Without one, the message goes at the end of the field or the group |
 {: .nds-table .nds-responsive}
 
@@ -256,7 +256,7 @@ Source: the `checkbox` group in `_sass/tokens/_components.scss`.
 
 | Method | Effect |
 |---|---|
-| `NDS.Form.setIndeterminate(checkbox, value)` | Shows or clears the dash, and fires `nds:checkbox:indeterminate` |
+| `NDS.Checkbox.setIndeterminate(checkbox, value)` | Shows or clears the dash, and fires `nds:checkbox:indeterminate` |
 | `NDS.Checkbox.validate(group, options)` | Checks the group and returns `{ valid, checked, min, max, message }`. Pass `{ showMessage: false }` to check without a message. A group that shows an error is checked again on each change |
 | `NDS.Form.syncState(input)` | Updates the field after you set `.checked` from code. It fires no event |
 | `NDS.Form.setStatus(element, status, { message })` | Shows a status and a message on a field or a group, such as an error from the server |
@@ -276,7 +276,7 @@ var options = document.querySelectorAll('.nds-checkbox-group .nds-checkbox-input
 function update() {
   var on = Array.prototype.filter.call(options, function (cb) { return cb.checked; }).length;
   all.checked = on === options.length;
-  NDS.Form.setIndeterminate(all, on > 0 && on < options.length);
+  NDS.Checkbox.setIndeterminate(all, on > 0 && on < options.length);
 }
 options.forEach(function (cb) { cb.addEventListener('change', update); });
 

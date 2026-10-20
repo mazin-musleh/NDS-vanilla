@@ -1,5 +1,5 @@
 /* NDS.Radio — public surface
- * Rides: nds-validation (its rule) · nds-form (validate shows the outcome)
+ * Rides: nds-validation (its rule) · nds-field (its part) · nds-form (validate shows the outcome)
  * Methods:
  *   NDS.Radio.validate(el, opts)   the radio group el sits in → {valid, message, selected};
  *                                  opts {showMessage} (default on)
@@ -11,6 +11,8 @@
  * Gotchas:
  *   - A type part of the form field: no init() and no loader entry.
  *   - A group showing an error is checked again on each change, so the message follows the fix.
+ *   - A pick, or a checked radio set from code and refreshed, re-syncs the others of its name group:
+ *     the browser unchecks them with no event.
  */
 (() => {
     'use strict';
@@ -34,6 +36,20 @@
         },
         { on: ['change'] }
     );
+
+    function repaint(changed) {
+        if (changed.type !== 'radio' || !changed.name) return;
+        const group = changed.closest('.nds-form-group');
+        if (!group) return;
+        group.querySelectorAll(`input[type="radio"][name="${CSS.escape(changed.name)}"]`).forEach((radio) => {
+            if (radio !== changed && radio.closest('.nds-form-control')) NDS.field.refresh(radio, { validate: true });
+        });
+    }
+
+    NDS.field.addType('radio', {
+        refresh: (input) => { if (input.type === 'radio' && input.checked) repaint(input); },
+        on: { change: (e, c) => { if (c) repaint(c.input); } },
+    });
 
     NDS.Radio = {
         validate: (el, opts) => NDS.Form.validateField(groupOf(el), opts, check),

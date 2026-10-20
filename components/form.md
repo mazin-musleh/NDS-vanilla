@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 12:53 AM"
 lang: en
 direction: ltr
 ---
@@ -672,7 +672,6 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 | `NDS.Form.syncState(input)` | Updates the field after a script sets its value or `checked`. It fires no event |
 | `NDS.Form.validate(el, options)` | Checks every visible field in the form that holds `el`, and returns `{ valid, invalidFields, errors }`. `options` is `{ showMessages, focusFirst }`, both `true` by default. Pass both: an object with one key turns the other off |
 | `NDS.Form.validateField(el, options)` | Checks one field by its component's rule and returns its result, or `null` when no rule answers for `el`. Each component's `validate(el)` calls it: `NDS.Checkbox.validate(group)`, `NDS.Radio.validate(group)`, `NDS.Otp.validate(group)`, `NDS.Multiselect.validate(el)`, `NDS.Taginput.validate(el)` and the others. A field that shows a message is checked again on each change |
-| `NDS.Form.setIndeterminate(checkbox, value)` | Sets a checkbox's mixed state. See [Checkbox](../components/checkbox) |
 | `NDS.Form.isNationalId(value)`, `isIban(value)` | Return `true` when the string passes the `.nds-national-id` or `.nds-iban` check. They take the clean value: digits only, or capitals with no spaces |
 {: .nds-table .nds-responsive}
 

@@ -732,6 +732,7 @@
   tags: ["CSS"]
   url: "/components/switch.html"
   scss: _sass/components/_switch.scss
+  js: _js/nds-switch.js
 
 - title: "Tag Input"
   description: "Free-text tags committed as removable chips while typing, posted natively as an array"

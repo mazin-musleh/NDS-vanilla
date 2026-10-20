@@ -352,6 +352,12 @@ registry's `owns` (Upload) keeps a required stamp off a value-owning field befor
 validate cases and 216 interaction steps, all the same. Speed (median of 9, x6.6): init and create even, a warm
 click +0.9 ms (the number part's pointer listeners), a first click even. Switch, Checkbox and Radio move in 9d.
 
+**Landed 2026-10-21 (change #9, step 9d):** Checkbox (`setIndeterminate`, moved from Form with a `kind: api` row;
+a pick clears the dash), Radio (repaints its name group on change and on refresh) and the new `nds-switch.js`
+(track, Space or Enter, a label in the same control; `nds:switch:change`) register their parts with `NDS.field`;
+Form holds none of them. Selection calls `NDS.Checkbox.setIndeterminate`. Parity: all 144 and all 216 the same;
+the dash, its clearing and the label and Enter toggles matched old against new.
+
 ## 4. Owner decisions
 
 1. **A7 renames: all four, decided 2026-10-20.** One naming pattern with no exceptions lets an agent guess a
