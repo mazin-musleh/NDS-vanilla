@@ -230,6 +230,10 @@
         // A sign-out in a single-page app: no session modal stays up.
         if (warnEl) NDS.Modal.destroy(warnEl);
         if (endedEl) NDS.Modal.destroy(endedEl);
+        // Built from init()'s links: a later init() builds them again with its own.
+        warnEl?.remove();
+        endedEl?.remove();
+        warnEl = endedEl = null;
         _initDone = warning = ended = redirected = false;
         renewed = tried = 0;
     }

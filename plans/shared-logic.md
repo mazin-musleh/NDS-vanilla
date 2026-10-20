@@ -285,8 +285,8 @@ before it is fixed. Base first: Dropmenu's fix reaches every component that ride
 - Visible after a re-create: ~~Filter and Table column toggle leave `data-delay="500"` (`filter:1450`, `table:492`)~~
   (fixed; a re-create set it again, so nothing showed); ~~the column toggle builds a second Reset footer (`table:478`)~~ (fixed); ~~Side Menu's toggle stays shown and
   dead (`sidemenu:212`)~~ (fixed); ~~Taginput's chips still drive the dead instance (`taginput:307`)~~ (fixed: `NDS.buildChip` takes the owner's `signal`); ~~Filter's `_ndsFilterObserver`
-  stays true, so later options are never wired (`filter:1690`)~~ (fixed); Session Timeout reuses its dialogs with the old links
-  (`session-timeout:95`); Date Picker may keep its error and block the form (`date-picker:605`, possible).
+  stays true, so later options are never wired (`filter:1690`)~~ (fixed); ~~Session Timeout reuses its dialogs with the old links
+  (`session-timeout:95`)~~ (fixed); Date Picker may keep its error and block the form (`date-picker:605`, possible).
 - Leaks: Pagination's ellipsis Dropmenu is not destroyed and `el.ndsPagination` has no `destroy()`; its stamps survive
   (`pagination:156-178, 271, 340-368, 450`); Multiselect's destroy leaves its Dropmenu live and its stamps
   (`multiselect:79, 93, 139, 350`); User Feedback has no backref, so `NDS.init.destroy` misses it, and its message stays
