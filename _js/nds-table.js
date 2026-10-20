@@ -489,7 +489,11 @@
                 // nds:dropmenu:prepare so we build, then opens with the content already
                 // in place — never empty, never mis-measured. One-shot; later opens are
                 // immediate. Released by the same abort signal in destroy().
-                this.root.setAttribute('data-delay', '500');
+                // An authored delay wins; destroy() takes back only this one.
+                if (!this.root.hasAttribute('data-delay')) {
+                    this.root.setAttribute('data-delay', '500');
+                    this._ownDelay = true;
+                }
                 this.root.addEventListener('nds:dropmenu:prepare', () => this.render(), { once: true, signal });
             }
 
@@ -549,8 +553,11 @@
 
         destroy() {
             this.abortController?.abort();
+            // The rows render() built stay: the next create() reads them as the list.
+            this.footer?.remove();
+            if (this._ownDelay) this.root.removeAttribute('data-delay');
             this.root.removeAttribute('data-nds-columns-initialized');
-            this.root.ndsColumnToggle = null;
+            delete this.root.ndsColumnToggle;
         }
     }
 

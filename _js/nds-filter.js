@@ -1447,7 +1447,11 @@
                 if (dm) dropmenus.add(dm);
             });
             dropmenus.forEach(dm => {
-                dm.setAttribute('data-delay', '500');
+                // An authored delay wins; destroy() takes back only this one.
+                if (!dm.hasAttribute('data-delay')) {
+                    dm.setAttribute('data-delay', '500');
+                    (this._ownDelay ||= []).push(dm);
+                }
                 dm.addEventListener('nds:dropmenu:prepare', () => this.buildDeferredFilters(), { signal });
             });
         }
@@ -1688,7 +1692,7 @@
             // Always set up the DOM observer, even with 0 inputs (handles cascading/async filters)
             if (!element._ndsFilterObserver) {
                 element._ndsFilterObserver = true;
-                this._offDOMAdds.push(NDS.onDOMAdd('input[type="checkbox"], input[type="radio"], .nds-switch-input', (nodes) => {
+                const off = NDS.onDOMAdd('input[type="checkbox"], input[type="radio"], .nds-switch-input', (nodes) => {
                     // Ignore nodes that already have listeners bound — they are
                     // being moved, not genuinely inserted.
                     const fresh = nodes.filter(n => element.contains(n) && !n._ndsFilterBound);
@@ -1696,7 +1700,9 @@
                         this.setupManualFilter(element, filterName);
                         this.reapplyUrlParamsForFilter(filterName);
                     }
-                }));
+                });
+                // The flag goes with the watcher, so a re-create watches again.
+                this._offDOMAdds.push(() => { off(); delete element._ndsFilterObserver; });
             }
 
             if (inputs.length === 0) {
@@ -2932,6 +2938,7 @@
             // would leak one closure per filter element for the page lifetime.
             this._offDOMAdds.forEach(off => off());
             this._offDOMAdds.length = 0;
+            this._ownDelay?.forEach(dm => dm.removeAttribute('data-delay'));
             this._filterElementACs.forEach(el => {
                 if (el._ndsFilterAC) { el._ndsFilterAC.abort(); delete el._ndsFilterAC; }
             });
