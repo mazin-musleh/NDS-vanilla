@@ -87,7 +87,7 @@ report.push(...await recordsPage.evaluate(async () => {
         }
     });
 
-    const EVENTS = ['nds:filter:change', 'nds:sort:change', 'nds:table:sort',
+    const EVENTS = ['nds:filter:change', 'nds:sort:change',
         'nds:selection:change', 'nds:pagination:change'];
     const events = {};
     EVENTS.forEach((e) => { events[e] = 0; document.addEventListener(e, () => { events[e]++; }, true); });
@@ -239,8 +239,8 @@ report.push(...await recordsPage.evaluate(async () => {
         order() === orderAfterInsert,
         sortActive ? `sort active, order held=${order() === orderAfterInsert}` : 'NO SORT ACTIVE — weak test');
     ok('server sort safe — a refresh fires no sort event',
-        events['nds:sort:change'] === 0 && events['nds:table:sort'] === 0,
-        `sort:change=${events['nds:sort:change']} table:sort=${events['nds:table:sort']}`);
+        events['nds:sort:change'] === 0,
+        `sort:change=${events['nds:sort:change']}`);
 
     // ── 4. SERVER-SIDE: an AJAX filter is skipped, not re-filtered ─────────
     const inst = filter();

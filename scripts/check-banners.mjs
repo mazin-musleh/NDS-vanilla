@@ -3,7 +3,8 @@
  * NDS public-surface banner checker (PERSONA entry 7, JSD-20).
  *
  *   node scripts/check-banners.mjs --verify <file>    check one file's banner
- *   node scripts/check-banners.mjs --all              check every in-scope file
+ *   node scripts/check-banners.mjs --all              check every in-scope file, one name per component
+ *                                                     (entry 9), and every NDS.X.method / nds:x:y caller
  *   node scripts/check-banners.mjs --generate <file>  print a banner skeleton to stdout
  *
  * Never writes files. Exit 0 = clean, 1 = findings, 2 = usage error.
@@ -438,6 +439,56 @@ function checkNames() {
     return [...new Set(issues)];
 }
 
+// ── callers: nothing calls a name no component defines ─────────────────────
+
+// Every place that calls NDS: the code, the docs a consumer copies from, and the browser checks.
+const CALLER_DIRS = ['_js', 'components', 'layout', 'utilities', 'ui-shell', 'core', 'foundations',
+    'examples', 'templates', 'guides', '_includes', '_layouts', 'scripts'];
+// Old names on purpose: the migration guide, and the IQ rules every 1.x template still reads.
+const CALLER_SKIP = /guides[\\/]migration\.md$|_includes[\\/]NDS-IQ/;
+
+function walk(dir) {
+    return readdirSync(dir, { withFileTypes: true }).flatMap((d) => {
+        const p = join(dir, d.name);
+        if (d.isDirectory()) return d.name === 'node_modules' ? [] : walk(p);
+        return /\.(js|mjs|md|html)$/.test(d.name) && !/\.min\.js$/.test(d.name) ? [p] : [];
+    });
+}
+
+// ponytail: NDS.X.method and nds:x:y only; an instance call (el.ndsTabs.goTo) has no parsed
+// surface, so the browser checks still own it. Add it if banners grow a parsable instance list.
+function checkCallers() {
+    const surfaces = {};
+    const dispatched = new Set();
+    for (const [file, ns] of SCOPE) {
+        const source = readFileSync(join(REPO, '_js', file), 'utf8');
+        if (ns) {
+            const keys = extractKeys(source, ns);
+            if (keys) surfaces[ns] = keys;
+        }
+        // A built name ('nds:table:' + verb) is live only as the full names its banner lists.
+        for (const e of extractEvents(source)) if (!isPrefix(e)) dispatched.add(e);
+        const events = parseBanner(source)?.sections.find((s) => s.label === 'Events');
+        for (const e of events ? bannerEventNames(events.text) : []) dispatched.add(e);
+    }
+    const found = new Map();
+    const note = (what, file, text, at) => {
+        const where = `${file.slice(REPO.length + 1)}:${text.slice(0, at).split('\n').length}`;
+        (found.get(what) || found.set(what, []).get(what)).push(where);
+    };
+    for (const file of CALLER_DIRS.flatMap((d) => walk(join(REPO, d)))) {
+        if (CALLER_SKIP.test(file)) continue;
+        const text = readFileSync(file, 'utf8');
+        for (const m of text.matchAll(/NDS\.([A-Z]\w*)\.([A-Za-z$][\w$]*)/g)) {
+            if (surfaces[m[1]] && !surfaces[m[1]].has(m[2])) note(`NDS.${m[1]}.${m[2]}`, file, text, m.index);
+        }
+        for (const m of text.matchAll(/nds:[a-z]+(?:-[a-z]+)*:[a-z]+(?:-[a-z]+)*/g)) {
+            if (!m[0].startsWith('nds:x:') && !dispatched.has(m[0])) note(m[0], file, text, m.index); // nds:x: is the docs' placeholder
+        }
+    }
+    return [...found].map(([what, at]) => `${what} is defined by no component (${at.length}x: ${at.slice(0, 3).join(', ')})`);
+}
+
 // ── generate ────────────────────────────────────────────────────────────────
 
 function generate(file, ns, source) {
@@ -511,9 +562,12 @@ if (mode === '--all') {
     }
     const names = checkNames();
     for (const issue of names) console.log(`names                        ${issue}`);
+    const callers = checkCallers();
+    for (const issue of callers) console.log(`callers                      ${issue}`);
     console.log(`\n${SCOPE.length} files in scope, ${SCOPE.length - bad} ok, ${bad} with findings`);
     console.log(names.length ? `one name per component: ${names.length} findings` : 'one name per component: ok');
-    process.exit(bad || names.length ? 1 : 0);
+    console.log(callers.length ? `callers: ${callers.length} dead names` : 'callers: ok');
+    process.exit(bad || names.length || callers.length ? 1 : 0);
 } else if (mode === '--verify' && arg) {
     const { file, ns, source } = resolve(arg);
     const issues = verifyFile(file, ns, source);
