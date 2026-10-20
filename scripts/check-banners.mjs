@@ -8,19 +8,19 @@
  *   node scripts/check-banners.mjs --generate <file>  print a banner skeleton to stdout
  *
  * Never writes files. Exit 0 = clean, 1 = findings, 2 = usage error.
+ * Imported, it runs nothing and exports SCOPE and extractKeys (check-js-rules.mjs reads the surfaces).
  */
 // ponytail: line-regex parser, not an AST — brace/comment tracking is line-local, so a brace
 // inside a multi-line string, a computed key, or an early `return {` in an IIFE can misparse.
 // Upgrade path: an acorn walk over the namespace object if a surface outgrows the regexes.
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
-import { basename, join, dirname } from 'node:path';
+import { basename, join, resolve as resolvePath } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { REPO, DOC_SHELVES, PAGE_DIRS, loaderNames, kebab } from './lib/nds-source.mjs';
 
-const REPO = join(dirname(fileURLToPath(import.meta.url)), '..');
-
-// The single source of truth for which files carry a banner: 55 components + core, loader,
-// accessibility, theme. ns = the NDS.<Name> namespace Methods verify against; null =
+// The single source of truth for which files carry a banner: every component, plus core, loader,
+// accessibility, theme and the shared internals (backdrop, dialog, date). ns = the NDS.<Name> namespace Methods verify against; null =
 // multi-namespace file (core) — its banner Methods verify existence-only.
 // Exclusions live in EXCLUDED below, not in this comment: --all asserts SCOPE ∪ EXCLUDED
 // covers _js/ exactly, so a new component cannot be silently skipped (nds-password.js was,
@@ -45,6 +45,7 @@ const SCOPE = [
     ['nds-custom-select.js', 'CustomSelect'],
     ['nds-date.js', 'date'],
     ['nds-date-picker.js', 'DatePicker'],
+    ['nds-dialog.js', 'dialog'],
     ['nds-digital-stamp.js', 'DigitalStamp'],
     ['nds-drawer.js', 'Drawer'],
     ['nds-dropmenu.js', 'Dropmenu'],
@@ -93,12 +94,10 @@ const SCOPE = [
     ['nds-voice-input.js', 'VoiceInput'],
 ];
 
-// Deliberately bannerless: two seasonal themes, the docs builder, and the dialog core Modal and Panel share (no public surface).
+// Deliberately bannerless: the docs builder (docs-site wiring, no public surface).
+// The event packs live in _js/events/, which --all does not read.
 const EXCLUDED = new Set([
-    'nds-dialog.js',
     'nds-docs.js',
-    'nds-theme-foundation-day.js',
-    'nds-theme-hajj.js',
 ]);
 
 // Event literals the scan counts as dispatched that the banner rightly omits, keyed by file name.
@@ -109,7 +108,7 @@ const EVENT_EXCEPTIONS = {
 };
 
 // A dispatched literal ending in ':' is a concatenation prefix, not an event name —
-// tables builds its sub-row events as 'nds:table:' + verb. It stands in for every banner
+// Table builds its sub-row events as 'nds:table:' + verb. It stands in for every banner
 // name starting with it, and needs at least one of them to exist.
 const isPrefix = (name) => name.endsWith(':');
 
@@ -124,7 +123,6 @@ const DOC_ELSEWHERE = {
     'city-weather': 'ui-shell/topbar.md',
     'time-date': 'ui-shell/topbar.md',
 };
-const DOC_SHELVES = ['components', 'layout', 'utilities', 'ui-shell', 'foundations', 'core'];
 // A part stamps its own name, not its component's.
 const STAMP_PARTS = new Set(['columns', 'auto-pagination']);
 // Classless: nds:session:* names what ends (Session Timeout), nds:template:ready is core's NDS.fromTemplate.
@@ -397,13 +395,9 @@ function verifyFile(file, ns, source) {
 
 // ── one name per component ──────────────────────────────────────────────────
 
-// MainNav → main-nav, Taginput → taginput, date → date.
-const kebab = (ns) => ns.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
-
 function checkNames() {
     const issues = [];
-    const loader = readFileSync(join(REPO, '_js', 'nds-loader.js'), 'utf8');
-    const registered = [...loader.matchAll(/^\s*name: '([^']+)'/gm)].map((m) => m[1]);
+    const registered = loaderNames();
     const stems = new Set(SCOPE.map(([f]) => f.replace(/^nds-|\.js$/g, '')));
     const partials = new Set(readdirSync(join(REPO, '_sass', 'components')).map((f) => f.replace(/^_|\.scss$/g, '')));
 
@@ -442,8 +436,7 @@ function checkNames() {
 // ── callers: nothing calls a name no component defines ─────────────────────
 
 // Every place that calls NDS: the code, the docs a consumer copies from, and the browser checks.
-const CALLER_DIRS = ['_js', 'components', 'layout', 'utilities', 'ui-shell', 'core', 'foundations',
-    'examples', 'templates', 'guides', '_includes', '_layouts', 'scripts'];
+const CALLER_DIRS = ['_js', ...PAGE_DIRS, 'guides', '_includes', '_layouts', 'scripts'];
 // Old names on purpose: the migration guide, and the IQ rules every 1.x template still reads.
 const CALLER_SKIP = /guides[\\/]migration\.md$|_includes[\\/]NDS-IQ/;
 
@@ -491,7 +484,7 @@ function checkCallers() {
 
 // ── generate ────────────────────────────────────────────────────────────────
 
-function generate(file, ns, source) {
+function generate(ns, source) {
     const keys = ns ? extractKeys(source, ns) : null;
     const events = [...extractEvents(source)].sort();
     const hooks = extractHookCandidates(source);
@@ -537,9 +530,14 @@ function resolve(arg) {
     return { file, ns: entry[1], source: readFileSync(path, 'utf8') };
 }
 
-const [mode, arg] = process.argv.slice(2);
+export { SCOPE, extractKeys };
+// Imported (check-js-rules.mjs reads the surfaces), it runs nothing.
+const isMain = !!process.argv[1] && fileURLToPath(import.meta.url) === resolvePath(process.argv[1]);
+const [mode, arg] = isMain ? process.argv.slice(2) : [];
 
-if (mode === '--all') {
+if (!isMain) {
+    // imported
+} else if (mode === '--all') {
     let bad = 0;
     // Coverage first: a file in neither list is an unreviewed public surface, and every
     // check below would pass by never looking at it.
@@ -577,8 +575,8 @@ if (mode === '--all') {
     }
     console.log(`${file}: ok`);
 } else if (mode === '--generate' && arg) {
-    const { file, ns, source } = resolve(arg);
-    console.log(generate(file, ns, source));
+    const { ns, source } = resolve(arg);
+    console.log(generate(ns, source));
 } else {
     console.error('usage: check-banners.mjs --verify <file> | --all | --generate <file>');
     process.exit(2);

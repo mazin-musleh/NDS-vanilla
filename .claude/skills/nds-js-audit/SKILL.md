@@ -170,7 +170,7 @@ NDS uses no per-component eager-shell + lazy-behavior splits — the chosen patt
 
 ## Phase 3: ANALYZE
 
-First run `node scripts/check-js-rules.mjs <files>` (no argument: the full tree): it decides the mechanical rules (JSD-01, JSD-02, JSD-12, JSP-01, JSP-03, JSP-04 (a)(b), JSP-05, JSS-02, JSA-05's registry sub-shape) with their carve-outs, so never re-grep them. A `finding` line is decided; a `verify` line names the one carve-out left to read. Then run the rest of the rule catalog (the per-group `RULES-*.md` file(s) read in Phase 2) file-by-file. Each match is recorded as: file, line, rule ID, offending snippet (≤120 characters), suggested fix pointing to the exact `NDS.*` call. Dedupe findings whose line ranges overlap so the same handler is not triple-flagged.
+First run `node scripts/check-js-rules.mjs <files>` (no argument: the full tree, which adds the cross-file rules). It runs the mechanical half of every rule its header lists, carve-outs included, so never re-grep those. A `finding` line is decided. A `verify` line is a candidate the script cannot decide, and it names the judgment left to make: read the site and decide only that. A rule row whose detection says `check-js-rules.mjs` finds it adds nothing to grep. Then run the rest of the rule catalog (the per-group `RULES-*.md` file(s) read in Phase 2) file-by-file. Each match is recorded as: file, line, rule ID, offending snippet (≤120 characters), suggested fix pointing to the exact `NDS.*` call. Dedupe findings whose line ranges overlap so the same handler is not triple-flagged.
 
 ### Ponytail overlay (final lens — every run unless `no-pony`)
 
@@ -214,7 +214,7 @@ Agent briefs (Phase 3 / Phase 6) must paste all three conventions verbatim — s
 
 **Single-file mode only.** After the inline catalog pass completes, spawn ONE dedicated deep-read agent (`Agent` tool, `general-purpose` subagent) whose sole job is to re-read the target file end-to-end with fresh context and hunt the rules that reward undivided attention. This is what makes single-file the deepest mode — the inline pass owns the fast greppable rules, the agent owns the architectural deep reads. Full-tree mode does NOT spawn this agent: its budget is committed to breadth, and deep-read rules are banner-skipped there.
 
-**Deep-read scope for the agent:** JSA-03, JSA-07 through JSA-12, JSA-14 through JSA-17, JSA-20, JSA-23 (c), JSA-24; JSD-14 sub-shapes (a) deep nesting, (b) redundant guards, (d) dead code, (e) unused locals; JSD-16 (frozen disabled-flag dead code); and the context-dependent confirmations for JSS-01 (innerHTML XSS vector) and JSS-04 (postMessage origin allowlist). Restrict the agent to the rule group(s) in scope for this run — on a single-group run with no deep-read rules (e.g. `performance`), skip the agent entirely; on `architecture`, `dry`, `security`, or `all`, run the in-scope deep-read subset.
+**Deep-read scope for the agent:** JSA-03, JSA-07 through JSA-12, JSA-14 through JSA-17, JSA-20, JSA-23 (c), JSA-24; JSD-14 (a) nesting written without braces (the script counts braced nesting only); the `verify` lines `check-js-rules.mjs` printed for this file; and the context-dependent confirmations for JSS-01 (innerHTML XSS vector) and JSS-04 (postMessage origin allowlist). Restrict the agent to the rule group(s) in scope for this run — on a single-group run with no deep-read rules (e.g. `performance`), skip the agent entirely; on `architecture`, `dry`, `security`, or `all`, run the in-scope deep-read subset.
 
 **Brief template** (self-contained — the agent has no audit context):
 1. **Target** — the resolved `_js/nds-<file>.js` path. "Read it top-to-bottom before judging; pattern-matching without the full read misses context."
@@ -259,7 +259,7 @@ Before computing the report's Recommended action, compute **consumer reach** for
 
 **STOP. Emit the report. Do not edit any files yet.**
 
-**Skip-banner rule (governs all four banners below).** Show a banner only on the run mode where its rule was actually skipped — JSD-14, JSD-16, and the JSA deep-read rules → full-tree only; JSD-05 → single-file `dry` only. Omit it on any run where the rule was in scope and ran. When a rule WAS skipped, its banner is mandatory — never silently omit it; it converts a misleading "clean" into honest coverage disclosure. Each banner is ONE line (per Response style): what was skipped, why, and the command that gets the coverage. On full-tree `architecture` runs, the JSA banner is immediately followed by the **Deep-read triage** block (computed in Phase 3) — the top-3 single-file candidates, each with the signal that drove its rank.
+**Skip-banner rule (governs both banners below).** Show a banner only on the run mode where its rule was actually skipped — the JSA deep-read rules → full-tree only; JSD-05 → single-file `dry` only. JSD-14 and JSD-16 run in every mode through `check-js-rules.mjs`, so they get no banner. Omit it on any run where the rule was in scope and ran. When a rule WAS skipped, its banner is mandatory — never silently omit it; it converts a misleading "clean" into honest coverage disclosure. Each banner is ONE line (per Response style): what was skipped, why, and the command that gets the coverage. On full-tree `architecture` runs, the JSA banner is immediately followed by the **Deep-read triage** block (computed in Phase 3) — the top-3 single-file candidates, each with the signal that drove its rank.
 
 Use this structure verbatim:
 
@@ -275,11 +275,7 @@ Use this structure verbatim:
 
 > Skipped: JSD-05 cross-tree promotion scan (single-file mode) — run `/nds-js-audit js dry` to surface promotion candidates across the tree.
 
-> Skipped: JSD-14 sub-shapes (a)(b)(d)(e) (full-tree mode — per-file deep reads; only sub-shape (c) is grep-detectable tree-wide) — run `/nds-js-audit nds-<file>.js dry` for a specific component.
-
-> Skipped: JSD-16 frozen-flag dead code (full-tree mode — needs whole-file scope analysis) — run `/nds-js-audit nds-<file>.js dry` for a specific component.
-
-> Skipped: JSA deep-read rules JSA-03, -07–-12, -14–-17, -20, -23 (c), -24 (full-tree mode — per-file analysis exceeds the full-tree budget) — run `/nds-js-audit nds-<file>.js architecture` for a specific component.
+> Skipped: JSA deep-read rules JSA-03, -07–-12, -14–-17, -20, -23 (c), -24 (full-tree mode — per-file analysis exceeds the full-tree budget; `check-js-rules.mjs` still lists candidates for JSA-03, -07, -09 and -11) — run `/nds-js-audit nds-<file>.js architecture` for a specific component.
 > Deep-read triage (full-tree `architecture` only): 1. `_js/nds-<a>.js` — {driving hotspots, then signals, e.g. "2 hotspots (JSA-23 b, JSA-03); 1.9k lines, 31 interaction listeners"}; 2. `_js/nds-<b>.js` — {…}; 3. `_js/nds-<c>.js` — {…}. Start with `/nds-js-audit nds-<a>.js architecture`.
 
 ## HIGH

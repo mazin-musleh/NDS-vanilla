@@ -6,20 +6,24 @@
  *
  *   node scripts/check-js-rules.mjs [file …]   default: every _js/nds-*.js in the audit's scope
  *
- * Rules: JSD-01 (a)(b)(c), JSD-02, JSD-12, JSP-01, JSP-03, JSP-04 (a)(b), JSP-05, JSS-02,
- * JSA-05 (registry hygiene).
+ * Rules, decided or listed for the reader:
+ *   JSP  01, 02, 03, 04 (a)(b), 05, 06 (a)(c), 07, 08, 09, 10, 11, 12
+ *   JSS  01, 02, 04, 05, 06
+ *   JSD  01, 02, 03, 04, 05 (a)(b), 06, 07, 08, 09, 10, 11, 12, 13, 14 (a)-(e), 16, 17, 18, 19
+ *   JSA  01, 02, 03, 04, 05 (registry hygiene), 06, 07, 09, 11 (length + concerns), 13, 21 (a), 22, 23 (a)
+ * Left to the reader whole: JSD-15, JSD-20 (check-banners.mjs), and the JSA rules that are judgment only.
  * Two kinds of line: `finding` is decided; `verify` is a candidate whose one remaining carve-out
  * needs reading, named on the line. Never writes files. Exit 0 = no finding, 1 = findings.
  *   --self-test   run the built-in cases
  */
 // ponytail: a char scanner, not a parser. A `/` after `)` reads as division, so a regex literal
 // right after a closing paren can mis-strip one line; an acorn walk is the upgrade if that bites.
+// The self-test holds one case per blind spot found so far (nested templates, `return /re/`).
 
 import { readFileSync, readdirSync } from 'node:fs';
-import { basename, join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { basename, join } from 'node:path';
+import { REPO, PAGE_DIRS, loaderNames, pascal } from './lib/nds-source.mjs';
 
-const REPO = join(dirname(fileURLToPath(import.meta.url)), '..');
 // The audit's `js` scope (SKILL.md): core owns State/Status, the loader and docs are out of scope.
 const OUT_OF_SCOPE = new Set(['nds-core.js', 'nds-loader.js', 'nds-docs.js']);
 
@@ -56,10 +60,18 @@ function stringEnd(src, i) {
     return j;
 }
 
+// JSD-04: functions that need the whole lang tag (region or script), which NDS.lang drops.
+const FULL_TAG = [
+    { file: 'nds-voice-input.js', fn: 'getLanguage' }, // SpeechRecognition.lang wants ar-SA, not ar
+    { file: 'nds-date.js', fn: 'format' }, // Intl locales read the region
+    { file: 'nds-accessibility.js', fn: 'noLetterSpacing' }, // the script subtag decides cursive
+];
+
 // Blanks comments to spaces (newlines kept, so line numbers hold) and returns the code plus its strings.
 function scan(source) {
     let code = '';
     const strings = []; // { text, at }
+    const regexps = []; // { at, end }: blanked in `bare` like string bodies
     let i = 0;
     let prev = ''; // last non-space code char, to tell a regex literal from division
     while (i < source.length) {
@@ -74,7 +86,8 @@ function scan(source) {
             const stop = end === -1 ? source.length : end + 2;
             code += source.slice(i, stop).replace(/[^\n]/g, ' '); i = stop; continue;
         }
-        if (c === '/' && (prev === '' || '(,=:[!&|?{};+-*%<>~^'.includes(prev))) {
+        if (c === '/' && (prev === '' || '(,=:[!&|?{};+-*%<>~^'.includes(prev)
+            || /\b(?:return|typeof|case|in|of|delete|void|throw|new|else|do|yield|await)\s*$/.test(code.slice(-12)))) {
             let j = i + 1, cls = false;
             while (j < source.length && source[j] !== '\n') {
                 if (source[j] === '\\') { j += 2; continue; }
@@ -82,6 +95,7 @@ function scan(source) {
                 else if (source[j] === '/' && !cls) break;
                 j++;
             }
+            regexps.push({ at: i, end: j });
             code += source.slice(i, j + 1); i = j + 1; prev = '/'; continue;
         }
         if (c === '"' || c === "'" || c === '`') {
@@ -96,38 +110,92 @@ function scan(source) {
     // String bodies blanked too, so a brace inside a string never moves the depth.
     const chars = code.split(''); // UTF-16 units, so offsets match the source
     for (const s of strings) for (let k = s.at + 1; k <= s.at + s.text.length; k++) if (chars[k] !== '\n') chars[k] = ' ';
+    for (const r of regexps) for (let k = r.at + 1; k < r.end; k++) chars[k] = ' ';
     return { code, bare: chars.join(''), strings };
 }
 
 // The `{` of every block enclosing `at`, innermost first.
 function blocksAround(bare, at) {
-    const opens = [];
-    let depth = 0;
-    for (let i = at - 1; i >= 0; i--) {
-        if (bare[i] === '}') depth++;
-        else if (bare[i] === '{') { if (depth) depth--; else opens.push(i); }
-    }
-    return opens;
+    const { opens, close, parent } = blockIndex(bare);
+    let lo = 0, hi = opens.length - 1, o = -1;
+    while (lo <= hi) { const mid = (lo + hi) >> 1; if (opens[mid] < at) { o = opens[mid]; lo = mid + 1; } else hi = mid - 1; }
+    while (o !== -1 && close.get(o) <= at) o = parent.get(o); // a sibling that ended before `at`: climb
+    const chain = [];
+    for (; o !== -1; o = parent.get(o)) chain.push(o);
+    return chain;
 }
 
-// The outermost function (or method) around `at`, below the module wrapper: its `{`, or 0.
+// Every block of one file, indexed once: its `{` offsets in order, where each closes, its parent.
+let indexed, index;
+function blockIndex(bare) {
+    if (indexed === bare) return index;
+    const opens = [], close = new Map(), parent = new Map(), stack = [];
+    for (let i = 0; i < bare.length; i++) {
+        if (bare[i] === '{') { parent.set(i, stack.at(-1) ?? -1); stack.push(i); opens.push(i); }
+        else if (bare[i] === '}' && stack.length) close.set(stack.pop(), i + 1);
+    }
+    for (const o of stack) close.set(o, bare.length);
+    indexed = bare;
+    index = { opens, close, parent };
+    return index;
+}
+
+// `expr` split at its top-level `+` (outside strings, templates and brackets), each term trimmed.
+function plusTerms(expr) {
+    const terms = [];
+    let depth = 0, from = 0;
+    for (let i = 0; i < expr.length; i++) {
+        const c = expr[i];
+        if (c === '"' || c === "'" || c === '`') { i = stringEnd(expr, i); continue; }
+        if ('([{'.includes(c)) depth++;
+        else if (')]}'.includes(c)) depth--;
+        else if (c === '+' && depth === 0 && expr[i + 1] !== '+' && expr[i - 1] !== '+' && expr[i + 1] !== '=') { terms.push(expr.slice(from, i)); from = i + 1; }
+    }
+    terms.push(expr.slice(from));
+    return terms.map((t) => t.trim()).filter(Boolean);
+}
+
+// The `{` of every function (or method) around `at` below the module wrapper, innermost first.
 // A block is a function when `)` or `=>` leads into it and the `(` before is no if/for/while/switch/catch.
-function outerFn(bare, at) {
-    const opens = blocksAround(bare, at).slice(0, -1); // the last is the module IIFE
-    let found = 0;
-    for (const o of opens) {
+function fnBlocks(bare, at) {
+    const found = [];
+    for (const o of blocksAround(bare, at).slice(0, -1)) { // the last is the module IIFE
         const head = bare.slice(Math.max(0, o - 400), o).trimEnd();
-        if (head.endsWith('=>')) { found = o; continue; }
+        if (head.endsWith('=>')) { found.push(o); continue; }
         if (!head.endsWith(')')) continue; // class body, object literal, else, try
         let depth = 0, k = head.length - 1;
         for (; k >= 0; k--) { if (head[k] === ')') depth++; else if (head[k] === '(' && --depth === 0) break; }
-        if (!/\b(if|for|while|switch|catch|with)\s*$/.test(head.slice(0, k))) found = o;
+        if (!/\b(if|for|while|switch|catch|with)\s*$/.test(head.slice(0, k))) found.push(o);
     }
     return found;
+}
+// The name of the function whose body opens at `open`: `init` for `init() {`, `function init(`,
+// `init: function (`, `init = () =>`; '' for an anonymous callback.
+function fnName(bare, open) {
+    const head = bare.slice(Math.max(0, open - 300), open).trimEnd();
+    const m = head.match(/(?:\bfunction\s+([\w$]+)\s*\([^()]*\)|([\w$]+)\s*\([^()]*\)|([\w$]+)\s*[:=]\s*(?:async\s+)?(?:function\b[^(]*)?\([^()]*\)\s*=>?|([\w$]+)\s*[:=]\s*(?:async\s+)?[\w$]+\s*=>)$/);
+    const name = m && (m[1] || m[2] || m[3] || m[4]);
+    return name && !/^(if|for|while|switch|catch|function)$/.test(name) ? name : '';
+}
+const outerFn = (bare, at) => fnBlocks(bare, at).at(-1) ?? 0;
+const innerFn = (bare, at) => fnBlocks(bare, at)[0] ?? 0;
+
+// The arguments of the call whose `(` is at `open`: [{ text, at }], split at top-level commas.
+function argsAt(code, bare, open) {
+    const args = [];
+    let depth = 0, from = open + 1;
+    for (let i = open; i < bare.length; i++) {
+        const c = bare[i];
+        if ('([{'.includes(c)) depth++;
+        else if (')]}'.includes(c)) { if (--depth === 0) { args.push({ text: code.slice(from, i).trim(), at: from }); break; } }
+        else if (c === ',' && depth === 1) { args.push({ text: code.slice(from, i).trim(), at: from }); from = i + 1; }
+    }
+    return args;
 }
 
 // The offset just past the `}` that closes the block opened at `open`.
 function blockEnd(bare, open) {
+    if (bare[open] === '{') return blockIndex(bare).close.get(open);
     let depth = 0;
     for (let i = open; i < bare.length; i++) {
         if (bare[i] === '{') depth++;
@@ -137,6 +205,12 @@ function blockEnd(bare, open) {
 }
 
 const lineOf = (text, at) => text.slice(0, at).split('\n').length;
+const lineEnd = (text, at) => { const n = text.indexOf('\n', at); return n < 0 ? text.length : n; };
+// `s` with every regex metacharacter escaped, for building a pattern from a name.
+const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+// The last non-space character before `at`, '' at the start (a cheap stand-in for a variable-length lookbehind).
+const before = (text, at) => { let k = at - 1; while (k >= 0 && /\s/.test(text[k])) k--; return k < 0 ? '' : text[k]; };
+const startsStatement = (text, at) => { const c = before(text, at); return c === '' || ';{}'.includes(c); };
 // The comments in source between two offsets, joined.
 const commentsIn = (source, code, from, to) => {
     let out = '';
@@ -149,9 +223,24 @@ const lineStart = (text, at, back = 0) => {
     return Math.max(0, k);
 };
 
+const DEPRECATIONS = readFileSync(join(REPO, 'DEPRECATIONS.md'), 'utf8');
+// The namespaces the loader registers (JSP-10 scopes to them).
+const REGISTERED = new Set(loaderNames());
+
 // Core and loader namespaces the loader guarantees; any other PascalCase namespace is a sibling (JSD-12).
 const CORE = new Set(['State', 'Status', 'Init']);
 const POOLS = 'Resize|ElementResize|Intersect|OutsideScroll|AttrChange|DOMAdd|DOMRemove|ChildrenChange';
+// JSD-08's core-utility allowlist; the values among them are read, not called, so only `?.` guards them.
+const CORE_UTILS = ['State', 'Status', 'breakpoints', 'lang', 'isRTL', 'isArabic', 'langKey', 'escapeHtml', 'debounce',
+    'rafThrottle', 'onResize', 'onElementResize', 'onIntersect', 'onDOMAdd', 'onDOMRemove', 'onChildrenChange',
+    'onAttrChange', 'onOutsideScroll', 'trapFocus', 'scrollLock', 'cache', 'i18n', 'topLayer', 'place', 'flipPosition',
+    'uniqueId', 'transitionSpeed', 'focusableSel', 'gridLastRow', 'onIdle'];
+// JSD-10: core functions a component must not re-declare.
+const CORE_FNS = new Set(['escapeHtml', 'debounce', 'rafThrottle', 'uniqueId', 'transitionSpeed', 'onIdle', 'trapFocus', 'flipPosition', 'safeUrl', 'safeMerge', 'setValue', 'announce']);
+const CORE_VALUES = new Set(['lang', 'isRTL', 'isArabic', 'langKey', 'focusableSel']);
+// JSD-13: the CSS transition durations NDS uses, and the tokens a transition writes.
+const DURATIONS = new Set([150, 200, 250, 300, 400]);
+const TRANSITION = new Set(['closing', 'opening', 'show', 'hide', 'shown', 'hidden', 'entering', 'exiting', 'collapsing', 'expanding']);
 
 function checkFile(file, source = readFileSync(file, 'utf8')) {
     if (typeof source !== 'string') throw new TypeError(`checkFile(${file}): source must be a string`);
@@ -160,14 +249,16 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     const out = [];
     const hit = (rule, at, what, verify) => out.push({ rule, file: name, line: lineOf(source, at), what, verify });
 
-    // The calls that write a State token here: NDS.State.x and any destructured alias of x.
-    const writers = ['NDS\\.State\\.(?:set|add|toggle|apply)'];
+    // A regex source matching a call to any of `methods` on NDS.State, or a destructured alias of one.
+    const aliases = {};
     for (const m of code.matchAll(/\{([^}]*)\}\s*=\s*NDS\.State\b/g)) {
         for (const part of m[1].split(',')) {
             const [key, alias] = part.split(':').map((s) => s.trim());
-            if (['set', 'add', 'toggle', 'apply'].includes(key)) writers.push(alias || key);
+            if (key) (aliases[key] ||= []).push(alias || key);
         }
     }
+    const stateCall = (methods) => `(?:NDS\\.State\\.(?:${methods.join('|')})|${methods.flatMap((k) => aliases[k] || []).join('|') || '(?!)'})`;
+    const writers = [stateCall(['set', 'add', 'toggle', 'apply'])];
     const writesToken = (token) => new RegExp(`(?:${writers.join('|')})\\s*\\([^;]*?['"\`][^'"\`]*\\b${token}\\b`).test(code);
     const gated = (value) => value.split(/\s+/).filter(Boolean).some((t) => VOCAB.has(t));
 
@@ -246,7 +337,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     };
 
     // JSD-12 a guard on a sibling namespace no comment in its scope explains.
-    const own = name.replace(/^nds-|\.js$/g, '').split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join('');
+    const own = pascal(name.replace(/^nds-|\.js$/g, ''));
     const guarded = new Set();
     for (const m of code.matchAll(/\bNDS\.([A-Z]\w*)\s*(?:\?\.|&&|\))|typeof\s+NDS\.([A-Z]\w*)/g)) {
         const sib = m[1] || m[2];
@@ -271,6 +362,665 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         }
     }
 
+    // A handler argument's body: inline, or the same-file function it names. `wrap` is the callee
+    // when the name is bound to a call (`const h = NDS.rafThrottle(fn)`).
+    const bodyAt = (open) => code.slice(open, blockEnd(bare, open));
+    const bodyOf = (arg) => {
+        const t = arg.text.replace(/\.bind\([^)]*\)$/, '');
+        const arrow = t.match(/^(?:async\s+)?(?:function\b[^(]*\([^)]*\)|\([^)]*\)|[\w$]+)\s*(=>)?\s*/);
+        if (arrow && (arrow[1] || t.startsWith('function') || t.startsWith('async function'))) {
+            const rest = arg.at + arg.text.indexOf(t) + arrow[0].length;
+            return code[rest] === '{' ? { text: bodyAt(rest) } : { text: t.slice(arrow[0].length) };
+        }
+        const call = t.match(/^([\w$.]+)\s*\(/);
+        if (call) return { wrap: call[1], text: t };
+        const fn = t.split('.').at(-1);
+        if (!/^[\w$]+$/.test(fn)) return null;
+        for (const re of [`\\bfunction\\s+${fn}\\s*\\([^)]*\\)\\s*\\{`, `^\\s*(?:async\\s+)?${fn}\\s*\\([^)]*\\)\\s*\\{`, `\\b${fn}\\s*[:=]\\s*(?:async\\s+)?(?:function\\b[^(]*)?\\([^)]*\\)\\s*(?:=>\\s*)?\\{`]) {
+            const d = new RegExp(re, 'm').exec(bare);
+            if (d) return { text: bodyAt(d.index + d[0].length - 1) };
+        }
+        const expr = new RegExp(`\\b${fn}\\s*=\\s*(?:async\\s+)?(?:\\([^)]*\\)|[\\w$]+)\\s*=>\\s*([^;\\n]+)`).exec(code);
+        if (expr) return { text: expr[1] }; // const off = () => target.removeEventListener(…)
+        const bound = new RegExp(`\\b${fn}\\s*=\\s*([\\w$.]+)\\s*\\(`).exec(code);
+        return bound ? { wrap: bound[1], text: code.slice(bound.index, bound.index + 200) } : null;
+    };
+    const annotated = (at) => commentsIn(source, code, lineStart(source, at, 3), at).trim();
+
+    // True when `at` runs as the module IIFE's own straight-line code: no function block around it
+    // and no `=>` or `function` earlier in its statement (an expression-bodied arrow has no block).
+    const topLevel = (at) => {
+        if (blocksAround(bare, at).length > 1 && outerFn(bare, at)) return false;
+        const start = Math.max(bare.lastIndexOf(';', at), bare.lastIndexOf('{', at), bare.lastIndexOf('}', at));
+        return !/=>|\bfunction\b/.test(bare.slice(start + 1, at));
+    };
+    // JSD-08 a guard on what the loader guarantees: NDS itself, a core utility, NDS.Init, or the
+    // file's own namespace, inside a function (module top level runs before the loader and passes).
+    const coreGuard = new RegExp(`typeof\\s+(?:window\\.)?NDS\\b(?:\\.(${[...CORE_UTILS, 'Init', own].join('|')})\\b)?`
+        + `|(?<![\\w.])(?:window\\.)?NDS\\s*(?:\\?\\.|&&)`
+        + `|\\bNDS\\.(${[...CORE_UTILS, 'Init', own].join('|')})\\s*(\\?\\.|&&|\\))`, 'g');
+    for (const m of code.matchAll(coreGuard)) {
+        if (topLevel(m.index)) continue;
+        const ns = m[1] || m[2];
+        if (m[3] && m[3] !== '?.' && CORE_VALUES.has(ns)) continue; // NDS.isRTL && x reads a value
+        if (m[3] === ')' && !/(?:\bif\s*\(\s*|!\s*|&&\s*|\|\|\s*)$/.test(code.slice(Math.max(0, m.index - 12), m.index))) continue;
+        hit('JSD-08', m.index, m[0].trim(), annotated(m.index) ? 'the comment above must name it and say why it is optional' : undefined);
+    }
+
+    // JSD-13 a transition-end timer with a hardcoded duration: the timer sits in the function that
+    // wrote a transition token, and its callback clears that element.
+    const consts = Object.fromEntries([...code.matchAll(/\bconst\s+([\w$]+)\s*=\s*(\d+)\s*;/g)].map((m) => [m[1], +m[2]]));
+    for (const m of code.matchAll(/\bsetTimeout\s*\(/g)) {
+        const [cb, ms] = argsAt(code, bare, m.index + m[0].length - 1);
+        if (!cb || !ms) continue;
+        const mm = ms.text.match(/^([\w$]+(?:\.[\w$]+)?|\d+)(?:\s*\+\s*(\d+))?$/);
+        if (!mm) continue;
+        const [obj, prop] = mm[1].split('.');
+        const base = /^\d+$/.test(mm[1]) ? +mm[1]
+            : prop ? +((code.match(new RegExp(`\\bconst\\s+${obj}\\s*=\\s*\\{[^}]*\\b${prop}\\s*:\\s*(\\d+)`)) || [])[1])
+            : consts[mm[1]];
+        if (!DURATIONS.has(base) || (mm[2] && +mm[2] > 100)) continue;
+        const fn = innerFn(bare, m.index);
+        const scope = code.slice(fn, blockEnd(bare, fn));
+        const write = new RegExp(`${stateCall(['set', 'add', 'remove'])}\\s*\\(\\s*([^,]+?)\\s*,\\s*['"\`]([a-z-]*)['"\`]`, 'g');
+        const targets = [...scope.matchAll(write)].filter((w) => TRANSITION.has(w[2].split('-').at(-1))).map((w) => w[1]); // toast-hide counts
+        if (!targets.length) continue;
+        const body = bodyOf(cb)?.text || '';
+        const clears = targets.some((t) => new RegExp(`${stateCall(['clear', 'remove', 'set'])}\\s*\\(\\s*${esc(t)}\\s*[,)]|${esc(t)}\\s*\\.\\s*(?:setAttribute\\(\\s*['"]hidden|removeAttribute\\(\\s*['"]hidden|remove\\(\\s*\\))`).test(body));
+        if (!clears) continue;
+        hit('JSD-13', m.index, `setTimeout(…, ${ms.text})`, annotated(m.index) ? 'the comment above may justify a fixed duration' : undefined);
+    }
+
+    // JSP-02 a scroll listener with no rate limit in its handler.
+    for (const m of code.matchAll(/\.addEventListener\s*\(\s*(['"])scroll\1\s*,/g)) {
+        const [, handler] = argsAt(code, bare, code.indexOf('(', m.index));
+        const b = handler && bodyOf(handler);
+        if (!b) { hit('JSP-02', m.index, 'scroll listener', 'its handler is not defined in this file: trace it'); continue; }
+        if (b.wrap) {
+            if (/^NDS\.(rafThrottle|debounce)$/.test(b.wrap)) continue;
+            const w = bodyOf({ text: b.wrap, at: 0 });
+            if (w && /requestAnimationFrame\s*\(/.test(w.text)) continue;
+        }
+        const t = b.text;
+        if (/requestAnimationFrame\s*\(|NDS\.(?:debounce|rafThrottle|onResize)\s*\(|removeEventListener\s*\(/.test(t)) continue;
+        if (/^\{\s*if\s*\(\s*![\w$.]+\.hasAttribute\([^)]*\)\s*\)\s*[\w$.]+\.setAttribute\([^)]*\)\s*;?\s*\}$/.test(t.trim())) continue; // one-time flag
+        const called = [...t.matchAll(/(?:this\.)?([\w$]+)\s*\(/g)].map((c) => bodyOf({ text: c[1], at: 0 }) || {});
+        if (called.some((c) => /removeEventListener\s*\(/.test(c.text || ''))) continue; // a single-shot dismiss
+        if (called.some((c) => c.wrap && /^NDS\.(rafThrottle|debounce)$/.test(c.wrap))) continue; // calls a throttled function
+        hit('JSP-02', m.index, 'scroll handler with no rAF / NDS.rafThrottle / NDS.debounce');
+    }
+
+    // JSA-21 (a) an explicit smooth scroll the reduced-motion preference never reaches.
+    for (const m of code.matchAll(/\.(scrollTo|scrollBy|scrollIntoView)\s*\(/g)) {
+        const args = argsAt(code, bare, m.index + m[0].length - 1).map((a) => a.text).join(',');
+        if (!/behavior\s*:\s*['"]smooth['"]/.test(args)) continue;
+        const fn = outerFn(bare, m.index);
+        if (/prefersReducedMotion|reduce-motion/.test(code.slice(fn, blockEnd(bare, fn)))) continue;
+        hit('JSA-21a', m.index, `${m[1]}({ behavior: 'smooth' })`, annotated(m.index) ? 'the comment above may name why the motion is essential' : undefined);
+    }
+
+    // JSS-04 a message listener that never checks event.origin.
+    for (const m of code.matchAll(/([\w$.]+)\.addEventListener\s*\(\s*(['"])message\2\s*,|([\w$.]+)\.onmessage\s*=/g)) {
+        const target = m[1] || m[3];
+        const b = m[1] ? bodyOf(argsAt(code, bare, code.indexOf('(', m.index))[1] || { text: '', at: 0 }) : { text: code.slice(m.index, m.index + 400) };
+        if (b && /\borigin\b/.test(b.text)) continue;
+        const port = /\.port[12]$/.test(target) || new RegExp(`\\b${target.split('.')[0]}\\s*=\\s*new\\s+MessageChannel`).test(code);
+        hit('JSS-04', m.index, `${target} message handler reads no origin`, port ? 'a same-realm MessageChannel port no one else holds is exempt' : undefined);
+    }
+
+    const optsOf = (m) => argsAt(code, bare, code.indexOf('(', m.index)).slice(2).map((a) => a.text).join(',');
+    const inFn = (at, re) => fnBlocks(bare, at).some((o) => re.test(fnName(bare, o)));
+
+    // JSP-06 (a) per-element listeners in a loop with no signal; (c) a document / window listener
+    // a constructor or init() adds with no signal and no removeEventListener.
+    for (const m of code.matchAll(/([\w$.]+)\.addEventListener\s*\(\s*(['"])([\w:-]+)\2/g)) {
+        if (/\bsignal\b|\bonce\s*:\s*true/.test(optsOf(m))) continue;
+        const fn = outerFn(bare, m.index);
+        if (!fn) continue; // the module body runs once
+        const scope = code.slice(fn, blockEnd(bare, fn));
+        if (/if\s*\(\s*!?\s*([\w$.]+)\s*\)\s*return\b[\s\S]*?\1\s*=(?!=)|if\s*\(\s*!\s*([\w$.]+)\s*\)\s*\{\s*\2\s*=\s*true/.test(bare.slice(fn, blockEnd(bare, fn)))) continue; // latch
+        const removed = new RegExp(`removeEventListener\\s*\\(\\s*['"]${m[3]}['"]`).test(code);
+        if (/^(document|window)$/.test(m[1])) {
+            if (!removed && inFn(m.index, /^(constructor|init|setup\w*)$/)) hit('JSP-06c', m.index, `${m[1]}.addEventListener('${m[3]}') per instance, no signal`);
+            continue;
+        }
+        const loop = blocksAround(bare, m.index).find((o) => /(?:\.forEach|\.map)\s*\(\s*(?:\(?[\w$, ]*\)?\s*=>|function\b[^(]*\([^)]*\))\s*$|\bfor\s*\([^)]*\)\s*$/.test(bare.slice(Math.max(0, o - 120), o).trimEnd()));
+        if (loop === undefined || removed) continue;
+        if (/\.innerHTML\s*=\s*['"`]{2}|replaceChildren\s*\(|\.remove\s*\(\s*\)/.test(scope.slice(0, m.index - fn))) continue; // old nodes left with their listeners
+        const guard = /\._nds\w+\s*=\s*true|data-nds-[\w-]+-initialized/.test(scope);
+        hit('JSP-06a', m.index, `${m[1]}.addEventListener('${m[3]}') in a loop, no signal`, guard || !/\bdestroy\b/.test(code) ? 'element-bound listeners behind a per-element guard self-clean' : 'one finding per loop: count its listeners');
+    }
+
+    // JSP-07 a hand-rolled trailing-edge debounce: clearTimeout(t) then t = setTimeout(…, N).
+    for (const m of code.matchAll(/clearTimeout\s*\(\s*([\w$.]+)\s*\)\s*;?\s*\1\s*=\s*setTimeout\s*\(/g)) {
+        const [, ms] = argsAt(code, bare, m.index + m[0].length - 1);
+        if (!ms || !/^\d+$/.test(ms.text)) continue; // a variable delay is a scheduler, not a debounce
+        const v = m[1].replace(/[.$]/g, '\\$&');
+        const cancels = [...code.matchAll(new RegExp(`clearTimeout\\s*\\(\\s*${v}\\s*\\)`, 'g'))].length > 1; // a separate cancel: a latch
+        if (cancels) continue;
+        hit('JSP-07', m.index, `clearTimeout(${m[1]}) + setTimeout(…, ${ms.text})`, 'check it runs per event, not as orchestration');
+    }
+
+    // JSP-08 a MutationObserver never disconnected (document-root observers live for the page).
+    for (const m of code.matchAll(/(?:(?:const|let|var)\s+([\w$]+)|([\w$.]+))\s*=\s*new\s+MutationObserver\s*\(/g)) {
+        const name = (m[1] || m[2]).split('.').at(-1);
+        if (new RegExp(`\\b${name}\\s*\\.\\s*disconnect\\s*\\(|\\.push\\(\\s*${name}\\s*\\)`).test(code)) continue;
+        if (new RegExp(`\\b${name}\\.observe\\(\\s*document\\.(?:body|documentElement)\\b`).test(code)) continue;
+        hit('JSP-08', m.index, `MutationObserver ${name} never disconnected`);
+    }
+
+    // JSP-09 per-element listeners wired in an onDOMAdd callback with no matching onDOMRemove.
+    for (const m of code.matchAll(/NDS\.onDOMAdd\s*\(\s*(['"`])([^'"`]+)\1\s*,/g)) {
+        if (removed.has(m[2])) continue;
+        const [, cb] = argsAt(code, bare, code.indexOf('(', m.index));
+        const body = cb && bodyOf(cb)?.text;
+        if (!body || !/\.addEventListener\s*\(/.test(body)) continue; // only refreshes or restyles: nothing to tear down
+        const delegated = [...body.matchAll(/([\w$.]+)\.addEventListener\s*\(/g)].every((l) => /^(document|window|document\.body)$/.test(l[1]));
+        if (delegated) continue;
+        hit('JSP-09', m.index, `onDOMAdd('${m[2]}') wires listeners, no onDOMRemove`, 'a stable parent (delegation) or a self-guarding routine exempts it');
+    }
+
+    // JSP-10 a DOM walk at the top of a loader-registered module's IIFE, inside bundle eval.
+    if (REGISTERED.has(own)) {
+        for (const m of code.matchAll(/(?:document\.)?(querySelectorAll|getElementsByClassName|getElementsByTagName)\s*\(/g)) {
+            if (blocksAround(bare, m.index).length !== 1 || !topLevel(m.index)) continue; // only the IIFE's own straight-line code
+            const stmtEnd = code.indexOf(';', m.index);
+            const stmt = code.slice(m.index, stmtEnd < 0 ? m.index + 400 : Math.max(stmtEnd, blockEnd(bare, code.indexOf('{', m.index))));
+            if (!/forEach|for\s*\(/.test(stmt)) continue;
+            hit('JSP-10', m.index, `${m[1]} walk in the module body`, annotated(m.index) ? 'the comment above may name why it must run at load' : undefined);
+        }
+    }
+
+    // JSP-11 a forced layout read on the synchronous init() / constructor path (one helper deep).
+    const READS = /\.getBoundingClientRect\s*\(|\.(?:offset|client|scroll)(?:Width|Height|Top|Left)\b(?!\s*=[^=])|\bgetComputedStyle\s*\(/g;
+    const initBodies = [];
+    for (const d of bare.matchAll(/(?:^|[\s;{}])(constructor|init)\s*\([^)]*\)\s*\{|\bfunction\s+init\s*\([^)]*\)\s*\{|\binit\s*[:=]\s*(?:function\s*)?\([^)]*\)\s*(?:=>\s*)?\{/gm)) {
+        const open = d.index + d[0].length - 1;
+        initBodies.push([open, d[1] || 'init']);
+        for (const c of code.slice(open, blockEnd(bare, open)).matchAll(/(?<![\w$.])(?:this\.)?([\w$]+)\s*\(/g)) {
+            const h = new RegExp(`(?:^|[\\s;{}])(?:function\\s+)?${c[1]}\\s*\\([^)]*\\)\\s*\\{`, 'm').exec(bare);
+            if (h && !/^(if|for|while|switch|catch|function|init|constructor)$/.test(c[1])) initBodies.push([h.index + h[0].length - 1, `${d[1] || 'init'} → ${c[1]}`]);
+        }
+    }
+    const seenRead = new Set();
+    for (const [open, via] of initBodies) {
+        const end = blockEnd(bare, open);
+        for (const r of code.slice(open, end).matchAll(READS)) {
+            const at = open + r.index;
+            if (innerFn(bare, at) !== open || seenRead.has(at)) continue; // a nested callback runs later
+            seenRead.add(at);
+            hit('JSP-11', at, `${r[0].replace(/\s*\($/, '()')} on the ${via} path`, 'a read on an element not yet in the page, or one JSA-02 already flags, is exempt');
+        }
+    }
+
+    // JSP-12 a stored onTransitionEnd handle overwritten without cancelling the prior one.
+    for (const m of code.matchAll(/([\w$]+(?:\.[\w$]+)+)\s*=\s*NDS\.onTransitionEnd\s*\(/g)) {
+        const h = m[1].replace(/[.$]/g, '\\$&');
+        const before = code.slice(lineStart(code, m.index, 3), m.index);
+        if (new RegExp(`${h}\\s*(?:\\?\\.)?\\(\\s*\\)`).test(before)) continue; // the prior handle runs first
+        const fn = innerFn(bare, m.index);
+        if (/^\{\s*if\s*\([^)]*\)\s*return\b/.test(code.slice(fn, fn + 300))) continue; // early return on state
+        hit('JSP-12', m.index, `${m[1]} re-armed without cancelling the prior handle`, annotated(m.index) ? 'the comment above may say why a second run is harmless' : undefined);
+    }
+
+    // ── DRY / consistency ───────────────────────────────────────────────────
+
+    // JSD-03 a breakpoint pixel literal in JS: (a) a viewport comparison, (b) a CSS-variable
+    // fallback, (c) a matchMedia width or height.
+    const inBp = (n) => +n >= 400 && +n <= 2000;
+    for (const m of code.matchAll(/(?:window\.innerWidth|document\.(?:documentElement|body)\.clientWidth)\s*(?:<=?|>=?|[!=]==?)\s*(\d+)|(\d+)\s*(?:<=?|>=?|[!=]==?)\s*(?:window\.innerWidth|document\.(?:documentElement|body)\.clientWidth)/g)) {
+        if (inBp(m[1] || m[2])) hit('JSD-03a', m.index, m[0]);
+    }
+    for (const m of code.matchAll(/getPropertyValue\([^)]*\)\)?\s*\|\|\s*(768|1024|1280|1440)\b/g)) hit('JSD-03b', m.index, `CSS variable fallback ${m[1]}`);
+    for (const s of strings) {
+        if (!/\((?:min|max)-(?:width|height)\s*:\s*\d+/.test(s.text) || !/matchMedia\s*\(\s*$/.test(code.slice(Math.max(0, s.at - 30), s.at))) continue;
+        for (const n of s.text.matchAll(/(?:min|max)-(?:width|height)\s*:\s*(\d+)/g)) if (inBp(n[1])) { hit('JSD-03c', s.at, `matchMedia('${s.text}')`); break; }
+    }
+
+    // JSD-04 a document-level dir / lang read that re-derives NDS.isRTL / NDS.lang. A full tag
+    // handed to Intl or speech is exempt: NDS.lang keeps only the primary subtag.
+    const rootAlias = [...code.matchAll(/(?:const|let|var)\s+([\w$]+)\s*=\s*document\.(?:documentElement|body)\s*[;,\n]/g)].map((a) => esc(a[1]));
+    const ROOT = `(?:document\\.(?:documentElement|body)${rootAlias.map((a) => `|(?<![\\w$.])${a}`).join('')})`;
+    for (const m of code.matchAll(new RegExp(`\\bdocument\\.dir\\b|${ROOT}\\.(?:dir|lang)\\b|${ROOT}\\.getAttribute\\(\\s*['"](dir|lang)['"]\\s*\\)|\\bdocument\\.lang\\b`, 'g'))) {
+        const stmt = code.slice(Math.max(code.lastIndexOf(';', m.index), code.lastIndexOf('{', m.index), code.lastIndexOf('}', m.index)) + 1, code.indexOf(';', m.index));
+        if (/\bIntl\.|Locale\(|SpeechRecognition|\.lang\s*=(?!=)|recognition/.test(stmt)) continue;
+        if (/^\s*=(?!=)/.test(code.slice(m.index + m[0].length))) continue; // a write sets the direction, it reads nothing
+        if (FULL_TAG.some((a) => a.file === name && a.fn === fnName(bare, innerFn(bare, m.index)))) continue;
+        hit('JSD-04', m.index, m[0], 'a full-tag read passed to an API that needs the region or script is exempt');
+    }
+
+    // JSD-06 a layout read after a style write inside one loop body (thrash per iteration).
+    const W = /\.style\.[\w$]+\s*=(?!=)|\.style\.setProperty\s*\(|\.classList\.(?:add|remove|toggle)\s*\(/g;
+    const R = /\.getBoundingClientRect\s*\(|\.(?:offset|client|scroll)(?:Width|Height|Top|Left)\b(?!\s*=[^=])|\bgetComputedStyle\s*\(/g;
+    for (const o of [...bare.matchAll(/(?:\.forEach|\.map)\s*\(\s*(?:\(?[\w$, ]*\)?\s*=>|function\b[^(]*\([^)]*\))\s*\{|\b(?:for|while)\s*\([^)]*\)\s*\{/g)]) {
+        const open = o.index + o[0].length - 1;
+        const body = code.slice(open, blockEnd(bare, open));
+        const w = [...body.matchAll(W)][0];
+        if (!w) continue;
+        const r = [...body.matchAll(R)].find((x) => x.index > w.index && !/^\s*(?:void\s+)?[\w$.]+\.offset(?:Height|Width)\s*;/m.test(body.slice(body.lastIndexOf('\n', x.index) + 1, body.indexOf('\n', x.index))));
+        if (!r) continue;
+        hit('JSD-06', open + r.index, `layout read after a style write in a loop`, commentsIn(source, code, open, open + w.index + 120).trim() ? 'a commented staged measurement is exempt' : undefined);
+    }
+
+    // JSD-16 a falsy const guarding code that can never run.
+    for (const m of code.matchAll(/(?:^|(?<=[;{}]))\s*const\s+([\w$]+)\s*=\s*(?:''|""|0|false|null)\s*;/gm)) {
+        const g = new RegExp(`if\\s*\\(\\s*${m[1]}\\s*&&`).exec(code);
+        if (!g || new RegExp(`NDS\\.[\\w$.]+\\s*=\\s*${m[1]}\\b|export\\s+const\\s+${m[1]}\\b`).test(code)) continue;
+        hit('JSD-16', g.index, `if (${m[1]} && …) can never run`, annotated(m.index) ? 'the comment must say why it is off and how to turn it on' : undefined);
+    }
+
+    // JSD-17 a bare element-arity function handed to a DOM-bus subscription, which passes an array.
+    for (const m of code.matchAll(/NDS\.on(?:DOMAdd|DOMRemove|ChildrenChange)\s*\(/g)) {
+        const [, cb] = argsAt(code, bare, m.index + m[0].length - 1);
+        if (!cb || !/^[\w$.]+$/.test(cb.text)) continue; // an inline callback shows its own shape
+        const fn = cb.text.split('.').at(-1);
+        const d = new RegExp(`(?:\\bfunction\\s+${fn}\\s*\\(\\s*([\\w$]+)|\\b${fn}\\s*[:=]\\s*(?:function\\s*\\(\\s*([\\w$]+)|\\(?\\s*([\\w$]+)\\s*\\)?\\s*=>)|^\\s*${fn}\\s*\\(\\s*([\\w$]+))`, 'm').exec(code);
+        const p = d && (d[1] || d[2] || d[3] || d[4]);
+        if (!p) continue;
+        const body = code.slice(d.index, d.index + 1500);
+        if (new RegExp(`\\b${p}\\s*\\.\\s*(?:forEach|length|map|filter)\\b|for\\s*\\([^)]*\\bof\\s+${p}\\b`).test(body)) continue;
+        if (new RegExp(`\\b${p}\\s*\\.\\s*(?:getAttribute|setAttribute|querySelector\\w*|matches|closest|classList|style|dataset)\\b`).test(body)) hit('JSD-17', m.index, `${cb.text} takes one element; the bus passes an array`);
+    }
+
+    // JSD-09 teardown that releases what was never stored: (a)(b) a handler or observer property
+    // no line assigns, (c) a stored NDS.on* handle never called, (d) a collection never filled.
+    const assigned = (owner, prop) => new RegExp(`${owner.replace(/[.$]/g, '\\$&')}\\s*\\.\\s*${prop}\\s*=(?!=)|${owner.replace(/[.$]/g, '\\$&')}\\s*\\[\\s*['"]${prop}['"]\\s*\\]\\s*=(?!=)`).test(code);
+    for (const m of code.matchAll(/removeEventListener\s*\(\s*['"][\w:-]+['"]\s*,\s*([\w$]+(?:\.[\w$]+)*)\.([\w$]+)\s*[,)]/g)) {
+        if (!assigned(m[1], m[2]) && !/^(NDS|window|document)$/.test(m[1])) hit('JSD-09', m.index, `removeEventListener(…, ${m[1]}.${m[2]}) — never assigned`);
+    }
+    for (const m of code.matchAll(/\b((?:this|[\w$]+))\.([\w$]+)\.disconnect\s*\(\s*\)/g)) {
+        if (!/^(cleanup|destroy|teardown|dispose)$/.test(fnName(bare, innerFn(bare, m.index)))) continue;
+        if (!assigned(m[1], m[2])) hit('JSD-09', m.index, `${m[1]}.${m[2]}.disconnect() — never assigned`);
+    }
+    for (const m of code.matchAll(/\b((?:this|[\w$]+)\.(_?off\w*))\s*=\s*NDS\.on\w+\s*\(/g)) {
+        // Any later read of the property (called, passed, pushed), on whatever owner holds it then.
+        const refs = [...code.matchAll(new RegExp(`\\.${m[2]}\\b(?!\\s*=[^=])`, 'g'))].length;
+        if (!refs) hit('JSD-09', m.index, `${m[1]} stored, never called`);
+    }
+    for (const m of code.matchAll(/(?<![\w$.])(_?off\w*)\s*=\s*NDS\.on\w+\s*\(/g)) { // a closure variable
+        const decl = new RegExp(`\\b(?:let|var)\\s+${m[1]}\\b`).exec(code);
+        if (!decl || blocksAround(bare, decl.index).length > 1) continue; // module scope only
+        const reads = [...code.matchAll(new RegExp(`(?<![\\w$.])${m[1]}\\b(?!\\s*=[^=])`, 'g'))].filter((r) => !/(?:let|var)\s+$/.test(code.slice(Math.max(0, r.index - 8), r.index)));
+        // Released when it is called, handed to a pool, or bridged to an abort.
+        if (!reads.some((r) => /^\s*(?:\(|\?\.\()/.test(code.slice(r.index + m[1].length)) || /\.push\(\s*$|abort['"]\s*,\s*$/.test(code.slice(Math.max(0, r.index - 30), r.index)))) {
+            hit('JSD-09', m.index, `${m[1]} stored, never called`, 'one page-lifetime subscription behind an init latch leaks nothing on re-init');
+        }
+    }
+    for (const m of code.matchAll(/\b((?:this|[\w$]+)\.([\w$]+))\s*=\s*(?:\[\s*\]|new\s+(?:Set|Map|Array)\s*\(\s*\))/g)) {
+        const f = m[1].replace(/[.$]/g, '\\$&');
+        if (!new RegExp(`${f}\\s*\\.\\s*forEach\\s*\\(`).test(code)) continue;
+        if (new RegExp(`${f}\\s*\\.\\s*(?:push|add|set|unshift|splice)\\s*\\(|${f}\\s*=\\s*[^\\[n]|${f}\\s*\\[[^\\]]+\\]\\s*=`).test(code.replace(m[0], ''))) continue;
+        hit('JSD-09', m.index, `${m[1]} iterated in teardown, never filled`);
+    }
+
+    // JSD-10 a local helper shadowing a core utility: its name, or the escape idiom core ships.
+    for (const m of code.matchAll(/\bfunction\s+([\w$]+)\s*\(|(?:const|let)\s+([\w$]+)\s*=\s*(?:\([^)]*\)|[\w$]+)\s*=>/g)) {
+        const fname = m[1] || m[2];
+        const body = code.slice(m.index, m.index + 600);
+        if (CORE_FNS.has(fname)) { hit('JSD-10', m.index, `local ${fname}() has a core name`, 'a finding when its body copies NDS.' + fname + ' (65% overlap); a different job under the same name is not'); continue; }
+        if (/\.replace\(\s*\/&\/g[\s\S]{0,200}\.replace\(\s*\/</.test(body) || /createElement\([^)]*\)[\s\S]{0,120}\.textContent\s*=[\s\S]{0,120}\.innerHTML/.test(body)) {
+            hit('JSD-10', m.index, `local ${fname}() re-implements the HTML escape`, 'use NDS.escapeHtml unless the file runs before the loader');
+        }
+    }
+
+    // JSD-14 (a) nesting past 4 levels in one function, (c) a ternary chain 3 deep, (d) code after an
+    // unconditional terminator, (e) an unused side-effect-free local.
+    const CONTROL = /(?:\b(?:if|for|while|switch|catch|with)\s*\([^]*\)|\b(?:else|try|do|finally)|=>|\bfunction\b[^(]*\([^)]*\)|\)\s*)$/;
+    const depthAt = new Map();
+    for (const b of bare.matchAll(/\{/g)) {
+        const head = bare.slice(Math.max(0, b.index - 200), b.index).trimEnd();
+        if (!CONTROL.test(head)) continue;
+        if (/(?:forEach|map|filter|some|every|find)\s*\(\s*(?:\(?[\w$, ]*\)?\s*=>|function\b[^(]*\([^)]*\))$/.test(head)
+            && (code.slice(b.index, blockEnd(bare, b.index)).match(/;/g) || []).length <= 3) continue; // a small array callback is idiom
+        const fn = outerFn(bare, b.index + 1);
+        if (!fn || fn === b.index) continue;
+        const depth = blocksAround(bare, b.index + 1).filter((o) => o >= fn && o !== fn && CONTROL.test(bare.slice(Math.max(0, o - 200), o).trimEnd())).length;
+        if (depth > (depthAt.get(fn)?.depth || 4)) depthAt.set(fn, { depth, at: b.index });
+    }
+    for (const [fn, d] of depthAt) hit('JSD-14a', d.at, `${d.depth} levels deep in ${fnName(bare, fn) || 'a callback'}`);
+    // An expression ends at `;`, or at `,` `{` `}` outside parentheses (object properties, arguments).
+    const exprs = [];
+    for (let i = 0, from = 0, paren = 0, saved = []; i <= bare.length; i++) {
+        const c = bare[i];
+        if (c === '(' || c === '[') paren++; else if (c === ')' || c === ']') paren = Math.max(0, paren - 1);
+        else if (c === '{') { saved.push(paren); paren = 0; } else if (c === '}') paren = saved.pop() ?? 0; // a block restarts the count
+        if (i === bare.length || c === ';' || c === '{' || c === '}' || (paren === 0 && c === ',')) { exprs.push([from, i]); from = i + 1; }
+    }
+    // How deep ternaries nest in `t`: a `?` opens one, a `)` below its level closes it.
+    const ternaryDepth = (t) => {
+        let paren = 0, max = 0;
+        const open = [];
+        for (let i = 0; i < t.length; i++) {
+            const c = t[i];
+            if (c === '(' || c === '[') paren++;
+            else if (c === ')' || c === ']') { paren--; while (open.length && open.at(-1) > paren) open.pop(); }
+            else if (c === '?' && t[i + 1] !== '.' && t[i + 1] !== '?' && t[i - 1] !== '?') { open.push(paren); max = Math.max(max, open.length); }
+        }
+        return max;
+    };
+    for (const [from, to] of exprs) {
+        const t = bare.slice(from, to);
+        if (ternaryDepth(t) < 3) continue;
+        // The branch values only: what follows each `?` up to its `:`, and the final else.
+        const parts = code.slice(from, to).split(/\?(?![.?])/).slice(1);
+        const values = [...parts.map((p) => p.split(':')[0]), parts.at(-1).split(':').at(-1)].map((v) => v.trim().replace(/[)\s]+$/, ''));
+        if (values.every((v) => /^(?:'[^']*'|"[^"]*"|-?\d[\d.]*|true|false|null)$/.test(v)) && values.join('').length < 60) continue; // a small lookup
+        hit('JSD-14c', from + t.search(/\?(?![.?])/), 'ternary chain 3+ deep');
+    }
+    for (const m of bare.matchAll(/\b(return|throw|break|continue)\b/g)) {
+        if (!startsStatement(bare, m.index) || !before(bare, m.index)) continue; // a statement of its own
+        let i = m.index, depth = 0;
+        for (; i < bare.length; i++) {
+            const c = bare[i];
+            if ('([{'.includes(c)) depth++; else if (')]}'.includes(c)) { if (--depth < 0) break; } else if (c === ';' && depth === 0) { i++; break; }
+            else if (c === '\n' && depth === 0 && /^(break|continue)$/.test(m[1])) break;
+        }
+        const next = bare.slice(i).match(/^\s*(\S+)/);
+        if (!next || /^[}]/.test(next[1]) || /^(case|default)\b/.test(next[1])) continue;
+        if (m[1] === 'throw' && blocksAround(bare, m.index).some((o) => /\btry\s*$/.test(bare.slice(Math.max(0, o - 20), o)))) continue;
+        hit('JSD-14d', i + next.index, `unreachable after ${m[1]}`);
+    }
+    for (const m of code.matchAll(/\b(?:const|let)\s+([\w$]+)\s*=\s*([^;\n]*)/g)) {
+        if (!startsStatement(code, m.index) && !/\n[ \t]*$/.test(code.slice(Math.max(0, m.index - 40), m.index))) continue;
+        if (/[(.]|\bnew\b/.test(m[2])) continue; // a call, a construction or a property read may have an effect
+        const open = blocksAround(bare, m.index)[0] ?? -1;
+        const scope = code.slice(m.index + m[0].length, open >= 0 ? blockEnd(bare, open) : code.length);
+        if (new RegExp(`(?:(?<![\\w$.])|(?<=\\.\\.\\.))${m[1]}(?![\\w$])`).test(scope)) continue; // a read, a spread included
+        if (annotated(m.index)) continue;
+        hit('JSD-14e', m.index, `${m[1]} is never read`);
+    }
+
+    // JSD-14 (b) a truthiness check the one before it dominates: after `if (!x) return`, or inside
+    // `if (x) { … }`. A reassignment or an await between re-opens it; on a property path a call may too.
+    // The operand must stand alone: `a === x && …` compares x, it does not test it.
+    const alone = `(?<![\\w$.])(?<![=!<>]=?=?\\s*)`;
+    const recheck = (x) => new RegExp(`(?:\\bif\\s*\\(\\s*!?\\s*${esc(x)}\\s*\\)|${alone}${esc(x)}\\s*(?:&&|\\?\\.)|${alone}${esc(x)}\\s*[!=]==?\\s*(?:null|undefined)\\b)`, 'g');
+    const dominated = (x, from, to, kind) => {
+        const region = bare.slice(from, to);
+        for (const r of region.matchAll(recheck(x))) {
+            const between = region.slice(0, r.index);
+            if (new RegExp(`(?<![\\w$.])${esc(x)}\\s*(?:[+\\-*/|&]?=(?!=)|\\+\\+|--)`).test(between) || /\bawait\b/.test(between)) return;
+            const prop = x.includes('.');
+            if (prop && /[\w$)\]]\s*\(/.test(between)) return; // a call may have changed a property
+            hit('JSD-14b', from + r.index, `${x} checked again after ${kind}`, prop ? 'a call between could have changed the property' : undefined);
+            return;
+        }
+    };
+    for (const g of bare.matchAll(/\bif\s*\(\s*!\s*([\w$]+(?:\.[\w$]+)*)\s*\)\s*(?:\{\s*)?(return|throw|continue|break)\b/g)) {
+        if (!startsStatement(bare, g.index) || !before(bare, g.index)) continue;
+        const open = blocksAround(bare, g.index)[0];
+        if (open === undefined) continue;
+        const end = blockEnd(bare, open);
+        let i = g.index + g[0].length; // past the terminator's statement
+        while (i < end && bare[i] !== ';' && bare[i] !== '}') i++;
+        dominated(g[1], i + 1, end - 1, `if (!${g[1]}) ${g[2]}`);
+    }
+    for (const g of bare.matchAll(/\bif\s*\(\s*([\w$]+(?:\.[\w$]+)*)\s*\)\s*\{/g)) {
+        const open = g.index + g[0].length - 1;
+        dominated(g[1], open + 1, blockEnd(bare, open) - 1, `if (${g[1]}) {`);
+    }
+
+    // JSD-18 a sweep stamps its sentinel after a constructor that can bail.
+    const bails = new Set([...code.matchAll(/class\s+([\w$]+)[^{]*\{/g)].filter((c) => {
+        const ctor = code.indexOf('constructor', c.index);
+        if (ctor < 0) return false;
+        const open = code.indexOf('{', ctor);
+        const body = code.slice(open, blockEnd(bare, open));
+        return /\breturn\s*;|\breturn\s*\}/.test(body.replace(/=>\s*\{[\s\S]*?\}/g, ''));
+    }).map((c) => c[1]));
+    for (const m of code.matchAll(/new\s+([\w$]+)\s*\(\s*([\w$]+)[^)]*\)\s*;?([\s\S]{0,200})/g)) {
+        if (!bails.has(m[1])) continue;
+        const stamp = m[3].match(new RegExp(`${m[2]}\\s*\\.\\s*(?:setAttribute\\(\\s*['"]data-nds-[\\w-]+-initialized|_nds\\w*Initialized\\s*=|nds[A-Z]\\w*\\s*=)`));
+        if (!stamp || /\bif\s*\(/.test(m[3].slice(0, stamp.index))) continue;
+        hit('JSD-18', m.index, `${m[2]} stamped after new ${m[1]}(), whose constructor can bail`, 'gate the stamp on the instance being valid');
+    }
+
+    // JSD-19 (dud) create() returns `new X(el)` from a constructor that can bail, without checking it.
+    for (const m of code.matchAll(/\bcreate\s*(?::\s*(?:function\s*)?\(\s*([\w$]+)[^)]*\)\s*(?:=>)?|\(\s*([\w$]+)[^)]*\))\s*\{?/g)) {
+        const open = code.indexOf('{', m.index);
+        const body = m[0].endsWith('{') ? code.slice(open, blockEnd(bare, open)) : code.slice(m.index, lineEnd(code, m.index));
+        // Only a `new X()` in the returned value hands back the dud; `new X(el); return el.ndsX || null` does not.
+        const viaVar = body.match(/\b(?:const|let|var)\s+([\w$]+)\s*=\s*new\s+([\w$]+)\s*\(/);
+        const made = m[0].endsWith('{')
+            ? body.match(/\breturn\b[^;]*?\bnew\s+([\w$]+)\s*\(/) || (viaVar && new RegExp(`\\breturn\\s+${viaVar[1]}\\s*;`).test(body) ? [null, viaVar[2]] : null)
+            : body.match(/\bnew\s+([\w$]+)\s*\(/);
+        if (!made || !bails.has(made[1])) continue;
+        if (/\.valid\b|\binstanceof\b|\?\s*inst|return\s+[\w$]+\.valid/.test(body)) continue; // it checks the build
+        hit('JSD-19', m.index, `create returns new ${made[1]}() unchecked, and its constructor can bail: return null or the live instance`);
+    }
+
+    // JSD-19 a bare create() that skips the expando the sweep registers.
+    const bareCreate = code.match(/\bcreate\s*:\s*(?:\(\s*([\w$]+)\s*\)|([\w$]+))\s*=>\s*new\s+([\w$]+)\s*\(\s*\1?\2?\s*\)\s*[,}\n]/);
+    if (bareCreate) {
+        const cls = bareCreate[3];
+        const ctorAt = code.search(new RegExp(`class\\s+${cls}\\b`));
+        const ctorBody = ctorAt < 0 ? '' : code.slice(ctorAt, blockEnd(bare, code.indexOf('{', ctorAt)));
+        if (/\.nds[A-Z]\w*\s*=(?!=)/.test(code) && !/\.nds[A-Z]\w*\s*=\s*this\b/.test(ctorBody)) hit('JSD-19', bareCreate.index, `create returns new ${cls}() without the expando`);
+    }
+
+    // ── architecture ────────────────────────────────────────────────────────
+
+    const kebabOwn = name.replace(/^nds-|\.js$/g, '');
+    const loops = (at) => blocksAround(bare, at).some((o) => /(?:\.forEach|\.map)\s*\(\s*(?:\(?[\w$, ]*\)?\s*=>|function\b[^(]*\([^)]*\))\s*$|\b(?:for|while)\s*\([^)]*\)\s*$/.test(bare.slice(Math.max(0, o - 120), o).trimEnd()));
+
+    // JSA-01 a document-wide walk iterated on the init() path with no yield (the component's own
+    // root sweep is the loader's to schedule).
+    for (const [open] of initBodies.filter(([, v]) => v === 'init')) {
+        const body = code.slice(open, blockEnd(bare, open));
+        if (/NDS\.onIdle|requestIdleCallback|requestAnimationFrame|postMessage/.test(body)) continue;
+        for (const w of body.matchAll(/document\.(?:querySelectorAll|getElementsByClassName|getElementsByTagName)\s*\(\s*(['"`])([^'"`]+)\1\s*\)\s*\.forEach\s*\(\s*([\w$.]+)?/g)) {
+            if (new RegExp(`^\\.nds-${kebabOwn}\\b`).test(w[2]) || /^(create|this\.create|[\w$]*[Ii]nit\w*)$/.test(w[3] || '')) continue;
+            hit('JSA-01', open + w.index, `init() walks ${w[2]}`, 'flag only when it can pass ~50 elements and need not settle before first paint');
+        }
+    }
+
+    // JSA-02 three or more read/write alternations in one function's straight-line code.
+    const RW = /\.getBoundingClientRect\s*\(|\.(?:offset|client|scroll)(?:Width|Height|Top|Left)\b(?!\s*=[^=])|\bgetComputedStyle\s*\(|\.style\.[\w$]+\s*=(?!=)|\.style\.setProperty\s*\(|\.classList\.(?:add|remove|toggle)\s*\(|\.setAttribute\(\s*['"](?:class|style)['"]/g;
+    const seq = new Map(); // function open → R/W string
+    for (const r of code.matchAll(RW)) {
+        const fn = innerFn(bare, r.index);
+        if (!fn || loops(r.index) && fnBlocks(bare, r.index)[0] === fn && blocksAround(bare, r.index).indexOf(fn) > 0) continue; // the loop form is JSD-06's
+        const kind = /^\.(?:getBounding|offset|client|scroll)|getComputedStyle/.test(r[0].trimStart()) ? 'R' : 'W';
+        const s = seq.get(fn) || { s: '', at: r.index };
+        if (s.s.at(-1) !== kind) s.s += kind;
+        seq.set(fn, s);
+    }
+    for (const [fn, s] of seq) if (s.s.length - 1 >= 3) hit('JSA-02', s.at, `${s.s.length - 1} read/write alternations in ${fnName(bare, fn) || 'a callback'}`, 'count only what runs in sequence: if/else arms and a staged measurement do not');
+
+    // JSA-04 setTimeout(fn, 0) used as a yield.
+    for (const m of code.matchAll(/\bsetTimeout\s*\(/g)) {
+        const args = argsAt(code, bare, m.index + m[0].length - 1);
+        if (args.length > 2 || (args[1] && args[1].text !== '0')) continue;
+        const from = lineStart(source, Math.min(m.index, innerFn(bare, m.index) || m.index), 3); // its line, or its function's leading comment
+        const said = commentsIn(source, code, from, lineEnd(code, m.index)).trim();
+        hit('JSA-04', m.index, 'setTimeout(…, 0)', said ? 'exempt only if the comment names what the yield outlasts (a reset restore, a focus pass, a layout)' : undefined);
+    }
+
+    // JSA-06 a fetch with no signal in a file that never aborts one.
+    if (!/\.abort\s*\(/.test(code)) {
+        for (const m of code.matchAll(/(?<![\w$.])fetch\s*\(/g)) {
+            const args = argsAt(code, bare, m.index + m[0].length - 1);
+            if (args.slice(1).some((a) => /\bsignal\b/.test(a.text)) || /Promise\.all\s*\(\s*\[[^\]]*$/.test(code.slice(Math.max(0, m.index - 200), m.index))) continue;
+            hit('JSA-06', m.index, 'fetch with no signal', 'only a handler a newer event supersedes needs an AbortController');
+        }
+    }
+
+    // JSA-13 an rAF that gates the whole init (module body or init()) with no setTimeout racing it.
+    for (const m of code.matchAll(/\brequestAnimationFrame\s*\(/g)) {
+        const fn = innerFn(bare, m.index);
+        const gate = topLevel(m.index) || /^init$/.test(fnName(bare, fn));
+        if (!gate) continue;
+        const scope = fn ? code.slice(fn, blockEnd(bare, fn)) : code;
+        if (/\bsetTimeout\s*\(/.test(scope)) continue;
+        hit('JSA-13', m.index, 'requestAnimationFrame gates init', 'a sub-step, animation or measurement is exempt unless it writes the reveal stamp');
+    }
+
+    // ── deep-read rules: the script runs the mechanical filter, the reader the judgment ──
+
+    // JSA-03 a module-scope cache that is written and never pruned.
+    for (const m of code.matchAll(/^\s{4}(?:const|let)\s+([\w$]+)\s*=\s*(new\s+(?:Map|Set)\s*\(\s*\)|\{\s*\})\s*;/gm)) {
+        const v = esc(m[1]);
+        const writes = new RegExp(`\\b${v}\\s*\\.\\s*(?:set|add)\\s*\\(|\\b${v}\\s*\\[[^\\]]+\\]\\s*=(?!=)`).exec(code);
+        if (!writes || !outerFn(bare, writes.index)) continue;
+        if (new RegExp(`\\b${v}\\s*\\.\\s*(?:delete|clear)\\s*\\(|delete\\s+${v}\\s*\\[|\\b${v}\\s*=(?!=)\\s*(?!${esc(m[2])})`).test(code.replace(m[0], ''))) continue;
+        if (annotated(m.index)) continue; // a comment names the page-lifetime intent
+        hit('JSA-03', m.index, `${m[1]} grows and is never pruned`, 'a finding only if the write runs per event, render or instance');
+    }
+
+    // JSA-07 a DOM-collection loop with a second walk or a linear search inside it.
+    const collections = new Set([...code.matchAll(/(?:const|let|var)\s+([\w$]+)\s*=\s*(?:Array\.from\(\s*|\[\s*\.\.\.\s*)?[\w$.]*querySelectorAll\(/g)].map((m) => m[1]));
+    for (const o of bare.matchAll(/([\w$.]+(?:\([^()]*\))?)\s*\.forEach\s*\(\s*(?:\(?[\w$, ]*\)?\s*=>|function\b[^(]*\([^)]*\))\s*\{|\bfor\s*\(\s*(?:const|let|var)\s+[\w$]+\s+of\s+([^)]+)\)\s*\{/g)) {
+        const over = (o[1] || o[2] || '').trim();
+        if (!/querySelectorAll|\.children\b/.test(over) && !collections.has(over.split('.')[0])) continue;
+        const open = o.index + o[0].length - 1;
+        const body = code.slice(open, blockEnd(bare, open));
+        const inner = body.match(/querySelectorAll\([^)]*\)\s*\.forEach|\bfor\s*\([^)]*\bof\s+[^)]*querySelectorAll|([\w$]+)\s*\.\s*(?:find|some|filter|indexOf|includes)\s*\(/);
+        if (!inner || (inner[1] && !collections.has(inner[1]))) continue;
+        hit('JSA-07', open, `a nested walk inside a loop over ${over.slice(0, 40)}`, 'a finding when both sides can grow (rows × rows), not rows × a bounded few');
+    }
+
+    // JSA-09 two ten-line blocks with one shape (names, strings and numbers masked).
+    const norm = source.split('\n').map((l) => l.replace(/\/\/.*$/, '').replace(/(['"`])(?:\\.|(?!\1).)*\1/g, 'S').replace(/\b\d+\b/g, 'N').replace(/\b[A-Za-z_$][\w$]*\b/g, (w) => (/^(if|else|for|while|return|const|let|var|function|new|this|await|of|in)$/.test(w) ? w : 'I')).trim());
+    const seen = new Map();
+    let lastPair = -20;
+    for (let i = 0; i + 10 <= norm.length; i++) {
+        const win = norm.slice(i, i + 10);
+        if (win.filter((l) => l.length > 15).length < 6) continue; // mostly braces: no shape to share
+        const key = win.join('\n');
+        const first = seen.get(key);
+        if (first === undefined) { seen.set(key, i); continue; }
+        if (i - first >= 10 && i - lastPair > 10) { hit('JSA-09', source.split('\n').slice(0, i).join('\n').length, `10 lines repeat the shape at line ${first + 1}`, 'a finding when one helper would read better than two copies'); lastPair = i; }
+    }
+
+    // JSA-11 a function over 80 lines mixing render, state, IO and event binding. (The branch-outlier
+    // trigger stays a deep read: medians over this tree's many small helpers flag every real function.)
+    for (const b of bare.matchAll(/\{/g)) {
+        const end = blockEnd(bare, b.index);
+        const body = code.slice(b.index, end);
+        if (body.split('\n').length <= 80 || !fnName(bare, b.index) || fnBlocks(bare, b.index + 1)[0] !== b.index) continue;
+        const concerns = [/createElement|innerHTML|appendChild|classList|setAttribute|insertAdjacent/, /\bthis\.[\w$]+\s*=(?!=)/, /\bfetch\(|localStorage|sessionStorage|document\.cookie|dataset|getAttribute/, /addEventListener|NDS\.on[A-Z]/].filter((r) => r.test(body)).length;
+        if (concerns >= 4) hit('JSA-11', b.index, `${fnName(bare, b.index)}: ${body.split('\n').length} lines, ${concerns} concerns`, 'exempt when the flow is one deliberate sequence or sections name each step');
+    }
+
+    // JSA-22 a compatibility tell in a comment whose names DEPRECATIONS.md never mentions.
+    for (const c of source.matchAll(/\/\/[^\n]*\b(back-?compat\w*|backward[s]? compatib\w*|deprecated (?:alias|name|spelling|class|attribute|API)\w*|legacy (?:alias|API|name|class|attribute|selector|spelling)\w*)[^\n]*/gi)) {
+        const near = source.slice(c.index, source.indexOf('\n', source.indexOf('\n', c.index) + 1));
+        const names = [...near.matchAll(/(?:\.|\b)(nds-[\w-]+|data-[\w-]+|[a-z]+[A-Z]\w+|--[\w-]+)/g)].map((n) => n[1]);
+        if (names.some((n) => DEPRECATIONS.includes(n))) continue;
+        hit('JSA-22', c.index, c[0].trim().slice(0, 70), 'resolve the name it keeps alive, then look for its row');
+    }
+
+    // JSA-23 (a) a module-scope registry of instances, which outlives an unmounted node.
+    for (const m of code.matchAll(/^\s{4}(?:const|let)\s+([\w$]+)\s*=\s*new\s+(Map|Set)\s*\(/gm)) {
+        if (!new RegExp(`\\b${m[1]}\\s*\\.\\s*(?:set|add)\\s*\\([^)]*(?:this|instance|inst)\\b`).test(code)) continue;
+        hit('JSA-23a', m.index, `${m[2]} ${m[1]} holds instances`, 'a page singleton released by a loader destroy hook is exempt');
+    }
+
+    // ── security ────────────────────────────────────────────────────────────
+
+    // An expression whose value is the same in every run: a literal, a number, or a module const of one.
+    const LIT = `(?:'[^'\\n]*'|"[^"\\n]*"|\`[^\`$]*\`)`;
+    const literalConst = (name) => new RegExp(`^\\s*(?:const|let)\\s+${name}\\s*=\\s*(?:${LIT}(?:\\s*\\+\\s*${LIT})*|-?\\d[\\d.]*|\\{[^{}()\`$]*\\}|\\[[^\\[\\]()\`$]*\\])\\s*(?:;|$)`, 'm').test(code);
+    // The ${…} expressions of every top-level template literal in `expr`, nesting kept whole.
+    const subsOf = (expr) => {
+        const subs = [];
+        for (let i = 0; i < expr.length; i++) {
+            if (expr[i] === "'" || expr[i] === '"') { i = stringEnd(expr, i); continue; }
+            if (expr[i] !== '`') continue;
+            const end = stringEnd(expr, i);
+            for (let j = i + 1; j < end; j++) {
+                if (expr[j] === '\\') { j++; continue; }
+                if (expr[j] !== '$' || expr[j + 1] !== '{') continue;
+                let d = 1, k = j + 2;
+                while (k < end && d) {
+                    const c = expr[k];
+                    if (c === '"' || c === "'" || c === '`') { k = stringEnd(expr, k) + 1; continue; }
+                    if (c === '{') d++; else if (c === '}') d--;
+                    k++;
+                }
+                subs.push(expr.slice(j + 2, k - 1));
+                j = k - 1;
+            }
+            i = end;
+        }
+        return subs;
+    };
+    // A branch of a ternary: a plain string, or a template whose own substitutions are all safe.
+    const safeBranch = (b, at, depth) => /^(['"])[^'"]*\1$/.test(b) || (/^`[\s\S]*`$/.test(b) && subsOf(b).every((s) => safeSub(s, at, depth + 1)));
+    const TAINT = /localStorage|sessionStorage|document\.cookie/;
+    // Why a ${…} substitution is safe in HTML, or null when the script cannot prove it.
+    const safeSub = (e, at, depth = 0) => {
+        e = e.trim();
+        if (/^(?:NDS\.)?escape\w*\s*\(|^\w*[Ee]scape\w*\s*\(/.test(e)) return 'escaped';
+        if (/^-?\d[\d.]*$|^(true|false)$|^['"][^'"]*['"]$/.test(e)) return 'literal';
+        if (/^[\w$.]+\.length$|^(?:parseInt|parseFloat|Number|Math\.\w+)\s*\(/.test(e)) return 'number';
+        if (/^[\w$.()]+\.(?:toFixed|padStart|padEnd|toLocaleString)\s*\(/.test(e) && !TAINT.test(e)) return 'number';
+        if (/^(i|j|k|n|idx|index)$/.test(e)) return 'counter';
+        const tern = e.match(/^([^?`'"]+)\?\s*([\s\S]+?)\s*:\s*((?:'[^']*'|"[^"]*"|`[\s\S]*`))$/);
+        if (tern && depth < 3 && safeBranch(tern[2].trim(), at, depth) && safeBranch(tern[3].trim(), at, depth)) return 'safe branches';
+        const [head, ...rest] = e.split('.');
+        if (/^[\w$]+$/.test(head) && literalConst(head) && rest.every((r) => /^[\w$]+(?:\[[\w$'"]+\])?$/.test(r))) return 'constant';
+        if (depth < 2 && /^[\w$]+$/.test(e)) { // a variable: judge its nearest assignment in the same function
+            const fn = innerFn(bare, at);
+            const defs = [...code.slice(fn, at).matchAll(new RegExp(`\\b${e}\\s*=(?!=)\\s*([^;\\n]+)`, 'g'))];
+            const def = defs.at(-1);
+            if (def) return TAINT.test(def[1]) ? null : safeSub(def[1], fn + def.index, depth + 1);
+        }
+        const ops = e.split(/\s*(?:\+|-|\*|\/|%|<|>|&&|\|\|)\s*/);
+        if (ops.length > 1 && ops.every((o) => o && safeSub(o, at, depth + 1))) return 'arithmetic';
+        return null;
+    };
+
+    // JSS-01 an HTML sink fed a template or concatenation with a substitution no rule proves safe.
+    for (const m of code.matchAll(/\.(innerHTML|outerHTML)\s*(?:\+?=)(?!=)\s*|\.insertAdjacentHTML\s*\(|\b(?:document|doc|[\w$]+\.contentDocument|[\w$]+\.document)\.write(?:ln)?\s*\(/g)) {
+        const isCall = m[0].trim().endsWith('(');
+        const arg = isCall ? argsAt(code, bare, m.index + m[0].length - 1).at(m[0].includes('insertAdjacent') ? 1 : 0) : null;
+        const rhsAt = isCall ? arg?.at : m.index + m[0].length;
+        if (rhsAt === undefined) continue;
+        let rhs = isCall ? arg.text : code.slice(rhsAt, Math.min(...[code.indexOf(';', rhsAt), blockEnd(bare, innerFn(bare, rhsAt)) - 1].filter((x) => x > 0)));
+        let pieces = [rhs];
+        if (/^[\w$]+$/.test(rhs.trim())) { // a variable: judge every string it was built from
+            const v = rhs.trim();
+            if (literalConst(v)) continue;
+            const fn = innerFn(bare, rhsAt);
+            pieces = [...code.slice(fn, rhsAt).matchAll(new RegExp(`\\b${v}\\s*\\+?=(?!=)\\s*([\`'"][\\s\\S]*?)(?:;|\\n\\s*\\n)`, 'g'))].map((d) => d[1]);
+            if (!pieces.length) { hit('JSS-01', m.index, `${m[1] || 'HTML sink'} = ${v}`, 'trace the variable: an escaped or fixed value exempts it'); continue; }
+        }
+        // Each piece splits at its top-level `+`: a string or template is markup, anything else a substitution.
+        const subs = pieces.flatMap((p) => plusTerms(p).flatMap((t) => (/^(['"])[\s\S]*\1$/.test(t) ? [] : /^`[\s\S]*`$/.test(t) ? subsOf(t) : [t])))
+            .map((s) => s.trim()).filter(Boolean);
+        if (!subs.length) continue; // a static string
+        if (subs.some((s) => TAINT.test(s))) { hit('JSS-01', m.index, `${m[1] || 'HTML sink'} reads a writable store`); continue; }
+        const unproven = subs.filter((s) => !safeSub(s, rhsAt)).map((s) => s.trim());
+        if (!unproven.length) continue;
+        hit('JSS-01', m.index, `${m[1] || 'HTML sink'} with ${unproven.slice(0, 3).map((s) => '${' + s.slice(0, 40) + '}').join(' ')}${unproven.length > 3 ? ' …' : ''}`,
+            'each must be escaped, numeric, or a fixed value; an annotation naming its source may exempt it');
+    }
+
+    // JSS-05 navigation to an expression: noopener (window.open needs a feature string) and scheme.
+    for (const m of code.matchAll(/\bwindow\.open\s*\(|\b(?:window\.)?location(?:\.href)?\s*=(?!=)|\blocation\.(?:assign|replace)\s*\(|\.href\s*=(?!=)|\.setAttribute\(\s*(['"])href\1\s*,/g)) {
+        const isCall = m[0].trim().endsWith('(') || m[0].endsWith(',');
+        const args = isCall ? argsAt(code, bare, code.indexOf('(', m.index)) : [];
+        const dest = isCall ? (m[0].includes('setAttribute') ? args[1]?.text : args[0]?.text) : code.slice(m.index + m[0].length, code.indexOf(';', m.index)).trim();
+        if (!dest) continue;
+        if (m[0].includes('window.open') && args.length < 3) hit('JSS-05', m.index, 'window.open without a feature string (opener kept)');
+        if (/^(['"`])(?:https?:|mailto:|tel:|\/|#|\?)/.test(dest) || /^(['"`])[^'"`$]*\1$/.test(dest)) continue; // the scheme is fixed
+        if (/^(?:window\.)?location\.(?:origin|pathname|href)\b/.test(dest)) continue; // browser-managed
+        if (/^[\w$.]+\.href$/.test(dest) && /new URL\(/.test(code)) { hit('JSS-05', m.index, `navigates to ${dest}`, 'check it passed a scheme allowlist'); continue; }
+        hit('JSS-05', m.index, `navigates to ${dest.slice(0, 50)}`, 'trace its source: a scheme check, or a value from no attribute, option or response, exempts it');
+    }
+
+    // JSS-06 a JSON value from a writable store merged with Object.assign or spread.
+    const helpers = [...code.matchAll(/function\s+([\w$]+)\s*\([^)]*\)\s*\{/g)].filter((h) => /JSON\.parse\([^)]*(?:localStorage|sessionStorage|cookie)/.test(code.slice(h.index, blockEnd(bare, h.index + h[0].length - 1)))).map((h) => h[1]);
+    const parsedFrom = new RegExp(`(?:const|let|var)\\s+([\\w$]+)\\s*=\\s*(?:JSON\\.parse\\([^;]*(?:localStorage|sessionStorage|cookie)|(?:${helpers.join('|') || '(?!)'})\\s*\\()`, 'g');
+    for (const p of code.matchAll(parsedFrom)) {
+        const v = p[1];
+        for (const u of code.matchAll(new RegExp(`Object\\.assign\\s*\\([^;]*?,\\s*${v}\\b|\\.\\.\\.\\s*${v}\\b`, 'g'))) {
+            if (/Object\.create\(null\)/.test(code.slice(u.index, u.index + 80)) || /safeMerge|delete\s+[\w$.]+\.__proto__/.test(code.slice(lineStart(code, u.index, 4), u.index))) continue;
+            hit('JSS-06', u.index, `${v} from a writable store merged without an own-key filter`, annotated(u.index) ? 'the comment above may say why the payload is trusted' : undefined);
+        }
+    }
+
     return out;
 }
 
@@ -282,6 +1032,72 @@ function checkLoader() {
     for (const m of source.matchAll(/\{([^{}]*?\bname:\s*'([^']+)'[^{}]*?)\}/g)) {
         if (!/\bcritical:\s*true/.test(m[1]) || m[1].includes('//')) continue;
         out.push({ rule: 'JSA-05', file: 'nds-loader.js', line: lineOf(source, m.index), what: `${m[2]}: critical: true with no rationale comment` });
+    }
+    return out;
+}
+
+// ── across files ────────────────────────────────────────────────────────────
+
+const GENERIC = new Set(['init', 'reinit', 'create', 'destroy', 'render', 'update', 'refresh', 'open', 'close', 'toggle', 'show', 'hide', 'setup', 'cleanup', 'reset', 'clear', 'getValue', 'setValue', 'apply', 'handle', 'onClick', 'onKeydown', 'tick', 'stamp', 'wire', 'paint', 'run', 'go', 'next', 'prev']);
+const tokens = (body) => new Set(body.replace(/\s+/g, ' ').match(/[\w$]+|[^\s\w$]/g) || []);
+const overlap = (a, b) => { let n = 0; for (const t of a) if (b.has(t)) n++; return n / Math.max(a.size, b.size, 1); };
+
+// The doc and example pages, read once: their snippets are the page scripts consumers copy.
+let docCache;
+const DOC_SOURCES = () => docCache ||= PAGE_DIRS
+    .flatMap((d) => readdirSync(join(REPO, d)).filter((f) => f.endsWith('.md')).map((f) => readFileSync(join(REPO, d, f), 'utf8')));
+
+async function checkTree(files) {
+    const out = [];
+    const sources = files.map((f) => ({ file: basename(f), source: readFileSync(f, 'utf8') })).map((x) => ({ ...x, ...scan(x.source) }));
+    const add = (rule, x, at, what, verify) => out.push({ rule, file: x.file, line: lineOf(x.source, at), what, verify });
+
+    // JSD-05 (a) one helper written twice: the same name in two component files, ~70% the same body.
+    const byName = new Map();
+    for (const x of sources) {
+        for (const m of x.code.matchAll(/\bfunction\s+([\w$]+)\s*\([^)]*\)\s*\{/g)) {
+            if (GENERIC.has(m[1]) || CORE_FNS.has(m[1])) continue;
+            const open = m.index + m[0].length - 1;
+            (byName.get(m[1]) || byName.set(m[1], []).get(m[1])).push({ x, at: m.index, body: tokens(x.code.slice(open, blockEnd(x.bare, open))) });
+        }
+    }
+    for (const [fname, defs] of byName) {
+        const files = new Set(defs.map((d) => d.x.file));
+        if (files.size < 2) continue;
+        const [a, ...rest] = defs;
+        const twin = rest.find((d) => d.x.file !== a.x.file && overlap(a.body, d.body) >= 0.7);
+        if (twin) add('JSD-05a', a.x, a.at, `${fname}() also in ${twin.x.file}`, 'a promotion candidate when core has no equivalent and the body is worth sharing');
+    }
+    // JSD-05 (b) the HTML-escape idiom inline in three or more files.
+    const escapers = sources.filter((x) => /\.replace\(\s*\/&\/g[\s\S]{0,200}\.replace\(\s*\/</.test(x.code) && !/NDS\.escapeHtml\s*=/.test(x.code));
+    if (escapers.length >= 3) add('JSD-05b', escapers[0], 0, `HTML escape inline in ${escapers.map((x) => x.file).join(', ')}`, 'use NDS.escapeHtml');
+
+    // JSD-07 the loader's contract: a registered component exposes init(); a factory (create(el)) also reinit().
+    const { SCOPE, extractKeys } = await import('./check-banners.mjs');
+    for (const [file, ns] of SCOPE) {
+        if (!ns || !REGISTERED.has(ns)) continue;
+        const x = sources.find((s) => s.file === file);
+        const keys = x && extractKeys(x.source, ns);
+        if (!keys) continue;
+        if (!keys.has('init')) add('JSD-07', x, 0, `NDS.${ns} has no init()`);
+        const transient = /\bcreate\s*(?::\s*(?:function\s*)?\(|\()\s*(?:options|opts|config|cfg|\{)/.test(x.code); // create({…}) builds a surface
+        const singleton = /^\s*\*.*\bsingleton\b/im.test(x.source.slice(0, x.source.indexOf('*/'))); // the banner declares the shape
+        if (keys.has('create') && !transient && !singleton && !keys.has('reinit')) add('JSD-07', x, 0, `NDS.${ns} has create(el) but no reinit()`, 'the loader calls init(), never reinit(): confirm the factory needs one');
+    }
+
+    // JSD-11 an unregistered namespace whose init() walks the DOM, which no file ever calls.
+    for (const [file, ns] of SCOPE) {
+        if (!ns || REGISTERED.has(ns) || /^(Init|Audit)$/.test(ns)) continue;
+        const x = sources.find((s) => s.file === file);
+        if (!x) continue;
+        const d = /\b(?:function\s+init\s*\([^)]*\)|init\s*[:(]\s*(?:function\s*)?\(?[^)]*\)?\s*(?:=>)?)\s*\{/.exec(x.bare);
+        if (!d) continue;
+        const open = d.index + d[0].length - 1;
+        if (!/document\.querySelectorAll|addEventListener|setAttribute/.test(x.code.slice(open, blockEnd(x.bare, open)))) continue;
+        const call = new RegExp(`NDS\\.${ns}\\.init\\s*\\(`);
+        if (sources.some((s) => s.file !== file && call.test(s.code))) continue;
+        if (DOC_SOURCES().some((t) => call.test(t))) continue; // a page's own script calls it, as the docs show
+        add('JSD-11', x, d.index, `NDS.${ns}.init() does DOM work, and no loader entry, file or doc calls it`);
     }
     return out;
 }
@@ -310,13 +1126,15 @@ const CASES = [
     [`const f = new Function('a', body);`, ['JSS-02']],
     [`setTimeout('go()', 10);`, ['JSS-02']],
     [`setTimeout(go, 10);`, []],
-    [`const re = /data-state="open"/; NDS.State.add(el, 'open');`, []], // a regex literal is not a string
+    [`const re = /data-state="open"/; NDS.State.add(el, 'open'); use(re);`, []], // a regex literal is not a string
     [`(function(){ function f() { const io = new IntersectionObserver(cb); } })();`, ['JSP-03']],
     [`(function(){ function f() { new ResizeObserver(cb).observe(el); } })();`, ['JSP-04a']],
-    [`(function(){ function f() { const mo = new MutationObserver(cb); } })();`, ['JSP-05']],
-    [`(function(){ function f() {\n// characterData: the pool has no text-node mode\nconst mo = new MutationObserver(cb); } })();`, ['JSP-05?']],
+    [`(function(){ function f() { const mo = new MutationObserver(cb); mo.disconnect(); } })();`, ['JSP-05']],
+    [`(function(){ function f() { const mo = new MutationObserver(cb); mo.observe(el); } })();`, ['JSP-05', 'JSP-08']], // never disconnected
+    [`(function(){ function f() {\n// characterData: the pool has no text-node mode\nconst mo = new MutationObserver(cb); mo.disconnect(); } })();`, ['JSP-05?']],
     [`(function(){ class A { constructor() { NDS.onResize(() => this.fit()); } } })();`, ['JSP-04b?']],
-    [`(function(){ class A { constructor() { this.off = NDS.onResize(() => this.fit()); } } })();`, []], // stored
+    [`(function(){ class A { constructor() { this.off = NDS.onResize(() => this.fit()); } destroy() { this.off(); } } })();`, []], // stored and released
+    [`(function(){ class A { constructor() { this.off = NDS.onResize(() => this.fit()); } } })();`, ['JSD-09']], // stored, never released
     [`(function(){ NDS.onDOMAdd('.x', wire); })();`, []], // module body runs once
     [`(function(){ function init() { NDS.onResize(fit, document.body); } })();`, ['JSP-04b?']],
     [`(function(){ function init() { NDS.onAttrChange(document.documentElement, ['lang'], f); } })();`, []], // outlives the page
@@ -326,13 +1144,89 @@ const CASES = [
     [`(function(){ function f() { NDS.Modal?.open(m); } })();`, ['JSD-12?']],
     [`(function(){ function f() {\n// Soft dependency: no dimming if NDS.Backdrop is not bundled.\nif (NDS.Backdrop) NDS.Backdrop.show(); } })();`, []],
     [`(function(){\n// ------\n// Soft dependency: Panel is optional here.\n// ------\nfunction a() { NDS.Panel?.open(p); }\nfunction b() { NDS.Panel?.close(p); } })();`, []], // section header
-    [`(function(){ function f() { NDS.State?.add(el, 'x'); } })();`, []], // core
-    [`(function(){\n// Soft dependency: Copy is optional.\nfunction a() { NDS.Copy?.run(); }\nfunction b() { NDS.Copy.run(); } })();`, ['JSD-12?']], // raw where guarded elsewhere
-    [`(function(){\n// Soft dependency: Copy is optional.\nfunction a() { NDS.Copy?.run(); }\nfunction b() { if (!NDS.Copy) return; NDS.Copy.run(); } })();`, []],
-    [`(function(){\n// Soft dependency: Alert is optional.\nfunction a() { if (!el || !NDS.Alert) return; NDS.Alert.show(el); }\nfunction b() { NDS.Alert.dismiss(el); } })();`, ['JSD-12?']], // || !NDS.X is a guard too
+    [`(function(){ function f() { NDS.State?.add(el, 'x'); } })();`, ['JSD-08']], // core: no JSD-12, but a dead guard
+    [`(function(){\n// Soft dependency: Copy is optional.\nfunction a() { NDS.Copy?.init(); }\nfunction b() { NDS.Copy.init(); } })();`, ['JSD-12?']], // raw where guarded elsewhere
+    [`(function(){\n// Soft dependency: Copy is optional.\nfunction a() { NDS.Copy?.init(); }\nfunction b() { if (!NDS.Copy) return; NDS.Copy.init(); } })();`, []],
+    [`(function(){\n// Soft dependency: Alert is optional.\nfunction a() { if (!el || !NDS.Alert) return; NDS.Alert.create(el); }\nfunction b() { NDS.Alert.dismiss(el); } })();`, ['JSD-12?']], // || !NDS.X is a guard too
     [`(function(){ function f() { log(NDS.Modal); } })();`, []], // passed as an argument, not a test
-    [`(function(){ function f() {\nconst h = \`<i class="\${a ? \`x\` : \`y\`}">\`;\n// Soft dependency: Copy is optional.\nNDS.Copy?.init(); } })();`, []], // a nested template keeps the scanner in step
-    [`(function(){ class A {\n// Soft dependency: Alert is optional.\nshow() { if (!NDS.Alert) return; NDS.Alert.show(); }\nhide() { NDS.Alert.dismiss(); } } })();`, ['JSD-12?']], // a guard in one method covers no other
+    [`(function(){ function f() { if (NDS.debounce) NDS.debounce(g); } })();`, ['JSD-08']],
+    [`(function(){ function f() { NDS.Init?.refresh(el); } })();`, ['JSD-08']], // the loader's own API
+    [`(function(){ function f() { if (NDS.isRTL && x) go(); } })();`, []], // a value read, not a guard
+    [`(function(){ NDS.Init?.refresh(el); })();`, []], // module top level runs before the loader
+    [`(function(){ NDS.Case = {}; function f() { NDS.Case?.init(); } })();`, ['JSD-08']], // own namespace
+    [`(function(){ function close() { NDS.State.add(el, 'closing'); setTimeout(() => { NDS.State.clear(el); }, 300); } })();`, ['JSD-13']],
+    [`(function(){ function close() { NDS.State.add(el, 'closing'); setTimeout(() => { NDS.State.clear(el); }, NDS.transitionSpeed()); } })();`, []],
+    [`(function(){ const T = 200; function close() { NDS.State.add(el, 'toast-hide'); setTimeout(() => el.remove(), T + 50); } })();`, ['JSD-13']], // const + offset
+    [`(function(){ function close() { NDS.State.add(el, 'closing'); setTimeout(() => poll(), 300); } })();`, []], // callback leaves el alone
+    [`(function(){ const CONFIG = { transitionDuration: 250 }; function hide() { NDS.State.add(el, 'hide'); setTimeout(() => el.setAttribute('hidden', ''), CONFIG.transitionDuration); } })();`, ['JSD-13']],
+    [`(function(){ function f() { el.addEventListener('scroll', () => { fit(); }); } })();`, ['JSP-02']],
+    [`(function(){ function f() { el.addEventListener('scroll', NDS.rafThrottle(fit)); } })();`, []],
+    [`(function(){ function f() { const r = NDS.rafThrottle(fit); el.addEventListener('scroll', (e) => { if (ok(e)) r(); }); } })();`, []], // calls a throttled function
+    [`(function(){ function f() { const off = () => document.removeEventListener('scroll', h); function h() { close(); off(); } document.addEventListener('scroll', h); } })();`, []], // single-shot dismiss
+    [`(function(){ function f() { el.scrollTo({ left: 0, behavior: 'smooth' }); } })();`, ['JSA-21a']],
+    [`(function(){ function f() { if (NDS.prefersReducedMotion) return el.scrollTo(0, 0); el.scrollTo({ left: 0, behavior: 'smooth' }); } })();`, []],
+    [`(function(){ function f() { window.addEventListener('message', (e) => run(e.data)); } })();`, ['JSS-04']],
+    [`(function(){ function f() { window.addEventListener('message', (e) => { if (e.origin !== O) return; run(e.data); }); } })();`, []],
+    [`(function(){ class A { constructor() { document.addEventListener('click', this.onDoc); } } })();`, ['JSP-06c']],
+    [`(function(){ class A { constructor() { document.addEventListener('click', this.onDoc, { signal: this.ac.signal }); } } })();`, []],
+    [`(function(){ document.addEventListener('click', onDoc); })();`, []], // module body runs once
+    [`(function(){ function wire(list) { list.forEach((b) => { b.addEventListener('click', go); }); } function destroy() {} })();`, ['JSP-06a?']],
+    [`(function(){ function render(box, items) { box.innerHTML = ''; items.forEach((b) => { b.addEventListener('click', go); }); } })();`, []], // old nodes left
+    [`(function(){ function f() { clearTimeout(t); t = setTimeout(run, 200); } })();`, ['JSP-07?']],
+    [`(function(){ function f() { clearTimeout(t); t = setTimeout(run, 200); } function cancel() { clearTimeout(t); } })();`, []], // latch
+    [`(function(){ function f() { clearTimeout(t); t = setTimeout(run, delay); } })();`, []], // a scheduler
+    [`(function(){ function f() { const mo = new MutationObserver(cb); mo.observe(document.body); } })();`, ['JSP-05']], // page-lifetime root
+    [`(function(){ NDS.onDOMAdd('.x', (nodes) => nodes.forEach((n) => n.addEventListener('click', go))); })();`, ['JSP-09?']],
+    [`(function(){ NDS.onDOMAdd('.x', (nodes) => nodes.forEach((n) => n.addEventListener('click', go))); NDS.onDOMRemove('.x', unwire); })();`, []],
+    [`(function(){ NDS.onDOMAdd('.x', (nodes) => refresh(nodes)); })();`, []], // no listener of its own
+    [`(function(){ class A { constructor(el) { this.w = el.getBoundingClientRect().width; } } })();`, ['JSP-11?']],
+    [`(function(){ class A { constructor(el) { this.off = NDS.onElementResize(el, () => { this.w = el.offsetWidth; }); } destroy() { this.off(); } } })();`, []], // measured later
+    [`(function(){ class A { close() { this.cancel = NDS.onTransitionEnd(el, done); } } })();`, ['JSP-12']],
+    [`(function(){ class A { close() { this.cancel?.(); this.cancel = NDS.onTransitionEnd(el, done); } } })();`, []],
+    [`(function(){ class A { close() { if (!this.open) return; this.cancel = NDS.onTransitionEnd(el, done); } } })();`, []], // early return
+    [`(function(){ const f = () => NDS.State?.add(el, 'x'); })();`, ['JSD-08']], // an expression arrow runs later
+    [`(function(){ function f() {\nconst h = \`<i class="\${a ? \`x\` : \`y\`}">\`;\n// Soft dependency: Copy is optional.\nNDS.Copy?.init(h); } })();`, []], // a nested template keeps the scanner in step
+    [`(function(){ function f(v) { return /["']/.test(v); }\nfunction g() { return 1; } })();`, []], // a regex after return is no division
+    [`(function(){ function f(el) { if (!el) return; go(); if (el) el.focus(); } })();`, ['JSD-14b']],
+    [`(function(){ function f(el) { if (el) { if (el) el.focus(); } } })();`, ['JSD-14b']],
+    [`(function(){ function f(el) { if (el) a(); if (el) b(); } })();`, []], // sibling ifs each guard their own body
+    [`(function(){ function f(el) { if (!el) return; if (t === el && el.x) go(); } })();`, []], // a comparison, not a test
+    [`(function(){ const s = a ? f(x) : b ? g(y) : c ? h(z) : w; })();`, ['JSD-14c']],
+    [`(function(){ const s = { k: a ? x : y, o: a ? (b ? 'p' : 'q') : null }; })();`, []], // two ternaries, not one chain
+    [`(function(){ const s = m === 'A' ? 1 : m === 'B' ? 2 : m === 'C' ? 3 : 0; use(s); })();`, []], // a small literal lookup
+    [`(function(){ const ok = (s) => +s >= (h && t ? 1 : 0) && +s <= (h ? (t ? 12 : 23) : 59); use(ok); })();`, []], // side by side, 2 deep
+    [`(function(){ function f() { a(); if (x) { if (y) { for (;;) { while (z) { if (w) { go(); } } } } } } })();`, ['JSD-14a']],
+    [`(function(){ function f() { return 1; go(); } })();`, ['JSD-14d']],
+    [`(function(){ function f() { switch (x) { case 1: return 1; case 2: return 2; } } })();`, []], // case labels stay reachable
+    [`(function(){ function f() { const n = 2; go(); } })();`, ['JSD-14e']],
+    [`(function(){ function f() { const n = read(); go(); } })();`, []], // a call may have an effect
+    [`(function(){ const BASE = { a: 1 }; const X = { ...BASE }; use(X); })();`, []], // a spread is a read
+    [`(function(){ const OFF = false; function f() { if (OFF && go()) x(); } })();`, ['JSD-16']],
+    [`(function(){ function f() { el.removeEventListener('click', this._onClick); } })();`, ['JSD-09']],
+    [`(function(){ function f() { this._onClick = h; el.removeEventListener('click', this._onClick); } })();`, []],
+    [`(function(){ class A { constructor() { this.items = []; } destroy() { this.items.forEach((o) => o.stop()); } } })();`, ['JSD-09']],
+    [`(function(){ function escapeHtml(s) { return s; } })();`, ['JSD-10?']],
+    [`(function(){ function wire(el) { el.classList.add('x'); } NDS.onDOMAdd('.x', wire); })();`, ['JSD-17']],
+    [`(function(){ function wire(nodes) { nodes.forEach(go); } NDS.onDOMAdd('.x', wire); })();`, []],
+    [`(function(){ function f() { if (window.innerWidth < 768) go(); } })();`, ['JSD-03a']],
+    [`(function(){ function f() { return window.matchMedia('(max-width: 600px)').matches; } })();`, ['JSD-03c']],
+    [`(function(){ function f() { return document.documentElement.dir === 'rtl'; } })();`, ['JSD-04?']],
+    [`(function(){ function f() { document.documentElement.dir = 'rtl'; } })();`, []], // a write reads nothing
+    [`(function(){ function f(els) { els.forEach((el) => { el.style.width = '1px'; const h = el.offsetHeight; use(h); }); } })();`, ['JSD-06']],
+    [`(function(){ class D { constructor(el) { if (!el.menu) return; this.valid = true; } } NDS.D = { create: (el) => el.ndsD || new D(el) }; })();`, ['JSD-19']],
+    [`(function(){ class D { constructor(el) { if (!el.menu) return; this.valid = true; } } NDS.D = { create(el) { const d = new D(el); return d.valid ? d : null; } }; })();`, []],
+    [`(function(){ class D { constructor(el) { if (!el.menu) return; this.valid = true; } } NDS.D = { create(el) { const d = new D(el); wire(d); return d; } }; })();`, ['JSD-19']], // the dud through a variable
+    [`(function(){ class D { constructor(el) { if (!el.menu) return; el.ndsD = this; } } NDS.D = { create(el) { if (!el.ndsD) new D(el); return el.ndsD || null; } }; })();`, []], // published on success only
+    [`(function(){ const html = document.documentElement; function f() { return html.dir === 'rtl'; } })();`, ['JSD-04?']], // an alias of the root
+    [`(function(){ let _offLang; function init() { _offLang = NDS.onAttrChange('html', ['lang'], f); } })();`, ['JSD-09?']], // module handle, never called
+    [`(function(){ let _offLang; function init() { _offLang = NDS.onAttrChange('html', ['lang'], f); } function destroy() { _offLang?.(); } })();`, []],
+    [`(function(){ function f(form) { form.addEventListener('reset', () => setTimeout(go)); } })();`, ['JSA-04']], // no comment at all
+    [`(function(){ // The restore lands after the reset event.\nfunction f(form) { form.addEventListener('reset', () => setTimeout(go)); } })();`, ['JSA-04?']],
+    [`(function(){ async function f(el) { if (!el) return; await x(); if (el) el.focus(); } })();`, []], // await re-opens it
+    [`(function(){ function f(el) { if (!el) return; el = next(); if (el) el.focus(); } })();`, []], // reassigned
+    [`(function(){ function f() { if (!this.box) return; this.measure(); if (this.box) go(); } })();`, []], // a call may reset a property
+    [`(function(){ function f() { if (!this.box) return; const w = 1; if (this.box) go(w); } })();`, ['JSD-14b?']],
+    [`(function(){ class A {\n// Soft dependency: Alert is optional.\nshow() { if (!NDS.Alert) return; NDS.Alert.create(); }\nhide() { NDS.Alert.dismiss(); } } })();`, ['JSD-12?']], // a guard in one method covers no other
 ];
 
 const args = process.argv.slice(2);
@@ -348,7 +1242,8 @@ if (args[0] === '--self-test') {
 const files = args.length
     ? args.map((a) => (a.includes('/') || a.includes('\\') ? a : join(REPO, '_js', a)))
     : readdirSync(join(REPO, '_js')).filter((f) => /^nds-.*\.js$/.test(f) && !OUT_OF_SCOPE.has(f)).map((f) => join(REPO, '_js', f));
-const all = [...files.flatMap((f) => checkFile(f)), ...(args.length && !args.some((a) => a.endsWith('nds-loader.js')) ? [] : checkLoader())];
+const all = [...files.flatMap((f) => checkFile(f)), ...(args.length && !args.some((a) => a.endsWith('nds-loader.js')) ? [] : checkLoader()),
+    ...(args.length ? [] : await checkTree(files))]; // the cross-file rules need the whole tree
 for (const f of all) console.log(`${(f.verify ? 'verify' : 'finding').padEnd(8)} ${f.rule.padEnd(8)} ${`${f.file}:${f.line}`.padEnd(30)} ${f.what}${f.verify ? `  — ${f.verify}` : ''}`);
 const findings = all.filter((f) => !f.verify);
 console.log(`\n${files.length} files, ${findings.length} findings, ${all.length - findings.length} to verify`);

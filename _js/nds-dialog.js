@@ -1,4 +1,4 @@
-/* NDS.dialog — internal core that Modal and Panel share for a <dialog>
+/* NDS.dialog — public surface (internal: the core Modal and Panel share for a <dialog>)
  * Rides: <dialog> show() + popover through NDS.topLayer (the top layer, the dim layer); an inert
  *        page, set once the open animation ends. No popover support: showModal()
  * Methods:
@@ -8,6 +8,10 @@
  *   NDS.dialog.top()                 the newest open modal dialog, or undefined
  *   NDS.dialog.hideMenus(dlg)        close the open popovers inside it
  *   NDS.dialog.onOutside(dlg, fn, signal)  fn on a click outside it, while it is the top one
+ * Events:
+ *   (none — Modal and Panel fire their own)
+ * Hooks:
+ *   (none — data-nds-modal and data-nds-under are its own stamps, read by the dialog CSS)
  * Gotchas:
  *   - The page goes inert after the open animation: making ~1,000 elements inert restyles them
  *     all (~300 ms on a phone), and showModal() did that inside the click.
