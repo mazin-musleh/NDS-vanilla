@@ -2092,7 +2092,7 @@
                     ? 'nds-radio-group'
                     : inputType === 'switch'
                         ? 'nds-switch-group'
-                        : 'nds-check-group';
+                        : 'nds-checkbox-group';
                 if (!fieldset.classList.contains(groupClass)) {
                     fieldset.classList.add(groupClass);
                 }
@@ -2296,8 +2296,8 @@
             formContainer.className = inputType === 'switch'
                 ? 'nds-form-container nds-switch-container'
                 : inputType === 'radio'
-                    ? 'nds-form-container nds-radio-container'
-                    : 'nds-form-container nds-check-container';
+                    ? 'nds-form-container nds-radio'
+                    : 'nds-form-container nds-checkbox';
             if (searchable) formContainer.setAttribute('data-search-item', '');
 
             const formHeader = document.createElement('div');
@@ -2342,7 +2342,7 @@
                 switchWrapper.appendChild(track);
                 formControl.appendChild(switchWrapper);
             } else {
-                const inputClass = inputType === 'radio' ? 'nds-radio' : 'nds-check';
+                const inputClass = inputType === 'radio' ? 'nds-radio-input' : 'nds-checkbox-input';
                 const input = document.createElement('input');
                 input.type = inputType;
                 input.id = id;

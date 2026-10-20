@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 03:51 PM"
+last_edit: "20/10/2026 - 05:24 PM"
 ---
 
 <section id="radio-overview" class="nds-content-section nds-doc-overview">
@@ -39,7 +39,7 @@ Pick another component when:
 <script type="text/html" id="radio-group" data-canon data-variants="radio-variants-table">
 <fieldset class="nds-form-group nds-radio-group">
   <legend class="nds-label">Select your plan</legend>
-  <div class="nds-form-container nds-radio-container">
+  <div class="nds-form-container nds-radio">
     <div class="nds-form-header">
       <label for="radio-1">
         <span class="nds-label">Basic</span>
@@ -47,10 +47,10 @@ Pick another component when:
       </label>
     </div>
     <div class="nds-form-control">
-      <input type="radio" id="radio-1" name="plan" value="basic" class="nds-radio" checked>
+      <input type="radio" id="radio-1" name="plan" value="basic" class="nds-radio-input" checked>
     </div>
   </div>
-  <div class="nds-form-container nds-radio-container">
+  <div class="nds-form-container nds-radio">
     <div class="nds-form-header">
       <label for="radio-2">
         <span class="nds-label">Professional</span>
@@ -58,10 +58,10 @@ Pick another component when:
       </label>
     </div>
     <div class="nds-form-control">
-      <input type="radio" id="radio-2" name="plan" value="pro" class="nds-radio">
+      <input type="radio" id="radio-2" name="plan" value="pro" class="nds-radio-input">
     </div>
   </div>
-  <div class="nds-form-container nds-radio-container">
+  <div class="nds-form-container nds-radio">
     <div class="nds-form-header">
       <label for="radio-3">
         <span class="nds-label">Enterprise</span>
@@ -69,7 +69,7 @@ Pick another component when:
       </label>
     </div>
     <div class="nds-form-control">
-      <input type="radio" id="radio-3" name="plan" value="enterprise" class="nds-radio">
+      <input type="radio" id="radio-3" name="plan" value="enterprise" class="nds-radio-input">
     </div>
   </div>
 </fieldset>
@@ -85,18 +85,18 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every option. Checked goes on one option only: the builder uses `#radio-1`, the first `<input>`, but on a page it goes on the option you mean.
+A row on `.nds-radio-input` (every `<input>`) or `.nds-radio` changes every option. Checked goes on one option only: the builder uses `#radio-1`, the first `<input>`, but on a page it goes on the option you mean.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Size | SM (default) | — | — | 16px tile. Dense forms and tables |
-| Size | MD | `.nds-md` | `.nds-radio-container` | 20px tile. Most forms |
-| Size | LG | `.nds-lg` | `.nds-radio-container` | 24px tile. Touch-first screens |
-| Color | Neutral (demo: + checked) | `.nds-neutral` | `.nds-radio` | Put it on each `<input>`. The checked tile uses the neutral color, not the primary color. Use it when the choice is not a brand action. The color shows only when an option is checked |
+| Size | MD | `.nds-md` | `.nds-radio` | 20px tile. Most forms |
+| Size | LG | `.nds-lg` | `.nds-radio` | 24px tile. Touch-first screens |
+| Color | Neutral (demo: + checked) | `.nds-neutral` | `.nds-radio-input` | Put it on each `<input>`. The checked tile uses the neutral color, not the primary color. Use it when the choice is not a brand action. The color shows only when an option is checked |
 | Checked | Checked (default) (id: checked) | `[checked]` | `#radio-1` | This option is chosen when the page loads. Put it on one option of a group only. Leave every option unchecked when the user must decide |
 | Required | Required (hint: Turn Checked off: the user must then pick an option) | `[data-required]` | `.nds-radio-group` | The user must pick an option before the form submits. A required mark shows before the legend. Use it with no option checked |
-| Disabled | Disabled | `[disabled]` | `.nds-radio` | The user cannot pick these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group |
-| Readonly | Readonly | `[data-state~="readonly"]` | `.nds-radio-container` | The group shows its value but cannot change, by pointer or by keyboard. Put it on every option's container. The tile outline takes the disabled color, and the fill stays |
+| Disabled | Disabled | `[disabled]` | `.nds-radio-input` | The user cannot pick these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group |
+| Readonly | Readonly | `[data-state~="readonly"]` | `.nds-radio` | The group shows its value but cannot change, by pointer or by keyboard. Put it on every option's container. The tile outline takes the disabled color, and the fill stays |
 | Layout | Row | `.nds-horizontal` | `.nds-radio-group` | The options sit side by side and wrap |
 | Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #radio-variants-table .nds-table .nds-responsive}
@@ -195,14 +195,14 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
 | `data-required` | `.nds-radio-group` | The user must pick an option before the form submits. It also adds the required mark to the legend |
 | `data-error-message` | `.nds-radio-group` | Replaces the default message, "Please select an option" |
 | `data-state~="disabled"` | `.nds-radio-group` | Disables every input in the group, and turns off pointer events. The group's title takes the disabled color |
-| `data-state~="readonly"` | `.nds-radio-container` | The option cannot change. The tile outline takes the disabled color |
+| `data-state~="readonly"` | `.nds-radio` | The option cannot change. The tile outline takes the disabled color |
 | `data-feedback-target` | an element inside the group | Receives the group's feedback message. Without one, the message goes at the end of the group |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set these on `.nds-radio-container`. The size classes set the first one.
+Set these on `.nds-radio`. The size classes set the first one.
 
 | Property | Default | Controls |
 |---|---|---|

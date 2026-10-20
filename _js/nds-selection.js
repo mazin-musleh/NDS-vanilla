@@ -15,7 +15,7 @@
  *   nds:selection:change   detail {list, items, count, total} — on a box or select-all change,
  *                          on selectAll() and clear(), and when items come or go and the count moves
  * Hooks:
- *   data-selection-target   the id of a list. On an input.nds-check it is that list's select-all,
+ *   data-selection-target   the id of a list. On an input.nds-checkbox-input it is that list's select-all,
  *                           which acts on and shows the current page only — other pages keep
  *                           their picks (nds-tables stamps a table's header checkbox); on
  *                           anything else it is a counter
@@ -28,7 +28,7 @@
  * Gotchas:
  *   - A list's items are its .nds-page-item elements, else its direct children. A <tbody>
  *     keeps only its own rows, and sub rows (tr.nds-sub) are never items, so a nested
- *     table is its own list. An item's box is its FIRST input.nds-check.
+ *     table is its own list. An item's box is its FIRST input.nds-checkbox-input.
  *   - The count covers EVERY selected item, including other pages and items a filter hides —
  *     the bulk-action truth export sends. Select-all skips the items a filter hides.
  *   - An item with a checkbox mirrors it into data-state="selected". An item without one
@@ -47,8 +47,8 @@
     // Last count per list: a DOM-driven resync fires the event only when the count moved.
     const _counts = new WeakMap();
 
-    // An item's own box is its FIRST input.nds-check, so a checklist inside a card never selects the card.
-    const boxOf = (item) => item.querySelector('input.nds-check');
+    // An item's own box is its FIRST input.nds-checkbox-input, so a checklist inside a card never selects the card.
+    const boxOf = (item) => item.querySelector('input.nds-checkbox-input');
     const isSelected = (item) => NDS.state.has(item, 'selected') || !!boxOf(item)?.checked;
 
     // A sub row's nested table stays its own list (NDS.ownItems).
@@ -67,7 +67,7 @@
     const scopeOf = (items, page) => items.filter(i => !i.hasAttribute('data-filtered') && !(page && i.hidden));
 
     const allBoxesOf = (list) => list.id
-        ? document.querySelectorAll(`input.nds-check[data-selection-target="${list.id}"]`)
+        ? document.querySelectorAll(`input.nds-checkbox-input[data-selection-target="${list.id}"]`)
         : [];
 
     // Every list something on the page counts or selects.
@@ -106,7 +106,7 @@
 
         if (list.id) {
             const rest = scopeOf(items, false).some(i => !isSelected(i));
-            document.querySelectorAll(`[data-selection-target="${list.id}"]:not(input.nds-check)`).forEach(wrap => {
+            document.querySelectorAll(`[data-selection-target="${list.id}"]:not(input.nds-checkbox-input)`).forEach(wrap => {
                 wrap.querySelectorAll('[data-selection-count]').forEach(el => { el.textContent = NDS.formatNumber(count); });
                 wrap.querySelectorAll('[data-selection-total]').forEach(el => { el.textContent = NDS.formatNumber(items.length); });
                 wrap.querySelectorAll('[data-selection-all]').forEach(btn => { btn.hidden = !count || !rest; });
@@ -169,7 +169,7 @@
 
     function onChange(e) {
         const box = e.target;
-        if (!(box instanceof Element) || !box.matches('input.nds-check')) return;
+        if (!(box instanceof Element) || !box.matches('input.nds-checkbox-input')) return;
         const allList = listOfAll(box);
         if (allList) { selectAll(allList, box.checked, 'page'); return; }
 
@@ -214,11 +214,11 @@
         document.addEventListener('click', onClick, { signal: _controller.signal });
 
         // Items added or removed fire no change event — ride the shared DOM bus
-        // (every selectable item carries an input.nds-check).
+        // (every selectable item carries an input.nds-checkbox-input).
         const refresh = NDS.debounce(recountAll, 150);
         _offs = [
-            NDS.onDOMAdd('input.nds-check', refresh),
-            NDS.onDOMRemove('input.nds-check', refresh),
+            NDS.onDOMAdd('input.nds-checkbox-input', refresh),
+            NDS.onDOMRemove('input.nds-checkbox-input', refresh),
             // A filter moves which items select-all covers, with no change event.
             NDS.onAttrChange('*', ['data-filtered'], resyncFor),
         ];

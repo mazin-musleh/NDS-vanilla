@@ -140,14 +140,14 @@ breadcrumb: [["Examples", "/examples"]]
               </div>
 
               <!-- Terms & Privacy -->
-              <div class="nds-form-container nds-check-container" data-required>
+              <div class="nds-form-container nds-checkbox" data-required>
                 <div class="nds-form-header" data-feedback-target>
                   <label for="accept-terms">
                     <span class="nds-label">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <input type="checkbox" id="accept-terms" name="accept-terms" value="accepted" class="nds-check" required>
+                  <input type="checkbox" id="accept-terms" name="accept-terms" value="accepted" class="nds-checkbox-input" required>
                 </div>
               </div>
             </div>

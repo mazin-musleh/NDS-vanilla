@@ -659,7 +659,7 @@ fieldset {
 // SHARED SELECTION-CONTROL CONTAINER (checkbox / radio / switch)
 // ==============================================
 
-:is(.nds-check-container, .nds-radio-container, .nds-switch-container) {
+:is(.nds-checkbox, .nds-radio, .nds-switch-container) {
     &.nds-form-container {
         flex-direction: row-reverse;
         width: fit-content;
@@ -685,7 +685,7 @@ fieldset {
 // (selection controls + slider). The control wrapper is just a layout slot.
 // !important on bg/shadow beats the focus/active state rules above (which
 // re-stamp both at higher specificity via [data-state~=…]).
-:is(.nds-check-container, .nds-radio-container, .nds-switch-container, .nds-slider-container).nds-form-container .nds-form-control {
+:is(.nds-checkbox, .nds-radio, .nds-switch-container, .nds-slider-container).nds-form-container .nds-form-control {
     padding: 0;
     border: 0;
     box-shadow: unset !important;
@@ -693,7 +693,7 @@ fieldset {
 }
 
 // Shared ripple (checkbox + radio)
-:is(.nds-check-container, .nds-radio-container) {
+:is(.nds-checkbox, .nds-radio) {
     &.nds-form-container .nds-form-control {
         &::before {
             content: "";
@@ -718,7 +718,7 @@ fieldset {
 
 // Shared container head (checkbox + radio — switch differs: own sizes + non-!important focus).
 // Public API token: --nds-input-size (16/20/24); size variants override it.
-:is(.nds-check-container, .nds-radio-container).nds-form-container {
+:is(.nds-checkbox, .nds-radio).nds-form-container {
     &.nds-md {
         --nds-input-size: 20px;
         gap: var(--spacing-lg);
@@ -744,7 +744,7 @@ fieldset {
 // ==============================================
 
 @include mobile {
-    :is(.nds-check-container, .nds-radio-container, .nds-switch-container) {
+    :is(.nds-checkbox, .nds-radio, .nds-switch-container) {
         gap: var(--spacing-sm);
 
         &.nds-md {
@@ -756,7 +756,7 @@ fieldset {
         }
     }
 
-    .nds-form-group:is(.nds-check-group, .nds-radio-group, .nds-switch-group) {
+    .nds-form-group:is(.nds-checkbox-group, .nds-radio-group, .nds-switch-group) {
         row-gap: var(--spacing-lg);
         column-gap: var(--spacing-4xl);
     }

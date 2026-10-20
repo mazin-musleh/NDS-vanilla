@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "20/10/2026 - 05:24 PM"
 ---
 
 <section id="selection-overview" class="nds-content-section nds-doc-overview">
@@ -40,14 +40,14 @@ Pick another component when:
 <div class="nds-toolbar">
   <div class="nds-toolbar-row">
     <div class="nds-toolbar-start">
-      <div class="nds-form-container nds-check-container">
+      <div class="nds-form-container nds-checkbox">
         <div class="nds-form-header">
           <label for="selection-services-all">
             <span class="nds-label" data-i18n="selection.select_all">Select all</span>
           </label>
         </div>
         <div class="nds-form-control">
-          <input type="checkbox" id="selection-services-all" class="nds-check" data-selection-target="selection-services">
+          <input type="checkbox" id="selection-services-all" class="nds-checkbox-input" data-selection-target="selection-services">
         </div>
       </div>
       <span class="nds-toolbar-text" data-selection-target="selection-services">
@@ -63,9 +63,9 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <div class="nds-card-corner">
-          <div class="nds-form-container nds-check-container">
+          <div class="nds-form-container nds-checkbox">
             <div class="nds-form-control">
-              <input type="checkbox" name="services" value="passport" class="nds-check" aria-label="Select Passport Renewal">
+              <input type="checkbox" name="services" value="passport" class="nds-checkbox-input" aria-label="Select Passport Renewal">
             </div>
           </div>
         </div>
@@ -78,9 +78,9 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <div class="nds-card-corner">
-          <div class="nds-form-container nds-check-container">
+          <div class="nds-form-container nds-checkbox">
             <div class="nds-form-control">
-              <input type="checkbox" name="services" value="licence" class="nds-check" aria-label="Select Driving Licence">
+              <input type="checkbox" name="services" value="licence" class="nds-checkbox-input" aria-label="Select Driving Licence">
             </div>
           </div>
         </div>
@@ -93,9 +93,9 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <div class="nds-card-corner">
-          <div class="nds-form-container nds-check-container">
+          <div class="nds-form-container nds-checkbox">
             <div class="nds-form-control">
-              <input type="checkbox" name="services" value="registration" class="nds-check" aria-label="Select Commercial Registration">
+              <input type="checkbox" name="services" value="registration" class="nds-checkbox-input" aria-label="Select Commercial Registration">
             </div>
           </div>
         </div>
@@ -123,9 +123,9 @@ Pick another component when:
   <thead>
     <tr>
       <th>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select all requests">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select all requests">
           </div>
         </div>
       </th>
@@ -136,9 +136,9 @@ Pick another component when:
   <tbody id="selection-requests" class="nds-paged-content" style="--per-page: 4;">
     <tr class="nds-page-item">
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select REQ-1001">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1001">
           </div>
         </div>
       </td>
@@ -147,9 +147,9 @@ Pick another component when:
     </tr>
     <tr class="nds-page-item">
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select REQ-1002">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1002">
           </div>
         </div>
       </td>
@@ -158,9 +158,9 @@ Pick another component when:
     </tr>
     <tr class="nds-page-item">
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select REQ-1003">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1003">
           </div>
         </div>
       </td>
@@ -169,9 +169,9 @@ Pick another component when:
     </tr>
     <tr class="nds-page-item">
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select REQ-1004">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1004">
           </div>
         </div>
       </td>
@@ -180,9 +180,9 @@ Pick another component when:
     </tr>
     <tr class="nds-page-item">
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select REQ-1005">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1005">
           </div>
         </div>
       </td>
@@ -191,9 +191,9 @@ Pick another component when:
     </tr>
     <tr class="nds-page-item">
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select REQ-1006">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1006">
           </div>
         </div>
       </td>
@@ -272,7 +272,7 @@ Use it on a paged list, so one line serves both browsing and selecting. The coun
             <i class="hgi hgi-stroke hgi-check-list"></i>
             <span class="nds-label">Content-Agnostic Selection</span>
           </span>
-          <p class="nds-item-desc">An item is selected when it holds a checked <code class="nds-inline-code lang-html">input.nds-check</code>, or carries <code class="nds-inline-code lang-html">data-state="selected"</code>. Table rows, cards and plain checkbox lists work the same way.</p>
+          <p class="nds-item-desc">An item is selected when it holds a checked <code class="nds-inline-code lang-html">input.nds-checkbox-input</code>, or carries <code class="nds-inline-code lang-html">data-state="selected"</code>. Table rows, cards and plain checkbox lists work the same way.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -354,7 +354,7 @@ Only the records swap uses these. A counter that always shows needs neither.
 ### Data Attributes
 {: .nds-block-title}
 
-The list is the element with the id that `data-selection-target` names. Its items are its `.nds-page-item` elements. A list without them uses its direct children. A `<tbody>` uses only its own rows, and its detail rows (`tr.nds-sub`) are never items, so a table nested in a detail row is a list of its own. An item's checkbox is the first `input.nds-check` in it, so a checklist inside a card never selects the card.
+The list is the element with the id that `data-selection-target` names. Its items are its `.nds-page-item` elements. A list without them uses its direct children. A `<tbody>` uses only its own rows, and its detail rows (`tr.nds-sub`) are never items, so a table nested in a detail row is a list of its own. An item's checkbox is the first `input.nds-checkbox-input` in it, so a checklist inside a card never selects the card.
 
 | Attribute | Element | Effect |
 |---|---|---|
@@ -364,7 +364,7 @@ The list is the element with the id that `data-selection-target` names. Its item
 | `data-selection-count` | an element in a counter | The script writes the number of selected items into it. Write the count at page load in it (usually `0`), so the line shows a number before the script runs |
 | `data-selection-total` | an element in a counter | The script writes the number of items in the list into it. On a paged list, `data-paged-count` from [Pagination](../components/pagination) can take its place: it counts only the items that match the filter |
 | `data-state~="has-selection"` | a counter | The script sets it while anything is selected |
-| `data-selection-target="id"` | an `input.nds-check` | Makes the checkbox the list's select-all. It acts on the current page only. [Tables](../components/table) add it to the header checkbox, and give the `<tbody>` an id if it has none |
+| `data-selection-target="id"` | an `input.nds-checkbox-input` | Makes the checkbox the list's select-all. It acts on the current page only. [Tables](../components/table) add it to the header checkbox, and give the `<tbody>` an id if it has none |
 | `data-state~="selected"` | an item | The script sets it when the item's checkbox is checked, and removes it when the box is cleared. Set it yourself on an item with no checkbox. `clear()` removes it from every item |
 {: .nds-table .nds-responsive}
 

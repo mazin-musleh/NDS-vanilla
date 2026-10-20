@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "20/10/2026 - 05:24 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -214,36 +214,36 @@ Pick another component when:
 <div id="flt-sector" data-filter="sector" data-filter-type="checkbox" data-filter-legend="Sector"></div>
 </script>
 <script type="text/html" id="filter-part-sector-manual" data-canon>
-<fieldset id="flt-sector-manual" class="nds-form-group nds-check-group nds-dropmenu-group" data-filter="sector">
+<fieldset id="flt-sector-manual" class="nds-form-group nds-checkbox-group nds-dropmenu-group" data-filter="sector">
   <legend class="nds-label">Sector</legend>
-  <div class="nds-form-container nds-check-container">
+  <div class="nds-form-container nds-checkbox">
     <div class="nds-form-header">
       <label for="flt-sector-business">
         <span class="nds-label">Business</span>
       </label>
     </div>
     <div class="nds-form-control">
-      <input type="checkbox" id="flt-sector-business" name="sector" value="Business" class="nds-check">
+      <input type="checkbox" id="flt-sector-business" name="sector" value="Business" class="nds-checkbox-input">
     </div>
   </div>
-  <div class="nds-form-container nds-check-container">
+  <div class="nds-form-container nds-checkbox">
     <div class="nds-form-header">
       <label for="flt-sector-housing">
         <span class="nds-label">Housing</span>
       </label>
     </div>
     <div class="nds-form-control">
-      <input type="checkbox" id="flt-sector-housing" name="sector" value="Housing" class="nds-check">
+      <input type="checkbox" id="flt-sector-housing" name="sector" value="Housing" class="nds-checkbox-input">
     </div>
   </div>
-  <div class="nds-form-container nds-check-container">
+  <div class="nds-form-container nds-checkbox">
     <div class="nds-form-header">
       <label for="flt-sector-transport">
         <span class="nds-label">Transport</span>
       </label>
     </div>
     <div class="nds-form-control">
-      <input type="checkbox" id="flt-sector-transport" name="sector" value="Transport" class="nds-check">
+      <input type="checkbox" id="flt-sector-transport" name="sector" value="Transport" class="nds-checkbox-input">
     </div>
   </div>
 </fieldset>
@@ -319,7 +319,7 @@ Every card carries two marks: `sector` and `fee`. A group in the menu filters by
 | Menu (any) | Fixed list (hint: The options are a list you write, not read from the cards) | `[data-filter-values='["Business","Health","Housing","Transport"]']` | `#flt-sector` | The options come from `data-filter-values`, in its order, also when no card has the value (Health). The script reads no cards for them. For a list the server owns |
 | Menu (any) | Collapsible (hint: The Sector group opens and closes) | `[data-filter-accordion]` | `#flt-sector` | The group becomes an [Accordion](../components/accordion) item, closed, with a count of the picked values on its header. For a group with many options |
 | Menu (any) | Option search (hint: A search box above the options) | `[data-search]` | `.nds-filter` | A search box at the top of the menu narrows the options. `data-search="10"` shows it only from 10 options |
-| Menu (any) | Option search (hint: A search box above the options) | `[data-search-item]` | `.nds-check-container` | Only on a Sector group you write yourself: the search finds options that carry it |
+| Menu (any) | Option search (hint: A search box above the options) | `[data-search-item]` | `.nds-checkbox` | Only on a Sector group you write yourself: the search finds options that carry it |
 | Menu (any) | No menu (hint: A search box alone is a filter) | remove | `.nds-filter` | Search only. The search box needs no `nds-filter` element |
 | Search box | Search box (default) (id: search) | canon `#filter-part-search` | `.nds-toolbar` (start) | Searches the text of each card. Enter or the Search button applies it |
 | Applied chips | Applied chips (default) | canon `#filter-part-applied` | `.nds-toolbar` | One removable chip per applied value and for the search term. Hidden while nothing is applied |

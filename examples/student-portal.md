@@ -1383,7 +1383,7 @@ hideFeedback: true
         </div>
         <fieldset class="nds-form-group nds-radio-group">
             <legend class="nds-label">Letter type</legend>
-            <div class="nds-form-container nds-radio-container">
+            <div class="nds-form-container nds-radio">
                 <div class="nds-form-header">
                     <label for="letter-enrollment">
                         <span class="nds-label">Enrollment letter</span>
@@ -1391,10 +1391,10 @@ hideFeedback: true
                     </label>
                 </div>
                 <div class="nds-form-control">
-                    <input type="radio" id="letter-enrollment" name="letter-type" value="enrollment" class="nds-radio" checked>
+                    <input type="radio" id="letter-enrollment" name="letter-type" value="enrollment" class="nds-radio-input" checked>
                 </div>
             </div>
-            <div class="nds-form-container nds-radio-container">
+            <div class="nds-form-container nds-radio">
                 <div class="nds-form-header">
                     <label for="letter-hours">
                         <span class="nds-label">Completed hours</span>
@@ -1402,10 +1402,10 @@ hideFeedback: true
                     </label>
                 </div>
                 <div class="nds-form-control">
-                    <input type="radio" id="letter-hours" name="letter-type" value="hours" class="nds-radio">
+                    <input type="radio" id="letter-hours" name="letter-type" value="hours" class="nds-radio-input">
                 </div>
             </div>
-            <div class="nds-form-container nds-radio-container">
+            <div class="nds-form-container nds-radio">
                 <div class="nds-form-header">
                     <label for="letter-graduation">
                         <span class="nds-label">Expected graduation</span>
@@ -1413,7 +1413,7 @@ hideFeedback: true
                     </label>
                 </div>
                 <div class="nds-form-control">
-                    <input type="radio" id="letter-graduation" name="letter-type" value="graduation" class="nds-radio">
+                    <input type="radio" id="letter-graduation" name="letter-type" value="graduation" class="nds-radio-input">
                 </div>
             </div>
         </fieldset>

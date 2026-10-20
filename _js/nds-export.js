@@ -94,7 +94,7 @@
             ths.forEach((th, index) => {
                 if (th.hasAttribute('data-export-skip')) return;
                 // Skip the row-selection checkbox column (auto-detected)
-                if (th.querySelector('input[type="checkbox"].nds-check')) return;
+                if (th.querySelector('input[type="checkbox"].nds-checkbox-input')) return;
                 const label = th.dataset.exportLabel
                     || NDS.cellText(th)
                     || ('col_' + index);

@@ -833,7 +833,7 @@
 
   // A control the page marked disabled shows its own disabled look; the fade only covers one it missed.
   .nds-btn:not(:disabled, [aria-disabled="true"], [data-state~="disabled"]),
-  .nds-card-corner .nds-check:not(:disabled) {
+  .nds-card-corner .nds-checkbox-input:not(:disabled) {
     opacity: 0.5;
   }
 }

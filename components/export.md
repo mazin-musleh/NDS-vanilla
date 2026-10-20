@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 11:47 AM"
+last_edit: "20/10/2026 - 05:24 PM"
 ---
 
 <section id="export-overview" class="nds-content-section nds-doc-overview">
@@ -63,9 +63,9 @@ Pick another component when:
   <thead>
     <tr>
       <th>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select all orders">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select all orders">
           </div>
         </div>
       </th>
@@ -78,9 +78,9 @@ Pick another component when:
   <tbody id="export-orders-body">
     <tr>
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select order 128">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select order 128">
           </div>
         </div>
       </td>
@@ -91,9 +91,9 @@ Pick another component when:
     </tr>
     <tr>
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select order 129">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select order 129">
           </div>
         </div>
       </td>
@@ -104,9 +104,9 @@ Pick another component when:
     </tr>
     <tr>
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select order 130">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select order 130">
           </div>
         </div>
       </td>
@@ -122,14 +122,14 @@ Pick another component when:
 <div class="nds-toolbar">
   <div class="nds-toolbar-row">
     <div class="nds-toolbar-start">
-      <div class="nds-form-container nds-check-container">
+      <div class="nds-form-container nds-checkbox">
         <div class="nds-form-header">
           <label for="export-services-all">
             <span class="nds-label" data-i18n="selection.select_all">Select all</span>
           </label>
         </div>
         <div class="nds-form-control">
-          <input type="checkbox" id="export-services-all" class="nds-check" data-selection-target="export-services">
+          <input type="checkbox" id="export-services-all" class="nds-checkbox-input" data-selection-target="export-services">
         </div>
       </div>
       <span class="nds-toolbar-text" data-selection-target="export-services">
@@ -156,9 +156,9 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <div class="nds-card-corner">
-          <div class="nds-form-container nds-check-container">
+          <div class="nds-form-container nds-checkbox">
             <div class="nds-form-control">
-              <input type="checkbox" class="nds-check" aria-label="Select Passport Renewal">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select Passport Renewal">
             </div>
           </div>
         </div>
@@ -176,9 +176,9 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <div class="nds-card-corner">
-          <div class="nds-form-container nds-check-container">
+          <div class="nds-form-container nds-checkbox">
             <div class="nds-form-control">
-              <input type="checkbox" class="nds-check" aria-label="Select Driving Licence">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select Driving Licence">
             </div>
           </div>
         </div>
@@ -196,9 +196,9 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <div class="nds-card-corner">
-          <div class="nds-form-container nds-check-container">
+          <div class="nds-form-container nds-checkbox">
             <div class="nds-form-control">
-              <input type="checkbox" class="nds-check" aria-label="Select Commercial Registration">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select Commercial Registration">
             </div>
           </div>
         </div>
@@ -222,7 +222,7 @@ Pick another component when:
   </button>
   <div class="nds-dropmenu-menu" hidden>
     <div class="nds-dropmenu-scroll">
-      <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
+      <fieldset class="nds-form-group nds-checkbox-group nds-dropmenu-group" data-columns-list data-no-auto-close>
         <legend class="nds-label" data-i18n="table.visible_columns">Visible columns</legend>
       </fieldset>
     </div>
@@ -276,7 +276,7 @@ Use it for cards or any list that is not a table. Give the list `data-export-row
 ### Export Scope
 {: .nds-block-title}
 
-By default, the file holds the selected rows when any row is selected, else every row. A row is selected when it holds a checked `input.nds-check` or carries `data-state="selected"`, the same rule as [Selection](../components/selection). Set `data-export-scope="selected"` or `"all"` on the buttons to fix the scope. Every format follows the scope. With nothing selected, the Selected scope exports only the header row.
+By default, the file holds the selected rows when any row is selected, else every row. A row is selected when it holds a checked `input.nds-checkbox-input` or carries `data-state="selected"`, the same rule as [Selection](../components/selection). Set `data-export-scope="selected"` or `"all"` on the buttons to fix the scope. Every format follows the scope. With nothing selected, the Selected scope exports only the header row.
 
 ### Server Pages
 {: .nds-block-title}

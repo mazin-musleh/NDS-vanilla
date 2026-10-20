@@ -21,7 +21,7 @@
 // RADIO INPUT
 // ==============================================
 
-.nds-radio-container .nds-form-control input[type="radio"] {
+.nds-radio .nds-form-control input[type="radio"] {
     width:  var(--nds-input-size, 16px);
     height: var(--nds-input-size, 16px);
     appearance: none;
@@ -111,7 +111,7 @@
 
 // Set on the container and inherited; hover/active never fire under its
 // pointer-events: none. No `input[type]` tail in the shared data-state set.
-.nds-radio-container[data-state~="readonly"] {
+.nds-radio[data-state~="readonly"] {
     --radio-tile-border: var(--border-disabled);
     --_radio-ro-tile-border: var(--border-disabled);
 }

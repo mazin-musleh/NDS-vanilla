@@ -556,7 +556,7 @@ for (const ver of VUE) {
         log: window.__log.filter((l) => /check/.test(l))
     }));
     ok('User Feedback: close unticks each box with input + change', r.ticked === 0
-        && r.log.includes('input:nds-check') && r.log.includes('change:nds-check'), JSON.stringify(r));
+        && r.log.includes('input:nds-checkbox-input') && r.log.includes('change:nds-checkbox-input'), JSON.stringify(r));
     await page.close();
 }
 

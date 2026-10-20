@@ -267,12 +267,12 @@
         }
     }
 
-    :is(th, td):has(.nds-check-container),
+    :is(th, td):has(.nds-checkbox),
     .nds-checkbox-column {
         width: 40px;
         text-align: center;
 
-        .nds-form-container.nds-check-container {
+        .nds-form-container.nds-checkbox {
             margin: 0;
 
             .nds-form-control {
@@ -281,7 +281,7 @@
                 align-items: center;
                 margin: 0;
 
-                .nds-check {
+                .nds-checkbox-input {
                     margin: 0;
                 }
             }

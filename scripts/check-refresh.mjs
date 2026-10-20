@@ -202,7 +202,7 @@ report.push(...await recordsPage.evaluate(async () => {
     // Selection writes [data-selection-count] / [data-selection-total], NOT the
     // [data-paged-*] slots pagination owns. Asserting the paged slot proved nothing
     // about Selection: it was pagination's assertion twice.
-    const box = rows()[rows().length - 1].querySelector('input.nds-check');
+    const box = rows()[rows().length - 1].querySelector('input.nds-checkbox-input');
     box.checked = true;
     box.dispatchEvent(new Event('change', { bubbles: true }));
     await wait(300);

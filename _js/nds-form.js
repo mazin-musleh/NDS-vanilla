@@ -258,7 +258,7 @@
     // A form-container's OWN field — skips fields living inside a NESTED
     // form-container (the editor's link-popover URL input precedes the carrier
     // textarea in DOM order; a multiselect option checkbox belongs to its
-    // check-container, not the wrapper being validated). Groups/feedback keep
+    // .nds-checkbox, not the wrapper being validated). Groups/feedback keep
     // the legacy first-match behavior.
     // dismissAll would also take a nested field's message and leave its error outline.
     function dismissOwn(container) {

@@ -185,7 +185,7 @@
                     scroll.appendChild(divider);
                 }
                 const fieldset = document.createElement('fieldset');
-                fieldset.className = 'nds-form-group nds-check-group nds-dropmenu-group';
+                fieldset.className = 'nds-form-group nds-checkbox-group nds-dropmenu-group';
                 fieldset.setAttribute('data-no-auto-close', '');
                 if (group.legend) {
                     const legend = document.createElement('legend');
@@ -200,13 +200,13 @@
             });
         }
 
-        // One .nds-check-container row — same structure as the canonical
+        // One .nds-checkbox row — same structure as the canonical
         // hand-written markup (and filter/tables' generated rows).
         _buildOptionRow(value, label, checked) {
             const id = NDS.uniqueId('nds-ms-');
 
             const container = document.createElement('div');
-            container.className = 'nds-form-container nds-check-container';
+            container.className = 'nds-form-container nds-checkbox';
             if (this.dropmenu.hasAttribute('data-search')) {
                 container.setAttribute('data-search-item', '');
             }
@@ -226,7 +226,7 @@
             const input = document.createElement('input');
             input.type = 'checkbox';
             input.id = id;
-            input.className = 'nds-check';
+            input.className = 'nds-checkbox-input';
             input.value = value;
             input.dataset.label = label;
             input.checked = checked;

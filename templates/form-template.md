@@ -291,14 +291,14 @@ sidemenu_mode: false
                         </div>
                     </dl>
 
-                    <div class="nds-form-container nds-check-container" data-required>
+                    <div class="nds-form-container nds-checkbox" data-required>
                         <div class="nds-form-header" data-feedback-target>
                             <label for="ft-confirm">
                                 <span class="nds-label">I confirm the information above is accurate and complete.</span>
                             </label>
                         </div>
                         <div class="nds-form-control">
-                            <input type="checkbox" id="ft-confirm" name="confirm" value="confirmed" class="nds-check" required>
+                            <input type="checkbox" id="ft-confirm" name="confirm" value="confirmed" class="nds-checkbox-input" required>
                         </div>
                     </div>
 

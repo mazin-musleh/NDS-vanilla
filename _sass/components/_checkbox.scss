@@ -21,7 +21,7 @@
 // CHECKBOX INPUT
 // ==============================================
 
-.nds-check-container .nds-form-control input[type="checkbox"] {
+.nds-checkbox .nds-form-control input[type="checkbox"] {
     width:  var(--nds-input-size, 16px);
     height: var(--nds-input-size, 16px);
     appearance: none;
@@ -126,7 +126,7 @@
 // Set on the container and inherited: the unchecked tile reads the public token,
 // the checked rules read the --_checkbox-ro-* hooks above. Hover/active never
 // fire here — the readonly container drops pointer events.
-.nds-check-container[data-state~="readonly"] {
+.nds-checkbox[data-state~="readonly"] {
     --checkbox-tile-border: var(--background-disabled);
     --_checkbox-ro-tile-border: var(--background-disabled);
     --_checkbox-ro-tile-bg: var(--background-default);

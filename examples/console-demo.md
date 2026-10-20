@@ -237,7 +237,7 @@ hideFeedback: true
                             </button>
                             <div class="nds-dropmenu-menu" hidden>
                                 <div class="nds-dropmenu-scroll">
-                                    <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
+                                    <fieldset class="nds-form-group nds-checkbox-group nds-dropmenu-group" data-columns-list data-no-auto-close>
                                         <legend class="nds-label" data-i18n="table.visible_columns">Visible columns</legend>
                                     </fieldset>
                                 </div>
@@ -338,9 +338,9 @@ hideFeedback: true
                         <thead>
                             <tr>
                                 <th>
-                                    <div class="nds-form-container nds-check-container">
+                                    <div class="nds-form-container nds-checkbox">
                                         <div class="nds-form-control">
-                                            <input type="checkbox" class="nds-check" aria-label="Select all transactions">
+                                            <input type="checkbox" class="nds-checkbox-input" aria-label="Select all transactions">
                                         </div>
                                     </div>
                                 </th>
@@ -403,9 +403,9 @@ hideFeedback: true
                             {% for txn in site.data.content.transactions %}
                             <tr class="nds-page-item">
                                 <td>
-                                    <div class="nds-form-container nds-check-container">
+                                    <div class="nds-form-container nds-checkbox">
                                         <div class="nds-form-control">
-                                            <input type="checkbox" class="nds-check" aria-label="Select transaction {{ txn.id }}">
+                                            <input type="checkbox" class="nds-checkbox-input" aria-label="Select transaction {{ txn.id }}">
                                         </div>
                                     </div>
                                 </td>

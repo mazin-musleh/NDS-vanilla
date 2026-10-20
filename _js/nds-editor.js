@@ -782,12 +782,12 @@
             + '<div class="nds-dropmenu-group nds-form-group">'
             + textFieldHtml(`${idBase}-link-text`, html('text'), 'text', 'data-editor-link-text')
             + textFieldHtml(`${idBase}-link-url`, html('url'), 'url', 'data-editor-link-url', 'https://')
-            + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-external"><span class="nds-label">${html('external')}</span></label></div>`
-            + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-external" class="nds-check" data-editor-link-external /></div></div>`
-            + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-noexternal"><span class="nds-label">${html('no_badge')}</span></label></div>`
-            + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-noexternal" class="nds-check" data-editor-link-noexternal /></div></div>`
-            + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-colored"><span class="nds-label">${html('colored')}</span></label></div>`
-            + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-colored" class="nds-check" data-editor-link-colored /></div></div>`
+            + `<div class="nds-form-container nds-checkbox"><div class="nds-form-header"><label for="${idBase}-link-external"><span class="nds-label">${html('external')}</span></label></div>`
+            + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-external" class="nds-checkbox-input" data-editor-link-external /></div></div>`
+            + `<div class="nds-form-container nds-checkbox"><div class="nds-form-header"><label for="${idBase}-link-noexternal"><span class="nds-label">${html('no_badge')}</span></label></div>`
+            + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-noexternal" class="nds-checkbox-input" data-editor-link-noexternal /></div></div>`
+            + `<div class="nds-form-container nds-checkbox"><div class="nds-form-header"><label for="${idBase}-link-colored"><span class="nds-label">${html('colored')}</span></label></div>`
+            + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-colored" class="nds-checkbox-input" data-editor-link-colored /></div></div>`
             + '</div></div>'
             + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action">'
             + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-link-cancel><span class="nds-label">${html('cancel')}</span></button>`

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 11:02 PM"
+last_edit: "20/10/2026 - 05:24 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -275,9 +275,9 @@ Pick another component when:
 </script>
 <script type="text/html" id="card-corner-checkbox" data-canon>
 <div class="nds-card-corner">
-  <div class="nds-form-container nds-check-container">
+  <div class="nds-form-container nds-checkbox">
     <div class="nds-form-control">
-      <input type="checkbox" name="cardSelect" value="card-1" class="nds-check" aria-label="Select card">
+      <input type="checkbox" name="cardSelect" value="card-1" class="nds-checkbox-input" aria-label="Select card">
     </div>
   </div>
 </div>

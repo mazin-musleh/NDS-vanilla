@@ -246,6 +246,13 @@ audit. Left on the old names: `.claude/skills/nds-iq-eval/` (scenarios and fixtu
 1.x templates; its SKILL.md notes the rename if the old-template check is dropped) and the published
 `_includes/NDS-IQ.md`.
 
+**Landed 2026-10-20 (change #1b):** `.nds-radio` was already the radio input's class, so the inputs took
+part names, as Switch's `.nds-switch-input` already is: `.nds-check` → `.nds-checkbox-input`, `.nds-radio` → `.nds-radio-input`, and
+`.nds-check-group` → `.nds-checkbox-group`, with the two container renames. The old `nds-radio` row is
+scoped `&input`, so the audit never flags the new container. Open: Switch's field is
+`.nds-switch-container` and `.nds-switch` is the widget inside it, while Checkbox and Radio now name the
+field itself (entry 9: one name per component).
+
 ## 4. Owner decisions
 
 1. **A7 renames: all four, decided 2026-10-20.** One naming pattern with no exceptions lets an agent guess a

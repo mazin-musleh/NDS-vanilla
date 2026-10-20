@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "20/10/2026 - 05:24 PM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -126,7 +126,7 @@ Pick another component when:
         </button>
         <div class="nds-dropmenu-menu" hidden>
           <div class="nds-dropmenu-scroll">
-            <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
+            <fieldset class="nds-form-group nds-checkbox-group nds-dropmenu-group" data-columns-list data-no-auto-close>
               <legend class="nds-label" data-i18n="table.visible_columns">Visible columns</legend>
             </fieldset>
           </div>
@@ -209,9 +209,9 @@ Pick another component when:
   <thead>
     <tr>
       <th>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select all requests">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select all requests">
           </div>
         </div>
       </th>
@@ -271,9 +271,9 @@ Pick another component when:
   <tbody id="tbl-rec-rows" class="nds-paged-content" data-filter-items="tr" style="--per-page: 5;">
     <tr class="nds-page-item">
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select REQ-2026-118">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-118">
           </div>
         </div>
       </td>
@@ -343,9 +343,9 @@ Pick another component when:
     </tr>
     <tr class="nds-page-item">
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select REQ-2026-117">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-117">
           </div>
         </div>
       </td>
@@ -398,9 +398,9 @@ Pick another component when:
     </tr>
     <tr class="nds-page-item">
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select REQ-2026-116">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-116">
           </div>
         </div>
       </td>
@@ -421,9 +421,9 @@ Pick another component when:
     </tr>
     <tr class="nds-page-item">
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select REQ-2026-115">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-115">
           </div>
         </div>
       </td>
@@ -444,9 +444,9 @@ Pick another component when:
     </tr>
     <tr class="nds-page-item">
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select REQ-2026-114">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-114">
           </div>
         </div>
       </td>
@@ -467,9 +467,9 @@ Pick another component when:
     </tr>
     <tr class="nds-page-item">
       <td>
-        <div class="nds-form-container nds-check-container">
+        <div class="nds-form-container nds-checkbox">
           <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select REQ-2026-113">
+            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-113">
           </div>
         </div>
       </td>

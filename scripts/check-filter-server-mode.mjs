@@ -69,7 +69,7 @@ const report = await page.evaluate(async () => {
         </div>
         <div class="nds-filter" data-filter-target="srv">
           <div data-filter="category">
-            <div class="nds-form-container nds-check-container">
+            <div class="nds-form-container nds-checkbox">
               <div class="nds-form-control">
                 <input type="checkbox" id="srv-cat-0" class="nds-check-input"
                        name="category" value="news">
@@ -306,7 +306,7 @@ const report = await page.evaluate(async () => {
     cliHost.innerHTML = `
         <div class="nds-filter" data-filter-target="cli">
           <div data-filter="cat">
-            <div class="nds-form-container nds-check-container">
+            <div class="nds-form-container nds-checkbox">
               <div class="nds-form-control">
                 <input type="checkbox" id="cli-0" class="nds-check-input" name="cat" value="news">
               </div>

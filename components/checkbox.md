@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 07:46 AM"
+last_edit: "20/10/2026 - 05:24 PM"
 ---
 
 <section id="checkbox-overview" class="nds-content-section nds-doc-overview">
@@ -37,7 +37,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="check-single" data-canon data-variants="checkbox-variants-table" data-harness="form">
-<div class="nds-form-container nds-check-container">
+<div class="nds-form-container nds-checkbox">
   <div class="nds-form-header" data-feedback-target>
     <label for="terms">
       <span class="nds-label">I agree to the terms and conditions</span>
@@ -45,51 +45,51 @@ Pick another component when:
     </label>
   </div>
   <div class="nds-form-control">
-    <input type="checkbox" id="terms" name="agreement" value="accepted" class="nds-check">
+    <input type="checkbox" id="terms" name="agreement" value="accepted" class="nds-checkbox-input">
   </div>
 </div>
 </script>
 <script type="text/html" id="check-group" data-canon>
-<fieldset class="nds-form-group nds-check-group">
+<fieldset class="nds-form-group nds-checkbox-group">
   <legend class="nds-label">Select your interests</legend>
-  <div class="nds-form-container nds-check-container">
+  <div class="nds-form-container nds-checkbox">
     <div class="nds-form-header">
       <label for="check-1">
         <span class="nds-label">Technology</span>
       </label>
     </div>
     <div class="nds-form-control">
-      <input type="checkbox" id="check-1" name="interests" value="technology" class="nds-check">
+      <input type="checkbox" id="check-1" name="interests" value="technology" class="nds-checkbox-input">
     </div>
   </div>
-  <div class="nds-form-container nds-check-container">
+  <div class="nds-form-container nds-checkbox">
     <div class="nds-form-header">
       <label for="check-2">
         <span class="nds-label">Sports</span>
       </label>
     </div>
     <div class="nds-form-control">
-      <input type="checkbox" id="check-2" name="interests" value="sports" class="nds-check">
+      <input type="checkbox" id="check-2" name="interests" value="sports" class="nds-checkbox-input">
     </div>
   </div>
-  <div class="nds-form-container nds-check-container">
+  <div class="nds-form-container nds-checkbox">
     <div class="nds-form-header">
       <label for="check-3">
         <span class="nds-label">Education</span>
       </label>
     </div>
     <div class="nds-form-control">
-      <input type="checkbox" id="check-3" name="interests" value="education" class="nds-check">
+      <input type="checkbox" id="check-3" name="interests" value="education" class="nds-checkbox-input">
     </div>
   </div>
-  <div class="nds-form-container nds-check-container">
+  <div class="nds-form-container nds-checkbox">
     <div class="nds-form-header">
       <label for="check-4">
         <span class="nds-label">Travel</span>
       </label>
     </div>
     <div class="nds-form-control">
-      <input type="checkbox" id="check-4" name="interests" value="travel" class="nds-check">
+      <input type="checkbox" id="check-4" name="interests" value="travel" class="nds-checkbox-input">
     </div>
   </div>
 </fieldset>
@@ -105,28 +105,28 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every option. Checked goes on one option: the builder uses `#terms` or `#check-1`, but on a page it goes on the option you mean. The indeterminate state is set only from JavaScript: see the API. `.nds-check-container:only-of-type` is the single checkbox, not one inside a group.
+A row on `.nds-checkbox-input` (every `<input>`) or `.nds-checkbox` changes every option. Checked goes on one option: the builder uses `#terms` or `#check-1`, but on a page it goes on the option you mean. The indeterminate state is set only from JavaScript: see the API. `.nds-checkbox:only-of-type` is the single checkbox, not one inside a group.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Single (default) | — | — | One checkbox, for a yes-or-no answer such as agreeing to the terms |
 | Structure | Group | canon `#check-group` | — | Several options under one legend. The user can pick any number |
 | Size | SM (default) | — | — | 16px tile. Dense forms and tables |
-| Size | MD | `.nds-md` | `.nds-check-container` | 20px tile. Most forms |
-| Size | LG | `.nds-lg` | `.nds-check-container` | 24px tile. Touch-first screens |
-| Color | Neutral (demo: + checked) | `.nds-neutral` | `.nds-check` | Put it on each `<input>`. The checked tile uses the neutral color, not the primary color. Use it when the choice is not a brand action. The color shows only when an option is checked, so the demo turns Checked on too |
+| Size | MD | `.nds-md` | `.nds-checkbox` | 20px tile. Most forms |
+| Size | LG | `.nds-lg` | `.nds-checkbox` | 24px tile. Touch-first screens |
+| Color | Neutral (demo: + checked) | `.nds-neutral` | `.nds-checkbox-input` | Put it on each `<input>`. The checked tile uses the neutral color, not the primary color. Use it when the choice is not a brand action. The color shows only when an option is checked, so the demo turns Checked on too |
 | Checked | Checked (id: checked) | `[checked]` | `#terms` | The option is on when the page loads |
 | Checked | Checked (id: checked) | `[checked]` | `#check-1` | The same, in a group |
 | Validation | None (default) | — | — | No rule |
-| Validation | Required (hint: Press Validate with nothing checked) | `[data-required]` | `.nds-check-container:only-of-type` | A single checkbox must be checked before the form submits. The forms script adds `required` to the input |
-| Validation | Required (hint: Press Validate with nothing checked) | `[data-required]` | `.nds-check-group` | A group needs at least one option checked |
-| Validation | At least 2 | `[data-min-checked="2"]` | `.nds-check-group` | At least 2 options must be checked. Say the rule in the legend |
-| Validation | At most 3 (hint: Check all four options, then press Validate) | `[data-max-checked="3"]` | `.nds-check-group` | No more than 3 options may be checked. Say the rule in the legend |
-| Validation | At least 2 + At most 3 | `[data-min-checked="2"]` | `.nds-check-group` | Both together: between 2 and 3 options must be checked |
-| Validation | At least 2 + At most 3 | `[data-max-checked="3"]` | `.nds-check-group` | The same |
-| Disabled | Disabled | `[disabled]` | `.nds-check` | The user cannot change these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group |
-| Readonly | Readonly | `[data-state~="readonly"]` | `.nds-check-container` | The options show their value but cannot change, by pointer or by keyboard. The tile shows a border only, and a checked tile keeps its mark |
-| Layout | Row | `.nds-horizontal` | `.nds-check-group` | The options sit side by side and wrap |
+| Validation | Required (hint: Press Validate with nothing checked) | `[data-required]` | `.nds-checkbox:only-of-type` | A single checkbox must be checked before the form submits. The forms script adds `required` to the input |
+| Validation | Required (hint: Press Validate with nothing checked) | `[data-required]` | `.nds-checkbox-group` | A group needs at least one option checked |
+| Validation | At least 2 | `[data-min-checked="2"]` | `.nds-checkbox-group` | At least 2 options must be checked. Say the rule in the legend |
+| Validation | At most 3 (hint: Check all four options, then press Validate) | `[data-max-checked="3"]` | `.nds-checkbox-group` | No more than 3 options may be checked. Say the rule in the legend |
+| Validation | At least 2 + At most 3 | `[data-min-checked="2"]` | `.nds-checkbox-group` | Both together: between 2 and 3 options must be checked |
+| Validation | At least 2 + At most 3 | `[data-max-checked="3"]` | `.nds-checkbox-group` | The same |
+| Disabled | Disabled | `[disabled]` | `.nds-checkbox-input` | The user cannot change these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group |
+| Readonly | Readonly | `[data-state~="readonly"]` | `.nds-checkbox` | The options show their value but cannot change, by pointer or by keyboard. The tile shows a border only, and a checked tile keeps its mark |
+| Layout | Row | `.nds-horizontal` | `.nds-checkbox-group` | The options sit side by side and wrap |
 | Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #checkbox-variants-table .nds-table .nds-responsive}
 
@@ -193,7 +193,7 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Put a group in a `<fieldset class="nds-form-group nds-check-group">` with a `<legend>` that names the choice. Screen readers read the legend with each option.
+- Put a group in a `<fieldset class="nds-form-group nds-checkbox-group">` with a `<legend>` that names the choice. Screen readers read the legend with each option.
 - Keep a group to 7 options or fewer. For a longer list, use a [Multiselect](../components/multiselect).
 - When a group has a rule, say it in the legend, such as "Select 2 to 3 interests". The error message appears only after a submit.
 - Put `data-required`, `data-min-checked` and `data-max-checked` on the group, not on its inputs. For a single checkbox, put `data-required` on its container.
@@ -219,20 +219,20 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-required` | `.nds-check-container` of a single checkbox, or `.nds-check-group` | The checkbox must be checked, or the group needs one option checked, before the form submits. It adds the required mark to the label or the legend |
-| `data-min-checked` | `.nds-check-group` | The fewest options that must be checked. The message reads "Please select at least 2 options" |
-| `data-max-checked` | `.nds-check-group` | The most options that may be checked. The message reads "Please select no more than 3 options" |
-| `data-error-message` | `.nds-check-group` | Replaces the message when nothing is checked. The `data-min-checked` and `data-max-checked` messages stay |
-| `data-state~="disabled"` | `.nds-check-container`, `.nds-check-group` | Disables the option, or every option in the group. The group's title takes the disabled color |
-| `data-state~="readonly"` | `.nds-check-container` | The option cannot change. The tile shows a border only |
-| `data-state~="indeterminate"` | `.nds-check-container` | Set by `NDS.Form.setIndeterminate()`. Do not set it yourself |
+| `data-required` | `.nds-checkbox` of a single checkbox, or `.nds-checkbox-group` | The checkbox must be checked, or the group needs one option checked, before the form submits. It adds the required mark to the label or the legend |
+| `data-min-checked` | `.nds-checkbox-group` | The fewest options that must be checked. The message reads "Please select at least 2 options" |
+| `data-max-checked` | `.nds-checkbox-group` | The most options that may be checked. The message reads "Please select no more than 3 options" |
+| `data-error-message` | `.nds-checkbox-group` | Replaces the message when nothing is checked. The `data-min-checked` and `data-max-checked` messages stay |
+| `data-state~="disabled"` | `.nds-checkbox`, `.nds-checkbox-group` | Disables the option, or every option in the group. The group's title takes the disabled color |
+| `data-state~="readonly"` | `.nds-checkbox` | The option cannot change. The tile shows a border only |
+| `data-state~="indeterminate"` | `.nds-checkbox` | Set by `NDS.Form.setIndeterminate()`. Do not set it yourself |
 | `data-feedback-target` | `.nds-form-header`, or an element inside the group | Receives the feedback message. Without one, the message goes at the end of the field or the group |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set these on `.nds-check-container`. The size classes set the first one.
+Set these on `.nds-checkbox`. The size classes set the first one.
 
 | Property | Default | Controls |
 |---|---|---|
@@ -272,7 +272,7 @@ Source: the `checkbox` group in `_sass/tokens/_components.scss`.
 <script type="text/html" id="check-js" data-canon data-lang="js">
 // A "select all" checkbox that shows a dash when only some options are checked
 var all = document.querySelector('#select-all');
-var options = document.querySelectorAll('.nds-check-group .nds-check');
+var options = document.querySelectorAll('.nds-checkbox-group .nds-checkbox-input');
 
 function update() {
   var on = Array.prototype.filter.call(options, function (cb) { return cb.checked; }).length;
@@ -282,7 +282,7 @@ function update() {
 options.forEach(function (cb) { cb.addEventListener('change', update); });
 
 // Check a group before a custom save
-var result = NDS.Form.validateCheckboxGroup(document.querySelector('.nds-check-group'));
+var result = NDS.Form.validateCheckboxGroup(document.querySelector('.nds-checkbox-group'));
 // { valid: false, checked: 1, min: 2, max: 3, message: 'Please select at least 2 options' }
 </script>
 

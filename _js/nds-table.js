@@ -39,7 +39,7 @@
  *   - Column hides persist in localStorage whenever the table has an id.
  *   - Hiding a column stamps data-export-skip on its <th> so exports match the view, and a
  *     header with no text falls back to its data-export-label for the menu entry.
- *   - The column menu's rows come from buildRow(): div.nds-form-container.nds-check-container
+ *   - The column menu's rows come from buildRow(): div.nds-form-container.nds-checkbox
  *     wrapping div.nds-form-header > label[for] > span.nds-label and div.nds-form-control >
  *     the input — the same skeleton nds-filter generates. Hand-written rows must match it.
  */
@@ -98,7 +98,7 @@
         // The header checkbox selects this table's rows through nds-selection.js. Stamped
         // here, after the loader's detection pass, so this table starts Selection itself.
         setupSelectAll() {
-            const all = this.thead.querySelector('th input.nds-check');
+            const all = this.thead.querySelector('th input.nds-checkbox-input');
             if (!all || all.hasAttribute('data-selection-target')) return;
             this.tbody.id ||= NDS.uniqueId('nds-rows-');
             all.setAttribute('data-selection-target', this.tbody.id);
@@ -506,20 +506,20 @@
             headCells(this.table).forEach((th, index) => {
                 // Locked columns and the row-selection column stay off the list.
                 if (th.hasAttribute('data-columns-lock')) return;
-                if (th.querySelector('input[type="checkbox"].nds-check')) return;
+                if (th.querySelector('input[type="checkbox"].nds-checkbox-input')) return;
                 frag.appendChild(this.buildRow(th, index));
             });
             this.list.appendChild(frag);
         }
 
-        // The .nds-check-container field nds-filter.js and nds-multiselect.js put
+        // The .nds-checkbox field nds-filter.js and nds-multiselect.js put
         // in a dropmenu. No .nds-dropmenu-item class — that's what keeps the menu
         // open while columns are toggled.
         buildRow(th, index) {
             const id = NDS.uniqueId('nds-col-');
 
             const container = document.createElement('div');
-            container.className = 'nds-form-container nds-check-container';
+            container.className = 'nds-form-container nds-checkbox';
 
             const header = document.createElement('div');
             header.className = 'nds-form-header';
@@ -538,7 +538,7 @@
             const input = document.createElement('input');
             input.type = 'checkbox';
             input.id = id;
-            input.className = 'nds-check';
+            input.className = 'nds-checkbox-input';
             input.dataset.columnIndex = index;
             input.checked = !th.hasAttribute('hidden');
             control.appendChild(input);
@@ -889,7 +889,7 @@
             // nested table carrying sort buttons or a select-all would otherwise
             // construct an inert controller for this table.
             const hasSortButtons = table.querySelector(':scope > thead .nds-sort-btn') !== null;
-            const hasCheckboxes = table.querySelector(':scope > thead input[type="checkbox"].nds-check') !== null;
+            const hasCheckboxes = table.querySelector(':scope > thead input[type="checkbox"].nds-checkbox-input') !== null;
 
             // Sorting / selection is opt-in by markup and guarded by the instance,
             // so a table whose <tbody> arrives later stays eligible for reinit().

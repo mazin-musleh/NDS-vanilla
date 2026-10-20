@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 05:43 AM"
+last_edit: "20/10/2026 - 05:24 PM"
 ---
 
 <section id="multiselect-overview" class="nds-content-section nds-doc-overview">
@@ -49,58 +49,58 @@ Pick another component when:
       </button>
       <div class="nds-dropmenu-menu" hidden>
         <div class="nds-dropmenu-scroll">
-          <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-no-auto-close>
+          <fieldset class="nds-form-group nds-checkbox-group nds-dropmenu-group" data-no-auto-close>
             <legend class="nds-label">Technology</legend>
-            <div class="nds-form-container nds-check-container">
+            <div class="nds-form-container nds-checkbox">
               <div class="nds-form-header">
                 <label for="ms-ai"><span class="nds-label">AI &amp; ML</span></label>
               </div>
               <div class="nds-form-control">
-                <input type="checkbox" id="ms-ai" class="nds-check" name="interests[]" value="ai" data-label="AI &amp; ML" checked>
+                <input type="checkbox" id="ms-ai" class="nds-checkbox-input" name="interests[]" value="ai" data-label="AI &amp; ML" checked>
               </div>
             </div>
-            <div class="nds-form-container nds-check-container">
+            <div class="nds-form-container nds-checkbox">
               <div class="nds-form-header">
                 <label for="ms-cloud"><span class="nds-label">Cloud</span></label>
               </div>
               <div class="nds-form-control">
-                <input type="checkbox" id="ms-cloud" class="nds-check" name="interests[]" value="cloud" data-label="Cloud">
+                <input type="checkbox" id="ms-cloud" class="nds-checkbox-input" name="interests[]" value="cloud" data-label="Cloud">
               </div>
             </div>
-            <div class="nds-form-container nds-check-container">
+            <div class="nds-form-container nds-checkbox">
               <div class="nds-form-header">
                 <label for="ms-security"><span class="nds-label">Cybersecurity</span></label>
               </div>
               <div class="nds-form-control">
-                <input type="checkbox" id="ms-security" class="nds-check" name="interests[]" value="security" data-label="Cybersecurity">
+                <input type="checkbox" id="ms-security" class="nds-checkbox-input" name="interests[]" value="security" data-label="Cybersecurity">
               </div>
             </div>
           </fieldset>
           <hr class="nds-divider">
-          <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-no-auto-close>
+          <fieldset class="nds-form-group nds-checkbox-group nds-dropmenu-group" data-no-auto-close>
             <legend class="nds-label">Design</legend>
-            <div class="nds-form-container nds-check-container">
+            <div class="nds-form-container nds-checkbox">
               <div class="nds-form-header">
                 <label for="ms-ux"><span class="nds-label">UX Research</span></label>
               </div>
               <div class="nds-form-control">
-                <input type="checkbox" id="ms-ux" class="nds-check" name="interests[]" value="ux" data-label="UX Research" checked>
+                <input type="checkbox" id="ms-ux" class="nds-checkbox-input" name="interests[]" value="ux" data-label="UX Research" checked>
               </div>
             </div>
-            <div class="nds-form-container nds-check-container">
+            <div class="nds-form-container nds-checkbox">
               <div class="nds-form-header">
                 <label for="ms-brand"><span class="nds-label">Brand Identity</span></label>
               </div>
               <div class="nds-form-control">
-                <input type="checkbox" id="ms-brand" class="nds-check" name="interests[]" value="brand" data-label="Brand Identity">
+                <input type="checkbox" id="ms-brand" class="nds-checkbox-input" name="interests[]" value="brand" data-label="Brand Identity">
               </div>
             </div>
-            <div class="nds-form-container nds-check-container">
+            <div class="nds-form-container nds-checkbox">
               <div class="nds-form-header">
                 <label for="ms-motion"><span class="nds-label">Motion</span></label>
               </div>
               <div class="nds-form-control">
-                <input type="checkbox" id="ms-motion" class="nds-check" name="interests[]" value="motion" data-label="Motion">
+                <input type="checkbox" id="ms-motion" class="nds-checkbox-input" name="interests[]" value="motion" data-label="Motion">
               </div>
             </div>
           </fieldset>
@@ -182,7 +182,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-A row on `.nds-check-container` changes every option row. A Reset or Apply row inserts its part at the end of `.nds-dropmenu-menu`, after `.nds-dropmenu-scroll`. Search changes two elements: write both.
+A row on `.nds-checkbox` changes every option row. A Reset or Apply row inserts its part at the end of `.nds-dropmenu-menu`, after `.nds-dropmenu-scroll`. Search changes two elements: write both.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -199,17 +199,17 @@ A row on `.nds-check-container` changes every option row. A Reset or Apply row i
 | Menu options | Reset (hint: Unchecks every option) | canon `#multiselect-footer-reset` | `.nds-dropmenu-menu` | A button that unchecks every option. See Reset Button |
 | Menu options | Apply (hint: Checks wait until Apply) | canon `#multiselect-footer-apply` | `.nds-dropmenu-menu` | Checks wait in the menu until the user presses Apply. See Apply Button |
 | Menu options | Search (hint: Filters the options) | `[data-search]` | `[data-multiselect-dropmenu]` | A search box at the top of the menu hides the options that do not match. Use it for a long list |
-| Menu options | Search (hint: Filters the options) | `[data-search-item]` | `.nds-check-container` | Put it on each option row. Data-driven adds it for you |
+| Menu options | Search (hint: Filters the options) | `[data-search-item]` | `.nds-checkbox` | Put it on each option row. Data-driven adds it for you |
 | Menu options | Reset + Apply | canon `#multiselect-footer-both` | `.nds-dropmenu-menu` | Both buttons in one row. Reset unchecks the options in the menu, and Apply commits them |
 | Menu options | Reset + Search | canon `#multiselect-footer-reset` | `.nds-dropmenu-menu` | Reset and the search box |
 | Menu options | Reset + Search | `[data-search]` | `[data-multiselect-dropmenu]` | The same |
-| Menu options | Reset + Search | `[data-search-item]` | `.nds-check-container` | The same |
+| Menu options | Reset + Search | `[data-search-item]` | `.nds-checkbox` | The same |
 | Menu options | Apply + Search | canon `#multiselect-footer-apply` | `.nds-dropmenu-menu` | Apply and the search box |
 | Menu options | Apply + Search | `[data-search]` | `[data-multiselect-dropmenu]` | The same |
-| Menu options | Apply + Search | `[data-search-item]` | `.nds-check-container` | The same |
+| Menu options | Apply + Search | `[data-search-item]` | `.nds-checkbox` | The same |
 | Menu options | Reset + Apply + Search | canon `#multiselect-footer-both` | `.nds-dropmenu-menu` | Both buttons and the search box |
 | Menu options | Reset + Apply + Search | `[data-search]` | `[data-multiselect-dropmenu]` | The same |
-| Menu options | Reset + Apply + Search | `[data-search-item]` | `.nds-check-container` | The same |
+| Menu options | Reset + Apply + Search | `[data-search-item]` | `.nds-checkbox` | The same |
 | Chip color | Primary (default) | — | — | Chips in the primary color |
 | Chip color | Neutral | `[data-chip-class="nds-neutral nds-sm"]` | `.nds-multiselect` | Chips in the neutral color, for a choice that is not a brand action |
 | State | None (default) | — | — | The user can change the options |
@@ -389,7 +389,7 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
 | `data-no-auto-close` | each `<fieldset>`, and the Reset button | A click on it leaves the menu open |
 | `data-multiselect-action` | a button in `.nds-dropmenu-footer` | `reset` makes a Reset button, and `apply` an Apply button. See Reset Button and Apply Button |
 | `data-label` | each checkbox | The chip text. Without it, the chip shows the option's `.nds-label` text |
-| `data-search-item` | each `.nds-check-container` | The search box filters this row. Data-driven adds it when the dropmenu has `data-search` |
+| `data-search-item` | each `.nds-checkbox` | The search box filters this row. Data-driven adds it when the dropmenu has `data-search` |
 {: .nds-table .nds-responsive}
 
 ### JavaScript
