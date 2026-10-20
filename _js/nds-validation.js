@@ -1,0 +1,133 @@
+/* NDS.validation — public surface
+ * Rides: (none — a base: Form calls it, components register their rules with it)
+ * Methods:
+ *   NDS.validation.addRule(selector, fn, opts)   a field another component owns: fn(el) → null when the
+ *                                     element is not its field, else {valid, message, empty, focus, …}.
+ *                                     opts: {on: [event names that re-check a field showing an error],
+ *                                     owns(container): the native pass leaves that container to the rule}
+ *   NDS.validation.check(el)          the first rule that answers for el → its result, or null
+ *   NDS.validation.run(form, opts)    every field in form → {invalidFields, errors: [{field, input, message}]};
+ *                                     opts.extra(container, input) → a message the native pass adds
+ *   NDS.validation.message(input)     the native message for an invalid input
+ *   NDS.validation.isVisible(el, form)   no [hidden] and no display:none up to form
+ *   NDS.validation.rules              the registered rules, to read: {selector, fn, on, owns}
+ * Events:
+ *   (none)
+ * Hooks:
+ *   data-error-message   on a field: replaces the message of an empty required field
+ * Gotchas:
+ *   - A base: it returns results and places no message. Form shows them, sets aria-invalid and moves focus.
+ *   - Rules hold functions and selectors, never elements, so the registry outlives no view.
+ *   - A field answers once: an element already invalid from an earlier pass is not checked again.
+ */
+(() => {
+    'use strict';
+
+    // The words Form has always shown; the section stays 'form' so no pack changes.
+    const strings = NDS.i18n.strings('form', {
+        required:       'This field is required',
+        invalid:        'Invalid input',
+        invalid_email:  'Please enter a valid email address',
+        invalid_url:    'Please enter a valid URL',
+        pattern:        'Please match the requested format',
+        too_short:      'Input is too short (minimum {n} characters)',
+        too_long:       'Input is too long (maximum {n} characters)',
+        range_under:    'Value must be at least {n}',
+        range_over:     'Value must be no more than {n}',
+    });
+
+    const rules = [];
+
+    // Hidden if it — or any ancestor up to the form — carries [hidden] or computes display:none.
+    // getComputedStyle is the submit-only read.
+    function isVisible(element, form) {
+        let current = element;
+        while (current && current !== form) {
+            if (current.hasAttribute('hidden') || current.hidden) return false;
+            if (getComputedStyle(current).display === 'none') return false;
+            current = current.parentElement;
+        }
+        return !!element;
+    }
+
+    function message(input) {
+        const validity = input.validity;
+        // A blank custom message: the component shows the cause itself (password's red chips).
+        if (validity.customError && !input.validationMessage.trim()) return '';
+        if (validity.valueMissing) return strings.text('required');
+        if (validity.typeMismatch) {
+            if (input.type === 'email') return strings.text('invalid_email');
+            if (input.type === 'url') return strings.text('invalid_url');
+        } else if (validity.tooShort) return strings.text('too_short', { n: input.minLength });
+        else if (validity.tooLong) return strings.text('too_long', { n: input.maxLength });
+        else if (validity.rangeUnderflow) return strings.text('range_under', { n: input.min });
+        else if (validity.rangeOverflow) return strings.text('range_over', { n: input.max });
+        // The one vague default: data-error-message says what the pattern asks for.
+        else if (validity.patternMismatch) return input.getAttribute('data-error-message') || strings.text('pattern');
+        // A setCustomValidity stamp, already localized by the component that wrote it.
+        else if (validity.customError) return input.validationMessage;
+        return strings.text('invalid');
+    }
+
+    function addRule(selector, fn, opts = {}) {
+        rules.push({ selector, fn, on: opts.on || [], owns: opts.owns });
+    }
+
+    // The shared parts once: an empty field's own wording.
+    function finish(el, result) {
+        if (!result) return null;
+        const custom = el.getAttribute('data-error-message');
+        if (!result.valid && result.empty && custom) result.message = custom;
+        return result;
+    }
+
+    function check(el) {
+        for (const rule of rules) {
+            if (!el.matches(rule.selector)) continue;
+            const result = finish(el, rule.fn(el));
+            if (result) return result;
+        }
+        return null;
+    }
+
+    // A form-container's own field: never one inside a nested container, never a hidden carrier.
+    function ownField(container) {
+        const fields = container.querySelectorAll('input:not([type="hidden"]), textarea, select');
+        for (let i = 0; i < fields.length; i++) {
+            if (fields[i].closest('.nds-form-container') === container) return fields[i];
+        }
+        return null;
+    }
+
+    function run(form, opts = {}) {
+        const acc = { invalidFields: [], errors: [] };
+        const fail = (field, input, msg) => {
+            acc.invalidFields.push(field);
+            acc.errors.push({ field, input, message: msg });
+        };
+
+        // The native pass: a field whose own input holds the value. A group answers as a whole,
+        // and a container a rule owns is left to that rule.
+        form.querySelectorAll('.nds-form-container').forEach((container) => {
+            if (!isVisible(container, form)) return;
+            if (container.classList.contains('nds-otp-container') || container.closest('.nds-form-group')) return;
+            if (rules.some((r) => r.owns && r.owns(container))) return;
+            const input = ownField(container);
+            if (!input || input.disabled) return;
+            const msg = !input.checkValidity() ? message(input) : opts.extra && opts.extra(container, input);
+            if (msg != null && msg !== false) fail(container, input, msg);
+        });
+
+        // The rules, in the order they registered.
+        for (const rule of rules) {
+            form.querySelectorAll(rule.selector).forEach((el) => {
+                if (acc.invalidFields.includes(el) || !isVisible(el, form)) return;
+                const result = finish(el, rule.fn(el));
+                if (result && !result.valid) fail(el, result.focus || null, result.message);
+            });
+        }
+        return acc;
+    }
+
+    NDS.validation = { addRule, check, run, message, isVisible, rules };
+})();

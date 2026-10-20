@@ -86,6 +86,22 @@ async function probe() {
             if (state === 'disabled') { tops(form).forEach((f) => NDS.state.add(f, 'disabled')); await wait(50); }
             try { res[state] = summary(NDS.Form.validate(form, { showMessages: true, focusFirst: false })); }
             catch (e) { res[state] = { error: String(e) }; }
+            // The public checks, read with no message shown: Form's old names or each component's validate.
+            const pub = (comp, old) => (NDS[comp]?.validate || NDS.Form[old])?.bind(NDS[comp]?.validate ? NDS[comp] : NDS.Form);
+            const PUBLIC = [
+                ['.nds-form-group', (g) => g.querySelector('input[type="checkbox"]') && !g.closest('.nds-multiselect'), pub('Checkbox', 'validateCheckboxGroup')],
+                ['.nds-form-group', (g) => g.querySelector('input[type="radio"]'), pub('Radio', 'validateRadioGroup')],
+                ['.nds-form-group.nds-otp-group', () => true, pub('Otp', 'validateOtpGroup')],
+                ['.nds-multiselect', () => true, pub('Multiselect', 'validateMultiselect')],
+                ['.nds-taginput', () => true, pub('Taginput', 'validateTaginput')],
+            ];
+            const pubOut = [];
+            for (const [sel, ok, fn] of PUBLIC) form.querySelectorAll(sel).forEach((el) => {
+                if (!ok(el) || !fn) return;
+                const r = fn(el, { showMessage: false });
+                pubOut.push(`${key(el)} ${JSON.stringify(r)}`);
+            });
+            if (pubOut.length) res[state].public = pubOut;
             NDS.init.destroy(form);
             form.remove();
         }

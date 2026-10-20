@@ -419,20 +419,6 @@
     // VALIDATION MODULE
     // ==============================================
 
-    // A field is hidden if it — or any ancestor up to the form — carries
-    // [hidden]/.hidden or computed display:none. Used to skip hidden fields
-    // during validation (getComputedStyle is the submit-only read).
-    function isFieldVisible(element, form) {
-        if (!element) return false;
-        var current = element;
-        while (current && current !== form) {
-            if (current.hasAttribute('hidden') || current.hidden) return false;
-            if (window.getComputedStyle(current).display === 'none') return false;
-            current = current.parentElement;
-        }
-        return true;
-    }
-
     // Saudi national ID / iqama: 10 digits, first 1 or 2, Luhn check digit.
     function isNationalId(v) {
         if (!/^[12]\d{9}$/.test(v)) return false;
@@ -479,429 +465,187 @@
         input.setCustomValidity(clean && !ok ? msg : '');
     }
 
-    var Validator = {
-        getMessage: function(input) {
-            var validity = input.validity;
+    // Each check returns {valid, message, empty, focus, …}; NDS.validation applies data-error-message
+    // to an empty field and runs them. focus is the control a failed field hands focus to.
+    var required = function(el) { return el.hasAttribute('data-required') || el.classList.contains('nds-required'); };
 
-            // A blank custom message: the component shows the cause itself (password's red chips).
-            if (validity.customError && !input.validationMessage.trim()) return '';
+    // Checkbox-backed fields: min defaults to 1 when required, max to the option count.
+    function checkedCount(group, boxes) {
+        var checked = Array.from(boxes).filter(function(cb) { return cb.checked; }).length;
+        var min = parseInt(group.getAttribute('data-min-checked') || (required(group) ? 1 : 0), 10);
+        var max = parseInt(group.getAttribute('data-max-checked') || boxes.length, 10);
+        var valid = checked >= min && checked <= max;
+        var below = checked < min;
+        return { valid: valid, message: valid ? '' : strings.text(below ? 'select_at_least' : 'select_at_most', { n: below ? min : max }),
+            empty: checked === 0, checked: checked, min: min, max: max };
+    }
 
-            if (validity.valueMissing) {
-                return strings.text('required');
-            } else if (validity.typeMismatch) {
-                if (input.type === 'email') {
-                    return strings.text('invalid_email');
-                } else if (input.type === 'url') {
-                    return strings.text('invalid_url');
-                }
-            } else if (validity.tooShort) {
-                return strings.text('too_short', { n: input.minLength });
-            } else if (validity.tooLong) {
-                return strings.text('too_long', { n: input.maxLength });
-            } else if (validity.rangeUnderflow) {
-                return strings.text('range_under', { n: input.min });
-            } else if (validity.rangeOverflow) {
-                return strings.text('range_over', { n: input.max });
-            } else if (validity.patternMismatch) {
-                // The one vague default: data-error-message says what the pattern asks for.
-                return input.getAttribute('data-error-message') || strings.text('pattern');
-            } else if (validity.customError) {
-                // setCustomValidity stamp — already localized by the stamping
-                // component (e.g. date-picker format/bounds).
-                return input.validationMessage;
-            }
-
-            return strings.text('invalid');
+    var Checks = {
+        checkbox: function(group) {
+            return checkedCount(group, group.querySelectorAll('input[type="checkbox"]'));
         },
+        radio: function(group) {
+            var picked = Array.from(group.querySelectorAll('input[type="radio"]')).some(function(r) { return r.checked; });
+            var valid = !required(group) || picked;
+            return { valid: valid, message: valid ? '' : strings.text('select_option'), empty: !picked, selected: picked };
+        },
+        // The stars are buttons, not form controls: the score lives on the .nds-rating root. Zero = nothing picked.
+        rating: function(group) {
+            var rating = group.querySelector('.nds-rating');
+            var value = rating ? (rating.ndsRating ? rating.ndsRating.getValue() : Number(rating.dataset.rating) || 0) : 0;
+            var valid = !required(group) || value > 0;
+            return { valid: valid, message: valid ? '' : strings.text('rating_required'), empty: value === 0, rating: value };
+        },
+        // Option checkboxes are the source of truth, scoped to the nested menu.
+        multiselect: function(ms) {
+            var menu = ms.querySelector('.nds-dropmenu-menu');
+            return checkedCount(ms, menu ? menu.querySelectorAll('input[type="checkbox"]') : []);
+        },
+        // Hidden inputs carry the tags; the typing field is empty at submit. Max is enforced at add time.
+        taginput: function(ti) {
+            // The instance's tags: carriers exist only with a name. Before init, the server-rendered carriers.
+            var count = ti.ndsTaginput ? ti.ndsTaginput.tags.length : ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
+            var valid = !required(ti) || count > 0;
+            return { valid: valid, message: valid ? '' : strings.text('tag_required'), empty: count === 0, count: count };
+        },
+        // The file input is emptied after each pick: required counts the staged rows, a rejected row not counted.
+        // A row still uploading blocks every upload field: the submit would go without that file.
+        upload: function(up) {
+            var count = up.querySelectorAll('.nds-file-list .nds-file-item:not([data-status="error"])').length;
+            var pending = !!up.querySelector('.nds-file-list .nds-file-item:is([data-state~="uploading"], [data-state~="processing"])');
+            var valid = !pending && (!required(up) || count > 0);
+            return { valid: valid, message: valid ? '' : strings.text(pending ? 'upload_pending' : 'file_required'),
+                empty: !pending && count === 0, count: count, pending: pending };
+        },
+        // The readonly display input is barred from constraint validation: required reads the carrier.
+        customSelect: function(container) {
+            var carrier = container.querySelector('.nds-select-value');
+            var valid = !required(container) || !!(carrier && carrier.value.trim());
+            return { valid: valid, message: valid ? '' : strings.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
+        },
+        // A dropmenu picker's pick lives in a hidden carrier; own carrier only, a nested picker holds its own.
+        dropmenuSelect: function(dm) {
+            var carrier = Array.prototype.find.call(dm.querySelectorAll('input[data-nds-select-value]'),
+                function(el) { return el.closest('.nds-dropmenu') === dm; });
+            var valid = !!(carrier && carrier.value.trim());
+            return { valid: valid, message: valid ? '' : strings.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
+        },
+        // data-strict: typed text must match a picked suggestion. The carrier holds the last pick; no carrier =
+        // the field never built, so its text is the prefilled pick. Empty text is required's business.
+        autocomplete: function(container) {
+            var carrier = container.querySelector('.nds-autocomplete-value');
+            var input = ownField(container);
+            var text = input ? input.value.trim() : '';
+            var valid = !carrier || text === '' || carrier.value === text;
+            return { valid: valid, message: valid ? '' : strings.text('pick_suggestion'), picked: !!(carrier && carrier.value) };
+        },
+        otp: function(group) {
+            var inputs = Array.from(group.querySelectorAll('.nds-otp-container input'));
+            var filled = inputs.length > 0 && inputs.every(function(i) { return i.value.length === 1; });
+            return { valid: filled, message: filled ? '' : strings.text('otp_incomplete', { n: inputs.length }),
+                empty: inputs.every(function(i) { return !i.value; }), filled: filled };
+        },
+        // Time Picker boxes: the picker stamps a typed error on the hour box.
+        timeFields: function(group) {
+            var hour = group.querySelector('.nds-time-hour');
+            var carrier = group.querySelector('.nds-time-value');
+            var typedError = hour ? hour.validationMessage : '';
+            var empty = !typedError && !(carrier && carrier.value);
+            var msg = typedError || (empty && required(group) ? strings.text('required') : '');
+            return { valid: !msg, message: msg, empty: empty };
+        }
+    };
 
+    // The rules Form answers for, in the order it always checked them.
+    var GROUPS = '.nds-form-group[data-min-checked], .nds-form-group[data-max-checked], .nds-form-group[data-required], .nds-form-group.nds-required, .nds-form-group.nds-time-fields';
+    var withFocus = function(result, focus) { result.focus = focus; return result; };
+    NDS.validation.addRule(GROUPS, function(group) {
+        if (group.classList.contains('nds-otp-group')) return withFocus(Checks.otp(group), group.querySelector('.nds-otp-container input'));
+        var box = group.querySelector('input[type="checkbox"]');
+        if (box) return withFocus(Checks.checkbox(group), box);
+        var radio = group.querySelector('input[type="radio"]');
+        if (radio) return withFocus(Checks.radio(group), radio);
+        // The stars are buttons, so focus lands on the first one.
+        if (group.querySelector('.nds-rating')) return withFocus(Checks.rating(group), group.querySelector('.nds-rating-star'));
+        if (group.classList.contains('nds-time-fields')) return withFocus(Checks.timeFields(group), group.querySelector('.nds-time-hour'));
+        return null;
+    });
+    NDS.validation.addRule('.nds-multiselect[data-required], .nds-multiselect.nds-required, .nds-multiselect[data-min-checked], .nds-multiselect[data-max-checked]',
+        function(ms) { return withFocus(Checks.multiselect(ms), ms.querySelector('.nds-dropmenu-trigger')); });
+    NDS.validation.addRule('.nds-taginput[data-required], .nds-taginput.nds-required',
+        function(ti) { return withFocus(Checks.taginput(ti), ti.querySelector('.nds-form-control > input:not([type="hidden"])')); },
+        { owns: function(c) { return c.classList.contains('nds-taginput'); } });
+    NDS.validation.addRule('.nds-upload',
+        function(up) { return withFocus(Checks.upload(up), up.querySelector('.nds-browse-btn') || up.querySelector('input[type="file"]')); },
+        { owns: function(c) { return c.classList.contains('nds-upload'); } });
+    // Keyed on the carrier: a native <select> shares the .nds-select shell and stays with the native pass.
+    NDS.validation.addRule('.nds-select[data-required], .nds-select.nds-required',
+        function(cs) { return cs.querySelector('.nds-select-value') ? withFocus(Checks.customSelect(cs), cs.querySelector('.nds-select-input')) : null; },
+        { owns: function(c) { return !!c.querySelector('.nds-select-value'); } });
+    NDS.validation.addRule('.nds-dropmenu[data-select-name][data-required]',
+        function(dm) { return withFocus(Checks.dropmenuSelect(dm), dm.querySelector('.nds-dropmenu-trigger') || dm); });
+    // Taginput in assist mode shares the container and owns its own rejection at add time.
+    NDS.validation.addRule('.nds-form-container[data-strict]',
+        function(ac) { return ac.classList.contains('nds-taginput') ? null : withFocus(Checks.autocomplete(ac), ownField(ac)); });
+
+    var Validator = {
         getNumberRangeMessage: function(type, value) {
             return strings.text(type === 'min' ? 'min_value' : 'max_value', { n: value });
         },
 
-        // Shared tail for group validators: apply the data-error-message
-        // override, dispatch the showMessage status update, and return the
-        // merged result. Each validator supplies its distinct validity/message
-        // computation, then hands off here. `empty`: nothing is picked. The
-        // override is the group's required wording, so a count limit or a
-        // pending upload keeps its own message.
-        _finishGroupValidation: function(group, options, isValid, message, extra, empty) {
-            var customMessage = group.getAttribute('data-error-message');
-            if (!isValid && empty && customMessage) message = customMessage;
-
+        // A public group check: the result as it always read, its status shown when asked.
+        _public: function(el, result, options) {
+            options = options || { showMessage: true };
+            var shown = { valid: result.valid, message: result.message };
+            Object.keys(result).forEach(function(k) { if (k !== 'empty' && k !== 'focus') shown[k] = result[k]; });
+            var custom = el.getAttribute('data-error-message');
+            if (!shown.valid && result.empty && custom) shown.message = custom;
             if (options.showMessage) {
-                if (!isValid) StatusManager.set({ element: group, status: 'error', message: message });
-                else StatusManager.clear(group);
+                if (!shown.valid) StatusManager.set({ element: el, status: 'error', message: shown.message });
+                else StatusManager.clear(el);
             }
-
-            return Object.assign({ valid: isValid, message: message }, extra);
+            return shown;
         },
+        validateCheckboxGroup: function(el, options) { var g = el.closest('.nds-form-group') || el; return this._public(g, Checks.checkbox(g), options); },
+        validateRadioGroup: function(el, options) { var g = el.closest('.nds-form-group') || el; return this._public(g, Checks.radio(g), options); },
+        validateMultiselect: function(el, options) { var m = el.closest('.nds-multiselect') || el; return this._public(m, Checks.multiselect(m), options); },
+        validateTaginput: function(el, options) { var t = el.closest('.nds-taginput') || el; return this._public(t, Checks.taginput(t), options); },
+        validateOtpGroup: function(el, options) { var g = el.closest('.nds-form-group') || el; return this._public(g, Checks.otp(g), options); },
 
-        // Shared checked-count rule for checkbox-backed groups: min defaults
-        // to 1 when the element is flagged required, max to the option count.
-        _validateCheckedCount: function(group, checkboxes, options) {
-            var checkedCount = Array.from(checkboxes).filter(function(cb) { return cb.checked; }).length;
-
-            var hasRequired = group.hasAttribute('data-required') || group.classList.contains('nds-required');
-            var minChecked = parseInt(group.getAttribute('data-min-checked') || (hasRequired ? 1 : 0), 10);
-            var maxChecked = parseInt(group.getAttribute('data-max-checked') || checkboxes.length, 10);
-
-            var isValid = checkedCount >= minChecked && checkedCount <= maxChecked;
-            var message = '';
-            if (!isValid) {
-                var below = checkedCount < minChecked;
-                message = strings.text(below ? 'select_at_least' : 'select_at_most', { n: below ? minChecked : maxChecked });
-            }
-
-            return this._finishGroupValidation(group, options, isValid, message, { checked: checkedCount, min: minChecked, max: maxChecked }, checkedCount === 0);
-        },
-
-        validateCheckboxGroup: function(groupElement, options) {
-            options = options || { showMessage: true };
-            var group = groupElement.closest('.nds-form-group') || groupElement;
-            return this._validateCheckedCount(group, group.querySelectorAll('input[type="checkbox"]'), options);
-        },
-
-        validateRadioGroup: function(groupElement, options) {
-            options = options || { showMessage: true };
-
-            var group = groupElement.closest('.nds-form-group') || groupElement;
-            var radios = group.querySelectorAll('input[type="radio"]');
-            var isSelected = Array.from(radios).some(function(r) { return r.checked; });
-
-            var isRequired = group.hasAttribute('data-required') || group.classList.contains('nds-required');
-            var isValid = !isRequired || isSelected;
-            var message = isValid ? '' : strings.text('select_option');
-
-            return this._finishGroupValidation(group, options, isValid, message, { selected: isSelected }, !isSelected);
-        },
-
-        // Rating: the stars are buttons, not form controls, so the score lives on
-        // the .nds-rating root. Zero means nothing was picked.
-        validateRatingGroup: function(groupElement, options) {
-            options = options || { showMessage: true };
-
-            var group = groupElement.closest('.nds-form-group') || groupElement;
-            var rating = group.querySelector('.nds-rating');
-            var value = 0;
-            if (rating) {
-                value = rating.ndsRating ? rating.ndsRating.getValue() : Number(rating.dataset.rating) || 0;
-            }
-
-            var isRequired = group.hasAttribute('data-required') || group.classList.contains('nds-required');
-            var isValid = !isRequired || value > 0;
-            var message = isValid ? '' : strings.text('rating_required');
-
-            return this._finishGroupValidation(group, options, isValid, message, { rating: value }, value === 0);
-        },
-
-        // Multiselect: option checkboxes are the source of truth (no hidden
-        // carrier); scoped to the nested dropmenu so nothing else in the
-        // wrapper is counted.
-        validateMultiselect: function(msElement, options) {
-            options = options || { showMessage: true };
-            var ms = msElement.closest('.nds-multiselect') || msElement;
-            var menu = ms.querySelector('.nds-dropmenu-menu');
-            return this._validateCheckedCount(ms, menu ? menu.querySelectorAll('input[type="checkbox"]') : [], options);
-        },
-
-        // Taginput: hidden inputs are the carriers (one per committed tag).
-        // Typing field is empty at submit even when tags exist — can't feed
-        // checkValidity. Required = at least one tag; max is enforced at
-        // add-time by the widget, not re-checked here.
-        validateTaginput: function(tiElement, options) {
-            options = options || { showMessage: true };
-            var ti = tiElement.closest('.nds-taginput') || tiElement;
-            var hasRequired = ti.hasAttribute('data-required') || ti.classList.contains('nds-required');
-            // The instance's tags: carriers exist only with a name. Before init, the server-rendered carriers.
-            var count = ti.ndsTaginput ? ti.ndsTaginput.tags.length : ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
-            var isValid = !hasRequired || count > 0;
-            var message = isValid ? '' : strings.text('tag_required');
-            return this._finishGroupValidation(ti, options, isValid, message, { count: count }, count === 0);
-        },
-
-        // Upload: the script empties the file input after each pick, so required
-        // counts the staged rows instead. A row the checks rejected does not count.
-        // A row still uploading blocks every upload field, required or not: the
-        // submit would go without that file.
-        validateUpload: function(upElement, options) {
-            options = options || { showMessage: true };
-            var up = upElement.closest('.nds-upload') || upElement;
-            var hasRequired = up.hasAttribute('data-required') || up.classList.contains('nds-required');
-            var count = up.querySelectorAll('.nds-file-list .nds-file-item:not([data-status="error"])').length;
-            var pending = !!up.querySelector('.nds-file-list .nds-file-item:is([data-state~="uploading"], [data-state~="processing"])');
-            var isValid = !pending && (!hasRequired || count > 0);
-            var message = isValid ? '' : strings.text(pending ? 'upload_pending' : 'file_required');
-            return this._finishGroupValidation(up, options, isValid, message, { count: count, pending: pending }, !pending && count === 0);
-        },
-
-        // Custom select: the visible .nds-select-input is readonly — barred
-        // from constraint validation, so checkValidity() always passes it.
-        // The hidden .nds-select-value is the carrier that submits; required
-        // reads it. Internal — reached via validateForm, not exported.
-        validateCustomSelect: function(csElement, options) {
-            options = options || { showMessage: true };
-            var container = csElement.closest('.nds-select') || csElement;
-            var carrier = container.querySelector('.nds-select-value');
-            var hasRequired = container.hasAttribute('data-required') || container.classList.contains('nds-required');
-            var isValid = !hasRequired || !!(carrier && carrier.value.trim());
-            var message = isValid ? '' : strings.text('select_option');
-            return this._finishGroupValidation(container, options, isValid, message, { value: carrier ? carrier.value : '' }, true);
-        },
-
-        // Dropmenu picker (data-select-name): the pick lives in a hidden carrier,
-        // which constraint validation skips. Internal — reached via validateForm.
-        validateDropmenuSelect: function(dm, options) {
-            options = options || { showMessage: true };
-            // Own carrier only: a picker nested in this menu holds its own.
-            var carrier = Array.prototype.find.call(dm.querySelectorAll('input[data-nds-select-value]'),
-                function(el) { return el.closest('.nds-dropmenu') === dm; });
-            var isValid = !!(carrier && carrier.value.trim());
-            var message = isValid ? '' : strings.text('select_option');
-            return this._finishGroupValidation(dm, options, isValid, message, { value: carrier ? carrier.value : '' }, true);
-        },
-
-        // Autocomplete strict: data-strict says typed text must match a picked
-        // suggestion. The hidden .nds-autocomplete-value carrier (JS-created at
-        // build under data-strict, seeded with any prefilled text) holds the last
-        // picked text; typing or clear empties it. No carrier = the field never
-        // built, so its text is the prefilled pick. Empty text is the required rule's
-        // business, not strict's. Internal — reached via validateForm.
-        validateAutocomplete: function(acElement, options) {
-            options = options || { showMessage: true };
-            var container = acElement.closest('.nds-form-container') || acElement;
-            var carrier = container.querySelector('.nds-autocomplete-value');
-            var input = ownField(container);
-            var text = input ? input.value.trim() : '';
-            var isValid = !carrier || text === '' || carrier.value === text;
-            var message = isValid ? '' : strings.text('pick_suggestion');
-            return this._finishGroupValidation(container, options, isValid, message, { picked: !!(carrier && carrier.value) });
-        },
-
-        validateOtpGroup: function(groupElement, options) {
-            options = options || { showMessage: true };
-
-            var group = groupElement.closest('.nds-form-group') || groupElement;
-            var inputs = Array.from(group.querySelectorAll('.nds-otp-container input'));
-            var isAllFilled = inputs.length > 0 && inputs.every(function(i) { return i.value.length === 1; });
-
-            var isValid = isAllFilled;
-            var message = isValid ? '' : strings.text('otp_incomplete', { n: inputs.length });
-
-            return this._finishGroupValidation(group, options, isValid, message, { filled: isAllFilled },
-                inputs.every(function(i) { return !i.value; }));
-        },
-
-        // Validate plain field containers (text/email/number/select/textarea).
-        // Skips hidden fields, OTP containers, and group-managed fields; pushes
-        // each invalid field + message onto the shared accumulator `acc`.
-        _validateContainers: function(form, options, acc) {
-            form.querySelectorAll('.nds-form-container').forEach(function(container) {
-                if (!isFieldVisible(container, form)) return;
-
-                // Skip containers validated at group level (OTP, radio, checkbox)
-                if (container.classList.contains('nds-otp-container')) return;
-                if (container.closest('.nds-form-group')) return;
-                // Composite wrappers own their own validators — taginput's
-                // typing field isn't the carrier, checkValidity would false-fail.
-                if (container.matches(NO_REQUIRED_STAMP)) return;
-                // Custom selects too: the readonly display input false-PASSES
-                // checkValidity, so the carrier block in _validateGroups reads
-                // the hidden .nds-select-value instead. Keyed on the carrier —
-                // a native <select> in the same .nds-select shell stays here.
-                if (container.querySelector('.nds-select-value')) return;
-
-                var input = ownField(container);
-                if (!input || input.disabled) return;
-
-                var isInvalid = !input.checkValidity();
-                var numberMsg = null;
-
-                // Validate number input min/max (type="text" with increment/decrement buttons)
-                if (!isInvalid && container.querySelector('.nds-number-increment, .nds-number-decrement')) {
-                    var rangeError = Utils.validateNumberRange(input);
-                    if (rangeError) {
-                        isInvalid = true;
-                        numberMsg = rangeError.message;
-                    }
-                }
-
-                if (isInvalid) {
-                    acc.invalidFields.push(container);
-                    var msg = numberMsg || Validator.getMessage(input);
-                    acc.errors.push({ field: container, input: input, message: msg });
-
-                    if (!acc.firstInvalidInput) acc.firstInvalidInput = input;
-                    if (options.showMessages) {
-                        StatusManager.set({ element: container, status: 'error', message: msg });
-                    }
-                }
-            });
-        },
-
-        // Validate OTP / checkbox / radio groups; pushes each invalid group +
-        // message onto the shared accumulator `acc`.
-        _validateGroups: function(form, options, acc) {
-            form.querySelectorAll('.nds-form-group[data-min-checked], .nds-form-group[data-max-checked], .nds-form-group[data-required], .nds-form-group.nds-required, .nds-form-group.nds-time-fields').forEach(function(group) {
-                if (!isFieldVisible(group, form)) return;
-
-                var hasCheckboxes = group.querySelector('input[type="checkbox"]');
-                var hasRadios = group.querySelector('input[type="radio"]');
-
-                var result = null;
-                var anchor = null;
-                if (group.classList.contains('nds-otp-group')) {
-                    result = Validator.validateOtpGroup(group, { showMessage: options.showMessages });
-                    if (!result.valid) anchor = group.querySelector('.nds-otp-container input');
-                } else if (hasCheckboxes) {
-                    result = Validator.validateCheckboxGroup(group, { showMessage: options.showMessages });
-                    anchor = hasCheckboxes;
-                } else if (hasRadios) {
-                    result = Validator.validateRadioGroup(group, { showMessage: options.showMessages });
-                    anchor = hasRadios;
-                } else if (group.querySelector('.nds-rating')) {
-                    result = Validator.validateRatingGroup(group, { showMessage: options.showMessages });
-                    // Anchor on the first star: the stars are buttons, so focusFirst lands on one.
-                    anchor = group.querySelector('.nds-rating-star');
-                } else if (group.classList.contains('nds-time-fields')) {
-                    // Time picker boxes: the picker stamps a typed error on the hour box.
-                    anchor = group.querySelector('.nds-time-hour');
-                    var carrier = group.querySelector('.nds-time-value');
-                    var typedError = anchor ? anchor.validationMessage : '';
-                    var empty = !typedError && !(carrier && carrier.value);
-                    var required = group.hasAttribute('data-required') || group.classList.contains('nds-required');
-                    var timeMsg = typedError || (empty && required ? strings.text('required') : '');
-                    result = Validator._finishGroupValidation(group, { showMessage: options.showMessages }, !timeMsg, timeMsg, {}, empty);
-                }
-
-                if (result && !result.valid) {
-                    acc.invalidFields.push(group);
-                    acc.errors.push({ field: group, input: anchor, message: result.message });
-                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
-                }
-            });
-
-            // Multiselect wrappers: option checkboxes live inside a nested
-            // dropmenu, so they're not caught by the .nds-form-group loop above.
-            // Validate min/max/required at the wrapper level; anchor is the
-            // dropdown trigger (the user's focusable target).
-            form.querySelectorAll('.nds-multiselect[data-required], .nds-multiselect.nds-required, .nds-multiselect[data-min-checked], .nds-multiselect[data-max-checked]').forEach(function(ms) {
-                if (!isFieldVisible(ms, form)) return;
-                var result = Validator.validateMultiselect(ms, { showMessage: options.showMessages });
-                if (!result.valid) {
-                    var anchor = ms.querySelector('.nds-dropmenu-trigger');
-                    acc.invalidFields.push(ms);
-                    acc.errors.push({ field: ms, input: anchor, message: result.message });
-                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
-                }
-            });
-
-            // Taginput wrappers: same pattern as multiselect — typing field
-            // isn't the carrier, so _validateContainers can't feed it via
-            // checkValidity. Anchor is the typing input (focusable).
-            form.querySelectorAll('.nds-taginput[data-required], .nds-taginput.nds-required').forEach(function(ti) {
-                if (!isFieldVisible(ti, form)) return;
-                var result = Validator.validateTaginput(ti, { showMessage: options.showMessages });
-                if (!result.valid) {
-                    var anchor = ti.querySelector('.nds-form-control > input:not([type="hidden"])');
-                    acc.invalidFields.push(ti);
-                    acc.errors.push({ field: ti, input: anchor, message: result.message });
-                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
-                }
-            });
-
-            // Uploads: same pattern, on every upload (a pending row blocks any of them).
-            // Anchor is the Browse button (the file input is invisible).
-            form.querySelectorAll('.nds-upload').forEach(function(up) {
-                if (!isFieldVisible(up, form)) return;
-                var result = Validator.validateUpload(up, { showMessage: options.showMessages });
-                if (!result.valid) {
-                    var anchor = up.querySelector('.nds-browse-btn') || up.querySelector('input[type="file"]');
-                    acc.invalidFields.push(up);
-                    acc.errors.push({ field: up, input: anchor, message: result.message });
-                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
-                }
-            });
-
-            // Custom selects: same pattern — the readonly display input is
-            // barred from constraint validation, so required reads the hidden
-            // .nds-select-value carrier. Keyed on the carrier: a native
-            // <select> shares the .nds-select shell and stays with
-            // _validateContainers. Anchor is the display input (focusable).
-            form.querySelectorAll('.nds-select[data-required], .nds-select.nds-required').forEach(function(cs) {
-                if (!isFieldVisible(cs, form)) return;
-                if (!cs.querySelector('.nds-select-value')) return;
-                var result = Validator.validateCustomSelect(cs, { showMessage: options.showMessages });
-                if (!result.valid) {
-                    var anchor = cs.querySelector('.nds-select-input');
-                    acc.invalidFields.push(cs);
-                    acc.errors.push({ field: cs, input: anchor, message: result.message });
-                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
-                }
-            });
-
-            // Dropmenu pickers: same pattern, keyed on the wrapper's data-required.
-            // Anchor is the trigger (focusable).
-            form.querySelectorAll('.nds-dropmenu[data-select-name][data-required]').forEach(function(dm) {
-                if (!isFieldVisible(dm, form)) return;
-                var result = Validator.validateDropmenuSelect(dm, { showMessage: options.showMessages });
-                if (!result.valid) {
-                    var anchor = dm.querySelector('.nds-dropmenu-trigger') || dm;
-                    acc.invalidFields.push(dm);
-                    acc.errors.push({ field: dm, input: anchor, message: result.message });
-                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
-                }
-            });
-
-            // Autocomplete strict fields: typed-vs-picked check on the hidden
-            // carrier. Skip taginput containers — assist mode makes one
-            // container serve both components, and taginput owns its own
-            // commit rejection at add-time.
-            form.querySelectorAll('.nds-form-container[data-strict]').forEach(function(ac) {
-                if (!isFieldVisible(ac, form)) return;
-                if (ac.classList.contains('nds-taginput')) return;
-                // Already failed required: strict passes empty text and would clear that message.
-                if (acc.invalidFields.indexOf(ac) !== -1) return;
-                var result = Validator.validateAutocomplete(ac, { showMessage: options.showMessages });
-                if (!result.valid) {
-                    var anchor = ownField(ac);
-                    acc.invalidFields.push(ac);
-                    acc.errors.push({ field: ac, input: anchor, message: result.message });
-                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
-                }
-            });
-        },
-
-        // Thin orchestrator over both validation passes (shared accumulator),
-        // then focus first-invalid + dispatch. Synchronous by contract — the
-        // submit handler reads the result to gate preventDefault.
+        // Runs every check, shows the outcome, focuses the first failure, reports.
+        // Synchronous by contract: the submit handler reads the result to gate preventDefault.
         validateForm: function(formElement, options) {
             options = options || { showMessages: true, focusFirst: true };
-
             var form = formElement.closest('.nds-form') || formElement;
+            var acc = NDS.validation.run(form, { extra: numberRange });
 
-            var acc = { invalidFields: [], errors: [], firstInvalidInput: null };
-
-            this._validateContainers(form, options, acc);
-            this._validateGroups(form, options, acc);
-
-            if (options.focusFirst && acc.firstInvalidInput) {
-                acc.firstInvalidInput.focus();
+            if (options.showMessages) {
+                acc.errors.forEach(function(e) { StatusManager.set({ element: e.field, status: 'error', message: e.message }); });
+                // A rule's field that passed drops the error it showed.
+                NDS.validation.rules.forEach(function(rule) {
+                    form.querySelectorAll(rule.selector).forEach(function(el) {
+                        if (acc.invalidFields.indexOf(el) === -1 && NDS.validation.isVisible(el, form) && NDS.validation.check(el)) StatusManager.clear(el);
+                    });
+                });
             }
+            var first = acc.errors.find(function(e) { return e.input; });
+            if (options.focusFirst && first) first.input.focus();
 
-            var isFormValid = acc.invalidFields.length === 0;
-
+            var valid = acc.invalidFields.length === 0;
             form.dispatchEvent(new CustomEvent('nds:form:validate', {
-                detail: { valid: isFormValid, invalidFields: acc.invalidFields, errors: acc.errors },
+                detail: { valid: valid, invalidFields: acc.invalidFields, errors: acc.errors },
                 bubbles: true
             }));
-
-            return {
-                valid: isFormValid,
-                invalidFields: acc.invalidFields,
-                errors: acc.errors
-            };
+            return { valid: valid, invalidFields: acc.invalidFields, errors: acc.errors };
         }
     };
+
+    // A number stepper's text input carries min/max that checkValidity ignores on type="text".
+    function numberRange(container, input) {
+        if (!container.querySelector('.nds-number-increment, .nds-number-decrement')) return null;
+        var rangeError = Utils.validateNumberRange(input);
+        return rangeError ? rangeError.message : null;
+    }
 
     // ==============================================
     // FIELD STATE SYNC
@@ -958,7 +702,7 @@
             if (!formContainer) return;
 
             if (isInvalid) {
-                StatusManager.set({ element: formContainer, status: 'error', message: Validator.getMessage(input) });
+                StatusManager.set({ element: formContainer, status: 'error', message: NDS.validation.message(input) });
             } else {
                 var currentStatus = NDS.status.get(formContainer);
                 if (currentStatus === 'error') {
