@@ -306,8 +306,8 @@
         const msg = empty.querySelector('.nds-empty-message');
         const customEmpty = drawer.getAttribute('data-search-empty');
         if (customEmpty) msg.textContent = customEmpty; else strings.set(msg, 'text', 'no_results');
-        // Forms init ran before this injection: wire its clear button. A plain input without NDS.Form.
-        NDS.Form?.create(box);
+        // Forms init ran before this injection: wire its clear button.
+        NDS.Form.create(box);
 
         const setOpen = (li, open) => {
             if (!li.querySelector(':scope > .nds-btn') || !li.querySelector(':scope > ul') || isOpen(li) === open) return;

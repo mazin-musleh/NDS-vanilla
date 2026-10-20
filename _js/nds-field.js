@@ -9,7 +9,8 @@
  *                                     code; part.readonlyActive(input) says a readonly input stays interactive
  *   NDS.field.create(el)              the first-paint pass over el: states, required marks, autofocus, and
  *                                     un-hiding the [hidden] wrappers; then each part's init
- *   NDS.field.refresh(input, opts)    re-sync the field input sits in, then every part's refresh
+ *   NDS.field.refresh(el, opts)       re-sync after a value or checked is set from code: an input its field,
+ *                                     any other element every field inside it; then every part's refresh
  *   NDS.field.control(target)         {input, control, container} when target is a field's own input
  *   NDS.field.isActive(input)         it takes the active and focus states: not readonly, or interactive
  *   NDS.field.ownControl(container) · NDS.field.ownInput(container)   a container's own, never a nested one's
@@ -112,8 +113,14 @@
         }
     }
 
-    function refresh(input, opts = {}) {
-        if (!input || !input.closest) return;
+    function refresh(el, opts = {}) {
+        if (!el || !el.closest) return;
+        // A container: every field inside it. A hidden input is a component's carrier, not a field.
+        if (!el.matches('input, textarea, select')) {
+            el.querySelectorAll('.nds-form-control :is(input:not([type="hidden"]), textarea, select)').forEach((i) => refresh(i, opts));
+            return;
+        }
+        const input = el;
         const fc = input.closest('.nds-form-control');
         if (!fc) return;
         sync(input, fc);

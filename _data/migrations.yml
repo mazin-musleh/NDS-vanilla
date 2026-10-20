@@ -248,6 +248,7 @@
 - { kind: api, name: NDS.Form.initRadioGroupValidation, status: removed, since: "2.0.0", fix: "Remove the call: a group that shows an error is checked again on each change, one added later too." }
 - { kind: api, name: NDS.Form.initMultiselectValidation, status: removed, since: "2.0.0", fix: "Remove the call: a Multiselect that shows an error is checked again on each change." }
 - { kind: api, name: NDS.Form.setIndeterminate, status: renamed, use: NDS.Checkbox.setIndeterminate, since: "2.0.0", fix: "Use NDS.Checkbox.setIndeterminate(checkbox, value)." }
+- { kind: api, name: NDS.Form.syncState, status: renamed, use: NDS.Form.refresh, since: "2.0.0", fix: "Use NDS.Form.refresh(el); it also takes a container and re-syncs every field inside it." }
 - { kind: file, name: nds-cookie-consent.min.js, status: renamed, use: nds-cookies.min.js, since: "2.0.0", fix: "Use nds-cookies.min.js wherever you list the NDS bundles: a self-hosted copy, a strict CSP." }
 - { kind: property, name: --tooltip-background-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-background-default, since: "1.12.0", fix: "Set --tooltip-background-default under :root[data-theme~=\"dark\"] instead." }
 - { kind: property, name: --tooltip-text-heading-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-text-heading-default, since: "1.12.0", fix: "Set --tooltip-text-heading-default under :root[data-theme~=\"dark\"] instead." }

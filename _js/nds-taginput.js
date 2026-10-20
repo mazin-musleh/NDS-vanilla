@@ -210,7 +210,7 @@
         // duplicate/max rejections in addTag (incl. the macrotask deferral).
         _strictReject() {
             const msg = strings.text('strict');
-            setTimeout(() => NDS.Form?.setStatus?.(this.root, 'error', { message: msg }), 0);
+            setTimeout(() => NDS.Form.setStatus(this.root, 'error', { message: msg }), 0);
             NDS.announce(msg);
         }
 
@@ -220,8 +220,6 @@
             if (!value) return;
             // Rejections get VISIBLE feedback in the field footer, not just
             // the live-region announce — cleared on the next successful commit.
-            // Soft dependency — NDS.Form ships in the main bundle; the footer
-            // feedback no-ops if a consumer bundle excludes it.
             // Deferred a macrotask: when the rejection comes from a typed
             // separator, the forms layer's document-level 'input' listener
             // clears field status after this handler (a microtask would still
@@ -229,13 +227,13 @@
             // whole event dispatch has finished.
             if (this.tags.length >= this.maxTags) {
                 const msg = strings.text('max', { n: this.maxTags });
-                setTimeout(() => NDS.Form?.setStatus?.(this.root, 'error', { message: msg }), 0);
+                setTimeout(() => NDS.Form.setStatus(this.root, 'error', { message: msg }), 0);
                 NDS.announce(msg);
                 return;
             }
             if (this.tags.some(t => t.toLowerCase() === value.toLowerCase())) {
                 // Same macrotask deferral as the max rejection above.
-                setTimeout(() => NDS.Form?.setStatus?.(this.root, 'error', { message: strings.text('duplicate') }), 0);
+                setTimeout(() => NDS.Form.setStatus(this.root, 'error', { message: strings.text('duplicate') }), 0);
                 NDS.announce(strings.text('duplicate'));
                 return;
             }
@@ -307,9 +305,8 @@
 
         emitChange() {
             // Every successful commit clears rejection/validation feedback —
-            // the user is actively fixing the field. Soft dependency on
-            // NDS.Form, same as the rejection path.
-            NDS.Form?.clearStatus?.(this.root);
+            // the user is actively fixing the field.
+            NDS.Form.clearStatus(this.root);
             this.root.dispatchEvent(new CustomEvent('nds:taginput:change', {
                 detail: { name: this.name, values: this.getValues() },
                 bubbles: true

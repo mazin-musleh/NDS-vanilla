@@ -261,10 +261,8 @@
             strings.set(searchInput, 'placeholder', 'search_placeholder');
             strings.set(searchBox.querySelector('.nds-clear'), 'aria-label', 'clear_search');
             // Wire the .nds-clear button — forms init ran before this injection,
-            // so the injected .nds-form-control needs its own pass. Soft
-            // dependency — the search box stays a plain input if NDS.Form
-            // isn't bundled (no clear button, no container interaction states).
-            NDS.Form?.create(searchBox);
+            // so the injected .nds-form-control needs its own pass.
+            NDS.Form.create(searchBox);
 
             // Empty state — reuses .nds-empty-placeholder for the visual grammar
             // (shared with NDS.Empty via _empty.scss) and carries

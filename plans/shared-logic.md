@@ -358,6 +358,10 @@ a pick clears the dash), Radio (repaints its name group on change and on refresh
 Form holds none of them. Selection calls `NDS.Checkbox.setIndeterminate`. Parity: all 144 and all 216 the same;
 the dash, its clearing and the label and Enter toggles matched old against new.
 
+**Landed 2026-10-21 (change #9, step 9e):** `NDS.Form.syncState(input)` → `NDS.Form.refresh(el)` (`NDS.field.refresh`:
+an input its field, any other element every field inside it, hidden carriers skipped; a `kind: api` row); the 18
+dead `NDS.Form?.` guards and their "soft dependency" comments are gone (JSD-12, A4). Parity: all the same.
+
 ## 4. Owner decisions
 
 1. **A7 renames: all four, decided 2026-10-20.** One naming pattern with no exceptions lets an agent guess a

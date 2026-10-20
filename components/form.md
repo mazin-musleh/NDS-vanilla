@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 12:53 AM"
+last_edit: "21/10/2026 - 01:04 AM"
 lang: en
 direction: ltr
 ---
@@ -558,7 +558,7 @@ The eye button switches the field between hidden and plain text, and its label b
 - Put a unit, a currency or a short code in a prefix or suffix. The slot also takes a button or a [Dropmenu](../components/dropmenu), such as an amount with a currency picker.
 - Use MD only where space is short, such as a table filter. Keep one size in one form.
 - Put a form's Submit and Back buttons in `.nds-form-actions`, after the fields. The singular `.nds-form-action` is the button slot inside one field.
-- Set `input.value` from a script, then call `NDS.Form.syncState(input)`. Setting the value alone does not update the Clear button or the field's state.
+- Set `input.value` from a script, then call `NDS.Form.refresh(input)`. Setting the value alone does not update the Clear button or the field's state.
 - To clear a form, call `form.reset()` or use a reset button. Each NDS field goes back to the value the page shipped with, and its message clears.
 - Give an icon-only action button an `aria-label`, such as "Clear input".
 - Test each required field type empty, one at a time. A text field, a custom select, a multiselect and a tag input each check their own required state, so one passing proves nothing about the others.
@@ -600,7 +600,7 @@ The eye button switches the field between hidden and plain text, and its label b
 | `data-ajax` | `form.nds-form` | The script stops the page from reloading after a passing submit. Send the request from `nds:form:valid` |
 | `data-no-pending` | `form.nds-form` with `method="post"` | A sent form takes submits again at once, and its button shows no spinner. For a form whose answer is a download or no page |
 | `novalidate` | `form.nds-form` | The script sets it at start, so the browser shows no popups |
-| `data-required` | `.nds-form-container` | Marks the field required. The script adds `required` and `aria-required="true"` to the input at start. It also sets or removes this attribute when the input's `required` changes, at the next edit or `syncState()` call |
+| `data-required` | `.nds-form-container` | Marks the field required. The script adds `required` and `aria-required="true"` to the input at start. It also sets or removes this attribute when the input's `required` changes, at the next edit or `NDS.Form.refresh()` call |
 | `data-state` | `.nds-form-container` | Write `disabled` or `readonly`, or call `setState()`: the script sets that property on every input inside. `disabled` also disables the action buttons. The script writes them too when an input is disabled or readonly. The script sets `focus`, `active` and `typing` while the user is on the field, and removes them on blur and release. It sets `open` while a native select's list is open |
 | `data-state="loading"` | `.nds-form-container` or `.nds-form-group` | Shows the spinner in place of the action buttons. The `nds-loading` class does the same. Write either in the HTML or from a script (`NDS.state.add()`, the attribute, `classList`), and remove it the same way. Put it on the container, not on `.nds-form-control` or the input |
 | `data-status` | `.nds-form-container` | The script sets it with each message: `error`, `help` or `neutral`. Only `error` draws the red outline. `clearStatus()` and any edit to the field remove it |
@@ -669,7 +669,7 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 | `NDS.Form.clearStatus(el)` | Removes the field's message and status. A permanent message comes back |
 | `NDS.Form.getStatus(el)` | Returns `{ status, message, isValid }`. `isValid` is `false` only for `error` |
 | `NDS.Form.setState(el, name, add)` | Adds or removes (`add: false`) a state on the field. `'required'` sets `data-required` and the inputs' `required` |
-| `NDS.Form.syncState(input)` | Updates the field after a script sets its value or `checked`. It fires no event |
+| `NDS.Form.refresh(el)` | Updates the field after a script sets its value or `checked`: an input updates its field, any other element every field inside it. It fires no event |
 | `NDS.Form.validate(el, options)` | Checks every visible field in the form that holds `el`, and returns `{ valid, invalidFields, errors }`. `options` is `{ showMessages, focusFirst }`, both `true` by default. Pass both: an object with one key turns the other off |
 | `NDS.Form.validateField(el, options)` | Checks one field by its component's rule and returns its result, or `null` when no rule answers for `el`. Each component's `validate(el)` calls it: `NDS.Checkbox.validate(group)`, `NDS.Radio.validate(group)`, `NDS.Otp.validate(group)`, `NDS.Multiselect.validate(el)`, `NDS.Taginput.validate(el)` and the others. A field that shows a message is checked again on each change |
 | `NDS.Form.isNationalId(value)`, `isIban(value)` | Return `true` when the string passes the `.nds-national-id` or `.nds-iban` check. They take the clean value: digits only, or capitals with no spaces |
@@ -704,7 +704,7 @@ form.addEventListener('nds:form:valid', function (e) {
 // Fill a field from a script
 var email = document.querySelector('#applicant-email');
 email.value = 'name@example.com';
-NDS.Form.syncState(email);
+NDS.Form.refresh(email);
 
 // Mark a field required after load
 NDS.Form.setState(email, 'required', true);

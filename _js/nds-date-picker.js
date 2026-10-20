@@ -604,9 +604,7 @@
             var msg = raw ? this._validationError(raw) : '';
             input.setCustomValidity(msg);
             if (msg && !silent) {
-                // Soft dependency — NDS.Form ships in the main bundle; the
-                // footer feedback no-ops if a consumer bundle excludes it.
-                NDS.Form?.setStatus?.(this.elements.container, 'error', { message: msg });
+                NDS.Form.setStatus(this.elements.container, 'error', { message: msg });
             }
         },
 

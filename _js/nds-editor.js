@@ -1091,9 +1091,7 @@
             this.root.querySelectorAll('[data-editor-link-dropmenu] .nds-dropmenu-menu, [data-editor-image-dropmenu] .nds-dropmenu-menu').forEach(menu => {
                 menu.addEventListener('input', (e) => {
                     const field = e.target.closest('.nds-form-container');
-                    // Soft dependency — NDS.Form ships in the main bundle; the menu's
-                    // field feedback just stays put if a consumer bundle excludes it.
-                    if (field && NDS.status.get(field) !== '') NDS.Form?.clearStatus?.(field);
+                    if (field && NDS.status.get(field) !== '') NDS.Form.clearStatus(field);
                     const primary = menu.querySelector('[data-dropmenu-primary]');
                     if (primary) primary.disabled = false;
                 }, { signal });
@@ -2382,8 +2380,7 @@
                 coloredInput.closest('.nds-form-container').hidden = asComponent || asOpaque;
             }
             if (unlinkBtn) unlinkBtn.hidden = !existing;
-            // Soft dependency — a stale field error just lingers if NDS.Form isn't bundled.
-            if (urlInput) NDS.Form?.clearStatus?.(urlInput.closest('.nds-form-container'));
+            if (urlInput) NDS.Form.clearStatus(urlInput.closest('.nds-form-container'));
             menu.querySelector('[data-dropmenu-primary]')?.removeAttribute('disabled');
             // After the dropmenu opens (next frame), select the URL for quick
             // overwrite — only if it's STILL open: a stale timer after a fast
@@ -2609,22 +2606,19 @@
         }
 
         // Transient author-facing notice through the field's native forms
-        // feedback (the editor root IS a form container). Soft dependency —
-        // the notice is silently dropped if NDS.Form isn't bundled.
+        // feedback (the editor root IS a form container).
         _notice(message) {
-            if (!NDS.Form?.setStatus) return;
             NDS.Form.setStatus(this.root, 'neutral', { message });
             this._clearNotice ||= NDS.debounce(() => NDS.Form.clearStatus(this.root), 5000);
             this._clearNotice();
         }
 
         // Inline error on a popover field via the same forms mechanism; the
-        // menu's primary (Insert) stays blocked until the error clears. Soft
-        // dependency — without NDS.Form the block still lands, just unexplained.
+        // menu's primary (Insert) stays blocked until the error clears.
         _fieldError(input, message) {
             const field = input?.closest('.nds-form-container');
             if (!field) return;
-            if (NDS.Form?.setStatus) NDS.Form.setStatus(field, 'error', { message });
+            NDS.Form.setStatus(field, 'error', { message });
             const primary = input.closest('.nds-dropmenu-menu')?.querySelector('[data-dropmenu-primary]');
             if (primary) primary.disabled = true;
         }
@@ -2665,8 +2659,7 @@
             const hInput = menu.querySelector('[data-editor-image-height]');
             if (wInput) wInput.value = existing?.getAttribute('width') || '';
             if (hInput) hInput.value = existing?.getAttribute('height') || '';
-            // Soft dependency — a stale field error just lingers if NDS.Form isn't bundled.
-            if (urlInput) NDS.Form?.clearStatus?.(urlInput.closest('.nds-form-container'));
+            if (urlInput) NDS.Form.clearStatus(urlInput.closest('.nds-form-container'));
             menu.querySelector('[data-dropmenu-primary]')?.removeAttribute('disabled');
             this._syncImageUploadVisibility();
             // Open-guarded like the link popover's — a stale timer would

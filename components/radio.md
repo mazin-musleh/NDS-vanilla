@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 12:53 AM"
+last_edit: "21/10/2026 - 01:04 AM"
 ---
 
 <section id="radio-overview" class="nds-content-section nds-doc-overview">
@@ -226,7 +226,7 @@ Source: the `radio` group in `_sass/tokens/_components.scss`.
 | Method | Effect |
 |---|---|
 | `NDS.Radio.validate(group, options)` | Checks the group and returns `{ valid, selected, message }`: `selected` is `true` when an option is checked. Pass `{ showMessage: false }` to check without a message |
-| `NDS.Form.syncState(input)` | Updates the field after you set `.checked` from code. It fires no event |
+| `NDS.Form.refresh(input)` | Updates the field after you set `.checked` from code. It fires no event |
 | `NDS.Form.setStatus(group, status, { message })` | Shows a status and a message on the group, such as an error from the server |
 | `NDS.Form.clearStatus(group)` | Removes the group's feedback message |
 {: .nds-table .nds-responsive}
@@ -238,7 +238,7 @@ var result = NDS.Radio.validate(group);
 
 var radio = document.querySelector('#radio-2');
 radio.checked = true;
-NDS.Form.syncState(radio);
+NDS.Form.refresh(radio);
 </script>
 
 The full API is in the banner of `_js/nds-form.js`.

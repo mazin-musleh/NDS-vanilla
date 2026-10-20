@@ -93,7 +93,7 @@
  *     [data-filter] group holding a .nds-slider-container (canon in components/slider.md);
  *     put data-filter-currency / data-filter-unit on the group for the chip.
  *   - Resetting is markup, not JS: a [data-filter-action="reset"] button inside the surface
- *     clears every input and re-emits nds:filter:change. Hand-clearing fields + syncState
+ *     clears every input and re-emits nds:filter:change. Hand-clearing fields + NDS.Form.refresh
  *     repaints only — it dispatches nothing.
  */
 

@@ -786,9 +786,7 @@
             const msg = raw ? this._validationError(raw) : '';
             input.setCustomValidity(msg);
             if (msg && !silent) {
-                // Soft dependency — forms ships in the main bundle; this no-ops if
-                // a consumer bundle excludes it.
-                NDS.Form?.setStatus?.(this.elements.container, 'error', { message: msg });
+                NDS.Form.setStatus(this.elements.container, 'error', { message: msg });
             }
         }
 
@@ -863,8 +861,7 @@
             // Only that one: a status forms or the page set stays.
             if (this.elements.input.validity.customError) {
                 this.elements.input.setCustomValidity('');
-                // Soft dependency — as in _validateInput.
-                NDS.Form?.clearStatus?.(this.elements.container);
+                NDS.Form.clearStatus(this.elements.container);
             }
             this.elements.container.removeAttribute('data-nds-time-picker-initialized');
             delete this.elements.input.ndsTimePicker;
@@ -987,9 +984,9 @@
                 this.value = value;
                 if (carrier) NDS.setValue(carrier, value);
             }
-            // An error paints on leaving the group; a fixed value clears it at once. Soft dependency, as in field mode.
-            if (msg && !silent) NDS.Form?.setStatus?.(container, 'error', { message: msg });
-            else if (!msg && NDS.status.get(container) === 'error') NDS.Form?.clearStatus?.(container);
+            // An error paints on leaving the group; a fixed value clears it at once.
+            if (msg && !silent) NDS.Form.setStatus(container, 'error', { message: msg });
+            else if (!msg && NDS.status.get(container) === 'error') NDS.Form.clearStatus(container);
         }
 
         getValue() { return this.value; }
@@ -1014,10 +1011,10 @@
 
         destroy() {
             this.instanceAbortController.abort();
-            // As in field mode: nothing is left to clear the picker's own error. Soft dependency, as in _validateInput.
+            // As in field mode: nothing is left to clear the picker's own error.
             if (this.elements.hour.validity.customError) {
                 this.elements.hour.setCustomValidity('');
-                NDS.Form?.clearStatus?.(this.elements.container);
+                NDS.Form.clearStatus(this.elements.container);
             }
             this.elements.container.removeAttribute('data-nds-time-picker-initialized');
             delete this.elements.container.ndsTimePicker;

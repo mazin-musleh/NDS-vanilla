@@ -1127,10 +1127,10 @@ hideFeedback: true
       fields.amount.value = record ? record.amount : '';
       setSelect(fields.service, record ? record.service : '');
       setSelect(fields.status, record ? record.status : 'pending');
-      NDS.Form.syncState(fields.requester);
-      NDS.Form.syncState(fields.date);
-      NDS.Form.syncState(fields.amount);
-      // syncState re-syncs the chrome but dispatches nothing, so it cannot clear a
+      NDS.Form.refresh(fields.requester);
+      NDS.Form.refresh(fields.date);
+      NDS.Form.refresh(fields.amount);
+      // refresh re-syncs the chrome but dispatches nothing, so it cannot clear a
       // status a failed submit left behind: every field needs clearStatus too, or
       // the form reopens blank with the last attempt's errors still on it.
       NDS.Form.clearStatus(fields.requester);

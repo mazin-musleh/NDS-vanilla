@@ -195,7 +195,7 @@
         if (quiet) {
             if (hiddenInput) hiddenInput.value = value;
             selectInput.value = text;
-            NDS.Form.syncState(selectInput);
+            NDS.Form.refresh(selectInput);
             return true;
         }
         // Dispatched input/change run forms' delegated field-state sync.

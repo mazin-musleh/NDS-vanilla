@@ -18,8 +18,8 @@
  *   NDS.Form.getStatus(el)                read {status, message}
  *   NDS.Form.setState(el, name, add)      add/remove a field state ('required' also
  *                                          flips the inputs' required property)
- *   NDS.Form.syncState(input)             re-sync a control's chrome after setting
- *                                          value/checked from JS
+ *   NDS.Form.refresh(el)                  re-sync after setting value/checked from JS: an input its
+ *                                          field, any other element every field inside it
  *   NDS.Form.validate(el, opts)           validate everything → {valid, invalidFields, errors};
  *                                          el is the .nds-form or anything inside it — works on
  *                                          a non-<form> container too (see the Gotcha below)
@@ -63,8 +63,8 @@
  *     for a component that shows the cause itself (password's red chips). It beats native messages.
  *   - A readonly checkbox, radio or switch cannot change: Forms cancels the click that Space
  *     or an arrow key sends, since the browser ignores readOnly on those inputs.
- *   - syncState() dispatches nothing, so it cannot re-enter your own input handler. Setting
- *     input.value from JS notifies nothing on its own: call syncState() or dispatch input/change.
+ *   - refresh() dispatches nothing, so it cannot re-enter your own input handler. Setting
+ *     input.value from JS notifies nothing on its own: call refresh() or dispatch input/change.
  *   - Forms owns the submit listener on every real <form class="nds-form">. data-ajax makes it
  *     preventDefault() after validation — the request is yours to send from nds:form:valid.
  *   - That automatic wiring is <form>-tags only: on any other element .nds-form is a layout
@@ -915,7 +915,7 @@
         // raw assignment alone no longer notifies the field. Dispatches nothing
         // itself, so it can't re-enter a caller's own input handler. No-op outside
         // a form-control.
-        syncState: function(input) { NDS.field.refresh(input); },
+        refresh: function(el) { NDS.field.refresh(el); },
 
         // Form Validation
         validate: Validator.validateForm.bind(Validator),

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 12:53 AM"
+last_edit: "21/10/2026 - 01:04 AM"
 ---
 
 <section id="checkbox-overview" class="nds-content-section nds-doc-overview">
@@ -258,7 +258,7 @@ Source: the `checkbox` group in `_sass/tokens/_components.scss`.
 |---|---|
 | `NDS.Checkbox.setIndeterminate(checkbox, value)` | Shows or clears the dash, and fires `nds:checkbox:indeterminate` |
 | `NDS.Checkbox.validate(group, options)` | Checks the group and returns `{ valid, checked, min, max, message }`. Pass `{ showMessage: false }` to check without a message. A group that shows an error is checked again on each change |
-| `NDS.Form.syncState(input)` | Updates the field after you set `.checked` from code. It fires no event |
+| `NDS.Form.refresh(input)` | Updates the field after you set `.checked` from code. It fires no event |
 | `NDS.Form.setStatus(element, status, { message })` | Shows a status and a message on a field or a group, such as an error from the server |
 | `NDS.Form.clearStatus(element)` | Removes the feedback message |
 {: .nds-table .nds-responsive}
