@@ -280,7 +280,7 @@ leaves `formControl.ndsCustomSelect`, so `NDS.init.destroy` reaches it too, and 
 
 **#4b inventory, 2026-10-20 (Sonnet, read-only; line numbers as of `e035b198`).** Each gap is checked in a browser
 before it is fixed. Base first: Dropmenu's fix reaches every component that rides it.
-- Base: Dropmenu `destroy()` leaves `aria-haspopup`, `aria-expanded`, `role=menu`, `role=menuitem` (`:497-500, 512`),
+- Base: Dropmenu `destroy()` leaves ~~`aria-haspopup`, `aria-expanded`, `role=menu`, `role=menuitem` (`:497-500, 512`)~~ (fixed),
   the select-mode hidden input and trigger label (`:411-414, 473-475`), and the lazy-template once-listener (`:1285-1296`).
 - Visible after a re-create: Filter and Table column toggle leave `data-delay="500"` (`filter:1450`, `table:492`: first
   open waits, empty); the column toggle builds a second Reset footer (`table:478`); Side Menu's toggle stays shown and

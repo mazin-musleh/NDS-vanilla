@@ -489,15 +489,18 @@
             }
         }
 
-        setupAria() {
-            const setDefault = (el, attr, val) => {
-                if (!el.hasAttribute(attr)) el.setAttribute(attr, val);
-            };
+        // Only where the author wrote none; destroy() takes back what this wrote.
+        _setDefault(el, attr, val) {
+            if (el.hasAttribute(attr)) return;
+            el.setAttribute(attr, val);
+            (this._ariaWritten ||= []).push([el, attr]);
+        }
 
-            setDefault(this.trigger, 'aria-expanded', 'false');
-            setDefault(this.trigger, 'aria-haspopup', 'true');
-            setDefault(this.menu, 'role', 'menu');
-            setDefault(this.menu, 'aria-hidden', 'true');
+        setupAria() {
+            this._setDefault(this.trigger, 'aria-expanded', 'false');
+            this._setDefault(this.trigger, 'aria-haspopup', 'true');
+            this._setDefault(this.menu, 'role', 'menu');
+            this._setDefault(this.menu, 'aria-hidden', 'true');
 
             this._stampItemRoles();
         }
@@ -510,6 +513,8 @@
                     && !item.classList.contains('nds-form-control')
                     && !item.classList.contains('nds-dropmenu-group')) {
                     item.setAttribute('role', 'menuitem');
+                    // A WeakSet: menus rebuilt on every open would grow a list.
+                    (this._roleWritten ||= new WeakSet()).add(item);
                 }
             });
         }
@@ -1208,6 +1213,8 @@
             if (!this.menu.showPopover) this.menu.style.position = '';
             delete this.dropmenu.ndsDropmenu;
             this.dropmenu.removeAttribute('data-nds-dropmenu-initialized');
+            this._ariaWritten?.forEach(([el, attr]) => el.removeAttribute(attr));
+            this._ownItems().forEach(item => { if (this._roleWritten?.has(item)) item.removeAttribute('role'); });
             this._unstamp?.();
         }
     }
