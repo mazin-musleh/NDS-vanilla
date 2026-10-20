@@ -4,6 +4,7 @@
  * Methods:
  *   NDS.Multiselect.init() / .reinit()   scan + initialize .nds-multiselect fields
  *   NDS.Multiselect.create(el)           instance one field (reuses an existing instance)
+ *   NDS.Multiselect.validate(el, opts)   its check → {valid, message, checked, min, max}; opts {showMessage}
  *   NDS.Multiselect.destroy(el)          tear one field down
  *   instance.populate(options, selected) rebuild the option set at runtime
  * Events (bubble from .nds-multiselect):
@@ -482,9 +483,21 @@
         });
     }
 
+    // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
+    // The option checkboxes are the source of truth, scoped to the nested menu.
+    const fieldCheck = (ms) => {
+        const menu = ms.querySelector('.nds-dropmenu-menu');
+        return NDS.validation.checkedCount(ms, menu ? menu.querySelectorAll('input[type="checkbox"]') : []);
+    };
+    NDS.validation.addRule('.nds-multiselect[data-required], .nds-multiselect.nds-required, .nds-multiselect[data-min-checked], .nds-multiselect[data-max-checked]',
+        (ms) => Object.assign(fieldCheck(ms), { focus: ms.querySelector('.nds-dropmenu-trigger') }),
+        // Its commit event, not the boxes' change: a chip removal or a reset unchecks with no change event.
+        { on: ['nds:multiselect:change'] });
+
     NDS.Multiselect = {
         init: initializeMultiselects,
         reinit: initializeMultiselects,
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-multiselect') || el, opts, fieldCheck),
         create: (element) => {
             if (element.ndsMultiselect) return element.ndsMultiselect;
             const inst = new NDSMultiselect(element);

@@ -24,13 +24,9 @@
  *   NDS.Form.validate(el, opts)           validate everything → {valid, invalidFields, errors};
  *                                          el is the .nds-form or anything inside it — works on
  *                                          a non-<form> container too (see the Gotcha below)
- *   NDS.Form.validateCheckboxGroup(group, opts)
- *   NDS.Form.validateRadioGroup(group, opts)
- *   NDS.Form.validateMultiselect(el, opts)
- *   NDS.Form.validateTaginput(el, opts)
- *   NDS.Form.validateOtpGroup(el, opts)
- *   NDS.Form.initCheckboxGroupValidation(group) / .initRadioGroupValidation(group)
- *   NDS.Form.initMultiselectValidation(el)      live-validation wiring for a group
+ *   NDS.Form.validateField(el, opts, check)     one field by check, or its component's rule → {valid,
+ *                                          message, …}, or null when none answers; opts {showMessage}
+ *                                          (default on). Each component's validate(el) calls it
  *   NDS.Form.isNationalId(str) / .isIban(str)   the checksum rules behind .nds-national-id / .nds-iban
  * Events:
  *   nds:form:status             detail {status, message} — from the form container
@@ -98,29 +94,11 @@
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
     var strings = NDS.i18n.strings('form', {
-        required:            'This field is required',
-        invalid:             'Invalid input',
-        invalid_email:       'Please enter a valid email address',
-        invalid_url:         'Please enter a valid URL',
-        pattern:             'Please match the requested format',
-        too_short:           'Input is too short (minimum {n} characters)',
-        too_long:            'Input is too long (maximum {n} characters)',
-        range_under:         'Value must be at least {n}',
-        range_over:          'Value must be no more than {n}',
         min_value:           'Minimum value is {n}',
         max_value:           'Maximum value is {n}',
         invalid_national_id: 'Invalid national ID number',
         invalid_iban:        'Invalid IBAN',
         no_arabic:           'Arabic characters are not allowed',
-        select_option:       'Please select an option',
-        select_at_least:     { one: 'Please select at least 1 option', other: 'Please select at least {n} options' },
-        select_at_most:      { one: 'Please select no more than 1 option', other: 'Please select no more than {n} options' },
-        rating_required:     'Please choose a rating',
-        tag_required:        'Please add at least one tag',
-        file_required:       'Please add a file',
-        upload_pending:      'Please wait for the upload to finish',
-        pick_suggestion:     'Choose from the suggestions',
-        otp_incomplete:      'Please enter all {n} digits',
         loading:             'Loading',
         show_password:       'Show password',
         hide_password:       'Hide password',
@@ -465,152 +443,25 @@
         input.setCustomValidity(clean && !ok ? msg : '');
     }
 
-    // Each check returns {valid, message, empty, focus, …}; NDS.validation applies data-error-message
-    // to an empty field and runs them. focus is the control a failed field hands focus to.
-    var required = function(el) { return el.hasAttribute('data-required') || el.classList.contains('nds-required'); };
-
-    // Checkbox-backed fields: min defaults to 1 when required, max to the option count.
-    function checkedCount(group, boxes) {
-        var checked = Array.from(boxes).filter(function(cb) { return cb.checked; }).length;
-        var min = parseInt(group.getAttribute('data-min-checked') || (required(group) ? 1 : 0), 10);
-        var max = parseInt(group.getAttribute('data-max-checked') || boxes.length, 10);
-        var valid = checked >= min && checked <= max;
-        var below = checked < min;
-        return { valid: valid, message: valid ? '' : strings.text(below ? 'select_at_least' : 'select_at_most', { n: below ? min : max }),
-            empty: checked === 0, checked: checked, min: min, max: max };
-    }
-
-    var Checks = {
-        checkbox: function(group) {
-            return checkedCount(group, group.querySelectorAll('input[type="checkbox"]'));
-        },
-        radio: function(group) {
-            var picked = Array.from(group.querySelectorAll('input[type="radio"]')).some(function(r) { return r.checked; });
-            var valid = !required(group) || picked;
-            return { valid: valid, message: valid ? '' : strings.text('select_option'), empty: !picked, selected: picked };
-        },
-        // The stars are buttons, not form controls: the score lives on the .nds-rating root. Zero = nothing picked.
-        rating: function(group) {
-            var rating = group.querySelector('.nds-rating');
-            var value = rating ? (rating.ndsRating ? rating.ndsRating.getValue() : Number(rating.dataset.rating) || 0) : 0;
-            var valid = !required(group) || value > 0;
-            return { valid: valid, message: valid ? '' : strings.text('rating_required'), empty: value === 0, rating: value };
-        },
-        // Option checkboxes are the source of truth, scoped to the nested menu.
-        multiselect: function(ms) {
-            var menu = ms.querySelector('.nds-dropmenu-menu');
-            return checkedCount(ms, menu ? menu.querySelectorAll('input[type="checkbox"]') : []);
-        },
-        // Hidden inputs carry the tags; the typing field is empty at submit. Max is enforced at add time.
-        taginput: function(ti) {
-            // The instance's tags: carriers exist only with a name. Before init, the server-rendered carriers.
-            var count = ti.ndsTaginput ? ti.ndsTaginput.tags.length : ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
-            var valid = !required(ti) || count > 0;
-            return { valid: valid, message: valid ? '' : strings.text('tag_required'), empty: count === 0, count: count };
-        },
-        // The file input is emptied after each pick: required counts the staged rows, a rejected row not counted.
-        // A row still uploading blocks every upload field: the submit would go without that file.
-        upload: function(up) {
-            var count = up.querySelectorAll('.nds-file-list .nds-file-item:not([data-status="error"])').length;
-            var pending = !!up.querySelector('.nds-file-list .nds-file-item:is([data-state~="uploading"], [data-state~="processing"])');
-            var valid = !pending && (!required(up) || count > 0);
-            return { valid: valid, message: valid ? '' : strings.text(pending ? 'upload_pending' : 'file_required'),
-                empty: !pending && count === 0, count: count, pending: pending };
-        },
-        // The readonly display input is barred from constraint validation: required reads the carrier.
-        customSelect: function(container) {
-            var carrier = container.querySelector('.nds-select-value');
-            var valid = !required(container) || !!(carrier && carrier.value.trim());
-            return { valid: valid, message: valid ? '' : strings.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
-        },
-        // A dropmenu picker's pick lives in a hidden carrier; own carrier only, a nested picker holds its own.
-        dropmenuSelect: function(dm) {
-            var carrier = Array.prototype.find.call(dm.querySelectorAll('input[data-nds-select-value]'),
-                function(el) { return el.closest('.nds-dropmenu') === dm; });
-            var valid = !!(carrier && carrier.value.trim());
-            return { valid: valid, message: valid ? '' : strings.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
-        },
-        // data-strict: typed text must match a picked suggestion. The carrier holds the last pick; no carrier =
-        // the field never built, so its text is the prefilled pick. Empty text is required's business.
-        autocomplete: function(container) {
-            var carrier = container.querySelector('.nds-autocomplete-value');
-            var input = ownField(container);
-            var text = input ? input.value.trim() : '';
-            var valid = !carrier || text === '' || carrier.value === text;
-            return { valid: valid, message: valid ? '' : strings.text('pick_suggestion'), picked: !!(carrier && carrier.value) };
-        },
-        otp: function(group) {
-            var inputs = Array.from(group.querySelectorAll('.nds-otp-container input'));
-            var filled = inputs.length > 0 && inputs.every(function(i) { return i.value.length === 1; });
-            return { valid: filled, message: filled ? '' : strings.text('otp_incomplete', { n: inputs.length }),
-                empty: inputs.every(function(i) { return !i.value; }), filled: filled };
-        },
-        // Time Picker boxes: the picker stamps a typed error on the hour box.
-        timeFields: function(group) {
-            var hour = group.querySelector('.nds-time-hour');
-            var carrier = group.querySelector('.nds-time-value');
-            var typedError = hour ? hour.validationMessage : '';
-            var empty = !typedError && !(carrier && carrier.value);
-            var msg = typedError || (empty && required(group) ? strings.text('required') : '');
-            return { valid: !msg, message: msg, empty: empty };
-        }
-    };
-
-    // The rules Form answers for, in the order it always checked them.
-    var GROUPS = '.nds-form-group[data-min-checked], .nds-form-group[data-max-checked], .nds-form-group[data-required], .nds-form-group.nds-required, .nds-form-group.nds-time-fields';
-    var withFocus = function(result, focus) { result.focus = focus; return result; };
-    NDS.validation.addRule(GROUPS, function(group) {
-        if (group.classList.contains('nds-otp-group')) return withFocus(Checks.otp(group), group.querySelector('.nds-otp-container input'));
-        var box = group.querySelector('input[type="checkbox"]');
-        if (box) return withFocus(Checks.checkbox(group), box);
-        var radio = group.querySelector('input[type="radio"]');
-        if (radio) return withFocus(Checks.radio(group), radio);
-        // The stars are buttons, so focus lands on the first one.
-        if (group.querySelector('.nds-rating')) return withFocus(Checks.rating(group), group.querySelector('.nds-rating-star'));
-        if (group.classList.contains('nds-time-fields')) return withFocus(Checks.timeFields(group), group.querySelector('.nds-time-hour'));
-        return null;
-    });
-    NDS.validation.addRule('.nds-multiselect[data-required], .nds-multiselect.nds-required, .nds-multiselect[data-min-checked], .nds-multiselect[data-max-checked]',
-        function(ms) { return withFocus(Checks.multiselect(ms), ms.querySelector('.nds-dropmenu-trigger')); });
-    NDS.validation.addRule('.nds-taginput[data-required], .nds-taginput.nds-required',
-        function(ti) { return withFocus(Checks.taginput(ti), ti.querySelector('.nds-form-control > input:not([type="hidden"])')); },
-        { owns: function(c) { return c.classList.contains('nds-taginput'); } });
-    NDS.validation.addRule('.nds-upload',
-        function(up) { return withFocus(Checks.upload(up), up.querySelector('.nds-browse-btn') || up.querySelector('input[type="file"]')); },
-        { owns: function(c) { return c.classList.contains('nds-upload'); } });
-    // Keyed on the carrier: a native <select> shares the .nds-select shell and stays with the native pass.
-    NDS.validation.addRule('.nds-select[data-required], .nds-select.nds-required',
-        function(cs) { return cs.querySelector('.nds-select-value') ? withFocus(Checks.customSelect(cs), cs.querySelector('.nds-select-input')) : null; },
-        { owns: function(c) { return !!c.querySelector('.nds-select-value'); } });
-    NDS.validation.addRule('.nds-dropmenu[data-select-name][data-required]',
-        function(dm) { return withFocus(Checks.dropmenuSelect(dm), dm.querySelector('.nds-dropmenu-trigger') || dm); });
-    // Taginput in assist mode shares the container and owns its own rejection at add time.
-    NDS.validation.addRule('.nds-form-container[data-strict]',
-        function(ac) { return ac.classList.contains('nds-taginput') ? null : withFocus(Checks.autocomplete(ac), ownField(ac)); });
-
     var Validator = {
         getNumberRangeMessage: function(type, value) {
             return strings.text(type === 'min' ? 'min_value' : 'max_value', { n: value });
         },
 
-        // A public group check: the result as it always read, its status shown when asked.
-        _public: function(el, result, options) {
+        // One field by its rule (or check, the component's own): the result each component's
+        // validate() returns, its status shown when asked.
+        validateField: function(el, options, check) {
             options = options || { showMessage: true };
-            var shown = { valid: result.valid, message: result.message };
+            var result = NDS.validation.check(el, check);
+            if (!result) return null;
+            var shown = {};
             Object.keys(result).forEach(function(k) { if (k !== 'empty' && k !== 'focus') shown[k] = result[k]; });
-            var custom = el.getAttribute('data-error-message');
-            if (!shown.valid && result.empty && custom) shown.message = custom;
             if (options.showMessage) {
                 if (!shown.valid) StatusManager.set({ element: el, status: 'error', message: shown.message });
                 else StatusManager.clear(el);
             }
             return shown;
         },
-        validateCheckboxGroup: function(el, options) { var g = el.closest('.nds-form-group') || el; return this._public(g, Checks.checkbox(g), options); },
-        validateRadioGroup: function(el, options) { var g = el.closest('.nds-form-group') || el; return this._public(g, Checks.radio(g), options); },
-        validateMultiselect: function(el, options) { var m = el.closest('.nds-multiselect') || el; return this._public(m, Checks.multiselect(m), options); },
-        validateTaginput: function(el, options) { var t = el.closest('.nds-taginput') || el; return this._public(t, Checks.taginput(t), options); },
-        validateOtpGroup: function(el, options) { var g = el.closest('.nds-form-group') || el; return this._public(g, Checks.otp(g), options); },
 
         // Runs every check, shows the outcome, focuses the first failure, reports.
         // Synchronous by contract: the submit handler reads the result to gate preventDefault.
@@ -639,6 +490,30 @@
             return { valid: valid, invalidFields: acc.invalidFields, errors: acc.errors };
         }
     };
+
+    // A field that shows an error is checked again after its rule's events, so the message
+    // follows the fix. One document listener per event name, added the first time a rule asks.
+    var _recheckOn = {};
+    function wireRechecks() {
+        NDS.validation.rules.forEach(function(rule) {
+            rule.on.forEach(function(type) {
+                if (_recheckOn[type]) return;
+                _recheckOn[type] = true;
+                document.addEventListener(type, function(e) {
+                    var t = e.target;
+                    if (!t || !t.closest) return;
+                    var seen = [];
+                    NDS.validation.rules.forEach(function(r) {
+                        if (r.on.indexOf(type) === -1) return;
+                        var el = t.closest(r.selector);
+                        if (!el || seen.indexOf(el) !== -1) return;
+                        seen.push(el);
+                        if (NDS.status.get(el) !== '') Validator.validateField(el);
+                    });
+                });
+            });
+        });
+    }
 
     // A number stepper's text input carries min/max that checkValidity ignores on type="text".
     function numberRange(container, input) {
@@ -788,6 +663,7 @@
     }
 
     function installFormDelegation() {
+        wireRechecks();
         if (_delegationInstalled) return;
         _delegationInstalled = true;
         var doc = document;
@@ -1291,53 +1167,6 @@
     };
 
     // ==============================================
-    // GROUP VALIDATION INITIALIZATION
-    // ==============================================
-    // Shared wiring for checkbox/radio group re-validation: once per group,
-    // each input's change re-runs the group validator — but only when the
-    // group opts into validation (predicate, re-checked per event so runtime
-    // attribute changes are honored) AND already shows a status, so the first
-    // interaction never validates prematurely.
-    function _initGroupValidation(group, flagKey, inputSelector, shouldValidate, validate) {
-        if (!group || group[flagKey]) return;
-        group[flagKey] = true;
-
-        group.querySelectorAll(inputSelector).forEach(function(input) {
-            input.addEventListener('change', function() {
-                if (shouldValidate(group) && NDS.status.get(group) !== '') {
-                    validate(group);
-                }
-            });
-        });
-    }
-
-    function initCheckboxGroupValidation(group) {
-        _initGroupValidation(group, '_checkGroupInitialized', 'input[type="checkbox"]',
-            function(g) { return g.hasAttribute('data-min-checked') || g.hasAttribute('data-max-checked') || g.hasAttribute('data-required'); },
-            Validator.validateCheckboxGroup.bind(Validator));
-    }
-
-    function initRadioGroupValidation(group) {
-        _initGroupValidation(group, '_radioGroupInitialized', 'input[type="radio"]',
-            function(g) { return g.hasAttribute('data-required') || g.classList.contains('nds-required'); },
-            Validator.validateRadioGroup.bind(Validator));
-    }
-
-    // Multiselect re-validation listens to the component's commit event, not
-    // checkbox `change` — chip removal and reset uncheck programmatically
-    // without dispatching change, so per-input listeners would miss them.
-    function initMultiselectValidation(ms) {
-        if (!ms || ms._msValidationInitialized) return;
-        ms._msValidationInitialized = true;
-
-        ms.addEventListener('nds:multiselect:change', function() {
-            var opted = ms.hasAttribute('data-required') || ms.classList.contains('nds-required')
-                || ms.hasAttribute('data-min-checked') || ms.hasAttribute('data-max-checked');
-            if (opted && NDS.status.get(ms) !== '') Validator.validateMultiselect(ms);
-        });
-    }
-
-    // ==============================================
     // GROUP STATE MANAGEMENT
     // ==============================================
     function initGroupState(group) {
@@ -1523,11 +1352,8 @@
         // Initialize form groups
         selfAndInner(container, '.nds-form-group').forEach(function(group) {
             initGroupState(group);
-            if (group.querySelector('input[type="checkbox"]')) initCheckboxGroupValidation(group);
-            if (group.querySelector('input[type="radio"]')) initRadioGroupValidation(group);
         });
 
-        selfAndInner(container, '.nds-multiselect').forEach(initMultiselectValidation);
 
         // Initialize forms
         var forms = selfAndInner(container, '.nds-form');
@@ -1627,26 +1453,10 @@
         // Checkbox Indeterminate State
         setIndeterminate: FieldSync.setIndeterminate.bind(FieldSync),
 
-        // Checkbox Group Validation
-        validateCheckboxGroup: Validator.validateCheckboxGroup.bind(Validator),
-        initCheckboxGroupValidation: initCheckboxGroupValidation,
-
-        // Radio Group Validation
-        validateRadioGroup: Validator.validateRadioGroup.bind(Validator),
-        initRadioGroupValidation: initRadioGroupValidation,
-
-        // Multiselect Validation
-        validateMultiselect: Validator.validateMultiselect.bind(Validator),
-        initMultiselectValidation: initMultiselectValidation,
-
-        // Taginput Validation
-        validateTaginput: Validator.validateTaginput.bind(Validator),
-
-        // OTP Group Validation
-        validateOtpGroup: Validator.validateOtpGroup.bind(Validator),
-
         // Form Validation
         validate: Validator.validateForm.bind(Validator),
+        // One field by its component's rule: each component's validate() calls it
+        validateField: Validator.validateField.bind(Validator),
 
         // Identifier checks (the .nds-national-id / .nds-iban rules, for your own code)
         isNationalId: isNationalId,

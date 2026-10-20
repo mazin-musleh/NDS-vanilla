@@ -4,6 +4,7 @@
  *   .nds-otp-group needs .nds-otp-container input — the group is not wired
  * Methods:
  *   NDS.Otp.init()                  wire every .nds-otp-group, and self-arm for late ones
+ *   NDS.Otp.validate(el, opts)      the group's check → {valid, message, filled}; opts {showMessage}
  *   NDS.Otp.getValue(group)         the digits, joined
  *   NDS.Otp.setValue(group, value)  fill the boxes (non-digits stripped)
  *   NDS.Otp.clear(group)            empty the boxes, focus the first
@@ -303,8 +304,20 @@
     // PUBLIC API
     // ==============================================
 
+    // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
+    var formWords = NDS.i18n.strings('form', { otp_incomplete: 'Please enter all {n} digits' });
+    function fieldCheck(group) {
+        var inputs = Array.from(group.querySelectorAll('.nds-otp-container input'));
+        var filled = inputs.length > 0 && inputs.every(function (i) { return i.value.length === 1; });
+        return { valid: filled, message: filled ? '' : formWords.text('otp_incomplete', { n: inputs.length }),
+            empty: inputs.every(function (i) { return !i.value; }), filled: filled };
+    }
+    NDS.validation.addRule('.nds-form-group.nds-otp-group[data-min-checked], .nds-form-group.nds-otp-group[data-max-checked], .nds-form-group.nds-otp-group[data-required], .nds-form-group.nds-otp-group.nds-required',
+        function (group) { return Object.assign(fieldCheck(group), { focus: group.querySelector('.nds-otp-container input') }); });
+
     NDS.Otp = {
         init: init,
+        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-form-group') || el, opts, fieldCheck); },
 
         getValue: getValue,
 

@@ -6,6 +6,7 @@
  *   NDS.Rating.init() / .reinit()   scan + initialize .nds-rating
  *   NDS.Rating.create(el)           instance one rating (returns the live one if there is
  *                                   already one)
+ *   NDS.Rating.validate(el, opts)   the rating group's check → {valid, message, rating}; opts {showMessage}
  *   NDS.Rating.destroy(el)          undo create()
  *   NDS.Rating.enable(el)           build it if needed, then take it out of disabled
  *   instance.setValue(v)            set the rating (fires the event)
@@ -274,9 +275,23 @@
     create(element).enable();
   }
 
+  // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
+  const formWords = NDS.i18n.strings('form', { rating_required: 'Please choose a rating' });
+  // The stars are buttons, not form controls: the score lives on the .nds-rating root. Zero = nothing picked.
+  const fieldCheck = (group) => {
+    const rating = group.querySelector('.nds-rating');
+    const value = rating ? (rating.ndsRating ? rating.ndsRating.getValue() : Number(rating.dataset.rating) || 0) : 0;
+    const valid = !NDS.validation.isRequired(group) || value > 0;
+    return { valid, message: valid ? '' : formWords.text('rating_required'), empty: value === 0, rating: value };
+  };
+  // The stars are buttons, so focus lands on the first one.
+  NDS.validation.addRule('.nds-form-group[data-min-checked], .nds-form-group[data-max-checked], .nds-form-group[data-required], .nds-form-group.nds-required',
+    (group) => (group.querySelector('.nds-rating') ? Object.assign(fieldCheck(group), { focus: group.querySelector('.nds-rating-star') }) : null));
+
   NDS.Rating = {
     init: initializeRatings,
     reinit: initializeRatings,
+    validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-form-group') || el, opts, fieldCheck),
     create,
     destroy: (element) => element?.ndsRating?.destroy(),
     enable: enableRating,

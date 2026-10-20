@@ -239,6 +239,14 @@
 - { kind: api, name: NDS.State, status: renamed, use: NDS.state, since: "2.0.0", fix: "Use NDS.state." }
 - { kind: api, name: NDS.Status, status: renamed, use: NDS.status, since: "2.0.0", fix: "Use NDS.status." }
 - { kind: api, name: NDS.gridLastRow.update, status: renamed, use: NDS.Grid.refresh, since: "2.0.0", fix: "Use NDS.Grid.refresh(el)." }
+- { kind: api, name: NDS.Form.validateCheckboxGroup, status: renamed, use: NDS.Checkbox.validate, since: "2.0.0", fix: "Use NDS.Checkbox.validate(group, opts); it returns the same result." }
+- { kind: api, name: NDS.Form.validateRadioGroup, status: renamed, use: NDS.Radio.validate, since: "2.0.0", fix: "Use NDS.Radio.validate(group, opts); it returns the same result." }
+- { kind: api, name: NDS.Form.validateMultiselect, status: renamed, use: NDS.Multiselect.validate, since: "2.0.0", fix: "Use NDS.Multiselect.validate(el, opts); it returns the same result." }
+- { kind: api, name: NDS.Form.validateTaginput, status: renamed, use: NDS.Taginput.validate, since: "2.0.0", fix: "Use NDS.Taginput.validate(el, opts); it returns the same result." }
+- { kind: api, name: NDS.Form.validateOtpGroup, status: renamed, use: NDS.Otp.validate, since: "2.0.0", fix: "Use NDS.Otp.validate(group, opts); it returns the same result." }
+- { kind: api, name: NDS.Form.initCheckboxGroupValidation, status: removed, since: "2.0.0", fix: "Remove the call: a group that shows an error is checked again on each change, one added later too." }
+- { kind: api, name: NDS.Form.initRadioGroupValidation, status: removed, since: "2.0.0", fix: "Remove the call: a group that shows an error is checked again on each change, one added later too." }
+- { kind: api, name: NDS.Form.initMultiselectValidation, status: removed, since: "2.0.0", fix: "Remove the call: a Multiselect that shows an error is checked again on each change." }
 - { kind: file, name: nds-cookie-consent.min.js, status: renamed, use: nds-cookies.min.js, since: "2.0.0", fix: "Use nds-cookies.min.js wherever you list the NDS bundles: a self-hosted copy, a strict CSP." }
 - { kind: property, name: --tooltip-background-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-background-default, since: "1.12.0", fix: "Set --tooltip-background-default under :root[data-theme~=\"dark\"] instead." }
 - { kind: property, name: --tooltip-text-heading-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-text-heading-default, since: "1.12.0", fix: "Set --tooltip-text-heading-default under :root[data-theme~=\"dark\"] instead." }

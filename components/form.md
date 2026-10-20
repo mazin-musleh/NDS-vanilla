@@ -671,12 +671,7 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 | `NDS.Form.setState(el, name, add)` | Adds or removes (`add: false`) a state on the field. `'required'` sets `data-required` and the inputs' `required` |
 | `NDS.Form.syncState(input)` | Updates the field after a script sets its value or `checked`. It fires no event |
 | `NDS.Form.validate(el, options)` | Checks every visible field in the form that holds `el`, and returns `{ valid, invalidFields, errors }`. `options` is `{ showMessages, focusFirst }`, both `true` by default. Pass both: an object with one key turns the other off |
-| `NDS.Form.validateCheckboxGroup(group)` | Checks a checkbox group's `data-required`, `data-min-checked` and `data-max-checked` |
-| `NDS.Form.validateRadioGroup(group)` | Checks that a required radio group has a choice |
-| `NDS.Form.validateOtpGroup(group)` | Checks that every OTP box has a digit |
-| `NDS.Form.validateMultiselect(el)` | Checks a [Multiselect](../components/multiselect)'s required and count rules |
-| `NDS.Form.validateTaginput(el)` | Checks that a required [Tag Input](../components/taginput) has a tag |
-| `NDS.Form.initCheckboxGroupValidation(group)`, `initRadioGroupValidation(group)`, `initMultiselectValidation(el)` | Checks the group again on each change once it shows a message. `init()` does this for every group |
+| `NDS.Form.validateField(el, options)` | Checks one field by its component's rule and returns its result, or `null` when no rule answers for `el`. Each component's `validate(el)` calls it: `NDS.Checkbox.validate(group)`, `NDS.Radio.validate(group)`, `NDS.Otp.validate(group)`, `NDS.Multiselect.validate(el)`, `NDS.Taginput.validate(el)` and the others. A field that shows a message is checked again on each change |
 | `NDS.Form.setIndeterminate(checkbox, value)` | Sets a checkbox's mixed state. See [Checkbox](../components/checkbox) |
 | `NDS.Form.isNationalId(value)`, `isIban(value)` | Return `true` when the string passes the `.nds-national-id` or `.nds-iban` check. They take the clean value: digits only, or capitals with no spaces |
 {: .nds-table .nds-responsive}

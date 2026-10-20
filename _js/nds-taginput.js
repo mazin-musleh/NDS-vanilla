@@ -5,6 +5,7 @@
  * Methods:
  *   NDS.Taginput.init() / .reinit()   scan + initialize .nds-taginput fields
  *   NDS.Taginput.create(el)           instance one field — null when the markup is incomplete
+ *   NDS.Taginput.validate(el, opts)   its check → {valid, message, count}; opts {showMessage}
  *   NDS.Taginput.destroy(el)          tear one field down
  *   instance.getValues()              the tags, in order
  *   instance.addTag(value)            commit one tag (rejects duplicates and over-max)
@@ -323,9 +324,23 @@
         });
     }
 
+    // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
+    const formWords = NDS.i18n.strings('form', { tag_required: 'Please add at least one tag' });
+    // The instance's tags (carriers exist only with a name); before init, the server-rendered carriers.
+    const fieldCheck = (ti) => {
+        const count = ti.ndsTaginput ? ti.ndsTaginput.tags.length : ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
+        const valid = !NDS.validation.isRequired(ti) || count > 0;
+        return { valid, message: valid ? '' : formWords.text('tag_required'), empty: count === 0, count };
+    };
+    NDS.validation.addRule('.nds-taginput[data-required], .nds-taginput.nds-required',
+        (ti) => Object.assign(fieldCheck(ti), { focus: ti.querySelector('.nds-form-control > input:not([type="hidden"])') }),
+        // The typing field is empty at submit even with tags: the native pass leaves the field to this rule.
+        { owns: (c) => c.classList.contains('nds-taginput') });
+
     NDS.Taginput = {
         init: initializeTagInputs,
         reinit: initializeTagInputs,
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-taginput') || el, opts, fieldCheck),
         // Construction fails (missing required elements, or the root is already
         // initialized) → null, never a dud instance whose every method throws.
         create: (element) => {

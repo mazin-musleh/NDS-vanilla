@@ -6,6 +6,7 @@
  * Methods:
  *   NDS.CustomSelect.init() / .reinit()    arm the delegated listeners; paint pre-selected labels
  *   NDS.CustomSelect.create(el)            build one select now — pass the input or its form-control
+ *   NDS.CustomSelect.validate(el, opts)    its check → {valid, message, value}; opts {showMessage}
  *   NDS.CustomSelect.destroy(el)           undo create() before you discard the field
  *   NDS.CustomSelect.setValue(el, value)   pick by option value; false when no option carries it
  *   NDS.CustomSelect.clear(el)             back to placeholder
@@ -264,9 +265,23 @@
         document.addEventListener('reset', onReset);
     }
 
+    // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
+    var formWords = NDS.i18n.strings('form', { select_option: 'Please select an option' });
+    // The readonly display input is barred from constraint validation: required reads the carrier.
+    function fieldCheck(container) {
+        var carrier = container.querySelector('.nds-select-value');
+        var valid = !NDS.validation.isRequired(container) || !!(carrier && carrier.value.trim());
+        return { valid: valid, message: valid ? '' : formWords.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
+    }
+    // Keyed on the carrier: a native <select> shares the .nds-select shell and stays with the native pass.
+    NDS.validation.addRule('.nds-select[data-required], .nds-select.nds-required', function (cs) {
+        return cs.querySelector('.nds-select-value') ? Object.assign(fieldCheck(cs), { focus: cs.querySelector('.nds-select-input') }) : null;
+    }, { owns: function (c) { return !!c.querySelector('.nds-select-value'); } });
+
     NDS.CustomSelect = {
         init: init,
         reinit: init,
+        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-select') || el, opts, fieldCheck); },
         // Programmatic build for a select input (or its form-control).
         create: function (el) {
             if (!el) return;

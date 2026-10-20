@@ -257,8 +257,7 @@ Source: the `checkbox` group in `_sass/tokens/_components.scss`.
 | Method | Effect |
 |---|---|
 | `NDS.Form.setIndeterminate(checkbox, value)` | Shows or clears the dash, and fires `nds:checkbox:indeterminate` |
-| `NDS.Form.validateCheckboxGroup(group, options)` | Checks the group and returns `{ valid, checked, min, max, message }`. Pass `{ showMessage: false }` to check without a message |
-| `NDS.Form.initCheckboxGroupValidation(group)` | Checks a group again on each change once it shows an error. The forms script calls it for groups on the page; call it for a group you add later |
+| `NDS.Checkbox.validate(group, options)` | Checks the group and returns `{ valid, checked, min, max, message }`. Pass `{ showMessage: false }` to check without a message. A group that shows an error is checked again on each change |
 | `NDS.Form.syncState(input)` | Updates the field after you set `.checked` from code. It fires no event |
 | `NDS.Form.setStatus(element, status, { message })` | Shows a status and a message on a field or a group, such as an error from the server |
 | `NDS.Form.clearStatus(element)` | Removes the feedback message |
@@ -282,7 +281,7 @@ function update() {
 options.forEach(function (cb) { cb.addEventListener('change', update); });
 
 // Check a group before a custom save
-var result = NDS.Form.validateCheckboxGroup(document.querySelector('.nds-checkbox-group'));
+var result = NDS.Checkbox.validate(document.querySelector('.nds-checkbox-group'));
 // { valid: false, checked: 1, min: 2, max: 3, message: 'Please select at least 2 options' }
 </script>
 

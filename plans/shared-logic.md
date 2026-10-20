@@ -324,6 +324,15 @@ selector to `.nds-grid` and keeps its own opt-in. Doc pass: `layout/grid.md` get
 Keyed on the instance, not the init stamp: Rating writes none. The loader remembers a bundle that failed, so its field
 is never pending. Nothing calls it yet: #9 wires Form. Doc pass: `core/init.md` gets `pending` and `rule`.
 
+**Landed 2026-10-20 (change #9, steps 9a–9b3):** `check-form-speed.mjs` and `check-form-validate.mjs` (144 cases,
+every field canon in four states, a past commit against today); `nds-validation.js` (native pass, rule registry,
+`check(el, fn)`, `isRequired`, `checkedCount`); every component registers its own rule and has `validate(el, opts)`
+through `NDS.Form.validateField(el, opts, check)`; new `nds-checkbox.js` and `nds-radio.js` hold their rules (the type
+parts come in 9d). Owner, 2026-10-20: errors and focus follow page order (a release-notes Migration line: today focus
+went to the plain fields first). The re-check runs on one document listener per event, so a group added later is
+re-checked too, and a `.nds-required` checkbox group (no `data-required`) now re-checks as well. The check words stay
+in the `form` section until 9b4. Parity: all 144 the same after each step.
+
 ## 4. Owner decisions
 
 1. **A7 renames: all four, decided 2026-10-20.** One naming pattern with no exceptions lets an agent guess a

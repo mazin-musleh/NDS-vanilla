@@ -624,6 +624,7 @@
   tags: ["CSS"]
   url: "/components/checkbox.html"
   scss: _sass/components/_checkbox.scss
+  js: _js/nds-checkbox.js
 
 - title: "Custom Select"
   description: "Styled single-choice dropdown with custom option markup and a JS API, built on dropmenu"
@@ -704,6 +705,7 @@
   tags: ["CSS"]
   url: "/components/radio.html"
   scss: _sass/components/_radio.scss
+  js: _js/nds-radio.js
 
 - title: "Selects"
   description: "Native dropdown menus for choosing from a list"

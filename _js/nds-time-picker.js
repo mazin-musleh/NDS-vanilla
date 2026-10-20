@@ -7,6 +7,7 @@
  *                                               and every .nds-time-fields group
  *   NDS.TimePicker.create(input, formControl)   build/return one instance — idempotent,
  *                                               null on bad markup; formControl is optional
+ *   NDS.TimePicker.validate(el, opts)  the boxes' check → {valid, message}; opts {showMessage}
  *   NDS.TimePicker.destroy(el)                  tear one down — the NDS.init.destroy entry point
  *   NDS.TimePicker.setValue(el, '14:30')        commit a 24h value — false when unparsable
  *                                               or outside data-min-time/data-max-time
@@ -1070,9 +1071,25 @@
         return input ? input.ndsTimePicker || null : null;
     };
 
+    // The boxes' check: NDS.validation runs it at submit, validate(el) is its public face. A field-mode
+    // picker stamps setCustomValidity on its input, so the native pass covers it.
+    const formWords = NDS.i18n.strings('form', { required: 'This field is required' });
+    // The picker stamps a typed error on the hour box.
+    const fieldCheck = (group) => {
+        const hour = group.querySelector('.nds-time-hour');
+        const carrier = group.querySelector('.nds-time-value');
+        const typedError = hour ? hour.validationMessage : '';
+        const empty = !typedError && !(carrier && carrier.value);
+        const msg = typedError || (empty && NDS.validation.isRequired(group) ? formWords.text('required') : '');
+        return { valid: !msg, message: msg, empty };
+    };
+    NDS.validation.addRule('.nds-form-group.nds-time-fields',
+        (group) => Object.assign(fieldCheck(group), { focus: group.querySelector('.nds-time-hour') }));
+
     NDS.TimePicker = {
         init: init,
         reinit: init,
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-time-fields') || el, opts, fieldCheck),
         create: create,
         destroy: (el) => {
             const instance = instanceOf(el);

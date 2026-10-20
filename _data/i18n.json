@@ -1321,9 +1321,99 @@
  },
  {
   "section": "form",
+  "key": "pick_suggestion",
+  "en": "Choose from the suggestions",
+  "ar": "اختر من الاقتراحات"
+ },
+ {
+  "section": "form",
+  "key": "select_option",
+  "en": "Please select an option",
+  "ar": "يرجى اختيار خيار"
+ },
+ {
+  "section": "form",
+  "key": "min_value",
+  "en": "Minimum value is {n}",
+  "ar": "الحد الأدنى {n}"
+ },
+ {
+  "section": "form",
+  "key": "max_value",
+  "en": "Maximum value is {n}",
+  "ar": "الحد الأقصى {n}"
+ },
+ {
+  "section": "form",
+  "key": "invalid_national_id",
+  "en": "Invalid national ID number",
+  "ar": "رقم الهوية غير صحيح"
+ },
+ {
+  "section": "form",
+  "key": "invalid_iban",
+  "en": "Invalid IBAN",
+  "ar": "رقم الآيبان غير صحيح"
+ },
+ {
+  "section": "form",
+  "key": "no_arabic",
+  "en": "Arabic characters are not allowed",
+  "ar": "الأحرف العربية غير مسموح بها"
+ },
+ {
+  "section": "form",
+  "key": "loading",
+  "en": "Loading",
+  "ar": "جارٍ التحميل"
+ },
+ {
+  "section": "form",
+  "key": "show_password",
+  "en": "Show password",
+  "ar": "إظهار كلمة المرور"
+ },
+ {
+  "section": "form",
+  "key": "hide_password",
+  "en": "Hide password",
+  "ar": "إخفاء كلمة المرور"
+ },
+ {
+  "section": "form",
+  "key": "otp_incomplete",
+  "en": "Please enter all {n} digits",
+  "ar": "يرجى إدخال جميع الأرقام"
+ },
+ {
+  "section": "form",
+  "key": "rating_required",
+  "en": "Please choose a rating",
+  "ar": "يرجى اختيار تقييم"
+ },
+ {
+  "section": "form",
+  "key": "tag_required",
+  "en": "Please add at least one tag",
+  "ar": "يرجى إضافة وسم واحد على الأقل"
+ },
+ {
+  "section": "form",
   "key": "required",
   "en": "This field is required",
   "ar": "هذا الحقل مطلوب"
+ },
+ {
+  "section": "form",
+  "key": "file_required",
+  "en": "Please add a file",
+  "ar": "يرجى إرفاق ملف"
+ },
+ {
+  "section": "form",
+  "key": "upload_pending",
+  "en": "Please wait for the upload to finish",
+  "ar": "يرجى الانتظار حتى يكتمل الرفع"
  },
  {
   "section": "form",
@@ -1375,42 +1465,6 @@
  },
  {
   "section": "form",
-  "key": "min_value",
-  "en": "Minimum value is {n}",
-  "ar": "الحد الأدنى {n}"
- },
- {
-  "section": "form",
-  "key": "max_value",
-  "en": "Maximum value is {n}",
-  "ar": "الحد الأقصى {n}"
- },
- {
-  "section": "form",
-  "key": "invalid_national_id",
-  "en": "Invalid national ID number",
-  "ar": "رقم الهوية غير صحيح"
- },
- {
-  "section": "form",
-  "key": "invalid_iban",
-  "en": "Invalid IBAN",
-  "ar": "رقم الآيبان غير صحيح"
- },
- {
-  "section": "form",
-  "key": "no_arabic",
-  "en": "Arabic characters are not allowed",
-  "ar": "الأحرف العربية غير مسموح بها"
- },
- {
-  "section": "form",
-  "key": "select_option",
-  "en": "Please select an option",
-  "ar": "يرجى اختيار خيار"
- },
- {
-  "section": "form",
   "key": "select_at_least",
   "en": "one: Please select at least 1 option · other: Please select at least {n} options",
   "ar": "one: يرجى اختيار خيار واحد على الأقل · two: يرجى اختيار خيارين على الأقل · few: يرجى اختيار {n} خيارات على الأقل · many: يرجى اختيار {n} خيارًا على الأقل · other: يرجى اختيار {n} خيار على الأقل"
@@ -1420,60 +1474,6 @@
   "key": "select_at_most",
   "en": "one: Please select no more than 1 option · other: Please select no more than {n} options",
   "ar": "one: يرجى اختيار خيار واحد كحد أقصى · two: يرجى اختيار خيارين كحد أقصى · few: يرجى اختيار {n} خيارات كحد أقصى · many: يرجى اختيار {n} خيارًا كحد أقصى · other: يرجى اختيار {n} خيار كحد أقصى"
- },
- {
-  "section": "form",
-  "key": "rating_required",
-  "en": "Please choose a rating",
-  "ar": "يرجى اختيار تقييم"
- },
- {
-  "section": "form",
-  "key": "tag_required",
-  "en": "Please add at least one tag",
-  "ar": "يرجى إضافة وسم واحد على الأقل"
- },
- {
-  "section": "form",
-  "key": "file_required",
-  "en": "Please add a file",
-  "ar": "يرجى إرفاق ملف"
- },
- {
-  "section": "form",
-  "key": "upload_pending",
-  "en": "Please wait for the upload to finish",
-  "ar": "يرجى الانتظار حتى يكتمل الرفع"
- },
- {
-  "section": "form",
-  "key": "pick_suggestion",
-  "en": "Choose from the suggestions",
-  "ar": "اختر من الاقتراحات"
- },
- {
-  "section": "form",
-  "key": "otp_incomplete",
-  "en": "Please enter all {n} digits",
-  "ar": "يرجى إدخال جميع الأرقام"
- },
- {
-  "section": "form",
-  "key": "loading",
-  "en": "Loading",
-  "ar": "جارٍ التحميل"
- },
- {
-  "section": "form",
-  "key": "show_password",
-  "en": "Show password",
-  "ar": "إظهار كلمة المرور"
- },
- {
-  "section": "form",
-  "key": "hide_password",
-  "en": "Hide password",
-  "ar": "إخفاء كلمة المرور"
  },
  {
   "section": "form",

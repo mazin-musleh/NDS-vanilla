@@ -6,6 +6,7 @@
  *   NDS.Dropmenu.init() / .reinit()      scan + initialize dropmenu wrappers
  *   NDS.Dropmenu.create(el, opts?)       instance one .nds-dropmenu wrapper; null when it has no menu.
  *                                        opts adopt a field: {menu, menuClass, click, keys, anchor}
+ *   NDS.Dropmenu.validate(el, opts)  a select-mode picker's check → {valid, message, value}; opts {showMessage}
  *   NDS.Dropmenu.destroy(el)             tear one down before you discard its wrapper; undoes what opts wrote
  *   NDS.Dropmenu.from(el)                the wrapper that owns any element inside it
  *   NDS.Dropmenu.menuOf(dropmenu)        the wrapper's menu
@@ -1336,9 +1337,21 @@
     }
 
     // Expose global API (called by nds-loader.js unified system)
+    // A select-mode picker's check: NDS.validation runs it at submit, validate(el) is its public face.
+    const formWords = NDS.i18n.strings('form', { select_option: 'Please select an option' });
+    // The pick lives in a hidden carrier; its own only, a picker nested in its menu holds its own.
+    const fieldCheck = (dm) => {
+        const carrier = Array.prototype.find.call(dm.querySelectorAll('input[data-nds-select-value]'), (el) => el.closest('.nds-dropmenu') === dm);
+        const valid = !!(carrier && carrier.value.trim());
+        return { valid, message: valid ? '' : formWords.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
+    };
+    NDS.validation.addRule('.nds-dropmenu[data-select-name][data-required]',
+        (dm) => Object.assign(fieldCheck(dm), { focus: dm.querySelector('.nds-dropmenu-trigger') || dm }));
+
     NDS.Dropmenu = {
         init: initializeDropmenus,
         reinit: initializeDropmenus,
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-dropmenu') || el, opts, fieldCheck),
         create: (element, opts) => {
             if (!element) return null;
             if (element.ndsDropmenu) return element.ndsDropmenu;

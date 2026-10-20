@@ -254,7 +254,7 @@ Each method takes the `.nds-otp-group` element.
 | `NDS.Otp.setValue(group, value)` | Fills the boxes from the first, and removes characters that are not digits. It fires no event |
 | `NDS.Otp.clear(group)` | Empties the boxes, focuses the first box and fires `nds:otp:clear`. It does not remove an error: call `NDS.Form.clearStatus(group)` for that |
 | `NDS.Otp.init()` | Starts every group on the page. It runs once at page load, and a group added later starts on its own |
-| `NDS.Form.validateOtpGroup(group)` | Checks that every box holds a digit, shows the error when one is empty, and returns `{ valid, message, filled }` |
+| `NDS.Otp.validate(group)` | Checks that every box holds a digit, shows the error when one is empty, and returns `{ valid, message, filled }` |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |

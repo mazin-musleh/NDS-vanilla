@@ -6,6 +6,7 @@
  *   NDS.Autocomplete.init() / .reinit()      arm the delegated focusin builder
  *   NDS.Autocomplete.create(el, options)     build one field now; options {filter, renderItem}.
  *                                            Null when the markup is incomplete; the live one if started
+ *   NDS.Autocomplete.validate(el, opts)  a data-strict field's check → {valid, message, picked}; opts {showMessage}
  *   NDS.Autocomplete.destroy(el)             undo create() before you discard the field
  * Events (bubble from the .nds-form-container):
  *   nds:autocomplete:fetch    detail {query, results} — after every result set is rendered
@@ -710,9 +711,25 @@
     // GLOBAL API
     // ==============================================
 
+    // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
+    const formWords = NDS.i18n.strings('form', { pick_suggestion: 'Choose from the suggestions' });
+    // data-strict: typed text must match a picked suggestion. The carrier holds the last pick and exists
+    // only on a built field; no carrier, so its text is the prefilled pick. Empty text is required's business.
+    const fieldCheck = (container) => {
+        const carrier = container.querySelector('.nds-autocomplete-value');
+        const input = container.ndsAutocomplete?.input;
+        const text = input ? input.value.trim() : '';
+        const valid = !carrier || text === '' || carrier.value === text;
+        return { valid, message: valid ? '' : formWords.text('pick_suggestion'), picked: !!(carrier && carrier.value) };
+    };
+    // Taginput in assist mode shares the container and owns its own rejection at add time.
+    NDS.validation.addRule('.nds-form-container[data-strict]',
+        (ac) => (ac.classList.contains('nds-taginput') ? null : Object.assign(fieldCheck(ac), { focus: ac.ndsAutocomplete?.input || null })));
+
     NDS.Autocomplete = {
         init: initializeAutocompletes,
         reinit: initializeAutocompletes,
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-form-container') || el, opts, fieldCheck),
         destroy: (element) => element?.ndsAutocomplete?.destroy(),
         // Programmatic construction. Pass { filter, renderItem } to override
         // the default substring match and dropdown-row renderer.

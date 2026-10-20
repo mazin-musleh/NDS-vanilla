@@ -225,7 +225,7 @@ Source: the `radio` group in `_sass/tokens/_components.scss`.
 
 | Method | Effect |
 |---|---|
-| `NDS.Form.validateRadioGroup(group, options)` | Checks the group and returns `{ valid, selected, message }`: `selected` is `true` when an option is checked. Pass `{ showMessage: false }` to check without a message |
+| `NDS.Radio.validate(group, options)` | Checks the group and returns `{ valid, selected, message }`: `selected` is `true` when an option is checked. Pass `{ showMessage: false }` to check without a message |
 | `NDS.Form.syncState(input)` | Updates the field after you set `.checked` from code. It fires no event |
 | `NDS.Form.setStatus(group, status, { message })` | Shows a status and a message on the group, such as an error from the server |
 | `NDS.Form.clearStatus(group)` | Removes the group's feedback message |
@@ -233,7 +233,7 @@ Source: the `radio` group in `_sass/tokens/_components.scss`.
 
 <script type="text/html" id="radio-js" data-canon data-lang="js">
 var group = document.querySelector('.nds-radio-group');
-var result = NDS.Form.validateRadioGroup(group);
+var result = NDS.Radio.validate(group);
 // { valid: false, selected: false, message: 'Please select an option' }
 
 var radio = document.querySelector('#radio-2');
