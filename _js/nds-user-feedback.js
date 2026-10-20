@@ -102,6 +102,8 @@ NDS.UserFeedback = (() => {
     function create(feedbackComponent) {
         // Skip if already initialized
         if (feedbackComponent.hasAttribute('data-nds-user-feedback-initialized')) return;
+        // NDS.init.destroy(view) finds instances through an nds* backref on the element.
+        feedbackComponent.ndsUserFeedback = { destroy: () => destroy(feedbackComponent) };
 
         const answerButtons = feedbackComponent.querySelectorAll('.nds-user-feedback-answer-btn .nds-btn');
         const closeButton = feedbackComponent.querySelector('.nds-user-feedback-close');
@@ -321,6 +323,7 @@ NDS.UserFeedback = (() => {
         feedbackComponent._ndsUfAC?.abort();
         delete feedbackComponent._ndsUfAC;
         delete feedbackComponent._ndsUfFinish;
+        delete feedbackComponent.ndsUserFeedback;
         feedbackComponent.removeAttribute('data-nds-user-feedback-initialized');
     }
 
