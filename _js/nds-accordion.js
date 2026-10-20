@@ -6,11 +6,12 @@
  *   NDS.Accordion.init() / .reinit()   scan .nds-accordion; a live root adopts new items
  *   NDS.Accordion.create(container)    instance one accordion — returns the live controller
  *                                      when there already is one, null when it has no buttons
+ *   NDS.Accordion.destroy(container)   undo create()
  *   instance.openItem(i) / .closeItem(i) / .toggleItem(i)
  *   instance.closeAll()
  *   instance.getOpenItems()            [{index, button, collapse, isOpen}]
  *   instance.refresh()                 adopt items added to this root since construction
- *   instance.destroy()
+ *   instance.destroy()                 the same, on the controller create() returned; open items stay open
  * Events (bubble from the .nds-accordion, AFTER the animation):
  *   nds:accordion:opened   detail {index, button, collapse, accordion}
  *   nds:accordion:closed   detail {index, button, collapse, accordion}
@@ -413,7 +414,8 @@
             const instance = new NDSAccordion(container);
             activate(container, instance);
             return instance.valid ? instance : null;
-        }
+        },
+        destroy: (container) => container?.ndsAccordion?.destroy(),
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

@@ -4,7 +4,9 @@
  *   NDS.Chart.init() / .reinit()      scan .nds-chart and build the ones that declare a
  *                                     type or a series
  *   NDS.Chart.create(elOrSel, opts)   build one chart — replaces any chart already on the
- *                                     element. Returns the instance
+ *                                     element. Returns the instance. No opts: the data-chart-*
+ *                                     its markup declares (null when it declares no series)
+ *   NDS.Chart.destroy(elOrSel)        undo create()
  *   instance.update(newOpts)          MERGE new options in and re-render
  *   instance.render()                 redraw in place from the current options
  *   instance.destroy()                empty the element and release its observers
@@ -1087,11 +1089,7 @@
                 if (!el.firstElementChild && !el.ndsChart._deferCount) el.ndsChart.render();
                 return;
             }
-            const d = el.dataset;
-            const config = tryParse(d.chartConfig) || {};
-            if (d.chartType) config.type = d.chartType;
-            if (d.chartSeries) config.series = tryParse(d.chartSeries) || config.series;
-            if (d.chartLabels) config.labels = tryParse(d.chartLabels) || config.labels;
+            const config = configFromData(el);
 
             // Series, not type: every render path reads series (the legend maps it even
             // for pie), so claiming an element on data-chart-type alone builds an instance
@@ -1104,9 +1102,24 @@
         });
     }
 
+    // The chart a markup element declares in its data-chart-* attributes.
+    function configFromData(el) {
+        const d = el.dataset;
+        const config = tryParse(d.chartConfig) || {};
+        if (d.chartType) config.type = d.chartType;
+        if (d.chartSeries) config.series = tryParse(d.chartSeries) || config.series;
+        if (d.chartLabels) config.labels = tryParse(d.chartLabels) || config.labels;
+        return config;
+    }
+
     function createChart(el, opts) {
         if (typeof el === 'string') el = document.querySelector(el);
         if (!el) return null;
+        // No options: the chart its markup declares, so destroy → create rebuilds it.
+        if (!opts) {
+            opts = configFromData(el);
+            if (!opts.series) return null;
+        }
         setupDirObserver();
         if (el.ndsChart) el.ndsChart.destroy();
         el.ndsChart = new NDSChartInstance(el, opts);
@@ -1118,5 +1131,6 @@
         init: initCharts,
         reinit: initCharts,
         create: createChart,
+        destroy: (el) => (typeof el === 'string' ? document.querySelector(el) : el)?.ndsChart?.destroy(),
     };
 })();

@@ -5,6 +5,7 @@
  * Methods:
  *   NDS.Filter.init() / .reinit()      scan + initialize filter surfaces
  *   NDS.Filter.create(container)       instance one surface — idempotent, registers the instance
+ *   NDS.Filter.destroy(container)      undo create(); any surface element of the filter works
  *   NDS.Filter.getInstance(elOrSel)    resolve the instance from any surface element
  *   NDS.Filter.getByTarget(targetId)   resolve the instance by its data-filter-target id
  *   NDS.Filter.whenReady(el, cb)       run cb with the instance, now or on ready
@@ -3066,6 +3067,7 @@
             if (live) return live;
             return createInstance(container);
         },
+        destroy: (container) => NDS.Filter.getInstance(container)?.destroy(),
 
         getInstance: (container) => {
             if (typeof container === 'string') {

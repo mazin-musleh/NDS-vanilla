@@ -6,6 +6,7 @@
  * Methods:
  *   NDS.Tabs.init() / .reinit()      scan + initialize .nds-tabs
  *   NDS.Tabs.create(container)       instance one tab set
+ *   NDS.Tabs.destroy(container)      undo create()
  *   instance.goTo(index)             activate a tab by index
  *   instance.getActiveTabIndex()     the active index
  *   instance.getActiveTab()          the active .nds-tab
@@ -307,6 +308,7 @@
         create: (container) => {
             if (!container.ndsTabs) new NDSTabs(container);
             return container.ndsTabs || null;
-        }
+        },
+        destroy: (container) => container?.ndsTabs?.destroy(),
     };
 })();

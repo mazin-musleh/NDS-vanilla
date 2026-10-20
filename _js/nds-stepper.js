@@ -5,6 +5,7 @@
  * Methods:
  *   NDS.Stepper.init() / .reinit()        instance every stepper, wire the delegated control listener
  *   NDS.Stepper.create(el)                instance one stepper
+ *   NDS.Stepper.destroy(el)               undo create(); an id works too
  *   NDS.Stepper.getInstance(idOrEl)       the stepper's instance, or null
  *   NDS.Stepper.next(idOrEl) / .prev(idOrEl)  move one step
  *   NDS.Stepper.goTo(idOrEl, step)        move to a step number; one past the last completes the flow
@@ -257,6 +258,7 @@
         // init is idempotent (the sweep skips started steppers, _wireGlobals runs once).
         reinit:      init,
         create,
+        destroy: (target) => getInstance(target)?.destroy(),
         getInstance,
         next:        (target) => control(target, 'next'),
         prev:        (target) => control(target, 'previous'),

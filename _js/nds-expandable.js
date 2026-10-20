@@ -6,6 +6,7 @@
  *                                       after changing --max-height at runtime
  *   NDS.Expandable.create(container)    instance one container — null when the markup is
  *                                       incomplete; the live one if started
+ *   NDS.Expandable.destroy(container)   undo create()
  *   instance.expand() / .collapse() / .toggle()   a no-op when already in that state
  *   instance.refresh()                  re-measure this one
  *   instance.getState()                 {isExpanded, hasButton, maxHeight, actualHeight}
@@ -318,7 +319,8 @@
             if (container.ndsExpandable) return container.ndsExpandable;
             const inst = new NDSExpandable(container);
             return inst.valid ? inst : null;
-        }
+        },
+        destroy: (container) => container?.ndsExpandable?.destroy(),
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

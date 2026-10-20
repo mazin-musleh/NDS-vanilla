@@ -6,6 +6,7 @@
  *   NDS.Rating.init() / .reinit()   scan + initialize .nds-rating
  *   NDS.Rating.create(el)           instance one rating (returns the live one if there is
  *                                   already one)
+ *   NDS.Rating.destroy(el)          undo create()
  *   NDS.Rating.enable(el)           build it if needed, then take it out of disabled
  *   instance.setValue(v)            set the rating (fires the event)
  *   instance.getValue()             the current value
@@ -277,6 +278,7 @@
     init: initializeRatings,
     reinit: initializeRatings,
     create,
+    destroy: (element) => element?.ndsRating?.destroy(),
     enable: enableRating,
   };
 

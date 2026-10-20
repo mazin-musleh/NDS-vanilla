@@ -5,6 +5,7 @@
  *   NDS.Breadcrumb.init() / .reinit()   scan + initialize .nds-breadcrumb-nav
  *   NDS.Breadcrumb.create(nav)          instance one breadcrumb — null when it has no items;
  *                                       the live one if started
+ *   NDS.Breadcrumb.destroy(nav)         undo create()
  *   instance.destroy()                  drop the overflow menu, restore every level
  * Events:
  *   (none)
@@ -151,7 +152,8 @@
             if (nav.ndsBreadcrumb) return nav.ndsBreadcrumb;
             const inst = new NDSBreadcrumb(nav);
             return inst.valid ? inst : null;
-        }
+        },
+        destroy: (nav) => nav?.ndsBreadcrumb?.destroy(),
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

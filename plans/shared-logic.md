@@ -4,8 +4,8 @@ Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (se
 AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Facts measured on `main` at `9fd54151`.
 
 **Resume here.** Order steps 1–2 are done, and so are changes #1 (1, 1b, 1c, 1d), #2 and #4 (#3 was dropped; the "Landed" notes
-under section 3's Mechanical checks). **In progress: change #4b** (owner, 2026-10-20): the base, visible and leak gaps are fixed, one commit each; the leftovers
-and the API pairs remain (its inventory note, below the Landed notes).
+under section 3's Mechanical checks). Change #4b is done (owner, 2026-10-20: every gap in its inventory note fixed, one commit each). **Next: change #5**,
+Form `dismissOwn` → Feedback `dismissAll(container, opts)`.
 
 ## Goal
 
@@ -300,8 +300,10 @@ before it is fixed. Base first: Dropmenu's fix reaches every component that ride
   states and the trigger icon class, and nulls its backref (`:477`)~~ (backref fixed; the sort states stay: they are the rows' order, and a re-create seeds from them); ~~Scroll More leaves `data-axis` and its states
   (`:216`)~~ (fixed, with a backref and the divider it built); ~~an empty TOC gets no backref (`toc:57`)~~ (fixed: the sweep keys on the
   instance, so a later refresh builds it; destroy clears the active mark).
-- API pairs: a namespace `destroy(el)` is missing on Autocomplete, Breadcrumb, Filter, Sort, Table, Tabs, Tooltip,
-  Upload; Progress has no destroy at all; Form's goes with #9. Alert and Feedback build new elements: no destroy needed.
+- API pairs: ~~a namespace `destroy(el)` is missing on Autocomplete, Breadcrumb, Filter, Sort, Table, Tabs, Tooltip,
+  Upload; Progress has no destroy at all~~ (fixed, with Rating, Stepper, Chart, Accordion, Expandable; `Chart.create(el)`
+  with no options now reads its data-chart-*); Form's goes with #9. Panel, Slider and Drawer reach `NDS.init.destroy`
+  through the loader's `destroyEach`: no backref needed. Alert and Feedback build new elements: no destroy needed.
 
 ## 4. Owner decisions
 
