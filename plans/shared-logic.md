@@ -4,7 +4,8 @@ Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (se
 AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Facts measured on `main` at `9fd54151`.
 
 **Resume here.** Order steps 1–2 are done, and so are changes #1 (1, 1b, 1c, 1d), #2 and #4 (#3 was dropped; the "Landed" notes
-under section 3's Mechanical checks). **Next: change #4b**, the inventory of components that ride another (owner, 2026-10-20).
+under section 3's Mechanical checks). **In progress: change #4b** (owner, 2026-10-20): the base, visible and leak gaps are fixed, one commit each; the leftovers
+and the API pairs remain (its inventory note, below the Landed notes).
 
 ## Goal
 
