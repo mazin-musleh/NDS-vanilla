@@ -126,7 +126,7 @@
         },
         {
             name: 'Upload',
-            selector: '.nds-file-upload',
+            selector: '.nds-upload',
         },
         {
             // Deferred: recognition starts on click, so a late wire lands first.

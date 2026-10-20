@@ -1,6 +1,6 @@
 @use '../mixins' as *;
 
-.nds-file-upload {
+.nds-upload {
 
     // dropbox is a markup token; core mirrors it to .nds-dropbox (the loading
     // pattern) so these descendant rules stay off the shared data-state set (PERF-06).

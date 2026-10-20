@@ -586,7 +586,7 @@
     // with a sample image's URL (doc pages sit one folder deep), so the editor's image popover gets a src.
     // A preview field with no URL gets one on its first pick or drop (capture runs before Upload reads it).
     function demoUploadUrl(e) {
-        var up = e.target.closest && e.target.closest('.nds-file-upload');
+        var up = e.target.closest && e.target.closest('.nds-upload');
         if (!up || up.dataset.uploadUrl || !up.closest('[data-demo-slot]')) return;
         up.dataset.uploadUrl = '/demo/upload';
         up.dataset.autoUpload = 'true';
@@ -596,7 +596,7 @@
     document.addEventListener('nds:upload:start', function (e) {
         if (!e.target.closest('[data-demo-slot]')) return;
         e.preventDefault();
-        var api = NDS.Upload.getInstance(e.target.closest('.nds-file-upload'));
+        var api = NDS.Upload.getInstance(e.target.closest('.nds-upload'));
         var file = e.detail.fileData;
         if (!api) return;
         var progress = 0;

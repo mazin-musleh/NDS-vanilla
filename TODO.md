@@ -21,7 +21,6 @@ Cleaned 2026-10-19: finished items and their release notes left (all in `CHANGEL
       - Swiper's public `goTo(i, animate)` is the old `slideTo`, and the old `goTo` is internal `_goToSlide`.
     - **2b follow-up (2026-10-20):** the six missed `setStatus` calls are fixed, and the underscore instances are renamed (`el.ndsSwiper`, `ndsDatePicker`, `ndsTimePicker`, `ndsToc`, `ndsSideinfo`; the event packs fall back to `_ndsSwiper` and are rebuilt). The loader's backref walk now reaches them, so their `destroyEach` flags are gone. Passing: `check-form-reset`, `check-frameworks`, `check-dialogs`, `check-init-destroy`, `check-swiper-loop`, `check-time-picker`, `check-set-value`, `check-ipv`, `check-banners` 65/65.
     - **Still to build:**
-      - Commit 3: `.nds-file-upload` → `.nds-upload`, with a `kind: class` row.
       - Commit 4: the release check that compares each component's names.
       - The naming-rule line in `_includes/NDS-IQ-draft.md` (load `nds-iq-eval` first).
       - Last: drop the built plan items from this TODO.

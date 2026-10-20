@@ -1,11 +1,11 @@
 /* NDS.Upload — public surface
  * Rides: nds-tooltip (the full file name on hover; soft)
  * Requires:
- *   .nds-file-upload needs input[type="file"] — the upload is not built
- *   .nds-file-upload needs .nds-form-control — the upload is not built
- *   .nds-file-upload needs .nds-file-list — the upload is not built
+ *   .nds-upload needs input[type="file"] — the upload is not built
+ *   .nds-upload needs .nds-form-control — the upload is not built
+ *   .nds-upload needs .nds-file-list — the upload is not built
  * Methods:
- *   NDS.Upload.init() / .reinit()                scan + initialize .nds-file-upload
+ *   NDS.Upload.init() / .reinit()                scan + initialize .nds-upload
  *   NDS.Upload.create(el, options)               instance one uploader; options override the
  *                                                data-* config, and merge into a started one.
  *                                                Selector string accepted
@@ -24,7 +24,7 @@
  *                                                checks without staging anything
  *   instance.getConfig()                         the resolved, frozen config
  *   instance.enable() / .disable() / .refreshUI() / .destroy()
- * Events (bubble from the .nds-file-upload container):
+ * Events (bubble from the .nds-upload container):
  *   nds:upload:ready             detail {instance}
  *   nds:upload:select            detail {files, allFiles, fileData} — files that passed checks
  *   nds:upload:invalid           detail {errors:[{file, errors, fileData}]}
@@ -99,7 +99,7 @@
 
     // Canonical file-item markup (mirrors components/upload.md). Cloned when a
     // consumer omits the hidden .nds-file-item-template, so a bare
-    // .nds-file-upload still renders file rows. A supplied template still wins.
+    // .nds-upload still renders file rows. A supplied template still wins.
     const DEFAULT_FILE_ITEM_HTML =
         '<div class="nds-file-item">' +
             '<span class="nds-feedback">' +
@@ -629,7 +629,7 @@
 
         // Returns the .nds-file-item node to clone for a row. A consumer-supplied
         // .nds-file-item-template wins; otherwise the built-in canonical markup is
-        // parsed once (cached per instance) so a bare .nds-file-upload still renders.
+        // parsed once (cached per instance) so a bare .nds-upload still renders.
         _getFileItemSource() {
             const template = this.container.querySelector('.nds-file-item-template');
             if (template) return template.querySelector('.nds-file-item');
@@ -823,7 +823,7 @@
     // ==============================================
 
     function initializeUploads() {
-        document.querySelectorAll('.nds-file-upload').forEach(el => {
+        document.querySelectorAll('.nds-upload').forEach(el => {
             if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-upload-initialized')) return;
             new NDSUpload(el);
@@ -868,7 +868,7 @@
     };
 
     // Self-register for dynamic elements
-    NDS.onDOMAdd('.nds-file-upload', function (nodes) {
+    NDS.onDOMAdd('.nds-upload', function (nodes) {
         nodes.forEach(el => {
             if (!el.hasAttribute('data-nds-upload-initialized')) {
                 new NDSUpload(el);
@@ -880,7 +880,7 @@
     // aborts in-flight XHRs and clears the
     // init marker — without which a re-added node would short-circuit re-init
     // behind the stale marker.
-    NDS.onDOMRemove('.nds-file-upload', function (nodes) {
+    NDS.onDOMRemove('.nds-upload', function (nodes) {
         nodes.forEach(el => {
             if (el.ndsUpload) el.ndsUpload.destroy();
         });

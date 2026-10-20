@@ -539,15 +539,15 @@ fieldset {
 }
 
 // Filled-background style variants — opt-in via .nds-form-container modifier.
-// Excluded from .nds-file-upload (its form-control is a Browse-Files button surface).
+// Excluded from .nds-upload (its form-control is a Browse-Files button surface).
 // Border uses :where() so its specificity stays at (0,1,0); existing
 // hover/focus/active/status rules keep their own border colors via cascade.
-:where(.nds-form-container.nds-lighter:not(.nds-file-upload),
-    .nds-form-container.nds-darker:not(.nds-file-upload)) .nds-form-control {
+:where(.nds-form-container.nds-lighter:not(.nds-upload),
+    .nds-form-container.nds-darker:not(.nds-upload)) .nds-form-control {
     border-color: transparent;
 }
 
-.nds-form-container:not(.nds-file-upload) {
+.nds-form-container:not(.nds-upload) {
     &.nds-lighter .nds-form-control {
         --_form-control-bg: var(--_control-bg-forced, var(--form-field-background-lighter));
     }

@@ -66,6 +66,7 @@
 - { kind: class, name: nds-dropdown-item, scope: .nds-main-nav, status: renamed, use: nds-nav-menu-item, since: "2.0.0", fix: "Use nds-nav-menu-item." }
 - { kind: class, name: nds-dropdown-menu, scope: .nds-main-nav, status: renamed, use: nds-nav-menu, since: "2.0.0", fix: "Use nds-nav-menu." }
 - { kind: class, name: nds-dropdown-title, scope: .nds-main-nav, status: renamed, use: nds-nav-title, since: "2.0.0", fix: "Use nds-nav-title." }
+- { kind: class, name: nds-file-upload, status: renamed, use: nds-upload, since: "2.0.0", fix: "Use nds-upload." }
 - { kind: class, name: nds-filter-bar, status: renamed, use: nds-toolbar, since: "2.0.0", fix: "Use nds-toolbar." }
 - { kind: class, name: nds-focus, status: removed, since: "2.0.0", fix: "Remove it: the field styles its own focus." }
 - { kind: class, name: nds-foundingDay, status: renamed, use: nds-founding-day, since: "2.0.0", fix: "Use nds-founding-day." }

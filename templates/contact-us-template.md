@@ -251,7 +251,7 @@ sidemenu_mode: false
                     </div>
 
                     <!-- Upload files (compact browse mode) -->
-                    <div class="nds-form-container nds-file-upload"
+                    <div class="nds-form-container nds-upload"
                         data-max-file-size="2097152" data-allowed-types="jpg,jpeg,png,pdf">
                         <div class="nds-form-header">
                             <label for="contact-upload">
@@ -489,7 +489,7 @@ sidemenu_mode: false
 
         // No upload step on this form — mark each validated selection complete
         // so the attached file shows the success state.
-        var upload = document.querySelector('.nds-file-upload');
+        var upload = document.querySelector('.nds-upload');
         if (upload) {
             upload.addEventListener('nds:upload:select', function (e) {
                 var api = window.NDS && NDS.Upload && NDS.Upload.getInstance(upload);

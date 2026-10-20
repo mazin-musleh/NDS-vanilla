@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 07:46 AM"
+last_edit: "20/10/2026 - 11:24 AM"
 ---
 
 <section id="upload-overview" class="nds-content-section nds-doc-overview">
@@ -35,7 +35,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="upload-field" data-canon data-variants="upload-variants-table" data-harness="form" data-demo-width="400px">
-<div class="nds-form-container nds-file-upload" data-state="dropbox" data-max-file-size="2097152" data-allowed-types="jpg,jpeg,png,pdf">
+<div class="nds-form-container nds-upload" data-state="dropbox" data-max-file-size="2097152" data-allowed-types="jpg,jpeg,png,pdf">
   <div class="nds-form-header">
     <label for="upload-files">
       <span class="nds-label">Supporting documents</span>
@@ -76,13 +76,13 @@ Button mode removes `.nds-upload-zone` and the `dropbox` token. Single adds the 
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Mode | Drop zone (default) | `[data-state~="dropbox"]` | `.nds-file-upload` | A large dashed area that takes dropped files. Use it when the upload is the main task of the page. See Drop Zone |
+| Mode | Drop zone (default) | `[data-state~="dropbox"]` | `.nds-upload` | A large dashed area that takes dropped files. Use it when the upload is the main task of the page. See Drop Zone |
 | Mode | Button | `remove` | `.nds-upload-zone` | A Browse button only. Use it when the upload is one field in a longer form |
 | Files | Many (default) | `[multiple]` | `.nds-file-input` | The user can add many files |
-| Files | Single | `[data-state~="single"]` | `.nds-file-upload` | The list holds one file, and a new file replaces it. See Single File |
-| State (any) | Disabled | `[data-state~="disabled"]` | `.nds-file-upload` | The user cannot add or remove files. See Disabled |
-| State (any) | Required (hint: Press Validate with no file) | `[data-required]` | `.nds-file-upload` | The form needs at least one file that passed the checks. See File Checks |
-| Max files | Max files | `[data-max-files="3"]` | `.nds-file-upload:not([data-state~="single"])` | The list takes 3 files at most. Not with Single. See File Checks |
+| Files | Single | `[data-state~="single"]` | `.nds-upload` | The list holds one file, and a new file replaces it. See Single File |
+| State (any) | Disabled | `[data-state~="disabled"]` | `.nds-upload` | The user cannot add or remove files. See Disabled |
+| State (any) | Required (hint: Press Validate with no file) | `[data-required]` | `.nds-upload` | The form needs at least one file that passed the checks. See File Checks |
+| Max files | Max files | `[data-max-files="3"]` | `.nds-upload:not([data-state~="single"])` | The list takes 3 files at most. Not with Single. See File Checks |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #upload-variants-table .nds-table .nds-responsive}
 
@@ -100,19 +100,19 @@ Button mode removes `.nds-upload-zone` and the `dropbox` token. Single adds the 
 ### Drop Zone
 {: .nds-block-title}
 
-The token `dropbox` in `data-state` on `.nds-file-upload` turns the field into a dashed drop zone. The zone shows `.nds-upload-zone` in place of the label: an icon, the drop text and the hint. A click on the zone opens the file picker, and a file dragged over it colors the zone in the success color. Without `dropbox`, the zone is hidden and the field takes no dropped files. You can add or remove the token after the page loads.
+The token `dropbox` in `data-state` on `.nds-upload` turns the field into a dashed drop zone. The zone shows `.nds-upload-zone` in place of the label: an icon, the drop text and the hint. A click on the zone opens the file picker, and a file dragged over it colors the zone in the success color. Without `dropbox`, the zone is hidden and the field takes no dropped files. You can add or remove the token after the page loads.
 
 ### Single File
 {: .nds-block-title}
 
-The token `single` in `data-state` on `.nds-file-upload` keeps one file in the list. A new pick or drop replaces it and stops its upload. When the user picks several files, only the first is kept. Remove `multiple` from the file input, so the picker lets the user choose one file. `data-max-files` does nothing with `single`.
+The token `single` in `data-state` on `.nds-upload` keeps one file in the list. A new pick or drop replaces it and stops its upload. When the user picks several files, only the first is kept. Remove `multiple` from the file input, so the picker lets the user choose one file. `data-max-files` does nothing with `single`.
 
 ### File Checks
 {: .nds-block-title}
 
 The script checks each file when the user adds it. `data-max-file-size` sets the largest size in bytes, and the default is 10 MB. `data-allowed-types` lists the file extensions, and `data-allowed-mime-types` lists the MIME types, such as `image/png`. A file that fails shows in the list with the reason, in Arabic or English. It is never uploaded, and `retry()` refuses it.
 
-`data-max-files` sets how many files the list holds. The files past the limit show in the list with an error too. `data-required` on `.nds-file-upload` makes the form need at least one file that passed the checks. The error clears when the user adds a file. A form reset empties the list.
+`data-max-files` sets how many files the list holds. The files past the limit show in the list with an error too. `data-required` on `.nds-upload` makes the form need at least one file that passed the checks. The error clears when the user adds a file. A form reset empties the list.
 
 ### Send with the Form
 {: .nds-block-title}
@@ -122,7 +122,7 @@ With no `data-upload-url`, the files stay in the field until the form is sent. T
 ### Upload as You Go
 {: .nds-block-title}
 
-`data-upload-url` on `.nds-file-upload` makes the script send each file to that address in its own POST request. The file goes in the field that `data-field-name` names, and the default is `file`. This fits large files, where the user needs the progress and a retry for each file. With `data-auto-upload="true"`, each file goes as soon as it passes the checks. Without it, call `startUpload()`. On a failure, the row shows the `error` text of a JSON response, then the HTTP status text, then a general message. The server's reply goes in the file's `response`, so the form can send what the server returned, such as an id.
+`data-upload-url` on `.nds-upload` makes the script send each file to that address in its own POST request. The file goes in the field that `data-field-name` names, and the default is `file`. This fits large files, where the user needs the progress and a retry for each file. With `data-auto-upload="true"`, each file goes as soon as it passes the checks. Without it, call `startUpload()`. On a failure, the row shows the `error` text of a JSON response, then the HTTP status text, then a general message. The server's reply goes in the file's `response`, so the form can send what the server returned, such as an id.
 
 The script sends no login or CSRF header. Set them on the `xhr` of `nds:upload:start`, and add extra fields to its `formData`. To send the file yourself, cancel that event.
 
@@ -134,7 +134,7 @@ While a file uploads, the form does not submit, whether the field is required or
 Each file gets a row. A file the user just added is `ready`. During an upload, the row shows a progress ring. When every byte is sent, the row goes to `processing` and pulses until the server answers. Then it shows a check mark when the upload is `complete`, or a cross and the reason on an `error`. Pick a file in the demo to see a full upload.
 
 <script type="text/html" id="upload-rows" data-canon data-code="none" data-demo-width="400px">
-<div class="nds-form-container nds-file-upload" id="upload-rows-demo" data-upload-url="/demo/upload" data-auto-upload="true">
+<div class="nds-form-container nds-upload" id="upload-rows-demo" data-upload-url="/demo/upload" data-auto-upload="true">
   <div class="nds-form-header">
     <label for="upload-rows-input">
       <span class="nds-label">Attachments</span>
@@ -178,7 +178,7 @@ document.addEventListener('nds:upload:ready', function (e) {
 });
 </script>
 
-The script draws each row from the built-in row. To customize the row, put a hidden `.nds-file-item-template` inside `.nds-file-upload`: the script copies its `.nds-file-item` for each file. Keep the class names of the parts, because the script fills and shows them by class. This template is the built-in row:
+The script draws each row from the built-in row. To customize the row, put a hidden `.nds-file-item-template` inside `.nds-upload`: the script copies its `.nds-file-item` for each file. Keep the class names of the parts, because the script fills and shows them by class. This template is the built-in row:
 
 <script type="text/html" id="upload-row-template" data-canon data-preview="none">
 <div class="nds-file-item-template" hidden>
@@ -217,7 +217,7 @@ To show the files the server already holds, such as in an edit form, add each on
 ### Disabled
 {: .nds-block-title}
 
-The token `disabled` in `data-state` on `.nds-file-upload` stops the user from adding or removing files. Forms disables the file input and the buttons, and the drop zone ignores clicks and dropped files. `setDisabled(true)` and `setDisabled(false)` add and remove the token.
+The token `disabled` in `data-state` on `.nds-upload` stops the user from adding or removing files. Forms disables the file input and the buttons, and the drop zone ignores clicks and dropped files. `setDisabled(true)` and `setDisabled(false)` add and remove the token.
 
 </div>
   </div>
@@ -235,7 +235,7 @@ The token `disabled` in `data-state` on `.nds-file-upload` stops the user from a
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-file-upload</code> starts on load, and so does one added to the page later. A field removed from the page stops its uploads and its listeners.</p>
+          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-upload</code> starts on load, and so does one added to the page later. A field removed from the page stops its uploads and its listeners.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -302,18 +302,18 @@ The token `disabled` in `data-state` on `.nds-file-upload` stops the user from a
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-state~="dropbox"` | `.nds-file-upload` | Set it yourself. Turns on the drop zone. See Drop Zone |
-| `data-state~="single"` | `.nds-file-upload` | Set it yourself. The list holds one file. See Single File |
-| `data-state~="disabled"` | `.nds-file-upload` | Set it yourself, or call `setDisabled()`. See Disabled |
-| `data-required` | `.nds-file-upload` | The form needs at least one file that passed the checks |
-| `data-max-file-size` | `.nds-file-upload` | The largest file, in bytes. The default is `10485760` (10 MB) |
-| `data-allowed-types` | `.nds-file-upload` | The allowed extensions, with commas and no dots: `jpg,png,pdf`. The script writes the matching `accept` on the file input when it starts |
-| `data-allowed-mime-types` | `.nds-file-upload` | The allowed file types, with commas: `image/*,application/pdf`. `image/*` takes every image type. A file whose type the browser does not report passes this check |
-| `data-max-files` | `.nds-file-upload` | How many files the list holds. The default is no limit. Ignored with `single` |
-| `data-upload-url` | `.nds-file-upload` | The address each file is sent to, one POST request per file. See Upload as You Go |
-| `data-field-name` | `.nds-file-upload` | The name of the form field that holds the file in each upload request. The default is `file` |
-| `data-upload-timeout` | `.nds-file-upload` | The time limit for each upload, in seconds. The default is `0`, no limit. See Upload as You Go |
-| `data-auto-upload="true"` | `.nds-file-upload` | Sends each file as soon as it passes the checks. Needs `data-upload-url` |
+| `data-state~="dropbox"` | `.nds-upload` | Set it yourself. Turns on the drop zone. See Drop Zone |
+| `data-state~="single"` | `.nds-upload` | Set it yourself. The list holds one file. See Single File |
+| `data-state~="disabled"` | `.nds-upload` | Set it yourself, or call `setDisabled()`. See Disabled |
+| `data-required` | `.nds-upload` | The form needs at least one file that passed the checks |
+| `data-max-file-size` | `.nds-upload` | The largest file, in bytes. The default is `10485760` (10 MB) |
+| `data-allowed-types` | `.nds-upload` | The allowed extensions, with commas and no dots: `jpg,png,pdf`. The script writes the matching `accept` on the file input when it starts |
+| `data-allowed-mime-types` | `.nds-upload` | The allowed file types, with commas: `image/*,application/pdf`. `image/*` takes every image type. A file whose type the browser does not report passes this check |
+| `data-max-files` | `.nds-upload` | How many files the list holds. The default is no limit. Ignored with `single` |
+| `data-upload-url` | `.nds-upload` | The address each file is sent to, one POST request per file. See Upload as You Go |
+| `data-field-name` | `.nds-upload` | The name of the form field that holds the file in each upload request. The default is `file` |
+| `data-upload-timeout` | `.nds-upload` | The time limit for each upload, in seconds. The default is `0`, no limit. See Upload as You Go |
+| `data-auto-upload="true"` | `.nds-upload` | Sends each file as soon as it passes the checks. Needs `data-upload-url` |
 | `data-state~="drag-over"` | `.nds-form-control` | The script sets it while a file is dragged over the drop zone. It removes it when the file leaves, on the drop, and on `destroy()` |
 | `accept` | `.nds-file-input` | The script writes it from `data-allowed-types`. Do not write it yourself |
 | `data-file-id` | `.nds-file-item` | The script writes the file's id when it draws the row. The row's `.nds-remove-file` gets the same id |
@@ -326,7 +326,7 @@ The token `disabled` in `data-state` on `.nds-file-upload` stops the user from a
 
 | Property | Default | Controls |
 |---|---|---|
-| `--progress-size` | `24px` | The size of the progress ring in a row. Set it on `.nds-file-upload` |
+| `--progress-size` | `24px` | The size of the progress ring in a row. Set it on `.nds-upload` |
 {: .nds-table .nds-responsive}
 
 ### Tokens
@@ -345,7 +345,7 @@ A file is an object `{ file, id, status, progress, error, response }`. `file` is
 
 | Method | Effect |
 |---|---|
-| `NDS.Upload.init()` | Starts every `.nds-file-upload` that has not started. The loader calls it on load |
+| `NDS.Upload.init()` | Starts every `.nds-upload` that has not started. The loader calls it on load |
 | `NDS.Upload.reinit()` | The same as `init()` |
 | `NDS.Upload.create(el, options)` | Starts one field and returns its instance. `el` is the element or a selector. On a field that has started, it adds `options` to it and returns the same instance. It returns `null` when the field has no file input, `.nds-form-control` or `.nds-file-list` |
 | `NDS.Upload.getInstance(el)` | Returns the instance of the field, or `null` |
@@ -381,7 +381,7 @@ The `create()` options override the attributes of the same name.
 | `uploadTimeout` | `data-upload-timeout` | The time limit for each upload, in seconds |
 {: .nds-table .nds-responsive}
 
-Every event fires on `.nds-file-upload` and bubbles.
+Every event fires on `.nds-upload` and bubbles.
 
 | Event | Fires when | Detail |
 |---|---|---|
@@ -401,7 +401,7 @@ Every event fires on `.nds-file-upload` and bubbles.
 var form = document.querySelector('#request-form');
 form.addEventListener('nds:form:valid', function () {
   var data = new FormData(form);
-  NDS.Upload.getInstance('#request-form .nds-file-upload').getAllFiles().forEach(function (f) {
+  NDS.Upload.getInstance('#request-form .nds-upload').getAllFiles().forEach(function (f) {
     data.append('attachments[]', f.file);
   });
   fetch(form.action, { method: 'POST', body: data });

@@ -54,7 +54,7 @@
  *   - A required custom select is validated through its hidden .nds-select-value carrier:
  *     author data-required on the .nds-select container. The readonly display input is
  *     never constraint-validated, so required on it does nothing.
- *   - A required .nds-file-upload counts its file rows (rows the checks rejected excluded):
+ *   - A required .nds-upload counts its file rows (rows the checks rejected excluded):
  *     the upload script empties the file input after each pick, so it never carries required.
  *     A row still uploading blocks the submit on any upload, required or not.
  *   - A dropmenu picker (data-select-name) with data-required is checked the same way,
@@ -132,7 +132,7 @@
 
     var FORM_SCOPE = '.nds-form-container, .nds-form-group';
     // Fields whose visible input never holds the value: required is checked on the wrapper, never stamped on the input.
-    var NO_REQUIRED_STAMP = '.nds-taginput, .nds-file-upload';
+    var NO_REQUIRED_STAMP = '.nds-taginput, .nds-upload';
 
     function _setDisabled(el, on) {
         el.querySelectorAll('input, textarea, select').forEach(function(inp) { inp.disabled = on; });
@@ -656,7 +656,7 @@
         // submit would go without that file.
         validateUpload: function(upElement, options) {
             options = options || { showMessage: true };
-            var up = upElement.closest('.nds-file-upload') || upElement;
+            var up = upElement.closest('.nds-upload') || upElement;
             var hasRequired = up.hasAttribute('data-required') || up.classList.contains('nds-required');
             var count = up.querySelectorAll('.nds-file-list .nds-file-item:not([data-status="error"])').length;
             var pending = !!up.querySelector('.nds-file-list .nds-file-item:is([data-state~="uploading"], [data-state~="processing"])');
@@ -842,7 +842,7 @@
 
             // Uploads: same pattern, on every upload (a pending row blocks any of them).
             // Anchor is the Browse button (the file input is invisible).
-            form.querySelectorAll('.nds-file-upload').forEach(function(up) {
+            form.querySelectorAll('.nds-upload').forEach(function(up) {
                 if (!isFieldVisible(up, form)) return;
                 var result = Validator.validateUpload(up, { showMessage: options.showMessages });
                 if (!result.valid) {

@@ -774,7 +774,7 @@
         ctx.find('input[data-error-message]:not([pattern]), textarea[data-error-message], select[data-error-message]').forEach(el =>
             ctx.report(el, 'data-error-message on a field with no pattern: it shows only when the value does not match pattern, so it never shows.',
                 'Add the pattern it describes, or remove it: every other check has its own message.'));
-        ctx.find(':is(.nds-form-group:not(.nds-otp-group), .nds-select, .nds-multiselect, .nds-taginput, .nds-file-upload)[data-error-message]:not([data-required], .nds-required, [data-min-checked])').forEach(el =>
+        ctx.find(':is(.nds-form-group:not(.nds-otp-group), .nds-select, .nds-multiselect, .nds-taginput, .nds-upload)[data-error-message]:not([data-required], .nds-required, [data-min-checked])').forEach(el =>
             ctx.report(el, 'data-error-message on a group that may be left empty: it shows only when nothing is picked, so it never shows.',
                 'Add data-required, or remove it: the count limits and a file still uploading have their own messages.'));
     } });

@@ -807,7 +807,7 @@
             // Canonical single-file nds-upload (no dropzone) — NDS.Upload owns
             // picking, extension enforcement, and the file chip; the editor
             // only listens for nds:upload:select.
-            + '<div class="nds-form-container nds-file-upload" data-state="single" data-allowed-types="jpg,jpeg,png,gif,webp,svg" data-max-file-size="2097152" data-editor-image-upload>'
+            + '<div class="nds-form-container nds-upload" data-state="single" data-allowed-types="jpg,jpeg,png,gif,webp,svg" data-max-file-size="2097152" data-editor-image-upload>'
             + '<div class="nds-form-control nds-center">'
             + `<input type="file" id="${idBase}-image-file" class="nds-file-input" data-editor-image-file />`
             + `<div class="nds-form-action"><button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn"><i class="hgi hgi-stroke hgi-folder-01"></i><span class="nds-label">${html('upload')}</span></button></div>`
@@ -1221,7 +1221,7 @@
             // working field.
             this.toolbar?.querySelectorAll('.nds-dropmenu').forEach(el => el.ndsDropmenu?.destroy?.());
             this.toolbar?.querySelectorAll('.nds-tooltip').forEach(el => el.ndsTooltip?.destroy?.());
-            this.toolbar?.querySelectorAll('.nds-file-upload').forEach(el => el.ndsUpload?.destroy?.());
+            this.toolbar?.querySelectorAll('.nds-upload').forEach(el => el.ndsUpload?.destroy?.());
             this.toolbar?.remove();
             this.toolbar = null;
             this.editable.remove();
