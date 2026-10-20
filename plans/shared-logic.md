@@ -283,8 +283,8 @@ before it is fixed. Base first: Dropmenu's fix reaches every component that ride
 - Base: Dropmenu `destroy()` leaves ~~`aria-haspopup`, `aria-expanded`, `role=menu`, `role=menuitem` (`:497-500, 512`)~~ (fixed),
   the select-mode hidden input and trigger label (`:411-414, 473-475`), and the lazy-template once-listener (`:1285-1296`).
 - Visible after a re-create: ~~Filter and Table column toggle leave `data-delay="500"` (`filter:1450`, `table:492`)~~
-  (fixed; a re-create set it again, so nothing showed); ~~the column toggle builds a second Reset footer (`table:478`)~~ (fixed); Side Menu's toggle stays shown and
-  dead (`sidemenu:212`); Taginput's chips still drive the dead instance (`taginput:307`); ~~Filter's `_ndsFilterObserver`
+  (fixed; a re-create set it again, so nothing showed); ~~the column toggle builds a second Reset footer (`table:478`)~~ (fixed); ~~Side Menu's toggle stays shown and
+  dead (`sidemenu:212`)~~ (fixed); Taginput's chips still drive the dead instance (`taginput:307`); ~~Filter's `_ndsFilterObserver`
   stays true, so later options are never wired (`filter:1690`)~~ (fixed); Session Timeout reuses its dialogs with the old links
   (`session-timeout:95`); Date Picker may keep its error and block the form (`date-picker:605`, possible).
 - Leaks: Pagination's ellipsis Dropmenu is not destroyed and `el.ndsPagination` has no `destroy()`; its stamps survive

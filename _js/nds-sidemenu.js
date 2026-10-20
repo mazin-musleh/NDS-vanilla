@@ -131,9 +131,10 @@
     function setupScrollPeek(toggleBtn, abortController) {
         if (!toggleBtn.classList.contains('nds-peek')) return;
 
+        const { signal } = abortController;
         // Flash peek on page load
         toggleBtn.classList.remove('nds-peek');
-        setTimeout(() => toggleBtn.classList.add('nds-peek'), 1500);
+        const flash = setTimeout(() => toggleBtn.classList.add('nds-peek'), 1500);
 
         const threshold = 60;
         let cachedRect = null;
@@ -157,8 +158,13 @@
             toggleBtn.classList.toggle('nds-peek', dist > threshold);
         });
 
-        const { signal } = abortController;
         window.addEventListener('mousemove', mousemoveHandler, { passive: true, signal });
+        // The authored peek comes back with the button's resting look.
+        signal.addEventListener('abort', () => {
+            clearTimeout(flash);
+            clearTimeout(rectTimer);
+            toggleBtn.classList.add('nds-peek');
+        });
         // Pooled handle takes no signal — bridge it onto the same teardown.
         const offResize = NDS.onResize(invalidate);
         signal.addEventListener('abort', offResize);
@@ -166,7 +172,7 @@
 
     function destroy() {
         if (currentInstance) {
-            const { abortController, accMenu, animTarget } = currentInstance;
+            const { abortController, accMenu, animTarget, toggleBtn } = currentInstance;
 
             if (hasState(animTarget, 'open')) {
                 reset(currentInstance);
@@ -175,6 +181,9 @@
 
             // One abort releases every listener plus the bridged pooled subscribers.
             abortController.abort();
+            // The markup ships the button hidden until script can drive it.
+            if (currentInstance.wasHidden) toggleBtn.hidden = true;
+            if (currentInstance.ownExpanded) toggleBtn.removeAttribute('aria-expanded');
             delete accMenu.ndsSidemenu;
             currentInstance = null;
         }
@@ -204,11 +213,13 @@
         accMenu.ndsSidemenu = { destroy: () => { if (currentInstance === ctx) destroy(); } };
 
         // Closed is the start state; open/close only write on a flip.
-        if (!toggleBtn.hasAttribute('aria-expanded')) NDS.aria.expanded(toggleBtn, false);
+        ctx.ownExpanded = !toggleBtn.hasAttribute('aria-expanded');
+        if (ctx.ownExpanded) NDS.aria.expanded(toggleBtn, false);
         // Escape and a click outside reach the backdrop's onClick.
         toggleBtn.addEventListener("click", () => {
             hasState(animTarget, 'open') ? closeMenu(ctx) : openMenu(ctx);
         }, { signal: abortController.signal });
+        ctx.wasHidden = toggleBtn.hidden;
         toggleBtn.removeAttribute('hidden');
         updateToggleLabel(accMenu, toggleBtn, isTopMode);
         // The label follows an active mark a client-side route moves.
