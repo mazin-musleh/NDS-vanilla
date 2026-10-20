@@ -43,7 +43,7 @@ breadcrumb: [["Examples", "/examples"]]
           </div>
 
           <!-- Actions sit outside .nds-card-content: that is the part that scrolls -->
-          <div class="nds-card-actions nds-row">
+          <div class="nds-card-actions nds-stacked">
             <button type="button" class="nds-btn nds-primary nds-lg nds-full" id="nafath-btn">
               <span class="nds-label">Continue with Nafath</span>
             </button>
@@ -51,19 +51,27 @@ breadcrumb: [["Examples", "/examples"]]
 
           <div class="nds-divider">or</div>
 
-          <div class="nds-card-actions nds-row">
+          <div class="nds-card-actions nds-stacked">
             <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full" id="credentials-btn">
               <span class="nds-label">Sign in with National ID</span>
             </button>
           </div>
+
+          <p class="nds-note nds-center">
+            New here? <a href="{{ '/examples/registration/' | relative_url }}">Create an account</a>
+          </p>
         </div>
 
         <!-- National ID and password: its own card, so it can move to its own page -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-credentials" hidden>
-          <div class="nds-card-header">
-            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+          <div class="nds-card-header nds-horizontal">
+            <a href="{{ '/' | relative_url }}" class="nds-brand">
               <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
                 height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
+            <a href="#" class="nds-btn nds-subtle nds-icon-only" hreflang="ar" lang="ar">
+              <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
+              <span class="nds-label">العربية</span>
             </a>
           </div>
           <form id="credentials-form" class="nds-form" data-ajax>
@@ -113,12 +121,7 @@ breadcrumb: [["Examples", "/examples"]]
                   </div>
                 </div>
                 <div class="nds-form-footer" data-feedback-target>
-                  <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
-                    <span class="nds-feedback-icon">
-                      <i class="nds-icon" aria-hidden="true"></i>
-                    </span>
-                    <span class="nds-feedback-message"><a href="#" class="forgot-password-link">Forgot your password?</a></span>
-                  </span>
+                  <p class="nds-note"><a href="#" class="forgot-password-link">Forgot your password?</a></p>
                 </div>
               </div>
 
@@ -132,38 +135,37 @@ breadcrumb: [["Examples", "/examples"]]
                     <span class="nds-label">Verification code</span>
                   </label>
                 </div>
-                <div class="nds-form-control">
-                  <input type="text" id="captcha-value" name="captcha" class="nds-input" inputmode="numeric" pattern="[0-9]{5}"
-                    maxlength="5" placeholder="Type the code shown below" autocomplete="off" required
-                    data-error-message="Enter the 5 digits shown below">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input">
-                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                <!-- One row: the box, the code image, and a new-code button, all one height -->
+                <div class="nds-flex" style="--gap: var(--spacing-sm);">
+                  <div class="nds-form-control" style="flex: 1;">
+                    <input type="text" id="captcha-value" name="captcha" class="nds-input" inputmode="numeric" pattern="[0-9]{5}"
+                      maxlength="5" placeholder="5 digits" autocomplete="off" required
+                      data-error-message="Enter the 5 digits you see">
+                  </div>
+                  <div class="nds-btn-group">
+                    <span class="nds-btn nds-secondary-outline" style="--btn-padding: 0; --btn-width: 96px;">
+                      <!-- Inline SVG, not an <img>: fill="currentColor" keeps it readable in dark mode -->
+                      <svg width="88" height="26" role="img" aria-label="Verification code image">
+                        <text id="captcha-image" x="44" y="20" text-anchor="middle" font-family="monospace" font-size="19"
+                          letter-spacing="4" fill="currentColor"></text>
+                      </svg>
+                    </span>
+                    <!-- The countdown fills the empty label and takes the icon's place -->
+                    <button type="button" class="nds-btn nds-secondary nds-icon-only nds-cooldown" id="captcha-refresh"
+                      data-cooldown="5" data-cooldown-label="{s}s" aria-label="New code">
+                      <span class="nds-label"></span>
+                      <i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i>
                     </button>
                   </div>
                 </div>
               </div>
-
-              <div class="nds-btn-group nds-center">
-                <span class="nds-btn nds-secondary-outline" style="--btn-padding: 0; --btn-width: 96px;">
-                  <!-- Inline SVG, not an <img>: fill="currentColor" keeps it readable in dark mode -->
-                  <svg width="88" height="26" role="img" aria-label="Verification code image">
-                    <text id="captcha-image" x="44" y="20" text-anchor="middle" font-family="monospace" font-size="19"
-                      letter-spacing="4" fill="currentColor"></text>
-                  </svg>
-                </span>
-                <button type="button" class="nds-btn nds-secondary nds-cooldown" id="captcha-refresh" data-cooldown="5"
-                  data-cooldown-label="{s}s">
-                  <span class="nds-label">New</span>
-                </button>
-              </div>
             </div>
 
-            <div class="nds-card-actions nds-col">
+            <div class="nds-card-actions nds-stacked">
               <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
                 <span class="nds-label">Sign in</span>
               </button>
-              <button type="button" class="nds-btn nds-subtle nds-full back-to-start">
+              <button type="button" class="nds-btn nds-subtle nds-lg nds-full back-to-start">
                 <span class="nds-label">Cancel</span>
               </button>
             </div>
@@ -172,16 +174,20 @@ breadcrumb: [["Examples", "/examples"]]
 
         <!-- Delivery method: where the one-time code is sent -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-delivery" hidden>
-          <div class="nds-card-header">
-            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+          <div class="nds-card-header nds-horizontal">
+            <a href="{{ '/' | relative_url }}" class="nds-brand">
               <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
                 height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
+            <a href="#" class="nds-btn nds-subtle nds-icon-only" hreflang="ar" lang="ar">
+              <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
+              <span class="nds-label">العربية</span>
             </a>
           </div>
           <div class="nds-card-content">
             <div class="nds-card-text nds-center">
               <h1 class="nds-card-title">Choose how to get your code</h1>
-              <p class="nds-card-description">We send a 5-digit code to the method you pick.</p>
+              <p class="nds-card-description">We send a 4-digit code to the method you pick.</p>
             </div>
 
             <!-- The three choices are the page's content, not its actions -->
@@ -189,20 +195,23 @@ breadcrumb: [["Examples", "/examples"]]
               <button type="button" class="nds-btn nds-secondary-outline nds-col delivery-btn" data-delivery="your mobile app">
                 <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
                 <span class="nds-label">Mobile app</span>
+                <span class="nds-note">Nafath app</span>
               </button>
               <button type="button" class="nds-btn nds-secondary-outline nds-col delivery-btn" data-delivery="n****@example.gov.sa">
                 <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
                 <span class="nds-label">Email</span>
+                <span class="nds-note">n****@example.gov.sa</span>
               </button>
               <button type="button" class="nds-btn nds-secondary-outline nds-col delivery-btn" data-delivery="05** *** 419">
-                <i class="nds-icon nds-hgi-notification-02" aria-hidden="true"></i>
+                <i class="hgi hgi-stroke hgi-message-01" aria-hidden="true"></i>
                 <span class="nds-label">Text message</span>
+                <span class="nds-note" dir="ltr">05** *** 419</span>
               </button>
             </div>
           </div>
 
-          <div class="nds-card-actions nds-row">
-            <button type="button" class="nds-btn nds-subtle nds-full back-to-start">
+          <div class="nds-card-actions nds-stacked">
+            <button type="button" class="nds-btn nds-subtle nds-lg nds-full back-to-start">
               <span class="nds-label">Cancel</span>
             </button>
           </div>
@@ -210,17 +219,21 @@ breadcrumb: [["Examples", "/examples"]]
 
         <!-- One-time code -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-otp" hidden>
-          <div class="nds-card-header">
-            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+          <div class="nds-card-header nds-horizontal">
+            <a href="{{ '/' | relative_url }}" class="nds-brand">
               <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
                 height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
+            <a href="#" class="nds-btn nds-subtle nds-icon-only" hreflang="ar" lang="ar">
+              <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
+              <span class="nds-label">العربية</span>
             </a>
           </div>
           <form id="otp-form" class="nds-form" data-ajax>
             <div class="nds-card-content">
               <div class="nds-card-text nds-center">
                 <h1 class="nds-card-title">Enter your code</h1>
-                <p class="nds-card-description">We sent a 5-digit code to <strong id="otp-destination">your mobile app</strong>.</p>
+                <p class="nds-card-description">We sent a 4-digit code to <strong id="otp-destination">your mobile app</strong>.</p>
               </div>
 
               <fieldset class="nds-form-group nds-otp-group nds-md nds-center" data-required>
@@ -229,27 +242,22 @@ breadcrumb: [["Examples", "/examples"]]
                   <div class="nds-form-container nds-otp-container">
                     <div class="nds-form-control">
                       <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code"
-                        aria-label="Digit 1 of 5">
+                        aria-label="Digit 1 of 4">
                     </div>
                   </div>
                   <div class="nds-form-container nds-otp-container">
                     <div class="nds-form-control">
-                      <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 2 of 5">
+                      <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 2 of 4">
                     </div>
                   </div>
                   <div class="nds-form-container nds-otp-container">
                     <div class="nds-form-control">
-                      <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 3 of 5">
+                      <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 3 of 4">
                     </div>
                   </div>
                   <div class="nds-form-container nds-otp-container">
                     <div class="nds-form-control">
-                      <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 4 of 5">
-                    </div>
-                  </div>
-                  <div class="nds-form-container nds-otp-container">
-                    <div class="nds-form-control">
-                      <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 5 of 5">
+                      <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 4 of 4">
                     </div>
                   </div>
                 </div>
@@ -268,6 +276,7 @@ breadcrumb: [["Examples", "/examples"]]
               </fieldset>
 
               <div class="nds-center">
+                <p class="nds-note nds-center">Didn't receive the code?</p>
                 <button type="button" class="nds-btn nds-subtle nds-cooldown" id="otp-resend" data-cooldown="30"
                   data-cooldown-label="Resend in {s}s" data-resend-label="Resend">
                   <span class="nds-label">Resend code</span>
@@ -275,12 +284,12 @@ breadcrumb: [["Examples", "/examples"]]
               </div>
             </div>
 
-            <div class="nds-card-actions nds-col">
+            <div class="nds-card-actions nds-stacked">
               <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
                 <span class="nds-label">Verify</span>
               </button>
               <!-- Cancel returns to whichever card sent the code, so no fixed target -->
-              <button type="button" class="nds-btn nds-subtle nds-full" id="otp-cancel">
+              <button type="button" class="nds-btn nds-subtle nds-lg nds-full" id="otp-cancel">
                 <span class="nds-label">Cancel</span>
               </button>
             </div>
@@ -289,10 +298,14 @@ breadcrumb: [["Examples", "/examples"]]
 
         <!-- Signed in: account home for the rest of the family -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-account" hidden>
-          <div class="nds-card-header">
-            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+          <div class="nds-card-header nds-horizontal">
+            <a href="{{ '/' | relative_url }}" class="nds-brand">
               <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
                 height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
+            <a href="#" class="nds-btn nds-subtle nds-icon-only" hreflang="ar" lang="ar">
+              <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
+              <span class="nds-label">العربية</span>
             </a>
           </div>
           <div class="nds-card-content">
@@ -305,19 +318,19 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
           </div>
 
-          <div class="nds-card-actions nds-col">
-            <a href="{{ '/examples/console-demo/' | relative_url }}" class="nds-btn nds-primary nds-full">
+          <div class="nds-card-actions nds-stacked">
+            <a href="{{ '/examples/console-demo/' | relative_url }}" class="nds-btn nds-primary nds-lg nds-full">
               <span class="nds-label">Go to dashboard</span>
             </a>
-            <button type="button" class="nds-btn nds-secondary-outline nds-full" data-goto="password">
+            <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full" data-goto="password">
               <i class="nds-icon nds-hgi-square-lock-01" aria-hidden="true"></i>
               <span class="nds-label">Change password</span>
             </button>
-            <button type="button" class="nds-btn nds-secondary-outline nds-full" data-goto="mobile">
+            <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full" data-goto="mobile">
               <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
               <span class="nds-label">Update mobile number</span>
             </button>
-            <button type="button" class="nds-btn nds-subtle nds-full" data-goto="out">
+            <button type="button" class="nds-btn nds-subtle nds-lg nds-full" data-goto="out">
               <i class="nds-icon nds-hgi-door-01" aria-hidden="true"></i>
               <span class="nds-label">Sign out</span>
             </button>
@@ -326,10 +339,14 @@ breadcrumb: [["Examples", "/examples"]]
 
         <!-- Change password -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-change-password" hidden>
-          <div class="nds-card-header">
-            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+          <div class="nds-card-header nds-horizontal">
+            <a href="{{ '/' | relative_url }}" class="nds-brand">
               <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
                 height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
+            <a href="#" class="nds-btn nds-subtle nds-icon-only" hreflang="ar" lang="ar">
+              <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
+              <span class="nds-label">العربية</span>
             </a>
           </div>
           <form id="password-form" class="nds-form" data-ajax>
@@ -452,11 +469,11 @@ breadcrumb: [["Examples", "/examples"]]
               </div>
             </div>
 
-            <div class="nds-card-actions nds-col">
-              <button type="submit" class="nds-btn nds-primary nds-full">
+            <div class="nds-card-actions nds-stacked">
+              <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
                 <span class="nds-label">Update password</span>
               </button>
-              <button type="button" class="nds-btn nds-subtle nds-full" data-goto="account">
+              <button type="button" class="nds-btn nds-subtle nds-lg nds-full" data-goto="account">
                 <span class="nds-label">Cancel</span>
               </button>
             </div>
@@ -465,10 +482,14 @@ breadcrumb: [["Examples", "/examples"]]
 
         <!-- Update mobile number -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-mobile" hidden>
-          <div class="nds-card-header">
-            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+          <div class="nds-card-header nds-horizontal">
+            <a href="{{ '/' | relative_url }}" class="nds-brand">
               <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
                 height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
+            <a href="#" class="nds-btn nds-subtle nds-icon-only" hreflang="ar" lang="ar">
+              <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
+              <span class="nds-label">العربية</span>
             </a>
           </div>
           <form id="mobile-form" class="nds-form" data-ajax>
@@ -507,11 +528,11 @@ breadcrumb: [["Examples", "/examples"]]
               </div>
             </div>
 
-            <div class="nds-card-actions nds-col">
-              <button type="submit" class="nds-btn nds-primary nds-full">
+            <div class="nds-card-actions nds-stacked">
+              <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
                 <span class="nds-label">Send code</span>
               </button>
-              <button type="button" class="nds-btn nds-subtle nds-full" data-goto="account">
+              <button type="button" class="nds-btn nds-subtle nds-lg nds-full" data-goto="account">
                 <span class="nds-label">Cancel</span>
               </button>
             </div>
@@ -520,35 +541,29 @@ breadcrumb: [["Examples", "/examples"]]
 
         <!-- Signed out -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-out" hidden>
-          <div class="nds-card-header">
-            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+          <div class="nds-card-header nds-horizontal">
+            <a href="{{ '/' | relative_url }}" class="nds-brand">
               <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
                 height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
+            <a href="#" class="nds-btn nds-subtle nds-icon-only" hreflang="ar" lang="ar">
+              <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
+              <span class="nds-label">العربية</span>
             </a>
           </div>
           <div class="nds-card-content">
             <div class="nds-card-text nds-center">
-              <h1 class="nds-card-title">Signed out</h1>
-            </div>
-
-            <div class="nds-alert nds-card nds-color" data-status="success" role="alert">
-              <span class="nds-feedback nds-alert-icon nds-outline">
-                <span class="nds-feedback-icon">
-                  <i class="nds-icon" aria-hidden="true"></i>
-                </span>
+              <span class="nds-featured-icon nds-xl nds-circle nds-center" data-status="success">
+                <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
               </span>
-              <div class="nds-alert-content">
-                <div class="nds-alert-text">
-                  <span class="nds-alert-title">You signed out safely</span>
-                  <p class="nds-alert-description">The sign-in page opens again in <strong id="signout-countdown">10</strong>
-                    seconds.</p>
-                </div>
-              </div>
+              <h1 class="nds-card-title">You signed out safely</h1>
+              <p class="nds-card-description">The sign-in page opens again in
+                <strong id="signout-countdown">10</strong> seconds.</p>
             </div>
           </div>
 
-          <div class="nds-card-actions nds-row">
-            <button type="button" class="nds-btn nds-secondary-outline nds-full back-to-start">
+          <div class="nds-card-actions nds-stacked">
+            <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full back-to-start">
               <span class="nds-label">Sign in again</span>
             </button>
           </div>
@@ -680,7 +695,7 @@ breadcrumb: [["Examples", "/examples"]]
       if (captchaInput.value !== captchaCode) {
         // A wrong code is a field error: pin it to the input, not a form banner
         NDS.Form.setStatus(captchaField, 'error', {
-          message: 'Wrong code. Enter the new code shown below.'
+          message: 'Wrong code. Enter the new code.'
         });
         captchaInput.value = '';
         // The refresh button owns the regeneration, so drive it rather than calling
@@ -702,7 +717,7 @@ breadcrumb: [["Examples", "/examples"]]
     // --- Delivery method + one-time code ------------------------------------
 
     function sendCode(destination) {
-      expectedCode = String(Math.floor(10000 + Math.random() * 90000));
+      expectedCode = String(Math.floor(1000 + Math.random() * 9000));
       // Empties the boxes, syncs the hidden carrier, and focuses the first box.
       // Call it with the card already visible or the focus has nowhere to land.
       NDS.Otp.clear(otpGroup);

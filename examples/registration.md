@@ -153,7 +153,7 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
 
             <!-- Actions sit outside .nds-card-content: that is the part that scrolls -->
-            <div class="nds-card-actions nds-row">
+            <div class="nds-card-actions nds-stacked">
               <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
                 <span class="nds-label">Create account</span>
               </button>
@@ -167,11 +167,14 @@ breadcrumb: [["Examples", "/examples"]]
 
         <!-- Step 2: Verify Email -->
         <div class="nds-card nds-shadow nds-stroke" id="registration-step-2" hidden>
-          <div class="nds-card-header">
-            <!-- The logo is the way home: the minimal layout ships no site chrome -->
-            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+          <div class="nds-card-header nds-horizontal">
+            <a href="{{ '/' | relative_url }}" class="nds-brand">
               <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
                 height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
+            <a href="#" class="nds-btn nds-subtle nds-icon-only" hreflang="ar" lang="ar">
+              <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
+              <span class="nds-label">العربية</span>
             </a>
           </div>
           <form id="registration-form-2" class="nds-form" data-ajax>
@@ -219,7 +222,7 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
               </fieldset>
               <div class="nds-center">
-                  <p class="nds-note nds-center">Didn't receive the code?</p>
+                <p class="nds-note nds-center">Didn't receive the code?</p>
                 <button type="button" class="nds-btn nds-subtle nds-cooldown" id="registration-resend" data-cooldown="30"
                   data-cooldown-label="Resend in {s}s" data-resend-label="Resend">
                   <span class="nds-label">Resend code</span>
@@ -227,11 +230,11 @@ breadcrumb: [["Examples", "/examples"]]
               </div>
             </div>
 
-            <div class="nds-card-actions nds-row">
+            <div class="nds-card-actions nds-stacked">
               <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
                 <span class="nds-label">Verify</span>
               </button>
-              <button type="button" class="nds-btn nds-secondary-outline nds-lg step-prev-btn">
+              <button type="button" class="nds-btn nds-subtle nds-lg nds-full step-prev-btn">
                 <span class="nds-label">Back</span>
               </button>
             </div>
@@ -240,11 +243,14 @@ breadcrumb: [["Examples", "/examples"]]
 
         <!-- Step 3: Success -->
         <div class="nds-card nds-shadow nds-stroke" id="registration-step-3" hidden>
-          <div class="nds-card-header">
-            <!-- The logo is the way home: the minimal layout ships no site chrome -->
-            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+          <div class="nds-card-header nds-horizontal">
+            <a href="{{ '/' | relative_url }}" class="nds-brand">
               <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
                 height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
+            <a href="#" class="nds-btn nds-subtle nds-icon-only" hreflang="ar" lang="ar">
+              <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
+              <span class="nds-label">العربية</span>
             </a>
           </div>
           <div class="nds-card-content">
@@ -257,7 +263,7 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
           </div>
 
-          <div class="nds-card-actions nds-row">
+          <div class="nds-card-actions nds-stacked">
             <a href="{{ '/examples/console-demo/' | relative_url }}" class="nds-btn nds-primary nds-lg nds-full">
               <span class="nds-label">Go to dashboard</span>
             </a>
