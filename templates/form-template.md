@@ -22,7 +22,7 @@ sidemenu_mode: false
             <p class="nds-note nds-block" data-status="error"><span class="nds-label">*Required information</span></p>
 
             <!-- data-ajax: Forms owns the submit listener and stops the POST itself
-                 after validation. Send the request from nds:formValid. -->
+                 after validation. Send the request from nds:form:valid. -->
             <form id="ft-form" class="nds-form" data-ajax>
 
                 <!-- ============================================================
@@ -308,7 +308,7 @@ sidemenu_mode: false
                             <span class="nds-label">Back</span>
                         </button>
                         <!-- No data-stepper-control: it would preventDefault the click
-                             and submit would never fire. Advance from nds:formValid. -->
+                             and submit would never fire. Advance from nds:form:valid. -->
                         <button type="submit" class="nds-btn nds-primary" id="ft-submit">
                             <span class="nds-label">Submit Application</span>
                         </button>
@@ -431,7 +431,7 @@ sidemenu_mode: false
         // from its event — a bare click handler would let the user hammer the endpoint —
         // and confirm from the outcome so a failure never reports success.
         document.getElementById('ft-otp-resend')
-            .addEventListener('nds:cooldown:triggered', function () {
+            .addEventListener('nds:cooldown:start', function () {
                 // Replace sendCode() with your own request. The loading state is the
                 // page's: it lasts exactly as long as the request does, and the countdown
                 // ticks underneath it.
@@ -546,11 +546,11 @@ sidemenu_mode: false
             });
         });
 
-        // data-ajax: Forms validates on submit, stops the POST and fires nds:formValid.
+        // data-ajax: Forms validates on submit, stops the POST and fires nds:form:valid.
         // Advance from the request's OUTCOME, never the click — a failure must not
         // report success. Forms skips fields in a hidden panel, so this validates step 3.
         document.getElementById('ft-form')
-            .addEventListener('nds:formValid', function () {
+            .addEventListener('nds:form:valid', function () {
                 var btn = document.getElementById('ft-submit');
                 NDS.State.add(btn, 'loading');
                 // Replace submitApplication() with your own request.

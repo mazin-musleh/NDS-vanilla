@@ -37,8 +37,8 @@
 (() => {
     'use strict';
 
-    const WARN_ID = 'ndsSessionWarning';
-    const ENDED_ID = 'ndsSessionEnded';
+    const WARN_ID = 'nds-session-warning';
+    const ENDED_ID = 'nds-session-ended';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
     const strings = NDS.i18n.strings('session-timeout', {

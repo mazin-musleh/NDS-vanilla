@@ -438,7 +438,7 @@
     // `button` with no type IS submit-typed inside a form.
     rule({ id: 'stepper-submit', docs: 'components/stepper.html', check(ctx) {
         ctx.find('form :is(button:not([type="button"]):not([type="reset"]), input[type="submit"])[data-stepper-control]').forEach(el =>
-            ctx.report(el, 'submit-typed button with data-stepper-control — the stepper hands this click to the form and does not move, so the attribute does nothing.', 'A form step is gated, so drive it from JS: call NDS.Stepper.next() after NDS.Forms.validateForm() passes, or from nds:formValid once your request succeeds.'));
+            ctx.report(el, 'submit-typed button with data-stepper-control — the stepper hands this click to the form and does not move, so the attribute does nothing.', 'A form step is gated, so drive it from JS: call NDS.Stepper.next() after NDS.Forms.validateForm() passes, or from nds:form:valid once your request succeeds.'));
     } });
 
     // ── migration ────────────────────────────────────────────────────

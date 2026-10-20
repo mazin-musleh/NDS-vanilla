@@ -182,6 +182,31 @@
 - { kind: event, name: nds:digitalStamp:opened, status: renamed, use: nds:digital-stamp:opened, since: "2.0.0", fix: "Listen for nds:digital-stamp:opened." }
 - { kind: event, name: nds:table:selection, status: renamed, use: nds:selection:change, since: "2.0.0", fix: "Listen for nds:selection:change on the list." }
 - { kind: event, name: nds:table:sort, status: renamed, use: nds:sort:change, since: "2.0.0", fix: "Listen for nds:sort:change; detail.key is the column index and detail.order the order." }
+- { kind: event, name: nds:accordion:hidden, status: renamed, use: nds:accordion:closed, since: "2.0.0", fix: "Listen for nds:accordion:closed." }
+- { kind: event, name: nds:accordion:shown, status: renamed, use: nds:accordion:opened, since: "2.0.0", fix: "Listen for nds:accordion:opened." }
+- { kind: event, name: nds:dropmenu:selected, status: renamed, use: nds:dropmenu:select, since: "2.0.0", fix: "Listen for nds:dropmenu:select." }
+- { kind: event, name: nds:feedbackCreate, status: renamed, use: nds:feedback:created, since: "2.0.0", fix: "Listen for nds:feedback:created." }
+- { kind: event, name: nds:feedbackDismiss, status: renamed, use: nds:feedback:dismiss, since: "2.0.0", fix: "Listen for nds:feedback:dismiss." }
+- { kind: event, name: nds:filterFormAjax, status: renamed, use: nds:filter:request, since: "2.0.0", fix: "Listen for nds:filter:request." }
+- { kind: event, name: nds:filterFormComplete, status: renamed, use: nds:filter:success, since: "2.0.0", fix: "Listen for nds:filter:success." }
+- { kind: event, name: nds:filterFormError, status: renamed, use: nds:filter:error, since: "2.0.0", fix: "Listen for nds:filter:error." }
+- { kind: event, name: nds:filterFormSubmit, status: renamed, use: nds:filter:submit, since: "2.0.0", fix: "Listen for nds:filter:submit." }
+- { kind: event, name: nds:formInvalid, status: renamed, use: nds:form:invalid, since: "2.0.0", fix: "Listen for nds:form:invalid." }
+- { kind: event, name: nds:formValid, status: renamed, use: nds:form:valid, since: "2.0.0", fix: "Listen for nds:form:valid." }
+- { kind: event, name: nds:formValidate, status: renamed, use: nds:form:validate, since: "2.0.0", fix: "Listen for nds:form:validate." }
+- { kind: event, name: nds:indeterminateChange, status: renamed, use: nds:checkbox:indeterminate, since: "2.0.0", fix: "Listen for nds:checkbox:indeterminate." }
+- { kind: event, name: nds:otpChange, status: renamed, use: nds:otp:change, since: "2.0.0", fix: "Listen for nds:otp:change." }
+- { kind: event, name: nds:otpClear, status: renamed, use: nds:otp:clear, since: "2.0.0", fix: "Listen for nds:otp:clear." }
+- { kind: event, name: nds:otpComplete, status: renamed, use: nds:otp:complete, since: "2.0.0", fix: "Listen for nds:otp:complete." }
+- { kind: event, name: nds:statusChange, status: renamed, use: nds:form:status, since: "2.0.0", fix: "Listen for nds:form:status." }
+- { kind: event, name: nds:switchChange, status: renamed, use: nds:switch:change, since: "2.0.0", fix: "Listen for nds:switch:change." }
+- { kind: event, name: nds:upload:beforeUpload, status: renamed, use: nds:upload:start, since: "2.0.0", fix: "Listen for nds:upload:start." }
+- { kind: event, name: nds:upload:maxFilesReached, status: renamed, use: nds:upload:max-files, since: "2.0.0", fix: "Listen for nds:upload:max-files." }
+- { kind: event, name: nds:upload:validationError, status: renamed, use: nds:upload:invalid, since: "2.0.0", fix: "Listen for nds:upload:invalid." }
+- { kind: event, name: nds:cooldown:triggered, status: renamed, use: nds:cooldown:start, since: "2.0.0", fix: "Listen for nds:cooldown:start." }
+- { kind: event, name: nds:table:sub-close, status: renamed, use: nds:table:sub-closed, since: "2.0.0", fix: "Listen for nds:table:sub-closed." }
+- { kind: event, name: nds:table:sub-open, status: renamed, use: nds:table:sub-opened, since: "2.0.0", fix: "Listen for nds:table:sub-opened." }
+- { kind: event, name: nds:upload:selected, status: renamed, use: nds:upload:select, since: "2.0.0", fix: "Listen for nds:upload:select." }
 - { kind: attribute, name: data-sort-dir, status: renamed, use: data-sort-order, since: "2.0.0", fix: "Use data-sort-order." }
 - { kind: attribute, name: data-portal, scope: "&.nds-dropmenu", status: removed, since: "2.0.0", fix: "Remove it: an open menu sits in the browser's top layer, so nothing clips it and it stays inside its wrapper." }
 - { kind: attribute, name: data-no-portal, scope: "&.nds-dropmenu", status: removed, since: "2.0.0", fix: "Remove it: an open menu never leaves its wrapper now, so CSS and DOM walks scoped under the wrapper reach it." }
@@ -194,10 +219,10 @@
 - { kind: property, name: --form-field-border-info, scope: .nds-form-control, status: renamed, use: --border-info, since: "1.11.0", fix: "Use --border-info.", inert: true }
 - { kind: property, name: --form-field-border-success, scope: .nds-form-control, status: renamed, use: --border-success, since: "1.11.0", fix: "Use --border-success.", inert: true }
 - { kind: property, name: --form-field-border-warning, scope: .nds-form-control, status: renamed, use: --border-warning, since: "1.11.0", fix: "Use --border-warning.", inert: true }
-- { kind: attribute, name: data-cooldown-loading, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
-- { kind: attribute, name: data-sent-message, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
-- { kind: attribute, name: data-sent-title, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
-- { kind: event, name: nds:cooldown:loading, status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:triggered handler and set data-state=\"loading\" yourself." }
+- { kind: attribute, name: data-cooldown-loading, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:start handler and set data-state=\"loading\" yourself." }
+- { kind: attribute, name: data-sent-message, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:start handler and set data-state=\"loading\" yourself." }
+- { kind: attribute, name: data-sent-title, scope: "&[data-cooldown]", status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:start handler and set data-state=\"loading\" yourself." }
+- { kind: event, name: nds:cooldown:loading, status: removed, since: "1.9.0", fix: "Delete it. Show your own confirmation in a nds:cooldown:start handler and set data-state=\"loading\" yourself." }
 - { kind: class, name: nds-card-form, scope: .nds-card, status: renamed, use: nds-card-meta, since: "1.7.0", fix: "Use nds-card-meta where it was the column wrapper, and drop the class otherwise." }
 - { kind: class, name: nds-center-lg, status: removed, since: "1.7.0", fix: "Write the media query in your own stylesheet; nds-center itself is unchanged." }
 - { kind: class, name: nds-center-md, status: removed, since: "1.7.0", fix: "Write the media query in your own stylesheet; nds-center itself is unchanged." }

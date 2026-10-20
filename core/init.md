@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 10:18 AM"
+last_edit: "20/10/2026 - 07:46 AM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -139,7 +139,7 @@ Call `window.NDS?.Init.mount(view)` after a view mounts, and `window.NDS?.Init.d
 
 Build rows with the framework, not with the `<template>` pattern in [Usage](#init-markup). The framework owns every node it renders.
 
-For the same reason, do not let a [Filter](../components/filter) `data-ajax` request swap in HTML: it replaces the results container. Answer with JSON, or stop the request in `nds:filterFormAjax` and send your own. Then render the results with the framework.
+For the same reason, do not let a [Filter](../components/filter) `data-ajax` request swap in HTML: it replaces the results container. Answer with JSON, or stop the request in `nds:filter:request` and send your own. Then render the results with the framework.
 
 ### HTML Swaps
 {: .nds-block-title}

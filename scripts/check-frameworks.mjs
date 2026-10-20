@@ -150,8 +150,8 @@ for (const v of REACT) {
                 window.NDS?.Init.mount(el);
                 const dm = el.querySelector('#r-dm');
                 const on = (e) => window.__picks.push(e.detail.value);
-                dm.addEventListener('nds:dropmenu:selected', on);
-                return () => { dm.removeEventListener('nds:dropmenu:selected', on); window.__destroy(el); };
+                dm.addEventListener('nds:dropmenu:select', on);
+                return () => { dm.removeEventListener('nds:dropmenu:select', on); window.__destroy(el); };
             }, []);
             return h('div', { ref }, ...tree(window.__VIEW('r')));
         }
@@ -200,7 +200,7 @@ for (const v of VUE) {
         const View = {
             template: '<div ref="root">' + window.__VIEW('v') + '</div>',
             mounted() {
-                this.$refs.root.querySelector('#v-dm').addEventListener('nds:dropmenu:selected', (e) => window.__picks.push(e.detail.value));
+                this.$refs.root.querySelector('#v-dm').addEventListener('nds:dropmenu:select', (e) => window.__picks.push(e.detail.value));
                 window.NDS?.Init.mount(this.$refs.root);
             },
             beforeUnmount() { window.__destroy(this.$refs.root); }
@@ -245,7 +245,7 @@ for (const v of VUE) {
         document.addEventListener('htmx:beforeSwap', (e) => { window.__released_count += window.__destroy(e.detail.target); });
         document.addEventListener('htmx:afterSwap', (e) => NDS.Init.mount(e.detail.target));
         // Delegated, since each swap brings a new dropmenu element.
-        document.addEventListener('nds:dropmenu:selected', (e) => { if (e.target.id === 'x-dm') window.__picks.push(e.detail.value); });
+        document.addEventListener('nds:dropmenu:select', (e) => { if (e.target.id === 'x-dm') window.__picks.push(e.detail.value); });
         window.__swap = () => new Promise((r) => {
             document.addEventListener('htmx:afterSettle', () => r(), { once: true });
             htmx.ajax('GET', url, { target: '#x-target', swap: 'innerHTML' });
@@ -272,7 +272,7 @@ for (const v of VUE) {
         window.__released_count = 0;
         document.addEventListener('turbo:before-frame-render', (e) => { window.__released_count += window.__destroy(e.target); });
         document.addEventListener('turbo:frame-render', (e) => NDS.Init.mount(e.target));
-        document.addEventListener('nds:dropmenu:selected', (e) => { if (e.target.id === 't-dm') window.__picks.push(e.detail.value); });
+        document.addEventListener('nds:dropmenu:select', (e) => { if (e.target.id === 't-dm') window.__picks.push(e.detail.value); });
         let n = 0;
         window.__swap = () => new Promise((r) => {
             frame.addEventListener('turbo:frame-load', () => r(), { once: true });
@@ -506,7 +506,7 @@ for (const v of SVELTE) {
   export let show = true;
   export let on = false;
   function nds(node) {
-    node.querySelector('#s-dm').addEventListener('nds:dropmenu:selected', (e) => window.__picks.push(e.detail.value));
+    node.querySelector('#s-dm').addEventListener('nds:dropmenu:select', (e) => window.__picks.push(e.detail.value));
     window.NDS?.Init.mount(node);
     return { destroy() { window.__destroy(node); } };
   }
@@ -555,7 +555,7 @@ for (const [v, zone] of ANGULAR) {
             el = inject(ElementRef);
             ngAfterViewInit() {
                 const root = this.el.nativeElement;
-                root.querySelector('#a-dm').addEventListener('nds:dropmenu:selected', (e) => window.__picks.push(e.detail.value));
+                root.querySelector('#a-dm').addEventListener('nds:dropmenu:select', (e) => window.__picks.push(e.detail.value));
                 window.NDS?.Init.mount(root);
             }
             ngOnDestroy() { window.__destroy(this.el.nativeElement); }
@@ -613,7 +613,7 @@ const IDIOMORPH = 'idiomorph@0.7.3/dist/idiomorph.min.js';
         host.id = 'm-host';
         host.innerHTML = html;
         NDS.Init.mount(host);
-        host.querySelector('#m-dm').addEventListener('nds:dropmenu:selected', (e) => window.__picks.push(e.detail.value));
+        host.querySelector('#m-dm').addEventListener('nds:dropmenu:select', (e) => window.__picks.push(e.detail.value));
         window.__morph = () => {
             window.__destroy(host);
             Idiomorph.morph(host, html, { morphStyle: 'innerHTML' });
@@ -645,7 +645,7 @@ const IDIOMORPH = 'idiomorph@0.7.3/dist/idiomorph.min.js';
         NDS.Init.refresh(host);
         await window.__wait(300);
         const picks = [];
-        dm.addEventListener('nds:dropmenu:selected', (e) => picks.push(e.detail.value));
+        dm.addEventListener('nds:dropmenu:select', (e) => picks.push(e.detail.value));
         dm.querySelector('.nds-dropmenu-trigger').click();
         await window.__wait();
         const menu = NDS.Dropmenu.menuOf(dm);
@@ -672,7 +672,7 @@ const IDIOMORPH = 'idiomorph@0.7.3/dist/idiomorph.min.js';
         window.__released_count = 0;
         document.addEventListener('turbo:before-frame-render', (e) => { window.__released_count += window.__destroy(e.target); });
         document.addEventListener('turbo:frame-render', (e) => NDS.Init.mount(e.target));
-        document.addEventListener('nds:dropmenu:selected', (e) => { if (e.target.id === 't8-dm') window.__picks.push(e.detail.value); });
+        document.addEventListener('nds:dropmenu:select', (e) => { if (e.target.id === 't8-dm') window.__picks.push(e.detail.value); });
         window.__swap = () => new Promise((r) => {
             frame.addEventListener('turbo:frame-load', () => r(), { once: true });
             if (frame.src) frame.reload(); else frame.src = url;

@@ -343,7 +343,7 @@ breadcrumb: [["Examples", "/examples"]]
     //   NDS.Alert.create({ variant: 'error', title: 'Registration failed',
     //     description: reason, target: '#registration-form-1 .nds-card-content',
     //     prepend: true, closable: false });
-    form1.addEventListener('nds:formValid', function () {
+    form1.addEventListener('nds:form:valid', function () {
       var btn = form1.querySelector('button[type="submit"]');
       withLoading(btn, 1500, function () {
         show('step2');
@@ -352,7 +352,7 @@ breadcrumb: [["Examples", "/examples"]]
     });
 
     // Step 2 — Verify
-    form2.addEventListener('nds:formValid', function () {
+    form2.addEventListener('nds:form:valid', function () {
       if (NDS.OTP.getValue(otpGroup) !== expectedCode) {
         NDS.Forms.setStatus({
           element: otpGroup,
@@ -378,7 +378,7 @@ breadcrumb: [["Examples", "/examples"]]
     // The loading state is the page's — against a real endpoint it lasts exactly
     // as long as the request, and the countdown ticks underneath it.
     var resendBtn = document.getElementById('registration-resend');
-    resendBtn.addEventListener('nds:cooldown:triggered', function () {
+    resendBtn.addEventListener('nds:cooldown:start', function () {
       // withLoading stands in for the request: it holds data-state="loading" for as
       // long as the call runs, then issues the code. The countdown ticks underneath.
       withLoading(resendBtn, 1200, sendCode);

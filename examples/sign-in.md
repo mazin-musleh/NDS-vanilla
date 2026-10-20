@@ -652,7 +652,7 @@ breadcrumb: [["Examples", "/examples"]]
     // The cooldown component handles the disabled state and the countdown;
     // this only fetches a fresh code when the countdown starts.
     var captchaBtn = document.getElementById('captcha-refresh');
-    captchaBtn.addEventListener('nds:cooldown:triggered', function () {
+    captchaBtn.addEventListener('nds:cooldown:start', function () {
       withLoading(captchaBtn, 800, newCaptcha);
     });
 
@@ -675,7 +675,7 @@ breadcrumb: [["Examples", "/examples"]]
     //   NDS.Alert.create({ variant: 'error', title: 'Sign-in failed',
     //     description: reason, target: '#credentials-form .nds-card-content',
     //     prepend: true, closable: false });
-    credForm.addEventListener('nds:formValid', function () {
+    credForm.addEventListener('nds:form:valid', function () {
       var captchaField = captchaInput.closest('.nds-form-container');
       if (captchaInput.value !== captchaCode) {
         // A wrong code is a field error: pin it to the input, not a form banner
@@ -728,7 +728,7 @@ breadcrumb: [["Examples", "/examples"]]
     // demo issues the code locally so it cannot fail, but against a real endpoint the
     // alert moves into the response handler and failures show an error variant.
     var otpResendBtn = document.getElementById('otp-resend');
-    otpResendBtn.addEventListener('nds:cooldown:triggered', function () {
+    otpResendBtn.addEventListener('nds:cooldown:start', function () {
       // withLoading stands in for the request: it holds data-state="loading" for as
       // long as the call runs, then sends. The countdown ticks underneath it.
       withLoading(otpResendBtn, 1200, function () {
@@ -741,7 +741,7 @@ breadcrumb: [["Examples", "/examples"]]
       });
     });
 
-    otpForm.addEventListener('nds:formValid', function () {
+    otpForm.addEventListener('nds:form:valid', function () {
       if (NDS.OTP.getValue(otpGroup) !== expectedCode) {
         NDS.Forms.setStatus({
           element: otpGroup,
@@ -782,7 +782,7 @@ breadcrumb: [["Examples", "/examples"]]
     // the retype container carries data-password-match, and the component blocks
     // submit through setCustomValidity. Nothing to wire here.
 
-    passwordForm.addEventListener('nds:formValid', function () {
+    passwordForm.addEventListener('nds:form:valid', function () {
       withLoading(passwordForm.querySelector('button[type="submit"]'), 1500, function () {
         // Each field, its rules and its message go back with the form.
         passwordForm.reset();
@@ -795,7 +795,7 @@ breadcrumb: [["Examples", "/examples"]]
 
     // A new number is only saved once a code sent to it comes back verified,
     // so this hands over to the OTP card instead of saving straight away.
-    mobileForm.addEventListener('nds:formValid', function () {
+    mobileForm.addEventListener('nds:form:valid', function () {
       var value = document.getElementById('mobile-number').value;
       withLoading(mobileForm.querySelector('button[type="submit"]'), 1500, function () {
         otpFlow = 'mobile';

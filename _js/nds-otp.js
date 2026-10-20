@@ -8,9 +8,9 @@
  *   NDS.OTP.setValue(group, value)  fill the boxes (non-digits stripped)
  *   NDS.OTP.clear(group)            empty the boxes, focus the first
  * Events (bubble from the .nds-otp-group; every detail carries `value`):
- *   nds:otpChange     detail {value, filled} — on every edit
- *   nds:otpComplete   detail {value} — the moment every box holds a digit
- *   nds:otpClear      detail {value} — from clear() only
+ *   nds:otp:change     detail {value, filled} — on every edit
+ *   nds:otp:complete   detail {value} — the moment every box holds a digit
+ *   nds:otp:clear      detail {value} — from clear() only
  * Hooks:
  *   (none — the group is markup: the inputs inside .nds-otp-container, plus an optional
  *    input[type="hidden"].nds-otp-value the component keeps in sync)
@@ -70,7 +70,7 @@
     function focusAndComplete(group, inputs) {
         if (isAllFilled(group)) {
             inputs[inputs.length - 1].focus();
-            dispatch(group, 'nds:otpComplete');
+            dispatch(group, 'nds:otp:complete');
         }
     }
 
@@ -135,8 +135,8 @@
 
         syncHidden(group);
         // After the sync, so a submit from the listener posts every digit. Checked on every box: they can be filled out of order.
-        if (digits.length === 1 && isAllFilled(group)) dispatch(group, 'nds:otpComplete');
-        dispatch(group, 'nds:otpChange', { filled: isAllFilled(group) });
+        if (digits.length === 1 && isAllFilled(group)) dispatch(group, 'nds:otp:complete');
+        dispatch(group, 'nds:otp:change', { filled: isAllFilled(group) });
     }
 
     function handleBeforeInput(e, group, input, inputs) {
@@ -160,7 +160,7 @@
             focusAndComplete(group, inputs);
         }
 
-        dispatch(group, 'nds:otpChange', { filled: isAllFilled(group) });
+        dispatch(group, 'nds:otp:change', { filled: isAllFilled(group) });
     }
 
     function handleKeydown(e, group) {
@@ -179,7 +179,7 @@
                 input.value = '';
                 syncHidden(group);
                 if (inputs[idx - 1]) inputs[idx - 1].focus();
-                dispatch(group, 'nds:otpChange', { filled: false });
+                dispatch(group, 'nds:otp:change', { filled: false });
                 break;
 
             case 'Delete':
@@ -187,7 +187,7 @@
                 input.value = '';
                 syncHidden(group);
                 if (inputs[idx + 1]) inputs[idx + 1].focus();
-                dispatch(group, 'nds:otpChange', { filled: false });
+                dispatch(group, 'nds:otp:change', { filled: false });
                 break;
 
             case 'ArrowLeft':
@@ -315,7 +315,7 @@
 
         clear: function (group) {
             clearInputs(group);
-            dispatch(group, 'nds:otpClear');
+            dispatch(group, 'nds:otp:clear');
             var inputs = getOtpInputs(group);
             if (inputs[0]) inputs[0].focus();
         }

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "20/10/2026 - 07:59 AM"
 ---
 
 <section id="cooldown-overview" class="nds-content-section nds-doc-overview">
@@ -102,14 +102,14 @@ The variants and sizes are the [Button](../components/button) ones. The cooldown
             <i class="hgi hgi-stroke hgi-loading-03"></i>
             <span class="nds-label">Your Loading State</span>
           </span>
-          <p class="nds-item-desc">The component has no loading phase: a timer cannot know how long a response takes. Add <code class="nds-inline-code lang-html">data-state="loading"</code> from <code class="nds-inline-code lang-js">nds:cooldown:triggered</code>, and remove it when the response arrives. The state hides the label, so the countdown runs under the spinner.</p>
+          <p class="nds-item-desc">The component has no loading phase: a timer cannot know how long a response takes. Add <code class="nds-inline-code lang-html">data-state="loading"</code> from <code class="nds-inline-code lang-js">nds:cooldown:start</code>, and remove it when the response arrives. The state hides the label, so the countdown runs under the spinner.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-notification-square"></i>
             <span class="nds-label">Your Confirmation</span>
           </span>
-          <p class="nds-item-desc">The component shows no alert of its own. Show one with <a class="nds-color" href="../components/alert">Alert</a> when the response arrives, in the same <code class="nds-inline-code lang-js">nds:cooldown:triggered</code> listener. A failed send then never reports success.</p>
+          <p class="nds-item-desc">The component shows no alert of its own. Show one with <a class="nds-color" href="../components/alert">Alert</a> when the response arrives, in the same <code class="nds-inline-code lang-js">nds:cooldown:start</code> listener. A failed send then never reports success.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -174,14 +174,14 @@ The variants and sizes are the [Button](../components/button) ones. The cooldown
 | Option | Default | Effect |
 |---|---|---|
 | `seconds` | `data-cooldown` | Seconds to run instead. With it, a button needs no `data-cooldown` and can run entirely from JavaScript |
-| `silent` | `false` | Skip `nds:cooldown:triggered`, for a send that already happened elsewhere. `tick` and `end` still fire |
+| `silent` | `false` | Skip `nds:cooldown:start`, for a send that already happened elsewhere. `tick` and `end` still fire |
 {: .nds-table .nds-responsive}
 
 All events bubble.
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:cooldown:triggered` | `.nds-cooldown`, when the cooldown starts. Skipped by `silent` | None. Issue the request here, and confirm from its response |
+| `nds:cooldown:start` | `.nds-cooldown`, when the cooldown starts. Skipped by `silent` | None. Issue the request here, and confirm from its response |
 | `nds:cooldown:tick` | `.nds-cooldown`, every second during the cooldown, starting at the full duration | `{ remaining }`: the seconds left |
 | `nds:cooldown:end` | `.nds-cooldown`, when the cooldown finishes or `reset()` is called | None. The button is enabled again and its label restored |
 {: .nds-table .nds-responsive}
@@ -190,7 +190,7 @@ All events bubble.
 const btn = document.querySelector('#resend-btn');
 
 // Add the listener before any start() call, so the first cooldown reaches it.
-btn.addEventListener('nds:cooldown:triggered', async () => {
+btn.addEventListener('nds:cooldown:start', async () => {
   NDS.State.add(btn, 'loading');
   try {
     // NDS.request throws on a non-OK status, so a failed send reaches
@@ -219,7 +219,7 @@ btn.addEventListener('nds:cooldown:triggered', async () => {
 NDS.CooldownButton.start(btn);
 
 // Or: the send already happened. Start the cooldown without firing
-// nds:cooldown:triggered again.
+// nds:cooldown:start again.
 NDS.CooldownButton.start(btn, { silent: true });
 
 // Or: resume a cooldown after a page reload, with 20 of 30 seconds left.

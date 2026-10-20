@@ -26,10 +26,10 @@
  *   instance.setDisabled(bool) / .refreshUI() / .destroy()
  * Events (bubble from the .nds-file-upload container):
  *   nds:upload:ready             detail {instance}
- *   nds:upload:selected          detail {files, allFiles, fileData} — files that passed checks
- *   nds:upload:validationError   detail {errors:[{file, errors, fileData}]}
- *   nds:upload:maxFilesReached   detail {maxFiles, currentCount}
- *   nds:upload:beforeUpload      detail {fileData, formData, xhr} — CANCELABLE. Set headers on
+ *   nds:upload:select            detail {files, allFiles, fileData} — files that passed checks
+ *   nds:upload:invalid           detail {errors:[{file, errors, fileData}]}
+ *   nds:upload:max-files         detail {maxFiles, currentCount}
+ *   nds:upload:start             detail {fileData, formData, xhr} — CANCELABLE. Set headers on
  *                                detail.xhr, or preventDefault() to send it yourself
  *   nds:upload:progress          detail {fileData, progress}
  *   nds:upload:success           detail {fileData, response}
@@ -251,7 +251,7 @@
             const config = this._readConfig();
             const isSingle = NDS.State.has(this.container, 'single');
             if (!isSingle && this._files.length >= config.maxFiles) {
-                this._dispatchEvent('nds:upload:maxFilesReached', {
+                this._dispatchEvent('nds:upload:max-files', {
                     maxFiles: config.maxFiles,
                     currentCount: this._files.length
                 });
@@ -483,7 +483,7 @@
                 .concat(excessFiles.map(file => this._entry(file, [strings.text('max_files', { n: config.maxFiles })])));
 
             if (excessFiles.length > 0) {
-                this._dispatchEvent('nds:upload:maxFilesReached', {
+                this._dispatchEvent('nds:upload:max-files', {
                     maxFiles: config.maxFiles,
                     currentCount: this._files.length + validFiles.length
                 });
@@ -493,7 +493,7 @@
 
             // Dispatch events
             if (validFiles.length > 0) {
-                this._dispatchEvent('nds:upload:selected', {
+                this._dispatchEvent('nds:upload:select', {
                     files: validFiles.map(f => f.file),
                     allFiles: this._files.map(f => f.file),
                     fileData: validFiles.map(f => this._toPublic(f))
@@ -505,7 +505,7 @@
             }
 
             if (validationErrors.length > 0) {
-                this._dispatchEvent('nds:upload:validationError', {
+                this._dispatchEvent('nds:upload:invalid', {
                     errors: validationErrors.map(e => ({
                         file: e.file,
                         errors: e.errors,
@@ -536,8 +536,8 @@
             // Open first: setRequestHeader() throws on an unopened request.
             xhr.open('POST', config.uploadUrl);
 
-            // Dispatch beforeUpload (cancelable, exposes xhr for custom headers)
-            const allowed = this._dispatchEvent('nds:upload:beforeUpload', {
+            // Dispatch nds:upload:start (cancelable, exposes xhr for custom headers)
+            const allowed = this._dispatchEvent('nds:upload:start', {
                 fileData: this._toPublic(fileData),
                 formData: formData,
                 xhr: xhr

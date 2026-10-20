@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 03:51 PM"
+last_edit: "20/10/2026 - 07:46 AM"
 ---
 
 <section id="switch-overview" class="nds-content-section nds-doc-overview">
@@ -159,7 +159,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
             <i class="hgi hgi-stroke hgi-keyboard"></i>
             <span class="nds-label">Toggle Input</span>
           </span>
-          <p class="nds-item-desc">A click on the track or the label toggles the switch. Space and Enter toggle it from the keyboard. Each toggle fires <code class="nds-inline-code lang-js">nds:switchChange</code>.</p>
+          <p class="nds-item-desc">A click on the track or the label toggles the switch. Space and Enter toggle it from the keyboard. Each toggle fires <code class="nds-inline-code lang-js">nds:switch:change</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -256,13 +256,13 @@ Source: the `switch` group in `_sass/tokens/_components.scss`.
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:switchChange` | `.nds-switch` (bubbles) | `{ checked, value, input }` |
+| `nds:switch:change` | `.nds-switch` (bubbles) | `{ checked, value, input }` |
 {: .nds-table .nds-responsive}
 
 To change a switch from code, set `checked` on the input and dispatch `change`. The full API is in the banner of `_js/nds-forms.js`.
 
 <script type="text/html" id="switch-js" data-canon data-lang="js">
-document.querySelector('.nds-switch').addEventListener('nds:switchChange', function (e) {
+document.querySelector('.nds-switch').addEventListener('nds:switch:change', function (e) {
   console.log(e.detail.checked, e.detail.value);
 });
 

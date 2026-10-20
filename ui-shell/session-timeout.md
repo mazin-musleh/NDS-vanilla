@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "20/10/2026 - 07:46 AM"
 ---
 
 <section id="session-timeout-overview" class="nds-content-section nds-doc-overview">
@@ -70,7 +70,7 @@ Pick another component when:
       NDS.SessionTimeout.init({ timeout: 30, warn: 25 });
       count(btn);
     }
-    if (e.target.closest('#ndsSessionEnded a')) { e.preventDefault(); NDS.Modal.close(); }
+    if (e.target.closest('#nds-session-ended a')) { e.preventDefault(); NDS.Modal.close(); }
   });
   document.addEventListener('nds:session:extend', function () {
     var btn = document.querySelector('[data-session-demo]');

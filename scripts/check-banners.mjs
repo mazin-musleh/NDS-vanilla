@@ -104,13 +104,16 @@ const EXCLUDED = new Set([
 // Every shipped event now carries the nds: prefix, so verifyFile's gate covers them all.
 const EVENT_EXCEPTIONS = {
     // Listened for through a name array, so clause 1 of extractEvents can't see the listener.
-    'nds-forms.js': ['nds:upload:selected', 'nds:upload:success', 'nds:upload:error'],
+    'nds-forms.js': ['nds:upload:select', 'nds:upload:success', 'nds:upload:error'],
 };
 
 // A dispatched literal ending in ':' is a concatenation prefix, not an event name —
 // tables builds its sub-row events as 'nds:table:' + verb. It stands in for every banner
 // name starting with it, and needs at least one of them to exist.
 const isPrefix = (name) => name.endsWith(':');
+
+// The event grammar, PERSONA entry 8.
+const EVENT_NAME = /^nds:[a-z]+(-[a-z]+)*:[a-z]+(-[a-z]+)*$/;
 
 const SECTIONS = ['Rides', 'Methods', 'Events', 'Hooks', 'Gotchas'];
 // Optional, after Rides: the markup the script needs to work, baked into the audit's required-part rule.
@@ -366,6 +369,11 @@ function verifyFile(file, ns, source) {
             if (!/^nds[:-]/.test(name) || exceptions.includes(name) || listed.has(name)) continue;
             if (isPrefix(name) && [...listed].some((l) => l.startsWith(name))) continue;
             issues.push(`dispatched event ${name} missing from banner Events`);
+        }
+        for (const name of new Set([...listed, ...dispatched])) {
+            if (name.startsWith('nds:') && !isPrefix(name) && !EVENT_NAME.test(name)) {
+                issues.push(`event ${name} is not nds:{component}:{action} in kebab case (PERSONA entry 8)`);
+            }
         }
     }
 

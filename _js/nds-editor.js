@@ -806,7 +806,7 @@
             + `<div class="nds-divider" data-editor-image-or>${html('or')}</div>`
             // Canonical single-file nds-upload (no dropzone) — NDS.Upload owns
             // picking, extension enforcement, and the file chip; the editor
-            // only listens for nds:upload:selected.
+            // only listens for nds:upload:select.
             + '<div class="nds-form-container nds-file-upload" data-state="single" data-allowed-types="jpg,jpeg,png,gif,webp,svg" data-max-file-size="2097152" data-editor-image-upload>'
             + '<div class="nds-form-control nds-center">'
             + `<input type="file" id="${idBase}-image-file" class="nds-file-input" data-editor-image-file />`
@@ -1139,7 +1139,7 @@
                 // 'embed' is a reserved sentinel — files embed as
                 // data:image URLs; any other URL POSTs and the URL arrives
                 // via nds:upload:success.
-                uploadHost.addEventListener('nds:upload:selected', (e) => {
+                uploadHost.addEventListener('nds:upload:select', (e) => {
                     const file = e.detail.files[0];
                     if (!file) return;
                     const altInput = imageMenu.querySelector('[data-editor-image-alt]');

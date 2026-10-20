@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 07:43 PM"
+last_edit: "20/10/2026 - 07:46 AM"
 lang: en
 direction: ltr
 ---
@@ -357,7 +357,7 @@ Every NDS field uses these states, and the other field pages link here for them.
 ### Submit Validation
 {: .nds-block-title}
 
-A `<form class="nds-form">` checks every visible field when the user submits it. A field that fails shows its message under it, the first one takes focus, and the submit stops. The API lists each check and its message. A message clears as soon as the user edits the field. Add `data-ajax` to stop the page from reloading after a passing submit, and send the request from `nds:formValid`.
+A `<form class="nds-form">` checks every visible field when the user submits it. A field that fails shows its message under it, the first one takes focus, and the submit stops. The API lists each check and its message. A message clears as soon as the user edits the field. Add `data-ajax` to stop the page from reloading after a passing submit, and send the request from `nds:form:valid`.
 
 <script type="text/html" id="forms-submit" data-canon data-form data-preview="none">
 <form class="nds-form" data-ajax>
@@ -397,7 +397,7 @@ A `<form class="nds-form">` checks every visible field when the user submits it.
 A sent form takes no second submit, so a double click sends it once. Its submit button shows the spinner while the form waits:
 
 - A form with `method="post"` that loads the next page in the same tab waits until that page opens. Add `data-no-pending` to a POST form whose answer is a download, or no page: the button would spin until the page reloads.
-- A `data-ajax` form waits only when the `nds:formValid` listener passes its request to `event.detail.waitUntil()`. The form takes submits again when the request ends, whether it passed or failed. Call `waitUntil()` in the listener itself, not after an `await`.
+- A `data-ajax` form waits only when the `nds:form:valid` listener passes its request to `event.detail.waitUntil()`. The form takes submits again when the request ends, whether it passed or failed. Call `waitUntil()` in the listener itself, not after an `await`.
 
 `.nds-form` draws no box: give the fields a gapped wrapper such as `nds-flex nds-col`. On an element that is not a `<form>`, `.nds-form` checks nothing. Call `NDS.Forms.validateForm(step)` from your own button there, where `step` is that `.nds-form` element, and read `valid` in the result.
 
@@ -599,7 +599,7 @@ The eye button switches the field between hidden and plain text, and its label b
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-ajax` | `form.nds-form` | The script stops the page from reloading after a passing submit. Send the request from `nds:formValid` |
+| `data-ajax` | `form.nds-form` | The script stops the page from reloading after a passing submit. Send the request from `nds:form:valid` |
 | `data-no-pending` | `form.nds-form` with `method="post"` | A sent form takes submits again at once, and its button shows no spinner. For a form whose answer is a download or no page |
 | `novalidate` | `form.nds-form` | The script sets it at start, so the browser shows no popups |
 | `data-required` | `.nds-form-container` | Marks the field required. The script adds `required` and `aria-required="true"` to the input at start. It also sets or removes this attribute when the input's `required` changes, at the next edit or `syncState()` call |
@@ -695,12 +695,12 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:statusChange` | the field's container, and it bubbles | `{ status, message }`. Both are `null` after `clearStatus()` |
-| `nds:formValidate` | the form, and it bubbles | `{ valid, invalidFields, errors }`, after every `validateForm()`. Each error is `{ field, input, message }` |
-| `nds:formValid` | the form, and it bubbles | `{ waitUntil(promise) }`, when a submit passes. `waitUntil()` keeps the form from a second submit until the promise ends, and the submit button shows the spinner |
-| `nds:formInvalid` | the form, and it bubbles | `{ invalidFields, errors }`, when a submit is blocked |
-| `nds:switchChange` | `.nds-switch`, and it bubbles | `{ checked, value, input }`. See [Switch](../components/switch) |
-| `nds:indeterminateChange` | the checkbox, and it bubbles | `{ indeterminate }`. See [Checkbox](../components/checkbox) |
+| `nds:form:status` | the field's container, and it bubbles | `{ status, message }`. Both are `null` after `clearStatus()` |
+| `nds:form:validate` | the form, and it bubbles | `{ valid, invalidFields, errors }`, after every `validateForm()`. Each error is `{ field, input, message }` |
+| `nds:form:valid` | the form, and it bubbles | `{ waitUntil(promise) }`, when a submit passes. `waitUntil()` keeps the form from a second submit until the promise ends, and the submit button shows the spinner |
+| `nds:form:invalid` | the form, and it bubbles | `{ invalidFields, errors }`, when a submit is blocked |
+| `nds:switch:change` | `.nds-switch`, and it bubbles | `{ checked, value, input }`. See [Switch](../components/switch) |
+| `nds:checkbox:indeterminate` | the checkbox, and it bubbles | `{ indeterminate }`. See [Checkbox](../components/checkbox) |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="forms-js" data-canon data-lang="js">
@@ -708,7 +708,7 @@ var form = document.querySelector('#apply-form');
 
 // Send the request once every field passes (the form has data-ajax).
 // waitUntil blocks a second submit until the request ends.
-form.addEventListener('nds:formValid', function (e) {
+form.addEventListener('nds:form:valid', function (e) {
   e.detail.waitUntil(NDS.request(form.action, { method: 'POST', body: new FormData(form) }));
 });
 

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "15/10/2026 - 03:13 PM"
+last_edit: "20/10/2026 - 07:46 AM"
 ---
 
 <section id="feedback-overview" class="nds-content-section nds-doc-overview">
@@ -252,8 +252,8 @@ There is no `init()`: nothing scans the page for feedback. The script only build
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:feedbackCreate` | `document` | `{ feedback, options }`, after the message is in place |
-| `nds:feedbackDismiss` | `document` | `{ feedback }`, before the message is removed |
+| `nds:feedback:created` | `document` | `{ feedback, options }`, after the message is in place |
+| `nds:feedback:dismiss` | `document` | `{ feedback }`, before the message is removed |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="fb-js-example" data-canon data-lang="js">

@@ -12,8 +12,8 @@
  *   instance.refresh()                 adopt items added to this root since construction
  *   instance.destroy()
  * Events (bubble from the .nds-accordion, AFTER the animation):
- *   nds:accordion:shown    detail {index, button, collapse, accordion}
- *   nds:accordion:hidden   detail {index, button, collapse, accordion}
+ *   nds:accordion:opened   detail {index, button, collapse, accordion}
+ *   nds:accordion:closed   detail {index, button, collapse, accordion}
  * Hooks:
  *   (none — the structure is markup: .nds-accordion-btn and .nds-accordion-collapse pairs
  *    matched BY POSITION; aria-expanded on the button says which item is open)
@@ -279,7 +279,7 @@
         }
 
         dispatchToggleEvent(index, button, collapse, isShown) {
-            const eventType = isShown ? 'nds:accordion:shown' : 'nds:accordion:hidden';
+            const eventType = isShown ? 'nds:accordion:opened' : 'nds:accordion:closed';
             const event = new CustomEvent(eventType, {
                 detail: {
                     index: index,

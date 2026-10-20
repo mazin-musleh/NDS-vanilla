@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 12:12 PM"
+last_edit: "20/10/2026 - 07:46 AM"
 hideFeedback: true
 ---
 
@@ -263,7 +263,7 @@ Pick another component when:
 </script>
 <script>
 // Demo only: the preview forgets each submit, so the next render asks again.
-document.addEventListener('nds:userfeedback:submit', function () {
+document.addEventListener('nds:user-feedback:submit', function () {
   setTimeout(function () {
     NDS.Cookies.delete('nds-feedback' + location.pathname.replace(/\//g, '_').replace(/\./g, '-'));
   });
@@ -316,7 +316,7 @@ After the checks pass, Submit sends the form data to the form's `action` with [N
 
 ### Your Own Request
 
-To send the data another way, listen for `nds:userfeedback:submit` and call `preventDefault()`. Send `e.detail.data`, then call `NDS.UserFeedback.showStatus()` with `'success'` or `'error'`. The messages work as they do for an `action`, but the spinner is yours to show. The example is in the API section.
+To send the data another way, listen for `nds:user-feedback:submit` and call `preventDefault()`. Send `e.detail.data`, then call `NDS.UserFeedback.showStatus()` with `'success'` or `'error'`. The messages work as they do for an `action`, but the spinner is yours to show. The example is in the API section.
 
 `e.detail.data` holds each checked box as its own entry with the same name. For a JSON body, read a group with `data.getAll('why-yes')`: `Object.fromEntries()` keeps only the last box.
 
@@ -387,7 +387,7 @@ To send the data another way, listen for `nds:userfeedback:submit` and call `pre
 
 - Put the widget after the main content, as the last section of the page.
 - Use Survey on content pages, where the question is about the page. Use Rating on service pages, where the visitor judges the service.
-- Set `action` on the form to your endpoint, or send the data yourself from `nds:userfeedback:submit`. Without either, nothing is sent.
+- Set `action` on the form to your endpoint, or send the data yourself from `nds:user-feedback:submit`. Without either, nothing is sent.
 - Leave the widget off task pages, such as a checkout, a multi-step form or a confirmation screen. The visitor's attention belongs on the task.
 - Write reasons that fit the page, four to six in each list.
 - Remove the statistic when you have no real numbers to show. In Rating, write the real average in the question and in `data-rating`.
@@ -457,11 +457,11 @@ The field rules (`data-required`, `data-min-checked`) and `data-feedback-target`
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:userfeedback:submit` | `.nds-user-feedback` (bubbles, cancelable) | `{ form, data }`. `data` is the form's `FormData`. It fires after the form passes its checks |
+| `nds:user-feedback:submit` | `.nds-user-feedback` (bubbles, cancelable) | `{ form, data }`. `data` is the form's `FormData`. It fires after the form passes its checks |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="uf-js" data-canon data-lang="js">
-document.addEventListener('nds:userfeedback:submit', function (e) {
+document.addEventListener('nds:user-feedback:submit', function (e) {
   e.preventDefault();
   var widget = e.target;
   var csrfToken = document.querySelector('meta[name="csrf-token"]').content;

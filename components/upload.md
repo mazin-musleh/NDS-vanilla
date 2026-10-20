@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "20/10/2026 - 07:46 AM"
 ---
 
 <section id="upload-overview" class="nds-content-section nds-doc-overview">
@@ -117,14 +117,14 @@ The script checks each file when the user adds it. `data-max-file-size` sets the
 ### Send with the Form
 {: .nds-block-title}
 
-With no `data-upload-url`, the files stay in the field until the form is sent. This fits small attachments that go in one request with the other fields. The script empties the file input after each pick, so a native form submit sends no files. Add `data-ajax` to the form, so Forms stops the native submit. Then, at `nds:formValid`, add the files from `getAllFiles()` to the form data and send it yourself. The JavaScript example below does this.
+With no `data-upload-url`, the files stay in the field until the form is sent. This fits small attachments that go in one request with the other fields. The script empties the file input after each pick, so a native form submit sends no files. Add `data-ajax` to the form, so Forms stops the native submit. Then, at `nds:form:valid`, add the files from `getAllFiles()` to the form data and send it yourself. The JavaScript example below does this.
 
 ### Upload as You Go
 {: .nds-block-title}
 
 `data-upload-url` on `.nds-file-upload` makes the script send each file to that address in its own POST request. The file goes in the field that `data-field-name` names, and the default is `file`. This fits large files, where the user needs the progress and a retry for each file. With `data-auto-upload="true"`, each file goes as soon as it passes the checks. Without it, call `startUpload()`. On a failure, the row shows the `error` text of a JSON response, then the HTTP status text, then a general message. The server's reply goes in the file's `response`, so the form can send what the server returned, such as an id.
 
-The script sends no login or CSRF header. Set them on the `xhr` of `nds:upload:beforeUpload`, and add extra fields to its `formData`. To send the file yourself, cancel that event.
+The script sends no login or CSRF header. Set them on the `xhr` of `nds:upload:start`, and add extra fields to its `formData`. To send the file yourself, cancel that event.
 
 While a file uploads, the form does not submit, whether the field is required or not. `data-upload-timeout` sets a time limit in seconds for each upload. When it runs out, the file goes to `error` with the message "Upload timed out", and `retry()` can send it again. Without it, a dead connection leaves the file uploading until your code calls `abort()`.
 
@@ -157,7 +157,7 @@ Each file gets a row. A file the user just added is `ready`. During an upload, t
 document.addEventListener('nds:upload:ready', function (e) {
   if (e.target.id !== 'upload-rows-demo') return;
   var up = e.detail.instance;
-  e.target.addEventListener('nds:upload:beforeUpload', function (ev) {
+  e.target.addEventListener('nds:upload:start', function (ev) {
     ev.preventDefault();
     ev.stopPropagation();
     var id = ev.detail.fileData.id, progress = 0;
@@ -386,10 +386,10 @@ Every event fires on `.nds-file-upload` and bubbles.
 | Event | Fires when | Detail |
 |---|---|---|
 | `nds:upload:ready` | the field starts | `{ instance }` |
-| `nds:upload:selected` | the user adds files that pass the checks | `{ files, allFiles, fileData }`: the new `File`s, every `File` in the list, and the new files |
-| `nds:upload:validationError` | the user adds files that fail the checks | `{ errors }`: an array of `{ file, errors, fileData }` |
-| `nds:upload:maxFilesReached` | a file does not fit in the list | `{ maxFiles, currentCount }` |
-| `nds:upload:beforeUpload` | before each upload. Cancelable | `{ fileData, formData, xhr }`. Set headers on `xhr`, add fields to `formData`, or call `preventDefault()` and send the file yourself |
+| `nds:upload:select` | the user adds files that pass the checks | `{ files, allFiles, fileData }`: the new `File`s, every `File` in the list, and the new files |
+| `nds:upload:invalid` | the user adds files that fail the checks | `{ errors }`: an array of `{ file, errors, fileData }` |
+| `nds:upload:max-files` | a file does not fit in the list | `{ maxFiles, currentCount }` |
+| `nds:upload:start` | before each upload. Cancelable | `{ fileData, formData, xhr }`. Set headers on `xhr`, add fields to `formData`, or call `preventDefault()` and send the file yourself |
 | `nds:upload:progress` | during an upload | `{ fileData, progress }` |
 | `nds:upload:success` | the server answers with a 2xx status | `{ fileData, response }` |
 | `nds:upload:error` | the upload fails | `{ fileData, error, status, response }`. A network error or a timeout has no `status` and no `response` |
@@ -399,7 +399,7 @@ Every event fires on `.nds-file-upload` and bubbles.
 <script type="text/html" id="upload-js" data-canon data-lang="js">
 // Send the files with the form, in one request. The form carries data-ajax.
 var form = document.querySelector('#request-form');
-form.addEventListener('nds:formValid', function () {
+form.addEventListener('nds:form:valid', function () {
   var data = new FormData(form);
   NDS.Upload.getInstance('#request-form .nds-file-upload').getAllFiles().forEach(function (f) {
     data.append('attachments[]', f.file);
@@ -409,7 +409,7 @@ form.addEventListener('nds:formValid', function () {
 
 // Or upload each file on its own. The field carries data-upload-url and data-auto-upload="true".
 var accessToken = 'your-access-token';
-document.querySelector('#documents-upload').addEventListener('nds:upload:beforeUpload', function (e) {
+document.querySelector('#documents-upload').addEventListener('nds:upload:start', function (e) {
   e.detail.xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 });
 </script>

@@ -103,7 +103,7 @@ The verb pair encodes the concept, not the DOM mutation. Two components making a
 
 **Examples:** `_js/nds-accordion.js` — `openItem(i)` / `closeItem(i)` / `toggleItem(i)` on the container instance; the item's markup contract is `data-state="open"` plus `aria-expanded`, so `open`/`close` is the verb a reader can verify against the DOM. `_js/nds-drawer.js` `showSubmenu` / `hideSubmenu` — module-private functions, not a public instance pair; cited for the naming shape only.
 
-**Why the verb follows the markup, not the events.** Accordion dispatches `nds:accordion:shown` / `nds:accordion:hidden`, which argues the other way, and the split is real. The markup wins because it is what a consumer inspects while debugging and what CSS selects on; the event names are a separate, already-shipped surface. Renaming either side is a breaking change to documented public API (`components/accordion.md` documents `instance.openItem(0)`), so the canonical accommodates the addressed-child shape rather than minting a migration with no reader benefit.
+**Why the verb follows the markup.** It is what a consumer inspects while debugging and what CSS selects on. The events follow it too (entry 8): Accordion's `nds:accordion:shown` / `hidden` became `opened` / `closed` in 2.0.0, so the markup, the methods and the events all say `open`.
 
 #### 3.3 Transient self-dismissing surfaces → `create({...})` + `dismiss(target)`
 
@@ -310,6 +310,34 @@ The banner is the knowledge surface a consumer agent (and human reader) greps be
 **Audit behavior**
 
 Run (or mirror) `node scripts/check-banners.mjs --verify <file>`: missing banner, or a missing/misordered section label → LOW. Methods/Events drift against the file's actual `NDS.<Name>` surface and dispatch literals → MEDIUM. A rider restating base-owned surface, or a base enumerating riders (downward edge) → LOW. Full rule: JSD-20 in `RULES-JSD.md`.
+
+---
+
+### 8. Event names
+
+**Canonical**
+
+`nds:{component}:{action}`, every segment lowercase kebab: `^nds:[a-z]+(-[a-z]+)*:[a-z]+(-[a-z]+)*$`.
+
+- **Component** — the component's class root without `nds-`: `nds-digital-stamp` → `digital-stamp`, `nds-taginput` → `taginput`, `nds-user-feedback` → `user-feedback`. An event a shared module fires for another component takes that component's name (`nds-forms.js` fires `nds:switch:change`, `nds:checkbox:indeterminate`).
+- **Action** — the tense says when it fires. The first that fits:
+  1. `change` for a new value — the DOM's word (`nds:tab:change`, `nds:otp:change`).
+  2. A past participle only when the component's state change is already done, from the entry-3 verb that caused it: `open()` → `opened`/`closed`, `showSubmenu()` → `shown`/`hidden`, `expand()` → `expanded`/`collapsed`, `create()` → `created` (the message is in place).
+  3. A present verb for anything that fires before the change, can be cancelled, asks for something, or reports an act at the moment it happens: `prepare`, `submit`, `start`, `request`, `select`, `clear`, `tick`, `end`, `complete`, `dismiss` (Feedback fires it before the message leaves the page).
+  4. A result word for an outcome: `ready`, `success`/`error`, `valid`/`invalid`, `progress`, `status`.
+
+**Why (and rejected alternatives)**
+
+One grammar lets a consumer guess an event from the component and what happened, and grep every event a component fires with one prefix. Kebab matches the class names, so the component segment reads the same in CSS, markup and listeners. Tense carries meaning: past says the state is already there, present says the step is now or still cancelable. Rejected: camelCase (`nds:formValid`, `nds:upload:beforeUpload`), which the 2.0.0 sweep removed like the camelCase classes; a `before-`/`after-` prefix, which repeats what the tense says; one tense for everything, which loses whether the state has already changed.
+
+**Carve-outs (NOT divergence)**
+
+- `nds:session:*` names what ends, not the Session Timeout component, which has no class root of its own (its dialogs are `.nds-modal`).
+- `nds:cookies:consent` comes from the `NDS.Cookies` utility, which has no class.
+
+**Audit behavior**
+
+Flag any dispatched `nds:` literal (a `new CustomEvent(` name or a string passed to a component's dispatch helper) that does not match the regex → MEDIUM. `scripts/check-release-guards.py` runs the same regex and fails the release. Flag a tense against the rules above → LOW, as a migration target for the next major: a rename is a breaking change.
 
 ---
 

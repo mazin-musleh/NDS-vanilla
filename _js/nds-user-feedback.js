@@ -11,7 +11,7 @@
  *   NDS.UserFeedback.showStatus(el, status)  end a send a submit listener took over:
  *                                         'success' (default) or 'error'
  * Events:
- *   nds:userfeedback:submit   on the root, bubbles, cancelable — detail { form, data }
+ *   nds:user-feedback:submit  on the root, bubbles, cancelable — detail { form, data }
  *                             (data is the form's FormData). Fires after validation.
  *                             Cancel it to send the data yourself, then call showStatus().
  * Hooks:
@@ -287,7 +287,7 @@ NDS.UserFeedback = (() => {
 
                 // A listener that cancels the event sends the data itself, then calls showStatus().
                 const data = form && form.tagName === 'FORM' ? new FormData(form) : new FormData();
-                const go = feedbackComponent.dispatchEvent(new CustomEvent('nds:userfeedback:submit', {
+                const go = feedbackComponent.dispatchEvent(new CustomEvent('nds:user-feedback:submit', {
                     bubbles: true, cancelable: true, detail: { form, data },
                 }));
                 if (!go) return;
@@ -324,7 +324,7 @@ NDS.UserFeedback = (() => {
         feedbackComponent.removeAttribute('data-nds-user-feedback-initialized');
     }
 
-    // Ends a send that a nds:userfeedback:submit listener took over.
+    // Ends a send that a nds:user-feedback:submit listener took over.
     function showStatus(feedbackComponent, status = 'success') {
         feedbackComponent._ndsUfFinish?.(status);
     }

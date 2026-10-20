@@ -574,13 +574,13 @@
     function dropAlert(form) {
         if (form) form.querySelectorAll(':scope > .nds-alert').forEach(function (a) { a.remove(); });
     }
-    document.addEventListener('nds:formValid', function (e) {
+    document.addEventListener('nds:form:valid', function (e) {
         var form = e.target;
         if (!form.querySelector('[data-demo-slot]')) return;
         dropAlert(form);
         NDS.Alert.create({ variant: 'success', display: 'inline', title: 'Valid:', description: 'every rule passes.', target: form });
     });
-    document.addEventListener('nds:formInvalid', function (e) { dropAlert(e.target); });
+    document.addEventListener('nds:form:invalid', function (e) { dropAlert(e.target); });
 
     // A preview has no server: an upload in one runs a fake, slow one, 1 in 10 fails. An image replies
     // with a sample image's URL (doc pages sit one folder deep), so the editor's image popover gets a src.
@@ -593,7 +593,7 @@
     }
     document.addEventListener('change', demoUploadUrl, true);
     document.addEventListener('drop', demoUploadUrl, true);
-    document.addEventListener('nds:upload:beforeUpload', function (e) {
+    document.addEventListener('nds:upload:start', function (e) {
         if (!e.target.closest('[data-demo-slot]')) return;
         e.preventDefault();
         var api = NDS.Upload.getInstance(e.target.closest('.nds-file-upload'));

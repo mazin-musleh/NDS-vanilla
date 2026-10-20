@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "19/10/2026 - 08:46 AM"
+last_edit: "20/10/2026 - 07:46 AM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -449,11 +449,11 @@ A group on a server page lists its options with `data-filter-values`: the page h
 ### AJAX Submission
 {: .nds-block-title}
 
-`data-ajax` on the form sends the request without a page load. For an HTML response, the script swaps the item container for the element with the same `id` in the response. It stops the components in the old container and starts the ones in the new container before `nds:filterFormComplete` fires, so the page calls nothing for them. A response without that element counts as a failure. For a response with a JSON `Content-Type`, the script changes no items: render them in `nds:filterFormComplete`. While a request runs, the menu takes no clicks and the button that sent it shows a spinner. A newer request cancels the one in flight.
+`data-ajax` on the form sends the request without a page load. For an HTML response, the script swaps the item container for the element with the same `id` in the response. It stops the components in the old container and starts the ones in the new container before `nds:filter:success` fires, so the page calls nothing for them. A response without that element counts as a failure. For a response with a JSON `Content-Type`, the script changes no items: render them in `nds:filter:success`. While a request runs, the menu takes no clicks and the button that sent it shows a spinner. A newer request cancels the one in flight.
 
 <script type="text/html" id="filter-json-js" data-canon data-lang="js" data-preview="none">
 var filter = document.querySelector('.nds-filter[data-filter-target="services-results"]');
-filter.addEventListener('nds:filterFormComplete', function (e) {
+filter.addEventListener('nds:filter:success', function (e) {
   if (!e.detail.isJson) return;
   var list = document.getElementById('services-results');
   list.replaceChildren();
@@ -470,18 +470,18 @@ filter.addEventListener('nds:filterFormComplete', function (e) {
 });
 </script>
 
-On a failure the items stay as they were, and so do the chips, the badge, the options and the URL: the script puts them back to match the items. An unapplied pick in the open menu is lost. The script shows an error toast, unless a listener calls `preventDefault()` on `nds:filterFormError`. The no-results alert never shows in form mode: call `showNoResultsAlert()` from your response handler.
+On a failure the items stay as they were, and so do the chips, the badge, the options and the URL: the script puts them back to match the items. An unapplied pick in the open menu is lost. The script shows an error toast, unless a listener calls `preventDefault()` on `nds:filter:error`. The no-results alert never shows in form mode: call `showNoResultsAlert()` from your response handler.
 
 ### Your Own Request
 {: .nds-block-title}
 
-Call `preventDefault()` on `nds:filterFormAjax` to send the request yourself, such as a POST with a JSON body. The event fires for Apply, a chip removal, the menu's Reset, `reset()` and the search box. The chips, the badge and the URL already show the new filters when it fires: call `detail.rollback()` if your request fails.
+Call `preventDefault()` on `nds:filter:request` to send the request yourself, such as a POST with a JSON body. The event fires for Apply, a chip removal, the menu's Reset, `reset()` and the search box. The chips, the badge and the URL already show the new filters when it fires: call `detail.rollback()` if your request fails.
 
 The event fires on the filter and bubbles, so a form that does not hold the filter never hears it. Listen on `document` and check `detail.form`. In `detail.criteria`, each group in `filters` is an array of values, even with one value picked. A range is one `min-max` string in it. The search term is the `search` string.
 
 <script type="text/html" id="filter-request-js" data-canon data-lang="js" data-preview="none">
 var form = document.getElementById('services-form');
-document.addEventListener('nds:filterFormAjax', function (e) {
+document.addEventListener('nds:filter:request', function (e) {
   if (e.detail.form !== form) return;
   e.preventDefault();
   NDS.request('/api/services', { method: 'POST', body: new FormData(form), json: true })
@@ -736,11 +736,11 @@ In form mode, each setter submits the form. Setters in one script run share one 
 | `nds:filter:change` | the same | `{ filter, criteria, totalItems, visibleItems, hiddenItems }`, after each apply, also when nothing is applied. The last three are numbers, `null` in form mode. The values are in `criteria.filters`, not in `criteria` |
 | `nds:filter:reset` | the same | `{ filter, totalItems }` |
 | `nds:filter:clear` | the same | `{ filter }`, on `clear()`, `reset()` and the menu's Reset |
-| `nds:filterFormSubmit` | the same | `{ criteria, form }`, before a form submits with a page load, after its fields pass. `preventDefault()` stops it |
-| `nds:filterFormAjax` | the same | `{ criteria, form, hiddenInputsContainer, rollback }`, before an AJAX request. `preventDefault()` stops the request. Add your own fields to `hiddenInputsContainer` here |
-| `nds:filterFormComplete` | the same | `{ success, isJson, data, html, form }`, after an AJAX response. `data` is the JSON, `html` the new container's HTML, `form` the element the event fires on |
-| `nds:filterFormError` | the same | `{ error, form }`, after a network error, an error status, a timeout, or a response without the item container. `preventDefault()` stops the error toast |
-| `nds:formValid`, `nds:formInvalid` | the same | As in [Forms](../components/forms), for a submission form without `data-ajax` |
+| `nds:filter:submit` | the same | `{ criteria, form }`, before a form submits with a page load, after its fields pass. `preventDefault()` stops it |
+| `nds:filter:request` | the same | `{ criteria, form, hiddenInputsContainer, rollback }`, before an AJAX request. `preventDefault()` stops the request. Add your own fields to `hiddenInputsContainer` here |
+| `nds:filter:success` | the same | `{ success, isJson, data, html, form }`, after an AJAX response. `data` is the JSON, `html` the new container's HTML, `form` the element the event fires on |
+| `nds:filter:error` | the same | `{ error, form }`, after a network error, an error status, a timeout, or a response without the item container. `preventDefault()` stops the error toast |
+| `nds:form:valid`, `nds:form:invalid` | the same | As in [Forms](../components/forms), for a submission form without `data-ajax` |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="filter-api-js" data-canon data-lang="js" data-preview="none">

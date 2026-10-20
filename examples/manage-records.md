@@ -1147,7 +1147,7 @@ hideFeedback: true
     // data-ajax makes Forms validate, block the real submit, and fire this.
     // The required Service select is validated by Forms itself (the container's
     // data-required reads the hidden .nds-select-value carrier).
-    form.addEventListener('nds:formValid', function () {
+    form.addEventListener('nds:form:valid', function () {
       var record = {
         ref: editing ? readRow(editing).ref : 'REQ-2026-' + nextRef++,
         requester: fields.requester.value.trim(),

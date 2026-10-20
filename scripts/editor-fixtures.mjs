@@ -2295,7 +2295,7 @@ try {
         const up = menu.querySelector('[data-editor-image-upload]');
         // The doc page's docs script fakes uploads in a preview — stop it
         // at the container so the REAL XHR runs, as on a consumer page.
-        up.addEventListener('nds:upload:beforeUpload', (e) => e.stopPropagation());
+        up.addEventListener('nds:upload:start', (e) => e.stopPropagation());
         up.dataset.uploadUrl = '/NDS-vanilla/fake-upload';
         up.dataset.autoUpload = 'true';
         const fileInput = menu.querySelector('[data-editor-image-file]');

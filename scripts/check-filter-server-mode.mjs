@@ -52,7 +52,7 @@ const report = await page.evaluate(async () => {
         });
     };
     const errors = [];
-    document.addEventListener('nds:filterFormError', (e) => errors.push(e.detail.error));
+    document.addEventListener('nds:filter:error', (e) => errors.push(e.detail.error));
 
     const host = document.createElement('div');
     host.innerHTML = `
@@ -359,7 +359,7 @@ if (report.fatal) {
     process.exit(2);
 }
 for (const f of report.findings) console.log(`${f.id.padEnd(46)} ${f.detail}`);
-// A filterFormError means the run rolled back — every reading after it describes
+// An nds:filter:error means the run rolled back — every reading after it describes
 // a reverted filter, so the numbers are not evidence of anything.
 for (const e of report.errors) console.log(`RUN INVALID — submit errored: ${e}`);
 for (const e of pageErrors) console.log(`page error: ${e}`);

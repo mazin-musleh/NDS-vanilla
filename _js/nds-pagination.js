@@ -639,7 +639,7 @@
     function _wirePerPagePickers() {
         if (_perPageWired) return;
         _perPageWired = true;
-        document.addEventListener('nds:dropmenu:selected', (e) => {
+        document.addEventListener('nds:dropmenu:select', (e) => {
             const { dropmenu, value } = e.detail;
             _writePerPageParam(dropmenu, value);
             const ref = dropmenu.getAttribute('data-per-page-target');

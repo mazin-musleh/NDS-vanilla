@@ -470,7 +470,7 @@ sidemenu_mode: false
         // Submit feedback — mock a successful submission.
         var form = document.getElementById('contact-form');
         if (form) {
-            form.addEventListener('nds:formValid', function (e) {
+            form.addEventListener('nds:form:valid', function (e) {
                 e.preventDefault && e.preventDefault();
                 if (window.NDS && NDS.Alert) {
                     NDS.Alert.create({
@@ -491,7 +491,7 @@ sidemenu_mode: false
         // so the attached file shows the success state.
         var upload = document.querySelector('.nds-file-upload');
         if (upload) {
-            upload.addEventListener('nds:upload:selected', function (e) {
+            upload.addEventListener('nds:upload:select', function (e) {
                 var api = window.NDS && NDS.Upload && NDS.Upload.getInstance(upload);
                 if (!api) return;
                 (e.detail.fileData || []).forEach(function (f) {

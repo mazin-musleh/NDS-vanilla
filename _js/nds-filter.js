@@ -20,16 +20,16 @@
  *   nds:filter:change      detail {filter, criteria, totalItems, visibleItems, hiddenItems}
  *   nds:filter:reset       detail {filter, totalItems}
  *   nds:filter:clear       detail {filter}
- *   nds:filterFormSubmit   detail {criteria, form} — cancelable, before a normal form submit
- *   nds:filterFormAjax     detail {criteria, form, hiddenInputsContainer, rollback} — cancelable;
+ *   nds:filter:submit      detail {criteria, form} — cancelable, before a normal form submit
+ *   nds:filter:request     detail {criteria, form, hiddenInputsContainer, rollback} — cancelable;
  *                          preventDefault() to send the request yourself (via NDS.request), and call
  *                          detail.rollback() if it fails (chips, badge and URL are already
  *                          committed by then)
- *   nds:filterFormComplete detail {success, form, isJson, data?} — after a successful AJAX apply
- *   nds:filterFormError    detail {error, form} — cancelable; preventDefault() suppresses the toast
- *   nds:formValid          detail {} — dispatched on nds-forms' behalf, so form-level
+ *   nds:filter:success     detail {success, form, isJson, data?} — after a successful AJAX apply
+ *   nds:filter:error       detail {error, form} — cancelable; preventDefault() suppresses the toast
+ *   nds:form:valid         detail {} — dispatched on nds-forms' behalf, so form-level
  *                          listeners work on a filter too
- *   nds:formInvalid        detail {invalidFields, errors} — same, on failed validation
+ *   nds:form:invalid       detail {invalidFields, errors} — same, on failed validation
  * Hooks:
  *   data-filter-target · data-filter-items · data-filter · data-filter-type · data-filter-value
  *   data-filter-values · data-filter-legend · data-filter-variant · data-filter-action
@@ -72,7 +72,7 @@
  *     search box — are written into .nds-filter-hidden-inputs on each submit, keyed
  *     like the URL param, so the request matches this.criteria. A filter whose own
  *     inputs are named is left alone (auto-generated options submit `filter-{name}`,
- *     not `{name}`). nds:filterFormAjax exposes that container as
+ *     not `{name}`). nds:filter:request exposes that container as
  *     hiddenInputsContainer; add your own fields to it there.
  *   - Sort is NOT criteria and never rides the request — by design, not a gap.
  *     ONE question decides who owns the order: does the server return all matching
@@ -447,7 +447,7 @@
 
             if (!result.valid) {
                 e.preventDefault();
-                this.filterContainer.dispatchEvent(new CustomEvent('nds:formInvalid', {
+                this.filterContainer.dispatchEvent(new CustomEvent('nds:form:invalid', {
                     detail: { invalidFields: result.invalidFields, errors: result.errors },
                     bubbles: true
                 }));
@@ -455,7 +455,7 @@
             }
 
             // Dispatch preventable event
-            const submitEvent = new CustomEvent('nds:filterFormSubmit', {
+            const submitEvent = new CustomEvent('nds:filter:submit', {
                 detail: {
                     // A copy, as nds:filter:change hands out: a handler must not edit live filter state.
                     criteria: this.getCriteria(),
@@ -475,7 +475,7 @@
             NDS.State.set(this.filterContainer, 'submitting');
             this._showTriggerLoading();
 
-            this.filterContainer.dispatchEvent(new CustomEvent('nds:formValid', {
+            this.filterContainer.dispatchEvent(new CustomEvent('nds:form:valid', {
                 detail: {},
                 bubbles: true
             }));
@@ -501,7 +501,7 @@
             this.dispatchFilterEvent();
 
             // Dispatch preventable AJAX submit event
-            const ajaxEvent = new CustomEvent('nds:filterFormAjax', {
+            const ajaxEvent = new CustomEvent('nds:filter:request', {
                 detail: {
                     criteria: this.getCriteria(),
                     form: this.submissionForm,
@@ -664,7 +664,7 @@
 
             this._commitAppliedUi();
 
-            this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormComplete', {
+            this.filterContainer.dispatchEvent(new CustomEvent('nds:filter:success', {
                 detail: eventDetail,
                 bubbles: true
             }));
@@ -690,8 +690,8 @@
             if (appliedUrl !== undefined) this._rollbackApplied(appliedUrl);
 
             // Cancelable so a consumer with its own error UI can suppress the
-            // toast — same opt-out idiom as nds:filterFormAjax.
-            const shouldToast = this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormError', {
+            // toast — same opt-out idiom as nds:filter:request.
+            const shouldToast = this.filterContainer.dispatchEvent(new CustomEvent('nds:filter:error', {
                 detail: {
                     error: error.message,
                     form: this.filterContainer

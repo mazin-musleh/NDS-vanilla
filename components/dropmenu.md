@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "19/10/2026 - 08:46 AM"
+last_edit: "20/10/2026 - 07:46 AM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -269,7 +269,7 @@ Every option goes on the `nds-dropmenu` wrapper, except Center items, which goes
 ### Picker
 {: .nds-block-title}
 
-A picker is a dropmenu that chooses one value, like a small select. Add `data-select-name` to the wrapper and `data-value` to each item. The script keeps the picked value in a hidden input, so it submits with the form. The trigger shows the picked item's label, and the wrapper fires `nds:dropmenu:selected`. Use it in a small slot, such as a country code before a phone number or a page-size count beside a table.
+A picker is a dropmenu that chooses one value, like a small select. Add `data-select-name` to the wrapper and `data-value` to each item. The script keeps the picked value in a hidden input, so it submits with the form. The trigger shows the picked item's label, and the wrapper fires `nds:dropmenu:select`. Use it in a small slot, such as a country code before a phone number or a page-size count beside a table.
 
 ### Search
 {: .nds-block-title}
@@ -466,13 +466,13 @@ Set these on the `.nds-dropmenu` wrapper. The menu inherits them.
 |---|---|---|
 | `nds:dropmenu:opened` | `.nds-dropmenu` | `{ dropmenu, trigger, menu, isOpen }`, after the menu is placed |
 | `nds:dropmenu:closed` | `.nds-dropmenu` | `{ dropmenu, trigger, menu, isOpen }` |
-| `nds:dropmenu:selected` | `.nds-dropmenu` | `{ dropmenu, item, value }`, when a picker picks a value |
+| `nds:dropmenu:select` | `.nds-dropmenu` | `{ dropmenu, item, value }`, when a picker picks a value |
 | `nds:dropmenu:prepare` | `.nds-dropmenu` | `{ dropmenu, trigger, menu, isOpen, waitUntil(promise) }`, before a delayed first open. Fill the menu here. `waitUntil()` keeps the menu closed until the promise ends |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="dm-js" data-canon data-lang="js">
 var picker = document.querySelector('[data-select-name="country"]');
-picker.addEventListener('nds:dropmenu:selected', function (e) {
+picker.addEventListener('nds:dropmenu:select', function (e) {
   console.log('Country:', e.detail.value);
 });
 

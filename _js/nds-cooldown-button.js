@@ -4,10 +4,10 @@
  *   NDS.CooldownButton.init()        wire every .nds-cooldown, now and later
  *   NDS.CooldownButton.start(btn, opts?)  begin the cycle by hand
  *                                    opts.seconds  run this long instead of data-cooldown
- *                                    opts.silent   skip nds:cooldown:triggered
+ *                                    opts.silent   skip nds:cooldown:start
  *   NDS.CooldownButton.reset(btn)    end it early and restore the button
  * Events (bubble from the button):
- *   nds:cooldown:triggered   the countdown starts — issue your request here
+ *   nds:cooldown:start       the countdown starts — issue your request here
  *   nds:cooldown:tick        detail {remaining} — once a second during the countdown
  *   nds:cooldown:end         the countdown finished, or reset() was called
  * Hooks (on the .nds-cooldown button):
@@ -30,16 +30,16 @@
  *     naming it twice fills both. This is not printf: %s and %d render literally, and a
  *     label naming no {s} warns at wire time rather than failing silently on first click.
  *   - start() drives the whole cycle, so the two flows it does NOT own are options on
- *     it: a send that happened elsewhere passes silent (no nds:cooldown:triggered, so
+ *     it: a send that happened elsewhere passes silent (no nds:cooldown:start, so
  *     your request handler does not run twice), and a cooldown the page is RESUMING
  *     after a reload passes the remainder as seconds. With seconds set, data-cooldown
  *     is not required at all — the button can be driven entirely from JS.
  *   - The countdown starts on the click, because that is when the endpoint was hit.
  *     It does NOT wait for your request, and the component owns no loading phase —
  *     a timer cannot know how long a response takes. For a real one, stamp the
- *     button's own loading state from nds:cooldown:triggered and clear it when the
+ *     button's own loading state from nds:cooldown:start and clear it when the
  *     response lands:
- *       btn.addEventListener('nds:cooldown:triggered', () => {
+ *       btn.addEventListener('nds:cooldown:start', () => {
  *         NDS.State.add(btn, 'loading');
  *         send().finally(() => NDS.State.remove(btn, 'loading'));
  *       });
@@ -68,7 +68,7 @@
  *   NDS.CooldownButton.reset(btn);
  *
  * Events (fired on the button, bubble):
- *   nds:cooldown:triggered  — cooldown starts; issue the request here
+ *   nds:cooldown:start      — cooldown starts; issue the request here
  *   nds:cooldown:tick       — every second during cooldown; detail.remaining
  *   nds:cooldown:end        — cooldown finished or reset(); button restored
  *
@@ -80,7 +80,7 @@
  *                           Absent = keep the initial label across cycles.
  *
  * The component owns the throttle and the label. The request, its loading state
- * and its confirmation are the page's, all wired from `nds:cooldown:triggered`.
+ * and its confirmation are the page's, all wired from `nds:cooldown:start`.
  *
  * The component is language-agnostic: the author writes whichever language the
  * page serves in the attributes and in the .nds-label span. Loading visual
@@ -169,7 +169,7 @@
 
     // opts.seconds  run for this many seconds instead of data-cooldown — the remainder
     //               of a cooldown the page is resuming, or a duration the server chose.
-    // opts.silent   skip nds:cooldown:triggered, for a send that already happened
+    // opts.silent   skip nds:cooldown:start, for a send that already happened
     //               elsewhere. tick and end still fire: a resumed cooldown still has to
     //               render its seconds and re-enable the button.
     function start(btn, opts) {
@@ -203,7 +203,7 @@
         // Fired before the first render so a listener can stamp its own 'loading'
         // state — the countdown then ticks underneath the spinner and is already
         // at the right number when the request resolves and the state comes off.
-        if (!opts.silent) fire(btn, 'nds:cooldown:triggered');
+        if (!opts.silent) fire(btn, 'nds:cooldown:start');
 
         const template = labelTemplate(btn);
         let remaining = total;

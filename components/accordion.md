@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "19/10/2026 - 08:46 AM"
+last_edit: "20/10/2026 - 07:46 AM"
 ---
 
 <section id="accordion-overview" class="nds-content-section nds-doc-overview">
@@ -321,13 +321,13 @@ The instance lives on `.nds-accordion` as `ndsAccordion`. It is there once the c
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:accordion:shown` | `.nds-accordion`, after the panel opens, and it bubbles | `index`, `button`, `collapse`, `accordion` |
-| `nds:accordion:hidden` | `.nds-accordion`, after the panel closes, and it bubbles | `index`, `button`, `collapse`, `accordion` |
+| `nds:accordion:opened` | `.nds-accordion`, after the panel opens, and it bubbles | `index`, `button`, `collapse`, `accordion` |
+| `nds:accordion:closed` | `.nds-accordion`, after the panel closes, and it bubbles | `index`, `button`, `collapse`, `accordion` |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="accordion-api-js" data-canon data-lang="js">
 var faq = document.querySelector('#service-faq');
-faq.addEventListener('nds:accordion:shown', function (e) {
+faq.addEventListener('nds:accordion:opened', function (e) {
   console.log('Opened item', e.detail.index);
 });
 faq.ndsAccordion.openItem(2);

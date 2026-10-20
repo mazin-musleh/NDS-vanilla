@@ -12,7 +12,7 @@
  *   nds:dropmenu:prepare   detail {dropmenu, trigger, menu, isOpen, waitUntil(promise)} — before lazy content builds
  *   nds:dropmenu:opened    detail {dropmenu, trigger, menu, isOpen}
  *   nds:dropmenu:closed    detail {dropmenu, trigger, menu, isOpen}
- *   nds:dropmenu:selected  detail {dropmenu, item, value}
+ *   nds:dropmenu:select    detail {dropmenu, item, value}
  * Hooks:
  *   data-anchor · data-anchor-cursor · data-position-vertical
  *   data-delay
@@ -392,7 +392,7 @@
         //       data-trigger-label="..."  custom short label for the trigger
         //                                 (falls back to the item's .nds-label)
         //   - Events: hidden input fires `input` + `change`; dropmenu fires
-        //     `nds:dropmenu:selected` with { item, value } in detail.
+        //     `nds:dropmenu:select` with { item, value } in detail.
 
         setupSelectMode() {
             const name = this.dropmenu.getAttribute('data-select-name');
@@ -445,7 +445,7 @@
                 // nested sub-dropmenu's items match this selector and carry
                 // data-value (date-picker's month/year), so without it the
                 // CHILD's value lands in THIS picker's hidden input, trigger
-                // label and nds:dropmenu:selected payload.
+                // label and nds:dropmenu:select payload.
                 if (!this._owns(item)) return;
                 if (item.hasAttribute('data-value')) this.applySelection(item);
             }, { signal });
@@ -481,7 +481,7 @@
 
             if (!opts.silent) {
                 if (this.selectHidden) NDS.setValue(this.selectHidden, value);
-                this.dropmenu.dispatchEvent(new CustomEvent('nds:dropmenu:selected', {
+                this.dropmenu.dispatchEvent(new CustomEvent('nds:dropmenu:select', {
                     detail: { dropmenu: this.dropmenu, item, value },
                     bubbles: true
                 }));

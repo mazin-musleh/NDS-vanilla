@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 09:13 PM"
+last_edit: "20/10/2026 - 07:46 AM"
 ---
 
 <section id="stepper-overview" class="nds-content-section nds-doc-overview">
@@ -461,8 +461,8 @@ document.getElementById('application-stepper').addEventListener('nds:stepper:cha
 });
 
 // Last step: move only when the request succeeds. The form has data-ajax,
-// so Forms validates it, stops the POST and fires nds:formValid.
-document.getElementById('application-form').addEventListener('nds:formValid', function () {
+// so Forms validates it, stops the POST and fires nds:form:valid.
+document.getElementById('application-form').addEventListener('nds:form:valid', function () {
   sendApplication().then(function () { NDS.Stepper.next('application-stepper'); });
 });
 </script>

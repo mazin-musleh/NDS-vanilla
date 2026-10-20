@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:31 AM"
+last_edit: "20/10/2026 - 07:46 AM"
 ---
 
 <section id="otp-overview" class="nds-content-section nds-doc-overview">
@@ -252,23 +252,23 @@ Each method takes the `.nds-otp-group` element.
 |---|---|
 | `NDS.OTP.getValue(group)` | Returns the digits as one string. An empty box adds nothing |
 | `NDS.OTP.setValue(group, value)` | Fills the boxes from the first, and removes characters that are not digits. It fires no event |
-| `NDS.OTP.clear(group)` | Empties the boxes, focuses the first box and fires `nds:otpClear`. It does not remove an error: call `NDS.Forms.clearStatus(group)` for that |
+| `NDS.OTP.clear(group)` | Empties the boxes, focuses the first box and fires `nds:otp:clear`. It does not remove an error: call `NDS.Forms.clearStatus(group)` for that |
 | `NDS.OTP.init()` | Starts every group on the page. It runs once at page load, and a group added later starts on its own |
 | `NDS.Forms.validateOtpGroup(group)` | Checks that every box holds a digit, shows the error when one is empty, and returns `{ valid, message, filled }` |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:otpChange` | `.nds-otp-group`, and it bubbles | `{ value, filled }`. It fires on each typed, pasted or deleted digit. `filled` is `true` when every box holds a digit |
-| `nds:otpComplete` | `.nds-otp-group`, and it bubbles | `{ value }`. It fires when the last empty box gets a digit, in any order. Use it to submit the code |
-| `nds:otpClear` | `.nds-otp-group`, and it bubbles | `{ value }`. It fires from `NDS.OTP.clear()` only |
+| `nds:otp:change` | `.nds-otp-group`, and it bubbles | `{ value, filled }`. It fires on each typed, pasted or deleted digit. `filled` is `true` when every box holds a digit |
+| `nds:otp:complete` | `.nds-otp-group`, and it bubbles | `{ value }`. It fires when the last empty box gets a digit, in any order. Use it to submit the code |
+| `nds:otp:clear` | `.nds-otp-group`, and it bubbles | `{ value }`. It fires from `NDS.OTP.clear()` only |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="otp-js" data-canon data-lang="js">
 var group = document.querySelector('#verify-form .nds-otp-group');
 
 // Submit when the last digit is in
-group.addEventListener('nds:otpComplete', function () {
+group.addEventListener('nds:otp:complete', function () {
   document.querySelector('#verify-form').requestSubmit();
 });
 

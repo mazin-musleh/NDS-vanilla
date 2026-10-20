@@ -350,7 +350,7 @@ related:
 
 <script>
 // Send the scores, then thank the user.
-document.getElementById('journey-survey').addEventListener('nds:formValid', () => {
+document.getElementById('journey-survey').addEventListener('nds:form:valid', () => {
     NDS.Modal.close();
     NDS.Alert.create({ variant: 'success', title: 'Thank you', description: 'Your rating was sent.', display: 'toast', duration: 4000 });
 });

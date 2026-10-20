@@ -22,8 +22,8 @@
  *   nds:table:sub-request  detail {row, sub, table, signal} — there is nothing to show yet.
  *                          Fetch, then answer: NDS.Tables.row(row).sub.setContent(html).open().
  *                          Pass detail.signal to fetch / NDS.request so a cancel drops it
- *   nds:table:sub-open     detail {row, sub, table}
- *   nds:table:sub-close    detail {row, sub, table}
+ *   nds:table:sub-opened   detail {row, sub, table}
+ *   nds:table:sub-closed   detail {row, sub, table}
  * Hooks:
  *   data-sub-toggle    the button that expands a row (anywhere in the row, or in its menu)
  *   data-sort-value    on a <td>, when the rendered text would sort wrong
@@ -555,31 +555,6 @@
         }
     }
 
-    // Global tab change handler (single listener for all responsive tables).
-    // On window, not a module let: a second copy of the bundle must not add a second listener.
-    if (!window.ndsTabChangeHandlerInitialized) {
-        window.ndsTabChangeHandlerInitialized = true;
-        document.addEventListener('nds:tab:changed', (e) => {
-            const activePanel = e.detail?.panel;
-            if (activePanel) {
-                // Find all responsive tables inside the activated tab panel
-                const tables = activePanel.querySelectorAll('.nds-table[data-nds-tables-initialized]');
-                tables.forEach(table => {
-                    const responsive = table.ndsTableResponsive;
-                    if (responsive) {
-                        if (!responsive._debouncedTabChangeCheck) {
-                            responsive._debouncedTabChangeCheck = NDS.debounce(
-                                () => responsive.checkTableWidth(),
-                                200
-                            );
-                        }
-                        responsive._debouncedTabChangeCheck();
-                    }
-                });
-            }
-        });
-    }
-
     // ── Column alignment (data-align on the <th>) ─────────────────────
     // One generated rule per aligned column, not a class stamped on each cell:
     // a selector also covers rows that arrive later from sort, filter or
@@ -716,7 +691,7 @@
             if (open) NDS.State.set(btn, 'open'); else NDS.State.clear(btn);
         });
 
-        emitSub(table, open ? 'sub-open' : 'sub-close', tr, sub);
+        emitSub(table, open ? 'sub-opened' : 'sub-closed', tr, sub);
     }
 
     // Single-open is the default (accordion parity); a table opts into
@@ -857,7 +832,7 @@
     // Delegated on document: covers content injected later, needs no per-table
     // wiring, and is independent of the sort/checkbox-gated NDSTables instance —
     // a plain table with no sorting or selection can still carry sub-rows.
-    // On window for the same reason as ndsTabChangeHandlerInitialized above.
+    // On window, not a module let: a second copy of the bundle must not add a second listener.
     if (!window.ndsTableSubHandlerInitialized) {
         window.ndsTableSubHandlerInitialized = true;
 

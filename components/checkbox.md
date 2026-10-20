@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 03:51 PM"
+last_edit: "20/10/2026 - 07:46 AM"
 ---
 
 <section id="checkbox-overview" class="nds-content-section nds-doc-overview">
@@ -154,7 +154,7 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
 ### Indeterminate
 {: .nds-block-title}
 
-`NDS.Forms.setIndeterminate()` shows a dash, for a "select all" checkbox. A click by the user clears it. Each change fires `nds:indeterminateChange`.
+`NDS.Forms.setIndeterminate()` shows a dash, for a "select all" checkbox. A click by the user clears it. Each change fires `nds:checkbox:indeterminate`.
 
 </div>
   </div>
@@ -256,7 +256,7 @@ Source: the `checkbox` group in `_sass/tokens/_components.scss`.
 
 | Method | Effect |
 |---|---|
-| `NDS.Forms.setIndeterminate(checkbox, value)` | Shows or clears the dash, and fires `nds:indeterminateChange` |
+| `NDS.Forms.setIndeterminate(checkbox, value)` | Shows or clears the dash, and fires `nds:checkbox:indeterminate` |
 | `NDS.Forms.validateCheckboxGroup(group, options)` | Checks the group and returns `{ valid, checked, min, max, message }`. Pass `{ showMessage: false }` to check without a message |
 | `NDS.Forms.initCheckboxGroupValidation(group)` | Checks a group again on each change once it shows an error. The forms script calls it for groups on the page; call it for a group you add later |
 | `NDS.Forms.syncState(input)` | Updates the field after you set `.checked` from code. It fires no event |
@@ -266,7 +266,7 @@ Source: the `checkbox` group in `_sass/tokens/_components.scss`.
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:indeterminateChange` | the `<input>` | `{ indeterminate }`, `true` or `false` |
+| `nds:checkbox:indeterminate` | the `<input>` | `{ indeterminate }`, `true` or `false` |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="check-js" data-canon data-lang="js">

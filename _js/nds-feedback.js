@@ -8,8 +8,8 @@
  *   NDS.Feedback.dismiss(elOrSel)      remove one message — true when it existed
  *   NDS.Feedback.dismissAll(container) clear a container (a permanent one is only unhidden)
  * Events (dispatched ON `document`, not on the message — listen there):
- *   nds:feedbackCreate    detail {feedback, options}
- *   nds:feedbackDismiss   detail {feedback}
+ *   nds:feedback:created   detail {feedback, options} — after the message is in place
+ *   nds:feedback:dismiss   detail {feedback} — before the message is removed
  * Hooks:
  *   data-permanent   a message that survives the next one: it hides instead of being
  *                    removed, and comes back when that newer message is dismissed
@@ -144,7 +144,7 @@
             }
 
             // Dispatch create event
-            const event = new CustomEvent('nds:feedbackCreate', {
+            const event = new CustomEvent('nds:feedback:created', {
                 detail: { feedback, options },
                 bubbles: true
             });
@@ -172,7 +172,7 @@
             const parent = el.parentNode;
 
             // Dispatch dismiss event
-            const event = new CustomEvent('nds:feedbackDismiss', {
+            const event = new CustomEvent('nds:feedback:dismiss', {
                 detail: { feedback: el },
                 bubbles: true
             });

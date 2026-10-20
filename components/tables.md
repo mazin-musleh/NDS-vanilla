@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "19/10/2026 - 08:46 AM"
+last_edit: "20/10/2026 - 07:59 AM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -787,8 +787,8 @@ Source: the `table` group in `_sass/tokens/_components.scss`.
 |---|---|---|
 | `nds:table:columns` | `.nds-table` | `{ table, index, hidden, restored }`. `restored` is `true` for a saved choice that the script applies at load |
 | `nds:table:sub-request` | `.nds-table` | `{ row, sub, table, signal }`. `sub` is `null`. Pass `signal` to your request, so a cancel stops it |
-| `nds:table:sub-open` | `.nds-table` | `{ row, sub, table }` |
-| `nds:table:sub-close` | `.nds-table` | `{ row, sub, table }` |
+| `nds:table:sub-opened` | `.nds-table` | `{ row, sub, table }` |
+| `nds:table:sub-closed` | `.nds-table` | `{ row, sub, table }` |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="tbl-js" data-canon data-lang="js">

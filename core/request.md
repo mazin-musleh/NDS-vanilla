@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.6.0"
 updated: "1.12.0"
-last_edit: "12/10/2026 - 04:08 PM"
+last_edit: "20/10/2026 - 07:46 AM"
 ---
 
 <section id="request-overview" class="nds-content-section nds-doc-overview">
@@ -239,7 +239,7 @@ The full API is in the banner of `_js/nds-core.js`, and in the comment above `ND
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Filter](../components/filter): the `nds:filterFormAjax` event lets you send the search yourself. Its `rollback()` puts the chips, the badge and the URL back when your request fails.
+- [Filter](../components/filter): the `nds:filter:request` event lets you send the search yourself. Its `rollback()` puts the chips, the badge and the URL back when your request fails.
 - [User Feedback](../components/user-feedback): Submit sends the form with `NDS.request`.
 - [Cooldown Button](../components/cooldown-button): a resend request that resets the cooldown when it fails.
 - [Autocomplete](../components/autocomplete): loads its results with `NDS.request`.

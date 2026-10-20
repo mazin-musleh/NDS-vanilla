@@ -33,13 +33,13 @@
  *   NDS.Forms.initMultiselectValidation(el)      live-validation wiring for a group
  *   NDS.Forms.isNationalId(str) / .isIban(str)   the checksum rules behind .nds-national-id / .nds-iban
  * Events:
- *   nds:statusChange         detail {status, message} — from the form container
- *   nds:formValidate         detail {valid, invalidFields, errors} — from the form, every
- *                            validateForm() run
- *   nds:formValid            detail {waitUntil(promise)} — from the form, on a passing submit
- *   nds:formInvalid          detail {invalidFields, errors} — from the form, on a blocked submit
- *   nds:switchChange         detail {checked, value, input} — from the .nds-switch element
- *   nds:indeterminateChange  detail {indeterminate} — from the checkbox
+ *   nds:form:status             detail {status, message} — from the form container
+ *   nds:form:validate           detail {valid, invalidFields, errors} — from the form, every
+ *                               validateForm() run
+ *   nds:form:valid              detail {waitUntil(promise)} — from the form, on a passing submit
+ *   nds:form:invalid            detail {invalidFields, errors} — from the form, on a blocked submit
+ *   nds:switch:change           detail {checked, value, input} — from the .nds-switch element
+ *   nds:checkbox:indeterminate  detail {indeterminate} — from the checkbox
  * Hooks:
  *   data-required · data-min-checked · data-max-checked · data-error-message
  *   data-ajax · data-no-pending · data-message · data-feedback-target · data-loading-slot
@@ -73,10 +73,10 @@
  *   - syncState() dispatches nothing, so it cannot re-enter your own input handler. Setting
  *     input.value from JS notifies nothing on its own: call syncState() or dispatch input/change.
  *   - Forms owns the submit listener on every real <form class="nds-form">. data-ajax makes it
- *     preventDefault() after validation — the request is yours to send from nds:formValid.
+ *     preventDefault() after validation — the request is yours to send from nds:form:valid.
  *   - That automatic wiring is <form>-tags only: on any other element .nds-form is a layout
  *     marker (wizard step divs use it that way) and initForm() skips it — no submit validation,
- *     no nds:formValid, silently. Can't use a <form> tag (one outer server form, a fragment)?
+ *     no nds:form:valid, silently. Can't use a <form> tag (one outer server form, a fragment)?
  *     Keep .nds-form on the container, call NDS.Forms.validateForm(container) from your own
  *     trigger (the button's click), and branch on its {valid} result — validation works the
  *     same; only the automatic submit lifecycle is absent.
@@ -87,7 +87,7 @@
  *   - Pending: a sent form drops further submits and its submit button shows loading. A POST
  *     that loads a page in this tab is pending until the page goes (a page restored from the
  *     back cache is not); a POST answered by a download or a 204 never ends it, so that form
- *     takes data-no-pending. Otherwise only a waitUntil(promise) from nds:formValid makes it
+ *     takes data-no-pending. Otherwise only a waitUntil(promise) from nds:form:valid makes it
  *     pending, until the promise settles; call it in the listener, not after an await.
  */
 
@@ -394,7 +394,7 @@
                 this.clear(container);
             }
 
-            container.dispatchEvent(new CustomEvent('nds:statusChange', {
+            container.dispatchEvent(new CustomEvent('nds:form:status', {
                 detail: { status: status, message: message },
                 bubbles: true
             }));
@@ -424,7 +424,7 @@
                 describeBy(input, null);
             }
 
-            container.dispatchEvent(new CustomEvent('nds:statusChange', {
+            container.dispatchEvent(new CustomEvent('nds:form:status', {
                 detail: { status: null, message: null },
                 bubbles: true
             }));
@@ -921,7 +921,7 @@
 
             var isFormValid = acc.invalidFields.length === 0;
 
-            form.dispatchEvent(new CustomEvent('nds:formValidate', {
+            form.dispatchEvent(new CustomEvent('nds:form:validate', {
                 detail: { valid: isFormValid, invalidFields: acc.invalidFields, errors: acc.errors },
                 bubbles: true
             }));
@@ -1008,7 +1008,7 @@
                 value ? NDS.State.add(formContainer, 'indeterminate') : NDS.State.remove(formContainer, 'indeterminate');
             }
 
-            checkbox.dispatchEvent(new CustomEvent('nds:indeterminateChange', {
+            checkbox.dispatchEvent(new CustomEvent('nds:checkbox:indeterminate', {
                 detail: { indeterminate: !!value },
                 bubbles: true
             }));
@@ -1301,7 +1301,7 @@
             if (group && NDS.Status.get(group) !== '') StatusManager.clear(group);
         });
         // A pick answers "add a file"; a finished upload answers "wait".
-        ['nds:upload:selected', 'nds:upload:success', 'nds:upload:error'].forEach(function(name) {
+        ['nds:upload:select', 'nds:upload:success', 'nds:upload:error'].forEach(function(name) {
             doc.addEventListener(name, function(e) {
                 if (NDS.Status.get(e.target) !== '') StatusManager.clear(e.target);
             });
@@ -1420,7 +1420,7 @@
                     if (switchInput.disabled || switchInput.readOnly || switchElement.classList.contains('disabled')) return;
                     NDS.setValue(switchInput, !switchInput.checked);
                     FieldSync.update(switchInput, formControl);
-                    switchElement.dispatchEvent(new CustomEvent('nds:switchChange', {
+                    switchElement.dispatchEvent(new CustomEvent('nds:switch:change', {
                         detail: { checked: switchInput.checked, value: switchInput.value, input: switchInput },
                         bubbles: true
                     }));
@@ -1677,7 +1677,7 @@
                 e.preventDefault();
                 e.stopPropagation();
 
-                form.dispatchEvent(new CustomEvent('nds:formInvalid', {
+                form.dispatchEvent(new CustomEvent('nds:form:invalid', {
                     detail: { invalidFields: result.invalidFields, errors: result.errors },
                     bubbles: true
                 }));
@@ -1686,7 +1686,7 @@
             }
 
             var waits = [];
-            form.dispatchEvent(new CustomEvent('nds:formValid', {
+            form.dispatchEvent(new CustomEvent('nds:form:valid', {
                 detail: { waitUntil: function(p) { waits.push(p); } },
                 bubbles: true
             }));
