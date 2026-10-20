@@ -6,6 +6,7 @@
  *   NDS.Autocomplete.init() / .reinit()      arm the delegated focusin builder
  *   NDS.Autocomplete.create(el, options)     build one field now; options {filter, renderItem}.
  *                                            Null when the markup is incomplete; the live one if started
+ *   NDS.Autocomplete.destroy(el)             undo create() before you discard the field
  * Events (bubble from the .nds-form-container):
  *   nds:autocomplete:fetch    detail {query, results} — after every result set is rendered
  *   nds:autocomplete:select   detail {item, text} — a suggestion was picked
@@ -36,6 +37,8 @@
     const { add: addState, remove: removeState } = NDS.state;
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    const ARIA_ATTRS = ['role', 'aria-expanded', 'aria-autocomplete', 'aria-controls', 'aria-activedescendant'];
+
     const strings = NDS.i18n.strings('autocomplete', {
         no_results: 'No results',
         load_failed: 'Could not load suggestions',
@@ -181,6 +184,8 @@
         }
 
         setupAria() {
+            // destroy() removes only what the author did not write.
+            this._authoredAria = ARIA_ATTRS.filter((a) => this.input.hasAttribute(a));
             this.input.setAttribute('role', 'combobox');
             NDS.aria.expanded(this.input, false);
             this.input.setAttribute('aria-autocomplete', 'list');
@@ -669,7 +674,7 @@
 
             // Restore the markup the focusin builder matches, so the field can build again.
             this.input.setAttribute('autocomplete', 'on');
-            ['role', 'aria-expanded', 'aria-autocomplete', 'aria-controls', 'aria-activedescendant']
+            ARIA_ATTRS.filter((a) => !this._authoredAria?.includes(a))
                 .forEach((a) => this.input.removeAttribute(a));
             this.container.removeAttribute('data-nds-autocomplete-initialized');
             if (this.container.ndsAutocomplete === this) delete this.container.ndsAutocomplete;
@@ -708,6 +713,7 @@
     NDS.Autocomplete = {
         init: initializeAutocompletes,
         reinit: initializeAutocompletes,
+        destroy: (element) => element?.ndsAutocomplete?.destroy(),
         // Programmatic construction. Pass { filter, renderItem } to override
         // the default substring match and dropdown-row renderer.
         create: function (element, options) {

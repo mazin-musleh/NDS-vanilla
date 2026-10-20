@@ -10,6 +10,7 @@
  *                                                data-* config, and merge into a started one.
  *                                                Selector string accepted
  *   NDS.Upload.getInstance(el)                   the existing instance, or null
+ *   NDS.Upload.destroy(el)                       undo create() before you discard the uploader
  *   NDS.Upload.whenReady(el, cb)                 run cb with the instance, now or on ready
  *   instance.addFile(file, options)              stage a File — returns its id, null when full.
  *                                                options {validate, status, progress, error}
@@ -853,6 +854,7 @@
             const instance = new NDSUpload(container, options);
             return instance._initialized ? instance : null;       // null if the constructor bailed
         },
+        destroy: (container) => NDS.resolveEl(container)?.ndsUpload?.destroy(),
 
         getInstance: (container) => {
             return NDS.resolveEl(container)?.ndsUpload || null;

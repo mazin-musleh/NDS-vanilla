@@ -3,6 +3,7 @@
  * Methods:
  *   NDS.Tooltip.init() / .reinit()   scan + initialize .nds-tooltip
  *   NDS.Tooltip.create(el)           instance one tooltip
+ *   NDS.Tooltip.destroy(el)          undo create(): the markup it built and the attributes it wrote go
  *   instance.open() / .close()       show or hide the balloon
  *   instance.destroy()               detach and un-stamp
  * Events (bubble from the .nds-tooltip):
@@ -80,6 +81,8 @@
             this.root = root;
             if (root.hasAttribute('data-nds-tooltip-initialized')) return;
 
+            // What this writes on the author's markup, taken back in reverse by destroy().
+            this._undo = [];
             this.autoMarkup();
 
             this.trigger = root.querySelector('.nds-tooltip-trigger') || root;
@@ -87,6 +90,7 @@
 
             if (!this.balloon && !this._lazyBalloon) {
                 console.warn('NDS Tooltip: no .nds-tooltip-balloon and no data-tooltip-title/message to build one');
+                this._unstamp();
                 return;
             }
 
@@ -122,6 +126,7 @@
             if (fromTitle) {
                 this.root.dataset.tooltipMessage = nativeTitle;
                 this.root.removeAttribute('title');
+                this._undo.push(() => { this.root.setAttribute('title', nativeTitle); delete this.root.dataset.tooltipMessage; });
                 // A marked title may still be English (pack past its cap): its marker follows the words.
                 this._messageRef = this.root.getAttribute('data-i18n-title');
                 // The title was the control's only name — keep it as one.
@@ -129,6 +134,7 @@
                     && !this.root.textContent.trim()) {
                     NDS.aria.label(this.root, nativeTitle);
                     if (this._messageRef) this.root.setAttribute('data-i18n-aria-label', this._messageRef);
+                    this._undo.push(() => { this.root.removeAttribute('aria-label'); this.root.removeAttribute('data-i18n-aria-label'); });
                 }
             }
 
@@ -155,6 +161,7 @@
                 if (title) NDS.aria.label(trigger, title); else strings.set(trigger, 'aria-label', 'more_info');
                 trigger.appendChild(buildChip(this.root.dataset.tooltipStatus));
                 this.root.prepend(trigger);
+                this._undo.push(() => trigger.remove());
             }
 
             if (hasBalloon) return;
@@ -167,6 +174,7 @@
             const balloon = document.createElement('div');
             balloon.className = 'nds-tooltip-balloon';
             balloon.hidden = true;
+            this._undo.push(() => balloon.remove());
 
             // Leading icon chip only when there's also a title — a pure
             // message-only tooltip stays clean (just the text).
@@ -196,6 +204,13 @@
         // balloon and on first open for a lazy one.
         adoptBalloon(balloon) {
             this.balloon = balloon;
+            // An authored balloon gets its own attributes back; a built one leaves whole.
+            const had = ['role', 'popover', 'id'].filter((a) => balloon.hasAttribute(a));
+            const style = balloon.getAttribute('style');   // open() places it inline
+            this._undo.push(() => {
+                ['role', 'popover', 'id'].forEach((a) => { if (!had.includes(a)) balloon.removeAttribute(a); });
+                if (style === null) balloon.removeAttribute('style'); else balloon.setAttribute('style', style);
+            });
             balloon.setAttribute('role', 'tooltip');
             balloon.setAttribute('popover', 'manual');
             balloon.id = this._balloonId;
@@ -223,6 +238,10 @@
             if (!existing || !existing.split(/\s+/).includes(id)) {
                 this.trigger.setAttribute('aria-describedby',
                     existing ? `${existing} ${id}` : id);
+                this._undo.push(() => {
+                    const rest = (this.trigger.getAttribute('aria-describedby') || '').split(/\s+/).filter((t) => t && t !== id);
+                    rest.length ? this.trigger.setAttribute('aria-describedby', rest.join(' ')) : this.trigger.removeAttribute('aria-describedby');
+                });
             }
 
             // A text trigger (span root) has no native activation — Enter/Space
@@ -230,9 +249,11 @@
             this._isTextTrigger = !this.trigger.matches('a, button, input, select, textarea');
             if (this._isTextTrigger && !this.trigger.hasAttribute('tabindex')) {
                 this.trigger.setAttribute('tabindex', '0');
+                this._undo.push(() => this.trigger.removeAttribute('tabindex'));
             }
             if (this._isTextTrigger && !this._hoverMode && !this.trigger.hasAttribute('role')) {
                 this.trigger.setAttribute('role', 'button');
+                this._undo.push(() => this.trigger.removeAttribute('role'));
             }
             // A link/button root owns its data-state (a nav toggle's open look),
             // so the balloon's open stamp stays off it there.
@@ -433,8 +454,14 @@
             clearTimeout(this._hoverTimer);
             if (this.isOpen) this.close();
             if (this.abortController) { this.abortController.abort(); this.abortController = null; }
+            this._unstamp();
             this.root.removeAttribute('data-nds-tooltip-initialized');
             delete this.root.ndsTooltip;
+        }
+
+        _unstamp() {
+            this._undo.reverse().forEach((fn) => fn());
+            this._undo = [];
         }
     }
 
@@ -453,6 +480,7 @@
         create: (el) => {
             if (!el.ndsTooltip) new NDSTooltip(el);
             return el.ndsTooltip || null;
-        }
+        },
+        destroy: (el) => el?.ndsTooltip?.destroy(),
     };
 })();
