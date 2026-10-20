@@ -431,7 +431,7 @@ Shared code sits in one of three layers, and a lower layer never names a higher 
 | Layer | What it is | Name (entry 9) | Bundle | Example |
 |---|---|---|---|---|
 | core | a page-wide utility that knows no component | lowercase | main | `NDS.debounce`, `NDS.aria` |
-| base | one job a family shares, no UI of its own | lowercase | main, evaluated before any file that registers with it | `NDS.dialog` (Modal, Panel) |
+| base | one job a family shares, no UI of its own | lowercase | its callers' bundle when they all share one, else main; listed before every file in that bundle that names it | `NDS.dialog` (Modal, Panel, all in delegated) |
 | component | has a root class or a loader entry | PascalCase | its own | `NDS.Modal` |
 
 - A base creates no markup and shows no message. It may write state and attributes (`NDS.dialog` writes `inert` and `data-nds-modal`), but it returns data, and the component that called it renders.
@@ -442,7 +442,7 @@ Shared code sits in one of three layers, and a lower layer never names a higher 
 
 **Why (and rejected alternatives)**
 
-Direction keeps a change local: a base that knows no user changes without breaking one, and a component that adds a rule or a type touches only its own file. Bases live in main because a stub cannot answer a synchronous call and every property of a stub is truthy; the two failed bundle splits of 2026-05 each grew a chain of late edges until main held almost everything, and the delegated tier worked once the shared dependencies stayed in main. Rejected: Form validating other components' markup (it knew ten, and seven called it back); a base that renders, which would have to name the component that renders it; a component split into an eager shell and a lazy half (removed 2026-06-04, AGENTS.md); a component split into plain files by doc page, which scatters code that runs together and adds a `document` listener per file (the Checkbox, Radio and Switch study, 2026-10-20); `?.` guards on main namespaces, which never fire.
+Direction keeps a change local: a base that knows no user changes without breaking one, and a component that adds a rule or a type touches only its own file. A base lives with its callers because a stub cannot answer a synchronous call and every property of a stub is truthy: in its callers' own bundle no caller ever meets the stub, and main is where callers in different bundles meet. The two failed bundle splits of 2026-05 each grew a chain of late edges until main held almost everything, and the delegated tier worked once the shared dependencies stayed in main. Rejected: every base in main (the owner's first call, 2026-10-20), which would add `NDS.dialog`'s 2.4 KB to the bundle that gates the reveal, for callers that all load later. Rejected: Form validating other components' markup (it knew ten, and seven called it back); a base that renders, which would have to name the component that renders it; a component split into an eager shell and a lazy half (removed 2026-06-04, AGENTS.md); a component split into plain files by doc page, which scatters code that runs together and adds a `document` listener per file (the Checkbox, Radio and Switch study, 2026-10-20); `?.` guards on main namespaces, which never fire.
 
 **Carve-outs (NOT divergence)**
 
@@ -452,7 +452,7 @@ Direction keeps a change local: a base that knows no user changes without breaki
 
 **Audit behavior**
 
-`check-js-rules.mjs` (built in `plans/shared-logic.md` step 2): a guard on a main namespace → finding; a call from one injected bundle into another → verify; core or a base naming a component namespace → finding. `js_processor.rb` fails the build on a base outside main, or listed after a file that registers with it. Until the plan lands, today's tree diverges in known ways (Form validates other components; `NDS.dialog` is in delegated): migration targets, not revisions.
+`check-js-rules.mjs` (built in `plans/shared-logic.md` step 2): a guard on a main namespace → finding; a call from one injected bundle into another → verify; core or a base naming a component namespace → finding. `js_processor.rb` fails the build on a base away from a caller's bundle, or listed after a file in its bundle that names it. Until the plan lands, today's tree diverges in known ways (Form validates other components): migration targets, not revisions.
 
 ---
 

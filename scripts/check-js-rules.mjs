@@ -9,9 +9,9 @@
  * Rules, decided or listed for the reader:
  *   JSP  01, 02, 03, 04 (a)(b), 05, 06 (a)(c), 07, 08, 09, 10, 11, 12
  *   JSS  01, 02, 04, 05, 06
- *   JSD  01, 02, 03, 04, 05 (a)(b), 06, 07, 08, 09, 10, 11, 12, 13, 14 (a)-(e), 16, 17, 18, 19
+ *   JSD  01, 02, 03, 04, 05 (a)(b), 06, 07, 08, 09, 10, 11, 12, 13, 14 (a)-(e), 15 (PERSONA entry 11), 16, 17, 18, 19
  *   JSA  01, 02, 03, 04, 05 (registry hygiene), 06, 07, 09, 11 (length + concerns), 13, 21 (a), 22, 23 (a)
- * Left to the reader whole: JSD-15, JSD-20 (check-banners.mjs), and the JSA rules that are judgment only.
+ * Left to the reader whole: JSD-15's other PERSONA entries, JSD-20 (check-banners.mjs), and the JSA rules that are judgment only.
  * Two kinds of line: `finding` is decided; `verify` is a candidate whose one remaining carve-out
  * needs reading, named on the line. Never writes files. Exit 0 = no finding, 1 = findings.
  *   --self-test   run the built-in cases
@@ -227,6 +227,20 @@ const DEPRECATIONS = readFileSync(join(REPO, 'DEPRECATIONS.md'), 'utf8');
 // The namespaces the loader registers (JSP-10 scopes to them).
 const REGISTERED = new Set(loaderNames());
 
+// Where each file ships ('main', 'delegated', …) and which file defines each namespace (PERSONA entry 11).
+const BUNDLE = {};
+for (const m of readFileSync(join(REPO, '_plugins', 'js_processor.rb'), 'utf8').matchAll(/'nds-([\w-]+)\.min\.js'\s*=>\s*\[([^\]]*)\]/g)) {
+    for (const f of m[2].matchAll(/'([^']+\.js)'/g)) BUNDLE[f[1]] = m[1];
+}
+const HOME = {};
+for (const f of readdirSync(join(REPO, '_js')).filter((x) => /^nds-.*\.js$/.test(x))) {
+    const src = readFileSync(join(REPO, '_js', f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
+    for (const m of src.matchAll(/(?<![\w.$])NDS\.([A-Za-z]\w*)\s*=(?!=)/g)) HOME[m[1]] ??= f;
+}
+const inMain = (ns) => BUNDLE[HOME[ns]] === 'main';
+// Core modules that A7 renames to lowercase: they are not components, so a base may name them.
+const MODULES = new Set(['State', 'Status', 'Init', 'Audit']);
+
 // Core and loader namespaces the loader guarantees; any other PascalCase namespace is a sibling (JSD-12).
 const CORE = new Set(['State', 'Status', 'Init']);
 const POOLS = 'Resize|ElementResize|Intersect|OutsideScroll|AttrChange|DOMAdd|DOMRemove|ChildrenChange';
@@ -344,6 +358,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         if (CORE.has(sib) || sib === own) continue;
         const ctx = code.slice(Math.max(0, m.index - 12), m.index);
         if (m[0].endsWith(')') && !/(?:\bif\s*\(\s*|!\s*|&&\s*|\|\|\s*)$/.test(ctx)) continue; // a call's argument, not a test
+        if (inMain(sib)) { hit('JSD-12', m.index, `NDS.${sib} guard: main always loads it, so remove it (PERSONA entry 11)`); continue; }
         guarded.add(sib);
         const from = lineStart(source, outerFn(bare, m.index) || m.index, 3); // the outermost function and its leading comment
         const names = new RegExp(`\\b${sib}\\b`);
@@ -359,6 +374,26 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
             if (new RegExp(`if\\s*\\([^;{]*!\\s*NDS\\.${sib}\\b[^;{]*\\)\\s*return\\b`).test(fnBody)) continue; // early return
             if (opens.some((o) => new RegExp(`if\\s*\\([^)]*\\bNDS\\.${sib}\\b[^)]*\\)\\s*$`).test(bare.slice(Math.max(0, o - 120), o)))) continue; // inside if (NDS.X) { }
             hit('JSD-12', m.index, `raw NDS.${sib} call in a file that guards it elsewhere`, 'check the path cannot run without it');
+        }
+    }
+
+    // JSD-15 (PERSONA entry 11) a call from one injected bundle into another: they land in no order.
+    const mine = BUNDLE[name];
+    if (mine && mine !== 'main') {
+        const seenNs = new Set();
+        for (const m of code.matchAll(/\bNDS\.([A-Z]\w*)\b/g)) {
+            const theirs = BUNDLE[HOME[m[1]]];
+            if (!theirs || theirs === 'main' || theirs === mine || seenNs.has(m[1])) continue;
+            seenNs.add(m[1]);
+            hit('JSD-15', m.index, `NDS.${m[1]} ships in ${theirs}, this file in ${mine}`, 'entry 11: its result must be unused or awaited, or carry the commented stub check');
+        }
+    }
+    // JSD-15 (entry 11) core or a base naming a component: a lower layer never names a higher one.
+    const defined = Object.keys(HOME).filter((ns) => HOME[ns] === name);
+    if (name === 'nds-core.js' || (defined.some((ns) => /^[a-z]/.test(ns)) && !defined.some((ns) => /^[A-Z]/.test(ns)))) {
+        for (const m of code.matchAll(/\bNDS\.([A-Z]\w*)\b/g)) {
+            if (MODULES.has(m[1]) || HOME[m[1]] === name) continue;
+            hit('JSD-15', m.index, `a base names NDS.${m[1]}, a component (entry 11): serve it through arguments, callbacks or a registry`);
         }
     }
 
@@ -1149,7 +1184,8 @@ const CASES = [
     [`(function(){ function init() { if (!done) { done = true; NDS.onResize(fit); } } })();`, []], // latch, block form
     [`(function(){ function init() { NDS.onElementResize(el, fit); } })();`, []], // dedup pool, stable ref
     [`(function(){ function f() { NDS.Modal?.open(m); } })();`, ['JSD-12?']],
-    [`(function(){ function f() {\n// Soft dependency: no dimming if NDS.Backdrop is not bundled.\nif (NDS.Backdrop) NDS.Backdrop.show(); } })();`, []],
+    [`(function(){ function f() {\n// Soft dependency: no tooltip if NDS.Tooltip is not bundled.\nif (NDS.Tooltip) NDS.Tooltip.create(el); } })();`, []],
+    [`(function(){ function f() { NDS.Form?.setStatus(el, 'error'); } })();`, ['JSD-12']], // main always loads Form
     [`(function(){\n// ------\n// Soft dependency: Panel is optional here.\n// ------\nfunction a() { NDS.Panel?.open(p); }\nfunction b() { NDS.Panel?.close(p); } })();`, []], // section header
     [`(function(){ function f() { NDS.State?.add(el, 'x'); } })();`, ['JSD-08']], // core: no JSD-12, but a dead guard
     [`(function(){\n// Soft dependency: Copy is optional.\nfunction a() { NDS.Copy?.init(); }\nfunction b() { NDS.Copy.init(); } })();`, ['JSD-12?']], // raw where guarded elsewhere
@@ -1252,7 +1288,15 @@ if (args[0] === '--self-test') {
     const twin = (n) => `(function(){ function ${n}(p, c) { const i = document.createElement('i'); i.className = 'nds-icon'; NDS.aria.hidden(i, true); const s = document.createElement('span'); s.className = 'nds-meta-item'; s.append(i, c); p.replaceChildren(s); } })();`;
     const pairs = (await checkTree(['a.js', 'b.js'], (f) => twin(f === 'a.js' ? 'renderCity' : 'renderDate'))).filter((f) => f.rule === 'JSD-05a');
     if (pairs.length !== 1) { failed++; console.log(`FAIL  JSD-05a twins: want 1 got ${pairs.length}`); }
-    console.log(`${CASES.length + 2 - failed}/${CASES.length + 2} cases pass`);
+    // Entry 11 reads the real bundle map, so these cases borrow a real file's name.
+    const layer = (file, src, want) => {
+        const got = checkFile(file, src).filter((f) => f.rule === 'JSD-15').map((f) => (f.verify ? 'verify' : 'finding'));
+        if (got.join() !== want) { failed++; console.log(`FAIL  entry 11 in ${file}: want [${want}] got [${got}]`); }
+    };
+    layer('nds-export.js', `(function(){ function f() { NDS.Panel.open(p); } })();`, 'verify'); // extras → delegated
+    layer('nds-export.js', `(function(){ function f() { NDS.Form.validate(p); } })();`, ''); // extras → main
+    layer('nds-dialog.js', `(function(){ function f() { NDS.Modal.close(); } })();`, 'finding'); // a base names a component
+    console.log(`${CASES.length + 5 - failed}/${CASES.length + 5} cases pass`);
     process.exit(failed ? 1 : 0);
 }
 const files = args.length

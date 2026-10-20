@@ -73,7 +73,7 @@ changes where the rules give a simpler, more consistent result (as the naming re
 | Layer | What it is | Name | Bundle | May use |
 |---|---|---|---|---|
 | core | page-wide utility, knows no component | lowercase (`NDS.debounce`, `NDS.aria`) | main | nothing above it |
-| base | one job a family shares, no UI of its own | lowercase (`NDS.dialog`, `NDS.field`) | **main, always** (owner, 2026-10-20) | core |
+| base | one job a family shares, no UI of its own | lowercase (`NDS.dialog`, `NDS.field`) | its callers' bundle when they all share one, else main (owner, 2026-10-20) | core |
 | loader | orchestration | `NDS.init` (A7) | main | names components only through its registry, never in code |
 | component | wires markup on the page: has a root class or a loader entry (decision 5) | PascalCase, from its class (entry 9) | as perf decides | core, bases, siblings that load no later |
 
@@ -102,14 +102,17 @@ Names follow PERSONA entry 10: a new job takes a verb from its table before a ne
 
 ### A3. Bundles
 
-- **Core and every base live in main.** A base is never a stub, so no caller guards it or waits for it.
-- Inside main, a base is evaluated before every file that registers with it: main is one script, and one
-  TypeError at eval stops the loader and the reveal.
+- **Core lives in main; a base lives with its callers:** in their bundle when they all share one, else in
+  main. No caller ever meets a base's stub, so none guards it or waits for it. (First call, every base in
+  main, was revised the same day: `NDS.dialog` would add 2.4 KB to the reveal path for callers that all
+  load later.)
+- A base is listed before every file in its bundle that names it: a bundle is one script, and one
+  TypeError at eval stops it (in main, the loader and the reveal).
 - A callee loads no later than every caller that uses its result synchronously. The injected bundles have
   no order among themselves: a call between two of them is allowed only if its result is unused or
   awaited, or it carries the one-line stub check with its comment (today's two sites).
-- Build guards in `js_processor.rb`, beside `assert_no_critical_in_injected!`: a base outside main fails;
-  a part listed before its base fails; `scan_namespaces` reads lowercase namespaces too (`:144` matches
+- Build guards in `js_processor.rb`, beside `assert_no_critical_in_injected!`: a base away from a caller's
+  bundle fails; a file listed before a base it names fails; `scan_namespaces` reads lowercase namespaces too (`:144` matches
   `[A-Z]` only today, so a lowercase namespace in an injected bundle gets no manifest row and no stub).
 
 ### A4. Guards
@@ -207,7 +210,7 @@ against entry 9 in the same pass (`kind: class` rows, which `migrations.yml` and
 | 1c | Session Timeout's dialogs carry `.nds-session-timeout` (decision 6) | A7 | the session-timeout demo |
 | 1d | Cookies names (decision 7): the UI → `NDS.Cookies`, the store → `NDS.consent`, cookie read and write → core `NDS.cookie`, `show()` removed, the bundle renamed | A1, A2, A7 | the cookies demo, a first-visit and a stored-choice load, `check-banners.mjs --all` |
 | 2 | The state mechanism in core (S1) and the field's disabled / readonly effects (S2); core's mirrors, Multiselect, Taginput, Editor and Form's `FIELD_STATES` move onto it | A2.3 | `check-data-state-tails.py`, form, multiselect, taginput and editor demos |
-| 3 | `nds-dialog.js` → main | A3 | `check-dialogs.mjs`, `ENGINE=webkit` |
+| 3 | (dropped 2026-10-20: `nds-dialog.js` stays in delegated with Modal and Panel, per A3) | | |
 | 4 | Date Picker + Time Picker: `NDS.Dropmenu.create(fc, opts)` stamps the field flags and menu class; `destroy()` removes them. Check Custom Select and Autocomplete against the same options | A2.1, A5, entry 10 | `check-menus-in-modal.mjs`, the picker docs |
 | 5 | Form `dismissOwn` → Feedback `dismissAll(container, opts)` with an ownership option | A2.1 | `check-form-reset.mjs` |
 | 6 | The chip-removal focus handoff (Multiselect, Taginput) → core, beside `buildChip` | A2.3 | a11y Tab walk on both docs |
@@ -227,6 +230,13 @@ The bundle map comes from `js_processor.rb`; the call graph that `tmp/xgraph.mjs
 - `check-banners.mjs`: each catalog component's `js:` file exists and its banner names the component,
   loader-registered or not; a namespace's case matches A7.
 - `js_processor.rb`: the A3 guards.
+
+**Landed 2026-10-20 (step 2):** the main-guard, cross-bundle and base-names-a-component rules in
+`check-js-rules.mjs` (31 dead guards and 7 cross-bundle calls reported on today's tree); the case rule
+(`CASE_PENDING` lists the names a step still renames) and the catalog `js:` check in `check-banners.mjs`;
+`assert_layers!` and lowercase `scan_namespaces` in `js_processor.rb` (today's tree passes: `NDS.dialog`
+sits with Modal and Panel). Held back: the `State.onAdd` / `onRemove` pair check lands with S1
+(change #2), since it would point at an API that does not exist yet.
 
 ## 4. Owner decisions
 

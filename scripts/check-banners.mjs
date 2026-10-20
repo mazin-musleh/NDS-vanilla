@@ -395,6 +395,19 @@ function verifyFile(file, ns, source) {
 
 // ── one name per component ──────────────────────────────────────────────────
 
+// Names that break the case rule until their plans/shared-logic.md step lands (section 3).
+const CASE_PENDING = { State: '#1', Status: '#1', Init: '#1', Audit: '#1', date: '#1', SessionTimeout: '#1c' };
+
+const sassText = () => {
+    const out = [];
+    const read = (dir) => readdirSync(dir, { withFileTypes: true }).forEach((d) => {
+        const p = join(dir, d.name);
+        if (d.isDirectory()) read(p); else if (d.name.endsWith('.scss')) out.push(readFileSync(p, 'utf8'));
+    });
+    read(join(REPO, '_sass'));
+    return out.join('\n');
+};
+
 function checkNames() {
     const issues = [];
     const registered = loaderNames();
@@ -415,6 +428,31 @@ function checkNames() {
         if (doc ? !existsSync(join(REPO, doc)) : !DOC_SHELVES.some((s) => existsSync(join(REPO, s, `${x}.md`)))) {
             issues.push(`NDS.${ns}: no doc page ${doc || `<shelf>/${x}.md`}`);
         }
+    }
+
+    // The case tells the layer (entry 9): a component, which has a root class or a loader entry, is
+    // PascalCase; everything else is lowercase. Core's own PascalCase objects are checked too.
+    const sass = sassText();
+    const core = readFileSync(join(REPO, '_js', 'nds-core.js'), 'utf8');
+    const namespaces = [...SCOPE.filter(([, ns]) => ns), ...[...core.matchAll(/\bNDS\.([A-Z]\w*)\s*=(?!=)/g)].map((m) => ['nds-core.js', m[1]])];
+    for (const [file, ns] of namespaces) {
+        const x = kebab(ns);
+        const builds = file !== 'nds-core.js' && new RegExp(`['"\`\\s]nds-${x}['"\`\\s]`).test(readFileSync(join(REPO, '_js', file), 'utf8'));
+        const component = registered.includes(ns) || new RegExp(`\\.nds-${x}(?![\\w-])`).test(sass) || builds;
+        const ok = /^[A-Z]/.test(ns) === component;
+        if (CASE_PENDING[ns]) {
+            if (ok) issues.push(`NDS.${ns}: passes the case rule now, so drop it from CASE_PENDING`);
+            continue;
+        }
+        if (!ok) issues.push(`NDS.${ns}: ${component ? 'a component, so PascalCase' : 'no root class and no loader entry, so lowercase'} (PERSONA entry 9)`);
+    }
+    for (const name of Object.keys(CASE_PENDING)) {
+        if (!namespaces.some(([, ns]) => ns === name)) issues.push(`NDS.${name}: gone, so drop it from CASE_PENDING`);
+    }
+
+    // Every catalog js: names a file that exists.
+    for (const m of readFileSync(join(REPO, '_data', 'catalog.yml'), 'utf8').matchAll(/^\s+js:\s*["']?([^"'\s#]+)/gm)) {
+        if (!existsSync(join(REPO, m[1]))) issues.push(`catalog.yml: js ${m[1]} does not exist`);
     }
 
     // A file may fire or stamp for another component, never for a name no component has.

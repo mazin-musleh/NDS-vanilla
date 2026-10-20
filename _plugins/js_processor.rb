@@ -141,8 +141,37 @@ class JSProcessor
     source_files.each_with_object([]) do |sf, ns|
       path = File.join(@source_dir, sf)
       next unless File.exist?(path)
-      File.read(path).scan(/\bNDS\.([A-Z][A-Za-z0-9_]*)\s*=(?!=)/) { |m| ns << m[0] }
+      File.read(path).scan(/\bNDS\.([A-Za-z][A-Za-z0-9_]*)\s*=(?!=)/) { |m| ns << m[0] }
     end.uniq
+  end
+
+  # Build guard (PERSONA entry 11): a lowercase namespace is core or a base. A base lives with its
+  # callers, in their bundle when they all share one, else in main, so no caller ever meets its stub;
+  # and it is listed before every file in its bundle that names it (a TypeError at eval stops the bundle).
+  def assert_layers!
+    strip = ->(sf) { File.read(File.join(@source_dir, sf)).gsub(%r{/\*.*?\*/}m, '').gsub(%r{(?<!:)//[^\n]*}, '') }
+    bundle_of = @bundles.each_with_object({}) { |(b, files), m| files.each { |f| m[f] = b } }
+    errors = []
+    injected_bundles.each do |bundle_name, files|
+      files.each do |sf|
+        scan_namespaces([sf]).grep(/\A[a-z]/).each do |ns|
+          away = bundle_of.keys.reject { |f| f == sf || bundle_of[f] == bundle_name }.select { |f| strip.call(f) =~ /\bNDS\.#{ns}\b/ }
+          errors << "#{sf} (NDS.#{ns}) ships in #{bundle_name}, but #{away.join(', ')} call it from another bundle: move it to nds-main.min.js" unless away.empty?
+        end
+      end
+    end
+    @bundles.each_value do |files|
+      files.each_with_index do |sf, i|
+        next if i.zero?
+        scan_namespaces([sf]).grep(/\A[a-z]/).each do |ns|
+          early = files[0...i].select { |prev| strip.call(prev) =~ /\bNDS\.#{ns}\b/ }
+          errors << "#{sf} (NDS.#{ns}) is listed after #{early.join(', ')}, which names it" unless early.empty?
+        end
+      end
+    end
+    return if errors.empty?
+
+    abort("[js_processor] BUILD FAILED — layer rules (PERSONA entry 11):\n  " + errors.join("\n  "))
   end
 
   # The loader COMPONENTS registry, parsed once: every component `name`, and the
@@ -381,6 +410,7 @@ class JSProcessor
 
     # Fail fast if location (build) contradicts classification (registry).
     assert_no_critical_in_injected!
+    assert_layers!
 
     bundled_files = @bundles.values.flatten
 
