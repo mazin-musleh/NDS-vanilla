@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 07:46 AM"
+last_edit: "20/10/2026 - 05:27 PM"
 ---
 
 <section id="session-timeout-overview" class="nds-content-section nds-doc-overview">
@@ -205,6 +205,11 @@ A server that signs out only on a POST, such as one that needs a CSRF token, get
       <h2 class="nds-section-title">API</h2>
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
+
+### Styling
+{: .nds-block-title}
+
+Both modals carry `.nds-session-timeout` beside their Modal classes. Put it in your own selectors to style these two modals and no other.
 
 ### Text
 {: .nds-block-title}

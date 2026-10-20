@@ -22,7 +22,8 @@
  *   nds:session:end      detail (none), cancelable — preventDefault() stops the logout redirect or the ended modal;
  *                        the warning then closes
  * Hooks:
- *   (none — the script builds both modals; their text is set through window.NDS_I18N['session-timeout'])
+ *   .nds-session-timeout   on both modals the script builds: a styling hook. Their text is set through
+ *                          window.NDS_I18N['session-timeout']
  * Gotchas:
  *   - The deadline is the last renewal plus the timeout, never the last click: activity renews the server
  *     at most once a minute, and only a renewal moves the deadline.
@@ -61,7 +62,7 @@
     </div>
   </div>`;
 
-    const warningMarkup = () => `<dialog id="${WARN_ID}" class="nds-modal nds-card nds-stroke nds-sm nds-center" data-status="warning" role="alertdialog" aria-labelledby="${WARN_ID}-title" aria-describedby="${WARN_ID}-desc ${WARN_ID}-countdown">
+    const warningMarkup = () => `<dialog id="${WARN_ID}" class="nds-session-timeout nds-modal nds-card nds-stroke nds-sm nds-center" data-status="warning" role="alertdialog" aria-labelledby="${WARN_ID}-title" aria-describedby="${WARN_ID}-desc ${WARN_ID}-countdown">
   ${icon('alert-circle')}
   <div class="nds-card-content">
     <div class="nds-card-text">
@@ -76,7 +77,7 @@
   </div>
 </dialog>`;
 
-    const endedMarkup = () => `<dialog id="${ENDED_ID}" class="nds-modal nds-card nds-stroke nds-sm nds-center" data-status="error" data-modal-static role="alertdialog" aria-labelledby="${ENDED_ID}-title" aria-describedby="${ENDED_ID}-desc">
+    const endedMarkup = () => `<dialog id="${ENDED_ID}" class="nds-session-timeout nds-modal nds-card nds-stroke nds-sm nds-center" data-status="error" data-modal-static role="alertdialog" aria-labelledby="${ENDED_ID}-title" aria-describedby="${ENDED_ID}-desc">
   ${icon('cancel-circle')}
   <div class="nds-card-content">
     <div class="nds-card-text">

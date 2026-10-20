@@ -253,6 +253,8 @@ scoped `&input`, so the audit never flags the new container. Open: Switch's fiel
 `.nds-switch-container` and `.nds-switch` is the widget inside it, while Checkbox and Radio now name the
 field itself (entry 9: one name per component).
 
+**Landed 2026-10-20 (change #1c):** both modals carry `.nds-session-timeout`; `CASE_PENDING` is empty.
+
 ## 4. Owner decisions
 
 1. **A7 renames: all four, decided 2026-10-20.** One naming pattern with no exceptions lets an agent guess a

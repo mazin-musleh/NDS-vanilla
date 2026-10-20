@@ -396,7 +396,7 @@ function verifyFile(file, ns, source) {
 // ── one name per component ──────────────────────────────────────────────────
 
 // Names that break the case rule until their plans/shared-logic.md step lands (section 3).
-const CASE_PENDING = { SessionTimeout: '#1c' };
+const CASE_PENDING = {};
 
 const sassText = () => {
     const out = [];
