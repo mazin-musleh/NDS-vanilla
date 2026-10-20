@@ -96,7 +96,7 @@
 
             const alert = document.createElement('div');
             alert.className = 'nds-alert nds-card';
-            NDS.Status.set(alert, variant);
+            NDS.status.set(alert, variant);
             if (shadow) alert.classList.add('nds-shadow');
             if (color) alert.classList.add('nds-color');
             if (display === 'inline') alert.classList.add('nds-inline');
@@ -229,7 +229,7 @@
                 }
 
                 // Add entrance animation
-                NDS.afterPaint(() => NDS.State.add(alert, 'toast-show'));
+                NDS.afterPaint(() => NDS.state.add(alert, 'toast-show'));
 
                 // Auto-dismiss with duration; hover pauses, click pins the pause
                 // (touch has no hover — tap keeps the toast until closed)
@@ -244,11 +244,11 @@
                         clearTimeout(timer);
                         timer = null;
                         remaining -= Date.now() - start;
-                        NDS.State.add(alert, 'paused');
+                        NDS.state.add(alert, 'paused');
                     };
                     const resume = () => {
                         if (pinned || timer) return;
-                        NDS.State.remove(alert, 'paused');
+                        NDS.state.remove(alert, 'paused');
                         run();
                     };
                     alert.addEventListener('mouseenter', pause);
@@ -325,7 +325,7 @@
 
                 // Add exit animation for toasts
                 if (el.classList.contains('nds-toast')) {
-                    NDS.State.set(el, 'toast-hide');
+                    NDS.state.set(el, 'toast-hide');
                     // Removal tracks the CSS fade via the token-sourced duration
                     // (reduced-motion / token bumps stay in sync automatically).
                     NDS.onTransitionEnd(el, () => {

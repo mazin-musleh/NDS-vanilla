@@ -1,25 +1,25 @@
-/* NDS.Init — public surface
+/* NDS.init — public surface
  * Rides: (none — this is the orchestrator every component registers with)
  * Methods:
- *   NDS.Init.initialize()      run the full init pass (called automatically on DOM ready)
- *   NDS.Init.components        the component registry: {name, selector, init, critical}
+ *   NDS.init.initialize()      run the full init pass (called automatically on DOM ready)
+ *   NDS.init.components        the component registry: {name, selector, init, critical}
  *                              (init defaults to NDS[name].init(); selector null = every page;
  *                              + optional lazy() — arm the trigger instead of fetching the
  *                              bundle, which needs its OWN bundle or a sibling pulls it anyway;
  *                              + optional eager() to opt an instance back in;
- *                              + optional refresh(root) — owner hook for NDS.Init.refresh;
+ *                              + optional refresh(root) — owner hook for NDS.init.refresh;
  *                              + optional destroy(root) / destroyEach / destroySelector —
- *                              NDS.Init.destroy hooks for components with no element backref)
- *   NDS.Init.config            the resolved config
- *   NDS.Init.audit()           run the debug audits (nds-audit.js). First call loads the
+ *                              NDS.init.destroy hooks for components with no element backref)
+ *   NDS.init.config            the resolved config
+ *   NDS.init.audit()           run the debug audits (nds-audit.js). First call loads the
  *                              audit bundle and returns a promise; later calls are synchronous.
- *   NDS.Init.refresh(el)       el's CHILDREN changed (rows/cards added or removed) — re-scan
+ *   NDS.init.refresh(el)       el's CHILDREN changed (rows/cards added or removed) — re-scan
  *                              every live component. Omit el for the whole document
- *   NDS.Init.mount(el)         el's markup is NEW to the page: load the bundles its content
+ *   NDS.init.mount(el)         el's markup is NEW to the page: load the bundles its content
  *                              needs, then init them against it → Promise
- *   NDS.Init.destroy(el)       tear down every instance inside el before it leaves the page.
+ *   NDS.init.destroy(el)       tear down every instance inside el before it leaves the page.
  *                              Returns how many instances it destroyed
- *   NDS.Init.ready             Promise: every component found at load has started, late
+ *   NDS.init.ready             Promise: every component found at load has started, late
  *                              bundles included. Page code that runs at load waits on it
  *   NDS.loadBundle(name)       load one injected bundle on demand → Promise
  * Events:
@@ -43,7 +43,7 @@
  *   - A component whose bundle has not arrived answers through a lazy stub: a method
  *     call loads the bundle and returns a Promise. A synchronous READ gets a truthy
  *     stub, so main-bundle code that reads an API synchronously keeps it in main.
- *     Page code that runs at load waits on NDS.Init.ready; content added later, on mount().
+ *     Page code that runs at load waits on NDS.init.ready; content added later, on mount().
  *   - refresh() skips a stubbed namespace on purpose — it scans the DOM when it lands.
  *     Content built after detection needs mount(), which fetches the bundle.
  *   - refresh() re-scans what stays; destroy() releases what leaves. A framework route
@@ -172,10 +172,10 @@
         },
         {
             // Critical: it rewrites a <time>'s text, and a date that changes length after the reveal would shift the line.
-            name: 'date',
+            name: 'Date',
             selector: 'time[datetime][data-date-to], time[datetime][data-date-format]',
             critical: true,
-            refresh: (root) => NDS.date?.fill?.(root),
+            refresh: (root) => NDS.Date?.fill?.(root),
         },
         {
             // Deferred: cosmetic on-scroll animation.
@@ -303,7 +303,7 @@
             // Owner hook: a filter is keyed by its target and its UI sits outside the list.
             refresh: (root) => NDS.Filter?.refresh?.(root),
             // Armed, never lazy: before its init a filter menu opens empty and fills while open,
-            // growing over its trigger. Clicks in the gap no-op and recover; after NDS.Init.ready
+            // growing over its trigger. Clicks in the gap no-op and recover; after NDS.init.ready
             // nothing is blocked, so a filter that never starts keeps a working menu.
             lazy: () => {
                 let done = false;
@@ -410,11 +410,11 @@
                     const ns = NDS.Accessibility;
                     if (ns && !ns.__ndsStub && ns.ready) return;
                     e.stopPropagation();
-                    NDS.State?.add?.(btn, 'loading');
+                    NDS.state?.add?.(btn, 'loading');
                     // Explicit so the paired stylesheet starts with the script, not after it. A failed
                     // bundle leaves the stub: drop the button's loading state, or its clicks stay dead.
                     Promise.resolve(NDS.loadBundle(bundle)).catch(() => {}).then(() => {
-                        if (NDS.Accessibility?.__ndsStub) NDS.State?.remove?.(btn, 'loading');
+                        if (NDS.Accessibility?.__ndsStub) NDS.state?.remove?.(btn, 'loading');
                     });
                     NDS.Accessibility.toggle(btn);
                 }, true);
@@ -736,7 +736,7 @@
             if (criticalIndex < criticalComponents.length) {
                 yieldToBrowser(initCriticalBatch);
             } else {
-                // Each list counts down once; the last one resolves NDS.Init.ready.
+                // Each list counts down once; the last one resolves NDS.init.ready.
                 let pending = 1 + Object.keys(injectedGroups).length;
                 const listDone = () => {
                     if (--pending) return;
@@ -827,7 +827,7 @@
     // icon masks are computable. Pulls nds-audit.min.js through the lazy stub.
     function scheduleDebugAudits() {
         if (!CONFIG.enableLogging) return;
-        const run = () => setTimeout(() => NDS.Audit.run(), 3000);
+        const run = () => setTimeout(() => NDS.audit.run(), 3000);
         if (document.readyState === 'complete') run();
         else window.addEventListener('load', run, { once: true });
     }
@@ -966,12 +966,12 @@
         return Promise.all([...needed].map(loadBundle).concat(NDS.i18n.settled)).then(() => refreshContainer(root));
     }
 
-    NDS.Init = {
+    NDS.init = {
         initialize: initializeNDS,
         components: COMPONENTS,
         config: CONFIG,
         // Works regardless of enableLogging, which only controls the automatic sweep.
-        audit: () => NDS.Audit.run(),
+        audit: () => NDS.audit.run(),
         refresh: refreshContainer,
         mount: mountContainer,
         destroy: destroyContainer,

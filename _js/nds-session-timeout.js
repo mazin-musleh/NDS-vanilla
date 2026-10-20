@@ -171,7 +171,7 @@
         // A new dialog, not the warning restyled: opening it moves focus, so the change is announced.
         else if (go) NDS.Modal.open(endedEl = build(ENDED_ID, endedMarkup));
         // Nothing replaced the warning: its Stay button would do nothing now.
-        else if (warnEl && NDS.State.has(warnEl, 'open')) NDS.Modal.close();
+        else if (warnEl && NDS.state.has(warnEl, 'open')) NDS.Modal.close();
     }
 
     function onActivity() {
@@ -238,7 +238,7 @@
         extend: () => _initDone && extend('api'),
         reset: () => {
             if (!_initDone) return;
-            if (ended && endedEl && NDS.State.has(endedEl, 'open')) NDS.Modal.close();
+            if (ended && endedEl && NDS.state.has(endedEl, 'open')) NDS.Modal.close();
             ended = false;
             renew(Date.now());
         },

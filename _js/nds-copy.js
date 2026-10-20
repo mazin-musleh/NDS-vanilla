@@ -69,7 +69,7 @@
 
     function flash(button, options) {
         // A second flash would snapshot the checkmark as the original icon (Enter skips pointer-events: none)
-        if (!button || NDS.Status.get(button) === 'success') return;
+        if (!button || NDS.status.get(button) === 'success') return;
         const opts = options || {};
         const duration = opts.duration || DEFAULT_FLASH_MS;
 
@@ -99,12 +99,12 @@
             }
         }
 
-        NDS.Status.set(button, 'success');
+        NDS.status.set(button, 'success');
         button.setAttribute('aria-disabled', 'true');
         NDS.announce(messageText);
 
         setTimeout(() => {
-            NDS.Status.clear(button);
+            NDS.status.clear(button);
             button.removeAttribute('aria-disabled');
             if (icon) {
                 if (originalIconClass == null) icon.removeAttribute('class');

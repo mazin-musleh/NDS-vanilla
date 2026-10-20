@@ -356,7 +356,7 @@
         function showApplicable() {
             controls().forEach(function (btn) {
                 var off = !applies(byKey[btn.getAttribute('data-builder-option')]);
-                NDS.State[off ? 'add' : 'remove'](btn, 'disabled');
+                NDS.state[off ? 'add' : 'remove'](btn, 'disabled');
                 off ? btn.setAttribute('aria-disabled', 'true') : btn.removeAttribute('aria-disabled');
                 if (!off && btn.ndsTooltip) btn.ndsTooltip.close();
                 // One balloon serves both texts: the hint while on, the reason while off.
@@ -442,7 +442,7 @@
             }
             // A form harness keeps its form and Validate button; only the slot inside it re-renders.
             var slot = preview.querySelector('[data-demo-slot]') || preview;
-            NDS.Init.destroy(slot);
+            NDS.init.destroy(slot);
             preview.style.removeProperty('--card-bg');
             // A JS-only structure (a toast) shows a Run button, on the page and in a screen.
             if (!html) {
@@ -462,7 +462,7 @@
                 preview.style.setProperty('--card-bg', 'var(--background-primary-strong)');
                 preview.setAttribute('data-theme', 'dark');
             }
-            NDS.Init.mount(slot);
+            NDS.init.mount(slot);
             if (script.getAttribute('data-preview') === 'js') new Function(js)();
             // The Validate and Reset buttons show only while the field has a rule that can fail.
             var acts = preview.querySelector('[data-demo-actions]');
@@ -486,7 +486,7 @@
                 var o = byKey[btn.getAttribute('data-builder-option')];
                 if (o.group !== g) return;
                 var sel = combos[g] ? (picks[g] || []).indexOf(o) >= 0 : active[g] === o;
-                NDS.State[sel ? 'add' : 'remove'](btn, 'selected');
+                NDS.state[sel ? 'add' : 'remove'](btn, 'selected');
                 btn.setAttribute('aria-pressed', String(sel));
             });
         }
@@ -640,7 +640,7 @@
     // A view toggle's on state: pressed for screen readers, the selected look for the eye.
     function pressed(btn, on) {
         btn.setAttribute('aria-pressed', String(on));
-        NDS.State[on ? 'add' : 'remove'](btn, 'selected');
+        NDS.state[on ? 'add' : 'remove'](btn, 'selected');
     }
 
     // Each preview card's view toggles. Dark on a builder card goes through the builder, so the
@@ -734,9 +734,9 @@
         var win = f && f.ndsSize === w && f.contentWindow, slot = win && win.NDS && f.contentDocument.querySelector('[data-demo-slot]');
         // The screen is up: re-render its slot in place, with no reload.
         if (slot) {
-            win.NDS.Init.destroy(slot);
+            win.NDS.init.destroy(slot);
             slot.innerHTML = card.ndsOut;
-            win.NDS.Init.mount(slot);
+            win.NDS.init.mount(slot);
             run(win);
             runButton(slot, card.ndsRunJs, win);
             theme(f.contentDocument);
@@ -894,7 +894,7 @@
     // keeps its own panel. Clear takes every copy away.
     function fillRun(card, box, win) {
         var N = (win || window).NDS;
-        N.Init.destroy(box);
+        N.init.destroy(box);
         box.innerHTML = card.ndsRunCode || dedent(document.getElementById(card.getAttribute('data-preview-of')).textContent);
         box.querySelectorAll('[id]').forEach(function (el) {
             var id = el.id;
@@ -902,7 +902,7 @@
                 Array.prototype.forEach.call(x.attributes, function (a) { if (a.value === id) a.value = id + '-' + box.ndsRun; });
             });
         });
-        N.Init.mount(box);
+        N.init.mount(box);
     }
     var runs = 0;
     // The bar's held box is its next sibling, on the page and in a screen's copy. A screen's copies
@@ -917,7 +917,7 @@
             fillRun(card, box, win);
         });
         bar.querySelector('[data-run-clear]').addEventListener('click', function () {
-            win.NDS.Init.destroy(held);
+            win.NDS.init.destroy(held);
             held.innerHTML = '';
             if (page) card.ndsLastRun = null;
         });
@@ -929,9 +929,9 @@
     // opens, so the demo builds on a page of its own. Closing the panel takes the copy away.
     function fillStage(card) {
         var stage = card.ndsStage;
-        NDS.Init.destroy(stage);
+        NDS.init.destroy(stage);
         stage.innerHTML = card.ndsRunCode || dedent(document.getElementById(stage.closest('.nds-panel').id.replace(/-stage$/, '')).textContent);
-        NDS.Init.mount(stage);
+        NDS.init.mount(stage);
     }
     document.querySelectorAll('[data-demo-stage]').forEach(function (stage) {
         var panel = stage.closest('.nds-panel'), button = document.querySelector('[data-panel-toggle="' + panel.id + '"]');
@@ -941,7 +941,7 @@
         document.body.appendChild(panel);
         button.addEventListener('click', function () { fillStage(card); });
         panel.addEventListener('nds:panel:closed', function () {
-            NDS.Init.destroy(stage);
+            NDS.init.destroy(stage);
             stage.innerHTML = '';
         });
     });

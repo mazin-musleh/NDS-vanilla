@@ -2,7 +2,7 @@
 # The audit's migration rule reads this file (nds-audit.js, bundled by js_processor.rb).
 # Built from scripts/surface-history.rb plus DEPRECATIONS.md; add rows at each release.
 # Keep the newest release first: guides/migration.md groups the rows in this order.
-#   kind     class | attribute | property | id | global (a window setting) | event (events go to the docs only: a page cannot see a listener) | param (a URL query key; docs only: the server reads it)
+#   kind     class | attribute | property | id | global (a window setting) | event (events go to the docs only: a page cannot see a listener) | param (a URL query key; docs only: the server reads it) | api (a JS namespace or method; docs only: the audit cannot see a call)
 #   scope    the selector the old name lived under; a match must sit inside it (closest), or with a leading & match it itself
 #   status   renamed | removed (broken today) | deprecated (still works until the next major)
 #   use      today's name, when there is one
@@ -218,6 +218,11 @@
 - { kind: attribute, name: data-dropmenu-portal, scope: "&.nds-editor", status: removed, since: "2.0.0", fix: "Remove it: the editor's link and image menus sit in the top layer on their own." }
 - { kind: event, name: ndsDropmenuItem, status: removed, since: "2.0.0", fix: "Read e.target.closest('.nds-dropmenu-item'): a menu item's click bubbles through its wrapper as any click does. ndsDropmenuRedispatch is gone too." }
 - { kind: param, name: dir, scope: "&.nds-filter", status: renamed, use: order, since: "2.0.0", fix: "A filter's sort writes ?sort=price&order=desc. Read order on the server; a link with dir=desc opens ascending." }
+- { kind: api, name: NDS.Audit, status: renamed, use: NDS.audit, since: "2.0.0", fix: "Use NDS.audit." }
+- { kind: api, name: NDS.date, status: renamed, use: NDS.Date, since: "2.0.0", fix: "Use NDS.Date." }
+- { kind: api, name: NDS.Init, status: renamed, use: NDS.init, since: "2.0.0", fix: "Use NDS.init." }
+- { kind: api, name: NDS.State, status: renamed, use: NDS.state, since: "2.0.0", fix: "Use NDS.state." }
+- { kind: api, name: NDS.Status, status: renamed, use: NDS.status, since: "2.0.0", fix: "Use NDS.status." }
 - { kind: property, name: --tooltip-background-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-background-default, since: "1.12.0", fix: "Set --tooltip-background-default under :root[data-theme~=\"dark\"] instead." }
 - { kind: property, name: --tooltip-text-heading-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-text-heading-default, since: "1.12.0", fix: "Set --tooltip-text-heading-default under :root[data-theme~=\"dark\"] instead." }
 - { kind: property, name: --tooltip-text-paragraph-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-text-paragraph-default, since: "1.12.0", fix: "Set --tooltip-text-paragraph-default under :root[data-theme~=\"dark\"] instead." }

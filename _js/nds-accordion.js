@@ -64,7 +64,7 @@
         }
 
         get isAlwaysOpen() {
-            return NDS.State.has(this.accordionContainer, 'always-open');
+            return NDS.state.has(this.accordionContainer, 'always-open');
         }
 
         setupInitialState() {
@@ -84,11 +84,11 @@
             if (!collapse) return;
 
             if (button.ariaExpanded === 'true') {
-                NDS.State.set(collapse, 'open');
-                NDS.State.set(button, 'open');
+                NDS.state.set(collapse, 'open');
+                NDS.state.set(button, 'open');
             } else {
-                NDS.State.clear(collapse);
-                NDS.State.clear(button);
+                NDS.state.clear(collapse);
+                NDS.state.clear(button);
                 NDS.aria.expanded(button, false);
             }
         }
@@ -221,14 +221,14 @@
 
             // Update button state immediately
             NDS.aria.expanded(button, true);
-            NDS.State.set(button, 'open');
+            NDS.state.set(button, 'open');
 
             // Set collapse to opening, then open after animation
-            NDS.State.set(collapse, 'opening');
+            NDS.state.set(collapse, 'opening');
 
             // Animate and dispatch event after
             this._animate(collapse, () => {
-                NDS.State.set(collapse, 'open');
+                NDS.state.set(collapse, 'open');
                 // Dispatch custom event
                 this.dispatchToggleEvent(index, button, collapse, true);
             });
@@ -252,13 +252,13 @@
 
             // Update button state immediately
             NDS.aria.expanded(button, false);
-            NDS.State.clear(button);
+            NDS.state.clear(button);
 
             // Set collapse to closing, then remove after animation
-            NDS.State.set(collapse, 'closing');
+            NDS.state.set(collapse, 'closing');
 
             this._animate(collapse, () => {
-                NDS.State.clear(collapse);
+                NDS.state.clear(collapse);
 
                 // Dispatch custom event
                 this.dispatchToggleEvent(index, button, collapse, false);

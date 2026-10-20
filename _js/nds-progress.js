@@ -55,7 +55,7 @@
         const max = parseFloat(el.dataset.max);
         const outOf = !isNaN(num) && !isNaN(max) && max > 0;
         const top = outOf ? max : 100;
-        const now = NDS.Status.get(el) === 'success' ? top
+        const now = NDS.status.get(el) === 'success' ? top
             : Math.max(0, outOf ? Math.min(num, max) : Math.min(parseFloat(el.dataset.value), 100));
         if (isNaN(now)) return;
         if (!el.hasAttribute('role')) el.setAttribute('role', 'progressbar');
@@ -115,7 +115,7 @@
 
             // Otherwise leave it empty and let the fill sweep when the indicator
             // scrolls into view — setting the value triggers the CSS transition.
-            // The pending reveal sits on an nds* backref so NDS.Init.destroy(view) can release it.
+            // The pending reveal sits on an nds* backref so NDS.init.destroy(view) can release it.
             el.ndsProgress?.destroy();
             const off = NDS.onIntersect(el, entry => {
                 if (!entry.isIntersecting) return;

@@ -16,7 +16,7 @@ NDS-IQ versioning rules (revision stamp, no version literals, what `check_rules(
 **Release notes are a summary for template users; `CHANGELOG.md` holds the detail.** A trimmed changelog read as a wall of equal bullets in maintainer terms (owner 2026-10-10). Title: the house line `vX.Y.Z — Headline, Headline & lowercase third`. Body, in this order:
 1. **Intro** — two or three sentences: what the release is and who should care.
 2. **Highlights** — four to six items, each what a user can now do, with its live doc link. A fix earns a place only if users saw the bug. Plain words, per `EDITORIAL.md`: no internals (recalc, observers, render tree).
-3. **Upgrading from vX.Y.Z** — the bundle-replacement step first, then every breaking change as a step, grouped by area. When the renames run long (v2.0.0: 161), one step per area names the kind of change and links the [Migration](https://mazin-musleh.github.io/NDS-vanilla/guides/migration.html) page; another step says `NDS.Init.audit()` lists each old name on a page. Never drop a step: an area with a breaking change gets its line.
+3. **Upgrading from vX.Y.Z** — the bundle-replacement step first, then every breaking change as a step, grouped by area. When the renames run long (v2.0.0: 161), one step per area names the kind of change and links the [Migration](https://mazin-musleh.github.io/NDS-vanilla/guides/migration.html) page; another step says `NDS.init.audit()` lists each old name on a page. Never drop a step: an area with a breaking change gets its line.
 4. **Download** — the template zip, and the NDS IQ revision for agents when one ships.
 5. **Full changelog** — a link to the section in `CHANGELOG.md`.
 

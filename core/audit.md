@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 11:57 PM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -20,7 +20,7 @@ last_edit: "18/10/2026 - 11:57 PM"
 
 The audit reads a page after NDS starts and lists the problems that show no error: a filter that binds to nothing, an icon with no registration, a skip link to a missing id. It also finds each class, attribute, id, custom property and window setting that an NDS release renamed or removed, in the page's markup and in the site's own CSS.
 
-`NDS.Init.audit()` runs it and returns the findings as an array, so you and an AI coding agent can read them. The audit is its own bundle. A page loads it only on the first call, so a production page downloads none of it.
+`NDS.init.audit()` runs it and returns the findings as an array, so you and an AI coding agent can read them. The audit is its own bundle. A page loads it only on the first call, so a production page downloads none of it.
 
 Pick another component when:
 
@@ -40,15 +40,15 @@ Pick another component when:
 Run it in the browser console, or from a test, once the page has loaded.
 
 <script type="text/html" id="audit-run" data-canon data-lang="js" data-preview="none">
-const findings = await NDS.Init.audit();
+const findings = await NDS.init.audit();
 const errors = findings.filter(f => f.severity === 'error');
 </script>
 
 Run one group or one rule. `quiet` keeps the console clear.
 
 <script type="text/html" id="audit-group" data-canon data-lang="js" data-preview="none">
-NDS.Audit.run({ group: 'migration', quiet: true });
-NDS.Audit.run({ rule: ['id-reference', 'skip-link'] });
+NDS.audit.run({ group: 'migration', quiet: true });
+NDS.audit.run({ rule: ['id-reference', 'skip-link'] });
 </script>
 
 Skip markup you cannot change yet, such as a block your CMS writes. Name the rules to skip, or leave the value empty to skip them all.
@@ -62,7 +62,7 @@ Skip markup you cannot change yet, such as a block your CMS writes. Name the rul
 Add a rule of your own. It runs with the others on every call.
 
 <script type="text/html" id="audit-rule" data-canon data-lang="js" data-preview="none">
-NDS.Audit.rule({
+NDS.audit.rule({
   id: 'service-card-link',
   group: 'structure',
   severity: 'error',
@@ -93,12 +93,12 @@ Each finding has a severity. `error` is broken now: a part gets no style or beha
 ### Tips
 {: .nds-block-title}
 
-The `practice` group holds tips from the Best Practices of the doc pages, such as a section inside a section. A tip is `info`: its line starts with `tip:`, and it never means that the page is broken. To run the audit without tips, name the other groups: `NDS.Audit.run({ group: ['page', 'structure', 'migration', 'i18n'] })`.
+The `practice` group holds tips from the Best Practices of the doc pages, such as a section inside a section. A tip is `info`: its line starts with `tip:`, and it never means that the page is broken. To run the audit without tips, name the other groups: `NDS.audit.run({ group: ['page', 'structure', 'migration', 'i18n'] })`.
 
 ### Console Output
 {: .nds-block-title}
 
-Each finding prints one line that starts with `[NDS.Audit]` and its rule id, then the problem, the fix and a docs link. An error prints as a console error, a warning as a warning. A last line counts the errors, warnings and notes. The element prints with its line, so the console can show it on the page.
+Each finding prints one line that starts with `[NDS.audit]` and its rule id, then the problem, the fix and a docs link. An error prints as a console error, a warning as a warning. A last line counts the errors, warnings and notes. The element prints with its line, so the console can show it on the page.
 
 ### Migration Checks
 {: .nds-block-title}
@@ -170,7 +170,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
             <i class="hgi hgi-stroke hgi-plug-01"></i>
             <span class="nds-label">Your Own Rules</span>
           </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.Audit.rule()</code> adds a check for your own markup, and it reports like the built-in ones.</p>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.audit.rule()</code> adds a check for your own markup, and it reports like the built-in ones.</p>
         </div>
       </div>
     </div>
@@ -303,17 +303,17 @@ The audit reads the page, not the scripts. An old method name or an event listen
 
 | Method | Effect |
 |---|---|
-| `NDS.Init.audit()` | Runs every rule and returns the findings. The first call loads the audit and returns a promise of them |
-| `NDS.Audit.run(options)` | Runs the rules once and returns the findings. `group` and `rule` take a name or an array, and `quiet: true` prints nothing. Before the audit loads, the call loads it and returns a promise |
-| `NDS.Audit.rule(definition)` | Adds a rule, or replaces the rule with the same id. It takes `id`, `group`, `severity`, `docs` and `check(ctx)`. Before the audit loads, the call loads it first |
-| `NDS.Audit.rules` | Every rule, in run order |
+| `NDS.init.audit()` | Runs every rule and returns the findings. The first call loads the audit and returns a promise of them |
+| `NDS.audit.run(options)` | Runs the rules once and returns the findings. `group` and `rule` take a name or an array, and `quiet: true` prints nothing. Before the audit loads, the call loads it and returns a promise |
+| `NDS.audit.rule(definition)` | Adds a rule, or replaces the rule with the same id. It takes `id`, `group`, `severity`, `docs` and `check(ctx)`. Before the audit loads, the call loads it first |
+| `NDS.audit.rules` | Every rule, in run order |
 | `ctx.find(selector)` | In `check`: the matching elements, without the ones in `<code>` or skipped by `data-nds-audit-ignore` |
 | `ctx.report(el, message, fix, severity)` | In `check`: adds a finding. `severity` overrides the rule's own |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="audit-api-js" data-canon data-lang="js">
 // Fail a page test on any error
-const findings = await NDS.Init.audit();
+const findings = await NDS.init.audit();
 const errors = findings.filter(f => f.severity === 'error');
 if (errors.length) throw new Error(errors.map(f => `${f.rule}: ${f.message} ${f.fix}`).join('\n'));
 </script>

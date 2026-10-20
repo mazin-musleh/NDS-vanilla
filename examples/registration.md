@@ -316,13 +316,13 @@ breadcrumb: [["Examples", "/examples"]]
     function withLoading(btn, delay, done) {
       if (!btn) { done(); return; }
       if (btn.classList.contains('nds-loading')) return;
-      NDS.State.add(btn, 'loading');
+      NDS.state.add(btn, 'loading');
       btn.setAttribute('aria-busy', 'true');
       var record = { btn: btn };
       pending = record;
       record.timer = setTimeout(function () {
         pending = null;
-        NDS.State.remove(btn, 'loading');
+        NDS.state.remove(btn, 'loading');
         btn.removeAttribute('aria-busy');
         done();
       }, delay);
@@ -330,7 +330,7 @@ breadcrumb: [["Examples", "/examples"]]
     function cancelLoading() {
       if (!pending) return;
       clearTimeout(pending.timer);
-      NDS.State.remove(pending.btn, 'loading');
+      NDS.state.remove(pending.btn, 'loading');
       pending.btn.removeAttribute('aria-busy');
       pending = null;
     }

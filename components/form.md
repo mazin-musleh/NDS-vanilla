@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 07:46 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 lang: en
 direction: ltr
 ---
@@ -331,7 +331,7 @@ Each Structure is one field type. Options stack: a field can be MD, Lighter and 
 | State | None (default) | — | — | The user can type |
 | State | Disabled | `[data-state~="disabled"]` | `.nds-form-container` | The field is dimmed and does not take focus. A disabled value does not submit |
 | State | Readonly | `[data-state~="readonly"]` | `.nds-form-container:not(.nds-select)` | The value shows and submits, and the user cannot change it. Not on a select: the browser ignores `readonly` there |
-| State | Loading | `[data-state~="loading"]` | `.nds-form-container:not(.nds-select)` | A spinner in place of the action buttons, while a script checks the value. Set it with `NDS.State.add()` and remove it when the check ends |
+| State | Loading | `[data-state~="loading"]` | `.nds-form-container:not(.nds-select)` | A spinner in place of the action buttons, while a script checks the value. Set it with `NDS.state.add()` and remove it when the check ends |
 | Required | Required (id: required) | `[data-required]` | `.nds-form-container` | A red asterisk before the label. An empty field blocks the submit |
 | Info | Info (hint: Help text under the label) | canon `#field-info` | `label` | A line of help text under the label |
 | Help | Help (hint: A help icon beside the label) | canon `#field-help` | `.nds-form-header` | A [Tooltip](../components/tooltip) after the label, for optional help. It goes in the header, never in the `label`. Text the user needs to fill the field goes in Info |
@@ -439,14 +439,14 @@ A `.nds-feedback` with `data-permanent` stays under the field as a hint. A valid
 var field = document.getElementById('username-field');
 
 async function checkUsername(name) {
-  NDS.State.add(field, 'loading');
+  NDS.state.add(field, 'loading');
   try {
     var { data } = await NDS.request('/api/username?name=' + encodeURIComponent(name), { json: true });
     NDS.Form.setStatus(field, data.available ? 'neutral' : 'error', {
       message: data.available ? 'This username is free' : 'This username is taken'
     });
   } finally {
-    NDS.State.remove(field, 'loading');
+    NDS.state.remove(field, 'loading');
   }
 }
 </script>
@@ -602,15 +602,15 @@ The eye button switches the field between hidden and plain text, and its label b
 | `novalidate` | `form.nds-form` | The script sets it at start, so the browser shows no popups |
 | `data-required` | `.nds-form-container` | Marks the field required. The script adds `required` and `aria-required="true"` to the input at start. It also sets or removes this attribute when the input's `required` changes, at the next edit or `syncState()` call |
 | `data-state` | `.nds-form-container` | Write `disabled` or `readonly`, or call `setState()`: the script sets that property on every input inside. `disabled` also disables the action buttons. The script writes them too when an input is disabled or readonly. The script sets `focus`, `active` and `typing` while the user is on the field, and removes them on blur and release. It sets `open` while a native select's list is open |
-| `data-state="loading"` | `.nds-form-container` or `.nds-form-group` | Shows the spinner in place of the action buttons. The `nds-loading` class does the same. Write either in the HTML or from a script (`NDS.State.add()`, the attribute, `classList`), and remove it the same way. Put it on the container, not on `.nds-form-control` or the input |
+| `data-state="loading"` | `.nds-form-container` or `.nds-form-group` | Shows the spinner in place of the action buttons. The `nds-loading` class does the same. Write either in the HTML or from a script (`NDS.state.add()`, the attribute, `classList`), and remove it the same way. Put it on the container, not on `.nds-form-control` or the input |
 | `data-status` | `.nds-form-container` | The script sets it with each message: `error`, `help` or `neutral`. Only `error` draws the red outline. `clearStatus()` and any edit to the field remove it |
 | `data-message` | `.nds-form-container` | The script writes the current message text with `data-status`. `getStatus()` reads it, and `clearStatus()` removes it |
 | `data-feedback-target` | `.nds-form-container` | A CSS selector for the element inside the field that holds its messages |
 | `data-feedback-target` | an element inside `.nds-form-container`, usually `.nds-form-footer` | Messages go in it, instead of right after the input row. A hidden one shows while a message is in it |
 | `hidden` | `.nds-form-container`, `.nds-form-group` or `.nds-form-action` | The script removes it at start. Write it to keep a field out of view until its state is set |
 | `data-permanent` | `.nds-feedback` in the feedback target | A message hides it instead of removing it. It comes back when the message clears |
-| `data-error-message` | an `<input>` with a `pattern` | The message when the value does not match the pattern. `NDS.Init.audit()` flags it on a field with no `pattern` |
-| `data-error-message` | `.nds-form-group`, or the container of a field that keeps its value in a hidden input (custom select, multiselect, tag input, upload) | The message when nothing is picked. A count limit, a half-filled code and a file still uploading keep their own messages. `NDS.Init.audit()` flags it on a group that may be left empty |
+| `data-error-message` | an `<input>` with a `pattern` | The message when the value does not match the pattern. `NDS.init.audit()` flags it on a field with no `pattern` |
+| `data-error-message` | `.nds-form-group`, or the container of a field that keeps its value in a hidden input (custom select, multiselect, tag input, upload) | The message when nothing is picked. A count limit, a half-filled code and a file still uploading keep their own messages. `NDS.init.audit()` flags it on a group that may be left empty |
 | `inputmode="numeric"` | the `<input>` | The script blocks a typed character that is not a digit. Arabic digits go in as `0` to `9` |
 | `min`, `max`, `step` | the input of a number field | The range and the step of the minus and plus buttons |
 | `autofocus` | the `<input>`, `<textarea>` or `<select>` | The script focuses the field again at start, without a scroll |

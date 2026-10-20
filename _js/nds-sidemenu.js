@@ -18,7 +18,7 @@
  * Gotchas:
  *   - One sidemenu per page: init() takes the FIRST .nds-sidemenu it finds.
  *   - There is no reinit(): call init() again and it re-wires from scratch.
- *   - init() does not start the drawer: new markup needs NDS.Init.refresh().
+ *   - init() does not start the drawer: new markup needs NDS.init.refresh().
  *   - .nds-top scrolls its bar to the top and locks the page before it opens.
  *   - A width change closes it.
  *   - The top bar label is the active <li>'s label, and follows the mark when it moves.
@@ -27,7 +27,7 @@
 (() => {
     'use strict';
 
-    const { add: addState, has: hasState, clear: clearState } = NDS.State;
+    const { add: addState, has: hasState, clear: clearState } = NDS.state;
 
     // Track current instance for cleanup on re-init
     let currentInstance = null;
@@ -200,7 +200,7 @@
 
         // Store for cleanup
         currentInstance = ctx;
-        // NDS.Init.destroy(view) finds instances through an nds* backref on the element.
+        // NDS.init.destroy(view) finds instances through an nds* backref on the element.
         accMenu.ndsSidemenu = { destroy: () => { if (currentInstance === ctx) destroy(); } };
 
         // Closed is the start state; open/close only write on a flip.

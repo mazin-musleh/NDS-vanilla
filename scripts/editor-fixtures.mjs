@@ -1885,13 +1885,13 @@ try {
             sel.addRange(r);
         };
         editable.innerHTML = '<p>مرحبا</p>';
-        NDS.State.add(root, 'readonly');
+        NDS.state.add(root, 'readonly');
         await raf();
         caretInText();
         document.dispatchEvent(new Event('selectionchange'));
         await raf(); await raf();
         const boldDisabledReadonly = bold.disabled;
-        NDS.State.remove(root, 'readonly');
+        NDS.state.remove(root, 'readonly');
         await raf();
         caretInText();
         document.dispatchEvent(new Event('selectionchange'));

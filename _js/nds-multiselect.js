@@ -56,9 +56,9 @@
     // Chips are buttons outside .nds-form-action, so the forms disabled hook
     // doesn't reach them — without this they stay tab-focusable (and removable)
     // on a disabled field.
-    NDS.State.onAdd('disabled', '.nds-multiselect', el =>
+    NDS.state.onAdd('disabled', '.nds-multiselect', el =>
         el.querySelectorAll('.nds-chip').forEach(c => { c.disabled = true; }));
-    NDS.State.onRemove('disabled', '.nds-multiselect', el =>
+    NDS.state.onRemove('disabled', '.nds-multiselect', el =>
         el.querySelectorAll('.nds-chip').forEach(c => { c.disabled = false; }));
 
     class NDSMultiselect {
@@ -92,7 +92,7 @@
             this.valid = true;
             this.init();
             // Forms applies an authored disabled through the field's input, and a multiselect's inputs sit in its menu.
-            NDS.State.apply(root, 'disabled');
+            NDS.state.apply(root, 'disabled');
         }
 
         init() {
@@ -251,10 +251,10 @@
 
             // ── Dropmenu lifecycle ──────────────────────────────────
             this.dropmenu.addEventListener('nds:dropmenu:opened', () => {
-                NDS.State.add(this.root, 'focus');
+                NDS.state.add(this.root, 'focus');
             }, { signal });
             this.dropmenu.addEventListener('nds:dropmenu:closed', () => {
-                NDS.State.remove(this.root, 'focus');
+                NDS.state.remove(this.root, 'focus');
                 // Apply mode: closing without Apply discards staged toggles.
                 // No-op after Apply — it re-syncs `applied` before the close.
                 if (this.applyMode) {
@@ -265,19 +265,19 @@
             // ── Trigger interaction states ──────────────────────────
             if (this.trigger) {
                 this.trigger.addEventListener('mousedown', () => {
-                    NDS.State.add(this.root, 'active');
+                    NDS.state.add(this.root, 'active');
                 }, { signal });
                 ['mouseup', 'mouseleave'].forEach(evt => {
                     this.trigger.addEventListener(evt, () => {
-                        NDS.State.remove(this.root, 'active');
+                        NDS.state.remove(this.root, 'active');
                     }, { signal });
                 });
                 this.trigger.addEventListener('focus', () => {
-                    NDS.State.add(this.root, 'focus');
+                    NDS.state.add(this.root, 'focus');
                 }, { signal });
                 this.trigger.addEventListener('blur', () => {
                     // Keep focus state while the panel is open — user is in the panel.
-                    if (!this.isOpen()) NDS.State.remove(this.root, 'focus');
+                    if (!this.isOpen()) NDS.state.remove(this.root, 'focus');
                 }, { signal });
             }
 
@@ -314,11 +314,11 @@
 
             this.root.addEventListener('mousedown', (e) => {
                 if (!isDelegatedSurface(e.target)) return;
-                NDS.State.add(this.root, 'active');
+                NDS.state.add(this.root, 'active');
             }, { signal });
             ['mouseup', 'mouseleave'].forEach(evt => {
                 this.root.addEventListener(evt, () => {
-                    NDS.State.remove(this.root, 'active');
+                    NDS.state.remove(this.root, 'active');
                 }, { signal });
             });
 
@@ -363,20 +363,20 @@
             this.formControl.removeAttribute('data-multiselect-stacked');
             // Chips hold their own remove listeners; create() rebuilds them.
             this.chipsEl.replaceChildren();
-            NDS.State.remove(this.root, 'filled');
+            NDS.state.remove(this.root, 'filled');
             NDS.aria.label(this.trigger, this.triggerAriaOriginal);
             this.root.removeAttribute('data-nds-multiselect-initialized');
             delete this.root.ndsMultiselect;
         }
 
         isOpen() {
-            return NDS.State.has(this.dropmenu, 'open');
+            return NDS.state.has(this.dropmenu, 'open');
         }
 
         // Readonly blocks the user only: chips and Reset are keyboard-reachable
         // past the readonly CSS, while removeValue()/reset() stay callable from code.
         isReadonly() {
-            return NDS.State.has(this.root, 'readonly');
+            return NDS.state.has(this.root, 'readonly');
         }
 
         getSelected() {
@@ -448,7 +448,7 @@
             const selected = this.getSelected();
             this.chipsEl.replaceChildren();
             selected.forEach(value => { this.chipsEl.appendChild(this.buildChip(value)); });
-            NDS.State[selected.length ? 'add' : 'remove'](this.root, 'filled');
+            NDS.state[selected.length ? 'add' : 'remove'](this.root, 'filled');
 
             if (this.trigger && this.triggerLabelOriginal) {
                 const labels = selected.map(v => this.labelFor(v));
@@ -463,7 +463,7 @@
                 data: { multiselectValue: value },
                 // Chips built while the field is disabled (init/reinit) — the
                 // State hook above only covers runtime toggles.
-                disabled: NDS.State.has(this.root, 'disabled'),
+                disabled: NDS.state.has(this.root, 'disabled'),
                 onRemove: (e) => {
                     e.stopPropagation();
                     if (this.isReadonly()) return;

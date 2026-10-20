@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 07:59 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="cooldown-overview" class="nds-content-section nds-doc-overview">
@@ -191,7 +191,7 @@ const btn = document.querySelector('#resend-btn');
 
 // Add the listener before any start() call, so the first cooldown reaches it.
 btn.addEventListener('nds:cooldown:start', async () => {
-  NDS.State.add(btn, 'loading');
+  NDS.state.add(btn, 'loading');
   try {
     // NDS.request throws on a non-OK status, so a failed send reaches
     // the catch below. A plain fetch resolves on one, reporting a
@@ -210,7 +210,7 @@ btn.addEventListener('nds:cooldown:start', async () => {
     // for a send that failed.
     NDS.Cooldown.reset(btn);
   } finally {
-    NDS.State.remove(btn, 'loading');
+    NDS.state.remove(btn, 'loading');
   }
 });
 

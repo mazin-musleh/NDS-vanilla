@@ -15,12 +15,12 @@ node scripts/svg-render-diff.mjs <path>         # REQUIRED after an SVG --apply:
 python scripts/check-data-state-tails.py        # after any [data-state]/[data-status] rule change, or a rule on a flag the JS writes on <html>/<body> — --report lists every tail
 python scripts/check-css.py [--report|--unused] # built CSS: dangling var(), dead fallbacks, duplicate decls, global token in a component dark block, !important on transform/opacity/filter, anything after a pseudo-element (`::after > *`); --unused = rules no page/JS uses
 node scripts/encode-webp.mjs <master>           # WebP at set widths, lowest quality above a PSNR floor — always from the master
-node scripts/run-audit.mjs [page.html]          # print a built page's NDS.Init.audit() warnings
+node scripts/run-audit.mjs [page.html]          # print a built page's NDS.init.audit() warnings
 node scripts/check-js-rules.mjs [file …]        # nds-js-audit's mechanical half: `finding` = decided, `verify` = left to read (rules in its header); --self-test
 bundle exec ruby scripts/surface-history.rb     # names every release had that today's code lacks → tmp/surface/candidates.json; new rows go in _data/migrations.yml
 node scripts/find-unused-icons.mjs              # UI icons nothing references
 python scripts/hgi-font-slices.py               # HGI content font → 25-icon slices in assets/fonts/hgi/ + their @font-face list (hgi-font-update.py --apply runs it)
-node scripts/check-date.mjs                     # NDS.date vs Intl: every day 2018–2037 round-trips gregory ↔ hijri; ENGINE=webkit for Safari
+node scripts/check-date.mjs                     # NDS.Date vs Intl: every day 2018–2037 round-trips gregory ↔ hijri; ENGINE=webkit for Safari
 node scripts/check-i18n.mjs [--build]           # every _i18n/ pack holds each English word (JS defaults + markers), markers match it, no Arabic in _js/; --build writes assets/i18n/ + _data/i18n.json (js_processor.rb runs it)
 python scripts/check-docs.py [page.md]          # one-source doc pages vs the nds-doc rules (no build needed)
 python scripts/publish-iq.py [--apply]          # NDS IQ draft → the file installs download: dry run; --apply commits + tags IQvX.Y, never pushes
@@ -223,9 +223,9 @@ Verify a whitespace change by rendered text, not by eyeballing: build before/aft
 
 ## Framework Hosts
 
-**NDS is plain HTML, CSS and JS, and a consumer can integrate it into any stack: a plain page, a server-rendered app, or a framework such as React, Vue or Angular. Judge every component and API change against all of them, never against how this repo's own pages use it.** A framework host mounts and unmounts views, rebuilds nodes, and keeps state in its own code. `core/init.md` → Framework Views is the contract the consumer follows: `NDS.Init.mount(view)` after mount, `NDS.Init.destroy(view)` before unmount.
+**NDS is plain HTML, CSS and JS, and a consumer can integrate it into any stack: a plain page, a server-rendered app, or a framework such as React, Vue or Angular. Judge every component and API change against all of them, never against how this repo's own pages use it.** A framework host mounts and unmounts views, rebuilds nodes, and keeps state in its own code. `core/init.md` → Framework Views is the contract the consumer follows: `NDS.init.mount(view)` after mount, `NDS.init.destroy(view)` before unmount.
 
-- **The instance lives on the element.** `el.nds{Name}`, with a `destroy()` that drops its stamps: `NDS.Init.destroy()` finds instances by that backref. No module-level registry keyed by id or selector. It outlives an unmounted node, and a reused id resolves to the dead instance.
+- **The instance lives on the element.** `el.nds{Name}`, with a `destroy()` that drops its stamps: `NDS.init.destroy()` finds instances by that backref. No module-level registry keyed by id or selector. It outlives an unmounted node, and a reused id resolves to the dead instance.
 - **`create(el)` stands alone.** A view mounted after load gets everything `init()` wires (document listeners, observers), not just an instance.
 - **State round-trips.** What a component reports in its events can be written back through its `data-*` hooks and restores the same look after a re-mount (Stepper: `currentStep` ↔ `data-current`).
 - **A change to an observable value is breaking** (event detail, return value, a `data-*` the script writes), even when every page here still works. It ships in a major with a Migration line, or takes an additive path. Before changing one, `git log -S` the code and read why it is that way.
@@ -279,7 +279,7 @@ last_edit: "15/07/2026 - 02:35 PM"  # timestamp of the most recent doc content e
 
 ## JS Bundles & Shrinking the Critical Bundle
 
-**Bundles, location owned by the build** (`@bundles` in `_plugins/js_processor.rb`): `nds-main.min.js` (a `<script defer>` — **gates the page reveal, keep lean**), `nds-delegated.min.js` + `nds-extras.min.js` + single-component chunks for big leaves nothing calls (`nds-editor`, `nds-chart`, `nds-code`) — all loader-INJECTED *after* the reveal, never gating it, and `nds-audit.min.js` (never auto-injected at all — pulled by the `enableLogging` sweep or the first `NDS.Init.audit()` call, so a production page ships zero audit bytes). The loader reads `window.__NDS_BUNDLES` (namespace→bundle, build-generated) — **never hardcode bundle membership in JS**. Run `ruby _plugins/js_processor.rb` after any `@bundles` or `_js/` change.
+**Bundles, location owned by the build** (`@bundles` in `_plugins/js_processor.rb`): `nds-main.min.js` (a `<script defer>` — **gates the page reveal, keep lean**), `nds-delegated.min.js` + `nds-extras.min.js` + single-component chunks for big leaves nothing calls (`nds-editor`, `nds-chart`, `nds-code`) — all loader-INJECTED *after* the reveal, never gating it, and `nds-audit.min.js` (never auto-injected at all — pulled by the `enableLogging` sweep or the first `NDS.init.audit()` call, so a production page ships zero audit bytes). The loader reads `window.__NDS_BUNDLES` (namespace→bundle, build-generated) — **never hardcode bundle membership in JS**. Run `ruby _plugins/js_processor.rb` after any `@bundles` or `_js/` change.
 
 **To move init-unnecessary code off the reveal-gating path — de-criticalize + move (wholesale).** For a component that is *delegate-safe*: markup + always-loaded CSS paint it correctly with JS deleted (JS owns behavior, not first paint). Public usage (`NDS.X.method()`) stays unchanged via the loader's lazy proxy stub.
 - Server-render any state JS stamps at first paint (e.g. accordion default-open ships `data-state="open"` on the button **and** the collapse so CSS paints it expanded — no JS, no CLS).

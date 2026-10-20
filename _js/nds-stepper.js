@@ -31,7 +31,7 @@
  *     validation, a request, a server check — call NDS.Stepper.next() from whatever
  *     knows the answer. Forms are always that case.
  *   - A submit-typed control inside a form is HANDED OFF: no preventDefault, no move.
- *     The form owns that click. NDS.Init.audit() reports the shape.
+ *     The form owns that click. NDS.init.audit() reports the shape.
  *   - Radial HIDES every step but the current one (or the last, once completed), so a
  *     stepper with no JS would paint EMPTY. _stepper.scss carries a pre-init skeleton keyed on the stepper's
  *     own data-nds-stepper-initialized stamp, which force-shows the first step until init
@@ -155,9 +155,9 @@
         updateProgressDisplay() {
             // Past the last step only: arriving on it leaves it current. next() moves past it.
             if (this.currentStep > this.totalSteps) {
-                NDS.State.add(this.element, 'completed');
+                NDS.state.add(this.element, 'completed');
             } else {
-                NDS.State.remove(this.element, 'completed');
+                NDS.state.remove(this.element, 'completed');
             }
 
             const pct = Math.min(100, (this.currentStep / this.totalSteps) * 100);
@@ -175,11 +175,11 @@
                 const stepNumber = index + 1;
 
                 if (allCompleted || stepNumber < this.currentStep) {
-                    NDS.State.set(step, 'completed');
+                    NDS.state.set(step, 'completed');
                 } else if (stepNumber === this.currentStep) {
-                    NDS.State.set(step, 'current');
+                    NDS.state.set(step, 'current');
                 } else {
-                    NDS.State.set(step, 'upcoming');
+                    NDS.state.set(step, 'upcoming');
                 }
             });
         }

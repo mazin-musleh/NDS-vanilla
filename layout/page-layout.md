@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 01:05 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="page-layout-overview" class="nds-content-section nds-doc-overview">
@@ -581,7 +581,7 @@ A console has no side info, because the side menu holds the side column. What a 
             <i class="hgi hgi-stroke hgi-search-02"></i>
             <span class="nds-label">Layout Audit</span>
           </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.Init.audit()</code> warns about an element between <code class="nds-inline-code lang-html">body</code> and <code class="nds-inline-code lang-html">main</code> that stops <code class="nds-inline-code lang-html">main</code> from growing, and about an extra child of the content layout.</p>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.init.audit()</code> warns about an element between <code class="nds-inline-code lang-html">body</code> and <code class="nds-inline-code lang-html">main</code> that stops <code class="nds-inline-code lang-html">main</code> from growing, and about an extra child of the content layout.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

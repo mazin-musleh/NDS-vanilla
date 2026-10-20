@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "19/10/2026 - 08:46 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="tabs-overview" class="nds-content-section nds-doc-overview">
@@ -362,7 +362,7 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
 ### JavaScript
 {: .nds-block-title}
 
-The instance lives on the element as `ndsTabs`. It is there once the component starts: code that runs at page load waits for [`NDS.Init.ready`](../core/init#instance-lookup). The same controller runs the [Content Switcher](../components/content-switcher).
+The instance lives on the element as `ndsTabs`. It is there once the component starts: code that runs at page load waits for [`NDS.init.ready`](../core/init#instance-lookup). The same controller runs the [Content Switcher](../components/content-switcher).
 
 | Method | Effect |
 |---|---|

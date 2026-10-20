@@ -1,12 +1,12 @@
-/* NDS.date — public surface
+/* NDS.Date — public surface
  * Rides: (none — base component)
  * Methods:
- *   NDS.date.parse(text, opts) · .format(date, opts) · .convert(text, from, to) · .today() · .site
- *   NDS.date.formatFor(el)           the nearest data-date-format (<html> is the site's)
- *   NDS.date.calendarFor(el, fb)     the nearest data-calendar: hijri | gregory (else fb, gregory)
- *   NDS.date.monthNames(calendar, lang) · .weekdayNames(lang)   names in a language, Sunday first
- *   NDS.date.fill(root)              write every such <time> in root, and root itself
- *   NDS.date.init()                  fill the page (the loader calls it)
+ *   NDS.Date.parse(text, opts) · .format(date, opts) · .convert(text, from, to) · .today() · .site
+ *   NDS.Date.formatFor(el)           the nearest data-date-format (<html> is the site's)
+ *   NDS.Date.calendarFor(el, fb)     the nearest data-calendar: hijri | gregory (else fb, gregory)
+ *   NDS.Date.monthNames(calendar, lang) · .weekdayNames(lang)   names in a language, Sunday first
+ *   NDS.Date.fill(root)              write every such <time> in root, and root itself
+ *   NDS.Date.init()                  fill the page (the loader calls it)
  * Events:
  *   (none)
  * Hooks:
@@ -21,7 +21,7 @@
  *   written by the component: the <time>'s text
  * Gotchas:
  *   - Main bundle, right after core: Date Picker, Sort, Export, Countdown and the top bar
- *     read NDS.date synchronously.
+ *     read NDS.Date synchronously.
  *   - A <time> is read from datetime only, never its text: HTML holds a Gregorian date
  *     there. A value that is not a date (YYYY-MM-DD, with or without a time) is left as written.
  *   - A datetime with a time and a zone (Z, +03:00) counts in the site's timezone.
@@ -36,12 +36,12 @@
     // A date is a calendar day: a Date at local midnight, never shifted by a timezone.
     // The site's timezone (<html data-timezone>) enters only through today().
     // ponytail: built for Saudi Arabia's two calendars, gregory and hijri; any other calendar when a site asks.
-    NDS.date = (() => {
+    NDS.Date = (() => {
         const TOKENS = /YYYY|YY|MMMM|MM|M|DD|D/g;
         const fmts = new Map();
         const regs = new Map();
         const warned = new Set();
-        const warnOnce = (msg) => { if (!warned.has(msg)) { warned.add(msg); console.warn('[NDS.date] ' + msg); } };
+        const warnOnce = (msg) => { if (!warned.has(msg)) { warned.add(msg); console.warn('[NDS.Date] ' + msg); } };
         // An Intl.DateTimeFormat costs ICU init; format() on a built one is cheap.
         const dtf = (locale, opts) => {
             const key = locale + JSON.stringify(opts);
@@ -209,7 +209,7 @@
         }
         const t = new Date(v);
         if (isNaN(t)) return null;
-        const tz = NDS.date.site.timeZone;   // validated: a mistyped zone falls back, never throws
+        const tz = NDS.Date.site.timeZone;   // validated: a mistyped zone falls back, never throws
         if (!tz) return new Date(t.getFullYear(), t.getMonth(), t.getDate());
         const p = {};
         new Intl.DateTimeFormat('en', { timeZone: tz, year: 'numeric', month: 'numeric', day: 'numeric' })
@@ -225,7 +225,7 @@
             // A Gregorian <time> is written only in a format of its own: else it already reads right.
             const date = (hijri || el.dataset.dateFormat) && dayOf(el.getAttribute('datetime'));
             if (!date) continue;
-            el.textContent = NDS.date.format(date, { calendar: hijri ? 'hijri' : 'gregory', format: NDS.date.formatFor(el) });
+            el.textContent = NDS.Date.format(date, { calendar: hijri ? 'hijri' : 'gregory', format: NDS.Date.formatFor(el) });
             if (hijri && el.hasAttribute('data-date-era')) {
                 const era = document.createElement('span');
                 strings.set(era, 'text', 'hijri_era');
@@ -243,6 +243,6 @@
         if (!strings.ready()) strings.load().then(() => fill());
     }
 
-    NDS.date.init = init;
-    NDS.date.fill = fill;
+    NDS.Date.init = init;
+    NDS.Date.fill = fill;
 })();

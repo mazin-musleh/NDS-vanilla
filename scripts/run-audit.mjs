@@ -1,5 +1,5 @@
-// Open a built page headlessly, call NDS.Init.audit(), and print every
-// [NDS.Audit] warning it emits. Also proves the on-demand path: the audit
+// Open a built page headlessly, call NDS.init.audit(), and print every
+// [NDS.audit] warning it emits. Also proves the on-demand path: the audit
 // bundle must NOT be present before the call and must load because of it.
 //
 //   node scripts/run-audit.mjs [path] [baseUrl]
@@ -21,7 +21,7 @@ const warnings = [];
 page.on('console', (msg) => {
     const text = msg.text();
     // The closing "N errors, N warnings" line is the summary, not a finding.
-    if (text.includes('[NDS.Audit]') && !/ errors, \d+ warnings/.test(text)) warnings.push(text);
+    if (/\[NDS\.[aA]udit\]/.test(text) && !/ errors, \d+ warnings/.test(text)) warnings.push(text);
 });
 
 await page.goto(`${BASE}/${PAGE}`, { waitUntil: 'networkidle' });
@@ -30,13 +30,14 @@ await page.goto(`${BASE}/${PAGE}`, { waitUntil: 'networkidle' });
 await page.waitForFunction(() => [...document.querySelectorAll('link[href*="nds-icons.min.css"]')].some((l) => l.sheet), null, { timeout: 8000 }).catch(() => {});
 
 console.log(`page: ${PAGE}`);
-// A pre-split runtime (≤1.8.1) has no NDS.Audit stub and its manifest names no
+// Before 2.0 the names were NDS.Init and NDS.Audit. A pre-split runtime (≤1.8.1) has
+// no audit stub and its manifest names no
 // audit bundle — inject this repo's build into the page and run it directly.
-const hasAudit = await page.evaluate(() => !!(window.NDS && NDS.Audit));
+const hasAudit = await page.evaluate(() => !!(window.NDS && (NDS.audit || NDS.Audit)));
 if (hasAudit) {
     const before = await page.evaluate(() =>
         [...document.scripts].some((s) => s.src.includes('nds-audit.min.js')));
-    await page.evaluate(() => NDS.Init.audit());
+    await page.evaluate(() => (NDS.init || NDS.Init).audit());
     const after = await page.evaluate(() =>
         [...document.scripts].some((s) => s.src.includes('nds-audit.min.js')));
     console.log(`audit bundle before call: ${before ? 'PRESENT (unexpected — should be on-demand)' : 'absent (correct)'}`);
@@ -44,7 +45,7 @@ if (hasAudit) {
 } else {
     console.log('runtime predates the audit bundle — injecting this repo\'s nds-audit.min.js');
     await page.addScriptTag({ path: fileURLToPath(new URL('../assets/js/nds-audit.min.js', import.meta.url)) });
-    await page.evaluate(() => NDS.Audit.run());
+    await page.evaluate(() => NDS.audit.run());
 }
 console.log(`audit warnings: ${warnings.length}`);
 for (const w of warnings) console.log(`  - ${w}`);

@@ -1,11 +1,11 @@
-/* NDS.Audit — public surface
+/* NDS.audit — public surface
  * Rides: (none — diagnostic module, not a component)
  * Methods:
- *   NDS.Audit.run(opts)   run the rules once; prints [NDS.Audit] lines and returns the findings.
+ *   NDS.audit.run(opts)   run the rules once; prints [NDS.audit] lines and returns the findings.
  *                         opts: { group, rule, quiet } (group/rule: a name or an array; quiet: no console)
- *   NDS.Audit.rule(def)   add a rule: { id, group, severity, docs, check(ctx) }. ctx.find(selector)
+ *   NDS.audit.rule(def)   add a rule: { id, group, severity, docs, check(ctx) }. ctx.find(selector)
  *                         returns the elements a rule may judge; ctx.report(el, message, fix, severity)
- *   NDS.Audit.rules       every rule, in run order
+ *   NDS.audit.rules       every rule, in run order
  * Findings: { rule, group, severity, message, fix, docs, el, count }
  *   severity: error (broken now) · warn (works, but wrong or going away) · info
  *   groups:   page · structure · migration · i18n · practice (a doc's Best Practices tip, info only)
@@ -18,7 +18,7 @@
  * Gotchas:
  *   - This bundle is never auto-injected. The loader pulls it when
  *     enableLogging schedules the post-init sweep, or on the first
- *     NDS.Init.audit() call (lazy namespace stub) — that first call returns a
+ *     NDS.init.audit() call (lazy namespace stub) — that first call returns a
  *     promise while the bundle loads. Production pages that never ask for it
  *     download zero bytes of it.
  *   - The icon check reads a ::before computed mask, so it only means something
@@ -39,7 +39,7 @@
     const RULES = [];
 
     function rule(def) {
-        if (!def || !def.id || typeof def.check !== 'function') return console.warn('[NDS.Audit] a rule needs an id and a check()', def);
+        if (!def || !def.id || typeof def.check !== 'function') return console.warn('[NDS.audit] a rule needs an id and a check()', def);
         const at = RULES.findIndex(r => r.id === def.id);
         const r = { group: 'structure', severity: 'warn', ...def };
         if (at < 0) RULES.push(r); else RULES[at] = r;
@@ -71,7 +71,7 @@
                                     docs: r.docs ? DOCS + r.docs : undefined, el: el || undefined, count });
                 },
             };
-            try { r.check(ctx); } catch (e) { console.warn(`[NDS.Audit] rule ${r.id} failed:`, e); }
+            try { r.check(ctx); } catch (e) { console.warn(`[NDS.audit] rule ${r.id} failed:`, e); }
         }
         if (!quiet) print(findings);
         return findings;
@@ -82,10 +82,10 @@
         const n = { error: 0, warn: 0, info: 0 };
         for (const f of findings) {
             n[f.severity]++;
-            const text = `[NDS.Audit] ${f.rule}: ${f.group === 'practice' ? 'tip: ' : ''}${f.message}${f.fix ? ' ' + f.fix : ''}${f.docs ? ' ' + f.docs : ''}`;
+            const text = `[NDS.audit] ${f.rule}: ${f.group === 'practice' ? 'tip: ' : ''}${f.message}${f.fix ? ' ' + f.fix : ''}${f.docs ? ' ' + f.docs : ''}`;
             (out[f.severity] || console.warn)(text, ...(f.el ? [f.el] : []));
         }
-        console.info(`[NDS.Audit] ${n.error} errors, ${n.warn} warnings, ${n.info} notes.`);
+        console.info(`[NDS.audit] ${n.error} errors, ${n.warn} warnings, ${n.info} notes.`);
     }
 
     // ── page ─────────────────────────────────────────────────────────
@@ -868,7 +868,7 @@
             col.get(td.cellIndex).push(tag);
         });
         for (const col of cols.values()) for (const tags of col.values()) {
-            const plain = tags.filter(t => !NDS.Status.get(t));
+            const plain = tags.filter(t => !NDS.status.get(t));
             if (plain.length && plain.length < tags.length) ctx.report(plain[0], `a table column shows a status tag on some rows and a standard tag on others (${plain.length} of ${tags.length} standard).`,
                 'Give every tag in the column data-status. A state that needs no color takes "neutral".', undefined, plain.length);
         }
@@ -886,5 +886,5 @@
             'Set palette tokens at :root. On a wrapper, set the token the component reads.', undefined, sels.length);
     } });
 
-    NDS.Audit = { run, rule, rules: RULES };
+    NDS.audit = { run, rule, rules: RULES };
 })();

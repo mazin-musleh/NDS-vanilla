@@ -60,7 +60,7 @@
 (function () {
     'use strict';
 
-    const { add: addState, remove: removeState, has: hasState, clear: clearState } = NDS.State;
+    const { add: addState, remove: removeState, has: hasState, clear: clearState } = NDS.state;
 
     const SELECTOR = '.nds-panel';
     const INIT_ATTR = 'data-nds-panel-initialized';
@@ -205,7 +205,7 @@
         // A string ref that missed may name a template-wrapped panel.
         if (!panel && typeof ref === 'string') panel = NDS.fromTemplate(ref.replace(/^#/, ''));
         if (!panel) return;
-        // A panel added after load without NDS.Init.mount: its close controls are wired here.
+        // A panel added after load without NDS.init.mount: its close controls are wired here.
         createPanel(panel);
         if (!panel.hasAttribute(INIT_ATTR)) return;
         // On the panel, not a local: a swap opens it later from close()'s cleanup.
@@ -467,7 +467,7 @@
             const btn = e.target.closest('[data-panel-toggle]');
             if (!btn) return;
             // fromTemplate covers a panel still inside a <template>: it moves the
-            // markup in and NDS.Init.refresh re-enters init(), whose scan runs
+            // markup in and NDS.init.refresh re-enters init(), whose scan runs
             // createPanel on it before toggle() below needs it.
             const panel = NDS.fromTemplate(btn.dataset.panelToggle);
             if (!panel) return;

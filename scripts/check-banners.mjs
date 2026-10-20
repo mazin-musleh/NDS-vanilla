@@ -29,7 +29,7 @@ const SCOPE = [
     ['nds-accessibility.js', 'Accessibility'],
     ['nds-accordion.js', 'Accordion'],
     ['nds-alert.js', 'Alert'],
-    ['nds-audit.js', 'Audit'],
+    ['nds-audit.js', 'audit'],
     ['nds-autocomplete.js', 'Autocomplete'],
     ['nds-backdrop.js', 'Backdrop'],
     ['nds-breadcrumb.js', 'Breadcrumb'],
@@ -43,7 +43,7 @@ const SCOPE = [
     ['nds-countdown.js', 'Countdown'],
     ['nds-core.js', null],
     ['nds-custom-select.js', 'CustomSelect'],
-    ['nds-date.js', 'date'],
+    ['nds-date.js', 'Date'],
     ['nds-date-picker.js', 'DatePicker'],
     ['nds-dialog.js', 'dialog'],
     ['nds-digital-stamp.js', 'DigitalStamp'],
@@ -59,7 +59,7 @@ const SCOPE = [
     ['nds-form.js', 'Form'],
     ['nds-ipv.js', 'Ipv'],
     ['nds-link.js', 'Link'],
-    ['nds-loader.js', 'Init'],
+    ['nds-loader.js', 'init'],
     ['nds-main-nav.js', 'MainNav'],
     ['nds-modal.js', 'Modal'],
     ['nds-multiselect.js', 'Multiselect'],
@@ -396,7 +396,7 @@ function verifyFile(file, ns, source) {
 // ── one name per component ──────────────────────────────────────────────────
 
 // Names that break the case rule until their plans/shared-logic.md step lands (section 3).
-const CASE_PENDING = { State: '#1', Status: '#1', Init: '#1', Audit: '#1', date: '#1', SessionTimeout: '#1c' };
+const CASE_PENDING = { SessionTimeout: '#1c' };
 
 const sassText = () => {
     const out = [];

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 09:21 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="loading-overview" class="nds-content-section nds-doc-overview">
@@ -217,16 +217,16 @@ Set these on the loading container, or on a parent.
 ### JavaScript
 {: .nds-block-title}
 
-Loading has no script and no events. To turn it on and off from code, set the `loading` token with `NDS.State`.
+Loading has no script and no events. To turn it on and off from code, set the `loading` token with `NDS.state`.
 
 <script type="text/html" id="loading-js" data-canon data-lang="js">
 var list = document.querySelector('#results');
 
-NDS.State.add(list, 'loading');
+NDS.state.add(list, 'loading');
 list.setAttribute('aria-busy', 'true');
 
 fetch('/api/results').then(function () {
-  NDS.State.remove(list, 'loading');
+  NDS.state.remove(list, 'loading');
   list.removeAttribute('aria-busy');
 });
 </script>

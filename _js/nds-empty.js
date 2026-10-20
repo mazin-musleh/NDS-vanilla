@@ -195,7 +195,7 @@
     if (icon) icon.className = getIconClass(container);
   }
 
-  // One-shot init guard. A re-run of init (e.g. NDS.Init.initialize()) would
+  // One-shot init guard. A re-run of init (e.g. NDS.init.initialize()) would
   // otherwise re-stack the four pool subscriptions below on every
   // re-call — onDOMAdd / onChildrenChange / onAttrChange all push
   // unconditionally with no (selector, fn) dedup in core. The single init at

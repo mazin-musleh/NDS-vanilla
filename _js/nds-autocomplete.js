@@ -32,8 +32,8 @@
 (function () {
     'use strict';
 
-    // State helpers — delegated to NDS.State (nds-core.js)
-    const { add: addState, remove: removeState } = NDS.State;
+    // State helpers — delegated to NDS.state (nds-core.js)
+    const { add: addState, remove: removeState } = NDS.state;
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
     const strings = NDS.i18n.strings('autocomplete', {
@@ -130,7 +130,7 @@
 
             this.init();
             containerElement.setAttribute('data-nds-autocomplete-initialized', 'true');
-            // NDS.Init.destroy(view) reaches an instance only through its nds* backref.
+            // NDS.init.destroy(view) reaches an instance only through its nds* backref.
             containerElement.ndsAutocomplete = this;
         }
 

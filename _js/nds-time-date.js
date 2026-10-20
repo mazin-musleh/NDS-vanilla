@@ -48,16 +48,16 @@
         hijri_date: '{month} {day}, {year} AH',
     });
 
-    // Month names from NDS.date: Android's ICU names Umm al-Qura months from the Gregorian set.
+    // Month names from NDS.Date: Android's ICU names Umm al-Qura months from the Gregorian set.
     function hijriText(day) {
-        const [d, m, y] = NDS.date.format(day, { calendar: 'hijri', format: 'D M YYYY' }).split(' ');
-        return strings.text('hijri_date', { day: d, month: NDS.date.monthNames('hijri')[m - 1], year: y });
+        const [d, m, y] = NDS.Date.format(day, { calendar: 'hijri', format: 'D M YYYY' }).split(' ');
+        return strings.text('hijri_date', { day: d, month: NDS.Date.monthNames('hijri')[m - 1], year: y });
     }
 
     // The site's wall clock, [h, m, s]. No data-timezone = the visitor's.
     function zoneTime() {
-        return NDS.date.format(new Date(), {
-            locale: 'en', timeZone: NDS.date.site.timeZone,
+        return NDS.Date.format(new Date(), {
+            locale: 'en', timeZone: NDS.Date.site.timeZone,
             hour: 'numeric', minute: 'numeric', second: 'numeric', hourCycle: 'h23'
         }).split(':').map(Number);
     }
@@ -78,11 +78,11 @@
         scheduleMidnight();
 
         const isArabic = NDS.isArabic;
-        const today = NDS.date.today();
-        const type = NDS.date.calendarFor(el, isArabic ? 'hijri' : 'gregory');
+        const today = NDS.Date.today();
+        const type = NDS.Date.calendarFor(el, isArabic ? 'hijri' : 'gregory');
         renderDate(el, type === 'hijri'
             ? hijriText(today)
-            : NDS.date.format(today, {
+            : NDS.Date.format(today, {
                 locale: isArabic ? 'ar-SA' : undefined, // undefined = the page's lang
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
             }));
@@ -140,7 +140,7 @@
         clockTimer = null;
     }
 
-    // Per-branch init guards. A re-run of init (e.g. NDS.Init.initialize())
+    // Per-branch init guards. A re-run of init (e.g. NDS.init.initialize())
     // would otherwise re-stack NDS.onAttrChange (no dedup in core)
     // and document.addEventListener('visibilitychange')
     // (no removal path) on every re-call. The date and clock topbar widgets can

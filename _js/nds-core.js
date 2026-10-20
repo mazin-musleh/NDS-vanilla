@@ -2,11 +2,11 @@
  * Rides: (none — every other file rides THIS one)
  * Methods:
  *   state + status
- *     NDS.State.add / .remove / .set / .has / .get / .clear / .apply (el, ...tokens)
+ *     NDS.state.add / .remove / .set / .has / .get / .clear / .apply (el, ...tokens)
  *                                     the data-state token list
- *     NDS.State.parse(el)              the tokens as a Set
- *     NDS.State.onAdd / .onRemove (token, scope, fn)   react to a token; returns off()
- *     NDS.Status.set / .get / .clear (el, status)      the data-status value
+ *     NDS.state.parse(el)              the tokens as a Set
+ *     NDS.state.onAdd / .onRemove (token, scope, fn)   react to a token; returns off()
+ *     NDS.status.set / .get / .clear (el, status)      the data-status value
  *     NDS.aria.expanded / .hidden / .pressed / .selected / .disabled / .label / .current
  *              / .sort (el, value)     write an ARIA attribute (null removes it)
  *   page facts (live getters, not snapshots)
@@ -35,7 +35,7 @@
  *     NDS.writeUrlParams(params|string)   rewrite the URL's ?params in place; path, hash and history.state stay
  *     NDS.cache.get / .clear (key) · .set (key, value, minutes)   localStorage with expiry
  *     NDS.formatNumber(n, opts) · NDS.latinDigits(s) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
- *     NDS.date                         dates in Gregorian and Hijri: _js/nds-date.js
+ *     NDS.Date                         dates in Gregorian and Hijri: _js/nds-date.js
  *     NDS.announce(text)               say something in the shared live region
  *     NDS.i18n.load(component, lang)   a promise of a section's words
  *     NDS.i18n.strings(component, defaults) → { text, set, load, ready, has, defaults }   a component's strings;
@@ -52,18 +52,18 @@
  *     NDS.badge(el, count) · NDS.buildChip(value, opts)
  * Events:
  *   nds:template:ready    on the stamped root, bubbles — detail.id is the summoned id.
- *                         Fires after NDS.Init.refresh wires the arrivals, so page JS
+ *                         Fires after NDS.init.refresh wires the arrivals, so page JS
  *                         that needs the markup binds on document and waits for it
  * Hooks:
- *   data-state    the token list NDS.State owns — space separated, matched with ~=
- *   data-status   the single value NDS.Status owns
+ *   data-state    the token list NDS.state owns — space separated, matched with ~=
+ *   data-status   the single value NDS.status owns
  * Gotchas:
  *   - There is no init(). Core is a utility layer, loaded first and consumed by everyone.
  *   - Every observer helper is POOLED — one observer per page, shared. Each call returns
  *     an off() function; not calling it leaks a subscriber for the page's lifetime.
  *   - NDS.request is a fetch wrapper and nothing more — no XHR, no upload progress, no
  *     retry, no cache layer and no interceptors.
- *   - data-state is a LIST. Never write it with setAttribute; go through NDS.State so
+ *   - data-state is a LIST. Never write it with setAttribute; go through NDS.state so
  *     other tokens survive and the onAdd/onRemove hooks fire.
  */
 // NDS Core — shared namespace and utilities
@@ -515,7 +515,7 @@
     // (priming the transition by stamping one state, then removing it
     // after the browser has painted the from-state so the change to
     // the to-state animates instead of jumping).
-    // Usage: NDS.afterPaint(() => NDS.State.remove(panel, 'opening'));
+    // Usage: NDS.afterPaint(() => NDS.state.remove(panel, 'opening'));
     NDS.afterPaint = (fn) => requestAnimationFrame(() => requestAnimationFrame(fn));
 
     // ── Number formatting rule ───────────────────────────────────────
@@ -767,16 +767,16 @@
 
     // ── State Management (data-state) ─────────────────────────────────
     // Space-separated token management for data-state attribute
-    // Usage: NDS.State.add(el, 'open', 'active')
-    //        NDS.State.remove(el, 'open')
-    //        NDS.State.has(el, 'open')     → true/false
-    //        NDS.State.set(el, 'open')     → replaces all tokens
-    //        NDS.State.get(el)            → 'open active' (raw string)
-    //        NDS.State.clear(el)           → removes data-state entirely
-    //        NDS.State.apply(el, ...states) → fire onAdd hooks for existing states (init-time)
-    //        NDS.State.onAdd(state, scope, fn)    → register hook: fn(el) fires when state added on el matching scope; returns off()
-    //        NDS.State.onRemove(state, scope, fn) → register hook: fn(el) fires when state removed; returns off()
-    NDS.State = (() => {
+    // Usage: NDS.state.add(el, 'open', 'active')
+    //        NDS.state.remove(el, 'open')
+    //        NDS.state.has(el, 'open')     → true/false
+    //        NDS.state.set(el, 'open')     → replaces all tokens
+    //        NDS.state.get(el)            → 'open active' (raw string)
+    //        NDS.state.clear(el)           → removes data-state entirely
+    //        NDS.state.apply(el, ...states) → fire onAdd hooks for existing states (init-time)
+    //        NDS.state.onAdd(state, scope, fn)    → register hook: fn(el) fires when state added on el matching scope; returns off()
+    //        NDS.state.onRemove(state, scope, fn) → register hook: fn(el) fires when state removed; returns off()
+    NDS.state = (() => {
         // Null prototype: a token named like an Object.prototype key ('constructor') has no hooks.
         const _onAdd = Object.create(null);    // { 'disabled': [{ scope, fn }, ...] }
         const _onRemove = Object.create(null);
@@ -871,7 +871,7 @@
     const MIRRORS = { loading: 'nds-loading', hidden: 'nds-hidden', 'has-more': 'nds-has-more', 'always-open': 'nds-always-open', dropbox: 'nds-dropbox' };
     const _mirrored = new WeakMap();
     const mirrorTokens = (el) => {
-        const cur = NDS.State.parse(el);
+        const cur = NDS.state.parse(el);
         let mine = _mirrored.get(el);
         for (const token in MIRRORS) {
             const cls = MIRRORS[token], on = cur.has(token);
@@ -897,10 +897,10 @@
 
     // ── Status Management (data-status) ─────────────────────────────
     // Single-value management for data-status attribute
-    // Usage: NDS.Status.set(el, 'error')
-    //        NDS.Status.get(el)            → 'error' | ''
-    //        NDS.Status.clear(el)          → removes data-status
-    NDS.Status = {
+    // Usage: NDS.status.set(el, 'error')
+    //        NDS.status.get(el)            → 'error' | ''
+    //        NDS.status.clear(el)          → removes data-status
+    NDS.status = {
         set: (el, status) => { if (el && status) el.setAttribute('data-status', status); },
         get: (el) => el ? (el.getAttribute('data-status') || '') : '',
         clear: (el) => { if (el) el.removeAttribute('data-status'); }
@@ -1090,7 +1090,7 @@
     // may ship template-wrapped so its nodes stay out of the DOM until first
     // open; on a live miss this scans the page's templates, moves the owning
     // template's content in right after it, inits the arrivals via
-    // NDS.Init.refresh (loader inits are idempotent), fires a bubbling
+    // NDS.init.refresh (loader inits are idempotent), fires a bubbling
     // nds:template:ready {id} on the element — page JS binds there, since
     // nothing it looked up at load existed — and returns the element.
     // MUTATING on a template hit — open/toggle paths only; read-only lookups
@@ -1106,7 +1106,7 @@
             tpls[i].after(tpls[i].content);
             el = document.getElementById(id);
             if (el) {
-                NDS.Init?.refresh?.(el);
+                NDS.init?.refresh?.(el);
                 el.dispatchEvent(new CustomEvent('nds:template:ready', { bubbles: true, detail: { id } }));
             }
             return el;
@@ -1283,7 +1283,7 @@
     //
     // Usage:
     //   NDS.onTransitionEnd(submenu, () => {
-    //       NDS.State.set(submenu, 'open');
+    //       NDS.state.set(submenu, 'open');
     //       submenu.style.height = '';
     //   });
     //   // Custom safety-net delay:

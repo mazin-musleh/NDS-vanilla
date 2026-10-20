@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 09:01 PM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="hidden-overview" class="nds-content-section nds-doc-overview">
@@ -160,7 +160,7 @@ The canon is a Share button, and every option goes on its label. The label start
 |---|---|---|
 | `hidden` | Any element | Hides the element at every width and from screen readers, over any `display` value. Set it yourself, or let a component's script set it |
 | `data-hidden` | Any element | Hides the element inside each width range it names: `sm` (narrower than 600px), `md` (600px to 959px), `lg` (960px and wider), or `print` (on paper only, see [Print](../utilities/print)). Separate tokens with spaces. Add `sr` to hide it on screen only |
-| `data-state` | Any element | The `hidden` token hides the element, the same as `hidden`. Component scripts write it through `NDS.State` |
+| `data-state` | Any element | The `hidden` token hides the element, the same as `hidden`. Component scripts write it through `NDS.state` |
 {: .nds-table .nds-responsive}
 
 </div>

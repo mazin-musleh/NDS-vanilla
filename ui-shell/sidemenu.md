@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 11:18 PM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="sidemenu-overview" class="nds-content-section nds-doc-overview">
@@ -534,7 +534,7 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
 
 | Method | Effect |
 |---|---|
-| `NDS.Sidemenu.init()` | Starts the side menu. It runs on page load. A second call stops the running side menu and starts it again. It does not start the drawer: for new markup, call `NDS.Init.refresh()` instead, which starts both. See [Init](../core/init) |
+| `NDS.Sidemenu.init()` | Starts the side menu. It runs on page load. A second call stops the running side menu and starts it again. It does not start the drawer: for new markup, call `NDS.init.refresh()` instead, which starts both. See [Init](../core/init) |
 | `NDS.Sidemenu.destroy()` | Closes the menu and removes every listener. The markup stays, and `init()` starts it again |
 {: .nds-table .nds-responsive}
 
@@ -543,7 +543,7 @@ The side menu fires no events. The drawer fires `nds:drawer:shown` after a group
 <script type="text/html" id="sidemenu-js" data-canon data-lang="js" data-preview="none">
 // A framework rendered a new side menu after the NDS script ran:
 // start the side menu and its drawer
-NDS.Init.refresh(document.querySelector('.nds-content-layout'));
+NDS.init.refresh(document.querySelector('.nds-content-layout'));
 
 // Know which group opened
 document.querySelector('.nds-sidemenu').addEventListener('nds:drawer:shown', (e) => {

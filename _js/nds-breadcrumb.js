@@ -121,7 +121,7 @@
             menu?.ndsDropmenu?.destroy?.();
             this.breadcrumb.replaceChildren(...this.items);
             // Releasing the stamp is what keeps destroy two-way: without it the same
-            // markup stays marked as claimed, so no later init() or NDS.Init.refresh()
+            // markup stays marked as claimed, so no later init() or NDS.init.refresh()
             // can ever collapse it again.
             this.breadcrumbNav.removeAttribute('data-nds-breadcrumb-initialized');
             delete this.breadcrumbNav.ndsBreadcrumb;

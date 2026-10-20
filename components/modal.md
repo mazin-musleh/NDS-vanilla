@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 08:27 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="modal-overview" class="nds-content-section nds-doc-overview">
@@ -294,12 +294,12 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
 - Write a title that names the action, and keep the content to one message or one task.
 - Give the modal a clear primary action and a way out, such as Confirm and Cancel.
 - Give every modal an `id`, and give its trigger that `id` in `data-modal-target`.
-- Make the modal a `<dialog>`. A closed dialog stays hidden, also before the script loads. `NDS.Init.audit()` flags a `div.nds-modal`.
+- Make the modal a `<dialog>`. A closed dialog stays hidden, also before the script loads. `NDS.init.audit()` flags a `div.nds-modal`.
 - Give the modal an `aria-labelledby` that points to its title. Give the close button an `aria-label`.
 - Use `role="alertdialog"` instead for an urgent message the user did not ask for, such as a session that is about to end.
 - Give every button `type="button"`. In a form, a button without it submits the form.
 - Put `.nds-card-actions` after `.nds-card-content`, not inside it.
-- For a form, wrap `.nds-card-content` and `.nds-card-actions` in one `<form class="nds-form">`. A form without `nds-form` breaks the layout: the content runs out of the modal and the actions leave the screen. It also gets no submit validation. `NDS.Init.audit()` flags it.
+- For a form, wrap `.nds-card-content` and `.nds-card-actions` in one `<form class="nds-form">`. A form without `nds-form` breaks the layout: the content runs out of the modal and the actions leave the screen. It also gets no submit validation. `NDS.init.audit()` flags it.
 - A [Dropmenu](../components/dropmenu), a select, a [Multiselect](../components/multiselect), an [Autocomplete](../components/autocomplete) or a [Filter](../components/filter) works in a modal with no extra attribute. Its menu opens in the browser's top layer, so the modal's edge does not cut it off.
 - Do not look up a lazy modal when the page loads: it is not in the page yet. Listen on `document` for `nds:template:ready`, which fires on the modal after it joins the page and its components start.
 
@@ -359,7 +359,7 @@ Set these on `:root`. They style the overlay behind every modal and modal panel.
 | `NDS.Modal.close()` | Closes the open modal. It takes no argument |
 | `NDS.Modal.isOpen()` | Returns `true` while a modal is open |
 | `NDS.Modal.init()` | Starts the trigger and close handlers on `document`. NDS calls it when the page loads, and a second call does nothing |
-| `NDS.Modal.destroy(root)` | Closes an open modal inside `root` at once, before you remove its markup. Without it, the page does not scroll. `NDS.Init.destroy(root)` calls it for you |
+| `NDS.Modal.destroy(root)` | Closes an open modal inside `root` at once, before you remove its markup. Without it, the page does not scroll. `NDS.init.destroy(root)` calls it for you |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |

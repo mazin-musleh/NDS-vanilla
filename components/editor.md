@@ -11,7 +11,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 03:51 PM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="editor-overview" class="nds-content-section nds-doc-overview">
@@ -153,7 +153,7 @@ The image button inserts an image from a URL, with alt text, a width and a heigh
 ### Read-only and Disabled
 {: .nds-block-title}
 
-`readonly` on the textarea keeps the text selectable, and the source view still opens. The commands are off, and the value submits. `disabled` turns the whole field off, and its value does not submit. To change the state after load, call `NDS.State.add(el, 'disabled')` or `NDS.State.remove(el, 'disabled')`, where `el` is `.nds-editor`. The same goes for `'readonly'`. The editor updates the textarea to match.
+`readonly` on the textarea keeps the text selectable, and the source view still opens. The commands are off, and the value submits. `disabled` turns the whole field off, and its value does not submit. To change the state after load, call `NDS.state.add(el, 'disabled')` or `NDS.state.remove(el, 'disabled')`, where `el` is `.nds-editor`. The same goes for `'readonly'`. The editor updates the textarea to match.
 
 </div>
   </div>
@@ -273,8 +273,8 @@ The image button inserts an image from a URL, with alt text, a width and a heigh
 | `data-editor-upload-max-file-size` | `.nds-editor` | The largest file in bytes. Default `2097152` (2 MB). With `embed`, it also limits a pasted screenshot |
 | `data-editor-upload-allowed-types` | `.nds-editor` | The file extensions the picker takes. Default `jpg,jpeg,png,gif,webp,svg`. List `jpg` and `jpeg` both to take either |
 | `data-editor-upload-allowed-mime-types` | `.nds-editor` | The MIME types the picker takes, such as `image/*`. A second check after the extension |
-| `data-state~="readonly"` | `.nds-editor` | Set by the script at load when the textarea has `readonly`. Add or remove it with `NDS.State` after load. See Read-only and Disabled |
-| `data-state~="disabled"` | `.nds-editor` | Set by the script at load when the textarea has `disabled`. Add or remove it with `NDS.State` after load. See Read-only and Disabled |
+| `data-state~="readonly"` | `.nds-editor` | Set by the script at load when the textarea has `readonly`. Add or remove it with `NDS.state` after load. See Read-only and Disabled |
+| `data-state~="disabled"` | `.nds-editor` | Set by the script at load when the textarea has `disabled`. Add or remove it with `NDS.state` after load. See Read-only and Disabled |
 {: .nds-table .nds-responsive}
 
 ### Toolbar Commands

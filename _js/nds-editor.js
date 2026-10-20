@@ -659,8 +659,8 @@
     // forms disabled/readonly hooks don't reach them (same rationale as the
     // taginput chip hooks) — react to the container state tokens instead.
     ['disabled', 'readonly'].forEach(token => {
-        NDS.State.onAdd(token, '.nds-editor', el => el.ndsEditor?._applyAccessState());
-        NDS.State.onRemove(token, '.nds-editor', el => el.ndsEditor?._applyAccessState());
+        NDS.state.onAdd(token, '.nds-editor', el => el.ndsEditor?._applyAccessState());
+        NDS.state.onRemove(token, '.nds-editor', el => el.ndsEditor?._applyAccessState());
     });
 
     // ---------- Toolbar generation ----------
@@ -945,7 +945,7 @@
             this._readUploadAttrs();
 
             // Server-shipped data-state="disabled|readonly" applies at init;
-            // later toggles arrive through the NDS.State hooks above.
+            // later toggles arrive through the NDS.state hooks above.
             this._applyAccessState();
             // Settle caret-gated button states (remove starts disabled) and
             // the image upload affordance (URL-only unless embed/endpoint).
@@ -1062,24 +1062,24 @@
             this.root.addEventListener('focusin', () => {
                 if (this._focusWithin) return;
                 this._focusWithin = true;
-                NDS.State.add(this.root, 'focus');
+                NDS.state.add(this.root, 'focus');
                 this._valueAtFocus = this.source.value;
             }, { signal });
             document.addEventListener('focusout', (e) => {
                 if (!this._focusWithin || e.target.closest?.('.nds-editor') !== this.root) return;
                 if (e.relatedTarget?.closest('.nds-editor') === this.root) return; // moving within the editor
                 this._focusWithin = false;
-                NDS.State.remove(this.root, 'focus');
-                NDS.State.remove(this.root, 'typing');
+                NDS.state.remove(this.root, 'focus');
+                NDS.state.remove(this.root, 'typing');
                 if (this.source.value !== this._valueAtFocus) {
                     this.source.dispatchEvent(new Event('change', { bubbles: true }));
                 }
             }, { signal });
-            this.editable.addEventListener('keydown',    () => NDS.State.add(this.root, 'typing'), { signal });
-            this.editable.addEventListener('paste',      () => NDS.State.add(this.root, 'typing'), { signal });
-            this.editable.addEventListener('mousedown',  () => NDS.State.add(this.root, 'active'), { signal });
-            this.editable.addEventListener('mouseup',    () => NDS.State.remove(this.root, 'active'), { signal });
-            this.editable.addEventListener('mouseleave', () => NDS.State.remove(this.root, 'active'), { signal });
+            this.editable.addEventListener('keydown',    () => NDS.state.add(this.root, 'typing'), { signal });
+            this.editable.addEventListener('paste',      () => NDS.state.add(this.root, 'typing'), { signal });
+            this.editable.addEventListener('mousedown',  () => NDS.state.add(this.root, 'active'), { signal });
+            this.editable.addEventListener('mouseup',    () => NDS.state.remove(this.root, 'active'), { signal });
+            this.editable.addEventListener('mouseleave', () => NDS.state.remove(this.root, 'active'), { signal });
 
             // Forms' invalid-focus and label clicks land on the clipped textarea — redirect.
             this.source.addEventListener('focus', () => {
@@ -1096,7 +1096,7 @@
                     const field = e.target.closest('.nds-form-container');
                     // Soft dependency — NDS.Form ships in the main bundle; the menu's
                     // field feedback just stays put if a consumer bundle excludes it.
-                    if (field && NDS.Status.get(field) !== '') NDS.Form?.clearStatus?.(field);
+                    if (field && NDS.status.get(field) !== '') NDS.Form?.clearStatus?.(field);
                     const primary = menu.querySelector('[data-dropmenu-primary]');
                     if (primary) primary.disabled = false;
                 }, { signal });
@@ -1194,8 +1194,8 @@
         // semantics via the carrier textarea). Readonly: content selectable,
         // source viewable, nothing editable, value still submits.
         _applyAccessState() {
-            const disabled = NDS.State.has(this.root, 'disabled');
-            const readonly = NDS.State.has(this.root, 'readonly');
+            const disabled = NDS.state.has(this.root, 'disabled');
+            const readonly = NDS.state.has(this.root, 'readonly');
             const editable = !disabled && !readonly;
             this.editable.setAttribute('contenteditable', editable ? 'true' : 'false');
             this.editable.setAttribute('aria-readonly', readonly ? 'true' : 'false');
@@ -1246,8 +1246,8 @@
             // Base for every generated id (label, link popover fields).
             this._idBase = this.source.id || `nds-editor-${++uid}`;
             // Native field attrs are the single source of truth for initial state.
-            if (this.source.readOnly) NDS.State.add(this.root, 'readonly');
-            if (this.source.disabled) NDS.State.add(this.root, 'disabled');
+            if (this.source.readOnly) NDS.state.add(this.root, 'readonly');
+            if (this.source.disabled) NDS.state.add(this.root, 'disabled');
             const editable = document.createElement('div');
             editable.className = 'nds-editor-editable';
             editable.setAttribute('contenteditable', 'true');

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 04:57 PM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="head-overview" class="nds-content-section nds-doc-overview">
@@ -261,7 +261,7 @@ The inline script runs once, at page load. The stylesheet links it adds and the 
 | `nds-main.min.js` | The loader and the components that paint the first screen | A `defer` script at the end of `<body>` |
 | `nds-delegated.min.js`, `nds-extras.min.js`, `nds-editor.min.js`, `nds-chart.min.js`, `nds-code.min.js`, `nds-cookie-consent.min.js` | The other components | Added by the loader after the page shows, when the page holds one of their components |
 | `nds-accessibility.min.js` and `nds-accessibility.min.css` | The accessibility panel. See [Accessibility](../ui-shell/accessibility) | Added by the loader on the first press of the accessibility button, or at load for a visitor with saved settings |
-| `nds-audit.min.js` | The page audit | Added by the first `NDS.Init.audit()` call, or by `enableLogging`. Never on a production page |
+| `nds-audit.min.js` | The page audit | Added by the first `NDS.init.audit()` call, or by `enableLogging`. Never on a production page |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes
@@ -333,7 +333,7 @@ A policy that allows no injected scripts can still run NDS: add each bundle's ow
 ### Inline Knobs
 {: .nds-block-title}
 
-Under a strict policy, a knob in a `style` attribute never applies. The browser prints a CSP error, and `NDS.Init.audit()` counts the blocked attributes (`style-blocked`). Search your pages for `style="--`, and move each knob to a class in your own stylesheet:
+Under a strict policy, a knob in a `style` attribute never applies. The browser prints a CSP error, and `NDS.init.audit()` counts the blocked attributes (`style-blocked`). Search your pages for `style="--`, and move each knob to a class in your own stylesheet:
 
 <script type="text/html" id="head-knob" data-canon data-preview="none">
 <!-- Before: dead under a strict CSP -->

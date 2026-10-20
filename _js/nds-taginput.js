@@ -57,9 +57,9 @@
 
     // Chips are buttons outside .nds-form-action, so the forms disabled hook
     // doesn't reach them (same rationale as the multiselect hook).
-    NDS.State.onAdd('disabled', '.nds-taginput', el =>
+    NDS.state.onAdd('disabled', '.nds-taginput', el =>
         el.querySelectorAll('.nds-chip').forEach(c => { c.disabled = true; }));
-    NDS.State.onRemove('disabled', '.nds-taginput', el =>
+    NDS.state.onRemove('disabled', '.nds-taginput', el =>
         el.querySelectorAll('.nds-chip').forEach(c => { c.disabled = false; }));
 
     class NDSTagInput {
@@ -125,7 +125,7 @@
             // nds:autocomplete:select below), and the mousedown-blur that
             // precedes a suggestion click must not commit the typed fragment.
             const acMenuOpen = () => this.root.hasAttribute('data-url')
-                && NDS.State.has(this.formControl, 'open');
+                && NDS.state.has(this.formControl, 'open');
 
             this.input.addEventListener('keydown', (e) => {
                 if (e.isComposing) return;
@@ -208,7 +208,7 @@
         // Readonly blocks the user only: chips are keyboard-reachable past the
         // readonly CSS, while removeTag()/clear() stay callable from code.
         isReadonly() {
-            return NDS.State.has(this.root, 'readonly');
+            return NDS.state.has(this.root, 'readonly');
         }
 
         // Strict-mode rejection of typed commits — same feedback shape as the
@@ -285,7 +285,7 @@
             this._syncHiddenInputs();
             // 'filled' is the field's public styling hook (multiselect parity)
             // — consumers style it; no in-repo reader by design.
-            NDS.State[this.tags.length ? 'add' : 'remove'](this.root, 'filled');
+            NDS.state[this.tags.length ? 'add' : 'remove'](this.root, 'filled');
         }
 
         // Rebuild the hidden carriers to mirror this.tags (also consumes any
@@ -308,7 +308,7 @@
                 // Public chip-identity hook (data-taginput-value) for
                 // consumer/e2e selectors — removal routes through the closure.
                 data: { taginputValue: value },
-                disabled: NDS.State.has(this.root, 'disabled'),
+                disabled: NDS.state.has(this.root, 'disabled'),
                 onRemove: () => { if (!this.isReadonly()) this.removeTag(value); },
             });
         }

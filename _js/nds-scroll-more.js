@@ -50,7 +50,7 @@
         scrollAmount: 0.8
     };
 
-    const { add: addState, remove: removeState, has: hasState } = NDS.State;
+    const { add: addState, remove: removeState, has: hasState } = NDS.state;
 
     // Return 'vertical' | 'horizontal' | null.
     // If both axes overflow, prefer vertical (more common list case).

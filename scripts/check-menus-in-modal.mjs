@@ -24,7 +24,7 @@ const ok = (name, pass, detail = '') => { if (!pass) fails++; console.log(`${pas
 const wait = (ms = 400) => page.waitForTimeout(ms);
 
 await page.goto(`${BASE}/components/modal.html`, { waitUntil: 'load' });
-await page.waitForFunction(() => window.NDS?.Init?.mount);
+await page.waitForFunction(() => window.NDS?.init?.mount);
 await page.addStyleTag({ content: '#nds-cookies-panel { display: none !important; }' });
 
 // Build the modal from the doc canons, each field between filler so the content scrolls.
@@ -48,7 +48,7 @@ await page.evaluate(async ([BASE, SHORT]) => {
   m.setAttribute('aria-labelledby', 'mm-t');
   if (SHORT) m.style.maxHeight = '300px';
   document.body.append(m);
-  NDS.Init.mount(m);
+  NDS.init.mount(m);
 }, [BASE, SHORT]);
 await wait(800);
 await page.evaluate(() => NDS.Modal.open('mm'));

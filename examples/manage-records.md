@@ -1099,7 +1099,7 @@ hideFeedback: true
     // forgotten: components inside a new row get scanned, and the ones driving the
     // list from outside it (filter, selection, sort) re-resolve against it.
     function refreshWidgets() {
-      NDS.Init.refresh(tbody);
+      NDS.init.refresh(tbody);
     }
 
     // A dropmenu instance holds a document-level listener, so tear it down before

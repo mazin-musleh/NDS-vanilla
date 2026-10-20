@@ -88,7 +88,7 @@
 
     // ISO text → epoch ms, or NaN. An offset is read as written; without one it is a wall
     // time in the site timezone (the visitor's when <html data-timezone> is unset).
-    // ponytail: lives here until a second component reads a wall time in the site timezone, then it moves to NDS.date.
+    // ponytail: lives here until a second component reads a wall time in the site timezone, then it moves to NDS.Date.
     function parseIso(text) {
         const s = String(text ?? '').trim();
         const m = /^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?)?(Z|([+-])(\d{2}):?(\d{2}))?$/.exec(s);
@@ -98,7 +98,7 @@
         const wall = Date.UTC(y, mo - 1, d, h, mi, sec);
         // Not Date.parse: it rejects a date-only offset (Chrome) and +0300 (Safari).
         if (m[7]) return m[7] === 'Z' ? wall : wall - (m[8] === '-' ? -1 : 1) * (m[9] * 60 + +m[10]) * 6e4;
-        const tz = NDS.date.site.timeZone;
+        const tz = NDS.Date.site.timeZone;
         if (!tz) return new Date(y, mo - 1, d, h, mi, sec).getTime();
         // Shift by the zone's offset at the guess, then once more in case the guess sat across a DST edge.
         let t = wall;
@@ -147,14 +147,14 @@
         if (items.get(el) !== it) return;
         if (it.warn && !it.warned && rem <= it.warn) {
             it.warned = true;
-            NDS.State.add(el, 'warning');
+            NDS.state.add(el, 'warning');
             fire(el, 'nds:countdown:warn', { remaining: rem });
             if (items.get(el) !== it) return;
         }
         if (rem === 0) {
             items.delete(el);
-            NDS.State.remove(el, 'warning');
-            NDS.State.add(el, 'ended');
+            NDS.state.remove(el, 'warning');
+            NDS.state.add(el, 'ended');
             // The ended message becomes the only content: units, words and separators all go at once.
             const done = el.querySelector('.nds-countdown-ended');
             if (done) {
@@ -231,7 +231,7 @@
             const v = Math.floor(remainingOf(it) / UNITS[top]);
             units.forEach((x) => { if (x.unit === top) x.value.setAttribute('data-countdown-sizes', top === 'd' ? String(v) : pad(v)); });
         }
-        NDS.State.remove(el, 'ended', 'warning');
+        NDS.state.remove(el, 'ended', 'warning');
         toggleLinked(el, false);
         items.set(el, it);
         render(el, it);

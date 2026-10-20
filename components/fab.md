@@ -6,7 +6,7 @@ hero_description: A floating action button (FAB) stays at an edge of the screen 
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 02:34 PM"
+last_edit: "20/10/2026 - 05:08 PM"
 lang: en
 direction: ltr
 ---
@@ -262,7 +262,7 @@ A button group with `nds-fab` docks as one item, with one shadow around the whol
 - Give the main action the lowest `data-fab-order`, so it sits nearest the edge.
 - Give an icon-only FAB an `aria-label` that names the action.
 - Do not write the square corners of a thumb yourself. The dock sets them from its edge, so they stay right when the FAB moves.
-- In an app that swaps views, call `NDS.Fab.destroy(view)` or `NDS.Init.destroy(view)` before you remove a view. A FAB lives in a dock on `<body>`, so it stays on the screen after its view is gone.
+- In an app that swaps views, call `NDS.Fab.destroy(view)` or `NDS.init.destroy(view)` before you remove a view. A FAB lives in a dock on `<body>`, so it stays on the screen after its view is gone.
 
 </div>
   </div>

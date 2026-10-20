@@ -1,4 +1,4 @@
-// Does NDS.Init.refresh(container) reach every live component exactly once, and
+// Does NDS.init.refresh(container) reach every live component exactly once, and
 // keep its hands off anything the server drives?
 //
 // Three failure modes, all silent in a browser:
@@ -77,7 +77,7 @@ report.push(...await recordsPage.evaluate(async () => {
 
     // ── instrumentation: count what the walk actually dispatched ───────────
     const calls = {};
-    NDS.Init.components.forEach((c) => {
+    NDS.init.components.forEach((c) => {
         calls[c.name] = { init: 0, refresh: 0 };
         const i = c.init;
         c.init = (...a) => { calls[c.name].init++; return i.apply(c, a); };
@@ -140,10 +140,10 @@ report.push(...await recordsPage.evaluate(async () => {
     // Independent ground truth for the SCANNER camp: a component with a live
     // element inside the container has work to do. Derived from the DOM, not from
     // the walk's own branch, or the test would only prove the code equals itself.
-    const live = NDS.Init.components.filter((c) => NDS[c.name] && !NDS[c.name].__ndsStub);
+    const live = NDS.init.components.filter((c) => NDS[c.name] && !NDS[c.name].__ndsStub);
     const shouldScan = live.filter((c) => !c.refresh && tbody.querySelector(c.selector)).map((c) => c.name);
 
-    NDS.Init.refresh(tbody);
+    NDS.init.refresh(tbody);
     const got = reached();
 
     const gaps = shouldScan.filter((n) => !got.includes(n));
@@ -206,7 +206,7 @@ report.push(...await recordsPage.evaluate(async () => {
     box.checked = true;
     box.dispatchEvent(new Event('change', { bubbles: true }));
     await wait(300);
-    NDS.Init.refresh(tbody);
+    NDS.init.refresh(tbody);
     await wait(300);
     ok('Selection counted the new row after it was checked',
         slot('[data-selection-count]') === '1',
@@ -233,7 +233,7 @@ report.push(...await recordsPage.evaluate(async () => {
     tbody.appendChild(makeRow('REQ-SRV-001', 'pending', 'Pending', 1));
     const orderAfterInsert = order();
     reset();
-    NDS.Init.refresh(tbody);
+    NDS.init.refresh(tbody);
     await wait(400);
     ok('server sort safe — refresh does not re-order rows the server placed',
         order() === orderAfterInsert,
@@ -255,7 +255,7 @@ report.push(...await recordsPage.evaluate(async () => {
     // data-ajax is server-driven too. Test the broader flag, and both variants.
     inst.isFormMode = true;
     inst.isAjaxMode = true;
-    NDS.Init.refresh(tbody);
+    NDS.init.refresh(tbody);
     await wait(200);
     ok('server filter safe — an AJAX filter is skipped, never re-filtered client-side',
         instCalls === 0, `instance.refresh calls=${instCalls}`);
@@ -263,13 +263,13 @@ report.push(...await recordsPage.evaluate(async () => {
         submitted === 0, `submitForm calls=${submitted}`);
 
     inst.isAjaxMode = false;   // plain form mode: still server-driven
-    NDS.Init.refresh(tbody);
+    NDS.init.refresh(tbody);
     await wait(200);
     ok('server filter safe — a plain form-submit filter is skipped too (not just AJAX)',
         instCalls === 0, `instance.refresh calls=${instCalls}`);
 
     inst.isFormMode = false;
-    NDS.Init.refresh(tbody);
+    NDS.init.refresh(tbody);
     await wait(200);
     ok('client filter still refreshed once the flags are off (guard is not blanket)',
         instCalls === 1, `calls=${instCalls}`);
@@ -284,7 +284,7 @@ report.push(...await recordsPage.evaluate(async () => {
     const pageBefore = activePage();
     const visibleBefore = firstVisible();
     rows().filter((r) => !r.hidden)[0].cells[2].textContent = 'EDITED';
-    NDS.Init.refresh(tbody);
+    NDS.init.refresh(tbody);
     await wait(800);
     ok('a row edit keeps the user on their page (no snap back to page 1)',
         activePage() === pageBefore && firstVisible() === visibleBefore,
@@ -292,11 +292,11 @@ report.push(...await recordsPage.evaluate(async () => {
 
     // ── 6. idempotence ────────────────────────────────────────────────────
     const snap = () => `${order()}#${slot('[data-paged-count]')}#${activePage()}#${firstVisible()}`;
-    NDS.Init.refresh(tbody);
+    NDS.init.refresh(tbody);
     await wait(500);
     const s1 = snap();
     reset();
-    NDS.Init.refresh(tbody);
+    NDS.init.refresh(tbody);
     await wait(500);
     ok('idempotent — refreshing twice leaves identical state', snap() === s1, snap() === s1 ? 'stable' : `${s1} → ${snap()}`);
     // A settled refresh re-announces the filter result once. That is documented on
@@ -321,7 +321,7 @@ report.push(...await recordsPage.evaluate(async () => {
     });
 
     tbody.appendChild(makeRow('REQ-TEST-003', 'pending', 'Pending', 500));
-    NDS.Init.refresh(tbody);
+    NDS.init.refresh(tbody);
     await wait(600);
     const viaEntry = fullState();
 
@@ -342,15 +342,15 @@ report.push(...await recordsPage.evaluate(async () => {
 
     // ── 7. removal, down to empty ─────────────────────────────────────────
     rows().forEach((r) => r.remove());
-    NDS.Init.refresh(tbody);
+    NDS.init.refresh(tbody);
     await wait(600);
     ok('removal: Filter item set empties', filter().items.length === 0, `items=${filter().items.length}`);
     ok('removal: record count reaches zero', slot('[data-paged-count]') === '0', `count=${slot('[data-paged-count]')}`);
 
     // ── 8. no-arg form ────────────────────────────────────────────────────
     let threw = null;
-    try { NDS.Init.refresh(); } catch (e) { threw = e.message; }
-    ok('NDS.Init.refresh() with no argument runs over the document without throwing',
+    try { NDS.init.refresh(); } catch (e) { threw = e.message; }
+    ok('NDS.init.refresh() with no argument runs over the document without throwing',
         !threw, threw || 'clean');
 
     return out;
@@ -358,7 +358,7 @@ report.push(...await recordsPage.evaluate(async () => {
 
 // ── 9. the stub guard: refreshing must never force a bundle to load ────────
 const beforeScripts = scriptRequests.length;
-await recordsPage.evaluate(() => NDS.Init.refresh(document.getElementById('requests-table-body')));
+await recordsPage.evaluate(() => NDS.init.refresh(document.getElementById('requests-table-body')));
 await new Promise((r) => setTimeout(r, 800));
 report.push({
     name: 'no bundle loads — a stubbed namespace is skipped, never probed',
@@ -380,7 +380,7 @@ report.push(...await pagPage.evaluate(async () => {
     const host = document.createElement('div');
     host.append(tpl.content);
     document.body.appendChild(host);
-    await NDS.Init.mount(host);
+    await NDS.init.mount(host);
     await wait(300);
     const navs = [...host.querySelectorAll('.nds-pagination[data-total-pages]')];
     if (!navs.length || !navs.every((n) => n.querySelector('.nds-pagination-item'))) {
@@ -399,7 +399,7 @@ report.push(...await pagPage.evaluate(async () => {
 
     const before = snap();
     const pagesBefore = navs.map((n) => n.getAttribute('data-active-page'));
-    NDS.Init.refresh();
+    NDS.init.refresh();
     await wait(600);
 
     ok('server pagination safe — data-driven navs are byte-identical after a refresh',

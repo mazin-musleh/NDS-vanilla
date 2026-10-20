@@ -115,24 +115,24 @@
         var current = (hiddenInput ? hiddenInput.value : '') || selectInput.value;
         if (current) {
             options.forEach(function (o) {
-                if (o.dataset.value === current) NDS.State.add(o, 'selected');
+                if (o.dataset.value === current) NDS.state.add(o, 'selected');
             });
         }
 
         // Mirror dropmenu open/close onto the form-container so the arrow
         // rotation rule (`.nds-form-container[data-state~="open"]`) keeps working.
         formControl.addEventListener('nds:dropmenu:opened', function () {
-            NDS.State.add(formContainer, 'open');
-            (Array.prototype.find.call(options, function (o) { return NDS.State.has(o, 'selected'); }) || options[0]).focus();
+            NDS.state.add(formContainer, 'open');
+            (Array.prototype.find.call(options, function (o) { return NDS.state.has(o, 'selected'); }) || options[0]).focus();
         });
         formControl.addEventListener('nds:dropmenu:closed', function () {
-            NDS.State.remove(formContainer, 'open');
+            NDS.state.remove(formContainer, 'open');
         });
 
         // Readonly CSS stops the pointer only; this stops the keyboard open.
         // Added before the dropmenu's own trigger listener, so it runs first.
         selectInput.addEventListener('keydown', function (e) {
-            if (/^(Enter| |ArrowDown|ArrowUp)$/.test(e.key) && NDS.State.has(formContainer, 'readonly')) {
+            if (/^(Enter| |ArrowDown|ArrowUp)$/.test(e.key) && NDS.state.has(formContainer, 'readonly')) {
                 e.preventDefault();
                 e.stopImmediatePropagation();
             }
@@ -169,8 +169,8 @@
         var text = option ? (optionLabel(option) || value) : '';
 
         formControl.querySelectorAll('.nds-select-option').forEach(function (o) {
-            if (option && o.dataset.value === value) NDS.State.add(o, 'selected');
-            else NDS.State.remove(o, 'selected');
+            if (option && o.dataset.value === value) NDS.state.add(o, 'selected');
+            else NDS.state.remove(o, 'selected');
         });
 
         if (quiet) {

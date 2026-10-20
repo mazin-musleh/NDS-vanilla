@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 07:46 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "20/10/2026 - 07:46 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-`NDS.Init` starts every component at page load. `NDS.Init.ready` tells your page code when they have all started. Three more calls keep components in step with content that changes later. `refresh(el)` tells them the contents of `el` changed. `mount(el)` tells them `el` is new markup. `destroy(el)` tells them `el` is about to go away. They are in the main bundle, so every page has them.
+`NDS.init` starts every component at page load. `NDS.init.ready` tells your page code when they have all started. Three more calls keep components in step with content that changes later. `refresh(el)` tells them the contents of `el` changed. `mount(el)` tells them `el` is new markup. `destroy(el)` tells them `el` is about to go away. They are in the main bundle, so every page has them.
 
 A page whose content never changes after load needs none of the three calls.
 
@@ -46,7 +46,7 @@ const tbody = document.getElementById('requests-table-body');
 tbody.appendChild(buildRow(record));
 
 // Then tell NDS the contents changed
-NDS.Init.refresh(tbody);
+NDS.init.refresh(tbody);
 </script>
 
 Mount markup you fetched or built.
@@ -55,7 +55,7 @@ Mount markup you fetched or built.
 const grid = document.getElementById('servicesGrid');
 const { data } = await NDS.request('/api/services.html');
 grid.innerHTML = data;
-await NDS.Init.mount(grid);
+await NDS.init.mount(grid);
 </script>
 
 Build rows from JSON. Keep one row's markup, copied from its canon, in a `<template>` on the page. Fill each copy with `textContent` and attributes, never with an HTML string.
@@ -70,16 +70,16 @@ data.forEach(item => {
   row.querySelector('.nds-tag').setAttribute('data-status', item.status);
   tbody.appendChild(row);
 });
-await NDS.Init.mount(tbody);
+await NDS.init.mount(tbody);
 </script>
 
 Destroy a row before you remove it.
 
 <script type="text/html" id="init-destroy" data-canon data-lang="js">
-NDS.Init.destroy(row);
+NDS.init.destroy(row);
 row.remove();
 // The filter and the counts follow the rows that are left
-NDS.Init.refresh(tbody);
+NDS.init.refresh(tbody);
 </script>
 
 </div>
@@ -96,12 +96,12 @@ NDS.Init.refresh(tbody);
 ### Startup
 {: .nds-block-title}
 
-The loader calls `NDS.Init.initialize()` at load. The components the first screen needs start before the page shows. The rest start in idle time, some from bundles that load after the page shows. `NDS.Init.ready` resolves when the last one has started: see [Instance Lookup](#instance-lookup).
+The loader calls `NDS.init.initialize()` at load. The components the first screen needs start before the page shows. The rest start in idle time, some from bundles that load after the page shows. `NDS.init.ready` resolves when the last one has started: see [Instance Lookup](#instance-lookup).
 
 ### Refresh
 {: .nds-block-title}
 
-`refresh(el)` checks every registered component. A component with an element in `el` runs its `init()` again, which wires the new elements and skips the ones it already started. Filter, Selection and Main Nav drive a container from outside it, so they run their own refresh instead. Use it when the markup holds only components the page already had at load. A started component does not pick up new items of its own, such as slides added to a running swiper: call `NDS.Init.destroy(el)`, change the markup, then `NDS.Init.mount(el)`.
+`refresh(el)` checks every registered component. A component with an element in `el` runs its `init()` again, which wires the new elements and skips the ones it already started. Filter, Selection and Main Nav drive a container from outside it, so they run their own refresh instead. Use it when the markup holds only components the page already had at load. A started component does not pick up new items of its own, such as slides added to a running swiper: call `NDS.init.destroy(el)`, change the markup, then `NDS.init.mount(el)`.
 
 ### Mount
 {: .nds-block-title}
@@ -133,7 +133,7 @@ NDS is plain HTML, CSS and JS, so any stack can host it: a framework such as Rea
 ### Mount and Destroy
 {: .nds-block-title}
 
-Call `window.NDS?.Init.mount(view)` after a view mounts, and `window.NDS?.Init.destroy(view)` before it unmounts. Do not wait for `NDS.Init.ready`, poll or retry before these calls. A view that mounts before NDS loads is found by NDS's own startup scan, and the `?.` skips each call while `NDS` does not exist yet.
+Call `window.NDS?.init.mount(view)` after a view mounts, and `window.NDS?.init.destroy(view)` before it unmounts. Do not wait for `NDS.init.ready`, poll or retry before these calls. A view that mounts before NDS loads is found by NDS's own startup scan, and the `?.` skips each call while `NDS` does not exist yet.
 
 `destroy()` also works on a view the framework has already removed, so a cleanup that runs after the removal, such as React's `useEffect` cleanup, is in time. Keep the view's element in a variable when the effect runs: React has emptied the ref by the time the cleanup runs.
 
@@ -151,7 +151,7 @@ A library or your own script that replaces or morphs server HTML in place, such 
 
 A framework that hydrates server HTML, such as Next.js or Nuxt, needs that HTML unchanged until hydration ends. When NDS starts first, it changes some of it: the clock writes the time, and Main Navigation sets classes. React then throws the server HTML away and renders it again, without what NDS wrote. When React renders `<html>` too, as the Next.js App Router does, it also removes `data-nds-loaded`, the mark that shows the page, so the page stays hidden. Which one starts first can change from one load to the next: Next.js loads its own scripts with `async`.
 
-Write `data-nds-auto-init="false"` on `<html>`. Once hydration ends, remove that attribute and call `window.NDS?.Init.initialize()`: in React from an effect in the root component, in Vue from `onMounted` in the root component. When NDS has not loaded yet, the `?.` skips the call, and NDS starts when it loads, because the attribute is gone.
+Write `data-nds-auto-init="false"` on `<html>`. Once hydration ends, remove that attribute and call `window.NDS?.init.initialize()`: in React from an effect in the root component, in Vue from `onMounted` in the root component. When NDS has not loaded yet, the `?.` skips the call, and NDS starts when it loads, because the attribute is gone.
 
 When the framework renders `<html>` too, as the Next.js App Router does, put `suppressHydrationWarning` on `<html>`. The head inline script writes the saved theme to its `data-theme` before hydration, and React reports that in development. React 18 also reports the `data-nds-defer` that the script removes from each preload link, so put the same prop on those links.
 
@@ -195,7 +195,7 @@ Keep the `<style>` gate and the inline script out of your bundler. A minifier ch
             <i class="hgi hgi-stroke hgi-hourglass"></i>
             <span class="nds-label">Startup Promise</span>
           </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.Init.ready</code> resolves once the last component on the page has started, the ones from late bundles included. A bundle that fails to load does not hold it.</p>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.init.ready</code> resolves once the last component on the page has started, the ones from late bundles included. A bundle that fails to load does not hold it.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -255,7 +255,7 @@ Keep the `<style>` gate and the inline script out of your bundler. A minifier ch
 - Call it after your response is written into the page, not when the request resolves. It reads the page, so the rows must be in place.
 - Pass the container whose children changed, such as the `<tbody>` or the grid wrapper. A distant ancestor holds more components, so more of them run.
 - Use it instead of one component's `reinit()` when a list changed. A component you forget gives no warning.
-- Use it instead of `NDS.Init.initialize()`, which starts every component on the page again. Use `initialize()` only when you replaced the whole page body.
+- Use it instead of `NDS.init.initialize()`, which starts every component on the page again. Use `initialize()` only when you replaced the whole page body.
 - Skip it for content that was in the HTML at load, and after a filter, sort or page change. NDS already keeps those in step.
 - Do not call it from a handler for an event it can fire, such as `nds:filter:change`. That starts a loop.
 - To sort late rows into a client-side sort, call `NDS.Sort.getInstance(table).refresh()` yourself. `refresh()` never sorts, because a server-sorted page is one slice of a larger sort.
@@ -293,10 +293,10 @@ Keep the `<style>` gate and the inline script out of your bundler. A minifier ch
 
 A component stores its instance on the element it starts, as an `nds{Name}` property: `el.ndsAccordion`, `el.ndsChart`, `el.ndsSort`. `destroy()` releases each one it finds there, and calls `NDS.{Name}.destroy(el)` for the components that keep no such property. Filter, Sort and Upload also have `getInstance(el)`, and Filter has `getByTarget(id)` and `whenReady(el, callback)`.
 
-Most components load after the page shows, so the property is missing until the component starts. Code that runs at load waits for `NDS.Init.ready`:
+Most components load after the page shows, so the property is missing until the component starts. Code that runs at load waits for `NDS.init.ready`:
 
 <script type="text/html" id="init-ready-js" data-canon data-lang="js">
-NDS.Init.ready.then(function () {
+NDS.init.ready.then(function () {
   document.querySelector('#service-tabs').ndsTabs.goTo(2);
 });
 </script>
@@ -308,7 +308,7 @@ NDS.Init.ready.then(function () {
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-nds-auto-init="false"` | `<html>` | No component starts at load. Call `NDS.Init.initialize()` yourself, or remove the attribute before NDS loads. `NDS.Init.ready` waits for the start |
+| `data-nds-auto-init="false"` | `<html>` | No component starts at load. Call `NDS.init.initialize()` yourself, or remove the attribute before NDS loads. `NDS.init.ready` waits for the start |
 | `data-nds-disable-all="true"` | `<html>` | `initialize()` starts no component. Call each one's `init()` yourself |
 | `data-nds-loaded` | `<html>` | The loader sets it once the main CSS has applied and the first components started. Do not set it yourself |
 {: .nds-table .nds-responsive}
@@ -322,7 +322,7 @@ Set these on `window` before the main bundle loads. A `window.NDSInitConfig` key
 |---|---|---|
 | `NDSInitConfig.autoInitialize` | `true` | `false` is the same as `data-nds-auto-init="false"` |
 | `NDSInitConfig.disableAll` | `false` | `true` is the same as `data-nds-disable-all="true"` |
-| `NDSInitConfig.enableLogging` | `false` | Logs each component as it starts, and runs `NDS.Init.audit()` after load |
+| `NDSInitConfig.enableLogging` | `false` | Logs each component as it starts, and runs `NDS.init.audit()` after load |
 | `NDSInitConfig.enableTiming` | `false` | Logs the total init time. With `enableLogging`, it also logs the time of each component |
 | `NDSInitConfig.initBudgetMs` | `5` | Milliseconds of init work before the loader yields to the browser |
 | `NDS_ASSETS_PATH` | the folder above the one that holds `nds-main.min.js` | The `assets/` folder. The other bundles load from its `js/` folder, and the language files from its `i18n/` folder |
@@ -333,14 +333,14 @@ Set these on `window` before the main bundle loads. A `window.NDSInitConfig` key
 
 | Method | Effect |
 |---|---|
-| `NDS.Init.initialize()` | Starts every component on the page. The loader calls it at load |
-| `NDS.Init.ready` | A promise. It resolves once every component that was on the page at load has started, including the ones from bundles that load later |
-| `NDS.Init.refresh(el)` | Tells every started component that the contents of `el` changed. Without `el`, it covers the whole page |
-| `NDS.Init.mount(el)` | Loads the bundles the markup in `el` needs, then calls `refresh(el)`. Returns a promise |
-| `NDS.Init.destroy(el)` | Releases every component instance inside `el`. Returns the number released. Without `el`, it covers the whole page |
-| `NDS.Init.audit()` | Runs the [Audit](../core/audit) and returns its findings: page problems that fail with no error, and names an NDS release changed. The first call loads the audit bundle and returns a promise of them |
-| `NDS.Init.components` | The component registry: one entry per component, with its `name`, `selector` and `init` |
-| `NDS.Init.config` | The settings in use, from the Configuration table |
+| `NDS.init.initialize()` | Starts every component on the page. The loader calls it at load |
+| `NDS.init.ready` | A promise. It resolves once every component that was on the page at load has started, including the ones from bundles that load later |
+| `NDS.init.refresh(el)` | Tells every started component that the contents of `el` changed. Without `el`, it covers the whole page |
+| `NDS.init.mount(el)` | Loads the bundles the markup in `el` needs, then calls `refresh(el)`. Returns a promise |
+| `NDS.init.destroy(el)` | Releases every component instance inside `el`. Returns the number released. Without `el`, it covers the whole page |
+| `NDS.init.audit()` | Runs the [Audit](../core/audit) and returns its findings: page problems that fail with no error, and names an NDS release changed. The first call loads the audit bundle and returns a promise of them |
+| `NDS.init.components` | The component registry: one entry per component, with its `name`, `selector` and `init` |
+| `NDS.init.config` | The settings in use, from the Configuration table |
 | `NDS.loadBundle(name)` | Loads one bundle, such as `'extras'`. Returns a promise. `mount()` calls it for you |
 {: .nds-table .nds-responsive}
 
@@ -349,9 +349,9 @@ Set these on `window` before the main bundle loads. A `window.NDSInitConfig` key
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const { data } = await NDS.request(form.action, { method: 'POST', body: new FormData(form) });
-  NDS.Init.destroy(row);
+  NDS.init.destroy(row);
   row.outerHTML = data;
-  NDS.Init.refresh(tbody);
+  NDS.init.refresh(tbody);
 });
 </script>
 

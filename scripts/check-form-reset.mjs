@@ -67,7 +67,7 @@ if (OLD_JS) await page.route('**/assets/js/*.min.js*', (r) => {
 });
 // A page under components/ so a canon's relative data-url resolves.
 await page.goto(`${BASE}/components/form.html`, { waitUntil: 'load' });
-await page.waitForFunction(() => window.NDS?.Init?.mount);
+await page.waitForFunction(() => window.NDS?.init?.mount);
 
 const blocks = [];
 for (const c of CASES) blocks.push({ name: c.name, html: await canon(c.doc, c.id), required: !!c.required, strict: !!c.strict, value: !!c.value, group: !!c.group });
@@ -91,7 +91,7 @@ await page.evaluate(async (blocks) => {
   });
   form.insertAdjacentHTML('beforeend', '<button type="reset" id="reset-btn" class="nds-btn nds-secondary"><span class="nds-label">Reset</span></button>');
   document.querySelector('main').prepend(form);
-  await NDS.Init.mount(form);
+  await NDS.init.mount(form);
   window.__snap = (name) => {
     const root = document.querySelector(`[data-case="${CSS.escape(name)}"]`);
     const MENU = '.nds-dropmenu-menu, .nds-select-dropdown, .nds-date-picker-menu';

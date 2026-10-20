@@ -36,7 +36,7 @@ const wait = (ms = 600) => page.waitForTimeout(ms);
 // The cookie panel opens itself at idle, into the panel stack these cases count on.
 await page.route('**/nds-cookie-consent.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
 await page.goto(`${BASE}/components/panel.html`, { waitUntil: 'load' });
-await page.waitForFunction(() => window.NDS?.Init?.mount);
+await page.waitForFunction(() => window.NDS?.init?.mount);
 await page.evaluate(() => {
   // No navigation from a stray outside click.
   document.addEventListener('click', (e) => { if (e.target.closest('a')) e.preventDefault(); }, true);
@@ -55,7 +55,7 @@ await page.evaluate(() => {
     + '<dialog id="tm2" class="nds-modal nds-card"><div class="nds-card-content">Second</div></dialog>'
     + '<button type="button" id="outside-btn" class="nds-btn">x</button>';
   document.body.append(box);
-  NDS.Init.mount(box);
+  NDS.init.mount(box);
 });
 await wait(800);
 
@@ -228,7 +228,7 @@ await page.evaluate(() => {
   box.id = 'lazy-box';
   box.innerHTML = document.getElementById('panel-lazy').textContent;
   document.body.append(box);
-  NDS.Init.mount(box);
+  NDS.init.mount(box);
 });
 await wait(300);
 await page.click('#lazy-box [data-panel-toggle="details-panel"]');
@@ -259,7 +259,7 @@ const errors2 = [];
 page2.on('pageerror', (e) => { if (!/ResizeObserver loop/.test(e.message)) errors2.push(e.message); });
 page2.on('console', (m) => { if (m.type() === 'error') errors2.push(m.text()); });
 await page2.goto(`${BASE}/ui-shell/accessibility.html`, { waitUntil: 'load' });
-await page2.waitForFunction(() => window.NDS?.Init?.mount);
+await page2.waitForFunction(() => window.NDS?.init?.mount);
 const cookie = await page2.waitForSelector('#nds-cookies-panel[open]', { timeout: 10000 }).then(() => true, () => false);
 const c = await page2.evaluate(() => {
   const d = document.getElementById('nds-cookies-panel');

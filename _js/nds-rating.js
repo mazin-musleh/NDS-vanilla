@@ -40,8 +40,8 @@
     score: '{n} of {total}',
   });
 
-  // State helpers — delegated to NDS.State (nds-core.js)
-  const { add: addState, remove: removeState, has: hasState } = NDS.State;
+  // State helpers — delegated to NDS.state (nds-core.js)
+  const { add: addState, remove: removeState, has: hasState } = NDS.state;
 
   class NDSRating {
     constructor(element) {
@@ -167,7 +167,7 @@
         // Preserve preview state if present
         if (hasState(this.stars[i], 'preview')) states.push('preview');
 
-        NDS.State.set(this.stars[i], ...states);
+        NDS.state.set(this.stars[i], ...states);
       }
     }
 

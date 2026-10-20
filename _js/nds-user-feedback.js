@@ -129,7 +129,7 @@ NDS.UserFeedback = (() => {
         // Show details section based on answer
         function showDetails(answer) {
             // Set data-state to details (UI state)
-            NDS.State.set(feedbackComponent, 'details');
+            NDS.state.set(feedbackComponent, 'details');
 
             // Set data-answer attribute based on answer
             if (answer === 'Yes') {
@@ -148,7 +148,7 @@ NDS.UserFeedback = (() => {
         function setStatus(status = 'success') {
             const ok = status === 'success';
             // An error keeps the form open, so the visitor can send it again.
-            if (ok) NDS.State.set(feedbackComponent, 'status');
+            if (ok) NDS.state.set(feedbackComponent, 'status');
 
             const successMessage = feedbackComponent.getAttribute('data-success-message') || strings.text('success');
             const errorMessage = feedbackComponent.getAttribute('data-error-message') || strings.text('error');
@@ -173,7 +173,7 @@ NDS.UserFeedback = (() => {
             } else {
                 // Fallback if NDSFeedback is not available
                 console.warn('NDS UserFeedback: NDSFeedback API not available');
-                NDS.Status.set(feedbackComponent, status);
+                NDS.status.set(feedbackComponent, status);
             }
             if (!ok) return;
 
@@ -215,8 +215,8 @@ NDS.UserFeedback = (() => {
         // Reset to initial state (overview)
         function resetFeedback() {
             // Remove data attributes
-            NDS.State.clear(feedbackComponent);
-            NDS.Status.clear(feedbackComponent);
+            NDS.state.clear(feedbackComponent);
+            NDS.status.clear(feedbackComponent);
             feedbackComponent.removeAttribute('data-answer');
 
             // Dismiss any feedback messages created by NDSFeedback API
@@ -295,12 +295,12 @@ NDS.UserFeedback = (() => {
                 const action = form && form.getAttribute('action');
                 if (!action) return finish('success');
 
-                NDS.State.add(submitButton, 'loading');
+                NDS.state.add(submitButton, 'loading');
                 submitButton.disabled = true;
                 NDS.request(action, { method: form.getAttribute('method') || 'POST', body: data })
                     .then(() => finish('success'), () => finish('error'))
                     .finally(() => {
-                        NDS.State.remove(submitButton, 'loading');
+                        NDS.state.remove(submitButton, 'loading');
                         submitButton.disabled = false;
                     });
             }, { signal: _ufSignal });

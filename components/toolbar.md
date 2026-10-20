@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:51 PM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="toolbar-overview" class="nds-content-section nds-doc-overview">
@@ -253,14 +253,14 @@ The toolbar of the [Editor](../components/editor).
 - Put every item in `nds-toolbar-start` or `nds-toolbar-end`. A search box is the one exception: it goes straight in the bar or in an `nds-toolbar-row`, where it fills the free space.
 - Choose a cluster by position, not by job. A table bar usually shows a count, applied filters or a selection summary at the start. It puts [Export](../components/export), a column menu or bulk actions at the end. An editor bar puts its format controls at the start and a source toggle at the end.
 - Use `nds-toolbar-row` only when the bar has two or more rows, or a row and another item. A row that is the bar's only child changes nothing. For two or three items, use no rows: the bar wraps them itself.
-- Give the search box most of its line, on a phone above all. Put one control beside it, a [Filter](../components/filter) or a sort menu, not both. Move the rest to another `nds-toolbar-row`. `NDS.Init.audit()` warns about a crowded search line.
+- Give the search box most of its line, on a phone above all. Put one control beside it, a [Filter](../components/filter) or a sort menu, not both. Move the rest to another `nds-toolbar-row`. `NDS.init.audit()` warns about a crowded search line.
 - Put the applied filters in the toolbar, in their own `nds-toolbar-row` right under the search and filter row, never outside the bar.
 - Do not crowd one row. Keep closely related items together and move the others to their own row. Small icon buttons can share a row; a wide item, such as a search box or a long count, needs room.
 - Use the toolbar on every data screen, so all bars have one layout. A layout made with [Grid](../layout/grid) also works, because each item connects to its content by itself.
 - Do not put a toolbar inside another toolbar. Use `nds-toolbar-row`: it has the same layout, with no outer margin.
 - Keep the `hidden` attribute on items that start empty, such as the applied-filters row. Without it, the bar keeps an empty line.
 - Keep the end cluster to one or two items. Put related buttons in an `nds-btn-group`, so they read as one control.
-- Use one size for every item on a line, buttons and search box alike. A default button is 40px tall, as the search box is, and an `nds-md` button is 32px. `NDS.Init.audit()` warns about a line with mixed heights.
+- Use one size for every item on a line, buttons and search box alike. A default button is 40px tall, as the search box is, and an `nds-md` button is 32px. `NDS.init.audit()` warns about a line with mixed heights.
 - Add `data-hidden="sm sr"` to a button label to show only the icon on phones. Screen readers still read the label. See [Hidden](../utilities/hidden).
 
 </div>

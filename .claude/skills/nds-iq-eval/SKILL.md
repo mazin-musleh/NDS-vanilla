@@ -57,6 +57,7 @@ mv tmp/iq-old-zip/*/_site $R/_site && rm -rf tmp/iq-old-zip
 
 - The default tag is the newest 1.x. It ships no `NDS-INDEX.md`, which is what the redirect keys on.
 - A scenario with a `root:` field runs only against that tag.
+- This skill's scenarios and fixtures keep the 1.x API names (`NDS.Init`, `NDS.State`, `NDS.Status`, `NDS.Audit`, `NDS.date`), which 2.0 renames (`plans/shared-logic.md` A7), because they run against 1.x templates. The old-template check may be dropped: if it is, rename them then.
 - In the harness prompt:
   - `{SRC}` = `C:\Projects\NDS-vanilla\tmp\iq-old-root-<tag>\_source`
   - `{SITE}` = `C:\Projects\NDS-vanilla\tmp\iq-old-root-<tag>\_site`

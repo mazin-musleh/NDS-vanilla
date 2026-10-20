@@ -182,7 +182,7 @@
     // dropdown, never re-serialized — class, href, label markup, custom
     // attributes and any consumer-attached listener survive collapse intact.
     // Only what the collapse owns is re-stamped: the dropdown marker class,
-    // aria-current, and data-state (NDS.State-managed, never a literal attribute).
+    // aria-current, and data-state (NDS.state-managed, never a literal attribute).
     // data-page-url template ("?page={page}") → page-to-href function, or null.
     // A javascript: template gives buttons. Fixed base, not the page: a relative template must pass on file:// too.
     const _safeTemplate = (u) => { try { return /^(https?|mailto|tel):$/.test(new URL(u, 'http://x/').protocol); } catch { return false; } };
@@ -199,7 +199,7 @@
             const num = pageNumberOf(el);
             if (isNaN(num) || seen.has(num)) return;
             seen.add(num);
-            model.push({ num, el, active: el.ariaCurrent === 'page' || NDS.State.has(el, 'active') });
+            model.push({ num, el, active: el.ariaCurrent === 'page' || NDS.state.has(el, 'active') });
         };
         list.querySelectorAll(_PAGE_CTRL_SEL).forEach(push);
         getPaginationDropmenuItems(list).forEach(push);
@@ -215,7 +215,7 @@
         const el = e.el;
         el.classList.toggle('nds-dropmenu-item', !!dropdownItem);
         NDS.aria.current(el, e.num === activeNum ? 'page' : null);
-        NDS.State.clear(el);
+        NDS.state.clear(el);
         if (el.tagName === 'BUTTON') el.setAttribute('type', 'button');
         return el;
     }
@@ -477,8 +477,8 @@
 
         let target = null;
         [...clickables, ...dropmenuItems].forEach(el => {
-            if (el.ariaCurrent === 'page' || NDS.State.has(el, 'active')) {
-                NDS.State.clear(el);
+            if (el.ariaCurrent === 'page' || NDS.state.has(el, 'active')) {
+                NDS.state.clear(el);
                 NDS.aria.current(el, null);
             }
             // First page element (never a trigger) whose number matches.
@@ -505,14 +505,14 @@
 
         // Activate the target; if it lives in the dropdown, also light the
         // ellipsis trigger and show the active page number on it.
-        NDS.State.set(target, 'active');
+        NDS.state.set(target, 'active');
         NDS.aria.current(target, 'page');
         if (target.classList.contains('nds-dropmenu-item')) {
             // Without it the trigger never carries the active page, and once the
             // menu closes and drops its rows nothing holds it at all.
             const ellipsisTrigger = target.closest('.nds-dropmenu')?.querySelector('.nds-dropmenu-trigger');
             if (ellipsisTrigger) {
-                NDS.State.set(ellipsisTrigger, 'active');
+                NDS.state.set(ellipsisTrigger, 'active');
                 const ellipsisLabel = ellipsisTrigger.querySelector('.nds-label');
                 if (ellipsisLabel) ellipsisLabel.textContent = pageNumber;
             }
@@ -537,8 +537,8 @@
             return;
         }
         NDS.aria.disabled(btn, isEdge || null);
-        if (isEdge) NDS.State.add(btn, 'disabled');
-        else NDS.State.remove(btn, 'disabled');
+        if (isEdge) NDS.state.add(btn, 'disabled');
+        else NDS.state.remove(btn, 'disabled');
     }
 
     // Initialize prev/next button states based on active page
@@ -763,7 +763,7 @@
 
     // ── HTML builders ────────────────────────────────────────────────
     // data-state for the active page is NOT baked into the template — it stays
-    // inside NDS.State.set (activateGeneratedPage / _layoutLazy) so the State
+    // inside NDS.state.set (activateGeneratedPage / _layoutLazy) so the State
     // vocab never leaks into a literal attribute. aria-current IS emitted; it's
     // semantic and valid pre-JS.
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
@@ -867,11 +867,11 @@
     // On a lazy menu the item usually isn't rendered — the trigger alone carries it.
     function activateGeneratedPage(host, activePage) {
         const visibleBtn = host.querySelector(`.page_${activePage} .nds-btn`);
-        if (visibleBtn) { NDS.State.set(visibleBtn, 'active'); return; }
+        if (visibleBtn) { NDS.state.set(visibleBtn, 'active'); return; }
         const items = host.querySelectorAll('.nds-pagination-ellipsis .nds-dropmenu-item');
         for (let i = 0; i < items.length; i++) {
             if (parseInt(items[i].querySelector('.nds-label')?.textContent) === activePage) {
-                NDS.State.set(items[i], 'active');
+                NDS.state.set(items[i], 'active');
                 _stampTriggerActive(host, activePage);
                 return;
             }
@@ -887,7 +887,7 @@
     function _stampTriggerActive(host, pageNumber) {
         const trigger = host.querySelector('.nds-pagination-ellipsis .nds-dropmenu-trigger');
         if (!trigger) return;
-        NDS.State.set(trigger, 'active');
+        NDS.state.set(trigger, 'active');
         const label = trigger.querySelector('.nds-label');
         if (label) label.textContent = pageNumber;
     }
@@ -1198,9 +1198,9 @@
         if (prev < to) scroll.insertAdjacentElement('beforeend', _spacer((to - prev) * pitch));
 
         // 4. Active row: aria-current is baked by _menuItem; data-state stays
-        //    NDS.State-managed (never a literal attribute).
+        //    NDS.state-managed (never a literal attribute).
         const cur = scroll.querySelector('[aria-current="page"]');
-        if (cur) NDS.State.set(cur, 'active');
+        if (cur) NDS.state.set(cur, 'active');
     }
 
     // ── Records slots ("x of y") ──────────────────────────────────────
@@ -1255,7 +1255,7 @@
         const active = getAllPageElements(pagination).find(el => el.ariaCurrent === 'page');
         if (active) return pageNumberOf(active) || null;
         const trigger = pagination.querySelector('.nds-pagination-ellipsis .nds-dropmenu-trigger');
-        if (trigger && NDS.State.has(trigger, 'active')) {
+        if (trigger && NDS.state.has(trigger, 'active')) {
             const n = parseInt(trigger.querySelector('.nds-label')?.textContent);
             if (!isNaN(n)) return n;
         }

@@ -436,7 +436,7 @@ sidemenu_mode: false
                 // page's: it lasts exactly as long as the request does, and the countdown
                 // ticks underneath it.
                 var btn = document.getElementById('ft-otp-resend');
-                NDS.State.add(btn, 'loading');
+                NDS.state.add(btn, 'loading');
                 sendCode()
                     .then(() => NDS.Alert.create({
                         variant: 'success', title: 'Verification code sent',
@@ -448,7 +448,7 @@ sidemenu_mode: false
                         description: 'Check your connection and try again.',
                         display: 'toast', position: 'top', duration: 0
                     }))
-                    .finally(() => NDS.State.remove(btn, 'loading'));
+                    .finally(() => NDS.state.remove(btn, 'loading'));
             });
 
         // Stands in for the request this template has no server for.
@@ -552,7 +552,7 @@ sidemenu_mode: false
         document.getElementById('ft-form')
             .addEventListener('nds:form:valid', function () {
                 var btn = document.getElementById('ft-submit');
-                NDS.State.add(btn, 'loading');
+                NDS.state.add(btn, 'loading');
                 // Replace submitApplication() with your own request.
                 submitApplication()
                     .then(() => NDS.Stepper.next('form-stepper'))
@@ -561,7 +561,7 @@ sidemenu_mode: false
                         description: 'Check your connection and try again.',
                         display: 'toast', position: 'top', duration: 0
                     }))
-                    .finally(() => NDS.State.remove(btn, 'loading'));
+                    .finally(() => NDS.state.remove(btn, 'loading'));
             });
 
         // Stands in for the request this template has no server for.

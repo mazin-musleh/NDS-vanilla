@@ -188,7 +188,7 @@
             setTimeout(function() { NDS.Feedback.dismiss(el); }, 4000);
             return;
         }
-        var prev = { status: NDS.Status.get(container), message: container.getAttribute('data-message') };
+        var prev = { status: NDS.status.get(container), message: container.getAttribute('data-message') };
         NDS.Form.setStatus(input, 'neutral', { message });
         setTimeout(function() {
             if (container.getAttribute('data-message') !== message) return; // validation wrote since
@@ -254,7 +254,7 @@
             if (timeout) { clearTimeout(timeout); timeout = null; }
             if (watch) { watch.abort(); watch = null; }
 
-            if (container) NDS.State.remove(container, 'listening');
+            if (container) NDS.state.remove(container, 'listening');
             NDS.aria.pressed(button, false);
             NDS.aria.label(button, strings.text('start', { language: strings.text('language') }));
         }
@@ -270,7 +270,7 @@
             if (!recognition) return;
 
             isListening = true;
-            if (container) NDS.State.add(container, 'listening');
+            if (container) NDS.state.add(container, 'listening');
             NDS.aria.pressed(button, true);
             NDS.aria.label(button, strings.text('stop'));
             markInsertPoint();

@@ -4,7 +4,7 @@
  *   NDS.Selection.init()                    wire the document listeners (the loader calls this)
  *   NDS.Selection.reinit()                  resync every list after the DOM changed
  *   NDS.Selection.refresh(list?)            resync one list (its id or the element); with no
- *                                           list, every list — the NDS.Init.refresh hook
+ *                                           list, every list — the NDS.init.refresh hook
  *   NDS.Selection.selectAll(list, on=true, scope)  check or clear every item a filter shows;
  *                                           scope 'page' = only the items on the current page
  *   NDS.Selection.clear(list)               clear EVERY item, filter-hidden and box-less too
@@ -49,7 +49,7 @@
 
     // An item's own box is its FIRST input.nds-check, so a checklist inside a card never selects the card.
     const boxOf = (item) => item.querySelector('input.nds-check');
-    const isSelected = (item) => NDS.State.has(item, 'selected') || !!boxOf(item)?.checked;
+    const isSelected = (item) => NDS.state.has(item, 'selected') || !!boxOf(item)?.checked;
 
     // A sub row's nested table stays its own list (NDS.ownItems).
     function itemsOf(list) {
@@ -83,7 +83,7 @@
     function mirror(items) {
         items.forEach(item => {
             const box = boxOf(item);
-            if (box) NDS.State[box.checked ? 'add' : 'remove'](item, 'selected');
+            if (box) NDS.state[box.checked ? 'add' : 'remove'](item, 'selected');
         });
     }
 
@@ -111,8 +111,8 @@
                 wrap.querySelectorAll('[data-selection-total]').forEach(el => { el.textContent = NDS.formatNumber(items.length); });
                 wrap.querySelectorAll('[data-selection-all]').forEach(btn => { btn.hidden = !count || !rest; });
                 wrap.querySelectorAll('[data-selection-clear]').forEach(btn => { btn.hidden = !count || rest; });
-                if (count) NDS.State.add(wrap, 'has-selection');
-                else NDS.State.remove(wrap, 'has-selection');
+                if (count) NDS.state.add(wrap, 'has-selection');
+                else NDS.state.remove(wrap, 'has-selection');
                 const records = wrap.querySelector('.nds-records-view');
                 const view = wrap.querySelector('.nds-selection-view');
                 if (records) records.hidden = count > 0;
@@ -157,7 +157,7 @@
         itemsOf(list).forEach(item => {
             const box = boxOf(item);
             if (box) box.checked = false;
-            NDS.State.remove(item, 'selected');
+            NDS.state.remove(item, 'selected');
         });
         sync(list, true);
     }
@@ -179,7 +179,7 @@
         if (!list) return;
         const item = itemsOf(list).find(i => i.contains(box));
         if (!item || boxOf(item) !== box) return;
-        NDS.State[box.checked ? 'add' : 'remove'](item, 'selected');
+        NDS.state[box.checked ? 'add' : 'remove'](item, 'selected');
         sync(list, true);
     }
 

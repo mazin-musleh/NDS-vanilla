@@ -3,7 +3,7 @@
  * Methods:
  *   NDS.Sideinfo.init() / .reinit()   scan + initialize .nds-sideinfo
  *   NDS.Sideinfo.create(el)           instance one card
- *   NDS.Sideinfo.destroy(el)          tear one down — the NDS.Init.destroy entry point
+ *   NDS.Sideinfo.destroy(el)          tear one down — the NDS.init.destroy entry point
  *   instance.destroy()
  * Events:
  *   (none)

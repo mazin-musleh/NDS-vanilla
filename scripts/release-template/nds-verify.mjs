@@ -206,14 +206,15 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
     const { data } = await s('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width, height, scale: 1 } });
     // After the shot: the audit loads its own bundle into the page.
     const findings = audit ? (await evaluate(`(async () => {
-        if (!window.NDS?.Init?.audit) return null;
-        return ((await NDS.Init.audit()) || []).map((f) => \`\${f.severity} \${f.rule}: \${f.message}\`);
+        const init = window.NDS?.init || window.NDS?.Init; // NDS.Init before 2.0
+        if (!init?.audit) return null;
+        return ((await init.audit()) || []).map((f) => \`\${f.severity} \${f.rule}: \${f.message}\`);
     })()`)) ?? null : [];
     handlers.delete(sessionId);
     await send('Target.closeTarget', { targetId });
     await send('Target.disposeBrowserContext', { browserContextId }).catch(() => {});
     return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, ...locale,
-        errors: [...errors.filter((e) => !/\[NDS\.Audit\]|Content Security Policy/.test(String(e))), ...csp], findings };
+        errors: [...errors.filter((e) => !/\[NDS\.[aA]udit\]|Content Security Policy/.test(String(e))), ...csp], findings };
 }
 
 // --- run --------------------------------------------------------------------------------------
@@ -290,7 +291,7 @@ try {
                 cells.push(file);
                 const shot = `${w}px ${t}`;
                 report.push(`${at} ${shot}: HTTP ${r.status}, innerWidth ${r.innerWidth}, ` +
-                    (r.findings === null ? 'audit unavailable (no NDS.Init.audit)' : `audit ${r.findings.length}`) +
+                    (r.findings === null ? 'audit unavailable (no NDS.init.audit)' : `audit ${r.findings.length}`) +
                     `, errors ${r.errors.length}${r.revealed ? '' : ', NOT REVEALED'}`);
                 if (r.innerWidth !== w) problems.push(`${at} ${shot}: innerWidth ${r.innerWidth}, not ${w}: the shot is not that width`);
                 if (!r.status || r.status >= 400) problems.push(`${at} ${shot}: HTTP ${r.status}`);

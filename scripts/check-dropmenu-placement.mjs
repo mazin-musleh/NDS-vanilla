@@ -193,7 +193,7 @@ const table = await tablePage.evaluate(async () => {
         + `<div data-theme="dark" style="padding:16px">${canon}</div>`
         + '<div style="height:200vh"></div>';
     document.querySelector('main, .nds-content, body').append(host);
-    await NDS.Init.mount(host);
+    await NDS.init.mount(host);
     let heard = 0;
     host.addEventListener('click', (e) => { if (e.target.closest('.nds-dropmenu-item')) heard++; });
     const [wrapper, darkWrapper] = host.querySelectorAll('.nds-dropmenu');

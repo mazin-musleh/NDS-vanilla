@@ -115,7 +115,7 @@
         // ==============================================
 
         needsScroll() {
-            return !!this.scrollMore && NDS.State.has(this.scrollMore, 'has-more');
+            return !!this.scrollMore && NDS.state.has(this.scrollMore, 'has-more');
         }
 
         scrollToTarget(target) {

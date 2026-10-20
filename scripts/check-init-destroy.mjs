@@ -1,4 +1,4 @@
-// Does NDS.Init.destroy(container) release every component instance inside it, and leave
+// Does NDS.init.destroy(container) release every component instance inside it, and leave
 // the markup re-initializable?
 //
 // The mirror of check-refresh.mjs. refresh() re-scans what stays; destroy() releases what
@@ -41,7 +41,7 @@ const report = await page.evaluate(async () => {
     const ok = (name, pass, detail = '') => out.push({ name, pass, detail: String(detail) });
     const settle = () => new Promise((r) => setTimeout(r, 300));
 
-    ok('NDS.Init.destroy is exposed', typeof NDS.Init.destroy === 'function', typeof NDS.Init.destroy);
+    ok('NDS.init.destroy is exposed', typeof NDS.init.destroy === 'function', typeof NDS.init.destroy);
 
     // The page's canon block (#filter-bar): toolbar + list, as markup text.
     const tpl = document.createElement('template');
@@ -63,7 +63,7 @@ const report = await page.evaluate(async () => {
     grid.removeAttribute('data-auto-pagination');
     document.body.appendChild(host);
 
-    NDS.Init.refresh(host);
+    NDS.init.refresh(host);
     await settle();
 
     const backrefs = () => [host, ...host.querySelectorAll('*')]
@@ -71,7 +71,7 @@ const report = await page.evaluate(async () => {
 
     const before = backrefs();
     // destroyEach components keep no backref (the filter's fee slider); destroy() counts them by stamp.
-    const eachOwned = NDS.Init.components
+    const eachOwned = NDS.init.components
         .filter((c) => c.destroyEach && c.selector)
         .flatMap((c) => [...host.querySelectorAll(c.destroySelector || c.selector)])
         .filter((el) => !Object.keys(el).some((k) => k.startsWith('nds') && typeof el[k]?.destroy === 'function')
@@ -81,7 +81,7 @@ const report = await page.evaluate(async () => {
     ok('setup: init stamps present', host.querySelectorAll('[data-nds-filter-initialized]').length > 0,
         `${host.querySelectorAll('[data-nds-filter-initialized]').length} stamped`);
 
-    const count = NDS.Init.destroy(host);
+    const count = NDS.init.destroy(host);
     await settle();
 
     ok('destroy reports what it released', count === before.length + eachOwned.length,
@@ -93,16 +93,16 @@ const report = await page.evaluate(async () => {
         `${host.querySelectorAll('[data-nds-filter-initialized]').length} still stamped`);
 
     // Idempotent: a second destroy on the same subtree must be a quiet no-op.
-    ok('second destroy is a no-op', NDS.Init.destroy(host) === 0);
+    ok('second destroy is a no-op', NDS.init.destroy(host) === 0);
 
     // Re-mountable: the same markup must come back to life.
-    NDS.Init.refresh(host);
+    NDS.init.refresh(host);
     await settle();
     ok('the view re-initializes after destroy', !!NDS.Filter.getByTarget('destroyView'));
     ok('re-init rebuilt the instances', backrefs().length > 0, backrefs().join(', ') || 'none');
 
     // The un-destroyed unmount (field report nds-test-app-7 F7): a framework view
-    // removed WITHOUT NDS.Init.destroy() left a detached instance squatting the target
+    // removed WITHOUT NDS.init.destroy() left a detached instance squatting the target
     // id, so the remount was skipped forever and the crit hold kept it hidden.
     const stale = NDS.Filter.getByTarget('destroyView');
     host.remove(); // no destroy() — that is the whole point
@@ -112,7 +112,7 @@ const report = await page.evaluate(async () => {
         el.removeAttribute('data-paged-initialized');
     });
     document.body.appendChild(remount);
-    NDS.Init.refresh(remount);
+    NDS.init.refresh(remount);
     await settle();
 
     const claimed = NDS.Filter.getByTarget('destroyView');
@@ -122,14 +122,14 @@ const report = await page.evaluate(async () => {
         remount.querySelectorAll('[data-nds-filter-initialized]').length > 0,
         `${remount.querySelectorAll('[data-nds-filter-initialized]').length} stamped`);
 
-    NDS.Init.destroy(remount);
+    NDS.init.destroy(remount);
     remount.remove();
 
     // A container with nothing initialized inside it must not throw or over-report.
     const bare = document.createElement('div');
     bare.innerHTML = '<p>plain markup</p>';
     document.body.appendChild(bare);
-    ok('empty container returns 0', NDS.Init.destroy(bare) === 0);
+    ok('empty container returns 0', NDS.init.destroy(bare) === 0);
     bare.remove();
 
     return out;
@@ -182,7 +182,7 @@ report.push(...await records.evaluate(async () => {
             !!menu && menu.matches(':popover-open') && dmHost.contains(menu),
             menu ? 'popover-open ' + menu.matches(':popover-open') : 'no menu resolved');
 
-        NDS.Init.destroy(dmHost);
+        NDS.init.destroy(dmHost);
         await new Promise((r) => setTimeout(r, 350));
         ok('the menu left the top layer', !menu.matches(':popover-open'));
         ok('the menu is hidden again, as it shipped',
@@ -192,7 +192,7 @@ report.push(...await records.evaluate(async () => {
             `${document.querySelectorAll('.nds-dropmenu-menu:popover-open').length} left`);
 
         // Two-way, and it re-arms the instance for the page-wide destroy below.
-        NDS.Init.refresh(dmHost);
+        NDS.init.refresh(dmHost);
         await new Promise((r) => setTimeout(r, 300));
         ok('the dropmenu re-initializes after destroy', !!dm.ndsDropmenu,
             dm.hasAttribute('data-nds-dropmenu-initialized') ? 'stamped' : 'not stamped');
@@ -200,7 +200,7 @@ report.push(...await records.evaluate(async () => {
         ok('setup: an open menu in the top layer, inside its cell', false, 'no dropmenu in a table cell');
     }
 
-    const count = NDS.Init.destroy(document.body);
+    const count = NDS.init.destroy(document.body);
     await new Promise((r) => setTimeout(r, 300));
 
     ok('destroy released every type', kinds().size === 0, [...kinds()].join(', ') || 'clean');
@@ -227,7 +227,7 @@ report.push(...await records.evaluate(async () => {
         ok('setup: the modal locked the page', NDS.Modal.isOpen() && !!document.body.style.top,
             `open=${NDS.Modal.isOpen()} bodyTop=${document.body.style.top || 'none'}`);
 
-        NDS.Init.destroy(document.body);
+        NDS.init.destroy(document.body);
         await new Promise((r) => setTimeout(r, 250));
         ok('destroy released the open modal', !NDS.Modal.isOpen());
         ok('the scroll lock is released', !document.body.style.top, document.body.style.top || 'clear');
@@ -237,7 +237,7 @@ report.push(...await records.evaluate(async () => {
     }
 
     // Mounting again must work after a full teardown: the shared runtime rebuilds itself.
-    NDS.Init.refresh(document.body);
+    NDS.init.refresh(document.body);
     await new Promise((r) => setTimeout(r, 300));
     ok('a FAB routes again after teardown', !fab || !!document.querySelector('.nds-fab-dock .nds-fab'),
         document.querySelector('.nds-fab-dock .nds-fab')?.className || 'none re-docked');
@@ -271,7 +271,7 @@ async function sweepOne(tab, errs, path) {
     ]));
     await new Promise((r) => setTimeout(r, 900));
 
-    const live = await tab.evaluate(() => NDS.Init.components
+    const live = await tab.evaluate(() => NDS.init.components
         // Markup a code sample shows is never initialized (the init pass skips it), so it
         // is not coverage either — same exclusion the pass itself uses.
         .filter((c) => c.selector && [...document.querySelectorAll(c.selector)].some((el) => !el.closest('code')))
@@ -286,12 +286,12 @@ async function sweepOne(tab, errs, path) {
             .flatMap((el) => [...el.attributes].map((a) => a.name).filter((n) => /^data-nds-.*-initialized$/.test(n))))];
 
         const before = kinds();
-        NDS.Init.destroy(document.body);
+        NDS.init.destroy(document.body);
         await new Promise((res) => setTimeout(res, 250));
         const leftKinds = kinds();
         const leftStamps = stamps();
 
-        NDS.Init.refresh(document.body);
+        NDS.init.refresh(document.body);
         await new Promise((res) => setTimeout(res, 250));
         const back = kinds();
         return { before, leftKinds, leftStamps, missing: before.filter((k) => !back.includes(k)) };
@@ -333,7 +333,7 @@ report.push(
 
 // Informational, not a gate: a registry component with no page carrying its markup is
 // untested by this check, and that is worth reading even when everything passes.
-const registry = await page.evaluate(() => NDS.Init.components.filter((c) => c.selector).map((c) => c.name));
+const registry = await page.evaluate(() => NDS.init.components.filter((c) => c.selector).map((c) => c.name));
 const covered = new Set(results.flatMap((r) => r.live));
 const uncovered = registry.filter((n) => !covered.has(n));
 

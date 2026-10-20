@@ -238,6 +238,14 @@ The bundle map comes from `js_processor.rb`; the call graph that `tmp/xgraph.mjs
 sits with Modal and Panel). Held back: the `State.onAdd` / `onRemove` pair check lands with S1
 (change #2), since it would point at an API that does not exist yet.
 
+**Landed 2026-10-20 (change #1):** the five A7 renames, five `kind: api` rows, the manifest's `audit`
+test. Once the names were lowercase, `assert_layers!` and JSD-15 caught two cases the rules did not
+foresee, now exempt with a reason: the loader (main's last file, called at runtime) and the audit (an
+on-demand module, not a base). The audit label for `kind: api` was skipped: those rows never reach the
+audit. Left on the old names: `.claude/skills/nds-iq-eval/` (scenarios and fixtures run against the
+1.x templates; its SKILL.md notes the rename if the old-template check is dropped) and the published
+`_includes/NDS-IQ.md`.
+
 ## 4. Owner decisions
 
 1. **A7 renames: all four, decided 2026-10-20.** One naming pattern with no exceptions lets an agent guess a

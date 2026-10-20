@@ -53,7 +53,7 @@ Read every time:
 - **`EDITORIAL.md`.**
 - **The SCSS, whole:** every class, modifier, knob (`--x` and its `var()` fallback), state selector, media rule, and the accessibility mixins.
 - **The JS, whole:** init, every public method, every event and its `detail`, keyboard handling, every `data-*` it reads, every state it writes. The banner at the top of the file is the public surface.
-- **The shared files it rides, banner only:** `_js/nds-form.js` and `_sass/components/_form.scss` for fields, `_js/nds-core.js` for `NDS.State` and `NDS.Status`. Read further only for a fact the banner does not answer: each JS file is ~86 KB.
+- **The shared files it rides, banner only:** `_js/nds-form.js` and `_sass/components/_form.scss` for fields, `_js/nds-core.js` for `NDS.state` and `NDS.status`. Read further only for a fact the banner does not answer: each JS file is ~86 KB.
 - **`_data/sidemenu/sidemenu.yml`:** confirm every part you link exists.
 - **The page's entry in `_data/catalog.yml`:** its card must agree with the hero description.
 - **The model page** for this page type.
@@ -269,7 +269,7 @@ In this order, each only when the source has it:
 
 The Effect, Controls, Holds, Detail and Use columns keep 320px on a phone: the build sets it from those header names, so use those names for a prose column.
 
-**The Data Attributes table needs its own pass: it drifts on almost every rewrite.** Build it from the JS, not the old page. Grep every read and write of each attribute (`getAttribute`, `setAttribute`, `removeAttribute`, `NDS.State.add` / `remove`, `dataset`, selectors in `querySelector`), and write each row from those hits:
+**The Data Attributes table needs its own pass: it drifts on almost every rewrite.** Build it from the JS, not the old page. Grep every read and write of each attribute (`getAttribute`, `setAttribute`, `removeAttribute`, `NDS.state.add` / `remove`, `dataset`, selectors in `querySelector`), and write each row from those hits:
 - **Group rows by element**, in the order a reader builds the markup: the owner or container, then its parts, then the items. The rows of one element sit together.
 - **One attribute on two kinds of element is two rows.** Each Element cell names its element so the two cannot be confused: "an `input.nds-check`" and "any element except a checkbox", never "the element" twice.
 - **A state row says who writes it and every way it goes:** "The script sets it when…, and removes it when…". Name each method that also writes it (`clear()` removes it). Say "Set it yourself" for the case the script leaves to the page.

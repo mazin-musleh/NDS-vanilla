@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "19/10/2026 - 08:46 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="print-overview" class="nds-content-section nds-doc-overview">
@@ -218,7 +218,7 @@ The target prints at its width on screen, in the middle of the sheet. A target w
 
 | Method | Effect |
 |---|---|
-| `NDS.Print.init()` | Listens for clicks on every `data-print-target` button. The loader calls it on a page that has one. For a button added after the page loads, call `NDS.Init.mount()` on its container |
+| `NDS.Print.init()` | Listens for clicks on every `data-print-target` button. The loader calls it on a page that has one. For a button added after the page loads, call `NDS.init.mount()` on its container |
 | `NDS.Print.print(target)` | Prints one element alone, the same as the button. `target` is an element, an `id` or a selector. Returns `false` when it names no element |
 {: .nds-table .nds-responsive}
 

@@ -201,7 +201,7 @@ Inventory the project and write NDS-PLAN.md for my review.
                 <h3 id="verification">Browser Verification</h3>
                 <p>The agent checks every page in a browser, twice:</p>
                 <ul>
-                    <li><strong>Behavior</strong>: it loads the page, reads the console, runs <code class="nds-inline-code lang-js">NDS.Init.audit()</code>, and tries every interaction and form check.</li>
+                    <li><strong>Behavior</strong>: it loads the page, reads the console, runs <code class="nds-inline-code lang-js">NDS.init.audit()</code>, and tries every interaction and form check.</li>
                     <li><strong>Look</strong>: it compares the page with the matching template page at desktop and mobile widths, in light and dark mode.</li>
                 </ul>
                 <p>Reading the code is not verification.</p>

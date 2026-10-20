@@ -91,12 +91,12 @@
 
             // Toggle nds-expand class and show/hide button based on content height
             if (actualHeight > maxHeight) {
-                NDS.State.add(this.expandableContainer, 'expandable');
+                NDS.state.add(this.expandableContainer, 'expandable');
                 this.expandButton.style.display = '';
                 // Reset inline style to let CSS handle max-height
                 this.contentElement.style.maxHeight = '';
             } else {
-                NDS.State.remove(this.expandableContainer, 'expandable', 'expanded');
+                NDS.state.remove(this.expandableContainer, 'expandable', 'expanded');
                 this.expandButton.style.display = 'none';
                 this.isExpanded = false; // Reset expanded state
                 // Content that grows past the clamp again shows a collapsed button.
@@ -152,7 +152,7 @@
             this.isExpanded = true;
 
             // Add expanded state to container
-            NDS.State.add(this.expandableContainer, 'expanded');
+            NDS.state.add(this.expandableContainer, 'expanded');
 
             // Update button state
             if (this.expandButton) {
@@ -174,7 +174,7 @@
             this.isExpanded = false;
 
             // Remove expanded state from container
-            NDS.State.remove(this.expandableContainer, 'expanded');
+            NDS.state.remove(this.expandableContainer, 'expanded');
 
             // Update button state
             if (this.expandButton) {
@@ -276,7 +276,7 @@
             }
 
             // Remove states
-            NDS.State.remove(this.expandableContainer, 'expanded', 'expandable');
+            NDS.state.remove(this.expandableContainer, 'expanded', 'expandable');
 
             // Drop the instance back-ref and the init sentinel last: leaving either on
             // makes teardown one-way — the init sweep skips a stamped container and
@@ -287,7 +287,7 @@
         }
     }
 
-    // Synchronous: the loader schedules init, and NDS.Init.ready promises el.ndsExpandable after it.
+    // Synchronous: the loader schedules init, and NDS.init.ready promises el.ndsExpandable after it.
     function initializeExpandableContent() {
         document.querySelectorAll('.nds-expandable').forEach(container => {
             // Skip elements rendered inside <code> tags (markup text, not live components)

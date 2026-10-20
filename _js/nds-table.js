@@ -217,7 +217,7 @@
                 this.currentScrollState = null; // Force handleScroll to update
                 this.handleScroll();
             } else {
-                NDS.State.clear(this.wrapper);
+                NDS.state.clear(this.wrapper);
                 this.needsScroll = false;
                 this.currentScrollState = null;
             }
@@ -262,7 +262,7 @@
 
             const newState = tokens.join(' ');
             if (this.currentScrollState !== newState) {
-                NDS.State.set(this.wrapper, ...tokens);
+                NDS.state.set(this.wrapper, ...tokens);
                 this.currentScrollState = newState;
             }
         }
@@ -310,7 +310,7 @@
             if (this._offResizeWrapper) { this._offResizeWrapper(); this._offResizeWrapper = null; }
             if (this._offIntersect) { this._offIntersect(); this._offIntersect = null; }
 
-            NDS.State.clear(this.wrapper);
+            NDS.state.clear(this.wrapper);
             this.setScrollFocus(false);
             this.currentScrollState = null;
             this.needsScroll = false;
@@ -627,7 +627,7 @@
     // cancels — every exit path below still has to clear it or the spinner never
     // stops: setContent() on success, close() on error or abort.
     const setToggleLoading = (tr, on) => rowToggles(tr).forEach(btn => {
-        if (on) NDS.State.add(btn, 'loading'); else NDS.State.remove(btn, 'loading');
+        if (on) NDS.state.add(btn, 'loading'); else NDS.state.remove(btn, 'loading');
     });
 
     // Minimum spinner-visible time: a sub-fast fetch would flash the loading state.
@@ -687,7 +687,7 @@
 
         togglesFor(tr, sub).forEach(btn => {
             NDS.aria.expanded(btn, open);
-            if (open) NDS.State.set(btn, 'open'); else NDS.State.clear(btn);
+            if (open) NDS.state.set(btn, 'open'); else NDS.state.clear(btn);
         });
 
         emitSub(table, open ? 'sub-opened' : 'sub-closed', tr, sub);
@@ -698,7 +698,7 @@
     // opens, never at init — pre-rendered multi-open markup stays as painted
     // until the first interaction.
     function closeOtherSubs(table, keep) {
-        if (NDS.State.has(table, 'always-open')) return;
+        if (NDS.state.has(table, 'always-open')) return;
         table.querySelectorAll(':scope > tbody > tr.nds-sub:not([hidden])').forEach(other => {
             // Backref first: setSubOpen re-runs linkSub, so handing it a wrong row
             // wouldn't just mis-report the event — it would rewrite _ndsRow and
@@ -847,7 +847,7 @@
             // setContent() on success and close() on the consumer's error path,
             // that's three exits — the control can't be stranded whatever the
             // consumer does or forgets to do.
-            if (NDS.State.has(btn, 'loading')) {
+            if (NDS.state.has(btn, 'loading')) {
                 handle.el._ndsSubAbort?.abort();
                 clearLoadClock(handle.el);
                 setToggleLoading(handle.el, false);

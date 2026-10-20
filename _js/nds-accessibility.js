@@ -27,7 +27,7 @@
  * Gotchas:
  *   - Every mode is a CSS token override in _variables-a11y.scss. This file only manages
  *     state, persistence, focus and the panel lifecycle — styling is never done here.
- *   - One per page, for the page's lifetime: no public destroy(), and NDS.Init.destroy()
+ *   - One per page, for the page's lifetime: no public destroy(), and NDS.init.destroy()
  *     leaves it alone. Its modes live on <html>, outside any view.
  *   - This file is a BUNDLE, not a <script> tag: nds-loader.js registers it `lazy`, so
  *     nothing here is downloaded until the FAB is pressed — or, for a visitor whose
@@ -68,7 +68,7 @@
     // real FAB — could ever arm it again for the rest of the page.
     const PANEL_ID = 'nds-accessibility-panel';
 
-    const { add: addState, remove: removeState, clear: clearState } = NDS.State;
+    const { add: addState, remove: removeState, clear: clearState } = NDS.state;
 
     const STORAGE_KEY = 'nds-a11y';
     const root = document.documentElement;
@@ -858,7 +858,7 @@
             btn.insertBefore(icon, lbl);
         }
         lbl.textContent = words.text('reset_done');
-        NDS.Status.set(btn, 'success');
+        NDS.status.set(btn, 'success');
         resetDoneTimer = setTimeout(() => {
             resetDoneTimer = null;
             if (btn.dataset.flashOriginal) {
@@ -867,7 +867,7 @@
             }
             const icon = btn.querySelector(':scope > [data-flash-icon]');
             if (icon) icon.remove();
-            NDS.Status.clear(btn);
+            NDS.status.clear(btn);
         }, RESET_DONE_MS);
     }
 
@@ -886,7 +886,7 @@
             }
             const icon = btn.querySelector(':scope > [data-flash-icon]');
             if (icon) icon.remove();
-            NDS.Status.clear(btn);
+            NDS.status.clear(btn);
         }
         if (resetTimer) {
             clearTimeout(resetTimer);
@@ -984,11 +984,11 @@
         if (_initDone) { if (ensureArmed()) proceed(); return; }
         _arming = true;
         const fab = triggerEl || document.querySelector('[data-accessibility-toggle]');
-        if (fab) NDS.State.add(fab, 'loading');
+        if (fab) NDS.state.add(fab, 'loading');
         init(triggerEl);
         setTimeout(() => {
             _arming = false;
-            if (fab) NDS.State.remove(fab, 'loading');
+            if (fab) NDS.state.remove(fab, 'loading');
             if (panel) proceed();
         }, 1000);
     }
@@ -1416,11 +1416,11 @@
         // mount() loads the bundles this panel's own markup needs and nothing
         // else; it used to ask for every bundle in the manifest, which dragged
         // in extras and audit on a page that wanted neither.
-        if (injected) NDS.Init.mount(injected);
+        if (injected) NDS.init.mount(injected);
         return injected;
     }
 
-    // fromTemplate's NDS.Init.refresh already armed Panel/Theme/Accordion/ScrollMore
+    // fromTemplate's NDS.init.refresh already armed Panel/Theme/Accordion/ScrollMore
     // (their inits are run-once / per-element guarded). What's left is the mode
     // mirror a Theme init that ran BEFORE the panel existed can't know about.
     function wireInjected(panelEl) {

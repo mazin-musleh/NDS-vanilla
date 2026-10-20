@@ -62,7 +62,7 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
   // The audit logs an error-severity finding with console.error: a finding, not a page error.
   page.on('console', m => {
       const t = m.text();
-      if (m.type() === 'warning' || (m.type() === 'error' && t.startsWith('[NDS.Audit]'))) warns.push(t);
+      if (m.type() === 'warning' || (m.type() === 'error' && t.startsWith('[NDS.audit]'))) warns.push(t);
       else if (m.type() === 'error') errors.push(t);
   });
   page.on('pageerror', e => errors.push(e.message));
@@ -120,24 +120,24 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
     const n0 = document.createElement('li'); n0.dataset.sortN = '0'; n0.textContent = 'z0';
     document.getElementById('m1').append(n0);
     NDS.Sort.refresh(document.getElementById('m2')); out.refreshOther = T('m1');
-    NDS.Init.refresh(document.getElementById('m1')); out.refreshOwn = T('m1');
+    NDS.init.refresh(document.getElementById('m1')); out.refreshOwn = T('m1');
     const n4 = document.createElement('li'); n4.dataset.sortN = '-1'; n4.textContent = 'neg';
     document.getElementById('m1').append(n4);
     NDS.Sort.refresh(document.getElementById('m1').firstElementChild); out.refreshInner = T('m1');
 
-    // New list added after load joins via NDS.Init.refresh
+    // New list added after load joins via NDS.init.refresh
     const host = document.createElement('div');
     host.innerHTML = '<button type="button" id="m9-t" data-sort-target="m9" data-sort="n">n</button><ul id="m9"><li data-sort-n="2">2</li><li data-sort-n="1">1</li></ul>';
     document.getElementById('fx-markup').append(host);
-    NDS.Init.refresh(host);
+    NDS.init.refresh(host);
     click('m9-t'); out.lateList = T('m9');
 
-    // NDS.Init.destroy(view) releases the wired list; refresh re-wires
+    // NDS.init.destroy(view) releases the wired list; refresh re-wires
     const m7 = document.getElementById('m7');
-    const destroyed = NDS.Init.destroy(document.getElementById('view'));
+    const destroyed = NDS.init.destroy(document.getElementById('view'));
     out.destroy = [destroyed >= 1, !!m7.ndsSort, m7.hasAttribute('data-nds-sort-initialized')];
     click('m7-t'); out.afterDestroy = T('m7');
-    NDS.Init.refresh(document.getElementById('view'));
+    NDS.init.refresh(document.getElementById('view'));
     click('m7-t'); out.rewired = T('m7');
 
     // ── create() ────────────────────────────────────────────────────────
@@ -235,7 +235,7 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
     const s13 = NDS.Sort.create(r13, { items: '.row', triggers: '.t13', urlSync: { keyParam: 'sk', orderParam: 'sd' } });
     s13.reset(); out.otherSortKept = location.search;
 
-    await NDS.Init.audit();
+    await NDS.init.audit();
     return out;
   });
   await page.waitForTimeout(300);
@@ -262,12 +262,12 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
   E('trigger in <code> not wired', r.m5Wired, false);
   E('dropmenu trigger icon sync', r.m8Icon, 'nds-icon nds-hgi-sort-by-down-02');
   E('Sort.refresh scoped: other root leaves list alone', r.refreshOther, 'a,b,c,z0');
-  E('Init.refresh(list): new item joins sort', r.refreshOwn, 'z0,a,b,c');
+  E('init.refresh(list): new item joins sort', r.refreshOwn, 'z0,a,b,c');
   E('Sort.refresh(root inside list) re-sorts it', r.refreshInner, 'neg,z0,a,b,c');
-  E('list added after load wired by Init.refresh', r.lateList, '1,2');
+  E('list added after load wired by init.refresh', r.lateList, '1,2');
   E('Init.destroy(view) releases list', r.destroy, [true, false, false]);
   E('after destroy: click does nothing', r.afterDestroy, '2,1');
-  E('Init.refresh re-wires', r.rewired, '1,2');
+  E('init.refresh re-wires', r.rewired, '1,2');
   E('create: selector forms, onChange>event, detail, onChange arg', r.c1, ['c,b,a', 'onChange>event', 'p', 'desc', 3, true, 'p', 'desc', '{"key":"p","order":"desc"}', 3]);
   E('create twice: same instance, options ignored', r.sameInstance, true);
   E('getInstance el/selector/none, create(null)', r.getInstance, [true, true, null, null]);

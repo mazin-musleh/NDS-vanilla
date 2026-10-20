@@ -416,7 +416,7 @@
     }
 
     // The site's day (<html data-timezone>), not toISOString's UTC day.
-    const today = () => NDS.date.format(NDS.date.today(), { format: 'YYYY-MM-DD' });
+    const today = () => NDS.Date.format(NDS.Date.today(), { format: 'YYYY-MM-DD' });
 
     function defaultFilename(source, ext) {
         const raw = source && source.dataset && source.dataset.exportName;

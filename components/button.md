@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 01:03 PM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="btn-overview" class="nds-content-section nds-doc-overview">
@@ -132,7 +132,7 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 | State | Selected | `[data-state~="selected"]` | `.nds-btn:first-child:not(.nds-progress)` | The chosen button, such as a pressed toggle or the chosen button in a group |
 | State | Selected | `[aria-pressed="true"]` | `.nds-btn:first-child:not(.nds-progress)` | Set it with `data-state~="selected"`. It tells screen readers the button is on |
 | State | Disabled | `[disabled]` | `.nds-btn:first-child:not(.nds-progress)` | The action is not available. On an `<a>`, use `aria-disabled="true"` |
-| State | Loading | `.nds-loading` | `.nds-btn:first-child:not(.nds-progress)` | A spinner replaces the content while a request runs. The button keeps its width. In JavaScript, call `NDS.State.add(btn, 'loading')` |
+| State | Loading | `.nds-loading` | `.nds-btn:first-child:not(.nds-progress)` | A spinner replaces the content while a request runs. The button keeps its width. In JavaScript, call `NDS.state.add(btn, 'loading')` |
 | State | Loading | `[disabled]` | `.nds-btn:first-child:not(.nds-progress)` | The same. `disabled` stops a second press, and a loading button keeps its colors |
 | Ring | Countdown (default) | `--progress-duration: 4000ms` | `.nds-progress` | The ring fills once over this time |
 | Ring | Fixed value (hint: The ring shows a set percentage, not a countdown) | `.nds-progress-static` | `.nds-progress` | The ring shows a fixed part, such as upload progress |
@@ -254,7 +254,7 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-state` | `.nds-btn` | `selected`, `open`, `active` or `current` gives the selected look. `open` and `opening` also turn the menu chevron. `loading` is the same as `nds-loading`, and `disabled` the same as the `disabled` attribute. `hover`, `pressed` and `focused` show that look without a pointer or a keyboard, for a design review |
-| `data-status` | `.nds-btn` | Feedback for a moment after an action: `success`, `error`, `info` or `warning`. It sets the colors in every state, swaps each `nds-icon` icon for the status icon, and colors the border of a secondary outline button. [Copy](../utilities/copy), Share and the accessibility panel set `success` for about two seconds. Set it for your own actions with `NDS.Status`, as in the example below. Do not write it in the markup |
+| `data-status` | `.nds-btn` | Feedback for a moment after an action: `success`, `error`, `info` or `warning`. It sets the colors in every state, swaps each `nds-icon` icon for the status icon, and colors the border of a secondary outline button. [Copy](../utilities/copy), Share and the accessibility panel set `success` for about two seconds. Set it for your own actions with `NDS.status`, as in the example below. Do not write it in the markup |
 | `aria-expanded` | `.nds-menu-btn` | `true` turns the chevron, the same as `data-state~="open"` |
 | `aria-disabled` | `.nds-btn` | `true` gives the disabled look and blocks clicks. Use it on an `<a>`, which has no `disabled` attribute |
 {: .nds-table .nds-responsive}
@@ -299,21 +299,21 @@ Source: the `button` group in `_sass/tokens/_components.scss`.
 ### JavaScript
 {: .nds-block-title}
 
-A button has no script of its own. Set its state with `NDS.State` and its status with `NDS.Status`.
+A button has no script of its own. Set its state with `NDS.state` and its status with `NDS.status`.
 
 <script type="text/html" id="btn-state-js" data-canon data-lang="js">
 var btn = document.querySelector('#save');
 
 // Lock the button while the request runs
-NDS.State.add(btn, 'loading');
+NDS.state.add(btn, 'loading');
 btn.disabled = true;
 
 save().then(function () {
   // Show success for two seconds
-  NDS.Status.set(btn, 'success');
-  setTimeout(function () { NDS.Status.clear(btn); }, 2000);
+  NDS.status.set(btn, 'success');
+  setTimeout(function () { NDS.status.clear(btn); }, 2000);
 }).finally(function () {
-  NDS.State.remove(btn, 'loading');
+  NDS.state.remove(btn, 'loading');
   btn.disabled = false;
 });
 </script>

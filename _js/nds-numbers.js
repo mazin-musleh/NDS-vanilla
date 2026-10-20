@@ -114,7 +114,7 @@
             // reinit() re-arms: release a subscription that has not fired yet.
             el.ndsCounter?.destroy();
             if (el.closest('code') || el.hasAttribute('data-animated') || el._ndsCounting) return;
-            // A backref, so NDS.Init.destroy(view) releases a counter that never scrolled into view.
+            // A backref, so NDS.init.destroy(view) releases a counter that never scrolled into view.
             const off = NDS.onIntersect(el, (entry) => {
                 if (!entry.isIntersecting) return;
                 el.ndsCounter.destroy();

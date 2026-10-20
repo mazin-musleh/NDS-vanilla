@@ -40,8 +40,8 @@
  *     button's own loading state from nds:cooldown:start and clear it when the
  *     response lands:
  *       btn.addEventListener('nds:cooldown:start', () => {
- *         NDS.State.add(btn, 'loading');
- *         send().finally(() => NDS.State.remove(btn, 'loading'));
+ *         NDS.state.add(btn, 'loading');
+ *         send().finally(() => NDS.state.remove(btn, 'loading'));
  *       });
  *     [data-state~="loading"] hides the label, so the countdown ticks under the
  *     spinner and is already at the right number when the state comes off. The
@@ -101,7 +101,7 @@
     // Global: a bilingual label names the token once per language.
     const TOKEN = /\{s\}/g;
 
-    // One-shot init guard. A re-run of init (e.g. NDS.Init.initialize())
+    // One-shot init guard. A re-run of init (e.g. NDS.init.initialize())
     // would otherwise re-stack the two pool subscriptions in init() — onDOMAdd
     // and onDOMRemove push unconditionally with no (selector, fn) dedup in core.
     // The single init at page load wires the subscribers; subsequent button
@@ -198,7 +198,7 @@
         stampSizers(btn, total);
         active.set(btn, ctx);
 
-        NDS.State.add(btn, 'cooldown');
+        NDS.state.add(btn, 'cooldown');
         btn.disabled = true;
         // Fired before the first render so a listener can stamp its own 'loading'
         // state — the countdown then ticks underneath the spinner and is already
@@ -232,7 +232,7 @@
         if (ctx.tickTimer) clearInterval(ctx.tickTimer);
         // 'loading' is the page's to set and clear — the component never touches it,
         // so a request still in flight keeps its spinner past the countdown.
-        NDS.State.remove(btn, 'cooldown');
+        NDS.state.remove(btn, 'cooldown');
         if (!ctx.wasDisabled) btn.disabled = false;
         if (ctx.hadFocus && !btn.disabled && (!document.activeElement || document.activeElement === document.body)) {
             btn.focus({ preventScroll: true });

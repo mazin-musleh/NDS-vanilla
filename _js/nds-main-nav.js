@@ -10,7 +10,7 @@
  *   NDS.MainNav.init()               wire the one nav on the page
  *   NDS.MainNav.reinit()             re-resolve the markup and wire it again — for a nav
  *                                    that mounted after the bundle ran, or was replaced by
- *                                    a route change. NDS.Init.refresh() calls it
+ *                                    a route change. NDS.init.refresh() calls it
  *   NDS.MainNav.destroy()            release every listener, observer and the backdrop; the
  *                                    markup stays, and reinit() wires it again
  *   NDS.MainNav.open() / close()     open or close the drawer (toggle() flips it)
@@ -79,8 +79,8 @@
     }
     captureDOM();
 
-    // State helpers — delegated to NDS.State (nds-core.js)
-    const { add: addState, remove: removeState, has: hasState } = NDS.State;
+    // State helpers — delegated to NDS.state (nds-core.js)
+    const { add: addState, remove: removeState, has: hasState } = NDS.state;
 
     // Minimal-mode breakpoint. Reads the canonical `--nds-minimal-nav-bp`
     // CSS var once at module load, then drives mode detection via
@@ -1042,7 +1042,7 @@
     // Only a CHANGE OF NODE counts — or, under a kept root, a swapped-out collapse or a
     // reverted [hidden] on it, which is how a diffing framework re-renders the nav (the
     // markup ships [hidden]; init strips it and nothing puts it back). This is the
-    // NDS.Init.refresh hook, so it fires on every
+    // NDS.init.refresh hook, so it fires on every
     // refresh call a page makes — most about a table or a card grid, nothing to do with the
     // nav — and re-wiring on each one would re-attach every listener and reset an open
     // drawer for nothing. Items added or removed INSIDE a live nav need no call at all: the

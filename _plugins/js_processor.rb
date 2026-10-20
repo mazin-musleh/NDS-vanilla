@@ -84,8 +84,8 @@ class JSProcessor
       'nds-code.min.js' => ['nds-code.js'],
       # Audit — debug diagnostics, its own bundle so production pages ship zero
       # bytes of it. NEVER auto-injected (no component registry entry): the
-      # loader pulls it via the NDS.Audit lazy stub when enableLogging schedules
-      # the post-init sweep, or on the first NDS.Init.audit() call.
+      # loader pulls it via the NDS.audit lazy stub when enableLogging schedules
+      # the post-init sweep, or on the first NDS.init.audit() call.
       'nds-audit.min.js' => ['nds-audit.js'],
       # Accessibility — the optional panel, its own bundle so a visitor who
       # never opens it never downloads it. Auto-injected ONLY for a returning
@@ -153,6 +153,7 @@ class JSProcessor
     bundle_of = @bundles.each_with_object({}) { |(b, files), m| files.each { |f| m[f] = b } }
     errors = []
     injected_bundles.each do |bundle_name, files|
+      next if bundle_name == 'nds-audit.min.js' # on demand: its callers reach it only through the stub
       files.each do |sf|
         scan_namespaces([sf]).grep(/\A[a-z]/).each do |ns|
           away = bundle_of.keys.reject { |f| f == sf || bundle_of[f] == bundle_name }.select { |f| strip.call(f) =~ /\bNDS\.#{ns}\b/ }
@@ -162,7 +163,7 @@ class JSProcessor
     end
     @bundles.each_value do |files|
       files.each_with_index do |sf, i|
-        next if i.zero?
+        next if i.zero? || sf == 'nds-loader.js' # the loader runs last on purpose; others call it at runtime
         scan_namespaces([sf]).grep(/\A[a-z]/).each do |ns|
           early = files[0...i].select { |prev| strip.call(prev) =~ /\bNDS\.#{ns}\b/ }
           errors << "#{sf} (NDS.#{ns}) is listed after #{early.join(', ')}, which names it" unless early.empty?
@@ -254,11 +255,11 @@ class JSProcessor
   end
 
   # _data/migrations.yml as the audit's rows: [kind, name, scope, status, use, since, fix, inert],
-  # 0 for an empty field. A fix that only says "Use <use>." is rebuilt at runtime. Events and
-  # URL params stay out: a page cannot see a listener or what its server reads.
+  # 0 for an empty field. A fix that only says "Use <use>." is rebuilt at runtime. Events, URL
+  # params and JS APIs stay out: a page cannot see a listener, a call or what its server reads.
   MIGRATIONS = '_data/migrations.yml'
   def migrations_js
-    rows = YAML.load_file(MIGRATIONS).reject { |r| %w[event param].include?(r['kind']) }.map do |r|
+    rows = YAML.load_file(MIGRATIONS).reject { |r| %w[event param api].include?(r['kind']) }.map do |r|
       fix = r['fix'] == "Use #{r['use']}." ? 0 : r['fix']
       [r['kind'], r['name'], r['scope'] || 0, r['status'], r['use'] || 0, r['since'].to_s, fix || 0, r['inert'] ? 1 : 0]
     end
@@ -499,7 +500,10 @@ class JSProcessor
         # code. Only the critical main bundle carries it.
         manifest_js = ''
         if bundle_name == 'nds-main.min.js'
-          manifest_js = "window.__NDS_BUNDLES=#{JSON.generate(bundle_manifest)};\n"
+          manifest = bundle_manifest
+          # NDS.init.audit() calls the audit's stub; with no manifest row it throws.
+          abort('[js_processor] BUILD FAILED — the bundle manifest names no audit namespace') unless manifest.values.any? { |e| e['ns'].include?('audit') }
+          manifest_js = "window.__NDS_BUNDLES=#{JSON.generate(manifest)};\n"
         end
         final_content = header_comment + manifest_js + final_content
 

@@ -10,7 +10,7 @@
  *   NDS.Modal.isOpen()          is a modal open?
  *   NDS.Modal.destroy(root)     release an open modal inside root before its markup is
  *                               removed — closes it and drops the scroll lock at once.
- *                               NDS.Init.destroy(view) calls it for you
+ *                               NDS.init.destroy(view) calls it for you
  * Events (bubble from the .nds-modal):
  *   nds:modal:opened   detail (none) — after the open state paints
  *   nds:modal:closed   detail (none) — after the close animation finishes, not on the click
@@ -50,7 +50,7 @@
 
     // Already the active modal: re-assert the open state and stop.
     if (activeModal === modal) {
-      NDS.State.set(modal, 'open');
+      NDS.state.set(modal, 'open');
       return;
     }
     if (activeModal) close();
@@ -65,7 +65,7 @@
     // The from-state paints first, so the CSS transition runs.
     NDS.afterPaint(() => {
       if (activeModal !== modal) return;
-      NDS.State.set(modal, 'open');
+      NDS.state.set(modal, 'open');
       modal.dispatchEvent(new CustomEvent('nds:modal:opened', { bubbles: true }));
     });
 
@@ -101,7 +101,7 @@
   // Close the dialog and, after the last modal, give the page back.
   function finish(modal) {
     NDS.dialog.close(modal);
-    NDS.State.clear(modal);
+    NDS.state.clear(modal);
     if (activeModal) return;
     // The browser hands focus back on close(); after a swap it aims at the closed first modal.
     const focused = document.activeElement;
@@ -117,7 +117,7 @@
     activeModal = null;
     openAbortController?.abort();
     NDS.dialog.hideMenus(modal);
-    NDS.State.set(modal, 'closing');
+    NDS.state.set(modal, 'closing');
     // The dialog stays in the top layer for the fade; the unlock reflow stays out of the click frame.
     setTimeout(() => {
       if (activeModal === modal) return; // re-opened during the fade

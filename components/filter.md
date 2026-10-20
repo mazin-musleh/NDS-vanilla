@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 07:46 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -709,7 +709,7 @@ Sort is not a filter value and is never sent with the form. Decide by what the s
 | `NDS.Filter.getInstance(element)` | The filter of any surface, by element or selector |
 | `NDS.Filter.getByTarget(id)` | The filter of an item container `id` |
 | `NDS.Filter.whenReady(element, callback)` | Runs `callback` with the filter, now or once it starts |
-| `NDS.Filter.refresh(container)` | Runs `refresh()` on each filter whose item container is `container`, is inside it, or holds it. Starts the filters of new surfaces in it first. Skips form-mode filters. `NDS.Init.refresh(container)` calls it for you |
+| `NDS.Filter.refresh(container)` | Runs `refresh()` on each filter whose item container is `container`, is inside it, or holds it. Starts the filters of new surfaces in it first. Skips form-mode filters. `NDS.init.refresh(container)` calls it for you |
 | `setFilterValues(name, values)` | Picks these values in the group, and applies them. An empty array clears the group |
 | `setSearchValue(text)` | Sets the search term, and applies it |
 | `removeFilterValue(name, value)` | Removes one value, and applies the rest |

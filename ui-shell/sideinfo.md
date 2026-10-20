@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:21 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="sideinfo-overview" class="nds-content-section nds-doc-overview">
@@ -300,7 +300,7 @@ The `aside` shows where it is in the markup: after the content, it is on the end
 | `NDS.Sideinfo.init()` | Starts each `.nds-sideinfo` on the page that has not started. It runs on page load |
 | `NDS.Sideinfo.reinit()` | The same as `init()` |
 | `NDS.Sideinfo.create(el)` | Starts one column and returns its instance, or the instance it already has. Returns `null` when the column has no parent element. Call it once for each column |
-| `NDS.Sideinfo.destroy(el)` | Stops one column: it removes the listeners and `--nds-sideinfo-top`, and adds back the sticky classes the markup had. `NDS.Init.destroy()` calls it for each column in the element it releases |
+| `NDS.Sideinfo.destroy(el)` | Stops one column: it removes the listeners and `--nds-sideinfo-top`, and adds back the sticky classes the markup had. `NDS.init.destroy()` calls it for each column in the element it releases |
 {: .nds-table .nds-responsive}
 
 The side info fires no events.
@@ -308,10 +308,10 @@ The side info fires no events.
 <script type="text/html" id="sideinfo-js" data-canon data-lang="js" data-preview="none">
 // A framework rendered a new section with side info after the NDS script ran:
 // start the column and the components in it
-NDS.Init.mount(document.querySelector('.nds-sideinfo-section'));
+NDS.init.mount(document.querySelector('.nds-sideinfo-section'));
 
 // A framework removes the section: release it first
-NDS.Init.destroy(document.querySelector('.nds-sideinfo-section'));
+NDS.init.destroy(document.querySelector('.nds-sideinfo-section'));
 </script>
 
 The full API is in the banner of `_js/nds-sideinfo.js`.

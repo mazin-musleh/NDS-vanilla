@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 05:43 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="sort-overview" class="nds-content-section nds-doc-overview">
@@ -350,7 +350,7 @@ In `create()`, set `urlSync: { keyParam, orderParam }` and the sort key and orde
     <div class="nds-section-body nds-prose" markdown="1">
 
 - Decide who sorts before you write a trigger. If the page holds every matching row, Sort reorders them. If the server sends one page at a time, the server must sort. Then write no `data-sort` triggers, and send your own sort parameter.
-- Point `data-sort-target` only at a list that no Filter or table sorts. Those sort their own list, and `NDS.Init.audit()` warns about the button.
+- Point `data-sort-target` only at a list that no Filter or table sorts. Those sort their own list, and `NDS.init.audit()` warns about the button.
 - Write direct mode triggers as an ascending and a descending pair, and add a trigger with an empty `data-sort` to restore the original order.
 - Use cycle mode when one control carries one key. Users expect the third click to undo the sort. Write `data-sort-mode="cycle"` on every trigger of the list.
 - Give each trigger a text label, or an `aria-label` when it shows only an icon.
@@ -359,9 +359,9 @@ In `create()`, set `urlSync: { keyParam, orderParam }` and the sort key and orde
 - Set `types: { key: 'string' }` in `create()` for codes that start with a number, such as `10-B`. Detection reads them as the number 10, so `10-A` and `10-B` tie and keep their order.
 - In `create()`, put the triggers and the items under the root: a selector string resolves inside it. Pass a function for elements outside it.
 - Keep the `accessor` fast and free of side effects: Sort calls it on every comparison.
-- Call `NDS.Init.refresh(list)` after you add items, such as after a request. New items join the active sort only after that call. On your own instance, call `refresh()`.
+- Call `NDS.init.refresh(list)` after you add items, such as after a request. New items join the active sort only after that call. On your own instance, call `refresh()`.
 - Use `onChange` in the code that creates the instance. Use the `nds:sort:change` event in other code.
-- Call `NDS.Init.destroy(view)` before you remove a view in a single-page app. It removes every listener Sort added.
+- Call `NDS.init.destroy(view)` before you remove a view in a single-page app. It removes every listener Sort added.
 
 </div>
   </div>
@@ -408,7 +408,7 @@ Markup wiring is a `create()` call on the list with the defaults below: `items` 
 | Method | Effect |
 |---|---|
 | `NDS.Sort.init()` | Wires every list that a `data-sort-target` names, and skips a list that already has an instance. The loader calls it. |
-| `NDS.Sort.refresh(root)` | Wires new lists, then sorts again each list that markup wired inside `root`, or that holds `root`. An instance from your own `create()` call needs its `refresh()`. `NDS.Init.refresh()` calls it. |
+| `NDS.Sort.refresh(root)` | Wires new lists, then sorts again each list that markup wired inside `root`, or that holds `root`. An instance from your own `create()` call needs its `refresh()`. `NDS.init.refresh()` calls it. |
 | `NDS.Sort.create(root, options)` | Returns the instance of the root. A root that already has one returns it and ignores `options`. |
 | `NDS.Sort.getInstance(root)` | Returns the instance of the root, or `null`. `root` is an element or a selector. |
 | `NDS.Sort.detectType(values, dateFormat)` | Returns `'number'`, `'date'` or `'string'`. `dateFormat` is the format a date in the values uses: the site's when you leave it out. |

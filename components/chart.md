@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 09:21 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="chart-overview" class="nds-content-section nds-doc-overview">
@@ -320,7 +320,7 @@ Set them on the chart or on any parent.
 | `chart.destroy()` | Empties the element, removes its observers and listeners, and deletes `el.ndsChart`. |
 {: .nds-table .nds-responsive}
 
-The instance is also on the element, as `el.ndsChart`. It is there once the component starts: code that runs at page load waits for [`NDS.Init.ready`](../core/init#instance-lookup). Chart fires no events.
+The instance is also on the element, as `el.ndsChart`. It is there once the component starts: code that runs at page load waits for [`NDS.init.ready`](../core/init#instance-lookup). Chart fires no events.
 
 <script type="text/html" id="chart-api-js" data-canon data-lang="js">
 const chart = NDS.Chart.create('#requests-chart', {

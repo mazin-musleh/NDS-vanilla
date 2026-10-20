@@ -24,7 +24,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import { REPO, PAGE_DIRS, loaderNames, pascal } from './lib/nds-source.mjs';
 
-// The audit's `js` scope (SKILL.md): core owns State/Status, the loader and docs are out of scope.
+// The audit's `js` scope (SKILL.md): core owns state/status, the loader and docs are out of scope.
 const OUT_OF_SCOPE = new Set(['nds-core.js', 'nds-loader.js', 'nds-docs.js']);
 
 // JSD-01's vocabulary gate: any other data-state token is the component's private classification.
@@ -238,14 +238,9 @@ for (const f of readdirSync(join(REPO, '_js')).filter((x) => /^nds-.*\.js$/.test
     for (const m of src.matchAll(/(?<![\w.$])NDS\.([A-Za-z]\w*)\s*=(?!=)/g)) HOME[m[1]] ??= f;
 }
 const inMain = (ns) => BUNDLE[HOME[ns]] === 'main';
-// Core modules that A7 renames to lowercase: they are not components, so a base may name them.
-const MODULES = new Set(['State', 'Status', 'Init', 'Audit']);
-
-// Core and loader namespaces the loader guarantees; any other PascalCase namespace is a sibling (JSD-12).
-const CORE = new Set(['State', 'Status', 'Init']);
 const POOLS = 'Resize|ElementResize|Intersect|OutsideScroll|AttrChange|DOMAdd|DOMRemove|ChildrenChange';
 // JSD-08's core-utility allowlist; the values among them are read, not called, so only `?.` guards them.
-const CORE_UTILS = ['State', 'Status', 'breakpoints', 'lang', 'isRTL', 'isArabic', 'langKey', 'escapeHtml', 'debounce',
+const CORE_UTILS = ['state', 'status', 'breakpoints', 'lang', 'isRTL', 'isArabic', 'langKey', 'escapeHtml', 'debounce',
     'rafThrottle', 'onResize', 'onElementResize', 'onIntersect', 'onDOMAdd', 'onDOMRemove', 'onChildrenChange',
     'onAttrChange', 'onOutsideScroll', 'trapFocus', 'scrollLock', 'cache', 'i18n', 'topLayer', 'place', 'flipPosition',
     'uniqueId', 'transitionSpeed', 'focusableSel', 'gridLastRow', 'onIdle'];
@@ -263,15 +258,15 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     const out = [];
     const hit = (rule, at, what, verify) => out.push({ rule, file: name, line: lineOf(source, at), what, verify });
 
-    // A regex source matching a call to any of `methods` on NDS.State, or a destructured alias of one.
+    // A regex source matching a call to any of `methods` on NDS.state, or a destructured alias of one.
     const aliases = {};
-    for (const m of code.matchAll(/\{([^}]*)\}\s*=\s*NDS\.State\b/g)) {
+    for (const m of code.matchAll(/\{([^}]*)\}\s*=\s*NDS\.state\b/g)) {
         for (const part of m[1].split(',')) {
             const [key, alias] = part.split(':').map((s) => s.trim());
             if (key) (aliases[key] ||= []).push(alias || key);
         }
     }
-    const stateCall = (methods) => `(?:NDS\\.State\\.(?:${methods.join('|')})|${methods.flatMap((k) => aliases[k] || []).join('|') || '(?!)'})`;
+    const stateCall = (methods) => `(?:NDS\\.state\\.(?:${methods.join('|')})|${methods.flatMap((k) => aliases[k] || []).join('|') || '(?!)'})`;
     const writers = [stateCall(['set', 'add', 'toggle', 'apply'])];
     const writesToken = (token) => new RegExp(`(?:${writers.join('|')})\\s*\\([^;]*?['"\`][^'"\`]*\\b${token}\\b`).test(code);
     const gated = (value) => value.split(/\s+/).filter(Boolean).some((t) => VOCAB.has(t));
@@ -286,7 +281,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         hit(m[1] === 'state' ? 'JSD-01a' : 'JSD-01b', m.index, m[0].trim());
     }
     // JSD-01 (c) a selector or an HTML template naming a vocabulary token. A token this file never
-    // writes through NDS.State is another component's (carve-out 2): a selector reads its state,
+    // writes through NDS.state is another component's (carve-out 2): a selector reads its state,
     // a template ships its canon (Accordion's default-open data-state="open").
     for (const s of strings) {
         for (const m of s.text.matchAll(/(\[)?data-state\s*[~*|^$]?=\s*\\?["']?([a-z][a-z -]*)/g)) {
@@ -300,7 +295,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         }
     }
 
-    // JSD-02 data-status outside NDS.Status, read or write.
+    // JSD-02 data-status outside NDS.status, read or write.
     for (const m of code.matchAll(/\.(?:set|get|remove|has)Attribute\(\s*(['"])data-status\1|\.dataset\.status\b/g)) hit('JSD-02', m.index, m[0]);
 
     // JSP-01 a raw window resize listener (NDS.onResize pools and debounces).
@@ -355,7 +350,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     const guarded = new Set();
     for (const m of code.matchAll(/\bNDS\.([A-Z]\w*)\s*(?:\?\.|&&|\))|typeof\s+NDS\.([A-Z]\w*)/g)) {
         const sib = m[1] || m[2];
-        if (CORE.has(sib) || sib === own) continue;
+        if (sib === own) continue;
         const ctx = code.slice(Math.max(0, m.index - 12), m.index);
         if (m[0].endsWith(')') && !/(?:\bif\s*\(\s*|!\s*|&&\s*|\|\|\s*)$/.test(ctx)) continue; // a call's argument, not a test
         if (inMain(sib)) { hit('JSD-12', m.index, `NDS.${sib} guard: main always loads it, so remove it (PERSONA entry 11)`); continue; }
@@ -390,9 +385,10 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     }
     // JSD-15 (entry 11) core or a base naming a component: a lower layer never names a higher one.
     const defined = Object.keys(HOME).filter((ns) => HOME[ns] === name);
-    if (name === 'nds-core.js' || (defined.some((ns) => /^[a-z]/.test(ns)) && !defined.some((ns) => /^[A-Z]/.test(ns)))) {
+    // The audit is a lowercase module, not a base: its messages name components on purpose.
+    if (name === 'nds-core.js' || (name !== 'nds-audit.js' && defined.some((ns) => /^[a-z]/.test(ns)) && !defined.some((ns) => /^[A-Z]/.test(ns)))) {
         for (const m of code.matchAll(/\bNDS\.([A-Z]\w*)\b/g)) {
-            if (MODULES.has(m[1]) || HOME[m[1]] === name) continue;
+            if (HOME[m[1]] === name) continue;
             hit('JSD-15', m.index, `a base names NDS.${m[1]}, a component (entry 11): serve it through arguments, callbacks or a registry`);
         }
     }
@@ -429,11 +425,11 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         const start = Math.max(bare.lastIndexOf(';', at), bare.lastIndexOf('{', at), bare.lastIndexOf('}', at));
         return !/=>|\bfunction\b/.test(bare.slice(start + 1, at));
     };
-    // JSD-08 a guard on what the loader guarantees: NDS itself, a core utility, NDS.Init, or the
+    // JSD-08 a guard on what the loader guarantees: NDS itself, a core utility, NDS.init, or the
     // file's own namespace, inside a function (module top level runs before the loader and passes).
-    const coreGuard = new RegExp(`typeof\\s+(?:window\\.)?NDS\\b(?:\\.(${[...CORE_UTILS, 'Init', own].join('|')})\\b)?`
+    const coreGuard = new RegExp(`typeof\\s+(?:window\\.)?NDS\\b(?:\\.(${[...CORE_UTILS, 'init', own].join('|')})\\b)?`
         + `|(?<![\\w.])(?:window\\.)?NDS\\s*(?:\\?\\.|&&)`
-        + `|\\bNDS\\.(${[...CORE_UTILS, 'Init', own].join('|')})\\s*(\\?\\.|&&|\\))`, 'g');
+        + `|\\bNDS\\.(${[...CORE_UTILS, 'init', own].join('|')})\\s*(\\?\\.|&&|\\))`, 'g');
     for (const m of code.matchAll(coreGuard)) {
         if (topLevel(m.index)) continue;
         const ns = m[1] || m[2];
@@ -1152,14 +1148,14 @@ const CASES = [
     [`el.dataset.state = 'active';`, ['JSD-01a']],
     [`if (el.dataset.state === 'active') go();`, []], // a read of dataset.state is not (a)
     [`t.setAttribute('data-toast-state', 'show');`, ['JSD-01b']],
-    [`NDS.State.add(el, 'open'); root.querySelector('[data-state~="open"]');`, ['JSD-01c']], // own token
+    [`NDS.state.add(el, 'open'); root.querySelector('[data-state~="open"]');`, ['JSD-01c']], // own token
     [`addState(el, 'open'); root.querySelector('[data-state~="open"]');`, []], // addState is no State alias here
-    [`const { add: addState } = NDS.State; addState(el, 'open'); root.querySelectorAll('.x[data-state~="open"]');`, ['JSD-01c']],
+    [`const { add: addState } = NDS.state; addState(el, 'open'); root.querySelectorAll('.x[data-state~="open"]');`, ['JSD-01c']],
     [`root.querySelectorAll('li[data-state~="active"]');`, []], // never written here: foreign
-    [`// root.querySelector('[data-state~="open"]')\nNDS.State.add(el, 'open');`, []], // comment
-    [`NDS.State.add(b, 'open'); el.innerHTML = '<button data-state="open">';`, ['JSD-01c']],
+    [`// root.querySelector('[data-state~="open"]')\nNDS.state.add(el, 'open');`, []], // comment
+    [`NDS.state.add(b, 'open'); el.innerHTML = '<button data-state="open">';`, ['JSD-01c']],
     [`el.innerHTML = '<div data-state="open">';`, []], // another component's canon
-    [`NDS.State.add(a, 'active'); report('uses data-state="active" here');`, []], // prose
+    [`NDS.state.add(a, 'active'); report('uses data-state="active" here');`, []], // prose
     [`el.setAttribute('data-status', 'error');`, ['JSD-02']],
     [`if (el.dataset.status === 'success') x();`, ['JSD-02']],
     [`window.addEventListener('resize', fn);`, ['JSP-01']],
@@ -1168,7 +1164,7 @@ const CASES = [
     [`const f = new Function('a', body);`, ['JSS-02']],
     [`setTimeout('go()', 10);`, ['JSS-02']],
     [`setTimeout(go, 10);`, []],
-    [`const re = /data-state="open"/; NDS.State.add(el, 'open'); use(re);`, []], // a regex literal is not a string
+    [`const re = /data-state="open"/; NDS.state.add(el, 'open'); use(re);`, []], // a regex literal is not a string
     [`(function(){ function f() { const io = new IntersectionObserver(cb); } })();`, ['JSP-03']],
     [`(function(){ function f() { new ResizeObserver(cb).observe(el); } })();`, ['JSP-04a']],
     [`(function(){ function f() { const mo = new MutationObserver(cb); mo.disconnect(); } })();`, ['JSP-05']],
@@ -1187,21 +1183,21 @@ const CASES = [
     [`(function(){ function f() {\n// Soft dependency: no tooltip if NDS.Tooltip is not bundled.\nif (NDS.Tooltip) NDS.Tooltip.create(el); } })();`, []],
     [`(function(){ function f() { NDS.Form?.setStatus(el, 'error'); } })();`, ['JSD-12']], // main always loads Form
     [`(function(){\n// ------\n// Soft dependency: Panel is optional here.\n// ------\nfunction a() { NDS.Panel?.open(p); }\nfunction b() { NDS.Panel?.close(p); } })();`, []], // section header
-    [`(function(){ function f() { NDS.State?.add(el, 'x'); } })();`, ['JSD-08']], // core: no JSD-12, but a dead guard
+    [`(function(){ function f() { NDS.state?.add(el, 'x'); } })();`, ['JSD-08']], // core: no JSD-12, but a dead guard
     [`(function(){\n// Soft dependency: Copy is optional.\nfunction a() { NDS.Copy?.init(); }\nfunction b() { NDS.Copy.init(); } })();`, ['JSD-12?']], // raw where guarded elsewhere
     [`(function(){\n// Soft dependency: Copy is optional.\nfunction a() { NDS.Copy?.init(); }\nfunction b() { if (!NDS.Copy) return; NDS.Copy.init(); } })();`, []],
     [`(function(){\n// Soft dependency: Alert is optional.\nfunction a() { if (!el || !NDS.Alert) return; NDS.Alert.create(el); }\nfunction b() { NDS.Alert.dismiss(el); } })();`, ['JSD-12?']], // || !NDS.X is a guard too
     [`(function(){ function f() { log(NDS.Modal); } })();`, []], // passed as an argument, not a test
     [`(function(){ function f() { if (NDS.debounce) NDS.debounce(g); } })();`, ['JSD-08']],
-    [`(function(){ function f() { NDS.Init?.refresh(el); } })();`, ['JSD-08']], // the loader's own API
+    [`(function(){ function f() { NDS.init?.refresh(el); } })();`, ['JSD-08']], // the loader's own API
     [`(function(){ function f() { if (NDS.isRTL && x) go(); } })();`, []], // a value read, not a guard
-    [`(function(){ NDS.Init?.refresh(el); })();`, []], // module top level runs before the loader
+    [`(function(){ NDS.init?.refresh(el); })();`, []], // module top level runs before the loader
     [`(function(){ NDS.Case = {}; function f() { NDS.Case?.init(); } })();`, ['JSD-08']], // own namespace
-    [`(function(){ function close() { NDS.State.add(el, 'closing'); setTimeout(() => { NDS.State.clear(el); }, 300); } })();`, ['JSD-13']],
-    [`(function(){ function close() { NDS.State.add(el, 'closing'); setTimeout(() => { NDS.State.clear(el); }, NDS.transitionSpeed()); } })();`, []],
-    [`(function(){ const T = 200; function close() { NDS.State.add(el, 'toast-hide'); setTimeout(() => el.remove(), T + 50); } })();`, ['JSD-13']], // const + offset
-    [`(function(){ function close() { NDS.State.add(el, 'closing'); setTimeout(() => poll(), 300); } })();`, []], // callback leaves el alone
-    [`(function(){ const CONFIG = { transitionDuration: 250 }; function hide() { NDS.State.add(el, 'hide'); setTimeout(() => el.setAttribute('hidden', ''), CONFIG.transitionDuration); } })();`, ['JSD-13']],
+    [`(function(){ function close() { NDS.state.add(el, 'closing'); setTimeout(() => { NDS.state.clear(el); }, 300); } })();`, ['JSD-13']],
+    [`(function(){ function close() { NDS.state.add(el, 'closing'); setTimeout(() => { NDS.state.clear(el); }, NDS.transitionSpeed()); } })();`, []],
+    [`(function(){ const T = 200; function close() { NDS.state.add(el, 'toast-hide'); setTimeout(() => el.remove(), T + 50); } })();`, ['JSD-13']], // const + offset
+    [`(function(){ function close() { NDS.state.add(el, 'closing'); setTimeout(() => poll(), 300); } })();`, []], // callback leaves el alone
+    [`(function(){ const CONFIG = { transitionDuration: 250 }; function hide() { NDS.state.add(el, 'hide'); setTimeout(() => el.setAttribute('hidden', ''), CONFIG.transitionDuration); } })();`, ['JSD-13']],
     [`(function(){ function f() { el.addEventListener('scroll', () => { fit(); }); } })();`, ['JSP-02']],
     [`(function(){ function f() { el.addEventListener('scroll', NDS.rafThrottle(fit)); } })();`, []],
     [`(function(){ function f() { const r = NDS.rafThrottle(fit); el.addEventListener('scroll', (e) => { if (ok(e)) r(); }); } })();`, []], // calls a throttled function
@@ -1228,7 +1224,7 @@ const CASES = [
     [`(function(){ class A { close() { this.cancel = NDS.onTransitionEnd(el, done); } } })();`, ['JSP-12']],
     [`(function(){ class A { close() { this.cancel?.(); this.cancel = NDS.onTransitionEnd(el, done); } } })();`, []],
     [`(function(){ class A { close() { if (!this.open) return; this.cancel = NDS.onTransitionEnd(el, done); } } })();`, []], // early return
-    [`(function(){ const f = () => NDS.State?.add(el, 'x'); })();`, ['JSD-08']], // an expression arrow runs later
+    [`(function(){ const f = () => NDS.state?.add(el, 'x'); })();`, ['JSD-08']], // an expression arrow runs later
     [`(function(){ function f() {\nconst h = \`<i class="\${a ? \`x\` : \`y\`}">\`;\n// Soft dependency: Copy is optional.\nNDS.Copy?.init(h); } })();`, []], // a nested template keeps the scanner in step
     [`(function(){ function f(v) { return /["']/.test(v); }\nfunction g() { return 1; } })();`, []], // a regex after return is no division
     [`(function(){ function f(el) { if (!el) return; go(); if (el) el.focus(); } })();`, ['JSD-14b']],

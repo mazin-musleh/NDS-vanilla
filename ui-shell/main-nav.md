@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 03:22 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="mainnav-overview" class="nds-content-section nds-doc-overview">
@@ -638,7 +638,7 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
 | `hidden` | `#nds-nav-collapse` | Write it in the markup. The script removes it when it starts |
 | `data-state` | `#nds-nav-collapse` | The script sets `open` and `opening` when the drawer opens, then `opened`. It adds `closing` when the drawer closes, and removes all of them after the close |
 | `data-state` | `ul.nds-nav-primary` | The script sets `has-more` while the links do not fit, `at-start` at the start of the scroll, and `at-end` at its end |
-| `data-state="current"` | A primary `a.nds-nav-link` | Set it yourself on the current page's link. It is the only attribute that highlights it. `NDS.Init.audit()` reports a current-page link without it |
+| `data-state="current"` | A primary `a.nds-nav-link` | Set it yourself on the current page's link. It is the only attribute that highlights it. `NDS.init.audit()` reports a current-page link without it |
 | `aria-current="page"` | A primary `a.nds-nav-link` | Set it yourself, with `data-state="current"`. It names the current page for screen readers, and changes no style |
 | `data-state` | `li.nds-has-menu` | The script sets `open` and `opening` when the menu opens, then `opened`. It adds `closing` when the menu closes, and removes all of them after the close |
 | `aria-expanded` | A dropdown's trigger | Write `false` in the markup. The script writes it when it is missing, sets `true` when the menu opens, and `false` when it closes |
@@ -669,7 +669,7 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
 | Method | Effect |
 |---|---|
 | `NDS.MainNav.init()` | Starts the main navigation. It runs on page load, and a second call does nothing |
-| `NDS.MainNav.reinit()` | Finds the main navigation again and starts it. Call it when the nav itself is new: rendered after the NDS script ran, or replaced by a route change. `NDS.Init.refresh()` calls it too |
+| `NDS.MainNav.reinit()` | Finds the main navigation again and starts it. Call it when the nav itself is new: rendered after the NDS script ran, or replaced by a route change. `NDS.init.refresh()` calls it too |
 | `NDS.MainNav.destroy()` | Removes every listener and observer, and the backdrop. The markup stays, and `reinit()` starts it again |
 | `NDS.MainNav.open()` | Opens the drawer |
 | `NDS.MainNav.close()` | Closes the drawer |

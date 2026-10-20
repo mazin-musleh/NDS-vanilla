@@ -13,7 +13,7 @@
  *                                      it, or wraps it — no getByTarget() lookup first. Omit
  *                                      root for all. Form-mode filters are skipped, AJAX or
  *                                      not: the server owns their result set. Prefer
- *                                      NDS.Init.refresh(root),
+ *                                      NDS.init.refresh(root),
  *                                      which calls this and every other affected component
  * Events (bubble from the filter surface element):
  *   nds:filter:ready       detail = the instance
@@ -55,7 +55,7 @@
  *     undefined.
  *   - Declare data-filter-items only where a live filter exists: a crit rule holds such a
  *     container as skeleton until an instance stamps data-nds-filter-initialized, with no
- *     console warning — NDS.Init.audit() is what reports an unclaimed one. The same audit
+ *     console warning — NDS.init.audit() is what reports an unclaimed one. The same audit
  *     flags a .nds-filter carrying no data-filter-target: a surface no instance ever binds,
  *     so its options never render.
  *   - A hidden auto-populated filter defers its option build to first open (data-delay="500"
@@ -472,7 +472,7 @@
                 return;
             }
 
-            NDS.State.set(this.filterContainer, 'submitting');
+            NDS.state.set(this.filterContainer, 'submitting');
             this._showTriggerLoading();
 
             this.filterContainer.dispatchEvent(new CustomEvent('nds:form:valid', {
@@ -517,7 +517,7 @@
             });
             if (!this.filterContainer.dispatchEvent(ajaxEvent)) return;
 
-            NDS.State.set(this.filterContainer, 'submitting');
+            NDS.state.set(this.filterContainer, 'submitting');
             this._showTriggerLoading();
             if (this.targetContainer) this.targetContainer.classList.add('nds-loading');
 
@@ -531,7 +531,7 @@
                     const eventDetail = this._applyAjaxResponse({ isJson, data });
                     // Swapped-in results start before the complete event, so its handlers find them live.
                     // A bundle that fails to load leaves them unstarted; it does not undo the filters.
-                    const mounted = isJson ? null : NDS.Init.mount(this.targetContainer).catch(() => {});
+                    const mounted = isJson ? null : NDS.init.mount(this.targetContainer).catch(() => {});
                     return Promise.resolve(mounted).then(() => {
                         // A newer request took over while this one mounted: it owns the loading state.
                         if (!signal.aborted) this._finishAjaxSubmit(eventDetail, isJson);
@@ -612,7 +612,7 @@
 
             if (targetInResponse) {
                 const newContainer = targetInResponse.cloneNode(true);
-                NDS.Init.destroy(this.targetContainer);
+                NDS.init.destroy(this.targetContainer);
                 this.targetContainer.replaceWith(newContainer);
                 this.targetContainer = newContainer;
                 this.items = this.resolveItems();
@@ -651,8 +651,8 @@
         // Undo what handleAjaxSubmit set on start; success and failure both release through here.
         _releaseSubmitUi() {
             if (this.targetContainer) this.targetContainer.classList.remove('nds-loading');
-            NDS.State.clear(this.filterContainer);
-            if (this._triggerBtn) { NDS.State.remove(this._triggerBtn, 'loading'); this._triggerBtn = null; }
+            NDS.state.clear(this.filterContainer);
+            if (this._triggerBtn) { NDS.state.remove(this._triggerBtn, 'loading'); this._triggerBtn = null; }
         }
 
         /**
@@ -1613,9 +1613,9 @@
         // stamped (never removed-without-re-add).
         _showTriggerLoading() {
             [this.filterButtonEl, this.directSearchBtn].forEach(btn => {
-                if (btn && btn !== this._triggerBtn) NDS.State.remove(btn, 'loading');
+                if (btn && btn !== this._triggerBtn) NDS.state.remove(btn, 'loading');
             });
-            if (this._triggerBtn) NDS.State.add(this._triggerBtn, 'loading');
+            if (this._triggerBtn) NDS.state.add(this._triggerBtn, 'loading');
         }
 
         /**
@@ -2699,7 +2699,7 @@
 
             // Clear form state if in form mode
             if (this.isFormMode) {
-                NDS.State.clear(this.filterContainer);
+                NDS.state.clear(this.filterContainer);
             }
 
             this.updateApplyButtonLabel();
@@ -2965,7 +2965,7 @@
     const _instancesByTarget = new Map();
 
     // Resolve the LIVE instance for a target id, or null. A framework view
-    // unmounted without NDS.Init.destroy() leaves a detached instance squatting
+    // unmounted without NDS.init.destroy() leaves a detached instance squatting
     // its id: every claim below would then skip the remount and the crit hold
     // (data-nds-filter-initialized) would keep the new region hidden forever.
     // A detached representative means that filter is gone — destroy it (which
@@ -2974,7 +2974,7 @@
         const instance = _instancesByTarget.get(id);
         if (!instance) return null;
         if (instance.filterContainer?.isConnected) return instance;
-        console.warn(`NDS Filter: reclaiming target "${id}" — its instance was removed from the DOM without NDS.Init.destroy(). Call destroy() on unmount.`);
+        console.warn(`NDS Filter: reclaiming target "${id}" — its instance was removed from the DOM without NDS.init.destroy(). Call destroy() on unmount.`);
         instance.destroy();
         _instancesByTarget.delete(id);
         return null;
@@ -3076,7 +3076,7 @@
         /**
          * Re-resolve items and regenerate auto-scanned filters for every instance
          * whose target container is `root`, sits inside it, or contains it. This is
-         * the NDS.Init.refresh(container) entry point: a filter is identified by its
+         * the NDS.init.refresh(container) entry point: a filter is identified by its
          * data-filter-target, never by the mutated container, so the caller cannot be
          * expected to resolve the instance first — that lookup is the trap this
          * removes. No arg (or document) refreshes every live filter.
@@ -3111,7 +3111,7 @@
                 // so the next real submit would silently drop the applied filter.
                 if (instance.isFormMode) return;
                 // Reap an instance whose surfaces left the DOM (route change with
-                // no NDS.Init.destroy()) instead of refreshing a detached filter.
+                // no NDS.init.destroy()) instead of refreshing a detached filter.
                 if (!liveInstance(instance.targetId)) return;
                 const target = instance.targetId
                     ? document.getElementById(instance.targetId)

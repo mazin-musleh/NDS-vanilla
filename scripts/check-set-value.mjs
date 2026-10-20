@@ -92,7 +92,7 @@ for (const v of REACT) {
             h(Box, { type: 'checkbox', id: 'r-cb' }), h(Box, { type: 'radio', id: 'r-rd', name: 'r-rd' }), h(Switch)));
         const tick = () => new Promise((r) => setTimeout(r, 50));
         await tick();
-        NDS.Init.mount(document.getElementById('r-sw-box'));
+        NDS.init.mount(document.getElementById('r-sw-box'));
         const read = (id) => ({ dom: document.getElementById(id).checked, state: document.getElementById(id + '-state').textContent });
         NDS.setValue(document.getElementById('r-cb'), true);
         NDS.setValue(document.getElementById('r-rd'), true);
@@ -276,7 +276,7 @@ for (const v of REACT) {
             + field('<input type="text" id="sv-num" class="nds-input nds-center" inputmode="numeric" value="1" min="1" max="20" step="1">',
                 step('decrement', 'prefix'), step('increment', 'suffix'));
         document.querySelector('.nds-section-body').prepend(box);
-        NDS.Init.mount(box);
+        NDS.init.mount(box);
     });
     const bind = (sel) => page.evaluate((sel) => {
         const el = document.querySelector(sel);
@@ -367,7 +367,7 @@ for (const ver of VUE) {
                 + '<input type="checkbox" id="v-sw" class="nds-switch-input" v-model="sw">'
                 + '<div class="nds-switch-track"><div class="nds-switch-thumb"></div></div></div></div></div>'
         }).mount(host);
-        NDS.Init.mount(host);
+        NDS.init.mount(host);
     });
     await page.waitForFunction(() => document.querySelector('#v-dp .nds-date-input')?.ndsDatePicker
         || window.NDS?.DatePicker?.create, null, { timeout: 10000 });
@@ -474,7 +474,7 @@ for (const ver of VUE) {
                 + '<input type="text" id="v2-qty" class="nds-input nds-center" inputmode="numeric" min="1" max="20" step="1" v-model="qty">'
                 + step('increment', 'suffix') + '</div></div>'
         }).mount(host);
-        NDS.Init.mount(host);
+        NDS.init.mount(host);
     });
     const vm = (k) => page.evaluate((k) => window.__vue2[k], k);
 
@@ -618,7 +618,7 @@ for (const v of SVELTE) {
     await page.evaluate(async ([markup, SVELTE_APP, v]) => {
         const props = 'export let region = "", date = "", time = "", phone = "", text = "", agree = false, sw = false;';
         const src = `<script>${props}
-  function nds(node) { window.NDS?.Init.mount(node); return { destroy() { NDS.Init.destroy(node); } }; }
+  function nds(node) { window.NDS?.init.mount(node); return { destroy() { NDS.init.destroy(node); } }; }
 <\/script><div use:nds>${markup}</div>`;
         const App = await eval(SVELTE_APP)(src, v, { accessors: true });
         window.__sv = new App({ target: document.querySelector('.nds-section-body').appendChild(document.createElement('div')) });
@@ -639,7 +639,7 @@ for (const [v, zone] of ANGULAR) {
         class AppCmp {
             region = ''; date = ''; time = ''; phone = ''; text = ''; agree = false; sw = false;
             el = inject(ElementRef);
-            ngAfterViewInit() { window.NDS?.Init.mount(this.el.nativeElement); }
+            ngAfterViewInit() { window.NDS?.init.mount(this.el.nativeElement); }
         }
         Component({ selector: 'nds-model-app', standalone: true, imports: [FormsModule], template: markup })(AppCmp);
         document.querySelector('.nds-section-body').appendChild(document.createElement('nds-model-app'));
@@ -669,7 +669,7 @@ for (const [v, zone] of ANGULAR) {
             + '<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="AE"><span class="nds-label">UAE</span></button>'
             + '</div></div></div>';
         document.querySelector('.nds-section-body').prepend(box);
-        NDS.Init.mount(box);
+        NDS.init.mount(box);
     });
     await page.locator('#sv-dm .nds-dropmenu-trigger').click();
     const item = page.locator('.nds-dropmenu-item[data-value="AE"]');

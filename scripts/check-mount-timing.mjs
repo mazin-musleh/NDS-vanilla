@@ -6,9 +6,9 @@
 // every window. This measures that claim instead of trusting the comment.
 //
 //   CASE 1  view in the DOM before nds-main.min.js executes  -> startup detection inits it
-//   CASE 4  consumer runs `window.NDS?.Init.refresh(view)` in that window -> no throw, no harm
+//   CASE 4  consumer runs `window.NDS?.init.refresh(view)` in that window -> no throw, no harm
 //   CASE 2  view mounted after detection, before the delegated bundle lands -> arrival scan inits it
-//   CASE 3  view mounted after everything -> NDS.Init.refresh(view) inits it
+//   CASE 3  view mounted after everything -> NDS.init.refresh(view) inits it
 //   CASE 5  component type absent at first load -> refresh() SKIPS its lazy stub
 //           (never force-loads), and the documented path (loadBundle + init) works
 //
@@ -86,7 +86,7 @@ async function holdBundle(page, match) {
     const mounted = await page.evaluate(MOUNT_VIEW('timingCase1'));
     ok('case1: view mounted while nds-main is still held', mounted === true);
     const guarded = await page.evaluate(() => {
-        try { window.NDS?.Init?.refresh?.(document.getElementById('host-timingCase1')); return 'no-throw'; }
+        try { window.NDS?.init?.refresh?.(document.getElementById('host-timingCase1')); return 'no-throw'; }
         catch (e) { return e.message; }
     });
     ok('case4: guarded refresh in the pre-NDS window does not throw', guarded === 'no-throw', guarded);
@@ -105,7 +105,7 @@ async function holdBundle(page, match) {
     page.on('pageerror', (e) => errors.push(e.message));
     const release = await holdBundle(page, 'nds-delegated.min.js');
     await page.goto(`${BASE}/components/filter.html`, { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => !!window.NDS?.Init, null, { timeout: 15000 });
+    await page.waitForFunction(() => !!window.NDS?.init, null, { timeout: 15000 });
     ok('case2: delegated bundle is genuinely absent at mount time',
         await page.evaluate(() => !window.NDS.Filter || NDS.Filter.__ndsStub === true));
     await page.evaluate(MOUNT_VIEW('timingCase2'));
@@ -118,7 +118,7 @@ async function holdBundle(page, match) {
 
     // ---- CASE 3: mounted after everything; one refresh call brings it up.
     await page.evaluate(MOUNT_VIEW('timingCase3'));
-    await page.evaluate(() => NDS.Init.refresh(document.getElementById('host-timingCase3')));
+    await page.evaluate(() => NDS.init.refresh(document.getElementById('host-timingCase3')));
     await settle(500);
     ok('case3: refresh() initialized a post-load view',
         await page.evaluate(VIEW_INITED('timingCase3')));
@@ -146,7 +146,7 @@ async function holdBundle(page, match) {
     ok('case5: code namespaces are lazy stubs after the failed load', stubbed === true,
         `${attempts.length} aborted attempt(s)`);
     const before = attempts.length;
-    await page.evaluate(() => NDS.Init.refresh(document.body));
+    await page.evaluate(() => NDS.init.refresh(document.body));
     await settle(800);
     ok('case5: refresh() skipped the stubs — no forced load attempt', attempts.length === before,
         `${attempts.length - before} new attempts`);

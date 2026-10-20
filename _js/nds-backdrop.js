@@ -131,7 +131,7 @@
     const speed = NDS.transitionSpeed();
     setTimeout(() => {
       if (!isActive) return;
-      NDS.State.set(backdropElement, 'active');
+      NDS.state.set(backdropElement, 'active');
       if (newConfig.preventScroll) {
         NDS.scrollLock.lock();
         locked = true;
@@ -166,7 +166,7 @@
     isActive = false;
 
     // Remove active state — CSS handles opacity/blur removal
-    NDS.State.clear(backdropElement);
+    NDS.state.clear(backdropElement);
 
     // Restore scroll immediately
     if (locked) {

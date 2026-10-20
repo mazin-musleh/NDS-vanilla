@@ -8,7 +8,7 @@
  *   NDS.Toc.init() / .reinit()   scan + initialize .nds-toc
  *   NDS.Toc.create(el)           instance one table of contents — null when no link has a
  *                                target; the live one if started
- *   NDS.Toc.destroy(el)          tear one down — the NDS.Init.destroy entry point
+ *   NDS.Toc.destroy(el)          tear one down — the NDS.init.destroy entry point
  *   instance.update()            re-pick the active entry now
  *   instance.destroy()
  * Events:
@@ -142,8 +142,8 @@
 
             // Drop any static active state so the scrollspy is the single source of truth.
             this.entries.forEach(e => {
-                NDS.State.remove(e.li, 'active');
-                NDS.State.remove(e.link, 'active');
+                NDS.state.remove(e.li, 'active');
+                NDS.state.remove(e.link, 'active');
             });
 
             this.links.forEach(link => link.addEventListener('click', this.onClick, { signal }));
@@ -214,13 +214,13 @@
         setActive(entry) {
             if (this.active === entry) return;
             if (this.active) {
-                NDS.State.remove(this.active.li, 'active');
-                NDS.State.remove(this.active.link, 'active');
+                NDS.state.remove(this.active.li, 'active');
+                NDS.state.remove(this.active.link, 'active');
             }
             this.active = entry;
             if (entry) {
-                NDS.State.add(entry.li, 'active');
-                NDS.State.add(entry.link, 'active');
+                NDS.state.add(entry.li, 'active');
+                NDS.state.add(entry.link, 'active');
             }
         }
 

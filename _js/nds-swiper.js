@@ -3,7 +3,7 @@
  * Methods:
  *   NDS.Swiper.init() / .reinit()   scan + initialize .nds-swiper
  *   NDS.Swiper.create(el)           instance one swiper
- *   NDS.Swiper.destroy(el)          tear one down — the NDS.Init.destroy entry point
+ *   NDS.Swiper.destroy(el)          tear one down — the NDS.init.destroy entry point
  *   instance.next() / .prev()       move by one page
  *   instance.goTo(index, animate = true)  move to a slide index, clamped to the
  *                                   last page (a loop has none); false = instant
@@ -788,8 +788,8 @@
 
             bullets.forEach((bullet, i) => {
                 const isActive = i === currentPage;
-                if (isActive) NDS.Status.set(bullet, 'active');
-                else NDS.Status.clear(bullet);
+                if (isActive) NDS.status.set(bullet, 'active');
+                else NDS.status.clear(bullet);
                 NDS.aria.current(bullet, isActive ? 'true' : null);
             });
         }
@@ -945,9 +945,9 @@
                 // same neighbours. Without a loop the row does not wrap.
                 let d = this._loop ? (((this._realOf(j) - open) % n) + n) % n : j - open;
                 if (this._loop && d > n / 2) d -= n;
-                if (d === 0) NDS.Status.set(s, 'active');
-                else if (d > 0) NDS.Status.set(s, 'after');
-                else NDS.Status.clear(s);
+                if (d === 0) NDS.status.set(s, 'active');
+                else if (d > 0) NDS.status.set(s, 'after');
+                else NDS.status.clear(s);
             });
         }
 
@@ -961,7 +961,7 @@
             // A loop has no ends.
             if (!this._loop && this.currentIndex <= 0) tokens.push('at-start');
             if (!this._loop && this.currentIndex >= this.maxIndex) tokens.push('at-end');
-            NDS.State.set(this.container, ...tokens);
+            NDS.state.set(this.container, ...tokens);
         }
 
         // ==============================================
@@ -999,9 +999,9 @@
             this.container.removeAttribute('data-swiper-peek');
             this.container.removeAttribute('data-swiper-preset');
             this.container.removeAttribute('data-swiper-single');
-            NDS.State.clear(this.container); // at-start/at-end are a documented consumer hook
+            NDS.state.clear(this.container); // at-start/at-end are a documented consumer hook
             ['--total', '--slides'].forEach(p => this.container.style.removeProperty(p));
-            if (this._spotlight) this.slides.forEach(s => NDS.Status.clear(s));
+            if (this._spotlight) this.slides.forEach(s => NDS.status.clear(s));
             this.wrapper.style.removeProperty('overflow');
             this.wrapper.removeAttribute('data-swiper-moving');
             if (this.pagination) { this.pagination.style.removeProperty('display'); this.pagination.innerHTML = ''; }

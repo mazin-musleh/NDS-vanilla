@@ -63,8 +63,8 @@
     // STATE MANAGEMENT
     // ==============================================
 
-    // State helpers — delegated to NDS.State (nds-core.js)
-    const { add: addState, remove: removeState, has: hasState } = NDS.State;
+    // State helpers — delegated to NDS.state (nds-core.js)
+    const { add: addState, remove: removeState, has: hasState } = NDS.state;
 
     // Transition states that are mutually exclusive
     const TRANSITION_STATES = ['open', 'opening', 'closing'];
@@ -83,11 +83,11 @@
     // A closed toggle keeps its highlight while its <li> is the current page.
     function clearButton(listItem, button) {
         if (hasState(listItem, CONFIG.states.active)) setState(button, CONFIG.states.active);
-        else NDS.State.clear(button);
+        else NDS.state.clear(button);
     }
 
     function isOpen(listItem) {
-        return NDS.State.has(listItem, CONFIG.states.open) || NDS.State.has(listItem, CONFIG.states.opening);
+        return NDS.state.has(listItem, CONFIG.states.open) || NDS.state.has(listItem, CONFIG.states.opening);
     }
 
     // ==============================================

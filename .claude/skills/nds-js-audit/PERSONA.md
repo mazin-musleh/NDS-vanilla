@@ -400,7 +400,7 @@ For each loader-registered component: the JS file suffix, the registry `name` tu
 | Move | `goTo(i)`, `next()`, `prev()` (Bootstrap's carousel) |
 | Check | `validate(el)` → `{ valid, … }` |
 
-5. Arguments: the element first, then the values, then one options object. More than two values go in the options object. A name used in two places takes the same arguments in both (`Form.setStatus(el, status, opts)`, `UserFeedback.setStatus(el, status)`, `NDS.Status.set(el, status)`).
+5. Arguments: the element first, then the values, then one options object. More than two values go in the options object. A name used in two places takes the same arguments in both (`Form.setStatus(el, status, opts)`, `UserFeedback.setStatus(el, status)`, `NDS.status.set(el, status)`).
 6. A namespace method and its instance method use the same verb; the namespace one takes the element first (`NDS.Rating.enable(el)` mirrors `el.ndsRating.enable()`).
 7. `create` returns the instance, `getInstance` the instance or `null`, a check its result, and a method that waits a Promise.
 

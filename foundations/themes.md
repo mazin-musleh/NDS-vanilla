@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "19/10/2026 - 10:35 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="themes-overview" class="nds-content-section nds-doc-overview">
@@ -250,7 +250,7 @@ A theme option can load a stylesheet theme on click: `data-theme-css` names the 
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">A toggle or a theme menu works with no setup code. On a page that has none at load, call <code class="nds-inline-code lang-js">NDS.Init.refresh()</code> after you add the first one.</p>
+          <p class="nds-item-desc">A toggle or a theme menu works with no setup code. On a page that has none at load, call <code class="nds-inline-code lang-js">NDS.init.refresh()</code> after you add the first one.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

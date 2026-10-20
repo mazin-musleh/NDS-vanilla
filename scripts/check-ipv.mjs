@@ -22,8 +22,8 @@ const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 await page.goto(`${BASE}/components/ipv.html`, { waitUntil: 'load' });
 await page.addStyleTag({ content: '#nds-cookies-panel { display: none !important; }' });
-await page.waitForFunction(() => window.NDS && NDS.Init, null, { timeout: 30000 });
-await page.evaluate(() => NDS.Init.ready);
+await page.waitForFunction(() => window.NDS && NDS.init, null, { timeout: 30000 });
+await page.evaluate(() => NDS.init.ready);
 await page.waitForTimeout(1000);
 
 const api = await page.evaluate(() => ({

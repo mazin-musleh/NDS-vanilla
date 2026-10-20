@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 07:46 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="pagination-overview" class="nds-content-section nds-doc-overview">
@@ -563,7 +563,7 @@ async function loadPage(page) {
   NDS.Pagination.setTotalPages(nav, res.data.totalPages);
   NDS.Pagination.updateRecords('requestsList', { from: res.data.from, to: res.data.to, count: res.data.count });
 }
-NDS.Init.ready.then(function () {
+NDS.init.ready.then(function () {
   return loadPage(nav.dataset.activePage || 1);
 }).catch(showError);
 nav.addEventListener('nds:pagination:change', function (e) {

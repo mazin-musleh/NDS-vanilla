@@ -44,7 +44,7 @@ Never use `file://` — NDS fetches (i18n JSON, autocomplete) fail under CORS th
   page.on('pageerror', e => errors.push(String(e)));
   ```
 - **The rule's specific interaction** — drive it, then assert the expected DOM/behavior. Map the rule to a scenario from the "Behavior regression verification (per rule)" table in `SKILL.md` (that table is the scenario source — automate the row, don't print it). Examples:
-  - JSD-01 → trigger each state transition, assert `data-state` token set via `NDS.State.get(el)`.
+  - JSD-01 → trigger each state transition, assert `data-state` token set via `NDS.state.get(el)`.
   - JSP-06 / JSD-09 → exercise one click **and** one keyboard path, then open/close the component ~20× and assert the listener count or detached-node count didn't grow.
   - JSS-01 / JSA-12 → render every variant, snapshot `outerHTML`, paste `<img src=x onerror=...>` as the user value and assert it renders as literal text (no `alert`).
 
@@ -54,7 +54,7 @@ Write a throwaway ESM script to the repo's `tmp/nds-browser-{name}.mjs`, run it 
 
 Turn the HTTP cache off before `goto`: `await page.route('**/*.js*', (r) => r.continue());`. A bundle's `?ver=` is fixed at server start, so a cached copy is the pre-fix bundle and the after-fix run silently tests old code.
 
-To test a date, replace `NDS.date.today` after `NDS.Init.ready` (`NDS.date.today = () => new Date(2028, 1, 29)`), then mount the fixture. Never freeze the clock with `page.clock.setFixedTime`: a page script waits for time to pass and the tab crashes.
+To test a date, replace `NDS.Date.today` after `NDS.init.ready` (`NDS.Date.today = () => new Date(2028, 1, 29)`), then mount the fixture. Never freeze the clock with `page.clock.setFixedTime`: a page script waits for time to pass and the tab crashes.
 
 ```js
 import { launch } from '../scripts/lib/browser.mjs';

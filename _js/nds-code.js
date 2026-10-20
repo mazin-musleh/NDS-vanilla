@@ -19,7 +19,7 @@
  *   - There is no reinit(): a block is highlighted once. Call highlight() after
  *     you change its content.
  *   - data-nds-code-highlighted marks a highlighted block. It stays through
- *     NDS.Init.destroy(): the markup stays highlighted, so a re-mount skips it.
+ *     NDS.init.destroy(): the markup stays highlighted, so a re-mount skips it.
  *   - The copy button in the action bar belongs to nds-copy (.nds-copy), not to this file.
  *   - A block that scrolls gets tabindex="0", so the keyboard can scroll it.
  *   - A CSS value that paints a color (a literal, or a var() that resolves to one on :root)
@@ -61,7 +61,7 @@
     // Each block highlights one viewport before it scrolls in, not in one init
     // sweep: ten blocks at once was the page's largest style recalc. A block in a
     // hidden tab panel intersects when its tab opens.
-    // Every NDS.Init.refresh re-runs this; a block already watched keeps its one subscription.
+    // Every NDS.init.refresh re-runs this; a block already watched keeps its one subscription.
     const watched = new WeakSet();
     function initializeCodeProcessing() {
         document.querySelectorAll('.nds-code code').forEach(function(codeElement) {
@@ -74,7 +74,7 @@
                 processCodeElement(codeElement);
                 offSize = NDS.onElementResize(codeElement, () => scrollStop(codeElement));
             }, { rootMargin: '100% 0px' });
-            // NDS.Init.destroy() finds this: core's pools hold the block until it is released.
+            // NDS.init.destroy() finds this: core's pools hold the block until it is released.
             codeElement.ndsCode = {
                 destroy() { off(); if (offSize) offSize(); watched.delete(codeElement); },
             };

@@ -54,7 +54,7 @@
         more_info: 'More info',
     });
 
-    const { add: addState, remove: removeState } = NDS.State;
+    const { add: addState, remove: removeState } = NDS.state;
 
     // Only one tooltip is open at a time — track it module-locally so open()
     // doesn't need to sweep the DOM by attribute selector.
@@ -64,7 +64,7 @@
     function buildChip(status) {
         const wrap = document.createElement('span');
         wrap.className = 'nds-feedback nds-sm';
-        if (status) NDS.Status.set(wrap, status);
+        if (status) NDS.status.set(wrap, status);
         const icon = document.createElement('span');
         icon.className = 'nds-feedback-icon';
         const i = document.createElement('i');

@@ -24,7 +24,7 @@
  *   data-state         sorted-asc | sorted-desc on the state host (a11yTarget in
  *                      a11y 'sort', else the trigger). Authored, it seeds the state.
  * Gotchas:
- *   - Auto-detect reads a date in the root's nearest data-date-format and data-calendar (NDS.date),
+ *   - Auto-detect reads a date in the root's nearest data-date-format and data-calendar (NDS.Date),
  *     or a Gregorian YYYY-MM-DD.
  *     Other date text sorts as text: write YYYY-MM-DD in the sort attribute.
  *   - Markup wiring sorts the list's children with the defaults. types, accessor, urlSync
@@ -101,7 +101,7 @@
 
     // A day in `format` and `calendar` (default: the site's) or YYYY-MM-DD, as local midnight; NaN otherwise.
     function day(s, format, calendar) {
-        const d = NDS.date.parse(s, { format, calendar }) || NDS.date.parse(s, { format: 'YYYY-MM-DD' });
+        const d = NDS.Date.parse(s, { format, calendar }) || NDS.Date.parse(s, { format: 'YYYY-MM-DD' });
         return d ? d.getTime() : NaN;
     }
 
@@ -208,8 +208,8 @@
         _readSeed() {
             for (const trigger of this._resolveTriggers()) {
                 const host = this._stateHost(trigger);
-                const order = NDS.State.has(host, 'sorted-asc') ? 'asc'
-                          : NDS.State.has(host, 'sorted-desc') ? 'desc' : null;
+                const order = NDS.state.has(host, 'sorted-asc') ? 'asc'
+                          : NDS.state.has(host, 'sorted-desc') ? 'desc' : null;
                 if (order) return { key: this.opts.keyFrom(trigger), order };
             }
             return null;
@@ -325,8 +325,8 @@
             if (hasKey) {
                 const accessor = this.opts.accessor;
                 const sample = items.map(i => accessor(i, key));
-                const dateFormat = NDS.date.formatFor(this.root);
-                const calendar = NDS.date.calendarFor(this.root);
+                const dateFormat = NDS.Date.formatFor(this.root);
+                const calendar = NDS.Date.calendarFor(this.root);
                 const type = (this.opts.types && this.opts.types[key]) || detectType(sample, dateFormat, calendar);
                 ordered = [...items].sort((a, b) =>
                     compare(accessor(a, key), accessor(b, key), type, this.state.order, dateFormat, calendar)
@@ -371,7 +371,7 @@
             const triggers = this._resolveTriggers();
             const a11y = this.opts.a11y;
             // Cleared in a pass of its own: two triggers can share one host.
-            triggers.forEach(t => NDS.State.remove(this._stateHost(t), 'sorted-asc', 'sorted-desc'));
+            triggers.forEach(t => NDS.state.remove(this._stateHost(t), 'sorted-asc', 'sorted-desc'));
 
             triggers.forEach(trigger => {
                 const key = this.opts.keyFrom(trigger);
@@ -386,12 +386,12 @@
                             && (!orderAttr || orderAttr === this.state.order);
                 }
 
-                if (isActive && this.state.order) NDS.State.add(this._stateHost(trigger), 'sorted-' + this.state.order);
+                if (isActive && this.state.order) NDS.state.add(this._stateHost(trigger), 'sorted-' + this.state.order);
 
                 if (a11y === 'pressed') {
                     NDS.aria.pressed(trigger, isActive);
-                    if (isActive) NDS.State.add(trigger, 'selected');
-                    else NDS.State.remove(trigger, 'selected');
+                    if (isActive) NDS.state.add(trigger, 'selected');
+                    else NDS.state.remove(trigger, 'selected');
                 } else if (a11y === 'sort') {
                     const target = this.opts.a11yTarget ? this.opts.a11yTarget(trigger) : null;
                     if (target) {
@@ -401,8 +401,8 @@
                             NDS.aria.sort(target, 'none');
                         }
                     }
-                    if (isActive) NDS.State.add(trigger, 'active');
-                    else NDS.State.remove(trigger, 'active');
+                    if (isActive) NDS.state.add(trigger, 'active');
+                    else NDS.state.remove(trigger, 'active');
                 }
             });
 
@@ -486,7 +486,7 @@
     // ── Markup wiring ────────────────────────────────────────────────────
 
     // One list per distinct target id. ponytail: triggers are bound at create — one added later
-    // needs NDS.Init.destroy + refresh; bind by delegation if that becomes common.
+    // needs NDS.init.destroy + refresh; bind by delegation if that becomes common.
     function markupLists() {
         const lists = new Set();
         document.querySelectorAll('[data-sort-target]').forEach(t => {
@@ -509,7 +509,7 @@
         });
     }
 
-    // Owner hook for NDS.Init.refresh: rows added to a wired list join the active sort.
+    // Owner hook for NDS.init.refresh: rows added to a wired list join the active sort.
     function refresh(root = document) {
         init();
         markupLists().forEach(list => {

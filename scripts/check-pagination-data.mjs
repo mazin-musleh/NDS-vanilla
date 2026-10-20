@@ -109,7 +109,7 @@ await pp.route('**/components/pagination?*', async (r) => {
   const app = `<script type="module">
       const nav = document.getElementById('dd-nav');
       window.__early = nav.dataset.activePage || '1';
-      NDS.Init.ready.then(() => { window.__ready = nav.dataset.activePage || '1'; });
+      NDS.init.ready.then(() => { window.__ready = nav.dataset.activePage || '1'; });
     </script>`;
   r.fulfill({
     response: res,
@@ -139,7 +139,7 @@ const ppState = (p) => pp.evaluate((p) => {
 await pp.goto(`${BASE}/components/pagination?per-page=6&page=2&dd-page=3`);
 await ppReady();
 const read = await pp.waitForFunction(() => window.__ready && `${window.__early} ${window.__ready}`).then((h) => h.jsonValue());
-check(`sample: a load-time script reads ?page=3 after NDS.Init.ready (read before it: ${read.split(' ')[0]})`, read.endsWith(' 3'), `early, ready: ${read}`);
+check(`sample: a load-time script reads ?page=3 after NDS.init.ready (read before it: ${read.split(' ')[0]})`, read.endsWith(' 3'), `early, ready: ${read}`);
 let s = await ppState('pp');
 check('?per-page=6: the early split shows 6', s.split === 6, s.split);
 check('?per-page=6&page=2: items 7–12 shown', s.count === 6 && s.first === 'Item 7', `${s.count} from ${s.first}`);
@@ -165,7 +165,7 @@ await pp.goto(`${BASE}/components/pagination?per-page=9`);
 await ppReady();
 await pp.evaluate((html) => {
   document.querySelector('main').insertAdjacentHTML('beforeend', html);
-  return NDS.Init.mount(document.getElementById('pm-wrap'));
+  return NDS.init.mount(document.getElementById('pm-wrap'));
 }, fixture('pm'));
 await pp.waitForFunction(() => document.querySelector('.nds-pagination[data-auto-pagination="pm-grid"][data-nds-auto-pagination-initialized]'));
 s = await ppState('pm');

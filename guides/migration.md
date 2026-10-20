@@ -80,7 +80,7 @@ sidemenu_mode: false
                                     </div>
                                     <hr class="nds-divider">
                                     <div data-filter="kind" data-filter-type="checkbox" data-filter-legend="Kind"
-                                        data-filter-values='{"class":"Class","attribute":"Attribute","id":"Id","property":"Custom property","global":"Window setting","event":"Event","param":"URL parameter"}' data-no-auto-close>
+                                        data-filter-values='{"class":"Class","attribute":"Attribute","id":"Id","property":"Custom property","global":"Window setting","event":"Event","param":"URL parameter","api":"JS API"}' data-no-auto-close>
                                     </div>
                                 </div>
                                 <div class="nds-dropmenu-footer">

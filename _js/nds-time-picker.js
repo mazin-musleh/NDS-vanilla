@@ -7,7 +7,7 @@
  *                                               and every .nds-time-fields group
  *   NDS.TimePicker.create(input, formControl)   build/return one instance — idempotent,
  *                                               null on bad markup; formControl is optional
- *   NDS.TimePicker.destroy(el)                  tear one down — the NDS.Init.destroy entry point
+ *   NDS.TimePicker.destroy(el)                  tear one down — the NDS.init.destroy entry point
  *   NDS.TimePicker.setValue(el, '14:30')        commit a 24h value — false when unparsable
  *                                               or outside data-min-time/data-max-time
  *   NDS.TimePicker.getValue(el)                 the 24h value, '' until the time is complete
@@ -400,7 +400,7 @@
             const signal = this.instanceAbortController.signal;
             const openFrom = (e) => {
                 // Forms copies a readonly input to the field's state; the toggle button stays live.
-                if (this.elements.input.disabled || NDS.State.has(this.elements.container, 'readonly')) return;
+                if (this.elements.input.disabled || NDS.state.has(this.elements.container, 'readonly')) return;
                 if (!this.isPanelCreated) {
                     this.createPanelDOM();
                     this.setupDropmenu();
@@ -490,13 +490,13 @@
             const signal = this.panelAbortController.signal;
             formControl.addEventListener('nds:dropmenu:opened', (e) => {
                 if (e.target !== formControl) return;
-                NDS.State.add(this.elements.container, 'open');
+                NDS.state.add(this.elements.container, 'open');
                 this.applyBounds();
                 this.dropmenuInstance.applyPosition();
             }, { signal });
             formControl.addEventListener('nds:dropmenu:closed', (e) => {
                 if (e.target !== formControl) return;
-                NDS.State.remove(this.elements.container, 'open');
+                NDS.state.remove(this.elements.container, 'open');
             }, { signal });
         }
 
@@ -831,7 +831,7 @@
             // The panel carries localized labels throughout; rebuilding it is
             // cheaper to reason about than patching six places.
             if (this.isPanelCreated) {
-                const open = NDS.State.has(this.elements.container, 'open');
+                const open = NDS.state.has(this.elements.container, 'open');
                 this.cleanup();
                 this.createPanelDOM();
                 this.setupDropmenu();
@@ -868,7 +868,7 @@
             fc.removeAttribute('data-dropmenu-no-keys');
             fc.removeAttribute('data-anchor');
             if (this._ownInputMode) this.elements.input.removeAttribute('inputmode');
-            NDS.State.remove(this.elements.container, 'open');
+            NDS.state.remove(this.elements.container, 'open');
             // Nothing is left to clear the picker's own error, so it would block submit for good.
             // Only that one: a status forms or the page set stays.
             if (this.elements.input.validity.customError) {
@@ -999,7 +999,7 @@
             }
             // An error paints on leaving the group; a fixed value clears it at once. Soft dependency, as in field mode.
             if (msg && !silent) NDS.Form?.setStatus?.(container, 'error', { message: msg });
-            else if (!msg && NDS.Status.get(container) === 'error') NDS.Form?.clearStatus?.(container);
+            else if (!msg && NDS.status.get(container) === 'error') NDS.Form?.clearStatus?.(container);
         }
 
         getValue() { return this.value; }

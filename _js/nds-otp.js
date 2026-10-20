@@ -28,7 +28,7 @@
 (function () {
     'use strict';
 
-    // One-shot init guard. A re-run of init (e.g. NDS.Init.initialize())
+    // One-shot init guard. A re-run of init (e.g. NDS.init.initialize())
     // would otherwise re-stack the two pool subscriptions in init() — onDOMAdd
     // and onDOMRemove push unconditionally with no (selector, fn) dedup in core.
     // The single init at page load wires the subscribers; subsequent .nds-otp-group
@@ -98,7 +98,7 @@
     }
 
     function autoClearStatus(group) {
-        if (NDS.Status.get(group) !== '') {
+        if (NDS.status.get(group) !== '') {
             NDS.Form.clearStatus(group);
         }
     }

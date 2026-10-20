@@ -249,7 +249,7 @@
 
         addFile(file, options = {}) {
             const config = this._readConfig();
-            const isSingle = NDS.State.has(this.container, 'single');
+            const isSingle = NDS.state.has(this.container, 'single');
             if (!isSingle && this._files.length >= config.maxFiles) {
                 this._dispatchEvent('nds:upload:max-files', {
                     maxFiles: config.maxFiles,
@@ -397,11 +397,11 @@
 
         // Forms disables the input and buttons on the token; the drop handlers read it per event.
         enable() {
-            NDS.State.remove(this.container, 'disabled');
+            NDS.state.remove(this.container, 'disabled');
         }
 
         disable() {
-            NDS.State.add(this.container, 'disabled');
+            NDS.state.add(this.container, 'disabled');
         }
 
         refreshUI() {
@@ -410,7 +410,7 @@
 
         destroy() {
             this.abortController?.abort();
-            NDS.State.remove(this._dropZone, 'drag-over');
+            NDS.state.remove(this._dropZone, 'drag-over');
 
             // Abort in-progress uploads
             this._files.forEach(f => { if (f._xhr) f._xhr.abort(); });
@@ -465,7 +465,7 @@
             const fileArray = Array.from(files);
             const validFiles = [];
             const validationErrors = [];
-            const isSingle = NDS.State.has(this.container, 'single');
+            const isSingle = NDS.state.has(this.container, 'single');
 
             // Max files check
             const remaining = isSingle ? 1 : config.maxFiles - this._files.length;
@@ -717,31 +717,31 @@
             const status = fileData.status;
 
             // Clear all transient states
-            NDS.State.remove(fileItem, 'uploading', 'processing');
-            NDS.Status.clear(fileItem);
+            NDS.state.remove(fileItem, 'uploading', 'processing');
+            NDS.status.clear(fileItem);
 
             // Clear progress circle status
             const progressCircle = fileItem.querySelector('.nds-progress-circle');
-            if (progressCircle) NDS.Status.clear(progressCircle);
+            if (progressCircle) NDS.status.clear(progressCircle);
 
             // Clear feedback status
             const feedback = fileItem.querySelector('.nds-feedback');
-            if (feedback) NDS.Status.clear(feedback);
+            if (feedback) NDS.status.clear(feedback);
 
             switch (status) {
                 case 'uploading':
-                    NDS.State.add(fileItem, 'uploading');
+                    NDS.state.add(fileItem, 'uploading');
                     break;
                 case 'processing':
-                    NDS.State.add(fileItem, 'processing');
+                    NDS.state.add(fileItem, 'processing');
                     break;
                 case 'complete':
-                    NDS.Status.set(fileItem, 'success');
-                    if (feedback) NDS.Status.set(feedback, 'success');
+                    NDS.status.set(fileItem, 'success');
+                    if (feedback) NDS.status.set(feedback, 'success');
                     break;
                 case 'error':
-                    NDS.Status.set(fileItem, 'error');
-                    if (feedback) NDS.Status.set(feedback, 'error');
+                    NDS.status.set(fileItem, 'error');
+                    if (feedback) NDS.status.set(feedback, 'error');
                     break;
                 // 'ready' - no state/status needed, CSS defaults apply
             }
@@ -780,23 +780,23 @@
 
         // The drop zone works only with the dropbox token, its zone markup, and not disabled.
         _dropActive() {
-            return !!this._uploadZone && NDS.State.has(this.container, 'dropbox') && !NDS.State.has(this.container, 'disabled');
+            return !!this._uploadZone && NDS.state.has(this.container, 'dropbox') && !NDS.state.has(this.container, 'disabled');
         }
 
         _handleDragOver(e) {
             if (!this._dropActive()) return;
             e.preventDefault();
-            NDS.State.add(this._dropZone, 'drag-over');
+            NDS.state.add(this._dropZone, 'drag-over');
         }
 
         _handleDragLeave(e) {
             if (!this._dropZone.contains(e.relatedTarget)) {
-                NDS.State.remove(this._dropZone, 'drag-over');
+                NDS.state.remove(this._dropZone, 'drag-over');
             }
         }
 
         _handleDrop(e) {
-            NDS.State.remove(this._dropZone, 'drag-over');
+            NDS.state.remove(this._dropZone, 'drag-over');
             if (!this._dropActive()) return;
             e.preventDefault();
             if (e.dataTransfer.files.length > 0) {

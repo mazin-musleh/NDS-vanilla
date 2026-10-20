@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 07:59 AM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -557,7 +557,7 @@ To start one open, leave out its `hidden` attribute. Write `aria-expanded="true"
 ### Sub-Rows on Demand
 {: .nds-block-title}
 
-A toggle whose row has no sub-row yet shows a spinner and fires `nds:table:sub-request`. Your code fetches the detail and calls `NDS.Table.row(row).sub.setContent(html).open()`. On an error, call `close()`, or the spinner keeps turning. A second click on a spinning toggle cancels the request through `detail.signal`. NDS never fetches the detail itself. The content stays, so the next open shows it with no new request. `setContent()` starts a table inside the content: for any other component in it, call `NDS.Init.mount(sub)`.
+A toggle whose row has no sub-row yet shows a spinner and fires `nds:table:sub-request`. Your code fetches the detail and calls `NDS.Table.row(row).sub.setContent(html).open()`. On an error, call `close()`, or the spinner keeps turning. A second click on a spinning toggle cancels the request through `detail.signal`. NDS never fetches the detail itself. The content stays, so the next open shows it with no new request. `setContent()` starts a table inside the content: for any other component in it, call `NDS.init.mount(sub)`.
 
 ### Column Alignment
 {: .nds-block-title}
@@ -760,7 +760,7 @@ Source: the `table` group in `_sass/tokens/_components.scss`.
 | Method | Effect |
 |---|---|
 | `NDS.Table.init()` | Starts every table and column menu that has not started yet |
-| `NDS.Table.reinit()` | The same as `init()`. Call it after you add a new table. When only the rows change, call `NDS.Init.refresh(tbody)`: see [Init](../core/init) |
+| `NDS.Table.reinit()` | The same as `init()`. Call it after you add a new table. When only the rows change, call `NDS.init.refresh(tbody)`: see [Init](../core/init) |
 | `NDS.Table.refresh()` | Measures every scroll box again, after a change the script cannot see |
 | `NDS.Table.create(table)` | Starts sorting and selection on one table, and returns its instance, or the instance it already has. Returns `null` when the table has no `<thead>` or `<tbody>` |
 | `NDS.Table.createResponsive(table)` | Adds the scroll box to one table and returns its instance |

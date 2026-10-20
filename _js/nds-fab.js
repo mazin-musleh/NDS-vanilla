@@ -7,7 +7,7 @@
  *                                       injected; override forces an edge
  *   NDS.Fab.destroy(fabOrContainer)     un-route a FAB back to where it was authored, or
  *                                       every FAB authored inside a container. Returns the
- *                                       count. NDS.Init.destroy(view) calls the second form
+ *                                       count. NDS.init.destroy(view) calls the second form
  *   NDS.Fab.dock(pos)                   the dock element at that edge, created if missing
  *   NDS.Fab.resolvePos(fab, override)   which edge this FAB resolves to
  * Events:
@@ -27,7 +27,7 @@
  *   - The FAB carries the position; the docks are static edge slots. FABs resolving to the
  *     same edge stack together.
  *   - Routing MOVES the FAB to a dock on <body>, so it leaves the view that authored it.
- *     A view removed without NDS.Fab.destroy() (or NDS.Init.destroy) leaves its FAB behind,
+ *     A view removed without NDS.Fab.destroy() (or NDS.init.destroy) leaves its FAB behind,
  *     pinned over the next screen — the destroy call is what puts it back first.
  */
 /**
@@ -157,7 +157,7 @@
         // Reads the START of the slide, not its end: data-state gains `open` up
         // front and `closing` before the return trip, where nds:panel:opened
         // only lands after the transition — too late to travel together.
-        const riding = NDS.State.has(panel, 'open') && !NDS.State.has(panel, 'closing');
+        const riding = NDS.state.has(panel, 'open') && !NDS.state.has(panel, 'closing');
         const sheet = side === 'bottom';
         const edge = sideToEdge(side);
 
@@ -257,7 +257,7 @@
 
     // Un-route one FAB, or every FAB authored inside a container.
     //
-    // The container form is what NDS.Init.destroy needs, and it cannot be a plain scan:
+    // The container form is what NDS.init.destroy needs, and it cannot be a plain scan:
     // register() MOVED the button to a dock on <body>, so a docked FAB is no longer inside
     // the view that authored it and no querySelectorAll on that view will ever find it.
     // The marker register() left (NDS.homeOf) is the only link back, so the match is on

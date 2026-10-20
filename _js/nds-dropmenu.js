@@ -55,8 +55,8 @@
         no_results: 'No results',
     });
 
-    // State helpers — delegated to NDS.State (nds-core.js)
-    const { add: addState, remove: removeState } = NDS.State;
+    // State helpers — delegated to NDS.state (nds-core.js)
+    const { add: addState, remove: removeState } = NDS.state;
 
     // Currently-open dropmenu wrappers, tracked module-locally so open() can
     // close peers without a DOM sweep by attribute selector. Maintained in
@@ -424,7 +424,7 @@
             }
             if (!initialItem) {
                 initialItem = this._ownItems()
-                    .find(el => NDS.State.has(el, 'selected')) || null;
+                    .find(el => NDS.state.has(el, 'selected')) || null;
             }
             // The trigger's own text, before a pick replaces it: what a form reset with no first pick shows.
             const triggerLabel = this.trigger !== this.dropmenu && (this.trigger.querySelector('.nds-label') || this.trigger);
@@ -435,7 +435,7 @@
                 if (e.defaultPrevented) return;
                 if (initialItem) { this.applySelection(initialItem, { silent: true }); return; }
                 hidden.value = '';
-                this._ownItems().forEach((o) => NDS.State.clear(o));
+                this._ownItems().forEach((o) => NDS.state.clear(o));
                 if (triggerLabel) triggerLabel.textContent = startLabel;
             }), { signal });
 
@@ -475,9 +475,9 @@
             }
 
             this._ownItems().forEach((o) => {
-                if (o !== item) NDS.State.clear(o);
+                if (o !== item) NDS.state.clear(o);
             });
-            NDS.State.set(item, 'selected');
+            NDS.state.set(item, 'selected');
 
             if (!opts.silent) {
                 if (this.selectHidden) NDS.setValue(this.selectHidden, value);
@@ -1242,14 +1242,14 @@
     }
 
     // Stamp the wrapper's menu template in place and wake what arrived.
-    // NDS.Init.refresh may construct this wrapper too (a nested sub-dropmenu
+    // NDS.init.refresh may construct this wrapper too (a nested sub-dropmenu
     // re-enters the scan), so callers read wrapper.ndsDropmenu afterwards.
     function _stampMenuTemplate(wrapper) {
         const tpl = _ownMenuTemplate(wrapper);
         if (!tpl) return null;
         tpl.replaceWith(tpl.content);
         const menu = _ownFirstIn(wrapper, '.nds-dropmenu-menu');
-        if (menu) NDS.Init.refresh(menu);
+        if (menu) NDS.init.refresh(menu);
         return menu;
     }
 

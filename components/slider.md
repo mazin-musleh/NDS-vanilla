@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "11/10/2026 - 02:03 PM"
+last_edit: "20/10/2026 - 05:08 PM"
 ---
 
 <section id="slider-overview" class="nds-content-section nds-doc-overview">
@@ -132,7 +132,7 @@ The `nds-number-format` class on the value adds thousands separators. Without it
 ### Loading
 {: .nds-block-title}
 
-The `nds-loading` class shows the bar and the value as a skeleton, and hides the thumb. Add it while your script loads the bounds or the value, and remove it once they are set. From a script, `NDS.State.add(container, 'loading')` also adds the class.
+The `nds-loading` class shows the bar and the value as a skeleton, and hides the thumb. Add it while your script loads the bounds or the value, and remove it once they are set. From a script, `NDS.state.add(container, 'loading')` also adds the class.
 
 </div>
   </div>
