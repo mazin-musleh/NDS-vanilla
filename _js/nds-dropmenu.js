@@ -404,6 +404,7 @@
             // own hidden input inside our menu, and a bare querySelector would
             // adopt it (renaming the child's field) on a destroy → re-init.
             let hidden = _ownFirstIn(this.dropmenu, 'input[type="hidden"][data-nds-select-value]');
+            const builtHidden = !hidden;
             if (!hidden) {
                 hidden = document.createElement('input');
                 hidden.type = 'hidden';
@@ -430,6 +431,12 @@
             // The trigger's own text, before a pick replaces it: what a form reset with no first pick shows.
             const triggerLabel = this.trigger !== this.dropmenu && (this.trigger.querySelector('.nds-label') || this.trigger);
             const startLabel = triggerLabel ? triggerLabel.textContent : '';
+            // destroy(): the field this built goes and the trigger reads as written. The pick stays
+            // on its item (selected), so a re-create picks it again.
+            this._undoSelect = () => {
+                if (builtHidden) hidden.remove();
+                if (triggerLabel) triggerLabel.textContent = startLabel;
+            };
             if (initialItem) this.applySelection(initialItem, { silent: true });
             // A form reset never touches a hidden input or a label: go back to the first pick.
             hidden.form?.addEventListener('reset', (e) => setTimeout(() => {
@@ -1214,6 +1221,7 @@
             delete this.dropmenu.ndsDropmenu;
             this.dropmenu.removeAttribute('data-nds-dropmenu-initialized');
             this._ariaWritten?.forEach(([el, attr]) => el.removeAttribute(attr));
+            this._undoSelect?.();
             this._ownItems().forEach(item => { if (this._roleWritten?.has(item)) item.removeAttribute('role'); });
             this._unstamp?.();
         }
@@ -1286,10 +1294,13 @@
     // click, so keyboard opens work; ArrowDown-to-open no-ops once and recovers
     // after construction (the established pre-wire-gap pattern).
     function _armTemplateDropmenu(wrapper) {
-        if (wrapper._ndsDropmenuArmed) return;
-        wrapper._ndsDropmenuArmed = true;
+        if (wrapper.ndsDropmenuArm) return;
         const trigger = _ownFirstIn(wrapper, '.nds-dropmenu-trigger') || wrapper;
+        const arm = new AbortController();
+        // NDS.init.destroy(view) disarms a menu never opened through this backref.
+        wrapper.ndsDropmenuArm = { destroy: () => { arm.abort(); delete wrapper.ndsDropmenuArm; } };
         trigger.addEventListener('click', (e) => {
+            wrapper.ndsDropmenuArm.destroy();
             _stampMenuTemplate(wrapper);
             if (!wrapper.ndsDropmenu) new NDSDropmenu(wrapper);
             const instance = wrapper.ndsDropmenu;
@@ -1300,7 +1311,7 @@
             instance._lastClickX = (wrapper.hasAttribute('data-anchor-cursor')
                 && typeof e.clientX === 'number' && e.clientX > 0) ? e.clientX : null;
             instance.toggle();
-        }, { once: true });
+        }, { signal: arm.signal });
     }
 
     // ==============================================
