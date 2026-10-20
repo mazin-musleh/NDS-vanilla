@@ -182,6 +182,7 @@
             const divider = document.createElement('div');
             divider.className = 'nds-divider';
             wrapper.insertBefore(divider, btn);
+            wrapper._builtDivider = divider;
         }
 
         wrapper._abortController = new AbortController();
@@ -203,6 +204,8 @@
             if (!write?.clears) return write;
             requestAnimationFrame(() => { if (wrapper._offResizeObs) checkOverflow(wrapper); });
         });
+        // NDS.init.destroy(view) finds instances through an nds* backref on the element.
+        wrapper.ndsScrollMore = { destroy: () => destroy(wrapper) };
         wrapper.setAttribute('data-nds-scroll-more-initialized', 'true');
     }
 
@@ -224,6 +227,12 @@
         }
         if (wrapper._content) scrollStop(wrapper._content, false);
         delete wrapper._content;
+        wrapper._builtDivider?.remove();
+        delete wrapper._builtDivider;
+        // What measure() wrote: a re-create measures again.
+        wrapper.removeAttribute('data-axis');
+        removeState(wrapper, CONFIG.overflow.hasMore, CONFIG.overflow.atStart, CONFIG.overflow.atEnd);
+        delete wrapper.ndsScrollMore;
         wrapper.removeAttribute('data-nds-scroll-more-initialized');
     }
 

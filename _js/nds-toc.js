@@ -246,6 +246,11 @@
 
         destroy() {
             this.abortController?.abort();
+            // The current-section mark is measured: a re-create marks it again.
+            if (this.active) {
+                NDS.state.remove(this.active.li, 'active');
+                NDS.state.remove(this.active.link, 'active');
+            }
             this.toc.removeAttribute('data-nds-toc-initialized');
             // A surviving backref would hand create() this dead instance.
             if (this.toc.ndsToc === this) delete this.toc.ndsToc;
@@ -255,7 +260,9 @@
     function initializeComponents() {
         document.querySelectorAll('.nds-toc').forEach(toc => {
             if (toc.closest('code')) return;
-            if (toc.hasAttribute('data-nds-toc-initialized')) return;
+            // The instance, not the stamp: an empty TOC is stamped to release its skeleton,
+            // and builds on a later refresh once its headings arrive.
+            if (toc.ndsToc) return;
             const instance = new NDSToc(toc);
             // Expando only on successful construction (sentinel is stamped post-guard by init()).
             if (instance.valid) toc.ndsToc = instance;
