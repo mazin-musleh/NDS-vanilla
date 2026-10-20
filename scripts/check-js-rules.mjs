@@ -473,6 +473,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
 
     // JSP-06 (a) per-element listeners in a loop with no signal; (c) a document / window listener
     // a constructor or init() adds with no signal and no removeEventListener.
+    const loopsHit = new Set();
     for (const m of code.matchAll(/([\w$.]+)\.addEventListener\s*\(\s*(['"])([\w:-]+)\2/g)) {
         if (/\bsignal\b|\bonce\s*:\s*true/.test(optsOf(m))) continue;
         const fn = outerFn(bare, m.index);
@@ -487,6 +488,8 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         const loop = blocksAround(bare, m.index).find((o) => /(?:\.forEach|\.map)\s*\(\s*(?:\(?[\w$, ]*\)?\s*=>|function\b[^(]*\([^)]*\))\s*$|\bfor\s*\([^)]*\)\s*$/.test(bare.slice(Math.max(0, o - 120), o).trimEnd()));
         if (loop === undefined || removed) continue;
         if (/\.innerHTML\s*=\s*['"`]{2}|replaceChildren\s*\(|\.remove\s*\(\s*\)/.test(scope.slice(0, m.index - fn))) continue; // old nodes left with their listeners
+        if (loopsHit.has(loop)) continue; // one line per loop
+        loopsHit.add(loop);
         const guard = /\._nds\w+\s*=\s*true|data-nds-[\w-]+-initialized/.test(scope);
         hit('JSP-06a', m.index, `${m[1]}.addEventListener('${m[3]}') in a loop, no signal`, guard || !/\bdestroy\b/.test(code) ? 'element-bound listeners behind a per-element guard self-clean' : 'one finding per loop: count its listeners');
     }
@@ -889,7 +892,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         const key = win.join('\n');
         const first = seen.get(key);
         if (first === undefined) { seen.set(key, i); continue; }
-        if (i - first >= 10 && i - lastPair > 10) { hit('JSA-09', source.split('\n').slice(0, i).join('\n').length, `10 lines repeat the shape at line ${first + 1}`, 'a finding when one helper would read better than two copies'); lastPair = i; }
+        if (i - first >= 10 && i - lastPair > 10) { hit('JSA-09', source.split('\n').slice(0, i).join('\n').length + (i ? 1 : 0),`10 lines repeat the shape at line ${first + 1}`, 'a finding when one helper would read better than two copies'); lastPair = i; }
     }
 
     // JSA-11 a function over 80 lines mixing render, state, IO and event binding. (The branch-outlier
@@ -1171,6 +1174,7 @@ const CASES = [
     [`(function(){ class A { constructor() { document.addEventListener('click', this.onDoc, { signal: this.ac.signal }); } } })();`, []],
     [`(function(){ document.addEventListener('click', onDoc); })();`, []], // module body runs once
     [`(function(){ function wire(list) { list.forEach((b) => { b.addEventListener('click', go); }); } function destroy() {} })();`, ['JSP-06a?']],
+    [`(function(){ function wire(list) { list.forEach((b) => { b.addEventListener('click', go); b.addEventListener('keydown', go); }); } function destroy() {} })();`, ['JSP-06a?']], // one line per loop
     [`(function(){ function render(box, items) { box.innerHTML = ''; items.forEach((b) => { b.addEventListener('click', go); }); } })();`, []], // old nodes left
     [`(function(){ function f() { clearTimeout(t); t = setTimeout(run, 200); } })();`, ['JSP-07?']],
     [`(function(){ function f() { clearTimeout(t); t = setTimeout(run, 200); } function cancel() { clearTimeout(t); } })();`, []], // latch
@@ -1236,7 +1240,11 @@ if (args[0] === '--self-test') {
         const got = checkFile('case.js', src).map((f) => f.rule + (f.verify ? '?' : '')).sort(); // ? = a verify line
         if (got.join() !== [...want].sort().join()) { failed++; console.log(`FAIL  ${JSON.stringify(src)}\n      want [${want}] got [${got}]`); }
     }
-    console.log(`${CASES.length - failed}/${CASES.length} cases pass`);
+    // JSA-09 names the line its repeat starts on.
+    const block = Array(10).fill('const one = first.value + other;').join('\n');
+    const rep = checkFile('case.js', `(function(){\n${block}\n}\nfunction b() {\n${block}\n})();`).find((f) => f.rule === 'JSA-09');
+    if (rep?.line !== 14) { failed++; console.log(`FAIL  JSA-09 line: want 14 got ${rep?.line}`); }
+    console.log(`${CASES.length + 1 - failed}/${CASES.length + 1} cases pass`);
     process.exit(failed ? 1 : 0);
 }
 const files = args.length
