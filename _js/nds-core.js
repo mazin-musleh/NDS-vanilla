@@ -52,7 +52,7 @@
  *     NDS.i18n.format(value, vars)     fill {name}; a plural value picks by vars.n
  *     NDS.i18n.safeMerge(target, src)  copy own keys, skipping __proto__ / constructor / prototype
  *     NDS.setValue(el, value, { change }) write value (checked: a click), fire input + change
- *     NDS.badge(el, count) · NDS.buildChip(value, opts)
+ *     NDS.badge(el, count) · NDS.buildChip(value, opts) · NDS.keepChipFocus(chips, render, fallback)
  * Events:
  *   nds:template:ready    on the stamped root, bubbles — detail.id is the summoned id.
  *                         Fires after NDS.init.refresh wires the arrivals, so page JS
@@ -1054,6 +1054,18 @@
             chip.addEventListener('click', (e) => { e.preventDefault(); opts.onRemove(e); }, { signal: opts.signal });
         }
         return chip;
+    };
+
+    // Removing the focused chip would drop focus to <body>. Runs render (which removes it),
+    // then focuses the chip that took its slot, else fallback.
+    //   chips — () => the live chip list, read before and after render
+    // Usage: NDS.keepChipFocus(() => list.children, () => this.renderChips(), this.input);
+    NDS.keepChipFocus = (chips, render, fallback) => {
+        const at = Array.prototype.indexOf.call(chips(), document.activeElement);
+        render();
+        if (at < 0) return;
+        const now = chips();
+        (now[Math.min(at, now.length - 1)] || fallback)?.focus();
     };
 
     // ── HTML Escape ──────────────────────────────────────────────────

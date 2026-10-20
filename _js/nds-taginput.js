@@ -246,16 +246,10 @@
         removeTag(value) {
             const idx = this.tags.indexOf(value);
             if (idx === -1) return;
-            // Focus handoff — removing the focused chip would drop focus to
-            // <body>; hand it to the chip in its slot, or back to the input.
-            const chips = Array.from(this.formControl.querySelectorAll('.nds-chip'));
-            const removedIdx = chips.indexOf(document.activeElement);
-            this.tags.splice(idx, 1);
-            this.renderChips();
-            if (removedIdx > -1) {
-                const remaining = this.formControl.querySelectorAll('.nds-chip');
-                (remaining[Math.min(removedIdx, remaining.length - 1)] || this.input)?.focus();
-            }
+            NDS.keepChipFocus(() => this.formControl.querySelectorAll('.nds-chip'), () => {
+                this.tags.splice(idx, 1);
+                this.renderChips();
+            }, this.input);
             NDS.announce(strings.text('removed', { value }));
             this.emitChange();
         }

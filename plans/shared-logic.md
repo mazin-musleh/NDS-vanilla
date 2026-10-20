@@ -4,8 +4,8 @@ Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (se
 AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Facts measured on `main` at `9fd54151`.
 
 **Resume here.** Order steps 1–2 are done, and so are changes #1 (1, 1b, 1c, 1d), #2 and #4 (#3 was dropped; the "Landed" notes
-under section 3's Mechanical checks). Change #4b is done (owner, 2026-10-20: every gap in its inventory note fixed, one commit each), and so is #5.
-**Next: change #6**, the chip-removal focus handoff (Multiselect, Taginput) → core, beside `buildChip`.
+under section 3's Mechanical checks). Change #4b is done (owner, 2026-10-20: every gap in its inventory note fixed, one commit each), and so are #5 and #6.
+**Next: change #7**, `NDS.gridLastRow` → `_js/nds-grid.js`, `NDS.Grid`.
 
 ## Goal
 
@@ -308,6 +308,9 @@ before it is fixed. Base first: Dropmenu's fix reaches every component that ride
 **Landed 2026-10-20 (change #5):** `NDS.Feedback.dismissAll(container, {own: true})` leaves the messages of fields
 nested in the container, by the same field rule `create()` already used for replacing (one `FIELD` constant). Form's
 `dismissOwn` is gone; its two callers pass `own`.
+
+**Landed 2026-10-20 (change #6):** core `NDS.keepChipFocus(chips, render, fallback)`, beside `buildChip`; Taginput
+and Multiselect pass their chip list, their re-render and their own control.
 
 ## 4. Owner decisions
 

@@ -410,17 +410,11 @@
         removeValue(value) {
             const cb = this.checkboxes.find(c => c.value === value);
             if (!cb || !cb.checked) return;
-            // Removing the focused chip would drop focus to <body>; hand it to
-            // the chip that takes its slot, or back to the trigger.
-            const chips = Array.from(this.chipsEl.children);
-            const removedIdx = chips.indexOf(document.activeElement);
-            cb.checked = false;
-            this.applied = this.applied.filter(v => v !== value);
-            this.renderChips();
-            if (removedIdx > -1) {
-                const remaining = this.chipsEl.children;
-                (remaining[Math.min(removedIdx, remaining.length - 1)] || this.trigger)?.focus();
-            }
+            NDS.keepChipFocus(() => this.chipsEl.children, () => {
+                cb.checked = false;
+                this.applied = this.applied.filter(v => v !== value);
+                this.renderChips();
+            }, this.trigger);
             NDS.announce(strings.text('removed', { value: this.labelFor(value) }));
             this.emitChange();
         }
