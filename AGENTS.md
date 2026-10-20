@@ -35,6 +35,7 @@ node scripts/check-pagination-data.mjs          # data-driven Pagination in a se
 node scripts/check-mainnav.mjs                  # Main Navigation: menu placement, swap, scroll, outside click, phone drawer; ENGINE=webkit, TIMING=1
 node scripts/trace-click.mjs [page] [runs]      # one plain tap traced: every listener on pointer/mouse/click with its cost, and the other main-thread work; TAP=1
 node scripts/trace-busy.mjs [page …]            # long frames from load to quiet, with their scripts (LoAF); INITS=1 adds each component's init time
+node scripts/check-form-speed.mjs                # Form speed, a past commit (BASE=, default HEAD) vs today, interleaved: init on real pages, create() × 20/50/100, one keystroke and one click; RUNS=, CPU=
 node scripts/profile-load.mjs [page] [ms]       # V8 CPU profile of a page load: self/total time per function in the NDS bundles
 node scripts/release-template/nds-verify.mjs <config.json>  # consumer verify tool, shipped at the zip root: every page and state, both widths, light and dark, audit + console + a sheet beside the reference; to try it here, NDS_SITE=<a release zip's _site>
 ```
