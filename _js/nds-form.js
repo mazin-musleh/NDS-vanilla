@@ -241,20 +241,6 @@
         },
     };
 
-    // A form-container's OWN field — skips fields living inside a NESTED
-    // form-container (the editor's link-popover URL input precedes the carrier
-    // textarea in DOM order; a multiselect option checkbox belongs to its
-    // .nds-checkbox, not the wrapper being validated). Groups/feedback keep
-    // the legacy first-match behavior.
-    // dismissAll would also take a nested field's message and leave its error outline.
-    function dismissOwn(container) {
-        container.querySelectorAll('.nds-feedback').forEach(function(fb) {
-            if (fb.parentElement.closest('.nds-form-container, .nds-form-group') !== container || fb.closest('code')) return;
-            if (fb.hasAttribute('data-permanent')) fb.removeAttribute('hidden');
-            else NDS.Feedback.dismiss(fb);
-        });
-    }
-
     // Where a field's message goes: its data-feedback-target selector, else the first marked
     // target it owns, else the field itself.
     function feedbackTargetOf(container) {
@@ -269,6 +255,11 @@
         return container;
     }
 
+    // A form-container's OWN field — skips fields living inside a NESTED
+    // form-container (the editor's link-popover URL input precedes the carrier
+    // textarea in DOM order; a multiselect option checkbox belongs to its
+    // .nds-checkbox, not the wrapper being validated). Groups/feedback keep
+    // the legacy first-match behavior.
     function ownField(container) {
         // Never a hidden carrier: a picker in the prefix slot puts one before the real input.
         var fields = container.querySelectorAll('input:not([type="hidden"]), textarea, select');
@@ -353,7 +344,7 @@
                     // A blank message (Validator's blank custom error) drops the old one: the
                     // component shows the cause itself. An omitted message keeps it.
                     container.removeAttribute('data-message');
-                    dismissOwn(container);
+                    NDS.Feedback.dismissAll(container, { own: true });
                 }
 
                 // Accessibility
@@ -394,7 +385,7 @@
             NDS.status.clear(container);
             container.removeAttribute('data-message');
 
-            dismissOwn(container);
+            NDS.Feedback.dismissAll(container, { own: true });
 
             var input = ownField(container);
             if (input) {

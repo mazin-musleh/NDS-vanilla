@@ -4,8 +4,8 @@ Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (se
 AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Facts measured on `main` at `9fd54151`.
 
 **Resume here.** Order steps 1–2 are done, and so are changes #1 (1, 1b, 1c, 1d), #2 and #4 (#3 was dropped; the "Landed" notes
-under section 3's Mechanical checks). Change #4b is done (owner, 2026-10-20: every gap in its inventory note fixed, one commit each). **Next: change #5**,
-Form `dismissOwn` → Feedback `dismissAll(container, opts)`.
+under section 3's Mechanical checks). Change #4b is done (owner, 2026-10-20: every gap in its inventory note fixed, one commit each), and so is #5.
+**Next: change #6**, the chip-removal focus handoff (Multiselect, Taginput) → core, beside `buildChip`.
 
 ## Goal
 
@@ -304,6 +304,10 @@ before it is fixed. Base first: Dropmenu's fix reaches every component that ride
   Upload; Progress has no destroy at all~~ (fixed, with Rating, Stepper, Chart, Accordion, Expandable; `Chart.create(el)`
   with no options now reads its data-chart-*); Form's goes with #9. Panel, Slider and Drawer reach `NDS.init.destroy`
   through the loader's `destroyEach`: no backref needed. Alert and Feedback build new elements: no destroy needed.
+
+**Landed 2026-10-20 (change #5):** `NDS.Feedback.dismissAll(container, {own: true})` leaves the messages of fields
+nested in the container, by the same field rule `create()` already used for replacing (one `FIELD` constant). Form's
+`dismissOwn` is gone; its two callers pass `own`.
 
 ## 4. Owner decisions
 

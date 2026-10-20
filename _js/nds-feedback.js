@@ -6,7 +6,8 @@
  *                                      style, showIcon, id, className, ariaLive, permanent,
  *                                      onDismiss, onCreate}
  *   NDS.Feedback.dismiss(elOrSel)      remove one message — true when it existed
- *   NDS.Feedback.dismissAll(container) clear a container (a permanent one is only unhidden)
+ *   NDS.Feedback.dismissAll(container, opts) clear a container (a permanent one is only unhidden);
+ *                                      {own: true} leaves the messages of fields nested in it
  * Events (dispatched ON `document`, not on the message — listen there):
  *   nds:feedback:created   detail {feedback, options} — after the message is in place
  *   nds:feedback:dismiss   detail {feedback} — before the message is removed
@@ -59,6 +60,9 @@
 
 (function() {
     'use strict';
+
+    // A field owns the messages inside it, except those of a field nested in it.
+    const FIELD = '.nds-form-container, .nds-form-group';
 
     const NDSFeedback = {
         /**
@@ -210,12 +214,15 @@
          * Dismiss all feedback elements in a container
          * @param {string|HTMLElement} container - Container selector or element
          */
-        dismissAll(container) {
+        dismissAll(container, { own = false } = {}) {
             const el = NDS.resolveEl(container);
             if (!el) return;
+            // own: a field's status clear must not take a nested field's message and leave its error outline.
+            const owner = own && el.closest(FIELD);
 
             el.querySelectorAll('.nds-feedback').forEach(feedback => {
                 if (feedback.closest('code')) return;
+                if (own && feedback.parentElement.closest(FIELD) !== owner) return;
                 if (feedback.hasAttribute('data-permanent')) {
                     feedback.removeAttribute('hidden');
                     return;
@@ -253,7 +260,6 @@
             // Handle existing feedback from target area before adding new one
             if (position === 'prepend' || position === 'append') {
                 // A group's message leaves the messages of the fields inside it.
-                const FIELD = '.nds-form-container, .nds-form-group';
                 const owner = targetEl.closest(FIELD);
                 targetEl.querySelectorAll('.nds-feedback').forEach(existingFeedback => {
                     if (!existingFeedback.closest('code') && existingFeedback.parentElement.closest(FIELD) === owner) makeWay(existingFeedback);
