@@ -930,7 +930,7 @@
             };
             this.source.addEventListener('change', reload, { signal });
             // The browser restores the textarea's default value only after the reset event.
-            this.source.form?.addEventListener('reset', () => setTimeout(reload), { signal });
+            NDS.field.onReset(this.source.form, reload, { signal });
 
             this._addToolbarListeners(signal);
             this._addEditableListeners(signal);

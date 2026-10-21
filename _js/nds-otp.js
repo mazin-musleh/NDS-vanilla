@@ -257,9 +257,7 @@
         var signal = abortController.signal;
 
         // A form reset empties the boxes but not the hidden carrier: a hidden input's value is its attribute.
-        if (inputs[0].form) inputs[0].form.addEventListener('reset', function (e) {
-            setTimeout(function () { if (!e.defaultPrevented) syncHidden(group); });
-        }, { signal: signal });
+        NDS.field.onReset(inputs[0].form, function () { syncHidden(group); }, { signal: signal });
 
         inputs.forEach(function (input, i) {
             // Each box says its place in the page's language; a label the page wrote itself stays.

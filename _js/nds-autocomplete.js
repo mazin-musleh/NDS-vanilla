@@ -274,13 +274,12 @@
             }
 
             // A form reset: the restored text counts as picked, as at build, and old results go.
-            this._input.form?.addEventListener('reset', (e) => setTimeout(() => {
-                if (e.defaultPrevented) return;
+            NDS.field.onReset(this._input.form, () => {
                 this._selectedItem = null;
                 this._results = [];
                 if (this._carrier) this._carrier.value = this._input.value.trim();
                 this._close();
-            }), { signal });
+            }, { signal });
 
             // Open on focus if results exist; a request that failed tries again.
             this._input.addEventListener('focus', () => {

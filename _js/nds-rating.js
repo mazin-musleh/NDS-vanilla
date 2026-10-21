@@ -104,10 +104,7 @@
       }, { signal });
 
       // The browser restores the form after the reset event; a hidden input keeps what JS wrote.
-      const form = this.rating.closest('form');
-      if (form) form.addEventListener('reset', (e) => {
-        setTimeout(() => { if (!e.defaultPrevented) this._setRating(this._startRating); });
-      }, { signal });
+      NDS.field.onReset(this.rating.closest('form'), () => this._setRating(this._startRating), { signal });
 
       this._syncVisualState();
     }

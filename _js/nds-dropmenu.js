@@ -444,13 +444,12 @@
             };
             if (initialItem) this.setSelection(initialItem, { silent: true });
             // A form reset never touches a hidden input or a label: go back to the first pick.
-            hidden.form?.addEventListener('reset', (e) => setTimeout(() => {
-                if (e.defaultPrevented) return;
+            NDS.field.onReset(hidden.form, () => {
                 if (initialItem) { this.setSelection(initialItem, { silent: true }); return; }
                 hidden.value = '';
                 this._getOwnItems().forEach((entry) => NDS.state.clear(entry));
                 if (triggerLabel) triggerLabel.textContent = startLabel;
-            }), { signal });
+            }, { signal });
 
             this._menu.addEventListener('click', (e) => {
                 const item = e.target.closest('.nds-dropmenu-item');

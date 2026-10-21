@@ -107,12 +107,11 @@
         _addEventListeners() {
             const { signal } = this.abortController;
 
-            // The browser restores the form after the reset event: wait for it, unless it was cancelled.
-            this._root.closest('form')?.addEventListener('reset', (e) => setTimeout(() => {
-                if (e.defaultPrevented) return;
+            // A form reset puts back the tags the page shipped.
+            NDS.field.onReset(this._root.closest('form'), () => {
                 this._tags = [...this._initialTags];
                 this._renderChips();
-            }), { signal });
+            }, { signal });
 
             // Assist mode — a root carrying data-url is ALSO an NDS.Autocomplete
             // host sharing this input. While its suggestion menu is open, a

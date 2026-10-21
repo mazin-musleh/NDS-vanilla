@@ -162,7 +162,7 @@
             this._fileInput.addEventListener('change', this._handleFileInput.bind(this), { signal });
             this._fileList.addEventListener('click', this._handleFileListClick.bind(this), { signal });
             // A native reset never touches the list: clear it with the form.
-            container.closest('form')?.addEventListener('reset', () => this.clearAllFiles(), { signal });
+            NDS.field.onReset(container.closest('form'), () => this.clearAllFiles(), { signal });
             const openPicker = this._openPicker.bind(this);
             if (this._browseButton) this._browseButton.addEventListener('click', openPicker, { signal });
 

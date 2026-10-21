@@ -13,6 +13,8 @@
  *                                     un-hiding the [hidden] wrappers; then each part's setupInput
  *   NDS.field.refresh(el, opts)       re-sync after a value or checked is set from code: an input its field,
  *                                     any other element every field inside it; then every part's refresh
+ *   NDS.field.onReset(form, fn, opts) fn(form) once the browser has put the values back, unless the reset
+ *                                     was cancelled; form a <form>, document (every form) or null
  *   NDS.field.findControl(target)     {input, control, container} when target is a field's own input
  *   NDS.field.isActive(input)         it takes the active and focus states: not readonly, or interactive
  *   NDS.field.findOwnControl(container) · NDS.field.findOwnInput(container)   a container's own, never a nested one's
@@ -172,6 +174,15 @@
         });
     };
 
+    // The same wait for a component that keeps its own value: a hidden carrier, a chip list, a file list.
+    function onReset(form, fn, options) {
+        if (!form) return;
+        form.addEventListener('reset', (e) => setTimeout(() => {
+            // A destroy() in that tick removed the listener, not this timer.
+            if (!e.defaultPrevented && !options?.signal?.aborted && e.target.querySelectorAll) fn(e.target);
+        }), options);
+    }
+
     // While a container is focus or active, its own control carries `target`, so the CSS
     // (container[state] .control[target]) reaches that one control and never a nested container's.
     const syncTarget = (container) => {
@@ -259,5 +270,5 @@
         });
     }
 
-    NDS.field = { addType, create, refresh, findControl, isActive, findOwnControl, findOwnInput };
+    NDS.field = { addType, create, refresh, onReset, findControl, isActive, findOwnControl, findOwnInput };
 })();

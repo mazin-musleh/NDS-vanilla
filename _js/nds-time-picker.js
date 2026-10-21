@@ -326,9 +326,9 @@
     // A form reset goes back to the time the page shipped: the hidden carrier keeps what a script wrote.
     function resetWithForm(picker, field) {
         const initial = picker.getValue();
-        field.form?.addEventListener('reset', (e) => setTimeout(() => {
-            if (!e.defaultPrevented) initial ? picker.setValue(initial) : picker.clear();
-        }), { signal: picker.instanceAbortController.signal });
+        NDS.field.onReset(field.form, () => {
+            initial ? picker.setValue(initial) : picker.clear();
+        }, { signal: picker.instanceAbortController.signal });
     }
 
     class NdsTimePicker {

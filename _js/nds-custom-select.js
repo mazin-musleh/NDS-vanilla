@@ -242,17 +242,13 @@
 
     // Back to the value the field had before its first pick. Never picked, it still re-labels:
     // the reset emptied the label restoreDisplay wrote.
-    function handleReset(e) {
-        var form = e.target;
-        setTimeout(function () {
-            if (e.defaultPrevented || !form.querySelectorAll) return;
-            form.querySelectorAll('.nds-select-value').forEach(function (hidden) {
-                var formControl = hidden.closest('.nds-form-control');
-                var value = initial.has(hidden) ? initial.get(hidden) : hidden.value, match = null;
-                if (!formControl) return;
-                formControl.querySelectorAll('.nds-select-option').forEach(function (option) { if (option.dataset.value === value) match = option; });
-                setOption(formControl, match, true);
-            });
+    function handleReset(form) {
+        form.querySelectorAll('.nds-select-value').forEach(function (hidden) {
+            var formControl = hidden.closest('.nds-form-control');
+            var value = initial.has(hidden) ? initial.get(hidden) : hidden.value, match = null;
+            if (!formControl) return;
+            formControl.querySelectorAll('.nds-select-option').forEach(function (option) { if (option.dataset.value === value) match = option; });
+            setOption(formControl, match, true);
         });
     }
 
@@ -262,7 +258,7 @@
         documentWired = true;
         document.addEventListener('focusin', handleFocusIn);
         document.addEventListener('click', handleOptionClick);
-        document.addEventListener('reset', handleReset);
+        NDS.field.onReset(document, handleReset);
     }
 
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.

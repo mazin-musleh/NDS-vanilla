@@ -336,11 +336,10 @@
             // fires deferred) must post/validate the APPLIED set, not staged
             // toggles. Capture phase beats NDS.Form' submit validation.
             // A form reset ticks the boxes back without a change event.
-            this._root.closest('form')?.addEventListener('reset', (e) => setTimeout(() => {
-                if (e.defaultPrevented) return;
+            NDS.field.onReset(this._root.closest('form'), () => {
                 this._applied = this.getSelected();
                 this._renderChips();
-            }), { signal });
+            }, { signal });
 
             const form = this._applyMode && this._root.closest('form');
             if (form) {
