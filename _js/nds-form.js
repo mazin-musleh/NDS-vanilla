@@ -125,15 +125,15 @@
     // re-computed from the current input value.
     var LOADING_SLOTS = '.nds-form-action:not(.nds-prefix)';
 
-    function ensureLoadingShell(fc) {
-        var shell = fc.querySelector(LOADING_SLOTS + ' [data-loading-slot]');
+    function ensureLoadingShell(formControl) {
+        var shell = formControl.querySelector(LOADING_SLOTS + ' [data-loading-slot]');
         if (shell) return shell;
-        var slots = fc.querySelectorAll(LOADING_SLOTS);
+        var slots = formControl.querySelectorAll(LOADING_SLOTS);
         var action = slots[slots.length - 1];
         if (!action) {
             action = document.createElement('div');
             action.className = 'nds-form-action';
-            fc.appendChild(action);
+            formControl.appendChild(action);
         }
         shell = document.createElement('button');
         shell.type = 'button';
@@ -148,17 +148,17 @@
     }
 
     function setLoading(el, on) {
-        var fc = el.classList.contains('nds-form-control') ? el : el.querySelector('.nds-form-control');
-        if (on) enterLoading(fc); else exitLoading(fc);
+        var formControl = el.classList.contains('nds-form-control') ? el : el.querySelector('.nds-form-control');
+        if (on) enterLoading(formControl); else exitLoading(formControl);
     }
 
-    function enterLoading(fc) {
-        if (!fc || loadingRefs.has(fc)) return;
-        var refs = { shell: ensureLoadingShell(fc) };
-        loadingRefs.set(fc, refs);
+    function enterLoading(formControl) {
+        if (!formControl || loadingRefs.has(formControl)) return;
+        var refs = { shell: ensureLoadingShell(formControl) };
+        loadingRefs.set(formControl, refs);
         // Snapshot each sibling's resting hidden state, so exit restores it.
         refs.rest = new Map();
-        fc.querySelectorAll(LOADING_SLOTS).forEach(function(slot) {
+        formControl.querySelectorAll(LOADING_SLOTS).forEach(function(slot) {
             Array.prototype.forEach.call(slot.children, function(child) {
                 if (child !== refs.shell) { refs.rest.set(child, child.hidden); child.hidden = true; }
             });
@@ -167,13 +167,13 @@
         NDS.state.add(refs.shell, 'loading');
     }
 
-    function exitLoading(fc) {
-        var refs = fc && loadingRefs.get(fc);
+    function exitLoading(formControl) {
+        var refs = formControl && loadingRefs.get(formControl);
         if (!refs) return;
-        loadingRefs.delete(fc);
+        loadingRefs.delete(formControl);
         NDS.state.remove(refs.shell, 'loading');
         refs.shell.hidden = true;
-        var input = fc.querySelector('input, textarea, select');
+        var input = formControl.querySelector('input, textarea, select');
         var hasValue = !!(input && String(input.value || '').trim());
         refs.rest.forEach(function(wasHidden, child) {
             child.hidden = child.classList.contains('nds-clear') ? !hasValue : wasHidden;
@@ -435,28 +435,28 @@
         validateForm: function(formElement, options) {
             options = options || { showMessages: true, focusFirst: true };
             var form = formElement.closest('.nds-form') || formElement;
-            var acc = NDS.validation.checkAll(form, { extra: getRangeMessage });
+            var validationResult = NDS.validation.checkAll(form, { extra: getRangeMessage });
             // A field still waiting for its component: load what it waits for, so the next submit can pass.
-            if (acc.pending) NDS.init.mount(form);
+            if (validationResult.pending) NDS.init.mount(form);
 
             if (options.showMessages) {
-                acc.errors.forEach(function(e) { statusManager.set({ element: e.field, status: 'error', message: e.message }); });
+                validationResult.errors.forEach(function(e) { statusManager.set({ element: e.field, status: 'error', message: e.message }); });
                 // A rule's field that passed drops the error it showed.
                 NDS.validation.rules.forEach(function(rule) {
                     form.querySelectorAll(rule.selector).forEach(function(el) {
-                        if (acc.invalidFields.indexOf(el) === -1 && NDS.validation.isVisible(el, form) && NDS.validation.check(el)) statusManager.clear(el);
+                        if (validationResult.invalidFields.indexOf(el) === -1 && NDS.validation.isVisible(el, form) && NDS.validation.check(el)) statusManager.clear(el);
                     });
                 });
             }
-            var first = acc.errors.find(function(e) { return e.input; });
+            var first = validationResult.errors.find(function(e) { return e.input; });
             if (options.focusFirst && first) first.input.focus();
 
-            var valid = acc.invalidFields.length === 0;
+            var valid = validationResult.invalidFields.length === 0;
             form.dispatchEvent(new CustomEvent('nds:form:validate', {
-                detail: { valid: valid, invalidFields: acc.invalidFields, errors: acc.errors },
+                detail: { valid: valid, invalidFields: validationResult.invalidFields, errors: validationResult.errors },
                 bubbles: true
             }));
-            return { valid: valid, invalidFields: acc.invalidFields, errors: acc.errors };
+            return { valid: valid, invalidFields: validationResult.invalidFields, errors: validationResult.errors };
         }
     };
 
@@ -505,8 +505,8 @@
     var isActive = NDS.field.isActive;
 
     // The clear button shows while the field holds a value.
-    function syncClear(input, fc) {
-        var clearButton = fc.querySelector('.nds-clear');
+    function syncClear(input, formControl) {
+        var clearButton = formControl.querySelector('.nds-clear');
         if (clearButton && input.type !== 'radio' && input.type !== 'checkbox') {
             clearButton.toggleAttribute('hidden', input.value.trim() === '');
         }
@@ -514,8 +514,8 @@
 
     // A field's own message from its input: shown when invalid, dropped once valid. A field in a
     // group answers with its group, at submit.
-    function validateInput(input, fc) {
-        var container = fc.closest('.nds-form-container');
+    function validateInput(input, formControl) {
+        var container = formControl.closest('.nds-form-container');
         if (container && container.closest('.nds-form-group')) return;
         var isInvalid = input.validity && !input.validity.valid;
         // Clear custom validation when HTML5 validation passes
@@ -579,8 +579,8 @@
     var STEP_TIERS = [[0, 1, 75], [1500, 10, 50]];   // [held for (ms), step multiplier, interval (ms)]
     var hold = null;
     function stepValue(btn, multiplier) {
-        var fc = btn.closest('.nds-form-control');
-        var input = fc && fc.querySelector('input');
+        var formControl = btn.closest('.nds-form-control');
+        var input = formControl && formControl.querySelector('input');
         if (!input || input.disabled || input.readOnly) return false;
         var current = parseInt(input.value) || 0;
         var min = input.hasAttribute('min') ? parseInt(input.min) : -Infinity;
@@ -588,7 +588,7 @@
         var step = (parseInt(input.step) || 1) * (multiplier || 1);
         var isIncrement = btn.classList.contains('nds-number-increment');
         var next = Math.max(min, Math.min(max, isIncrement ? current + step : current - step));
-        var container = fc.closest('.nds-form-container');
+        var container = formControl.closest('.nds-form-container');
         if (next !== current) {
             if (container && NDS.status.get(container) === 'error') statusManager.clear(container);
             NDS.setValue(input, next, { change: false });
@@ -717,8 +717,8 @@
                 var btn = e.target.closest && e.target.closest('.nds-clear');
                 if (!btn || !btn.closest('.nds-form-control .nds-form-action')) return;
                 e.preventDefault();
-                var fc = btn.closest('.nds-form-control');
-                var inputs = fc.querySelectorAll(':scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input');
+                var formControl = btn.closest('.nds-form-control');
+                var inputs = formControl.querySelectorAll(':scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input');
                 inputs.forEach(function(input) {
                     // Hidden inputs are component-owned carriers (taginput tags, restore seeds): clear resets
                     // the visible field, never the committed values.
@@ -739,10 +739,10 @@
     // Messages: typing drops a message, leaving the field checks it again once it shows an error,
     // and a reset clears every message. The clear button follows the value.
     NDS.field.addType('status', {
-        setupInput: function(input, fc) { syncClear(input, fc); },
-        refresh: function(input, fc, opts) {
-            syncClear(input, fc);
-            if (opts.validate) validateInput(input, fc);
+        setupInput: function(input, formControl) { syncClear(input, formControl); },
+        refresh: function(input, formControl, opts) {
+            syncClear(input, formControl);
+            if (opts.validate) validateInput(input, formControl);
         },
         on: {
             focusout: function(e, context) {

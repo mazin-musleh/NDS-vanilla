@@ -278,8 +278,8 @@
 
     // Keyed on the carrier: a native <select> shares the .nds-select shell and stays with the native pass.
     // Re-checked on the carrier's change: a pick writes it and dispatches input and change.
-    NDS.validation.addRule('.nds-select[data-required], .nds-select.nds-required', function (cs) {
-        return cs.querySelector('.nds-select-value') ? Object.assign(checkField(cs), { focus: cs.querySelector('.nds-select-input') }) : null;
+    NDS.validation.addRule('.nds-select[data-required], .nds-select.nds-required', function (customSelect) {
+        return customSelect.querySelector('.nds-select-value') ? Object.assign(checkField(customSelect), { focus: customSelect.querySelector('.nds-select-input') }) : null;
     }, { owns: function (container) { return !!container.querySelector('.nds-select-value'); }, on: ['change'] });
 
     NDS.CustomSelect = {

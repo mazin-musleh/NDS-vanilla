@@ -47,7 +47,7 @@
 (() => {
     'use strict';
 
-    const SEL = '.nds-progress-circle, .nds-progress-bar';
+    const SELECTOR = '.nds-progress-circle, .nds-progress-bar';
     const attributes = ['data-value', 'data-num', 'data-max', 'data-status'];
 
     // The value a screen reader hears; set at once, the fill waits for scroll.
@@ -91,11 +91,11 @@
         }
     }
 
-    let offAttrChange;
+    let offAttributeChange;
     // A page with no indicator at load never runs init(), so the public writers wire this too.
     function watch() {
-        if (offAttrChange) return;
-        offAttrChange = NDS.onAttributeChange(SEL, attributes, elements => elements.forEach(syncFromData));
+        if (offAttributeChange) return;
+        offAttributeChange = NDS.onAttributeChange(SELECTOR, attributes, elements => elements.forEach(syncFromData));
     }
 
     // Public API
@@ -106,7 +106,7 @@
         const reduced = NDS.prefersReducedMotion;
         const canObserve = typeof IntersectionObserver !== 'undefined';
 
-        document.querySelectorAll(SEL).forEach(el => {
+        document.querySelectorAll(SELECTOR).forEach(el => {
             if (el.dataset.value == null && el.dataset.num == null) return;
             if (el.closest('code')) return;
 

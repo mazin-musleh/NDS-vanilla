@@ -527,14 +527,14 @@
         }
 
         _render() {
-            const frag = document.createDocumentFragment();
+            const fragment = document.createDocumentFragment();
             getHeadCells(this._table).forEach((th, index) => {
                 // Locked columns and the row-selection column stay off the list.
                 if (th.hasAttribute('data-columns-lock')) return;
                 if (th.querySelector('input[type="checkbox"].nds-checkbox-input')) return;
-                frag.appendChild(this._buildRow(th, index));
+                fragment.appendChild(this._buildRow(th, index));
             });
-            this._list.appendChild(frag);
+            this._list.appendChild(fragment);
         }
 
         // The .nds-checkbox field nds-filter.js and nds-multiselect.js put
@@ -591,7 +591,7 @@
     // Positional by nature: a colspan in the body shifts the column index.
     const alignValues = { center: 1, start: 1, end: 1 };
     let alignSheet = null;
-    let alignSeq = 0;
+    let alignSequence = 0;
 
     function syncColumnAlign(table) {
         // Through getHeadCells so the nth-child index lands in the same column space
@@ -601,7 +601,7 @@
         if (!heads.length) return;
 
         const rules = [];
-        const scope = 'a' + (++alignSeq);
+        const scope = 'a' + (++alignSequence);
         heads.forEach(th => {
             const align = th.getAttribute('data-align');
             if (!alignValues[align]) return;

@@ -139,10 +139,10 @@
     }
 
     function checkAll(form, opts = {}) {
-        const acc = { invalidFields: [], errors: [] };
+        const validationResult = { invalidFields: [], errors: [] };
         const fail = (field, input, errorText) => {
-            acc.invalidFields.push(field);
-            acc.errors.push({ field, input, message: errorText });
+            validationResult.invalidFields.push(field);
+            validationResult.errors.push({ field, input, message: errorText });
         };
 
         // The native pass: a field whose own input holds the value. A group answers as a whole,
@@ -158,7 +158,7 @@
         });
 
         // The rules: an element answers to the first that answers for it.
-        const answered = new Set(acc.invalidFields);
+        const answered = new Set(validationResult.invalidFields);
         for (const rule of rules) {
             form.querySelectorAll(rule.selector).forEach((el) => {
                 if (answered.has(el) || !isVisible(el, form)) return;
@@ -175,13 +175,13 @@
             !answered.has(field) && isVisible(field, form) && !isDisabled(field) && (isRequired(field) || field.querySelector('[required]')) && NDS.init.isPending(field));
         waiting.filter((field) => !waiting.some((other) => other !== field && field.contains(other))).forEach((field) => {
             fail(field, field.querySelector(NDS.focusableSel), strings.text('still_loading'));
-            acc.pending = true;
+            validationResult.pending = true;
         });
         // Page order, whatever order the rules registered in.
         const order = (left, right) => (left.compareDocumentPosition(right) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
-        acc.errors.sort((left, right) => order(left.field, right.field));
-        acc.invalidFields = acc.errors.map((e) => e.field);
-        return acc;
+        validationResult.errors.sort((left, right) => order(left.field, right.field));
+        validationResult.invalidFields = validationResult.errors.map((e) => e.field);
+        return validationResult;
     }
 
     NDS.validation = { addRule, onRule: watchRules, isOwned, check, checkAll, getMessage, isVisible, isRequired, checkCount, rules };

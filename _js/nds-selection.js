@@ -93,12 +93,12 @@
         const selected = items.filter(isSelected);
         const count = selected.length;
 
-        const alls = getAllBoxes(list);
-        if (alls.length) {
+        const allBoxes = getAllBoxes(list);
+        if (allBoxes.length) {
             watchPages();
             const shown = getScope(items, true).map(getBox).filter(Boolean);
             const on = shown.filter(box => box.checked).length;
-            alls.forEach(box => {
+            allBoxes.forEach(box => {
                 box.checked = on > 0 && on === shown.length;
                 NDS.Checkbox.setIndeterminate(box, on > 0 && on < shown.length);
             });

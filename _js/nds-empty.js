@@ -39,7 +39,7 @@
   const strings = NDS.i18n.getStrings('empty', {
     message: 'No content to show',
   });
-  const PLACEHOLDER_ATTR = 'data-nds-empty-placeholder';
+  const PLACEHOLDER_ATTRIBUTE = 'data-nds-empty-placeholder';
   const DEFAULT_ICON_CLASS = 'nds-icon nds-hgi-desert';
 
   function getMessage(container) {
@@ -53,7 +53,7 @@
   }
 
   function isPlaceholder(el) {
-    return el.hasAttribute(PLACEHOLDER_ATTR);
+    return el.hasAttribute(PLACEHOLDER_ATTRIBUTE);
   }
 
   function countRealChildren(container) {
@@ -71,7 +71,7 @@
         if (child.tagName === 'TBODY' && !isPlaceholder(child)) bodies.push(child);
       }
       if (bodies.length === 0) return true;
-      return bodies.every(tb => countRealChildren(tb) === 0);
+      return bodies.every(tbody => countRealChildren(tbody) === 0);
     }
     return countRealChildren(container) === 0;
   }
@@ -79,7 +79,7 @@
   function findPlaceholder(container) {
     if (container.tagName === 'TABLE') {
       return container.querySelector(
-        ':scope > [' + PLACEHOLDER_ATTR + '], :scope > tbody > [' + PLACEHOLDER_ATTR + ']'
+        ':scope > [' + PLACEHOLDER_ATTRIBUTE + '], :scope > tbody > [' + PLACEHOLDER_ATTRIBUTE + ']'
       );
     }
     for (const child of container.children) if (isPlaceholder(child)) return child;
@@ -106,14 +106,14 @@
   function buildListItem(message, iconClass) {
     const item = document.createElement('li');
     item.className = 'nds-empty-placeholder';
-    item.setAttribute(PLACEHOLDER_ATTR, '');
+    item.setAttribute(PLACEHOLDER_ATTRIBUTE, '');
     buildInner(message, iconClass).forEach(node => item.appendChild(node));
     return item;
   }
 
   function buildRow(colspan, message, iconClass) {
     const tr = document.createElement('tr');
-    tr.setAttribute(PLACEHOLDER_ATTR, '');
+    tr.setAttribute(PLACEHOLDER_ATTRIBUTE, '');
     const td = document.createElement('td');
     td.colSpan = colspan;
     buildInner(message, iconClass).forEach(node => td.appendChild(node));
@@ -124,7 +124,7 @@
   function buildDiv(message, iconClass) {
     const div = document.createElement('div');
     div.className = 'nds-empty-placeholder';
-    div.setAttribute(PLACEHOLDER_ATTR, '');
+    div.setAttribute(PLACEHOLDER_ATTRIBUTE, '');
     buildInner(message, iconClass).forEach(node => div.appendChild(node));
     return div;
   }
@@ -150,13 +150,13 @@
       return;
     }
     if (tag === 'TABLE') {
-      const existingTbody = container.querySelector(':scope > tbody:not([' + PLACEHOLDER_ATTR + '])');
+      const existingTbody = container.querySelector(':scope > tbody:not([' + PLACEHOLDER_ATTRIBUTE + '])');
       if (existingTbody) {
         existingTbody.appendChild(buildRow(getColspan(container), message, iconClass));
         return;
       }
       const tbody = document.createElement('tbody');
-      tbody.setAttribute(PLACEHOLDER_ATTR, '');
+      tbody.setAttribute(PLACEHOLDER_ATTRIBUTE, '');
       tbody.appendChild(buildRow(getColspan(container), message, iconClass));
       container.appendChild(tbody);
       return;
@@ -182,16 +182,16 @@
   }
 
   function syncMessage(container) {
-    const ph = findPlaceholder(container);
-    if (!ph) return;
-    const span = ph.querySelector('.nds-empty-message');
+    const placeholder = findPlaceholder(container);
+    if (!placeholder) return;
+    const span = placeholder.querySelector('.nds-empty-message');
     if (span) span.textContent = getMessage(container);
   }
 
   function syncIcon(container) {
-    const ph = findPlaceholder(container);
-    if (!ph) return;
-    const icon = ph.querySelector('i');
+    const placeholder = findPlaceholder(container);
+    if (!placeholder) return;
+    const icon = placeholder.querySelector('i');
     if (icon) icon.className = getIconClass(container);
   }
 
@@ -212,7 +212,7 @@
       NDS.onDomAdd('.nds-empty', hits => hits.forEach(evaluate));
       NDS.onChildrenChange('.nds-empty', hits => hits.forEach(evaluate));
       NDS.onChildrenChange('table.nds-empty > tbody', hits => {
-        hits.forEach(tb => evaluate(tb.parentElement));
+        hits.forEach(tbody => evaluate(tbody.parentElement));
       });
       NDS.onAttributeChange('.nds-empty', ['data-empty-message', 'data-empty-icon'], hits => {
         hits.forEach(container => { syncMessage(container); syncIcon(container); });

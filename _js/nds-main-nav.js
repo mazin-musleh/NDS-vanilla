@@ -48,7 +48,7 @@
 
     // Fallback values used only if corresponding CSS custom properties are undefined at runtime.
     // These should match the CSS defaults; any mismatch indicates a token-source drift.
-    const MINIMAL_NAV_BP_FALLBACK = 960;
+    const MINIMAL_NAV_BREAKPOINT_FALLBACK = 960;
 
     // ==============================================
     // dom REFERENCES
@@ -90,9 +90,9 @@
     // still get honored (the override is what we read here). The
     // matchMedia change listener is attached at the bottom of the file
     // alongside the reduced-motion listener.
-    const minimalBp = parseInt(getComputedStyle(document.documentElement)
-        .getPropertyValue('--nds-minimal-nav-bp')) || MINIMAL_NAV_BP_FALLBACK;
-    const mqMinimal = window.matchMedia(`(max-width: ${minimalBp}px)`);
+    const minimalBreakpoint = parseInt(getComputedStyle(document.documentElement)
+        .getPropertyValue('--nds-minimal-nav-bp')) || MINIMAL_NAV_BREAKPOINT_FALLBACK;
+    const minimalMediaQuery = window.matchMedia(`(max-width: ${minimalBreakpoint}px)`);
 
     // Scroll behavior for every JS-driven nav scroll. 'auto' defers to the element's
     // CSS scroll-behavior, which is unset on the nav and on the document — so it is a
@@ -110,8 +110,8 @@
     const autoInit = (window.NDS_INIT_CONFIG || {}).autoInitialize
         ?? document.documentElement.getAttribute('data-nds-auto-init') !== 'false';
     if (autoInit && dom.nav && dom.collapse) {
-        dom.nav.classList.toggle('nds-minimal', mqMinimal.matches);
-        dom.minimal?.toggleAttribute('hidden', !mqMinimal.matches);
+        dom.nav.classList.toggle('nds-minimal', minimalMediaQuery.matches);
+        dom.minimal?.toggleAttribute('hidden', !minimalMediaQuery.matches);
     }
 
     // ==============================================
@@ -125,7 +125,7 @@
         // scheduleUpdate to gate the toggler-visibility recompute. Reset there.
         _navChanged: false,
 
-        get isMinimal() { return mqMinimal.matches; },
+        get isMinimal() { return minimalMediaQuery.matches; },
 
         _durations: new WeakMap(),
         getDuration(el) {
@@ -173,17 +173,17 @@
 
     // Resolve the animation target for a dropdown element. needsHeight + animTarget
     // derive from state.isMinimal, which changes at runtime.
-    const getDropdownAnimTarget = (dd) => {
-        const menu = dd.querySelector('.nds-nav-menu');
+    const getDropdownAnimationTarget = (dropdownItem) => {
+        const menu = dropdownItem.querySelector('.nds-nav-menu');
         const parts = {
             menu,
             content: menu?.querySelector('.nds-nav-menu-content'),
-            isInMinimal: dd.closest('.nds-nav-minimal'),
-            isInPrimary: dd.closest('.nds-nav-primary'),
+            isInMinimal: dropdownItem.closest('.nds-nav-minimal'),
+            isInPrimary: dropdownItem.closest('.nds-nav-primary'),
         };
         const needsHeight = state.isMinimal && parts.isInPrimary;
-        const animTarget = parts.isInMinimal ? (parts.content || parts.menu) : (needsHeight ? parts.menu : (parts.content || parts.menu));
-        return { ...parts, needsHeight, animTarget };
+        const animationTarget = parts.isInMinimal ? (parts.content || parts.menu) : (needsHeight ? parts.menu : (parts.content || parts.menu));
+        return { ...parts, needsHeight, animTarget: animationTarget };
     };
 
     // Nav backdrop ownership — prevents flicker during navbar↔dropdown transitions
@@ -349,7 +349,7 @@
             dom.nav.classList.toggle('nds-minimal', should);
             if (dom.minimal) dom.minimal.toggleAttribute('hidden', wantsHidden);
             primaryMaxHeightCached = null;
-            managePabPlacement();
+            managePinnedItemPlacement();
             return true;
         }
         return false;
@@ -361,7 +361,7 @@
         // Pure markup check — no layout reads, no style recalcs.
         // The mainnav SCSS doesn't conditionally hide individual .nds-nav-item
         // via media queries; PABs are MOVED between containers by
-        // managePabPlacement (not CSS-hidden), and only the .nds-label inside
+        // managePinnedItemPlacement (not CSS-hidden), and only the .nds-label inside
         // .nds-nav-link is hidden in icon-only mode (the item itself stays).
         // So "are there items the toggler would expose" reduces to
         // "is the parent not [hidden] and does it have at least one
@@ -389,19 +389,19 @@
     // PAB (Persistent Action Buttons) MANAGEMENT
     // ==============================================
     // A pinned item leaves a marker in its place (NDS.markHome), so a framework holding it still finds its spot.
-    function managePabPlacement() {
-        const pabs = dom.nav ? dom.nav.querySelectorAll('.nds-nav-item.nds-pinned') : [];
-        if (!pabs.length || !dom.minimal) return;
+    function managePinnedItemPlacement() {
+        const pinnedItems = dom.nav ? dom.nav.querySelectorAll('.nds-nav-item.nds-pinned') : [];
+        if (!pinnedItems.length || !dom.minimal) return;
 
         if (state.isMinimal) {
-            pabs.forEach(item => NDS.markHome(item));
+            pinnedItems.forEach(item => NDS.markHome(item));
             // Calls to action first, then the rest, each in written order.
-            const all = Array.from(pabs);
+            const all = Array.from(pinnedItems);
             const cta = all.filter(item => item.classList.contains('nds-nav-cta'));
             const rest = all.filter(item => !item.classList.contains('nds-nav-cta'));
             dom.minimal.prepend(...cta, ...rest);
         } else {
-            pabs.forEach(item => NDS.sendHome(item));
+            pinnedItems.forEach(item => NDS.sendHome(item));
         }
     }
 
@@ -496,8 +496,8 @@
     // pixels from the inner viewport edge (i.e. the edge of the visible content
     // area, not the scrollbar area).
     const FIT_SHIFT_PAD = 16;
-    function setFitShift(dd) {
-        const menu = dd.querySelector('.nds-nav-menu.nds-fit');
+    function setFitShift(dropdownItem) {
+        const menu = dropdownItem.querySelector('.nds-nav-menu.nds-fit');
         if (!menu) return;
         // Clear any leftover inline transform BEFORE the minimal-mode bail. Minimal
         // mode uses `position: fixed; inset-inline: 0` and a stale shift from a
@@ -513,9 +513,9 @@
             // visible edge with no real gap. The scrollbar lives on the right in
             // LTR, on the left in RTL.
             const innerW = window.innerWidth;
-            const sb = innerW - document.documentElement.clientWidth;
-            const left = NDS.isRtl ? sb : 0;
-            const right = NDS.isRtl ? innerW : innerW - sb;
+            const scrollbarWidth = innerW - document.documentElement.clientWidth;
+            const left = NDS.isRtl ? scrollbarWidth : 0;
+            const right = NDS.isRtl ? innerW : innerW - scrollbarWidth;
 
             let shift = 0;
             if (rect.left < left + FIT_SHIFT_PAD) shift = (left + FIT_SHIFT_PAD) - rect.left;
@@ -530,10 +530,10 @@
     const dropdown = {
         closeAll(except = null) {
             let maxDuration = 0;
-            openDropdowns.forEach(dd => {
-                if (dd !== except) {
-                    this.toggle(dd, false);
-                    maxDuration = Math.max(maxDuration, state.getDuration(getDropdownAnimTarget(dd).animTarget));
+            openDropdowns.forEach(dropdownItem => {
+                if (dropdownItem !== except) {
+                    this.toggle(dropdownItem, false);
+                    maxDuration = Math.max(maxDuration, state.getDuration(getDropdownAnimationTarget(dropdownItem).animTarget));
                 }
             });
             if (maxDuration > 0) overflow.schedule('high');
@@ -541,7 +541,7 @@
         },
 
         toggle(el, open) {
-            const { animTarget, isInMinimal, menu } = getDropdownAnimTarget(el);
+            const { animTarget: animationTarget, isInMinimal, menu } = getDropdownAnimationTarget(el);
             const navLink = el.querySelector('.nds-nav-link');
 
             // Maintain the open set when toggle actually flips state.
@@ -566,7 +566,7 @@
             }
 
             animate.run(el, open, {
-                getMenu: () => animTarget,
+                getMenu: () => animationTarget,
                 blockWhileAnimating: open,
                 onStart: () => {
                     overflow.schedule('high', 10);
@@ -687,27 +687,27 @@
         }
     }
 
-    function toggleMenu(dd) {
-        if (!dd) return;
+    function toggleMenu(dropdownItem) {
+        if (!dropdownItem) return;
 
-        const isOpen = hasState(dd, 'open');
-        const { animTarget, isInMinimal, isInPrimary } = getDropdownAnimTarget(dd);
-        const duration = state.getDuration(animTarget);
+        const isOpen = hasState(dropdownItem, 'open');
+        const { animTarget: animationTarget, isInMinimal, isInPrimary } = getDropdownAnimationTarget(dropdownItem);
+        const duration = state.getDuration(animationTarget);
 
-        if (state.isAnimating) { animate.queue('dropdown', dd); return; }
+        if (state.isAnimating) { animate.queue('dropdown', dropdownItem); return; }
         cancelToggleAction();
 
         if (isOpen) {
-            dropdown.toggle(dd, false);
+            dropdown.toggle(dropdownItem, false);
             if (isInPrimary && hasState(dom.collapse, 'open')) runAfterDelay(duration, syncDrawerOverflow);
             return;
         }
 
-        const closeDelay = dropdown.closeAll(dd);
+        const closeDelay = dropdown.closeAll(dropdownItem);
 
         const open = () => {
             if (animate._activeCount === 0) state.isAnimating = false;
-            dropdown.toggle(dd, true);
+            dropdown.toggle(dropdownItem, true);
             if (isInPrimary && hasState(dom.collapse, 'open')) runAfterDelay(duration * 0.1, syncDrawerOverflow);
         };
 
@@ -757,10 +757,10 @@
         if (collapseOpen) {
             const elements = [dom.collapse, dom.toggler];
             if (state.isMinimal) {
-                openDropdowns.forEach(dd => {
-                    if (!dd.closest('.nds-nav-actions')) return;
-                    if (dom.collapse && !dom.collapse.contains(dd)) return;
-                    const menu = dd.querySelector('.nds-nav-menu');
+                openDropdowns.forEach(dropdownItem => {
+                    if (!dropdownItem.closest('.nds-nav-actions')) return;
+                    if (dom.collapse && !dom.collapse.contains(dropdownItem)) return;
+                    const menu = dropdownItem.querySelector('.nds-nav-menu');
                     if (menu && !menu.closest('.nds-nav-minimal')) elements.push(menu);
                 });
             }
@@ -768,13 +768,13 @@
         }
 
         // Close dropdowns if click outside
-        openDropdowns.forEach(dd => {
-            if (hasState(dd, 'closing')) return;
-            const menu = dd.querySelector('.nds-nav-menu');
-            if (![dd, menu].some(el => el?.contains(target))) {
-                const needsRecalc = (dd.closest('.nds-nav-primary') || dd.closest('.nds-nav-actions')) &&
+        openDropdowns.forEach(dropdownItem => {
+            if (hasState(dropdownItem, 'closing')) return;
+            const menu = dropdownItem.querySelector('.nds-nav-menu');
+            if (![dropdownItem, menu].some(el => el?.contains(target))) {
+                const needsRecalc = (dropdownItem.closest('.nds-nav-primary') || dropdownItem.closest('.nds-nav-actions')) &&
                     hasState(dom.collapse, 'open');
-                dropdown.toggle(dd, false);
+                dropdown.toggle(dropdownItem, false);
                 if (needsRecalc) runAfterDelay(state.getDuration(menu), syncDrawerOverflow);
             }
         });
@@ -795,8 +795,8 @@
             const amount = (state.isMinimal ? dom.primary.clientHeight : dom.primary.clientWidth) * 0.8;
 
             if (state.isMinimal) {
-                openDropdowns.forEach(dd => {
-                    if (dd.closest('.nds-nav-actions')) dropdown.toggle(dd, false);
+                openDropdowns.forEach(dropdownItem => {
+                    if (dropdownItem.closest('.nds-nav-actions')) dropdown.toggle(dropdownItem, false);
                 });
                 dom.primary.scrollTo({ top: atEnd ? 0 : dom.primary.scrollTop + amount, behavior: getScrollBehavior() });
             } else {
@@ -1062,7 +1062,7 @@
         if (initDone || !dom.collapse) return;
         initDone = true;
 
-        // syncMode calls managePabPlacement when the state transitions;
+        // syncMode calls managePinnedItemPlacement when the state transitions;
         // only run the explicit pass when it didn't, otherwise PAB placement
         // walks every .nds-pinned twice and re-prepends nodes already in place.
         const modeSynced = syncMode();
@@ -1084,7 +1084,7 @@
         // both document-click listeners detach atomically on teardown. It
         // fast-bails when nothing is open, so it's cheap on the common click.
         document.addEventListener('click', (e) => handleDocumentClick(e), { signal: eventsAbortController.signal });
-        if (!modeSynced) managePabPlacement();
+        if (!modeSynced) managePinnedItemPlacement();
         // Read the nav composition now that PABs (if any) have been placed.
         // scheduleUpdate's only call site for this fires on width/mode/nav
         // changes — none of which trigger on first load — so without this,
@@ -1110,8 +1110,8 @@
     // `--nds-minimal-nav-bp`. scheduleUpdate's syncMode call then
     // sees the mismatch between .nds-main-nav.nds-minimal and the new state.isMinimal
     // and runs the mode-transition logic (close dropdowns, drawer cleanup,
-    // PAB placement). Replaces the old windowWidth-vs-minimalBp poll.
-    mqMinimal.addEventListener('change', () => {
+    // PAB placement). Replaces the old windowWidth-vs-minimalBreakpoint poll.
+    minimalMediaQuery.addEventListener('change', () => {
         if (!initDone) return;
         primaryMaxHeightCached = null;
         scheduleUpdate();
@@ -1143,8 +1143,8 @@
         close: () => { if (isDrawerOpen()) toggleNavbar(); },
         toggle: () => toggleNavbar(),
         openMenu: (trigger) => {
-            const dd = trigger?.closest('.nds-has-menu');
-            if (dd && !hasState(dd, 'open')) toggleMenu(dd);
+            const dropdownItem = trigger?.closest('.nds-has-menu');
+            if (dropdownItem && !hasState(dropdownItem, 'open')) toggleMenu(dropdownItem);
         },
         closeMenus: () => { dropdown.closeAll(); },
     };

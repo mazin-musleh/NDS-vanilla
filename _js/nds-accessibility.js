@@ -318,10 +318,10 @@
     // String() both sides: cycled settings come back as strings ('0' vs 0).
     function isDefaultState(candidate) {
         if (candidate.modes.length || candidate.bundles.length || candidate.excluded.length) return false;
-        const def = getDefaultState().settings;
-        for (const key in def) {
+        const defaults = getDefaultState().settings;
+        for (const key in defaults) {
             if (key === 'mask-band' || key === 'mask-y') continue;
-            if (String(candidate.settings[key]) !== String(def[key])) return false;
+            if (String(candidate.settings[key]) !== String(defaults[key])) return false;
         }
         return true;
     }
@@ -348,9 +348,9 @@
         }
 
         // Continuous scalars → inline var when non-default + presence token.
-        scalarProperties.forEach(({ key, cssVar, def, token }) => {
+        scalarProperties.forEach(({ key, cssVar, def: defaultValue, token }) => {
             const value = settings[key];
-            if (value && value !== def && !(key === 'letter-spacing' && isLetterSpacingBlocked())) {
+            if (value && value !== defaultValue && !(key === 'letter-spacing' && isLetterSpacingBlocked())) {
                 root.style.setProperty(cssVar, value);
                 tokens.add(token);
             } else {
@@ -661,13 +661,13 @@
         const barsEl = btn.querySelector('[data-a11y-bars]');
         if (!barsEl || barsEl.children.length) return;
         const levels = Math.max(0, cycle.length - 1);
-        const frag = document.createDocumentFragment();
+        const fragment = document.createDocumentFragment();
         for (let i = 0; i < levels; i++) {
             const bar = document.createElement('span');
             bar.className = 'nds-accessibility-tile-bar';
-            frag.appendChild(bar);
+            fragment.appendChild(bar);
         }
-        barsEl.appendChild(frag);
+        barsEl.appendChild(fragment);
     }
 
     function formatSettingValue(key, value) {
@@ -809,8 +809,8 @@
                     state.excluded.push(other);
                 }
             });
-            const ei = state.excluded.indexOf(filter);
-            if (ei >= 0) state.excluded.splice(ei, 1);
+            const excludedIndex = state.excluded.indexOf(filter);
+            if (excludedIndex >= 0) state.excluded.splice(excludedIndex, 1);
             if (!isSuppliedElsewhere(filter) && !state.modes.includes(filter)) {
                 state.modes.push(filter);
             }
@@ -907,13 +907,13 @@
         // Mid-window reminder so SR users aren't navigating blind through the
         // 5s arming window (countdown is purely visual otherwise — WCAG 2.2.3).
         const remainingMs = 2000;
-        const remainingSec = Math.round(remainingMs / 1000);
+        const remainingSeconds = Math.round(remainingMs / 1000);
         resetCountdownTimer = setTimeout(() => {
             resetCountdownTimer = null;
             // Only announce if still armed — the second-click path already
             // cleared the timer and announced the success message.
             if (resetTimer) {
-                announce(words.text('confirm_reset_remaining', { n: remainingSec }));
+                announce(words.text('confirm_reset_remaining', { n: remainingSeconds }));
             }
         }, RESET_CONFIRM_MS - remainingMs);
         resetTimer = setTimeout(() => {

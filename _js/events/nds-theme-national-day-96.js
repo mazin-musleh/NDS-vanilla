@@ -43,7 +43,7 @@
     // step aside so the switcher drives that one.
     if (window.__NDS_THEME_HOOKS && window.__NDS_THEME_HOOKS[THEME]) return;
     var LINK_ID = 'nds-theme-stylesheet';   // shared slot: nds-theme.js LINK_ID + head.html brand path
-    var SWIPER_SEL = '.nds-hero-section .nds-swiper.nds-hero';
+    var SWIPER_SELECTOR = '.nds-hero-section .nds-swiper.nds-hero';
     // Both are injection/teardown hooks only — the stylesheet styles neither.
     var SLIDE_CLASS = 'nds-national-day';      // the type 1 slide
     var DECK_SLIDE = 'nds-nd96-slide';         // a type 2 slide
@@ -227,7 +227,7 @@
                 '<picture><img src="' + escapeHtml(imgUrl) + '" class="nds-hero-image" alt="" fetchpriority="high"></picture>' +
               '</div>'
             : '';
-        var desc = translate(HERO.description) ? '<p class="nds-section-description">' + escapeHtml(translate(HERO.description)) + '</p>' : '';
+        var description = translate(HERO.description) ? '<p class="nds-section-description">' + escapeHtml(translate(HERO.description)) + '</p>' : '';
         var iconUrl = HERO.cta ? resolveAssetUrl(HERO.cta.icon) : '';
         var cta = HERO.cta
             ? '<a class="nds-btn nds-primary nds-oncolor nds-lg" href="' + escapeHtml(HERO.cta.url) + '" target="_blank">' +
@@ -242,7 +242,7 @@
             img +
             '<div class="nds-section-body">' +
               '<h2 class="nds-section-title">' + escapeHtml(translate(HERO.title)) + '</h2>' +
-              desc + cta +
+              description + cta +
             '</div>';
         return slide;
     }
@@ -289,13 +289,13 @@
     function readTokens() {
         return (document.documentElement.getAttribute('data-theme') || '').split(/\s+/).filter(Boolean);
     }
-    function writeTokens(toks) {
-        if (toks.length) document.documentElement.setAttribute('data-theme', toks.join(' '));
+    function writeTokens(tokens) {
+        if (tokens.length) document.documentElement.setAttribute('data-theme', tokens.join(' '));
         else document.documentElement.removeAttribute('data-theme');
     }
     function addToken() {
-        var toks = readTokens();
-        if (toks.indexOf(THEME) === -1) { toks.push(THEME); writeTokens(toks); }
+        var tokens = readTokens();
+        if (tokens.indexOf(THEME) === -1) { tokens.push(THEME); writeTokens(tokens); }
     }
     function removeToken() {
         writeTokens(readTokens().filter(function (x) { return x !== THEME; }));
@@ -318,7 +318,7 @@
     }
 
     function injectSlide() {
-        var swiper = document.querySelector(SWIPER_SEL);
+        var swiper = document.querySelector(SWIPER_SELECTOR);
         if (!swiper) return;
         var wrapper = swiper.querySelector('.nds-swiper-wrapper');
         if (!wrapper || wrapper.querySelector('.' + SLIDE_CLASS)) return;   // idempotent
@@ -344,7 +344,7 @@
         if (document.readyState !== 'loading') { injectHero(); return; }
         if (observer) return;
         observer = new MutationObserver(function () {
-            if (document.querySelector(SWIPER_SEL + ' .nds-swiper-wrapper')) {
+            if (document.querySelector(SWIPER_SELECTOR + ' .nds-swiper-wrapper')) {
                 cancelPending();
                 injectHero();
             }
@@ -358,7 +358,7 @@
     }
 
     function removeSlide() {
-        var swiper = document.querySelector(SWIPER_SEL);
+        var swiper = document.querySelector(SWIPER_SELECTOR);
         if (!swiper) return;
         // A loop's head clones copy the class and come first; reinit drops them.
         var slide = swiper.querySelector('.nds-swiper-slide.' + SLIDE_CLASS + ':not(.nds-swiper-clone)');
@@ -440,7 +440,7 @@
     }
 
     function injectDeck() {
-        var swiper = document.querySelector(SWIPER_SEL);
+        var swiper = document.querySelector(SWIPER_SELECTOR);
         if (!swiper) return;
         var wrapper = swiper.querySelector('.nds-swiper-wrapper');
         var section = swiper.closest('.nds-hero-section');
@@ -467,27 +467,27 @@
         if (page) page.classList.add('nds-md');
 
         deckAbort = new AbortController();
-        var sig = deckAbort.signal;
-        swiper.addEventListener('nds:swiper:change', function (e) { setActive(e.detail.index); }, { signal: sig });
-        section.addEventListener('pointerenter', pause, { signal: sig });
-        section.addEventListener('pointerleave', resume, { signal: sig });
-        document.addEventListener('visibilitychange', function () { if (document.hidden) pause(); else resume(); }, { signal: sig });
+        var signal = deckAbort.signal;
+        swiper.addEventListener('nds:swiper:change', function (e) { setActive(e.detail.index); }, { signal: signal });
+        section.addEventListener('pointerenter', pause, { signal: signal });
+        section.addEventListener('pointerleave', resume, { signal: signal });
+        document.addEventListener('visibilitychange', function () { if (document.hidden) pause(); else resume(); }, { signal: signal });
         // The page direction can flip in place; the text follows it.
         var dirWatch = new MutationObserver(retext);
         dirWatch.observe(document.documentElement, { attributes: true, attributeFilter: ['dir'] });
-        sig.addEventListener('abort', function () { dirWatch.disconnect(); });
+        signal.addEventListener('abort', function () { dirWatch.disconnect(); });
         // Adopt the swiper once it initializes
         // (and again after every reinit — the attribute comes back each time).
         var initWatch = new MutationObserver(function () {
             if (swiper.hasAttribute('data-nds-swiper-initialized')) adoptDeck(swiper);
         });
         initWatch.observe(swiper, { attributes: true, attributeFilter: ['data-nds-swiper-initialized'] });
-        sig.addEventListener('abort', function () { initWatch.disconnect(); });
+        signal.addEventListener('abort', function () { initWatch.disconnect(); });
         if (document.readyState === 'loading') {
             var sweep = new MutationObserver(function () { stashSiteSlides(wrapper); });
             sweep.observe(wrapper, { childList: true });
-            document.addEventListener('DOMContentLoaded', function () { sweep.disconnect(); }, { once: true, signal: sig });
-            sig.addEventListener('abort', function () { sweep.disconnect(); });
+            document.addEventListener('DOMContentLoaded', function () { sweep.disconnect(); }, { once: true, signal: signal });
+            signal.addEventListener('abort', function () { sweep.disconnect(); });
         }
 
         setActive(0);
@@ -524,9 +524,9 @@
         if (!first) {
             // Cross-fade: park the outgoing gradient on ::before, then fade it out
             // over the new one (compositor opacity, one repaint — see the stylesheet).
-            var cs = getComputedStyle(section);
-            section.style.setProperty('--_nd96-prev-from', cs.getPropertyValue('--_nd96-from'));
-            section.style.setProperty('--_nd96-prev-to', cs.getPropertyValue('--_nd96-to'));
+            var computedStyle = getComputedStyle(section);
+            section.style.setProperty('--_nd96-prev-from', computedStyle.getPropertyValue('--_nd96-from'));
+            section.style.setProperty('--_nd96-prev-to', computedStyle.getPropertyValue('--_nd96-to'));
             section.classList.remove('nds-nd96-' + SLIDES[current].theme);
         }
         current = i;
@@ -582,7 +582,7 @@
     // it). An invisible compositor animation on the deck just before the move
     // brings the clocks up in time.
     function prewarm() {
-        var deck = document.querySelector(SWIPER_SEL + ' .nds-swiper-deck');
+        var deck = document.querySelector(SWIPER_SELECTOR + ' .nds-swiper-deck');
         if (deck && deck.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             deck.animate([{ opacity: 1 }, { opacity: 0.999 }, { opacity: 1 }], { duration: WARM_MS + 100 });
         }
@@ -590,7 +590,7 @@
     }
 
     function advance() {
-        var swiper = document.querySelector(SWIPER_SEL);
+        var swiper = document.querySelector(SWIPER_SELECTOR);
         var instance = getSwiperInstance(swiper);
         if (instance) instance.goTo((current + 1) % SLIDES.length);   // by index: wraps with or without loop (the text switch is instant)
     }
@@ -646,10 +646,10 @@
 
         function place(active) {
             cards.forEach(function (card, index) {
-                var rel = (index - active + count) % count, srel = rel > count / 2 ? rel - count : rel;
+                var rel = (index - active + count) % count, signedRelative = rel > count / 2 ? rel - count : rel;
                 card.style.setProperty('--rel', rel);
-                card.style.setProperty('--srel', srel);
-                var status = rel === 0 ? 'active' : Math.abs(srel) === 1 ? 'near' : '';
+                card.style.setProperty('--srel', signedRelative);
+                var status = rel === 0 ? 'active' : Math.abs(signedRelative) === 1 ? 'near' : '';
                 if (status) card.setAttribute('data-status', status); else card.removeAttribute('data-status');
                 if (rel === 0) card.setAttribute('aria-current', 'true'); else card.removeAttribute('aria-current');
             });
@@ -707,14 +707,14 @@
         if (deck && !draggedDecks.has(deck)) {
             draggedDecks.add(deck);
             var mediaQuery = window.matchMedia((window.NDS && NDS.breakpoints && NDS.breakpoints.desktop) || '(min-width: 960px)');
-            var sig = deckAbort ? deckAbort.signal : undefined;
+            var signal = deckAbort ? deckAbort.signal : undefined;
             var x0 = null, dx = 0, pressed = -1;
             deck.addEventListener('pointerdown', function (e) {
                 if (e.pointerType === 'mouse' && e.button !== 0) return;
                 x0 = e.clientX; dx = 0;
                 pressed = cards.indexOf(e.target.closest('.nds-swiper-card'));
                 try { deck.setPointerCapture(e.pointerId); } catch (error) { /* synthetic pointer */ }
-            }, { signal: sig });
+            }, { signal: signal });
             deck.addEventListener('pointermove', function (e) {
                 // The fan layout has the arrows; only the stacked layout drags, and
                 // .nds-stacked asks for that layout above the breakpoint too. Read
@@ -722,7 +722,7 @@
                 if (x0 === null || (mediaQuery.matches && !swiper.classList.contains('nds-stacked'))) return;
                 dx = e.clientX - x0;
                 if (Math.abs(dx) > 4) { deck.classList.add('nds-dragging'); deck.style.setProperty('--drag', dx + 'px'); }
-            }, { signal: sig });
+            }, { signal: signal });
             var release = function (e) {
                 if (x0 === null) return;
                 x0 = null;
@@ -731,15 +731,15 @@
                 var live = getSwiperInstance(swiper);
                 if (!live) return;
                 // By index, so the ends wrap on a runtime without loop too.
-                if (Math.abs(dx) >= 40) { var fwd = (window.NDS && 'isRtl' in NDS ? NDS.isRtl : document.documentElement.dir === 'rtl') ? dx > 0 : dx < 0; live.goTo((getRealIndex() + (fwd ? 1 : count - 1)) % count); return; }
+                if (Math.abs(dx) >= 40) { var forward = (window.NDS && 'isRtl' in NDS ? NDS.isRtl : document.documentElement.dir === 'rtl') ? dx > 0 : dx < 0; live.goTo((getRealIndex() + (forward ? 1 : count - 1)) % count); return; }
                 if (e.type === 'pointerup' && pressed >= 0) live.goTo(pressed);
             };
-            deck.addEventListener('pointerup', release, { signal: sig });
-            deck.addEventListener('pointercancel', release, { signal: sig });
+            deck.addEventListener('pointerup', release, { signal: signal });
+            deck.addEventListener('pointercancel', release, { signal: signal });
             cards.forEach(function (card, i) {
                 card.addEventListener('keydown', function (e) {
                     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); var live = getSwiperInstance(swiper); if (live) live.goTo(i); }
-                }, { signal: sig });
+                }, { signal: signal });
             });
         }
 

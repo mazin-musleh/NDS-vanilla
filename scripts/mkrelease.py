@@ -219,6 +219,14 @@ def verify(out, version, rules=None):
     if banners.returncode:
         sys.exit('check-banners.mjs --all failed:\n' + banners.stdout + banners.stderr)
 
+    # The JS rules and the naming rules: a finding is decided, so it fails; a verify line is left to read.
+    for flag in ('', ' --names'):
+        rules = subprocess.run('node scripts/check-js-rules.mjs' + flag, cwd=ROOT,
+                               shell=True, capture_output=True, text=True)
+        if rules.returncode:
+            sys.exit(f'check-js-rules.mjs{flag} failed:\n' + '\n'.join(
+                l for l in rules.stdout.splitlines() if l.startswith('finding')) + rules.stderr)
+
     # The shared [data-state] invalidation set only grows silently: one new
     # `[data-state] … td` rule taxes every state write on every container.
     tails = subprocess.run('python scripts/check-data-state-tails.py', cwd=ROOT,

@@ -43,8 +43,8 @@
 (() => {
     'use strict';
 
-    const SEL = '.nds-countdown';
-    const WIRED_ATTR = 'data-nds-countdown-initialized';
+    const SELECTOR = '.nds-countdown';
+    const WIRED_ATTRIBUTE = 'data-nds-countdown-initialized';
     const unitSeconds = { d: 86400, h: 3600, m: 60, s: 1 };
     const unitNames = { d: 'day', h: 'hour', m: 'minute', s: 'second' };
     const DEFAULT_MARKUP = '<span data-unit="d" data-countdown-hide-zero><span class="nds-countdown-value">--</span> <span class="nds-countdown-label"></span> </span>'
@@ -74,12 +74,12 @@
     }
 
     // The wall clock of epoch `t` in `tz`, as if it were UTC.
-    function getWallTime(epoch, tz) {
-        let formatter = zoneFormats.get(tz);
+    function getWallTime(epoch, timeZone) {
+        let formatter = zoneFormats.get(timeZone);
         if (!formatter) {
-            formatter = new Intl.DateTimeFormat('en', { timeZone: tz, hourCycle: 'h23', numberingSystem: 'latn',
+            formatter = new Intl.DateTimeFormat('en', { timeZone: timeZone, hourCycle: 'h23', numberingSystem: 'latn',
                 year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
-            zoneFormats.set(tz, formatter);
+            zoneFormats.set(timeZone, formatter);
         }
         const parts = {};
         for (const { type, value } of formatter.formatToParts(epoch)) parts[type] = +value;
@@ -93,16 +93,16 @@
         const trimmed = String(text ?? '').trim();
         const match = /^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?)?(Z|([+-])(\d{2}):?(\d{2}))?$/.exec(trimmed);
         if (!match) return NaN;
-        const [y, mo, day] = [+match[1], +match[2], +match[3]];
-        const [hour, mi, sec] = [+match[4] || 0, +match[5] || 0, +match[6] || 0];
-        const wall = Date.UTC(y, mo - 1, day, hour, mi, sec);
+        const [y, month, day] = [+match[1], +match[2], +match[3]];
+        const [hour, minute, second] = [+match[4] || 0, +match[5] || 0, +match[6] || 0];
+        const wall = Date.UTC(y, month - 1, day, hour, minute, second);
         // Not Date.parse: it rejects a date-only offset (Chrome) and +0300 (Safari).
         if (match[7]) return match[7] === 'Z' ? wall : wall - (match[8] === '-' ? -1 : 1) * (match[9] * 60 + +match[10]) * 6e4;
-        const tz = NDS.Date.site.timeZone;
-        if (!tz) return new Date(y, mo - 1, day, hour, mi, sec).getTime();
+        const timeZone = NDS.Date.site.timeZone;
+        if (!timeZone) return new Date(y, month - 1, day, hour, minute, second).getTime();
         // Shift by the zone's offset at the guess, then once more in case the guess sat across a DST edge.
         let epoch = wall;
-        for (let i = 0; i < 2; i++) epoch = wall - (getWallTime(epoch, tz) - epoch);
+        for (let i = 0; i < 2; i++) epoch = wall - (getWallTime(epoch, timeZone) - epoch);
         return epoch;
     }
 
@@ -240,7 +240,7 @@
     }
 
     function setupCountdown(el) {
-        if (el.hasAttribute(WIRED_ATTR) || el.closest('code')) return;
+        if (el.hasAttribute(WIRED_ATTRIBUTE) || el.closest('code')) return;
         // Once: a waiter is re-wired by every reinit(), and the server time in the markup does not move.
         const src = !offsets.has(el) && el.closest('[data-countdown-now]');
         if (src) {
@@ -256,7 +256,7 @@
         const seconds = el.getAttribute('data-countdown-seconds');
         if (seconds === null && el.getAttribute('data-countdown') === '') return; // waits for set()
         // Stamped only on success, so reinit() retries a target filled in later.
-        if (track(el, seconds !== null ? parseInt(seconds, 10) : el.getAttribute('data-countdown'))) el.setAttribute(WIRED_ATTR, '');
+        if (track(el, seconds !== null ? parseInt(seconds, 10) : el.getAttribute('data-countdown'))) el.setAttribute(WIRED_ATTRIBUTE, '');
     }
 
     // A page with no countdown at load never runs init(), so set() binds this too.
@@ -267,7 +267,7 @@
     }
 
     function init() {
-        document.querySelectorAll(SEL).forEach(setupCountdown);
+        document.querySelectorAll(SELECTOR).forEach(setupCountdown);
         addVisibilityListeners();
     }
 

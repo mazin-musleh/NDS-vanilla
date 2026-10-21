@@ -188,16 +188,16 @@
         // ==============================================
 
         _readConfig() {
-            const ds = this.container.dataset;
+            const dataset = this.container.dataset;
             const attributeConfig = {
-                uploadUrl: ds.uploadUrl || null,
-                autoUpload: ds.autoUpload === 'true',
-                maxFileSize: parseInt(ds.maxFileSize) || 10 * 1024 * 1024,
-                allowedTypes: ds.allowedTypes ? ds.allowedTypes.split(',').map(type => type.trim().toLowerCase()) : null,
-                allowedMimeTypes: ds.allowedMimeTypes ? ds.allowedMimeTypes.split(',').map(type => type.trim().toLowerCase()) : null,
-                maxFiles: parseInt(ds.maxFiles) || Infinity,
-                fieldName: ds.fieldName || 'file',
-                uploadTimeout: parseFloat(ds.uploadTimeout) || 0
+                uploadUrl: dataset.uploadUrl || null,
+                autoUpload: dataset.autoUpload === 'true',
+                maxFileSize: parseInt(dataset.maxFileSize) || 10 * 1024 * 1024,
+                allowedTypes: dataset.allowedTypes ? dataset.allowedTypes.split(',').map(type => type.trim().toLowerCase()) : null,
+                allowedMimeTypes: dataset.allowedMimeTypes ? dataset.allowedMimeTypes.split(',').map(type => type.trim().toLowerCase()) : null,
+                maxFiles: parseInt(dataset.maxFiles) || Infinity,
+                fieldName: dataset.fieldName || 'file',
+                uploadTimeout: parseFloat(dataset.uploadTimeout) || 0
             };
             // JS options (passed to NDS.Upload.create / the constructor) override the
             // declarative data-* attributes; _options only holds keys the caller set.
@@ -446,9 +446,9 @@
 
             // Extension check
             if (config.allowedTypes) {
-                const ext = file.name.split('.').pop().toLowerCase();
-                if (!config.allowedTypes.includes(ext)) {
-                    errors.push(strings.text('type_not_allowed_ext', { ext }));
+                const extension = file.name.split('.').pop().toLowerCase();
+                if (!config.allowedTypes.includes(extension)) {
+                    errors.push(strings.text('type_not_allowed_ext', { ext: extension }));
                 }
             }
 
@@ -674,10 +674,10 @@
                 base.textContent = dot > 0 ? name.slice(0, dot) : name;
                 fileName.replaceChildren(base);
                 if (dot > 0) {
-                    const ext = document.createElement('span');
-                    ext.className = 'nds-file-ext';
-                    ext.textContent = name.slice(dot);
-                    fileName.append(ext);
+                    const extensionElement = document.createElement('span');
+                    extensionElement.className = 'nds-file-ext';
+                    extensionElement.textContent = name.slice(dot);
+                    fileName.append(extensionElement);
                 }
                 // title is the tooltip's message source; plain browser title without NDS.Tooltip.
                 fileName.title = name;

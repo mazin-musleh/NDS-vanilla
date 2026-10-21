@@ -90,7 +90,7 @@
     const tableAdapter = {
         getColumns(source) {
             const ths = Array.from(source.querySelector(':scope > thead > tr')?.cells || []);
-            const cols = [];
+            const columns = [];
             ths.forEach((th, index) => {
                 if (th.hasAttribute('data-export-skip')) return;
                 // Skip the row-selection checkbox column (auto-detected)
@@ -98,9 +98,9 @@
                 const label = th.dataset.exportLabel
                     || NDS.getCellText(th)
                     || ('col_' + index);
-                cols.push({ index, key: 'c' + index, label });
+                columns.push({ index, key: 'c' + index, label });
             });
-            return cols;
+            return columns;
         },
 
         getRows(source, scope) {
@@ -121,8 +121,8 @@
             return rows;
         },
 
-        getCell(row, col) {
-            const td = row.cells[col.index];
+        getCell(row, column) {
+            const td = row.cells[column.index];
             if (!td) return '';
             // data-sort-value is deliberately NOT consulted here — it's a
             // sort-comparison signal, not an export override. Authors who want
@@ -153,7 +153,7 @@
                 (source.dataset.exportSkip || '').split(/\s+/).filter(Boolean)
             );
             const rows = this.getRows(source, 'all');
-            const cols = [];
+            const columns = [];
             const seen = new Set();
             rows.forEach(row => {
                 const fields = row.querySelectorAll('[data-export-field]');
@@ -162,14 +162,14 @@
                     const key = el.dataset.exportField;
                     if (!key || seen.has(key) || skipKeys.has(key)) return;
                     seen.add(key);
-                    cols.push({ key, label: el.dataset.exportLabel || key });
+                    columns.push({ key, label: el.dataset.exportLabel || key });
                 });
             });
-            return cols;
+            return columns;
         },
 
-        getCell(row, col) {
-            const el = row.querySelector('[data-export-field="' + col.key + '"]');
+        getCell(row, column) {
+            const el = row.querySelector('[data-export-field="' + column.key + '"]');
             if (!el || el.hasAttribute('data-export-skip')) return '';
             const override = el.getAttribute('data-export-value');
             if (override !== null) return override;
@@ -209,9 +209,9 @@
         const columns = adapter.getColumns(el);
         const rawRows = adapter.getRows(el, effective);
         const rows = rawRows.map(row => {
-            const rec = {};
-            columns.forEach(col => { rec[col.key] = adapter.getCell(row, col); });
-            return rec;
+            const record = {};
+            columns.forEach(column => { record[column.key] = adapter.getCell(row, column); });
+            return record;
         });
         return { columns, rows };
     }
@@ -291,10 +291,10 @@
             const light = prevTheme.split(/\s+/).filter(token => token !== 'dark' && token !== 'light').join(' ');
             if (light) root.setAttribute('data-theme', light); else root.removeAttribute('data-theme');
         }
-        const cs = getComputedStyle(root);
+        const computedStyle = getComputedStyle(root);
         // Only a real colour reaches the print <style>: a saved palette seed flows into these tokens.
         const getToken = (name, fallback) => {
-            const x = cs.getPropertyValue(name).trim();
+            const x = computedStyle.getPropertyValue(name).trim();
             return x && CSS.supports('color', x) ? x : fallback;
         };
         const tokens = {
@@ -354,7 +354,7 @@
         frameDocument.write(html);
         frameDocument.close();
 
-        const win = iframe.contentWindow;
+        const printWindow = iframe.contentWindow;
         // Track focus so we can restore it to the triggering button after the
         // print dialog closes. Without this, focus lands on <body>.
         const previouslyFocused = document.activeElement;
@@ -370,7 +370,7 @@
                 previouslyFocused.focus();
             }
         };
-        win.addEventListener('afterprint', cleanup, { once: true });
+        printWindow.addEventListener('afterprint', cleanup, { once: true });
         // Safety net: most engines fire afterprint reliably, but Safari's PDF
         // preview path and a few WebView variants have skipped it historically.
         // 10 minutes is well past any realistic dialog lifespan and keeps the
@@ -380,8 +380,8 @@
         // Give the iframe a tick to lay out before the print dialog blocks the thread.
         setTimeout(() => {
             try {
-                win.focus();
-                win.print();
+                printWindow.focus();
+                printWindow.print();
             } catch (error) {
                 console.warn('[NDS.Export] print failed', error);
                 cleanup();
@@ -418,19 +418,19 @@
     // The site's day (<html data-timezone>), not toISOString's UTC day.
     const getToday = () => NDS.Date.format(NDS.Date.getToday(), { format: 'YYYY-MM-DD' });
 
-    function buildDefaultFilename(source, ext) {
+    function buildDefaultFilename(source, extension) {
         const raw = source && source.dataset && source.dataset.exportName;
         const name = sanitizeFilename(raw);
-        return name + '-' + getToday() + '.' + ext;
+        return name + '-' + getToday() + '.' + extension;
     }
 
     function download(data, format, opts) {
         opts = opts || {};
-        const ext = format === 'pdf' ? 'pdf' : format === 'xls' ? 'xls' : 'csv';
-        const rawName = opts.filename || ('nds-export-' + getToday() + '.' + ext);
+        const extension = format === 'pdf' ? 'pdf' : format === 'xls' ? 'xls' : 'csv';
+        const rawName = opts.filename || ('nds-export-' + getToday() + '.' + extension);
         // sanitize the stem (before extension) — keep the trailing extension as-is.
         const stem = rawName.replace(/\.[a-z]+$/i, '');
-        const filename = sanitizeFilename(stem) + (rawName.match(/\.[a-z]+$/i)?.[0] || '.' + ext);
+        const filename = sanitizeFilename(stem) + (rawName.match(/\.[a-z]+$/i)?.[0] || '.' + extension);
         const title = opts.title || filename.replace(/\.[a-z]+$/i, '');
         if (format === 'csv') {
             downloadBlob(new Blob([toCsv(data)], { type: 'text/csv;charset=utf-8' }), filename, data.rows.length);
@@ -448,8 +448,8 @@
         if (!el) return;
         opts = opts || {};
         const data = collect(el, scope || 'auto');
-        const ext = format === 'pdf' ? 'pdf' : format === 'xls' ? 'xls' : 'csv';
-        const filename = opts.filename || buildDefaultFilename(el, ext);
+        const extension = format === 'pdf' ? 'pdf' : format === 'xls' ? 'xls' : 'csv';
+        const filename = opts.filename || buildDefaultFilename(el, extension);
         const title = opts.title || filename.replace(/\.[a-z]+$/i, '');
         const go = el.dispatchEvent(new CustomEvent('nds:export:start', {
             bubbles: true, cancelable: true, detail: { format, scope: scope || 'auto', data, filename },

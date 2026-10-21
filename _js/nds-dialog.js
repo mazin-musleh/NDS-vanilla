@@ -36,8 +36,8 @@
   function syncInert() {
     const want = new Set();
     for (let node = getTop(); node && node !== document.body && node.parentElement; node = node.parentElement) {
-      for (const sib of node.parentElement.children) {
-        if (sib !== node && !skip.has(sib.tagName) && (!sib.inert || inerted.has(sib))) want.add(sib);
+      for (const sibling of node.parentElement.children) {
+        if (sibling !== node && !skip.has(sibling.tagName) && (!sibling.inert || inerted.has(sibling))) want.add(sibling);
       }
     }
     inerted.forEach((el) => { if (!want.has(el)) el.inert = false; });
@@ -52,54 +52,54 @@
   // A menu inside is a popover of its own: closing the dialog leaves it open in the top layer.
   // Without popover there is none, and Safari 16 throws on the selector.
   // No popover: the menus are plain fixed boxes, so close them through their instance.
-  const hideMenus = (dlg) => POPOVER
-    ? dlg.querySelectorAll(':popover-open').forEach((popover) => popover.hidePopover())
-    : dlg.querySelectorAll('.nds-dropmenu').forEach((dropmenu) => dropmenu.ndsDropmenu?.isOpen && dropmenu.ndsDropmenu.close());
+  const hideMenus = (dialog) => POPOVER
+    ? dialog.querySelectorAll(':popover-open').forEach((popover) => popover.hidePopover())
+    : dialog.querySelectorAll('.nds-dropmenu').forEach((dropmenu) => dropmenu.ndsDropmenu?.isOpen && dropmenu.ndsDropmenu.close());
 
   // The fallback's dim layer is the dialog itself, outside its box; the popover's lets the click through.
-  const isOutside = (dlg, e) => {
-    if (e.target !== dlg) return !dlg.contains(e.target);
-    const rect = dlg.getBoundingClientRect();
+  const isOutside = (dialog, e) => {
+    if (e.target !== dialog) return !dialog.contains(e.target);
+    const rect = dialog.getBoundingClientRect();
     return e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom;
   };
-  const isAway = (dlg, e) => getTop() === dlg && isOutside(dlg, e);
+  const isAway = (dialog, e) => getTop() === dialog && isOutside(dialog, e);
 
-  function show(dlg, signal) {
-    if (!open.includes(dlg)) {
+  function show(dialog, signal) {
+    if (!open.includes(dialog)) {
       if (!open.length) {
         NDS.scrollLock.lock();
         setBackdropUnder(true);
       }
-      open.push(dlg);
+      open.push(dialog);
       mark();
     }
-    dlg.setAttribute('data-nds-modal', '');
+    dialog.setAttribute('data-nds-modal', '');
     // An Escape a control inside stopped short of the component's own handler.
-    dlg.addEventListener('cancel', (e) => e.preventDefault(), { signal });
+    dialog.addEventListener('cancel', (e) => e.preventDefault(), { signal });
     // Until the page is inert, nothing behind may take a click.
-    document.addEventListener('click', (e) => { if (isAway(dlg, e)) { e.preventDefault(); e.stopPropagation(); } }, { capture: true, signal });
+    document.addEventListener('click', (e) => { if (isAway(dialog, e)) { e.preventDefault(); e.stopPropagation(); } }, { capture: true, signal });
     // Re-opened during its fade, it is still open.
-    if (dlg.open) return;
-    if (!POPOVER) { dlg.showModal(); return; }
+    if (dialog.open) return;
+    if (!POPOVER) { dialog.showModal(); return; }
     // The dialog under it may have made this one inert; focus cannot move in until it is not.
-    inerted.forEach((el) => { if (el.contains(dlg)) { el.inert = false; inerted.delete(el); } });
-    dlg.setAttribute('popover', 'manual');
-    dlg.show();
-    NDS.setTopLayer(dlg, true);
+    inerted.forEach((el) => { if (el.contains(dialog)) { el.inert = false; inerted.delete(el); } });
+    dialog.setAttribute('popover', 'manual');
+    dialog.show();
+    NDS.setTopLayer(dialog, true);
     // After the open slide: its frames would wait on the restyle.
-    NDS.onTransitionEnd(dlg, syncInert, { fallbackMs: NDS.transitionSpeed() + 150 });
+    NDS.onTransitionEnd(dialog, syncInert, { fallbackMs: NDS.transitionSpeed() + 150 });
   }
 
-  function close(dlg) {
-    hideMenus(dlg);
-    NDS.setTopLayer(dlg, false);
-    if (dlg.open) dlg.close();
-    const i = open.indexOf(dlg);
+  function close(dialog) {
+    hideMenus(dialog);
+    NDS.setTopLayer(dialog, false);
+    if (dialog.open) dialog.close();
+    const i = open.indexOf(dialog);
     if (i < 0) return;
     open.splice(i, 1);
-    dlg.removeAttribute('popover');
-    dlg.removeAttribute('data-nds-modal');
-    dlg.removeAttribute('data-nds-under');
+    dialog.removeAttribute('popover');
+    dialog.removeAttribute('data-nds-modal');
+    dialog.removeAttribute('data-nds-under');
     mark();
     if (POPOVER) syncInert();
     if (!open.length) {
@@ -109,10 +109,10 @@
   }
 
   // Down and up both outside: a text selection dragged out of the box is not a dismiss.
-  function addOutsideListeners(dlg, fn, signal) {
+  function addOutsideListeners(dialog, fn, signal) {
     let down = false;
-    document.addEventListener('pointerdown', (e) => { down = isAway(dlg, e); }, { capture: true, signal });
-    document.addEventListener('click', (e) => { if (down && isAway(dlg, e)) fn(); }, { capture: true, signal });
+    document.addEventListener('pointerdown', (e) => { down = isAway(dialog, e); }, { capture: true, signal });
+    document.addEventListener('click', (e) => { if (down && isAway(dialog, e)) fn(); }, { capture: true, signal });
   }
 
   NDS.dialog = {

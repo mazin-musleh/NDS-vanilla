@@ -29,7 +29,7 @@
 
     var THEME = 'foundation-day';
     var LINK_ID = 'nds-theme-stylesheet';   // shared slot: nds-theme.js LINK_ID + head.html brand path
-    var SWIPER_SEL = '.nds-hero-section .nds-swiper.nds-hero';
+    var SWIPER_SELECTOR = '.nds-hero-section .nds-swiper.nds-hero';
     var SLIDE_CLASS = 'nds-founding-day';
 
     // This script ships beside its assets (…/docs-assets/events/foundation_day/), so its
@@ -108,7 +108,7 @@
         var img = imgUrl
             ? '<picture><img src="' + escapeHtml(imgUrl) + '" class="nds-hero-image" alt="" fetchpriority="high"></picture>'
             : '';
-        var desc = getText(HERO.description) ? '<p class="nds-section-description">' + escapeHtml(getText(HERO.description)) + '</p>' : '';
+        var description = getText(HERO.description) ? '<p class="nds-section-description">' + escapeHtml(getText(HERO.description)) + '</p>' : '';
         var iconUrl = HERO.cta ? resolveAssetUrl(HERO.cta.icon) : '';
         var cta = HERO.cta
             ? '<div class="nds-section-action">' +
@@ -126,7 +126,7 @@
             '<div class="nds-section-body nds-full-width">' +
               '<div class="nds-block nds-content-wrapper"><div>' +
                 '<h2 class="nds-section-title">' + escapeHtml(getText(HERO.title)) + '</h2>' +
-                desc + cta +
+                description + cta +
               '</div></div>' +
             '</div>';
         return slide;
@@ -174,13 +174,13 @@
     function getTokens() {
         return (document.documentElement.getAttribute('data-theme') || '').split(/\s+/).filter(Boolean);
     }
-    function writeTokens(toks) {
-        if (toks.length) document.documentElement.setAttribute('data-theme', toks.join(' '));
+    function writeTokens(tokens) {
+        if (tokens.length) document.documentElement.setAttribute('data-theme', tokens.join(' '));
         else document.documentElement.removeAttribute('data-theme');
     }
     function addToken() {
-        var toks = getTokens();
-        if (toks.indexOf(THEME) === -1) { toks.push(THEME); writeTokens(toks); }
+        var tokens = getTokens();
+        if (tokens.indexOf(THEME) === -1) { tokens.push(THEME); writeTokens(tokens); }
     }
     function removeToken() {
         writeTokens(getTokens().filter(function (x) { return x !== THEME; }));
@@ -200,7 +200,7 @@
     }
 
     function injectSlide() {
-        var swiper = document.querySelector(SWIPER_SEL);
+        var swiper = document.querySelector(SWIPER_SELECTOR);
         if (!swiper) return;
         var wrapper = swiper.querySelector('.nds-swiper-wrapper');
         if (!wrapper || wrapper.querySelector('.' + SLIDE_CLASS)) return;   // idempotent
@@ -226,7 +226,7 @@
         if (document.readyState !== 'loading') { injectSlide(); return; }
         if (observer) return;
         observer = new MutationObserver(function () {
-            if (document.querySelector(SWIPER_SEL + ' .nds-swiper-wrapper')) {
+            if (document.querySelector(SWIPER_SELECTOR + ' .nds-swiper-wrapper')) {
                 cancelPending();
                 injectSlide();
             }
@@ -240,7 +240,7 @@
     }
 
     function removeSlide() {
-        var swiper = document.querySelector(SWIPER_SEL);
+        var swiper = document.querySelector(SWIPER_SELECTOR);
         if (!swiper) return;
         // A loop's head clones copy the class and come first; reinit drops them.
         var slide = swiper.querySelector('.nds-swiper-slide.' + SLIDE_CLASS + ':not(.nds-swiper-clone)');

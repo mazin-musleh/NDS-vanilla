@@ -35,13 +35,13 @@
 (() => {
     'use strict';
 
-    const DOCS = 'https://mazin-musleh.github.io/NDS-vanilla/';
+    const DOCUMENTATION_URL = 'https://mazin-musleh.github.io/NDS-vanilla/';
     const rules = [];
 
-    function addRule(def) {
-        if (!def || !def.id || typeof def.check !== 'function') return console.warn('[NDS.audit] a rule needs an id and a check()', def);
-        const at = rules.findIndex(existing => existing.id === def.id);
-        const entry = { group: 'structure', severity: 'warn', ...def };
+    function addRule(definition) {
+        if (!definition || !definition.id || typeof definition.check !== 'function') return console.warn('[NDS.audit] a rule needs an id and a check()', definition);
+        const at = rules.findIndex(existing => existing.id === definition.id);
+        const entry = { group: 'structure', severity: 'warn', ...definition };
         if (at < 0) rules.push(entry); else rules[at] = entry;
     }
 
@@ -68,7 +68,7 @@
                 report(el, message, fix, severity, count) {
                     if (skip(el)) return;
                     findings.push({ rule: entry.id, group: entry.group, severity: severity || entry.severity, message, fix,
-                                    docs: entry.docs ? DOCS + entry.docs : undefined, el: el || undefined, count });
+                                    docs: entry.docs ? DOCUMENTATION_URL + entry.docs : undefined, el: el || undefined, count });
                 },
             };
             try { entry.check(context); } catch (e) { console.warn(`[NDS.audit] rule ${entry.id} failed:`, e); }
@@ -138,13 +138,13 @@
         const mainEl = context.find('body main')[0];
         if (!mainEl || mainEl.parentElement === document.body) return;
         for (let node = mainEl.parentElement; node && node !== document.body; node = node.parentElement) {
-            const cs = getComputedStyle(node);
+            const computedStyle = getComputedStyle(node);
             // The two treatments layout/page-layout.md prescribes: vanish from
             // the layout, or become the growing column yourself.
-            if (cs.display === 'contents') continue;
-            if (cs.display === 'flex' && cs.flexDirection === 'column' && parseFloat(cs.flexGrow) > 0) continue;
+            if (computedStyle.display === 'contents') continue;
+            if (computedStyle.display === 'flex' && computedStyle.flexDirection === 'column' && parseFloat(computedStyle.flexGrow) > 0) continue;
             const label = node.tagName.toLowerCase() + (node.id ? `#${node.id}` : '');
-            context.report(node, `<${label}> sits between <body> and <main> with display:${cs.display} — main no longer grows, so the footer rides up the viewport instead of sitting at the bottom.`, 'Give it "display: contents", or "flex: 1; display: flex; flex-direction: column" when the app styles the mount root itself.');
+            context.report(node, `<${label}> sits between <body> and <main> with display:${computedStyle.display} — main no longer grows, so the footer rides up the viewport instead of sitting at the bottom.`, 'Give it "display: contents", or "flex: 1; display: flex; flex-direction: column" when the app styles the mount root itself.');
             break; // one warning per page: the outermost break is the one to fix
         }
     } });
@@ -324,8 +324,8 @@
         context.find('i.nds-icon[class*="nds-hgi-"]').forEach(el => {
             // An unknown name leaves --nds-icon unset, and the mask falls back to transparent.
             if (getComputedStyle(el).getPropertyValue('--nds-icon').trim()) return;
-            const cls = [...el.classList].find(className => className.startsWith('nds-hgi-'));
-            context.report(el, `inline icon "${cls}" is not in the registered set and paints nothing.`, `Use the HGI font class: <i class="hgi hgi-stroke ${cls.replace('nds-', '')}">`);
+            const iconClassName = [...el.classList].find(className => className.startsWith('nds-hgi-'));
+            context.report(el, `inline icon "${iconClassName}" is not in the registered set and paints nothing.`, `Use the HGI font class: <i class="hgi hgi-stroke ${iconClassName.replace('nds-', '')}">`);
         });
     } });
 
@@ -394,7 +394,7 @@
                 const value = el.getAttribute(attribute).trim();
                 // An empty data-auto-pagination uses the container right before the nav.
                 if (!value || isResolved(attribute, value)) return;
-                context.report(el, `${attribute}="${value}" names no element on the page — the component it wires does nothing.`, `Give the element id="${value.replace(/^#/, '')}", or fix the value. See ${DOCS}${refs[attribute]}`);
+                context.report(el, `${attribute}="${value}" names no element on the page — the component it wires does nothing.`, `Give the element id="${value.replace(/^#/, '')}", or fix the value. See ${DOCUMENTATION_URL}${refs[attribute]}`);
             });
         }
     } });
@@ -521,8 +521,8 @@
             readable = walkRules(sheet, cssRule => {
                 const it = splitSelectors(cssRule.selectorText);
                 for (const selector of it) {
-                    const cls = new Set([...selector.matchAll(/\.(nds-[\w-]+)/g)].map(match => match[1]));
-                    if (cls.size) { nds.items.push(cls); cls.forEach(className => nds.classes.add(className)); }
+                    const classNames = new Set([...selector.matchAll(/\.(nds-[\w-]+)/g)].map(match => match[1]));
+                    if (classNames.size) { nds.items.push(classNames); classNames.forEach(className => nds.classes.add(className)); }
                 }
                 const dark = it.some(selector => DARK_MODE.test(selector)), root = it.includes(':root'), area = it.some(selector => DARK_AREA.test(selector));
                 if (!dark && !root) return;
@@ -592,9 +592,9 @@
         set.forEach((state, property) => {
             const match = property.match(STATE);
             if (!match) return;
-            for (const st of ['default', 'hovered', 'pressed', 'selected', 'focused', 'disabled']) {
-                const sib = `${match[1]}-${st}`;
-                if (nds.light.has(sib) && !set.has(sib) && !missing.includes(sib)) missing.push(sib);
+            for (const stateName of ['default', 'hovered', 'pressed', 'selected', 'focused', 'disabled']) {
+                const sibling = `${match[1]}-${stateName}`;
+                if (nds.light.has(sibling) && !set.has(sibling) && !missing.includes(sibling)) missing.push(sibling);
             }
         });
         if (missing.length) context.report(null, `token override sets part of a state family: ${formatList(missing)} still hold the NDS value, so the states no longer match.`,
@@ -621,7 +621,7 @@
             if (style && style.includes('--')) for (const [, property] of style.matchAll(/(--[\w-]+)\s*:/g)) look('property', property, el);
         }
         // A window setting NDS read before: set by a script that runs before NDS.
-        byKind.global?.forEach((rs, name) => { if (name in window) rs.forEach(row => hit(row, null)); });
+        byKind.global?.forEach((kindRows, name) => { if (name in window) kindRows.forEach(row => hit(row, null)); });
         hits.forEach((elements, row) => reportRow(context, row, elements[0],
             say(row) + (elements.length > 1 ? ` (${elements.length} elements; the first is shown)` : ''), row.inert, elements.length));
     } });
@@ -640,8 +640,8 @@
         const isScoped = (row, selector) => {
             // A class that only changed element (div.nds-modal, aside.nds-panel → <dialog>) is still right in CSS.
             if (row.kind === 'class' && /^&(?:[a-z]+|:not\([a-z]+\))$/.test(row.scope || '')) return false;
-            const cls = row.scope && row.scope.match(/\.[\w-]+/g);
-            return !row.scope || (cls ? cls.some(className => selector.includes(className)) : /^(nds|data)-/.test(row.name));
+            const classNames = row.scope && row.scope.match(/\.[\w-]+/g);
+            return !row.scope || (classNames ? classNames.some(className => selector.includes(className)) : /^(nds|data)-/.test(row.name));
         };
         for (const { sel: selector, style, where } of getSiteRules()) {
             for (const [, className] of selector.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)) (byKind.class?.get(className) || []).forEach(row => { if (isScoped(row, selector)) hit(row, where, selector); });
@@ -709,14 +709,14 @@
         },
     };
     addRule({ id: 'required-part', severity: 'error', check(context) {
-        for (const [name, host, verb, arg, extra, why] of anatomy.requires || []) {
+        for (const [name, host, verb, argument, extra, why] of anatomy.requires || []) {
             let missing;
-            try { missing = context.find(host).filter(el => !require[verb](el, arg, extra)); } catch (e) { continue; /* a selector this browser cannot parse */ }
+            try { missing = context.find(host).filter(el => !require[verb](el, argument, extra)); } catch (e) { continue; /* a selector this browser cannot parse */ }
             if (!missing.length) continue;
-            const need = { 'needs': arg, 'needs one': `one ${arg} per ${extra}`, 'sits in': `a ${arg} around it`, 'sits outside': `no ${arg} around it`,
-                'is': `to be ${arg}`, 'with': `${arg} on the page`, 'points at': `its ${extra} to name a ${arg}` }[verb];
+            const need = { 'needs': argument, 'needs one': `one ${argument} per ${extra}`, 'sits in': `a ${argument} around it`, 'sits outside': `no ${argument} around it`,
+                'is': `to be ${argument}`, 'with': `${argument} on the page`, 'points at': `its ${extra} to name a ${argument}` }[verb];
             context.report(missing[0], `${host} needs ${need}: ${why}${missing.length > 1 ? ` (${missing.length} elements; the first is shown)` : ''}.`,
-                verb === 'sits outside' ? `Move it out of the ${arg}, as the ${name} canon has it.` : `Copy the missing part from the ${name} canon.`, undefined, missing.length);
+                verb === 'sits outside' ? `Move it out of the ${argument}, as the ${name} canon has it.` : `Copy the missing part from the ${name} canon.`, undefined, missing.length);
         }
     } });
 
@@ -857,16 +857,16 @@
 
     // One table column is one field: a status tag on some rows and a standard tag on others shows one state two ways.
     addRule({ id: 'tag-kind-mix', group: 'practice', severity: 'info', docs: 'components/tag.html', check(context) {
-        const cols = new Map();
+        const columnsByTable = new Map();
         context.find('td .nds-tag').forEach(tag => {
             const td = tag.closest('td'), key = td.closest('table');
             if (td.querySelectorAll('.nds-tag').length > 1) return; // a tag group mixes kinds on purpose
-            if (!cols.has(key)) cols.set(key, new Map());
-            const col = cols.get(key);
-            if (!col.has(td.cellIndex)) col.set(td.cellIndex, []);
-            col.get(td.cellIndex).push(tag);
+            if (!columnsByTable.has(key)) columnsByTable.set(key, new Map());
+            const tableColumns = columnsByTable.get(key);
+            if (!tableColumns.has(td.cellIndex)) tableColumns.set(td.cellIndex, []);
+            tableColumns.get(td.cellIndex).push(tag);
         });
-        for (const col of cols.values()) for (const tags of col.values()) {
+        for (const tableColumns of columnsByTable.values()) for (const tags of tableColumns.values()) {
             const plain = tags.filter(tag => !NDS.status.get(tag));
             if (plain.length && plain.length < tags.length) context.report(plain[0], `a table column shows a status tag on some rows and a standard tag on others (${plain.length} of ${tags.length} standard).`,
                 'Give every tag in the column data-status. A state that needs no color takes "neutral".', undefined, plain.length);

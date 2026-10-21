@@ -90,16 +90,16 @@
         if (!context) return;
         try {
             if (context.state === 'suspended') context.resume();
-            var osc = context.createOscillator();
+            var oscillator = context.createOscillator();
             var gain = context.createGain();
             var now = context.currentTime;
-            osc.connect(gain).connect(context.destination);
-            osc.frequency.setValueAtTime(frequency, now);
-            osc.type = 'sine';
+            oscillator.connect(gain).connect(context.destination);
+            oscillator.frequency.setValueAtTime(frequency, now);
+            oscillator.type = 'sine';
             gain.gain.setValueAtTime(0.1, now);
             gain.gain.exponentialRampToValueAtTime(0.01, now + duration / 1000);
-            osc.start(now);
-            osc.stop(now + duration / 1000);
+            oscillator.start(now);
+            oscillator.stop(now + duration / 1000);
         } catch (e) {
             // Silent fail
         }
@@ -171,10 +171,10 @@
                 || document.querySelector('[name="' + target + '"]')
                 || document.querySelector('[data-name="' + target + '"]');
         }
-        var fc = button.closest('.nds-form-control');
-        if (!fc) return null;
-        return fc.querySelector(':scope > input[type="text"], :scope > input[type="email"], :scope > input[type="search"], :scope > textarea')
-            || fc.querySelector(':scope > input, :scope > textarea');
+        var formControl = button.closest('.nds-form-control');
+        if (!formControl) return null;
+        return formControl.querySelector(':scope > input[type="text"], :scope > input[type="email"], :scope > input[type="search"], :scope > textarea')
+            || formControl.querySelector(':scope > input, :scope > textarea');
     }
 
     // A 4-second field message, placed like any field message (a placeholder hides once the

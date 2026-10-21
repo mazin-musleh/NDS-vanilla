@@ -90,8 +90,8 @@
         if (pattern) {
             if (!ruleTests.has(chip)) {
                 try {
-                    var re = new RegExp(pattern);
-                    ruleTests.set(chip, function (value) { return re.test(value); });
+                    var regularExpression = new RegExp(pattern);
+                    ruleTests.set(chip, function (value) { return regularExpression.test(value); });
                 } catch (e) {
                     console.warn('NDS Password: invalid data-rule-pattern', chip);
                     ruleTests.set(chip, null);

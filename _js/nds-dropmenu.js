@@ -834,9 +834,9 @@
             // against the viewport. Convert to px while the menu is still closed.
             // Read all three before writing any: a write between reads re-flushes style.
             const wrapperWidth = this.dropmenu.getBoundingClientRect().width;
-            const mcs = getComputedStyle(this._menu);
+            const menuComputedStyle = getComputedStyle(this._menu);
             const widthVars = ['--dropmenu-width', '--dropmenu-min-width', '--dropmenu-max-width'];
-            const widthValues = widthVars.map(variable => mcs.getPropertyValue(variable).trim());
+            const widthValues = widthVars.map(variable => menuComputedStyle.getPropertyValue(variable).trim());
             for (let i = 0; i < widthVars.length; i++) {
                 if (widthValues[i].endsWith('%')) {
                     this._menu.style.setProperty(widthVars[i], (wrapperWidth * parseFloat(widthValues[i]) / 100) + 'px');
@@ -883,10 +883,10 @@
             // 150ms so the heavy syncPosition only runs once resize settles.
             // The visual viewport also resizes for the on-screen keyboard and a pinch zoom,
             // which fire no window resize; the page-wide bus stays off them.
-            const vv = window.visualViewport;
-            if (vv) {
+            const viewport = window.visualViewport;
+            if (viewport) {
                 const handleViewportResize = NDS.debounce(() => this.syncPosition(), 150);
-                vv.addEventListener('resize', handleViewportResize, { signal });
+                viewport.addEventListener('resize', handleViewportResize, { signal });
                 this._unsubResize = handleViewportResize.cancel;
             } else this._unsubResize = NDS.onResize(() => this.syncPosition());
             // Keep scroll momentum off the page (its scroll closes the menu), but only while
@@ -1052,7 +1052,7 @@
             // Re-measure only when the clamp changed the height; otherwise the
             // menu is unchanged since p.menuRect (no DOM write since), so reuse
             // it and skip a forced reflow.
-            const mr2 = clamped ? this._menu.getBoundingClientRect() : placement.menuRect;
+            const currentMenuRect = clamped ? this._menu.getBoundingClientRect() : placement.menuRect;
             if (flipUp) {
                 this.dropmenu.setAttribute('data-position-vertical', 'top');
                 this._menu.setAttribute('data-position-vertical', 'top');
@@ -1066,11 +1066,11 @@
             // the menu fits the side it was placed on and must never slide over
             // its own trigger — a covered input never recovers.
             // Matches _trackPosition(), which never clamped.
-            const top = flipUp ? placement.triggerRect.top - mr2.height - gap : placement.triggerRect.bottom + gap;
+            const top = flipUp ? placement.triggerRect.top - currentMenuRect.height - gap : placement.triggerRect.bottom + gap;
 
             // Pass the box read at the top — re-reading it here, after the
             // data-position-vertical writes above, would force a second layout.
-            const leftPx = this._getLeft(placement.triggerRect, mr2.width, placement.box, edge);
+            const leftPx = this._getLeft(placement.triggerRect, currentMenuRect.width, placement.box, edge);
 
             // Cache flip direction so the scroll-tracker can reuse it without
             // re-running flip math (and without re-clamping the menu to the
@@ -1084,9 +1084,9 @@
         // The nearest scroll box around the menu inside an open <dialog>, or null.
         // ponytail: vertical only; a menu wider than a narrow modal can still overhang its sides.
         _getModalClip() {
-            const dlg = this.dropmenu.closest('dialog[open]');
-            if (!dlg) return null;
-            for (let el = this.dropmenu.parentElement; el && el !== dlg.parentElement; el = el.parentElement) {
+            const dialog = this.dropmenu.closest('dialog[open]');
+            if (!dialog) return null;
+            for (let el = this.dropmenu.parentElement; el && el !== dialog.parentElement; el = el.parentElement) {
                 if (/auto|scroll|hidden/.test(getComputedStyle(el).overflowY)) return el.getBoundingClientRect();
             }
             return null;
@@ -1229,8 +1229,8 @@
     // takes back; a class or flag the author wrote stays.
     function stampField(el, { menu, menuClass, click = true, keys = true, anchor } = {}) {
         const undo = [];
-        const addClass = (node, cls) => {
-            if (!node.classList.contains(cls)) { node.classList.add(cls); undo.push(() => node.classList.remove(cls)); }
+        const addClass = (node, className) => {
+            if (!node.classList.contains(className)) { node.classList.add(className); undo.push(() => node.classList.remove(className)); }
         };
         const setFlag = (name, value = '') => {
             if (!el.hasAttribute(name)) { el.setAttribute(name, value); undo.push(() => el.removeAttribute(name)); }
@@ -1268,10 +1268,10 @@
     }
 
     function findOwnMenuTemplate(wrapper) {
-        const tpls = wrapper.querySelectorAll('template');
-        for (let i = 0; i < tpls.length; i++) {
-            if (tpls[i].closest('.nds-dropmenu') === wrapper
-                && tpls[i].content.querySelector('.nds-dropmenu-menu')) return tpls[i];
+        const templates = wrapper.querySelectorAll('template');
+        for (let i = 0; i < templates.length; i++) {
+            if (templates[i].closest('.nds-dropmenu') === wrapper
+                && templates[i].content.querySelector('.nds-dropmenu-menu')) return templates[i];
         }
         return null;
     }
@@ -1334,13 +1334,13 @@
     // Expose global API (called by nds-loader.js unified system)
     // A select-mode picker's check: NDS.validation runs it at submit, validate(el) is its public face.
     // The pick lives in a hidden carrier; its own only, a picker nested in its menu holds its own.
-    const checkField = (dm) => {
-        const carrier = Array.prototype.find.call(dm.querySelectorAll('input[data-nds-select-value]'), (el) => el.closest('.nds-dropmenu') === dm);
+    const checkField = (dropmenu) => {
+        const carrier = Array.prototype.find.call(dropmenu.querySelectorAll('input[data-nds-select-value]'), (el) => el.closest('.nds-dropmenu') === dropmenu);
         const valid = !!(carrier && carrier.value.trim());
         return { valid, message: valid ? '' : strings.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
     };
     NDS.validation.addRule('.nds-dropmenu[data-select-name][data-required]',
-        (dm) => Object.assign(checkField(dm), { focus: dm.querySelector('.nds-dropmenu-trigger') || dm }),
+        (dropmenu) => Object.assign(checkField(dropmenu), { focus: dropmenu.querySelector('.nds-dropmenu-trigger') || dropmenu }),
         { on: ['nds:dropmenu:select'] });
 
     NDS.Dropmenu = {

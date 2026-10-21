@@ -133,16 +133,16 @@
     // Separate set from activeSwipers: single-slide swipers skip keyboard/nav
     // setup but still need --slides re-derived on breakpoint crossings.
     const resizeSwipers = new Set();
-    const mqDesktop = window.matchMedia(NDS.breakpoints.desktop);
-    const mqTablet = window.matchMedia(NDS.breakpoints.tablet);
+    const mediaQueryDesktop = window.matchMedia(NDS.breakpoints.desktop);
+    const mediaQueryTablet = window.matchMedia(NDS.breakpoints.tablet);
     let resizeAttached = false;
 
     function ensureSharedResize() {
         if (resizeAttached) return;
         resizeAttached = true;
         const trigger = () => resizeSwipers.forEach(instance => instance._handleResize());
-        mqDesktop.addEventListener('change', trigger);
-        mqTablet.addEventListener('change', trigger);
+        mediaQueryDesktop.addEventListener('change', trigger);
+        mediaQueryTablet.addEventListener('change', trigger);
     }
 
     // ==============================================
@@ -182,8 +182,8 @@
 
             // Static knobs — read once, reused on every breakpoint change.
             // Computed, not inline: a strict-CSP page sets them in a class.
-            const cs = getComputedStyle(container);
-            const readKnob = prop => parseInt(cs.getPropertyValue(prop)) || 0;
+            const computedStyle = getComputedStyle(container);
+            const readKnob = property => parseInt(computedStyle.getPropertyValue(property)) || 0;
             this._slidesMax = readKnob('--max-slides') || 1;
             this._slidesMid = readKnob('--mid-slides') || 1;
             this._slidesMin = readKnob('--min-slides') || 1;
@@ -209,8 +209,8 @@
         // ==============================================
 
         _calculateSlidesPerView() {
-            if (mqDesktop.matches) return this._slidesMax;
-            if (mqTablet.matches) return this._slidesMid;
+            if (mediaQueryDesktop.matches) return this._slidesMax;
+            if (mediaQueryTablet.matches) return this._slidesMid;
             return this._slidesMin;
         }
 

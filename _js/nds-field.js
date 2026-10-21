@@ -36,14 +36,14 @@
     // ── Field states ───────────────────────────────────────────────────
     // Chips are built after load: their component re-applies with NDS.state.refresh after a render.
     NDS.state.onToggle('disabled', SCOPE, (el, on) => {
-        el.querySelectorAll('input, textarea, select').forEach((inp) => { inp.disabled = on; });
+        el.querySelectorAll('input, textarea, select').forEach((input) => { input.disabled = on; });
         el.querySelectorAll('.nds-form-action .nds-btn, button.nds-chip').forEach((btn) => {
             NDS.aria.disabled(btn, on);
             if (btn.tagName === 'BUTTON') btn.disabled = on;
         });
     });
     NDS.state.onToggle('readonly', SCOPE, (el, on) => {
-        el.querySelectorAll('input, textarea, select').forEach((inp) => { inp.readOnly = on; });
+        el.querySelectorAll('input, textarea, select').forEach((input) => { input.readOnly = on; });
     });
 
     // ── Parts ──────────────────────────────────────────────────────────
@@ -74,9 +74,9 @@
     // The input an event belongs to: a direct input / textarea / select of a .nds-form-control that is no code sample.
     function findControl(target) {
         if (!target || !target.matches || !target.matches('input, textarea, select')) return null;
-        const fc = target.parentElement;
-        if (!fc || !fc.classList || !fc.classList.contains('nds-form-control') || fc.closest('code')) return null;
-        return { input: target, control: fc, container: fc.closest('.nds-form-container') };
+        const formControl = target.parentElement;
+        if (!formControl || !formControl.classList || !formControl.classList.contains('nds-form-control') || formControl.closest('code')) return null;
+        return { input: target, control: formControl, container: formControl.closest('.nds-form-container') };
     }
 
     // A container's own control: the first whose nearest container is this one (an Editor's popover fields are not).
@@ -105,8 +105,8 @@
 
     // ── Sync ───────────────────────────────────────────────────────────
     // The container's states from its input: disabled, readonly, required.
-    function sync(input, fc) {
-        const container = fc.closest('.nds-form-container');
+    function sync(input, formControl) {
+        const container = formControl.closest('.nds-form-container');
         if (!container) return;
         input.disabled ? NDS.state.add(container, 'disabled') : NDS.state.remove(container, 'disabled');
         if (isInteractive(input)) return;
@@ -127,10 +127,10 @@
             return;
         }
         const input = el;
-        const fc = input.closest('.nds-form-control');
-        if (!fc) return;
-        sync(input, fc);
-        for (const part of parts) if (part.refresh) part.refresh(input, fc, opts);
+        const formControl = input.closest('.nds-form-control');
+        if (!formControl) return;
+        sync(input, formControl);
+        for (const part of parts) if (part.refresh) part.refresh(input, formControl, opts);
     }
 
     // ── The base's own handlers ────────────────────────────────────────
@@ -175,10 +175,10 @@
     // While a container is focus or active, its own control carries `target`, so the CSS
     // (container[state] .control[target]) reaches that one control and never a nested container's.
     const syncTarget = (container) => {
-        const fc = findOwnControl(container);
-        if (!fc) return;
-        if (NDS.state.has(container, 'focus') || NDS.state.has(container, 'active')) NDS.state.add(fc, 'target');
-        else NDS.state.remove(fc, 'target');
+        const formControl = findOwnControl(container);
+        if (!formControl) return;
+        if (NDS.state.has(container, 'focus') || NDS.state.has(container, 'active')) NDS.state.add(formControl, 'target');
+        else NDS.state.remove(formControl, 'target');
     };
 
     let started = false;
@@ -192,9 +192,9 @@
         // a page-wide sweep cost 63 ms per added row at 1,000 fields (6.6x CPU).
         NDS.onDomAdd('.nds-form-control', (controls) => {
             const roots = new Set();
-            controls.forEach((fc) => {
-                let root = fc;
-                for (let node = fc; node; node = node.parentElement) if (node.matches('.nds-form, .nds-form-group, .nds-form-container')) root = node;
+            controls.forEach((formControl) => {
+                let root = formControl;
+                for (let node = formControl; node; node = node.parentElement) if (node.matches('.nds-form, .nds-form-group, .nds-form-container')) root = node;
                 roots.add(root);
             });
             roots.forEach((root) => {
@@ -213,10 +213,10 @@
         return el.matches && el.matches(selector) ? [el].concat(inner) : inner;
     };
 
-    function setupInput(input, fc) {
+    function setupInput(input, formControl) {
         if (initializedInputs.has(input)) return;
         initializedInputs.add(input);
-        const container = fc.closest('.nds-form-container');
+        const container = formControl.closest('.nds-form-container');
         // A required container marks its input; one whose value a component owns never stamps required,
         // which would false-fail checkValidity, but still announces it.
         if (container && (container.hasAttribute('data-required') || container.classList.contains('nds-required'))) {
@@ -225,18 +225,18 @@
         }
         // Container → input: a state shipped in the markup; then input → container.
         if (container) NDS.state.refresh(container, 'disabled', 'readonly', 'loading');
-        sync(input, fc);
+        sync(input, formControl);
     }
 
     function create(el) {
         if (!el) return;
         start();
-        getSelfAndInner(el, '.nds-form-control').forEach((fc) => {
-            if (fc.closest('code')) return;
+        getSelfAndInner(el, '.nds-form-control').forEach((formControl) => {
+            if (formControl.closest('code')) return;
             // A slider's inputs sit in its track, one level down.
-            fc.querySelectorAll(':scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input').forEach((input) => {
-                setupInput(input, fc);
-                for (const part of parts) if (part.setupInput) part.setupInput(input, fc);
+            formControl.querySelectorAll(':scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input').forEach((input) => {
+                setupInput(input, formControl);
+                for (const part of parts) if (part.setupInput) part.setupInput(input, formControl);
             });
         });
         getSelfAndInner(el, '.nds-form-group').forEach((group) => NDS.state.refresh(group, 'disabled', 'readonly', 'loading'));

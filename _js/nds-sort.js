@@ -151,15 +151,15 @@
     }
 
     function compare(left, right, type, order, dateFormat, calendar) {
-        const av = parseValue(left, type, dateFormat, calendar);
-        const bv = parseValue(right, type, dateFormat, calendar);
-        let cmp;
+        const leftValue = parseValue(left, type, dateFormat, calendar);
+        const rightValue = parseValue(right, type, dateFormat, calendar);
+        let comparison;
         if (type === 'string') {
-            cmp = av.localeCompare(bv, undefined, { numeric: true, sensitivity: 'base' });
+            comparison = leftValue.localeCompare(rightValue, undefined, { numeric: true, sensitivity: 'base' });
         } else {
-            cmp = av - bv;
+            comparison = leftValue - rightValue;
         }
-        return order === 'desc' ? -cmp : cmp;
+        return order === 'desc' ? -comparison : comparison;
     }
 
     // ── Instance ─────────────────────────────────────────────────────────

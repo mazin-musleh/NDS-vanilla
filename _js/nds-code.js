@@ -256,9 +256,9 @@
             const token = tokens[i];
             const escaped = NDS.escapeHtml(token.value);
             if (token.type === 'value') {
-                const ws = token.value.match(/^\s*/)[0];
-                const sw = getSwatch(token.value);
-                if (sw) { html += ws + sw + '<span class="nds-syntax-value">' + escaped.slice(ws.length) + '</span>'; continue; }
+                const whitespace = token.value.match(/^\s*/)[0];
+                const swatch = getSwatch(token.value);
+                if (swatch) { html += whitespace + swatch + '<span class="nds-syntax-value">' + escaped.slice(whitespace.length) + '</span>'; continue; }
             }
             html += token.type ? '<span class="nds-syntax-' + token.type + '">' + escaped + '</span>' : escaped;
         }
@@ -398,12 +398,12 @@
         };
 
         while (i < tag.length) {
-            const ch = tag.charAt(i);
+            const character = tag.charAt(i);
 
             // Quoted attribute value.
-            if (ch === '"' || ch === "'") {
+            if (character === '"' || character === "'") {
                 flush();
-                const quoteEnd = tag.indexOf(ch, i + 1);
+                const quoteEnd = tag.indexOf(character, i + 1);
                 const end = quoteEnd === -1 ? tag.length : quoteEnd + 1;
                 tokens.push({ type: 'value', value: tag.slice(i, end) });
                 i = end;
@@ -413,7 +413,7 @@
             // Attribute name: a word that follows whitespace and is bounded by
             // `=`, whitespace, `/`, `>` or end (covers both valued and boolean attrs).
             // `i` is always past the tag name here, so the prev char always exists.
-            if (/[a-zA-Z]/.test(ch) && /\s/.test(tag.charAt(i - 1))) {
+            if (/[a-zA-Z]/.test(character) && /\s/.test(tag.charAt(i - 1))) {
                 const attribute = /^[a-zA-Z][a-zA-Z0-9-]*/.exec(tag.slice(i));
                 if (attribute) {
                     const after = tag.charAt(i + attribute[0].length);
@@ -426,7 +426,7 @@
                 }
             }
 
-            buffer += ch;
+            buffer += character;
             i++;
         }
         flush();
@@ -452,10 +452,10 @@
         const blockStack = [];
 
         while (i < sourceLength) {
-            const ch = source.charAt(i);
+            const character = source.charAt(i);
 
             // Comment anywhere (may span lines; split-into-lines breaks it safely).
-            if (ch === '/' && source.charAt(i + 1) === '*') {
+            if (character === '/' && source.charAt(i + 1) === '*') {
                 const end = source.indexOf('*/', i + 2);
                 const stop = end === -1 ? sourceLength : end + 2;
                 tokens.push({ type: 'comment', value: source.slice(i, stop) });
@@ -464,7 +464,7 @@
             }
 
             // Close the current block.
-            if (ch === '}') {
+            if (character === '}') {
                 tokens.push({ type: null, value: '}' });
                 blockStack.pop();
                 i++;
@@ -564,25 +564,25 @@
         const textLength = text.length;
         let i = 0;
         while (i < textLength) {
-            const ch = text.charAt(i);
-            if (ch === '[') {                                   // attribute selector
+            const character = text.charAt(i);
+            if (character === '[') {                                   // attribute selector
                 const close = text.indexOf(']', i + 1);
                 const end = close === -1 ? textLength : close + 1;
                 tokens.push({ type: 'attr', value: text.slice(i, end) });
                 i = end;
-            } else if (ch === ':') {                            // pseudo-class / element
+            } else if (character === ':') {                            // pseudo-class / element
                 let j = i + 1;
                 if (text.charAt(j) === ':') j++;
                 const match = /^[a-zA-Z-]+/.exec(text.slice(j));
                 const end = match ? j + match[0].length : j;
                 tokens.push({ type: 'keyword', value: text.slice(i, end) });
                 i = end;
-            } else if (ch === '.' || ch === '#') {              // class / id
+            } else if (character === '.' || character === '#') {              // class / id
                 const match = /^[\w-]+/.exec(text.slice(i + 1));
                 const end = match ? i + 1 + match[0].length : i + 1;
                 tokens.push({ type: 'selector', value: text.slice(i, end) });
                 i = end;
-            } else if (/[a-zA-Z]/.test(ch)) {                   // tag / element name
+            } else if (/[a-zA-Z]/.test(character)) {                   // tag / element name
                 const match = /^[\w-]+/.exec(text.slice(i));
                 tokens.push({ type: 'selector', value: match[0] });
                 i += match[0].length;
@@ -606,20 +606,20 @@
     // Scan a master regex left to right; each alternative is one capture group,
     // and groupTypes[g] is the token type for group g. Gaps between matches are
     // plain text, so the token values always round-trip to the source.
-    function lexByRegex(source, re, groupTypes) {
+    function lexByRegex(source, pattern, groupTypes) {
         const tokens = [];
         let last = 0;
         let match;
-        re.lastIndex = 0;
-        while ((match = re.exec(source)) !== null) {
+        pattern.lastIndex = 0;
+        while ((match = pattern.exec(source)) !== null) {
             if (match.index > last) tokens.push({ type: null, value: source.slice(last, match.index) });
             let type = null;
             for (let group = 1; group < groupTypes.length; group++) {
                 if (match[group] !== undefined) { type = groupTypes[group]; break; }
             }
             tokens.push({ type: type, value: match[0] });
-            last = re.lastIndex;
-            if (match.index === re.lastIndex) re.lastIndex++; // zero-length guard
+            last = pattern.lastIndex;
+            if (match.index === pattern.lastIndex) pattern.lastIndex++; // zero-length guard
         }
         if (last < source.length) tokens.push({ type: null, value: source.slice(last) });
         return tokens;
@@ -647,8 +647,8 @@
     // Built on first use, not at module eval: Safari < 16.4 rejects lookbehind,
     // and a throw here would end the bundle's script. There the guards drop and a
     // `.catch`-style member colors as the token — a blemish, not a crash.
-    let JS_TOKEN_RE;
-    const getJsTokenPattern = () => JS_TOKEN_RE ||= (() => {
+    let JS_TOKEN_PATTERN;
+    const getJsTokenPattern = () => JS_TOKEN_PATTERN ||= (() => {
         try { return new RegExp(JS_TOKEN_SRC, 'g'); }
         catch { return new RegExp(JS_TOKEN_SRC.replace(/\(\?<!\\\.\)/g, ''), 'g'); }
     })();
@@ -667,7 +667,7 @@
     // alternatives win at the same position, so a heading colours whole-line and
     // inline code inside bold reads as bold. Types reuse the shared syntax
     // palette — no markdown-specific CSS.
-    const MD_TOKEN_RE = new RegExp(
+    const MD_TOKEN_PATTERN = new RegExp(
         '(^```+[^\\n]*\\n[\\s\\S]*?^```+[ \\t]*$)' + // 1 fenced code block
         '|(^#{1,6} [^\\n]*)' +                       // 2 heading
         '|(^[ \\t]*>[ \\t]?)' +                      // 3 blockquote marker
@@ -683,7 +683,7 @@
 
     function lexMarkdown(source) {
         const tokens = [];
-        const scanned = lexByRegex(source, MD_TOKEN_RE, markdownGroupTypes);
+        const scanned = lexByRegex(source, MD_TOKEN_PATTERN, markdownGroupTypes);
         for (let i = 0; i < scanned.length; i++) {
             if (scanned[i].type === 'fence') pushFenceTokens(tokens, scanned[i].value);
             else tokens.push(scanned[i]);
@@ -714,7 +714,7 @@
     // An agent prompt is prose, so markdown lexing leaves it flat. What carries
     // meaning here is what the reader must edit or verify before pasting: the
     // paths, the placeholder names, and the phrases quoted from a doc.
-    const PROMPT_TOKEN_RE = new RegExp(
+    const PROMPT_TOKEN_PATTERN = new RegExp(
         '("[^"\\n]*")' +                                        // 1 quoted phrase
         '|((?:https?:\\/\\/)?\\/?(?:[\\w.-]+\\/)+[\\w-]*(?:\\.\\w+)*' + // 2 path (optional scheme) …
         '|\\b[\\w-]+\\.(?:md|html|js|css|json|ya?ml|scss|txt|zip)\\b)' + //   … or bare filename
@@ -725,7 +725,7 @@
     const promptGroupTypes = [null, 'string', 'property', 'attr'];
 
     function lexPrompt(source) {
-        return lexByRegex(source, PROMPT_TOKEN_RE, promptGroupTypes);
+        return lexByRegex(source, PROMPT_TOKEN_PATTERN, promptGroupTypes);
     }
 
     // ==============================================

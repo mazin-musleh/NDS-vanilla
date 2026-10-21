@@ -70,7 +70,7 @@
         target.setAttribute('data-nds-print-self', '');
         for (let el = target; el.parentElement && el !== document.body; el = el.parentElement) {
             if (el !== target) el.setAttribute('data-nds-print-path', '');
-            for (const sib of el.parentElement.children) if (sib !== el) sib.setAttribute('data-nds-print-skip', '');
+            for (const sibling of el.parentElement.children) if (sibling !== el) sibling.setAttribute('data-nds-print-skip', '');
         }
         addEventListener('afterprint', clearMarks, { once: true });
         window.print();

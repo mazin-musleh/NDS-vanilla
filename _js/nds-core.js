@@ -99,7 +99,7 @@
     const scriptSrc = (document.currentScript
         || [...document.scripts].find(script => /nds-main(\.min)?\.js/.test(script.src)) || {}).src || '';
     const isOwnPath = /\/js\/[^/?#]+\.js(?:[?#]|$)|nds-main(\.min)?\.js/.test(scriptSrc);
-    const ASSETS_VER = (scriptSrc.match(/\?ver=[^&#]*/) || [''])[0];
+    const ASSETS_VERSION = (scriptSrc.match(/\?ver=[^&#]*/) || [''])[0];
     const ASSETS_BASE = window.NDS_ASSETS_PATH
                      || (isOwnPath ? new URL('../', scriptSrc).href : '');
 
@@ -174,7 +174,7 @@
         'data-i18n-placeholder': 'placeholder',
         'data-i18n-label': 'label',
     };
-    const I18N_MARK_SEL = Object.keys(i18nMarks).map(attribute => `[${attribute}]`).join(',');
+    const I18N_MARK_SELECTOR = Object.keys(i18nMarks).map(attribute => `[${attribute}]`).join(',');
     NDS.i18n = {
         _files: Object.create(null),   // 'ar' → the pack, once landed (null when none)
         _loads: Object.create(null),   // same keys → Promise<data>
@@ -269,8 +269,8 @@
                     const mark = attribute === 'text' ? 'data-i18n' : 'data-i18n-' + attribute;
                     if (!vars && mark in i18nMarks) { el.setAttribute(mark, component + '.' + key); return; }
                     if (hasLanded()) return;
-                    if (!queue.length) i18n.load(component).then(() => queue.splice(0).forEach(([e, attribute, was, key, vs]) => {
-                        if (read(e, attribute) === was) write(e, attribute, translate(key, vs));
+                    if (!queue.length) i18n.load(component).then(() => queue.splice(0).forEach(([e, attribute, was, key, variables]) => {
+                        if (read(e, attribute) === was) write(e, attribute, translate(key, variables));
                     }));
                     queue.push([el, attribute, value, key, vars]);
                 },
@@ -294,7 +294,7 @@
         async _fetchOne(path) {
             const base = window.NDS_I18N_PATH || (ASSETS_BASE ? ASSETS_BASE + 'i18n/' : 'assets/i18n/');
             try {
-                const { data } = await NDS.request(base + path + '.json' + ASSETS_VER, { cache: 'default', json: true });
+                const { data } = await NDS.request(base + path + '.json' + ASSETS_VERSION, { cache: 'default', json: true });
                 return data;
             } catch (error) {
                 // A 404 is a language NDS does not ship: English shows, and a site adds its words with NDS_I18N.
@@ -383,8 +383,8 @@
         // descendants, and the content of each <template>, so a later clone lands translated.
         translate(root = document) {
             const walk = (node) => {
-                if (node.nodeType === 1 && node.matches(I18N_MARK_SEL)) this._mark(node);
-                node.querySelectorAll(I18N_MARK_SEL).forEach(el => this._mark(el));
+                if (node.nodeType === 1 && node.matches(I18N_MARK_SELECTOR)) this._mark(node);
+                node.querySelectorAll(I18N_MARK_SELECTOR).forEach(el => this._mark(el));
                 node.querySelectorAll('template').forEach(template => walk(template.content));
             };
             walk(root);
@@ -400,8 +400,8 @@
             this.settled.then(() => {
                 this.translate();
                 document.documentElement.setAttribute('data-nds-i18n', '');
-                NDS.onDomAdd(I18N_MARK_SEL, elements => elements.forEach(el => this._mark(el)));
-                NDS.onAttributeChange(I18N_MARK_SEL, Object.keys(i18nMarks), elements => elements.forEach(el => this._mark(el, true)));
+                NDS.onDomAdd(I18N_MARK_SELECTOR, elements => elements.forEach(el => this._mark(el)));
+                NDS.onAttributeChange(I18N_MARK_SELECTOR, Object.keys(i18nMarks), elements => elements.forEach(el => this._mark(el, true)));
                 this.pack().then(() => this.translate());
             });
         },
@@ -500,7 +500,7 @@
     // Usage: const fn = NDS.debounce(handler, 150)
     NDS.debounce = (fn, ms) => {
         let timer;
-        const debounceCall = (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), ms); };
+        const debounceCall = (...callArguments) => { clearTimeout(timer); timer = setTimeout(() => fn(...callArguments), ms); };
         debounceCall.cancel = () => clearTimeout(timer); // destroy paths drop the pending call
         return debounceCall;
     };
@@ -510,10 +510,10 @@
     // Usage: el.addEventListener('scroll', NDS.throttleToFrame(handler), { passive: true })
     NDS.throttleToFrame = fn => {
         let ticking = false;
-        return (...args) => {
+        return (...callArguments) => {
             if (ticking) return;
             ticking = true;
-            requestAnimationFrame(() => { ticking = false; fn(...args); });
+            requestAnimationFrame(() => { ticking = false; fn(...callArguments); });
         };
     };
 
@@ -588,12 +588,12 @@
     //        cost 68ms@6.6x that way).
     NDS.onElementResize = (() => {
         const map = new Map();
-        const ro = typeof ResizeObserver !== 'undefined'
+        const resizeObserver = typeof ResizeObserver !== 'undefined'
             ? new ResizeObserver(entries => {
                 const writes = [];
                 for (let i = 0; i < entries.length; i++) {
-                    const fns = map.get(entries[i].target);
-                    if (fns) fns.forEach(fn => {
+                    const listeners = map.get(entries[i].target);
+                    if (listeners) listeners.forEach(fn => {
                         const write = fn(entries[i]);
                         if (typeof write === 'function') writes.push(write);
                     });
@@ -603,13 +603,13 @@
             : null;
 
         return (el, fn) => {
-            if (!ro) return () => {};
-            let fns = map.get(el);
-            if (!fns) { fns = new Set(); map.set(el, fns); ro.observe(el); }
-            fns.add(fn);
+            if (!resizeObserver) return () => {};
+            let listeners = map.get(el);
+            if (!listeners) { listeners = new Set(); map.set(el, listeners); resizeObserver.observe(el); }
+            listeners.add(fn);
             return () => {
-                if (!fns.delete(fn)) return; // a repeat off() must not unobserve a newer subscriber
-                if (!fns.size) { map.delete(el); ro.unobserve(el); }
+                if (!listeners.delete(fn)) return; // a repeat off() must not unobserve a newer subscriber
+                if (!listeners.size) { map.delete(el); resizeObserver.unobserve(el); }
             };
         };
     })();
@@ -626,21 +626,21 @@
             let group = pool.get(key);
             if (!group) {
                 const map = new Map();
-                const io = new IntersectionObserver(entries => {
+                const intersectionObserver = new IntersectionObserver(entries => {
                     for (let i = 0; i < entries.length; i++) {
-                        const fns = map.get(entries[i].target);
-                        if (fns) fns.forEach(fn => fn(entries[i]));
+                        const listeners = map.get(entries[i].target);
+                        if (listeners) listeners.forEach(fn => fn(entries[i]));
                     }
                 }, { threshold: opts.threshold || 0, rootMargin: opts.rootMargin || '0px' });
-                group = { io, map };
+                group = { io: intersectionObserver, map };
                 pool.set(key, group);
             }
             // A Set per element, as in onElementResize: two subscribers on one element both fire.
-            let fns = group.map.get(el);
-            if (!fns) { fns = new Set(); group.map.set(el, fns); group.io.observe(el); }
-            fns.add(fn);
+            let elementListeners = group.map.get(el);
+            if (!elementListeners) { elementListeners = new Set(); group.map.set(el, elementListeners); group.io.observe(el); }
+            elementListeners.add(fn);
             return () => {
-                if (!fns.delete(fn) || fns.size) return; // a repeat off() must not drop a newer subscriber
+                if (!elementListeners.delete(fn) || elementListeners.size) return; // a repeat off() must not drop a newer subscriber
                 group.map.delete(el);
                 group.io.unobserve(el);
                 if (!group.map.size) { group.io.disconnect(); pool.delete(key); }
@@ -674,8 +674,8 @@
                 const hits = new Set();
                 for (let i = 0; i < nodes.length; i++) {
                     if (nodes[i].matches(sub.sel)) hits.add(nodes[i]);
-                    const ch = nodes[i].querySelectorAll(sub.sel);
-                    for (let j = 0; j < ch.length; j++) hits.add(ch[j]);
+                    const descendants = nodes[i].querySelectorAll(sub.sel);
+                    for (let j = 0; j < descendants.length; j++) hits.add(descendants[j]);
                 }
                 if (hits.size) sub.fn([...hits]);
             });
@@ -738,19 +738,19 @@
     // their subscription. Mirrors the DOM Mutation Bus shape above.
     // Usage: const off = NDS.onAttributeChange('.nds-progress-circle', ['data-value', 'data-num'], els => { ... })
     //        // later: off();  releases the subscriber
-    const attrSubs = [];
-    const attrNames = new Set();
-    let attrMo;
+    const attributeSubscribers = [];
+    const attributeNames = new Set();
+    let attributeObserver;
     NDS.onAttributeChange = (selector, attributes, fn) => {
-        if (!attrMo) {
-            attrMo = new MutationObserver(mutations => {
+        if (!attributeObserver) {
+            attributeObserver = new MutationObserver(mutations => {
                 const changed = new Map();
                 for (let i = 0; i < mutations.length; i++) {
                     const el = mutations[i].target;
                     if (!changed.has(el)) changed.set(el, new Set());
                     changed.get(el).add(mutations[i].attributeName);
                 }
-                callEach(attrSubs, sub => {
+                callEach(attributeSubscribers, sub => {
                     const hits = [];
                     changed.forEach((names, el) => {
                         // Attribute check before matches(): this observer sees every
@@ -766,12 +766,12 @@
         // attributeFilter = the union of every subscriber's names, re-observed as it
         // grows. Without it the observer records EVERY attribute write on the page
         // for its lifetime — class, aria, style, init stamps — and runs the callback.
-        const before = attrNames.size;
-        attributes.forEach(attribute => attrNames.add(attribute));
-        if (attrNames.size !== before) {
-            attrMo.observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: [...attrNames] });
+        const before = attributeNames.size;
+        attributes.forEach(attribute => attributeNames.add(attribute));
+        if (attributeNames.size !== before) {
+            attributeObserver.observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: [...attributeNames] });
         }
-        return subscribe(attrSubs, { sel: selector, attrs: new Set(attributes), fn });
+        return subscribe(attributeSubscribers, { sel: selector, attrs: new Set(attributes), fn });
     };
 
     // ── State Management (data-state) ─────────────────────────────────
@@ -792,8 +792,8 @@
         const removeHooks = Object.create(null);
 
         function runHooks(hooks, token, el) {
-            const fns = hooks[token];
-            if (fns) callEach(fns, sub => { if (el.matches(sub.scope)) sub.fn(el, token); });
+            const tokenHooks = hooks[token];
+            if (tokenHooks) callEach(tokenHooks, sub => { if (el.matches(sub.scope)) sub.fn(el, token); });
         }
 
         const parse = el => new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
@@ -928,10 +928,10 @@
     const mirrored = new WeakMap();
     const getMirrorSet = (el) => mirrored.get(el) || mirrored.set(el, new Set()).get(el);
     for (const token in mirrors) {
-        const cls = mirrors[token];
+        const className = mirrors[token];
         NDS.state.onToggle(token, '*', (el, on) => {
-            if (on && !el.classList.contains(cls)) { el.classList.add(cls); getMirrorSet(el).add(cls); }
-            else if (!on && mirrored.get(el)?.delete(cls)) el.classList.remove(cls);
+            if (on && !el.classList.contains(className)) { el.classList.add(className); getMirrorSet(el).add(className); }
+            else if (!on && mirrored.get(el)?.delete(className)) el.classList.remove(className);
         });
     }
     // Loading tells a screen reader too: wait for the content.
@@ -967,12 +967,12 @@
     //        NDS.aria.label(button, '');           // removes the attribute
     //        if (button.ariaExpanded === 'true') { ... }   // read via IDL
     // To add a new aria-* helper, extend the NDS.aria object below with
-    // `<name>: aria('aria-<name>', <isBool>)`. Do NOT add a flat
+    // `<name>: aria('aria-<name>', <isBoolean>)`. Do NOT add a flat
     // NDS.aria<Name> at the top level.
-    const makeAriaSetter = (attribute, isBool) => (el, value) => {
+    const makeAriaSetter = (attribute, isBoolean) => (el, value) => {
         if (!el) return;
         if (value == null || value === '') return el.removeAttribute(attribute);
-        el.setAttribute(attribute, isBool ? String(Boolean(value)) : value);
+        el.setAttribute(attribute, isBoolean ? String(Boolean(value)) : value);
     };
     NDS.aria = {
         expanded: makeAriaSetter('aria-expanded', true),
@@ -1159,11 +1159,11 @@
         if (!id) return null;
         let el = document.getElementById(id);
         if (el) return el;
-        const tpls = document.querySelectorAll('template');
-        for (let i = 0; i < tpls.length; i++) {
-            if (!tpls[i].content.getElementById(id)) continue;
+        const templates = document.querySelectorAll('template');
+        for (let i = 0; i < templates.length; i++) {
+            if (!templates[i].content.getElementById(id)) continue;
             // After it, not in its place: the emptied <template> stays where a framework put it.
-            tpls[i].after(tpls[i].content);
+            templates[i].after(templates[i].content);
             el = document.getElementById(id);
             if (el) {
                 NDS.init?.refresh?.(el);
@@ -1220,8 +1220,8 @@
     // written as is (a leading ? is optional), so a snapshot is restored unre-encoded.
     // Usage: const p = new URLSearchParams(location.search); p.set('page', 2); NDS.writeUrlParams(p);
     NDS.writeUrlParams = (params) => {
-        const qs = String(params).replace(/^\?/, '');
-        history.replaceState(history.state, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+        const queryString = String(params).replace(/^\?/, '');
+        history.replaceState(history.state, '', location.pathname + (queryString ? '?' + queryString : '') + location.hash);
     };
 
     // ── Sticky Header Bottom ─────────────────────────────────────────
@@ -1671,9 +1671,9 @@
         el.style.top = top + 'px';
         el.style.left = left + 'px';
         const rect = el.getBoundingClientRect();
-        const { m41: tx, m42: ty } = new DOMMatrixReadOnly(getComputedStyle(el).transform);
-        const dx = (rect.left - tx) - left;
-        const dy = (rect.top  - ty) - top;
+        const { m41: translateX, m42: translateY } = new DOMMatrixReadOnly(getComputedStyle(el).transform);
+        const dx = (rect.left - translateX) - left;
+        const dy = (rect.top  - translateY) - top;
         if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
             el.style.top  = (top  - dy) + 'px';
             el.style.left = (left - dx) + 'px';

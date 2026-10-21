@@ -67,10 +67,10 @@
         const el = document.getElementById('nds-weather-info');
         if (!el) return;
 
-        const lat = +(el.dataset.latitude || 24.7136);
-        const lng = +(el.dataset.longitude || 46.6753);
+        const latitude = +(el.dataset.latitude || 24.7136);
+        const longitude = +(el.dataset.longitude || 46.6753);
         // v3: { cond, temp, icon } — v2 cached the text per language.
-        const key = `weather_v3_${lat}_${lng}`;
+        const key = `weather_v3_${latitude}_${longitude}`;
 
         const cached = NDS.cache.get(key);
         if (cached && typeof cached === 'object' && cached.icon && strings.has(cached.cond)) {
@@ -81,44 +81,44 @@
 
         try {
             const { data } = await NDS.request(
-                `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true&timezone=auto`,
+                `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&timezone=auto`,
                 { timeout: 10000, json: true }
             );
 
             if (!data.current_weather) throw new Error('Invalid weather data');
 
             const code = data.current_weather.weathercode;
-            const temp = Math.round(data.current_weather.temperature);
+            const temperature = Math.round(data.current_weather.temperature);
             const hour = new Date().getHours();
             const isNight = hour >= 18 || hour <= 6;
 
-            let cond, icon;
+            let condition, icon;
             if (code <= 1) {
-                cond = 'clear';
+                condition = 'clear';
                 icon = isNight ? 'nds-hgi-moon-02' : 'nds-hgi-sun-03';
             } else if (code === 2) {
-                cond = 'partly_cloudy';
+                condition = 'partly_cloudy';
                 icon = isNight ? 'nds-hgi-moon-cloud' : 'nds-hgi-sun-cloud-01';
             } else if (code === 3) {
-                cond = 'overcast';
+                condition = 'overcast';
                 icon = 'nds-hgi-cloud';
             } else if (code >= 45 && code <= 48) {
-                cond = 'fog';
+                condition = 'fog';
                 icon = 'nds-hgi-slow-winds';
             } else if (code >= 51 && code <= 67) {
-                cond = 'rain';
+                condition = 'rain';
                 icon = 'nds-hgi-cloud-angled-rain';
             } else if (code >= 71 && code <= 77) {
-                cond = 'snow';
+                condition = 'snow';
                 icon = 'nds-hgi-cloud-snow';
             } else if (code >= 80 && code <= 99) {
-                cond = 'storm';
+                condition = 'storm';
                 icon = 'nds-hgi-cloud-angled-rain-zap';
             } else {
                 throw new Error('Unknown weather code');
             }
 
-            const payload = { cond, temp, icon };
+            const payload = { cond: condition, temp: temperature, icon };
             renderWeather(el, payload);
             el.style.display = '';
             NDS.cache.set(key, payload, 15);
@@ -151,11 +151,11 @@
             return;
         }
 
-        const lat = +(weatherEl.dataset.latitude || 24.7136);
-        const lng = +(weatherEl.dataset.longitude || 46.6753);
+        const latitude = +(weatherEl.dataset.latitude || 24.7136);
+        const longitude = +(weatherEl.dataset.longitude || 46.6753);
         const lang = encodeURIComponent(NDS.lang);
         // v2 key: cache shape changed from HTML string to plain city name.
-        const cacheKey = `city_v2_${lat}_${lng}_${lang}`;
+        const cacheKey = `city_v2_${latitude}_${longitude}_${lang}`;
 
         // Check cache first (30 days)
         const cached = NDS.cache.get(cacheKey);
@@ -167,7 +167,7 @@
 
         try {
             const { data } = await NDS.request(
-                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=${lang}&addressdetails=1`,
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=${lang}&addressdetails=1`,
                 { timeout: 8000, json: true }
             );
 

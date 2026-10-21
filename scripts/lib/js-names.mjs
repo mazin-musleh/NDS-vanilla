@@ -49,8 +49,30 @@ for (const w of [...Object.keys(BANNED), ...Object.keys(BANNED_PREFIX)]) VERBS.d
 // Entry 10 rule 8: abbreviations. LOCAL_OK is the locals' and parameters' short list.
 const ABBREV = new Set(`fmt val vals norm sel sels msg msgs dtf cal ymd cmd pct pos idx len num nums str obj arr cb cbs
 tmp cfg conf ctx evt ev err errs ac li lis el els elem elems btn btns opt opts doc docs cur curr mq esc inst attr attrs
-prep res req resp calc dim dims lbl txt ctrl ctrls mgr util utils coll tpl tmpl fn dest ns`.split(/\s+/));
+prep res req resp calc dim dims lbl txt ctrl ctrls mgr util utils coll tpl tmpl fn dest ns
+fc cs sw dm acc anim fd dd toks cls ch re dlg win op ops ext lo hi sec secs sib pts fns tz mer frag si inp sig st
+rad ci dist lat lng ta ver mo tpls mi sr sg oc tb ph ei ico rs arg args mag strs dec grad pt temp cond ws perf vs ro io
+bool qs tx ty greg dn cr fmts regs ind lim acts mcs vv deco cmds lh occ cac nr er rm rec le sep tt dup pab pabs sb ri
+pag av bv cmp seq bg ds uf osc srel fwd desc col cols tw bp desk def dev prop props ti mr2 h12 alls`.split(/\s+/));
 const LOCAL_OK = new Set(['el', 'e', 'i', 'j', 'x', 'y', 'fn', 'opts', 'btn']);
+// A short word that is a word: English, a platform name (an HTML tag or attribute, a CSS unit, an SVG or canvas
+// argument), or a standard acronym. Any other 2–4 letter word is a verify line: read it, then add it here or to ABBREV.
+const SHORT_OK = new Set(`is get set has add end top on off to in at by of up go no or as and for not any all new old own
+per raw run was now it ok can had out few two why use say try way may yes key id ids uid url api css js svg dom rtl
+html json aria csv xls iban otp ipv ajax xhr mime a11y i18n toc fab cta ui bom gtag hgi nds iso md sm lg pm px ms vh
+vw deg rem fr cx cy dx dy x0 y0 t0 t1 t2 p0 p1 p2 p3 cp1x cp1y cp2x cp2y th tr td ul div span img pre nav sub subs ths
+src href alt rel dir lang role ref refs var vars name page text item list root node menu row rows date open sync data
+init type max file form icon next find link last year rect min tag tags box step done unit left read from real prev
+rule size code day days mode host base cell self path pad auto lazy bar bars tab tabs call card mask time line slot
+body hour deck dark wrap chip live site hits edge band gap char stop head atom load axis lex view grid logo side main
+area dot dots city map tail spec hero drop pick hide warn seed pair keys safe zoom fits drag only skip fix fill copy
+hold tier save move kind hit tip push fire pack seen want arm back star bad same walk kept navs nice sum make held
+swap zone with down room fit runs flip info snap rest lock jump keep full test best each here what home scan wall
+tick week once void kids twin none undo demo like exit blob dock ride near low knob peek more hash pass half wait
+over hook fail tone grab wire dead look lost verb need note deep plot font axes arc defs into pool bus miss zero era
+away wins lay clip px flag bold flow stem ends diff mine idle when log park sign fade app mid busy sort meta play gain
+lead warm loop also both even just last less most much must next once part show cat sum word mark pie tap
+intl os lab outs offs high`.split(/\s+/));
 
 // The hook names and entry 10's public verbs stand alone.
 const EXACT_OK = new Set(['whenReady', 'getInstance', 'initialize', 'init', 'reinit', 'refresh', 'destroy', 'create', 'constructor', 'open', 'close', 'toggle',
@@ -151,6 +173,10 @@ function scanFile(file, source) {
         if (n.length === 1 ? !LOCAL_OK.has(n) : (ABBREV.has(lower.toLowerCase()) && !LOCAL_OK.has(lower)) ||
             (ws.length > 1 && ws.some((w) => ABBREV.has(w) && !LOCAL_OK.has(w))))
             push('P10.8', node, `local \`${n}\`: whole words (short list: ${[...LOCAL_OK].join(' ')})`);
+        else {
+            const unknown = ws.filter((w) => w.length >= 2 && w.length <= 4 && !LOCAL_OK.has(w) && !SHORT_OK.has(w) && !ABBREV.has(w));
+            if (unknown.length) push('P10.8', node, `local \`${n}\`: is ${unknown.map((w) => `\`${w}\``).join(', ')} a word?`, 'a word → SHORT_OK; a shortening → ABBREV and rename');
+        }
         if (acronym(n)) push('P10.3', node, `local \`${n}\` writes an acronym in capitals`);
     };
 
@@ -181,7 +207,7 @@ function scanFile(file, source) {
                                 push('P12.8', id, `\`${id.name}\` is upper case but holds ${kindOf(d.init)}`, 'upper case only for a primitive or frozen value never reassigned');
                             if (node.kind === 'const' && !constCase(id.name) && isPrimitive(d.init))
                                 push('P12.8', id, `\`${id.name}\` holds a primitive constant`, 'upper snake case, unless it is a setting read per call');
-                            if (acronym(id.name)) push('P10.3', id, `\`${id.name}\` writes an acronym in capitals`);
+                            local(id, d); // module names take whole words too (entry 12 rule 8)
                             if (/^[A-Z][a-z]/.test(id.name) && d.init && d.init.type !== 'ClassExpression')
                                 push('P12.8', id, `\`${id.name}\` is PascalCase but is not a class: camelCase`);
                             if (d.init?.type === 'Literal' && typeof d.init.value === 'string') topStrings.set(id.name, d.init.value);

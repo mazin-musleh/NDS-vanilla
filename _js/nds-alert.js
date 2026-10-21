@@ -180,10 +180,10 @@
                         el.classList.add('nds-copy');
                         if (action.copy) el.setAttribute('data-copy', action.copy);
                         else el.setAttribute('data-copy-target', action.copyTarget);
-                        const ico = document.createElement('i');
-                        ico.className = 'nds-icon nds-hgi-copy-01';
-                        ico.setAttribute('aria-hidden', 'true');
-                        el.prepend(ico);
+                        const icon = document.createElement('i');
+                        icon.className = 'nds-icon nds-hgi-copy-01';
+                        icon.setAttribute('aria-hidden', 'true');
+                        el.prepend(icon);
                     }
                     el.setAttribute('data-action-index', index);
                     actionsWrap.appendChild(el);

@@ -325,15 +325,15 @@
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
     // The instance's tags (carriers exist only with a name); before init, the server-rendered carriers.
     // data-max-tags blocks a submit too: tags written in the markup or set by a script skip the add-time check.
-    const checkField = (ti) => {
-        const count = ti.ndsTaginput ? ti.ndsTaginput._tags.length : ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
-        const max = parseInt(ti.getAttribute('data-max-tags'), 10);
+    const checkField = (taginput) => {
+        const count = taginput.ndsTaginput ? taginput.ndsTaginput._tags.length : taginput.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
+        const max = parseInt(taginput.getAttribute('data-max-tags'), 10);
         const over = max > 0 && count > max;
-        const valid = !over && (!NDS.validation.isRequired(ti) || count > 0);
+        const valid = !over && (!NDS.validation.isRequired(taginput) || count > 0);
         return { valid, message: valid ? '' : strings.text(over ? 'max' : 'tag_required', { n: max }), empty: count === 0, count };
     };
     NDS.validation.addRule('.nds-taginput[data-required], .nds-taginput.nds-required, .nds-taginput[data-max-tags]',
-        (ti) => Object.assign(checkField(ti), { focus: ti.querySelector('.nds-form-control > input:not([type="hidden"])') }),
+        (taginput) => Object.assign(checkField(taginput), { focus: taginput.querySelector('.nds-form-control > input:not([type="hidden"])') }),
         // The typing field is empty at submit even with tags: the native pass leaves the field to this rule.
         { owns: (control) => control.classList.contains('nds-taginput'), on: ['nds:taginput:change'] });
 

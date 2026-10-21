@@ -1303,7 +1303,7 @@ const NAME_CASES = [
     [`(function(){ class NDSTables {} })();`, ['P12.7']],
     [`(function(){ class NdsTable {} class NdsDatePickerCalendar {} })();`, []],
     [`(function(){ const CooldownButton = { init() {} }; const NdsX = class {}; })();`, ['P12.8']], // PascalCase is for classes
-    [`(function(){ const SEL = A + ', ' + B; const HAS = 'x' in window; const DEFAULT = \`<i>\${x}</i>\`; const SELF = document.currentScript; })();`, ['P12.8?']], // only the member read is unknown
+    [`(function(){ const SELECTOR = A + ', ' + B; const HAS = 'x' in window; const DEFAULT = \`<i>\${x}</i>\`; const SELF = document.currentScript; })();`, ['P12.8?']], // only the member read is unknown
     [`(function(){ function run(el) { el._ndsFoo = 1; } })();`, ['P12.14']],
     [`(function(){ function run(row) { row._x = 1; } })();`, ['P12.14?']],
     [`(function(){ function run(el) { el.ndsDone = true; el.dataset.ndsSeen = 'true'; } })();`, ['P12.14']],
@@ -1320,7 +1320,9 @@ const NAME_CASES = [
     [`(function(){ class NdsA { constructor() { this._ac = new AbortController(); } } })();`, ['P1', 'P10.8']],
     [`(function(){ class NdsA { constructor() { this._listBtn = null; } } })();`, ['P10.8']], // `_` lifts the banner rule, not the words
     [`/* NDS.A — public surface\n * Methods:\n *   el.ndsA.open()   open it\n */\n(function(){ class NdsA { constructor() { this.abortController = new AbortController(); this.box = 1; this._menu = 2; } open() {} close() {} } })();`, ['P12.11', 'P12.11']], // box, close
-    [`(function(){ const SEL = '.x'; const CONFIG = { a: 1 }; const FROZEN = Object.freeze({}); const delayMs = 200; })();`, ['P12.8?', 'P12.8?']],
+    [`(function(){ const SELECTOR = '.x'; const CONFIG = { a: 1 }; const FROZEN = Object.freeze({}); const delayMs = 200; })();`, ['P12.8?', 'P12.8?']],
+    [`(function(){ const SEL = '.x'; })();`, ['P10.8']], // module names take whole words
+    [`(function(){ function getValue() { const qux = 1; return qux; } })();`, ['P10.8?']], // an unknown short word is read
     [`/* NDS.T — public surface
  * Methods:
  *   NDS.T.updateDate()   render

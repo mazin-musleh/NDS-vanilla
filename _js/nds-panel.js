@@ -63,7 +63,7 @@
     const { add: addState, remove: removeState, has: hasState, clear: clearState } = NDS.state;
 
     const SELECTOR = '.nds-panel';
-    const INIT_ATTR = 'data-nds-panel-initialized';
+    const INIT_ATTRIBUTE = 'data-nds-panel-initialized';
     const sizes = ['sm', 'md', 'lg', 'xl'];
 
     // Open panels, bottom to top; a closing one stays until its slide ends.
@@ -219,7 +219,7 @@
         if (!panel) return;
         // A panel added after load without NDS.init.mount: its close controls are wired here.
         createPanel(panel);
-        if (!panel.hasAttribute(INIT_ATTR)) return;
+        if (!panel.hasAttribute(INIT_ATTRIBUTE)) return;
         // On the panel, not a local: a swap opens it later from close()'s cleanup.
         if (focus) noFocusPanels.delete(panel); else noFocusPanels.add(panel);
 
@@ -389,7 +389,7 @@
     // ==============================================
 
     function createPanel(panel) {
-        if (panel.hasAttribute(INIT_ATTR)) return;
+        if (panel.hasAttribute(INIT_ATTRIBUTE)) return;
         // A page with no panel at load never runs init(), so create() wires the toggles too.
         addToggleListeners();
 
@@ -424,7 +424,7 @@
         }, { signal });
         syncResize(panel);
 
-        panel.setAttribute(INIT_ATTR, 'true');
+        panel.setAttribute(INIT_ATTRIBUTE, 'true');
     }
 
     function destroyPanel(panel) {
@@ -455,7 +455,7 @@
         openers.delete(panel);
         silentPanels.delete(panel);
         noFocusPanels.delete(panel);
-        panel.removeAttribute(INIT_ATTR);
+        panel.removeAttribute(INIT_ATTRIBUTE);
 
         // Another panel still sliding out flushes the slot itself.
         if (pending && stack.some(stackedPanel => hasState(stackedPanel, 'closing'))) pendingOpen = pending;

@@ -95,8 +95,8 @@
 (function() {
     'use strict';
 
-    const SEL = '.nds-cooldown';
-    const WIRED_ATTR = 'data-nds-cooldown-initialized';
+    const SELECTOR = '.nds-cooldown';
+    const WIRED_ATTRIBUTE = 'data-nds-cooldown-initialized';
     const DEFAULT_TEMPLATE = '{s}';
     // Global: a bilingual label names the token once per language.
     const TOKEN = /\{s\}/g;
@@ -266,8 +266,8 @@
     }
 
     function setupButton(btn) {
-        if (!btn || btn.hasAttribute(WIRED_ATTR)) return;
-        btn.setAttribute(WIRED_ATTR, '');
+        if (!btn || btn.hasAttribute(WIRED_ATTRIBUTE)) return;
+        btn.setAttribute(WIRED_ATTRIBUTE, '');
         getConfig(btn); // freeze cooldown durations at wire time
         warnNoCountdown(btn);
         stampSizers(btn); // reserve the label width before the first click
@@ -281,21 +281,21 @@
 
     // Paired with onDomRemove so a detached + re-added button gets a clean
     // re-wire rather than having the old closure state persist behind the
-    // WIRED_ATTR guard.
+    // WIRED_ATTRIBUTE guard.
     function cleanupButton(btn) {
-        if (!btn || !btn.hasAttribute(WIRED_ATTR)) return;
+        if (!btn || !btn.hasAttribute(WIRED_ATTRIBUTE)) return;
         abortControllers.get(btn)?.abort();
         abortControllers.delete(btn);
-        btn.removeAttribute(WIRED_ATTR);
+        btn.removeAttribute(WIRED_ATTRIBUTE);
     }
 
     const api = {
         init() {
             if (subscribed) return;
             subscribed = true;
-            document.querySelectorAll(SEL).forEach(setupButton);
-            NDS.onDomAdd(SEL, (nodes) => nodes.forEach(setupButton));
-            NDS.onDomRemove(SEL, (nodes) => nodes.forEach(cleanupButton));
+            document.querySelectorAll(SELECTOR).forEach(setupButton);
+            NDS.onDomAdd(SELECTOR, (nodes) => nodes.forEach(setupButton));
+            NDS.onDomRemove(SELECTOR, (nodes) => nodes.forEach(cleanupButton));
         },
         start,
         reset

@@ -64,8 +64,8 @@
 (function () {
     'use strict';
 
-    const INIT_ATTR = 'data-nds-fab-initialized';
-    const DEFAULT_POS = 'right';   // physical default edge
+    const INIT_ATTRIBUTE = 'data-nds-fab-initialized';
+    const DEFAULT_POSITION = 'right';   // physical default edge
     const createdDocks = new WeakSet();   // docks we built; an authored one is not ours to remove
 
     const order = (el) => parseInt(el.dataset.fabOrder, 10) || 0;
@@ -75,7 +75,7 @@
     // A JS-made dock always stamps its position (below), but an authored bare
     // <div class="nds-fab-dock"> may omit it — treat that as 'right' so both
     // resolve to the same edge.
-    const getDockPosition = (el) => el.dataset.fabDockPos || DEFAULT_POS;
+    const getDockPosition = (el) => el.dataset.fabDockPos || DEFAULT_POSITION;
 
     // Map a side to one of the PHYSICAL docks. Physical left/right/bottom pass
     // through unchanged; logical start/end resolve by direction (so `end` lands
@@ -106,7 +106,7 @@
 
     // Find the static slot at `pos`, creating it lazily if absent.
     function getDock(position) {
-        const want = position || DEFAULT_POS;
+        const want = position || DEFAULT_POSITION;
         let el = [...document.querySelectorAll('.nds-fab-dock')].find(candidate => getDockPosition(candidate) === want);
         if (!el) {
             el = document.createElement('div');
@@ -131,7 +131,7 @@
         slot.appendChild(fab);
         [...slot.children].sort((left, right) => order(left) - order(right)).forEach(child => slot.appendChild(child));
         fab.removeAttribute('hidden');   // reveal now that it's docked (it ships `hidden` to avoid a pre-route flash)
-        fab.setAttribute(INIT_ATTR, 'true');
+        fab.setAttribute(INIT_ATTRIBUTE, 'true');
         setupRuntime();
         return slot;
     }
@@ -274,10 +274,10 @@
 
         if (elOrRoot.classList?.contains('nds-fab')) {
             const fab = elOrRoot;
-            if (!fab.hasAttribute(INIT_ATTR)) return 0;   // never routed — nothing was taken
+            if (!fab.hasAttribute(INIT_ATTRIBUTE)) return 0;   // never routed — nothing was taken
             // Back to its marker: with a view the app already removed, it leaves with that view.
             if (NDS.sendHome(fab)) fab.setAttribute('hidden', '');
-            fab.removeAttribute(INIT_ATTR);
+            fab.removeAttribute(INIT_ATTRIBUTE);
             fab.removeAttribute('data-fab-riding');
             fab.style.removeProperty('--_fab-ride');
 
@@ -285,12 +285,12 @@
             document.querySelectorAll('.nds-fab-dock').forEach(slot => {
                 if (createdDocks.has(slot) &&!slot.children.length) slot.remove();
             });
-            if (!document.querySelector('.nds-fab[' + INIT_ATTR + ']')) cleanupRuntime();
+            if (!document.querySelector('.nds-fab[' + INIT_ATTRIBUTE + ']')) cleanupRuntime();
             return 1;
         }
 
         let count = 0;
-        document.querySelectorAll('.nds-fab[' + INIT_ATTR + ']').forEach(fab => {
+        document.querySelectorAll('.nds-fab[' + INIT_ATTRIBUTE + ']').forEach(fab => {
             const parent = NDS.getHome(fab);
             if (elOrRoot === document || (parent && (parent === elOrRoot || elOrRoot.contains?.(parent)))) {
                 count += destroy(fab);
@@ -310,7 +310,7 @@
     // register() because an explicit register(child) call is deliberate.
     function init() {
         document.querySelectorAll('.nds-fab').forEach(fab => {
-            if (fab.hasAttribute(INIT_ATTR)) return;
+            if (fab.hasAttribute(INIT_ATTRIBUTE)) return;
             if (fab.closest('code')) return;
             if (fab.parentElement?.closest('.nds-fab')) return;
             register(fab);

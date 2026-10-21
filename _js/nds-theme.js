@@ -56,8 +56,8 @@
     // a runtime override could only desync the two, so it's a plain const.
     const STORAGE_KEY = 'nds-theme';            // full data-theme string ("dark crimson")
     const PALETTE_KEY = 'nds-palette';          // custom inline-seed theme only: { seeds, value }
-    const TOGGLE_SEL = '[data-theme-toggle]';
-    const SWITCH_SEL = '[data-theme-value]';
+    const TOGGLE_SELECTOR = '[data-theme-toggle]';
+    const SWITCH_SELECTOR = '[data-theme-value]';
     const LINK_ID = 'nds-theme-stylesheet';
     const modes = ['light', 'dark'];
     // data-seed-* suffix → the CSS custom property it sets (custom/inline path).
@@ -73,8 +73,8 @@
         return (root.getAttribute('data-theme') || '').split(/\s+/).filter(Boolean);
     }
     // Write the token list back AND persist the whole string (single source of truth).
-    function writeTheme(toks) {
-        if (toks.length) root.setAttribute('data-theme', toks.join(' '));
+    function writeTheme(tokens) {
+        if (tokens.length) root.setAttribute('data-theme', tokens.join(' '));
         else root.removeAttribute('data-theme');
         try {
             const value = root.getAttribute('data-theme');
@@ -102,9 +102,9 @@
         if (!meta) return;
         const top = document.querySelector('.nds-topbar, .nds-main-nav');
         const clear = (color) => !color || color === 'rgba(0, 0, 0, 0)' || color === 'transparent';
-        let bg = top && getComputedStyle(top).backgroundColor;
-        if (clear(bg)) bg = getComputedStyle(document.body).backgroundColor;
-        if (!clear(bg)) meta.setAttribute('content', bg);
+        let background = top && getComputedStyle(top).backgroundColor;
+        if (clear(background)) background = getComputedStyle(document.body).backgroundColor;
+        if (!clear(background)) meta.setAttribute('content', background);
     }
     // Circular clip-path reveal (View Transitions) expanding from an origin element's
     // centre — shared by the dark toggle AND the theme switcher. Runs `apply` (the DOM
@@ -137,7 +137,7 @@
         setTheme(getTheme() === 'dark' ? 'light' : 'dark', el);
     }
     function setToggles(theme) {
-        const elements = document.querySelectorAll(TOGGLE_SEL);
+        const elements = document.querySelectorAll(TOGGLE_SELECTOR);
         const isDark = theme === 'dark';
         for (let i = 0; i < elements.length; i++) {
             const el = elements[i];
@@ -155,7 +155,7 @@
     // ── Theme SWITCHER axis (predefined token / inline custom / stylesheet) ──
     // Every switcher value is a member of the theme-token group: swap one, preserve mode.
     function getThemeNames() {
-        return Array.from(document.querySelectorAll(SWITCH_SEL))
+        return Array.from(document.querySelectorAll(SWITCH_SELECTOR))
             .map(el => el.getAttribute('data-theme-value')).filter(Boolean);
     }
     function findItem(value) {
@@ -166,9 +166,9 @@
     // just records (+ persists) which sheet is active for reconcileSwitcher to re-inject.
     function setThemeToken(name) {
         const names = getThemeNames();
-        const toks = getCurrentTokens().filter(token => names.indexOf(token) === -1);
-        if (name) toks.push(name);
-        writeTheme(toks);
+        const tokens = getCurrentTokens().filter(token => names.indexOf(token) === -1);
+        if (name) tokens.push(name);
+        writeTheme(tokens);
     }
     function clearInline() {
         for (const key in seedProperties) root.style.removeProperty(seedProperties[key]);
@@ -221,7 +221,7 @@
     }
     function syncSwitcher(active) {
         currentValue = active;
-        const elements = document.querySelectorAll(SWITCH_SEL);
+        const elements = document.querySelectorAll(SWITCH_SELECTOR);
         for (let i = 0; i < elements.length; i++) {
             const on = (elements[i].getAttribute('data-theme-value') || '') === active;
             elements[i].setAttribute('aria-current', on ? 'true' : 'false');
@@ -330,7 +330,7 @@
     function init() {
         setToggles(getTheme());
         if (reconciled) syncSwitcher(currentValue);
-        else if (document.querySelector(SWITCH_SEL)) {
+        else if (document.querySelector(SWITCH_SELECTOR)) {
             reconciled = true;
             reconcileSwitcher();
 
@@ -341,7 +341,7 @@
             const params = new URLSearchParams(location.search);
             if (params.has('theme')) {
                 const want = params.get('theme');
-                const option = Array.from(document.querySelectorAll(SWITCH_SEL))
+                const option = Array.from(document.querySelectorAll(SWITCH_SELECTOR))
                     .find(el => (el.getAttribute('data-theme-value') || '') === want);
                 if (option && option.getAttribute('aria-current') !== 'true') setSelection(option);
             }
@@ -354,26 +354,26 @@
         // A switcher item is usually a button (click); it can also be a switch — then
         // the input's 'change' drives it, so skip the click to avoid a double-toggle.
         document.addEventListener('click', (e) => {
-            const el = e.target.closest(SWITCH_SEL);
+            const el = e.target.closest(SWITCH_SELECTOR);
             if (!el || el.querySelector('.nds-switch-input')) return;
             setSelection(el);
         });
         document.addEventListener('change', (e) => {
             if (!e.target.matches('.nds-switch-input')) return;
-            const el = e.target.closest(SWITCH_SEL);
+            const el = e.target.closest(SWITCH_SELECTOR);
             if (el) setSelection(el);   // setSelection toggles on the item's current state
         });
 
         // Mode toggle — button click delegation
         document.addEventListener('click', e => {
-            const el = e.target.closest(TOGGLE_SEL);
+            const el = e.target.closest(TOGGLE_SELECTOR);
             if (!el || el.querySelector('.nds-switch-input')) return;
             toggle(el);
         });
         // Mode toggle — switch 'change' (track click, label click, keyboard)
         document.addEventListener('change', e => {
             if (!e.target.matches('.nds-switch-input')) return;
-            const el = e.target.closest(TOGGLE_SEL);
+            const el = e.target.closest(TOGGLE_SELECTOR);
             if (!el) return;
             setTheme(e.target.checked ? 'dark' : 'light', el);
         });

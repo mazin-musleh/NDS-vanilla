@@ -257,21 +257,21 @@ NDS.UserFeedback = (() => {
         // Scope all listeners to an AbortController so a future destroy/reinit can detach atomically
         const abortController = new AbortController();
         abortControllers.set(feedbackComponent, abortController);
-        const ufSignal = abortController.signal;
+        const feedbackSignal = abortController.signal;
 
         // Add click handlers to answer buttons
         answerButtons.forEach(button => {
             button.addEventListener('click', function () {
                 const answer = this.getAttribute('data-answer');
                 showDetails(answer);
-            }, { signal: ufSignal });
+            }, { signal: feedbackSignal });
         });
 
         // Add click handler to close button
         if (closeButton) {
             closeButton.addEventListener('click', function () {
                 resetFeedback();
-            }, { signal: ufSignal });
+            }, { signal: feedbackSignal });
         }
 
         // Handle form submission to show success message
@@ -309,7 +309,7 @@ NDS.UserFeedback = (() => {
                         NDS.state.remove(submitButton, 'loading');
                         submitButton.disabled = false;
                     });
-            }, { signal: ufSignal });
+            }, { signal: feedbackSignal });
         }
 
         // Mark as initialized

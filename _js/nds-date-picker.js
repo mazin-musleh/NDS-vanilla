@@ -654,10 +654,10 @@
 
         detectCalendarTypeFromSingleValue: function (dateString, format) {
             // The typed year picks the calendar: a Hijri year is 1500 or less.
-            var greg = NDS.Date.parse(dateString, { format: format });
-            var hijri = !greg && NDS.Date.parse(dateString, { format: format, calendar: 'hijri' });
-            if (!greg && !hijri) return null;
-            var year = greg ? greg.getFullYear() : toHijri(hijri).year;
+            var gregorianDate = NDS.Date.parse(dateString, { format: format });
+            var hijri = !gregorianDate && NDS.Date.parse(dateString, { format: format, calendar: 'hijri' });
+            if (!gregorianDate && !hijri) return null;
+            var year = gregorianDate ? gregorianDate.getFullYear() : toHijri(hijri).year;
             return year > 1500 ? 'gregorian' : 'hijri';
         },
 
@@ -974,8 +974,8 @@
                 }
                 case 'PageDown': {
                     e.preventDefault();
-                    var stepsDn = e.shiftKey ? 12 : 1;
-                    for (var downStep = 0; downStep < stepsDn; downStep++) if (!this._stepMonth(1)) break;
+                    var stepsDown = e.shiftKey ? 12 : 1;
+                    for (var downStep = 0; downStep < stepsDown; downStep++) if (!this._stepMonth(1)) break;
                     this._refreshView();
                     this.focusFirstCurrentMonthDay();
                     break;
@@ -1854,9 +1854,9 @@
                     if (NDS.state.has(candidates[i], 'selected')) { selected = candidates[i]; break; }
                 }
                 if (selected) {
-                    var cr = container.getBoundingClientRect();
-                    var sr = selected.getBoundingClientRect();
-                    container.scrollTop = Math.max(0, sr.top - cr.top + container.scrollTop - (cr.height / 2) + (sr.height / 2));
+                    var containerRect = container.getBoundingClientRect();
+                    var selectedRect = selected.getBoundingClientRect();
+                    container.scrollTop = Math.max(0, selectedRect.top - containerRect.top + container.scrollTop - (containerRect.height / 2) + (selectedRect.height / 2));
                 }
             }, 10);
         },

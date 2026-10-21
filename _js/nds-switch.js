@@ -16,23 +16,23 @@
 
     const toggleOf = (target) => target && target.closest && target.closest('.nds-form-control .nds-switch-toggle');
     const trackOf = (target) => target && target.closest && target.closest('.nds-switch-track');
-    const findInput = (sw) => sw.querySelector('.nds-switch-input');
-    const off = (sw, input) => !input || input.disabled || sw.classList.contains('disabled');
+    const findInput = (switchToggle) => switchToggle.querySelector('.nds-switch-input');
+    const off = (switchToggle, input) => !input || input.disabled || switchToggle.classList.contains('disabled');
 
-    function toggle(sw) {
-        const input = findInput(sw);
-        if (off(sw, input) || input.readOnly) return;
+    function toggle(switchToggle) {
+        const input = findInput(switchToggle);
+        if (off(switchToggle, input) || input.readOnly) return;
         NDS.setValue(input, !input.checked);
         NDS.field.refresh(input, { validate: true });
-        sw.dispatchEvent(new CustomEvent('nds:switch:change', {
+        switchToggle.dispatchEvent(new CustomEvent('nds:switch:change', {
             detail: { checked: input.checked, value: input.value, input },
             bubbles: true,
         }));
     }
 
     // A press on the track marks the field active, as on an input.
-    const setActive = (sw, on) => {
-        const container = sw.closest('.nds-form-container');
+    const setActive = (switchToggle, on) => {
+        const container = switchToggle.closest('.nds-form-container');
         if (container) on ? NDS.state.add(container, 'active') : NDS.state.remove(container, 'active');
     };
 
@@ -46,20 +46,20 @@
         on: {
             // mouseleave does not bubble: a mouseout to outside the track stands in for it.
             mouseout: (e) => {
-                const track = trackOf(e.target), sw = toggleOf(track);
-                if (sw && !track.contains(e.relatedTarget)) setActive(sw, false);
+                const track = trackOf(e.target), switchToggle = toggleOf(track);
+                if (switchToggle && !track.contains(e.relatedTarget)) setActive(switchToggle, false);
             },
         },
         // The switch input sits in its toggle, never a field's own input.
         around: {
             mousedown: (e) => {
-                const track = trackOf(e.target), sw = toggleOf(track);
-                if (sw && !off(sw, findInput(sw))) setActive(sw, true);
+                const track = trackOf(e.target), switchToggle = toggleOf(track);
+                if (switchToggle && !off(switchToggle, findInput(switchToggle))) setActive(switchToggle, true);
             },
-            mouseup: (e) => { const sw = toggleOf(trackOf(e.target)); if (sw) setActive(sw, false); },
+            mouseup: (e) => { const switchToggle = toggleOf(trackOf(e.target)); if (switchToggle) setActive(switchToggle, false); },
             click: (e) => {
-                const sw = toggleOf(trackOf(e.target));
-                if (sw) { e.preventDefault(); toggle(sw); return; }
+                const switchToggle = toggleOf(trackOf(e.target));
+                if (switchToggle) { e.preventDefault(); toggle(switchToggle); return; }
                 // A label in the same control: its own click would toggle the input with no event.
                 const label = e.target.closest && e.target.closest('label[for]');
                 const input = label && document.getElementById(label.htmlFor);
@@ -71,10 +71,10 @@
             },
             keydown: (e) => {
                 if ((e.key !== ' ' && e.key !== 'Enter') || !e.target.classList || !e.target.classList.contains('nds-switch-input')) return;
-                const sw = toggleOf(e.target);
-                if (!sw) return;
+                const switchToggle = toggleOf(e.target);
+                if (!switchToggle) return;
                 e.preventDefault();
-                toggle(sw);
+                toggle(switchToggle);
             },
         },
     });

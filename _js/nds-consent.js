@@ -55,9 +55,9 @@
     }
 
     function syncConsent() {
-        const perf = isAllowed('performance');
+        const performanceAllowed = isAllowed('performance');
         // The flag is in-memory only, so it is set again on every load.
-        getTrackingIds().forEach(id => { window['ga-disable-' + id] = !perf; });
+        getTrackingIds().forEach(id => { window['ga-disable-' + id] = !performanceAllowed; });
         const names = document.cookie.split(';').map(cookie => cookie.split('=')[0].trim());
         Object.keys(trackers).forEach(category => {
             if (!isAllowed(category)) names.filter(cookieName => trackers[category].some(prefix => cookieName.startsWith(prefix))).forEach(NDS.cookie.delete);

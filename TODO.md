@@ -10,7 +10,10 @@ Cleaned 2026-10-19: finished items and their release notes left (all in `CHANGEL
 
 - **NDS IQ v4.0 on release day** (plan and status in `plans/iq-v4.md`; `IQv3.2` is already tagged and pushed, off main). [ ] `python scripts/publish-iq.py --apply` BEFORE the build and `mkrelease.py` (`verify()` checks the published copy and the guides' v4.0 render), `git push origin main IQv4.0`, then `nds-iq-eval` `evolve`. [ ] Optional, owner go: the S101 behavior run.
 - **v2.0.0 is the window for breaking improvements.** A major is the one time a wrong name or a split API can be fixed rather than aliased. For each find: add a sub-item here with the problem, the fix and its migration line, then decide build or drop with the owner. Every landed break gets a Migrating entry in `CHANGELOG.md`.
-- **JS naming rules, parked 2026-10-21** (plan and status in `plans/js-naming-rules.md`). What `_` means, one verb per meaning for internal functions, element data in a `WeakMap`; the whole tree in v2, internal and public names. [ ] Start after `plans/shared-logic.md` finishes, from the plan's "Resume here". [ ] Public renames (the plan's section 3): Migration rows for the names v1.12.0 shipped (`onDOMAdd`/`onDOMRemove`, `Toc.update`, `Chart.update`, `NDS.state.apply`, `NDS.badge`), none for the names born in v2.
+- **JS naming rules: done 2026-10-21** (`plans/js-naming-rules.md`); the naming checks fail the release. Open:
+  [ ] The nds-iq-eval scenarios S14 and S25 and the `fixtures/mini-root/_source` snapshot name old API (`updateRecords`, `populate`, `menuOf`): load the `nds-iq-eval` skill before editing them.
+  [ ] `_data/migrations.yml` has no rows for the v2 method renames in CHANGELOG's Migrating entry (`validateForm` → `validate`, `slideTo` → `goTo`, `NDS.Forms` → `NDS.Form` …), so the Migration page misses them.
+  [ ] `check-bundle-once.mjs` fails about 1 run in 6, on old bundles too: the ONCE page sometimes settles at 51 listeners and TWICE at 48. Cause not found.
 
 ### Parked features (owner calls; after v2.0.0 unless noted)
 

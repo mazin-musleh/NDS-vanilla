@@ -69,7 +69,7 @@
         return out;
     }
 
-    function parseOp(cell) {
+    function parseOperation(cell) {
         var text = cell.trim(), match;
         if ((match = text.match(/^\.([\w-]+)\s*=\s*(.+)$/))) return { kind: 'prop', name: match[1], value: JSON.parse(match[2]) };
         if ((match = text.match(/^\.([\w-]+)$/))) return { kind: 'class', name: match[1] };
@@ -91,12 +91,12 @@
         var open = src.indexOf('{'), close = src.lastIndexOf('}'), body = src.slice(open + 1, close);
         var entries = [], depth = 0, quote = null, start = 0;
         for (var i = 0; i <= body.length; i++) {
-            var ch = body.charAt(i);
-            if (quote) { if (ch === '\\') i++; else if (ch === quote) quote = null; continue; }
-            if (ch && '\'"`'.indexOf(ch) >= 0) quote = ch;
-            else if (ch && '([{'.indexOf(ch) >= 0) depth++;
-            else if (ch && ')]}'.indexOf(ch) >= 0) depth--;
-            else if ((ch === ',' && !depth) || i === body.length) {
+            var character = body.charAt(i);
+            if (quote) { if (character === '\\') i++; else if (character === quote) quote = null; continue; }
+            if (character && '\'"`'.indexOf(character) >= 0) quote = character;
+            else if (character && '([{'.indexOf(character) >= 0) depth++;
+            else if (character && ')]}'.indexOf(character) >= 0) depth--;
+            else if ((character === ',' && !depth) || i === body.length) {
                 var match = body.slice(start, i).trim().match(/^(\w+)\s*:\s*([\s\S]+)$/);
                 if (match) entries.push({ key: match[1], value: dedentTail(match[2]) });
                 start = i + 1;
@@ -141,11 +141,11 @@
         return !!match && (!match[1] || has(match[1], match[2])) && !(match[3] && has(match[3], match[4]));
     }
 
-    function setCallFromOp(call, row) {
-        var op = row.op;
+    function setCallFromOperation(call, row) {
+        var operation = row.op;
         if (!callMatches(call, row.target)) return;
-        if (op.kind === 'js') setCallEntry(call, op.name, op.value);
-        else if (op.kind === 'insert') parsePart(op.id).entries.forEach(function (e) { setCallEntry(call, e.key, e.value); });
+        if (operation.kind === 'js') setCallEntry(call, operation.name, operation.value);
+        else if (operation.kind === 'insert') parsePart(operation.id).entries.forEach(function (e) { setCallEntry(call, e.key, e.value); });
     }
 
     // A JS part canon is a run of options, `actions: [...]`.
@@ -167,28 +167,28 @@
     function insert(el, html, position) {
         var kids = el.childNodes, first = kids[0], last = kids[kids.length - 1];
         var readIndent = function (node) { return node && node.nodeType === 3 ? (node.textContent.match(/\n([ \t]*)$/) || [])[1] : null; };
-        var ind = position === 'after' ? readIndent(el.previousSibling) || '' : readIndent(first);
+        var indent = position === 'after' ? readIndent(el.previousSibling) || '' : readIndent(first);
         // An empty element (a badge into an icon) opens onto its own lines, one level in.
         if (!first && position !== 'after') {
             var own = readIndent(el.previousSibling) || '';
-            ind = own + '  ';
+            indent = own + '  ';
             el.appendChild(document.createTextNode('\n' + own));
             first = last = el.firstChild;
             position = 'end';
         }
-        if (ind == null) ind = (readIndent(last) || '') + '  ';
+        if (indent == null) indent = (readIndent(last) || '') + '  ';
         var template = document.createElement('template');
-        template.innerHTML = html.split('\n').join('\n' + ind);
+        template.innerHTML = html.split('\n').join('\n' + indent);
         if (position === 'after') {
             var next = el.nextSibling;
-            el.parentNode.insertBefore(document.createTextNode('\n' + ind), next);
+            el.parentNode.insertBefore(document.createTextNode('\n' + indent), next);
             el.parentNode.insertBefore(template.content, next);
         } else if (position === 'start') {
-            template.content.appendChild(document.createTextNode('\n' + ind));
+            template.content.appendChild(document.createTextNode('\n' + indent));
             el.insertBefore(template.content, first && first.nodeType === 3 ? first.nextSibling : first);
         } else {
             var ref = last && last.nodeType === 3 ? last : null;
-            el.insertBefore(document.createTextNode('\n' + ind), ref);
+            el.insertBefore(document.createTextNode('\n' + indent), ref);
             el.insertBefore(template.content, ref);
         }
     }
@@ -196,26 +196,26 @@
     // Phase 'insert' adds part blocks, 'markup' the rest; JS properties ('prop') go on the live preview only.
     function setChoice(root, choice, phase) {
         choice.ops.forEach(function (row) {
-            var op = row.op;
-            if (!op || op.kind === 'structure') return;
-            if ((op.kind === 'insert' ? 'insert' : op.kind === 'prop' ? 'prop' : 'markup') !== phase) return;
+            var operation = row.op;
+            if (!operation || operation.kind === 'structure') return;
+            if ((operation.kind === 'insert' ? 'insert' : operation.kind === 'prop' ? 'prop' : 'markup') !== phase) return;
             // JS rows change a create() call, HTML rows the markup; each skips the other mode.
-            if (isJs(row.target) || root.entries) { if (isJs(row.target) && root.entries) setCallFromOp(root, row); return; }
+            if (isJs(row.target) || root.entries) { if (isJs(row.target) && root.entries) setCallFromOperation(root, row); return; }
             findTargets(root, row.target).forEach(function (el) {
-                if (op.kind === 'insert') insert(el, dedent(document.getElementById(op.id).textContent), row.pos);
-                else if (op.kind === 'remove') {
+                if (operation.kind === 'insert') insert(el, dedent(document.getElementById(operation.id).textContent), row.pos);
+                else if (operation.kind === 'remove') {
                     // Take the line break before it too, so the code keeps its indentation.
                     if (el.previousSibling && el.previousSibling.nodeType === 3) el.previousSibling.remove();
                     el.remove();
                 }
-                else if (op.kind === 'class') el.classList.add(op.name);
-                else if (op.kind === 'attr') el.setAttribute(op.name, op.value);
-                else if (op.kind === 'token') {
-                    var set = (el.getAttribute(op.name) || '').split(/\s+/).filter(Boolean);
-                    if (set.indexOf(op.value) < 0) set.push(op.value);
-                    el.setAttribute(op.name, set.join(' '));
-                } else if (op.kind === 'style') el.style.setProperty(op.name, op.value);
-                else if (op.kind === 'prop') el[op.name] = op.value;
+                else if (operation.kind === 'class') el.classList.add(operation.name);
+                else if (operation.kind === 'attr') el.setAttribute(operation.name, operation.value);
+                else if (operation.kind === 'token') {
+                    var set = (el.getAttribute(operation.name) || '').split(/\s+/).filter(Boolean);
+                    if (set.indexOf(operation.value) < 0) set.push(operation.value);
+                    el.setAttribute(operation.name, set.join(' '));
+                } else if (operation.kind === 'style') el.style.setProperty(operation.name, operation.value);
+                else if (operation.kind === 'prop') el[operation.name] = operation.value;
             });
         });
     }
@@ -224,23 +224,23 @@
     // An attribute the next choice sets again stays, so it keeps its place in the code.
     function unapply(root, choice, next) {
         choice.ops.forEach(function (row) {
-            var op = row.op;
-            if (!op) return;
-            var again = next && next.ops.some(function (nextRow) { return nextRow.op && nextRow.op.kind === op.kind && nextRow.op.name === op.name && nextRow.target === row.target; });
-            if (again && (op.kind === 'attr' || op.kind === 'js')) return;
+            var operation = row.op;
+            if (!operation) return;
+            var again = next && next.ops.some(function (nextRow) { return nextRow.op && nextRow.op.kind === operation.kind && nextRow.op.name === operation.name && nextRow.target === row.target; });
+            if (again && (operation.kind === 'attr' || operation.kind === 'js')) return;
             if (isJs(row.target) || root.entries) {
                 if (!isJs(row.target) || !root.entries) return;
-                var keys = op.kind === 'js' ? [op.name] : op.kind === 'insert' ? parsePart(op.id).entries.map(function (e) { return e.key; }) : [];
+                var keys = operation.kind === 'js' ? [operation.name] : operation.kind === 'insert' ? parsePart(operation.id).entries.map(function (e) { return e.key; }) : [];
                 keys.forEach(function (key) { setCallEntry(root, key); });
                 return;
             }
             findTargets(root, row.target).forEach(function (el) {
-                if (op.kind === 'class') el.classList.remove(op.name);
-                else if (op.kind === 'attr') el.removeAttribute(op.name);
-                else if (op.kind === 'token') {
-                    var set = (el.getAttribute(op.name) || '').split(/\s+/).filter(function (token) { return token && token !== op.value; });
-                    set.length ? el.setAttribute(op.name, set.join(' ')) : el.removeAttribute(op.name);
-                } else if (op.kind === 'style') el.style.removeProperty(op.name);
+                if (operation.kind === 'class') el.classList.remove(operation.name);
+                else if (operation.kind === 'attr') el.removeAttribute(operation.name);
+                else if (operation.kind === 'token') {
+                    var set = (el.getAttribute(operation.name) || '').split(/\s+/).filter(function (token) { return token && token !== operation.value; });
+                    set.length ? el.setAttribute(operation.name, set.join(' ')) : el.removeAttribute(operation.name);
+                } else if (operation.kind === 'style') el.style.removeProperty(operation.name);
             });
         });
     }
@@ -267,14 +267,14 @@
         Array.prototype.forEach.call(table.tBodies[0].rows, function (tr) {
             var cells = tr.cells, group = cells[0].textContent.trim(), option = cells[1].textContent.trim();
             // kramdown keeps the backslash of a cell's `\|` inside a code span.
-            var key = group + '|' + option, op = parseOp(cells[2].textContent.replace(/\\\|/g, '|'));
-            if (!op && cells[2].textContent.trim() !== '—') console.warn('[NDS Docs] unparsed Markup cell:', cells[2].textContent.trim());
+            var key = group + '|' + option, operation = parseOperation(cells[2].textContent.replace(/\\\|/g, '|'));
+            if (!operation && cells[2].textContent.trim() !== '—') console.warn('[NDS Docs] unparsed Markup cell:', cells[2].textContent.trim());
             // `canon #id` swaps the markup in the Structure (or Example) group; anywhere else it inserts a part block.
-            if (op && op.kind === 'structure' && !STRUCT.test(group)) op.kind = 'insert';
+            if (operation && operation.kind === 'structure' && !STRUCT.test(group)) operation.kind = 'insert';
             var at = cells[3].textContent.trim().match(/^(.*?)\s*(?:\((start|end|after)\))?$/);
             if (!byKey[key]) { byKey[key] = { key: key, group: group, option: option, ops: [] }; choices.push(byKey[key]); }
-            byKey[key].ops.push({ op: op, target: at[1], pos: at[2] || 'end' });
-            if (op && op.kind === 'structure') byKey[key].structure = op.id;
+            byKey[key].ops.push({ op: operation, target: at[1], pos: at[2] || 'end' });
+            if (operation && operation.kind === 'structure') byKey[key].structure = operation.id;
         });
         return choices;
     }
@@ -330,8 +330,8 @@
         // A choice is enabled only when the element it changes is in the current markup ("Row" needs a group).
         // `(not: home)`: off while the structure marked `(id: home)` is chosen.
         function isExcluded(choice) {
-            var not = choice.option.match(/\(not:\s*([^)]*)\)/), sg = order.filter(function (group) { return STRUCT.test(group); })[0];
-            var id = not && sg && active[sg] && (active[sg].option.match(/\(id:\s*([\w-]+)\)/) || [])[1];
+            var not = choice.option.match(/\(not:\s*([^)]*)\)/), structureGroup = order.filter(function (group) { return STRUCT.test(group); })[0];
+            var id = not && structureGroup && active[structureGroup] && (active[structureGroup].option.match(/\(id:\s*([\w-]+)\)/) || [])[1];
             return !!id && not[1].split(/[\s,]+/).indexOf(id) >= 0;
         }
         // `(limit: 2 widgets)`: once that many chips sharing it are on, the others stay off.
@@ -339,14 +339,14 @@
         function isApplicable(choice) {
             if (choice.structure) return true;
             if (isExcluded(choice)) return false;
-            var lim = limitOf(choice);
-            if (lim && active[choice.group] !== choice && order.filter(function (group) { return active[group] && limitOf(active[group]) === lim; }).length >= parseInt(lim, 10)) return false;
+            var limit = limitOf(choice);
+            if (limit && active[choice.group] !== choice && order.filter(function (group) { return active[group] && limitOf(active[group]) === limit; }).length >= parseInt(limit, 10)) return false;
             // A `—` row with a target (a default that fits only some structures) is checked too.
-            var ops = choice.ops.filter(function (row) { return row.op || (row.target && row.target !== '—'); });
+            var operations = choice.ops.filter(function (row) { return row.op || (row.target && row.target !== '—'); });
             // Like the build, a descendant target never gates when the choice has a one-element target.
-            var own = ops.filter(function (row) { return !/[\s>+~]/.test((row.target || '').replace(/\([^)]*\)|\[[^\]]*\]/g, '')); });
-            if (own.length) ops = own;
-            return !ops.length || ops.some(function (row) {
+            var own = operations.filter(function (row) { return !/[\s>+~]/.test((row.target || '').replace(/\([^)]*\)|\[[^\]]*\]/g, '')); });
+            if (own.length) operations = own;
+            return !operations.length || operations.some(function (row) {
                 if (isJs(row.target)) return !!call && callMatches(call, row.target);
                 // A chosen `remove` row took its own target away: it stays on, so it can be turned off.
                 if (row.op && row.op.kind === 'remove' && active[choice.group] === choice) return true;
@@ -372,8 +372,8 @@
         var isPart = function (choice) { return !!choice && getPartIds(choice).length > 0; };
 
         function render() {
-            var sg = order.filter(function (group) { return STRUCT.test(group); })[0];
-            var struct = sg && active[sg] && active[sg].structure;
+            var structureGroup = order.filter(function (group) { return STRUCT.test(group); })[0];
+            var struct = structureGroup && active[structureGroup] && active[structureGroup].structure;
             var srcEl = struct ? document.getElementById(struct) : script;
             // A structure with no preview (a token pack of palette aliases) shows its code alone.
             var none = srcEl.getAttribute('data-preview') === 'none';
@@ -463,8 +463,8 @@
             NDS.init.mount(slot);
             if (script.getAttribute('data-preview') === 'js') new Function(js)();
             // The Validate and Reset buttons show only while the field has a rule that can fail.
-            var acts = preview.querySelector('[data-demo-actions]');
-            if (acts) acts.hidden = !slot.querySelector(RULES);
+            var actions = preview.querySelector('[data-demo-actions]');
+            if (actions) actions.hidden = !slot.querySelector(RULES);
             // A static stepper has no step to move, so Back and Next hide.
             var steps = preview.querySelector('[data-demo-steps]');
             if (steps) steps.hidden = !!slot.querySelector('.nds-stepper.nds-static');
@@ -527,8 +527,8 @@
             (on && choice.option.match(/\(demo:\s*\+\s*[^)]+\)/g) || []).forEach(function (marker) {
                 var id = marker.replace(/^\(demo:\s*\+\s*|\)$/g, '').trim();
                 Object.keys(byKey).forEach(function (key) {
-                    var oc = byKey[key], own = oc.option.match(/\(id:\s*([\w-]+)\)/);
-                    if (oc !== choice && own && own[1] === id) set(oc, true);
+                    var otherChoice = byKey[key], own = otherChoice.option.match(/\(id:\s*([\w-]+)\)/);
+                    if (otherChoice !== choice && own && own[1] === id) set(otherChoice, true);
                 });
             });
             render();
@@ -679,12 +679,12 @@
         // phone), and the card goes back to Desktop. With no device left, the buttons hide too.
         // Desktop names the device the reader is on: on a tablet it takes the Tablet button's name and
         // icon, and the Tablet button hides.
-        var desk = screens.length && [screens[0].getAttribute('aria-label'), screens[0].querySelector('i').className];
+        var desktopScreen = screens.length && [screens[0].getAttribute('aria-label'), screens[0].querySelector('i').className];
         if (screens.length) NDS.onElementResize(card, function () {
             if (!card.clientWidth) return;
             // A page preview scales every screen to fit, so none hides.
             if (card.hasAttribute('data-preview-page')) return function () { fit(card); };
-            var cs = getComputedStyle(card), room = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2 * BEZEL;
+            var computedStyle = getComputedStyle(card), room = card.clientWidth - parseFloat(computedStyle.paddingLeft) - parseFloat(computedStyle.paddingRight) - 2 * BEZEL;
             var tier = matchMedia(NDS.breakpoints.desktop).matches ? null : screens[matchMedia(NDS.breakpoints.tablet).matches ? 1 : 2];
             return function () {
                 var left = 0;
@@ -695,7 +695,7 @@
                     if (off && card.getAttribute('data-screen') === screenSize) screens[0].click();
                 });
                 screens[0].parentNode.hidden = !left;
-                var name = tier ? [tier.getAttribute('aria-label'), tier.querySelector('i').className] : desk, desktopButton = screens[0];
+                var name = tier ? [tier.getAttribute('aria-label'), tier.querySelector('i').className] : desktopScreen, desktopButton = screens[0];
                 desktopButton.setAttribute('aria-label', name[0]);
                 desktopButton.setAttribute('data-tooltip-message', name[0]);
                 desktopButton.querySelector('i').className = name[1];
@@ -713,9 +713,9 @@
     // A JS-only structure previews as a Run button that runs the code shown: the page's own canon,
     // never user input. In a screen it runs in the screen's window, so a toast floats over the screen.
     var RUN = '<button type="button" class="nds-btn nds-primary nds-md" data-run-js><span class="nds-label">Run</span></button>';
-    function runButton(root, code, win) {
+    function runButton(root, code, runWindow) {
         var button = root.querySelector('[data-run-js]');
-        if (button) button.addEventListener('click', function () { new win.Function(code)(); });
+        if (button) button.addEventListener('click', function () { new runWindow.Function(code)(); });
     }
     function renderFrame(card) {
         // A plain card shows its canon as written; a builder's render keeps ndsOut current.
@@ -725,33 +725,33 @@
         // data-preview="js": the screen runs the JS tab too, in its own window.
         if (card.ndsJs == null) card.ndsJs = canon.getAttribute('data-preview') === 'js' ? dedent(document.getElementById(canon.getAttribute('data-js')).textContent) : '';
         var run = function (targetWindow) { if (card.ndsJs) new targetWindow.Function(card.ndsJs)(); };
-        var screenSize = card.getAttribute('data-screen'), dev = card.querySelector('.nds-doc-device'), iframe = dev && dev.firstChild;
-        if (!screenSize) { if (dev) dev.remove(); return; }
+        var screenSize = card.getAttribute('data-screen'), device = card.querySelector('.nds-doc-device'), iframe = device && device.firstChild;
+        if (!screenSize) { if (device) device.remove(); return; }
         // The card's dark goes on the frame's body, so the harness around the markup goes dark too.
         var setTheme = function (frameDocument) { var cardTheme = card.getAttribute('data-theme'); cardTheme ? frameDocument.body.setAttribute('data-theme', cardTheme) : frameDocument.body.removeAttribute('data-theme'); };
-        var win = iframe && iframe.ndsSize === screenSize && iframe.contentWindow, slot = win && win.NDS && iframe.contentDocument.querySelector('[data-demo-slot]');
+        var runWindow = iframe && iframe.ndsSize === screenSize && iframe.contentWindow, slot = runWindow && runWindow.NDS && iframe.contentDocument.querySelector('[data-demo-slot]');
         // The screen is up: re-render its slot in place, with no reload.
         if (slot) {
-            win.NDS.init.destroy(slot);
+            runWindow.NDS.init.destroy(slot);
             slot.innerHTML = card.ndsOut;
-            win.NDS.init.mount(slot);
-            run(win);
-            runButton(slot, card.ndsRunJs, win);
+            runWindow.NDS.init.mount(slot);
+            run(runWindow);
+            runButton(slot, card.ndsRunJs, runWindow);
             setTheme(iframe.contentDocument);
             return;
         }
-        if (!dev) {
-            dev = document.createElement('div');
-            dev.className = 'nds-doc-device';
+        if (!device) {
+            device = document.createElement('div');
+            device.className = 'nds-doc-device';
             iframe = document.createElement('iframe');
             iframe.className = 'nds-doc-screen';
             iframe.title = 'Preview';
-            dev.appendChild(iframe);
-            card.appendChild(dev);
+            device.appendChild(iframe);
+            card.appendChild(device);
         }
         iframe.ndsSize = screenSize;
         var size = screenSize.split('x');
-        dev.style.cssText = 'width:' + (+size[0] + 2 * BEZEL) + 'px;height:' + (+size[1] + 2 * BEZEL) + 'px;border-radius:' + RADIUS + 'px';
+        device.style.cssText = 'width:' + (+size[0] + 2 * BEZEL) + 'px;height:' + (+size[1] + 2 * BEZEL) + 'px;border-radius:' + RADIUS + 'px';
         iframe.style.cssText = 'top:' + BEZEL + 'px;left:' + BEZEL + 'px;width:' + size[0] + 'px;height:' + size[1] + 'px;border-radius:' + (RADIUS - BEZEL) + 'px';
         // Hidden until it loads, so it never shows a blank screen.
         iframe.style.visibility = 'hidden';
@@ -776,8 +776,8 @@
             iframe.style.visibility = '';
         };
         // The body lays the demo out as the card does, over the whole screen: a longer demo scrolls in it.
-        var cs = getComputedStyle(card), lay = ['display', 'flex-direction', 'flex-wrap', 'align-items', 'justify-content', 'gap']
-            .map(function (property) { return property + ':' + cs.getPropertyValue(property); }).join(';');
+        var computedStyle = getComputedStyle(card), lay = ['display', 'flex-direction', 'flex-wrap', 'align-items', 'justify-content', 'gap']
+            .map(function (property) { return property + ':' + computedStyle.getPropertyValue(property); }).join(';');
         // The template's own page gutter, so a screen is as wide as a real page at that size.
         // data-preview-flush: the markup brings its own padding (a section), so it meets the screen edges.
         var pad = document.getElementById(card.getAttribute('data-preview-of')).hasAttribute('data-preview-flush') ? '0' : 'var(--nds-viewport-padding)';
@@ -818,11 +818,11 @@
     // "fit" sizes it to the content of each render, and follows the content as it grows.
     var PAGE = '1280x800';
     function renderPageFrame(card) {
-        var dev = card.querySelector('.nds-doc-device');
-        if (!dev) {
-            dev = document.createElement('div');
-            dev.className = 'nds-doc-device';
-            card.appendChild(dev);
+        var device = card.querySelector('.nds-doc-device');
+        if (!device) {
+            device = document.createElement('div');
+            device.className = 'nds-doc-device';
+            card.appendChild(device);
         }
         var pageDocument = new DOMParser().parseFromString(card.ndsOut, 'text/html');
         // Only a whole <body> loses them: a part canon (the footer) is the part itself.
@@ -837,13 +837,13 @@
             // data-preview-light: drop the site's dark (the copied head script restores it), so a dark area shows on a light page.
             var root = iframe.contentDocument.documentElement;
             if (canon.hasAttribute('data-preview-light') && !dark) root.setAttribute('data-theme', (root.getAttribute('data-theme') || '').replace(/(^|\s)dark(?=\s|$)/g, '').trim());
-            dev.querySelectorAll('iframe').forEach(function (x) { if (x !== iframe) x.remove(); });
+            device.querySelectorAll('iframe').forEach(function (x) { if (x !== iframe) x.remove(); });
             iframe.style.visibility = '';
             fit(card);
             var top = iframe.contentDocument.body && iframe.contentDocument.body.firstElementChild;
             if (top && canon.getAttribute('data-preview-height') === 'fit') new iframe.contentWindow.ResizeObserver(function () { fit(card); }).observe(top);
         };
-        dev.appendChild(iframe);
+        device.appendChild(iframe);
         fit(card);
         // A light frame without screen buttons watches the card's width itself.
         if (canon.hasAttribute('data-preview-light') && !card.querySelector('[data-preview-screen]') && !card.ndsFitWatch) card.ndsFitWatch = NDS.onElementResize(card, function () { return function () { fit(card); }; });
@@ -854,32 +854,32 @@
             (document.getElementById(card.getAttribute('data-preview-of')).getAttribute('data-preview-style') || '') + '</style></head>' + pageDocument.body.outerHTML.replace(/<\/body>$/, getRuntimeScripts() + '</body>') + '</html>';
     }
     function fit(card) {
-        var dev = card.querySelector('.nds-doc-device');
-        if (!dev) return;
+        var device = card.querySelector('.nds-doc-device');
+        if (!device) return;
         // Desktop is the reader's own screen: a plain frame, no device around it.
-        var desk = !card.getAttribute('data-screen'), bezel = desk ? 0 : BEZEL;
+        var isDesktop = !card.getAttribute('data-screen'), bezel = isDesktop ? 0 : BEZEL;
         var size = (card.getAttribute('data-screen') || PAGE).split('x'), width = +size[0], height = +size[1];
-        var cs = getComputedStyle(card), room = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2 * bezel;
+        var computedStyle = getComputedStyle(card), room = card.clientWidth - parseFloat(computedStyle.paddingLeft) - parseFloat(computedStyle.paddingRight) - 2 * bezel;
         var canon = document.getElementById(card.getAttribute('data-preview-of'));
-        if (desk) height = +canon.getAttribute('data-preview-height') || height;
-        if (desk && canon.getAttribute('data-preview-height') === 'fit') height = getContentHeight(dev, width) || height;
+        if (isDesktop) height = +canon.getAttribute('data-preview-height') || height;
+        if (isDesktop && canon.getAttribute('data-preview-height') === 'fit') height = getContentHeight(device, width) || height;
         // data-preview-light: the frame takes the card's width and its content's height, like a plain preview.
-        if (desk && canon.hasAttribute('data-preview-light')) { width = room; height = getContentHeight(dev, width) || height; }
+        if (isDesktop && canon.hasAttribute('data-preview-light')) { width = room; height = getContentHeight(device, width) || height; }
         var scale = Math.min(1, room / width);
-        dev.style.cssText = 'width:' + (width * scale + 2 * bezel) + 'px;height:' + (height * scale + 2 * bezel) + 'px;' +
-            (desk ? 'background:none;box-shadow:none' : 'border-radius:' + RADIUS + 'px');
-        dev.querySelectorAll('iframe').forEach(function (iframe) {
+        device.style.cssText = 'width:' + (width * scale + 2 * bezel) + 'px;height:' + (height * scale + 2 * bezel) + 'px;' +
+            (isDesktop ? 'background:none;box-shadow:none' : 'border-radius:' + RADIUS + 'px');
+        device.querySelectorAll('iframe').forEach(function (iframe) {
             iframe.style.top = iframe.style.left = bezel + 'px';
             iframe.style.width = width + 'px';
             iframe.style.height = height + 'px';
-            iframe.style.borderRadius = desk ? '' : (RADIUS - BEZEL) / scale + 'px';
+            iframe.style.borderRadius = isDesktop ? '' : (RADIUS - BEZEL) / scale + 'px';
             iframe.style.transform = 'scale(' + scale + ')';
             iframe.style.transformOrigin = '0 0';
         });
     }
     // The loaded frame's content height at width w; 0 before it loads.
-    function getContentHeight(dev, width) {
-        var iframe = dev.querySelector('iframe:last-of-type'), frameDocument = iframe && iframe.contentDocument, top = frameDocument && frameDocument.body && frameDocument.body.firstElementChild;
+    function getContentHeight(device, width) {
+        var iframe = device.querySelector('iframe:last-of-type'), frameDocument = iframe && iframe.contentDocument, top = frameDocument && frameDocument.body && frameDocument.body.firstElementChild;
         if (!top) return 0;
         iframe.style.width = width + 'px';
         return Math.ceil(top.getBoundingClientRect().bottom + parseFloat(frameDocument.defaultView.getComputedStyle(frameDocument.body).paddingBottom));
@@ -890,8 +890,8 @@
     // data-preview="run": Run mounts a copy of the code shown in the card's held box, where it can
     // leave the card (a FAB docks at the screen edge). Each copy's ids get its own suffix, so each
     // keeps its own panel. Clear takes every copy away.
-    function fillRun(card, box, win) {
-        var frameNds = (win || window).NDS;
+    function fillRun(card, box, runWindow) {
+        var frameNds = (runWindow || window).NDS;
         frameNds.init.destroy(box);
         box.innerHTML = card.ndsRunCode || dedent(document.getElementById(card.getAttribute('data-preview-of')).textContent);
         box.querySelectorAll('[id]').forEach(function (el) {
@@ -905,17 +905,17 @@
     var runs = 0;
     // The bar's held box is its next sibling, on the page and in a screen's copy. A screen's copies
     // mount in its own window; only the page's last copy is rebuilt on a choice.
-    function addRunListeners(card, bar, win) {
-        var held = bar.nextElementSibling, page = win === window;
+    function addRunListeners(card, bar, runWindow) {
+        var held = bar.nextElementSibling, page = runWindow === window;
         bar.querySelector('[data-run]').addEventListener('click', function () {
             var box = held.ownerDocument.createElement('div');
             box.ndsRun = ++runs;
             held.appendChild(box);
             if (page) card.ndsLastRun = box;
-            fillRun(card, box, win);
+            fillRun(card, box, runWindow);
         });
         bar.querySelector('[data-run-clear]').addEventListener('click', function () {
-            win.NDS.init.destroy(held);
+            runWindow.NDS.init.destroy(held);
             held.innerHTML = '';
             if (page) card.ndsLastRun = null;
         });

@@ -38,15 +38,15 @@
     // ponytail: built for Saudi Arabia's two calendars, gregory and hijri; any other calendar when a site asks.
     NDS.Date = (() => {
         const TOKENS = /YYYY|YY|MMMM|MM|M|DD|D/g;
-        const fmts = new Map();
-        const regs = new Map();
+        const formatters = new Map();
+        const parsers = new Map();
         const warned = new Set();
         const warnOnce = (message) => { if (!warned.has(message)) { warned.add(message); console.warn('[NDS.Date] ' + message); } };
         // An Intl.DateTimeFormat costs ICU init; format() on a built one is cheap.
         const getDateFormatter = (locale, opts) => {
             const key = locale + JSON.stringify(opts);
-            let formatter = fmts.get(key);
-            if (!formatter) fmts.set(key, formatter = new Intl.DateTimeFormat(locale, opts));
+            let formatter = formatters.get(key);
+            if (!formatter) formatters.set(key, formatter = new Intl.DateTimeFormat(locale, opts));
             return formatter;
         };
         const toIntlCalendar = (calendar) => (calendar === 'hijri' ? 'islamic-umalqura' : calendar || 'gregory');
@@ -89,10 +89,10 @@
         }
 
         function readTimeZone() {
-            const tz = document.documentElement.dataset.timezone;
-            if (!tz) return undefined;
-            try { getDateFormatter('en', { timeZone: tz }); return tz; }
-            catch { warnOnce(`data-timezone "${tz}" is not a timezone; using the visitor's`); return undefined; }
+            const timeZone = document.documentElement.dataset.timezone;
+            if (!timeZone) return undefined;
+            try { getDateFormatter('en', { timeZone: timeZone }); return timeZone; }
+            catch { warnOnce(`data-timezone "${timeZone}" is not a timezone; using the visitor's`); return undefined; }
         }
 
         // The nearest data-date-format wins, like a dark area; <html> holds the site's.
@@ -126,17 +126,17 @@
 
             // Today in the site's timezone (the visitor's when unset), as a local day.
             getToday() {
-                const tz = readTimeZone();
-                if (!tz) { const now = new Date(); return new Date(now.getFullYear(), now.getMonth(), now.getDate()); }
-                const parts = getDayParts(getDateFormatter('en', { timeZone: tz, numberingSystem: 'latn', year: 'numeric', month: 'numeric', day: 'numeric' }), new Date());
+                const timeZone = readTimeZone();
+                if (!timeZone) { const now = new Date(); return new Date(now.getFullYear(), now.getMonth(), now.getDate()); }
+                const parts = getDayParts(getDateFormatter('en', { timeZone: timeZone, numberingSystem: 'latn', year: 'numeric', month: 'numeric', day: 'numeric' }), new Date());
                 return new Date(parts.y, parts.m - 1, parts.d);
             },
 
             // The caller names the format: 03/04/2026 is ambiguous, so nothing is guessed.
             parse(text, opts = {}) {
                 const format = opts.format || getSiteFormat();
-                let re = regs.get(format);
-                if (!re) {
+                let parser = parsers.get(format);
+                if (!parser) {
                     const order = [];
                     const src = format.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(TOKENS, (token) => {
                         order.push(token);
@@ -144,14 +144,14 @@
                         if (token === 'MMMM') return '(?!)';
                         return token === 'YYYY' ? '(\\d{4})' : token.length === 2 ? '(\\d{2})' : '(\\d{1,2})';
                     });
-                    regs.set(format, re = { rx: new RegExp('^' + src + '$'), order });
+                    parsers.set(format, parser = { rx: new RegExp('^' + src + '$'), order });
                 }
                 // Arabic digits to ASCII, and the bidi marks Intl writes in Arabic out.
                 const normalized = NDS.toLatinDigits(text).replace(/[\u200e\u200f\u061c]/g, '').trim();
-                const match = normalized.match(re.rx);
+                const match = normalized.match(parser.rx);
                 if (!match) return null;
                 let y = null, month = 1, day = 1;
-                re.order.forEach((token, i) => {
+                parser.order.forEach((token, i) => {
                     const value = +match[i + 1];
                     if (token[0] === 'Y') y = token === 'YY' ? 2000 + value : value; // ponytail: YY reads 20xx; add a year window if 19xx/21xx dates need it
                     else if (token[0] === 'M') month = value;
@@ -193,7 +193,7 @@
     })();
 
     // ── <time> text ──────────────────────────────────────────────────
-    const SEL = 'time[datetime][data-date-to], time[datetime][data-date-format]';
+    const SELECTOR = 'time[datetime][data-date-to], time[datetime][data-date-format]';
     const strings = NDS.i18n.getStrings('date', { hijri_era: 'AH' });
     const DATETIME = /^(\d{4})-(\d{2})-(\d{2})(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(Z|[+-]\d{2}:?\d{2})?)?$/;
 
@@ -209,17 +209,17 @@
         }
         const instant = new Date(text);
         if (isNaN(instant)) return null;
-        const tz = NDS.Date.site.timeZone;   // validated: a mistyped zone falls back, never throws
-        if (!tz) return new Date(instant.getFullYear(), instant.getMonth(), instant.getDate());
+        const timeZone = NDS.Date.site.timeZone;   // validated: a mistyped zone falls back, never throws
+        if (!timeZone) return new Date(instant.getFullYear(), instant.getMonth(), instant.getDate());
         const parts = {};
-        new Intl.DateTimeFormat('en', { timeZone: tz, year: 'numeric', month: 'numeric', day: 'numeric' })
+        new Intl.DateTimeFormat('en', { timeZone: timeZone, year: 'numeric', month: 'numeric', day: 'numeric' })
             .formatToParts(instant).forEach(x => { parts[x.type] = +x.value; });
         return new Date(parts.year, parts.month - 1, parts.day);
     }
 
     function fill(root = document) {
-        const elements = root.matches?.(SEL) ? [root] : [];
-        elements.push(...(root.querySelectorAll?.(SEL) || []));
+        const elements = root.matches?.(SELECTOR) ? [root] : [];
+        elements.push(...(root.querySelectorAll?.(SELECTOR) || []));
         for (const el of elements) {
             const hijri = el.dataset.dateTo === 'hijri';
             // A Gregorian <time> is written only in a format of its own: else it already reads right.

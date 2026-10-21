@@ -1,6 +1,6 @@
 # Naming: the underscore and internal function names
 
-Status: IN PROGRESS, step 5 of section 7. Design agreed 2026-10-20; PERSONA landed 2026-10-21.
+Status: DONE 2026-10-21 (steps 1–6); open items below. Design agreed 2026-10-20; PERSONA landed 2026-10-21.
 
 ## Progress (read this first)
 
@@ -18,6 +18,8 @@ Status: IN PROGRESS, step 5 of section 7. Design agreed 2026-10-20; PERSONA land
 | "no file reads another file's _ name" | Step 3: P12.12, each cross-file `_` given a home (below) |
 | "the WeakMap move" | Step 3: P12.14, data on elements and foreign objects in module WeakMaps/WeakSets (below) |
 | "public names follow entry 10" | Step 4: section 3's table, the born-in-v2 table, storage keys, `NDS_INIT_CONFIG`; 39 Migration rows (kind `storage` is new) |
+| (step 5, no commit) | Speed vs 1d19f39d: form keystroke faster, click and create() the same; a WeakMap read costs +0.15 ms per 2,000-item filter pass |
+| "the naming checks fail the release" | Step 6: both `--names` gaps closed (SHORT_OK + verify for an unknown short word; module names checked), 369 renames, `mkrelease.py` runs `check-js-rules` and `--names` |
 
 **Where the work list stands** (`node scripts/check-js-rules.mjs --names`, a count per rule on the last lines):
 32 findings, 79 to verify. P12.11 0; P12.12 0 (1 verify, read: Dropmenu's and Tooltip's `_unstamp` are each
@@ -49,7 +51,7 @@ the rules of section 2, a cross-file table so one meaning gets one name: `setupE
 `check-banners.mjs` matched `emitEvent(` (now `_dispatchEvent(`); JSD-19 matched `.valid` (now `._?valid`); the names
 check skipped the words of a `_` field (now checked); the rule files cite members (RULES-JSA/JSD/JSP/JSS).
 
-**Next session starts here: step 5, speed** (section 7), then step 6, the checks fail the release. Open from step 4:
+**The plan is done.** Open from step 4:
 - The nds-iq-eval scenarios S14 and S25 and the `fixtures/mini-root/_source` snapshot name old API (`updateRecords`,
   `populate`, `menuOf`): load the `nds-iq-eval` skill before touching them.
 - The v2 method renames listed in CHANGELOG's Migrating entry (`validateForm` → `validate`, `slideTo` → `goTo` …)
@@ -70,21 +72,10 @@ one record, the old clears and deletes kept where they were. Decisions made in r
 - `check-bundle-once.mjs` flakes about 1 run in 6, on HEAD's bundles too: ONCE sometimes settles at 51 listeners
   (document click 7, change 3) and TWICE at 48. Three readings instead of two did not help; the cause is open.
 
-**Also next: two gaps in `--names` P10.8** (found 2026-10-21, when the loader's `ns` passed step 3). Close both
-before step 6 makes the check fail the release:
-- **Longer short words go through a hand-written list.** Rule 8 allows only `el e i j x y fn opts btn`, but
-  `js-names.mjs` `local()` uses that list for single letters only; a longer name is flagged only when it is in
-  `ABBREV`, which was written by hand in 9d014bcb. Any abbreviation not in that list passes (`ns` did; it is in now).
-  Fix: a word of 2–4 letters that is not in `LOCAL_OK` becomes a verify line; a real English word passes on a
-  short allow list. Adding about 100 likely abbreviations to `ABBREV` as a test flagged about 380 declarations
-  (`sub` 26, `fc` 21, `secs` 16, `ref` 16, `cs` 11, `sw` 10, `dir` 10, `dm` 9, `toks` 8, `fd` 8, `dd` 8, `dlg` 7 …),
-  with platform words among them to read (`dx`/`dy`, `dir`, `ref`). Rename them like step 3: a map per batch,
-  `rename-bindings.mjs`.
-- **Module-scope names skip the short-word check** (`VariableDeclaration`, the `ctx.module` branch: case, acronym
-  and constant rules only). `nsToBundle` and `for (const b in bundleMap)` passed that way. Calling `local()` there
-  too adds 31 findings, mostly constants (`SEL`, `SWIPER_SEL`, `DOCS`). Entry 12 rule 8 itself cites `SEL`, so the
-  rules leave open whether a module constant takes whole words: decide it by the pick order (directives below), fix
-  rule 8's example or write the carve-out, then check module scope.
+**The two `--names` P10.8 gaps are closed** (step 6): a 2–4 letter word is in `LOCAL_OK`, `SHORT_OK` (a word, a
+platform name, a standard acronym) or `ABBREV` (a finding); any other is a verify line to file in one of them.
+Module names take whole words (PERSONA entry 12 rule 8 now says so; its examples are `INIT_ATTRIBUTE`, `SELECTOR`).
+`offs` stays a word: a list of entry 6's `offX` handles.
 
 **How a step is verified on this machine** (slow: Chrome launches time out in a row, rerun a failed one alone):
 - `bundle exec jekyll serve --port 4010 --destination tmp/site-4010 --no-watch` in the background (never :4002),

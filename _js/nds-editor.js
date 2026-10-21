@@ -183,7 +183,7 @@
     const phrasingTags = new Set(['BR', 'STRONG', 'EM', 'B', 'I', 'U', 'S', 'STRIKE', 'A', 'SPAN', 'IMG', 'CODE', 'SUP', 'SUB', 'SMALL', 'FONT', 'MARK']);
     // figure/figcaption ride along so captioned article images degrade to
     // img + caption paragraph instead of leaking bare caption text.
-    const CONTAINER_SEL = 'div, section, article, aside, header, footer, main, center, figure, figcaption';
+    const CONTAINER_SELECTOR = 'div, section, article, aside, header, footer, main, center, figure, figcaption';
 
     function unwrapElement(el) {
         while (el.firstChild) el.parentNode.insertBefore(el.firstChild, el);
@@ -285,13 +285,13 @@
         // enforcement strip the carrier element/attribute as usual.
         for (const el of Array.from(root.querySelectorAll('[style]'))) {
             if (isInNdsMarkup(el)) continue;
-            const st = el.style;
-            const deco = `${st.textDecoration} ${st.textDecorationLine}`;
+            const style = el.style;
+            const decoration = `${style.textDecoration} ${style.textDecorationLine}`;
             const wraps = [];
-            if (st.fontWeight === 'bold' || st.fontWeight === 'bolder' || parseInt(st.fontWeight, 10) >= 600) wraps.push('strong');
-            if (st.fontStyle === 'italic' || st.fontStyle === 'oblique') wraps.push('em');
-            if (deco.includes('underline')) wraps.push('u');
-            if (deco.includes('line-through')) wraps.push('s');
+            if (style.fontWeight === 'bold' || style.fontWeight === 'bolder' || parseInt(style.fontWeight, 10) >= 600) wraps.push('strong');
+            if (style.fontStyle === 'italic' || style.fontStyle === 'oblique') wraps.push('em');
+            if (decoration.includes('underline')) wraps.push('u');
+            if (decoration.includes('line-through')) wraps.push('s');
             let host = el;
             for (const tag of wraps) {
                 const wrapper = el.ownerDocument.createElement(tag);
@@ -313,7 +313,7 @@
         // so adjacent paragraphs don't merge into one blob when the container
         // is stripped; mixed ones unwrap generically and their block children
         // stand on their own.
-        for (const el of Array.from(root.querySelectorAll(CONTAINER_SEL)).reverse()) {
+        for (const el of Array.from(root.querySelectorAll(CONTAINER_SELECTOR)).reverse()) {
             if (isInNdsMarkup(el)) continue;
             let phrasingOnly = true;
             for (const child of el.children) {
@@ -377,7 +377,7 @@
             const isImg = el.tagName === 'IMG';
             const href = isAnchor ? cleanUrl(el.getAttribute('href') || '') : null;
             const external = isAnchor && el.getAttribute('target') === '_blank';
-            const noExt = isAnchor && el.hasAttribute('data-no-external');
+            const noExternal = isAnchor && el.hasAttribute('data-no-external');
             const src = isImg ? cleanUrl(el.getAttribute('src') || '') : null;
             const alt = isImg ? el.getAttribute('alt') : null;
             // Numeric width/height survive — the popover writes them, and
@@ -401,7 +401,7 @@
                     if (external) el.setAttribute('target', '_blank');
                     el.setAttribute('rel', 'noopener noreferrer');
                     // Author badge opt-out (NDS.Link honors it) survives.
-                    if (noExt) el.setAttribute('data-no-external', '');
+                    if (noExternal) el.setAttribute('data-no-external', '');
                 } else {
                     unwrapElement(el);
                 }
@@ -448,8 +448,8 @@
         const src = tag === 'IMG' ? cleanUrl(el.getAttribute('src') || '') : null;
         const knobs = [];
         for (let i = 0; i < el.style.length; i++) {
-            const prop = el.style.item(i);
-            if (prop.startsWith('--')) knobs.push([prop, el.style.getPropertyValue(prop)]);
+            const property = el.style.item(i);
+            if (property.startsWith('--')) knobs.push([property, el.style.getPropertyValue(property)]);
         }
         const kept = [];
         for (const attribute of Array.from(el.attributes)) {
@@ -531,7 +531,7 @@
         // separates inline runs is kept.
         for (const node of Array.from(root.childNodes)) {
             if (node.nodeType !== Node.TEXT_NODE || node.textContent.trim()) continue;
-            const isBlock = (sib) => !sib || (sib.nodeType === Node.ELEMENT_NODE && !inlineTags.has(sib.tagName));
+            const isBlock = (sibling) => !sibling || (sibling.nodeType === Node.ELEMENT_NODE && !inlineTags.has(sibling.tagName));
             if (isBlock(node.previousSibling) && isBlock(node.nextSibling)) node.remove();
         }
         // Dead-empty paragraphs (no children, no text — editing-split debris)
@@ -1109,8 +1109,8 @@
                 else if (e.target.closest('[data-editor-link-cancel]')) this._cancelLink();
             }, { signal });
             // Enter in either text field confirms.
-            linkMenu.querySelectorAll('[data-editor-link-text], [data-editor-link-url]').forEach(inp => {
-                inp.addEventListener('keydown', (e) => {
+            linkMenu.querySelectorAll('[data-editor-link-text], [data-editor-link-url]').forEach(input => {
+                input.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter') { e.preventDefault(); this._confirmLink(); }
                 }, { signal });
             });
@@ -1168,8 +1168,8 @@
                     if (urlInput && urlInput.value.startsWith('data:')) urlInput.value = 'https://';
                 }, { signal });
             }
-            imageMenu.querySelectorAll('[data-editor-image-url], [data-editor-image-alt], [data-editor-image-width], [data-editor-image-height]').forEach(inp => {
-                inp.addEventListener('keydown', (e) => {
+            imageMenu.querySelectorAll('[data-editor-image-url], [data-editor-image-alt], [data-editor-image-width], [data-editor-image-height]').forEach(input => {
+                input.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter') { e.preventDefault(); this._confirmImage(); }
                 }, { signal });
             });
@@ -1198,8 +1198,8 @@
             this.source.readOnly = readonly;
             if (this._toolbar) {
                 // Commands act on the visual view: off in source view too, as real disabled buttons.
-                const cmds = editable && !this._root.classList.contains('is-source');
-                this._toolbar.querySelectorAll('[data-cmd]').forEach(btn => { btn.disabled = !cmds; });
+                const commandsEnabled = editable && !this._root.classList.contains('is-source');
+                this._toolbar.querySelectorAll('[data-cmd]').forEach(btn => { btn.disabled = !commandsEnabled; });
                 const srcBtn = this._toolbar.querySelector('[data-source-toggle]');
                 if (srcBtn) srcBtn.disabled = disabled; // readonly may still view source
                 this._syncRemoveState(); // remove stays caret-gated, not blanket-enabled
@@ -1351,8 +1351,8 @@
                     this.source.setSelectionRange(carry.start, carry.end);
                     // Rough line-based scroll — enough to bring the selection into view.
                     const line = this.source.value.slice(0, carry.start).split('\n').length;
-                    const lh = parseFloat(getComputedStyle(this.source).lineHeight) || 24;
-                    this.source.scrollTop = Math.max(0, (line - 3) * lh);
+                    const lineHeight = parseFloat(getComputedStyle(this.source).lineHeight) || 24;
+                    this.source.scrollTop = Math.max(0, (line - 3) * lineHeight);
                 }
             } else {
                 // Sanitize whatever was typed in source view before it becomes visual DOM.
@@ -1400,12 +1400,12 @@
             pre.selectNodeContents(this._editable);
             pre.setEnd(range.startContainer, range.startOffset);
             const preText = normalizeText(pre.toString());
-            let occ = 0;
-            for (let i = preText.indexOf(needle); i !== -1; i = preText.indexOf(needle, i + 1)) occ++;
+            let occurrences = 0;
+            for (let i = preText.indexOf(needle); i !== -1; i = preText.indexOf(needle, i + 1)) occurrences++;
 
             const value = this.source.value;
             let index = -1, from = 0;
-            for (let step = 0; step <= occ; step++) {
+            for (let step = 0; step <= occurrences; step++) {
                 index = value.indexOf(needle, from);
                 if (index === -1) break;
                 from = index + 1;
@@ -1429,9 +1429,9 @@
             if (e.key !== 'Tab') { this._sourceTabEscape = false; return; }
             if (this._sourceTabEscape) { this._sourceTabEscape = false; return; }
             e.preventDefault();
-            const ta = this.source;
+            const textarea = this.source;
             const INDENT = '  ';
-            const { selectionStart: start, selectionEnd: end, value } = ta;
+            const { selectionStart: start, selectionEnd: end, value } = textarea;
             if (start === end && !e.shiftKey) {
                 document.execCommand('insertText', false, INDENT);
                 return;
@@ -1443,10 +1443,10 @@
                 ? block.replace(/^ {1,2}/gm, '')
                 : block.replace(/^/gm, INDENT);
             if (next === block) return;
-            ta.setSelectionRange(lineStart, end);
+            textarea.setSelectionRange(lineStart, end);
             document.execCommand('insertText', false, next);
             // Re-select the affected lines so repeated Tab/Shift+Tab flows.
-            ta.setSelectionRange(lineStart, lineStart + next.length);
+            textarea.setSelectionRange(lineStart, lineStart + next.length);
         }
 
         // ---------- Editing events ----------
@@ -1653,9 +1653,9 @@
             if (!this._editable.contains(range.startContainer)) return false;
             range.deleteContents();
             const blocky = Array.from(probe.children).some(child => !isInlineNode(child));
-            const frag = document.createDocumentFragment();
-            while (probe.firstChild) frag.appendChild(probe.firstChild);
-            const lastNode = frag.lastChild;
+            const fragment = document.createDocumentFragment();
+            while (probe.firstChild) fragment.appendChild(probe.firstChild);
+            const lastNode = fragment.lastChild;
             if (!lastNode) return false;
 
             // The caret's own top-level element — the split point for block
@@ -1668,18 +1668,18 @@
             const hasContent = (node) => node.textContent.trim() || node.querySelector('img, [class*="nds-"]');
             let landing = null; // block the caret should end up inside
             if (!blocky || !top) {
-                range.insertNode(frag);
+                range.insertNode(fragment);
             } else if (!/^(?:P|H[1-4])$/.test(top.tagName)) {
                 // Not a simple text block (a list, a table, a component shell) —
                 // land after it whole rather than splitting something structural.
-                top.after(frag);
+                top.after(fragment);
             } else {
                 // Split the caret's block so the pasted blocks sit between the
                 // halves instead of nesting inside a <p>.
                 const tail = range.cloneRange();
                 tail.setEnd(top, top.childNodes.length);
                 const tailContent = tail.extractContents();
-                top.after(frag);
+                top.after(fragment);
                 if (hasContent(tailContent)) {
                     const tailBlock = document.createElement(top.tagName.toLowerCase());
                     tailBlock.appendChild(tailContent);
@@ -1809,21 +1809,21 @@
             // The editable is the ceiling: a drag can escape the editing host,
             // and rooting above it would let outside text answer as an
             // endpoint.
-            const cac = range.commonAncestorContainer;
-            const inner = (cac.nodeType === Node.ELEMENT_NODE ? cac : cac.parentElement) || this._editable;
+            const commonAncestor = range.commonAncestorContainer;
+            const inner = (commonAncestor.nodeType === Node.ELEMENT_NODE ? commonAncestor : commonAncestor.parentElement) || this._editable;
             const scope = this._editable.contains(inner) ? inner : this._editable;
             const walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT);
             let first = null, last = null;
             for (let node = walker.nextNode(); node; node = walker.nextNode()) {
                 if (!range.intersectsNode(node)) continue;
-                const nr = document.createRange();
-                nr.selectNodeContents(node);
-                if (nr.compareBoundaryPoints(Range.START_TO_START, range) < 0) nr.setStart(range.startContainer, range.startOffset);
-                if (nr.compareBoundaryPoints(Range.END_TO_END, range) > 0) nr.setEnd(range.endContainer, range.endOffset);
+                const nodeRange = document.createRange();
+                nodeRange.selectNodeContents(node);
+                if (nodeRange.compareBoundaryPoints(Range.START_TO_START, range) < 0) nodeRange.setStart(range.startContainer, range.startOffset);
+                if (nodeRange.compareBoundaryPoints(Range.END_TO_END, range) > 0) nodeRange.setEnd(range.endContainer, range.endOffset);
                 // trim: a double-click word selection drags its trailing
                 // whitespace along — inter-part whitespace is inert, not a
                 // boundary crossing.
-                if (!nr.toString().trim().length) continue;
+                if (!nodeRange.toString().trim().length) continue;
                 if (!first) first = node;
                 last = node;
             }
@@ -1843,12 +1843,12 @@
                 return range.compareBoundaryPoints(Range.START_TO_START, elementRange) <= 0
                     && range.compareBoundaryPoints(Range.END_TO_END, elementRange) >= 0;
             };
-            const sr = this._findRegionRoot(first);
-            const er = this._findRegionRoot(last);
-            const startClips = sr && !containsWhole(sr);
-            const endClips = er && !containsWhole(er);
+            const startRegion = this._findRegionRoot(first);
+            const endRegion = this._findRegionRoot(last);
+            const startClips = startRegion && !containsWhole(startRegion);
+            const endClips = endRegion && !containsWhole(endRegion);
             if (!startClips && !endClips) return false;
-            if (sr === er) return this._findPart(first, sr) !== this._findPart(last, sr);
+            if (startRegion === endRegion) return this._findPart(first, startRegion) !== this._findPart(last, startRegion);
             return true;
         }
 
@@ -1876,22 +1876,22 @@
             const off = range.startOffset;
             if (node.nodeType === Node.TEXT_NODE
                 && (back ? off > 0 : off < node.textContent.length)) return null;
-            let sib = node.nodeType === Node.ELEMENT_NODE
+            let sibling = node.nodeType === Node.ELEMENT_NODE
                 ? (back ? node.childNodes[off - 1] : node.childNodes[off]) || null
                 : null;
             let current = node;
             while (true) {
-                while (sib) {
-                    if (sib.nodeType === Node.ELEMENT_NODE) {
-                        if (hasNdsClass(sib)) return sib;
-                        if (sib.tagName !== 'BR') return null;
-                    } else if (sib.nodeType === Node.TEXT_NODE && sib.textContent.trim()) {
+                while (sibling) {
+                    if (sibling.nodeType === Node.ELEMENT_NODE) {
+                        if (hasNdsClass(sibling)) return sibling;
+                        if (sibling.tagName !== 'BR') return null;
+                    } else if (sibling.nodeType === Node.TEXT_NODE && sibling.textContent.trim()) {
                         return null;
                     }
-                    sib = back ? sib.previousSibling : sib.nextSibling;
+                    sibling = back ? sibling.previousSibling : sibling.nextSibling;
                 }
                 if (!current || current === this._editable) return null;
-                sib = back ? current.previousSibling : current.nextSibling;
+                sibling = back ? current.previousSibling : current.nextSibling;
                 current = current.parentElement;
             }
         }
@@ -2015,8 +2015,8 @@
                 if (getComponentName(e) === 'NDS') return; // icon-only
                 const outer = elements.slice(i + 1);
                 const isPart = Array.from(e.classList).some(className =>
-                    className.startsWith('nds-') && outer.some(outerElement => Array.from(outerElement.classList).some(oc =>
-                        oc.startsWith('nds-') && className.startsWith(oc + '-'))));
+                    className.startsWith('nds-') && outer.some(outerElement => Array.from(outerElement.classList).some(outerClass =>
+                        outerClass.startsWith('nds-') && className.startsWith(outerClass + '-'))));
                 if (!isPart) levels.push(e);
             });
             return levels;
@@ -2070,11 +2070,11 @@
         // The remove command is caret-gated — live only when the caret sits
         // inside (or whole-selects) a component on an editable surface.
         _syncRemoveState() {
-            const rm = this._toolbar?.querySelector('[data-cmd="remove"]');
-            if (!rm) return;
+            const removeButton = this._toolbar?.querySelector('[data-cmd="remove"]');
+            if (!removeButton) return;
             const node = this._editable.getAttribute('contenteditable') === 'true' && !this._root.classList.contains('is-source')
                 ? this._getComponentCaretNode() : null;
-            rm.disabled = !(node && this._findRegionRoot(node));
+            removeButton.disabled = !(node && this._findRegionRoot(node));
         }
 
         // Enter inside a shell would SPLIT the caret's block — the browser

@@ -324,8 +324,8 @@
                 ready.then(() => { done = true; });
                 document.addEventListener('click', (e) => {
                     if (done) return;
-                    const dm = e.target.closest?.('.nds-dropmenu-trigger')?.closest('[data-filter-target]');
-                    if (dm && !dm.hasAttribute('data-nds-filter-initialized')) e.stopPropagation();
+                    const dropmenu = e.target.closest?.('.nds-dropmenu-trigger')?.closest('[data-filter-target]');
+                    if (dropmenu && !dropmenu.hasAttribute('data-nds-filter-initialized')) e.stopPropagation();
                 }, true);
             },
             eager: () => true,
@@ -446,7 +446,7 @@
             init: () => { const api = NDS.Accessibility; if (api && !api.__ndsStub && !api.isStarted) api.init(); },
         },
     ];
-    for (const c of components) c.init ||= () => NDS[c.name]?.init?.();
+    for (const component of components) component.init ||= () => NDS[component.name]?.init?.();
 
     // scheduler.yield() lets input/paint preempt between batches; the fallback channel
     // is allocated once per page so SPA reinits don't leak channels.
@@ -479,9 +479,9 @@
     // NDS_ASSETS_PATH names the assets/ folder, as core reads it for the language files.
     const assetPath = (() => {
         const scriptUrl = mainScript && mainScript.src ? new URL(mainScript.src, location.href) : null;
-        const ver = scriptUrl ? scriptUrl.search : '';
-        if (window.NDS_ASSETS_PATH) return { dir: window.NDS_ASSETS_PATH + 'js/', ver };
-        return { dir: scriptUrl ? scriptUrl.href.slice(0, scriptUrl.href.lastIndexOf('/') + 1) : '', ver };
+        const version = scriptUrl ? scriptUrl.search : '';
+        if (window.NDS_ASSETS_PATH) return { dir: window.NDS_ASSETS_PATH + 'js/', ver: version };
+        return { dir: scriptUrl ? scriptUrl.href.slice(0, scriptUrl.href.lastIndexOf('/') + 1) : '', ver: version };
     })();
     const getBundleUrl = (file) => assetPath.dir + file + assetPath.ver;
 
@@ -494,10 +494,10 @@
 
     // Trusted Types sink for script.src. A policy name the consumer did not allowlist
     // falls back to a plain string for their default policy.
-    let ttPolicy;
+    let trustedTypesPolicy;
     if (window.trustedTypes && trustedTypes.createPolicy) {
         try {
-            ttPolicy = trustedTypes.createPolicy('nds', { createScriptURL: (url) => url });
+            trustedTypesPolicy = trustedTypes.createPolicy('nds', { createScriptURL: (url) => url });
         } catch (e) { /* policy name not allowed — fall back to plain string */ }
     }
 
@@ -526,9 +526,9 @@
             }
             path = new URL(url, location.href).pathname;
         } catch (e) { return null; }
-        const dup = [...document.querySelectorAll('link[rel="stylesheet"]')]
+        const duplicate = [...document.querySelectorAll('link[rel="stylesheet"]')]
             .some((existing) => { try { return new URL(existing.href, location.href).pathname === path; } catch (e) { return false; } });
-        if (dup) return null;
+        if (duplicate) return null;
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = url;
@@ -557,7 +557,7 @@
         bundlePromises[name] = new Promise((resolve) => {
             const url = getBundleUrl(file);
             const script = document.createElement('script');
-            script.src = ttPolicy ? ttPolicy.createScriptURL(url) : url;
+            script.src = trustedTypesPolicy ? trustedTypesPolicy.createScriptURL(url) : url;
             script.fetchPriority = 'low';
             if (mainScript && mainScript.nonce) script.nonce = mainScript.nonce;
             script.onload = () => { failedBundles.delete(name); resolve(); };
@@ -579,19 +579,19 @@
         if (NDS[namespace]) continue;
         const bundle = bundleByNamespace[namespace];
         NDS[namespace] = new Proxy({ __ndsStub: true }, {
-            get(target, prop) {
-                if (prop === '__ndsStub') return true;
-                if (prop === 'then' || typeof prop === 'symbol') return undefined;
-                return (...args) => loadBundle(bundle).then(() => {
+            get(target, property) {
+                if (property === '__ndsStub') return true;
+                if (property === 'then' || typeof property === 'symbol') return undefined;
+                return (...callArguments) => loadBundle(bundle).then(() => {
                     const real = NDS[namespace];
-                    if (real && !real.__ndsStub && typeof real[prop] === 'function') {
-                        return real[prop](...args);
+                    if (real && !real.__ndsStub && typeof real[property] === 'function') {
+                        return real[property](...callArguments);
                     }
                     // Caller error (no such method) vs a bundle that never arrived.
                     if (real && !real.__ndsStub) {
-                        console.warn(`[NDS] ${namespace}.${String(prop)} is not a method of NDS.${namespace} — its surface: ${Object.keys(real).join(', ')}`);
+                        console.warn(`[NDS] ${namespace}.${String(property)} is not a method of NDS.${namespace} — its surface: ${Object.keys(real).join(', ')}`);
                     } else {
-                        console.warn(`[NDS] ${namespace}.${String(prop)}() unavailable — bundle '${bundle}' missing`);
+                        console.warn(`[NDS] ${namespace}.${String(property)}() unavailable — bundle '${bundle}' missing`);
                     }
                 });
             },
@@ -684,8 +684,8 @@
                 const swipers = [...document.querySelectorAll('.nds-swiper:not([data-nds-swiper-initialized], [data-swiper-preset])')];
                 // Every read before the first write: one style recalc, not one per swiper.
                 const knobs = swipers.map(swiper => {
-                    const cs = getComputedStyle(swiper);
-                    const readKnob = prop => parseInt(cs.getPropertyValue(prop)) || 0;
+                    const computedStyle = getComputedStyle(swiper);
+                    const readKnob = property => parseInt(computedStyle.getPropertyValue(property)) || 0;
                     return [readKnob(`--${tier}-slides`), readKnob('--peek')];
                 });
                 swipers.forEach((swiper, i) => {
@@ -859,8 +859,8 @@
 
     // window.NDS_INIT_CONFIG wins over the <html> data-attributes.
     const rootEl = document.documentElement;
-    const attrAutoInit = rootEl.getAttribute('data-nds-auto-init');
-    const attrDisableAll = rootEl.getAttribute('data-nds-disable-all');
+    const attributeAutoInit = rootEl.getAttribute('data-nds-auto-init');
+    const attributeDisableAll = rootEl.getAttribute('data-nds-disable-all');
     const initConfig = window.NDS_INIT_CONFIG || {};
 
     const config = {
@@ -868,8 +868,8 @@
         initBudgetMs: initConfig.initBudgetMs ?? 5,
         enableLogging: initConfig.enableLogging ?? false,
         enableTiming: initConfig.enableTiming ?? false,
-        autoInitialize: initConfig.autoInitialize ?? (attrAutoInit != null ? attrAutoInit !== 'false' : true),
-        disableAll: initConfig.disableAll ?? (attrDisableAll != null ? attrDisableAll === 'true' : false),
+        autoInitialize: initConfig.autoInitialize ?? (attributeAutoInit != null ? attributeAutoInit !== 'false' : true),
+        disableAll: initConfig.disableAll ?? (attributeDisableAll != null ? attributeDisableAll === 'true' : false),
     };
 
     NDS.loadBundle = loadBundle;

@@ -74,9 +74,9 @@
             // The spot the card pins at, the same with the classes on or off, so dropping them cannot flip the result.
             let top;
             if (window.matchMedia(NDS.breakpoints.desktop).matches) {
-                const cs = getComputedStyle(this._sideInfo);
+                const computedStyle = getComputedStyle(this._sideInfo);
                 // Beside the title pulls the card up with a transform: the pinned spot is top + that shift.
-                top = (parseFloat(cs.top) || 0) + (cs.transform === 'none' ? 0 : new DOMMatrix(cs.transform).m42);
+                top = (parseFloat(computedStyle.top) || 0) + (computedStyle.transform === 'none' ? 0 : new DOMMatrix(computedStyle.transform).m42);
             } else {
                 // The small-screen strip pins right under the main nav.
                 top = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nds-nav-height')) || 0;

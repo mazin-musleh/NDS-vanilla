@@ -101,30 +101,30 @@
     function parseClock(text) {
         const match = /^(\d{1,2}):(\d{2})(?::(\d{2}))?$/.exec(String(text || '').trim());
         if (!match) return null;
-        const hour = +match[1], mi = +match[2], second = match[3] ? +match[3] : 0;
-        if (hour > 23 || mi > 59 || second > 59) return null;
-        return hour * 3600 + mi * 60 + second;
+        const hour = +match[1], minute = +match[2], second = match[3] ? +match[3] : 0;
+        if (hour > 23 || minute > 59 || second > 59) return null;
+        return hour * 3600 + minute * 60 + second;
     }
 
-    const getParts = (secs) => ({
-        h24: Math.floor(secs / 3600),
-        m: Math.floor(secs / 60) % 60,
-        s: secs % 60
+    const getParts = (seconds) => ({
+        h24: Math.floor(seconds / 3600),
+        m: Math.floor(seconds / 60) % 60,
+        s: seconds % 60
     });
 
-    function formatClock(secs, hasSeconds) {
-        const clock = getParts(secs);
+    function formatClock(seconds, hasSeconds) {
+        const clock = getParts(seconds);
         return pad(clock.h24) + ':' + pad(clock.m) + (hasSeconds ? ':' + pad(clock.s) : '');
     }
 
     // The localized display string the visible input shows.
-    function formatDisplay(secs, format) {
-        const clock = getParts(secs);
-        const h12 = ((clock.h24 + 11) % 12) + 1;
-        const mer = strings.text(clock.h24 >= 12 ? 'pm' : 'am');
+    function formatDisplay(seconds, format) {
+        const clock = getParts(seconds);
+        const hour12 = ((clock.h24 + 11) % 12) + 1;
+        const meridiem = strings.text(clock.h24 >= 12 ? 'pm' : 'am');
         const map = {
-            HH: pad(clock.h24), H: String(clock.h24), hh: pad(h12), h: String(h12),
-            mm: pad(clock.m), ss: pad(clock.s), A: mer, a: mer.toLowerCase()
+            HH: pad(clock.h24), H: String(clock.h24), hh: pad(hour12), h: String(hour12),
+            mm: pad(clock.m), ss: pad(clock.s), A: meridiem, a: meridiem.toLowerCase()
         };
         return format.replace(FORMAT_TOKEN_REGEX, (token) => map[token]);
     }
@@ -153,26 +153,26 @@
     // Typed text → seconds since midnight, or null. Accepts either language's
     // meridiem and unpadded numbers.
     function parseTyped(text, format) {
-        const { re, order } = getParseConfig(format);
-        const match = re.exec(String(text || ''));
+        const { re: pattern, order } = getParseConfig(format);
+        const match = pattern.exec(String(text || ''));
         if (!match) return null;
 
-        let hour = 0, min = 0, sec = 0, mer = null, hour12 = false;
+        let hour = 0, min = 0, second = 0, meridiem = null, hour12 = false;
         order.forEach((token, i) => {
             const raw = match[i + 1];
             if (token === 'HH' || token === 'H') hour = +raw;
             else if (token === 'hh' || token === 'h') { hour = +raw; hour12 = true; }
             else if (token === 'mm') min = +raw;
-            else if (token === 'ss') sec = +raw;
-            else mer = raw;
+            else if (token === 'ss') second = +raw;
+            else meridiem = raw;
         });
 
         if (hour12) {
             if (hour < 1 || hour > 12) return null;
-            hour = (hour % 12) + (mer && isPm(mer) ? 12 : 0);
+            hour = (hour % 12) + (meridiem && isPm(meridiem) ? 12 : 0);
         } else if (hour > 23) return null;
-        if (min > 59 || sec > 59) return null;
-        return hour * 3600 + min * 60 + sec;
+        if (min > 59 || second > 59) return null;
+        return hour * 3600 + min * 60 + second;
     }
 
     // Any common way to write a time, whatever the field's format: "1430", "14.30", "2:30 PM",
@@ -182,13 +182,13 @@
         const match = LOOSE.exec(latin(text || '').trim());
         if (!match) return null;
         let hour = +match[1];
-        const min = +match[2], sec = match[3] ? +match[3] : 0;
+        const min = +match[2], second = match[3] ? +match[3] : 0;
         if (match[4]) {
             if (hour < 1 || hour > 12) return null;
             hour = (hour % 12) + (isPm(match[4]) ? 12 : 0);
         } else if (hour > 23) return null;
-        if (min > 59 || sec > 59) return null;
-        return hour * 3600 + min * 60 + sec;
+        if (min > 59 || second > 59) return null;
+        return hour * 3600 + min * 60 + second;
     }
 
     // What the field accepts — its own format, then any common form — so a paste, a typed
@@ -213,13 +213,13 @@
             else if (/\d/.test(latinText[index - 1])) closed.add(digits.length - 1);
         }
         // The last one: a typed "p" after a shown "AM" switches it.
-        const mer = meridiemKeys[[...latinText].reverse().find((char) => meridiemKeys[char])];
+        const meridiem = meridiemKeys[[...latinText].reverse().find((char) => meridiemKeys[char])];
         let out = '', i = 0;
         for (const piece of format.split(FORMAT_TOKEN_REGEX)) {
             if (!piece) continue;
             if (piece === 'A' || piece === 'a') {
-                if (!mer) break;
-                out += piece === 'a' ? strings.text(mer).toLowerCase() : strings.text(mer);
+                if (!meridiem) break;
+                out += piece === 'a' ? strings.text(meridiem).toLowerCase() : strings.text(meridiem);
             } else if (tokenPatterns[piece]) {
                 if (i >= digits.length) break;
                 const maxFirst = /^[Hh]/.test(piece) ? (hour12 ? 1 : 2) : 5;
@@ -238,8 +238,8 @@
     // Typing inside a shown value types over it, as a native time field does: the digit
     // replaces the one at the caret, the caret steps over separators, and a digit that
     // makes an impossible unit is refused, as at the end. Returns { value, caret } or null.
-    function getTypedOver(value, position, ch, format, hour12) {
-        ch = latin(ch);
+    function getTypedOver(value, position, character, format, hour12) {
+        character = latin(character);
         const kinds = format.match(/HH|H|hh|h|mm|ss/g) || [];
         let unitIndex = 0;
         // Digit runs are the units, in the format's order; a meridiem word is the meridiem.
@@ -250,28 +250,28 @@
         }));
         const i = runs.findIndex((candidate) => candidate.end > position);
         // Past the last unit: the same shaping as typing at the end.
-        if (i < 0) return { value: formatTyped(value + ch, format, hour12), caret: null };
+        if (i < 0) return { value: formatTyped(value + character, format, hour12), caret: null };
         const run = runs[i];
         const set = (text, caret) => ({ value: value.slice(0, run.start) + text + value.slice(run.end), caret });
-        if (meridiemKeys[ch]) {
-            const mer = runs.find((candidate) => candidate.kind === 'a');
-            if (!mer) return null;
-            const label = strings.text(meridiemKeys[ch]);
+        if (meridiemKeys[character]) {
+            const meridiemRun = runs.find((candidate) => candidate.kind === 'a');
+            if (!meridiemRun) return null;
+            const label = strings.text(meridiemKeys[character]);
             const text = format.split(FORMAT_TOKEN_REGEX).includes('a') ? label.toLowerCase() : label;
-            return { value: value.slice(0, mer.start) + text + value.slice(mer.end), caret: position };
+            return { value: value.slice(0, meridiemRun.start) + text + value.slice(meridiemRun.end), caret: position };
         }
         // A typed separator steps over the one at the caret; any other key is refused.
-        if (!/^\d$/.test(ch) || run.kind === 'a') return value[position] === ch ? { value, caret: position + 1 } : null;
+        if (!/^\d$/.test(character) || run.kind === 'a') return value[position] === character ? { value, caret: position + 1 } : null;
 
         const hour = run.kind === 'h';
         const isValid = (digits) => +digits >= (hour && hour12 ? 1 : 0) && +digits <= (hour ? (hour12 ? 12 : 23) : 59);
         const next = runs[i + 1] ? runs[i + 1].start : value.length;
         const offset = Math.max(0, position - run.start);
-        const text = run.text.slice(0, offset) + ch + run.text.slice(offset + 1);
+        const text = run.text.slice(0, offset) + character + run.text.slice(offset + 1);
         if (offset === 0 && run.text.length === 2 && !isValid(text)) {
             // No second digit can follow ("9" → "09"), or the old one can't: take the lowest that can ("29" → "20").
-            if (+ch > (hour ? (hour12 ? 1 : 2) : 5)) return set('0' + ch, next);
-            return set(ch + [...'0123456789'].find((digit) => isValid(ch + digit)), run.start + 1);
+            if (+character > (hour ? (hour12 ? 1 : 2) : 5)) return set('0' + character, next);
+            return set(character + [...'0123456789'].find((digit) => isValid(character + digit)), run.start + 1);
         }
         if (!isValid(text)) return null;
         return set(text, offset >= text.length - 1 ? next : run.start + offset + 1);
@@ -437,8 +437,8 @@
             input.addEventListener('input', (e) => {
                 // A pasted time in any common form commits at once, in the field's format.
                 if (e.inputType === 'insertFromPaste') {
-                    const secs = parseAny(input.value, this._format);
-                    if (secs !== null && this._isInBounds(secs, secs)) this._adopt(secs);
+                    const seconds = parseAny(input.value, this._format);
+                    if (seconds !== null && this._isInBounds(seconds, seconds)) this._adopt(seconds);
                     return;
                 }
                 if (e.inputType !== 'insertText' || e.isComposing || input.selectionEnd !== input.value.length) return;
@@ -450,8 +450,8 @@
                     || input.selectionEnd >= input.value.length) return;
                 e.preventDefault();
                 let value = input.value, caret = input.selectionStart;
-                for (const ch of e.data) {
-                    const result = getTypedOver(value, caret, ch, this._format, this._hour12);
+                for (const character of e.data) {
+                    const result = getTypedOver(value, caret, character, this._format, this._hour12);
                     if (!result) break;
                     value = result.value;
                     caret = result.caret ?? value.length;
@@ -554,10 +554,10 @@
 
         _removePanel() {
             Object.values(this._unitElements).forEach((el) => {
-                const fc = el && el.querySelector('.nds-form-control');
+                const formControl = el && el.querySelector('.nds-form-control');
                 // Each unit's dropmenu holds a document-level click listener, so
                 // it is destroyed before its wrapper is discarded.
-                if (fc) NDS.CustomSelect.destroy(fc);
+                if (formControl) NDS.CustomSelect.destroy(formControl);
             });
             this._unitElements = {};
             if (this.elements.panel) this.elements.panel.remove();
@@ -566,9 +566,9 @@
         }
 
         _getOptions(unit) {
-            const fc = this._unitElements[unit] && this._unitElements[unit].querySelector('.nds-form-control');
-            if (!fc) return [];
-            return fc.querySelectorAll('.nds-select-option');
+            const formControl = this._unitElements[unit] && this._unitElements[unit].querySelector('.nds-form-control');
+            if (!formControl) return [];
+            return formControl.querySelectorAll('.nds-select-option');
         }
 
         // Suppress the re-entrant commit path for the length of one write. Saves
@@ -619,9 +619,9 @@
         // Split the picks out of a 24h value. Used by the constructor's seed, by
         // setValue and by a typed edit — self-guarding, since every one of them
         // must suppress the change-event round trip its _syncInput would fire.
-        _adopt(secs) {
+        _adopt(seconds) {
             this._runQuietly(() => {
-                const clock = getParts(secs);
+                const clock = getParts(seconds);
                 this._picks.hour = String(this._hour12 ? ((clock.h24 + 11) % 12) + 1 : clock.h24);
                 this._picks.minute = String(clock.m);
                 this._picks.second = String(clock.s);
@@ -642,9 +642,9 @@
         // The one write path — a unit pick, a typed edit, setValue and clear all
         // funnel through it, so the panel, the input and the carrier cannot drift.
         _syncInput() {
-            const secs = this._getSeconds();
-            const display = secs === null ? '' : formatDisplay(secs, this._format);
-            const stable = secs === null ? '' : formatClock(secs, this._hasSeconds);
+            const seconds = this._getSeconds();
+            const display = seconds === null ? '' : formatDisplay(seconds, this._format);
+            const stable = seconds === null ? '' : formatClock(seconds, this._hasSeconds);
             const input = this.elements.input;
             const carrier = this.elements.carrier;
 
@@ -660,20 +660,20 @@
         _readTyped() {
             const raw = this.elements.input.value.trim();
             if (!raw) { this.clear(); return; }
-            const secs = parseAny(raw, this._format);
-            if (secs === null || !this._isInBounds(secs, secs)) { this._validateInput(); return; }
-            this._adopt(secs);
+            const seconds = parseAny(raw, this._format);
+            if (seconds === null || !this._isInBounds(seconds, seconds)) { this._validateInput(); return; }
+            this._adopt(seconds);
         }
 
         getValue() {
-            const secs = this._getSeconds();
-            return secs === null ? '' : formatClock(secs, this._hasSeconds);
+            const seconds = this._getSeconds();
+            return seconds === null ? '' : formatClock(seconds, this._hasSeconds);
         }
 
         setValue(value) {
-            const secs = parseClock(value);
-            if (secs === null || !this._isInBounds(secs, secs)) return false;
-            this._adopt(secs);
+            const seconds = parseClock(value);
+            if (seconds === null || !this._isInBounds(seconds, seconds)) return false;
+            this._adopt(seconds);
             return true;
         }
 
@@ -707,9 +707,9 @@
 
         // ---- bounds -----------------------------------------------------
 
-        _isInBounds(lo, hi) {
-            if (this._min !== null && hi < this._min) return false;
-            if (this._max !== null && lo > this._max) return false;
+        _isInBounds(low, high) {
+            if (this._min !== null && high < this._min) return false;
+            if (this._max !== null && low > this._max) return false;
             return true;
         }
 
@@ -732,8 +732,8 @@
                 const halves = this._hour12
                     ? (this._picks.meridiem === null ? ['am', 'pm'] : [this._picks.meridiem])
                     : [null];
-                return halves.some((mer) => {
-                    const hour24 = mer === null ? +value : (+value % 12) + (mer === 'pm' ? 12 : 0);
+                return halves.some((meridiem) => {
+                    const hour24 = meridiem === null ? +value : (+value % 12) + (meridiem === 'pm' ? 12 : 0);
                     return this._isInBounds(hour24 * 3600, hour24 * 3600 + 3599);
                 });
             }
@@ -741,8 +741,8 @@
             const pickedHour = this._getPickedHour();
             if (pickedHour === null) return true;              // nothing to narrow against yet
             if (unit === 'minute') {
-                const lo = pickedHour * 3600 + (+value) * 60;
-                return this._isInBounds(lo, lo + 59);
+                const low = pickedHour * 3600 + (+value) * 60;
+                return this._isInBounds(low, low + 59);
             }
             if (this._picks.minute === null) return true;
             const at = pickedHour * 3600 + (+this._picks.minute) * 60 + (+value);
@@ -793,15 +793,15 @@
         }
 
         _getValidationError(raw) {
-            const secs = parseAny(raw, this._format);
-            return secs === null ? strings.text('invalid', { format: this._format }) : this._getBoundsError(secs);
+            const seconds = parseAny(raw, this._format);
+            return seconds === null ? strings.text('invalid', { format: this._format }) : this._getBoundsError(seconds);
         }
 
-        _getBoundsError(secs) {
-            if (this._min !== null && secs < this._min) {
+        _getBoundsError(seconds) {
+            if (this._min !== null && seconds < this._min) {
                 return strings.text('before_min', { time: formatDisplay(this._min, this._format) });
             }
-            if (this._max !== null && secs > this._max) {
+            if (this._max !== null && seconds > this._max) {
                 return strings.text('after_max', { time: formatDisplay(this._max, this._format) });
             }
             return '';
@@ -911,10 +911,10 @@
                 // maxlength cuts a paste to two characters, so it is read here, whole.
                 box.addEventListener('paste', (e) => {
                     if (box.readOnly) return;
-                    const secs = parseLoose(e.clipboardData.getData('text'));
-                    if (secs === null) return;
+                    const seconds = parseLoose(e.clipboardData.getData('text'));
+                    if (seconds === null) return;
                     e.preventDefault();
-                    this._adopt(secs);
+                    this._adopt(seconds);
                     minute.focus();
                 }, { signal });
 
@@ -963,8 +963,8 @@
             }, { signal });
         }
 
-        _adopt(secs) {
-            const clock = getParts(secs);
+        _adopt(seconds) {
+            const clock = getParts(seconds);
             this._elements.hour.value = pad(clock.h24);
             this._elements.minute.value = pad(clock.m);
             this._sync(true);
@@ -973,15 +973,15 @@
         // The one write path: the boxes → the carrier and the validity stamp.
         _sync(silent) {
             const { container, hour, minute, carrier } = this._elements;
-            const secs = parseClock(hour.value + ':' + minute.value);
+            const seconds = parseClock(hour.value + ':' + minute.value);
             let message = '';
-            if ((hour.value || minute.value) && secs === null) message = strings.text('incomplete');
-            else if (secs !== null && this._min !== null && secs < this._min) message = strings.text('before_min', { time: formatClock(this._min) });
-            else if (secs !== null && this._max !== null && secs > this._max) message = strings.text('after_max', { time: formatClock(this._max) });
+            if ((hour.value || minute.value) && seconds === null) message = strings.text('incomplete');
+            else if (seconds !== null && this._min !== null && seconds < this._min) message = strings.text('before_min', { time: formatClock(this._min) });
+            else if (seconds !== null && this._max !== null && seconds > this._max) message = strings.text('after_max', { time: formatClock(this._max) });
 
             // Forms reads the hour box's stamp at submit; an out-of-range time never reaches the carrier.
             hour.setCustomValidity(message);
-            const value = secs === null || message ? '' : formatClock(secs);
+            const value = seconds === null || message ? '' : formatClock(seconds);
             if (value !== this._value) {
                 this._value = value;
                 if (carrier) NDS.setValue(carrier, value);
@@ -994,9 +994,9 @@
         getValue() { return this._value; }
 
         setValue(value) {
-            const secs = parseClock(value);
-            if (secs === null || !this._isInBounds(secs)) return false;
-            this._adopt(secs);
+            const seconds = parseClock(value);
+            if (seconds === null || !this._isInBounds(seconds)) return false;
+            this._adopt(seconds);
             return true;
         }
 
@@ -1007,8 +1007,8 @@
             return true;
         }
 
-        _isInBounds(secs) {
-            return (this._min === null || secs >= this._min) && (this._max === null || secs <= this._max);
+        _isInBounds(seconds) {
+            return (this._min === null || seconds >= this._min) && (this._max === null || seconds <= this._max);
         }
 
         destroy() {
@@ -1049,12 +1049,12 @@
         const el = findInput(input) || (input && input.closest ? input.closest('.nds-form-container')?.querySelector('.nds-time-input') : null);
         if (!el) return null;
         if (el.ndsTimePicker) return el.ndsTimePicker;
-        const fc = formControl || el.closest('.nds-form-control');
-        if (!fc) {
+        const resolvedFormControl = formControl || el.closest('.nds-form-control');
+        if (!resolvedFormControl) {
             console.warn('NDS TimePicker: .nds-form-control not found');
             return null;
         }
-        const instance = new NdsTimePicker(el, fc);
+        const instance = new NdsTimePicker(el, resolvedFormControl);
         if (!instance._valid) return null;
         el.ndsTimePicker = instance;
         return instance;

@@ -523,7 +523,7 @@ Use counts never decide. A meaning these four leave open is a new decision here,
 5. **A `data-*` hook** is kebab whole words. On the component's own element (its root, or a part its doc names) it is named for what it sets (`data-position` on `.nds-alert`). On any other element it starts with the component's name (`data-ipv-gallery` on an `<img>`). A hook that turns off a default starts with `no-` (`data-no-auto-close`).
 6. **A `data-state` or `data-status` token** is kebab and names a state, not an action: an adjective or past participle (`open`, `selected`, `loading`, `has-more`). One token per meaning across components.
 7. **An internal JS class** is `Nds{Name}`, PascalCase, with entry 9's name (`NdsTable`, `NdsIpv`); a class for a part adds the part (`NdsDatePickerCalendar`). An acronym is one word.
-8. **A module-level constant** is upper snake case when it is a primitive or frozen value that is never reassigned (`INIT_ATTR`, `SEL`); everything else is camelCase (functions, elements, `Map`, `WeakMap`, objects that change).
+8. **A module-level constant** is upper snake case when it is a primitive or frozen value that is never reassigned (`INIT_ATTRIBUTE`, `SELECTOR`), in whole words like every name (entry 10 rule 8); everything else is camelCase (functions, elements, `Map`, `WeakMap`, objects that change).
 9. **A true/false value**: a public property or method is `isX` / `hasX` (entry 10 rule 1); a latch is named for what it latched, as a past participle (`initDone`, `wired`; entry 5).
 10. **An event `detail` key** is camelCase whole words: the instance under the component's name (`detail.stepper`), a new value under `value`.
 

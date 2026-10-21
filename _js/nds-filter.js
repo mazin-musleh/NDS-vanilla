@@ -245,7 +245,7 @@
             // Per-filter-element AbortControllers, kept in the
             // filterAbortControllers map; tracked here so destroy()
             // can release them all in one sweep.
-            this._filterElementACs = new Set();
+            this._filterElementAbortControllers = new Set();
             // In-flight AJAX submission controller. Re-created per submit so a
             // newer Apply click aborts the prior request before it can replace
             // fresh results with stale ones.
@@ -450,9 +450,9 @@
         // Does this filter's own markup put anything in the form, under any key?
         // A range never does — two thumbs, no name, one encoded value between them.
         _filterReachesForm(filterName) {
-            const fd = this.filterInputs[filterName];
-            if (!fd || fd.type === 'range') return false;
-            return Array.from(fd.inputs || []).some(input => input.name);
+            const filterInput = this.filterInputs[filterName];
+            if (!filterInput || filterInput.type === 'range') return false;
+            return Array.from(filterInput.inputs || []).some(input => input.name);
         }
 
         /**
@@ -1331,13 +1331,13 @@
         // filters back, so a search, a chip or a sort never applies a tick nobody applied.
         _addMenuDraftListeners() {
             const { signal } = this.abortController;
-            this._targetRoots.forEach(dm => {
-                if (!dm.matches?.('.nds-dropmenu') || this._draftMenus.has(dm)) return;
-                this._draftMenus.add(dm);
-                dm.addEventListener('nds:dropmenu:opened', () => {
+            this._targetRoots.forEach(dropmenu => {
+                if (!dropmenu.matches?.('.nds-dropmenu') || this._draftMenus.has(dropmenu)) return;
+                this._draftMenus.add(dropmenu);
+                dropmenu.addEventListener('nds:dropmenu:opened', () => {
                     this._appliedFilters = structuredClone(this.criteria.filters);
                 }, { signal });
-                dm.addEventListener('nds:dropmenu:closed', () => {
+                dropmenu.addEventListener('nds:dropmenu:closed', () => {
                     const applied = this._appliedFilters;
                     this._appliedFilters = null;
                     if (applied && JSON.stringify(applied) !== JSON.stringify(this.criteria.filters)) this._restoreFilterInputs(applied);
@@ -1349,12 +1349,12 @@
         _restoreFilterInputs(applied) {
             this._resetFilterInputs();
             for (const [name, values] of Object.entries(applied)) {
-                const fd = this.filterInputs[name];
-                if (!fd || !values.length) continue;
-                if (fd.type === 'range') {
+                const filterInput = this.filterInputs[name];
+                if (!filterInput || !values.length) continue;
+                if (filterInput.type === 'range') {
                     this._setRangeFromUrl(name, values[0]);
                 } else {
-                    this._checkInputsForValues(fd, values.join(','));
+                    this._checkInputsForValues(filterInput, values.join(','));
                     this._syncFilterCriteria(name);
                 }
             }
@@ -1464,16 +1464,16 @@
             const { signal } = this.abortController;
             const dropmenus = new Set();
             this._deferredFilters.forEach(({ element }) => {
-                const dm = element.closest('.nds-dropmenu');
-                if (dm) dropmenus.add(dm);
+                const dropmenu = element.closest('.nds-dropmenu');
+                if (dropmenu) dropmenus.add(dropmenu);
             });
-            dropmenus.forEach(dm => {
+            dropmenus.forEach(dropmenu => {
                 // An authored delay wins; destroy() takes back only this one.
-                if (!dm.hasAttribute('data-delay')) {
-                    dm.setAttribute('data-delay', '500');
-                    (this._ownDelay ||= []).push(dm);
+                if (!dropmenu.hasAttribute('data-delay')) {
+                    dropmenu.setAttribute('data-delay', '500');
+                    (this._ownDelay ||= []).push(dropmenu);
                 }
-                dm.addEventListener('nds:dropmenu:prepare', () => this._buildDeferredFilters(), { signal });
+                dropmenu.addEventListener('nds:dropmenu:prepare', () => this._buildDeferredFilters(), { signal });
             });
         }
 
@@ -1772,7 +1772,7 @@
             filterAbortControllers.get(element)?.abort();
             const elementController = new AbortController();
             filterAbortControllers.set(element, elementController);
-            this._filterElementACs.add(element);
+            this._filterElementAbortControllers.add(element);
 
             inputs.forEach(input => {
                 boundInputs.add(input);
@@ -1825,7 +1825,7 @@
             filterAbortControllers.get(root)?.abort();
             const rootController = new AbortController();
             filterAbortControllers.set(root, rootController);
-            this._filterElementACs.add(root);
+            this._filterElementAbortControllers.add(root);
 
             const handleInput = () => {
                 this._syncRangeCriteria(filterName);
@@ -1932,39 +1932,39 @@
         // Read both thumbs into criteria. Empty (inactive) when the span covers the
         // full bounds; otherwise one "lo-hi" encoded string.
         _syncRangeCriteria(filterName) {
-            const fd = this.filterInputs[filterName];
-            if (!fd || fd.type !== 'range') return;
-            let lo, hi;
-            if (fd.single) {
+            const filterInput = this.filterInputs[filterName];
+            if (!filterInput || filterInput.type !== 'range') return;
+            let low, high;
+            if (filterInput.single) {
                 // "Up to": lo pinned to the floor, hi = the single thumb.
-                lo = fd.min;
-                hi = parseFloat(fd.maxInput.value);
-                if (isNaN(hi)) hi = fd.max;
+                low = filterInput.min;
+                high = parseFloat(filterInput.maxInput.value);
+                if (isNaN(high)) high = filterInput.max;
             } else {
-                lo = parseFloat(fd.minInput.value);
-                hi = parseFloat(fd.maxInput.value);
-                if (isNaN(lo)) lo = fd.min;
-                if (isNaN(hi)) hi = fd.max;
-                if (lo > hi) { const previousLow = lo; lo = hi; hi = previousLow; }
+                low = parseFloat(filterInput.minInput.value);
+                high = parseFloat(filterInput.maxInput.value);
+                if (isNaN(low)) low = filterInput.min;
+                if (isNaN(high)) high = filterInput.max;
+                if (low > high) { const previousLow = low; low = high; high = previousLow; }
             }
-            this.criteria.filters[filterName] = (lo <= fd.min && hi >= fd.max) ? [] : [lo + '-' + hi];
+            this.criteria.filters[filterName] = (low <= filterInput.min && high >= filterInput.max) ? [] : [low + '-' + high];
         }
 
         // Write both thumbs and repaint the slider fill. NDS.Slider is a soft
         // dependency — when absent the values still land on the inputs and the
         // slider paints from them on its own init.
-        _setRangeValues(filterName, lo, hi) {
-            const fd = this.filterInputs[filterName];
-            if (!fd || fd.type !== 'range') return;
-            if (fd.single) {
-                fd.maxInput.value = hi;          // single: only the cutoff thumb (lo is pinned)
+        _setRangeValues(filterName, low, high) {
+            const filterInput = this.filterInputs[filterName];
+            if (!filterInput || filterInput.type !== 'range') return;
+            if (filterInput.single) {
+                filterInput.maxInput.value = high;          // single: only the cutoff thumb (lo is pinned)
             } else {
-                fd.minInput.value = lo;
-                fd.maxInput.value = hi;
+                filterInput.minInput.value = low;
+                filterInput.maxInput.value = high;
             }
             // Soft dependency on NDS.Slider — same cross-bundle contract declared where
             // the slider is built; without it the thumbs keep their last paint.
-            if (NDS.Slider && NDS.Slider.reinit) NDS.Slider.reinit(fd.controlContainer);
+            if (NDS.Slider && NDS.Slider.reinit) NDS.Slider.reinit(filterInput.controlContainer);
             this._syncRangeCriteria(filterName);
         }
 
@@ -1976,59 +1976,59 @@
         }
 
         _setRangeFromUrl(filterName, raw) {
-            const fd = this.filterInputs[filterName];
-            if (!fd || fd.type !== 'range') return;
+            const filterInput = this.filterInputs[filterName];
+            if (!filterInput || filterInput.type !== 'range') return;
             const pair = this._parseEncodedRange(this._sanitizeFilterValue(raw));
             if (!pair) return;
-            let [lo, hi] = pair;
-            lo = Math.min(Math.max(lo, fd.min), fd.max);
-            hi = Math.min(Math.max(hi, fd.min), fd.max);
-            if (lo > hi) { const previousLow = lo; lo = hi; hi = previousLow; }
-            this._setRangeValues(filterName, lo, hi);
+            let [low, high] = pair;
+            low = Math.min(Math.max(low, filterInput.min), filterInput.max);
+            high = Math.min(Math.max(high, filterInput.min), filterInput.max);
+            if (low > high) { const previousLow = low; low = high; high = previousLow; }
+            this._setRangeValues(filterName, low, high);
         }
 
         _matchesRange(item, filterName, encoded) {
             const pair = this._parseEncodedRange(encoded);
             if (!pair) return true;
-            const [lo, hi] = pair;
+            const [low, high] = pair;
             const itemValues = itemCaches.get(item)?.values[filterName];
             if (!itemValues || !itemValues.length) return false;
             const value = parseFloat(itemValues[0]);
             if (isNaN(value)) return false;
-            return value >= lo && value <= hi;
+            return value >= low && value <= high;
         }
 
         // Build the chip label as nds-number-format nodes so a range chip renders
         // exactly like the card tags / slider outputs — currency icon (CSS ::after
         // on [data-currency]) + thousand separators (NDS.Numbers) — not a string.
         _buildRangeChipLabel(filterName, encoded) {
-            const fd = this.filterInputs[filterName];
+            const filterInput = this.filterInputs[filterName];
             // Same decoder the URL and matching paths use, so a negative floor
             // ("-20-15") splits at the delimiter rather than the leading sign.
             const pair = this._parseEncodedRange(encoded);
             if (!pair) return null;  // chip falls back to the raw encoded value
-            const frag = document.createDocumentFragment();
+            const fragment = document.createDocumentFragment();
             // Single ("up to") shows just the cutoff with a ≤ prefix; dual shows lo – hi.
-            if (fd && fd.single) {
-                const le = document.createElement('span');
-                le.textContent = '≤ ';
-                frag.appendChild(le);
-                frag.appendChild(this._buildRangeValueNode(String(pair[1]), fd));
-                return frag;
+            if (filterInput && filterInput.single) {
+                const lessOrEqualMark = document.createElement('span');
+                lessOrEqualMark.textContent = '≤ ';
+                fragment.appendChild(lessOrEqualMark);
+                fragment.appendChild(this._buildRangeValueNode(String(pair[1]), filterInput));
+                return fragment;
             }
-            frag.appendChild(this._buildRangeValueNode(String(pair[0]), fd));
-            const sep = document.createElement('span');
-            sep.textContent = ' – ';
-            frag.appendChild(sep);
-            frag.appendChild(this._buildRangeValueNode(String(pair[1]), fd));
-            return frag;
+            fragment.appendChild(this._buildRangeValueNode(String(pair[0]), filterInput));
+            const separator = document.createElement('span');
+            separator.textContent = ' – ';
+            fragment.appendChild(separator);
+            fragment.appendChild(this._buildRangeValueNode(String(pair[1]), filterInput));
+            return fragment;
         }
 
-        _buildRangeValueNode(value, fd) {
+        _buildRangeValueNode(value, filterInput) {
             const span = document.createElement('span');
             span.className = 'nds-number-format';
-            if (fd && fd.currency) span.setAttribute('data-currency', fd.currency);
-            if (fd && fd.unit) span.setAttribute('data-unit', fd.unit);
+            if (filterInput && filterInput.currency) span.setAttribute('data-currency', filterInput.currency);
+            if (filterInput && filterInput.unit) span.setAttribute('data-unit', filterInput.unit);
             span.textContent = value;
             // Soft dependency — range chips render unformatted if NDS.Numbers isn't bundled.
             if (NDS.Numbers && NDS.Numbers.format) NDS.Numbers.format(span);
@@ -2037,9 +2037,9 @@
 
         // Chip-remove / clear handler for a range filter: restore the full span.
         resetRangeFilter(filterName) {
-            const fd = this.filterInputs[filterName];
-            if (!fd || fd.type !== 'range') return;
-            this._setRangeValues(filterName, fd.min, fd.max);
+            const filterInput = this.filterInputs[filterName];
+            if (!filterInput || filterInput.type !== 'range') return;
+            this._setRangeValues(filterName, filterInput.min, filterInput.max);
             this._syncApplyButtonLabel();
             this._commitCriteriaChange();
         }
@@ -2948,12 +2948,12 @@
             // would leak one closure per filter element for the page lifetime.
             this._offDomAdds.forEach(off => off());
             this._offDomAdds.length = 0;
-            this._ownDelay?.forEach(dm => dm.removeAttribute('data-delay'));
-            this._filterElementACs.forEach(el => {
+            this._ownDelay?.forEach(dropmenu => dropmenu.removeAttribute('data-delay'));
+            this._filterElementAbortControllers.forEach(el => {
                 filterAbortControllers.get(el)?.abort();
                 filterAbortControllers.delete(el);
             });
-            this._filterElementACs.clear();
+            this._filterElementAbortControllers.clear();
             this.items.forEach(item => this._showItem(item));
             // Only release shared registry/backref state when THIS instance owns it.
             // A stale reference — destroyed, then re-inited on the same element —

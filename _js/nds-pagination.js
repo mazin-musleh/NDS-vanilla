@@ -131,8 +131,8 @@
     // a trigger click resolves to a page change (scroll jump + a no-op
     // :change event). Today only Dropmenu's stopPropagation hides that, which
     // the documented soft-dependency path (setupGeneratedPagination) doesn't get.
-    const PAGE_ITEM_SEL = '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next):not(.nds-pagination-ellipsis)';
-    const PAGE_CTRL_SEL = `${PAGE_ITEM_SEL} button, ${PAGE_ITEM_SEL} a`;
+    const PAGE_ITEM_SELECTOR = '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next):not(.nds-pagination-ellipsis)';
+    const PAGE_CONTROL_SELECTOR = `${PAGE_ITEM_SELECTOR} button, ${PAGE_ITEM_SELECTOR} a`;
 
     // The list element inside a nav, tolerating a bare .nds-pagination-list used
     // as the root. The manual/author paths resolve the list through here, so the
@@ -186,8 +186,8 @@
             // in exactly one place.
             reconcileCollapse(this._paginationNav);
             // A re-create after destroy() finds the ellipsis built but its menu torn down.
-            const dm = this._paginationNav.querySelector('.nds-pagination-ellipsis .nds-dropmenu');
-            if (dm) NDS.Dropmenu.create(dm);
+            const dropmenu = this._paginationNav.querySelector('.nds-pagination-ellipsis .nds-dropmenu');
+            if (dropmenu) NDS.Dropmenu.create(dropmenu);
         }
 
         destroy() {
@@ -219,7 +219,7 @@
             seen.add(pageNumber);
             model.push({ num: pageNumber, el, active: el.ariaCurrent === 'page' || NDS.state.has(el, 'active') });
         };
-        list.querySelectorAll(PAGE_CTRL_SEL).forEach(push);
+        list.querySelectorAll(PAGE_CONTROL_SELECTOR).forEach(push);
         getPaginationDropmenuItems(list).forEach(push);
         return model.sort((left, right) => left.num - right.num);
     }
@@ -284,9 +284,9 @@
         const model = capturePageModel(list);
         if (!model.length) return;
 
-        const sig = model.map(e => e.num).join(',');
-        if (collapseSignatures.get(nav) === sig) return; // unchanged set (incl. our own collapse) → loop guard
-        collapseSignatures.set(nav, sig);
+        const signature = model.map(e => e.num).join(',');
+        if (collapseSignatures.get(nav) === signature) return; // unchanged set (incl. our own collapse) → loop guard
+        collapseSignatures.set(nav, signature);
 
         // <=5 and already flat → leave the author's exact markup untouched.
         const isCollapsed = !!list.querySelector('.nds-pagination-ellipsis');
@@ -486,7 +486,7 @@
     // All clickable page elements (in-list buttons + dropmenu items).
     // Excludes prev/next.
     function getAllPageElements(pagination) {
-        const inList = Array.from(pagination.querySelectorAll(PAGE_CTRL_SEL));
+        const inList = Array.from(pagination.querySelectorAll(PAGE_CONTROL_SELECTOR));
         return [...inList, ...getPaginationDropmenuItems(pagination)];
     }
 
@@ -874,13 +874,13 @@
     // rebuild — never a consumer-facing attribute) BEFORE activateGeneratedPage,
     // which reads it. reconcileCollapse (author markup, eager menu) passes none.
     function setupGeneratedPagination(paginationNav, activePage, totalPages) {
-        const dm = paginationNav.querySelector('.nds-pagination-ellipsis .nds-dropmenu');
-        if (dm && totalPages > 5) {
-            const scroll = dm.querySelector('.nds-dropmenu-scroll');
+        const dropmenu = paginationNav.querySelector('.nds-pagination-ellipsis .nds-dropmenu');
+        if (dropmenu && totalPages > 5) {
+            const scroll = dropmenu.querySelector('.nds-dropmenu-scroll');
             if (scroll) lazyRanges.set(scroll, { from: 4, to: totalPages - 1 });
             addEllipsisLazyListeners();
         }
-        if (dm) NDS.Dropmenu.create(dm);
+        if (dropmenu) NDS.Dropmenu.create(dropmenu);
         activateGeneratedPage(paginationNav, activePage);
     }
 
@@ -1050,18 +1050,18 @@
         const active = list ? getCurrentPage(list) : from;
 
         scroll.innerHTML = ''; // rapid-toggle leftovers (see closed handler)
-        const win = {
+        const lazyWindow = {
             start: 0, end: 0, pitch: LAZY_ROW, active,
             url: toUrlFunction(nav && nav.getAttribute('data-page-url')),
         };
-        lazyWindows.set(scroll, win);
+        lazyWindows.set(scroll, lazyWindow);
 
         const center = Math.max(from, Math.min(active, to));
         const start = Math.max(from, center - LAZY_OVERSCAN);
         const end = Math.min(to, center + LAZY_OVERSCAN);
         renderLazyRows(scroll, start, end);
-        win.start = start;
-        win.end = end;
+        lazyWindow.start = start;
+        lazyWindow.end = end;
 
         // Jump input for large ranges — injected BEFORE syncPosition so the
         // menu is positioned/clamped with its real height.
@@ -1075,8 +1075,8 @@
         // True pitch (40 by CSS contract; measured to avoid a JS↔CSS constant).
         const row = scroll.querySelector('.nds-dropmenu-item');
         const pitch = (row && row.offsetHeight) || LAZY_ROW;
-        if (pitch !== win.pitch) {
-            win.pitch = pitch;
+        if (pitch !== lazyWindow.pitch) {
+            lazyWindow.pitch = pitch;
             renderLazyRows(scroll, start, end); // spacers were sized at the assumed pitch
         }
 
@@ -1150,16 +1150,16 @@
     // Re-window from scrollTop. Uniform pitch → index math is exact; SLACK keeps
     // row-by-row keyboard scrolling from re-rendering on every step.
     function shiftWindow(scroll) {
-        const win = lazyWindows.get(scroll), range = lazyRanges.get(scroll);
-        if (!win || !range || !scroll.isConnected) return;
-        const first = range.from + Math.floor(scroll.scrollTop / win.pitch);
-        const viewportRows = Math.ceil(scroll.clientHeight / win.pitch) || 1;
+        const lazyWindow = lazyWindows.get(scroll), range = lazyRanges.get(scroll);
+        if (!lazyWindow || !range || !scroll.isConnected) return;
+        const first = range.from + Math.floor(scroll.scrollTop / lazyWindow.pitch);
+        const viewportRows = Math.ceil(scroll.clientHeight / lazyWindow.pitch) || 1;
         const start = Math.max(range.from, first - LAZY_OVERSCAN);
         const end = Math.min(range.to, first + viewportRows + LAZY_OVERSCAN);
-        if (Math.abs(start - win.start) < LAZY_SLACK && Math.abs(end - win.end) < LAZY_SLACK) return;
+        if (Math.abs(start - lazyWindow.start) < LAZY_SLACK && Math.abs(end - lazyWindow.end) < LAZY_SLACK) return;
         renderLazyRows(scroll, start, end);
-        win.start = start;
-        win.end = end;
+        lazyWindow.start = start;
+        lazyWindow.end = end;
     }
 
     // Height via CSSOM, never a style attribute — a strict style-src blocks the
@@ -1194,19 +1194,19 @@
         });
 
         // 2. Fill the window's gaps around kept rows (rows are in page order).
-        let ri = 0;
-        while (ri < rows.length && readPageNumber(rows[ri]) < start) ri++; // retained focused row above the window
+        let rowIndex = 0;
+        while (rowIndex < rows.length && readPageNumber(rows[rowIndex]) < start) rowIndex++; // retained focused row above the window
         let chunk = '';
         for (let pageNumber = start; pageNumber <= end; pageNumber++) {
-            if (ri < rows.length && readPageNumber(rows[ri]) === pageNumber) {
-                if (chunk) { rows[ri].insertAdjacentHTML('beforebegin', chunk); chunk = ''; }
-                ri++;
+            if (rowIndex < rows.length && readPageNumber(rows[rowIndex]) === pageNumber) {
+                if (chunk) { rows[rowIndex].insertAdjacentHTML('beforebegin', chunk); chunk = ''; }
+                rowIndex++;
             } else {
                 chunk += buildMenuItem(pageNumber, active, url);
             }
         }
         if (chunk) {
-            if (ri < rows.length) rows[ri].insertAdjacentHTML('beforebegin', chunk);
+            if (rowIndex < rows.length) rows[rowIndex].insertAdjacentHTML('beforebegin', chunk);
             else scroll.insertAdjacentHTML('beforeend', chunk);
         }
 
@@ -1354,8 +1354,8 @@
         newPagination.addEventListener('click', (e) => {
             // Strip control, or an own-ellipsis row — same guard as
             // addManualNavClickListeners. The two are mutually exclusive:
-            // PAGE_ITEM_SEL excludes .nds-pagination-ellipsis.
-            const strip = e.target.closest(PAGE_CTRL_SEL);
+            // PAGE_ITEM_SELECTOR excludes .nds-pagination-ellipsis.
+            const strip = e.target.closest(PAGE_CONTROL_SELECTOR);
             const row = e.target.closest('.nds-dropmenu-item');
             const pageElement = strip ||
                 (row && newPagination.contains(row.closest('.nds-dropmenu')) ? row : null);
@@ -1412,8 +1412,8 @@
             const currentItems = getLiveItems();
             setAutoPagination(paginationNav, currentItems, currentPerPage);
             // innerHTML replace just created a fresh <ul> with no listener; re-wire.
-            const newPag = paginationNav.querySelector('.nds-pagination-list');
-            if (newPag) addAutoClickListeners(newPag, getLiveItems, currentPerPage);
+            const newPaginationList = paginationNav.querySelector('.nds-pagination-list');
+            if (newPaginationList) addAutoClickListeners(newPaginationList, getLiveItems, currentPerPage);
         }, 150)));
 
         // Release pooled ResizeObserver subscriptions when paged-content
@@ -1580,7 +1580,7 @@
             // the list element).
             const pagination = resolveList(paginationNav);
 
-            const pageElement = e.target.closest(PAGE_CTRL_SEL);
+            const pageElement = e.target.closest(PAGE_CONTROL_SELECTOR);
             // Own ellipsis only: the row's wrapper must sit in this list.
             const row = e.target.closest('.nds-dropmenu-item');
             const dropdownItem = row && pagination.contains(row.closest('.nds-dropmenu')) ? row : null;
