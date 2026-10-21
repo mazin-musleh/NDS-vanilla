@@ -19,6 +19,8 @@
  *   data-active-page (read at init; the script keeps it current on a data-driven nav)
  *   data-page-param · data-page-url · data-pagination-no-scroll
  *   data-per-page-param (picker: ?per-page=; the loader reads it at load, before the split)
+ *   data-per-page-default (picker: the size that drops ?per-page=; the loader writes it from
+ *                         data-select-value unless the server did)
  *   data-paged-count · data-paged-from · data-paged-to (record slots the component fills)
  *   data-paged-split (loader-stamped at init: items past --per-page, else 6, are hidden)
  * Gotchas:
@@ -941,7 +943,7 @@
     // The loader read ?per-page= at load; a pick of the size the HTML wrote drops it.
     function writePerPageParam(picker, value) {
         const attribute = picker.getAttribute('data-per-page-param');
-        if (attribute != null) writeParam(attribute || 'per-page', value === picker._ndsPerPageDefault ? null : value);
+        if (attribute != null) writeParam(attribute || 'per-page', value === picker.getAttribute('data-per-page-default') ? null : value);
     }
 
     // null deletes the param.

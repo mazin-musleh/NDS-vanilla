@@ -10,7 +10,8 @@
  *   NDS.Dropmenu.destroy(el)             tear one down before you discard its wrapper; undoes what opts wrote
  *   NDS.Dropmenu.from(el)                the wrapper that owns any element inside it
  *   NDS.Dropmenu.menuOf(dropmenu)        the wrapper's menu
- *   instance.open() / .close() / .toggle()
+ *   instance.open() / .close() / .toggle(event?)   a click event anchors the menu under the
+ *                                        pointer when the wrapper has data-anchor-cursor
  *   instance.applyPosition()             place the open menu again
  *   instance.applySelection(item)        pick an item in a select-mode picker
  *   instance.isOpen / .trigger / .dropmenu   read-only state; dropmenu is the wrapper
@@ -541,18 +542,7 @@
                 this.trigger.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    // Cursor anchoring is opt-in via `data-anchor-cursor`: when
-                    // set, stash the click x so applyPosition() anchors the menu
-                    // under the cursor (useful for wide triggers). Default — and
-                    // keyboard / programmatic opens — fall back to trigger-center.
-                    // Cleared in close(). no-click consumers opt in by stashing
-                    // instance._lastClickX themselves before toggle()/open() —
-                    // see date-picker.
-                    this._lastClickX = (this.dropmenu.hasAttribute('data-anchor-cursor')
-                        && typeof e.clientX === 'number' && e.clientX > 0)
-                        ? e.clientX
-                        : null;
-                    this.toggle();
+                    this.toggle(e);
                 }, { signal });
             }
 
@@ -754,11 +744,15 @@
         // OPEN / CLOSE / TOGGLE
         // ==============================================
 
-        toggle() {
+        toggle(event) {
             // A second click during a delayed first-open aborts it rather than
             // being swallowed by open()'s _delaying guard.
             if (this._cancelDelayedOpen()) return;
-            this.isOpen ? this.close() : this.open();
+            if (this.isOpen) return this.close();
+            // data-anchor-cursor: a click opens the menu under the pointer (wide triggers);
+            // keys and code open it at the trigger's centre. close() clears it.
+            this._lastClickX = this.dropmenu.hasAttribute('data-anchor-cursor') && event?.clientX > 0 ? event.clientX : null;
+            this.open();
         }
 
         // Abort a delayed first-open that hasn't fired yet: the user asked for the
@@ -1312,9 +1306,7 @@
             // Mirror the real trigger handler for this one click.
             e.preventDefault();
             e.stopPropagation();
-            instance._lastClickX = (wrapper.hasAttribute('data-anchor-cursor')
-                && typeof e.clientX === 'number' && e.clientX > 0) ? e.clientX : null;
-            instance.toggle();
+            instance.toggle(e);
         }, { signal: arm.signal });
     }
 

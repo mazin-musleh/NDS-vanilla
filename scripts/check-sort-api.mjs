@@ -86,7 +86,7 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
     out.compare = [Math.sign(NDS.Sort.compare('2', '10', 'number', 'asc')), Math.sign(NDS.Sort.compare('2', '10', 'number', 'desc')), Math.sign(NDS.Sort.compare('item 2', 'item 10', 'string', 'asc'))];
 
     // Markup wiring: direct
-    out.m1Wired = !!document.getElementById('m1').ndsSort?._markup && document.getElementById('m1').hasAttribute('data-nds-sort-initialized');
+    out.m1Wired = !!document.getElementById('m1').ndsSort?.hasMarkupTriggers && document.getElementById('m1').hasAttribute('data-nds-sort-initialized');
     click('m1-desc');
     out.m1Desc = [T('m1'), st('m1-desc'), document.getElementById('m1-desc').getAttribute('aria-pressed'), st('m1-asc'), document.getElementById('m1-asc').getAttribute('aria-pressed')];
     click('m1-noorder'); out.m1NoOrder1 = [T('m1'), st('m1-noorder')];

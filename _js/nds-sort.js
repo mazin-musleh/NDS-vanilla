@@ -14,6 +14,7 @@
  *   instance.refresh()                  re-run the active sort over the items as they stand
  *   instance.getState()                 {key, order}
  *   instance.root / .opts               read-only: the sorted list, the resolved options
+ *   instance.hasMarkupTriggers          true when [data-sort-target] buttons drive it, not a Filter or a Table
  *   instance.destroy()
  * Events (bubble from the root):
  *   nds:sort:change   detail {key, order, orderedItems, sort}
@@ -508,7 +509,7 @@
                 items: () => list.children,
                 triggers: () => document.querySelectorAll(selector),
                 mode: document.querySelector(`${selector}[data-sort-mode="cycle"]`) ? 'cycle' : 'direct',
-            })._markup = true;
+            }).hasMarkupTriggers = true;
         });
     }
 
@@ -516,7 +517,7 @@
     function refresh(root = document) {
         init();
         getMarkupLists().forEach(list => {
-            if (list.ndsSort?._markup && (root === document || root.contains(list) || list.contains(root))) list.ndsSort.refresh();
+            if (list.ndsSort?.hasMarkupTriggers && (root === document || root.contains(list) || list.contains(root))) list.ndsSort.refresh();
         });
     }
 

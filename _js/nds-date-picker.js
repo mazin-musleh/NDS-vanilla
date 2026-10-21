@@ -278,21 +278,11 @@
                     self.setupDropmenu();
                 }
 
-                // Stash click x on the dropmenu instance so its applyPosition
-                // horizontally anchors the calendar on the click point (wide
-                // desktop inputs). Gated on `data-anchor-cursor` (set in
-                // setupDropmenu) — the uniform cursor-anchor opt-in flag, since
-                // the native click handler is skipped for this no-click consumer.
-                // Keyboard-driven toggle (no mouse event) → null → trigger center.
-                self.dropmenuInstance._lastClickX = (self.dropmenuInstance.dropmenu.hasAttribute('data-anchor-cursor')
-                    && e && typeof e.clientX === 'number' && e.clientX > 0)
-                    ? e.clientX
-                    : null;
-
                 // Toggle through the NDS.Dropmenu instance so auto-close-others
-                // and other dropmenu invariants apply uniformly.
+                // and other dropmenu invariants apply uniformly; the click anchors
+                // the calendar under the pointer (anchor: 'cursor' in setupDropmenu).
                 if (e) e.stopPropagation();
-                self.dropmenuInstance.toggle();
+                self.dropmenuInstance.toggle(e);
             };
 
             var signal = this.instanceAbortController.signal;
@@ -324,7 +314,7 @@
             var dropdown = this.elements.dropdown;
 
             // Cursor anchoring: the native click handler is skipped (no click), so the
-            // toggle handler stashes _lastClickX itself, gated on data-anchor-cursor.
+            // toggle handler passes its click to toggle(e).
             this.dropmenuInstance = NDS.Dropmenu.create(formControl, { menu: dropdown, click: false, keys: false, anchor: 'cursor' });
 
             // Calendar lifecycle hooks.

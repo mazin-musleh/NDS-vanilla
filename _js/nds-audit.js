@@ -297,9 +297,8 @@
     // ── i18n ─────────────────────────────────────────────────────────
 
     addRule({ id: 'i18n-pack', group: 'i18n', severity: 'error', docs: 'core/i18n.html', check(context) {
-        const lang = NDS.i18n._lang();
-        // undefined: still loading. null: the file and its en fallback both failed.
-        if (lang && NDS.i18n._files[lang] === null) {
+        const lang = NDS.i18n.resolveLang();
+        if (NDS.i18n.isMissing(lang)) {
             context.report(null, `the language file for "${lang}" did not load — components show their English text.`, 'Keep the i18n/ folder beside the folder that holds nds-main.min.js, or set NDS_I18N_PATH.');
         }
     } });
@@ -427,7 +426,7 @@
     addRule({ id: 'sort-target-owned', docs: 'components/sort.html', check(context) {
         context.find('[data-sort-target]').forEach(btn => {
             const formatList = document.getElementById(btn.getAttribute('data-sort-target'));
-            if (formatList && (formatList.closest('.nds-table') || (formatList.ndsSort && !formatList.ndsSort._markup))) {
+            if (formatList && (formatList.closest('.nds-table') || (formatList.ndsSort && !formatList.ndsSort.hasMarkupTriggers))) {
                 context.report(btn, `data-sort-target="${formatList.id}" names a list a Filter or a Table already sorts — this button does nothing.`, "Use data-filter-target on a Filter's sort button, or the table's header sort buttons.");
             }
         });

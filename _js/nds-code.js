@@ -82,16 +82,10 @@
         syncActionButtons();
     }
 
-    // A block that scrolls takes a tab stop so the keyboard can scroll it (Chrome
-    // does this itself, Safari does not). Returns the write, for onElementResize.
+    // A block that scrolls takes a tab stop (NDS.setScrollStop). Returns the write, for onElementResize.
     function scrollStop(el) {
-        if (el.hasAttribute('tabindex') && !el._ndsScrollStop) return;
         const scrolls = el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1;
-        if (scrolls === !!el._ndsScrollStop) return;
-        return () => {
-            el._ndsScrollStop = scrolls;
-            if (scrolls) el.setAttribute('tabindex', '0'); else el.removeAttribute('tabindex');
-        };
+        return () => NDS.setScrollStop(el, scrolls);
     }
 
     // The action bar's button is component chrome, not content: a 32px icon

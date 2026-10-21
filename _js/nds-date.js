@@ -102,7 +102,7 @@
             hijri_months: ['Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani', 'Jumada al-Ula', 'Jumada al-Akhirah', 'Rajab', 'Shaban', 'Ramadan', 'Shawwal', 'Dhu al-Qadah', 'Dhu al-Hijjah'],
         });
         const getIntlNames = (lang, opts, at) => {
-            const formatter = new Intl.DateTimeFormat(NDS.i18n._lang(lang), { timeZone: 'UTC', ...opts });
+            const formatter = new Intl.DateTimeFormat(NDS.i18n.resolveLang(lang), { timeZone: 'UTC', ...opts });
             return Array.from({ length: opts.month ? 12 : 7 }, (_, i) => formatter.format(at(i)));
         };
         const getMonthNames = (calendar, lang) => (calendar === 'hijri'

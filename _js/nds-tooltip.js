@@ -229,8 +229,6 @@
             // intent filter only; keyboard focus and touch tap always open
             // immediately. Default stays click-toggle.
             this._hoverMode = this._root.hasAttribute('data-tooltip-hover');
-            const delay = parseInt(this._root.dataset.tooltipHover, 10);
-            this._hoverDelay = Number.isNaN(delay) ? 120 : delay;
             // Reserved now so aria-describedby holds whether the balloon
             // exists yet or is built on first open.
             const id = this._balloonId = (this.balloon && this.balloon.id) || NDS.uniqueId('nds-tooltip-');
@@ -279,7 +277,10 @@
                     if (e.pointerType !== 'mouse') return;
                     clearTimeout(this._hoverTimer);
                     if (this._isOpen) return;
-                    if (this._hoverDelay) this._hoverTimer = setTimeout(() => this.open(), this._hoverDelay);
+                    // Read per hover, so a script may change the delay.
+                    const delay = parseInt(this._root.dataset.tooltipHover, 10);
+                    const wait = Number.isNaN(delay) ? 120 : delay;
+                    if (wait) this._hoverTimer = setTimeout(() => this.open(), wait);
                     else this.open();
                 };
                 this._hoverClose = (e) => {

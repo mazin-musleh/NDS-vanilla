@@ -9,6 +9,9 @@
  *                                   last page (a loop has none); false = instant
  *   instance.updateState()          sync buttons, bullets and classes to the current slide
  *   instance.wrapper / .currentIndex / .lastIndex / .slidesPerView   read-only state
+ *   instance.realIndex              the current slide, clones not counted (currentIndex counts them)
+ *   instance.toRealIndex(index)     a row index (clones counted) → its slide
+ *   instance.goToFull(index, instant)   move to a row index; every move runs through it
  *   instance.destroy()
  * Events:
  *   nds:swiper:change (bubbles)     detail.index = the real slide now at rest, after every move
@@ -194,8 +197,8 @@
             // it needs one more.
             this._loop = (container.hasAttribute('data-swiper-loop') || this._spotlight) &&
                 this._slides.length > Math.max(this._slidesMax, this._slidesMid, this._slidesMin) + (this._spotlight ? 1 : 0);
-            this._real = this._slides.length; // real slides; clones extend this._slides at both ends
-            this._head = 0;                  // clones before the first real slide
+            this._realCount = this._slides.length; // real slides; clones extend this._slides at both ends
+            this._headCount = 0;                  // clones before the first real slide
 
             this._valid = true;
             this.init();
@@ -225,27 +228,27 @@
         // Real-slide index of a full-list position — a rest on a clone maps to its
         // twin. One source for every site that must agree on it: where the loop jumps,
         // which bullet reads active, where destroy() lands the
-        // row. _goToFull needs it for a target index, not the current one, hence the
+        // row. goToFull needs it for a target index, not the current one, hence the
         // parameter.
-        _toRealIndex(index) {
-            const realCount = this._real;
-            return (((index - this._head) % realCount) + realCount) % realCount;
+        toRealIndex(index) {
+            const realCount = this._realCount;
+            return (((index - this._headCount) % realCount) + realCount) % realCount;
         }
 
-        get _realIndex() { return this._toRealIndex(this.currentIndex); }
+        get realIndex() { return this.toRealIndex(this.currentIndex); }
 
         // Pages at the current slidesPerView. Decides nav visibility in
         // _syncSlidesPerView and pagination + button visibility in _setupPagination —
         // two halves of the same chrome, so they read one value.
         get _pageCount() {
-            return Math.ceil(this._real / this.slidesPerView);
+            return Math.ceil(this._realCount / this.slidesPerView);
         }
 
         // Where page p starts, in real slides. The last page end-aligns so it stays
         // inside the deck; a loop has no end, so its pages run on into the clones.
         _getPageStart(page) {
             const start = page * this.slidesPerView;
-            return this._loop ? start : Math.min(start, this._real - this.slidesPerView);
+            return this._loop ? start : Math.min(start, this._realCount - this.slidesPerView);
         }
 
         init() {
@@ -257,7 +260,7 @@
                 const fixed = fixSrcsetSpaces(srcset);
                 if (fixed !== srcset) el.setAttribute('srcset', fixed);
             });
-            this._container.style.setProperty('--total', this._real);
+            this._container.style.setProperty('--total', this._realCount);
             this._syncSlidesPerView();
 
             // Single-slide swipers can never navigate; bail before nav/observer/keyboard
@@ -341,7 +344,7 @@
                     // it, so clear the flag here as well.
                     if (this._loop) {
                         this._loopPending = false;
-                        this._jumpTo(this._head);
+                        this._jumpTo(this._headCount);
                         this._detectCurrentSlide();
                     }
                 });
@@ -403,7 +406,7 @@
                 this._detectCurrentSlide();
                 if (this._loopPending && this._measuredStep) {
                     this._loopPending = false;
-                    this._jumpTo(this._head);
+                    this._jumpTo(this._headCount);
                     this._detectCurrentSlide();
                 }
                 this._syncPagination();
@@ -415,7 +418,7 @@
             this._offResize = NDS.onElementResize(this.wrapper, remeasure);
             // A spotlight's content sets its slide's width, which can change while
             // the row's does not (a late image, a font, a live style edit).
-            if (this._spotlight) this._offSlideResize = NDS.onElementResize(this._slides[this._head], remeasure);
+            if (this._spotlight) this._offSlideResize = NDS.onElementResize(this._slides[this._headCount], remeasure);
         }
 
         _handleResize() {
@@ -468,23 +471,23 @@
         // Always a full view. A loop whose count is not a multiple of the slides
         // per view drifts off the page grid by the remainder on every wrap; the
         // bullets absorb that (_syncPagination), the movement never does.
-        prev() { this._goToFull(this.currentIndex - this.slidesPerView); }
-        next() { this._goToFull(this.currentIndex + this.slidesPerView); }
+        prev() { this.goToFull(this.currentIndex - this.slidesPerView); }
+        next() { this.goToFull(this.currentIndex + this.slidesPerView); }
 
         // The index counts real slides. Internally the row may carry clones
         // at both ends, so every scroll target is a full-list index.
         _goToSlide(index) {
             // Clamp in real slides: a loop's full-list clamp spans the clones, so an
             // out-of-range index would wrap onto an arbitrary slide.
-            index = Math.max(0, Math.min(index, this._real - 1));
-            this._goToFull(this._getFullIndex(index));
+            index = Math.max(0, Math.min(index, this._realCount - 1));
+            this.goToFull(this._getFullIndex(index));
         }
 
         // Full-list index of a real slide, in the cycle the row sits in NOW. Between
-        // a rapid click and the settle jump the row rests on a clone, and _head +
+        // a rapid click and the settle jump the row rests on a clone, and _headCount +
         // real would then animate a whole cycle the wrong way to reach the twin.
         _getFullIndex(real) {
-            return this.currentIndex + (real - this._realIndex);
+            return this.currentIndex + (real - this.realIndex);
         }
 
         // scrollTo/scrollBy's 'auto' keyword — and passing no keyword at all — defers
@@ -506,12 +509,12 @@
             this.wrapper.style.scrollBehavior = prevBehavior;
         }
 
-        _goToFull(index, instant = NDS.prefersReducedMotion) {
+        goToFull(index, instant = NDS.prefersReducedMotion) {
             // A move before the first resize callback lands the loop now; landing after
             // would cancel the move and strand _aim. No layout yet = leave it to remeasure.
             if (this._loopPending && this._slides[1].offsetLeft !== this._slides[0].offsetLeft) {
                 this._loopPending = false;
-                this._jumpTo(this._head);
+                this._jumpTo(this._headCount);
                 this._detectCurrentSlide();
             }
             if (this._loop) {
@@ -519,7 +522,7 @@
                 // last page (a loop has no end, so that alignment would shift at the
                 // settle jump): a target past the start or on the last page first
                 // shifts one real cycle the other way, silently.
-                const realCount = this._real;
+                const realCount = this._realCount;
                 if (index < 0) { if (this._shiftCycle(1)) { this.currentIndex += realCount; index += realCount; } }
                 else if (index >= this._maxIndex) { if (this._shiftCycle(-1)) { this.currentIndex -= realCount; index -= realCount; } }
             }
@@ -540,7 +543,7 @@
             // Where a smooth move rests; the loop's settle waits for it (_setupLoop).
             this._aim = instant ? null : offset;
             // The spotlight opens the target at the click, not as the row crosses halfway.
-            this._aimReal = this._toRealIndex(clampedIndex);
+            this._aimReal = this.toRealIndex(clampedIndex);
             this._syncSpotlight();
             // No keyword: the wrapper's own scroll-behavior decides (smooth by
             // default), so a consumer can set it to auto and get an instant switch.
@@ -559,7 +562,7 @@
             // and _recenter has no room to work in — it only shifts once the row is a
             // whole cycle out. A row shorter than the budget repeats its own cycle to
             // reach it; the wrap math is cycle-relative, so the clone index just wraps.
-            const realCount = this._real;
+            const realCount = this._realCount;
             const count = Math.max(2 * Math.max(this._slidesMax, this._slidesMid, this._slidesMin) + 1, 6);
             const clone = (i) => {
                 const clone = this._slides[i].cloneNode(true);
@@ -583,7 +586,7 @@
             }
             this._slides[0].before(...head);
             this._slides[realCount - 1].after(...tail);
-            this._head = count;
+            this._headCount = count;
             this._slides = [...head, ...this._slides, ...tail];
             this.currentIndex = count;
             this._loopPending = true; // the ResizeObserver's first callback lands the jump
@@ -624,7 +627,7 @@
             this._aim = null;
             if (this._loopPending || !this._measuredStep) return;
             const position = this._getPosition();
-            const dir = position < this._head ? 1 : position >= this._head + this._real ? -1 : 0;
+            const dir = position < this._headCount ? 1 : position >= this._headCount + this._realCount ? -1 : 0;
             if (!dir) return;
 
             // The row is nearly always mid-snap here (measured ~0.1 of a slide short),
@@ -643,9 +646,9 @@
 
         _settleLoop() {
             this._detectCurrentSlide();
-            const realCount = this._real, headCount = this._head, i = this.currentIndex;
+            const realCount = this._realCount, headCount = this._headCount, i = this.currentIndex;
             if (i >= headCount && i < headCount + realCount) return;
-            this._jumpTo(headCount + this._realIndex);
+            this._jumpTo(headCount + this.realIndex);
             this._detectCurrentSlide();
             this.updateState();
         }
@@ -659,10 +662,10 @@
         // clamped shift is a short one, which does show. Skipping costs nothing — the
         // settle re-anchors at the next rest.
         _shiftCycle(dir) {
-            const realCount = this._real;
+            const realCount = this._realCount;
             const landing = this._getPosition() + dir * realCount;
             if (landing < 0 || landing > this._maxIndex) return false;
-            const cycle = Math.abs(this._slides[this._head + realCount].offsetLeft - this._slides[this._head].offsetLeft);
+            const cycle = Math.abs(this._slides[this._headCount + realCount].offsetLeft - this._slides[this._headCount].offsetLeft);
             this._runInstant(() => { this.wrapper.scrollLeft += NDS.isRTL ? -dir * cycle : dir * cycle; });
             return true;
         }
@@ -778,7 +781,7 @@
             if (!this._pagination) return;
 
             const bullets = this._pagination.querySelectorAll('.nds-bullet');
-            const current = this._realIndex;
+            const current = this.realIndex;
 
             // The page whose start is at or before the lead slide. A drifted loop
             // then skips at most the last bullet on a wrap; the nearest start would
@@ -858,7 +861,7 @@
                     if (img.dataset.srcset) { img.srcset = fixSrcsetSpaces(img.dataset.srcset); delete img.dataset.srcset; }
                 });
             };
-            const loadReal = (realIndex) => this._slides.forEach((slide, j) => { if (this._toRealIndex(j) === realIndex) load(slide, true); });
+            const loadReal = (realIndex) => this._slides.forEach((slide, j) => { if (this.toRealIndex(j) === realIndex) load(slide, true); });
             // Ahead loads wait until every image on screen has finished (or failed): low
             // priority alone still starts them at once, sharing a slow link with the view.
             // ponytail: a request that never settles holds them; they then load on arrival.
@@ -890,7 +893,7 @@
                     load(slide, false);
                     slide.querySelectorAll('img').forEach(track);
                     queued.push(() => {
-                        const realCount = this._real, realIndex = this._toRealIndex(j);
+                        const realCount = this._realCount, realIndex = this.toRealIndex(j);
                         for (let offset = realIndex - this.slidesPerView; offset <= realIndex + this.slidesPerView; offset++) {
                             if (this._loop) loadReal((offset % realCount + realCount) % realCount);
                             else if (offset >= 0 && offset < realCount) loadReal(offset);
@@ -926,7 +929,7 @@
             this._syncBoundaryClasses();
             this._syncSpotlight();
             this._container.dispatchEvent(new CustomEvent('nds:swiper:change', {
-                bubbles: true, detail: { index: this._realIndex }
+                bubbles: true, detail: { index: this.realIndex }
             }));
         }
 
@@ -937,15 +940,15 @@
             // Before the loop lands, the index still points into the head clones.
             // While a move is under way the target stays open, so a jump over several
             // slides does not open each one it crosses (the loop clears _aim on arrival).
-            const open = this._loopPending ? 0 : this._loop && this._aim != null ? this._aimReal : this._realIndex;
+            const open = this._loopPending ? 0 : this._loop && this._aim != null ? this._aimReal : this.realIndex;
             // Runs on every scroll frame; the marks change only when the open slide does.
             if (open === this._open) return;
             this._open = open;
-            const realCount = this._real;
+            const realCount = this._realCount;
             this._slides.forEach((slide, j) => {
                 // Side of the nearest twin of the open slide, so every twin has the
                 // same neighbours. Without a loop the row does not wrap.
-                let distance = this._loop ? (((this._toRealIndex(j) - open) % realCount) + realCount) % realCount : j - open;
+                let distance = this._loop ? (((this.toRealIndex(j) - open) % realCount) + realCount) % realCount : j - open;
                 if (this._loop && distance > realCount / 2) distance -= realCount;
                 if (distance === 0) NDS.status.set(slide, 'active');
                 else if (distance > 0) NDS.status.set(slide, 'after');
@@ -973,8 +976,8 @@
         goTo(index, animate = true) {
             // Real index in, clamped to the last real page. A loop has no last page, so
             // any slide goes — the index nds:swiper:change reports must restore.
-            index = Math.max(0, Math.min(index, this._real - (this._loop ? 1 : this.slidesPerView)));
-            this._goToFull(this._getFullIndex(index), !animate || NDS.prefersReducedMotion);
+            index = Math.max(0, Math.min(index, this._realCount - (this._loop ? 1 : this.slidesPerView)));
+            this.goToFull(this._getFullIndex(index), !animate || NDS.prefersReducedMotion);
         }
 
         // ==============================================
@@ -989,10 +992,10 @@
             if (this._ownsTabindex) this._container.removeAttribute('tabindex');
 
             // Drop the clones and land on the real twin of the current slide.
-            if (this._head) {
-                const real = this._realIndex;
+            if (this._headCount) {
+                const real = this.realIndex;
                 this._slides = this._slides.filter(slide => !slide.classList.contains('nds-swiper-clone') || (slide.remove(), false));
-                this._head = 0;
+                this._headCount = 0;
                 this._jumpTo(real);
             }
 

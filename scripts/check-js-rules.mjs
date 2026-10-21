@@ -1368,6 +1368,9 @@ if (args[0] === '--self-test') {
     }
     const cross = checkNames(['a.js', 'b.js'], (f) => (f === 'a.js' ? `(function(){ class NdsA { constructor() { this._sync = 1; } } })();` : `(function(){ function run(a) { return a.ndsA._sync; } })();`)).filter((f) => f.rule === 'P12.12');
     if (cross.length !== 1 || cross[0].file !== 'b.js') { failed++; console.log(`FAIL  P12.12 cross-file: want one in b.js, got ${JSON.stringify(cross)}`); }
+    // Each file's own `_check`, one a class method, one a prototype object's: no cross-file use.
+    const own = checkNames(['a.js', 'b.js'], (f) => (f === 'a.js' ? `(function(){ class NdsA { _check() {} run() { this._check(); } } })();` : `(function(){ function B() {} B.prototype = { _check: function () {}, run: function () { this._check(); } }; })();`)).filter((f) => f.rule === 'P12.12');
+    if (own.length) { failed++; console.log(`FAIL  P12.12 own prototype method: want none, got ${JSON.stringify(own)}`); }
     // PERSONA's canonical examples must pass every naming rule (its Update workflow).
     const persona = readFileSync(join(REPO, '.claude', 'skills', 'nds-js-audit', 'PERSONA.md'), 'utf8');
     const blocks = [...persona.matchAll(/```js\r?\n([\s\S]*?)```/g)].map((m) => m[1]);

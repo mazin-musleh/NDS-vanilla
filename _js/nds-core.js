@@ -29,6 +29,7 @@
  *     NDS.stickyHeaderBottom() · NDS.viewportPadding(el) · NDS.visibleBox() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
  *     NDS.dragScroll(el, { canScroll, signal })   wheel + mouse-drag sideways scroll; a drag swallows its click
  *     NDS.trapFocus(getEl) · NDS.focusableSel
+ *     NDS.setScrollStop(el, on)        give a scroller a tab stop so keys scroll it; an authored tabindex stays
  *     NDS.cellText(cell)               a table cell's own text, the value sort and export read
  *     NDS.ownParts(root, sel, ownerSelector)   root's own matches, not a nested instance's
  *     NDS.ownItems(list, items)        a list's own items: never .nds-sub; a <tbody> keeps its direct rows
@@ -49,6 +50,8 @@
  *     NDS.i18n.translate(root?)         translate the markers in root now (mount/refresh call it)
  *     NDS.i18n.settled → Promise        the pack landed, failed, or 3 s passed; then <html data-nds-i18n>
  *     NDS.i18n.pack() → Promise         the page language's pack
+ *     NDS.i18n.resolveLang(lang?)       the page's language or lang as a base tag ('ar-SA' → 'ar'); else 'en'
+ *     NDS.i18n.isMissing(lang?)         true when that language's file failed to load
  *     NDS.i18n.format(value, vars)     fill {name}; a plural value picks by vars.n
  *     NDS.i18n.safeMerge(target, src)  copy own keys, skipping __proto__ / constructor / prototype
  *     NDS.setValue(el, value, { change }) write value (checked: a click), fire input + change
@@ -186,16 +189,19 @@
         // The page's language, or the one a component passes ('ar-SA' → 'ar'). Anything
         // that isn't a BCP-47 base tag (2–3 letters) is 'en' — guards the fetch URL
         // against <html lang="../foo"> traversal.
-        _lang(lang) {
+        resolveLang(lang) {
             const code = String(lang || NDS.lang).split('-')[0].toLowerCase();
             return /^[a-z]{2,3}$/.test(code) ? code : 'en';
         },
+
+        // The language's file failed to load (and its en fallback), so its components show English.
+        isMissing(lang) { return this._files[this.resolveLang(lang)] === null; },
 
         // A section's words in a language: undefined until known, then the pack's section, or
         // null when it has none. English is built in (the JS defaults and the markup), so an
         // English page loads no file. Ignores the override: an override is no sign the file landed.
         _fromFiles(component, lang) {
-            lang = this._lang(lang);
+            lang = this.resolveLang(lang);
             if (lang === 'en') return null;
             const pack = this._files[lang];
             if (pack === undefined) return undefined;
@@ -216,7 +222,7 @@
         // A language's pack (the page's by default), landed; English has none. settled is the
         // capped promise the loader waits on.
         pack(lang) {
-            lang = this._lang(lang);
+            lang = this.resolveLang(lang);
             return lang === 'en' ? Promise.resolve(null) : this._file(lang);
         },
 
@@ -275,7 +281,7 @@
         // categories ({ one, two, few, many, other }), picked by vars.n.
         format(value, vars, lang) {
             if (value && typeof value === 'object' && !Array.isArray(value)) {
-                lang = this._lang(lang);
+                lang = this.resolveLang(lang);
                 const rules = this._plural[lang] || (this._plural[lang] = new Intl.PluralRules(lang));
                 value = value[rules.select(vars && vars.n)] || value.other;
             }
@@ -1386,6 +1392,15 @@
     // Usage: document.addEventListener('keydown',
     //          NDS.trapFocus(() => isOpen ? panelEl : null),
     //          { signal });
+    // A scroller with nothing to focus takes a tab stop so the keyboard can scroll it (Chrome
+    // does this itself, Safari does not). Only a tabindex NDS wrote moves.
+    const scrollStops = new WeakSet();
+    NDS.setScrollStop = (el, on) => {
+        if (el.hasAttribute('tabindex') && !scrollStops.has(el)) return;
+        if (on) { scrollStops.add(el); el.setAttribute('tabindex', '0'); }
+        else { scrollStops.delete(el); el.removeAttribute('tabindex'); }
+    };
+
     NDS.trapFocus = (containerFn) => (e) => {
         if (e.key !== 'Tab') return;
         const container = typeof containerFn === 'function' ? containerFn() : containerFn;

@@ -65,7 +65,8 @@ async function run(page, which, dir) {
             requestAnimationFrame(tick);
         })();
         const r = el.getBoundingClientRect();
-        return { real: s._real, head: s._head, spv: s.slidesPerView, rtl: !!window.NDS?.isRTL, y: r.y + r.height / 2 };
+        const slides = [...wrap.children], reals = slides.filter((c) => !c.classList.contains('nds-swiper-clone'));
+        return { real: reals.length, head: slides.indexOf(reals[0]), spv: s.slidesPerView, rtl: !!window.NDS?.isRTL, y: r.y + r.height / 2 };
     }, which);
 
     const cy = Math.round(info.y), x0 = 206, span = 150 * (info.rtl ? -dir : dir);

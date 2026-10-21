@@ -281,6 +281,9 @@ function scanFile(file, source) {
                 if (typeof node.value === 'string' && /^nds_/.test(node.value)) push('P12.3', node, `\`'${node.value}'\`: a key prefix is \`nds-\`, not \`nds_\``);
                 break;
             case 'ObjectExpression':
+                // A `_x` method on any object of this file is its own (a prototype: `_validateInput: function`).
+                for (const q of node.properties)
+                    if (q.type === 'Property' && q.key.type === 'Identifier' && q.key.name.startsWith('_') && (q.method || isFn(q.value))) defines.add(q.key.name);
                 // A namespace object (an inner object literal is data, its keys are not names). A key whose
                 // value names a function of this file is a method too: `{ updateDate }`.
                 if (namespaces.has(node)) {

@@ -364,9 +364,7 @@
                 var tooltipMessage = message && btn.ndsTooltip && btn.ndsTooltip.balloon && btn.ndsTooltip.balloon.querySelector('.nds-tooltip-message');
                 if (tooltipMessage) tooltipMessage.textContent = message;
                 // A reason shows at once, a hint after a pause.
-                // ponytail: Tooltip reads the delay only at init, so the instance field is set too; drop it once Tooltip reads the attribute per hover.
                 if (btn.hasAttribute('data-tooltip-hover')) btn.setAttribute('data-tooltip-hover', off ? '0' : '500');
-                if (btn.ndsTooltip) btn.ndsTooltip._hoverDelay = off ? 0 : 500;
             });
         }
 

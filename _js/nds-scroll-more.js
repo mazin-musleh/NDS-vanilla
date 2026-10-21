@@ -78,13 +78,9 @@
         if (atEnd)   addState(wrapper, config.overflow.atEnd);   else removeState(wrapper, config.overflow.atEnd);
     }
 
-    // A scroller with nothing focusable inside takes a tab stop so the keyboard can
-    // scroll it (Chrome does this itself, Safari does not). Only our own tabindex moves.
+    // A scroller with nothing focusable inside takes a tab stop (NDS.setScrollStop).
     function scrollStop(content, on) {
-        if (content.hasAttribute('tabindex') && !content._ndsScrollStop) return;
-        on = on && !content.querySelector(NDS.focusableSel);
-        content._ndsScrollStop = on;
-        if (on) content.setAttribute('tabindex', '0'); else content.removeAttribute('tabindex');
+        NDS.setScrollStop(content, on && !content.querySelector(NDS.focusableSel));
     }
 
     // Reads only; returns the writes, so the pooled ResizeObserver runs every

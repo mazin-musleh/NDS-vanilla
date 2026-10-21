@@ -600,12 +600,13 @@
 
     // ?per-page= (data-per-page-param on a per-page picker), before anything reads the size:
     // the picker starts on it and the split below uses it, so nothing jumps. A CSSOM write,
-    // which a strict CSP allows. Pagination reads _ndsPerPageDefault to drop the param.
+    // which a strict CSP allows. Pagination reads data-per-page-default to drop the param;
+    // a server that applied ?per-page= itself writes it.
     function setPerPageParams(root) {
         const params = new URLSearchParams(location.search);
         root.querySelectorAll('[data-per-page-param]').forEach(picker => {
-            if ('_ndsPerPageDefault' in picker) return;
-            picker._ndsPerPageDefault = picker.getAttribute('data-select-value');
+            if (picker.hasAttribute('data-per-page-default')) return;
+            picker.setAttribute('data-per-page-default', picker.getAttribute('data-select-value') || '');
             const size = params.get(picker.getAttribute('data-per-page-param') || 'per-page');
             // Only a size the menu offers: the address must not set 99999.
             if (!size || !picker.querySelector(`.nds-dropmenu-item[data-value="${CSS.escape(size)}"]`)) return;

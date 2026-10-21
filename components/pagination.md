@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 01:47 PM"
 ---
 
 <section id="pagination-overview" class="nds-content-section nds-doc-overview">
@@ -371,7 +371,7 @@ On a nav the script builds, the menu of hidden pages opens on the current page. 
 
 The per-page picker is a [Dropmenu](../components/dropmenu) picker (`data-select-name`). `data-per-page-target` names the `id` of the container, and each item's `data-value` becomes its `--per-page`. A new size goes back to page 1. When a server sends the items, leave out `data-per-page-target`, listen for `nds:dropmenu:select`, and load the page with its `detail.value` yourself. Then call `setTotalPages()` and `updateRecords()` with the server's numbers.
 
-`data-per-page-param` on the picker keeps the page size in the address as `?per-page=9`. A reload or a shared link then opens the same size. At load, the script reads the size before the list shows, and sets the picker to it. A size that is not in the menu is ignored. When the user picks a size, the script writes it to the address. When the user picks the default size, the `data-select-value` you wrote, the script removes it. To use a name other than `per-page`, give the attribute a value, as with `data-page-param`. When a server sends the items, read the picker's `data-select-value` for the first request.
+`data-per-page-param` on the picker keeps the page size in the address as `?per-page=9`. A reload or a shared link then opens the same size. At load, the script reads the size before the list shows, and sets the picker to it. A size that is not in the menu is ignored. When the user picks a size, the script writes it to the address. When the user picks the default size, the `data-select-value` you wrote, the script removes it. The script keeps that size in `data-per-page-default`. A server that already applied `?per-page=` to `data-select-value` writes `data-per-page-default` itself, with the size it uses when the address has no size. To use a name other than `per-page`, give the attribute a value, as with `data-page-param`. When a server sends the items, read the picker's `data-select-value` for the first request.
 
 ### Records Counter
 {: .nds-block-title}
@@ -514,6 +514,7 @@ After a page change, the script scrolls the content back into view when its top 
 | `data-pagination-no-scroll` | `.nds-pagination` | A page change does not scroll to the content |
 | `data-per-page-target` | a picker `.nds-dropmenu` | The `id` of the `.nds-paged-content` whose page size the picker sets |
 | `data-per-page-param` | a picker `.nds-dropmenu` | Keeps the page size in the address. The name is `per-page` by default. A value sets another name |
+| `data-per-page-default` | a picker `.nds-dropmenu` | The size that removes the parameter. The script writes it from `data-select-value` at load. Write it yourself when the server already applied the parameter |
 | `data-paged-target` | any element | The `id` of the `.nds-paged-content` whose range and count it shows |
 | `data-paged-from`, `data-paged-to`, `data-paged-count` | in `[data-paged-target]` | The slots the script writes: the first item shown, the last item shown, and the item count |
 | `aria-current="page"` | a page button or link | The current page at load. The script moves it on each change, and adds `data-state="active"` |

@@ -654,25 +654,30 @@
             });
             swiper.dispatchEvent(new CustomEvent('nds:swiper:change', { bubbles: true, detail: { index: active } }));
         }
-        // 1.12 loops with clones (a full-list index maps to a real one); 1.11 and
-        // earlier have no loop, so the index is the position.
-        function getRealIndex() { return instance._realIndex !== undefined ? instance._realIndex : instance.currentIndex; }
+        // The loop runs on clones (a full-list index maps to a real one): public names
+        // after 1.12, private ones in 1.12; 1.11 and earlier have no loop, so the index
+        // is the position.
+        function getRealIndex() {
+            return instance.realIndex !== undefined ? instance.realIndex : instance._realIndex !== undefined ? instance._realIndex : instance.currentIndex;
+        }
         function toRealIndex(full) {
+            if (instance.toRealIndex) return instance.toRealIndex(full);
             var realCount = instance._real;
             return realCount ? (((full - instance._head) % realCount) + realCount) % realCount : Math.max(0, Math.min(full, count - 1));
         }
 
         // Every index change the runtime settles on, plus the target the moment a
-        // move starts: _goToFull carries every move in 1.12, goTo before that.
+        // move starts: goToFull carries every move after 1.12, _goToFull in 1.12, goTo before that.
         var update = instance.updateState;
         instance.updateState = function () {
             var before = this.lastIndex;
             update.call(this);
             if (this.lastIndex !== before) place(getRealIndex());
         };
-        if (instance._goToFull) {
-            var go = instance._goToFull;
-            instance._goToFull = function (index, instant) { place(toRealIndex(index)); return go.call(this, index, instant); };
+        var goKey = instance.goToFull ? 'goToFull' : instance._goToFull ? '_goToFull' : null;
+        if (goKey) {
+            var go = instance[goKey];
+            instance[goKey] = function (index, instant) { place(toRealIndex(index)); return go.call(this, index, instant); };
         } else {
             var goTo = instance.goTo;
             instance.goTo = function (index) { place(((index % count) + count) % count); return goTo.call(this, index); };
