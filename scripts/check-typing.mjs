@@ -1,0 +1,377 @@
+// Typing patterns: what a shaped field does to real keys. Each pattern below mounts its fields in a
+// built page and runs two kinds of check, in Chromium or WebKit:
+//
+//   CASES      a written case: start value, keys, expected value — one line each
+//   ROUNDTRIP  generated: for each listed value, every span is deleted (Backspace) and typed back, once
+//              as deleted and once as its digits alone (not for a field in noDigits); the field must
+//              come back to the value
+//   INITIAL    the value a field holds once built, from the value its markup ships (initial)
+//   FUZZ       generated: random typing, pastes and Backspace on each field in limits ([most digits,
+//              each other character as often as it may appear]); the field must stay inside them. FUZZ=<runs per
+//              field, default 60>, SEED=<n> repeats a run
+//
+// Case notation: `|` is the caret and `[…]` a selection in `from`; `|` in `want` checks the caret too.
+// Keys are typed as text, and `{Name}` presses a key: '{Backspace}05'. `{Paste:text}` pastes text as the browser
+// does (beforeinput, insert, input as insertFromPaste; never the clipboard: it is the machine's, and the
+// parallel pages would share it). `{Blur}` leaves the field, and `{Insert:text}` sends text as one insert,
+// as a phone keyboard or dictation does. A new pattern is one more
+// PATTERNS entry: the field markup, its instance property, cases and round-trip values.
+//
+//   node scripts/check-typing.mjs [pattern …]     ENGINE=webkit · PAGES=<parallel pages, default 4>
+// Needs the dev server on :4002 (SITE=<base url> for another).
+import { launch, log, step } from './lib/browser.mjs';
+
+const SITE = (process.env.SITE || 'http://localhost:4002/NDS-vanilla/').replace(/\/?$/, '/');
+const PAGES = +process.env.PAGES || 4;
+
+const dateField = (format, extra = '') => `<div class="nds-form-container nds-date-picker${extra ? ' ' + extra : ''}" data-format="${format}">
+  <div class="nds-form-control"><input type="text" class="nds-input nds-date-input" placeholder="${format}"></div></div>`;
+const timeField = (format) => `<div class="nds-form-container nds-time-picker" data-format="${format}">
+  <div class="nds-form-control"><input type="text" class="nds-input nds-time-input" placeholder="${format}"></div></div>`;
+
+const PATTERNS = {
+    date: {
+        instance: 'ndsDatePicker',
+        fields: {
+            dmy: dateField('DD/MM/YYYY'), iso: dateField('YYYY-MM-DD'), month: dateField('MM/YYYY'), year: dateField('YYYY'),
+            short: dateField('D/M/YYYY'), mshort: dateField('M/YYYY'),
+            readonly: dateField('DD/MM/YYYY').replace('<input', '<input readonly'),
+            gregory: dateField('DD/MM/YYYY').replace('nds-date-picker"', 'nds-date-picker" data-calendar="gregory"'),
+            hijri: dateField('DD/MM/YYYY').replace('nds-date-picker"', 'nds-date-picker" data-calendar="hijri"'),
+            served: dateField('DD/MM/YYYY').replace('<input', '<input value="15/09/1447"'),
+            servedHijri: dateField('DD/MM/YYYY').replace('nds-date-picker"', 'nds-date-picker" data-calendar="hijri"').replace('<input', '<input value="04/03/2026"'),
+            servedIso: dateField('DD/MM/YYYY').replace('<input', '<input value="2026-03-04"'), dots: dateField('DD.MM.YY'), range: dateField('DD/MM/YYYY', 'nds-date-range'),
+        },
+        cases: [
+            // At the end: the format's shape.
+            ['dmy', '', '28051983', '28/05/1983|'],
+            ['dmy', '', '28', '28/|'],
+            ['dmy', '', '4', '04/|'],
+            ['dmy', '', '4/5/', '04/05/|'],
+            ['dmy', '', '32', '3|'],
+            ['dmy', '', '2813', '28/1|'],
+            ['dmy', '', '2x8', '02/08/|'],
+            ['dmy', '', '٢٨٠٥١٩٨٣', '28/05/1983|'],
+            ['iso', '', '19830528', '1983-05-28|'],
+            ['range', '', '0103202615032026', '01/03/2026 - 15/03/2026|'],
+            ['month', '', '52026', '05/2026|'],
+            ['year', '', '2026', '2026|'],
+            ['short', '', '9', '9/|'],
+            ['dots', '', '280583', '28.05.83|'],
+            // Inside a whole date: type-over.
+            ['dmy', '|28/05/1983', '1', '1|8/05/1983'],
+            ['dmy', '|28/05/1983', '15', '15/|05/1983'],
+            ['dmy', '28/|05/1983', '07', '28/07/|1983'],
+            ['dmy', '28/|05/1983', '9', '28/09/|1983'],
+            ['dmy', '|28/05/1983', '3', '3|0/05/1983'],
+            ['dmy', '28/1|2/1983', '3', '28/1|2/1983'],
+            ['dmy', '28/05/|1983', '2026', '28/05/2026|'],
+            ['dmy', '28|/05/1983', '07', '28/07/1983'],
+            ['dmy', '28/[05]/1983', '11', '28/11/1983'],
+            ['dmy', '28/05/19[83]', '4', '28/05/194|'],
+            ['range', '01/03/2026 - 1|5/03/2026', '2', '01/03/2026 - 12/|03/2026'],
+            ['short', '9/|5/2026', '7', '9/7/|2026'],
+            ['short', '1|/5/2026', '5', '15/|5/2026'],
+            // Inside a date an edit broke: insert.
+            ['dmy', '2|/1983', '805', '28/05|/1983'],
+            ['dmy', '2|/1983', '8/05/', '28/05/|1983'],
+            ['dmy', '28/05|1983', '/', '28/05/|1983'],
+            ['dmy', '01/|3/2026', '0', '01/0|3/2026'],
+            ['dmy', '01/|3/2026', '1', '01/|3/2026'],
+            ['dmy', '|8/05/1983', '2', '2|8/05/1983'],
+            ['dmy', '3|/05/2026', '7', '3|/05/2026'],
+            ['dmy', '2/1983|', '4', '2/19834|'],
+            ['range', '01/03/2026 - 1|/03/2026', '5', '01/03/2026 - 15|/03/2026'],
+            ['dmy', '28/05/1983', '{Backspace}', '28/05/198|'],
+            // Found by the adversarial pass (2026-10-22).
+            ['readonly', '|15/06/2026', '2', '15/06/2026'],
+            ['readonly', '28/0|', '7', '28/0'],
+            ['short', '|9/5/2026', '12', '12/|5/2026'],
+            ['short', '|1/5/2026', '12', '12/|5/2026'],
+            ['short', '9/|5/2026', '11', '9/11/|2026'],
+            ['short', '|9/5/2026', '1', '1|9/5/2026'],
+            ['short', '|9/5/2026', '4', '4/|5/2026'],
+            ['short', '9/5/2026|', '7', '9/5/2026|'],
+            ['short', '9/5/20|26', '30', '9/5/2030|'],
+            ['mshort', '|5/2026', '11', '11/|2026'],
+            ['mshort', '5/2026|', '7', '5/2026|'],
+            ['dmy', '٢٨/|٠٥/١٩٨٣', '7', '28/07/|1983'],
+            ['dmy', '28/|٠٥/1983', '7', '28/07/|1983'],
+            ['dmy', '2|/1983', 'D', '2|/1983'],
+            // Never more than the format holds (2026-10-22: "55/58/198355/58/1983" got in).
+            ['dmy', '55/58/1983|', '7', '55/58/1983|'],
+            ['dmy', '55/58/1983|', '/', '55/58/1983|'],
+            ['dmy', '2/1983|', 'x', '2/1983|'],
+            ['dmy', '5|/58/1983', '5', '5|/58/1983'],
+            ['dmy', '28/05/1983|', '{Paste:28/05/1983}', '28/05/1983'],
+            ['dmy', '55/58/1983|', '{Paste:28/05/1983}', '28/05/1983'],
+            ['range', '01/03/2026 - 15/03/2026|', '{Paste:01/03/2026 - 15/03/2026}', '01/03/2026 - 15/03/2026'],
+            // A paste that is not a date goes in as if typed (2026-10-22: "55-58-198355-58-1983" got in by paste).
+            ['dmy', '', '{Paste:55-58-1983}{Paste:55-58-1983}', '05/05/5819|'],
+            ['dmy', '', '{Paste:hello}', ''],
+            ['dmy', '', '{Paste:28/05}', '28/05/|'],
+            ['dmy', '28/05/1983|', '{Paste:55-58-1983}', '28/05/1983|'],
+            // A set data-calendar keeps its calendar: a date in the other one is converted, never switching the field.
+            ['gregory', '', '{Paste:15/09/1447}', '04/03/2026'],
+            ['gregory', '', '{Paste:1447-09-15}', '04/03/2026'],
+            ['gregory', '', '15091447{Blur}', '04/03/2026'],
+            ['gregory', '', '{Paste:04/03/2026}', '04/03/2026'],
+            ['hijri', '', '{Paste:04/03/2026}', '15/09/1447'],
+            ['hijri', '', '{Paste:2026-03-04T09:00}', '15/09/1447'],
+            ['hijri', '', '{Paste:15/09/1447 هـ}', '15/09/1447'],
+            ['hijri', '', '04032026{Blur}', '15/09/1447'],
+            ['dmy', '', '{Paste:15/09/1447}', '04/03/2026'],
+            // Both Arabic digit sets: Arabic-Indic (U+0660) and Persian / Urdu (U+06F0).
+            ['dmy', '', '۲۸۰۵۱۹۸۳', '28/05/1983|'],
+            ['dmy', '28/|05/1983', '۰۷', '28/07/|1983'],
+            ['dmy', '۲۸/|۰۵/۱۹۸۳', '٧', '28/07/|1983'],
+            ['dmy', '2|/1983', '۸۰۵', '28/05|/1983'],
+            ['dmy', '', '{Paste:۲۸/۰۵/۱۹۸۳}', '28/05/1983'],
+            ['dmy', '', '{Paste:٢٨-۰۵-١٩٨٣}', '28/05/1983'],
+            ['dmy', '', '01010500{Blur}', '01/01/0500'],
+            ['dmy', '|28/05/1983', '{Insert:15/07/2000}', '15/07/2000|'],
+            ['dmy', '|28/05/198', '1', '|28/05/198'],
+            ['iso', '|1983-05-2', '8', '|1983-05-2'],
+            // Paste, and a typed date read when the field is left: written another common way → the format.
+            ['dmy', '', '{Paste:28/05/1983}', '28/05/1983'],
+            ['dmy', '', '{Paste:28051983}', '28/05/1983'],
+            ['dmy', '', '{Paste:٢٨/٠٥/١٩٨٣}', '28/05/1983'],
+            ['dmy', '', '{Paste: 28-5-1983 }', '28/05/1983'],
+            ['dmy', '', '{Paste:28.05.1983}', '28/05/1983'],
+            ['dmy', '', '{Paste:1983-05-28}', '28/05/1983'],
+            ['dmy', '', '{Paste:1983-05-28T10:30:00Z}', '28/05/1983'],
+            ['dmy', '', '{Paste:05/28/1983}', '28/05/1983'],
+            ['dmy', '', '{Paste:05/06/2026}', '05/06/2026'],
+            ['dmy', '', '{Paste:15/09/1447 هـ}', '04/03/2026'],
+            ['dmy', '', '{Paste:31/02/2026}', '31/02/2026'],
+            ['dmy', '', '{Paste:28/05/83}', '28/05/83'],
+            ['dmy', '', '{Paste:28/05/1983 extra}', '28/05/1983|'],
+            ['dmy', '28/[05]/1983', '{Paste:07}', '28/07/1983'],
+            ['dmy', '28/[05]/1983', '{Backspace}5{Blur}', '28/05/1983'],
+            ['iso', '', '{Paste:28/05/1983}', '1983-05-28'],
+            ['short', '', '{Paste:09/05/2026}', '9/5/2026'],
+            ['dots', '', '{Paste:28/05/2083}', '28.05.83'],
+            ['month', '', '{Paste:2026-05}', '05/2026'],
+            ['year', '', '{Paste:2026}', '2026'],
+            ['range', '', '{Paste:2026-03-01 - 2026-03-15}', '01/03/2026 - 15/03/2026'],
+            ['range', '', '{Paste:1/3/2026 to 15/3/2026}', '01/03/2026 - 15/03/2026'],
+        ],
+        roundTrip: {
+            dmy: ['28/05/1983', '01/01/2000', '31/12/2026', '10/10/1010'],
+            iso: ['1983-05-28', '2026-12-31'],
+            month: ['05/2026', '12/1999'],
+            year: ['2026'],
+            dots: ['28.05.83', '01.10.20'],
+            short: ['9/5/2026', '19/11/2026'],
+            range: ['01/03/2026 - 15/03/2026'],
+        },
+        noDigits: ['short'],   // 1911 is 19/11 or 1/9/11: an open-width format needs its separators
+        // A value the page ships takes the field's format and calendar (data-calendar, else Gregorian) when it builds.
+        initial: { served: '04/03/2026', servedHijri: '15/09/1447', servedIso: '04/03/2026' },
+        limits: {
+            dmy: [8, '//'], iso: [8, '--'], month: [6, '/'], year: [4, ''], short: [8, '//'], mshort: [6, '/'],
+            dots: [6, '..'], range: [16, '//// - ////'],
+        },
+    },
+    time: {
+        instance: 'ndsTimePicker',
+        fields: {
+            h24: timeField('HH:mm'), h12: timeField('hh:mm A'), secs: timeField('HH:mm:ss'), open: timeField('H:mm'),
+            readonly: timeField('HH:mm').replace('<input', '<input readonly'),
+        },
+        cases: [
+            ['h24', '', '1430', '14:30|'],
+            ['h24', '', '9', '09:|'],
+            ['h24', '', '2:', '02:|'],
+            ['h24', '', '25', '2|'],
+            ['h24', '', '٠٩٣٠', '09:30|'],
+            ['h24', '', '۱۴۳۰', '14:30|'],
+            ['h12', '', '0230p', '02:30 PM|'],
+            ['h12', '', '13', '1|'],
+            ['secs', '', '143005', '14:30:05|'],
+            ['h24', '|14:30', '0', '0|4:30'],
+            ['h24', '14:|30', '45', '14:45|'],
+            ['h24', '|14:30', '9', '09:|30'],
+            ['h12', '02:30 |AM', 'p', '02:30 |PM'],
+            // The date picker's fixes, in time (2026-10-22).
+            ['readonly', '|14:30', '2', '14:30'],
+            ['h24', '10:|3', '0', '10:0|3'],
+            ['h24', '1|:30', '4', '14|:30'],
+            ['h24', '|14:30', '{Insert:09:45}', '09:45|'],
+            ['h24', '١٤:|٣٠', '4', '14:4|0'],
+            ['h24', '1|:30', 'H', '1|:30'],
+            ['open', '', '9', '9:|'],
+            ['open', '|9:30', '12', '12:|30'],
+            ['open', '|9:30', '4', '4:|30'],
+            ['open', '9:30|', '5', '9:30|'],
+            ['h24', '', '{Paste:2:30 PM}', '14:30'],
+            ['h24', '75:99|', '1', '75:99|'],
+            ['h24', '7|:99', '5', '7|:99'],
+            ['h24', '10:3|', '05', '10:30|'],
+            ['h24', '14:30|', '{Paste:09:15}', '09:15'],
+            ['h24', '75:99|', '{Paste:09:15}', '09:15'],
+            ['h24', '', '{Paste:75-99-75-99}{Paste:75-99}', '07:05|'],
+            ['h24', '14:30|', '{Paste:7599}', '14:30|'],
+            ['h24', '', '{Paste:۱۴:۳۰}', '14:30'],
+            ['h12', '', '{Paste:٢:٣٠ م}', '02:30 PM'],
+        ],
+        roundTrip: { h24: ['14:30', '09:05', '23:59'], secs: ['14:30:05'], h12: ['02:30 PM', '11:05 AM'], open: ['9:30', '19:05'] },
+        noDigits: ['open'],
+        limits: { h24: [4, ':'], h12: [4, ': AMP'], secs: [6, '::'], open: [4, ':'] },
+    },
+};
+
+// '28/[05]/1983' → { value, start, end }; '28/|05' → caret only.
+function parseMarked(marked) {
+    const start = marked.search(/[|[]/);
+    if (start < 0) return { value: marked, start: null, end: null };
+    const value = marked.replace(/[|[\]]/g, '');
+    const close = marked.indexOf(']');
+    return { value, start, end: close < 0 ? start : close - 1 };
+}
+const mark = (value, caret) => caret === null ? value : value.slice(0, caret) + '|' + value.slice(caret);
+
+const wanted = process.argv.slice(2);
+const unknown = wanted.filter((name) => !PATTERNS[name]);
+if (unknown.length) { console.error(`unknown pattern: ${unknown.join(', ')} — have ${Object.keys(PATTERNS).join(', ')}`); process.exit(1); }
+const patterns = wanted.length ? wanted : Object.keys(PATTERNS);
+
+// Every check as one job: { pattern, field, from, keys, want, kind }.
+const jobs = [];
+for (const name of patterns) {
+    const pattern = PATTERNS[name];
+    for (const [field, from, keys, want] of pattern.cases) jobs.push({ pattern: name, field, from, keys, want, kind: 'case' });
+    for (const [field, values] of Object.entries(pattern.roundTrip)) {
+        for (const value of values) {
+            for (let a = 0; a < value.length; a++) {
+                for (let b = a + 1; b <= value.length; b++) {
+                    const from = value.slice(0, a) + '[' + value.slice(a, b) + ']' + value.slice(b);
+                    const cut = value.slice(a, b), digits = cut.replace(/\D/g, '');
+                    jobs.push({ pattern: name, field, from, keys: '{Backspace}' + cut, want: value, kind: 'roundtrip' });
+                    // Digits alone cannot bring back a word (a meridiem), so a cut holding letters gets no digits run.
+                    if (digits && digits !== cut && !/\p{L}/u.test(cut) && !pattern.noDigits?.includes(field)) jobs.push({ pattern: name, field, from, keys: '{Backspace}' + digits, want: value, kind: 'roundtrip digits' });
+                }
+            }
+        }
+    }
+}
+// A small seeded generator, so a failing fuzz run repeats with the same SEED.
+const SEED = +process.env.SEED || Date.now() % 100000;
+let state = SEED;
+const random = () => { state = (state * 1103515245 + 12345) % 2147483648; return state / 2147483648; };
+const pick = (items) => items[Math.floor(random() * items.length)];
+const KEYS = '0123456789012345678901234567890123456789/-.: xAPap٢۵';
+const chunk = (most) => Array.from({ length: 1 + Math.floor(random() * most) }, () => pick(KEYS)).join('');
+for (const name of patterns) {
+    const pattern = PATTERNS[name];
+    for (const [field, limit] of Object.entries(pattern.limits || {})) {
+        const starts = ['', ...(pattern.roundTrip[field] || [])];
+        for (let run = 0; run < (+process.env.FUZZ || 60); run++) {
+            const start = pick(starts), caret = Math.floor(random() * (start.length + 1));
+            const keys = Array.from({ length: 1 + Math.floor(random() * 4) }, () => {
+                const kind = random();
+                return kind < 0.5 ? chunk(12) : kind < 0.85 ? '{Paste:' + chunk(20) + '}' : '{Backspace}';
+            }).join('');
+            jobs.push({ pattern: name, field, from: start.slice(0, caret) + '|' + start.slice(caret), keys, limit, kind: 'fuzz' });
+        }
+    }
+}
+log(`seed ${SEED}`);
+log(`${jobs.length} checks over ${patterns.join(', ')} on ${PAGES} pages`);
+
+const browser = await step('launch', () => launch());
+
+async function openPage() {
+    const page = await browser.newPage();
+    await step('load ' + SITE, () => page.goto(SITE, { waitUntil: 'load' }));
+    await step('NDS ready', () => page.waitForFunction(() => window.NDS?.init?.mount));
+    const fields = patterns.flatMap((name) => Object.entries(PATTERNS[name].fields).map(([field, html]) => ({ id: `${name}-${field}`, html, instance: PATTERNS[name].instance })));
+    await page.evaluate((fields) => {
+        const host = document.createElement('div');
+        host.id = 'typing-fixture';
+        for (const { id, html } of fields) {
+            const box = document.createElement('div');
+            box.innerHTML = html;
+            box.querySelector('input').id = id;
+            host.append(box);
+        }
+        (document.querySelector('main') || document.body).prepend(host);
+        NDS.init.mount(host);
+    }, fields);
+    await step('fields built', () => page.waitForFunction((fields) => fields.every(({ id, instance }) => {
+        const input = document.getElementById(id);
+        return input[instance] || input.closest('.nds-form-container')[instance];
+    }), fields));
+    return page;
+}
+
+const paste = (page, id, text) => page.evaluate(([id, text]) => {
+    const input = document.getElementById(id);
+    const init = { inputType: 'insertFromPaste', data: text, bubbles: true, cancelable: true };
+    if (!input.dispatchEvent(new InputEvent('beforeinput', init))) return;
+    input.setRangeText(text, input.selectionStart, input.selectionEnd, 'end');
+    input.dispatchEvent(new InputEvent('input', init));
+}, [id, text]);
+
+async function run(page, job) {
+    const id = `${job.pattern}-${job.field}`;
+    const from = parseMarked(job.from);
+    await page.evaluate(({ id, from }) => {
+        const input = document.getElementById(id);
+        input.focus();
+        input.value = from.value;
+        const at = from.start ?? from.value.length;
+        input.setSelectionRange(at, from.end ?? at);
+    }, { id, from });
+    for (const part of job.keys.split(/(\{\w+(?::[^}]*)?\})/)) {
+        if (!part) continue;
+        if (part.startsWith('{Paste:')) await paste(page, id, part.slice(7, -1));
+        else if (part.startsWith('{Insert:')) await page.keyboard.insertText(part.slice(8, -1));
+        else if (part === '{Blur}') await page.evaluate((id) => document.getElementById(id).blur(), id);
+        else if (/^\{\w+\}$/.test(part)) await page.keyboard.press(part.slice(1, -1));
+        else await page.keyboard.type(part);
+    }
+    const [value, caret] = await page.evaluate((id) => { const input = document.getElementById(id); return [input.value, input.selectionStart]; }, id);
+    if (job.limit) {
+        // Each other character at most as often as the limit lists it: '//' allows two slashes.
+        const [most, others] = job.limit, digit = /[\d٠-٩۰-۹]/, count = (text, char) => text.split(char).length - 1;
+        const digits = [...value].filter((char) => digit.test(char)).length;
+        const extra = [...new Set(value)].filter((char) => !digit.test(char) && count(value, char) > count(others, char));
+        if (digits <= most && !extra.length) return null;
+        return `${job.pattern}/${job.field} fuzz: "${job.from}" + ${JSON.stringify(job.keys)} → "${value}" (${digits} digits, most ${most}${extra.length ? ', too many ' + JSON.stringify(extra.join('')) : ''})`;
+    }
+    const want = parseMarked(job.want);
+    const pass = value === want.value && (want.start === null || caret === want.start);
+    return pass ? null : `${job.pattern}/${job.field} ${job.kind}: "${job.from}" + ${JSON.stringify(job.keys)} → "${mark(value, caret)}", want "${job.want}"`;
+}
+
+const pages = await Promise.all(Array.from({ length: Math.min(PAGES, jobs.length) }, openPage)).catch((e) => {
+    console.error(`${e.message.split('\n')[0]} — is the dev server up? (bundle exec jekyll serve, or SITE=<base url>)`);
+    process.exit(1);
+});
+log('fields built');
+const failures = [];
+// INITIAL: the value each listed field holds once built, before any check writes to it.
+for (const name of patterns) {
+    for (const [field, want] of Object.entries(PATTERNS[name].initial || {})) {
+        const value = await pages[0].evaluate((id) => document.getElementById(id).value, `${name}-${field}`);
+        if (value !== want) failures.push(`${name}/${field} initial: "${value}", want "${want}"`);
+    }
+}
+await Promise.all(pages.map(async (page, p) => {
+    for (let j = p; j < jobs.length; j += pages.length) {
+        const failure = await step(`check ${jobs[j].from} + ${jobs[j].keys}`, () => run(page, jobs[j]));
+        if (failure) failures.push(failure);
+    }
+}));
+await browser.close();
+
+for (const name of patterns) {
+    const mine = failures.filter((line) => line.startsWith(name + '/'));
+    const total = jobs.filter((job) => job.pattern === name).length;
+    console.log(`${mine.length ? 'FAIL' : 'PASS'}  ${name}: ${total - mine.length}/${total}`);
+    for (const line of mine.slice(0, 40)) console.log('   ' + line);
+    if (mine.length > 40) console.log(`   … ${mine.length - 40} more`);
+}
+log(failures.length ? `${failures.length} failed` : 'all passed');
+process.exit(failures.length ? 1 : 0);

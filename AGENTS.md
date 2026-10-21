@@ -34,6 +34,7 @@ node scripts/check-dialogs.mjs                  # Modal + Panel on <dialog>: pla
 node scripts/check-bundle-once.mjs              # a bundle loaded twice runs once: no error, no extra listener, a warning; JS=<dir> for other bundles
 node scripts/check-a11y.mjs [page.html …]       # axe (WCAG A/AA) + a Tab walk (visible stop, focus ring, no trap) on every built page, LTR and RTL; --dir, --no-keys, ENGINE=webkit
 node scripts/check-form-reset.mjs               # every form field's doc canon: a reset puts it back (value, message, chips, status), a cancelled one keeps the change; ENGINE=webkit, OLD_JS=<dir of old bundles> for an A/B
+node scripts/check-typing.mjs [pattern …]       # shaped typing (date, time) with real keys: written cases + every span deleted and typed back; a new pattern is one PATTERNS entry; ENGINE=webkit
 node scripts/check-pagination-data.mjs          # data-driven Pagination in a server flow: focus kept, 0/1 page hides, placeholder releases, data-active-page + ?page= current, ?per-page= read before the split; ENGINE=webkit, OLD_JS=<dir>
 node scripts/check-mainnav.mjs                  # Main Navigation: menu placement, swap, scroll, outside click, phone drawer; ENGINE=webkit, TIMING=1
 node scripts/trace-click.mjs [page] [runs]      # one plain tap traced: every listener on pointer/mouse/click with its cost, and the other main-thread work; TAP=1

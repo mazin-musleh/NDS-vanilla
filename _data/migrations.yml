@@ -320,6 +320,8 @@
 - { kind: api, name: NDS.DatePicker.createHijriDate, status: removed, since: "2.0.0", fix: "Remove the call: write a { day, month, year } object." }
 - { kind: api, name: NDS.DatePicker.CalendarConfig.hijri.gregorianToHijri, status: removed, since: "2.0.0", fix: "Use NDS.Date.format(date, { calendar: 'hijri', format: 'DD/MM/YYYY' })." }
 - { kind: api, name: NDS.DatePicker.CalendarConfig.hijri.hijriToGregorian, status: removed, since: "2.0.0", fix: "Use NDS.Date.parse(text, { calendar: 'hijri', format: … })." }
+- { kind: api, name: NDS.DatePicker.Calendar.detectCalendarTypeFromValue, status: removed, since: "2.0.0", fix: "Read the calendar with NDS.Date.getCalendar(el): only data-calendar picks it now." }
+- { kind: api, name: NDS.DatePicker.Calendar.detectCalendarTypeFromSingleValue, status: removed, since: "2.0.0", fix: "Read the calendar with NDS.Date.getCalendar(el): only data-calendar picks it now." }
 - { kind: api, name: NDS.TimeDate.getHijriDate, status: removed, since: "2.0.0", fix: "Use NDS.Date.format(NDS.Date.getToday(), { calendar: 'hijri', format: 'D M YYYY' })." }
 - { kind: api, name: el.ndsTabs.switchTo, status: renamed, use: el.ndsTabs.goTo, since: "2.0.0", fix: "Use el.ndsTabs.goTo(index)." }
 - { kind: api, name: el._ndsSwiper, status: renamed, use: el.ndsSwiper, since: "2.0.0", fix: "Use el.ndsSwiper." }

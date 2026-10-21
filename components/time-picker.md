@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "22/10/2026 - 01:42 AM"
 ---
 
 <section id="time-picker-overview" class="nds-content-section nds-doc-overview">
@@ -197,7 +197,7 @@ Any other character stays as written. `ss` adds a Second list, and `A` or `a` ad
             <i class="hgi hgi-stroke hgi-keyboard"></i>
             <span class="nds-label">Type or Pick</span>
           </span>
-          <p class="nds-item-desc">The user can type the time, in Latin or Arabic digits. The digits fill the format as they are typed: the separator appears on its own, <code class="nds-inline-code lang-html">9</code> becomes <code class="nds-inline-code lang-html">09:</code>, and <code class="nds-inline-code lang-html">2:</code> becomes <code class="nds-inline-code lang-html">02:</code>. A digit that makes the hour impossible is ignored: after <code class="nds-inline-code lang-html">2</code>, a <code class="nds-inline-code lang-html">5</code> is not added. <code class="nds-inline-code lang-html">a</code> or <code class="nds-inline-code lang-html">p</code>, <code class="nds-inline-code lang-html">ص</code> or <code class="nds-inline-code lang-html">م</code>, adds AM or PM. A pasted time is read at once in any common form: <code class="nds-inline-code lang-html">2:30 PM</code> shows as <code class="nds-inline-code lang-html">14:30</code> in a 24-hour field. An edit in the middle is read when the user leaves the field.</p>
+          <p class="nds-item-desc">The user can type the time, in Latin or Arabic digits. The digits fill the format as they are typed: the separator appears on its own, <code class="nds-inline-code lang-html">9</code> becomes <code class="nds-inline-code lang-html">09:</code>, and <code class="nds-inline-code lang-html">2:</code> becomes <code class="nds-inline-code lang-html">02:</code>. A digit that makes the hour impossible is ignored: after <code class="nds-inline-code lang-html">2</code>, a <code class="nds-inline-code lang-html">5</code> is not added. <code class="nds-inline-code lang-html">a</code> or <code class="nds-inline-code lang-html">p</code>, <code class="nds-inline-code lang-html">ص</code> or <code class="nds-inline-code lang-html">م</code>, adds AM or PM. A pasted time is read at once in any common form: <code class="nds-inline-code lang-html">2:30 PM</code> shows as <code class="nds-inline-code lang-html">14:30</code> in a 24-hour field, and a paste that is not a time goes in as if the user typed it. Typing in the middle of a full time replaces the digit after the cursor. After the user deletes part of a time, a key goes in at the cursor, and the time takes its format again when its digits are complete: <code class="nds-inline-code lang-html">10:3</code> and a <code class="nds-inline-code lang-html">0</code> before the <code class="nds-inline-code lang-html">3</code> make <code class="nds-inline-code lang-html">10:03</code>. The field never takes more digits or separators than the format holds, or a unit past the clock. An edit in the middle is read when the user leaves the field.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

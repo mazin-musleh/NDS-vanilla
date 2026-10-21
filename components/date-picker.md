@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "22/10/2026 - 02:10 AM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -106,6 +106,13 @@ The calendar button, `.date-picker-toggle`, opens the calendar. A click in the t
 
 A pick shows in the calendar, but the field does not change until the user presses Save. Save writes the date in the field and fires native `input` and `change` events on it. Close, Escape or a click outside the calendar closes it and drops the pick. When the calendar closes with focus inside it, focus goes back to the calendar button. Today moves the calendar to this month and picks today. In Range, Today only moves the calendar. The Today button is off when today is outside the bounds.
 
+### Typing
+{: .nds-block-title}
+
+The user can type the date, in Latin or Arabic digits. The digits fill the format as they are typed, and the separators appear on their own: `28051983` becomes `28/05/1983`. A day or a month digit that no second digit can follow gets a zero, so `4` becomes `04/`, and a typed separator ends a part, so `4/` becomes `04/` too. A digit that makes the day or the month impossible is ignored: after `3`, a `2` is not added. Typing in the middle of a full date replaces the digit after the cursor, and the cursor steps over the separators. After the user deletes part of a date, a key goes in at the cursor, and the date takes its format again when its digits are complete: `28/051983` becomes `28/05/1983`. The field never takes more digits or separators than the format holds, or a day or month that cannot be. In a range, ` - ` appears after the start date. A format with a month name, `MMMM`, gets no help while the user types. On a phone, the field opens a keypad with digits, unless the input has its own `inputmode`.
+
+A pasted date, or a typed one when the user leaves the field, takes the field's format when it is written another common way: `/`, `.`, `-` or spaces between the parts, digits only such as `28051983`, the year first such as `1983-05-28`, Arabic digits, or a time or `هـ` after it. In a `DD/MM/YYYY` field, `1983-05-28T10:30:00Z` becomes `28/05/1983`. A date with the year last reads day first, unless the field puts the month first, and the other order only when that day does not exist: `05/28/1983` becomes `28/05/1983`. A year up to 1500 reads as Hijri, and a date in the other calendar becomes the field's: in a Gregorian field, `15/09/1447` becomes `04/03/2026`. In a range, each date takes the format, and `to` between them works too. A two-digit year fits only a `YY` field. A paste that is not a date goes in as if the user typed it, under the same limits. Typed text that is not a date stays as written, and the field shows the invalid message.
+
 ### Date Range
 {: .nds-block-title}
 
@@ -114,7 +121,7 @@ The class `nds-date-range` on `.nds-date-picker` makes the user pick two days. T
 ### Hijri Calendar
 {: .nds-block-title}
 
-`data-calendar="hijri"` on `.nds-date-picker` shows Hijri months and years, and the field holds the Hijri date. The nearest `data-calendar` wins, so on `<html>` it makes every picker on the site Hijri, and `data-calendar="gregory"` on one picker keeps it Gregorian. A date already in the field picks the calendar too: a year up to 1500 opens the Hijri calendar, and a later year opens the Gregorian one, whatever the attribute. Hijri dates follow Umm al-Qura, the official calendar of Saudi Arabia, through [Date](../core/date). A Hijri day that does not exist, such as day 30 of a 29-day month, is an invalid date.
+`data-calendar="hijri"` on `.nds-date-picker` shows Hijri months and years, and the field holds the Hijri date. The nearest `data-calendar` wins, so on `<html>` it makes every picker on the site Hijri, and `data-calendar="gregory"` on one picker keeps it Gregorian. Without `data-calendar`, the field is Gregorian. The date never picks the calendar: a date in the other calendar is converted to the field's calendar, whether the user types or pastes it or the page ships it in the field's `value`. In a Gregorian field, `15/09/1447` becomes `04/03/2026`. A shipped value written another common way, such as `2026-03-04`, takes the field's format too. Hijri dates follow Umm al-Qura, the official calendar of Saudi Arabia, through [Date](../core/date). A Hijri day that does not exist, such as day 30 of a 29-day month, is an invalid date.
 
 ### Date Format
 {: .nds-block-title}

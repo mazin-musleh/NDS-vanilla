@@ -19,7 +19,8 @@
  *                                data-date-format, else DD/MM/YYYY) · data-clearable (automatic
  *                                in range mode) · .nds-date-range
  *   data-calendar="hijri":       on the container or any ancestor (<html> too): Hijri months
- *                                (a prefilled value's year overrides it: up to 1500 reads as Hijri)
+ *                                (none: Gregorian). The value never picks the calendar: a date in
+ *                                the other one, typed, pasted or shipped, is converted to it
  *   .nds-date-value:             a hidden input in the container the picker fills with the day;
  *                                its own data-date-format / data-calendar, else the picker's.
  *                                Range: the first takes the start, the second the end;
@@ -38,6 +39,12 @@
  *     data-converted-date on the input.
  *   - "Today" follows <html data-timezone>; without it, the visitor's clock.
  *   - Hijri is Umm al-Qura, converted exactly by NDS.Date.
+ *   - Typing at the end is shaped to the format: digits only, separators added ("28051983" →
+ *     "28/05/1983"); typing inside a whole date types over it, and inside one an edit broke
+ *     inserts until the digits fill the format. Not with a MMMM format.
+ *   - A pasted date, or a typed one on change, written another common way takes the format
+ *     ("1983-05-28" → "28/05/1983"); year last reads day first unless the format is month first.
+ *     Sets inputmode="decimal" unless the input has one.
  */
 (() => {
     'use strict';
@@ -129,6 +136,227 @@
         if (/D/.test(format)) return 'day';
         if (/M/.test(format)) return 'month';
         return 'year';
+    }
+
+    // Split keeps the tokens; longest first, so YYYY is not read as two YY.
+    var DATE_TOKENS = /(YYYY|YY|MMMM|MM|M|DD|D)/;
+    var isValidUnit = function (text, day) { return +text >= 1 && +text <= (day ? 31 : 12); };
+
+    // Typing at the end → the format's shape, as the time picker does: digits fill the units,
+    // separators appear on their own. A day or month digit is padded when no second digit can
+    // follow it ("4" → "04/") or a typed separator closes it ("4/" → "04/"). Stops at the
+    // first unit not typed yet.
+    function formatTyped(text, format) {
+        var latinText = NDS.toLatinDigits(text), digits = '', closed = {};
+        for (var index = 0; index < latinText.length; index++) {
+            if (/\d/.test(latinText[index])) digits += latinText[index];
+            else if (/\d/.test(latinText[index - 1])) closed[digits.length - 1] = true;
+        }
+        var out = '', i = 0, pieces = format.split(DATE_TOKENS);
+        for (var p = 0; p < pieces.length; p++) {
+            var piece = pieces[p], unit;
+            if (!piece) continue;
+            if (p % 2 === 0) { out += piece; continue; }
+            if (i >= digits.length) break;
+            if (piece[0] === 'Y') {
+                unit = digits.slice(i, i += piece.length);
+                out += unit;
+                if (unit.length < piece.length) break;
+                continue;
+            }
+            var day = piece[0] === 'D', ends = +digits[i] > (day ? 3 : 1) || closed[i];
+            // D and M keep a lone digit as it is ("9/5/2026"); DD and MM pad it.
+            unit = ends ? (piece.length === 2 ? '0' : '') + digits[i++] : digits.slice(i, i += 2);
+            // A second digit past the calendar ("32", "13", "00") is refused.
+            if (unit.length === 2 && !isValidUnit(unit, day)) unit = unit[0];
+            out += unit;
+            if (!ends && unit.length < 2) break;
+        }
+        return out;
+    }
+
+    // The whole format, each unit at its width (D and M take one digit or two).
+    function isComplete(value, format) {
+        var source = format.split(DATE_TOKENS).map(function (piece, p) {
+            return p % 2 ? '\\d{' + (piece.length === 1 ? '1,2' : piece.length) + '}' : piece.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }).join('');
+        return new RegExp('^' + source + '$').test(NDS.toLatinDigits(value));
+    }
+
+    // Digits that fill a fixed-width format exactly, in its shape: "28/051983" → "28/05/1983".
+    // Null when they do not, when a day or month would not exist, or when a D or M unit leaves the width open.
+    function getFilled(text, format) {
+        var pieces = format.split(DATE_TOKENS), digits = NDS.toLatinDigits(text).replace(/\D/g, '');
+        var tokens = pieces.filter(function (piece, p) { return p % 2; });
+        if (tokens.some(function (token) { return token.length === 1; }) || digits.length !== tokens.join('').length) return null;
+        var i = 0, fits = true;
+        var filled = pieces.map(function (piece, p) {
+            if (!(p % 2)) return piece;
+            var unit = digits.slice(i, i += piece.length);
+            if (piece[0] !== 'Y' && !isValidUnit(unit, piece[0] === 'D')) fits = false;
+            return unit;
+        }).join('');
+        return fits ? filled : null;
+    }
+
+    // A date written another common way, in the field's format: "1983-05-28", "28.5.1983", "28051983",
+    // Arabic digits, a time or هـ after it. A year-last date reads day first unless the field is month
+    // first, and the other order only when that day does not exist. NDS.Date reads and writes it, in
+    // the calendar its year names (up to 1500: Hijri, as the picker reads a value), or converted
+    // into `into` ('hijri' | 'gregory') when the field sets one. Null otherwise.
+    function readLoose(text, format, into) {
+        text = NDS.toLatinDigits(text).replace(/[\u200e\u200f\u061c]/g, '').trim()
+            .replace(/\s*(هـ|ه|AH)$/i, '').replace(/[T\s]\d{1,2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:?\d{2})?$/, '');
+        var tokens = format.split(DATE_TOKENS).filter(function (piece, p) { return p % 2; });
+        var kinds = tokens.map(function (token) { return token[0]; });
+        var groups, orders;
+        if (/^\d+$/.test(text)) {
+            // One run of digits: the format's units at full width, in its order.
+            var i = 0;
+            groups = tokens.map(function (token) { return text.slice(i, i += token[0] === 'Y' ? token.length : 2); });
+            if (i !== text.length) return null;
+            orders = [kinds];
+        } else {
+            groups = text.split(/[\/.\-\s,]+/);
+            if (groups.length !== kinds.length || groups.some(function (group) { return !/^\d+$/.test(group); })) return null;
+            var monthFirst = kinds.indexOf('M') < kinds.indexOf('D') && kinds[0] !== 'Y';
+            var keep = function (order) { return order.filter(function (kind) { return kinds.indexOf(kind) >= 0; }); };
+            orders = groups[0].length > 2 ? [keep(['Y', 'M', 'D'])] : [keep(monthFirst ? ['M', 'D', 'Y'] : ['D', 'M', 'Y']), keep(monthFirst ? ['D', 'M', 'Y'] : ['M', 'D', 'Y'])];
+        }
+        // Four digits are a year; two only in a YY field, as 20xx.
+        var yearDigits = groups[orders[0].indexOf('Y')] || '';
+        var year = yearDigits.length === 4 ? 'YYYY' : yearDigits.length === 2 && tokens.indexOf('YY') >= 0 ? 'YY' : null;
+        // NDS.Date writes a year as a number, so 0500 would come back as 500.
+        if (!year || (year === 'YYYY' && +yearDigits < 1000)) return null;
+        var calendar = year === 'YYYY' && +yearDigits <= 1500 ? 'hijri' : 'gregory';
+        for (var o = 0; o < orders.length; o++) {
+            var date = NDS.Date.parse(groups.join('/'), { format: orders[o].join('/').replace('Y', year), calendar: calendar });
+            if (date) return NDS.Date.format(date, { format: format, calendar: into || calendar });
+        }
+        return null;
+    }
+
+    // The most digits the format holds: D and M count two.
+    var getMaxDigits = function (format) {
+        return format.split(DATE_TOKENS).reduce(function (sum, piece, p) { return sum + (p % 2 ? (piece[0] === 'Y' ? piece.length : 2) : 0); }, 0);
+    };
+    var countDigits = function (text) { return NDS.toLatinDigits(text).replace(/\D/g, '').length; };
+
+    // The units of a value that holds every separator of the format in order, as
+    // [{ start, text, token }]; null when one is missing or something else is there.
+    function splitUnits(value, format) {
+        var pieces = format.split(DATE_TOKENS), units = [], at = 0;
+        for (var p = 0; p < pieces.length; p++) {
+            if (!(p % 2)) {
+                if (value.substr(at, pieces[p].length) !== pieces[p]) return null;
+                at += pieces[p].length;
+                continue;
+            }
+            var text = value.slice(at).match(/^\d*/)[0];
+            units.push({ start: at, text: text, token: pieces[p] });
+            at += text.length;
+        }
+        return at === value.length ? units : null;
+    }
+
+    // Typing inside a date an edit broke ("2/1983" after deleting "8/05") inserts the key at the
+    // caret, as a plain text box does, up to the digits and separators the format holds. With every
+    // separator in, a digit that makes its unit too long or impossible is refused. Once the digits
+    // fill the format again, they take its shape (getFilled).
+    function getTypedIn(value, start, end, character, format) {
+        var separator = /\D/.test(character), rest = value.slice(0, start) + value.slice(end);
+        var count = function (text) { return text.split(character).length - 1; };
+        var separators = format.split(DATE_TOKENS).filter(function (piece, p) { return !(p % 2); }).join('');
+        if (separator ? count(rest) >= count(separators) : countDigits(rest) >= getMaxDigits(format)) return null;
+        var typed = value.slice(0, start) + character + value.slice(end);
+        var unit = !separator && (splitUnits(typed, format) || []).find(function (candidate) {
+            return candidate.start <= start && start < candidate.start + candidate.text.length;
+        });
+        if (unit && (unit.text.length > (unit.token[0] === 'Y' ? unit.token.length : 2)
+            || (unit.token[0] !== 'Y' && unit.text.length === 2 && !isValidUnit(unit.text, unit.token[0] === 'D')))) return null;
+        var filled = getFilled(typed, format);
+        if (filled === null) return { value: typed, caret: start + 1 };
+        // The caret stays after the same digits, and after the separator when one was typed.
+        var digitsBefore = NDS.toLatinDigits(typed.slice(0, start + 1)).replace(/\D/g, '').length, caret = 0;
+        for (var seen = 0; caret < filled.length && seen < digitsBefore; caret++) if (/\d/.test(filled[caret])) seen++;
+        if (separator && filled[caret] === character) caret++;
+        return { value: filled, caret: caret };
+    }
+
+    // Typing inside a whole date types over it, as the time picker does: the digit replaces
+    // the one at the caret, the caret steps over separators, and a digit that makes an
+    // impossible day or month is refused. Returns { value, caret } or null.
+    function getTypedOver(value, position, end, character, format) {
+        // Arabic digits keep their places as 0-9, so the caret and the runs below line up.
+        character = NDS.toLatinDigits(character);
+        value = NDS.toLatinDigits(value);
+        if (!isComplete(value, format)) return getTypedIn(value, position, end, character, format);
+        var tokens = format.split(DATE_TOKENS).filter(function (piece, p) { return p % 2; });
+        var runs = [], match, digitRuns = /\d+/g;
+        while ((match = digitRuns.exec(value))) {
+            runs.push({ start: match.index, end: match.index + match[0].length, text: match[0], token: tokens[runs.length] || 'YYYY' });
+        }
+        var i = runs.findIndex(function (candidate) { return candidate.end > position; });
+        // A one-digit D or M unit grows when the two digits fit ("|9/5" + "1" → "19/5", "1|/5" + "2" → "12/5"),
+        // and a key at its start replaces it when they do not ("|9/5" + "4" → "4/5"): two digits can go where one was.
+        var single = runs.findIndex(function (candidate) {
+            return candidate.token.length === 1 && candidate.text.length === 1 && candidate.start <= position && position <= candidate.end;
+        });
+        if (single >= 0 && /^\d$/.test(character)) {
+            var unit = runs[single], unitDay = unit.token === 'D', after = runs[single + 1] ? runs[single + 1].start : value.length;
+            if (position === unit.start && isValidUnit(character + unit.text, unitDay)) {
+                return { value: value.slice(0, position) + character + value.slice(position), caret: position + 1 };
+            }
+            if (position === unit.start) {
+                return { value: value.slice(0, position) + character + value.slice(unit.end), caret: +character > (unitDay ? 3 : 1) ? after : position + 1 };
+            }
+            if (isValidUnit(unit.text + character, unitDay)) {
+                return { value: value.slice(0, position) + character + value.slice(position), caret: runs[single + 1] ? after + 1 : position + 1 };
+            }
+        }
+        // Past the last unit: the same shaping as typing at the end.
+        if (i < 0) return { value: formatTyped(value + character, format), caret: null };
+        var run = runs[i];
+        var set = function (text, caret) { return { value: value.slice(0, run.start) + text + value.slice(run.end), caret: caret }; };
+        // A typed separator steps over the one at the caret; any other key is refused.
+        if (!/^\d$/.test(character)) return value[position] === character ? { value: value, caret: position + 1 } : null;
+
+        var next = runs[i + 1] ? runs[i + 1].start : value.length;
+        var offset = Math.max(0, position - run.start);
+        var text = run.text.slice(0, offset) + character + run.text.slice(offset + 1);
+        var step = offset >= text.length - 1 ? next : run.start + offset + 1;
+        if (run.token[0] === 'Y') return text.length > run.token.length ? null : set(text, step);
+        var day = run.token[0] === 'D';
+        if (offset === 0 && run.text.length === 2 && !isValidUnit(text, day)) {
+            // No second digit can follow ("4" → "04"), or the old one can't: take the lowest that can ("39" → "30").
+            if (+character > (day ? 3 : 1)) return set('0' + character, next);
+            return set(character + '0123456789'.split('').find(function (digit) { return isValidUnit(character + digit, day); }), run.start + 1);
+        }
+        return isValidUnit(text, day) ? set(text, step) : null;
+    }
+
+    // Keys typed from the caret on, one by one as the user types them: at the end they are shaped
+    // (formatTyped, or getTypedIn on a broken value, whose tail reshaping would drop), inside the
+    // value they type over or go in (getTypedOver). A refused key is skipped. Returns { value, caret }.
+    function typeKeys(value, caret, end, keys, format) {
+        value = NDS.toLatinDigits(value);
+        for (var c = 0; c < keys.length; c++) {
+            var key = NDS.toLatinDigits(keys[c]), result;
+            if ((c ? caret : end) >= value.length) {
+                var head = value.slice(0, caret);
+                result = formatTyped(head, format).indexOf(head) === 0
+                    ? { value: formatTyped(head + key, format) }
+                    : getTypedIn(head, head.length, head.length, key, format);
+                result = result || { value: head };
+                result.caret = null;
+            } else {
+                result = getTypedOver(value, caret, c ? caret : end, key, format);
+                if (!result) continue;
+            }
+            value = result.value;
+            caret = result.caret === null ? value.length : result.caret;
+        }
+        return { value: value, caret: caret };
     }
 
     // Calendar System Configuration
@@ -235,9 +463,9 @@
 
         // Bind events that need dropdown creation
         this.bindInitEvents();
-        // Pre-filled values stamp validity at construction (silently) so a
-        // server-rendered out-of-bounds value can't pass a pre-open submit.
-        if (dateInput.value.trim()) this._validateInput(true);
+        // A shipped value in another form or calendar takes the field's, and stamps validity at
+        // construction (silently) so a server-rendered out-of-bounds value can't pass a pre-open submit.
+        if (dateInput.value.trim()) { this._readTyped(); this._validateInput(true); }
         this._syncValueInputs();
         this.valid = true;
     }
@@ -293,12 +521,88 @@
             // stamp lands before forms' document-level change delegation
             // reads validity.
             this.elements.input.addEventListener('change', function () {
+                self._readTyped();
                 self._validateInput();
                 self._syncValueInputs();
             }, { signal: signal });
             // A form reset restores the field after this event, and a hidden input keeps what JS wrote.
             // The old value's error goes too; Forms clears the message.
-            NDS.field.onReset(this.elements.input.form, function () { self._validateInput(true); self._syncValueInputs(); }, { signal: signal });
+            NDS.field.onReset(this.elements.input.form, function () { self._readTyped(); self._validateInput(true); self._syncValueInputs(); }, { signal: signal });
+            if (!/MMMM/.test(this.state.format)) this._bindTyping(signal);
+        },
+
+        // Text as the field's date (or range) in its format, through readLoose; null when it is none.
+        // A date the user types or pastes in the other calendar is converted into the field's (the
+        // value the page shipped, else the nearest data-calendar, else Gregorian), never switching it.
+        _readDates: function (text) {
+            var format = this.state.format, into = this.state.calendarType === 'hijri' ? 'hijri' : 'gregory';
+            var dates = this.isRangeMode() ? text.split(/\s+[-–—]\s+|\s+(?:to|إلى)\s+/) : [text];
+            if (!text.trim() || dates.length > 2) return null;
+            dates = dates.map(function (date) { return readLoose(date, format, into); });
+            return dates.indexOf(null) >= 0 ? null : dates.join(' - ');
+        },
+
+        // A typed date written another common way takes the field's format, as the time picker reads
+        // a time. Text it cannot read stays, for the invalid message.
+        _readTyped: function () {
+            var input = this.elements.input, value = this._readDates(input.value);
+            if (value !== null && value !== input.value) NDS.setValue(input, value, { change: false });
+        },
+
+        // Typing at the end is shaped (formatTyped); typing inside the value types over it (getTypedOver).
+        // A delete keeps what the user wrote, so Backspace can remove an added separator.
+        _bindTyping: function (signal) {
+            var self = this, input = this.elements.input, shaped = false;
+            var getFormat = function () { return self.isRangeMode() ? self.state.format + ' - ' + self.state.format : self.state.format; };
+            // decimal, not numeric: forms blocks non-digits under numeric, and a typed separator closes a unit.
+            if (!input.hasAttribute('inputmode')) {
+                input.inputMode = 'decimal';
+                this._ownInputMode = true;
+            }
+            input.addEventListener('change', function () { shaped = false; }, { signal: signal });
+            input.addEventListener('input', function (e) {
+                // A paste with no text to read in beforeinput: read what landed.
+                if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+                    self._readTyped();
+                    shaped = true;
+                    return;
+                }
+                if (e.inputType !== 'insertText' || e.isComposing || input.selectionEnd !== input.value.length) return;
+                var before = input.value.slice(0, -e.data.length);
+                var text = typeKeys(before, before.length, before.length, e.data, getFormat()).value;
+                if (text !== input.value) { input.value = text; shaped = true; }
+            }, { signal: signal });
+            var write = function (result) {
+                if (result.value !== input.value) {
+                    shaped = true;
+                    // No inputType, so the shaping handler above skips it; Forms still hears it.
+                    NDS.setValue(input, result.value, { change: false });
+                }
+                input.setSelectionRange(result.caret, result.caret);
+            };
+            input.addEventListener('beforeinput', function (e) {
+                // Chrome sends beforeinput on a readonly field too.
+                if (e.isComposing || input.readOnly) return;
+                var start = input.selectionStart, end = input.selectionEnd, value = input.value;
+                if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+                    var pasted = (e.dataTransfer && e.dataTransfer.getData('text/plain')) || e.data;
+                    if (!pasted) return;
+                    // A date in any common form, the whole field's or the pasted text's own ("28/05/1983" dropped
+                    // beside another): that date. Anything else goes in as if typed, under the same limits.
+                    e.preventDefault();
+                    var read = self._readDates(value.slice(0, start) + pasted + value.slice(end));
+                    if (read === null) read = self._readDates(pasted);
+                    write(read === null ? typeKeys(value, start, end, pasted, getFormat()) : { value: read, caret: read.length });
+                    return;
+                }
+                if (e.inputType !== 'insertText' || !e.data || end >= value.length) return;
+                e.preventDefault();
+                write(typeKeys(value, start, end, e.data, getFormat()));
+            }, { signal: signal });
+            // WebKit sends no change on blur when a script wrote the last edit: send it here.
+            input.addEventListener('blur', function () {
+                if (shaped) input.dispatchEvent(new Event('change', { bubbles: true }));
+            }, { signal: signal });
         },
 
         // Adopt NDS.Dropmenu for the calendar's open/close/escape/outside-click
@@ -510,7 +814,7 @@
                 isInitialized: false,
                 format: format,
                 mode: mode,
-                calendarType: this.detectCalendarType(format),
+                calendarType: this.detectCalendarType(),
                 minDate: null,
                 maxDate: null
             };
@@ -623,41 +927,10 @@
             return '';
         },
 
-        detectCalendarType: function (format) {
-            // First check if there's an initial value to determine calendar type
-            var inputValue = this.elements.input.value.trim();
-            if (inputValue) {
-                var detectedType = this.detectCalendarTypeFromValue(inputValue, format);
-                if (detectedType) {
-                    return detectedType;
-                }
-            }
-
-            // Check hijri class dynamically each time
+        // The nearest data-calendar, else Gregorian. The value never picks it: a date in the other
+        // calendar is converted into this one (_readTyped).
+        detectCalendarType: function () {
             return NDS.Date.getCalendar(this.elements.container) === 'hijri' ? 'hijri' : 'gregorian';
-        },
-
-        detectCalendarTypeFromValue: function (inputValue, format) {
-            // Handle range format
-            if (inputValue.includes(' - ')) {
-                var rangeParts = inputValue.split(' - ');
-                if (rangeParts.length === 2) {
-                    // Use the first date to determine calendar type
-                    return this.detectCalendarTypeFromSingleValue(rangeParts[0].trim(), format);
-                }
-            }
-
-            // Handle single date format
-            return this.detectCalendarTypeFromSingleValue(inputValue, format);
-        },
-
-        detectCalendarTypeFromSingleValue: function (dateString, format) {
-            // The typed year picks the calendar: a Hijri year is 1500 or less.
-            var gregorianDate = NDS.Date.parse(dateString, { format: format });
-            var hijri = !gregorianDate && NDS.Date.parse(dateString, { format: format, calendar: 'hijri' });
-            if (!gregorianDate && !hijri) return null;
-            var year = gregorianDate ? gregorianDate.getFullYear() : toHijri(hijri).year;
-            return year > 1500 ? 'gregorian' : 'hijri';
         },
 
         // Utility methods
@@ -714,9 +987,8 @@
         },
 
         initializeCalendar: function () {
-            // Re-detect calendar type each time — with the picker's own format,
-            // so value-based detection parses custom formats correctly.
-            this.state.calendarType = this.detectCalendarType(this.state.format);
+            // Each time: a script may change data-calendar between opens.
+            this.state.calendarType = this.detectCalendarType();
             this.state.isInitialized = true;
             this._readBounds();
             this.parseInitialValue();
@@ -1685,7 +1957,7 @@
             var outs = this.elements.container.querySelectorAll('.nds-date-value');
             if (!outs.length) return;
             var format = this.state.format;
-            var type = this.detectCalendarType(format);
+            var type = this.detectCalendarType();
             var text = this.elements.input.value.trim();
             var range = this.isRangeMode(), parts = text.split(' - ');
             outs.forEach(function (out, i) {
@@ -1923,6 +2195,7 @@
 
             var container = this.elements.container, input = this.elements.input;
             if (container) container.removeAttribute('data-picker-mode');
+            if (this._ownInputMode) input.removeAttribute('inputmode');
             // Nothing is left to clear the picker's own error, so it would block submit for good.
             // Only that one: a status forms or the page set stays.
             if (input && input.validity.customError) {

@@ -13,6 +13,11 @@ Cleaned 2026-10-19: finished items and their release notes left (all in `CHANGEL
 - **JS naming rules: done 2026-10-21** (`plans/js-naming-rules.md`); the naming checks fail the release. Open:
   [ ] The nds-iq-eval scenarios S14 and S25 and the `fixtures/mini-root/_source` snapshot name old API (`updateRecords`, `populate`, `menuOf`): load the `nds-iq-eval` skill before editing them.
   [ ] `check-bundle-once.mjs` fails about 1 run in 6, on old bundles too: the ONCE page sometimes settles at 51 listeners and TWICE at 48. Cause not found.
+- **Date and Time Picker typing and paste (built 2026-10-22).** Shaped typing, type-over, insert in a broken value, format limits, paste read through `NDS.Date`, `data-calendar` alone picks the calendar (else Gregorian). Guarded by `node scripts/check-typing.mjs` (cases, delete-and-retype sweep, seeded fuzz; `ENGINE=webkit`). Open:
+  [ ] Performance: time one keystroke (`check-form-speed.mjs`) against the commit before; `isComplete`, `splitUnits` and `getMeridiemWords` rebuild a regex or a list on every key: cache them per format.
+  [ ] Simplify: the two pickers hold near-twin helpers (`formatTyped`, `isComplete`, `getFilled`, `getTypedIn`, `splitUnits`, `typeKeys`): share them or trim each.
+  [ ] Calendar conversion at the last input (owner, 2026-10-22): convert a date in the other calendar when the user finishes, not mid-edit (today a paste converts at once). Confirm the exact trigger with the owner first.
+  [ ] More testing: a real Ctrl+V in Chrome and Safari (the checker sends the browser's paste events, not the clipboard), phone keyboards (Android sends several characters at once), an RTL page, and the full suite after the simplify pass.
 
 ### Parked features (owner calls; after v2.0.0 unless noted)
 
