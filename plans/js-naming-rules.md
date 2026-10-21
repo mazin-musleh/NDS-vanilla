@@ -60,6 +60,11 @@ Pick rule 1 trusts PERSONA, so the entries were checked first. Each fix keeps th
 - Update workflow: an entry that breaks another, or cites a source wrongly, is fixed before anything is
   picked from it.
 
+Also landed: entry 12, a map from every kind of name to its rule, with rules for the ten kinds that had
+none (`window` globals, consumer settings, storage and cookie keys, URL parameters, `data-*` hooks, state
+tokens, internal classes, module constants, true/false values, event `detail` keys). Section 3 lists what they
+break.
+
 Left for section 4 because it changes an outcome: entry 1's carve-out approves `el._ndsFilterAC`, an
 abbreviation its own audit flags (`_docAC`).
 
@@ -101,8 +106,8 @@ abbreviation its own audit flags (`_docAC`).
 6. **No `#private`.** `#` works only inside a `class`; most NDS namespaces are object literals, which
    cannot hold it, so `_` is the one mark both shapes take. Bootstrap 5 uses the same `_` mark.
 7. **No `_` flag on a public namespace.** It is a module-scope variable (rule 3).
-8. **Every property NDS writes on `window` is `__NDS_{NAME}`**, as the build and inline-script bridges
-   already are. Carve-out: `window.NDS`, the namespace itself. Entry 9 bars a component global; this covers
+8. **Every property NDS writes on `window` is `__NDS_{NAME}`** (landed as entry 12 rule 1), as the build
+   and inline-script bridges already are. `window.NDS` is the public namespace, not an internal global. Entry 9 bars a component global; this covers
    the rest (`__NDS_LOADED_{BUNDLE}`, rule 9; entry 5's `window.ndsTableSubHandlerInitialized` is deleted by it).
 9. **A bundle runs once per page** (decided 2026-10-21). A page can load one twice: the tag written twice,
    Turbo or pjax re-running body scripts, a framework view adding the tag on mount. Today the second copy
@@ -221,6 +226,23 @@ agents read them) and gets a Migration row when a released template shipped it (
 Rule 5 passes `NDS.state.onAdd(token, scope, fn)` and `NDS.keepChipFocus(chips, render, fallback)` (a
 callback is not a value).
 
+### Entry 12's kinds (landed in PERSONA 2026-10-21): what breaks today
+
+- **Storage and cookie keys** (rule 3), observable, a row each: `cookieConsent` → `nds-consent`
+  (`nds-consent.js`, `nds-loader.js`), `cookieConsentDismissed` → `nds-cookies-dismissed` (`nds-cookies.js`,
+  `nds-loader.js`), `NDS.cache`'s `nds_` prefix → `nds-cache:` (`nds-core.js`). Cost, accepted for the major:
+  a visitor sees the consent notice once more after the upgrade (a generic `cookieConsent` can clash with
+  another consent script on the same site), and old cache entries refill. Keys already on `nds-` stay (carve-out).
+- **Internal classes** (rule 7), no row: 27 classes, `NDSAccordion` … → `NdsAccordion` …; with the wrong
+  name too: `NDSTables` → `NdsTable`, `NDSImagePopupViewer` → `NdsIpv`, `NDSSideInfo` → `NdsSideinfo`,
+  `NDSTagInput` → `NdsTaginput`, `NDSChartInstance` → `NdsChart`, `TimeFields` / `TimePicker` →
+  `NdsTimeFields` / `NdsTimePicker`, `DatePickerCalendar` → `NdsDatePickerCalendar` (`DatePicker.Calendar`
+  stays public).
+- **`window`** (rule 1): `window.ndsTableSubHandlerInitialized` (deleted by rule 9). Consumer settings
+  (rule 2) all conform.
+- **Hooks, tokens, constants, `detail` keys** (rules 5, 6, 8, 10): the check lists them (135 hooks on banners
+  carry no component name; most sit on their own component and pass). Each hook or token rename is a row.
+
 ## 4. What this changes in PERSONA
 
 Each rule lands in PERSONA's own four fields (Canonical, Why, Carve-outs, Audit behavior with severities).
@@ -236,7 +258,7 @@ directly, not through Phase 7.
 | 5 | carve-out "Bundle-scope listener, window flag" (`window.ndsTableSubHandlerInitialized`); Why's "a second copy of the bundle" | deleted: the build guard covers it (rule 9); a module latch does the job |
 | 6 | `el._ndsFilterAC` named as out of scope | the WeakMap form |
 | 10 | rule 1: "a name starting with `_` is internal" | points to entry 12; the internal-verb table, its ban-list line and the `setup…` carve-out join it |
-| 12 (new) | — | section 1's rules, the pick order, the scope line |
+| 12 | the name map and its ten kinds (landed 2026-10-21) | section 1's rules and the pick order join it; its map row for internal names then points to itself |
 | RULES-JSA, JSA-23(a) | names only the `_nds` key form of unreachable per-element state | adds the WeakMap form (rule 4) |
 
 Cited symbols in entry 3 (`_openDropmenus`, `_openTooltip`) and entry 5 (`_controller`, `_abortController`)
@@ -289,7 +311,7 @@ are module-scope names: their citations follow the rename (PERSONA's "a cited sy
    `nds-main.min.js` twice and sees one click run once; then the table flag goes.
 2. `scripts/check-js-rules.mjs`: checks for rules 1.1–1.8 and the section 2 verbs (a replaced verb →
    finding, an unknown first word → verify, capitals acronyms, `_` on a module-scope name, a short word
-   outside the locals list). Its `--self-test` also runs PERSONA's `js` code blocks through the rules, so a
+   outside the locals list), and entry 12's Audit behavior. Its `--self-test` also runs PERSONA's `js` code blocks through the rules, so a
    canonical example that breaks another entry fails. Run it before renaming: its list is the work list.
 3. Renames by script, one commit per rule. After each: `ruby _plugins/js_processor.rb`,
    `node scripts/check-js-rules.mjs --self-test` and a full run diffed against the run before (section 6),

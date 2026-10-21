@@ -2,7 +2,7 @@
 
 The project's chosen conventions for `_js/nds-*.js` component files, documented as concrete canonical forms backed by principle reasoning. Consulted by `nds-js-audit` so JSD-15 ("cross-file pattern consistency") works in single-file mode and so the audit measures code against deliberate choices instead of against the loudest accidental majority.
 
-**Scope:** the component files under `_js/nds-*.js`. Excludes `nds-core.js` (publishes the shared utility surface, different conventions), `nds-loader.js` (orchestration shape), `nds-docs.js` (docs-site builder). Exception: entry 7 (public-surface banner) uses its own wider scope — the `SCOPE` array in `scripts/check-banners.mjs`, which includes `nds-core.js` and `nds-loader.js`. Entry 11 (layers) covers `nds-core.js`, the bases and the loader as well.
+**Scope:** the component files under `_js/nds-*.js`. Excludes `nds-core.js` (publishes the shared utility surface, different conventions), `nds-loader.js` (orchestration shape), `nds-docs.js` (docs-site builder). Exception: entry 7 (public-surface banner) uses its own wider scope — the `SCOPE` array in `scripts/check-banners.mjs`, which includes `nds-core.js` and `nds-loader.js`. Entry 11 (layers) covers `nds-core.js`, the bases and the loader as well. Entry 12 (every name has a rule) covers the whole of `_js/`.
 
 ---
 
@@ -455,6 +455,54 @@ Direction keeps a change local: a base that knows no user changes without breaki
 **Audit behavior**
 
 `check-js-rules.mjs` (built in `plans/shared-logic.md` step 2): a guard on a main namespace → finding; a call from one injected bundle into another → verify; core or a base naming a component namespace → finding. `js_processor.rb` fails the build on a base away from a caller's bundle, or listed after a file in its bundle that names it. Until the plan lands, today's tree diverges in known ways (Form validates other components): migration targets, not revisions.
+
+---
+
+### 12. Every name has a rule
+
+Scope: the whole of `_js/`, core, the loader, docs and the event packs included. A new kind of name gets a row here before it ships.
+
+| Kind | Rule |
+|---|---|
+| Component: file, namespace, instance, init stamp, doc page | entry 9 |
+| Public methods | entry 10 |
+| Internal functions, `_` members, module-scope names, WeakMaps | `plans/js-naming-rules.md` sections 1–2, until they land in this entry and entry 10 |
+| Events | entry 8 |
+| Console prefix | entry 4 |
+| AbortControllers | entry 1 |
+| Init guards and latches | entry 5 |
+| CSS classes, menu identifiers, tokens, knobs | AGENTS.md (SCSS Standards, Design Tokens) |
+| i18n keys | the English word is the key (`scripts/check-i18n.mjs`) |
+| Bundle files | the build (`@bundles` in `_plugins/js_processor.rb`) |
+| Everything below | this entry |
+
+**Canonical**
+
+1. **A global NDS writes on `window`**: `window.NDS` is the public namespace, the one name consumers call; everything else is internal and is `__NDS_{NAME}`, upper snake case (`__NDS_BUNDLES`, `__NDS_THEME_ACTIVE`). Never a component global (entry 9).
+2. **A global the consumer sets for NDS to read** is `NDS_{NAME}` (`NDS_ASSETS_PATH`, `NDS_I18N_PATH`): a public setting, so no underscores in front.
+3. **A storage or cookie key** is `nds-{name}[-{part}]`, kebab, with `{name}` the component's name (entry 9) or the core module's; a key per item adds `:{id}` (`nds-scroll:/path`, `nds-cache:weather`).
+4. **A URL parameter** is kebab whole words named for the value, with no prefix (`page`, `per-page`, `theme`): it is part of the site's own URL. A component that writes one takes the name from its hook when the page gives one.
+5. **A `data-*` hook** is kebab whole words. On the component's own element (its root, or a part its doc names) it is named for what it sets (`data-position` on `.nds-alert`). On any other element it starts with the component's name (`data-ipv-gallery` on an `<img>`). A hook that turns off a default starts with `no-` (`data-no-auto-close`).
+6. **A `data-state` or `data-status` token** is kebab and names a state, not an action: an adjective or past participle (`open`, `selected`, `loading`, `has-more`). One token per meaning across components.
+7. **An internal JS class** is `Nds{Name}`, PascalCase, with entry 9's name (`NdsTable`, `NdsIpv`); a class for a part adds the part (`NdsDatePickerCalendar`). An acronym is one word.
+8. **A module-level constant** is upper snake case when it is a primitive or frozen value that is never reassigned (`INIT_ATTR`, `SEL`); everything else is camelCase (functions, elements, `Map`, `WeakMap`, objects that change).
+9. **A true/false value**: a public property or method is `isX` / `hasX` (entry 10 rule 1); a latch is named for what it latched, as a past participle (`initDone`, `wired`; entry 5).
+10. **An event `detail` key** is camelCase whole words: the instance under the component's name (`detail.stepper`), a new value under `value`.
+
+**Why (and rejected alternatives)**
+
+A name an agent can guess from its kind is a name nobody looks up, and a kind with no rule grows one spelling per author (`cookieConsent` beside `nds-theme`; `NDSTables` beside `NDS.Table`). Rule 1: one plain public global and double underscores on the internal ones is what libraries do (`Vue` and `__VUE__`, `jQuery`, `bootstrap`, `__NEXT_DATA__`), and a single `_` already means an internal member. Rule 3: the key shows in devtools beside the class it belongs to, so it carries the same name. Rule 5 follows HTML, which names an attribute per element (`min` on `<input>`): a hook on its own component cannot clash, and only one on a foreign element needs the component's name. Rule 8 is Google's JavaScript style. Rejected: Bootstrap's prefix on every hook (`data-bs-*`), which would rename 135 hooks in every consumer page to prevent clashes that element scoping already prevents; a bare class name (`class Table`), which can shadow a browser global (`Selection`, `Image`) and needs a list of exceptions; `nds_` with an underscore for keys, which no other NDS surface uses.
+
+**Carve-outs (NOT divergence)**
+
+- `data-state` and `data-status` are core's shared hooks (`NDS.state`, `NDS.status`), not a component's.
+- A field's hook that mirrors an HTML attribute keeps the HTML word (`data-required`, `data-min-checked`).
+- `NDS.cache` keys carry the caller's id after `nds-cache:`.
+- A key that already starts with `nds-` keeps its name (`nds-a11y`, `nds-palette`): a renamed key loses the visitor's saved choice, and the prefix already prevents a clash. Only a key without the prefix is renamed.
+
+**Audit behavior**
+
+`check-js-rules.mjs`: a `window.` write other than `__NDS_*` or `NDS` → finding; a storage or cookie key literal that does not start with `nds-` → finding; a class not named `Nds[A-Z]…` → finding; an event `detail` key that is not camelCase → finding; an upper-case constant holding a non-primitive, or a camelCase one holding a primitive literal → verify; a `data-*` hook read on an element outside the component's root without the component's name → verify. Each is LOW, a migration target. A storage key, hook, token or `detail` key is observable, so its rename ships in a major with a Migration line (AGENTS.md, Framework Hosts).
 
 ---
 
