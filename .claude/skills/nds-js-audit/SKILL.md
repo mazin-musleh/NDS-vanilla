@@ -255,7 +255,7 @@ A full-tree run reports what it proves. A **hotspot** is what it suspects and ca
   - JSA-03: a module-scope `Map` / `Set` / object written with `.set` / `.add` / a key write, and no `.delete` / `.clear` in the file
   - JSA-14: an interaction listener (`click` / `input` / `change` / `keydown` / `submit`) whose body runs `querySelectorAll(…).forEach` or builds DOM in a loop
   - JSA-15: `style.height` / `style.maxHeight` written from `scrollHeight` / `getBoundingClientRect()`, or a `scroll` handler that only toggles a class
-  - JSA-24: a `close` / `toggle` listener with no `.open` / `newState` / `:popover-open` read in its body
+  - JSA-24: a `close` / `toggle` listener with no `.open` / `newState` / `:popover-open` read in its body, or a `setTimeout` whose id is never stored in a function a toggle or a public method reaches
   - JSA-23 (b): `init()` wires a document listener or an `NDS.on*` pool that a public `create` / `open` / `set` does not visibly call
 
 A hotspot is closed by a single-file deep read (`/nds-js-audit nds-<file>.js <group>`), which turns it into a finding or clears it, or by an annotation comment naming why the code is right (annotation exemption (global)), which keeps it out of the next run. Nothing is stored between runs: the code and its annotations are the ledger.

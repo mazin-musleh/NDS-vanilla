@@ -93,8 +93,11 @@ Files: nds-dialog.js, nds-modal.js, nds-panel.js, nds-backdrop.js
 Seams:
 - modal, panel → dialog (base): `NDS.dialog.show(el, signal)` / `close` / `onOutside` / `hideMenus` / `getTop`. Bundle: dialog listed before modal and panel in delegated.
 - modal ↔ panel Escape: Modal's `handleEscape` calls `preventDefault()` and closes only when `getTop() === modal`; Panel's keydown returns on `e.defaultPrevented || !isTop(panel)`.
-- panel stacking: a panel goes modal with `data-panel-modal`, or when `NDS.dialog.getTop()` is set and a user click opened it; a plain panel's outside click skips `.nds-modal, .nds-backdrop, [data-modal-target]`.
+- panel stacking: `opensModal(panel)` decides modal for both the open path and the swap — `data-panel-modal`, or a user-opened panel while `NDS.dialog.getTop()` is set; the swap skips every panel in `modalPanels`; a plain panel's outside click skips `.nds-modal, .nds-backdrop, [data-modal-target]`.
+- panel ← modal fade: `openPanel` / `isTop` read `NDS.dialog.getTop()`, which still returns a modal for its whole fade (Modal's `close()` clears `activeModal` first), so a panel opened in that window goes modal.
 - dialog → backdrop: `setBackdropUnder` toggles `data-nds-under` on the `.nds-backdrop` element that Backdrop's `show()` builds; dialog also writes `data-nds-modal` / `data-nds-under` that CSS reads.
+- backdrop ↔ dialog, the `NDS.scrollLock` counter: Backdrop locks from its `showTimer` and unlocks in `hide()`; dialog locks on the first `show()` and unlocks on the last `close()`. A lock either side leaks blocks the other's final unlock.
+- backdrop ↔ modal Escape: both are document keydown listeners; Backdrop's `handleEscape` yields only on `e.defaultPrevented`, which Modal sets only when focus is inside the modal.
 
 ## @nav
 
