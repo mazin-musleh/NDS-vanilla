@@ -948,13 +948,11 @@
     //     shared by every trigger via open()/toggle() below, not just the FAB;
     //   • mirroring open state onto the FAB, since Panel only manages the
     //     toggles it owns.
-    // Soft dependency — NDS.Panel ships in the delegated bundle and a consumer
-    // can omit it; the FAB then no-ops instead of throwing. Checked explicitly
-    // (not just optional-chained) because a still-stubbed NDS.Panel answers
+    // NDS.Panel ships in the delegated bundle: until it lands, its stub answers
     // ANY call with a Promise — always truthy — which would read as "open" and
     // wrongly trigger close() on a panel Panel.js never actually opened.
     // ----------------------------------------------
-    const panelIsOpen = () => !!(panel && NDS.Panel && !NDS.Panel.__ndsStub && NDS.Panel.isOpen(panel));
+    const panelIsOpen = () => !!(panel && !NDS.Panel.__ndsStub && NDS.Panel.isOpen(panel));
 
     // The boot gate only arms on a saved-prefs load or a FAB click, so a consumer
     // wiring their own trigger — the documented pattern — would otherwise call into
@@ -996,18 +994,18 @@
     function open(triggerEl) {
         armedThen(() => {
             openerEl = document.activeElement;
-            NDS.Panel?.open?.(panel);
+            NDS.Panel.open(panel);
         }, triggerEl);
     }
 
     function close() {
-        if (panel) NDS.Panel?.close?.(panel);
+        if (panel) NDS.Panel.close(panel);
     }
 
     function toggle(triggerEl) {
         armedThen(() => {
             openerEl = document.activeElement;
-            NDS.Panel?.toggle?.(panel);
+            NDS.Panel.toggle(panel);
         }, triggerEl);
     }
 

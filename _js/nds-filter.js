@@ -1638,10 +1638,7 @@
             this._triggerBtn = triggerBtn || null;
 
             // Dismiss any feedback in filter container
-            // Soft dependency — filter skips feedback dismissal if NDS.Feedback isn't bundled.
-            if (NDS.Feedback) {
-                NDS.Feedback.dismissAll(this.filterContainer);
-            }
+            NDS.Feedback.dismissAll(this.filterContainer);
 
             // requestSubmit, never .submit(): .submit() skips the submit event, so
             // setupFormSubmission's listener never fires — validation is bypassed and
@@ -2195,12 +2192,10 @@
         // has .ndsAccordion, so initializing after the first of several groups
         // sharing one author-supplied .nds-accordion root (the documented
         // multi-group shape) leaves every later group's header button unwired.
-        // Soft dependency — groups render expanded, uncollapsible, if
-        // NDS.Accordion isn't bundled.
         _flushAccordionInit() {
             if (!this._accordionInitPending) return;
             this._accordionInitPending = false;
-            NDS.Accordion?.reinit();
+            NDS.Accordion.reinit();
         }
 
         // Sync applied-count tags on filter-accordion headers with the current
@@ -2430,10 +2425,7 @@
 
         applyFilters() {
             // Dismiss any feedback in filter container
-            // Soft dependency — filter skips feedback dismissal if NDS.Feedback isn't bundled.
-            if (NDS.Feedback) {
-                NDS.Feedback.dismissAll(this.filterContainer);
-            }
+            NDS.Feedback.dismissAll(this.filterContainer);
 
             // In form mode, just update state (don't submit form programmatically)
             // Form submission only happens from explicit user actions via submitForm()
@@ -2721,10 +2713,7 @@
             this.dismissNoResultsAlert();
 
             // Dismiss any feedback in filter container
-            // Soft dependency — filter skips feedback dismissal if NDS.Feedback isn't bundled.
-            if (NDS.Feedback) {
-                NDS.Feedback.dismissAll(this.filterContainer);
-            }
+            NDS.Feedback.dismissAll(this.filterContainer);
 
             this.dispatchResetEvent();
 

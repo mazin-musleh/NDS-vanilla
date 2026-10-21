@@ -189,8 +189,6 @@
     let _navBackdropOwner = null;
 
     const showNavBackdrop = (owner, onClick) => {
-        // Soft dependency — nav skips backdrop dimming if NDS.Backdrop isn't bundled.
-        if (!NDS.Backdrop) return;
         if (_navBackdropOwner === owner) return;
         const replacing = _navBackdropOwner !== null;
         _navBackdropOwner = owner;
@@ -211,8 +209,7 @@
     };
 
     const hideNavBackdrop = (owner) => {
-        // Soft dependency — nav skips backdrop dimming if NDS.Backdrop isn't bundled.
-        if (!NDS.Backdrop || _navBackdropOwner !== owner) return;
+        if (_navBackdropOwner !== owner) return;
         _navBackdropOwner = null;
         NDS.Backdrop.hide();
     };
@@ -873,9 +870,7 @@
             if (_navBackdropOwner) {
                 _navBackdropOwner = null;
                 cancelToggleAction();
-                // Soft dependency — backdrop cleanup no-ops if NDS.Backdrop isn't
-                // bundled (matches the guarded showNavBackdrop/hideNavBackdrop handoff).
-                if (NDS.Backdrop && NDS.Backdrop.isActive()) NDS.Backdrop.hide();
+                if (NDS.Backdrop.isActive()) NDS.Backdrop.hide();
             }
         }
 

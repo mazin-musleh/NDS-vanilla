@@ -405,10 +405,7 @@
                 this.state.currentIndex = this.state.thumbnails.indexOf(thumb);
                 this._containerRect = null; // recompute against the now-visible overlay
 
-                // Soft dependency — skip the dimming layer if Backdrop isn't bundled.
-                if (NDS.Backdrop) {
-                    NDS.Backdrop.show({ zIndex: 999, clickToClose: false, escapeClose: false });
-                }
+                NDS.Backdrop.show({ zIndex: 999, clickToClose: false, escapeClose: false });
 
                 // Move focus into the dialog, trap Tab, and remember where to return.
                 this.lastFocused = document.activeElement;
@@ -427,8 +424,7 @@
         close() {
             if (this.el.overlay) {
                 this.el.overlay.classList.remove('nds-ipv-active');
-                // Soft dependency — only hide the dimming layer if Backdrop is bundled.
-                if (NDS.Backdrop) NDS.Backdrop.hide();
+                NDS.Backdrop.hide();
             }
 
             // Release the trap and return focus to the triggering thumbnail.

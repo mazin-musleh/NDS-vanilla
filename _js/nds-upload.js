@@ -682,7 +682,7 @@
                 fileName.title = name;
                 fileName.classList.add('nds-tooltip');
                 fileName.setAttribute('data-tooltip-hover', '500');
-                NDS.Tooltip?.create?.(fileName);
+                NDS.Tooltip.create(fileName);
             }
             // A saved file added as new File([], name) has no size to show.
             const fileSize = fileItem.querySelector('.nds-file-size');

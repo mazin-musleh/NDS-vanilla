@@ -423,10 +423,8 @@
             this._items = [];
 
             if (!data || data.length === 0) {
-                // Soft dependency — NDS.Empty ships in the main bundle; without
-                // it the menu closes silently as before.
                 // Only strict needs "no results": elsewhere any typed text is valid.
-                if (!NDS.Empty || !this.strict) { this.close(); return; }
+                if (!this.strict) { this.close(); return; }
                 NDS.Empty.refresh(this.scroll);
                 NDS.announce(strings.text('no_results'));
                 this.open();

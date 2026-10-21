@@ -189,9 +189,7 @@
                 alert.querySelector('.nds-alert-content').appendChild(actionsWrap);
                 // Late-created copy actions need the delegated .nds-copy binding even on
                 // pages that had no copy button at loader scan time (bind is idempotent).
-                // Soft dependency — NDS.Copy ships in the extras bundle; copy actions
-                // no-op until it loads / if a consumer bundle excludes it.
-                if (actions.some(a => a.copy || a.copyTarget)) NDS.Copy?.init?.();
+                if (actions.some(a => a.copy || a.copyTarget)) NDS.Copy.init();
             }
 
             // Close button handler

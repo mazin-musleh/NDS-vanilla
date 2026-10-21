@@ -3,16 +3,18 @@
 Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (section 7); rules landed in
 AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Facts measured on `main` at `9fd54151`.
 
-**Resume here.** Changes #1, #2, #4, #4b, #5 to #8 are done (#3 dropped), and #9 steps 9a to 9e (the "Landed" notes
-under section 3's Mechanical checks). **Next: finish 9f**, then #10.
-- 9f so far (2026-10-21), against `448fa728` (before the Form split): `check-form-validate` differs only in the 17
-  intended "disabled" cases; `check-form-interact` showed 1 difference in one of two runs, not yet read: rerun
-  `BASE=448fa728 node scripts/check-form-interact.mjs` and read it. Speed (`check-form-speed`, median of 9, x6.6):
-  init and create even or faster; one field click: a first click 11.4 → 14.6 ms, a later one 3.7 → 4.6 ms
-  (+0.5 / +0.14 ms on a phone: every click now passes the delegated parts), a keystroke about +0.3 ms on a phone.
-  Report these to the owner; then `doc-check.mjs` on form.md, checkbox.md, radio.md, switch.md after the owner's
-  go-ahead (AGENTS.md). The doc pass for form pages (A6 outcomes, NDS.field, NDS.Grid, core/init `pending`) waits
-  for the docs plan.
+**Resume here.** Changes #1, #2, #4 to #10 are done (#3 dropped); see the "Landed" notes under section 3's
+Mechanical checks. **Left:** `doc-check.mjs` on form.md, checkbox.md, radio.md, switch.md (owner's go-ahead first,
+AGENTS.md), then speed, last (owner, 2026-10-21: measure once the plan's code is done; this machine is slow, so
+interleave and give medians).
+- 9f correctness, against `448fa728` (before the Form split): `check-form-validate` differs only in the 17 intended
+  "disabled" cases; `check-form-interact` all 216 the same (one earlier run's single difference did not repeat);
+  `check-form-reset` and `check-a11y` on the four form pages pass. A first speed read (median of 9, x6.6), to redo
+  at the end: init and create even or faster; a field click +0.5 ms first / +0.14 ms later on a phone (every click
+  now passes the delegated parts), a keystroke about +0.3 ms.
+- Checks run on my own server (`--port 4010 --destination tmp/site-4010`), never the owner's :4002; the form
+  checks and `check-a11y` take `SITE=<base url>`, the others a base argument.
+- The doc pass for form pages (A6 outcomes, NDS.field, NDS.Grid, core/init `pending`) waits for the docs plan.
 - Guards: `check-form-validate`, `check-form-interact`, `check-form-speed`.
 
 ## Goal
@@ -369,6 +371,14 @@ the dash, its clearing and the label and Enter toggles matched old against new.
 **Landed 2026-10-21 (change #9, step 9e):** `NDS.Form.syncState(input)` → `NDS.Form.refresh(el)` (`NDS.field.refresh`:
 an input its field, any other element every field inside it, hidden carriers skipped; a `kind: api` row); the 18
 dead `NDS.Form?.` guards and their "soft dependency" comments are gone (JSD-12, A4). Parity: all the same.
+
+**Landed 2026-10-21 (change #10):** 14 dead guards on main namespaces gone: `NDS.Dropmenu` (breadcrumb, editor,
+pagination), `NDS.Link` (editor), `NDS.Feedback` (filter), `NDS.Backdrop` (main-nav, ipv), `NDS.Empty`
+(autocomplete). JSD-12 now also reads `NDS.X ||` and a `window.NDS.X =` home; on the old tree it finds all 14.
+The same pass took the `?.` off 8 calls into injected bundles that always ship (`NDS.Panel` from accessibility,
+`NDS.Copy` from alert, `NDS.Upload` and `NDS.Tooltip` from editor, `NDS.Accordion` from filter, `NDS.Tooltip` from
+upload): the loader's stub is truthy, so `?.` never fired, and it queues an unused call anyway (A3). The guards
+date from per-file scripts (March 2026); `2316b6d3` annotated them as "soft" after one bundle already held them.
 
 ## 4. Owner decisions
 

@@ -869,8 +869,7 @@
             if (scroll) scroll._ndsRange = { from: 4, to: totalPages - 1 };
             _wireEllipsisLazy();
         }
-        // Soft dependency — ellipsis stays plain markup if NDS.Dropmenu isn't bundled.
-        if (dm && NDS.Dropmenu) NDS.Dropmenu.create(dm);
+        if (dm) NDS.Dropmenu.create(dm);
         activateGeneratedPage(paginationNav, activePage);
     }
 

@@ -1123,10 +1123,8 @@
             }, { signal });
             const uploadHost = imageMenu.querySelector('[data-editor-image-upload]');
             if (uploadHost) {
-                // Generated after the loader's sweep — init is idempotent. Soft
-                // dependency — the host stays a plain URL field if NDS.Upload
-                // isn't bundled.
-                NDS.Upload?.init?.();
+                // Generated after the loader's sweep — init is idempotent.
+                NDS.Upload.init();
                 // Chosen file → URL field (alt seeds from the file name).
                 // Consumers configure the popover's upload container
                 // through the editor's setImageUpload() (uploadUrl,
@@ -1273,17 +1271,9 @@
             // Dropmenu (main) finished its sweep before editor init — wire the
             // generated elements directly. Tooltip rides the delegated bundle;
             // while that is still in flight NDS.Tooltip is the loader's lazy
-            // stub, so create() lands once it arrives. Soft dependencies: the
-            // toolbar's dropmenus and tooltips stay inert if NDS.Dropmenu /
-            // NDS.Tooltip aren't bundled.
-            // Soft dependency — NDS.Dropmenu ships in the main bundle, so this
-            // normally runs; without it the link/image menus never open and every
-            // downstream menuOf read below is unreachable, which is why those are
-            // optional-chained too. Toolbar buttons that don't open a menu still work.
-            toolbar.querySelectorAll('.nds-dropmenu').forEach(el => NDS.Dropmenu?.create?.(el));
-            // Soft dependency — toolbar buttons keep their title/aria labels and
-            // stay fully usable if NDS.Tooltip isn't bundled.
-            toolbar.querySelectorAll('.nds-tooltip').forEach(el => NDS.Tooltip?.create?.(el));
+            // stub, so create() lands once it arrives.
+            toolbar.querySelectorAll('.nds-dropmenu').forEach(el => NDS.Dropmenu.create(el));
+            toolbar.querySelectorAll('.nds-tooltip').forEach(el => NDS.Tooltip.create(el));
             return toolbar;
         }
 
@@ -1757,10 +1747,8 @@
         // Anchors created after load (link insert, paste, source edits,
         // hydration) miss the loader's eager NDS.Link pass — re-run it so
         // external links pick up their badge and target BEFORE the value
-        // syncs, so the tagging round-trips into the form value. Soft
-        // dependency: links keep their href but skip external-badge tagging
-        // if NDS.Link isn't bundled.
-        _refreshLinks() { NDS.Link?.init?.(); }
+        // syncs, so the tagging round-trips into the form value.
+        _refreshLinks() { NDS.Link.init(); }
 
         _getAncestorTag(tagName) { return this._selAncestor(n => n.tagName === tagName); }
 
@@ -2312,10 +2300,9 @@
             }
         }
 
-        // Popover fields live in the menu. Optional-chained: NDS.Dropmenu is a
-        // soft dependency.
+        // Popover fields live in the menu.
         _menuOf(dropmenu) {
-            return (dropmenu && NDS.Dropmenu?.menuOf?.(dropmenu)) || dropmenu;
+            return (dropmenu && NDS.Dropmenu.menuOf(dropmenu)) || dropmenu;
         }
 
         _imageUploadHost() {
