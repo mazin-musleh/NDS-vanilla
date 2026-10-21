@@ -856,7 +856,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     for (const [open] of initBodies.filter(([, v]) => v === 'init')) {
         const body = code.slice(open, blockEnd(bare, open));
         if (/NDS\.onIdle|requestIdleCallback|requestAnimationFrame|postMessage/.test(body)) continue;
-        for (const w of body.matchAll(/document\.(?:querySelectorAll|getElementsByClassName|getElementsByTagName)\s*\(\s*(['"`])([^'"`]+)\1\s*\)\s*\.forEach\s*\(\s*([\w$.]+)?/g)) {
+        for (const w of body.matchAll(/document\.(?:querySelectorAll|getElementsByClassName|getElementsByTagName)\s*\(\s*(['"`])([^'"`]+)\1\s*\)\s*\.forEach\s*\(\s*(?:\(?[\w$]+\)?\s*=>\s*)?([\w$.]+)?/g)) {
             if (new RegExp(`^\\.nds-${kebabOwn}\\b`).test(w[2]) || /^(create|this\.create|[\w$]*[Ii]nit\w*)$/.test(w[3] || '')) continue;
             hit('JSA-01', open + w.index, `init() walks ${w[2]}`, 'flag only when it can pass ~50 elements and need not settle before first paint');
         }
@@ -1194,6 +1194,8 @@ const CASES = [
     [`(function(){ function init() { NDS.onAttributeChange(document.documentElement, ['lang'], f); } })();`, []], // outlives the page
     [`(function(){ function init() { if (done) return; done = true; NDS.onResize(fit); } })();`, []], // latch
     [`(function(){ function init() { if (!done) { done = true; NDS.onResize(fit); } } })();`, []], // latch, block form
+    [`(function(){ function init() { document.querySelectorAll('.x-item').forEach((el) => create(el)); } })();`, []], // own sweep, arrow form
+    [`(function(){ function init() { document.querySelectorAll('.x-item').forEach((el) => el.classList.add('y')); } })();`, ['JSA-01?']],
     [`(function(){ function init() { NDS.onElementResize(el, fit); } })();`, []], // dedup pool, stable ref
     [`(function(){ function f() { NDS.Modal?.open(m); } })();`, ['JSD-12?']],
     [`(function(){ function f() {\n// Soft dependency: no tooltip if NDS.Tooltip is not bundled.\nif (NDS.Tooltip) NDS.Tooltip.create(el); } })();`, []],
