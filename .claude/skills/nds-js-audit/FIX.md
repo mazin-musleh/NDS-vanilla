@@ -42,6 +42,7 @@ A regression is the rollback grain — that's where the user checkpoints and rev
 - Fix batches MAY edit `_js/nds-core.js` and `_js/nds-loader.js` when a finding's `Fix:` recommendation routes there. The common case is JSA-05 (drop `critical: true` from a component's registry entry in `_js/nds-loader.js`); JSD-05 promotion candidates also edit core, but they go through the separate `promote <api-name>` flow (see "Applying promotion candidates" below) because they coordinate core + N call sites and need a signature-confirmation step. When a fix touches core or loader as part of a component-file batch, the per-file closing summary MUST list every file edited under the `Cross-file edits` line — the user must never be surprised by a loader/core change. Do NOT make incidental core/loader edits outside a finding's recommendation: a JSP-01 fix in `_js/nds-foo.js` may only touch `_js/nds-foo.js` unless the rule's `Fix:` column explicitly routes elsewhere. Direct-named single-file audits of `_js/nds-core.js` or `_js/nds-loader.js` (e.g. `/nds-js-audit nds-core.js performance`) remain the right shape when the AUDITED file is core/loader itself — the carve-out is for deliberate review of those files, not the only path to fixing them.
 - Fix batches MAY ALSO edit `_sass/**/*.scss` when a JSA finding's `Fix:` recommendation routes there — the canonical case is JSA-15 (JS work CSS expresses natively). The SCSS edit MUST be named specifically in the `Fix:` line (which file, which selector, what to add or change) and stay narrowly bounded to the migration the rule called out. Respect the SCSS conventions in CLAUDE.md: `@use '../mixins' as *;` at the top of new files, `nds-` prefix on new classes, CSS Logical Properties for direction-aware properties (`margin-inline-start`, `inset-inline-start`, `text-align: start`, etc.), design tokens only (no raw hex or `--colors-*` references). The per-file summary MUST list every `.scss` file edited under `Cross-file edits` — the user must never be surprised by an SCSS change. Do NOT make incidental SCSS edits outside a finding's recommendation, and do NOT generalize this carve-out into a license to audit SCSS: SCSS *auditing* (running rules against `.scss` files) remains out of scope per Non-goals; only SCSS *editing as part of a JSA fix* is permitted here. SCSS edits have no per-fix rebundle step (no equivalent of `js_processor.rb`) — Jekyll re-processes SCSS automatically when the dev server is running.
 - Do not run `bundle exec jekyll build` unless the user explicitly asks. The Phase 6 browser behavior test MAY start `bundle exec jekyll serve` (port 4002) when no server is already running — that test requires a live server, so running the audit's fix phase carries that authorization. Reuse an existing server; don't restart per file. See `BROWSER.md`.
+- A `SEAM` finding (group runs, `GROUPS.md`) is fixed in one slot even when it edits both files of the join, since half a seam fix is a new break. The slot belongs to the first file named in the finding; the other goes under `Cross-file edits`. Its behavior check exercises the join itself (both components on one page).
 - Do not reformat code, adjust whitespace, or rename unrelated identifiers. Keep diffs minimal so the user can verify each change at a glance.
 
 ### Applying promotion candidates (JSD-05)
@@ -179,18 +180,20 @@ When the user replies `stop`, or when every file in the batch has been processed
 - Files touched: N
 - Total findings resolved: X
 - Findings remaining (all files): Y (list rule IDs per file)
+- Open tradeoffs: every `tradeoff → recommend solving` from the report that is still unapplied, one line each with its lever (omit when none)
 - Regressions reported: 0 (or list them)
 ```
 
 Do not mark the audit complete while findings remain open or regressions exist.
 
-**Closing offer — always NUMBERED (this is exactly where the discipline slips).** After the batch summary, any open follow-on action the user can take — authorizing the surfaced Phase 7 candidates (`evolve` — skill-file edits happen ONLY on this go), committing, running a behavior check — is presented as a numbered list, never as prose bullets or an "open / optional / your call" block. Even ONE open action gets a number, and the recommended one is itself numbered:
+**Closing offer — always NUMBERED (this is exactly where the discipline slips).** After the batch summary, any open follow-on action the user can take — authorizing the surfaced Phase 7 candidates (`evolve` — skill-file edits happen ONLY on this go), applying a still-open `tradeoff → recommend solving` (`apply solution <finding>`, one numbered item each: a `fix all` batch never applies them, so this is their only way back in front of the user), committing, running a behavior check — is presented as a numbered list, never as prose bullets or an "open / optional / your call" block. Even ONE open action gets a number, and the recommended one is itself numbered:
 
 ```
 Open items — reply with a number:
 
 1. `evolve` — apply the surfaced catalog/persona candidates (`evolve <RULE>` for one, e.g. heal the stale `RULES-JSP.md` exemplar). [recommended]
-2. commit — I'll propose the message and wait; I never commit unprompted.
+2. `apply solution <finding>` — the open `recommend solving` tradeoff, e.g. the panel swap rule (needs a Migration line).
+3. commit — I'll propose the message and wait; I never commit unprompted.
 0. done — nothing further.
 ```
 

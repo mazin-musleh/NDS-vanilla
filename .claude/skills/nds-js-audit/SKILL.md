@@ -1,7 +1,7 @@
 ---
 name: nds-js-audit
-description: Audit NDS source JS for DRY/KISS violations, scalability and maintainability risks, performance issues, client-side security risks, architectural design (scheduling, memory, DOM API choice, complexity, in-file DRY, KISS), and cross-file pattern consistency. Covers listener/observer pooling via nds-core.js (NDS.onResize, NDS.onIntersect, NDS.onElementResize, NDS.onDomAdd, NDS.onAttributeChange, NDS.debounce), throttling of scroll/resize handlers, NDS.state and NDS.status reuse, NDS.breakpoints reuse, cross-file detection of repeated helper functions that should be promoted to nds-core.js, component contract conformance (factory vs singleton shape via NDS.{Name}.init/reinit/create), dead defensive guards inside loader-registered components, common web-security sinks (innerHTML XSS, eval/new Function, target="_blank" tabnabbing, postMessage origin checks, untrusted URLs), and architectural review (JSA rules covering unbounded caches/maps, scheduling-primitive choice, polyfill fidelity, DOM API choice, mixed-concern functions, in-file repeated blocks, interaction-handler INP cost, and forced layout reads at init). Use this skill for "audit the JS", "audit performance", "audit security", "audit the architecture", "improve INP", "lower init cost", "optimize listeners", "check nds-core usage", "find functions that should live in core", "find unthrottled scroll handlers", "find heavy interaction handlers", "find forced layout reads in init", "find XSS risks", "find unbounded caches", "find mixed-concern functions", "make all components follow the same pattern", "check component consistency", or any JS source-code quality pass on `_js/`. NOT for SCSS/CSS audits, documentation page audits (use nds-doc), or UX copy review.
-argument-hint: "[target] [optional: rule-group]"
+description: Audit NDS source JS for DRY/KISS violations, scalability and maintainability risks, performance issues, client-side security risks, architectural design (scheduling, memory, DOM API choice, complexity, in-file DRY, KISS), and cross-file pattern consistency. Covers listener/observer pooling via nds-core.js (NDS.onResize, NDS.onIntersect, NDS.onElementResize, NDS.onDomAdd, NDS.onAttributeChange, NDS.debounce), throttling of scroll/resize handlers, NDS.state and NDS.status reuse, NDS.breakpoints reuse, cross-file detection of repeated helper functions that should be promoted to nds-core.js, component contract conformance (factory vs singleton shape via NDS.{Name}.init/reinit/create), dead defensive guards inside loader-registered components, common web-security sinks (innerHTML XSS, eval/new Function, target="_blank" tabnabbing, postMessage origin checks, untrusted URLs), and architectural review (JSA rules covering unbounded caches/maps, scheduling-primitive choice, polyfill fidelity, DOM API choice, mixed-concern functions, in-file repeated blocks, interaction-handler INP cost, and forced layout reads at init). Use this skill for "audit the JS", "audit performance", "audit security", "audit the architecture", "improve INP", "lower init cost", "optimize listeners", "check nds-core usage", "find functions that should live in core", "find unthrottled scroll handlers", "find heavy interaction handlers", "find forced layout reads in init", "find XSS risks", "find unbounded caches", "find mixed-concern functions", "make all components follow the same pattern", "check component consistency", "audit related components together" (a group: forms, menus, filter + pagination), or any JS source-code quality pass on `_js/`. NOT for SCSS/CSS audits, documentation page audits (use nds-doc), or UX copy review.
+argument-hint: "[file | @group | a,b | js] [rule-group]"
 ---
 
 # NDS JS Audit
@@ -12,6 +12,7 @@ This skill audits the NDS JavaScript source — the files in `_js/` — against 
 
 > **THIS SKILL WILL BURN YOUR TOKENS FAST.** A full-scope run reads every `_js/nds-*.js` file, applies all four catalogs against each, and spawns per-file review agents during Phase 5/6. Narrow the scope whenever you can:
 > - `/nds-js-audit <filename> [rule-group]` — single-file pass against one component (e.g. `/nds-js-audit nds-modal.js architecture`). The cheap mode — a dedicated deep-read agent runs per single-file pass (see Phase 3), which is where the architectural deep-reads pay off. Omit the rule-group to run all four. Best fit for a newly-added component before merging.
+> - `/nds-js-audit @<group> <rule-group>` or `/nds-js-audit a,b <rule-group>` — group pass: the single-file deep read on each related file, plus one agent that checks the seams between them (events, shared `data-*`, load order). Costs about one single-file pass per file. Groups and their seams live in `GROUPS.md`.
 > - `/nds-js-audit js <rule-group>` — full-tree pass for one rule group (`performance` / `dry` / `security` / `architecture`). Costs several single-file passes. The release-prep / refactor-window shape. Full-tree `architecture` runs only the greppable JSA rules; deep-read JSA rules are skipped with a mandatory banner.
 
 ---
@@ -43,12 +44,13 @@ Target: a report a reader skims in ~15 seconds with the decision obvious. Prefer
 
 ## Auto-drive
 
-Default to advancing, not asking. Run the obvious next step automatically and report what you did. Pause ONLY at these four points — everywhere else, proceed:
+Default to advancing, not asking. Run the obvious next step automatically and report what you did. Pause ONLY at these five points — everywhere else, proceed:
 
 1. **Before applying any code fix** — Phase 5 needs ONE explicit go (`fix all` / `fix <scope>` / a number). After that go, the batch runs file-by-file to completion **without per-file `next` prompts**.
 2. **On a regression** — an agent-review FAIL or a `regression in {file}` report stops the run for revert.
 3. **Before a git commit** — never auto-commit; propose the message and wait.
 4. **Before editing the skill's own files** — Phase 7 EVOLVE surfaces catalog/persona refinement candidates at run end; applying them needs ONE explicit go (`evolve` / `evolve <RULE>`). Audit sessions run concurrently and share `.claude/skills/nds-js-audit/` — an unprompted mid-run write from one session clobbers another session's read of the same catalog.
+5. **Before a group run of more than 6 files** — print the file count and agent count (files + 1) and wait for a go; a group of 6 or fewer runs at once.
 
 Read-only / reversible steps (running the audit, emitting the report) take the recommended action without an extra confirmation round-trip. When nothing is ambiguous, do it and say so — don't stop to ask permission for the step you already recommended.
 
@@ -80,6 +82,12 @@ type the filename directly — no menu needed. Omit the rule-group to run all fo
   /nds-js-audit nds-accessibility.js              (all four groups → one consolidated report)
   /nds-js-audit nds-accessibility.js performance  (one group)
   /nds-js-audit nds-accessibility.js architecture (all JSA rules, including deep-read sub-shapes)
+
+For related files together (deep read on each + the seams between them), name a
+group from GROUPS.md or list the files. A rule group is required:
+  /nds-js-audit @lists architecture
+  /nds-js-audit filter,pagination architecture
+Groups: @forms @menus @dates @lists @dialogs @nav
 ```
 
 Accept `0` or `exit` as "end here, nothing runs".
@@ -91,9 +99,12 @@ Do not begin Phase 2 or any file reads until the user responds.
 | `$1` | Files in scope | Rule groups run |
 |---|---|---|
 | `js` | All `_js/nds-*.js` except `nds-core.js`, `nds-loader.js`, `nds-docs.js` | Always paired with a rule-group filter (`performance` / `dry` / `security` / `architecture`); see below. In `architecture` mode, deep-read JSA rules are **skipped with a banner** — see "JSA deep-read rules in full-tree mode" below |
+| **group** — `@name` (from `GROUPS.md`) or a comma list with no spaces (`filter,pagination`) | The group's files; each list entry resolves like a filename. 2 files minimum (a one-entry list is a single-file run) | A rule-group filter is required (no default); `all` only for a 2-file group. Each file gets the full single-file run, deep reads included; JSD-05 runs across the group's files; one seams agent checks the joins. **Read `GROUPS.md` and follow it.** More than 6 files → Auto-drive pause point 5 |
 | **filename** (e.g. `nds-accessibility.js`, `_js/nds-accessibility.js`, `nds-accessibility`, `accessibility`) | One file: the resolved target | A rule-group filter (`performance` / `dry` / `security` / `architecture`), or `all`. **When the rule-group is omitted, default to `all`** — single-file `all` is cheap, so run it instead of prompting. In `dry` (and the dry portion of `all`), JSD-05 is **skipped with a banner**. `architecture` (and the architecture portion of `all`) runs every JSA rule, greppable AND deep-read. |
 
-**File resolution.** When `$1` doesn't match a known mode token (`js`), treat it as a filename and try these in order: (1) literal `_js/$1` if `$1` already starts with `nds-` and ends in `.js`; (2) `_js/$1` if it ends in `.js`; (3) `_js/$1.js` if it starts with `nds-`; (4) `_js/nds-$1.js` for the bare-name form. Stop at the first existing file. If none exist, reply: *"Couldn't resolve `<filename>` to a file in `_js/`. Tried: `_js/<X>.js`, `_js/nds-<X>.js`. Pass the filename as it appears in `_js/`."* and stop.
+**Group resolution.** `$1` starting with `@` names a group in `GROUPS.md`; an unknown name replies with the list of group names and stops. `$1` containing a comma is an ad-hoc group: resolve each entry as below, and stop on the first that fails. A group never holds `nds-core.js`, `nds-loader.js` or an excluded file: every component depends on core and the loader, so they would turn every group into the whole tree.
+
+**File resolution.** When `$1` doesn't match a known mode token (`js`, `@group`, comma list), treat it as a filename and try these in order: (1) literal `_js/$1` if `$1` already starts with `nds-` and ends in `.js`; (2) `_js/$1` if it ends in `.js`; (3) `_js/$1.js` if it starts with `nds-`; (4) `_js/nds-$1.js` for the bare-name form. Stop at the first existing file. If none exist, reply: *"Couldn't resolve `<filename>` to a file in `_js/`. Tried: `_js/<X>.js`, `_js/nds-<X>.js`. Pass the filename as it appears in `_js/`."* and stop.
 
 **Excluded-file rejection.** If the resolved file is `nds-docs.js` or any `.min.js`, reply: *"`<file>` is excluded from audits — see the 'Excluded files' section below for why."* and stop. Don't attempt a partial audit on a hard-excluded file.
 
@@ -115,9 +126,9 @@ Unfiltered four-group runs in **full-tree `js` mode** are not supported — swee
 | `dry` | JSD |
 | `security` | JSS |
 | `architecture` | JSA |
-| `all` (**single-file only**) | JSP + JSD + JSS + JSA against the one file → one consolidated report |
+| `all` (**single-file, or a 2-file group**) | JSP + JSD + JSS + JSA against the file(s) → one consolidated report |
 
-**If `$2` is missing:** single-file mode defaults to `all` and runs immediately (single-file `all` is cheap — don't prompt for a group). Full-tree `js` mode has no default — show the Phase 1 menu and wait. `all` is valid in single-file mode only; in full-tree `js` it's rejected (see the full-tree note above).
+**If `$2` is missing:** single-file mode defaults to `all` and runs immediately (single-file `all` is cheap — don't prompt for a group). Full-tree `js` mode and group mode have no default — show the Phase 1 menu and wait. `all` is valid in single-file mode only; in full-tree `js` it's rejected (see the full-tree note above).
 
 **Ponytail overlay.** The ponytail lens (Phase 3) runs on top of whichever groups run — it is not itself a selectable group. Pass a `no-pony` token (e.g. `/nds-js-audit nds-modal.js all no-pony`, or alongside a single group) to suppress it for a pure catalog run.
 
@@ -125,7 +136,7 @@ Unfiltered four-group runs in **full-tree `js` mode** are not supported — swee
 
 ### Cross-tree rules in single-file mode
 
-Single-file `dry` runs every JSD rule **except JSD-05** — JSD-05 compares helper bodies across all of `_js/` and needs the full tree; the report shows the JSD-05 skip banner (Phase 4) in its place. **JSD-15 runs in single-file mode** by reading the canonicals in `PERSONA.md` (sibling file) and applying each entry's "Audit behavior" check against the target — a deterministic per-file check with no corpus re-tally (see the JSD-15 row in `RULES-JSD.md`). Every other JSD rule is a per-file check and runs normally.
+Single-file `dry` runs every JSD rule **except JSD-05** — JSD-05 compares helper bodies across all of `_js/` and needs the full tree; the report shows the JSD-05 skip banner (Phase 4) in its place. **JSD-15 runs in single-file mode** by reading the canonicals in `PERSONA.md` (sibling file) and applying each entry's "Audit behavior" check against the target — a deterministic per-file check with no corpus re-tally (see the JSD-15 row in `RULES-JSD.md`). Every other JSD rule is a per-file check and runs normally. Group `dry` runs JSD-05 across the group's files: duplication inside a family is where it pays most, and a promotion it finds still goes through `promote`.
 
 ### JSA deep-read rules in full-tree mode
 
@@ -212,7 +223,7 @@ Agent briefs (Phase 3 / Phase 6) must paste all three conventions verbatim — s
 
 ### Single-file deep-read pass (dedicated agent)
 
-**Single-file mode only.** After the inline catalog pass completes, spawn ONE dedicated deep-read agent (`Agent` tool, `general-purpose` subagent) whose sole job is to re-read the target file end-to-end with fresh context and hunt the rules that reward undivided attention. This is what makes single-file the deepest mode — the inline pass owns the fast greppable rules, the agent owns the architectural deep reads. Full-tree mode does NOT spawn this agent: its budget is committed to breadth, and deep-read rules are banner-skipped there.
+**Single-file mode, and each file of a group run** (group mode spawns one per file, in parallel, plus the seams agent — `GROUPS.md`). After the inline catalog pass completes, spawn ONE dedicated deep-read agent (`Agent` tool, `general-purpose` subagent) whose sole job is to re-read the target file end-to-end with fresh context and hunt the rules that reward undivided attention. This is what makes single-file the deepest mode — the inline pass owns the fast greppable rules, the agent owns the architectural deep reads. Full-tree mode does NOT spawn this agent: its budget is committed to breadth, and deep-read rules are banner-skipped there.
 
 **Deep-read scope for the agent:** JSA-03, JSA-07 through JSA-12, JSA-14 through JSA-17, JSA-20, JSA-23 (c), JSA-24; JSD-14 (a) nesting written without braces (the script counts braced nesting only); the `verify` lines `check-js-rules.mjs` printed for this file; and the context-dependent confirmations for JSS-01 (innerHTML XSS vector) and JSS-04 (postMessage origin allowlist). Restrict the agent to the rule group(s) in scope for this run — on a single-group run with no deep-read rules (e.g. `performance`), skip the agent entirely; on `architecture`, `dry`, `security`, or `all`, run the in-scope deep-read subset.
 
@@ -259,7 +270,7 @@ Before computing the report's Recommended action, compute **consumer reach** for
 
 **STOP. Emit the report. Do not edit any files yet.**
 
-**Skip-banner rule (governs both banners below).** Show a banner only on the run mode where its rule was actually skipped — the JSA deep-read rules → full-tree only; JSD-05 → single-file `dry` only. JSD-14 and JSD-16 run in every mode through `check-js-rules.mjs`, so they get no banner. Omit it on any run where the rule was in scope and ran. When a rule WAS skipped, its banner is mandatory — never silently omit it; it converts a misleading "clean" into honest coverage disclosure. Each banner is ONE line (per Response style): what was skipped, why, and the command that gets the coverage. On full-tree `architecture` runs, the JSA banner is immediately followed by the **Deep-read triage** block (computed in Phase 3) — the top-3 single-file candidates, each with the signal that drove its rank.
+**Skip-banner rule (governs both banners below).** Show a banner only on the run mode where its rule was actually skipped — the JSA deep-read rules → full-tree only; JSD-05 → single-file `dry` (group `dry` prints instead: `JSD-05 ran across the group only — run /nds-js-audit js dry for the whole tree.`). JSD-14 and JSD-16 run in every mode through `check-js-rules.mjs`, so they get no banner. Omit it on any run where the rule was in scope and ran. When a rule WAS skipped, its banner is mandatory — never silently omit it; it converts a misleading "clean" into honest coverage disclosure. Each banner is ONE line (per Response style): what was skipped, why, and the command that gets the coverage. On full-tree `architecture` runs, the JSA banner is immediately followed by the **Deep-read triage** block (computed in Phase 3) — the top-3 single-file candidates, each with the signal that drove its rank.
 
 Use this structure verbatim:
 
@@ -411,4 +422,4 @@ This skill deliberately does not cover:
 - Profiler-driven *detection*. The JSP/JSA catalogs are static-read heuristics — they surface candidates, not hotspots, and don't replace a DevTools Performance / Lighthouse pass. (The Phase 6 perf *verification* is different: a bounded before/after measurement of one applied fix, not a profiler sweep.)
 - Including `_js/nds-core.js` or `_js/nds-loader.js` in full-tree `js` runs. Single-file audits on either ARE supported — see the "Excluded files" carve-out in Phase 1.
 - Running `bundle exec jekyll build` unless the user explicitly asks. `ruby _plugins/js_processor.rb` runs automatically per-file in Phase 5/6, and the Phase 6 browser test MAY start/reuse `bundle exec jekyll serve` (port 4002) — see `BROWSER.md`.
-- Editing files outside the Phase 5 / Phase 7 paths. Phase 5 edits `_js/nds-*.js`, plus `_js/nds-loader.js` / `_js/nds-core.js` only when a finding's `Fix:` routes there (JSA-05 registry edits; `promote <api-name>` candidates), plus `_sass/**/*.scss` only when a JSA finding's `Fix:` routes there (JSA-15 CSS-subsume migrations — see `FIX.md` → "Out-of-scope modifications" for the bounds). Phase 7 edits this `SKILL.md`, the `RULES-*.md` group files, and `PERSONA.md` only on an explicit `evolve` go. Nothing else.
+- Editing files outside the Phase 5 / Phase 7 paths. Phase 5 edits `_js/nds-*.js`, plus `_js/nds-loader.js` / `_js/nds-core.js` only when a finding's `Fix:` routes there (JSA-05 registry edits; `promote <api-name>` candidates), plus `_sass/**/*.scss` only when a JSA finding's `Fix:` routes there (JSA-15 CSS-subsume migrations — see `FIX.md` → "Out-of-scope modifications" for the bounds). Phase 7 edits this `SKILL.md`, the `RULES-*.md` group files, `PERSONA.md` and `GROUPS.md` only on an explicit `evolve` go. Nothing else.
