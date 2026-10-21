@@ -286,12 +286,12 @@
                 <span class="nds-empty-message"></span>
             </div>`;
             scroll.insertAdjacentHTML('afterbegin', emptyHtml);
-            const emptyMessage = scroll.querySelector('[data-nds-empty-placeholder] .nds-empty-message');
+            const emptyEl = scroll.firstElementChild;
+            const emptyMessage = emptyEl.querySelector('.nds-empty-message');
             const customEmpty = this.dropmenu.getAttribute('data-search-empty');
             if (customEmpty) emptyMessage.textContent = customEmpty; else strings.set(emptyMessage, 'text', 'no_results');
 
-            this._searchInput = this._findOwnItem('.nds-dropmenu-search .nds-search-input');
-            const emptyEl = scroll.querySelector('[data-nds-empty-placeholder]');
+            this._searchInput = searchInput;
 
             // Case-insensitive + diacritic-stripped so "مطار" matches "المَطار"
             // and "cafe" matches "café". Arabic harakat are in the Unicode
@@ -304,7 +304,8 @@
                 if (!this._searchInput) return;
                 const query = normalizeText(this._searchInput.value.trim());
                 let visible = 0;
-                for (const item of getItems()) {
+                const items = getItems();
+                for (const item of items) {
                     const haystack = normalizeText(item.textContent + ' ' + (item.getAttribute('data-search-value') || ''));
                     const match = !query || haystack.includes(query);
                     item.hidden = !match;
@@ -312,8 +313,9 @@
                 }
                 // A group with no match hides, and so does a divider left with nothing on one side.
                 for (const group of this._getOwnItems('.nds-dropmenu-group')) {
-                    const rows = group.querySelectorAll(itemSelector);
-                    group.hidden = !!query && rows.length > 0 && Array.prototype.every.call(rows, row => row.hidden);
+                    // Own rows only: a menu nested in the group keeps its items unfiltered.
+                    const rows = items.filter(el => el !== group && group.contains(el));
+                    group.hidden = !!query && rows.length > 0 && rows.every(row => row.hidden);
                 }
                 let prev = null;
                 for (const el of scroll.children) {
@@ -555,7 +557,7 @@
 
                 this._menu.addEventListener('keydown', (e) => {
                     // A nested sub-menu's keys bubble here; that menu handles its own.
-                    if (e.target.closest('.nds-dropmenu-menu') !== this._menu) return;
+                    if (!this._isOwnItem(e.target)) return;
                     // A control in the menu already used the key (a rating's arrows).
                     if (e.defaultPrevented) return;
                     // For inputs: only handle Tab and Alt+Arrow
@@ -1114,7 +1116,7 @@
          * `box` (NDS.getVisibleBox) is a parameter so a caller that already read
          * it can avoid forcing a second layout.
          */
-        _getLeft(triggerRect, menuWidth, box = NDS.getVisibleBox(), pad = NDS.getViewportPadding(this._menu)) {
+        _getLeft(triggerRect, menuWidth, box = NDS.getVisibleBox(), pad) {
             const anchor = this.dropmenu.getAttribute('data-anchor');
             const min = box.left + pad, max = box.right - pad;
             let left;
@@ -1199,14 +1201,10 @@
             // then. No-op when the menu was never opened.
             if (this._cancelClose) { this._cancelClose(); this._finishClose(); }
             // One abort releases every listener this instance attached — and only
-            // those. The former cloneNode/replaceWith swap also destroyed listeners
-            // consumers had attached to the wrapper, and its clone inherited
-            // data-nds-dropmenu-initialized while losing the .ndsDropmenu expando,
-            // which left the element permanently ineligible for re-init.
+            // those: listeners consumers attached to the wrapper survive.
             this.abortController.abort();
-            // Undo _setupSearch's injection and its filtering. The clone used to
-            // discard both for free; now that the wrapper survives, a destroy →
-            // re-init would otherwise stack a second search box and leave items
+            // Undo _setupSearch's injection and its filtering: the wrapper survives, so a
+            // destroy → re-init would otherwise stack a second search box and leave items
             // hidden behind a search field that reads as empty.
             this._teardownSearch?.();
             // Only release the shared registration when THIS instance still owns it.
@@ -1267,12 +1265,8 @@
     }
 
     function findOwnMenuTemplate(wrapper) {
-        const templates = wrapper.querySelectorAll('template');
-        for (let i = 0; i < templates.length; i++) {
-            if (templates[i].closest('.nds-dropmenu') === wrapper
-                && templates[i].content.querySelector('.nds-dropmenu-menu')) return templates[i];
-        }
-        return null;
+        return NDS.findOwnParts(wrapper, 'template', '.nds-dropmenu')
+            .find(template => template.content.querySelector('.nds-dropmenu-menu')) || null;
     }
 
     // Stamp the wrapper's menu template in place and wake what arrived.
@@ -1330,18 +1324,18 @@
         });
     }
 
-    // Expose global API (called by nds-loader.js unified system)
     // A select-mode picker's check: NDS.validation runs it at submit, validate(el) is its public face.
     // The pick lives in a hidden carrier; its own only, a picker nested in its menu holds its own.
     const checkField = (dropmenu) => {
-        const carrier = Array.prototype.find.call(dropmenu.querySelectorAll('input[data-nds-select-value]'), (el) => el.closest('.nds-dropmenu') === dropmenu);
+        const carrier = findOwnFirstIn(dropmenu, 'input[data-nds-select-value]');
         const valid = !!(carrier && carrier.value.trim());
         return { valid, message: valid ? '' : strings.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
     };
     NDS.validation.addRule('.nds-dropmenu[data-select-name][data-required]',
-        (dropmenu) => Object.assign(checkField(dropmenu), { focus: dropmenu.querySelector('.nds-dropmenu-trigger') || dropmenu }),
+        (dropmenu) => Object.assign(checkField(dropmenu), { focus: findOwnFirstIn(dropmenu, '.nds-dropmenu-trigger') || dropmenu }),
         { on: ['nds:dropmenu:select'] });
 
+    // Expose global API (called by nds-loader.js unified system)
     NDS.Dropmenu = {
         init: setupDropmenus,
         reinit: setupDropmenus,
