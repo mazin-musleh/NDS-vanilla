@@ -15,7 +15,10 @@ where the plain name was taken; citations in PERSONA and RULES-* healed). Every 
 byte-identical, since Terser mangles locals: a binding rename needs no browser check, and a pack's rebuild
 differs only in line endings and zip times (restored). Second commit: P12.7, 27 classes and
 `DatePickerCalendar` to `Nds{Name}[Part]`, and PascalCase module objects to camelCase (`NDSAlert` → `api`, a
-check added for them). Next: P12.8 constants (verify), then verbs, acronyms and whole words.
+check added for them). Third commit: P12.8, 69 UPPER_CASE objects, arrays, Sets and elements to camelCase
+(rule 8 allows UPPER for a primitive or a frozen value; renaming keeps the bundles byte-identical, freezing would
+not); the loader's registry is now `components`, and the build aborts when it cannot find it. Three computed
+strings stay UPPER as verify lines (`ASSETS_VER`, `ASSETS_BASE`, `I18N_MARK_SEL`). Next: verbs, acronyms and whole words.
 Start each step on a clean tree. Step 2's list is the work list: every count, file and line below is a hint.
 Step 3's commits go safest first: module-scope `_`, constants and classes; then verbs, acronyms and whole
 words; then cross-file `_`; the WeakMap move last of the internal ones (it changes runtime, so browser checks).
@@ -225,7 +228,8 @@ banner"): `NDS.isRTL` (acronym), `NDS.onAttrChange` and `NDS.resolveEl` (short w
 `createColumnToggle` (DOM or instance?), and noun-first names: core's `strings`, `safeMerge`, `rafThrottle`,
 `afterPaint`, `latinDigits`, `uniqueId`, `cellText`, `ownParts`, `ownItems`, `safeUrl`, `stickyHeaderBottom`,
 `viewportPadding`, `visibleBox`, `homeOf`, `topLayer`; `Dropmenu.menuOf`; `Export.csv` / `xls` / `pdf`; the
-loader's `audit` and `owns`; Accessibility's `state`; `NDS.DatePicker.CalendarConfig`, an object in PascalCase (rule 8: camelCase). Each shipped in v1.12.0 gets a Migration row.
+loader's `audit` and `owns`; Accessibility's `state`; `NDS.DatePicker.CalendarConfig`, an object in PascalCase (rule 8: camelCase). The consumer setting
+`window.NDSInitConfig` (rule 2: `NDS_{NAME}`). Each shipped in v1.12.0 gets a Migration row.
 
 **Born in v2 (shared-logic), no row:**
 

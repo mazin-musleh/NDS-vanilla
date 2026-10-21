@@ -35,7 +35,7 @@
  *   - Two storage keys: nds-theme holds the whole data-theme string; nds-palette holds a
  *     custom inline-seed theme only.
  */
-// NDS Theme — dark/light MODE toggle + the theme SWITCHER (predefined seed tokens,
+// NDS Theme — dark/light modes toggle + the theme SWITCHER (predefined seed tokens,
 // inline custom seeds, and stylesheet themes), with localStorage persistence.
 //
 // Lives in the MAIN bundle so it runs on every page the topbar renders on (the
@@ -59,9 +59,9 @@
     const TOGGLE_SEL = '[data-theme-toggle]';
     const SWITCH_SEL = '[data-theme-value]';
     const LINK_ID = 'nds-theme-stylesheet';
-    const MODE = ['light', 'dark'];
+    const modes = ['light', 'dark'];
     // data-seed-* suffix → the CSS custom property it sets (custom/inline path).
-    const SEED_PROPS = {
+    const seedProperties = {
         primary: '--brand-primary', secondary: '--brand-secondary',
         tertiary: '--brand-tertiary', tint: '--neutral-tint', font: '--nds-font-brand',
         'weight-regular': '--font-weight-regular', 'weight-medium': '--font-weight-medium',
@@ -82,13 +82,13 @@
         } catch (e) { /* storage blocked — selection still applies */ }
     }
 
-    // ── Dark/light MODE axis ────────────────────────────────────────────────
+    // ── Dark/light modes axis ────────────────────────────────────────────────
     function getTheme() {
         return curTokens().indexOf('dark') !== -1 ? 'dark' : 'light';
     }
     function applyTheme(theme) {
         // Preserve the theme token; light is the default → no token.
-        const kept = curTokens().filter(t => MODE.indexOf(t) === -1);
+        const kept = curTokens().filter(t => modes.indexOf(t) === -1);
         if (theme === 'dark') kept.push('dark');
         writeTheme(kept);
         updateToggles(theme);
@@ -171,7 +171,7 @@
         writeTheme(toks);
     }
     function clearInline() {
-        for (const k in SEED_PROPS) root.style.removeProperty(SEED_PROPS[k]);
+        for (const k in seedProperties) root.style.removeProperty(seedProperties[k]);
         root.removeAttribute('data-palette');
     }
     // An event pack loaded by its own <script> tag inlines its CSS as a
@@ -265,9 +265,9 @@
                 removeStylesheet(); setThemeToken('');      // custom rides [data-palette], not a token
                 clearInline();
                 const seeds = {};
-                for (const k in SEED_PROPS) {
+                for (const k in seedProperties) {
                     const v = el.getAttribute('data-seed-' + k);
-                    if (v) { root.style.setProperty(SEED_PROPS[k], v); seeds[SEED_PROPS[k]] = v; }
+                    if (v) { root.style.setProperty(seedProperties[k], v); seeds[seedProperties[k]] = v; }
                 }
                 root.setAttribute('data-palette', '');
                 savePalette({ value: value, seeds: seeds });
@@ -298,11 +298,11 @@
 
         if (palette && palette.seeds) {
             // Custom inline seeds (not flash-free — re-applied here). Iterate the
-            // known SEED_PROPS, not the stored keys, so a tampered store can't set
+            // known seedProperties, not the stored keys, so a tampered store can't set
             // arbitrary custom properties on :root.
-            for (const k in SEED_PROPS) {
-                const v = palette.seeds[SEED_PROPS[k]];
-                if (v) root.style.setProperty(SEED_PROPS[k], v);
+            for (const k in seedProperties) {
+                const v = palette.seeds[seedProperties[k]];
+                if (v) root.style.setProperty(seedProperties[k], v);
             }
             root.setAttribute('data-palette', '');
             syncSwitcher(palette.value || '');

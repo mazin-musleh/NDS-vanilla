@@ -35,7 +35,7 @@
 (function () {
     'use strict';
 
-    const CONFIG = {
+    const config = {
         selectors: {
             wrapper: '.nds-scroll-more',
             content: '.nds-scroll-more-content',
@@ -55,8 +55,8 @@
     // Return 'vertical' | 'horizontal' | null.
     // If both axes overflow, prefer vertical (more common list case).
     function detectAxis(content) {
-        const vertical = content.scrollHeight > content.clientHeight + CONFIG.scrollThreshold;
-        const horizontal = content.scrollWidth > content.clientWidth + CONFIG.scrollThreshold;
+        const vertical = content.scrollHeight > content.clientHeight + config.scrollThreshold;
+        const horizontal = content.scrollWidth > content.clientWidth + config.scrollThreshold;
         if (vertical) return 'vertical';
         if (horizontal) return 'horizontal';
         return null;
@@ -72,10 +72,10 @@
         : content.scrollWidth - content.clientWidth;
 
     function applyEdges(wrapper, pos, maxScroll) {
-        const atStart = pos <= CONFIG.scrollThreshold;
-        const atEnd = maxScroll - pos <= CONFIG.scrollThreshold;
-        if (atStart) addState(wrapper, CONFIG.overflow.atStart); else removeState(wrapper, CONFIG.overflow.atStart);
-        if (atEnd)   addState(wrapper, CONFIG.overflow.atEnd);   else removeState(wrapper, CONFIG.overflow.atEnd);
+        const atStart = pos <= config.scrollThreshold;
+        const atEnd = maxScroll - pos <= config.scrollThreshold;
+        if (atStart) addState(wrapper, config.overflow.atStart); else removeState(wrapper, config.overflow.atStart);
+        if (atEnd)   addState(wrapper, config.overflow.atEnd);   else removeState(wrapper, config.overflow.atEnd);
     }
 
     // A scroller with nothing focusable inside takes a tab stop so the keyboard can
@@ -91,19 +91,19 @@
     // wrapper's reads before any write (a write between reads forces a layout
     // per wrapper — 68ms@6.6x on a page with 34 of them).
     function measure(wrapper) {
-        const content = wrapper._content || wrapper.querySelector(CONFIG.selectors.content);
+        const content = wrapper._content || wrapper.querySelector(config.selectors.content);
         if (!content) return;
         const axis = detectAxis(content);
         if (!axis) return wrapper.hasAttribute('data-axis') ? Object.assign(() => {
             wrapper.removeAttribute('data-axis');
             scrollStop(content, false);
-            removeState(wrapper, CONFIG.overflow.hasMore, CONFIG.overflow.atStart, CONFIG.overflow.atEnd);
+            removeState(wrapper, config.overflow.hasMore, config.overflow.atStart, config.overflow.atEnd);
         }, { clears: true }) : undefined;
         const pos = scrollPos(content, axis), maxScroll = maxScrollOf(content, axis);
         return () => {
             wrapper.setAttribute('data-axis', axis);
             scrollStop(content, true);
-            addState(wrapper, CONFIG.overflow.hasMore);
+            addState(wrapper, config.overflow.hasMore);
             applyEdges(wrapper, pos, maxScroll);
         };
     }
@@ -114,7 +114,7 @@
     }
 
     function checkScrollPosition(wrapper) {
-        const content = wrapper._content || wrapper.querySelector(CONFIG.selectors.content);
+        const content = wrapper._content || wrapper.querySelector(config.selectors.content);
         const axis = wrapper.getAttribute('data-axis');
         if (!content || !axis) return;
         applyEdges(wrapper, scrollPos(content, axis), maxScrollOf(content, axis));
@@ -126,7 +126,7 @@
         const axis = wrapper.getAttribute('data-axis');
         if (!axis) return;
 
-        const atEnd = hasState(wrapper, CONFIG.overflow.atEnd);
+        const atEnd = hasState(wrapper, config.overflow.atEnd);
 
         const isVertical = axis === 'vertical';
         const posKey = isVertical ? 'top' : 'left';
@@ -144,7 +144,7 @@
         const fade = parseFloat(getComputedStyle(content).getPropertyValue('--mask-fade-distance')) || 0;
         const step = childSize > 0 && childSize < size
             ? Math.max(size - childSize - fade, childSize)
-            : size * CONFIG.scrollAmount;
+            : size * config.scrollAmount;
 
         // Clamp target to the absolute scroll bounds so the last click lands
         // exactly at the end (browsers never settle there via momentum alone).
@@ -167,12 +167,12 @@
 
     function initElement(wrapper) {
         if (wrapper.hasAttribute('data-nds-scroll-more-initialized')) return;
-        const content = wrapper.querySelector(CONFIG.selectors.content);
+        const content = wrapper.querySelector(config.selectors.content);
         if (!content) return;
 
         wrapper._content = content;
         // The content can hold a nested scroll-more, whose button comes first in document order.
-        const btn = [...wrapper.querySelectorAll(CONFIG.selectors.btn)].find(b => b.closest(CONFIG.selectors.wrapper) === wrapper);
+        const btn = [...wrapper.querySelectorAll(config.selectors.btn)].find(b => b.closest(config.selectors.wrapper) === wrapper);
 
         // Auto-inject a separator between the content and the show-more button
         // so authors opting in via .nds-divided don't have to. Always inject —
@@ -210,7 +210,7 @@
     }
 
     function initAll() {
-        document.querySelectorAll(CONFIG.selectors.wrapper).forEach(wrapper => {
+        document.querySelectorAll(config.selectors.wrapper).forEach(wrapper => {
             if (wrapper.closest('code')) return;
             initElement(wrapper);
         });
@@ -231,7 +231,7 @@
         delete wrapper._builtDivider;
         // What measure() wrote: a re-create measures again.
         wrapper.removeAttribute('data-axis');
-        removeState(wrapper, CONFIG.overflow.hasMore, CONFIG.overflow.atStart, CONFIG.overflow.atEnd);
+        removeState(wrapper, config.overflow.hasMore, config.overflow.atStart, config.overflow.atEnd);
         delete wrapper.ndsScrollMore;
         wrapper.removeAttribute('data-nds-scroll-more-initialized');
     }

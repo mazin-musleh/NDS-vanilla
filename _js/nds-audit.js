@@ -36,13 +36,13 @@
     'use strict';
 
     const DOCS = 'https://mazin-musleh.github.io/NDS-vanilla/';
-    const RULES = [];
+    const rules = [];
 
     function rule(def) {
         if (!def || !def.id || typeof def.check !== 'function') return console.warn('[NDS.audit] a rule needs an id and a check()', def);
-        const at = RULES.findIndex(r => r.id === def.id);
+        const at = rules.findIndex(r => r.id === def.id);
         const r = { group: 'structure', severity: 'warn', ...def };
-        if (at < 0) RULES.push(r); else RULES[at] = r;
+        if (at < 0) rules.push(r); else rules[at] = r;
     }
 
     // data-nds-audit-ignore="" skips every rule; a value names the ones to skip.
@@ -59,7 +59,7 @@
         const groups = group == null ? null : [].concat(group);
         const ids = only == null ? null : [].concat(only);
         const findings = [];
-        for (const r of RULES) {
+        for (const r of rules) {
             if ((groups && !groups.includes(r.group)) || (ids && !ids.includes(r.id))) continue;
             // Markup inside <code> is a sample, never the page.
             const skip = (el) => !!el && el.nodeType === 1 && (!!el.closest('code') || ignored(el, r.id));
@@ -376,7 +376,7 @@
 
     // Attributes whose value names another element. A miss wires nothing and throws nothing.
     // ponytail: the attributes NDS resolves by id or selector today; add one when a component reads a new one.
-    const REFS = {
+    const refs = {
         'data-filter-target': 'components/filter.html', 'data-selection-target': 'components/selection.html',
         'data-sort-target': 'components/sort.html', 'data-per-page-target': 'components/pagination.html',
         'data-auto-pagination': 'components/pagination.html', 'data-modal-target': 'components/modal.html',
@@ -390,12 +390,12 @@
     const resolves = (attr, v) => !!NDS.resolveEl(v) || inTemplate(v.replace(/^#/, ''))
         || (attr === 'data-voice-target' && !!document.querySelector(`[name="${CSS.escape(v)}"]`));
     rule({ id: 'id-reference', severity: 'error', check(ctx) {
-        for (const attr in REFS) {
+        for (const attr in refs) {
             ctx.find(`[${attr}]`).forEach(el => {
                 const v = el.getAttribute(attr).trim();
                 // An empty data-auto-pagination uses the container right before the nav.
                 if (!v || resolves(attr, v)) return;
-                ctx.report(el, `${attr}="${v}" names no element on the page — the component it wires does nothing.`, `Give the element id="${v.replace(/^#/, '')}", or fix the value. See ${DOCS}${REFS[attr]}`);
+                ctx.report(el, `${attr}="${v}" names no element on the page — the component it wires does nothing.`, `Give the element id="${v.replace(/^#/, '')}", or fix the value. See ${DOCS}${refs[attr]}`);
             });
         }
     } });
@@ -443,12 +443,12 @@
 
     // ── migration ────────────────────────────────────────────────────
 
-    const MIGRATIONS = /*@migrations*/[];
-    const rows = MIGRATIONS.map(([kind, name, scope, status, use, since, fix, inert]) =>
+    const migrations = /*@migrations*/[];
+    const rows = migrations.map(([kind, name, scope, status, use, since, fix, inert]) =>
         ({ kind, name, scope: scope || null, status, use: use || null, since, fix: fix || (use ? `Use ${use}.` : ''), inert: !!inert }));
     const byKind = {};
     rows.forEach(r => ((byKind[r.kind] ||= new Map()).get(r.name) || byKind[r.kind].set(r.name, []).get(r.name)).push(r));
-    const SEVERITY = { renamed: 'error', removed: 'error', deprecated: 'warn' };
+    const severityByKind = { renamed: 'error', removed: 'error', deprecated: 'warn' };
     const label = { class: 'class', attribute: 'attribute', property: 'property', id: 'id', global: 'window setting' };
     const say = (r, inCss) => {
         const what = `${label[r.kind]} "${r.name}"`;
@@ -459,7 +459,7 @@
     };
     // A name NDS never read had no effect when set, so it is a note, not a break.
     const reportRow = (ctx, r, el, msg, inert, count) => ctx.report(el, msg,
-        inert ? `${r.fix} Setting the old name never had an effect.` : r.fix, inert ? 'info' : SEVERITY[r.status], count);
+        inert ? `${r.fix} Setting the old name never had an effect.` : r.fix, inert ? 'info' : severityByKind[r.status], count);
     // A leading & tests the element itself; any other scope, the element or an ancestor.
     const inScope = (el, scope) => !scope || (scope[0] === '&' ? el.matches(scope.slice(1)) : !!el.closest(scope));
 
@@ -663,14 +663,14 @@
     } });
 
     // Baked by js_processor.rb from the docs' canons, includes and scripts.
-    const ANATOMY = /*@anatomy*/{};
+    const anatomy = /*@anatomy*/{};
 
     // An nds- class that no NDS sheet, doc or script has is invented markup: it gets nothing.
     // Judged only when NDS's own sheets are readable; an old name is migration-markup's.
     rule({ id: 'unknown-class', check(ctx) {
         const nds = ndsSheets();
         if (!nds) return;
-        const known = new Set([...(ANATOMY.known || []), ...nds.classes]);
+        const known = new Set([...(anatomy.known || []), ...nds.classes]);
         const hits = new Map();
         for (const el of ctx.find('[class*="nds-"]')) {
             for (const c of el.classList) {
@@ -687,7 +687,7 @@
     rule({ id: 'part-outside', check(ctx) {
         const nds = ndsSheets();
         if (!nds) return;
-        for (const [part, root] of Object.entries(ANATOMY.parts || {})) {
+        for (const [part, root] of Object.entries(anatomy.parts || {})) {
             if (root === 'nds-toolbar' || nds.items.some(s => s.has(part) && !s.has(root))) continue;
             const lost = ctx.find('.' + part).filter(el => !el.closest('.' + root));
             if (lost.length) ctx.report(lost[0], `.${part} outside a .${root}${lost.length > 1 ? ` (${lost.length} elements; the first is shown)` : ''}.`,
@@ -696,7 +696,7 @@
     } });
 
     // Each component banner's Requires lines: the markup its script needs to work, missing with no warning.
-    const REQUIRE = {
+    const require = {
         'needs': (el, s) => el.matches(s) || !!el.querySelector(s),
         'needs one': (el, s, per) => el.querySelectorAll(s).length >= el.querySelectorAll(per).length,
         'sits in': (el, s) => !!el.parentElement?.closest(s),
@@ -710,9 +710,9 @@
         },
     };
     rule({ id: 'required-part', severity: 'error', check(ctx) {
-        for (const [name, host, verb, arg, extra, why] of ANATOMY.requires || []) {
+        for (const [name, host, verb, arg, extra, why] of anatomy.requires || []) {
             let missing;
-            try { missing = ctx.find(host).filter(el => !REQUIRE[verb](el, arg, extra)); } catch (e) { continue; /* a selector this browser cannot parse */ }
+            try { missing = ctx.find(host).filter(el => !require[verb](el, arg, extra)); } catch (e) { continue; /* a selector this browser cannot parse */ }
             if (!missing.length) continue;
             const need = { 'needs': arg, 'needs one': `one ${arg} per ${extra}`, 'sits in': `a ${arg} around it`, 'sits outside': `no ${arg} around it`,
                 'is': `to be ${arg}`, 'with': `${arg} on the page`, 'points at': `its ${extra} to name a ${arg}` }[verb];
@@ -886,5 +886,5 @@
             'Set palette tokens at :root. On a wrapper, set the token the component reads.', undefined, sels.length);
     } });
 
-    NDS.audit = { run, rule, rules: RULES };
+    NDS.audit = { run, rule, rules: rules };
 })();

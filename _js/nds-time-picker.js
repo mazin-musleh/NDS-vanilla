@@ -60,7 +60,7 @@
     const MERIDIEM = '(AM|PM|am|pm|ص|م)';
     // Two-digit tokens parse lenient (\d{1,2}) and format strict (padded), so
     // "9:30" is accepted under HH:mm and written back as "09:30".
-    const TOKEN_PATTERNS = {
+    const tokenPatterns = {
         HH: '(\\d{1,2})', H: '(\\d{1,2})', hh: '(\\d{1,2})', h: '(\\d{1,2})',
         mm: '(\\d{1,2})', ss: '(\\d{1,2})', A: MERIDIEM, a: MERIDIEM
     };
@@ -138,7 +138,7 @@
         let last = 0;
         for (const { 0: token, index } of format.matchAll(FORMAT_TOKEN_REGEX)) {
             source += format.slice(last, index).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            source += TOKEN_PATTERNS[token];
+            source += tokenPatterns[token];
             order.push(token);
             last = index + token.length;
         }
@@ -194,7 +194,7 @@
     const parseAny = (text, format) => parseTyped(text, format) ?? parseLoose(text);
 
     // The one key typed for each meridiem, in both languages.
-    const MER_KEY = { a: 'am', A: 'am', 'ص': 'am', p: 'pm', P: 'pm', 'م': 'pm' };
+    const meridiemKeys = { a: 'am', A: 'am', 'ص': 'am', p: 'pm', P: 'pm', 'م': 'pm' };
     const MERIDIEM_RUNS = new RegExp('\\d+|' + MERIDIEM, 'g');
 
     // Typing at the end → the format's shape: digits fill the units, separators appear on
@@ -211,14 +211,14 @@
             else if (/\d/.test(s[k - 1])) closed.add(digits.length - 1);
         }
         // The last one: a typed "p" after a shown "AM" switches it.
-        const mer = MER_KEY[[...s].reverse().find((c) => MER_KEY[c])];
+        const mer = meridiemKeys[[...s].reverse().find((c) => meridiemKeys[c])];
         let out = '', i = 0;
         for (const piece of format.split(FORMAT_TOKEN_REGEX)) {
             if (!piece) continue;
             if (piece === 'A' || piece === 'a') {
                 if (!mer) break;
                 out += piece === 'a' ? strings.text(mer).toLowerCase() : strings.text(mer);
-            } else if (TOKEN_PATTERNS[piece]) {
+            } else if (tokenPatterns[piece]) {
                 if (i >= digits.length) break;
                 const maxFirst = /^[Hh]/.test(piece) ? (hour12 ? 1 : 2) : 5;
                 let unit = +digits[i] > maxFirst || closed.has(i) ? '0' + digits[i++] : digits.slice(i, i += 2);
@@ -251,10 +251,10 @@
         if (i < 0) return { value: shapeTyped(value + ch, format, hour12), caret: null };
         const run = runs[i];
         const set = (text, caret) => ({ value: value.slice(0, run.start) + text + value.slice(run.end), caret });
-        if (MER_KEY[ch]) {
+        if (meridiemKeys[ch]) {
             const mer = runs.find((r) => r.kind === 'a');
             if (!mer) return null;
-            const label = strings.text(MER_KEY[ch]);
+            const label = strings.text(meridiemKeys[ch]);
             const text = format.split(FORMAT_TOKEN_REGEX).includes('a') ? label.toLowerCase() : label;
             return { value: value.slice(0, mer.start) + text + value.slice(mer.end), caret: pos };
         }

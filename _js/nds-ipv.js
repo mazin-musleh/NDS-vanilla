@@ -53,7 +53,7 @@
     });
 
     // Zoom limits and step factors — shared by buttons, keys, wheel, and pinch.
-    const ZOOM = { min: 0.1, max: 10, step: 1.5, wheelIn: 1.1, wheelOut: 0.9 };
+    const zoomLimits = { min: 0.1, max: 10, step: 1.5, wheelIn: 1.1, wheelOut: 0.9 };
 
     // The page's one viewer, built by init().
     let viewer = null;
@@ -183,7 +183,7 @@
 
         // ── Zoom ─────────────────────────────────────────────────────────
         setZoom(zoom) {
-            this.state.zoom = this.clamp(zoom, ZOOM.min, ZOOM.max);
+            this.state.zoom = this.clamp(zoom, zoomLimits.min, zoomLimits.max);
         }
 
         zoomBy(factor) {
@@ -316,8 +316,8 @@
             if (!this.image || !rect) return;
 
             const newZoom = this.clamp(
-                this.state.zoom * (e.deltaY > 0 ? ZOOM.wheelOut : ZOOM.wheelIn),
-                ZOOM.min, ZOOM.max
+                this.state.zoom * (e.deltaY > 0 ? zoomLimits.wheelOut : zoomLimits.wheelIn),
+                zoomLimits.min, zoomLimits.max
             );
             this.zoomAt(e.clientX - rect.left, e.clientY - rect.top, newZoom);
         }
@@ -351,7 +351,7 @@
                 const newDistance = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
                 const newZoom = this.clamp(
                     this.state.zoom * (newDistance / this.state.touchDistance),
-                    ZOOM.min, ZOOM.max
+                    zoomLimits.min, zoomLimits.max
                 );
                 this.zoomAt(this.state.touchCenterX, this.state.touchCenterY, newZoom);
                 this.state.touchDistance = newDistance;
@@ -370,9 +370,9 @@
 
             const actions = {
                 'Escape': () => this.close(),
-                '+': () => this.zoomBy(ZOOM.step),
-                '=': () => this.zoomBy(ZOOM.step),
-                '-': () => this.zoomBy(1 / ZOOM.step),
+                '+': () => this.zoomBy(zoomLimits.step),
+                '=': () => this.zoomBy(zoomLimits.step),
+                '-': () => this.zoomBy(1 / zoomLimits.step),
                 '0': () => this.resetTransform(),
                 'h': () => this.toggleUI(),
                 'H': () => this.toggleUI(),
@@ -487,8 +487,8 @@
 
         attachControlEvents() {
             const actions = {
-                '.nds-ipv-zoom-in-btn': () => this.zoomBy(ZOOM.step),
-                '.nds-ipv-zoom-out-btn': () => this.zoomBy(1 / ZOOM.step),
+                '.nds-ipv-zoom-in-btn': () => this.zoomBy(zoomLimits.step),
+                '.nds-ipv-zoom-out-btn': () => this.zoomBy(1 / zoomLimits.step),
                 '.nds-ipv-reset-zoom-btn': () => this.resetTransform(),
                 '.nds-ipv-ui-toggle-btn': () => this.toggleUI(),
                 '.nds-ipv-close-btn': () => this.close(),

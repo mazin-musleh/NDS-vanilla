@@ -1298,6 +1298,7 @@ const NAME_CASES = [
     [`(function(){ class NDSTables {} })();`, ['P12.7']],
     [`(function(){ class NdsTable {} class NdsDatePickerCalendar {} })();`, []],
     [`(function(){ const CooldownButton = { init() {} }; const NdsX = class {}; })();`, ['P12.8']], // PascalCase is for classes
+    [`(function(){ const SEL = A + ', ' + B; const HAS = 'x' in window; const DEFAULT = \`<i>\${x}</i>\`; const SELF = document.currentScript; })();`, ['P12.8?']], // only the member read is unknown
     [`(function(){ function run(el) { el._ndsFoo = 1; } })();`, ['P12.14']],
     [`(function(){ function run(row) { row._x = 1; } })();`, ['P12.14?']],
     [`(function(){ function run(el) { el.ndsDone = true; el.dataset.ndsSeen = 'true'; } })();`, ['P12.14']],

@@ -65,6 +65,10 @@ const constCase = (n) => /^[A-Z][A-Z0-9_]*$/.test(n);
 const isFn = (n) => n && /^(FunctionExpression|ArrowFunctionExpression)$/.test(n.type);
 const isPrimitive = (n) => n && ((n.type === 'Literal' && !(n.value instanceof RegExp)) ||
     (n.type === 'TemplateLiteral' && !n.expressions.length) || (n.type === 'UnaryExpression' && n.argument.type === 'Literal'));
+// A computed value that is a primitive whatever its parts: `a + b`, a template, `typeof x`, `k in o`.
+const yieldsPrimitive = (n) => n && (isPrimitive(n) || /^(BinaryExpression|UnaryExpression|TemplateLiteral)$/.test(n.type) ||
+    (n.type === 'ConditionalExpression' && yieldsPrimitive(n.consequent) && yieldsPrimitive(n.alternate)) ||
+    (n.type === 'LogicalExpression' && yieldsPrimitive(n.left) && yieldsPrimitive(n.right)));
 const rootName = (n) => { while (n && n.type === 'MemberExpression') n = n.object; return n?.type === 'Identifier' ? n.name : n?.type === 'ThisExpression' ? 'this' : ''; };
 const propName = (m) => (m?.type !== 'MemberExpression' ? null : !m.computed && m.property.type === 'Identifier' ? m.property.name : m.computed && m.property.type === 'Literal' ? String(m.property.value) : null);
 
@@ -170,7 +174,7 @@ function scanFile(file, source) {
                         if (/^_[A-Za-z]/.test(id.name)) push('P12.13', id, `\`${id.name}\` is a binding: no \`_\` on a name nothing outside can reach`);
                         if (isFn(d.init)) fnName(d, id);
                         else if (ctx.module && d.id.type === 'Identifier') {
-                            if (node.kind === 'const' && constCase(id.name) && d.init && !isPrimitive(d.init) && !/^Object\.freeze/.test(source.slice(d.init.start, d.init.start + 13)) && !(d.init.type === 'NewExpression' && /^RegExp$/.test(d.init.callee.name)) && d.init.type !== 'Literal')
+                            if (node.kind === 'const' && constCase(id.name) && d.init && !yieldsPrimitive(d.init) && !/^Object\.freeze/.test(source.slice(d.init.start, d.init.start + 13)) && !(d.init.type === 'NewExpression' && /^RegExp$/.test(d.init.callee.name)) && d.init.type !== 'Literal')
                                 push('P12.8', id, `\`${id.name}\` is upper case but holds ${kindOf(d.init)}`, 'upper case only for a primitive or frozen value never reassigned');
                             if (node.kind === 'const' && !constCase(id.name) && isPrimitive(d.init))
                                 push('P12.8', id, `\`${id.name}\` holds a primitive constant`, 'upper snake case, unless it is a setting read per call');

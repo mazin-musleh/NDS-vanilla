@@ -581,7 +581,7 @@
     // before this runs); body cells sit under the pre-init skeleton until init,
     // so the rule is in place before they are ever visible.
     // Positional by nature: a colspan in the body shifts the column index.
-    const ALIGN = { center: 1, start: 1, end: 1 };
+    const alignValues = { center: 1, start: 1, end: 1 };
     let alignSheet = null;
     let alignSeq = 0;
 
@@ -596,7 +596,7 @@
         const scope = 'a' + (++alignSeq);
         heads.forEach(th => {
             const align = th.getAttribute('data-align');
-            if (!ALIGN[align]) return;
+            if (!alignValues[align]) return;
             // Child combinators, not descendants: a sub-row's nested table has
             // its own columns, and a descendant rule would align those too.
             rules.push(`[data-nds-align="${scope}"] > tbody > tr > td:nth-child(${th.cellIndex + 1}){text-align:${align}}`);

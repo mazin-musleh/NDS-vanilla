@@ -162,7 +162,7 @@
     // Markers (plans/i18n-markers.md): data-i18n="section.key" writes an element's text, and
     // data-i18n-{attribute}="section.key" that attribute. Core translates them all once the pack
     // settles, then each one added or changed later. The six names are the attribute allowlist.
-    const I18N_MARKS = {
+    const i18nMarks = {
         'data-i18n': 'text',
         'data-i18n-aria-label': 'aria-label',
         'data-i18n-aria-description': 'aria-description',
@@ -171,7 +171,7 @@
         'data-i18n-placeholder': 'placeholder',
         'data-i18n-label': 'label',
     };
-    const I18N_MARK_SEL = Object.keys(I18N_MARKS).map(a => `[${a}]`).join(',');
+    const I18N_MARK_SEL = Object.keys(i18nMarks).map(a => `[${a}]`).join(',');
     NDS.i18n = {
         _files: Object.create(null),   // 'ar' → the pack, once landed (null when none)
         _loads: Object.create(null),   // same keys → Promise<data>
@@ -261,7 +261,7 @@
                     write(el, attr, v);
                     // A fixed word becomes a marker, so core owns it from here, as markup would.
                     const mark = attr === 'text' ? 'data-i18n' : 'data-i18n-' + attr;
-                    if (!vars && mark in I18N_MARKS) { el.setAttribute(mark, component + '.' + key); return; }
+                    if (!vars && mark in i18nMarks) { el.setAttribute(mark, component + '.' + key); return; }
                     if (landed()) return;
                     if (!queue.length) I.load(component).then(() => queue.splice(0).forEach(([e, a, was, k, vs]) => {
                         if (read(e, a) === was) write(e, a, t(k, vs));
@@ -339,7 +339,7 @@
         // a word that reads neither what core wrote nor the markup word it replaced. It never adds an absent attribute.
         // force: the marker itself changed, so its new word always lands.
         _mark(el, force) {
-            for (const name in I18N_MARKS) {
+            for (const name in i18nMarks) {
                 const ref = el.getAttribute(name);
                 if (ref === null) continue;
                 if (!ref.trim()) {
@@ -348,7 +348,7 @@
                 }
                 const { word: v, english } = this._word(ref.trim());
                 if (v === null) continue;
-                const target = I18N_MARKS[name];
+                const target = i18nMarks[name];
                 const isText = target === 'text';
                 if (isText && el.firstElementChild) {
                     this._warnOnce(`${ref}: data-i18n goes on an element that holds only the word`);
@@ -395,7 +395,7 @@
                 this.translate();
                 document.documentElement.setAttribute('data-nds-i18n', '');
                 NDS.onDOMAdd(I18N_MARK_SEL, els => els.forEach(el => this._mark(el)));
-                NDS.onAttrChange(I18N_MARK_SEL, Object.keys(I18N_MARKS), els => els.forEach(el => this._mark(el, true)));
+                NDS.onAttrChange(I18N_MARK_SEL, Object.keys(i18nMarks), els => els.forEach(el => this._mark(el, true)));
                 this.pack().then(() => this.translate());
             });
         },
@@ -918,11 +918,11 @@
     // / `.nds-form-control` rules, the table stripe's `of` list — key on their
     // class, whose set only they touch.
     // A class or aria-busy the author wrote stays theirs: mirrored holds only what this wrote.
-    const MIRRORS = { loading: 'nds-loading', hidden: 'nds-hidden', 'has-more': 'nds-has-more', 'always-open': 'nds-always-open', dropbox: 'nds-dropbox' };
+    const mirrors = { loading: 'nds-loading', hidden: 'nds-hidden', 'has-more': 'nds-has-more', 'always-open': 'nds-always-open', dropbox: 'nds-dropbox' };
     const mirrored = new WeakMap();
     const mine = (el) => mirrored.get(el) || mirrored.set(el, new Set()).get(el);
-    for (const token in MIRRORS) {
-        const cls = MIRRORS[token];
+    for (const token in mirrors) {
+        const cls = mirrors[token];
         NDS.state.effect(token, '*', (el, on) => {
             if (on && !el.classList.contains(cls)) { el.classList.add(cls); mine(el).add(cls); }
             else if (!on && mirrored.get(el)?.delete(cls)) el.classList.remove(cls);
@@ -1072,8 +1072,8 @@
     // Escape a string for text and QUOTED attribute values. Not for unquoted
     // attributes, URLs (NDS.safeUrl), or style/script contents.
     // Usage: el.innerHTML = `<span title="${NDS.escapeHtml(v)}">${NDS.escapeHtml(v)}</span>`
-    const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
-    NDS.escapeHtml = (str) => str == null ? '' : String(str).replace(/[&<>"']/g, (c) => ESC[c]);
+    const htmlEscapes = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+    NDS.escapeHtml = (str) => str == null ? '' : String(str).replace(/[&<>"']/g, (c) => htmlEscapes[c]);
 
     // ── Unique ID ─────────────────────────────────────────────────────
     // Short collision-resistant ID for DOM-scoped needs (input names,

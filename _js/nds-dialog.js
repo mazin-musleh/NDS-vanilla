@@ -26,7 +26,7 @@
   const POPOVER = 'showPopover' in HTMLElement.prototype;
   const open = []; // modal dialogs, bottom to top
   let inerted = new Set(); // what this core made inert
-  const SKIP = new Set(['SCRIPT', 'TEMPLATE', 'STYLE', 'LINK', 'NOSCRIPT']);
+  const skip = new Set(['SCRIPT', 'TEMPLATE', 'STYLE', 'LINK', 'NOSCRIPT']);
 
   const top = () => open[open.length - 1];
   const mark = () => open.forEach((d, i) => d.toggleAttribute('data-nds-under', i < open.length - 1));
@@ -37,7 +37,7 @@
     const want = new Set();
     for (let n = top(); n && n !== document.body && n.parentElement; n = n.parentElement) {
       for (const sib of n.parentElement.children) {
-        if (sib !== n && !SKIP.has(sib.tagName) && (!sib.inert || inerted.has(sib))) want.add(sib);
+        if (sib !== n && !skip.has(sib.tagName) && (!sib.inert || inerted.has(sib))) want.add(sib);
       }
     }
     inerted.forEach((el) => { if (!want.has(el)) el.inert = false; });

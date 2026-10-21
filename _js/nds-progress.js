@@ -48,7 +48,7 @@
     'use strict';
 
     const SEL = '.nds-progress-circle, .nds-progress-bar';
-    const ATTRS = ['data-value', 'data-num', 'data-max', 'data-status'];
+    const attributes = ['data-value', 'data-num', 'data-max', 'data-status'];
 
     // The value a screen reader hears; set at once, the fill waits for scroll.
     function syncAria(el) {
@@ -95,7 +95,7 @@
     // A page with no indicator at load never runs init(), so the public writers wire this too.
     function watch() {
         if (offAttrChange) return;
-        offAttrChange = NDS.onAttrChange(SEL, ATTRS, els => els.forEach(syncFromData));
+        offAttrChange = NDS.onAttrChange(SEL, attributes, els => els.forEach(syncFromData));
     }
 
     // Public API

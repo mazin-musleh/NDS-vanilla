@@ -38,7 +38,7 @@
     const { add: addState, remove: removeState } = NDS.state;
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const ARIA_ATTRS = ['role', 'aria-expanded', 'aria-autocomplete', 'aria-controls', 'aria-activedescendant'];
+    const ariaAttributes = ['role', 'aria-expanded', 'aria-autocomplete', 'aria-controls', 'aria-activedescendant'];
 
     const strings = NDS.i18n.strings('autocomplete', {
         no_results: 'No results',
@@ -187,7 +187,7 @@
 
         setupAria() {
             // destroy() removes only what the author did not write.
-            this._authoredAria = ARIA_ATTRS.filter((a) => this.input.hasAttribute(a));
+            this._authoredAria = ariaAttributes.filter((a) => this.input.hasAttribute(a));
             this.input.setAttribute('role', 'combobox');
             NDS.aria.expanded(this.input, false);
             this.input.setAttribute('aria-autocomplete', 'list');
@@ -674,7 +674,7 @@
 
             // Restore the markup the focusin builder matches, so the field can build again.
             this.input.setAttribute('autocomplete', 'on');
-            ARIA_ATTRS.filter((a) => !this._authoredAria?.includes(a))
+            ariaAttributes.filter((a) => !this._authoredAria?.includes(a))
                 .forEach((a) => this.input.removeAttribute(a));
             this.container.removeAttribute('data-nds-autocomplete-initialized');
             if (this.container.ndsAutocomplete === this) delete this.container.ndsAutocomplete;

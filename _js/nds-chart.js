@@ -117,7 +117,7 @@
 
     // ── Default options ─────────────────────────────────────────────
 
-    const PIE_BASE = {
+    const pieBase = {
         height: 300,
         legend: { show: true, position: 'bottom' },
         dataLabels: { show: true },
@@ -126,7 +126,7 @@
         startAngle: 0,
     };
 
-    const AXIS_BASE = {
+    const axisBase = {
         height: 350,
         legend: { show: true, position: 'top' },
         tooltip: { show: true },
@@ -137,11 +137,11 @@
         xaxis: { show: true, title: '', labelRotate: 'auto', labelDecimate: false },
     };
 
-    const TYPE_DEFAULTS = {
-        pie: PIE_BASE,
-        donut: { ...PIE_BASE, donut: { size: 0.50 } },
-        bar: { ...AXIS_BASE, bar: { borderRadius: 6, gap: 0.3, stacked: false }, dataLabels: { show: false } },
-        line: { ...AXIS_BASE, line: { width: 3, smooth: true, dots: true, dotRadius: 4, area: false, crosshair: true } },
+    const typeDefaults = {
+        pie: pieBase,
+        donut: { ...pieBase, donut: { size: 0.50 } },
+        bar: { ...axisBase, bar: { borderRadius: 6, gap: 0.3, stacked: false }, dataLabels: { show: false } },
+        line: { ...axisBase, line: { width: 3, smooth: true, dots: true, dotRadius: 4, area: false, crosshair: true } },
     };
 
     // ── Chart class ────────────────────────────────────────────────
@@ -166,7 +166,7 @@
 
         _resolveOpts(opts) {
             const type = opts.type || 'bar';
-            const defaults = TYPE_DEFAULTS[type] || TYPE_DEFAULTS.bar;
+            const defaults = typeDefaults[type] || typeDefaults.bar;
             const merged = deepMerge(defaults, opts);
             merged.type = type;
             return merged;

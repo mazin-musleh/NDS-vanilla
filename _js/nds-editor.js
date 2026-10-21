@@ -78,21 +78,21 @@
     'use strict';
 
     // ponytail: tag-whitelist sanitizer. Upgrade to DOMPurify only if a security review demands fuller spec compliance.
-    const ALLOWED_TAGS = new Set(['P', 'BR', 'STRONG', 'EM', 'B', 'I', 'U', 'S', 'STRIKE', 'A', 'IMG', 'H1', 'H2', 'H3', 'H4', 'UL', 'OL', 'LI']);
+    const allowedTags = new Set(['P', 'BR', 'STRONG', 'EM', 'B', 'I', 'U', 'S', 'STRIKE', 'A', 'IMG', 'H1', 'H2', 'H3', 'H4', 'UL', 'OL', 'LI']);
     // Dropped whole, never unwrapped — unwrapping would leak their TEXT into
     // content (a Word clipboard ships a <style> block whose CSS would become
     // visible text) or keep active/embedded surfaces.
-    const DROP_TAGS = new Set(['STYLE', 'SCRIPT', 'HEAD', 'META', 'LINK', 'TITLE', 'XML', 'TEMPLATE', 'NOSCRIPT', 'IFRAME', 'FRAME', 'OBJECT', 'EMBED', 'SVG', 'MATH', 'SELECT', 'TEXTAREA', 'INPUT', 'AUDIO', 'VIDEO', 'CANVAS', 'MAP', 'BASE']);
-    const INLINE_TAGS  = new Set(['BR', 'STRONG', 'EM', 'B', 'I', 'U', 'S', 'STRIKE', 'A']);
-    const BLOCK_TAGS   = new Set(['P', 'H1', 'H2', 'H3', 'H4', 'LI']);
+    const dropTags = new Set(['STYLE', 'SCRIPT', 'HEAD', 'META', 'LINK', 'TITLE', 'XML', 'TEMPLATE', 'NOSCRIPT', 'IFRAME', 'FRAME', 'OBJECT', 'EMBED', 'SVG', 'MATH', 'SELECT', 'TEXTAREA', 'INPUT', 'AUDIO', 'VIDEO', 'CANVAS', 'MAP', 'BASE']);
+    const inlineTags  = new Set(['BR', 'STRONG', 'EM', 'B', 'I', 'U', 'S', 'STRIKE', 'A']);
+    const blockTags   = new Set(['P', 'H1', 'H2', 'H3', 'H4', 'LI']);
     // Alignment values sanitize keeps on generic blocks: the toolbar writes
     // PHYSICAL left/right/center/justify (orthogonal to the dir command);
     // logical start/end are also accepted so already-saved content and
     // bidi-aware pastes round-trip unchanged.
-    const ALIGN_VALUES = new Set(['left', 'right', 'center', 'justify', 'start', 'end']);
+    const alignValues = new Set(['left', 'right', 'center', 'justify', 'start', 'end']);
     // Table columns align per the table canon: data-align on the <th>.
-    const COLUMN_ALIGN = new Set(['center', 'start', 'end']);
-    const CMD_BLOCK_MAP = { h1: 'H1', h2: 'H2', h3: 'H3', h4: 'H4' };
+    const columnAlign = new Set(['center', 'start', 'end']);
+    const commandBlocks = { h1: 'H1', h2: 'H2', h3: 'H3', h4: 'H4' };
     const DRAG_TYPE = 'application/x-nds-editor';
     // Structural/formatting commands never touch an atom's content — it's a
     // label (+ icon), never a heading, a list, or formatted text. Native
@@ -101,7 +101,7 @@
     // (_placeCaretAtEnd) — block at the source instead of cleaning up after.
     // Alignment/direction are exempt: they write to the CONTAINING block via
     // direct DOM properties, never into the atom itself.
-    const ATOM_LOCKED_CMDS = new Set(['bold', 'italic', 'underline', 'strike', 'clear', 'ul', 'ol', 'h1', 'h2', 'h3', 'h4']);
+    const atomLockedCommands = new Set(['bold', 'italic', 'underline', 'strike', 'clear', 'ul', 'ol', 'h1', 'h2', 'h3', 'h4']);
     // One trust decision for every URL the editor keeps: scheme-less URLs
     // (relative — path/to/img.jpg, page.html, #anchor — doc-example canon)
     // pass; an explicit scheme must be allowlisted, so javascript:,
@@ -122,11 +122,11 @@
 
     // NDS component regions — the editor is NDS-specific, so pasted/typed NDS
     // component markup (buttons, tags, tables, cards, alerts…) is kept, not
-    // stripped. An element in NDS_TAGS carrying an nds-* class roots a region;
+    // stripped. An element in ndsTags carrying an nds-* class roots a region;
     // inside it structural tags survive, classes filter to the NDS/HGI
     // vocabulary, and attributes reduce to the styling/a11y set in
     // scrubRegionElement — never style/on*/id, so the trust boundary holds.
-    const NDS_TAGS = new Set(['DIV', 'SPAN', 'BUTTON', 'A', 'I', 'P', 'BR', 'HR', 'STRONG', 'EM', 'B', 'U', 'S', 'STRIKE', 'SMALL',
+    const ndsTags = new Set(['DIV', 'SPAN', 'BUTTON', 'A', 'I', 'P', 'BR', 'HR', 'STRONG', 'EM', 'B', 'U', 'S', 'STRIKE', 'SMALL',
         'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'UL', 'OL', 'LI', 'TABLE', 'CAPTION', 'THEAD', 'TBODY', 'TFOOT', 'TR', 'TH', 'TD',
         'FIGURE', 'FIGCAPTION', 'BLOCKQUOTE', 'CITE', 'IMG', 'DL', 'DT', 'DD']);
     // Full-token validation, not a prefix test: a whitespace-free token can
@@ -135,16 +135,16 @@
     // bare base class) — hostile and empty-prefix tokens both die here.
     const NDS_CLASS = /^(?:nds-[\w-]+|hgi(?:-[\w-]+)?)$/;
     // Region roots that may legitimately sit inline inside a <p>.
-    const INLINE_REGION_TAGS = new Set(['SPAN', 'BUTTON', 'A', 'I']);
+    const inlineRegionTags = new Set(['SPAN', 'BUTTON', 'A', 'I']);
     // Content that flows inline at the caret. Everything else is a block: it
     // needs its own line and cannot nest inside a <p>.
     const isInlineNode = (el) =>
-        INLINE_TAGS.has(el.tagName) || el.tagName === 'IMG' || INLINE_REGION_TAGS.has(el.tagName);
+        inlineTags.has(el.tagName) || el.tagName === 'IMG' || inlineRegionTags.has(el.tagName);
     // A table interpretMarkup stamped nds-table on is foreign content wearing an
     // NDS class, not markup an author claimed as NDS — so it gets table structure
-    // plus the plain vocabulary, never NDS_TAGS' IMG/BUTTON/DIV (which the generic
+    // plus the plain vocabulary, never ndsTags' IMG/BUTTON/DIV (which the generic
     // whitelist strips, and which a converted table must not smuggle back in).
-    const CONVERTED_TAGS = new Set(['TABLE', 'CAPTION', 'THEAD', 'TBODY', 'TFOOT', 'TR', 'TH', 'TD', ...ALLOWED_TAGS]);
+    const convertedTags = new Set(['TABLE', 'CAPTION', 'THEAD', 'TBODY', 'TFOOT', 'TR', 'TH', 'TD', ...allowedTags]);
 
     function hasNdsClass(el) {
         for (const c of el.classList) if (NDS_CLASS.test(c)) return true;
@@ -157,17 +157,17 @@
     // sanitizer (atoms may carry only their label/icon, never block
     // structure) and the editor's _linkableAtom (Enter/Link key on the same
     // boundary) — one definition, not two that can drift apart.
-    const isAtomTag = (el) => el.tagName === 'BUTTON' || (INLINE_REGION_TAGS.has(el.tagName) && hasNdsClass(el));
+    const isAtomTag = (el) => el.tagName === 'BUTTON' || (inlineRegionTags.has(el.tagName) && hasNdsClass(el));
     // No BR either — atoms never take a line break (see _guardRegionEnter);
     // a stray one smuggled in via paste/source unwraps like anything else.
-    const ATOM_TAGS = new Set(['SPAN', 'I', 'IMG']);
+    const atomTags = new Set(['SPAN', 'I', 'IMG']);
 
     // The editor's own link stamps aren't component identity — an anchor
     // carrying any OTHER nds class is a component wearing link duty (a
     // converted button/tag/chip/avatar…), which canon styling must not touch.
-    const LINK_STAMP_CLASSES = new Set(['nds-link', 'nds-primary', 'nds-external']);
+    const linkStampClasses = new Set(['nds-link', 'nds-primary', 'nds-external']);
     function isComponentAnchor(a) {
-        for (const c of a.classList) if (!LINK_STAMP_CLASSES.has(c) && NDS_CLASS.test(c)) return true;
+        for (const c of a.classList) if (!linkStampClasses.has(c) && NDS_CLASS.test(c)) return true;
         return false;
     }
 
@@ -178,7 +178,7 @@
     // editor's vocabulary so enforcement keeps meaning instead of junk.
     // Every step skips NDS-classed markup — that's already canon.
 
-    const PHRASING_TAGS = new Set(['BR', 'STRONG', 'EM', 'B', 'I', 'U', 'S', 'STRIKE', 'A', 'SPAN', 'IMG', 'CODE', 'SUP', 'SUB', 'SMALL', 'FONT', 'MARK']);
+    const phrasingTags = new Set(['BR', 'STRONG', 'EM', 'B', 'I', 'U', 'S', 'STRIKE', 'A', 'SPAN', 'IMG', 'CODE', 'SUP', 'SUB', 'SMALL', 'FONT', 'MARK']);
     // figure/figcaption ride along so captioned article images degrade to
     // img + caption paragraph instead of leaking bare caption text.
     const CONTAINER_SEL = 'div, section, article, aside, header, footer, main, center, figure, figcaption';
@@ -315,7 +315,7 @@
             if (inNdsMarkup(el)) continue;
             let phrasingOnly = true;
             for (const child of el.children) {
-                if (!PHRASING_TAGS.has(child.tagName)) { phrasingOnly = false; break; }
+                if (!phrasingTags.has(child.tagName)) { phrasingOnly = false; break; }
             }
             if (phrasingOnly && (el.children.length || el.textContent.trim())) renameEl(el, 'p');
         }
@@ -334,7 +334,7 @@
 
         // Plain tables become NDS tables — the flagship convert. The class
         // makes them an NDS region, so their structure survives enforcement.
-        // Returned so Pass A can hold them to CONVERTED_TAGS.
+        // Returned so Pass A can hold them to convertedTags.
         const converted = new Set();
         for (const t of root.querySelectorAll('table')) {
             if (!hasNdsClass(t)) { t.classList.add('nds-table'); converted.add(t); }
@@ -357,7 +357,7 @@
             if (child.nodeType === Node.TEXT_NODE) continue;
             if (child.nodeType !== Node.ELEMENT_NODE) { child.remove(); continue; }
             // toUpperCase: SVG/MathML elements report lowercase tagName.
-            if (DROP_TAGS.has(child.tagName.toUpperCase())) { child.remove(); continue; }
+            if (dropTags.has(child.tagName.toUpperCase())) { child.remove(); continue; }
             // Recurse first so nested disallowed tags resolve in one pass.
             sanitizeNode(child, allowed, trusted);
             if (!allowed.has(child.tagName)) unwrapEl(child);
@@ -384,14 +384,14 @@
                 ? ['width', 'height'].map(n => [n, el.getAttribute(n)]).filter(([, v]) => /^\d+$/.test(v || ''))
                 : [];
             // Legacy Word markup carries align="center" as an attribute.
-            const align = BLOCK_TAGS.has(el.tagName)
+            const align = blockTags.has(el.tagName)
                 ? (el.style.textAlign || el.getAttribute('align') || '').toLowerCase() : '';
             // Absolute text direction (toolbar dir command; pasted bidi
             // content) survives on blocks — the browser owns the flip.
-            const dir = BLOCK_TAGS.has(el.tagName)
+            const dir = blockTags.has(el.tagName)
                 ? (el.getAttribute('dir') || '').toLowerCase() : '';
             for (const attr of Array.from(el.attributes)) el.removeAttribute(attr.name);
-            if (ALIGN_VALUES.has(align)) el.style.textAlign = align;
+            if (alignValues.has(align)) el.style.textAlign = align;
             if (dir === 'ltr' || dir === 'rtl') el.setAttribute('dir', dir);
             if (isAnchor) {
                 if (href && safeUrl(href)) {
@@ -424,8 +424,8 @@
             if (!p.parentNode || (trusted && isInTrusted(p, trusted))) continue;
             let bad = false;
             for (const child of p.children) {
-                const inlineOk = INLINE_TAGS.has(child.tagName) || child.tagName === 'IMG'
-                    || (trusted && trusted.has(child) && INLINE_REGION_TAGS.has(child.tagName));
+                const inlineOk = inlineTags.has(child.tagName) || child.tagName === 'IMG'
+                    || (trusted && trusted.has(child) && inlineRegionTags.has(child.tagName));
                 if (!inlineOk) { bad = true; break; }
             }
             if (bad) unwrapEl(p);
@@ -457,7 +457,7 @@
             if (/^aria-/i.test(n) || n === 'role' || n === 'data-status' || n === 'data-state' || n === 'data-no-external'
                 || (tag === 'IMG' && (n === 'alt' || ((n === 'width' || n === 'height') && /^\d+$/.test(attr.value))))
                 || ((tag === 'TD' || tag === 'TH') && (n === 'colspan' || n === 'rowspan' || n === 'scope'))
-                || (tag === 'TH' && n === 'data-align' && COLUMN_ALIGN.has(attr.value))) {
+                || (tag === 'TH' && n === 'data-align' && columnAlign.has(attr.value))) {
                 kept.push([n, attr.value]);
             }
             el.removeAttribute(n);
@@ -507,13 +507,13 @@
         for (const el of Array.from(root.querySelectorAll('[class*="nds-"]'))) {
             if (!el.isConnected) continue; // removed inside an earlier region
             if (lastRegion && lastRegion.contains(el)) continue; // top-most roots only
-            if (!NDS_TAGS.has(el.tagName) || !hasNdsClass(el)) continue;
-            const allowed = converted.has(el) ? CONVERTED_TAGS : isAtomTag(el) ? ATOM_TAGS : NDS_TAGS;
+            if (!ndsTags.has(el.tagName) || !hasNdsClass(el)) continue;
+            const allowed = converted.has(el) ? convertedTags : isAtomTag(el) ? atomTags : ndsTags;
             if (sanitizeRegion(el, allowed)) { trusted.add(el); lastRegion = el; }
         }
 
         // Pass B — generic whitelist outside trusted subtrees.
-        sanitizeNode(root, ALLOWED_TAGS, trusted);
+        sanitizeNode(root, allowedTags, trusted);
         stripAttributes(root, trusted);
         flattenBadPWrappers(root, trusted);
 
@@ -529,7 +529,7 @@
         // separates inline runs is kept.
         for (const n of Array.from(root.childNodes)) {
             if (n.nodeType !== Node.TEXT_NODE || n.textContent.trim()) continue;
-            const blocky = (sib) => !sib || (sib.nodeType === Node.ELEMENT_NODE && !INLINE_TAGS.has(sib.tagName));
+            const blocky = (sib) => !sib || (sib.nodeType === Node.ELEMENT_NODE && !inlineTags.has(sib.tagName));
             if (blocky(n.previousSibling) && blocky(n.nextSibling)) n.remove();
         }
         // Dead-empty paragraphs (no children, no text — editing-split debris)
@@ -579,7 +579,7 @@
             if (n.nodeType === Node.TEXT_NODE && n.textContent.trim()) return false;
         }
         for (const child of el.children) {
-            if (!INLINE_TAGS.has(child.tagName)) return true;
+            if (!inlineTags.has(child.tagName)) return true;
         }
         return false;
     }
@@ -614,7 +614,7 @@
         return (a === 'start') !== (getComputedStyle(th).direction === 'rtl') ? 'left' : 'right';
     }
 
-    const VOID_TAGS = new Set(['BR', 'HR', 'IMG', 'WBR']);
+    const voidTags = new Set(['BR', 'HR', 'IMG', 'WBR']);
     // Elements typing can continue in — anything else as a trailing node
     // traps the caret (component regions, tables, block wrappers).
     const FLOW_EXIT_TAGS = /^(?:P|H[1-4]|UL|OL)$/;
@@ -635,7 +635,7 @@
             // Void elements get no closing tag — `<br></br>` would re-parse as
             // TWO brs (the parser treats a stray </br> as another <br>) and
             // duplicate on every source round-trip.
-            if (VOID_TAGS.has(child.tagName)) {
+            if (voidTags.has(child.tagName)) {
                 out += `${pad}<${openTag(child)}>\n`;
                 continue;
             }
@@ -663,7 +663,7 @@
     // ---------- Toolbar generation ----------
 
     const TOOLBAR_DEFAULT = 'undo redo | bold italic underline strike clear | link image | h2 h3 h4 | align-left align-center align-right align-justify | dir-ltr dir-rtl | ul ol | remove | source';
-    const TOOLBAR_CMDS = {
+    const toolbarCommands = {
         undo:      { icon: 'arrow-turn-backward' },
         redo:      { icon: 'arrow-turn-forward' },
         bold:      { icon: 'text-bold',                 toggle: true },
@@ -756,7 +756,7 @@
     // Every command button doubles as a declarative NDS tooltip (the button's
     // own content is the trigger; nds-tooltip.js generates the balloon).
     function cmdButtonHtml(cmd, extraClass = '') {
-        const c = TOOLBAR_CMDS[cmd];
+        const c = toolbarCommands[cmd];
         const label = html(cmd);
         const icon = c.icon;
         // inlineIcon: paint from the mask-based UI-icon sheet (.nds-icon) rather
@@ -826,12 +826,12 @@
 
     // Shared vocabulary atoms — never independent components in the remove
     // picker (extend if a new atom class enters the paste vocabulary).
-    const NDS_ATOM_CLASSES = new Set(['nds-label', 'nds-icon', 'nds-divider']);
+    const ndsAtomClasses = new Set(['nds-label', 'nds-icon', 'nds-divider']);
 
     // The component name a shell shows in the remove picker — its first
     // nds class that isn't a generic atom.
     const componentNameOf = (el) =>
-        Array.from(el.classList).find(c => /^nds-[\w-]+$/.test(c) && !NDS_ATOM_CLASSES.has(c)) || 'NDS';
+        Array.from(el.classList).find(c => /^nds-[\w-]+$/.test(c) && !ndsAtomClasses.has(c)) || 'NDS';
 
     // Destructive with confirmation — the trigger opens a confirm popover
     // whose rows are filled per caret position (one destructive row per
@@ -865,7 +865,7 @@
                 } else if (cmd === 'remove') {
                     flush();
                     start += removeDropmenuHtml();
-                } else if (TOOLBAR_CMDS[cmd]) {
+                } else if (toolbarCommands[cmd]) {
                     cluster += cmdButtonHtml(cmd);
                 } else {
                     console.warn(`NDS Editor: unknown toolbar command "${cmd}"`);
@@ -1294,7 +1294,7 @@
             // inline formatting never lands inside one. Checked here, the one
             // choke point both the toolbar click and the Ctrl+B/I/U keyboard
             // shortcuts route through.
-            if (ATOM_LOCKED_CMDS.has(cmd) && this._linkableAtom()) return;
+            if (atomLockedCommands.has(cmd) && this._linkableAtom()) return;
             // ponytail: execCommand for writes — deprecated but universally
             // supported, with browser-handled RTL/bidi. Replace per-command only if a UA misbehaves.
             switch (cmd) {
@@ -1311,7 +1311,7 @@
                 case 'h2':
                 case 'h3':
                 case 'h4': {
-                    const targetTag = CMD_BLOCK_MAP[cmd];
+                    const targetTag = commandBlocks[cmd];
                     const block = this._getBlockContext();
                     document.execCommand('formatBlock', false, (block && block.tagName === targetTag) ? 'P' : targetTag);
                     break;
@@ -1591,7 +1591,7 @@
                 // ponytail: bypasses execCommand, so this paste makes no native
                 // undo entry — the editor history covers it (_syncSource snapshots).
                 const probe = new DOMParser().parseFromString(insert, 'text/html').body;
-                const inlineOnly = [...probe.children].every(c => INLINE_TAGS.has(c.tagName));
+                const inlineOnly = [...probe.children].every(c => inlineTags.has(c.tagName));
                 this.editable.innerHTML = inlineOnly ? `<p>${insert}</p>` : insert;
                 const r = document.createRange();
                 r.selectNodeContents(this.editable);
@@ -1768,7 +1768,7 @@
             return atom;
         }
 
-        _getBlockContext() { return this._selAncestor(n => BLOCK_TAGS.has(n.tagName)); }
+        _getBlockContext() { return this._selAncestor(n => blockTags.has(n.tagName)); }
 
         // ---------- Component-shell delete guard ----------
 
@@ -2276,7 +2276,7 @@
                         for (const td of tr.cells) {
                             // Same lookup the toolbar reads, so the painted and pressed alignment agree.
                             const a = columnHead(td)?.getAttribute('data-align');
-                            if (COLUMN_ALIGN.has(a)) td.style.textAlign = a;
+                            if (columnAlign.has(a)) td.style.textAlign = a;
                             else td.style.removeProperty('text-align');
                             if (!td.getAttribute('style')) td.removeAttribute('style');
                         }
@@ -2799,7 +2799,7 @@
             // Must not re-enable a disabled/readonly surface's buttons.
             const locked = !!this._linkableAtom() || this.editable.getAttribute('contenteditable') !== 'true';
             for (const btn of this.buttons) {
-                if (ATOM_LOCKED_CMDS.has(btn.dataset.cmd)) btn.disabled = locked;
+                if (atomLockedCommands.has(btn.dataset.cmd)) btn.disabled = locked;
             }
 
             for (const btn of this.buttons) {
@@ -2814,7 +2814,7 @@
                 else if (cmd === 'strike')    pressed = this._safeQueryState('strikeThrough');
                 else if (cmd === 'link')      pressed = !!this._getAncestorTag('A');
                 else if (cmd === 'image')     pressed = !!this._selectedImage();
-                else if (CMD_BLOCK_MAP[cmd]) pressed = blockTag === CMD_BLOCK_MAP[cmd];
+                else if (commandBlocks[cmd]) pressed = blockTag === commandBlocks[cmd];
                 else if (cmd === 'ul')        pressed = inList === 'UL';
                 else if (cmd === 'ol')        pressed = inList === 'OL';
                 else if (cmd.startsWith('align-')) {
@@ -2834,7 +2834,7 @@
 
         // Loose top-level text / inline nodes (from a value the author wrote
         // as bare text — no <p> wrapper) can't take a block command:
-        // _getBlockContext walks up looking for a BLOCK_TAGS ancestor and
+        // _getBlockContext walks up looking for a blockTags ancestor and
         // hits the editable root, so alignment / dir / heading all no-op.
         // Wrap each run of loose siblings into a <p> after every hydrate.
         _normalizeLooseBlocks() {

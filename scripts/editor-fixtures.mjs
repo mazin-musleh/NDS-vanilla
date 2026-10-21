@@ -314,8 +314,8 @@ p.MsoListParagraph {margin-left:36.0pt; mso-add-space:auto;}
     },
     {
         // interpretMarkup stamps nds-table on every classless table, promoting it
-        // to a region — so its contents filter against NDS_TAGS (which has IMG)
-        // instead of ALLOWED_TAGS (which doesn't). Same <img> at top level is
+        // to a region — so its contents filter against ndsTags (which has IMG)
+        // instead of allowedTags (which doesn't). Same <img> at top level is
         // stripped; see evil-payloads-neutralized.
         // Images joined the plain vocabulary (1.4.1): a converted table keeps
         // a safe-src image, region-scrubbed; unsafe srcs still die whole.
@@ -332,8 +332,8 @@ p.MsoListParagraph {margin-left:36.0pt; mso-add-space:auto;}
     },
     {
         // Counterpart to the above: a table the AUTHOR claimed as NDS keeps full
-        // NDS_TAGS trust, image included. Auto-converted vs authored is the whole
-        // distinction CONVERTED_TAGS draws — this is the half that must not regress.
+        // ndsTags trust, image included. Auto-converted vs authored is the whole
+        // distinction convertedTags draws — this is the half that must not regress.
         name: 'authored-nds-table-keeps-img',
         html: '<table class="nds-table"><tbody><tr><td><img src="https://example.com/x.png" alt="صورة">خلية</td></tr></tbody></table>',
         expect: [

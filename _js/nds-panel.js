@@ -64,7 +64,7 @@
 
     const SELECTOR = '.nds-panel';
     const INIT_ATTR = 'data-nds-panel-initialized';
-    const SIZES = ['sm', 'md', 'lg', 'xl'];
+    const sizes = ['sm', 'md', 'lg', 'xl'];
 
     // Open panels, bottom to top; a closing one stays until its slide ends.
     const stack = [];
@@ -309,7 +309,7 @@
     // ==============================================
 
     const sizeIndex = (panel) => {
-        const i = SIZES.indexOf(panel.getAttribute('data-panel-size'));
+        const i = sizes.indexOf(panel.getAttribute('data-panel-size'));
         return i < 0 ? 1 : i;
     };
 
@@ -331,7 +331,7 @@
     // aria-disabled, not disabled: a disabled button drops the focus the user just clicked into.
     function syncResize(panel) {
         const i = sizeIndex(panel);
-        const full = i === SIZES.length - 1 || atMax(panel);
+        const full = i === sizes.length - 1 || atMax(panel);
         ownControls(panel, '[data-panel-resize]').forEach(btn => {
             NDS.aria.disabled(btn, btn.dataset.panelResize === 'grow' ? full : i === 0);
         });
@@ -339,9 +339,9 @@
 
     function resize(panel, step) {
         const from = sizeIndex(panel);
-        const to = Math.min(Math.max(from + step, 0), SIZES.length - 1);
+        const to = Math.min(Math.max(from + step, 0), sizes.length - 1);
         if (to === from || (step > 0 && atMax(panel))) return;
-        panel.setAttribute('data-panel-size', SIZES[to]);
+        panel.setAttribute('data-panel-size', sizes[to]);
         syncResize(panel);
         // Measure the cap again once the size has settled.
         if (panel._cancelResize) panel._cancelResize();
@@ -350,7 +350,7 @@
             syncResize(panel);
         }, { fallbackMs: NDS.transitionSpeed() + 100 });
         panel.dispatchEvent(new CustomEvent('nds:panel:resized', {
-            detail: { panel, size: SIZES[to] }, bubbles: true,
+            detail: { panel, size: sizes[to] }, bubbles: true,
         }));
     }
 

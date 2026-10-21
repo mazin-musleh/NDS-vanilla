@@ -45,7 +45,7 @@
         no_results: 'No results',
     });
 
-    const CONFIG = {
+    const config = {
         selectors: {
             drawer: '.nds-drawer'
         },
@@ -67,27 +67,27 @@
     const { add: addState, remove: removeState, has: hasState } = NDS.state;
 
     // Transition states that are mutually exclusive
-    const TRANSITION_STATES = ['open', 'opening', 'closing'];
+    const transitionStates = ['open', 'opening', 'closing'];
 
     function setState(element, state) {
         if (state) {
             // Remove sibling transition states before adding new one
-            removeState(element, ...TRANSITION_STATES);
+            removeState(element, ...transitionStates);
             addState(element, state);
         } else {
             // Empty state = clear transition states only: an <li>'s `active` is the author's current-page mark
-            removeState(element, ...TRANSITION_STATES);
+            removeState(element, ...transitionStates);
         }
     }
 
     // A closed toggle keeps its highlight while its <li> is the current page.
     function clearButton(listItem, button) {
-        if (hasState(listItem, CONFIG.states.active)) setState(button, CONFIG.states.active);
+        if (hasState(listItem, config.states.active)) setState(button, config.states.active);
         else NDS.state.clear(button);
     }
 
     function isOpen(listItem) {
-        return NDS.state.has(listItem, CONFIG.states.open) || NDS.state.has(listItem, CONFIG.states.opening);
+        return NDS.state.has(listItem, config.states.open) || NDS.state.has(listItem, config.states.opening);
     }
 
     // ==============================================
@@ -106,7 +106,7 @@
         } else {
             // Accordion: close siblings
             const parentList = listItem.parentElement;
-            if (parentList && !hasState(button.closest(CONFIG.selectors.drawer), 'always-open')) {
+            if (parentList && !hasState(button.closest(config.selectors.drawer), 'always-open')) {
                 parentList.querySelectorAll(':scope > li').forEach(sibling => {
                     if (sibling === listItem) return;
                     if (!isOpen(sibling)) return;
@@ -129,16 +129,16 @@
 
     function showSubmenu(listItem, button, submenu) {
         cancelPending(submenu);
-        setState(submenu, CONFIG.states.opening);
-        setState(listItem, CONFIG.states.opening);
+        setState(submenu, config.states.opening);
+        setState(listItem, config.states.opening);
         NDS.aria.expanded(button, true);
-        setState(button, CONFIG.states.active);
+        setState(button, config.states.active);
         submenu.style.height = submenu.scrollHeight + 'px';
 
         pendingEnd.set(submenu, NDS.onTransitionEnd(submenu, () => {
             pendingEnd.delete(submenu);
-            setState(submenu, CONFIG.states.open);
-            setState(listItem, CONFIG.states.open);
+            setState(submenu, config.states.open);
+            setState(listItem, config.states.open);
             submenu.style.height = '';
             dispatchDrawerEvent(listItem, 'shown');
         }));
@@ -148,15 +148,15 @@
         cancelPending(submenu);
         submenu.style.height = submenu.scrollHeight + 'px';
         submenu.offsetHeight; // Force reflow
-        setState(submenu, CONFIG.states.closing);
+        setState(submenu, config.states.closing);
         submenu.style.height = '0px';
-        setState(listItem, CONFIG.states.closed);
+        setState(listItem, config.states.closed);
         NDS.aria.expanded(button, false);
         clearButton(listItem, button);
 
         pendingEnd.set(submenu, NDS.onTransitionEnd(submenu, () => {
             pendingEnd.delete(submenu);
-            setState(submenu, CONFIG.states.closed);
+            setState(submenu, config.states.closed);
             submenu.style.height = '';
             dispatchDrawerEvent(listItem, 'hidden');
         }));
@@ -166,20 +166,20 @@
     function paintBranch(listItem, open) {
         const button = listItem.querySelector(':scope > .nds-btn');
         const submenu = listItem.querySelector(':scope > ul');
-        setState(listItem, open ? CONFIG.states.open : CONFIG.states.closed);
+        setState(listItem, open ? config.states.open : config.states.closed);
         if (submenu) {
             cancelPending(submenu);
             submenu.style.height = '';
-            setState(submenu, open ? CONFIG.states.open : CONFIG.states.closed);
+            setState(submenu, open ? config.states.open : config.states.closed);
         }
         if (button) {
             NDS.aria.expanded(button, open);
-            if (open) setState(button, CONFIG.states.active); else clearButton(listItem, button);
+            if (open) setState(button, config.states.active); else clearButton(listItem, button);
         }
     }
 
     function dispatchDrawerEvent(listItem, eventType) {
-        const drawer = listItem.closest(CONFIG.selectors.drawer);
+        const drawer = listItem.closest(config.selectors.drawer);
         drawer?.dispatchEvent(new CustomEvent(`nds:drawer:${eventType}`, {
             detail: { item: listItem, drawer },
             bubbles: true
@@ -194,7 +194,7 @@
         drawer.querySelectorAll('.nds-drawer-list li').forEach(item => {
             if (!item.querySelector(':scope > ul') || !item.querySelector(':scope > .nds-btn')) return;
             // Open where the markup says so
-            paintBranch(item, hasState(item, CONFIG.states.open));
+            paintBranch(item, hasState(item, config.states.open));
         });
     }
 
@@ -229,7 +229,7 @@
     // through toggleSubmenu() later, so a moved mark animates and closes sibling branches.
     function activateItem(drawer, activeItem, animate) {
         const activeBtn = activeItem.querySelector(':scope > .nds-btn');
-        if (activeBtn) setState(activeBtn, CONFIG.states.active);
+        if (activeBtn) setState(activeBtn, config.states.active);
 
         const closed = [];
         let parent = activeItem.closest('ul')?.closest('li');
@@ -257,9 +257,9 @@
         NDS.onAttrChange('.nds-drawer[data-nds-drawer-initialized] li', ['data-state'], items => items.forEach(item => {
             const btn = item.querySelector(':scope > .nds-btn');
             if (!btn) return;
-            if (hasState(item, CONFIG.states.active)) {
-                if (!hasState(btn, CONFIG.states.active)) activateItem(item.closest(CONFIG.selectors.drawer), item, true);
-            } else if (!isOpen(item) && hasState(btn, CONFIG.states.active)) {
+            if (hasState(item, config.states.active)) {
+                if (!hasState(btn, config.states.active)) activateItem(item.closest(config.selectors.drawer), item, true);
+            } else if (!isOpen(item) && hasState(btn, config.states.active)) {
                 clearButton(item, btn);
             }
         }));
@@ -380,7 +380,7 @@
     }
 
     function initAllDrawers() {
-        document.querySelectorAll(CONFIG.selectors.drawer).forEach(drawer => {
+        document.querySelectorAll(config.selectors.drawer).forEach(drawer => {
             if (drawer.closest('code')) return;
             createDrawer(drawer);
         });

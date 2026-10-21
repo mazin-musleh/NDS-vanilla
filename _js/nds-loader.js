@@ -65,7 +65,7 @@
     // each injected bundle's group on arrival). `name` must equal the NDS namespace:
     // it keys the default init and the build manifest lookup.
     // Each `critical` / deferred note says why the component is safe (or not) to init late.
-    const COMPONENTS = [
+    const components = [
         {
             name: 'MainNav',
             selector: '.nds-main-nav',
@@ -446,7 +446,7 @@
             init: () => { const ns = NDS.Accessibility; if (ns && !ns.__ndsStub && !ns.isStarted) ns.init(); },
         },
     ];
-    for (const c of COMPONENTS) c.init ||= () => NDS[c.name]?.init?.();
+    for (const c of components) c.init ||= () => NDS[c.name]?.init?.();
 
     // scheduler.yield() lets input/paint preempt between batches; the fallback channel
     // is allocated once per page so SPA reinits don't leak channels.
@@ -474,21 +474,21 @@
 
     // Captured at eval: currentScript is main's own tag here and null in any callback.
     // Siblings reuse main's origin (passes a CSP host allowlist) and its ?ver= cache-bust.
-    const SELF = document.currentScript ||
+    const mainScript = document.currentScript ||
         [...document.scripts].find((s) => /nds-main(\.min)?\.js/.test(s.src));
     // NDS_ASSETS_PATH names the assets/ folder, as core reads it for the language files.
-    const ASSET = (() => {
-        const u = SELF && SELF.src ? new URL(SELF.src, location.href) : null;
+    const assetPath = (() => {
+        const u = mainScript && mainScript.src ? new URL(mainScript.src, location.href) : null;
         const ver = u ? u.search : '';
         if (window.NDS_ASSETS_PATH) return { dir: window.NDS_ASSETS_PATH + 'js/', ver };
         return { dir: u ? u.href.slice(0, u.href.lastIndexOf('/') + 1) : '', ver };
     })();
-    const bundleUrl = (file) => ASSET.dir + file + ASSET.ver;
+    const bundleUrl = (file) => assetPath.dir + file + assetPath.ver;
 
     // Build-generated: { delegated: { file, ns:[...], css?:[...] }, ... }.
-    const MAP = window.__NDS_BUNDLES || {};
+    const bundleMap = window.__NDS_BUNDLES || {};
     const nsToBundle = {};
-    for (const b in MAP) for (const ns of (MAP[b].ns || [])) nsToBundle[ns] = b;
+    for (const b in bundleMap) for (const ns of (bundleMap[b].ns || [])) nsToBundle[ns] = b;
     // A bundle that failed stops counting as pending; a later load that succeeds clears it.
     const failedBundles = new Set();
 
@@ -522,7 +522,7 @@
                 u.pathname = u.pathname.replace(/[^/]*$/, name);
                 url = u.href;
             } else {
-                url = ASSET.dir.replace(/\/js\/?$/, '/css/') + name + ASSET.ver;
+                url = assetPath.dir.replace(/\/js\/?$/, '/css/') + name + assetPath.ver;
             }
             path = new URL(url, location.href).pathname;
         } catch (e) { return null; }
@@ -541,16 +541,16 @@
     const bundlePromises = {};
     function loadBundle(name) {
         if (bundlePromises[name]) return bundlePromises[name];
-        const file = MAP[name] && MAP[name].file;
+        const file = bundleMap[name] && bundleMap[name].file;
         // Sheets first, before any early return: a self-hosted or inlined bundle still needs them.
-        if (MAP[name]) for (const sheet of MAP[name].css || []) addSheet(sheet);
-        if (!file || !ASSET.dir) return (bundlePromises[name] = Promise.resolve());
+        if (bundleMap[name]) for (const sheet of bundleMap[name].css || []) addSheet(sheet);
+        if (!file || !assetPath.dir) return (bundlePromises[name] = Promise.resolve());
         // Self-hosted under a no-injection CSP: their own <script> tag, our init.
         if ([...document.scripts].some((s) => s.src && s.src.includes(file))) {
             return (bundlePromises[name] = Promise.resolve());
         }
         // Inlined or concatenated into the consumer's build: every namespace already real.
-        const bundleNs = MAP[name].ns || [];
+        const bundleNs = bundleMap[name].ns || [];
         if (bundleNs.length && bundleNs.every((n) => NDS[n] && !NDS[n].__ndsStub)) {
             return (bundlePromises[name] = Promise.resolve());
         }
@@ -559,7 +559,7 @@
             const s = document.createElement('script');
             s.src = ttPolicy ? ttPolicy.createScriptURL(url) : url;
             s.fetchPriority = 'low';
-            if (SELF && SELF.nonce) s.nonce = SELF.nonce;
+            if (mainScript && mainScript.nonce) s.nonce = mainScript.nonce;
             s.onload = () => { failedBundles.delete(name); resolve(); };
             s.onerror = () => {
                 console.warn(`[NDS] bundle '${name}' failed to load (${url})`);
@@ -638,8 +638,8 @@
     const ready = new Promise((resolve) => { resolveReady = resolve; });
 
     function initializeNDS() {
-        if (CONFIG.disableAll === true) {
-            if (CONFIG.enableLogging) {
+        if (config.disableAll === true) {
+            if (config.enableLogging) {
                 console.warn('[NDS] Initialization disabled (config.disableAll = true)');
             }
             resolveReady();     // nothing will start, so nothing to wait for
@@ -655,11 +655,11 @@
         let criticalComponents, deferredComponents, injectedGroups;
 
         const runInit = (component) => {
-            const start = CONFIG.enableTiming ? performance.now() : 0;
+            const start = config.enableTiming ? performance.now() : 0;
             try {
                 component.init();
-                if (CONFIG.enableLogging) {
-                    const timing = CONFIG.enableTiming
+                if (config.enableLogging) {
+                    const timing = config.enableTiming
                         ? ` ${(performance.now() - start).toFixed(1)}ms`
                         : '';
                     console.log(`[NDS:init] ${component.name}${timing}`);
@@ -753,7 +753,7 @@
             const batchStart = performance.now();
             while (
                 criticalIndex < criticalComponents.length &&
-                performance.now() - batchStart < CONFIG.initBudgetMs
+                performance.now() - batchStart < config.initBudgetMs
             ) {
                 runInit(criticalComponents[criticalIndex++]);
             }
@@ -800,7 +800,7 @@
         }
 
         function logAllDone() {
-            if (CONFIG.enableTiming) {
+            if (config.enableTiming) {
                 console.log(
                     `[NDS] All components initialized in ${Math.round(performance.now() - startTime)}ms`
                 );
@@ -812,7 +812,7 @@
         criticalComponents = [];
         deferredComponents = [];
         injectedGroups = {};
-        for (const c of COMPONENTS) {
+        for (const c of components) {
             const present = !c.selector || document.querySelector(c.selector);
             if (!present) continue;
             if (c.critical) {
@@ -831,13 +831,13 @@
         for (const name in injectedGroups) loadBundle(name);
         loadIconTokens(mainCssLink());
 
-        if (CONFIG.enableLogging) {
+        if (config.enableLogging) {
             const names = Object.keys(injectedGroups);
             const injected = names.reduce((n, name) => n + injectedGroups[name].length, 0);
             const total = criticalComponents.length + deferredComponents.length + injected;
             const detail = names.map((name) => `${name}:${injectedGroups[name].length}`);
             console.log(
-                `[NDS] Initializing ${total}/${COMPONENTS.length} components ` +
+                `[NDS] Initializing ${total}/${components.length} components ` +
                 `(${criticalComponents.length} critical, ${deferredComponents.length} deferred` +
                 `${detail.length ? ', ' + detail.join(', ') : ''})`
             );
@@ -850,7 +850,7 @@
     // enableLogging only: 3s after window load, so injected bundles have initialized and
     // icon masks are computable. Pulls nds-audit.min.js through the lazy stub.
     function scheduleDebugAudits() {
-        if (!CONFIG.enableLogging) return;
+        if (!config.enableLogging) return;
         const run = () => setTimeout(() => NDS.audit.run(), 3000);
         if (document.readyState === 'complete') run();
         else window.addEventListener('load', run, { once: true });
@@ -860,15 +860,15 @@
     const rootEl = document.documentElement;
     const attrAutoInit = rootEl.getAttribute('data-nds-auto-init');
     const attrDisableAll = rootEl.getAttribute('data-nds-disable-all');
-    const GLOBAL = window.NDSInitConfig || {};
+    const initConfig = window.NDSInitConfig || {};
 
-    const CONFIG = {
+    const config = {
         // Below ~40 keeps clear of TBT's 50ms long-task threshold on throttled CPUs.
-        initBudgetMs: GLOBAL.initBudgetMs ?? 5,
-        enableLogging: GLOBAL.enableLogging ?? false,
-        enableTiming: GLOBAL.enableTiming ?? false,
-        autoInitialize: GLOBAL.autoInitialize ?? (attrAutoInit != null ? attrAutoInit !== 'false' : true),
-        disableAll: GLOBAL.disableAll ?? (attrDisableAll != null ? attrDisableAll === 'true' : false),
+        initBudgetMs: initConfig.initBudgetMs ?? 5,
+        enableLogging: initConfig.enableLogging ?? false,
+        enableTiming: initConfig.enableTiming ?? false,
+        autoInitialize: initConfig.autoInitialize ?? (attrAutoInit != null ? attrAutoInit !== 'false' : true),
+        disableAll: initConfig.disableAll ?? (attrDisableAll != null ? attrDisableAll === 'true' : false),
     };
 
     NDS.loadBundle = loadBundle;
@@ -877,7 +877,7 @@
     // Tooltip or Copy inside a field never blocks it; a lazy component is never flagged.
     function pending(el) {
         const root = el || document;
-        return COMPONENTS.some((c) => {
+        return components.some((c) => {
             if (!c.rule || c.lazy) return false;
             const found = [...(root.matches?.(c.selector) ? [root] : []), ...root.querySelectorAll(c.selector)];
             if (!found.length) return false;
@@ -904,7 +904,7 @@
         const root = container || document;
         // Words first: a component that reads its label at init reads the page language.
         if (root !== document) NDS.i18n.translate(root);
-        for (const component of COMPONENTS) {
+        for (const component of components) {
             const ns = NDS[component.name];
             if (!ns || ns.__ndsStub) continue;
             try {
@@ -945,7 +945,7 @@
                 }
             }
         }
-        for (const component of COMPONENTS) {
+        for (const component of components) {
             const ns = NDS[component.name];
             if (!ns || ns.__ndsStub) continue;
 
@@ -993,7 +993,7 @@
         const root = container || document;
         applyPerPageParams(root);
         const needed = new Set();
-        for (const c of COMPONENTS) {
+        for (const c of components) {
             if (!c.selector) continue;
             const here = root.matches?.(c.selector) || root.querySelector?.(c.selector);
             const bundle = here && nsToBundle[c.name];
@@ -1007,14 +1007,14 @@
 
     NDS.init = {
         initialize: initializeNDS,
-        components: COMPONENTS,
-        config: CONFIG,
+        components: components,
+        config: config,
         // Works regardless of enableLogging, which only controls the automatic sweep.
         audit: () => NDS.audit.run(),
         refresh: refreshContainer,
         mount: mountContainer,
         destroy: destroyContainer,
-        owns: (el) => COMPONENTS.some((c) => c.owns && el.matches(c.selector)),
+        owns: (el) => components.some((c) => c.owns && el.matches(c.selector)),
         pending,
         ready,
     };
@@ -1022,7 +1022,7 @@
     // Not DOMContentLoaded: DCL also waits for every OTHER defer script, which would let
     // them gate the reveal. Main is a defer script, so the DOM is parsed here already;
     // only the rare sync-in-<head> case waits.
-    if (CONFIG.autoInitialize) {
+    if (config.autoInitialize) {
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initializeNDS);
         } else {

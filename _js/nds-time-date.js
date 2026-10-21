@@ -24,13 +24,13 @@
     // data-hidden bands of _utilities.scss from matchMedia — no layout read, so
     // the check is free in the init drain and in an idle slot. `sr` keeps the
     // text for screen readers. A breakpoint crossing re-runs via NDS.onResize.
-    const BAND_ALIAS = { sm: 'mobile', md: 'tablet', lg: 'desktop' };
+    const bandAlias = { sm: 'mobile', md: 'tablet', lg: 'desktop' };
     function rendered(el) {
         const tokens = (el.dataset.hidden || '').split(/\s+/);
         if (tokens.includes('sr')) return true;
         const mq = (q) => window.matchMedia(NDS.breakpoints[q]).matches;
         const band = mq('mobile') ? 'sm' : mq('tablet-max') ? 'md' : mq('desktop-max') ? 'lg' : 'xl';
-        return !tokens.includes(band) && !tokens.includes(BAND_ALIAS[band]);
+        return !tokens.includes(band) && !tokens.includes(bandAlias[band]);
     }
     // Built imperatively: the text flows through textContent, never the HTML parser.
     function renderDate(parent, content) {

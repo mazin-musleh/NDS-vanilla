@@ -470,14 +470,14 @@
     // loads this bundle, so pages without one pay nothing. The single delegated
     // listener resolves its button per click, so buttons injected later (modals,
     // dropmenus, dynamic toolbars) are covered with no re-arm.
-    const VALID_FORMATS = { csv: 1, xls: 1, pdf: 1 };
+    const validFormats = { csv: 1, xls: 1, pdf: 1 };
     let initDone = false;
 
     function onExportClick(e) {
         const btn = e.target.closest && e.target.closest('[data-export]');
         if (!btn) return;
         const format = btn.dataset.export;
-        if (!VALID_FORMATS[format]) return;
+        if (!validFormats[format]) return;
         const sel = btn.dataset.exportTarget;
         const target = sel
             ? document.querySelector(sel)

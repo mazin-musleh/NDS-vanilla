@@ -26,13 +26,13 @@
     'use strict';
 
     const KEY = 'cookieConsent';
-    const GTAG = {
+    const gtagSignals = {
         performance: ['analytics_storage'],
         functional: ['functionality_storage', 'personalization_storage'],
         targeting: ['ad_storage', 'ad_user_data', 'ad_personalization'],
     };
     // Name prefixes: GA4 sets _ga_<id>, Ads sets _gcl_au.
-    const TRACKERS = { performance: ['_ga', '_gid', '_gat'], targeting: ['_gcl', '_fbp', '_fbc'] };
+    const trackers = { performance: ['_ga', '_gid', '_gat'], targeting: ['_gcl', '_fbp', '_fbc'] };
 
     function get() {
         const v = NDS.cookie.get(KEY);
@@ -59,12 +59,12 @@
         // The flag is in-memory only, so it is set again on every load.
         trackingIds().forEach(id => { window['ga-disable-' + id] = !perf; });
         const names = document.cookie.split(';').map(c => c.split('=')[0].trim());
-        Object.keys(TRACKERS).forEach(c => {
-            if (!allowed(c)) names.filter(n => TRACKERS[c].some(p => n.startsWith(p))).forEach(NDS.cookie.delete);
+        Object.keys(trackers).forEach(c => {
+            if (!allowed(c)) names.filter(n => trackers[c].some(p => n.startsWith(p))).forEach(NDS.cookie.delete);
         });
         if (typeof gtag === 'function') {
             const update = {};
-            Object.keys(GTAG).forEach(c => GTAG[c].forEach(k => { update[k] = allowed(c) ? 'granted' : 'denied'; }));
+            Object.keys(gtagSignals).forEach(c => gtagSignals[c].forEach(k => { update[k] = allowed(c) ? 'granted' : 'denied'; }));
             gtag('consent', 'update', update);
         }
     }
@@ -74,7 +74,7 @@
         NDS.cookie.set(KEY, choice === true ? 'accepted' : list.length ? list.join(',') : 'declined', 365);
         apply();
         const categories = { necessary: true };
-        Object.keys(GTAG).concat(list).forEach(c => { categories[c] = allowed(c); });
+        Object.keys(gtagSignals).concat(list).forEach(c => { categories[c] = allowed(c); });
         // The hook for anything NDS does not know (Clarity, a vendor pixel): the listener owns its SDK.
         document.dispatchEvent(new CustomEvent('nds:cookies:consent', {
             detail: { consent: get(), categories },

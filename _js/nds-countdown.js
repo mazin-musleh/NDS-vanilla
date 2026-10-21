@@ -45,8 +45,8 @@
 
     const SEL = '.nds-countdown';
     const WIRED_ATTR = 'data-nds-countdown-initialized';
-    const UNITS = { d: 86400, h: 3600, m: 60, s: 1 };
-    const UNIT_NAMES = { d: 'day', h: 'hour', m: 'minute', s: 'second' };
+    const unitSeconds = { d: 86400, h: 3600, m: 60, s: 1 };
+    const unitNames = { d: 'day', h: 'hour', m: 'minute', s: 'second' };
     const DEFAULT_MARKUP = '<span data-unit="d" data-countdown-hide-zero><span class="nds-countdown-value">--</span> <span class="nds-countdown-label"></span> </span>'
         + '<span class="nds-countdown-value" data-unit="h">--</span>:<span class="nds-countdown-value" data-unit="m">--</span>:<span class="nds-countdown-value" data-unit="s">--</span>';
 
@@ -111,7 +111,7 @@
         const key = lang + unit;
         let f = unitFormats.get(key);
         if (!f) {
-            f = new Intl.NumberFormat(lang, { style: 'unit', unit: UNIT_NAMES[unit], unitDisplay: 'long' });
+            f = new Intl.NumberFormat(lang, { style: 'unit', unit: unitNames[unit], unitDisplay: 'long' });
             unitFormats.set(key, f);
         }
         return f.formatToParts(value).find((p) => p.type === 'unit')?.value ?? '';
@@ -133,8 +133,8 @@
         const vals = {};
         let left = rem;
         for (const u of it.order) {
-            vals[u] = Math.floor(left / UNITS[u]);
-            left -= vals[u] * UNITS[u];
+            vals[u] = Math.floor(left / unitSeconds[u]);
+            left -= vals[u] * unitSeconds[u];
         }
         for (const x of it.units) {
             const v = vals[x.unit];
@@ -214,7 +214,7 @@
         const units = [];
         el.querySelectorAll('[data-unit]').forEach((box) => {
             const unit = box.getAttribute('data-unit');
-            if (!(unit in UNITS)) return;
+            if (!(unit in unitSeconds)) return;
             const label = box.querySelector('.nds-countdown-label');
             // A written label stays as the author wrote it. An empty one is ours: the sizes stamp marks it after the fill.
             const auto = label && (!label.textContent.trim() || label.hasAttribute('data-countdown-sizes'));
@@ -222,13 +222,13 @@
             units.push({ unit, box, value: box.querySelector('.nds-countdown-value') || box,
                 label: auto ? label : null, hideZero: box.hasAttribute('data-countdown-hide-zero') });
         });
-        const order = Object.keys(UNITS).filter((u) => units.some((x) => x.unit === u));
+        const order = Object.keys(unitSeconds).filter((u) => units.some((x) => x.unit === u));
         const it = { target: t, offset, warn: parseInt(el.getAttribute('data-countdown-warn'), 10) || 0, warned: false,
             lang, order, units };
         // Only the largest unit can lose a digit (10 → 9 days): its value holds the width of its start.
         const top = order[0];
         if (top) {
-            const v = Math.floor(remainingOf(it) / UNITS[top]);
+            const v = Math.floor(remainingOf(it) / unitSeconds[top]);
             units.forEach((x) => { if (x.unit === top) x.value.setAttribute('data-countdown-sizes', top === 'd' ? String(v) : pad(v)); });
         }
         NDS.state.remove(el, 'ended', 'warning');

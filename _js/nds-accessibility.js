@@ -144,7 +144,7 @@
     // Letter cycle 0/0.04/0.08/0.12em and word cycle 0/0.16/0.32/0.48em both
     // step Default → Small → Medium → Large, so one tier map covers both.
     // Read through words.text(), so each value is said in the page language.
-    const SPACING_TIER = {
+    const spacingTier = {
         '0':       'default',
         '0.04em':  'small',  '0.08em':  'medium',  '0.12em':  'large',
         '0.16em':  'small',  '0.32em':  'medium',  '0.48em':  'large',
@@ -163,7 +163,7 @@
     // `settings` is the bundle's "opening position" — applied on activation
     // for keys still at default (see toggleMode), restored on deactivation
     // for keys the user didn't manually re-cycle.
-    const MODE_BUNDLES = {
+    const modeBundles = {
         'epilepsy-safe':        ['reduce-motion', 'low-saturation'],          // WCAG 2.3.1
         'visually-impaired':    {                                              // WCAG 1.4.6 + 1.30× scale
             primitives: ['high-contrast'],
@@ -182,16 +182,16 @@
     // Letter spacing breaks the letters of a script that joins them. The browser names the page
     // language's script, so every language written in one is covered (ar, fa, ur, pa-Arab…).
     // On such a page the tile goes, a bundle's preset skips it and a saved value does not apply.
-    const JOINED_SCRIPTS = new Set(['Arab', 'Syrc', 'Mong', 'Nkoo', 'Adlm', 'Mand']);
+    const joinedScripts = new Set(['Arab', 'Syrc', 'Mong', 'Nkoo', 'Adlm', 'Mand']);
     const noLetterSpacing = () => {
-        try { return JOINED_SCRIPTS.has(new Intl.Locale(document.documentElement.lang || 'en').maximize().script); }
+        try { return joinedScripts.has(new Intl.Locale(document.documentElement.lang || 'en').maximize().script); }
         catch { return false; }   // not a language tag
     };
 
     // Normalize a bundle entry. line-height + word-spacing + the font primitives still
     // apply where letter spacing does not.
     function bundleRecipe(name) {
-        const entry = MODE_BUNDLES[name];
+        const entry = modeBundles[name];
         if (!entry) return { primitives: [], settings: null };
         if (Array.isArray(entry)) return { primitives: entry, settings: null };
         let settings = entry.settings || null;
@@ -205,23 +205,23 @@
 
     // Mutex group — clicking any of these mutes the others (filters compose
     // multiplicatively; users want exactly one).
-    const VISUAL_FILTERS = ['boost-contrast', 'monochrome', 'high-contrast', 'high-saturation', 'low-saturation', 'cvd-deutan'];
+    const visualFilters = ['boost-contrast', 'monochrome', 'high-contrast', 'high-saturation', 'low-saturation', 'cvd-deutan'];
 
     // OS-supplied preferences auto-supply the matching primitive token
     // (same way bundles do). state.excluded still wins.
-    const OS_MQ = {
+    const osMediaQueries = {
         'reduce-motion': matchMedia('(prefers-reduced-motion: reduce)'),
         'high-contrast': matchMedia('(prefers-contrast: more)'),
     };
     function isSuppliedByOS(name) {
-        return !!(OS_MQ[name] && OS_MQ[name].matches);
+        return !!(osMediaQueries[name] && osMediaQueries[name].matches);
     }
 
     // Continuous scalars → inline CSS var on <html> + presence token in
     // data-a11y. The token gates the SCSS rule so author CSS isn't
     // clobbered when an UNRELATED mod is on. font-step is NOT here — it's
     // discrete and gets folded into data-a11y as `font-step-N` directly.
-    const SCALAR_PROPS = [
+    const scalarProperties = [
         { key: 'line-height',    cssVar: '--user-line-height',    token: 'has-line-height',    def: 'normal' },
         { key: 'letter-spacing', cssVar: '--user-letter-spacing', token: 'has-letter-spacing', def: '0' },
         { key: 'word-spacing',   cssVar: '--user-word-spacing',   token: 'has-word-spacing',   def: '0' },
@@ -290,7 +290,7 @@
     // (state.modes ∪ each active bundle's primitives ∪ OS-supplied) − state.excluded
     function effectiveTokens() {
         const tokens = new Set(state.modes);
-        for (const k in OS_MQ) if (OS_MQ[k].matches) tokens.add(k);
+        for (const k in osMediaQueries) if (osMediaQueries[k].matches) tokens.add(k);
         for (let i = 0; i < state.bundles.length; i++) {
             const b = state.bundles[i];
             const { primitives } = bundleRecipe(b);
@@ -348,7 +348,7 @@
         }
 
         // Continuous scalars → inline var when non-default + presence token.
-        SCALAR_PROPS.forEach(({ key, cssVar, def, token }) => {
+        scalarProperties.forEach(({ key, cssVar, def, token }) => {
             const v = s[key];
             if (v && v !== def && !(key === 'letter-spacing' && noLetterSpacing())) {
                 root.style.setProperty(cssVar, v);
@@ -594,7 +594,7 @@
     // Bundle switch ON ⇔ in state.bundles. Primitive tile ON ⇔ in
     // effectiveTokens (so bundle-supplied primitives also light up).
     function isModeActive(name, tokens) {
-        if (MODE_BUNDLES[name]) return state.bundles.includes(name);
+        if (modeBundles[name]) return state.bundles.includes(name);
         return (tokens || effectiveTokens()).has(name);
     }
 
@@ -682,7 +682,7 @@
             return val === 'normal' ? words.text('default') : val + '×';
         }
         if (key === 'letter-spacing' || key === 'word-spacing') {
-            return SPACING_TIER[val] ? words.text(SPACING_TIER[val]) : val;
+            return spacingTier[val] ? words.text(spacingTier[val]) : val;
         }
         return val;
     }
@@ -750,7 +750,7 @@
     }
 
     function toggleMode(name) {
-        if (MODE_BUNDLES[name]) {
+        if (modeBundles[name]) {
             const i = state.bundles.indexOf(name);
             if (i >= 0) deactivateBundle(name, i);
             else activateBundle(name);
@@ -777,7 +777,7 @@
         }
         commit();
 
-        const isOn = MODE_BUNDLES[name]
+        const isOn = modeBundles[name]
             ? state.bundles.includes(name)
             : effectiveTokens().has(name);
         announce(labelFor(name) + ' ' + (isOn ? words.text('on') : words.text('off')));
@@ -801,7 +801,7 @@
             }
         } else {
             // Turn on — mute every OTHER filter first, in both slots.
-            VISUAL_FILTERS.forEach(other => {
+            visualFilters.forEach(other => {
                 if (other === filter) return;
                 const i = state.modes.indexOf(other);
                 if (i >= 0) state.modes.splice(i, 1);
@@ -1028,7 +1028,7 @@
 
     // Module-scoped so it allocates once. Function-declaration hoisting
     // keeps forward references to toggleMode/setVisualFilter/etc. valid.
-    const WIRE = [
+    const wire = [
         { sel: 'input[data-a11y-mode]',     event: 'change', fn: el => toggleMode(el.dataset.a11yMode) },
         { sel: 'button[data-a11y-mode]',    event: 'click',  fn: el => toggleMode(el.dataset.a11yMode) },
         { sel: 'button[data-a11y-visual]',  event: 'click',  fn: el => setVisualFilter(el.dataset.a11yVisual) },
@@ -1472,8 +1472,8 @@
         }, { signal });
 
         // Re-apply when an OS preference flips mid-session.
-        for (const k in OS_MQ) {
-            OS_MQ[k].addEventListener('change', () => apply(), { signal });
+        for (const k in osMediaQueries) {
+            osMediaQueries[k].addEventListener('change', () => apply(), { signal });
         }
 
         // Close on width change. Panel re-measures the header offset itself.
@@ -1486,7 +1486,7 @@
         });
         signal.addEventListener('abort', offResize);
 
-        WIRE.forEach(({ sel, event, fn, each }) => {
+        wire.forEach(({ sel, event, fn, each }) => {
             panel.querySelectorAll(sel).forEach(el => {
                 if (each) each(el);
                 el.addEventListener(event, () => fn(el), { signal });

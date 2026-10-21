@@ -66,7 +66,7 @@
         sa_title: 'Official Saudi activities and initiatives websites URL ends with', sa_mark: '.sa',
         sa_desc: 'Website belongs to an official activities and initiatives in the Kingdom of Saudi Arabia always ends with .sa .',
     });
-    const DOMAINS = ['gov', 'edu', 'sch', 'med', 'org', 'sa'];
+    const domains = ['gov', 'edu', 'sch', 'med', 'org', 'sa'];
 
     // The site's own address picks the card: iu.edu.sa → edu, vision.sa → sa. Anything
     // else (localhost, a .com.sa, a preview host) is gov.
@@ -74,7 +74,7 @@
         const labels = location.hostname.split('.');
         if (labels.length < 2 || labels.at(-1) !== 'sa') return 'gov';
         const second = labels.at(-2);
-        if (DOMAINS.includes(second)) return second;
+        if (domains.includes(second)) return second;
         return second === 'com' || second === 'net' ? 'gov' : 'sa';
     }
 
@@ -85,8 +85,8 @@
         // 'edu.sa', '.edu.sa' and 'edu' all name the edu card; '.sa' and 'sa' the sa one.
         let domain = (panel.getAttribute('data-digital-stamp-domain') || domainOfHost()).replace(/^\./, '');
         if (domain !== 'sa') domain = domain.replace(/\.sa$/, '');
-        if (!DOMAINS.includes(domain)) {
-            console.warn('NDS DigitalStamp: data-digital-stamp-domain "' + domain + '" is not one of ' + DOMAINS.join(', ') + '; showing gov');
+        if (!domains.includes(domain)) {
+            console.warn('NDS DigitalStamp: data-digital-stamp-domain "' + domain + '" is not one of ' + domains.join(', ') + '; showing gov');
             domain = 'gov';
         }
         if (domain === 'gov') return;

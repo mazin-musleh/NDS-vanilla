@@ -34,7 +34,7 @@
     const PANEL_ID = 'nds-cookies-panel';
     const DISMISS_KEY = 'cookieConsentDismissed';
     const DELAY = 6000;
-    const CATEGORIES = ['performance', 'functional', 'targeting'];
+    const categories = ['performance', 'functional', 'targeting'];
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
     const strings = NDS.i18n.strings('cookies', {
@@ -114,7 +114,7 @@
       <p>${html('manage_description')}</p>
       <fieldset class="nds-form-group nds-switch-group" aria-label="${html('types')}">
         ${category('necessary', true)}
-        ${CATEGORIES.map(c => category(c)).join('')}
+        ${categories.map(c => category(c)).join('')}
       </fieldset>
       <div class="nds-flex nds-col">
         <button type="button" class="nds-btn nds-primary nds-full" data-cookies-action="save"><span class="nds-label">${html('confirm')}</span></button>

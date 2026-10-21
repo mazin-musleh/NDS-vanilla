@@ -140,7 +140,7 @@
     // ==============================================
 
     // Casing the class name can't give us.
-    const LANG_LABELS = {
+    const languageLabels = {
         html: 'HTML', css: 'CSS', scss: 'SCSS', js: 'JavaScript', javascript: 'JavaScript',
         json: 'JSON', yaml: 'YAML', yml: 'YAML', md: 'Markdown', php: 'PHP', sql: 'SQL'
     };
@@ -166,7 +166,7 @@
         // The authored class names it; with no class, the sniffed language does.
         const authored = /\blang(?:uage)?-([\w-]+)/.exec(codeElement.className);
         const name = (authored ? authored[1] : detected).toLowerCase();
-        const labelText = LANG_LABELS[name] || name.charAt(0).toUpperCase() + name.slice(1);
+        const labelText = languageLabels[name] || name.charAt(0).toUpperCase() + name.slice(1);
 
         // The lang class rides along: it is how the tag knows whether the block
         // has a gutter to clear (see $prose-langs in _code.scss).
@@ -332,7 +332,7 @@
     // ==============================================
 
     // Tags whose body is a foreign language. Lower-cased tag name -> sub-lexer key.
-    const EMBEDDED_LANG = { style: 'css', script: 'javascript' };
+    const embeddedLanguages = { style: 'css', script: 'javascript' };
 
     function lexHtml(source) {
         const tokens = [];
@@ -368,7 +368,7 @@
             // <style>/<script>: splice the body's CSS/JS tokens, then let the loop
             // pick up the closing tag as an ordinary tag on its next pass.
             const name = /^<([a-zA-Z][a-zA-Z0-9-]*)/.exec(tagText);
-            const sub = name && EMBEDDED_LANG[name[1].toLowerCase()];
+            const sub = name && embeddedLanguages[name[1].toLowerCase()];
             if (sub && tagText.charAt(tagText.length - 2) !== '/') {
                 const rel = source.slice(i).search(new RegExp('</' + name[1] + '\\s*>', 'i'));
                 const bodyEnd = rel === -1 ? len : i + rel;
@@ -659,10 +659,10 @@
         catch { return new RegExp(JS_TOKEN_SRC.replace(/\(\?<!\\\.\)/g, ''), 'g'); }
     })();
 
-    const JS_GROUP_TYPE = [null, 'comment', 'comment', 'template', 'string', 'number', 'keyword', 'literal', 'builtin'];
+    const jsGroupTypes = [null, 'comment', 'comment', 'template', 'string', 'number', 'keyword', 'literal', 'builtin'];
 
     function lexJs(source) {
-        return lexByRegex(source, jsTokenRe(), JS_GROUP_TYPE);
+        return lexByRegex(source, jsTokenRe(), jsGroupTypes);
     }
 
     // ==============================================
@@ -685,11 +685,11 @@
     );
 
     // 'fence' is a sentinel — lexMarkdown expands it, it never reaches render.
-    const MD_GROUP_TYPE = [null, 'fence', 'tag', 'attr', 'attr', 'property', 'keyword', 'string'];
+    const markdownGroupTypes = [null, 'fence', 'tag', 'attr', 'attr', 'property', 'keyword', 'string'];
 
     function lexMarkdown(source) {
         const tokens = [];
-        const scanned = lexByRegex(source, MD_TOKEN_RE, MD_GROUP_TYPE);
+        const scanned = lexByRegex(source, MD_TOKEN_RE, markdownGroupTypes);
         for (let i = 0; i < scanned.length; i++) {
             if (scanned[i].type === 'fence') pushFenceTokens(tokens, scanned[i].value);
             else tokens.push(scanned[i]);
@@ -728,10 +728,10 @@
         'g'
     );
 
-    const PROMPT_GROUP_TYPE = [null, 'string', 'property', 'attr'];
+    const promptGroupTypes = [null, 'string', 'property', 'attr'];
 
     function lexPrompt(source) {
-        return lexByRegex(source, PROMPT_TOKEN_RE, PROMPT_GROUP_TYPE);
+        return lexByRegex(source, PROMPT_TOKEN_RE, promptGroupTypes);
     }
 
     // ==============================================

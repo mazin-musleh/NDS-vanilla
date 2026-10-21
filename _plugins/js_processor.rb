@@ -175,14 +175,15 @@ class JSProcessor
     abort("[js_processor] BUILD FAILED — layer rules (PERSONA entry 11):\n  " + errors.join("\n  "))
   end
 
-  # The loader COMPONENTS registry, parsed once: every component `name`, and the
+  # The loader `components` registry, parsed once: every component `name`, and the
   # subset flagged `critical: true` (the reveal checklist). The registry `name` IS
   # the NDS namespace.
   def loader_registry
     loader_path = File.join(@source_dir, 'nds-loader.js')
     return { names: [], critical: [] } unless File.exist?(loader_path)
-    region = File.read(loader_path)[/const COMPONENTS = \[(.*?)\n    \];/m, 1]
-    return { names: [], critical: [] } unless region
+    region = File.read(loader_path)[/const components = \[(.*?)\n    \];/m, 1]
+    # No match would empty the registry and pass every guard that reads it.
+    abort('[js_processor] BUILD FAILED — nds-loader.js has no `const components = [` registry') unless region
 
     names = []
     critical = []
