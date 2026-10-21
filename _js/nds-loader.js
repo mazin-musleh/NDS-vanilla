@@ -423,13 +423,13 @@
             name: 'Accessibility',
             selector: '[data-accessibility-toggle]',
             // Capture, so Panel (the FAB is also a [data-panel-toggle]) never acts before the bundle.
-            // Read __ndsStub FIRST: every property on a stub is a truthy function, so a bare .ready lies.
+            // Read __ndsStub FIRST: every property on a stub is a truthy function, so a bare .isReady lies.
             lazy: (bundle) => {
                 document.addEventListener('click', (e) => {
                     const btn = e.target.closest('[data-accessibility-toggle]');
                     if (!btn) return;
-                    const ns = NDS.Accessibility;
-                    if (ns && !ns.__ndsStub && ns.ready) return;
+                    const api = NDS.Accessibility;
+                    if (api && !api.__ndsStub && api.isReady) return;
                     e.stopPropagation();
                     NDS.state?.add?.(btn, 'loading');
                     // Explicit so the paired stylesheet starts with the script, not after it. A failed
@@ -443,7 +443,7 @@
             eager: () => { try { return !!localStorage.getItem('nds-a11y'); } catch (e) { return false; } },
             // A press may already have started it (and opened the panel) while this group waited:
             // init() would tear that down and close the panel.
-            init: () => { const ns = NDS.Accessibility; if (ns && !ns.__ndsStub && !ns.isStarted) ns.init(); },
+            init: () => { const api = NDS.Accessibility; if (api && !api.__ndsStub && !api.isStarted) api.init(); },
         },
     ];
     for (const c of components) c.init ||= () => NDS[c.name]?.init?.();
@@ -487,8 +487,8 @@
 
     // Build-generated: { delegated: { file, ns:[...], css?:[...] }, ... }.
     const bundleMap = window.__NDS_BUNDLES || {};
-    const nsToBundle = {};
-    for (const b in bundleMap) for (const ns of (bundleMap[b].ns || [])) nsToBundle[ns] = b;
+    const bundleByNamespace = {};
+    for (const bundle in bundleMap) for (const namespace of (bundleMap[bundle].ns || [])) bundleByNamespace[namespace] = bundle;
     // A bundle that failed stops counting as pending; a later load that succeeds clears it.
     const failedBundles = new Set();
 
@@ -550,8 +550,8 @@
             return (bundlePromises[name] = Promise.resolve());
         }
         // Inlined or concatenated into the consumer's build: every namespace already real.
-        const bundleNs = bundleMap[name].ns || [];
-        if (bundleNs.length && bundleNs.every((namespace) => NDS[namespace] && !NDS[namespace].__ndsStub)) {
+        const namespaces = bundleMap[name].ns || [];
+        if (namespaces.length && namespaces.every((namespace) => NDS[namespace] && !NDS[namespace].__ndsStub)) {
             return (bundlePromises[name] = Promise.resolve());
         }
         bundlePromises[name] = new Promise((resolve) => {
@@ -575,23 +575,23 @@
 
     // Lazy stubs: NDS.X.method() before its bundle arrives loads it and replays the call
     // (returning a Promise). The bundle overwrites the stub when it runs.
-    for (const ns in nsToBundle) {
-        if (NDS[ns]) continue;
-        const bundle = nsToBundle[ns];
-        NDS[ns] = new Proxy({ __ndsStub: true }, {
+    for (const namespace in bundleByNamespace) {
+        if (NDS[namespace]) continue;
+        const bundle = bundleByNamespace[namespace];
+        NDS[namespace] = new Proxy({ __ndsStub: true }, {
             get(target, prop) {
                 if (prop === '__ndsStub') return true;
                 if (prop === 'then' || typeof prop === 'symbol') return undefined;
                 return (...args) => loadBundle(bundle).then(() => {
-                    const real = NDS[ns];
+                    const real = NDS[namespace];
                     if (real && !real.__ndsStub && typeof real[prop] === 'function') {
                         return real[prop](...args);
                     }
                     // Caller error (no such method) vs a bundle that never arrived.
                     if (real && !real.__ndsStub) {
-                        console.warn(`[NDS] ${ns}.${String(prop)} is not a method of NDS.${ns} — its surface: ${Object.keys(real).join(', ')}`);
+                        console.warn(`[NDS] ${namespace}.${String(prop)} is not a method of NDS.${namespace} — its surface: ${Object.keys(real).join(', ')}`);
                     } else {
-                        console.warn(`[NDS] ${ns}.${String(prop)}() unavailable — bundle '${bundle}' missing`);
+                        console.warn(`[NDS] ${namespace}.${String(prop)}() unavailable — bundle '${bundle}' missing`);
                     }
                 });
             },
@@ -820,7 +820,7 @@
                 criticalComponents.push(component);
                 continue;
             }
-            const bundle = nsToBundle[component.name];
+            const bundle = bundleByNamespace[component.name];
             // Armed even when eager: a press while that bundle is in flight must not reach a half-wired page.
             if (component.lazy) armLazy(component, bundle);
             if (bundle && component.lazy && !component.eager?.()) continue;      // armed only — nothing loads yet
@@ -882,9 +882,9 @@
             if (!component.rule || component.lazy) return false;
             const found = [...(root.matches?.(component.selector) ? [root] : []), ...root.querySelectorAll(component.selector)];
             if (!found.length) return false;
-            const ns = NDS[component.name];
-            if (!ns || failedBundles.has(nsToBundle[component.name])) return false;   // nothing is coming
-            if (ns.__ndsStub) return true;                                     // its bundle is on the way
+            const api = NDS[component.name];
+            if (!api || failedBundles.has(bundleByNamespace[component.name])) return false;   // nothing is coming
+            if (api.__ndsStub) return true;                                     // its bundle is on the way
             return component.rule === true && found.some((field) => !field['nds' + component.name]);
         });
     }
@@ -906,8 +906,8 @@
         // Words first: a component that reads its label at init reads the page language.
         if (root !== document) NDS.i18n.translate(root);
         for (const component of components) {
-            const ns = NDS[component.name];
-            if (!ns || ns.__ndsStub) continue;
+            const api = NDS[component.name];
+            if (!api || api.__ndsStub) continue;
             try {
                 if (component.refresh) component.refresh(root);
                 // matches() covers a root that IS the component (a panel pulled from a template).
@@ -947,8 +947,8 @@
             }
         }
         for (const component of components) {
-            const ns = NDS[component.name];
-            if (!ns || ns.__ndsStub) continue;
+            const api = NDS[component.name];
+            if (!api || api.__ndsStub) continue;
 
             if (component.destroy) {
                 try {
@@ -959,7 +959,7 @@
                 continue;
             }
 
-            if (!component.destroyEach || typeof ns.destroy !== 'function') continue;
+            if (!component.destroyEach || typeof api.destroy !== 'function') continue;
             const selector = component.destroySelector || component.selector;
             const owned = [...root.querySelectorAll(selector)];
             if (root.matches?.(selector)) owned.unshift(root);
@@ -970,7 +970,7 @@
                 const getStampCount = () => el.getAttributeNames().filter((attributeName) => attributeName.startsWith('data-nds-') && attributeName.endsWith('-initialized')).length;
                 const before = getStampCount();
                 try {
-                    if (ns.destroy(el) === true || getStampCount() < before) destroyed++;
+                    if (api.destroy(el) === true || getStampCount() < before) destroyed++;
                 } catch (error) {
                     console.warn(`[NDS:destroy] ${component.name} failed:`, error);
                 }
@@ -997,7 +997,7 @@
         for (const component of components) {
             if (!component.selector) continue;
             const here = root.matches?.(component.selector) || root.querySelector?.(component.selector);
-            const bundle = here && nsToBundle[component.name];
+            const bundle = here && bundleByNamespace[component.name];
             // A lazy component stays lazy in a mounted view: armed, loaded on its first press.
             if (bundle && component.lazy) { armLazy(component, bundle); if (!component.eager?.()) continue; }
             if (bundle) needed.add(bundle);

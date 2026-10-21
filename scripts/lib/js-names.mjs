@@ -49,7 +49,7 @@ for (const w of [...Object.keys(BANNED), ...Object.keys(BANNED_PREFIX)]) VERBS.d
 // Entry 10 rule 8: abbreviations. LOCAL_OK is the locals' and parameters' short list.
 const ABBREV = new Set(`fmt val vals norm sel sels msg msgs dtf cal ymd cmd pct pos idx len num nums str obj arr cb cbs
 tmp cfg conf ctx evt ev err errs ac li lis el els elem elems btn btns opt opts doc docs cur curr mq esc inst attr attrs
-prep res req resp calc dim dims lbl txt ctrl ctrls mgr util utils coll tpl tmpl fn dest`.split(/\s+/));
+prep res req resp calc dim dims lbl txt ctrl ctrls mgr util utils coll tpl tmpl fn dest ns`.split(/\s+/));
 const LOCAL_OK = new Set(['el', 'e', 'i', 'j', 'x', 'y', 'fn', 'opts', 'btn']);
 
 // The hook names and entry 10's public verbs stand alone.

@@ -64,6 +64,22 @@ no script does it: each site is read. One commit, or one per family if it grows.
 Migration rows (section 3, the "Public members the step found" list above, the storage keys and
 `window.NDSInitConfig`); step 5 speed; step 6 the checks fail the release.
 
+**Also next: two gaps in `--names` P10.8** (found 2026-10-21, when the loader's `ns` passed step 3). Close both
+before step 6 makes the check fail the release:
+- **Longer short words go through a hand-written list.** Rule 8 allows only `el e i j x y fn opts btn`, but
+  `js-names.mjs` `local()` uses that list for single letters only; a longer name is flagged only when it is in
+  `ABBREV`, which was written by hand in 9d014bcb. Any abbreviation not in that list passes (`ns` did; it is in now).
+  Fix: a word of 2–4 letters that is not in `LOCAL_OK` becomes a verify line; a real English word passes on a
+  short allow list. Adding about 100 likely abbreviations to `ABBREV` as a test flagged about 380 declarations
+  (`sub` 26, `fc` 21, `secs` 16, `ref` 16, `cs` 11, `sw` 10, `dir` 10, `dm` 9, `toks` 8, `fd` 8, `dd` 8, `dlg` 7 …),
+  with platform words among them to read (`dx`/`dy`, `dir`, `ref`). Rename them like step 3: a map per batch,
+  `rename-bindings.mjs`.
+- **Module-scope names skip the short-word check** (`VariableDeclaration`, the `ctx.module` branch: case, acronym
+  and constant rules only). `nsToBundle` and `for (const b in bundleMap)` passed that way. Calling `local()` there
+  too adds 31 findings, mostly constants (`SEL`, `SWIPER_SEL`, `DOCS`). Entry 12 rule 8 itself cites `SEL`, so the
+  rules leave open whether a module constant takes whole words: decide it by the pick order (directives below), fix
+  rule 8's example or write the carve-out, then check module scope.
+
 **How a step is verified on this machine** (slow: Chrome launches time out in a row, rerun a failed one alone):
 - `bundle exec jekyll serve --port 4010 --destination tmp/site-4010 --no-watch` in the background (never :4002),
   checks get `http://127.0.0.1:4010/NDS-vanilla` as their base, one browser check at a time; stop only that server.
@@ -97,6 +113,9 @@ Migration rows (section 3, the "Public members the step found" list above, the s
   with Python: a `git grep -E` alternation of hundreds of names fails silently and prints nothing.
 - A whole-name rename rewrites comments, but never for a plain word (`active`): such a comment keeps the old name.
 - A shorthand `{ old }` becomes `{ old: new }`, so a public key never moves in step 3.
+- `check-banners.mjs`' callers check only matches `NDS.X.y` written out in full, so a read through an alias (`const
+  api = NDS.X; api.y`) is not checked. The `ready` → `isReady` rename (ad8db5c8) left the loader's FAB gate reading
+  `ready`, so the FAB stayed loading from the second press on. After a public rename, search for `.oldName` too.
 
 **Gates:** start each step on a clean tree; another session may work in this repo, so stage files by name and
 leave its changes alone; bulk renames go to subagents (Sonnet), the decisions and the review stay here; each
