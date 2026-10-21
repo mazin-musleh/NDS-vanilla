@@ -4,10 +4,14 @@ Status: PARKED 2026-10-21, design agreed, reviewed against PERSONA the same day 
 changed yet. Facts first measured on `main` at `e035b198`, spot-checked at `7edd18a1`. `plans/shared-logic.md`
 finished its code (owner, 2026-10-21); its doc-check and speed steps rename nothing.
 
-**Resume here.** Step 1 done: PERSONA per section 4, the once-per-page bundle guard in `js_processor.rb`
-(`scripts/check-bundle-once.mjs` proves it; HEAD's old bundles fail it) and the table flag gone. Next: step 2,
-the checks. PERSONA now names `initDone`, `dateInitDone`, `wired`, `reconciled`: the module-scope commit lands
-them in the code, and heals the citations still on old names (entries 3 and 5, JSA-23's `_wired`).
+**Resume here.** Steps 1 and 2 done. `node scripts/check-js-rules.mjs --names` is the work list (rule ids
+`P<entry>.<rule>`, a count per rule at the end; the pass is `scripts/lib/js-names.mjs`). On 2026-10-21: 2,574
+findings, 559 to verify, over 76 files: P10.8 short words 1,547 (1,041 single-letter locals, 455 other locals,
+64 functions and fields), P12.11 not on a banner 463, P10.4 replaced verbs 255, P12.13 `_` bindings 179,
+P12.14 element data 50, P10.3 acronyms 36, P12.7 classes 27, P12.12 cross-file 13, P12.3 keys 4; to verify:
+P10.0 first word 416, P12.8 constant case 78, P12.14 46, P10.4 `createX` 15, P12.12 4. Next: step 3.
+PERSONA now names `initDone`, `dateInitDone`, `wired`, `reconciled`: the module-scope commit lands them in the
+code, and heals the citations still on old names (entries 3 and 5, JSA-23's `_wired`).
 Start each step on a clean tree. Step 2's list is the work list: every count, file and line below is a hint.
 Step 3's commits go safest first: module-scope `_`, constants and classes; then verbs, acronyms and whole
 words; then cross-file `_`; the WeakMap move last of the internal ones (it changes runtime, so browser checks).
@@ -210,6 +214,14 @@ agents read them) and gets a Migration row when a released template shipped it (
 - `NDS.state.apply(el, ...tokens)` → `refresh(el, ...tokens)`: it re-runs the effects after a render, entry
   10's "read again"; `apply` is `Function.prototype.apply`.
 - `NDS.badge(el, count)` → `setBadge(el, count)` (rule 1: verb first).
+
+**Found by the check (2026-10-21), to decide by the pick order before step 4** (`--names`, lines tagged "on the
+banner"): `NDS.isRTL` (acronym), `NDS.onAttrChange` and `NDS.resolveEl` (short words), `Multiselect.populate`,
+`Pagination.updateRecords`, `Sort.apply`, `Upload.refreshUI` (replaced verbs), `Table.createResponsive` /
+`createColumnToggle` (DOM or instance?), and noun-first names: core's `strings`, `safeMerge`, `rafThrottle`,
+`afterPaint`, `latinDigits`, `uniqueId`, `cellText`, `ownParts`, `ownItems`, `safeUrl`, `stickyHeaderBottom`,
+`viewportPadding`, `visibleBox`, `homeOf`, `topLayer`; `Dropmenu.menuOf`; `Export.csv` / `xls` / `pdf`; the
+loader's `audit` and `owns`; Accessibility's `state`. Each shipped in v1.12.0 gets a Migration row.
 
 **Born in v2 (shared-logic), no row:**
 

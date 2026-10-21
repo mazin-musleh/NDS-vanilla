@@ -8,7 +8,7 @@
  *   node scripts/check-banners.mjs --generate <file>  print a banner skeleton to stdout
  *
  * Never writes files. Exit 0 = clean, 1 = findings, 2 = usage error.
- * Imported, it runs nothing and exports SCOPE and extractKeys (check-js-rules.mjs reads the surfaces).
+ * Imported, it runs nothing and exports SCOPE, extractKeys and parseBanner (check-js-rules.mjs reads the surfaces).
  */
 // ponytail: line-regex parser, not an AST — brace/comment tracking is line-local, so a brace
 // inside a multi-line string, a computed key, or an early `return {` in an IIFE can misparse.
@@ -573,7 +573,7 @@ function resolve(arg) {
     return { file, ns: entry[1], source: readFileSync(path, 'utf8') };
 }
 
-export { SCOPE, extractKeys };
+export { SCOPE, extractKeys, parseBanner };
 // Imported (check-js-rules.mjs reads the surfaces), it runs nothing.
 const isMain = !!process.argv[1] && fileURLToPath(import.meta.url) === resolvePath(process.argv[1]);
 const [mode, arg] = isMain ? process.argv.slice(2) : [];

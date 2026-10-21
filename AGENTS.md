@@ -16,7 +16,7 @@ python scripts/check-data-state-tails.py        # after any [data-state]/[data-s
 python scripts/check-css.py [--report|--unused] # built CSS: dangling var(), dead fallbacks, duplicate decls, global token in a component dark block, !important on transform/opacity/filter, anything after a pseudo-element (`::after > *`); --unused = rules no page/JS uses
 node scripts/encode-webp.mjs <master>           # WebP at set widths, lowest quality above a PSNR floor — always from the master
 node scripts/run-audit.mjs [page.html]          # print a built page's NDS.init.audit() warnings
-node scripts/check-js-rules.mjs [file …]        # nds-js-audit's mechanical half: `finding` = decided, `verify` = left to read (rules in its header); --self-test
+node scripts/check-js-rules.mjs [file …]        # nds-js-audit's mechanical half: `finding` = decided, `verify` = left to read (rules in its header); --self-test; --names = the naming rules (PERSONA 1, 10, 12)
 bundle exec ruby scripts/surface-history.rb     # names every release had that today's code lacks → tmp/surface/candidates.json; new rows go in _data/migrations.yml
 node scripts/find-unused-icons.mjs              # UI icons nothing references
 python scripts/hgi-font-slices.py               # HGI content font → 25-icon slices in assets/fonts/hgi/ + their @font-face list (hgi-font-update.py --apply runs it)

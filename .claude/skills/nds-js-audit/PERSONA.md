@@ -449,7 +449,7 @@ A name a reader or an agent can guess from another component, or from the DOM an
 
 **Audit behavior**
 
-Flag a public method whose verb is a synonym the table replaces (`recheck…`, `recount`, `checkOverflow`, `setDisabled`, `previous`, `switchTo`, `slideTo`, `initialize…`, `setup…`), a name that repeats its namespace, or two public names that call the same code → LOW, as a migration target for the next major. `check-js-rules.mjs`, for every function: a verb the internal table replaces → finding; a first word it does not know → verify; an acronym in capitals → finding; a short word outside rule 8's list → finding. Each is LOW; an internal rename needs no Migration line.
+Flag a public method whose verb is a synonym the table replaces (`recheck…`, `recount`, `checkOverflow`, `setDisabled`, `previous`, `switchTo`, `slideTo`, `initialize…`, `setup…`), a name that repeats its namespace, or two public names that call the same code → LOW, as a migration target for the next major. `check-js-rules.mjs --names` (rule ids `P10.<rule>`), for every function: a verb the internal table replaces → finding; a first word it does not know → verify; an acronym in capitals → finding; a short word outside rule 8's list → finding. Each is LOW; an internal rename needs no Migration line.
 
 ---
 
@@ -553,7 +553,7 @@ Rule 11 makes the banner the one contract. Rejected: "a plain name is public", w
 
 **Audit behavior**
 
-`check-js-rules.mjs`: a member missing from its banner without `_` → finding; a `_` name read or written outside the file that defines it → finding; a module-scope name with `_` → finding; a property written on an element other than `nds{Name}` → finding; a `#` member → finding; a `window.` write other than `__NDS_*` or `NDS` → finding; a storage or cookie key literal that does not start with `nds-` → finding; a class not named `Nds[A-Z]…` → finding; an event `detail` key that is not camelCase → finding; an upper-case constant holding a non-primitive, or a camelCase one holding a primitive literal → verify; a `data-*` hook read on an element outside the component's root without the component's name → verify. Each is LOW, a migration target. A storage key, hook, token or `detail` key is observable, so its rename ships in a major with a Migration line (AGENTS.md, Framework Hosts).
+`check-js-rules.mjs --names` (rule ids `P12.<rule>`): a member missing from its banner without `_` → finding; a `_` name read or written outside the file that declares it → finding; a binding with `_` → finding; a property written on an element other than `nds{Name}` → finding; a `#` member → finding; a `window.` write other than `__NDS_*` or `NDS` → finding; a storage or cookie key literal that does not start with `nds-` → finding; a class not named `Nds[A-Z]…` → finding; an event `detail` key that is not camelCase → finding; an upper-case constant holding a non-primitive, or a camelCase one holding a primitive literal → verify; rules 5 and 6 (whether a hook sits on the component's own element, whether a token names a state) are read, not checked. Each is LOW, a migration target. A storage key, hook, token or `detail` key is observable, so its rename ships in a major with a Migration line (AGENTS.md, Framework Hosts).
 
 ---
 

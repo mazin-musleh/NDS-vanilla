@@ -14,7 +14,10 @@
  * Left to the reader whole: JSD-15's other PERSONA entries, JSD-20 (check-banners.mjs), and the JSA rules that are judgment only.
  * Two kinds of line: `finding` is decided; `verify` is a candidate whose one remaining carve-out
  * needs reading, named on the line. Never writes files. Exit 0 = no finding, 1 = findings.
- *   --self-test   run the built-in cases
+ *   --self-test   run the built-in cases, and PERSONA's `js` blocks through the naming rules
+ *   --names [file …]   only the naming rules (PERSONA entries 1, 10, 12; scripts/lib/js-names.mjs), over the
+ *                 whole of _js/ with the event packs; the rule id is P<entry>.<rule>, then a count per rule.
+ *                 Kept out of the default run until the renames land (plans/js-naming-rules.md step 6).
  */
 // ponytail: a char scanner, not a parser. A `/` after `)` reads as division, so a regex literal
 // right after a closing paren can mis-strip one line; an acorn walk is the upgrade if that bites.
@@ -23,6 +26,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import { REPO, PAGE_DIRS, loaderNames, pascal } from './lib/nds-source.mjs';
+import { checkNames } from './lib/js-names.mjs';
 
 // The audit's `js` scope (SKILL.md): core owns state/status, the loader and docs are out of scope.
 const OUT_OF_SCOPE = new Set(['nds-core.js', 'nds-loader.js', 'nds-docs.js']);
@@ -1278,7 +1282,55 @@ const CASES = [
     [`(function(){ class A {\n// Soft dependency: Alert is optional.\nshow() { if (!NDS.Alert) return; NDS.Alert.create(); }\nhide() { NDS.Alert.dismiss(); } } })();`, ['JSD-12?']], // a guard in one method covers no other
 ];
 
+// Naming cases: [source, rules] for one file, `?` = verify.
+const NAME_CASES = [
+    [`(function(){ let _initDone = false; })();`, ['P12.13']],
+    [`(function(){ let initDone = false; })();`, []],
+    [`(function(){ function bindEvents() {} })();`, ['P10.4']],
+    [`(function(){ function initPanel() {} function init() {} })();`, ['P10.4']], // the bare hook passes
+    [`(function(){ function addItemListeners() {} function handleClick(e) {} })();`, []],
+    [`(function(){ function pageBounds() {} })();`, ['P10.0?']],
+    [`(function(){ function toCSV() {} })();`, ['P10.3']],
+    [`(function(){ function renderXLabels() {} })();`, []], // an axis letter is no acronym
+    [`(function(){ function run(a) { const idx = a; } })();`, ['P10.8', 'P10.8']],
+    [`(function(){ function run(el, opts) { for (let i = 0; i < 1; i++) {} } })();`, []],
+    [`(function(){ function fmtVal() {} })();`, ['P10.0?', 'P10.8']],
+    [`(function(){ class NDSTables {} })();`, ['P12.7']],
+    [`(function(){ class NdsTable {} class NdsDatePickerCalendar {} })();`, []],
+    [`(function(){ function run(el) { el._ndsFoo = 1; } })();`, ['P12.14']],
+    [`(function(){ function run(row) { row._x = 1; } })();`, ['P12.14?']],
+    [`(function(){ function run(el) { el.ndsDone = true; el.dataset.ndsSeen = 'true'; } })();`, ['P12.14']],
+    [`(function(){ window.ndsFlag = true; window.__NDS_LOADED_X = true; window.NDS = {}; })();`, ['P12.1']],
+    [`(function(){ const self = this; self.items = 1; })();`, []], // a local alias, not the global
+    [`(function(){ localStorage.setItem('cookieConsent', '1'); sessionStorage.getItem('nds-scroll:/'); })();`, ['P12.3']],
+    [`(function(){ const KEY = 'cookieConsent'; localStorage.getItem(KEY); })();`, ['P12.3']],
+    [`(function(){ NDS.cookie.set('cookieConsent', 'accepted'); NDS.cookie.get('nds-a11y'); })();`, ['P12.3']],
+    [`(function(){ document.cookie = 'cookieConsentDismissed=1'; document.cookie = \`\${name}=1\`; })();`, ['P12.3']],
+    [`(function(){ el.dispatchEvent(new CustomEvent('nds:x:change', { detail: { new_value: 1, value: 2 } })); })();`, ['P12.10']],
+    [`(function(){ const map = new WeakMap(); function run(el) { map.set(el, new AbortController()); } })();`, ['P12.15']],
+    [`(function(){ const filterAbortControllers = new WeakMap(); function run(el) { filterAbortControllers.set(el, new AbortController()); } })();`, []],
+    [`(function(){ class NdsA { #x = 1; } })();`, ['P12.16']],
+    [`(function(){ class NdsA { constructor() { this._ac = new AbortController(); } } })();`, ['P1']],
+    [`/* NDS.A — public surface\n * Methods:\n *   el.ndsA.open()   open it\n */\n(function(){ class NdsA { constructor() { this.abortController = new AbortController(); this.box = 1; this._menu = 2; } open() {} close() {} } })();`, ['P12.11', 'P12.11']], // box, close
+    [`(function(){ const SEL = '.x'; const CONFIG = { a: 1 }; const FROZEN = Object.freeze({}); const delayMs = 200; })();`, ['P12.8?', 'P12.8?']],
+];
+
 const args = process.argv.slice(2);
+const allJs = () => [...readdirSync(join(REPO, '_js')).filter((f) => f.endsWith('.js')).map((f) => join(REPO, '_js', f)),
+    ...readdirSync(join(REPO, '_js', 'events')).filter((f) => f.endsWith('.js')).map((f) => join(REPO, '_js', 'events', f))];
+if (args[0] === '--names') {
+    const t0 = Date.now();
+    const tree = allJs();
+    const report = args.length > 1 ? args.slice(1).map((a) => tree.find((f) => basename(f) === basename(a)) || a) : tree;
+    const all = checkNames(tree, undefined, report);
+    for (const f of all) console.log(`${(f.verify ? 'verify' : 'finding').padEnd(8)} ${f.rule.padEnd(8)} ${`${f.file}:${f.line}`.padEnd(30)} ${f.what}${f.verify ? `  — ${f.verify}` : ''}`);
+    const count = {};
+    for (const f of all) { const k = f.rule + (f.verify ? '?' : ''); count[k] = (count[k] || 0) + 1; }
+    const findings = all.filter((f) => !f.verify).length;
+    console.log(`\n${Object.entries(count).sort().map(([k, n]) => `${k} ${n}`).join(' · ')}`);
+    console.log(`${report.length} files, ${findings} findings, ${all.length - findings} to verify, ${Date.now() - t0} ms`);
+    process.exit(findings ? 1 : 0);
+}
 if (args[0] === '--self-test') {
     let failed = 0;
     for (const [src, want] of CASES) {
@@ -1301,7 +1353,31 @@ if (args[0] === '--self-test') {
     layer('nds-export.js', `(function(){ function f() { NDS.Panel.open(p); } })();`, 'verify'); // extras → delegated
     layer('nds-export.js', `(function(){ function f() { NDS.Form.validate(p); } })();`, ''); // extras → main
     layer('nds-dialog.js', `(function(){ function f() { NDS.Modal.close(); } })();`, 'finding'); // a base names a component
-    console.log(`${CASES.length + 5 - failed}/${CASES.length + 5} cases pass`);
+    // Naming: one file per case; then a `_` member another file declares.
+    for (const [src, want] of NAME_CASES) {
+        const got = checkNames(['case.js'], () => src).map((f) => f.rule + (f.verify ? '?' : '')).sort();
+        if (got.join() !== [...want].sort().join()) { failed++; console.log(`FAIL  ${JSON.stringify(src)}\n      want [${want}] got [${got}]`); }
+    }
+    const cross = checkNames(['a.js', 'b.js'], (f) => (f === 'a.js' ? `(function(){ class NdsA { constructor() { this._sync = 1; } } })();` : `(function(){ function run(a) { return a.ndsA._sync; } })();`)).filter((f) => f.rule === 'P12.12');
+    if (cross.length !== 1 || cross[0].file !== 'b.js') { failed++; console.log(`FAIL  P12.12 cross-file: want one in b.js, got ${JSON.stringify(cross)}`); }
+    // PERSONA's canonical examples must pass every naming rule (its Update workflow).
+    const persona = readFileSync(join(REPO, '.claude', 'skills', 'nds-js-audit', 'PERSONA.md'), 'utf8');
+    const blocks = [...persona.matchAll(/```js\r?\n([\s\S]*?)```/g)].map((m) => m[1]);
+    for (const [k, block] of blocks.entries()) {
+        // A block may be a method or a statement run: try it bare, then as a class body.
+        let got;
+        // Each runs under a banner that lists only the loader hooks, so rule 11 sees a component file.
+        const head = `/* NDS.Case — public surface\n * Methods:\n *   NDS.Case.init() / .reinit() / .refresh() / .destroy(el)\n */\n`;
+        for (const src of [head + block, `${head}class NdsCase {\n${block}\n}`]) {
+            try { (await import('acorn')).parse(src, { ecmaVersion: 'latest' }); } catch { continue; }
+            got = checkNames(['persona.js'], () => src).filter((f) => !f.verify);
+            break;
+        }
+        if (!got) { failed++; console.log(`FAIL  PERSONA js block ${k + 1} does not parse`); }
+        else if (got.length) { failed++; console.log(`FAIL  PERSONA js block ${k + 1}: ${got.map((f) => `${f.rule} ${f.what}`).join('; ')}`); }
+    }
+    const total = CASES.length + 5 + NAME_CASES.length + 1 + blocks.length;
+    console.log(`${total - failed}/${total} cases pass`);
     process.exit(failed ? 1 : 0);
 }
 const files = args.length
