@@ -87,8 +87,9 @@ const constCase = (n) => /^[A-Z][A-Z0-9_]*$/.test(n);
 const isFn = (n) => n && /^(FunctionExpression|ArrowFunctionExpression)$/.test(n.type);
 const isPrimitive = (n) => n && ((n.type === 'Literal' && !(n.value instanceof RegExp)) ||
     (n.type === 'TemplateLiteral' && !n.expressions.length) || (n.type === 'UnaryExpression' && n.argument.type === 'Literal'));
-// A computed value that is a primitive whatever its parts: `a + b`, a template, `typeof x`, `k in o`.
+// A computed value that is a primitive whatever its parts: `a + b`, a template, `typeof x`, `k in o`, `list.join(',')`.
 const yieldsPrimitive = (n) => n && (isPrimitive(n) || /^(BinaryExpression|UnaryExpression|TemplateLiteral)$/.test(n.type) ||
+    (n.type === 'CallExpression' && /^(join|toLowerCase|toUpperCase|trim|toFixed)$/.test(propName(n.callee))) ||
     (n.type === 'ConditionalExpression' && yieldsPrimitive(n.consequent) && yieldsPrimitive(n.alternate)) ||
     (n.type === 'LogicalExpression' && yieldsPrimitive(n.left) && yieldsPrimitive(n.right)));
 const rootName = (n) => { while (n && n.type === 'MemberExpression') n = n.object; return n?.type === 'Identifier' ? n.name : n?.type === 'ThisExpression' ? 'this' : ''; };
@@ -169,7 +170,7 @@ function scanFile(file, source) {
         const n = id.name;
         if (n === '_' ) return;
         const lower = n.replace(/^_+/, '');
-        const ws = words(n).map((w) => w.toLowerCase());
+        const ws = (constCase(n) ? n.split('_').filter(Boolean) : words(n)).map((w) => w.toLowerCase());
         if (n.length === 1 ? !LOCAL_OK.has(n) : (ABBREV.has(lower.toLowerCase()) && !LOCAL_OK.has(lower)) ||
             (ws.length > 1 && ws.some((w) => ABBREV.has(w) && !LOCAL_OK.has(w))))
             push('P10.8', node, `local \`${n}\`: whole words (short list: ${[...LOCAL_OK].join(' ')})`);

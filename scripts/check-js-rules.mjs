@@ -1101,12 +1101,12 @@ async function checkTree(files, read = (f) => readFileSync(f, 'utf8')) {
     const add = (rule, x, at, what, verify) => out.push({ rule, file: x.file, line: lineOf(x.source, at), what, verify });
 
     // JSD-05 (a) one helper written twice: a function or method in two component files, ~70% the
-    // same body, under any name. The initialize* sweeps share one shape on purpose.
+    // same body, under any name. The setupX sweeps share one shape on purpose.
     const defs = [];
     for (const x of sources) {
         for (const m of x.bare.matchAll(/\bfunction\s+([\w$]+)\s*\([^)]*\)\s*\{|^[ \t]+(?:async\s+)?([\w$]+)\s*\([^)]*\)\s*\{|\b([\w$]+)\s*[:=]\s*(?:function\s*)?\([^)]*\)\s*(?:=>\s*)?\{/gm)) {
             const fname = m[1] || m[2] || m[3];
-            if (GENERIC.has(fname) || CORE_FNS.has(fname) || /^(?:if|for|while|switch|catch|function)$|^initiali[sz]e/.test(fname)) continue;
+            if (GENERIC.has(fname) || CORE_FNS.has(fname) || /^(?:if|for|while|switch|catch|function)$|^setup[A-Z]/.test(fname)) continue;
             const open = m.index + m[0].length - 1;
             const body = x.code.slice(open, blockEnd(x.bare, open));
             const n = (body.match(/[\w$]+|[^\s\w$]/g) || []).length;
@@ -1320,6 +1320,7 @@ const NAME_CASES = [
     [`(function(){ class NdsA { constructor() { this._ac = new AbortController(); } } })();`, ['P1', 'P10.8']],
     [`(function(){ class NdsA { constructor() { this._listBtn = null; } } })();`, ['P10.8']], // `_` lifts the banner rule, not the words
     [`/* NDS.A — public surface\n * Methods:\n *   el.ndsA.open()   open it\n */\n(function(){ class NdsA { constructor() { this.abortController = new AbortController(); this.box = 1; this._menu = 2; } open() {} close() {} } })();`, ['P12.11', 'P12.11']], // box, close
+    [`(function(){ const LIST = a.map(f).join(','); const I18N_KEY = 'x'; })();`, []], // join gives a string; snake case splits at _
     [`(function(){ const SELECTOR = '.x'; const CONFIG = { a: 1 }; const FROZEN = Object.freeze({}); const delayMs = 200; })();`, ['P12.8?', 'P12.8?']],
     [`(function(){ const SEL = '.x'; })();`, ['P10.8']], // module names take whole words
     [`(function(){ function getValue() { const qux = 1; return qux; } })();`, ['P10.8?']], // an unknown short word is read
@@ -1367,6 +1368,8 @@ if (args[0] === '--self-test') {
     const twin = (n) => `(function(){ function ${n}(p, c) { const i = document.createElement('i'); i.className = 'nds-icon'; NDS.aria.hidden(i, true); const s = document.createElement('span'); s.className = 'nds-meta-item'; s.append(i, c); p.replaceChildren(s); } })();`;
     const pairs = (await checkTree(['a.js', 'b.js'], (f) => twin(f === 'a.js' ? 'renderCity' : 'renderDate'))).filter((f) => f.rule === 'JSD-05a');
     if (pairs.length !== 1) { failed++; console.log(`FAIL  JSD-05a twins: want 1 got ${pairs.length}`); }
+    const sweeps = (await checkTree(['a.js', 'b.js'], (f) => twin(f === 'a.js' ? 'setupCities' : 'setupDates'))).filter((f) => f.rule === 'JSD-05a');
+    if (sweeps.length) { failed++; console.log(`FAIL  JSD-05a setupX sweeps: want 0 got ${sweeps.length}`); }
     // Entry 11 reads the real bundle map, so these cases borrow a real file's name.
     const layer = (file, src, want) => {
         const got = checkFile(file, src).filter((f) => f.rule === 'JSD-15').map((f) => (f.verify ? 'verify' : 'finding'));
