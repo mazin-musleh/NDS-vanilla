@@ -119,7 +119,7 @@
     // the field's last non-prefix .nds-form-action (a suffix on a stepper,
     // which has no plain slot: a new slot would squeeze the input), creating a
     // slot if there is none. Its own button, so no styled button is repurposed.
-    // nds-btn's CSS renders the spinner from data-state="loading". Every other
+    // nds-btn's CSS renders the spinner from .nds-loading, which core mirrors from the token. Every other
     // button in those slots hides while loading; a prefix is never touched.
     // On exit, restore them; the .nds-clear button's visibility is
     // re-computed from the current input value.
@@ -148,7 +148,8 @@
     }
 
     function setLoading(el, on) {
-        var formControl = el.classList.contains('nds-form-control') ? el : el.querySelector('.nds-form-control');
+        // A container's own control: an Editor's toolbar fields come first.
+        var formControl = el.classList.contains('nds-form-container') ? NDS.field.findOwnControl(el) : el.querySelector('.nds-form-control');
         if (on) enterLoading(formControl); else exitLoading(formControl);
     }
 
@@ -518,8 +519,6 @@
         var container = formControl.closest('.nds-form-container');
         if (container && container.closest('.nds-form-group')) return;
         var isInvalid = input.validity && !input.validity.valid;
-        // Clear custom validation when HTML5 validation passes
-        if (!isInvalid && input.validationMessage) input.setCustomValidity('');
         if (!container) return;
         if (isInvalid) {
             statusManager.set({ element: container, status: 'error', message: NDS.validation.getMessage(input) });
@@ -563,17 +562,10 @@
                     }
                 }
                 stampIdentifier(input);
-            },
-            reset: function(e) {
-                var form = e.target;
-                // After the reset restore: the browser puts the values back after the reset event.
-                setTimeout(function() {
-                    if (e.defaultPrevented || !form.querySelectorAll) return;
-                    form.querySelectorAll('.nds-national-id, .nds-iban').forEach(stampIdentifier);
-                });
             }
         }
     });
+    NDS.field.onReset(document, function(form) { form.querySelectorAll('.nds-national-id, .nds-iban').forEach(stampIdentifier); });
 
     // Number stepper: the buttons step, a held button repeats and speeds up, and blur clamps to min/max.
     var STEP_TIERS = [[0, 1, 75], [1500, 10, 50]];   // [held for (ms), step multiplier, interval (ms)]
@@ -766,18 +758,13 @@
                 if (!context) return;
                 syncClear(context.input, context.control);
                 if (context.container && NDS.status.get(context.container) === 'error') validateInput(context.input, context.control);
-            },
-            reset: function(e) {
-                var form = e.target;
-                // After the reset restore: the browser puts the values back after the reset event.
-                setTimeout(function() {
-                    if (e.defaultPrevented || !form.querySelectorAll) return;
-                    form.querySelectorAll('.nds-form-container[data-status], .nds-form-group[data-status]').forEach(function(el) {
-                        statusManager.clear(el);
-                    });
-                });
             }
         }
+    });
+    NDS.field.onReset(document, function(form) {
+        form.querySelectorAll('.nds-form-container[data-status], .nds-form-group[data-status]').forEach(function(el) {
+            statusManager.clear(el);
+        });
     });
 
     // Auto-fill: a chip fills its target field; data-autofill-apply also submits the search
