@@ -1329,9 +1329,9 @@
         setPrevNextStates(pagination, pageNumber, 1, totalPages);
         showPage(items, pageNumber, perPage);
         scrollOnPageChange(pagination);
-
-        dispatchPageChange(pagination, pageNumber, previousPage, totalPages);
+        // Before the event: a listener reads ?page= for its request.
         writePageParam(resolveNav(pagination), pageNumber);
+        dispatchPageChange(pagination, pageNumber, previousPage, totalPages);
     }
 
     // Per-nav click handler for an auto-pagination's <ul>. getItems() returns
@@ -1531,8 +1531,9 @@
         const { min, max } = getPageBounds(allPageElements);
         setPrevNextStates(pagination, targetPageNumber, min, max);
         scrollOnPageChange(pagination);
-        dispatchPageChange(pagination, targetPageNumber, previousPage, max);
+        // Before the event: a listener reads data-active-page or ?page= for its request.
         syncPage(resolveNav(pagination), targetPageNumber);
+        dispatchPageChange(pagination, targetPageNumber, previousPage, max);
     }
 
     // Per-nav click handler for manual pagination. Scoped to the nav element,

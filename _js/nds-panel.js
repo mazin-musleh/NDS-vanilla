@@ -69,6 +69,9 @@
     // Open panels, bottom to top; a closing one stays until its slide ends.
     const stack = [];
     const getTopPanel = () => stack[stack.length - 1];
+    // Modal by its attribute, or opened by the user over a modal dialog. One check for both the
+    // open path and the swap, so a panel that went modal is never swapped out like a plain one.
+    const opensModal = (panel) => panel.hasAttribute('data-panel-modal') || (!noFocusPanels.has(panel) && !!NDS.dialog.getTop());
     // A modal dialog above (a Modal, or a newer modal panel) answers instead.
     const isTop = (panel) => (NDS.dialog.getTop() ? NDS.dialog.getTop() === panel : getTopPanel() === panel);
     // Static panels kept off the screen by another; the newest returns once none is open.
@@ -116,7 +119,7 @@
         const isStatic = panel.hasAttribute('data-panel-static');
         // Recorded: data-panel-modal is consumer-mutable, and close() must undo the open it got.
         // One the user opens over a modal dialog goes modal too; one the page opens stays under it.
-        if (panel.hasAttribute('data-panel-modal') || (!noFocusPanels.has(panel) && !!NDS.dialog.getTop())) modalPanels.add(panel);
+        if (opensModal(panel)) modalPanels.add(panel);
         else modalPanels.delete(panel);
 
         // Listeners that only exist while open — zero cost when closed.
@@ -229,7 +232,8 @@
             pendingOpen = hasState(panel, 'closing') ? panel : null;
             return;
         }
-        if (panel.hasAttribute('data-panel-modal')) { openPanel(panel); return; }
+        // A parked static panel leaves the wait list, or close() would take it for parked.
+        if (opensModal(panel)) { drop(waiting, panel); openPanel(panel); return; }
         // Only a static panel the page opens on its own waits; one the user asks for takes the screen.
         if (panel.hasAttribute('data-panel-static') && noFocusPanels.has(panel)) {
             if (!stack.length && !pendingOpen) openPanel(panel);
@@ -239,7 +243,7 @@
 
         pendingOpen = null;              // supersede any swap already waiting
         drop(waiting, panel);
-        const out = stack.filter(stackedPanel => !stackedPanel.hasAttribute('data-panel-modal'));
+        const out = stack.filter(stackedPanel => !modalPanels.has(stackedPanel));
         if (out.length) {
             // Swap: let the outgoing panel's close cleanup start this one, so
             // the two never animate across each other.
