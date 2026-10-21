@@ -334,7 +334,7 @@
     }
 
     // Persist + push to DOM. Every state mutator ends with commit() so
-    // save/apply stays atomic.
+    // save() and syncRoot() stay paired.
     function commit() { save(); syncRoot(); }
 
     // Single source of truth for the visible state — runs after every mutation.
@@ -383,49 +383,56 @@
     // Reading mask — telescope-style: fixed at saved Y, only moves on
     // grab-handle drag or arrow-key nudge. Layout: [size−] [grab] [size+]
     // [close] horizontally. Persists mask-y on drag-end, mask-band on size click.
+    function buildMaskDom() {
+        if (!maskTopEl) {
+            maskTopEl = document.createElement('div');
+            maskTopEl.className = 'nds-a11y-mask nds-a11y-mask-top';
+            NDS.aria.hidden(maskTopEl, true);
+            document.body.appendChild(maskTopEl);
+        }
+        if (!maskBottomEl) {
+            maskBottomEl = document.createElement('div');
+            maskBottomEl.className = 'nds-a11y-mask nds-a11y-mask-bottom';
+            NDS.aria.hidden(maskBottomEl, true);
+            document.body.appendChild(maskBottomEl);
+        }
+        if (maskControlsEl) return;
+        maskControlsEl = document.createElement('div');
+        maskControlsEl.className = 'nds-a11y-mask-controls';
+        maskControlsEl.setAttribute('role', 'toolbar');
+        // Built via createElement so JSON-sourced labels can't break out of the
+        // attribute via innerHTML string concat.
+        NDS.aria.label(maskControlsEl, words.text('mask_toolbar'));
+        [
+            { action: 'size-down', icon: 'nds-icon nds-hgi-zoom-out-area',         label: words.text('mask_size_down') },
+            { action: 'size-up',   icon: 'nds-icon nds-hgi-zoom-in-area',          label: words.text('mask_size_up')   },
+            { action: 'grab',      icon: 'hgi hgi-stroke hgi-arrow-all-direction', label: words.text('mask_grab')      },
+            { action: 'close',     icon: 'nds-icon nds-hgi-cancel-01',             label: words.text('mask_close')     },
+        ].forEach(({ action, icon, label }) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'nds-btn nds-subtle nds-icon-only';
+            btn.dataset.action = action;
+            NDS.aria.label(btn, label || '');
+            const i = document.createElement('i');
+            i.className = icon;
+            NDS.aria.hidden(i, true);
+            btn.appendChild(i);
+            maskControlsEl.appendChild(btn);
+        });
+        document.body.appendChild(maskControlsEl);
+    }
+
+    function removeMask() {
+        if (maskAbortController) { maskAbortController.abort(); maskAbortController = null; }
+        if (maskTopEl)      { maskTopEl.remove();      maskTopEl      = null; }
+        if (maskBottomEl)   { maskBottomEl.remove();   maskBottomEl   = null; }
+        if (maskControlsEl) { maskControlsEl.remove(); maskControlsEl = null; }
+    }
+
     function setReadingMask(active) {
         if (active && !maskAbortController) {
-            if (!maskTopEl) {
-                maskTopEl = document.createElement('div');
-                maskTopEl.className = 'nds-a11y-mask nds-a11y-mask-top';
-                NDS.aria.hidden(maskTopEl, true);
-                document.body.appendChild(maskTopEl);
-            }
-            if (!maskBottomEl) {
-                maskBottomEl = document.createElement('div');
-                maskBottomEl.className = 'nds-a11y-mask nds-a11y-mask-bottom';
-                NDS.aria.hidden(maskBottomEl, true);
-                document.body.appendChild(maskBottomEl);
-            }
-            if (!maskControlsEl) {
-                maskControlsEl = document.createElement('div');
-                maskControlsEl.className = 'nds-a11y-mask-controls';
-                maskControlsEl.setAttribute('role', 'toolbar');
-                // Toolbar builds lazily on first reading-mask activation, so
-                // the i18n fetch has resolved long before this runs (user must
-                // open the panel and toggle the mask first). Built via
-                // createElement so JSON-sourced labels can't break out of the
-                // attribute via innerHTML string concat.
-                NDS.aria.label(maskControlsEl, words.text('mask_toolbar'));
-                [
-                    { action: 'size-down', icon: 'nds-icon nds-hgi-zoom-out-area',         label: words.text('mask_size_down') },
-                    { action: 'size-up',   icon: 'nds-icon nds-hgi-zoom-in-area',          label: words.text('mask_size_up')   },
-                    { action: 'grab',      icon: 'hgi hgi-stroke hgi-arrow-all-direction', label: words.text('mask_grab')      },
-                    { action: 'close',     icon: 'nds-icon nds-hgi-cancel-01',             label: words.text('mask_close')     },
-                ].forEach(({ action, icon, label }) => {
-                    const btn = document.createElement('button');
-                    btn.type = 'button';
-                    btn.className = 'nds-btn nds-subtle nds-icon-only';
-                    btn.dataset.action = action;
-                    NDS.aria.label(btn, label || '');
-                    const i = document.createElement('i');
-                    i.className = icon;
-                    NDS.aria.hidden(i, true);
-                    btn.appendChild(i);
-                    maskControlsEl.appendChild(btn);
-                });
-                document.body.appendChild(maskControlsEl);
-            }
+            buildMaskDom();
 
             const grabBtn = maskControlsEl.querySelector('[data-action="grab"]');
             // Fixed-size 4-button control bar — its height is constant, so the
@@ -583,11 +590,7 @@
             requestAnimationFrame(() => { if (signal.aborted) return; readGeometry(); render(); });
 
         } else if (!active && maskAbortController) {
-            maskAbortController.abort();
-            maskAbortController = null;
-            if (maskTopEl)      { maskTopEl.remove();      maskTopEl      = null; }
-            if (maskBottomEl)   { maskBottomEl.remove();   maskBottomEl   = null; }
-            if (maskControlsEl) { maskControlsEl.remove(); maskControlsEl = null; }
+            removeMask();
         }
     }
 
@@ -714,7 +717,7 @@
     }
 
     // ----------------------------------------------
-    // Mutators — every change goes through these so apply() + save() stay paired.
+    // Mutators — every change goes through these, and each ends with commit().
     // ----------------------------------------------
     // Restore snapshotted settings only where the current value still matches what
     // the bundle wrote (the user didn't re-cycle the tile mid-session).
@@ -724,7 +727,8 @@
         if (!snapshot) return;
         const { settings: bundleSettings } = getBundleRecipe(name);
         for (const key in snapshot) {
-            if (bundleSettings && state.settings[key] !== bundleSettings[key]) continue;
+            // String() both sides: a cycled tile stores strings ('2' vs 2).
+            if (bundleSettings && String(state.settings[key]) !== String(bundleSettings[key])) continue;
             state.settings[key] = snapshot[key];
         }
         delete state.settingsSnapshots[name];
@@ -744,7 +748,7 @@
         const snapshot = {};
         for (const key in settings) {
             snapshot[key] = state.settings[key];
-            if (state.settings[key] === defaults[key]) state.settings[key] = settings[key];
+            if (String(state.settings[key]) === String(defaults[key])) state.settings[key] = settings[key];
         }
         state.settingsSnapshots[name] = snapshot;
     }
@@ -822,7 +826,8 @@
 
     function cycleSetting(key, cycle) {
         const current = String(state.settings[key]);
-        const index = cycle.indexOf(current);
+        // String() the values too: a caller may pass numbers ([0, 1, 2, 3]).
+        const index = cycle.map(String).indexOf(current);
         const next = cycle[(index + 1) % cycle.length];
         state.settings[key] = next;
         commit();
@@ -861,14 +866,19 @@
         NDS.status.set(btn, 'success');
         resetDoneTimer = setTimeout(() => {
             resetDoneTimer = null;
-            if (btn.dataset.flashOriginal) {
-                label.textContent = btn.dataset.flashOriginal;
-                delete btn.dataset.flashOriginal;
-            }
-            const icon = btn.querySelector(':scope > [data-flash-icon]');
-            if (icon) icon.remove();
-            NDS.status.clear(btn);
+            endResetFlash(btn);
         }, RESET_DONE_MS);
+    }
+
+    // The flash's end and its pre-empt must undo the same things, or arming saves "Settings reset" as the label.
+    function endResetFlash(btn) {
+        const label = btn.querySelector('.nds-label');
+        if (label && btn.dataset.flashOriginal) {
+            label.textContent = btn.dataset.flashOriginal;
+            delete btn.dataset.flashOriginal;
+        }
+        btn.querySelector(':scope > [data-flash-icon]')?.remove();
+        NDS.status.clear(btn);
     }
 
     // Two-click reset confirmation. Visible countdown via the
@@ -879,14 +889,7 @@
         if (resetDoneTimer) {
             clearTimeout(resetDoneTimer);
             resetDoneTimer = null;
-            const flashLabel = btn.querySelector('.nds-label');
-            if (flashLabel && btn.dataset.flashOriginal) {
-                flashLabel.textContent = btn.dataset.flashOriginal;
-                delete btn.dataset.flashOriginal;
-            }
-            const icon = btn.querySelector(':scope > [data-flash-icon]');
-            if (icon) icon.remove();
-            NDS.status.clear(btn);
+            endResetFlash(btn);
         }
         if (resetTimer) {
             clearTimeout(resetTimer);
@@ -943,7 +946,7 @@
     //   • the lazy-arm boot gate: the FAB IS a [data-panel-toggle] (data-fab-pos
     //     "auto" needs it to find the panel's side), so the boot gate's capture
     //     listener has to pre-empt Panel's own delegated handler on the FAB's
-    //     first click — see bootAccessibility() at the bottom of this file;
+    //     first click — see the Accessibility entry's lazy hook in nds-loader.js;
     //   • the cold-arm loading affordance, covering the first (heavy) build —
     //     shared by every trigger via open()/toggle() below, not just the FAB;
     //   • mirroring open state onto the FAB, since Panel only manages the
@@ -953,15 +956,6 @@
     // wrongly trigger close() on a panel Panel.js never actually opened.
     // ----------------------------------------------
     const isPanelOpen = () => !!(panel && !NDS.Panel.__ndsStub && NDS.Panel.isOpen(panel));
-
-    // The boot gate only arms on a saved-prefs load or a FAB click, so a consumer
-    // wiring their own trigger — the documented pattern — would otherwise call into
-    // a component with no panel reference yet and get silence. Arming here keeps
-    // the no-prefs, no-interaction session at zero init cost either way.
-    function ensureArmed() {
-        if (!initDone) init();
-        return !!panel;
-    }
 
     // Cold-start gate — shared by EVERY trigger (the FAB, a demo button, a
     // consumer's own NDS.Accessibility.open() call), not just the FAB's own
@@ -979,7 +973,7 @@
     // activation and a consumer's own open()/toggle() call do not.)
     function runArmed(proceed, triggerEl) {
         if (arming) return;
-        if (initDone) { if (ensureArmed()) proceed(); return; }
+        if (initDone) { if (panel) proceed(); return; }
         arming = true;
         const fab = triggerEl || document.querySelector('[data-accessibility-toggle]');
         if (fab) NDS.state.add(fab, 'loading');
@@ -1020,10 +1014,7 @@
         if (resetDoneTimer) { clearTimeout(resetDoneTimer); resetDoneTimer = null; }
         if (resetCountdownTimer) { clearTimeout(resetCountdownTimer); resetCountdownTimer = null; }
         if (initAbortController) { initAbortController.abort(); initAbortController = null; }
-        if (maskAbortController) { maskAbortController.abort(); maskAbortController = null; }
-        if (maskTopEl)      { maskTopEl.remove();      maskTopEl      = null; }
-        if (maskBottomEl)   { maskBottomEl.remove();   maskBottomEl   = null; }
-        if (maskControlsEl) { maskControlsEl.remove(); maskControlsEl = null; }
+        removeMask();
     }
 
     // Module-scoped so it allocates once. Function-declaration hoisting
@@ -1046,14 +1037,13 @@
         },
     ];
 
-    // The panel's words are data-i18n markers, which core translates.
+    // On a page whose script joins its letters, the letter-spacing tile goes.
     function dropExcludedTiles() {
         if (panel && isLetterSpacingBlocked()) panel.querySelectorAll('[data-a11y-exclude-token="letter-spacing"]').forEach(el => el.remove());
     }
 
-    // Panel markup — moved out of every page's HTML (was a <template> in
-    // _includes/accessibility-panel.html, ~185 inert nodes on every load) and
-    // built here instead, so it exists only once armed. side comes off the
+    // Panel markup — built here, not shipped in the page, so it exists only once
+    // armed. The panel's words are data-i18n markers core translates. side comes off the
     // FAB's own data-panel-side (fallback 'end') so the FAB is the one place
     // to reposition both itself (data-fab-pos="auto") and the panel it builds — no
     // JS edit needed for the common case.
@@ -1386,7 +1376,7 @@
 </dialog>`;
     }
 
-    // Default: nothing ships in the page's HTML for this — buildPanelMarkup() below
+    // Default: nothing ships in the page's HTML for this — buildPanelMarkup() above
     // supplies the <template> content instead. Still honors a page-authored
     // <template class="nds-panel-template"> or a bare panel already in the
     // document (pre-1.13 markup, or a consumer's own customized copy).
@@ -1411,9 +1401,7 @@
         // fromTemplate's refresh runs — nds-loader.js skips a stub on purpose,
         // and nothing revisits content built AFTER the page's own one-time
         // detection pass, since that accordion didn't exist yet to be detected.
-        // mount() loads the bundles this panel's own markup needs and nothing
-        // else; it used to ask for every bundle in the manifest, which dragged
-        // in extras and audit on a page that wanted neither.
+        // mount() loads the bundles this panel's own markup needs and nothing else.
         if (injected) NDS.init.mount(injected);
         return injected;
     }
@@ -1453,7 +1441,7 @@
         // path armed the component.
         panel.setAttribute('data-armed', '');
 
-        // commit, not bare apply: save() drops a default-state key on the spot,
+        // commit, not a bare syncRoot: save() drops a default-state key on the spot,
         // so a stale all-defaults visitor stops arming from the next visit on.
         state = load();
         commit();
