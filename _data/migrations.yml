@@ -226,29 +226,30 @@
 - { kind: event, name: ndsDropmenuItem, status: removed, since: "2.0.0", fix: "Read e.target.closest('.nds-dropmenu-item'): a menu item's click bubbles through its wrapper as any click does. ndsDropmenuRedispatch is gone too." }
 - { kind: param, name: dir, scope: "&.nds-filter", status: renamed, use: order, since: "2.0.0", fix: "A filter's sort writes ?sort=price&order=desc. Read order on the server; a link with dir=desc opens ascending." }
 - { kind: api, name: NDS.Audit, status: renamed, use: NDS.audit, since: "2.0.0", fix: "Use NDS.audit." }
-- { kind: api, name: NDS.CookieConsent, status: renamed, use: NDS.Cookies, since: "2.0.0", fix: "Use NDS.Cookies: the panel took the name. init, open and close are the same." }
-- { kind: api, name: NDS.Cookies.allowed, status: renamed, use: NDS.consent.isAllowed, since: "2.0.0", fix: "Use NDS.consent.isAllowed." }
 - { kind: api, name: NDS.Cookies.delete, status: renamed, use: NDS.cookie.delete, since: "2.0.0", fix: "Use NDS.cookie.delete." }
 - { kind: api, name: NDS.Cookies.get, status: renamed, use: NDS.cookie.get, since: "2.0.0", fix: "Use NDS.cookie.get." }
 - { kind: api, name: NDS.Cookies.getConsent, status: renamed, use: NDS.consent.get, since: "2.0.0", fix: "Use NDS.consent.get." }
-- { kind: api, name: NDS.Cookies.save, status: renamed, use: NDS.consent.set, since: "2.0.0", fix: "Use NDS.consent.set." }
 - { kind: api, name: NDS.Cookies.set, status: renamed, use: NDS.cookie.set, since: "2.0.0", fix: "Use NDS.cookie.set." }
 - { kind: api, name: NDS.Cookies.show, status: renamed, use: NDS.Cookies.open, since: "2.0.0", fix: "Use NDS.Cookies.open(view): it takes the same view." }
-- { kind: api, name: NDS.date, status: renamed, use: NDS.Date, since: "2.0.0", fix: "Use NDS.Date." }
 - { kind: api, name: NDS.Init, status: renamed, use: NDS.init, since: "2.0.0", fix: "Use NDS.init." }
 - { kind: api, name: NDS.State, status: renamed, use: NDS.state, since: "2.0.0", fix: "Use NDS.state." }
 - { kind: api, name: NDS.Status, status: renamed, use: NDS.status, since: "2.0.0", fix: "Use NDS.status." }
 - { kind: api, name: NDS.gridLastRow.update, status: renamed, use: NDS.Grid.refresh, since: "2.0.0", fix: "Use NDS.Grid.refresh(el)." }
-- { kind: api, name: NDS.Form.validateCheckboxGroup, status: renamed, use: NDS.Checkbox.validate, since: "2.0.0", fix: "Use NDS.Checkbox.validate(group, opts); it returns the same result." }
-- { kind: api, name: NDS.Form.validateRadioGroup, status: renamed, use: NDS.Radio.validate, since: "2.0.0", fix: "Use NDS.Radio.validate(group, opts); it returns the same result." }
-- { kind: api, name: NDS.Form.validateMultiselect, status: renamed, use: NDS.Multiselect.validate, since: "2.0.0", fix: "Use NDS.Multiselect.validate(el, opts); it returns the same result." }
-- { kind: api, name: NDS.Form.validateTaginput, status: renamed, use: NDS.Taginput.validate, since: "2.0.0", fix: "Use NDS.Taginput.validate(el, opts); it returns the same result." }
-- { kind: api, name: NDS.Form.validateOtpGroup, status: renamed, use: NDS.Otp.validate, since: "2.0.0", fix: "Use NDS.Otp.validate(group, opts); it returns the same result." }
-- { kind: api, name: NDS.Form.initCheckboxGroupValidation, status: removed, since: "2.0.0", fix: "Remove the call: a group that shows an error is checked again on each change, one added later too." }
-- { kind: api, name: NDS.Form.initRadioGroupValidation, status: removed, since: "2.0.0", fix: "Remove the call: a group that shows an error is checked again on each change, one added later too." }
-- { kind: api, name: NDS.Form.initMultiselectValidation, status: removed, since: "2.0.0", fix: "Remove the call: a Multiselect that shows an error is checked again on each change." }
-- { kind: api, name: NDS.Form.setIndeterminate, status: renamed, use: NDS.Checkbox.setIndeterminate, since: "2.0.0", fix: "Use NDS.Checkbox.setIndeterminate(checkbox, value)." }
-- { kind: api, name: NDS.Form.syncState, status: renamed, use: NDS.Form.refresh, since: "2.0.0", fix: "Use NDS.Form.refresh(el); it also takes a container and re-syncs every field inside it." }
+- { kind: api, name: NDS.Forms, status: renamed, use: NDS.Form, since: "2.0.0", fix: "Use NDS.Form. init, getStatus, clearStatus and setState keep their names." }
+- { kind: api, name: NDS.Forms.validateForm, status: renamed, use: NDS.Form.validate, since: "2.0.0", fix: "Use NDS.Form.validate(el, opts); it returns the same result." }
+- { kind: api, name: NDS.Forms.initForm, status: renamed, use: NDS.Form.create, since: "2.0.0", fix: "Use NDS.Form.create(el)." }
+- { kind: api, name: NDS.Forms.initializeContainer, status: renamed, use: NDS.Form.create, since: "2.0.0", fix: "Use NDS.Form.create(el): it initializes every field and form inside el." }
+- { kind: api, name: NDS.Forms.setStatus, status: renamed, use: NDS.Form.setStatus, since: "2.0.0", fix: "Use NDS.Form.setStatus(el, status, { message, permanent }): the element is the first argument, not a key of an options object." }
+- { kind: api, name: NDS.Forms.validateCheckboxGroup, status: renamed, use: NDS.Checkbox.validate, since: "2.0.0", fix: "Use NDS.Checkbox.validate(group, opts); it returns the same result." }
+- { kind: api, name: NDS.Forms.validateRadioGroup, status: renamed, use: NDS.Radio.validate, since: "2.0.0", fix: "Use NDS.Radio.validate(group, opts); it returns the same result." }
+- { kind: api, name: NDS.Forms.validateMultiselect, status: renamed, use: NDS.Multiselect.validate, since: "2.0.0", fix: "Use NDS.Multiselect.validate(el, opts); it returns the same result." }
+- { kind: api, name: NDS.Forms.validateTaginput, status: renamed, use: NDS.Taginput.validate, since: "2.0.0", fix: "Use NDS.Taginput.validate(el, opts); it returns the same result." }
+- { kind: api, name: NDS.Forms.validateOtpGroup, status: renamed, use: NDS.Otp.validate, since: "2.0.0", fix: "Use NDS.Otp.validate(group, opts); it returns the same result." }
+- { kind: api, name: NDS.Forms.initCheckboxGroupValidation, status: removed, since: "2.0.0", fix: "Remove the call: a group that shows an error is checked again on each change, one added later too." }
+- { kind: api, name: NDS.Forms.initRadioGroupValidation, status: removed, since: "2.0.0", fix: "Remove the call: a group that shows an error is checked again on each change, one added later too." }
+- { kind: api, name: NDS.Forms.initMultiselectValidation, status: removed, since: "2.0.0", fix: "Remove the call: a Multiselect that shows an error is checked again on each change." }
+- { kind: api, name: NDS.Forms.setIndeterminate, status: renamed, use: NDS.Checkbox.setIndeterminate, since: "2.0.0", fix: "Use NDS.Checkbox.setIndeterminate(checkbox, value)." }
+- { kind: api, name: NDS.Forms.syncState, status: renamed, use: NDS.Form.refresh, since: "2.0.0", fix: "Use NDS.Form.refresh(el); it also takes a container and re-syncs every field inside it." }
 - { kind: api, name: NDS.isRTL, status: renamed, use: NDS.isRtl, since: "2.0.0", fix: "Use NDS.isRtl." }
 - { kind: api, name: NDS.i18n.safeMerge, status: renamed, use: NDS.i18n.mergeOwnKeys, since: "2.0.0", fix: "Use NDS.i18n.mergeOwnKeys." }
 - { kind: api, name: NDS.rafThrottle, status: renamed, use: NDS.throttleToFrame, since: "2.0.0", fix: "Use NDS.throttleToFrame." }
@@ -284,11 +285,64 @@
 - { kind: api, name: el.ndsSort.apply, status: renamed, use: el.ndsSort.setSort, since: "2.0.0", fix: "Use setSort(key, order): it takes the same arguments." }
 - { kind: api, name: NDS.Pagination.updateRecords, status: renamed, use: NDS.Pagination.setRecords, since: "2.0.0", fix: "Use setRecords(listOrId, { from, to, count }): it takes the same arguments." }
 - { kind: api, name: NDS.Tables.row, status: renamed, use: NDS.Table.getRow, since: "2.0.0", fix: "Use NDS.Table.getRow." }
+- { kind: api, name: NDS.Tables, status: renamed, use: NDS.Table, since: "2.0.0", fix: "Use NDS.Table. init, reinit, create, createResponsive, createColumnToggle and setColumnHidden keep their names." }
+- { kind: api, name: NDS.Tables.recheckWidths, status: renamed, use: NDS.Table.refresh, since: "2.0.0", fix: "Use NDS.Table.refresh." }
+- { kind: api, name: NDS.Tables.getCellText, status: renamed, use: NDS.getCellText, since: "2.0.0", fix: "Use NDS.getCellText(cell)." }
+- { kind: api, name: NDS.Mainnav, status: renamed, use: NDS.MainNav, since: "2.0.0", fix: "Use NDS.MainNav. init and reinit keep their names." }
+- { kind: api, name: NDS.Mainnav.toggleNavbar, status: renamed, use: NDS.MainNav.toggle, since: "2.0.0", fix: "Use NDS.MainNav.toggle(); open() and close() set the state." }
+- { kind: api, name: NDS.Mainnav.toggleDropdown, status: renamed, use: NDS.MainNav.openMenu, since: "2.0.0", fix: "Use NDS.MainNav.openMenu(trigger): it takes the trigger element, not the click event. closeMenus() closes every open menu." }
+- { kind: api, name: NDS.CooldownButton, status: renamed, use: NDS.Cooldown, since: "2.0.0", fix: "Use NDS.Cooldown. init, start and reset keep their names." }
+- { kind: api, name: NDS.TagInput, status: renamed, use: NDS.Taginput, since: "2.0.0", fix: "Use NDS.Taginput." }
+- { kind: api, name: el.ndsTagInput, status: renamed, use: el.ndsTaginput, since: "2.0.0", fix: "Use el.ndsTaginput." }
+- { kind: api, name: NDS.OTP, status: renamed, use: NDS.Otp, since: "2.0.0", fix: "Use NDS.Otp. init, getValue, setValue and clear keep their names." }
+- { kind: api, name: NDS.Stepper.get, status: renamed, use: NDS.Stepper.getInstance, since: "2.0.0", fix: "Use NDS.Stepper.getInstance(idOrEl)." }
+- { kind: api, name: NDS.Stepper.previous, status: renamed, use: NDS.Stepper.prev, since: "2.0.0", fix: "Use NDS.Stepper.prev(idOrEl). The instance's previous() is prev() too." }
+- { kind: api, name: NDS.Stepper.getFallback, status: removed, since: "2.0.0", fix: "Remove the call: write nds-vertical or nds-radial on the stepper for the layout you want." }
+- { kind: api, name: NDS.Stepper.setFallback, status: removed, since: "2.0.0", fix: "Remove the call: write nds-vertical or nds-radial on the stepper for the layout you want." }
+- { kind: api, name: NDS.Selection.recount, status: renamed, use: NDS.Selection.refresh, since: "2.0.0", fix: "Use NDS.Selection.refresh(list)." }
+- { kind: api, name: NDS.Expandable.recheckHeights, status: renamed, use: NDS.Expandable.refresh, since: "2.0.0", fix: "Use NDS.Expandable.refresh." }
+- { kind: api, name: el.ndsExpandable.recheckHeight, status: renamed, use: el.ndsExpandable.refresh, since: "2.0.0", fix: "Use el.ndsExpandable.refresh." }
+- { kind: api, name: el.ndsExpandable.expandContent, status: renamed, use: el.ndsExpandable.expand, since: "2.0.0", fix: "Use el.ndsExpandable.expand: it does nothing when the box is already open." }
+- { kind: api, name: el.ndsExpandable.collapseContent, status: renamed, use: el.ndsExpandable.collapse, since: "2.0.0", fix: "Use el.ndsExpandable.collapse: it does nothing when the box is already closed." }
+- { kind: api, name: el.ndsExpandable.toggleContent, status: renamed, use: el.ndsExpandable.toggle, since: "2.0.0", fix: "Use el.ndsExpandable.toggle." }
+- { kind: api, name: NDS.ScrollMore.checkOverflow, status: renamed, use: NDS.ScrollMore.refresh, since: "2.0.0", fix: "Use NDS.ScrollMore.refresh(wrapper)." }
+- { kind: api, name: NDS.Code.reprocessCodeElement, status: renamed, use: NDS.Code.highlight, since: "2.0.0", fix: "Use NDS.Code.highlight(codeEl)." }
+- { kind: api, name: NDS.Numbers.formatNumbers, status: renamed, use: NDS.Numbers.formatAll, since: "2.0.0", fix: "Use NDS.Numbers.formatAll." }
+- { kind: api, name: NDS.Numbers.setupCounterAnimations, status: renamed, use: NDS.Numbers.initCounters, since: "2.0.0", fix: "Use NDS.Numbers.initCounters." }
+- { kind: api, name: NDS.Progress.initCircle, status: renamed, use: NDS.Progress.create, since: "2.0.0", fix: "Use NDS.Progress.create(el)." }
+- { kind: api, name: NDS.Rating.enableRating, status: renamed, use: NDS.Rating.enable, since: "2.0.0", fix: "Use NDS.Rating.enable(el)." }
+- { kind: api, name: el.ndsRating.getRating, status: renamed, use: el.ndsRating.getValue, since: "2.0.0", fix: "Use el.ndsRating.getValue." }
+- { kind: api, name: el.ndsRating.setDisabled, status: renamed, use: el.ndsRating.disable, since: "2.0.0", fix: "Use el.ndsRating.disable() and enable()." }
+- { kind: api, name: el.ndsUpload.setDisabled, status: renamed, use: el.ndsUpload.disable, since: "2.0.0", fix: "Use el.ndsUpload.disable() and enable()." }
+- { kind: api, name: NDS.Export.toCSV, status: renamed, use: NDS.Export.toCsv, since: "2.0.0", fix: "Use NDS.Export.toCsv." }
+- { kind: api, name: NDS.Export.toXLSHtml, status: renamed, use: NDS.Export.toXlsHtml, since: "2.0.0", fix: "Use NDS.Export.toXlsHtml." }
+- { kind: api, name: NDS.DatePicker.DatePickerCalendar, status: renamed, use: NDS.DatePicker.Calendar, since: "2.0.0", fix: "Use NDS.DatePicker.Calendar." }
+- { kind: api, name: NDS.DatePicker.createHijriDate, status: removed, since: "2.0.0", fix: "Remove the call: write a { day, month, year } object." }
+- { kind: api, name: NDS.DatePicker.CalendarConfig.hijri.gregorianToHijri, status: removed, since: "2.0.0", fix: "Use NDS.Date.format(date, { calendar: 'hijri', format: 'DD/MM/YYYY' })." }
+- { kind: api, name: NDS.DatePicker.CalendarConfig.hijri.hijriToGregorian, status: removed, since: "2.0.0", fix: "Use NDS.Date.parse(text, { calendar: 'hijri', format: … })." }
+- { kind: api, name: NDS.TimeDate.getHijriDate, status: removed, since: "2.0.0", fix: "Use NDS.Date.format(NDS.Date.getToday(), { calendar: 'hijri', format: 'D M YYYY' })." }
+- { kind: api, name: el.ndsTabs.switchTo, status: renamed, use: el.ndsTabs.goTo, since: "2.0.0", fix: "Use el.ndsTabs.goTo(index)." }
+- { kind: api, name: el._ndsSwiper, status: renamed, use: el.ndsSwiper, since: "2.0.0", fix: "Use el.ndsSwiper." }
+- { kind: api, name: el._ndsSwiper.slideTo, status: renamed, use: el.ndsSwiper.goTo, since: "2.0.0", fix: "Use el.ndsSwiper.goTo(index, animate); it stops at the last page, as slideTo did." }
+- { kind: api, name: NDS.Drawer.initDrawer, status: renamed, use: NDS.Drawer.create, since: "2.0.0", fix: "Use NDS.Drawer.create(drawer)." }
+- { kind: api, name: NDS.triggerEvents, status: renamed, use: NDS.setValue, since: "2.0.0", fix: "Use NDS.setValue(el, value): it writes the value and fires input and change. el.value = x; NDS.triggerEvents(el); becomes NDS.setValue(el, x);" }
+- { kind: api, name: NDS.langKey, status: renamed, use: NDS.lang, since: "2.0.0", fix: "Use NDS.lang: it holds the page language, not only ar or en." }
+- { kind: api, name: NDS.loadExtras, status: removed, since: "2.0.0", fix: "Use NDS.init.mount(el) for new markup, or NDS.loadBundle(name). Editor, Chart and Code have their own bundles now." }
+- { kind: api, name: NDS.placeFixed, status: renamed, use: NDS.place, since: "2.0.0", fix: "Use NDS.place(el, top, left)." }
+- { kind: api, name: NDS.Ipv.create, status: removed, since: "2.0.0", fix: "Drive the viewer from the namespace: NDS.Ipv.open(img), close(), next(), prev(), resetZoom(), toggleControls() and destroy()." }
+- { kind: api, name: window.ndsIPV, status: removed, since: "2.0.0", fix: "Drive the viewer from NDS.Ipv: open(img), close(), next(), prev(), resetZoom(), toggleControls() and destroy()." }
+- { kind: api, name: el.ndsSideinfo.updatePosition, status: removed, since: "2.0.0", fix: "Remove the call: the column measures itself again when the hero resizes or the fonts load." }
+- { kind: api, name: el.ndsSideinfo.updateStickyState, status: removed, since: "2.0.0", fix: "Remove the call: the column measures itself again when the hero resizes or the fonts load." }
+- { kind: api, name: NDS.portal, status: removed, since: "2.0.0", fix: "Remove the call: an open menu sits in the top layer and stays inside its wrapper." }
+- { kind: api, name: NDS.unportal, status: removed, since: "2.0.0", fix: "Remove the call: an open menu sits in the top layer and stays inside its wrapper." }
+- { kind: api, name: NDS.needsPortal, status: removed, since: "2.0.0", fix: "Remove the call: nothing is portaled any more." }
+- { kind: api, name: el.ndsTableControls.getSortDirection, status: renamed, use: el.ndsTableControls.getSortOrder, since: "2.0.0", fix: "Use getSortOrder(): it returns the same value." }
+- { kind: api, name: NDS.isRowSelected, status: renamed, use: NDS.Selection.isSelected, since: "2.0.0", fix: "Use NDS.Selection.isSelected(item): it works for any list, not only table rows." }
+- { kind: api, name: NDS.FontLoading, status: removed, since: "2.0.0", fix: "Remove the call: NDS no longer tracks fonts. To wait for a font, use the browser's document.fonts.load() or document.fonts.ready." }
 - { kind: global, name: NDSInitConfig, status: renamed, use: NDS_INIT_CONFIG, since: "2.0.0", fix: "Use window.NDS_INIT_CONFIG, with the same value." }
 - { kind: storage, name: cookieConsent, status: renamed, use: nds-consent, since: "2.0.0", fix: "The consent cookie is named nds-consent. A script that reads cookieConsent (the Google Analytics snippet, for one) reads nds-consent: copy the snippet again from the Cookies page. Visitors see the consent notice once more." }
 - { kind: storage, name: cookieConsentDismissed, status: renamed, use: nds-cookies-dismissed, since: "2.0.0", fix: "NDS stores the dismissed notice under nds-cookies-dismissed. Read that key if your code reads it." }
 - { kind: storage, name: nds_, status: renamed, use: "nds-cache:", since: "2.0.0", fix: "NDS.cache keys start with nds-cache:. Old entries are not read again: they refill." }
-- { kind: file, name: nds-cookie-consent.min.js, status: renamed, use: nds-cookies.min.js, since: "2.0.0", fix: "Use nds-cookies.min.js wherever you list the NDS bundles: a self-hosted copy, a strict CSP." }
 - { kind: property, name: --tooltip-background-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-background-default, since: "1.12.0", fix: "Set --tooltip-background-default under :root[data-theme~=\"dark\"] instead." }
 - { kind: property, name: --tooltip-text-heading-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-text-heading-default, since: "1.12.0", fix: "Set --tooltip-text-heading-default under :root[data-theme~=\"dark\"] instead." }
 - { kind: property, name: --tooltip-text-paragraph-inverse, scope: .nds-tooltip, status: renamed, use: --tooltip-text-paragraph-default, since: "1.12.0", fix: "Set --tooltip-text-paragraph-default under :root[data-theme~=\"dark\"] instead." }

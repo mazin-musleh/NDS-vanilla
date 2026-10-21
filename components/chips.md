@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="chip-overview" class="nds-content-section nds-doc-overview">
@@ -220,7 +220,8 @@ A chip has no script of its own. `NDS.buildChip()` builds a removable chip for y
 
 | Method | Effect |
 |---|---|
-| `NDS.buildChip(label, options)` | Returns a removable chip: a `<button>` with the label and a cancel icon. `options.chipClass` adds classes, `options.data` adds data attributes, `options.onRemove` runs on a click anywhere on the chip, and `options.disabled` disables it |
+| `NDS.buildChip(label, options)` | Returns a removable chip: a `<button>` with the label and a cancel icon. `options.chipClass` adds classes, `options.data` adds data attributes, `options.onRemove` runs on a click anywhere on the chip, `options.disabled` disables it, and `options.signal` is an `AbortSignal`: after it aborts, a click no longer calls `onRemove` |
+| `NDS.keepChipFocus(chips, render, fallback)` | Runs `render`, which removes a chip. If a chip had focus, it then focuses the chip in the same place, or `fallback` when none is left. `chips` is a function that returns the live chips. Call it from the remove handler of a chip built with `NDS.buildChip()` |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="chip-js" data-canon data-lang="js">

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="accordion-overview" class="nds-content-section nds-doc-overview">
@@ -312,11 +312,12 @@ The instance lives on `.nds-accordion` as `ndsAccordion`. It is there once the c
 |---|---|
 | `NDS.Accordion.init()` | Starts every accordion on the page that has not started yet. On an accordion that already started, it picks up the new items. `reinit()` is the same |
 | `NDS.Accordion.create(element)` | Starts one accordion and returns its instance, or the instance it already has. Returns `null` when it has no buttons |
+| `NDS.Accordion.destroy(container)` | The same as `instance.destroy()`. The open items stay open |
 | `instance.openItem(index)`, `instance.closeItem(index)`, `instance.toggleItem(index)` | Open, close or toggle an item by its position |
 | `instance.closeAll()` | Closes every open item |
 | `instance.getOpenItems()` | Returns the open items, each as `{ index, button, collapse, isOpen }` |
 | `instance.refresh()` | Picks up the items put into this accordion after it started |
-| `instance.destroy()` | Removes the listeners. The markup stays as it is |
+| `instance.destroy()` | Removes the listeners. The markup stays as it is, and the open items stay open |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="rating-overview" class="nds-content-section nds-doc-overview">
@@ -320,6 +320,8 @@ The instance is on the element as `el.ndsRating`. It is there once the component
 |---|---|
 | `NDS.Rating.init()`, `NDS.Rating.reinit()` | Start every `.nds-rating` that has no instance |
 | `NDS.Rating.create(el)` | Start one rating and return its instance. It returns the existing instance when there is one |
+| `NDS.Rating.destroy(el)` | The same as `el.ndsRating.destroy()` |
+| `NDS.Rating.validate(el, options)` | Check the rating group and return `{ valid, message, rating }`. Pass `{ showMessage: false }` to check without a message |
 | `NDS.Rating.enable(el)` | Start the rating if needed, then take it out of disabled |
 | `el.ndsRating.setValue(v)` | Set the score, from 0 to the star count. The event fires only when the score changes |
 | `el.ndsRating.getValue()` | Return the score |

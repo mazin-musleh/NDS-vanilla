@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 12:53 AM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="otp-overview" class="nds-content-section nds-doc-overview">
@@ -253,8 +253,8 @@ Each method takes the `.nds-otp-group` element.
 | `NDS.Otp.getValue(group)` | Returns the digits as one string. An empty box adds nothing |
 | `NDS.Otp.setValue(group, value)` | Fills the boxes from the first, and removes characters that are not digits. It fires no event |
 | `NDS.Otp.clear(group)` | Empties the boxes, focuses the first box and fires `nds:otp:clear`. It does not remove an error: call `NDS.Form.clearStatus(group)` for that |
-| `NDS.Otp.init()` | Starts every group on the page. It runs once at page load, and a group added later starts on its own |
-| `NDS.Otp.validate(group)` | Checks that every box holds a digit, shows the error when one is empty, and returns `{ valid, message, filled }` |
+| `NDS.Otp.init()` | Starts every group on the page that has not started. It runs at page load, and a group added later starts on its own. `NDS.init.destroy(view)` releases a group |
+| `NDS.Otp.validate(group, options)` | Checks that every box holds a digit, shows the error when one is empty, and returns `{ valid, message, filled }`. Pass `{ showMessage: false }` to check without showing the error |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "21/10/2026 - 11:28 PM"
 ---
 
 <section id="pagination-overview" class="nds-content-section nds-doc-overview">
@@ -545,12 +545,13 @@ After a page change, the script scrolls the content back into view when its top 
 | `NDS.Pagination.refresh(content, { keepPage })` | Counts the pages of a `.nds-paged-content` again and goes to page 1. `keepPage: true` stays on the current page. Added and removed items need no call |
 | `NDS.Pagination.setRecords(id, { from, to, count })` | Writes your numbers into the counter slots of `[data-paged-target="id"]` |
 | `NDS.Pagination.scrollToContent(nav)` | Scrolls to the content now, also on a nav with `data-pagination-no-scroll` |
-| `NDS.Pagination.destroy(nav)` | Removes the nav's listeners and marks it as not started, so `init()` can start it again. The items keep the page they show |
+| `NDS.Pagination.destroy(nav)` | Removes the nav's listeners, closes the menu of hidden pages, and marks the nav as not started, so `init()` can start it again. The items keep the page they show |
+| `nav.ndsPagination.destroy()` | The same as `NDS.Pagination.destroy(nav)` |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:pagination:change` | `.nds-pagination` | `{ page, previousPage, totalPages, pagination }`, where `pagination` is the nav. Only a user's click fires it |
+| `nds:pagination:change` | `.nds-pagination` | `{ page, previousPage, totalPages, pagination }`, where `pagination` is the nav. Only a user's click fires it. `data-active-page` and `?page=` already hold the new page |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="pg-js" data-canon data-lang="js">

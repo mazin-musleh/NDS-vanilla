@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -96,7 +96,7 @@ NDS.init.refresh(tbody);
 ### Startup
 {: .nds-block-title}
 
-The loader calls `NDS.init.initialize()` at load. The components the first screen needs start before the page shows. The rest start in idle time, some from bundles that load after the page shows. `NDS.init.ready` resolves when the last one has started: see [Instance Lookup](#instance-lookup).
+The loader calls `NDS.init.initialize()` at load. The components the first screen needs start before the page shows. The rest start in idle time, some from bundles that load after the page shows. `NDS.init.ready` resolves when the last one has started: see [Instance Lookup](#instance-lookup). Each NDS bundle runs once per page. A second copy of the same file logs a warning and does nothing.
 
 ### Refresh
 {: .nds-block-title}

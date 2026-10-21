@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -706,6 +706,7 @@ Sort is not a filter value and is never sent with the form. Decide by what the s
 |---|---|
 | `NDS.Filter.init()` | Starts a filter for each `data-filter-target` value that has none. `reinit()` is the same |
 | `NDS.Filter.create(element)` | Starts the filter of one surface and returns it. On a started filter, it returns that one |
+| `NDS.Filter.destroy(element)` | The same as `destroy()`. Any element of the filter's surfaces works |
 | `NDS.Filter.getInstance(element)` | The filter of any surface, by element or selector |
 | `NDS.Filter.getByTarget(id)` | The filter of an item container `id` |
 | `NDS.Filter.whenReady(element, callback)` | Runs `callback` with the filter, now or once it starts |

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="upload-overview" class="nds-content-section nds-doc-overview">
@@ -348,6 +348,8 @@ A file is an object `{ file, id, status, progress, error, response }`. `file` is
 | `NDS.Upload.init()` | Starts every `.nds-upload` that has not started. The loader calls it on load |
 | `NDS.Upload.reinit()` | The same as `init()` |
 | `NDS.Upload.create(el, options)` | Starts one field and returns its instance. `el` is the element or a selector. On a field that has started, it adds `options` to it and returns the same instance. It returns `null` when the field has no file input, `.nds-form-control` or `.nds-file-list` |
+| `NDS.Upload.destroy(el)` | The same as `instance.destroy()`. `el` is the element or a selector |
+| `NDS.Upload.validate(el, options)` | Checks the field and returns `{ valid, message, count, pending }`. `pending` is true while a file uploads or processes. Pass `{ showMessage: false }` to check without a message |
 | `NDS.Upload.getInstance(el)` | Returns the instance of the field, or `null` |
 | `NDS.Upload.whenReady(el, callback)` | Calls `callback(instance)` now, or when the field starts |
 | `instance.addFile(file, options)` | Adds a `File` to the list and returns its id, or `null` when the list is full. Options: `validate` (`true` runs the checks, default `false`), `status` (default `ready`), `progress` (default `0`) and `error` |

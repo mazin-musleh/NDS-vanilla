@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "19/10/2026 - 12:45 AM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="scroll-more-overview" class="nds-content-section nds-doc-overview">
@@ -396,7 +396,7 @@ Set these on the wrapper.
 | `NDS.ScrollMore.init()` | Starts every `.nds-scroll-more` on the page that has not started yet. `reinit()` is the same |
 | `NDS.ScrollMore.create(wrapper)` | Starts one wrapper. It does nothing on a wrapper that has started |
 | `NDS.ScrollMore.refresh(wrapper)` | Checks the overflow again. Call it after you add or remove items while the wrapper keeps its size |
-| `NDS.ScrollMore.destroy(wrapper)` | Removes the listeners. Call it before you remove the wrapper |
+| `NDS.ScrollMore.destroy(wrapper)` | Removes the listeners, the divider it built, `data-axis` and the overflow states. Call it before you remove the wrapper |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="sm-js" data-canon data-lang="js">

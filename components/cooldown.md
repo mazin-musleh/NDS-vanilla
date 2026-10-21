@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="cooldown-overview" class="nds-content-section nds-doc-overview">
@@ -135,6 +135,7 @@ The variants and sizes are the [Button](../components/button) ones. The cooldown
 - Do not use it to block a double form submit. Disable the submit button while the form sends instead.
 - Do not use it for cooldowns over a few minutes. A long countdown reads as nagging and ties the user to the page. Show the time when the action is available again instead.
 - Put the button text in a `<span class="nds-label">`. The countdown writes into that span. A button without one never counts down and logs a console warning.
+- On an `.nds-icon-only` button, write an empty `<span class="nds-label"></span>` before the icon. The countdown takes the icon's place in the same square, so the button keeps its size. Give the button an `aria-label`: the empty label gives it no name at rest.
 - Omit `data-resend-label` when the action reads the same every time, such as "Try again". The button then returns to its first label.
 - Keep the countdown text short, such as "Resend in 30s". Stable Width holds the button at its longest text, so a long countdown makes it wide at rest too. Shorten the wording, not the CSS.
 - Call `NDS.Cooldown.reset()` when the request fails. The user can then retry at once, instead of waiting out a cooldown for a send that failed.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 09:30 AM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="switch-overview" class="nds-content-section nds-doc-overview">
@@ -152,14 +152,14 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Form Integration</span>
           </span>
-          <p class="nds-item-desc">The forms script starts every switch. No switch script or init call is needed.</p>
+          <p class="nds-item-desc">Every switch starts on its own. No init call is needed.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-keyboard"></i>
             <span class="nds-label">Toggle Input</span>
           </span>
-          <p class="nds-item-desc">A click on the track or the label toggles the switch. Space and Enter toggle it from the keyboard. Each toggle fires <code class="nds-inline-code lang-js">nds:switch:change</code>.</p>
+          <p class="nds-item-desc">A click on the track, or on a label inside the control, toggles the switch. Space and Enter toggle it from the keyboard. Each of these fires <code class="nds-inline-code lang-js">nds:switch:change</code>. The label in the field header toggles the input natively and fires no <code class="nds-inline-code lang-js">nds:switch:change</code>: listen for <code class="nds-inline-code lang-js">change</code> on the input for that click.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

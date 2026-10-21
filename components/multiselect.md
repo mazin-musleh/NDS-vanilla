@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="multiselect-overview" class="nds-content-section nds-doc-overview">
@@ -240,7 +240,7 @@ The script builds the option rows from the JSON in `data-multiselect-options` on
 ### Apply Button
 {: .nds-block-title}
 
-With no Apply button, each check commits at once: the chips change and `nds:multiselect:change` fires. A button with `data-multiselect-action="apply"` in the menu makes checks wait. The user checks options in the menu, and Apply commits them. Closing the menu without Apply undoes them. A form submit while the menu is open checks and sends the committed options, not the waiting ones.
+With no Apply button, each check commits at once: the chips change and `nds:multiselect:change` fires. A button with `data-multiselect-action="apply"` in the menu makes checks wait. The user checks options in the menu, and Apply commits them. Closing the menu without Apply undoes them. Removing a chip undoes them too. A form submit while the menu is open checks and sends the committed options, not the waiting ones.
 
 ### Reset Button
 {: .nds-block-title}
@@ -400,7 +400,8 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
 | `NDS.Multiselect.init()` | Starts every `.nds-multiselect` that has not started. The loader calls it on load. Call it again after you add a field to the page |
 | `NDS.Multiselect.reinit()` | The same as `init()` |
 | `NDS.Multiselect.create(el)` | Starts one field, and returns its instance. On a field that has started, it returns the same instance. It returns `null` when the field lacks a required part |
-| `NDS.Multiselect.destroy(el)` | Removes the listeners and the chips. The checked options stay. Call it before you remove the field from the page |
+| `NDS.Multiselect.destroy(el)` | Removes the listeners, the chips and the dropmenu it started, and closes an open menu. The checked options stay. A dropmenu that the page started before `create()` stays. Call it before you remove the field from the page |
+| `NDS.Multiselect.validate(el, options)` | Checks the field and returns `{ valid, message, checked, min, max }`. Pass `{ showMessage: false }` to check without a message |
 | `el.ndsMultiselect` | The instance of a field that has started |
 | `instance.getSelected()` | Returns the values of the checked options, in menu order |
 | `instance.commit()` | Commits the checked options: the chips change and the change event fires. The Apply button calls it |

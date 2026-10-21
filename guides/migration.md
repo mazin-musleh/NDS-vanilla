@@ -2,7 +2,7 @@
 layout: page
 title: Migration
 since: "1.12.x"
-last_edit: "19/10/2026 - 09:39 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 lang: en
 direction: ltr
 hero_title: Migration
@@ -135,7 +135,7 @@ sidemenu_mode: false
                     <p>Open each page and run the migration checks of the audit in the browser console. The first call loads the audit.</p>
 
 <script type="text/html" id="migration-run" data-canon data-lang="js" data-preview="none">
-const findings = await NDS.Audit.run({ group: 'migration' });
+const findings = await NDS.audit.run({ group: 'migration' });
 </script>
 
                     <p>It lists each old name on the page, with its fix. <a class="nds-color" href="{{ 'core/audit' | relative_url }}#findings">Audit: Findings</a> names the fields of each finding.</p>

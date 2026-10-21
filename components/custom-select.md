@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="custom-select-overview" class="nds-content-section nds-doc-overview">
@@ -300,6 +300,8 @@ To show a saved value, write it in the `value` of `.nds-select-value`, and leave
 | `NDS.CustomSelect.create(el)` | Builds the list of one field now, instead of at its first focus. A built field is left as it is |
 | `NDS.CustomSelect.setValue(el, 'makkah')` | Picks the option with that `data-value`, the same as a click, and returns `true`. It returns `false`, and changes nothing, when no option has the value. It works before the list is built |
 | `NDS.CustomSelect.clear(el)` | Empties the text box and the value, removes the `selected` state, and returns `true` |
+| `NDS.CustomSelect.destroy(el)` | Undoes `create()` for one field: pass the input or its field. The list is hidden again and the field builds again at its next focus. Call it before you remove the field from the page |
+| `NDS.CustomSelect.validate(el, options)` | Checks the field and returns `{ valid, message, value }`. Pass `{ showMessage: false }` to check without a message |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |

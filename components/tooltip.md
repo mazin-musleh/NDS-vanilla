@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="tooltip-overview" class="nds-content-section nds-doc-overview">
@@ -272,8 +272,9 @@ The instance is on the element as `el.ndsTooltip`. It is there once the componen
 |---|---|
 | `NDS.Tooltip.init()` | Starts every `.nds-tooltip` on the page that has not started yet. `reinit()` is the same |
 | `NDS.Tooltip.create(el)` | Starts one tooltip and returns its instance, or the instance it already has. Returns `null` when it has no balloon and no `data-tooltip-title` or `data-tooltip-message` to build one |
+| `NDS.Tooltip.destroy(el)` | The same as `el.ndsTooltip.destroy()` |
 | `el.ndsTooltip.open()`, `.close()` | Opens or closes the balloon |
-| `el.ndsTooltip.destroy()` | Closes the balloon and removes the listeners. The tooltip can start again after it |
+| `el.ndsTooltip.destroy()` | Closes the balloon, removes the listeners, and takes back what the script wrote: the `title` it moved, the trigger and balloon it built, `aria-describedby`, `tabindex` and `role`. A balloon you wrote keeps its own attributes. The tooltip can start again after it |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |

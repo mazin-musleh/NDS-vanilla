@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="taginput-overview" class="nds-content-section nds-doc-overview">
@@ -120,7 +120,7 @@ A form that edits saved data shows the tags the user saved before. For each tag,
 ### Tag Limit
 {: .nds-block-title}
 
-`data-max-tags` on `.nds-taginput` sets how many tags the field takes at most. A tag past the limit is not added, and the field shows "Maximum limit 3". The message clears at the next change.
+`data-max-tags` on `.nds-taginput` sets how many tags the field takes at most. A tag past the limit is not added, and the field shows "Maximum limit 3". The message clears at the next change. A submit also checks the limit, for tags the markup or a script set past it.
 
 ### Disabled and Read-only
 {: .nds-block-title}
@@ -255,7 +255,8 @@ A form that edits saved data shows the tags the user saved before. For each tag,
 | `NDS.Taginput.init()` | Starts every `.nds-taginput` that has not started. The loader calls it on load. Call it again after you add a field to the page |
 | `NDS.Taginput.reinit()` | The same as `init()` |
 | `NDS.Taginput.create(el)` | Starts one field, and returns its instance. On a field that has started, it returns the same instance. It returns `null` when the field has no `.nds-form-control` or no text box in it |
-| `NDS.Taginput.destroy(el)` | Removes the listeners. The chips and the hidden inputs stay, and `init()` can start the field again. Call it before you remove the field from the page |
+| `NDS.Taginput.destroy(el)` | Removes the listeners and the chips. The hidden inputs stay, and `init()` builds the chips from them to start the field again. Call it before you remove the field from the page |
+| `NDS.Taginput.validate(el, options)` | Checks the field and returns `{ valid, message, count }`: a required field needs a tag, and `data-max-tags` caps the count. Pass `{ showMessage: false }` to check without a message |
 | `el.ndsTaginput` | The instance of a field that has started |
 | `instance.getValues()` | Returns the tags, in the order they were added |
 | `instance.addTag(value)` | Adds one tag. It trims spaces and commas, and rejects a repeat or a tag past the limit with the same message as typing |

@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 lang: en
 direction: ltr
 ---
@@ -357,7 +357,7 @@ Every NDS field uses these states, and the other field pages link here for them.
 ### Submit Validation
 {: .nds-block-title}
 
-A `<form class="nds-form">` checks every visible field when the user submits it. A field that fails shows its message under it, the first in page order takes focus, and the submit stops. The API lists each check and its message. A message clears as soon as the user edits the field. A required field whose component has not started yet, such as a Rating or an Upload, fails with "Still loading. Try again in a moment": see [Fields Still Loading](../core/init#fields-still-loading). Add `data-ajax` to stop the page from reloading after a passing submit, and send the request from `nds:form:valid`.
+A `<form class="nds-form">` checks every field when the user submits it. A hidden or disabled field is skipped. A field that fails shows its message under it, the first in page order takes focus, and the submit stops. The API lists each check and its message. A message clears as soon as the user edits the field. A required field whose component has not started yet, such as a Rating or an Upload, fails with "Still loading. Try again in a moment": see [Fields Still Loading](../core/init#fields-still-loading). Add `data-ajax` to stop the page from reloading after a passing submit, and send the request from `nds:form:valid`.
 
 <script type="text/html" id="forms-submit" data-canon data-form data-preview="none">
 <form class="nds-form" data-ajax>
@@ -454,7 +454,7 @@ async function checkUsername(name) {
 ### Number Stepper
 {: .nds-block-title #number-input}
 
-The minus and plus buttons change the value by `step`, 1 by default. Hold a button to repeat the step, and hold it about two seconds to step ten at a time. A button at `min` or `max` shows a message instead of a change. A value typed outside the range is set to the nearest limit when the field loses focus. Without `min` and `max`, the value has no limit.
+The minus and plus buttons change the value by `step`, 1 by default. Hold a button to repeat the step, and hold it about two seconds to step ten at a time. A button at `min` or `max` shows a message instead of a change. A value typed outside the range is set to the nearest limit when the field loses focus. Without `min` and `max`, the value has no limit. A blank `min` or `max` counts as missing.
 
 ### Phone Number
 {: .nds-block-title}

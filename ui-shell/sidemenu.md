@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="sidemenu-overview" class="nds-content-section nds-doc-overview">
@@ -535,7 +535,7 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
 | Method | Effect |
 |---|---|
 | `NDS.Sidemenu.init()` | Starts the side menu. It runs on page load. A second call stops the running side menu and starts it again. It does not start the drawer: for new markup, call `NDS.init.refresh()` instead, which starts both. See [Init](../core/init) |
-| `NDS.Sidemenu.destroy()` | Closes the menu and removes every listener. The markup stays, and `init()` starts it again |
+| `NDS.Sidemenu.destroy()` | Closes the menu, removes every listener, and hides the toggle button again. The markup stays, and `init()` starts it again |
 {: .nds-table .nds-responsive}
 
 The side menu fires no events. The drawer fires `nds:drawer:shown` after a group opens, and `nds:drawer:hidden` after it closes: see [Drawer](../components/drawer).

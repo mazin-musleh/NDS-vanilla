@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="time-picker-overview" class="nds-content-section nds-doc-overview">
@@ -318,6 +318,7 @@ Any other character stays as written. `ss` adds a Second list, and `A` or `a` ad
 | `NDS.TimePicker.setValue(el, '14:30')` | Writes a 24-hour time, and returns `true`. It returns `false`, and changes nothing, when it cannot read the time or the time is outside the bounds |
 | `NDS.TimePicker.clear(el)` | Empties the field and every list, and returns `true` |
 | `NDS.TimePicker.destroy(el)` | Runs `instance.destroy()` on the picker of `el`: the input, or in Boxes the group or a box. `NDS.init.destroy()` calls it |
+| `NDS.TimePicker.validate(el, options)` | Checks the boxes of a Boxes field and returns `{ valid, message }`. Pass `{ showMessage: false }` to check without a message |
 | `instance.destroy()` | Removes the panel and its listeners. `create()` can start the field again. Call it before you remove the field from the page. The instance is on the input as `input.ndsTimePicker`, and in Boxes on the group as `group.ndsTimePicker` |
 {: .nds-table .nds-responsive}
 

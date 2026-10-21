@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="toc-overview" class="nds-content-section nds-doc-overview">
@@ -151,7 +151,7 @@ You write the links. Nest a `<ul>` inside an `<li>` for each level.
 ### Auto-built List
 {: .nds-block-title}
 
-`data-toc-source` on `.nds-toc` names the container to read, as a CSS selector. At init, the script replaces the list with a link to each heading in it, nested by level. `data-toc-levels` picks the levels, such as `h2` for a flat list. The script builds the list once. After the headings change, call `NDS.Toc.destroy(toc)`, then `NDS.Toc.create(toc)`. A heading with no `id` gets one made from its text, Arabic included, so its link works. Until the list fills in, it keeps the height of `--toc-skeleton-rows` links, so the content under it does not move.
+`data-toc-source` on `.nds-toc` names the container to read, as a CSS selector. At init, the script replaces the list with a link to each heading in it, nested by level. `data-toc-levels` picks the levels, such as `h2` for a flat list. The script builds the list once. After the headings change, call `NDS.Toc.destroy(toc)`, then `NDS.Toc.create(toc)`. A heading with no `id` gets one made from its text, Arabic included, so its link works. Until the list fills in, it keeps the height of `--toc-skeleton-rows` links, so the content under it does not move. A TOC that finds no headings at load stays empty, and `NDS.init.refresh()` builds it once the headings are in the page.
 
 ### Manual List
 {: .nds-block-title}
@@ -284,7 +284,7 @@ Without `data-toc-source`, the script reads the links you write. Pick it for som
 |---|---|
 | `NDS.Toc.init()` | Starts every TOC on the page that has not started yet. `reinit()` is the same |
 | `NDS.Toc.create(toc)` | Starts one TOC and returns its instance. Returns the running one when `toc` already has one, and `null` when no link points at an element on the page |
-| `NDS.Toc.destroy(toc)` | Removes the listeners. The active link keeps its state. `NDS.init.destroy()` calls it for every TOC in the container it releases |
+| `NDS.Toc.destroy(toc)` | Removes the listeners and the active mark of the link. `NDS.init.destroy()` calls it for every TOC in the container it releases |
 | `instance.refresh()` | Picks the active link again from the scroll position. Call it after the layout above the headings changes |
 {: .nds-table .nds-responsive}
 

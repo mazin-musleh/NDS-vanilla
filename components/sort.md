@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="sort-overview" class="nds-content-section nds-doc-overview">
@@ -410,6 +410,7 @@ Markup wiring is a `create()` call on the list with the defaults below: `items` 
 | `NDS.Sort.init()` | Wires every list that a `data-sort-target` names, and skips a list that already has an instance. The loader calls it. |
 | `NDS.Sort.refresh(root)` | Wires new lists, then sorts again each list that markup wired inside `root`, or that holds `root`. An instance from your own `create()` call needs its `refresh()`. `NDS.init.refresh()` calls it. |
 | `NDS.Sort.create(root, options)` | Returns the instance of the root. A root that already has one returns it and ignores `options`. |
+| `NDS.Sort.destroy(root)` | The same as `sort.destroy()`. `root` is an element or a selector. |
 | `NDS.Sort.getInstance(root)` | Returns the instance of the root, or `null`. `root` is an element or a selector. |
 | `NDS.Sort.detectType(values, dateFormat)` | Returns `'number'`, `'date'` or `'string'`. `dateFormat` is the format a date in the values uses: the site's when you leave it out. |
 | `NDS.Sort.parseValue(raw, type, dateFormat)` | Returns the value as the type sorts it. |
@@ -418,7 +419,7 @@ Markup wiring is a `create()` call on the list with the defaults below: `items` 
 | `sort.reset()` | Restores the original order. |
 | `sort.refresh()` | Sorts the items again by the active key. Does nothing when no sort is active. |
 | `sort.getState()` | Returns `{ key, order }`. |
-| `sort.destroy()` | Removes the listeners. |
+| `sort.destroy()` | Removes the listeners. The sort states on the triggers and the order of the items stay. |
 {: .nds-table .nds-responsive}
 
 The `create()` options:

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -545,7 +545,7 @@ A checkbox in a header cell selects every row on the current page, and the scrip
 ### Column Menu
 {: .nds-block-title}
 
-A [Dropmenu](../components/dropmenu) with `data-columns-target` names the `id` of a table. The script fills its `[data-columns-list]` with one checkbox per column the first time it opens. A column with `data-columns-lock` and the selection column stay off the list. A badge on the trigger counts the hidden columns. While a column is hidden, a Reset button in the menu shows them all. When the table has an `id`, the browser keeps the choice for the next visit. The browser drops it when the column count changes. [Export](../components/export) skips a hidden column.
+A [Dropmenu](../components/dropmenu) with `data-columns-target` names the `id` of a table. The script fills its `[data-columns-list]` with one checkbox per column the first time it opens. A column with `data-columns-lock` and the selection column stay off the list. A badge on the trigger counts the hidden columns. A row added later takes the hidden columns too. While a column is hidden, a Reset button in the menu shows them all. When the table has an `id`, the browser keeps the choice for the next visit. The browser drops it when the column count changes. [Export](../components/export) skips a hidden column.
 
 ### Sub-Rows
 {: .nds-block-title}
@@ -765,7 +765,8 @@ Source: the `table` group in `_sass/tokens/_components.scss`.
 | `NDS.Table.create(table)` | Starts sorting and selection on one table, and returns its instance, or the instance it already has. Returns `null` when the table has no `<thead>` or `<tbody>` |
 | `NDS.Table.createResponsive(table)` | Adds the scroll box to one table and returns its instance |
 | `NDS.Table.createColumnToggle(menu)` | Starts one column menu, and returns its instance, or the instance it already has. Returns `null` when the table or `[data-columns-list]` is missing |
-| `NDS.Table.setColumnHidden(table, index, hidden)` | Hides or shows the column at this index: it sets `hidden` on the header cell and on its cell in every row, and fires `nds:table:columns`. The menu does not save this change |
+| `NDS.Table.destroy(el)` | Undoes whichever of the three that lives on `el`: sorting, the scroll box or the column menu |
+| `NDS.Table.setColumnHidden(table, index, hidden)` | Hides or shows the column at this index: it sets `hidden` on the header cell and on its cell in every row, and fires `nds:table:columns`. The checkbox and badge of the column menu follow it, but the menu does not save this change |
 | `NDS.Table.getRow(tr).sub` | The handle of a row's sub-row. `tr` is the row or its sub-row |
 | `.sub.setContent(html)` | Puts your markup or node in the sub-row. It builds the sub-row when there is none, and stops the spinner. It returns the handle |
 | `.sub.open()`, `.close()`, `.toggle()` | Opens, closes or flips the sub-row. `open()` with no sub-row fires `nds:table:sub-request`. Each returns the handle |
@@ -777,9 +778,9 @@ Source: the `table` group in `_sass/tokens/_components.scss`.
 | `create()` | `getSortColumn()` | The cell index of the sorted column, or `-1` |
 | `create()` | `getSortOrder()` | `"asc"`, `"desc"` or `null` |
 | `create()` | `resetSort()` | Clears the sort and puts the rows back in their first order |
-| `create()` | `destroy()` | Stops sorting. The table keeps its scroll box |
+| `create()` | `destroy()` | Stops sorting, and removes the `data-selection-target` link and the `<tbody>` `id` it wrote. The table keeps its scroll box |
 | `createResponsive()` | `refresh()` | Measures this table again |
-| `createResponsive()` | `destroy()` | Stops the scroll checks and marks the table as not started. The box stays |
+| `createResponsive()` | `destroy()` | Stops the scroll checks and marks the table as not started. A box the script built goes and the table returns to its place. A box you wrote stays |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |

@@ -6,7 +6,7 @@ hero_description: A panel is a surface that slides in from an edge of the screen
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 02:34 PM"
+last_edit: "21/10/2026 - 11:28 PM"
 lang: en
 direction: ltr
 ---
@@ -188,6 +188,7 @@ Each kind of panel has its own rule when another panel opens:
 
 - A plain panel replaces an open plain panel. It waits until the old one slides out, so the two never cross.
 - A modal panel closes nothing. Its dimmed layer covers the panels under it.
+- A panel the user opens over a modal, or over a modal panel, opens as a modal panel too. It covers the one under it, and plain and static panels do not close it.
 - A static panel that the page opens with `{ focus: false }` waits until no panel is open. A static panel that a toggle or a script opens shows at once, like a plain panel.
 - When another panel replaces a static panel, the static panel hides. It comes back when the screen has no open panel again.
 

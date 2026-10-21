@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 08:21 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="progress-overview" class="nds-content-section nds-doc-overview">
@@ -290,6 +290,7 @@ Set these in the `style` of the circle or the bar. The size classes set `--progr
 | `NDS.Progress.setValue(el, value)` | Sets `data-value` |
 | `NDS.Progress.setOutOf(el, num, max)` | Sets `data-num` and `data-max` |
 | `NDS.Progress.create(el)` | Draws one indicator from its attributes now, with no wait for scroll |
+| `NDS.Progress.destroy(el)` | Stops a reveal that is still waiting for the indicator to scroll into view |
 {: .nds-table .nds-responsive}
 
 The component fires no events. The methods only write the attributes, so writing them yourself works the same. The full API is in the banner of `_js/nds-progress.js`.

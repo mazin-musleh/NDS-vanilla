@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:27 PM"
+last_edit: "21/10/2026 - 10:38 PM"
 ---
 
 <section id="session-timeout-overview" class="nds-content-section nds-doc-overview">
@@ -225,7 +225,7 @@ The modals read their English from the script and their Arabic from the `session
 | `NDS.SessionTimeout.extend()` | Extends the session now: it fires `nds:session:extend` and sends the keep-alive request |
 | `NDS.SessionTimeout.reset()` | Starts the deadline again from now, with no event and no request. Call it after a request of your own renews the session. It closes an open warning, and it restarts an ended session, such as after the user signs in again on the same page |
 | `NDS.SessionTimeout.end()` | Ends the session now. Call it when your own request finds the session gone |
-| `NDS.SessionTimeout.destroy()` | Stops the timers and listeners, and closes an open session modal |
+| `NDS.SessionTimeout.destroy()` | Stops the timers and listeners, and removes both session modals. The next `init()` builds them again |
 {: .nds-table .nds-responsive}
 
 | Option | Default | Effect |
