@@ -81,16 +81,16 @@
                             <p class="nds-card-description">{{ comp.description }}</p>
                         </div>
                         <div class="nds-card-tags">
-                            <span class="nds-tag nds-blue nds-sm">
+                            <span class="nds-tag nds-blue nds-xs">
                                 <span class="nds-label" data-filter="shelf">{{ _shelf }}</span>
                             </span>
                             {%- if comp.category != _shelf %}
-                            <span class="nds-tag nds-blue nds-sm">
+                            <span class="nds-tag nds-xs">
                                 <span class="nds-label" data-filter="category">{{ comp.category }}</span>
                             </span>
                             {%- endif %}
                             {% for tag in comp.tags %}
-                            <span class="nds-tag {{ tag.style | default: 'nds-gray' }} nds-sm">
+                            <span class="nds-tag {{ tag.style | default: 'nds-gray' }} nds-xs">
                                 <span class="nds-label" data-filter="tech">{{ tag.name | default: tag }}</span>
                             </span>
                             {% endfor %}
@@ -102,11 +102,11 @@
                                rather than the 1.4.x placeholder. The label is also the filter facet value. {%- endcomment %}
                             {%- assign _dev_target = site.version | remove: "-dev" %}
                             {%- if comp_page.since == _dev_target and site.version != site.latest_release %}
-                            <span class="nds-tag nds-blue nds-sm">
+                            <span class="nds-tag nds-blue nds-xs">
                                 <span class="nds-label" data-filter="since">Next release</span>
                             </span>
                             {%- else %}
-                            <span class="nds-tag nds-green nds-sm">
+                            <span class="nds-tag nds-green nds-xs">
                                 <span class="nds-label" data-filter="since">v{{ comp_page.since }}</span>
                             </span>
                             {%- endif %}
