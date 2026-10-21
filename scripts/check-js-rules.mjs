@@ -1328,6 +1328,9 @@ const NAME_CASES = [
  *   NDS.T.updateDate()   render
  */
 (function(){ function updateDate() {} const site = {}; NDS.T = (function () { return { updateDate, site }; })(); })();`, ['P10.4', 'P10.4']], // the function and its public key; `site` is a value
+    [`(function(){ function onReset() {} NDS.T = { onReset }; })();`, []], // exported under its own name: a public onX subscribes
+    [`(function(){ function onClick() {} NDS.T = { handleClick: onClick }; })();`, ['P10.4']], // the local name is no public one
+    [`(function(){ function onClick() {} })();`, ['P10.4']], // a listener: handleX
 ];
 
 const args = process.argv.slice(2);

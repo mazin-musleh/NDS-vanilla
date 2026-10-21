@@ -201,7 +201,7 @@ function scanFile(file, source) {
                 for (const d of node.declarations) {
                     for (const id of bound(d.id)) {
                         if (/^_[A-Za-z]/.test(id.name)) push('P12.13', id, `\`${id.name}\` is a binding: no \`_\` on a name nothing outside can reach`);
-                        if (isFn(d.init)) fnName(d, id);
+                        if (isFn(d.init)) fnName(d, id, { pub: ctx.module && exported.has(id.name) });
                         else if (ctx.module && d.id.type === 'Identifier') {
                             if (node.kind === 'const' && constCase(id.name) && d.init && !yieldsPrimitive(d.init) && !/^Object\.freeze/.test(source.slice(d.init.start, d.init.start + 13)) && !(d.init.type === 'NewExpression' && /^RegExp$/.test(d.init.callee.name)) && d.init.type !== 'Literal')
                                 push('P12.8', id, `\`${id.name}\` is upper case but holds ${kindOf(d.init)}`, 'upper case only for a primitive or frozen value never reassigned');
@@ -219,7 +219,7 @@ function scanFile(file, source) {
                 break;
             case 'FunctionDeclaration':
                 if (/^_[A-Za-z]/.test(node.id.name)) push('P12.13', node.id, `function \`${node.id.name}\`: no \`_\` on a name nothing outside can reach`);
-                fnName(node, node.id);
+                fnName(node, node.id, { pub: ctx.module && exported.has(node.id.name) });
                 break;
             case 'ClassDeclaration':
             case 'ClassExpression':
@@ -367,6 +367,10 @@ function scanFile(file, source) {
         // const api = { … }; return api;
         if (st.argument?.type === 'Identifier') for (const d of inits) if (d.id.name === st.argument.name && d.start > f.start && d.end < f.end) namespaces.add(d.init);
     }
+    // A function a namespace exports under its own name is public where it is declared too: `{ onReset }`.
+    const exported = new Set();
+    for (const ns of namespaces) for (const q of ns.properties)
+        if (q.type === 'Property' && q.key.type === 'Identifier' && q.value?.type === 'Identifier' && q.value.name === q.key.name && fnBindings.has(q.key.name)) exported.add(q.key.name);
     for (const s of ast.body) walk(s, { module: true, cls: null, fnDepth: 0 }, ast);
     return { name, out, defines, expandos, uses };
 }
