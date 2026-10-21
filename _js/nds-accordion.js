@@ -43,39 +43,39 @@
 
     class NdsAccordion {
         constructor(accordionContainer) {
-            this.accordionContainer = accordionContainer;
-            this.buttons = findOwnParts(accordionContainer, '.nds-accordion-btn');
-            this.collapses = findOwnParts(accordionContainer, '.nds-accordion-collapse');
-            this.isAnimating = false; // Simple flag to prevent clicks during animation
+            this._accordionContainer = accordionContainer;
+            this._buttons = findOwnParts(accordionContainer, '.nds-accordion-btn');
+            this._collapses = findOwnParts(accordionContainer, '.nds-accordion-collapse');
+            this._isAnimating = false; // Simple flag to prevent clicks during animation
             
-            if (this.buttons.length === 0) {
+            if (this._buttons.length === 0) {
                 console.warn('NDS Accordion: No accordion buttons found');
                 return;
             }
 
             this.abortController = new AbortController();
-            this.valid = true;
+            this._valid = true;
             this.init();
         }
 
         init() {
-            this.setupEventListeners();
-            this.setupInitialState();
-            this.setupKeyboardNavigation();
+            this._addEventListeners();
+            this._setupInitialState();
+            this._setupKeyboardNavigation();
         }
 
-        get isAlwaysOpen() {
-            return NDS.state.has(this.accordionContainer, 'always-open');
+        get _isAlwaysOpen() {
+            return NDS.state.has(this._accordionContainer, 'always-open');
         }
 
-        setupInitialState() {
+        _setupInitialState() {
             // The init-time 0fr → 1fr transition is suppressed by a CSS
             // gate keyed on `:not([data-nds-accordion-initialized])` on the
             // container. activate() defers the marker stamp by one
             // rAF so the browser commits the state change in a paint where
             // the rule still applies; the marker then lands in the next
             // paint and future user clicks animate normally.
-            this.buttons.forEach((button, index) => this._syncItem(button, this.collapses[index]));
+            this._buttons.forEach((button, index) => this._syncItem(button, this._collapses[index]));
         }
 
         // Put one item's collapse + button state in sync with its aria-expanded.
@@ -94,8 +94,8 @@
             }
         }
 
-        setupEventListeners() {
-            this.buttons.forEach(button => this._bindButton(button));
+        _addEventListeners() {
+            this._buttons.forEach(button => this._addButtonListeners(button));
         }
 
         // The index is resolved at click time rather than captured at bind time:
@@ -105,12 +105,12 @@
         // The guard records the OWNING instance, not a boolean: destroy() aborts
         // this instance's listeners, so a later controller on the same DOM must
         // be free to re-bind — a boolean would leave it click-dead.
-        _bindButton(button) {
+        _addButtonListeners(button) {
             if (button._ndsAcc === this) return;
             button._ndsAcc = this;
             button.addEventListener('click', (e) => {
                 e.preventDefault();
-                this.toggle(this.buttons.indexOf(button));
+                this._toggle(this._buttons.indexOf(button));
             }, { signal: this.abortController.signal });
         }
 
@@ -119,24 +119,24 @@
         // unbound buttons are wired and only they are state-synced: re-syncing
         // the whole set would collapse panels the user has already opened.
         refresh() {
-            this.buttons = findOwnParts(this.accordionContainer, '.nds-accordion-btn');
-            this.collapses = findOwnParts(this.accordionContainer, '.nds-accordion-collapse');
-            this.buttons.forEach((button, index) => {
+            this._buttons = findOwnParts(this._accordionContainer, '.nds-accordion-btn');
+            this._collapses = findOwnParts(this._accordionContainer, '.nds-accordion-collapse');
+            this._buttons.forEach((button, index) => {
                 if (button._ndsAcc === this) return;
-                this._syncItem(button, this.collapses[index]);
-                this._bindButton(button);
+                this._syncItem(button, this._collapses[index]);
+                this._addButtonListeners(button);
             });
         }
 
-        setupKeyboardNavigation() {
-            this.accordionContainer.addEventListener('keydown', (e) => {
-                this.handleKeyDown(e);
+        _setupKeyboardNavigation() {
+            this._accordionContainer.addEventListener('keydown', (e) => {
+                this._handleKeyDown(e);
             }, { signal: this.abortController.signal });
         }
 
-        handleKeyDown(e) {
+        _handleKeyDown(e) {
             const currentButton = e.target;
-            const currentIndex = this.buttons.indexOf(currentButton);
+            const currentIndex = this._buttons.indexOf(currentButton);
             // A nested accordion's keys bubble here; they are not this accordion's.
             if (currentIndex === -1) return;
             let targetIndex = currentIndex;
@@ -144,12 +144,12 @@
             switch (e.key) {
                 case 'ArrowDown':
                     e.preventDefault();
-                    targetIndex = currentIndex < this.buttons.length - 1 ? currentIndex + 1 : 0;
+                    targetIndex = currentIndex < this._buttons.length - 1 ? currentIndex + 1 : 0;
                     break;
 
                 case 'ArrowUp':
                     e.preventDefault();
-                    targetIndex = currentIndex > 0 ? currentIndex - 1 : this.buttons.length - 1;
+                    targetIndex = currentIndex > 0 ? currentIndex - 1 : this._buttons.length - 1;
                     break;
 
                 case 'Home':
@@ -159,64 +159,64 @@
 
                 case 'End':
                     e.preventDefault();
-                    targetIndex = this.buttons.length - 1;
+                    targetIndex = this._buttons.length - 1;
                     break;
 
                 case 'Enter':
                 case ' ':
                     e.preventDefault();
-                    this.toggle(currentIndex);
+                    this._toggle(currentIndex);
                     return;
 
                 default:
                     return;
             }
 
-            this.focusButton(targetIndex);
+            this._focusButton(targetIndex);
         }
 
-        focusButton(index) {
-            if (index >= 0 && index < this.buttons.length) {
-                this.buttons[index].focus();
+        _focusButton(index) {
+            if (index >= 0 && index < this._buttons.length) {
+                this._buttons[index].focus();
             }
         }
 
-        toggle(index) {
-            const button = this.buttons[index];
-            const collapse = this.collapses[index];
+        _toggle(index) {
+            const button = this._buttons[index];
+            const collapse = this._collapses[index];
             
             if (!button || !collapse) return;
             
             // Prevent toggling while animation is in progress
-            if (this.isAnimating) return;
+            if (this._isAnimating) return;
 
             const isCurrentlyExpanded = button.ariaExpanded === 'true';
             
             if (isCurrentlyExpanded) {
-                this.hide(index);
+                this._hide(index);
             } else {
-                this.show(index);
+                this._show(index);
             }
         }
 
-        show(index) {
-            const button = this.buttons[index];
-            const collapse = this.collapses[index];
+        _show(index) {
+            const button = this._buttons[index];
+            const collapse = this._collapses[index];
 
             if (!button || !collapse) return;
 
             // If not always-open mode, hide other panels first
-            if (!this.isAlwaysOpen) {
-                this.hideAll(index);
+            if (!this._isAlwaysOpen) {
+                this._hideAll(index);
             }
 
             // Set animation flag — skip lock when reduced motion is active
             if (NDS.prefersReducedMotion) {
-                this.isAnimating = false;
+                this._isAnimating = false;
             } else {
-                this.isAnimating = true;
+                this._isAnimating = true;
                 setTimeout(() => {
-                    this.isAnimating = false;
+                    this._isAnimating = false;
                 }, NDS.transitionSpeed() + 50);
             }
 
@@ -231,23 +231,23 @@
             this._animate(collapse, () => {
                 NDS.state.set(collapse, 'open');
                 // Dispatch custom event
-                this.dispatchToggleEvent(index, button, collapse, true);
+                this._dispatchToggleEvent(index, button, collapse, true);
             });
         }
 
-        hide(index) {
-            const button = this.buttons[index];
-            const collapse = this.collapses[index];
+        _hide(index) {
+            const button = this._buttons[index];
+            const collapse = this._collapses[index];
 
             if (!button || !collapse) return;
 
             // Set animation flag — skip lock when reduced motion is active
             if (NDS.prefersReducedMotion) {
-                this.isAnimating = false;
+                this._isAnimating = false;
             } else {
-                this.isAnimating = true;
+                this._isAnimating = true;
                 setTimeout(() => {
-                    this.isAnimating = false;
+                    this._isAnimating = false;
                 }, NDS.transitionSpeed() + 50);
             }
 
@@ -262,14 +262,14 @@
                 NDS.state.clear(collapse);
 
                 // Dispatch custom event
-                this.dispatchToggleEvent(index, button, collapse, false);
+                this._dispatchToggleEvent(index, button, collapse, false);
             });
         }
 
-        hideAll(excludeIndex = -1) {
-            this.buttons.forEach((button, index) => {
+        _hideAll(excludeIndex = -1) {
+            this._buttons.forEach((button, index) => {
                 if (index !== excludeIndex && button.ariaExpanded === 'true') {
-                    this.hide(index);
+                    this._hide(index);
                 }
             });
         }
@@ -279,50 +279,50 @@
             NDS.onTransitionEnd(collapse, callback);
         }
 
-        dispatchToggleEvent(index, button, collapse, isShown) {
+        _dispatchToggleEvent(index, button, collapse, isShown) {
             const eventType = isShown ? 'nds:accordion:opened' : 'nds:accordion:closed';
             const event = new CustomEvent(eventType, {
                 detail: {
                     index: index,
                     button: button,
                     collapse: collapse,
-                    accordion: this.accordionContainer
+                    accordion: this._accordionContainer
                 },
                 bubbles: true
             });
 
-            this.accordionContainer.dispatchEvent(event);
+            this._accordionContainer.dispatchEvent(event);
         }
 
         // Public API methods
         openItem(index) {
-            if (index >= 0 && index < this.buttons.length) {
-                this.show(index);
+            if (index >= 0 && index < this._buttons.length) {
+                this._show(index);
             }
         }
 
         closeItem(index) {
-            if (index >= 0 && index < this.buttons.length) {
-                this.hide(index);
+            if (index >= 0 && index < this._buttons.length) {
+                this._hide(index);
             }
         }
 
         toggleItem(index) {
-            if (index >= 0 && index < this.buttons.length) {
-                this.toggle(index);
+            if (index >= 0 && index < this._buttons.length) {
+                this._toggle(index);
             }
         }
 
         closeAll() {
-            this.hideAll();
+            this._hideAll();
         }
 
         getOpenItems() {
-            return this.buttons
+            return this._buttons
                 .map((button, index) => ({
                     index,
                     button,
-                    collapse: this.collapses[index],
+                    collapse: this._collapses[index],
                     isOpen: button.ariaExpanded === 'true'
                 }))
                 .filter(item => item.isOpen);
@@ -332,17 +332,17 @@
             if (this.abortController) this.abortController.abort();
             // Release the ownership marks too, so the buttons don't pin this
             // instance after its listeners are gone.
-            this.buttons.forEach(button => {
+            this._buttons.forEach(button => {
                 if (button._ndsAcc === this) delete button._ndsAcc;
             });
             // Release the container backref + init stamp so create()/init() can
             // rebuild — without this, create() returns the dead controller and
             // init() calls refresh() on it. Identity-guard the delete: a later
             // controller may already own the root.
-            if (this.accordionContainer.ndsAccordion === this) {
-                delete this.accordionContainer.ndsAccordion;
+            if (this._accordionContainer.ndsAccordion === this) {
+                delete this._accordionContainer.ndsAccordion;
             }
-            this.accordionContainer.removeAttribute('data-nds-accordion-initialized');
+            this._accordionContainer.removeAttribute('data-nds-accordion-initialized');
         }
     }
 
@@ -381,12 +381,12 @@
     // constructions — buttons that render late stay eligible for the next
     // reinit(). The backref lands synchronously so a reinit in the same tick sees
     // it; the marker is deferred by one rAF so the browser commits
-    // setupInitialState's state change in a paint where the CSS gate
+    // _setupInitialState's state change in a paint where the CSS gate
     // (.nds-accordion:not([data-nds-accordion-initialized])) still applies,
     // suppressing the init-time animation. The timer races the rAF: a hidden
     // tab runs no rAF, and the stamp also releases the skeleton.
     function activate(container, instance) {
-        if (!instance.valid) return;
+        if (!instance._valid) return;
         container.ndsAccordion = instance;
         let stamped = false;
         const stamp = () => {
@@ -413,7 +413,7 @@
             if (container.ndsAccordion) return container.ndsAccordion;
             const instance = new NdsAccordion(container);
             activate(container, instance);
-            return instance.valid ? instance : null;
+            return instance._valid ? instance : null;
         },
         destroy: (container) => container?.ndsAccordion?.destroy(),
     };

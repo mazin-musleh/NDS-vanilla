@@ -7,6 +7,8 @@
  *   instance.next() / .prev()       move by one page
  *   instance.goTo(index, animate = true)  move to a slide index, clamped to the
  *                                   last page (a loop has none); false = instant
+ *   instance.updateState()          sync buttons, bullets and classes to the current slide
+ *   instance.wrapper / .currentIndex / .lastIndex / .slidesPerView   read-only state
  *   instance.destroy()
  * Events:
  *   nds:swiper:change (bubbles)     detail.index = the real slide now at rest, after every move
@@ -117,7 +119,7 @@
         if (active && active !== document.body && active !== document.documentElement) return null;
         let best = null;
         for (const swiper of activeSwipers) {
-            if (swiper.container.matches(':hover') && (!best || best.container.contains(swiper.container))) best = swiper;
+            if (swiper._container.matches(':hover') && (!best || best._container.contains(swiper._container))) best = swiper;
         }
         return best;
     }
@@ -146,31 +148,31 @@
 
     class NdsSwiper {
         constructor(container) {
-            this.container = container;
+            this._container = container;
             this.wrapper = container.querySelector('.nds-swiper-wrapper');
             // A slide holds arbitrary consumer content, so a swiper may nest inside
             // one — and its parts sit EARLIER in document order than ours, because
             // nav and pagination follow the wrapper. An unguarded querySelector then
             // hands us the nested swiper's controls. Slides are direct wrapper
-            // children by contract (flex row; setupLoop inserts clones as siblings),
+            // children by contract (flex row; _setupLoop inserts clones as siblings),
             // so :scope > is exact there; the rest are ownership-checked.
             const findOwnPart = (selector) => NDS.ownParts(container, selector, '.nds-swiper')[0] || null;
-            this.slides = this.wrapper
+            this._slides = this.wrapper
                 ? Array.from(this.wrapper.querySelectorAll(':scope > .nds-swiper-slide'))
                 : [];
-            this.pagination = findOwnPart('.nds-swiper-pagination');
-            this.navigation = findOwnPart('.nds-swiper-navigation');
-            this.prevBtn = findOwnPart('.nds-prev');
-            this.nextBtn = findOwnPart('.nds-next');
+            this._pagination = findOwnPart('.nds-swiper-pagination');
+            this._navigation = findOwnPart('.nds-swiper-navigation');
+            this._prevButton = findOwnPart('.nds-prev');
+            this._nextButton = findOwnPart('.nds-next');
 
-            this.isHero = container.classList.contains('nds-hero');
+            this._isHero = container.classList.contains('nds-hero');
             this._spotlight = container.classList.contains('nds-spotlight');
             this._cachedGap = null;
             this.currentIndex = 0;
             // [hidden] snapshot — destroy() restores the as-served nav state.
-            this._navHadHidden = !!(this.navigation && this.navigation.hasAttribute('hidden'));
+            this._navHadHidden = !!(this._navigation && this._navigation.hasAttribute('hidden'));
 
-            if (!this.wrapper || this.slides.length === 0) {
+            if (!this.wrapper || this._slides.length === 0) {
                 console.warn('NDS Swiper: No wrapper or slides found');
                 return;
             }
@@ -191,11 +193,11 @@
             // A spotlight always loops; its peeks show one more slide at each end, so
             // it needs one more.
             this._loop = (container.hasAttribute('data-swiper-loop') || this._spotlight) &&
-                this.slides.length > Math.max(this._slidesMax, this._slidesMid, this._slidesMin) + (this._spotlight ? 1 : 0);
-            this._real = this.slides.length; // real slides; clones extend this.slides at both ends
+                this._slides.length > Math.max(this._slidesMax, this._slidesMid, this._slidesMin) + (this._spotlight ? 1 : 0);
+            this._real = this._slides.length; // real slides; clones extend this._slides at both ends
             this._head = 0;                  // clones before the first real slide
 
-            this.valid = true;
+            this._valid = true;
             this.init();
         }
 
@@ -203,21 +205,21 @@
         // BREAKPOINT CALCULATION
         // ==============================================
 
-        calculateSlidesPerView() {
+        _calculateSlidesPerView() {
             if (mqDesktop.matches) return this._slidesMax;
             if (mqTablet.matches) return this._slidesMid;
             return this._slidesMin;
         }
 
-        getGap() {
+        _getGap() {
             if (this._cachedGap === null) {
-                this._cachedGap = parseInt(getComputedStyle(this.container).getPropertyValue('--swiper-gap')) || 0;
+                this._cachedGap = parseInt(getComputedStyle(this._container).getPropertyValue('--swiper-gap')) || 0;
             }
             return this._cachedGap;
         }
 
-        get maxIndex() {
-            return Math.max(0, this.slides.length - this.slidesPerView);
+        get _maxIndex() {
+            return Math.max(0, this._slides.length - this.slidesPerView);
         }
 
         // Real-slide index of a full-list position — a rest on a clone maps to its
@@ -225,15 +227,15 @@
         // which bullet reads active, where destroy() lands the
         // row. _goToFull needs it for a target index, not the current one, hence the
         // parameter.
-        _realOf(index) {
+        _toRealIndex(index) {
             const realCount = this._real;
             return (((index - this._head) % realCount) + realCount) % realCount;
         }
 
-        get _realIndex() { return this._realOf(this.currentIndex); }
+        get _realIndex() { return this._toRealIndex(this.currentIndex); }
 
         // Pages at the current slidesPerView. Decides nav visibility in
-        // updateSlidesPerView and pagination + button visibility in setupPagination —
+        // _syncSlidesPerView and pagination + button visibility in _setupPagination —
         // two halves of the same chrome, so they read one value.
         get _pageCount() {
             return Math.ceil(this._real / this.slidesPerView);
@@ -241,69 +243,69 @@
 
         // Where page p starts, in real slides. The last page end-aligns so it stays
         // inside the deck; a loop has no end, so its pages run on into the clones.
-        _pageStart(page) {
+        _getPageStart(page) {
             const start = page * this.slidesPerView;
             return this._loop ? start : Math.min(start, this._real - this.slidesPerView);
         }
 
         init() {
             this.abortController = new AbortController();
-            // An unencoded space in a srcset URL breaks the candidate. Before setupLoop,
+            // An unencoded space in a srcset URL breaks the candidate. Before _setupLoop,
             // so the clones copy the repaired value.
-            this.container.querySelectorAll('img[srcset], source[srcset]').forEach(el => {
+            this._container.querySelectorAll('img[srcset], source[srcset]').forEach(el => {
                 const srcset = el.getAttribute('srcset');
                 const fixed = fixSrcsetSpaces(srcset);
                 if (fixed !== srcset) el.setAttribute('srcset', fixed);
             });
-            this.container.style.setProperty('--total', this._real);
-            this.updateSlidesPerView();
+            this._container.style.setProperty('--total', this._real);
+            this._syncSlidesPerView();
 
             // Single-slide swipers can never navigate; bail before nav/observer/keyboard
             // setup. They still join the shared breakpoint subscription — --slides
             // must keep tracking --max/mid/min-slides or the lone card holds its
             // init-time width across resizes.
-            if (this.slides.length === 1) {
+            if (this._slides.length === 1) {
                 resizeSwipers.add(this);
                 ensureSharedResize();
-                this.container.setAttribute('data-nds-swiper-initialized', 'true');
+                this._container.setAttribute('data-nds-swiper-initialized', 'true');
                 return;
             }
 
-            // Clones first: the lazy-load and hero-reveal gates below walk this.slides.
-            if (this._loop) this.setupLoop();
+            // Clones first: the lazy-load and hero-reveal gates below walk this._slides.
+            if (this._loop) this._setupLoop();
 
-            this.setupNavigation();
-            this.setupScrollSync();
-            this.setupKeyboard();
-            this.setupResize();
+            this._setupNavigation();
+            this._setupScrollSync();
+            this._setupKeyboard();
+            this._setupResize();
 
             // Gate observers — only register when they have work to do.
-            const lazySlides = this.slides.filter(slide =>
+            const lazySlides = this._slides.filter(slide =>
                 slide.querySelector('img[data-src], img[data-srcset]')
             );
-            if (lazySlides.length) this.setupLazyLoading(lazySlides);
-            // setupVisibilityObserver only does meaningful work for heroes that have
+            if (lazySlides.length) this._setupLazyLoading(lazySlides);
+            // _setupVisibilityObserver only does meaningful work for heroes that have
             // [hidden] slides to reveal on visibility (the WebKit RTL fix). Non-hero
             // peek/state was set synchronously above — no late update needed.
-            if (this.isHero && this.slides.some(slide => slide.hasAttribute('hidden'))) {
-                this.setupVisibilityObserver();
+            if (this._isHero && this._slides.some(slide => slide.hasAttribute('hidden'))) {
+                this._setupVisibilityObserver();
             }
 
-            // Initial state. setupPagination (called inside updateSlidesPerView) already
+            // Initial state. _setupPagination (called inside _syncSlidesPerView) already
             // set the active bullet; only buttons + boundary classes remain.
-            this.updateButtons();
-            this.updateBoundaryClasses();
-            this.updateSpotlight();
+            this._syncButtons();
+            this._syncBoundaryClasses();
+            this._syncSpotlight();
             this.lastIndex = this.currentIndex;
 
-            this.container.setAttribute('data-nds-swiper-initialized', 'true');
+            this._container.setAttribute('data-nds-swiper-initialized', 'true');
         }
 
-        setupVisibilityObserver() {
+        _setupVisibilityObserver() {
             // One-shot: fires once when the hero becomes visible, reveals [hidden]
             // slides, then unsubscribes. Only registered when the hero actually has
             // [hidden] slides (gated at init).
-            this._offVisibility = NDS.onIntersect(this.container, (entry) => {
+            this._offVisibility = NDS.onIntersect(this._container, (entry) => {
                 if (!entry.isIntersecting) return;
                 this._offVisibility();
                 this._offVisibility = null;
@@ -313,11 +315,11 @@
                 requestAnimationFrame(() => {
                     // One reveal, two scroll contexts — a later addition to it must
                     // reach both directions, not just the RTL default.
-                    const reveal = () => this.slides.forEach(slide => slide.removeAttribute('hidden'));
+                    const reveal = () => this._slides.forEach(slide => slide.removeAttribute('hidden'));
                     if (NDS.isRTL) {
                         // WebKit RTL: keep scroll-behavior: auto through the entire
                         // update so Safari/WebKit doesn't jump scroll on reflow.
-                        this._instant(() => {
+                        this._runInstant(() => {
                             reveal();
                             this.wrapper.scrollLeft = 0;
                             void this.wrapper.offsetHeight;
@@ -332,7 +334,7 @@
                     // so the ResizeObserver never re-fires. Without this, the step cached
                     // at init off a display:none slide (= wrapper padding, truthy, so the
                     // offsetWidth fallback never runs) sticks and clamps currentIndex to
-                    // maxIndex on the first scroll.
+                    // _maxIndex on the first scroll.
                     this._measuredStep = null;
                     // The loop's start position was measured off hidden clones too.
                     // This IS the landing when the reveal beats the resize callback to
@@ -340,7 +342,7 @@
                     if (this._loop) {
                         this._loopPending = false;
                         this._jumpTo(this._head);
-                        this.detectCurrentSlide();
+                        this._detectCurrentSlide();
                     }
                 });
             }, { threshold: 0.01 });
@@ -350,12 +352,12 @@
         // RESPONSIVE SLIDES PER VIEW
         // ==============================================
 
-        updateSlidesPerView() {
-            const newSlidesPerView = this.calculateSlidesPerView();
+        _syncSlidesPerView() {
+            const newSlidesPerView = this._calculateSlidesPerView();
 
             if (newSlidesPerView !== this.slidesPerView) {
                 this.slidesPerView = newSlidesPerView;
-                this.container.style.setProperty('--slides', this.slidesPerView);
+                this._container.style.setProperty('--slides', this.slidesPerView);
             }
 
             const pageCount = this._pageCount;
@@ -364,16 +366,16 @@
             // every breakpoint pass. Inline display can't do this job — the
             // universal [hidden]{display:none!important} rule outranks it, which
             // left the nav stuck hidden when init landed on a one-page breakpoint.
-            if (this.navigation) this.navigation.toggleAttribute('hidden', pageCount <= 1);
+            if (this._navigation) this._navigation.toggleAttribute('hidden', pageCount <= 1);
 
             // CSS adds the gap to --peek; this flag only says whether there is a
             // next page to peek at.
-            this.container.toggleAttribute('data-swiper-peek', this._peek > 0 && pageCount > 1);
+            this._container.toggleAttribute('data-swiper-peek', this._peek > 0 && pageCount > 1);
 
-            if (this.pagination) this.setupPagination();
+            if (this._pagination) this._setupPagination();
         }
 
-        setupResize() {
+        _setupResize() {
             // Breakpoint-driven slidesPerView: shared via ensureSharedResize; instance
             // is invoked through resizeSwipers membership.
             resizeSwipers.add(this);
@@ -382,7 +384,7 @@
             // Pixel-geometry caches (_measuredStep, _cachedGap) go stale on ANY size
             // change, not just breakpoint crosses: a same-band window resize, or the
             // hero settling to full width after first paint, both change slide spacing
-            // without firing a matchMedia change. A stale step makes detectCurrentSlide's
+            // without firing a matchMedia change. A stale step makes _detectCurrentSlide's
             // round(scrollPos/step) overcount, which corrupts currentIndex → wrong nav
             // disable state, wrong active bullet, and no-op prev/next. Invalidate + re-sync
             // on every wrapper resize. Shared ResizeObserver via NDS.onElementResize; its
@@ -393,38 +395,38 @@
                 // Loop: land on the first real slide here, not at init — this initial
                 // callback runs after layout and before the first paint after init, so
                 // the head clones never show and init stays free of layout reads.
-                // detectCurrentSlide first, because it is what measures the step, and
+                // _detectCurrentSlide first, because it is what measures the step, and
                 // the landing needs that measurement: _jumpTo takes its offset from
                 // offsetLeft, so a callback that fires before the slides have width
                 // computes a zero offset, scrolls nowhere, and still spends the
                 // landing. Wait for a real step.
-                this.detectCurrentSlide();
+                this._detectCurrentSlide();
                 if (this._loopPending && this._measuredStep) {
                     this._loopPending = false;
                     this._jumpTo(this._head);
-                    this.detectCurrentSlide();
+                    this._detectCurrentSlide();
                 }
-                this.updatePagination();
-                this.updateButtons();
-                this.updateBoundaryClasses();
-                this.updateSpotlight();
+                this._syncPagination();
+                this._syncButtons();
+                this._syncBoundaryClasses();
+                this._syncSpotlight();
                 this.lastIndex = this.currentIndex;
             };
             this._offResize = NDS.onElementResize(this.wrapper, remeasure);
             // A spotlight's content sets its slide's width, which can change while
             // the row's does not (a late image, a font, a live style edit).
-            if (this._spotlight) this._offSlideResize = NDS.onElementResize(this.slides[this._head], remeasure);
+            if (this._spotlight) this._offSlideResize = NDS.onElementResize(this._slides[this._head], remeasure);
         }
 
         _handleResize() {
             this._cachedGap = null;
             this._measuredStep = null;
             const oldSlidesPerView = this.slidesPerView;
-            this.updateSlidesPerView();
+            this._syncSlidesPerView();
 
             if (oldSlidesPerView !== this.slidesPerView) {
-                this.updateButtons();
-                this.updateBoundaryClasses();
+                this._syncButtons();
+                this._syncBoundaryClasses();
             }
         }
 
@@ -437,7 +439,7 @@
         // manipulation` in _swiper.scss.
         // `action` receives the triggering event so delegated callers (the
         // pagination container) can resolve e.target; direct callers ignore it.
-        _attachActivation(btn, action) {
+        _addActivationListeners(btn, action) {
             const { signal } = this.abortController;
             btn.addEventListener('pointerdown', (e) => {
                 if (e.pointerType === 'mouse' && e.button !== 0) return;
@@ -458,14 +460,14 @@
         // NAVIGATION
         // ==============================================
 
-        setupNavigation() {
-            if (this.prevBtn) this._attachActivation(this.prevBtn, () => this.prev());
-            if (this.nextBtn) this._attachActivation(this.nextBtn, () => this.next());
+        _setupNavigation() {
+            if (this._prevButton) this._addActivationListeners(this._prevButton, () => this.prev());
+            if (this._nextButton) this._addActivationListeners(this._nextButton, () => this.next());
         }
 
         // Always a full view. A loop whose count is not a multiple of the slides
         // per view drifts off the page grid by the remainder on every wrap; the
-        // bullets absorb that (updatePagination), the movement never does.
+        // bullets absorb that (_syncPagination), the movement never does.
         prev() { this._goToFull(this.currentIndex - this.slidesPerView); }
         next() { this._goToFull(this.currentIndex + this.slidesPerView); }
 
@@ -475,13 +477,13 @@
             // Clamp in real slides: a loop's full-list clamp spans the clones, so an
             // out-of-range index would wrap onto an arbitrary slide.
             index = Math.max(0, Math.min(index, this._real - 1));
-            this._goToFull(this._full(index));
+            this._goToFull(this._getFullIndex(index));
         }
 
         // Full-list index of a real slide, in the cycle the row sits in NOW. Between
         // a rapid click and the settle jump the row rests on a clone, and _head +
         // real would then animate a whole cycle the wrong way to reach the twin.
-        _full(real) {
+        _getFullIndex(real) {
             return this.currentIndex + (real - this._realIndex);
         }
 
@@ -490,7 +492,7 @@
         // on the wrapper. Toggling it inline is the only way to force a real instant
         // scroll, and that holds on every engine, not just old Safari. Every instant
         // path here routes through this.
-        _instant(scroll) {
+        _runInstant(scroll) {
             const prevBehavior = this.wrapper.style.scrollBehavior;
             const prevSnap = this.wrapper.style.scrollSnapType;
             this.wrapper.style.scrollBehavior = 'auto';
@@ -507,10 +509,10 @@
         _goToFull(index, instant = NDS.prefersReducedMotion) {
             // A move before the first resize callback lands the loop now; landing after
             // would cancel the move and strand _aim. No layout yet = leave it to remeasure.
-            if (this._loopPending && this.slides[1].offsetLeft !== this.slides[0].offsetLeft) {
+            if (this._loopPending && this._slides[1].offsetLeft !== this._slides[0].offsetLeft) {
                 this._loopPending = false;
                 this._jumpTo(this._head);
-                this.detectCurrentSlide();
+                this._detectCurrentSlide();
             }
             if (this._loop) {
                 // Keep the animation inside the clone budget and off the end-aligned
@@ -519,10 +521,10 @@
                 // shifts one real cycle the other way, silently.
                 const realCount = this._real;
                 if (index < 0) { if (this._shiftCycle(1)) { this.currentIndex += realCount; index += realCount; } }
-                else if (index >= this.maxIndex) { if (this._shiftCycle(-1)) { this.currentIndex -= realCount; index -= realCount; } }
+                else if (index >= this._maxIndex) { if (this._shiftCycle(-1)) { this.currentIndex -= realCount; index -= realCount; } }
             }
-            const clampedIndex = Math.max(0, Math.min(index, this.maxIndex));
-            const targetSlide = this.slides[clampedIndex];
+            const clampedIndex = Math.max(0, Math.min(index, this._maxIndex));
+            const targetSlide = this._slides[clampedIndex];
             if (!targetSlide) return;
 
             // offsetLeft difference from first slide — static DOM property,
@@ -530,19 +532,19 @@
             // Last page: end-align instead — the start-aligned offset overshoots
             // max-scroll by the peek reserve (no next page left to peek), and
             // mandatory snap re-pulls the row short, clipping the last slide.
-            const offset = clampedIndex >= this.maxIndex && !this._spotlight
+            const offset = clampedIndex >= this._maxIndex && !this._spotlight
                 ? this.wrapper.scrollWidth - this.wrapper.clientWidth
-                : this._offsetOf(targetSlide);
+                : this._getOffset(targetSlide);
 
             const left = NDS.isRTL ? -offset : offset;
-            // Where a smooth move rests; the loop's settle waits for it (setupLoop).
+            // Where a smooth move rests; the loop's settle waits for it (_setupLoop).
             this._aim = instant ? null : offset;
             // The spotlight opens the target at the click, not as the row crosses halfway.
-            this._aimReal = this._realOf(clampedIndex);
-            this.updateSpotlight();
+            this._aimReal = this._toRealIndex(clampedIndex);
+            this._syncSpotlight();
             // No keyword: the wrapper's own scroll-behavior decides (smooth by
             // default), so a consumer can set it to auto and get an instant switch.
-            if (instant) this._instant(() => this.wrapper.scrollTo({ left }));
+            if (instant) this._runInstant(() => this.wrapper.scrollTo({ left }));
             else this.wrapper.scrollTo({ left });
         }
 
@@ -550,7 +552,7 @@
         // LOOP — clones at both ends, silent jump at rest
         // ==============================================
 
-        setupLoop() {
+        _setupLoop() {
             // Two pages plus one clone on each side, and never fewer than six SLIDES.
             // The floor is absolute because the relative formula strands a short row: a
             // two-slide loop caps its budget at two, so the edge stays two swipes away
@@ -560,7 +562,7 @@
             const realCount = this._real;
             const count = Math.max(2 * Math.max(this._slidesMax, this._slidesMid, this._slidesMin) + 1, 6);
             const clone = (i) => {
-                const clone = this.slides[i].cloneNode(true);
+                const clone = this._slides[i].cloneNode(true);
                 clone.classList.add('nds-swiper-clone');
                 clone.setAttribute('data-swiper-clone', i);   // its real twin, for consumers that sync content
                 clone.setAttribute('aria-hidden', 'true');
@@ -579,10 +581,10 @@
                 head.push(clone((((j - count) % realCount) + realCount) % realCount));
                 tail.push(clone(j % realCount));
             }
-            this.slides[0].before(...head);
-            this.slides[realCount - 1].after(...tail);
+            this._slides[0].before(...head);
+            this._slides[realCount - 1].after(...tail);
             this._head = count;
-            this.slides = [...head, ...this.slides, ...tail];
+            this._slides = [...head, ...this._slides, ...tail];
             this.currentIndex = count;
             this._loopPending = true; // the ResizeObserver's first callback lands the jump
 
@@ -599,7 +601,7 @@
                     if (Math.abs(Math.abs(this.wrapper.scrollLeft) - this._aim) > 2) return;
                     this._aim = null;
                 }
-                this._loopSettle();
+                this._settleLoop();
             };
             if ('onscrollend' in this.wrapper) this.wrapper.addEventListener('scrollend', settle, { signal });
             else this.wrapper.addEventListener('scroll', NDS.debounce(settle, 150), { passive: true, signal });
@@ -621,7 +623,7 @@
             if (e.pointerType === 'mouse') return;
             this._aim = null;
             if (this._loopPending || !this._measuredStep) return;
-            const position = this._pos();
+            const position = this._getPosition();
             const dir = position < this._head ? 1 : position >= this._head + this._real ? -1 : 0;
             if (!dir) return;
 
@@ -639,12 +641,12 @@
             wrapper.addEventListener('pointercancel', restore, { once: true, signal });
         }
 
-        _loopSettle() {
-            this.detectCurrentSlide();
+        _settleLoop() {
+            this._detectCurrentSlide();
             const realCount = this._real, headCount = this._head, i = this.currentIndex;
             if (i >= headCount && i < headCount + realCount) return;
             this._jumpTo(headCount + this._realIndex);
-            this.detectCurrentSlide();
+            this._detectCurrentSlide();
             this.updateState();
         }
 
@@ -658,25 +660,25 @@
         // settle re-anchors at the next rest.
         _shiftCycle(dir) {
             const realCount = this._real;
-            const landing = this._pos() + dir * realCount;
-            if (landing < 0 || landing > this.maxIndex) return false;
-            const cycle = Math.abs(this.slides[this._head + realCount].offsetLeft - this.slides[this._head].offsetLeft);
-            this._instant(() => { this.wrapper.scrollLeft += NDS.isRTL ? -dir * cycle : dir * cycle; });
+            const landing = this._getPosition() + dir * realCount;
+            if (landing < 0 || landing > this._maxIndex) return false;
+            const cycle = Math.abs(this._slides[this._head + realCount].offsetLeft - this._slides[this._head].offsetLeft);
+            this._runInstant(() => { this.wrapper.scrollLeft += NDS.isRTL ? -dir * cycle : dir * cycle; });
             return true;
         }
 
         // Instant reposition to a full-list index.
         _jumpTo(index) {
-            const target = this.slides[index];
+            const target = this._slides[index];
             if (!target) return;
-            const offset = this._offsetOf(target);
-            this._instant(() => { this.wrapper.scrollLeft = NDS.isRTL ? -offset : offset; });
+            const offset = this._getOffset(target);
+            this._runInstant(() => { this.wrapper.scrollLeft = NDS.isRTL ? -offset : offset; });
         }
 
         // Scroll distance from the start that rests this slide. A spotlight centres
         // the slide where it really is: content can grow it past its planned width.
-        _offsetOf(el) {
-            if (!this._spotlight) return Math.abs(el.offsetLeft - this.slides[0].offsetLeft);
+        _getOffset(el) {
+            if (!this._spotlight) return Math.abs(el.offsetLeft - this._slides[0].offsetLeft);
             const rect = el.getBoundingClientRect(), wrapperRect = this.wrapper.getBoundingClientRect();
             return Math.abs(this.wrapper.scrollLeft + (rect.left + rect.right - wrapperRect.left - wrapperRect.right) / 2);
         }
@@ -685,16 +687,16 @@
         // SCROLL SYNC
         // ==============================================
 
-        setupScrollSync() {
+        _setupScrollSync() {
             const { signal } = this.abortController;
             const wrapper = this.wrapper;
             wrapper.addEventListener('scroll', NDS.rafThrottle(() => {
-                this.detectCurrentSlide();
+                this._detectCurrentSlide();
                 this.updateState();
             }), { passive: true, signal });
 
             // The shadow clip cuts cards short of the screen edge; CSS lifts it while the row moves.
-            if (this.isHero || this._spotlight || !this.container.closest('.nds-max-width')) return;
+            if (this._isHero || this._spotlight || !this._container.closest('.nds-max-width')) return;
             const clearMoving = () => wrapper.removeAttribute('data-swiper-moving');
             wrapper.addEventListener('scroll', () => {
                 if (!wrapper.hasAttribute('data-swiper-moving')) wrapper.setAttribute('data-swiper-moving', '');
@@ -703,30 +705,30 @@
             else wrapper.addEventListener('scroll', NDS.debounce(clearMoving, 150), { passive: true, signal });
         }
 
-        detectCurrentSlide() {
-            if (this.slides.length === 0) return;
+        _detectCurrentSlide() {
+            if (this._slides.length === 0) return;
 
             // Measure actual step from DOM once (accounts for fractional widths + gap).
-            if (this.slides.length > 1 && !this._measuredStep) {
-                this._measuredStep = Math.abs(this.slides[1].offsetLeft - this.slides[0].offsetLeft);
+            if (this._slides.length > 1 && !this._measuredStep) {
+                this._measuredStep = Math.abs(this._slides[1].offsetLeft - this._slides[0].offsetLeft);
             }
 
-            this.currentIndex = Math.max(0, Math.min(Math.round(this._pos()), this.maxIndex));
+            this.currentIndex = Math.max(0, Math.min(Math.round(this._getPosition()), this._maxIndex));
         }
 
         // Where the row is, in slides. A spotlight counts the slide nearest the
         // middle instead: content can make one slide wider, and then no step fits.
-        _pos() {
+        _getPosition() {
             if (this._spotlight) {
                 const wrapperRect = this.wrapper.getBoundingClientRect(), mid = wrapperRect.left + wrapperRect.right;
                 let position = 0, best = Infinity;
-                this.slides.forEach((slide, j) => {
+                this._slides.forEach((slide, j) => {
                     const rect = slide.getBoundingClientRect(), distance = Math.abs(rect.left + rect.right - mid);
                     if (distance < best) { best = distance; position = j; }
                 });
                 return position;
             }
-            const step = this._measuredStep || (this.slides[0].offsetWidth + this.getGap()) || 1;
+            const step = this._measuredStep || (this._slides[0].offsetWidth + this._getGap()) || 1;
             return (NDS.isRTL ? -this.wrapper.scrollLeft : this.wrapper.scrollLeft) / step;
         }
 
@@ -734,28 +736,28 @@
         // PAGINATION
         // ==============================================
 
-        setupPagination() {
+        _setupPagination() {
             const pageCount = this._pageCount;
 
             const hidden = pageCount <= 1;
             const display = hidden ? 'none' : '';
-            this.pagination.style.display = display;
-            this.pagination.innerHTML = '';
-            if (this.prevBtn) this.prevBtn.style.display = display;
-            if (this.nextBtn) this.nextBtn.style.display = display;
+            this._pagination.style.display = display;
+            this._pagination.innerHTML = '';
+            if (this._prevButton) this._prevButton.style.display = display;
+            if (this._nextButton) this._nextButton.style.display = display;
             this.wrapper.style.overflow = hidden ? 'unset' : '';
             if (hidden) return;
 
             // Delegated activation — one listener on the container, attached once.
-            // Bullets are rebuilt on every breakpoint change (setupPagination re-runs
-            // via updateSlidesPerView); binding per-bullet would stack listeners on the
+            // Bullets are rebuilt on every breakpoint change (_setupPagination re-runs
+            // via _syncSlidesPerView); binding per-bullet would stack listeners on the
             // instance signal until destroy.
             if (!this._paginationBound) {
                 this._paginationBound = true;
-                this._attachActivation(this.pagination, (e) => {
+                this._addActivationListeners(this._pagination, (e) => {
                     const bullet = e.target.closest('.nds-bullet');
-                    if (bullet && this.pagination.contains(bullet)) {
-                        this._goToSlide(this._pageStart(Number(bullet.dataset.page)));
+                    if (bullet && this._pagination.contains(bullet)) {
+                        this._goToSlide(this._getPageStart(Number(bullet.dataset.page)));
                     }
                 });
             }
@@ -766,16 +768,16 @@
                 bullet.type = 'button';
                 bullet.dataset.page = i;
                 strings.set(bullet, 'aria-label', 'go_to_page', { n: i + 1 });
-                this.pagination.appendChild(bullet);
+                this._pagination.appendChild(bullet);
             }
 
-            this.updatePagination();
+            this._syncPagination();
         }
 
-        updatePagination() {
-            if (!this.pagination) return;
+        _syncPagination() {
+            if (!this._pagination) return;
 
-            const bullets = this.pagination.querySelectorAll('.nds-bullet');
+            const bullets = this._pagination.querySelectorAll('.nds-bullet');
             const current = this._realIndex;
 
             // The page whose start is at or before the lead slide. A drifted loop
@@ -783,7 +785,7 @@
             // also leap two bullets mid-cycle.
             let currentPage = 0;
             for (let i = 1; i < bullets.length; i++) {
-                if (this._pageStart(i) <= current) currentPage = i;
+                if (this._getPageStart(i) <= current) currentPage = i;
             }
 
             bullets.forEach((bullet, i) => {
@@ -798,10 +800,10 @@
         // KEYBOARD
         // ==============================================
 
-        setupKeyboard() {
+        _setupKeyboard() {
             // Only own the tabindex we add — destroy() must leave an author's alone.
-            this._ownsTabindex = !this.container.hasAttribute('tabindex');
-            if (this._ownsTabindex) this.container.setAttribute('tabindex', '0');
+            this._ownsTabindex = !this._container.hasAttribute('tabindex');
+            if (this._ownsTabindex) this._container.setAttribute('tabindex', '0');
 
             activeSwipers.add(this);
             ensureSharedKeydown();
@@ -809,8 +811,8 @@
 
         // The nav buttons listen for pointerdown, not click, so an arrow key has to
         // call the move itself; the button's disabled state stays the boundary guard.
-        _arrowMove(dir) {
-            const btn = dir === 'next' ? this.nextBtn : this.prevBtn;
+        _moveByArrow(dir) {
+            const btn = dir === 'next' ? this._nextButton : this._prevButton;
             if (btn && !btn.disabled) this[dir]();
         }
 
@@ -819,11 +821,11 @@
             switch (e.key) {
                 case 'ArrowLeft':
                     e.preventDefault();
-                    this._arrowMove(rtl ? 'next' : 'prev');
+                    this._moveByArrow(rtl ? 'next' : 'prev');
                     break;
                 case 'ArrowRight':
                     e.preventDefault();
-                    this._arrowMove(rtl ? 'prev' : 'next');
+                    this._moveByArrow(rtl ? 'prev' : 'next');
                     break;
                 case 'Home':
                     e.preventDefault();
@@ -831,7 +833,7 @@
                     break;
                 case 'End':
                     e.preventDefault();
-                    this._goToSlide(this._pageStart(this._pageCount - 1));
+                    this._goToSlide(this._getPageStart(this._pageCount - 1));
                     break;
             }
         }
@@ -840,23 +842,23 @@
         // LAZY LOADING
         // ==============================================
 
-        setupLazyLoading(lazySlides) {
+        _setupLazyLoading(lazySlides) {
             const pending = new Set(lazySlides), offs = [];
             const load = (slide, ahead) => {
                 if (!pending.delete(slide)) return;
                 // Activate <source> elements inside <picture> first.
-                this._lazyIn(slide, 'source[data-srcset]').forEach(source => {
+                this._findLazyElements(slide, 'source[data-srcset]').forEach(source => {
                     source.srcset = fixSrcsetSpaces(source.dataset.srcset);
                     delete source.dataset.srcset;
                 });
-                this._lazyIn(slide, 'img[data-src], img[data-srcset]').forEach(img => {
+                this._findLazyElements(slide, 'img[data-src], img[data-srcset]').forEach(img => {
                     // Loaded ahead: yield the network to the slide on screen (and the LCP).
                     if (ahead && !img.hasAttribute('fetchpriority')) img.fetchPriority = 'low';
                     if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
                     if (img.dataset.srcset) { img.srcset = fixSrcsetSpaces(img.dataset.srcset); delete img.dataset.srcset; }
                 });
             };
-            const loadReal = (realIndex) => this.slides.forEach((slide, j) => { if (this._realOf(j) === realIndex) load(slide, true); });
+            const loadReal = (realIndex) => this._slides.forEach((slide, j) => { if (this._toRealIndex(j) === realIndex) load(slide, true); });
             // Ahead loads wait until every image on screen has finished (or failed): low
             // priority alone still starts them at once, sharing a slow link with the view.
             // ponytail: a request that never settles holds them; they then load on arrival.
@@ -881,14 +883,14 @@
             // side of it, loop twins included, so the next slide and the loop's silent jump
             // land loaded. Every slide is watched, so a plain-src one triggers it too; a
             // spotlight's or peek's side slides show, so they reach one further.
-            this.slides.forEach((slide, j) => {
+            this._slides.forEach((slide, j) => {
                 const off = NDS.onIntersect(slide, (entry) => {
                     if (!entry.isIntersecting) return;
                     off();
                     load(slide, false);
                     slide.querySelectorAll('img').forEach(track);
                     queued.push(() => {
-                        const realCount = this._real, realIndex = this._realOf(j);
+                        const realCount = this._real, realIndex = this._toRealIndex(j);
                         for (let offset = realIndex - this.slidesPerView; offset <= realIndex + this.slidesPerView; offset++) {
                             if (this._loop) loadReal((offset % realCount + realCount) % realCount);
                             else if (offset >= 0 && offset < realCount) loadReal(offset);
@@ -904,10 +906,10 @@
 
         // A nested swiper that lazy-loads its own slides keeps its images; one that
         // doesn't (a single slide, a loop clone's dead copy) leaves them to us.
-        _lazyIn(slide, selector) {
+        _findLazyElements(slide, selector) {
             return Array.from(slide.querySelectorAll(selector)).filter(el => {
                 const owner = el.closest('.nds-swiper');
-                return !owner || owner === this.container || !owner.ndsSwiper?._offLazyLoad;
+                return !owner || owner === this._container || !owner.ndsSwiper?._offLazyLoad;
             });
         }
 
@@ -919,18 +921,18 @@
             if (this.lastIndex === this.currentIndex) return;
             this.lastIndex = this.currentIndex;
 
-            this.updatePagination();
-            this.updateButtons();
-            this.updateBoundaryClasses();
-            this.updateSpotlight();
-            this.container.dispatchEvent(new CustomEvent('nds:swiper:change', {
+            this._syncPagination();
+            this._syncButtons();
+            this._syncBoundaryClasses();
+            this._syncSpotlight();
+            this._container.dispatchEvent(new CustomEvent('nds:swiper:change', {
                 bubbles: true, detail: { index: this._realIndex }
             }));
         }
 
         // The slide in the middle is the open one. Every twin of it (real or clone)
         // is marked, so the loop's silent jump onto a twin changes nothing visible.
-        updateSpotlight() {
+        _syncSpotlight() {
             if (!this._spotlight) return;
             // Before the loop lands, the index still points into the head clones.
             // While a move is under way the target stays open, so a jump over several
@@ -940,10 +942,10 @@
             if (open === this._open) return;
             this._open = open;
             const realCount = this._real;
-            this.slides.forEach((slide, j) => {
+            this._slides.forEach((slide, j) => {
                 // Side of the nearest twin of the open slide, so every twin has the
                 // same neighbours. Without a loop the row does not wrap.
-                let distance = this._loop ? (((this._realOf(j) - open) % realCount) + realCount) % realCount : j - open;
+                let distance = this._loop ? (((this._toRealIndex(j) - open) % realCount) + realCount) % realCount : j - open;
                 if (this._loop && distance > realCount / 2) distance -= realCount;
                 if (distance === 0) NDS.status.set(slide, 'active');
                 else if (distance > 0) NDS.status.set(slide, 'after');
@@ -951,17 +953,17 @@
             });
         }
 
-        updateButtons() {
-            if (this.prevBtn) this.prevBtn.disabled = !this._loop && this.currentIndex <= 0;
-            if (this.nextBtn) this.nextBtn.disabled = !this._loop && this.currentIndex >= this.maxIndex;
+        _syncButtons() {
+            if (this._prevButton) this._prevButton.disabled = !this._loop && this.currentIndex <= 0;
+            if (this._nextButton) this._nextButton.disabled = !this._loop && this.currentIndex >= this._maxIndex;
         }
 
-        updateBoundaryClasses() {
+        _syncBoundaryClasses() {
             const tokens = [];
             // A loop has no ends.
             if (!this._loop && this.currentIndex <= 0) tokens.push('at-start');
-            if (!this._loop && this.currentIndex >= this.maxIndex) tokens.push('at-end');
-            NDS.state.set(this.container, ...tokens);
+            if (!this._loop && this.currentIndex >= this._maxIndex) tokens.push('at-end');
+            NDS.state.set(this._container, ...tokens);
         }
 
         // ==============================================
@@ -972,7 +974,7 @@
             // Real index in, clamped to the last real page. A loop has no last page, so
             // any slide goes — the index nds:swiper:change reports must restore.
             index = Math.max(0, Math.min(index, this._real - (this._loop ? 1 : this.slidesPerView)));
-            this._goToFull(this._full(index), !animate || NDS.prefersReducedMotion);
+            this._goToFull(this._getFullIndex(index), !animate || NDS.prefersReducedMotion);
         }
 
         // ==============================================
@@ -983,31 +985,31 @@
         // subsequent call to a setup method that reads `this.abortController.signal` will
         // throw. Re-initialize via `NDS.Swiper.create(el)` (constructs a fresh instance).
         destroy() {
-            this.container.removeAttribute('data-nds-swiper-initialized');
-            if (this._ownsTabindex) this.container.removeAttribute('tabindex');
+            this._container.removeAttribute('data-nds-swiper-initialized');
+            if (this._ownsTabindex) this._container.removeAttribute('tabindex');
 
             // Drop the clones and land on the real twin of the current slide.
             if (this._head) {
                 const real = this._realIndex;
-                this.slides = this.slides.filter(slide => !slide.classList.contains('nds-swiper-clone') || (slide.remove(), false));
+                this._slides = this._slides.filter(slide => !slide.classList.contains('nds-swiper-clone') || (slide.remove(), false));
                 this._head = 0;
                 this._jumpTo(real);
             }
 
-            // Reverse the state init/setupPagination wrote, so destroy() restores
+            // Reverse the state init/_setupPagination wrote, so destroy() restores
             // the pre-init DOM for consumers that tear down without re-creating.
-            this.container.removeAttribute('data-swiper-peek');
-            this.container.removeAttribute('data-swiper-preset');
-            this.container.removeAttribute('data-swiper-single');
-            NDS.state.clear(this.container); // at-start/at-end are a documented consumer hook
-            ['--total', '--slides'].forEach(property => this.container.style.removeProperty(property));
-            if (this._spotlight) this.slides.forEach(slide => NDS.status.clear(slide));
+            this._container.removeAttribute('data-swiper-peek');
+            this._container.removeAttribute('data-swiper-preset');
+            this._container.removeAttribute('data-swiper-single');
+            NDS.state.clear(this._container); // at-start/at-end are a documented consumer hook
+            ['--total', '--slides'].forEach(property => this._container.style.removeProperty(property));
+            if (this._spotlight) this._slides.forEach(slide => NDS.status.clear(slide));
             this.wrapper.style.removeProperty('overflow');
             this.wrapper.removeAttribute('data-swiper-moving');
-            if (this.pagination) { this.pagination.style.removeProperty('display'); this.pagination.innerHTML = ''; }
-            if (this.navigation) this.navigation.toggleAttribute('hidden', this._navHadHidden);
-            if (this.prevBtn) this.prevBtn.style.removeProperty('display');
-            if (this.nextBtn) this.nextBtn.style.removeProperty('display');
+            if (this._pagination) { this._pagination.style.removeProperty('display'); this._pagination.innerHTML = ''; }
+            if (this._navigation) this._navigation.toggleAttribute('hidden', this._navHadHidden);
+            if (this._prevButton) this._prevButton.style.removeProperty('display');
+            if (this._nextButton) this._nextButton.style.removeProperty('display');
             activeSwipers.delete(this);
             resizeSwipers.delete(this);
             if (this._offResize) { this._offResize(); this._offResize = null; }
@@ -1016,7 +1018,7 @@
             if (this._offLazyLoad) { this._offLazyLoad.forEach(off => off()); this._offLazyLoad = null; }
             if (this.abortController) { this.abortController.abort(); this.abortController = null; }
 
-            delete this.container.ndsSwiper;
+            delete this._container.ndsSwiper;
         }
     }
 
@@ -1033,7 +1035,7 @@
             const instance = new NdsSwiper(swiper);
             // Expando only on successful construction — retries must not inherit
             // a half-built instance.
-            if (instance.valid) swiper.ndsSwiper = instance;
+            if (instance._valid) swiper.ndsSwiper = instance;
         });
     }
 
@@ -1043,7 +1045,7 @@
         create: (element) => {
             if (element.ndsSwiper) return element.ndsSwiper;
             const instance = new NdsSwiper(element);
-            if (!instance.valid) return null;
+            if (!instance._valid) return null;
             element.ndsSwiper = instance;
             return instance;
         },

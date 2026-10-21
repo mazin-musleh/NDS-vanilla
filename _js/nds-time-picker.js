@@ -13,6 +13,8 @@
  *                                               or outside data-min-time/data-max-time
  *   NDS.TimePicker.getValue(el)                 the 24h value, '' until the time is complete
  *   NDS.TimePicker.clear(el)                    empty the field and every unit
+ *   instance.elements                           {input, formControl, container, …}, read-only
+ *   instance.isPanelCreated                     true once the panel is built (on first open)
  * Events:
  *   (none — a pick writes the input and dispatches native input + change; listen on the input)
  * Hooks:
@@ -333,7 +335,7 @@
         constructor(input, formControl) {
             // Success signal — create() gates the expando on it, so a bailed
             // construction stays eligible for a later reinit() sweep.
-            this.valid = false;
+            this._valid = false;
             const container = formControl.closest('.nds-form-container');
             if (!container) {
                 console.warn('NDS TimePicker: .nds-form-container not found');
@@ -350,20 +352,20 @@
 
             // Derived from the field, so the unit ids survive a panel rebuild
             // (a lang change discards and re-creates the panel).
-            this.uid = input.id || ('nds-time-picker-' + (++uid));
+            this._uid = input.id || ('nds-time-picker-' + (++uid));
 
-            this.format = container.getAttribute('data-format') || DEFAULT_FORMAT;
-            this.units = getUnits(this.format);
-            this.hour12 = /h/.test(this.format);
-            this.hasSeconds = this.units.includes('second');
-            this.step = Math.min(60, Math.max(1, parseInt(container.getAttribute('data-step'), 10) || DEFAULT_STEP));
-            this.min = parseClock(input.getAttribute('data-min-time'));
-            this.max = parseClock(input.getAttribute('data-max-time'));
+            this._format = container.getAttribute('data-format') || DEFAULT_FORMAT;
+            this._units = getUnits(this._format);
+            this._hour12 = /h/.test(this._format);
+            this._hasSeconds = this._units.includes('second');
+            this._step = Math.min(60, Math.max(1, parseInt(container.getAttribute('data-step'), 10) || DEFAULT_STEP));
+            this._min = parseClock(input.getAttribute('data-min-time'));
+            this._max = parseClock(input.getAttribute('data-max-time'));
 
             // The picks are the source of truth and outlive the panel, which is
             // built lazily on first open.
-            this.picks = { hour: null, minute: null, second: null, meridiem: null };
-            this.unitEls = {};
+            this._picks = { hour: null, minute: null, second: null, meridiem: null };
+            this._unitElements = {};
             this.isPanelCreated = false;
             this._committing = false;
 
@@ -372,43 +374,43 @@
             this.instanceAbortController = new AbortController();
             this.panelAbortController = new AbortController();
 
-            this.bindInitEvents();
-            this.setupLanguageObserver();
+            this._addInitListeners();
+            this._setupLanguageObserver();
 
             // Seed from whichever side the server filled in — the carrier wins,
             // since it is the unambiguous one.
             const seeded = (this.elements.carrier && this.elements.carrier.value.trim())
                 ? parseClock(this.elements.carrier.value)
-                : parseAny(input.value, this.format);
-            if (seeded !== null && this._inBounds(seeded, seeded)) this._adopt(seeded);
+                : parseAny(input.value, this._format);
+            if (seeded !== null && this._isInBounds(seeded, seeded)) this._adopt(seeded);
             // A pre-filled bad value stamps validity silently so it can't pass a
             // pre-open submit without painting an error on first paint. Out of range is
             // shown but not adopted, as a typed one is — else the panel's bounds would snap
             // the picks away from what the input and carrier hold. Stamped from the seed
             // itself: a lossy display (hh:mm, no meridiem) can re-parse in range.
             else if (seeded !== null) {
-                input.value = formatDisplay(seeded, this.format);
-                input.setCustomValidity(this._boundsError(seeded));
+                input.value = formatDisplay(seeded, this._format);
+                input.setCustomValidity(this._getBoundsError(seeded));
             } else if (input.value.trim()) this._validateInput(true);
             resetWithForm(this, input);
 
             container.setAttribute('data-nds-time-picker-initialized', '');
-            this.valid = true;
+            this._valid = true;
         }
 
         // ---- open / close ----------------------------------------------
 
-        bindInitEvents() {
+        _addInitListeners() {
             const signal = this.instanceAbortController.signal;
             const openFrom = (e) => {
                 // Forms copies a readonly input to the field's state; the toggle button stays live.
                 if (this.elements.input.disabled || NDS.state.has(this.elements.container, 'readonly')) return;
                 if (!this.isPanelCreated) {
-                    this.createPanelDOM();
-                    this.setupDropmenu();
+                    this._buildPanel();
+                    this._setupDropmenu();
                 }
                 if (e) e.stopPropagation();
-                this.dropmenuInstance.toggle();
+                this._dropmenu.toggle();
             };
 
             // The button opens the panel, so a click in the input only places the cursor.
@@ -421,26 +423,26 @@
             this.elements.input.addEventListener('change', () => {
                 this._shaped = false;
                 if (this._committing) return;
-                this.readTyped();
+                this._readTyped();
             }, { signal });
 
             // Typing at the end is shaped; typing inside the value types over it (getTypedOver).
             // A delete keeps what the user wrote, so Backspace can remove an added separator.
             const input = this.elements.input;
             // decimal, not numeric: its keypad has a separator key, and forms blocks non-digits under numeric.
-            if (!/[Aa]/.test(this.format) && !input.hasAttribute('inputmode')) {
+            if (!/[Aa]/.test(this._format) && !input.hasAttribute('inputmode')) {
                 input.inputMode = 'decimal';
                 this._ownInputMode = true;
             }
             input.addEventListener('input', (e) => {
                 // A pasted time in any common form commits at once, in the field's format.
                 if (e.inputType === 'insertFromPaste') {
-                    const secs = parseAny(input.value, this.format);
-                    if (secs !== null && this._inBounds(secs, secs)) this._adopt(secs);
+                    const secs = parseAny(input.value, this._format);
+                    if (secs !== null && this._isInBounds(secs, secs)) this._adopt(secs);
                     return;
                 }
                 if (e.inputType !== 'insertText' || e.isComposing || input.selectionEnd !== input.value.length) return;
-                const shaped = formatTyped(input.value, this.format, this.hour12);
+                const shaped = formatTyped(input.value, this._format, this._hour12);
                 if (shaped !== input.value) { input.value = shaped; this._shaped = true; }
             }, { signal });
             input.addEventListener('beforeinput', (e) => {
@@ -449,7 +451,7 @@
                 e.preventDefault();
                 let value = input.value, caret = input.selectionStart;
                 for (const ch of e.data) {
-                    const result = getTypedOver(value, caret, ch, this.format, this.hour12);
+                    const result = getTypedOver(value, caret, ch, this._format, this._hour12);
                     if (!result) break;
                     value = result.value;
                     caret = result.caret ?? value.length;
@@ -474,22 +476,22 @@
         //   dropmenu's flat trigger keys would swallow typing.
         // Anchor start: the panel is content-width, and centred under a full-width
         //   field it reads as a mistake.
-        setupDropmenu() {
+        _setupDropmenu() {
             const formControl = this.elements.formControl;
-            this.dropmenuInstance = NDS.Dropmenu.create(formControl, {
+            this._dropmenu = NDS.Dropmenu.create(formControl, {
                 menu: this.elements.panel, menuClass: 'nds-time-picker-menu', click: false, keys: false, anchor: 'start',
             });
 
             // Guard `e.target !== formControl`: these bubble, so the unit selects'
             // own open/close events would otherwise re-run this on every pick.
-            // Panel-scoped, not instance-scoped: setupDropmenu re-runs on every
+            // Panel-scoped, not instance-scoped: _setupDropmenu re-runs on every
             // language rebuild, so instance scope would stack another pair each time.
             const signal = this.panelAbortController.signal;
             formControl.addEventListener('nds:dropmenu:opened', (e) => {
                 if (e.target !== formControl) return;
                 NDS.state.add(this.elements.container, 'open');
-                this.applyBounds();
-                this.dropmenuInstance.applyPosition();
+                this._syncBounds();
+                this._dropmenu.applyPosition();
             }, { signal });
             formControl.addEventListener('nds:dropmenu:closed', (e) => {
                 if (e.target !== formControl) return;
@@ -499,14 +501,14 @@
 
         // ---- panel ------------------------------------------------------
 
-        optionsFor(unit) {
+        _buildOptions(unit) {
             if (unit === 'meridiem') return buildOptionMarkup('am', strings.text('am')) + buildOptionMarkup('pm', strings.text('pm'));
 
             const list = [];
             if (unit === 'hour') {
-                for (let hour = this.hour12 ? 1 : 0; hour <= (this.hour12 ? 12 : 23); hour++) list.push(hour);
+                for (let hour = this._hour12 ? 1 : 0; hour <= (this._hour12 ? 12 : 23); hour++) list.push(hour);
             } else if (unit === 'minute') {
-                for (let minute = 0; minute < 60; minute += this.step) list.push(minute);
+                for (let minute = 0; minute < 60; minute += this._step) list.push(minute);
             } else {
                 // ponytail: seconds always step 1 — data-step is a MINUTE grid, and
                 // 00/15/30/45 seconds reads as a bug. data-second-step if anyone asks.
@@ -515,11 +517,11 @@
             return list.map((value) => buildOptionMarkup(value, pad(value))).join('');
         }
 
-        createPanelDOM() {
+        _buildPanel() {
             const panel = document.createElement('div');
             panel.className = 'nds-time-picker-panel';
             panel.innerHTML = '<div class="nds-time-picker-units">'
-                + this.units.map((unit) => buildUnitMarkup(unit, strings.text(unit), this.optionsFor(unit))).join('')
+                + this._units.map((unit) => buildUnitMarkup(unit, strings.text(unit), this._buildOptions(unit))).join('')
                 + '</div>';
 
             // After the input, inside the same form-control — date-picker's shape.
@@ -527,54 +529,54 @@
             this.elements.panel = panel;
 
             const signal = this.panelAbortController.signal;
-            this.unitEls = {};
+            this._unitElements = {};
             // Custom-select's delegated option-click listener installs in ITS init(),
             // which the loader skips when the page's only .nds-select-inputs are the
             // ones we just generated (it gates on a live querySelector). Idempotent.
             NDS.CustomSelect.init();
-            this.units.forEach((unit) => {
+            this._units.forEach((unit) => {
                 const el = panel.querySelector('[data-time-picker-unit="' + unit + '"]');
-                this.unitEls[unit] = el;
+                this._unitElements[unit] = el;
                 // Before create(): custom-select reads the input while building.
-                el.querySelector('.nds-select-input').id = this.uid + '-' + unit;
+                el.querySelector('.nds-select-input').id = this._uid + '-' + unit;
                 NDS.CustomSelect.create(el);
                 // nds:custom-select:change fires on the form-control and does NOT
                 // bubble, so it binds per unit, never on the panel.
                 el.querySelector('.nds-form-control').addEventListener('nds:custom-select:change', (e) => {
-                    this.onUnitChange(unit, e.detail.value);
+                    this._handleUnitChange(unit, e.detail.value);
                 }, { signal });
             });
 
-            // Before syncUnits: it and applyBounds both no-op while this is false.
+            // Before _syncUnits: it and _syncBounds both no-op while this is false.
             this.isPanelCreated = true;
-            this.syncUnits();
+            this._syncUnits();
         }
 
-        removePanelDOM() {
-            Object.values(this.unitEls).forEach((el) => {
+        _removePanel() {
+            Object.values(this._unitElements).forEach((el) => {
                 const fc = el && el.querySelector('.nds-form-control');
                 // Each unit's dropmenu holds a document-level click listener, so
                 // it is destroyed before its wrapper is discarded.
                 if (fc) NDS.CustomSelect.destroy(fc);
             });
-            this.unitEls = {};
+            this._unitElements = {};
             if (this.elements.panel) this.elements.panel.remove();
             this.elements.panel = null;
             this.isPanelCreated = false;
         }
 
-        _optionsOf(unit) {
-            const fc = this.unitEls[unit] && this.unitEls[unit].querySelector('.nds-form-control');
+        _getOptions(unit) {
+            const fc = this._unitElements[unit] && this._unitElements[unit].querySelector('.nds-form-control');
             if (!fc) return [];
             return fc.querySelectorAll('.nds-select-option');
         }
 
         // Suppress the re-entrant commit path for the length of one write. Saves
-        // and RESTORES rather than clearing: these nest (_adopt → syncUnits), and
-        // a clear would drop an outer caller's guard mid-write — updateInput's own
+        // and RESTORES rather than clearing: these nest (_adopt → _syncUnits), and
+        // a clear would drop an outer caller's guard mid-write — _syncInput's own
         // change event would then re-parse the display it just wrote, which under a
         // lossy format (hh:mm, no meridiem token) writes back the wrong carrier.
-        _quiet(fn) {
+        _runQuietly(fn) {
             const was = this._committing;
             this._committing = true;
             try { return fn(); } finally { this._committing = was; }
@@ -582,67 +584,67 @@
 
         // Paint the current picks onto the unit selects. Guarded so the resulting
         // change events don't each run a partial commit.
-        syncUnits() {
+        _syncUnits() {
             if (!this.isPanelCreated) return;
-            this._quiet(() => {
-                this.units.forEach((unit) => {
-                    const value = this.picks[unit];
-                    if (value === null) { NDS.CustomSelect.clear(this.unitEls[unit]); return; }
+            this._runQuietly(() => {
+                this._units.forEach((unit) => {
+                    const value = this._picks[unit];
+                    if (value === null) { NDS.CustomSelect.clear(this._unitElements[unit]); return; }
                     this._ensureOption(unit, value);
-                    NDS.CustomSelect.setValue(this.unitEls[unit], value);
+                    NDS.CustomSelect.setValue(this._unitElements[unit], value);
                 });
             });
-            this.applyBounds();
+            this._syncBounds();
         }
 
         // ---- value ------------------------------------------------------
 
-        onUnitChange(unit, value) {
-            this.picks[unit] = value === '' ? null : value;
+        _handleUnitChange(unit, value) {
+            this._picks[unit] = value === '' ? null : value;
             if (this._committing) return;
-            this.commit();
+            this._commit();
         }
 
         _complete() {
-            return this.units.every((unit) => this.picks[unit] !== null);
+            return this._units.every((unit) => this._picks[unit] !== null);
         }
 
-        _seconds() {
+        _getSeconds() {
             if (!this._complete()) return null;
-            let hour = +this.picks.hour;
-            if (this.hour12) hour = (hour % 12) + (this.picks.meridiem === 'pm' ? 12 : 0);
-            return hour * 3600 + (+this.picks.minute) * 60 + (this.hasSeconds ? +this.picks.second : 0);
+            let hour = +this._picks.hour;
+            if (this._hour12) hour = (hour % 12) + (this._picks.meridiem === 'pm' ? 12 : 0);
+            return hour * 3600 + (+this._picks.minute) * 60 + (this._hasSeconds ? +this._picks.second : 0);
         }
 
         // Split the picks out of a 24h value. Used by the constructor's seed, by
         // setValue and by a typed edit — self-guarding, since every one of them
-        // must suppress the change-event round trip its updateInput would fire.
+        // must suppress the change-event round trip its _syncInput would fire.
         _adopt(secs) {
-            this._quiet(() => {
+            this._runQuietly(() => {
                 const clock = getParts(secs);
-                this.picks.hour = String(this.hour12 ? ((clock.h24 + 11) % 12) + 1 : clock.h24);
-                this.picks.minute = String(clock.m);
-                this.picks.second = String(clock.s);
-                this.picks.meridiem = clock.h24 >= 12 ? 'pm' : 'am';
-                this.syncUnits();
-                this.updateInput();
+                this._picks.hour = String(this._hour12 ? ((clock.h24 + 11) % 12) + 1 : clock.h24);
+                this._picks.minute = String(clock.m);
+                this._picks.second = String(clock.s);
+                this._picks.meridiem = clock.h24 >= 12 ? 'pm' : 'am';
+                this._syncUnits();
+                this._syncInput();
             });
         }
 
-        // A unit pick's write — onUnitChange already skipped the re-entrant ones.
-        commit() {
-            this._quiet(() => {
-                this.applyBounds();
-                this.updateInput();
+        // A unit pick's write — _handleUnitChange already skipped the re-entrant ones.
+        _commit() {
+            this._runQuietly(() => {
+                this._syncBounds();
+                this._syncInput();
             });
         }
 
         // The one write path — a unit pick, a typed edit, setValue and clear all
         // funnel through it, so the panel, the input and the carrier cannot drift.
-        updateInput() {
-            const secs = this._seconds();
-            const display = secs === null ? '' : formatDisplay(secs, this.format);
-            const stable = secs === null ? '' : formatClock(secs, this.hasSeconds);
+        _syncInput() {
+            const secs = this._getSeconds();
+            const display = secs === null ? '' : formatDisplay(secs, this._format);
+            const stable = secs === null ? '' : formatClock(secs, this._hasSeconds);
             const input = this.elements.input;
             const carrier = this.elements.carrier;
 
@@ -655,31 +657,31 @@
         }
 
         // A hand-typed edit: parse it, adopt it, and let the panel catch up.
-        readTyped() {
+        _readTyped() {
             const raw = this.elements.input.value.trim();
             if (!raw) { this.clear(); return; }
-            const secs = parseAny(raw, this.format);
-            if (secs === null || !this._inBounds(secs, secs)) { this._validateInput(); return; }
+            const secs = parseAny(raw, this._format);
+            if (secs === null || !this._isInBounds(secs, secs)) { this._validateInput(); return; }
             this._adopt(secs);
         }
 
         getValue() {
-            const secs = this._seconds();
-            return secs === null ? '' : formatClock(secs, this.hasSeconds);
+            const secs = this._getSeconds();
+            return secs === null ? '' : formatClock(secs, this._hasSeconds);
         }
 
         setValue(value) {
             const secs = parseClock(value);
-            if (secs === null || !this._inBounds(secs, secs)) return false;
+            if (secs === null || !this._isInBounds(secs, secs)) return false;
             this._adopt(secs);
             return true;
         }
 
         clear() {
-            this._quiet(() => {
-                this.picks = { hour: null, minute: null, second: null, meridiem: null };
-                this.syncUnits();
-                this.updateInput();
+            this._runQuietly(() => {
+                this._picks = { hour: null, minute: null, second: null, meridiem: null };
+                this._syncUnits();
+                this._syncInput();
             });
             return true;
         }
@@ -688,7 +690,7 @@
         // own option in sorted position rather than being rounded away.
         _ensureOption(unit, value) {
             if (unit === 'meridiem') return;
-            const options = this._optionsOf(unit);
+            const options = this._getOptions(unit);
             if (!options.length) return;
             if (Array.from(options).some((option) => option.dataset.value === value)) return;
 
@@ -705,71 +707,71 @@
 
         // ---- bounds -----------------------------------------------------
 
-        _inBounds(lo, hi) {
-            if (this.min !== null && hi < this.min) return false;
-            if (this.max !== null && lo > this.max) return false;
+        _isInBounds(lo, hi) {
+            if (this._min !== null && hi < this._min) return false;
+            if (this._max !== null && lo > this._max) return false;
             return true;
         }
 
         // 24h hour implied by the current picks, or null while it is unknowable.
-        _pickedHour() {
-            if (this.picks.hour === null) return null;
-            if (!this.hour12) return +this.picks.hour;
-            if (this.picks.meridiem === null) return null;
-            return (+this.picks.hour % 12) + (this.picks.meridiem === 'pm' ? 12 : 0);
+        _getPickedHour() {
+            if (this._picks.hour === null) return null;
+            if (!this._hour12) return +this._picks.hour;
+            if (this._picks.meridiem === null) return null;
+            return (+this._picks.hour % 12) + (this._picks.meridiem === 'pm' ? 12 : 0);
         }
 
-        _allowed(unit, value) {
+        _isAllowed(unit, value) {
             if (unit === 'meridiem') {
                 const base = value === 'pm' ? 12 : 0;
-                return this._inBounds(base * 3600, (base + 11) * 3600 + 3599);
+                return this._isInBounds(base * 3600, (base + 11) * 3600 + 3599);
             }
             if (unit === 'hour') {
                 // With the meridiem unpicked an hour survives if EITHER half-day
                 // fits — narrowing happens once ص/م is chosen.
-                const halves = this.hour12
-                    ? (this.picks.meridiem === null ? ['am', 'pm'] : [this.picks.meridiem])
+                const halves = this._hour12
+                    ? (this._picks.meridiem === null ? ['am', 'pm'] : [this._picks.meridiem])
                     : [null];
                 return halves.some((mer) => {
                     const hour24 = mer === null ? +value : (+value % 12) + (mer === 'pm' ? 12 : 0);
-                    return this._inBounds(hour24 * 3600, hour24 * 3600 + 3599);
+                    return this._isInBounds(hour24 * 3600, hour24 * 3600 + 3599);
                 });
             }
 
-            const pickedHour = this._pickedHour();
+            const pickedHour = this._getPickedHour();
             if (pickedHour === null) return true;              // nothing to narrow against yet
             if (unit === 'minute') {
                 const lo = pickedHour * 3600 + (+value) * 60;
-                return this._inBounds(lo, lo + 59);
+                return this._isInBounds(lo, lo + 59);
             }
-            if (this.picks.minute === null) return true;
-            const at = pickedHour * 3600 + (+this.picks.minute) * 60 + (+value);
-            return this._inBounds(at, at);
+            if (this._picks.minute === null) return true;
+            const at = pickedHour * 3600 + (+this._picks.minute) * 60 + (+value);
+            return this._isInBounds(at, at);
         }
 
         // Walks the units in order, so a narrowed hour immediately narrows the
         // minutes below it (and a narrowed minute the seconds).
-        applyBounds() {
+        _syncBounds() {
             if (!this.isPanelCreated) return;
-            if (this.min === null && this.max === null) return;
+            if (this._min === null && this._max === null) return;
 
-            this.units.forEach((unit) => {
-                const options = this._optionsOf(unit);
-                options.forEach((option) => { option.disabled = !this._allowed(unit, option.dataset.value); });
+            this._units.forEach((unit) => {
+                const options = this._getOptions(unit);
+                options.forEach((option) => { option.disabled = !this._isAllowed(unit, option.dataset.value); });
 
                 // A picked option that just went out of range would commit an
                 // invalid time — snap to the nearest live one instead of clearing,
                 // so the user keeps every other pick.
-                const current = this.picks[unit];
+                const current = this._picks[unit];
                 if (current === null) return;
                 const el = Array.from(options).find((option) => option.dataset.value === current);
                 if (!el || !el.disabled) return;
 
                 const near = findNearestEnabled(options, current);
-                this.picks[unit] = near ? near.dataset.value : null;
-                this._quiet(() => {
-                    if (near) NDS.CustomSelect.setValue(this.unitEls[unit], near.dataset.value);
-                    else NDS.CustomSelect.clear(this.unitEls[unit]);
+                this._picks[unit] = near ? near.dataset.value : null;
+                this._runQuietly(() => {
+                    if (near) NDS.CustomSelect.setValue(this._unitElements[unit], near.dataset.value);
+                    else NDS.CustomSelect.clear(this._unitElements[unit]);
                 });
             });
         }
@@ -783,31 +785,31 @@
         _validateInput(silent, value = this.elements.input.value) {
             const input = this.elements.input;
             const raw = value.trim();
-            const message = raw ? this._validationError(raw) : '';
+            const message = raw ? this._getValidationError(raw) : '';
             input.setCustomValidity(message);
             if (message && !silent) {
                 NDS.Form.setStatus(this.elements.container, 'error', { message: message });
             }
         }
 
-        _validationError(raw) {
-            const secs = parseAny(raw, this.format);
-            return secs === null ? strings.text('invalid', { format: this.format }) : this._boundsError(secs);
+        _getValidationError(raw) {
+            const secs = parseAny(raw, this._format);
+            return secs === null ? strings.text('invalid', { format: this._format }) : this._getBoundsError(secs);
         }
 
-        _boundsError(secs) {
-            if (this.min !== null && secs < this.min) {
-                return strings.text('before_min', { time: formatDisplay(this.min, this.format) });
+        _getBoundsError(secs) {
+            if (this._min !== null && secs < this._min) {
+                return strings.text('before_min', { time: formatDisplay(this._min, this._format) });
             }
-            if (this.max !== null && secs > this.max) {
-                return strings.text('after_max', { time: formatDisplay(this.max, this.format) });
+            if (this._max !== null && secs > this._max) {
+                return strings.text('after_max', { time: formatDisplay(this._max, this._format) });
             }
             return '';
         }
 
         // ---- lifecycle ---------------------------------------------------
 
-        setupLanguageObserver() {
+        _setupLanguageObserver() {
             this._offLangChange = NDS.onAttrChange('html', ['lang'], () => this._relocalize());
             // Built before the pack landed: its AM/PM went out in English.
             if (!strings.ready()) this._relocalize();
@@ -827,25 +829,25 @@
             // cheaper to reason about than patching six places.
             if (this.isPanelCreated) {
                 const open = NDS.state.has(this.elements.container, 'open');
-                this.cleanup();
-                this.createPanelDOM();
-                this.setupDropmenu();
-                if (open) this.dropmenuInstance.open();
+                this._cleanup();
+                this._buildPanel();
+                this._setupDropmenu();
+                if (open) this._dropmenu.open();
             }
             // Incomplete picks would write '' over what the user typed.
-            if (this._complete()) this._quiet(() => this.updateInput());
+            if (this._complete()) this._runQuietly(() => this._syncInput());
         }
 
         // Per-open-cycle teardown: releases the panel's listeners and its DOM,
         // leaving the instance (and its picks) alive.
-        cleanup() {
+        _cleanup() {
             this.panelAbortController.abort();
             this.panelAbortController = new AbortController();
-            if (this.dropmenuInstance) {
+            if (this._dropmenu) {
                 NDS.Dropmenu.destroy(this.elements.formControl);
-                this.dropmenuInstance = null;
+                this._dropmenu = null;
             }
-            this.removePanelDOM();
+            this._removePanel();
         }
 
         destroy() {
@@ -854,7 +856,7 @@
                 this._offLangChange();
                 this._offLangChange = null;
             }
-            this.cleanup();
+            this._cleanup();
             if (this._ownInputMode) this.elements.input.removeAttribute('inputmode');
             NDS.state.remove(this.elements.container, 'open');
             // Nothing is left to clear the picker's own error, so it would block submit for good.
@@ -872,33 +874,33 @@
 
     class NdsTimePickerFields {
         constructor(group) {
-            this.valid = false;
+            this._valid = false;
             const hour = group.querySelector('.nds-time-hour');
             const minute = group.querySelector('.nds-time-minute');
             if (!hour || !minute) {
                 console.warn('NDS TimePicker: .nds-time-fields needs .nds-time-hour and .nds-time-minute');
                 return;
             }
-            this.elements = { container: group, hour, minute, carrier: group.querySelector('.nds-time-value') };
-            this.min = parseClock(group.getAttribute('data-min-time'));
-            this.max = parseClock(group.getAttribute('data-max-time'));
-            this.value = '';
+            this._elements = { container: group, hour, minute, carrier: group.querySelector('.nds-time-value') };
+            this._min = parseClock(group.getAttribute('data-min-time'));
+            this._max = parseClock(group.getAttribute('data-max-time'));
+            this._value = '';
             this.instanceAbortController = new AbortController();
-            this.bindEvents();
+            this._addEventListeners();
 
             // The carrier wins, as in field mode; boxes the server filled are the fallback.
-            const carrier = this.elements.carrier;
+            const carrier = this._elements.carrier;
             const seeded = parseClock(carrier && carrier.value.trim() ? carrier.value : hour.value + ':' + minute.value);
             if (seeded !== null) this._adopt(seeded);
             else this._sync(true);
             resetWithForm(this, hour);
 
             group.setAttribute('data-nds-time-picker-initialized', '');
-            this.valid = true;
+            this._valid = true;
         }
 
-        bindEvents() {
-            const { container, hour, minute } = this.elements;
+        _addEventListeners() {
+            const { container, hour, minute } = this._elements;
             const signal = this.instanceAbortController.signal;
             const getBoxMax = (box) => (box === hour ? 23 : 59);
 
@@ -963,25 +965,25 @@
 
         _adopt(secs) {
             const clock = getParts(secs);
-            this.elements.hour.value = pad(clock.h24);
-            this.elements.minute.value = pad(clock.m);
+            this._elements.hour.value = pad(clock.h24);
+            this._elements.minute.value = pad(clock.m);
             this._sync(true);
         }
 
         // The one write path: the boxes → the carrier and the validity stamp.
         _sync(silent) {
-            const { container, hour, minute, carrier } = this.elements;
+            const { container, hour, minute, carrier } = this._elements;
             const secs = parseClock(hour.value + ':' + minute.value);
             let message = '';
             if ((hour.value || minute.value) && secs === null) message = strings.text('incomplete');
-            else if (secs !== null && this.min !== null && secs < this.min) message = strings.text('before_min', { time: formatClock(this.min) });
-            else if (secs !== null && this.max !== null && secs > this.max) message = strings.text('after_max', { time: formatClock(this.max) });
+            else if (secs !== null && this._min !== null && secs < this._min) message = strings.text('before_min', { time: formatClock(this._min) });
+            else if (secs !== null && this._max !== null && secs > this._max) message = strings.text('after_max', { time: formatClock(this._max) });
 
             // Forms reads the hour box's stamp at submit; an out-of-range time never reaches the carrier.
             hour.setCustomValidity(message);
             const value = secs === null || message ? '' : formatClock(secs);
-            if (value !== this.value) {
-                this.value = value;
+            if (value !== this._value) {
+                this._value = value;
                 if (carrier) NDS.setValue(carrier, value);
             }
             // An error paints on leaving the group; a fixed value clears it at once.
@@ -989,35 +991,35 @@
             else if (!message && NDS.status.get(container) === 'error') NDS.Form.clearStatus(container);
         }
 
-        getValue() { return this.value; }
+        getValue() { return this._value; }
 
         setValue(value) {
             const secs = parseClock(value);
-            if (secs === null || !this._inBounds(secs)) return false;
+            if (secs === null || !this._isInBounds(secs)) return false;
             this._adopt(secs);
             return true;
         }
 
         clear() {
-            this.elements.hour.value = '';
-            this.elements.minute.value = '';
+            this._elements.hour.value = '';
+            this._elements.minute.value = '';
             this._sync(true);
             return true;
         }
 
-        _inBounds(secs) {
-            return (this.min === null || secs >= this.min) && (this.max === null || secs <= this.max);
+        _isInBounds(secs) {
+            return (this._min === null || secs >= this._min) && (this._max === null || secs <= this._max);
         }
 
         destroy() {
             this.instanceAbortController.abort();
             // As in field mode: nothing is left to clear the picker's own error.
-            if (this.elements.hour.validity.customError) {
-                this.elements.hour.setCustomValidity('');
-                NDS.Form.clearStatus(this.elements.container);
+            if (this._elements.hour.validity.customError) {
+                this._elements.hour.setCustomValidity('');
+                NDS.Form.clearStatus(this._elements.container);
             }
-            this.elements.container.removeAttribute('data-nds-time-picker-initialized');
-            delete this.elements.container.ndsTimePicker;
+            this._elements.container.removeAttribute('data-nds-time-picker-initialized');
+            delete this._elements.container.ndsTimePicker;
         }
     }
 
@@ -1040,7 +1042,7 @@
         if (group) {
             if (!group.ndsTimePicker) {
                 const instance = new NdsTimePickerFields(group);
-                if (instance.valid) group.ndsTimePicker = instance;
+                if (instance._valid) group.ndsTimePicker = instance;
             }
             return group.ndsTimePicker || null;
         }
@@ -1053,7 +1055,7 @@
             return null;
         }
         const instance = new NdsTimePicker(el, fc);
-        if (!instance.valid) return null;
+        if (!instance._valid) return null;
         el.ndsTimePicker = instance;
         return instance;
     }

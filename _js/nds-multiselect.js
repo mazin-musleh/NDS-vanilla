@@ -7,6 +7,9 @@
  *   NDS.Multiselect.validate(el, opts)   its check → {valid, message, checked, min, max}; opts {showMessage}
  *   NDS.Multiselect.destroy(el)          tear one field down
  *   instance.populate(options, selected) rebuild the option set at runtime
+ *   instance.getSelected()               the picked values
+ *   instance.apply() / .reset()          commit the menu's picks / clear them
+ *   instance.removeValue(value)          unpick one value
  * Events (bubble from .nds-multiselect):
  *   nds:multiselect:change   detail {name, values, labels} — on every commit
  * Hooks:
@@ -56,34 +59,34 @@
 
     class NdsMultiselect {
         constructor(root) {
-            this.root = root;
+            this._root = root;
             if (root.hasAttribute('data-nds-multiselect-initialized')) return;
 
-            this.dropmenu = root.querySelector('[data-multiselect-dropmenu]')
+            this._dropmenu = root.querySelector('[data-multiselect-dropmenu]')
                 || root.querySelector('.nds-form-action.nds-prefix.nds-dropmenu');
-            this.formControl = root.querySelector('.nds-form-control');
-            this.chipsEl = root.querySelector('[data-multiselect-chips]')
+            this._formControl = root.querySelector('.nds-form-control');
+            this._chipsElement = root.querySelector('[data-multiselect-chips]')
                 || root.querySelector('.nds-multiselect-chips');
-            this.trigger = this.dropmenu && this.dropmenu.querySelector('.nds-dropmenu-trigger');
-            this.menu = this.dropmenu && this.dropmenu.querySelector('.nds-dropmenu-menu');
-            this.resetBtn = root.querySelector('[data-multiselect-action="reset"]');
-            this.applyBtn = root.querySelector('[data-multiselect-action="apply"]');
+            this._trigger = this._dropmenu && this._dropmenu.querySelector('.nds-dropmenu-trigger');
+            this._menu = this._dropmenu && this._dropmenu.querySelector('.nds-dropmenu-menu');
+            this._resetButton = root.querySelector('[data-multiselect-action="reset"]');
+            this._applyButton = root.querySelector('[data-multiselect-action="apply"]');
             // The Apply button IS the mode switch: present = filter-style
             // staged commit, absent = every toggle commits instantly.
-            this.applyMode = !!this.applyBtn;
+            this._applyMode = !!this._applyButton;
 
-            if (!this.dropmenu || !this.menu || !this.formControl || !this.chipsEl) {
+            if (!this._dropmenu || !this._menu || !this._formControl || !this._chipsElement) {
                 console.warn('NDS Multiselect: missing required elements', root);
                 return;
             }
             // Rule: every owned menu names itself.
-            this._ownMenuClass = !this.menu.classList.contains('nds-multiselect-menu');
-            this.menu.classList.add('nds-multiselect-menu');
+            this._ownMenuClass = !this._menu.classList.contains('nds-multiselect-menu');
+            this._menu.classList.add('nds-multiselect-menu');
 
-            this.name = root.getAttribute('data-multiselect-name') || '';
-            this.chipClass = root.getAttribute('data-chip-class') || 'nds-primary nds-sm';
+            this._name = root.getAttribute('data-multiselect-name') || '';
+            this._chipClass = root.getAttribute('data-chip-class') || 'nds-primary nds-sm';
             this.abortController = new AbortController();
-            this.valid = true;
+            this._valid = true;
             this.init();
         }
 
@@ -92,52 +95,52 @@
             // up with the field's start edge instead of the default centered
             // anchor. Author can override with data-anchor="center|end".
             // Written here, not through Dropmenu.create's options: the page sweep may have built the menu already.
-            this._ownAnchor = !this.dropmenu.hasAttribute('data-anchor');
-            if (this._ownAnchor) this.dropmenu.setAttribute('data-anchor', 'start');
+            this._ownAnchor = !this._dropmenu.hasAttribute('data-anchor');
+            if (this._ownAnchor) this._dropmenu.setAttribute('data-anchor', 'start');
             // destroy() takes the menu down only when this built it.
-            this._ownDropmenu = !this.dropmenu.ndsDropmenu;
-            if (this._ownDropmenu) NDS.Dropmenu.create(this.dropmenu);
+            this._ownDropmenu = !this._dropmenu.ndsDropmenu;
+            if (this._ownDropmenu) NDS.Dropmenu.create(this._dropmenu);
             // An icon-only trigger names itself in aria-label: read it, and give it back on destroy().
-            this.triggerAriaOriginal = this.trigger?.getAttribute('aria-label') || '';
-            this.triggerLabelOriginal = (
-                this.trigger?.querySelector('.nds-label')?.textContent || this.triggerAriaOriginal
+            this._triggerAriaOriginal = this._trigger?.getAttribute('aria-label') || '';
+            this._triggerLabelOriginal = (
+                this._trigger?.querySelector('.nds-label')?.textContent || this._triggerAriaOriginal
             ).trim();
             // Declarative population — JSON attributes win over any
             // hand-written rows in the menu.
-            const optionsJson = this.root.getAttribute('data-multiselect-options');
+            const optionsJson = this._root.getAttribute('data-multiselect-options');
             if (optionsJson) {
                 try {
-                    const selectedJson = this.root.getAttribute('data-multiselect-selected');
+                    const selectedJson = this._root.getAttribute('data-multiselect-selected');
                     this._buildOptions(JSON.parse(optionsJson), selectedJson ? JSON.parse(selectedJson) : []);
                 } catch (error) {
-                    console.warn('NDS Multiselect: invalid JSON in data-multiselect-options/-selected', this.root, error);
+                    console.warn('NDS Multiselect: invalid JSON in data-multiselect-options/-selected', this._root, error);
                 }
             }
             this._collectCheckboxes();
             // Last committed values — the revert target when an apply-mode
             // panel closes without Apply.
-            this.applied = this.getSelected();
-            this.bindEvents();
-            this.renderChips();
+            this._applied = this.getSelected();
+            this._addEventListeners();
+            this._renderChips();
             // A narrow field wraps the trigger onto its own top row, a shape only
             // layout can see; CSS rounds the trigger's corners for it.
-            this._offStacked = NDS.onElementResize(this.formControl, () => {
-                const stacked = this.dropmenu.offsetHeight < this.formControl.clientHeight - 1;
-                return () => this.formControl.toggleAttribute('data-multiselect-stacked', stacked);
+            this._offStacked = NDS.onElementResize(this._formControl, () => {
+                const stacked = this._dropmenu.offsetHeight < this._formControl.clientHeight - 1;
+                return () => this._formControl.toggleAttribute('data-multiselect-stacked', stacked);
             });
-            this.root.setAttribute('data-nds-multiselect-initialized', 'true');
+            this._root.setAttribute('data-nds-multiselect-initialized', 'true');
             // Registered here (not the sweep) so create()-made instances get the
             // expando too — init() only runs on successful construction.
-            this.root.ndsMultiselect = this;
+            this._root.ndsMultiselect = this;
         }
 
         // Gather the option checkboxes and mirror data-multiselect-name onto
         // any missing a name, so the form submits an array (name="X[]").
         _collectCheckboxes() {
-            this.checkboxes = Array.from(this.menu.querySelectorAll('input[type="checkbox"]'));
-            if (this.name) {
-                this.checkboxes.forEach(checkbox => {
-                    if (!checkbox.name) checkbox.name = this.name + '[]';
+            this._checkboxes = Array.from(this._menu.querySelectorAll('input[type="checkbox"]'));
+            if (this._name) {
+                this._checkboxes.forEach(checkbox => {
+                    if (!checkbox.name) checkbox.name = this._name + '[]';
                 });
             }
         }
@@ -161,11 +164,11 @@
         // author's footer if absent), replacing whatever rows were there.
         _buildOptions(raw, selected) {
             const groups = this._normalizeOptions(raw);
-            let scroll = this.menu.querySelector('.nds-dropmenu-scroll');
+            let scroll = this._menu.querySelector('.nds-dropmenu-scroll');
             if (!scroll) {
                 scroll = document.createElement('div');
                 scroll.className = 'nds-dropmenu-scroll';
-                this.menu.prepend(scroll);
+                this._menu.prepend(scroll);
             }
             scroll.replaceChildren();
 
@@ -198,7 +201,7 @@
 
             const container = document.createElement('div');
             container.className = 'nds-form-container nds-checkbox';
-            if (this.dropmenu.hasAttribute('data-search')) {
+            if (this._dropmenu.hasAttribute('data-search')) {
                 container.setAttribute('data-search-item', '');
             }
 
@@ -233,42 +236,42 @@
         populate(options, selected) {
             this._buildOptions(options, selected || []);
             this._collectCheckboxes();
-            this.applied = this.getSelected();
-            this.renderChips();
+            this._applied = this.getSelected();
+            this._renderChips();
         }
 
-        bindEvents() {
+        _addEventListeners() {
             const { signal } = this.abortController;
 
             // ── Dropmenu lifecycle ──────────────────────────────────
-            this.dropmenu.addEventListener('nds:dropmenu:opened', () => {
-                NDS.state.add(this.root, 'focus');
+            this._dropmenu.addEventListener('nds:dropmenu:opened', () => {
+                NDS.state.add(this._root, 'focus');
             }, { signal });
-            this.dropmenu.addEventListener('nds:dropmenu:closed', () => {
-                NDS.state.remove(this.root, 'focus');
+            this._dropmenu.addEventListener('nds:dropmenu:closed', () => {
+                NDS.state.remove(this._root, 'focus');
                 // Apply mode: closing without Apply discards staged toggles.
                 // No-op after Apply — it re-syncs `applied` before the close.
-                if (this.applyMode) {
-                    this.checkboxes.forEach(checkbox => { checkbox.checked = this.applied.includes(checkbox.value); });
+                if (this._applyMode) {
+                    this._checkboxes.forEach(checkbox => { checkbox.checked = this._applied.includes(checkbox.value); });
                 }
             }, { signal });
 
             // ── Trigger interaction states ──────────────────────────
-            if (this.trigger) {
-                this.trigger.addEventListener('mousedown', () => {
-                    NDS.state.add(this.root, 'active');
+            if (this._trigger) {
+                this._trigger.addEventListener('mousedown', () => {
+                    NDS.state.add(this._root, 'active');
                 }, { signal });
                 ['mouseup', 'mouseleave'].forEach(eventName => {
-                    this.trigger.addEventListener(eventName, () => {
-                        NDS.state.remove(this.root, 'active');
+                    this._trigger.addEventListener(eventName, () => {
+                        NDS.state.remove(this._root, 'active');
                     }, { signal });
                 });
-                this.trigger.addEventListener('focus', () => {
-                    NDS.state.add(this.root, 'focus');
+                this._trigger.addEventListener('focus', () => {
+                    NDS.state.add(this._root, 'focus');
                 }, { signal });
-                this.trigger.addEventListener('blur', () => {
+                this._trigger.addEventListener('blur', () => {
                     // Keep focus state while the panel is open — user is in the panel.
-                    if (!this.isOpen()) NDS.state.remove(this.root, 'focus');
+                    if (!this._isOpen()) NDS.state.remove(this._root, 'focus');
                 }, { signal });
             }
 
@@ -276,14 +279,14 @@
             // Each toggle commits immediately; chips + a11y summary refresh
             // live. One listener on the menu element survives populate()
             // rebuilding the rows.
-            this.menu.addEventListener('change', (e) => {
+            this._menu.addEventListener('change', (e) => {
                 if (!e.target.matches('input[type="checkbox"]')) return;
                 // Staged in apply mode — the native checkbox state change is
                 // what the user perceives; commit happens on Apply.
-                if (this.applyMode) return;
-                this.renderChips();
-                this.announceToggle(e.target);
-                this.emitChange();
+                if (this._applyMode) return;
+                this._renderChips();
+                this._announceToggle(e.target);
+                this._dispatchChange();
             }, { signal });
 
             // ── Surface-delegated open ──────────────────────────────
@@ -291,40 +294,40 @@
             // is required because this click bubbles past the dropmenu host and
             // the dropmenu's outside-click handler would close what we just opened.
             const isDelegatedSurface = (target) =>
-                !this.dropmenu.contains(target) && !target.closest('.nds-chip');
+                !this._dropmenu.contains(target) && !target.closest('.nds-chip');
 
-            this.root.addEventListener('click', (e) => {
-                if (!isDelegatedSurface(e.target) || this.isOpen()) return;
+            this._root.addEventListener('click', (e) => {
+                if (!isDelegatedSurface(e.target) || this._isOpen()) return;
                 e.stopPropagation();
                 // Focus first — a real trigger click focuses via mousedown, a
                 // synthetic .click() doesn't. Without it focus stays on <body>
                 // and keyboard flow (arrows, Escape-refocus) is dead.
-                this.trigger?.focus();
-                this.trigger?.click();
+                this._trigger?.focus();
+                this._trigger?.click();
             }, { signal });
 
-            this.root.addEventListener('mousedown', (e) => {
+            this._root.addEventListener('mousedown', (e) => {
                 if (!isDelegatedSurface(e.target)) return;
-                NDS.state.add(this.root, 'active');
+                NDS.state.add(this._root, 'active');
             }, { signal });
             ['mouseup', 'mouseleave'].forEach(eventName => {
-                this.root.addEventListener(eventName, () => {
-                    NDS.state.remove(this.root, 'active');
+                this._root.addEventListener(eventName, () => {
+                    NDS.state.remove(this._root, 'active');
                 }, { signal });
             });
 
             // ── Footer actions (optional) ───────────────────────────
-            if (this.resetBtn) {
-                this.resetBtn.addEventListener('click', (e) => {
+            if (this._resetButton) {
+                this._resetButton.addEventListener('click', (e) => {
                     e.preventDefault();
-                    if (this.isReadonly()) return;
+                    if (this._isReadonly()) return;
                     this.reset();
                 }, { signal });
             }
             // No data-no-auto-close on Apply — the dropmenu closes it and
             // hands focus back to the trigger.
-            if (this.applyBtn) {
-                this.applyBtn.addEventListener('click', () => this.apply(), { signal });
+            if (this._applyButton) {
+                this._applyButton.addEventListener('click', () => this.apply(), { signal });
             }
 
             // ── Submit guard (apply mode) ───────────────────────────
@@ -333,17 +336,17 @@
             // fires deferred) must post/validate the APPLIED set, not staged
             // toggles. Capture phase beats NDS.Form' submit validation.
             // A form reset ticks the boxes back without a change event.
-            this.root.closest('form')?.addEventListener('reset', (e) => setTimeout(() => {
+            this._root.closest('form')?.addEventListener('reset', (e) => setTimeout(() => {
                 if (e.defaultPrevented) return;
-                this.applied = this.getSelected();
-                this.renderChips();
+                this._applied = this.getSelected();
+                this._renderChips();
             }), { signal });
 
-            const form = this.applyMode && this.root.closest('form');
+            const form = this._applyMode && this._root.closest('form');
             if (form) {
                 form.addEventListener('submit', () => {
-                    this.checkboxes.forEach(checkbox => { checkbox.checked = this.applied.includes(checkbox.value); });
-                    if (this.isOpen()) this.dropmenu.ndsDropmenu?.close();
+                    this._checkboxes.forEach(checkbox => { checkbox.checked = this._applied.includes(checkbox.value); });
+                    if (this._isOpen()) this._dropmenu.ndsDropmenu?.close();
                 }, { signal, capture: true });
             }
         }
@@ -351,81 +354,81 @@
         destroy() {
             this.abortController?.abort();
             this._offStacked?.();
-            this.formControl.removeAttribute('data-multiselect-stacked');
+            this._formControl.removeAttribute('data-multiselect-stacked');
             // Chips hold their own remove listeners; create() rebuilds them.
-            this.chipsEl.replaceChildren();
-            NDS.state.remove(this.root, 'filled');
-            NDS.aria.label(this.trigger, this.triggerAriaOriginal);
+            this._chipsElement.replaceChildren();
+            NDS.state.remove(this._root, 'filled');
+            NDS.aria.label(this._trigger, this._triggerAriaOriginal);
             // The checkbox names stay: they carry the field's value to the form.
-            if (this._ownDropmenu) NDS.Dropmenu.destroy(this.dropmenu);
-            if (this._ownAnchor) this.dropmenu.removeAttribute('data-anchor');
-            if (this._ownMenuClass) this.menu.classList.remove('nds-multiselect-menu');
-            this.root.removeAttribute('data-nds-multiselect-initialized');
-            delete this.root.ndsMultiselect;
+            if (this._ownDropmenu) NDS.Dropmenu.destroy(this._dropmenu);
+            if (this._ownAnchor) this._dropmenu.removeAttribute('data-anchor');
+            if (this._ownMenuClass) this._menu.classList.remove('nds-multiselect-menu');
+            this._root.removeAttribute('data-nds-multiselect-initialized');
+            delete this._root.ndsMultiselect;
         }
 
-        isOpen() {
-            return NDS.state.has(this.dropmenu, 'open');
+        _isOpen() {
+            return NDS.state.has(this._dropmenu, 'open');
         }
 
         // Readonly blocks the user only: chips and Reset are keyboard-reachable
         // past the readonly CSS, while removeValue()/reset() stay callable from code.
-        isReadonly() {
-            return NDS.state.has(this.root, 'readonly');
+        _isReadonly() {
+            return NDS.state.has(this._root, 'readonly');
         }
 
         getSelected() {
-            return this.checkboxes.filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
+            return this._checkboxes.filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
         }
 
         // Commit the current checked set: chips, a11y summary, change event.
         // In apply mode this is the Apply button's handler; callable directly
         // in either mode.
         apply() {
-            this.applied = this.getSelected();
-            this.renderChips();
-            const labels = this.applied.map(value => this.labelFor(value));
+            this._applied = this.getSelected();
+            this._renderChips();
+            const labels = this._applied.map(value => this._getLabel(value));
             NDS.announce(labels.length ? strings.text('applied', { value: labels.join(', ') }) : strings.text('cleared'));
-            this.emitChange();
+            this._dispatchChange();
         }
 
         reset() {
             // Apply mode with the panel open: clear the STAGED set only —
             // Apply commits it, closing without Apply restores `applied`.
-            if (this.applyMode && this.isOpen()) {
-                this.checkboxes.forEach(checkbox => { checkbox.checked = false; });
+            if (this._applyMode && this._isOpen()) {
+                this._checkboxes.forEach(checkbox => { checkbox.checked = false; });
                 return;
             }
             const before = this.getSelected();
-            this.checkboxes.forEach(checkbox => {
+            this._checkboxes.forEach(checkbox => {
                 if (checkbox.checked) checkbox.checked = false;
             });
-            this.applied = [];
-            this.renderChips();
+            this._applied = [];
+            this._renderChips();
             if (before.length) {
                 NDS.announce(strings.text('cleared'));
-                this.emitChange();
+                this._dispatchChange();
             }
         }
 
         removeValue(value) {
-            const checkbox = this.checkboxes.find(item => item.value === value);
+            const checkbox = this._checkboxes.find(item => item.value === value);
             if (!checkbox || !checkbox.checked) return;
-            NDS.keepChipFocus(() => this.chipsEl.children, () => {
+            NDS.keepChipFocus(() => this._chipsElement.children, () => {
                 checkbox.checked = false;
-                this.applied = this.applied.filter(item => item !== value);
-                this.renderChips();
-            }, this.trigger);
-            NDS.announce(strings.text('removed', { value: this.labelFor(value) }));
-            this.emitChange();
+                this._applied = this._applied.filter(item => item !== value);
+                this._renderChips();
+            }, this._trigger);
+            NDS.announce(strings.text('removed', { value: this._getLabel(value) }));
+            this._dispatchChange();
         }
 
-        announceToggle(checkbox) {
-            NDS.announce(strings.text(checkbox.checked ? 'added' : 'removed', { value: this.labelFor(checkbox.value) }));
+        _announceToggle(checkbox) {
+            NDS.announce(strings.text(checkbox.checked ? 'added' : 'removed', { value: this._getLabel(checkbox.value) }));
         }
 
-        labelFor(value) {
-            const checkbox = this.checkboxes.find(item => item.value === value);
+        _getLabel(value) {
+            const checkbox = this._checkboxes.find(item => item.value === value);
             if (!checkbox) return value;
             if (checkbox.dataset.label) return checkbox.dataset.label;
             const row = checkbox.closest('.nds-form-container') || checkbox.parentElement;
@@ -433,42 +436,42 @@
             return label ? label.textContent.trim() : value;
         }
 
-        renderChips() {
+        _renderChips() {
             const selected = this.getSelected();
-            this.chipsEl.replaceChildren();
-            selected.forEach(value => { this.chipsEl.appendChild(this.buildChip(value)); });
+            this._chipsElement.replaceChildren();
+            selected.forEach(value => { this._chipsElement.appendChild(this._buildChip(value)); });
             // New chips take the field's disabled.
-            NDS.state.apply(this.root, 'disabled');
-            NDS.state[selected.length ? 'add' : 'remove'](this.root, 'filled');
+            NDS.state.apply(this._root, 'disabled');
+            NDS.state[selected.length ? 'add' : 'remove'](this._root, 'filled');
 
-            if (this.trigger && this.triggerLabelOriginal) {
-                const labels = selected.map(value => this.labelFor(value));
-                if (labels.length) NDS.aria.label(this.trigger, this.triggerLabelOriginal + ': ' + labels.join(', '));
-                else strings.set(this.trigger, 'aria-label', 'none', { label: this.triggerLabelOriginal });
+            if (this._trigger && this._triggerLabelOriginal) {
+                const labels = selected.map(value => this._getLabel(value));
+                if (labels.length) NDS.aria.label(this._trigger, this._triggerLabelOriginal + ': ' + labels.join(', '));
+                else strings.set(this._trigger, 'aria-label', 'none', { label: this._triggerLabelOriginal });
             }
         }
 
-        buildChip(value) {
-            return NDS.buildChip(this.labelFor(value), {
-                chipClass: this.chipClass,
+        _buildChip(value) {
+            return NDS.buildChip(this._getLabel(value), {
+                chipClass: this._chipClass,
                 data: { multiselectValue: value },
-                disabled: NDS.state.has(this.root, 'disabled'),
+                disabled: NDS.state.has(this._root, 'disabled'),
                 signal: this.abortController.signal,
                 onRemove: (e) => {
                     e.stopPropagation();
-                    if (this.isReadonly()) return;
+                    if (this._isReadonly()) return;
                     this.removeValue(value);
                 },
             });
         }
 
-        emitChange() {
+        _dispatchChange() {
             const values = this.getSelected();
-            this.root.dispatchEvent(new CustomEvent('nds:multiselect:change', {
+            this._root.dispatchEvent(new CustomEvent('nds:multiselect:change', {
                 detail: {
-                    name: this.name,
+                    name: this._name,
                     values: values,
-                    labels: values.map(value => this.labelFor(value))
+                    labels: values.map(value => this._getLabel(value))
                 },
                 bubbles: true
             }));
@@ -501,7 +504,7 @@
         create: (element) => {
             if (element.ndsMultiselect) return element.ndsMultiselect;
             const instance = new NdsMultiselect(element);
-            return instance.valid ? instance : null;
+            return instance._valid ? instance : null;
         },
         destroy: (element) => element.ndsMultiselect?.destroy()
     };

@@ -144,7 +144,7 @@
 
             // Attach to target
             if (target) {
-                this._attachToTarget(feedback, target, position);
+                this._insertIntoTarget(feedback, target, position);
             }
 
             // Dispatch create event
@@ -232,10 +232,10 @@
         },
 
         /**
-         * Internal: Attach feedback to target element
+         * Internal: insert feedback into the target element
          * @private
          */
-        _attachToTarget(feedback, target, position) {
+        _insertIntoTarget(feedback, target, position) {
             const targetEl = NDS.resolveEl(target);
             if (!targetEl) {
                 console.warn('NDS Feedback: target element not found', target);

@@ -11,6 +11,7 @@
  *   NDS.Stepper.goTo(idOrEl, step)        move to a step number; one past the last completes the flow
  *   NDS.Stepper.control(idOrEl, action, val)  the same entry point the buttons use
  *                                         (action: next | previous | goto)
+ *   instance.current / .total / .progress   read-only: step number, step count, percent
  * Events (bubble from the .nds-stepper):
  *   nds:stepper:change   detail {currentStep, totalSteps, progressPercentage}
  *                        (currentStep is totalSteps + 1 once the flow is completed)
@@ -93,21 +94,21 @@
                 const newTotal = parseInt(el.dataset.total);
                 let changed = false;
 
-                if (newTotal > 0 && newTotal !== stepper.totalSteps) {
-                    stepper.totalSteps = newTotal;
-                    stepper.steps = el.querySelectorAll('.nds-stepper-step');
+                if (newTotal > 0 && newTotal !== stepper._totalSteps) {
+                    stepper._totalSteps = newTotal;
+                    stepper._steps = el.querySelectorAll('.nds-stepper-step');
                     changed = true;
                 }
 
-                if (newCurrent >= 1 && newCurrent !== stepper.currentStep) {
-                    stepper.currentStep = Math.min(newCurrent, stepper.totalSteps + 1);
+                if (newCurrent >= 1 && newCurrent !== stepper._currentStep) {
+                    stepper._currentStep = Math.min(newCurrent, stepper._totalSteps + 1);
                     changed = true;
                 }
 
                 if (changed) {
-                    stepper.updateProgressDisplay();
-                    stepper.syncStepStates();
-                    stepper.dispatchEvent();
+                    stepper._syncProgressDisplay();
+                    stepper._syncStepStates();
+                    stepper._dispatchEvent();
                 }
             });
         });
@@ -115,69 +116,69 @@
 
     class NdsStepper {
         constructor(element) {
-            this.element = element;
-            this.steps = element.querySelectorAll('.nds-stepper-step');
-            this.ring = element.querySelector('.nds-progress-circle');
-            this.progressNumber = element.querySelector('.nds-progress-number');
-            this.progressText = element.querySelector('.nds-progress-steps');
+            this._element = element;
+            this._steps = element.querySelectorAll('.nds-stepper-step');
+            this._ring = element.querySelector('.nds-progress-circle');
+            this._progressNumber = element.querySelector('.nds-progress-number');
+            this._progressText = element.querySelector('.nds-progress-steps');
 
-            this.currentStep = this.getCurrentStep();
-            this.totalSteps = this.steps.length;
+            this._currentStep = this._getCurrentStep();
+            this._totalSteps = this._steps.length;
 
             // First paint: the step states and the progress display.
-            this.updateProgress();
-            this.syncStepStates();
+            this._syncProgress();
+            this._syncStepStates();
         }
 
         // One past the last step is the completed flow, the same state data-current writes.
-        isValidStep(stepNumber) {
-            return stepNumber >= 1 && stepNumber <= this.totalSteps + 1;
+        _isValidStep(stepNumber) {
+            return stepNumber >= 1 && stepNumber <= this._totalSteps + 1;
         }
 
         destroy() {
-            const el = this.element;
+            const el = this._element;
             delete el.ndsStepper;
             el.removeAttribute('data-nds-stepper-initialized');
             // The shared control listener and data-current observer stay — they serve every stepper.
         }
 
-        getCurrentStep() {
-            const dataStep = parseInt(this.element.dataset.current);
+        _getCurrentStep() {
+            const dataStep = parseInt(this._element.dataset.current);
             // One past the last step is the completed flow.
-            return dataStep >= 1 ? Math.min(dataStep, this.steps.length + 1) : 1;
+            return dataStep >= 1 ? Math.min(dataStep, this._steps.length + 1) : 1;
         }
 
-        updateProgress() {
-            this.element.dataset.current = this.currentStep;
-            this.element.dataset.total = this.totalSteps;
-            this.updateProgressDisplay();
+        _syncProgress() {
+            this._element.dataset.current = this._currentStep;
+            this._element.dataset.total = this._totalSteps;
+            this._syncProgressDisplay();
         }
 
-        updateProgressDisplay() {
+        _syncProgressDisplay() {
             // Past the last step only: arriving on it leaves it current. next() moves past it.
-            if (this.currentStep > this.totalSteps) {
-                NDS.state.add(this.element, 'completed');
+            if (this._currentStep > this._totalSteps) {
+                NDS.state.add(this._element, 'completed');
             } else {
-                NDS.state.remove(this.element, 'completed');
+                NDS.state.remove(this._element, 'completed');
             }
 
-            const percent = Math.min(100, (this.currentStep / this.totalSteps) * 100);
+            const percent = Math.min(100, (this._currentStep / this._totalSteps) * 100);
             // Only the radial ring draws it, so a stepper with no ring carries no inline style.
-            if (this.ring) this.ring.style.setProperty('--progress-value', percent);
-            if (this.progressNumber) this.progressNumber.textContent = Math.round(percent);
-            if (this.progressText) this.progressText.textContent = `${Math.min(this.currentStep, this.totalSteps)} / ${this.totalSteps}`;
+            if (this._ring) this._ring.style.setProperty('--progress-value', percent);
+            if (this._progressNumber) this._progressNumber.textContent = Math.round(percent);
+            if (this._progressText) this._progressText.textContent = `${Math.min(this._currentStep, this._totalSteps)} / ${this._totalSteps}`;
         }
 
-        syncStepStates() {
-            if (this.element.classList.contains('nds-static')) return;
-            const allCompleted = this.currentStep > this.totalSteps;
+        _syncStepStates() {
+            if (this._element.classList.contains('nds-static')) return;
+            const allCompleted = this._currentStep > this._totalSteps;
 
-            this.steps.forEach((step, index) => {
+            this._steps.forEach((step, index) => {
                 const stepNumber = index + 1;
 
-                if (allCompleted || stepNumber < this.currentStep) {
+                if (allCompleted || stepNumber < this._currentStep) {
                     NDS.state.set(step, 'completed');
-                } else if (stepNumber === this.currentStep) {
+                } else if (stepNumber === this._currentStep) {
                     NDS.state.set(step, 'current');
                 } else {
                     NDS.state.set(step, 'upcoming');
@@ -186,27 +187,27 @@
         }
 
         goTo(stepNumber) {
-            if (!this.isValidStep(stepNumber)) return false;
-            this.currentStep = stepNumber;
-            this.updateProgress();
-            this.syncStepStates();
-            this.dispatchEvent();
+            if (!this._isValidStep(stepNumber)) return false;
+            this._currentStep = stepNumber;
+            this._syncProgress();
+            this._syncStepStates();
+            this._dispatchEvent();
             return true;
         }
 
         next() {
-            return this.goTo(this.currentStep + 1);
+            return this.goTo(this._currentStep + 1);
         }
 
         prev() {
-            return this.goTo(this.currentStep - 1);
+            return this.goTo(this._currentStep - 1);
         }
 
-        dispatchEvent() {
-            this.element.dispatchEvent(new CustomEvent('nds:stepper:change', {
+        _dispatchEvent() {
+            this._element.dispatchEvent(new CustomEvent('nds:stepper:change', {
                 detail: {
-                    currentStep: this.currentStep,
-                    totalSteps: this.totalSteps,
+                    currentStep: this._currentStep,
+                    totalSteps: this._totalSteps,
                     progressPercentage: this.progress
                 },
                 bubbles: true
@@ -214,9 +215,9 @@
         }
 
         // Simple getters
-        get current() { return this.currentStep; }
-        get total() { return this.totalSteps; }
-        get progress() { return Math.min(100, Math.round((this.currentStep / this.totalSteps) * 100)); }
+        get current() { return this._currentStep; }
+        get total() { return this._totalSteps; }
+        get progress() { return Math.min(100, Math.round((this._currentStep / this._totalSteps) * 100)); }
     }
 
     // Read off the element, so an unmounted stepper (a framework removing it without destroy()) is gone.

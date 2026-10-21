@@ -34,17 +34,17 @@
 
     class NdsBreadcrumb {
         constructor(breadcrumbNav) {
-            this.breadcrumbNav = breadcrumbNav;
-            this.breadcrumb = breadcrumbNav.querySelector('.nds-breadcrumb');
-            this.items = Array.from(this.breadcrumb.querySelectorAll('li'));
-            this.threshold = 5; // Collapse if more than 5 items
+            this._breadcrumbNav = breadcrumbNav;
+            this._breadcrumb = breadcrumbNav.querySelector('.nds-breadcrumb');
+            this._items = Array.from(this._breadcrumb.querySelectorAll('li'));
+            this._threshold = 5; // Collapse if more than 5 items
 
-            if (this.items.length === 0) {
+            if (this._items.length === 0) {
                 console.warn('NDS Breadcrumb: No breadcrumb items found');
                 return;
             }
 
-            this.valid = true;
+            this._valid = true;
             // Here, not in the sweep, so create() also ends the skeleton and stops a second sweep.
             breadcrumbNav.ndsBreadcrumb = this;
             this.init();
@@ -52,21 +52,21 @@
         }
 
         init() {
-            if (this.items.length > this.threshold) {
-                this.collapseBreadcrumb();
+            if (this._items.length > this._threshold) {
+                this._collapseBreadcrumb();
             }
         }
 
-        collapseBreadcrumb() {
+        _collapseBreadcrumb() {
             // Keep first item (Home) and last 2 items visible
-            const firstItem = this.items[0];
-            const lastTwoItems = this.items.slice(-2);
-            const hiddenItems = this.items.slice(1, -2);
+            const firstItem = this._items[0];
+            const lastTwoItems = this._items.slice(-2);
+            const hiddenItems = this._items.slice(1, -2);
 
             // Create dropdown container using nds-dropmenu
-            const dropdownContainer = this.createDropdown(hiddenItems);
+            const dropdownContainer = this._buildDropdown(hiddenItems);
 
-            this.breadcrumb.replaceChildren(firstItem, dropdownContainer, ...lastTwoItems);
+            this._breadcrumb.replaceChildren(firstItem, dropdownContainer, ...lastTwoItems);
 
             // Initialize only the newly created dropdown menu
             const dropmenuElement = dropdownContainer.querySelector('.nds-dropmenu');
@@ -76,7 +76,7 @@
             }
         }
 
-        createDropdown(hiddenItems) {
+        _buildDropdown(hiddenItems) {
             const ellipsisItem = document.createElement('li');
             ellipsisItem.className = 'nds-breadcrumb-ellipsis';
 
@@ -117,14 +117,14 @@
 
         destroy() {
             // Put back the original items: collapse detached the middle ones.
-            const menu = this.breadcrumb.querySelector('.nds-breadcrumb-ellipsis .nds-dropmenu');
+            const menu = this._breadcrumb.querySelector('.nds-breadcrumb-ellipsis .nds-dropmenu');
             menu?.ndsDropmenu?.destroy?.();
-            this.breadcrumb.replaceChildren(...this.items);
+            this._breadcrumb.replaceChildren(...this._items);
             // Releasing the stamp is what keeps destroy two-way: without it the same
             // markup stays marked as claimed, so no later init() or NDS.init.refresh()
             // can ever collapse it again.
-            this.breadcrumbNav.removeAttribute('data-nds-breadcrumb-initialized');
-            delete this.breadcrumbNav.ndsBreadcrumb;
+            this._breadcrumbNav.removeAttribute('data-nds-breadcrumb-initialized');
+            delete this._breadcrumbNav.ndsBreadcrumb;
         }
     }
 
@@ -150,7 +150,7 @@
         create: (nav) => {
             if (nav.ndsBreadcrumb) return nav.ndsBreadcrumb;
             const instance = new NdsBreadcrumb(nav);
-            return instance.valid ? instance : null;
+            return instance._valid ? instance : null;
         },
         destroy: (nav) => nav?.ndsBreadcrumb?.destroy(),
     };

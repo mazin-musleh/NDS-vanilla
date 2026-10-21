@@ -42,23 +42,23 @@
 
     class NdsExpandable {
         constructor(expandableContainer) {
-            this.expandableContainer = expandableContainer;
+            this._expandableContainer = expandableContainer;
             // Look for .nds-expandable-content as child element first, then check if the container itself has nds-expandable-content class
-            this.contentElement = expandableContainer.querySelector('.nds-expandable-content') ||
+            this._contentElement = expandableContainer.querySelector('.nds-expandable-content') ||
                                  (expandableContainer.classList.contains('nds-expandable-content') ? expandableContainer : null);
             // A wrapper between container and content gets named, so _utilities.scss can clip
             // it without a bare `> *:has()` subject (which taxes every data-state write).
-            const holder = this.contentElement?.parentElement;
+            const holder = this._contentElement?.parentElement;
             if (holder && holder !== expandableContainer) holder.classList.add('nds-expandable-clip');
-            this.expandButton = null;
-            this.isExpanded = false;
+            this._expandButton = null;
+            this._isExpanded = false;
 
-            if (!this.contentElement) {
+            if (!this._contentElement) {
                 console.warn('NDS Expandable: No .nds-expandable-content element found in expandable container');
                 return;
             }
 
-            this.valid = true;
+            this._valid = true;
             // Registered here, not in the sweep, so every construction path —
             // sweep, reinit() and programmatic create() — is reachable and stamped.
             expandableContainer.ndsExpandable = this;
@@ -67,81 +67,81 @@
         }
 
         init() {
-            // checkContentHeight (scrollHeight + getComputedStyle) runs from the
-            // ResizeObserver's first delivery in setupEventListeners — a free
+            // _checkContentHeight (scrollHeight + getComputedStyle) runs from the
+            // ResizeObserver's first delivery in _addEventListeners — a free
             // post-layout read. Calling it here would force a reflow during the
             // component-init burst.
-            this.setupEventListeners();
+            this._addEventListeners();
         }
 
-        checkContentHeight() {
+        _checkContentHeight() {
             // An unrendered panel (inactive tab, display:none) measures 0. That's
             // "unmeasurable", not "fits" — taking the fits branch would strip the
             // CSS clamp via inline max-height:none, so revealing the tab paints the
             // content full-height until the next recheck clamps it back (a >1000px
             // flash on tokens.html). Wait for a delivery with a real box instead;
             // the CSS max-height keeps holding until then.
-            if (this.contentElement.scrollHeight === 0) return;
+            if (this._contentElement.scrollHeight === 0) return;
 
             // Get the max height from CSS custom property or use default
-            const maxHeight = this.getMaxHeight();
-            const actualHeight = this.contentElement.scrollHeight;
+            const maxHeight = this._getMaxHeight();
+            const actualHeight = this._contentElement.scrollHeight;
 
             // Always add button first
-            this.addExpandButton();
+            this._addExpandButton();
 
             // Toggle nds-expand class and show/hide button based on content height
             if (actualHeight > maxHeight) {
-                NDS.state.add(this.expandableContainer, 'expandable');
-                this.expandButton.style.display = '';
+                NDS.state.add(this._expandableContainer, 'expandable');
+                this._expandButton.style.display = '';
                 // Reset inline style to let CSS handle max-height
-                this.contentElement.style.maxHeight = '';
+                this._contentElement.style.maxHeight = '';
             } else {
-                NDS.state.remove(this.expandableContainer, 'expandable', 'expanded');
-                this.expandButton.style.display = 'none';
-                this.isExpanded = false; // Reset expanded state
+                NDS.state.remove(this._expandableContainer, 'expandable', 'expanded');
+                this._expandButton.style.display = 'none';
+                this._isExpanded = false; // Reset expanded state
                 // Content that grows past the clamp again shows a collapsed button.
-                NDS.aria.expanded(this.expandButton, false);
-                strings.set(this.expandButton.querySelector('.nds-label'), 'text', 'show_more');
+                NDS.aria.expanded(this._expandButton, false);
+                strings.set(this._expandButton.querySelector('.nds-label'), 'text', 'show_more');
                 // Remove max-height constraint when content fits
-                this.contentElement.style.maxHeight = 'none';
+                this._contentElement.style.maxHeight = 'none';
             }
         }
 
-        getMaxHeight() {
+        _getMaxHeight() {
             // Cached for resize checks; refresh() clears it
             if (this._cachedMaxHeight === undefined) {
-                const computedStyle = getComputedStyle(this.contentElement);
+                const computedStyle = getComputedStyle(this._contentElement);
                 const maxHeightValue = computedStyle.getPropertyValue('--max-height') || '300px';
                 this._cachedMaxHeight = parseInt(maxHeightValue);
             }
             return this._cachedMaxHeight;
         }
 
-        addExpandButton() {
+        _addExpandButton() {
             // Don't add button if it already exists
-            if (this.expandButton) return;
+            if (this._expandButton) return;
 
             // Create the expand button
-            this.expandButton = document.createElement('button');
-            this.expandButton.className = 'nds-btn nds-subtle nds-expand-btn nds-menu-btn nds-md';
-            NDS.aria.expanded(this.expandButton, false);
+            this._expandButton = document.createElement('button');
+            this._expandButton.className = 'nds-btn nds-subtle nds-expand-btn nds-menu-btn nds-md';
+            NDS.aria.expanded(this._expandButton, false);
 
-            this.expandButton.innerHTML = '<span class="nds-label"></span>';
-            strings.set(this.expandButton.firstChild, 'text', 'show_more');
+            this._expandButton.innerHTML = '<span class="nds-label"></span>';
+            strings.set(this._expandButton.firstChild, 'text', 'show_more');
 
             // Add button to the parent container (not the content element)
-            this.expandableContainer.appendChild(this.expandButton);
+            this._expandableContainer.appendChild(this._expandButton);
 
             // Setup button click event
-            this.expandButton.addEventListener('click', (e) => {
+            this._expandButton.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.toggle();
             });
         }
 
         toggle() {
-            if (this.isExpanded) {
+            if (this._isExpanded) {
                 this.collapse();
             } else {
                 this.expand();
@@ -149,117 +149,117 @@
         }
 
         expand(syncSiblings = true) {
-            if (this.isExpanded) return;
-            this.isExpanded = true;
+            if (this._isExpanded) return;
+            this._isExpanded = true;
 
             // Add expanded state to container
-            NDS.state.add(this.expandableContainer, 'expanded');
+            NDS.state.add(this._expandableContainer, 'expanded');
 
             // Update button state
-            if (this.expandButton) {
-                NDS.aria.expanded(this.expandButton, true);
-                strings.set(this.expandButton.querySelector('.nds-label'), 'text', 'show_less');
+            if (this._expandButton) {
+                NDS.aria.expanded(this._expandButton, true);
+                strings.set(this._expandButton.querySelector('.nds-label'), 'text', 'show_less');
             }
 
             // Sync siblings if parent has nds-expand-all
             if (syncSiblings) {
-                this.syncSiblings(true);
+                this._syncSiblings(true);
             }
 
             // Dispatch custom event
-            this.dispatchEvent('nds:expandable:expanded');
+            this._dispatchEvent('nds:expandable:expanded');
         }
 
         collapse(syncSiblings = true) {
-            if (!this.isExpanded) return;
-            this.isExpanded = false;
+            if (!this._isExpanded) return;
+            this._isExpanded = false;
 
             // Remove expanded state from container
-            NDS.state.remove(this.expandableContainer, 'expanded');
+            NDS.state.remove(this._expandableContainer, 'expanded');
 
             // Update button state
-            if (this.expandButton) {
-                NDS.aria.expanded(this.expandButton, false);
-                strings.set(this.expandButton.querySelector('.nds-label'), 'text', 'show_more');
+            if (this._expandButton) {
+                NDS.aria.expanded(this._expandButton, false);
+                strings.set(this._expandButton.querySelector('.nds-label'), 'text', 'show_more');
             }
 
             // Sync siblings if parent has nds-expand-all
             if (syncSiblings) {
-                this.syncSiblings(false);
+                this._syncSiblings(false);
             }
 
             // Dispatch custom event
-            this.dispatchEvent('nds:expandable:collapsed');
+            this._dispatchEvent('nds:expandable:collapsed');
         }
 
-        syncSiblings(expand) {
-            const parent = this.expandableContainer.closest('.nds-expand-all');
+        _syncSiblings(expand) {
+            const parent = this._expandableContainer.closest('.nds-expand-all');
             if (!parent) return;
             // Only direct members sync: an expandable nested inside a member's
             // content neither drives the group nor follows it. Keyed on the
             // group (not "any expandable ancestor") so a group that itself
             // sits inside an expandable still works.
             const isMember = el => el.parentElement.closest('.nds-expandable, .nds-expand-all') === parent;
-            if (!isMember(this.expandableContainer)) return;
+            if (!isMember(this._expandableContainer)) return;
 
             // Find all expandable siblings
             const siblings = parent.querySelectorAll('.nds-expandable[data-nds-expandable-initialized]');
             siblings.forEach(sibling => {
-                if (sibling === this.expandableContainer || !isMember(sibling)) return;
+                if (sibling === this._expandableContainer || !isMember(sibling)) return;
                 if (sibling.ndsExpandable) {
-                    if (expand && !sibling.ndsExpandable.isExpanded) {
+                    if (expand && !sibling.ndsExpandable._isExpanded) {
                         sibling.ndsExpandable.expand(false);
-                    } else if (!expand && sibling.ndsExpandable.isExpanded) {
+                    } else if (!expand && sibling.ndsExpandable._isExpanded) {
                         sibling.ndsExpandable.collapse(false);
                     }
                 }
             });
         }
 
-        setupEventListeners() {
-            // The RO's first delivery runs the initial checkContentHeight — it
-            // fires once contentElement has a real box, post-layout, so the
+        _addEventListeners() {
+            // The RO's first delivery runs the initial _checkContentHeight — it
+            // fires once _contentElement has a real box, post-layout, so the
             // scrollHeight/getComputedStyle reads are free. Later deliveries are
             // debounced to coalesce resize storms.
             let firstMeasure = true;
-            const debounced = NDS.debounce(() => this.checkContentHeight(), 100);
-            this._offResize = NDS.onElementResize(this.contentElement, () => {
+            const debounced = NDS.debounce(() => this._checkContentHeight(), 100);
+            this._offResize = NDS.onElementResize(this._contentElement, () => {
                 if (firstMeasure) {
                     firstMeasure = false;
-                    this.checkContentHeight();
+                    this._checkContentHeight();
                 } else {
                     debounced();
                 }
             });
         }
 
-        dispatchEvent(eventType) {
+        _dispatchEvent(eventType) {
             const event = new CustomEvent(eventType, {
                 detail: {
-                    container: this.expandableContainer,
-                    content: this.contentElement,
-                    button: this.expandButton,
-                    isExpanded: this.isExpanded
+                    container: this._expandableContainer,
+                    content: this._contentElement,
+                    button: this._expandButton,
+                    isExpanded: this._isExpanded
                 },
                 bubbles: true
             });
 
-            this.expandableContainer.dispatchEvent(event);
+            this._expandableContainer.dispatchEvent(event);
         }
 
         refresh() {
             // Force recheck of content height (useful when element becomes visible)
             this._cachedMaxHeight = undefined;
-            this.checkContentHeight();
+            this._checkContentHeight();
         }
 
 
         getState() {
             return {
-                isExpanded: this.isExpanded,
-                hasButton: !!this.expandButton,
-                maxHeight: this.getMaxHeight(),
-                actualHeight: this.contentElement.scrollHeight
+                isExpanded: this._isExpanded,
+                hasButton: !!this._expandButton,
+                maxHeight: this._getMaxHeight(),
+                actualHeight: this._contentElement.scrollHeight
             };
         }
 
@@ -271,20 +271,20 @@
             }
 
             // Remove button if it exists
-            if (this.expandButton) {
-                this.expandButton.remove();
-                this.expandButton = null;
+            if (this._expandButton) {
+                this._expandButton.remove();
+                this._expandButton = null;
             }
 
             // Remove states
-            NDS.state.remove(this.expandableContainer, 'expanded', 'expandable');
+            NDS.state.remove(this._expandableContainer, 'expanded', 'expandable');
 
             // Drop the instance back-ref and the init sentinel last: leaving either on
             // makes teardown one-way — the init sweep skips a stamped container and
             // create() hands back the dead instance, so a view that unmounts and mounts
             // again gets markup no live instance will ever claim.
-            delete this.expandableContainer.ndsExpandable;
-            this.expandableContainer.removeAttribute('data-nds-expandable-initialized');
+            delete this._expandableContainer.ndsExpandable;
+            this._expandableContainer.removeAttribute('data-nds-expandable-initialized');
         }
     }
 
@@ -318,7 +318,7 @@
         create: (container) => {
             if (container.ndsExpandable) return container.ndsExpandable;
             const instance = new NdsExpandable(container);
-            return instance.valid ? instance : null;
+            return instance._valid ? instance : null;
         },
         destroy: (container) => container?.ndsExpandable?.destroy(),
     };

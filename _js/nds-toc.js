@@ -40,10 +40,10 @@
 
     class NdsToc {
         constructor(toc) {
-            this.toc = toc;
-            this.populate();
-            this.links = Array.from(toc.querySelectorAll('a[href^="#"]'));
-            this.entries = this.links
+            this._toc = toc;
+            this._renderList();
+            this._links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+            this._entries = this._links
                 .map(link => {
                     const id = link.getAttribute('href').slice(1);
                     const target = id ? document.getElementById(id) : null;
@@ -54,14 +54,14 @@
 
             // Stamp even with no entries — the pre-init skeleton (_toc.scss)
             // keys on the stamp and must release either way.
-            if (!this.entries.length) {
+            if (!this._entries.length) {
                 toc.setAttribute('data-nds-toc-initialized', 'true');
                 return;
             }
 
-            this.active = null;
-            this.box = null;
-            this.valid = true;
+            this._active = null;
+            this._box = null;
+            this._valid = true;
             this.init();
         }
 
@@ -69,15 +69,15 @@
         // when `data-toc-source` is set. `data-toc-levels` (default "h2,h3,h4")
         // chooses which heading levels to include; missing IDs are slugified
         // from the heading's text so anchors resolve.
-        populate() {
-            const sourceSelector = this.toc.dataset.tocSource;
+        _renderList() {
+            const sourceSelector = this._toc.dataset.tocSource;
             if (!sourceSelector) return;
 
             const source = document.querySelector(sourceSelector);
-            const list = this.toc.querySelector('.nds-drawer-list');
+            const list = this._toc.querySelector('.nds-drawer-list');
             if (!source || !list) return;
 
-            const levels = (this.toc.dataset.tocLevels || 'h2,h3,h4')
+            const levels = (this._toc.dataset.tocLevels || 'h2,h3,h4')
                 .split(',').map(level => level.trim()).filter(Boolean);
             const headings = Array.from(source.querySelectorAll(levels.join(',')));
             if (!headings.length) return;
@@ -92,7 +92,7 @@
             for (const heading of headings) {
                 if (!heading.id) {
                     // Two headings with one text need two ids, or both links go to the first.
-                    const base = this.slugify(heading.textContent);
+                    const base = this._slugify(heading.textContent);
                     let id = base;
                     for (let suffix = 2; document.getElementById(id); suffix++) id = base + '-' + suffix;
                     heading.id = id;
@@ -110,11 +110,11 @@
                     stack[depth] = ul;
                 }
 
-                stack[depth].appendChild(this.buildItem(heading));
+                stack[depth].appendChild(this._buildItem(heading));
             }
         }
 
-        buildItem(heading) {
+        _buildItem(heading) {
             const item = document.createElement('li');
             const link = document.createElement('a');
             link.href = `#${heading.id}`;
@@ -128,25 +128,25 @@
         }
 
         // Keep Arabic/Latin letters and digits, collapse everything else to '-'.
-        slugify(text) {
+        _slugify(text) {
             return text.trim().toLowerCase()
                 .replace(/[^a-z0-9\u0600-\u06FF]+/g, '-')
                 .replace(/^-+|-+$/g, '') || 'section';
         }
 
         init() {
-            this.onClick = this.onClick.bind(this);
+            this._handleClick = this._handleClick.bind(this);
             this.update = this.update.bind(this);
             this.abortController = new AbortController();
             const { signal } = this.abortController;
 
             // Drop any static active state so the scrollspy is the single source of truth.
-            this.entries.forEach(e => {
+            this._entries.forEach(e => {
                 NDS.state.remove(e.li, 'active');
                 NDS.state.remove(e.link, 'active');
             });
 
-            this.links.forEach(link => link.addEventListener('click', this.onClick, { signal }));
+            this._links.forEach(link => link.addEventListener('click', this._handleClick, { signal }));
 
             // Scroll + resize both change which section is at the top;
             // rafThrottle keeps the scroll handler off the layout thread.
@@ -154,8 +154,8 @@
             const onScroll = NDS.rafThrottle(this.update);
             document.addEventListener('scroll', (e) => {
                 const target = e.target;
-                if (target === document) this.box = null;
-                else if (target.contains(this.entries[0].target)) this.box = target;
+                if (target === document) this._box = null;
+                else if (target.contains(this._entries[0].target)) this._box = target;
                 else return;
                 onScroll();
             }, { capture: true, passive: true, signal });
@@ -168,23 +168,23 @@
             // idle slot keeps that read out of the component-init burst, where
             // the DOM is dirty and the read would force a synchronous reflow.
             // The scrollspy itself is already live via the scroll listener.
-            NDS.onIdle(() => { this.box = this.findBox(); this.update(); }, 2000);
-            this.toc.setAttribute('data-nds-toc-initialized', 'true');
+            NDS.onIdle(() => { this._box = this._findBox(); this.update(); }, 2000);
+            this._toc.setAttribute('data-nds-toc-initialized', 'true');
         }
 
         // Top of the scroll area (the live nav height, or the scrolling box's top) + breathing
         // room, in viewport px. Scrollspy threshold and click scroll-to share this offset so
         // clicking a link lands on the exact line where the section becomes "active".
-        navOffset() {
-            if (this.box) return this.box.getBoundingClientRect().top + 40;
+        _getNavOffset() {
+            if (this._box) return this._box.getBoundingClientRect().top + 40;
             const nav = document.querySelector('.nds-main-nav');
             return (nav ? nav.offsetHeight : 0) + 40;
         }
 
         // Nearest ancestor that scrolls the headings, or null for the page. Click-time only:
         // before the first scroll event there is no event target to learn it from.
-        findBox() {
-            for (let el = this.entries[0].target.parentElement; el && el !== document.body; el = el.parentElement) {
+        _findBox() {
+            for (let el = this._entries[0].target.parentElement; el && el !== document.body; el = el.parentElement) {
                 const overflow = getComputedStyle(el).overflowY;
                 if ((overflow === 'auto' || overflow === 'scroll') && el.scrollHeight > el.clientHeight) return el;
             }
@@ -196,10 +196,10 @@
         // just-landed heading still counts as "reached". Null until the first
         // heading is actually reached — on mobile the TOC sits ABOVE the content,
         // so defaulting to entry[0] highlighted a section still off-screen.
-        findActive() {
-            const threshold = this.navOffset() + 1;
+        _findActive() {
+            const threshold = this._getNavOffset() + 1;
             let active = null;
-            for (const e of this.entries) {
+            for (const e of this._entries) {
                 // A hidden heading (an inactive tab) has no box and reads top 0.
                 if (!e.target.getClientRects().length) continue;
                 if (e.target.getBoundingClientRect().top <= threshold) {
@@ -211,13 +211,13 @@
             return active;
         }
 
-        setActive(entry) {
-            if (this.active === entry) return;
-            if (this.active) {
-                NDS.state.remove(this.active.li, 'active');
-                NDS.state.remove(this.active.link, 'active');
+        _setActive(entry) {
+            if (this._active === entry) return;
+            if (this._active) {
+                NDS.state.remove(this._active.li, 'active');
+                NDS.state.remove(this._active.link, 'active');
             }
-            this.active = entry;
+            this._active = entry;
             if (entry) {
                 NDS.state.add(entry.li, 'active');
                 NDS.state.add(entry.link, 'active');
@@ -225,35 +225,35 @@
         }
 
         update() {
-            this.setActive(this.findActive());
+            this._setActive(this._findActive());
         }
 
         // Click sets the active state immediately, then manually scrolls so
-        // the target lands at navOffset below the viewport top.
-        onClick(e) {
+        // the target lands at _getNavOffset below the viewport top.
+        _handleClick(e) {
             const link = e.currentTarget;
-            const entry = this.entries.find(x => x.link === link);
+            const entry = this._entries.find(x => x.link === link);
             if (!entry || !entry.target.getClientRects().length) return;
 
             e.preventDefault();
-            this.setActive(entry);
+            this._setActive(entry);
 
-            this.box = this.findBox();
-            const top = entry.target.getBoundingClientRect().top - this.navOffset();
-            (this.box || window).scrollBy({ top, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
+            this._box = this._findBox();
+            const top = entry.target.getBoundingClientRect().top - this._getNavOffset();
+            (this._box || window).scrollBy({ top, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
             history.replaceState(history.state, '', link.getAttribute('href'));   // a router keeps its state
         }
 
         destroy() {
             this.abortController?.abort();
             // The current-section mark is measured: a re-create marks it again.
-            if (this.active) {
-                NDS.state.remove(this.active.li, 'active');
-                NDS.state.remove(this.active.link, 'active');
+            if (this._active) {
+                NDS.state.remove(this._active.li, 'active');
+                NDS.state.remove(this._active.link, 'active');
             }
-            this.toc.removeAttribute('data-nds-toc-initialized');
+            this._toc.removeAttribute('data-nds-toc-initialized');
             // A surviving backref would hand create() this dead instance.
-            if (this.toc.ndsToc === this) delete this.toc.ndsToc;
+            if (this._toc.ndsToc === this) delete this._toc.ndsToc;
         }
     }
 
@@ -265,7 +265,7 @@
             if (toc.ndsToc) return;
             const instance = new NdsToc(toc);
             // Expando only on successful construction (sentinel is stamped post-guard by init()).
-            if (instance.valid) toc.ndsToc = instance;
+            if (instance._valid) toc.ndsToc = instance;
         });
     }
 
@@ -275,7 +275,7 @@
         create: (el) => {
             if (el.ndsToc) return el.ndsToc;
             const instance = new NdsToc(el);
-            if (!instance.valid) return null;
+            if (!instance._valid) return null;
             el.ndsToc = instance;
             return instance;
         },

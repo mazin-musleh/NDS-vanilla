@@ -134,7 +134,9 @@ function scanFile(file, source) {
         const method = ctx.methods.has(p);
         if (banner && !banner.has(p) && !/(^a|A)bortController$/.test(p))
             push('P12.11', node, `${method ? 'member' : 'field'} \`${p}\` is not on the banner: add it there, or rename \`_${p}\``);
-        if (method) return; // fnName judges a method's words
+        if (!method) fieldWords(ctx, p, node); // fnName judges a method's words
+    });
+    const fieldWords = (ctx, p, node) => once(`words ${ctx.cls.start} ${p}`, () => {
         const short = words(p).map((w) => w.toLowerCase()).filter((w) => ABBREV.has(w));
         if (short.length) push('P10.8', node, `field \`this.${p}\` shortens ${short.map((w) => `\`${w}\``).join(', ')}: whole words`);
         if (acronym(p)) push('P10.3', node, `field \`this.${p}\` writes an acronym in capitals`);
@@ -241,8 +243,10 @@ function scanFile(file, source) {
             }
             case 'MemberExpression': {
                 const p = propName(node);
-                if (p && p.startsWith('_')) uses.push({ name: p, node });
-                else if (p && ctx.cls && node.object.type === 'ThisExpression') member(ctx, p, node);
+                if (p && p.startsWith('_')) {
+                    uses.push({ name: p, node });
+                    if (ctx.cls && node.object.type === 'ThisExpression' && !ctx.methods.has(p)) fieldWords(ctx, p, node); // `_` takes the banner rule off, not the words
+                } else if (p && ctx.cls && node.object.type === 'ThisExpression') member(ctx, p, node);
                 if (node.property.type === 'PrivateIdentifier') push('P12.16', node, `\`#${node.property.name}\`: no \`#private\``);
                 break;
             }

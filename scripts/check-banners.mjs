@@ -264,12 +264,12 @@ function extractKeys(source, ns) {
 //   3. an interpolated template — drawer builds `nds:drawer:${type}`; the captured stem
 //      ends in ':' and stands in as a prefix (see isPrefix);
 //   4. every other nds:* literal — files reach the bus through too many wrappers to
-//      enumerate (emitEvent, _dispatchEvent, dispatch(el, name), fire(el, name)) and
+//      enumerate (_dispatchEvent, dispatch(el, name), fire(el, name)) and
 //      accordion routes its pair through a variable, so matching the NAME beats listing
 //      the callers.
 function extractEvents(source) {
     const events = new Set();
-    const re = /(?:add|remove)EventListener\(\s*([`'"])[^`'"]*\1|(?:new CustomEvent|emitEvent)\(\s*(['"])([^'"]+)\2|`(nds:[\w:.-]*)\$\{|([`'"])(nds:[\w:.-]+)\5/g;
+    const re = /(?:add|remove)EventListener\(\s*([`'"])[^`'"]*\1|(?:new CustomEvent|_dispatchEvent)\(\s*(['"])([^'"]+)\2|`(nds:[\w:.-]*)\$\{|([`'"])(nds:[\w:.-]+)\5/g;
     for (const m of source.matchAll(re)) {
         const name = m[3] || m[4] || m[6];
         if (name) events.add(name);

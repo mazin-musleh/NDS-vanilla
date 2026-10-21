@@ -32,117 +32,117 @@
 
     class NdsSideinfo {
         constructor(element) {
-            this.sideInfo = element;
-            this.sideInfoParent = element.parentElement;
-            this.sectionHead = document.querySelector('.nds-hero-section');
+            this._sideInfo = element;
+            this._sideInfoParent = element.parentElement;
+            this._sectionHead = document.querySelector('.nds-hero-section');
             this.abortController = new AbortController();
             // Remember which sticky classes the author wrote, so we can re-apply
             // them after a viewport/content change makes the card fit again.
-            this.stickyClasses = ['nds-sticky', 'nds-sticky-sm', 'nds-sticky-md'].filter(className => element.classList.contains(className));
+            this._stickyClasses = ['nds-sticky', 'nds-sticky-sm', 'nds-sticky-md'].filter(className => element.classList.contains(className));
 
             // A sideinfo without a hero is a valid plain sticky-aside config — it
             // skips the hero-alignment offset but still gets sticky-fit + resize
             // wiring (init guards the hero-only observer). Only the parent is required.
-            if (!this.sideInfoParent) {
+            if (!this._sideInfoParent) {
                 console.warn('NDS Sideinfo: parent element not found');
                 return;
             }
 
-            this.valid = true;
+            this._valid = true;
             this.init();
         }
 
         init() {
             // The initial position + sticky-fit measurement runs from the
-            // ResizeObserver first deliveries below — setupHeroResize fires
-            // updatePosition + updateStickyState, setupContentResize fires
-            // updateStickyState — each post-layout, so the rect and
+            // ResizeObserver first deliveries below — _setupHeroResize fires
+            // _syncPosition + _syncStickyState, _setupContentResize fires
+            // _syncStickyState — each post-layout, so the rect and
             // getComputedStyle reads are free. Running them here would force a
             // synchronous reflow during the component-init burst.
-            if (this.sectionHead) this.setupHeroResize();
-            this.setupResize();
-            this.setupContentResize();
-            this.setupLateRecompute();
-            this.sideInfo.setAttribute('data-nds-sideinfo-initialized', 'true');
+            if (this._sectionHead) this._setupHeroResize();
+            this._setupResize();
+            this._setupContentResize();
+            this._setupLateRecompute();
+            this._sideInfo.setAttribute('data-nds-sideinfo-initialized', 'true');
         }
 
         // Sticky breaks down when the side info is taller than the viewport
         // (the user can never scroll past it). Drop the modifier in that case
         // and let normal flow handle it; restore when it fits again.
-        updateStickyState() {
-            if (!this.stickyClasses.length) return;
+        _syncStickyState() {
+            if (!this._stickyClasses.length) return;
             // The spot the card pins at, the same with the classes on or off, so dropping them cannot flip the result.
             let top;
             if (window.matchMedia(NDS.breakpoints.desktop).matches) {
-                const cs = getComputedStyle(this.sideInfo);
+                const cs = getComputedStyle(this._sideInfo);
                 // Beside the title pulls the card up with a transform: the pinned spot is top + that shift.
                 top = (parseFloat(cs.top) || 0) + (cs.transform === 'none' ? 0 : new DOMMatrix(cs.transform).m42);
             } else {
                 // The small-screen strip pins right under the main nav.
                 top = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nds-nav-height')) || 0;
             }
-            const fits = this.sideInfo.offsetHeight + top <= document.documentElement.clientHeight;
-            this.stickyClasses.forEach(className => this.sideInfo.classList.toggle(className, fits));
+            const fits = this._sideInfo.offsetHeight + top <= document.documentElement.clientHeight;
+            this._stickyClasses.forEach(className => this._sideInfo.classList.toggle(className, fits));
         }
 
-        updatePosition() {
+        _syncPosition() {
             // Only compute the hero-alignment offset when the hero actually
             // reserves an aside column. Without `.nds-aside`, CSS keeps the
             // sideinfo aligned with content start and doesn't read the var.
             if (!document.querySelector('.nds-hero-section.nds-aside')) {
-                this.sideInfo.style.removeProperty('--nds-sideinfo-top');
+                this._sideInfo.style.removeProperty('--nds-sideinfo-top');
                 return;
             }
             // No cached hero head (sideinfo built before a hero existed) — nothing
             // to align against; leave the placeholder offset in place.
-            if (!this.sectionHead) return;
+            if (!this._sectionHead) return;
 
             // Early return for mobile/tablet with reset
             if (!window.matchMedia(NDS.breakpoints.desktop).matches) {
-                this.sideInfo.style.removeProperty('--nds-sideinfo-top');
+                this._sideInfo.style.removeProperty('--nds-sideinfo-top');
                 return;
             }
 
             // Desktop calc (>=960px): recapture parent position fresh each resize for accuracy.
-            const parentRect = this.sideInfoParent.getBoundingClientRect();
+            const parentRect = this._sideInfoParent.getBoundingClientRect();
             const parentTop = parentRect.top;
-            const sectionHeadRect = this.sectionHead.getBoundingClientRect();
+            const sectionHeadRect = this._sectionHead.getBoundingClientRect();
             const offsetY = sectionHeadRect.top - parentTop;
-            this.sideInfo.style.setProperty('--nds-sideinfo-top', `${offsetY}px`);
+            this._sideInfo.style.setProperty('--nds-sideinfo-top', `${offsetY}px`);
         }
 
-        setupResize() {
+        _setupResize() {
             this._offResize = NDS.onResize(() => {
-                this.updatePosition();
-                this.updateStickyState();
+                this._syncPosition();
+                this._syncStickyState();
             });
         }
 
         // Hero height shifts with late-loading images and font swap; a
         // ResizeObserver recomputes each time so the card re-aligns after CLS.
-        setupHeroResize() {
-            this._offHeroResize = NDS.onElementResize(this.sectionHead, () => {
-                this.updatePosition();
-                this.updateStickyState();
+        _setupHeroResize() {
+            this._offHeroResize = NDS.onElementResize(this._sectionHead, () => {
+                this._syncPosition();
+                this._syncStickyState();
             });
         }
 
-        setupContentResize() {
-            if (!this.stickyClasses.length) return;
-            this._offContentResize = NDS.onElementResize(this.sideInfo, () => {
-                this.updateStickyState();
+        _setupContentResize() {
+            if (!this._stickyClasses.length) return;
+            this._offContentResize = NDS.onElementResize(this._sideInfo, () => {
+                this._syncStickyState();
             });
         }
 
         // One-shot recomputes after font swap and image load finish,
         // covering CLS sources that don't change the hero's own box size.
-        setupLateRecompute() {
+        _setupLateRecompute() {
             // Skip a late font-swap / load recompute after destroy() aborts — it would re-stamp cleared state.
             const { signal } = this.abortController;
             const recompute = () => {
                 if (signal.aborted) return;
-                this.updatePosition();
-                this.updateStickyState();
+                this._syncPosition();
+                this._syncStickyState();
             };
             if (document.fonts && document.fonts.ready) {
                 document.fonts.ready.then(recompute);
@@ -158,9 +158,9 @@
 
         destroy() {
             this.abortController.abort();
-            this.sideInfo.removeAttribute('data-nds-sideinfo-initialized');
-            this.sideInfo.style.removeProperty('--nds-sideinfo-top');
-            this.sideInfo.classList.add(...this.stickyClasses);
+            this._sideInfo.removeAttribute('data-nds-sideinfo-initialized');
+            this._sideInfo.style.removeProperty('--nds-sideinfo-top');
+            this._sideInfo.classList.add(...this._stickyClasses);
 
             if (this._offHeroResize) this._offHeroResize();
             if (this._offResize) this._offResize();
@@ -179,7 +179,7 @@
             if (!element.hasAttribute('data-nds-sideinfo-initialized')) {
                 const instance = new NdsSideinfo(element);
                 // Expando only on successful construction (sentinel is stamped post-guard by init()).
-                if (instance.valid) element.ndsSideinfo = instance;
+                if (instance._valid) element.ndsSideinfo = instance;
             }
         });
     }
@@ -191,7 +191,7 @@
         create: (element) => {
             if (element.ndsSideinfo) return element.ndsSideinfo;
             const instance = new NdsSideinfo(element);
-            if (!instance.valid) return null;
+            if (!instance._valid) return null;
             element.ndsSideinfo = instance;
             return instance;
         },

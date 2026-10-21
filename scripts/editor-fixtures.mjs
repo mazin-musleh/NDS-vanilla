@@ -521,7 +521,7 @@ p.MsoListParagraph {margin-left:36.0pt; mso-add-space:auto;}
         ],
     },
     // ── Paste into a NON-EMPTY document ────────────────────────────────────
-    // _onPaste short-circuits an empty document straight to innerHTML, so every
+    // _handlePaste short-circuits an empty document straight to innerHTML, so every
     // fixture above exercises that clean path. These drive the real insert
     // instead, where execCommand('insertHTML') used to merge the fragment's
     // first element into the caret's block and strip a component's identity.
@@ -627,7 +627,7 @@ try {
     });
 
     // Fixtures marked paste:true go through the REAL paste path: a synthetic
-    // ClipboardEvent on the editable → _onPaste → insertHTML → _syncSource,
+    // ClipboardEvent on the editable → _handlePaste → insertHTML → _syncSource,
     // read back from the form textarea. Others call the sanitize hook directly.
     async function runFixture(f) {
         // init:true drives the adopt-a-textarea path — a standard field whose
@@ -651,7 +651,7 @@ try {
             const source = document.getElementById('story');
             const editable = source.closest('.nds-form-control').querySelector('.nds-editor-editable');
             // pasteInto seeds a NON-EMPTY document and drops the caret at the end
-            // of its last text — the branch that skips _onPaste's empty-document
+            // of its last text — the branch that skips _handlePaste's empty-document
             // shortcut and goes through the real insert path.
             editable.innerHTML = seed || '<p><br></p>';
             editable.focus();
@@ -1662,7 +1662,7 @@ try {
     // Ctrl+B/I/U keyboard shortcuts, could still restructure a button's label
     // (wrap it in a heading, a list, bold/italic/underline/strike) even
     // though paste/source already refuse that content. Both paths route
-    // through _applyCommand, so both must refuse while the caret is in an
+    // through _runCommand, so both must refuse while the caret is in an
     // atom; a command outside one still works normally.
     const atomToolbarLockOut = await page.evaluate(async () => {
         const raf = () => new Promise(requestAnimationFrame);
@@ -1677,7 +1677,7 @@ try {
             sel.removeAllRanges();
             sel.addRange(r);
         };
-        // mousedown's preventDefault (in _bindToolbar) is what keeps the
+        // mousedown's preventDefault (in _addToolbarListeners) is what keeps the
         // editable's selection alive through a button click — a plain
         // .click() alone lets the browser shift focus/selection first.
         const clickCmd = (cmd) => {
@@ -1698,8 +1698,8 @@ try {
         const toolbarBlocked = editable.innerHTML
             === '<p>قبل <button class="nds-btn nds-primary" type="button"><span class="nds-label">زر</span></button> بعد</p>';
 
-        // Ctrl+B keyboard shortcut path — same choke point (_applyCommand),
-        // reached differently (_onKeydown, not the toolbar button).
+        // Ctrl+B keyboard shortcut path — same choke point (_runCommand),
+        // reached differently (_handleKeyDown, not the toolbar button).
         putCaretInLabel();
         editable.dispatchEvent(new KeyboardEvent('keydown', { key: 'b', ctrlKey: true, bubbles: true, cancelable: true }));
         await raf();

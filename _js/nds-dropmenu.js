@@ -10,6 +10,10 @@
  *   NDS.Dropmenu.destroy(el)             tear one down before you discard its wrapper; undoes what opts wrote
  *   NDS.Dropmenu.from(el)                the wrapper that owns any element inside it
  *   NDS.Dropmenu.menuOf(dropmenu)        the wrapper's menu
+ *   instance.open() / .close() / .toggle()
+ *   instance.applyPosition()             place the open menu again
+ *   instance.applySelection(item)        pick an item in a select-mode picker
+ *   instance.isOpen / .trigger / .dropmenu   read-only state; dropmenu is the wrapper
  * Events (bubble from the .nds-dropmenu wrapper):
  *   nds:dropmenu:prepare   detail {dropmenu, trigger, menu, isOpen, waitUntil(promise)} — before lazy content builds
  *   nds:dropmenu:opened    detail {dropmenu, trigger, menu, isOpen}
@@ -81,10 +85,10 @@
             // wrapper). Same nesting-aware pattern as the menu click handler.
             this.trigger = findOwnFirstIn(dropmenuElement, '.nds-dropmenu-trigger')
                 || dropmenuElement;
-            this.menu = findOwnFirstIn(dropmenuElement, '.nds-dropmenu-menu');
+            this._menu = findOwnFirstIn(dropmenuElement, '.nds-dropmenu-menu');
             this.isOpen = false;
 
-            if (!this.menu) {
+            if (!this._menu) {
                 console.warn('NDS Dropmenu: Missing menu element');
                 return;
             }
@@ -108,31 +112,31 @@
         // ── Ownership ─────────────────────────────────────────────
         // A menu may host a nested `.nds-dropmenu` whose parts match every
         // selector this component owns (the date-picker's calendar contains
-        // month/year sub-dropmenus). A bare `this.menu.querySelector(All)`
+        // month/year sub-dropmenus). A bare `this._menu.querySelector(All)`
         // therefore claims the CHILD instance's items, scroll region and
         // focusables. Every post-init derivation of "elements this instance
         // owns" routes through these three, so a new call site can't
         // re-derive the set unguarded.
 
         /** True when `el`'s nearest `.nds-dropmenu-menu` is our own menu. */
-        _owns(el) {
-            return !!el && el.closest('.nds-dropmenu-menu') === this.menu;
+        _isOwnItem(el) {
+            return !!el && el.closest('.nds-dropmenu-menu') === this._menu;
         }
 
         /** Every own element matching `selector`, in DOM order. */
-        _ownItems(selector = '.nds-dropmenu-item') {
-            return NDS.ownParts(this.menu, selector, '.nds-dropmenu-menu');
+        _getOwnItems(selector = '.nds-dropmenu-item') {
+            return NDS.ownParts(this._menu, selector, '.nds-dropmenu-menu');
         }
 
         /** First own element matching `selector`, or null. */
-        _ownFirst(selector) {
-            return this._ownItems(selector)[0] || null;
+        _findOwnItem(selector) {
+            return this._getOwnItems(selector)[0] || null;
         }
 
         /** Check if an element is a text-entry input that consumes arrow/Home/End keys.
          *  Checkbox/radio/button inputs don't use these for editing, so they should
          *  fall through to menu navigation. */
-        isInputElement(el) {
+        _isInputElement(el) {
             if (!el) return false;
             if (el.tagName === 'TEXTAREA') return true;
             if (el.tagName !== 'INPUT') return false;
@@ -144,8 +148,8 @@
         /** Get all focusable elements in the menu in DOM order. [hidden]
          *  elements are skipped — focus() on them silently fails, which would
          *  wedge the Tab walk on their neighbor. */
-        getFocusableElements() {
-            return this._ownItems(
+        _getFocusableElements() {
+            return this._getOwnItems(
                 'input:not([type="hidden"]):not(:disabled):not([hidden]), textarea:not(:disabled):not([hidden]), :is(a, button).nds-dropmenu-item:not(:disabled):not([hidden])'
             );
         }
@@ -156,7 +160,7 @@
          * @param {number} currentIndex - Current focused index
          * @param {number} direction - 1 for next, -1 for previous
          */
-        navigateToIndex(elements, currentIndex, direction) {
+        _navigateToIndex(elements, currentIndex, direction) {
             if (!elements.length) return;
 
             let nextIndex;
@@ -172,7 +176,7 @@
         }
 
         /** Resolve the current focus index within focusable elements */
-        resolveCurrentIndex(elements) {
+        _resolveCurrentIndex(elements) {
             const active = document.activeElement;
             let index = elements.indexOf(active);
 
@@ -193,14 +197,14 @@
             // One controller for every listener this instance attaches, so destroy()
             // releases them atomically without touching consumer-attached listeners.
             this.abortController = new AbortController();
-            this.menu.setAttribute('popover', 'manual');
+            this._menu.setAttribute('popover', 'manual');
             // No popover (Safari < 17, Firefox < 125): fixed, so a scroll box cannot cut it off.
             // Set here, not in CSS: Safari 16.4 parses :popover-open but has no popover.
-            if (!this.menu.showPopover) this.menu.style.position = 'fixed';
-            this.setupAria();
-            this.setupEventListeners();
-            this.setupSelectMode();
-            this.setupSearch();
+            if (!this._menu.showPopover) this._menu.style.position = 'fixed';
+            this._setupAria();
+            this._addEventListeners();
+            this._setupSelectMode();
+            this._setupSearch();
             this.dropmenu.setAttribute('data-nds-dropmenu-initialized', 'true');
         }
 
@@ -221,19 +225,19 @@
         // Per-item `data-search-value="…"` appends extra tokens to the haystack
         // (English aliases next to an Arabic label, IDs, keywords).
 
-        setupSearch() {
+        _setupSearch() {
             const attribute = this.dropmenu.getAttribute('data-search');
             if (attribute === null) return;
 
             const itemSelector = ':is(.nds-dropmenu-item, [data-search-item]):not([data-search-item="false"])';
             // Nesting-aware: a plain querySelector would grab the scroll of a
             // nested sub-dropmenu and inject this menu's search box into it.
-            const scroll = this._ownFirst('.nds-dropmenu-scroll');
+            const scroll = this._findOwnItem('.nds-dropmenu-scroll');
             if (!scroll) return;
             const { signal } = this.abortController;
 
             // The scroll's items only: footer buttons (Apply, Reset) are .nds-dropmenu-item too.
-            const getItems = () => this._ownItems(itemSelector).filter(el => scroll.contains(el));
+            const getItems = () => this._getOwnItems(itemSelector).filter(el => scroll.contains(el));
             const threshold = parseInt(attribute, 10) || 0;
             if (threshold && getItems().length < threshold) return;
 
@@ -252,10 +256,10 @@
                     </div>
                 </div>
             </div>`;
-            this.menu.insertAdjacentHTML('afterbegin', searchHtml);
+            this._menu.insertAdjacentHTML('afterbegin', searchHtml);
             // Hold the node we just injected — destroy() removes exactly this one,
             // rather than re-querying (which can mis-hit a nested menu's box).
-            const searchBox = this.menu.firstElementChild;
+            const searchBox = this._menu.firstElementChild;
             const searchInput = searchBox.querySelector('.nds-search-input');
             strings.set(searchInput, 'aria-label', 'search');
             strings.set(searchInput, 'placeholder', 'search_placeholder');
@@ -285,7 +289,7 @@
             const customEmpty = this.dropmenu.getAttribute('data-search-empty');
             if (customEmpty) emptyMessage.textContent = customEmpty; else strings.set(emptyMessage, 'text', 'no_results');
 
-            this.searchInput = this._ownFirst('.nds-dropmenu-search .nds-search-input');
+            this._searchInput = this._findOwnItem('.nds-dropmenu-search .nds-search-input');
             const emptyEl = scroll.querySelector('[data-nds-empty-placeholder]');
 
             // Case-insensitive + diacritic-stripped so "مطار" matches "المَطار"
@@ -296,8 +300,8 @@
             const filter = () => {
                 // The debounced input handler can still fire after destroy()
                 // tore the search box down — abort() can't cancel its timer.
-                if (!this.searchInput) return;
-                const query = normalizeText(this.searchInput.value.trim());
+                if (!this._searchInput) return;
+                const query = normalizeText(this._searchInput.value.trim());
                 let visible = 0;
                 for (const item of getItems()) {
                     const haystack = normalizeText(item.textContent + ' ' + (item.getAttribute('data-search-value') || ''));
@@ -306,7 +310,7 @@
                     if (match) visible++;
                 }
                 // A group with no match hides, and so does a divider left with nothing on one side.
-                for (const group of this._ownItems('.nds-dropmenu-group')) {
+                for (const group of this._getOwnItems('.nds-dropmenu-group')) {
                     const rows = group.querySelectorAll(itemSelector);
                     group.hidden = !!query && rows.length > 0 && Array.prototype.every.call(rows, row => row.hidden);
                 }
@@ -323,11 +327,11 @@
             // destroy() calls this: replay the filter with an empty query (its own
             // semantics, not a blanket [hidden] sweep) then drop both injected nodes.
             this._teardownSearch = () => {
-                this.searchInput.value = '';
+                this._searchInput.value = '';
                 filter();
                 searchBox.remove();
                 emptyEl.remove();
-                this.searchInput = null;
+                this._searchInput = null;
                 this._teardownSearch = null;
             };
 
@@ -338,16 +342,16 @@
             // menu is large — running that per keystroke is the INP cost.
             // Escape / clear-on-close / teardown call filter() directly, so
             // only the typing path waits.
-            this.searchInput.addEventListener('input', NDS.debounce(filter, 120), { signal });
+            this._searchInput.addEventListener('input', NDS.debounce(filter, 120), { signal });
 
-            this.searchInput.addEventListener('keydown', (e) => {
+            this._searchInput.addEventListener('keydown', (e) => {
                 // Two-stage Escape: first press clears the query, second closes
                 // the menu (falls through to the existing menu-scope handleEscape).
                 if (e.key === 'Escape') {
-                    if (this.searchInput.value) {
+                    if (this._searchInput.value) {
                         e.stopPropagation();
                         e.preventDefault();
-                        this.searchInput.value = '';
+                        this._searchInput.value = '';
                         filter();
                     }
                     return;
@@ -369,10 +373,10 @@
             }, { signal });
 
             // Autofocus on open, reset on close — each open is a fresh state.
-            this.dropmenu.addEventListener('nds:dropmenu:opened', () => this.searchInput.focus(), { signal });
+            this.dropmenu.addEventListener('nds:dropmenu:opened', () => this._searchInput.focus(), { signal });
             this.dropmenu.addEventListener('nds:dropmenu:closed', () => {
-                if (!this.searchInput.value) return;
-                this.searchInput.value = '';
+                if (!this._searchInput.value) return;
+                this._searchInput.value = '';
                 filter();
             }, { signal });
         }
@@ -395,7 +399,7 @@
         //   - Events: hidden input fires `input` + `change`; dropmenu fires
         //     `nds:dropmenu:select` with { item, value } in detail.
 
-        setupSelectMode() {
+        _setupSelectMode() {
             const name = this.dropmenu.getAttribute('data-select-name');
             if (!name) return;
             const { signal } = this.abortController;
@@ -413,7 +417,7 @@
             }
             hidden.name = name;
             if (this.dropmenu.hasAttribute('data-required')) hidden.required = true;
-            this.selectHidden = hidden;
+            this._selectHidden = hidden;
 
             // Initial selection: data-select-value beats any pre-rendered
             // [data-state~="selected"] item, so consumers can drive it from
@@ -421,11 +425,11 @@
             const initialValue = this.dropmenu.getAttribute('data-select-value');
             let initialItem = null;
             if (initialValue != null) {
-                initialItem = this._ownItems()
+                initialItem = this._getOwnItems()
                     .find(el => el.getAttribute('data-value') === initialValue) || null;
             }
             if (!initialItem) {
-                initialItem = this._ownItems()
+                initialItem = this._getOwnItems()
                     .find(el => NDS.state.has(el, 'selected')) || null;
             }
             // The trigger's own text, before a pick replaces it: what a form reset with no first pick shows.
@@ -443,25 +447,25 @@
                 if (e.defaultPrevented) return;
                 if (initialItem) { this.applySelection(initialItem, { silent: true }); return; }
                 hidden.value = '';
-                this._ownItems().forEach((entry) => NDS.state.clear(entry));
+                this._getOwnItems().forEach((entry) => NDS.state.clear(entry));
                 if (triggerLabel) triggerLabel.textContent = startLabel;
             }), { signal });
 
-            this.menu.addEventListener('click', (e) => {
+            this._menu.addEventListener('click', (e) => {
                 const item = e.target.closest('.nds-dropmenu-item');
                 // Ownership guard, same as the auto-close handler below: a
                 // nested sub-dropmenu's items match this selector and carry
                 // data-value (date-picker's month/year), so without it the
                 // CHILD's value lands in THIS picker's hidden input, trigger
                 // label and nds:dropmenu:select payload.
-                if (!this._owns(item)) return;
+                if (!this._isOwnItem(item)) return;
                 if (item.hasAttribute('data-value')) this.applySelection(item);
             }, { signal });
         }
 
         applySelection(item, opts = {}) {
             const value = item.getAttribute('data-value') || '';
-            if (this.selectHidden && opts.silent) this.selectHidden.value = value;
+            if (this._selectHidden && opts.silent) this._selectHidden.value = value;
 
             // Trigger label: prefer per-item data-trigger-label for cases
             // where the dropdown row is descriptive ("Saudi Arabia (+966)")
@@ -482,13 +486,13 @@
                 else this.trigger.textContent = labelText;
             }
 
-            this._ownItems().forEach((other) => {
+            this._getOwnItems().forEach((other) => {
                 if (other !== item) NDS.state.clear(other);
             });
             NDS.state.set(item, 'selected');
 
             if (!opts.silent) {
-                if (this.selectHidden) NDS.setValue(this.selectHidden, value);
+                if (this._selectHidden) NDS.setValue(this._selectHidden, value);
                 this.dropmenu.dispatchEvent(new CustomEvent('nds:dropmenu:select', {
                     detail: { dropmenu: this.dropmenu, item, value },
                     bubbles: true
@@ -503,11 +507,11 @@
             (this._ariaWritten ||= []).push([el, attribute]);
         }
 
-        setupAria() {
+        _setupAria() {
             this._setDefault(this.trigger, 'aria-expanded', 'false');
             this._setDefault(this.trigger, 'aria-haspopup', 'true');
-            this._setDefault(this.menu, 'role', 'menu');
-            this._setDefault(this.menu, 'aria-hidden', 'true');
+            this._setDefault(this._menu, 'role', 'menu');
+            this._setDefault(this._menu, 'aria-hidden', 'true');
 
             this._stampItemRoles();
         }
@@ -515,7 +519,7 @@
         // Also on open: rows built in nds:dropmenu:prepare came after init.
         _stampItemRoles() {
             // Skip form controls and groups
-            this._ownItems().forEach(item => {
+            this._getOwnItems().forEach(item => {
                 if (!item.hasAttribute('role')
                     && !item.classList.contains('nds-form-control')
                     && !item.classList.contains('nds-dropmenu-group')) {
@@ -530,7 +534,7 @@
         // EVENT LISTENERS
         // ==============================================
 
-        setupEventListeners() {
+        _addEventListeners() {
             const { signal } = this.abortController;
             // Trigger click (skip if programmatic-only mode)
             if (!this.dropmenu.hasAttribute('data-dropmenu-no-click')) {
@@ -558,20 +562,20 @@
             // Escape stays bound below in either case so close-on-escape
             // remains uniform across dropmenus.
             if (!this.dropmenu.hasAttribute('data-dropmenu-no-keys')) {
-                this.trigger.addEventListener('keydown', (e) => this.handleTriggerKeydown(e), { signal });
+                this.trigger.addEventListener('keydown', (e) => this._handleTriggerKeydown(e), { signal });
 
-                this.menu.addEventListener('keydown', (e) => {
+                this._menu.addEventListener('keydown', (e) => {
                     // A nested sub-menu's keys bubble here; that menu handles its own.
-                    if (e.target.closest('.nds-dropmenu-menu') !== this.menu) return;
+                    if (e.target.closest('.nds-dropmenu-menu') !== this._menu) return;
                     // A control in the menu already used the key (a rating's arrows).
                     if (e.defaultPrevented) return;
                     // For inputs: only handle Tab and Alt+Arrow
-                    if (this.isInputElement(e.target)) {
+                    if (this._isInputElement(e.target)) {
                         const isNavKey = e.key === 'Tab'
                             || (e.altKey && (e.key === 'ArrowDown' || e.key === 'ArrowUp'));
                         if (!isNavKey) return;
                     }
-                    this.handleMenuKeydown(e);
+                    this._handleMenuKeydown(e);
                 }, { signal });
             }
 
@@ -594,13 +598,13 @@
             this.dropmenu.addEventListener('keydown', handleEscape, { signal });
             this._onEscape = handleEscape;
             // Something else hid the menu (a closing modal): close with it, so the state follows.
-            this.menu.addEventListener('toggle', (e) => { if (e.newState === 'closed' && this.isOpen) this.close(); }, { signal });
+            this._menu.addEventListener('toggle', (e) => { if (e.newState === 'closed' && this.isOpen) this.close(); }, { signal });
 
             // Item click auto-close.
-            this.menu.addEventListener('click', (e) => {
+            this._menu.addEventListener('click', (e) => {
                 const item = e.target.closest('.nds-dropmenu-item');
                 // A nested sub-dropmenu's item (date-picker month/year) leaves its parent open.
-                if (!item || !this._owns(item)) return;
+                if (!item || !this._isOwnItem(item)) return;
                 if (!item.hasAttribute('data-no-auto-close')) {
                     setTimeout(() => this.close(), 100);
                 }
@@ -645,11 +649,11 @@
         // stamped data-state active (pagination's current page, sort's active
         // option) or selected (picker mode, custom select). Keyboard-open lands
         // focus there instead of the list edge.
-        getCurrentItem() {
-            return this._ownFirst('.nds-dropmenu-item:is([data-state~="active"], [data-state~="selected"]):not(:disabled):not([hidden])');
+        _getCurrentItem() {
+            return this._findOwnItem('.nds-dropmenu-item:is([data-state~="active"], [data-state~="selected"]):not(:disabled):not([hidden])');
         }
 
-        handleTriggerKeydown(e) {
+        _handleTriggerKeydown(e) {
             // Focusables are enumerated AFTER toggle()/open() — lazily-populated
             // menus (pagination's ellipsis, data-delay consumers) have no items
             // until open() has run.
@@ -661,31 +665,31 @@
                 case ' ': {
                     e.preventDefault();
                     this.toggle();
-                    const elements = this.getFocusableElements();
-                    if (this.isOpen && elements.length) (this.getCurrentItem() || elements[0]).focus();
+                    const elements = this._getFocusableElements();
+                    if (this.isOpen && elements.length) (this._getCurrentItem() || elements[0]).focus();
                     break;
                 }
                 case 'ArrowDown': {
                     e.preventDefault();
                     this.open();
-                    const elements = this.getFocusableElements();
-                    if (elements.length) (this.getCurrentItem() || elements[0]).focus();
+                    const elements = this._getFocusableElements();
+                    if (elements.length) (this._getCurrentItem() || elements[0]).focus();
                     break;
                 }
                 case 'ArrowUp': {
                     e.preventDefault();
                     this.open();
-                    const elements = this.getFocusableElements();
-                    if (elements.length) (this.getCurrentItem() || elements[elements.length - 1]).focus();
+                    const elements = this._getFocusableElements();
+                    if (elements.length) (this._getCurrentItem() || elements[elements.length - 1]).focus();
                     break;
                 }
             }
         }
 
-        handleMenuKeydown(e) {
-            const elements = this.getFocusableElements();
-            const currentIndex = this.resolveCurrentIndex(elements);
-            const isInput = this.isInputElement(document.activeElement);
+        _handleMenuKeydown(e) {
+            const elements = this._getFocusableElements();
+            const currentIndex = this._resolveCurrentIndex(elements);
+            const isInput = this._isInputElement(document.activeElement);
 
             // Enter inside the menu triggers the primary action (if tagged).
             // Buttons/anchors keep native Enter-to-click, and text inputs
@@ -695,7 +699,7 @@
                 const isActionable = tag === 'BUTTON' || tag === 'A';
                 const isTextInput = isInput && !e.altKey;
                 if (!isActionable && !isTextInput) {
-                    const primary = this._ownFirst('[data-dropmenu-primary]:not(:disabled)');
+                    const primary = this._findOwnItem('[data-dropmenu-primary]:not(:disabled)');
                     if (primary) {
                         e.preventDefault();
                         primary.click();
@@ -711,7 +715,7 @@
                     if (isInput && !e.altKey) return;
                     e.preventDefault();
                     const dir = e.key === 'ArrowDown' ? 1 : -1;
-                    this.navigateToIndex(elements, currentIndex, dir);
+                    this._navigateToIndex(elements, currentIndex, dir);
                     break;
                 }
                 case 'Home':
@@ -784,7 +788,7 @@
             // Already open: a second open() would overwrite _offView and
             // _unsubResize, stranding the pooled subscribers the first one
             // registered (close() only releases the last pair). Reachable via
-            // handleTriggerKeydown, which calls open() unconditionally on
+            // _handleTriggerKeydown, which calls open() unconditionally on
             // Arrow keys. Reposition with applyPosition(), not a re-open.
             if (this.isOpen) return;
             // Delayed-first-open mode (opt-in via data-delay="<ms>"). The first
@@ -805,7 +809,7 @@
                 this._delayTimer = setTimeout(() => {
                     this.dropmenu.removeAttribute('data-delay');
                     const waits = [];
-                    this.emitEvent('nds:dropmenu:prepare', { waitUntil: (promise) => { waits.push(promise); } });
+                    this._dispatchEvent('nds:dropmenu:prepare', { waitUntil: (promise) => { waits.push(promise); } });
                     if (!waits.length) return this._finishDelay();
                     this._preparing = Promise.allSettled(waits).then(() => { this._preparing = null; this._finishDelay(); });
                 }, delay);
@@ -826,7 +830,7 @@
             });
 
             removeState(this.dropmenu, 'closing');
-            removeState(this.menu,     'closing');
+            removeState(this._menu,     'closing');
             this.isOpen = true;
             openDropmenus.add(this.dropmenu);
             this._listenDocument();
@@ -836,12 +840,12 @@
             // against the viewport. Convert to px while the menu is still closed.
             // Read all three before writing any: a write between reads re-flushes style.
             const wrapperWidth = this.dropmenu.getBoundingClientRect().width;
-            const mcs = getComputedStyle(this.menu);
+            const mcs = getComputedStyle(this._menu);
             const widthVars = ['--dropmenu-width', '--dropmenu-min-width', '--dropmenu-max-width'];
             const widthValues = widthVars.map(variable => mcs.getPropertyValue(variable).trim());
             for (let i = 0; i < widthVars.length; i++) {
                 if (widthValues[i].endsWith('%')) {
-                    this.menu.style.setProperty(widthVars[i], (wrapperWidth * parseFloat(widthValues[i]) / 100) + 'px');
+                    this._menu.style.setProperty(widthVars[i], (wrapperWidth * parseFloat(widthValues[i]) / 100) + 'px');
                 }
             }
 
@@ -851,22 +855,22 @@
             this._respectNav = !this.trigger.closest('.nds-modal, dialog[data-nds-modal]');
 
             this._stampItemRoles();
-            this.menu.removeAttribute('hidden');
-            NDS.topLayer(this.menu, true);
+            this._menu.removeAttribute('hidden');
+            NDS.topLayer(this._menu, true);
 
             addState(this.dropmenu, 'open', 'opening');
-            addState(this.menu,     'open', 'opening');
+            addState(this._menu,     'open', 'opening');
             addState(this.trigger,  'open');
             NDS.aria.expanded(this.trigger, true);
-            NDS.aria.hidden(this.menu, false);
+            NDS.aria.hidden(this._menu, false);
 
             this.applyPosition();
 
             // Absolute in the top layer: page scroll carries the menu with no JS. Only a
             // scroll box around the trigger moves one without the other. rAF-throttled.
             // Without popover the menu is fixed, so page scroll moves it too.
-            const reposition = NDS.rafThrottle(() => this.trackPosition());
-            const fixed = !this.menu.showPopover;
+            const reposition = NDS.rafThrottle(() => this._trackPosition());
+            const fixed = !this._menu.showPopover;
             const handleScroll = (e) => { if (e.target === document ? fixed : e.target.contains?.(this.trigger)) reposition(); };
             const { signal } = this.documentAbortController;   // close() aborts it with the other document listeners
             document.addEventListener('scroll', handleScroll, { capture: true, passive: true, signal });
@@ -894,7 +898,7 @@
             // Keep scroll momentum off the page (its scroll closes the menu), but only while
             // the list scrolls: on a list that fits, `contain` swallows the page's wheel.
             // Watched while open, since search, results and populate change its length.
-            const list = this._ownFirst('.nds-dropmenu-scroll');
+            const list = this._findOwnItem('.nds-dropmenu-scroll');
             if (list) this._offListSize = NDS.onElementResize(list, () => {
                 const value = list.scrollHeight > list.clientHeight ? 'contain' : '';
                 return () => { list.style.overscrollBehavior = value; };
@@ -902,9 +906,9 @@
 
             requestAnimationFrame(() => {
                 removeState(this.dropmenu, 'opening');
-                removeState(this.menu,     'opening');
+                removeState(this._menu,     'opening');
             });
-            this.emitEvent('nds:dropmenu:opened');
+            this._dispatchEvent('nds:dropmenu:opened');
         }
 
         close() {
@@ -918,18 +922,18 @@
             });
             this._lastClickX = null;
 
-            if (this.menu.contains(document.activeElement)) {
+            if (this._menu.contains(document.activeElement)) {
                 this.trigger.focus();
                 // A trigger that takes no focus (Date Picker's field box): its first own control,
                 // else let go. Focus left in the menu would sit under its aria-hidden.
-                if (this.menu.contains(document.activeElement)) {
-                    const own = [...this.trigger.querySelectorAll(NDS.focusableSel)].find(el => !this.menu.contains(el));
+                if (this._menu.contains(document.activeElement)) {
+                    const own = [...this.trigger.querySelectorAll(NDS.focusableSel)].find(el => !this._menu.contains(el));
                     if (own) own.focus(); else document.activeElement.blur();
                 }
             }
 
             addState(this.dropmenu, 'closing');
-            addState(this.menu,     'closing');
+            addState(this._menu,     'closing');
             NDS.aria.expanded(this.trigger, false);
 
             if (this._offView) { this._offView.forEach((off) => off()); this._offView = null; }
@@ -942,7 +946,7 @@
             // Cancel first — close() has no re-entry guard, and re-arming over a
             // live handle strands it: both fire, so _finishClose() runs twice.
             this._cancelClose?.();
-            this._cancelClose = NDS.onTransitionEnd(this.menu, () => this._finishClose());
+            this._cancelClose = NDS.onTransitionEnd(this._menu, () => this._finishClose());
         }
 
         /** Post-transition close cleanup. Split out of close() so destroy()
@@ -952,21 +956,21 @@
          *  builds a new one). */
         _finishClose() {
             removeState(this.dropmenu, 'open', 'opening', 'closing');
-            removeState(this.menu,     'open', 'opening', 'closing');
+            removeState(this._menu,     'open', 'opening', 'closing');
             removeState(this.trigger, 'open');
             this.dropmenu.removeAttribute('data-position-vertical');
-            this.menu.removeAttribute('data-position-vertical');
+            this._menu.removeAttribute('data-position-vertical');
             // Only what open() wrote: an authored style and the no-popover position stay.
             ['top', 'left', 'width', 'max-height', 'overflow-y', '--dropmenu-width', '--dropmenu-min-width', '--dropmenu-max-width']
-                .forEach(property => this.menu.style.removeProperty(property));
-            const scroll = this._ownFirst('.nds-dropmenu-scroll');
+                .forEach(property => this._menu.style.removeProperty(property));
+            const scroll = this._findOwnItem('.nds-dropmenu-scroll');
             if (scroll) scroll.style.maxHeight = '';
-            NDS.aria.hidden(this.menu, true);
-            NDS.topLayer(this.menu, false);
+            NDS.aria.hidden(this._menu, true);
+            NDS.topLayer(this._menu, false);
             // Restore the intrinsic [hidden] state so the menu can't
             // flash on the next paint if it re-enters the viewport.
-            this.menu.setAttribute('hidden', '');
-            this.emitEvent('nds:dropmenu:closed');
+            this._menu.setAttribute('hidden', '');
+            this._dispatchEvent('nds:dropmenu:closed');
             this._cancelClose = null;
         }
 
@@ -983,25 +987,25 @@
         applyPosition() {
             const gap = 4, pad = 8;
             // Kept for the scroll follower: a read there, after its own writes, would force a style pass.
-            const edge = this._edge = NDS.viewportPadding(this.menu);
+            const edge = this._edge = NDS.viewportPadding(this._menu);
 
             // Own scroll region only — a bare querySelector would grab a
             // NESTED dropmenu's scroll (the date-picker calendar contains
             // month/year sub-dropmenus) and clamp another instance's list.
-            const scroll = this._ownFirst('.nds-dropmenu-scroll');
+            const scroll = this._findOwnItem('.nds-dropmenu-scroll');
             if (scroll) scroll.style.maxHeight = '';
 
             // Lock width in px before measurement. fit-content/max-content
             // are unreliable for a positioned block when children use
             // flex/grid or width:100%.
-            this.menu.style.width = '';
+            this._menu.style.width = '';
             // Same for a previous run's own-height clamp, or the menu measures
             // at the size the last placement squeezed it to.
-            this.menu.style.maxHeight = '';
-            this.menu.style.overflowY = '';
+            this._menu.style.maxHeight = '';
+            this._menu.style.overflowY = '';
             const vw = document.documentElement.clientWidth;
-            const width = Math.min(this.menu.offsetWidth, vw - edge * 2);
-            this.menu.style.width = width + 'px';
+            const width = Math.min(this._menu.offsetWidth, vw - edge * 2);
+            this._menu.style.width = width + 'px';
 
             // NDS.flipPosition returns raw space values + topEdge using the
             // sticky mainnav as the top boundary. We clamp topEdge to `pad`
@@ -1013,12 +1017,12 @@
             // ~nav height while the down side only gives up `pad`, so a tall menu
             // reads "less room above", stays down, and runs off the viewport with
             // real space going unused above it.
-            const placement = NDS.flipPosition(this.trigger, this.menu, {
+            const placement = NDS.flipPosition(this.trigger, this._menu, {
                 respectNav: this._respectNav
             });
             // No popover (Safari 16): the part of a fixed menu outside the modal's scroll box takes
             // no clicks, so the menu flips and shrinks inside that box.
-            const clip = this.menu.showPopover ? null : this._modalClip();
+            const clip = this._menu.showPopover ? null : this._getModalClip();
             const topEdge = Math.max(placement.box.top + pad, placement.topEdge, clip ? clip.top + pad : -Infinity);
             const spaceBelow = (clip ? Math.min(placement.spaceBelow, clip.bottom - placement.triggerRect.bottom) : placement.spaceBelow) - gap - pad;
             // Recompute spaceAbove from triggerRect rather than reusing
@@ -1045,8 +1049,8 @@
                 } else {
                     // No inner scroll region to give back — the date-picker
                     // calendar is one rigid block. Scroll the whole menu.
-                    this.menu.style.maxHeight = Math.max(80, available) + 'px';
-                    this.menu.style.overflowY = 'auto';
+                    this._menu.style.maxHeight = Math.max(80, available) + 'px';
+                    this._menu.style.overflowY = 'auto';
                 }
                 clamped = true;
             }
@@ -1054,25 +1058,25 @@
             // Re-measure only when the clamp changed the height; otherwise the
             // menu is unchanged since p.menuRect (no DOM write since), so reuse
             // it and skip a forced reflow.
-            const mr2 = clamped ? this.menu.getBoundingClientRect() : placement.menuRect;
+            const mr2 = clamped ? this._menu.getBoundingClientRect() : placement.menuRect;
             if (flipUp) {
                 this.dropmenu.setAttribute('data-position-vertical', 'top');
-                this.menu.setAttribute('data-position-vertical', 'top');
+                this._menu.setAttribute('data-position-vertical', 'top');
             } else {
                 this.dropmenu.removeAttribute('data-position-vertical');
-                this.menu.removeAttribute('data-position-vertical');
+                this._menu.removeAttribute('data-position-vertical');
             }
 
             // Glued to the trigger edge, no vertical viewport clamp on the
             // POSITION: everything was already shrunk to `available` above, so
             // the menu fits the side it was placed on and must never slide over
             // its own trigger — a covered input never recovers.
-            // Matches trackPosition(), which never clamped.
+            // Matches _trackPosition(), which never clamped.
             const top = flipUp ? placement.triggerRect.top - mr2.height - gap : placement.triggerRect.bottom + gap;
 
             // Pass the box read at the top — re-reading it here, after the
             // data-position-vertical writes above, would force a second layout.
-            const leftPx = this._leftFor(placement.triggerRect, mr2.width, placement.box, edge);
+            const leftPx = this._getLeft(placement.triggerRect, mr2.width, placement.box, edge);
 
             // Cache flip direction so the scroll-tracker can reuse it without
             // re-running flip math (and without re-clamping the menu to the
@@ -1080,12 +1084,12 @@
             // scrolled off-screen).
             this._flipUp = flipUp;
 
-            NDS.place(this.menu, top, leftPx);
+            NDS.place(this._menu, top, leftPx);
         }
 
         // The nearest scroll box around the menu inside an open <dialog>, or null.
         // ponytail: vertical only; a menu wider than a narrow modal can still overhang its sides.
-        _modalClip() {
+        _getModalClip() {
             const dlg = this.dropmenu.closest('dialog[open]');
             if (!dlg) return null;
             for (let el = this.dropmenu.parentElement; el && el !== dlg.parentElement; el = el.parentElement) {
@@ -1096,7 +1100,7 @@
 
         /**
          * Horizontal placement in viewport coords, shared by applyPosition()
-         * and trackPosition() so an open menu can't re-place itself by a
+         * and _trackPosition() so an open menu can't re-place itself by a
          * different rule on the first scroll frame than the one that opened
          * it (the cursor anchor and the edge-flip used to live only in
          * applyPosition, so a tracked menu jumped on first scroll).
@@ -1117,7 +1121,7 @@
          * `box` (NDS.visibleBox) is a parameter so a caller that already read
          * it can avoid forcing a second layout.
          */
-        _leftFor(triggerRect, menuWidth, box = NDS.visibleBox(), pad = NDS.viewportPadding(this.menu)) {
+        _getLeft(triggerRect, menuWidth, box = NDS.visibleBox(), pad = NDS.viewportPadding(this._menu)) {
             const anchor = this.dropmenu.getAttribute('data-anchor');
             const min = box.left + pad, max = box.right - pad;
             let left;
@@ -1146,29 +1150,29 @@
         // follow the trigger off-screen is what "tracking" means; clamping
         // would freeze the menu against a viewport edge while the trigger
         // scrolled past.
-        trackPosition() {
+        _trackPosition() {
             const gap = 4;
             const tRect = this.trigger.getBoundingClientRect();
-            const mRect = this.menu.getBoundingClientRect();
+            const mRect = this._menu.getBoundingClientRect();
             const top = this._flipUp
                 ? tRect.top - mRect.height - gap
                 : tRect.bottom + gap;
             // Same horizontal rule as the opening placement, including its
             // viewport clamp — users can't scroll sideways to recover
             // off-screen content.
-            NDS.place(this.menu, top, this._leftFor(tRect, mRect.width, undefined, this._edge));
+            NDS.place(this._menu, top, this._getLeft(tRect, mRect.width, undefined, this._edge));
         }
 
         // ==============================================
         // EVENTS & CLEANUP
         // ==============================================
 
-        emitEvent(name, extra) {
+        _dispatchEvent(name, extra) {
             this.dropmenu.dispatchEvent(new CustomEvent(name, {
                 detail: {
                     dropmenu: this.dropmenu,
                     trigger: this.trigger,
-                    menu: this.menu,
+                    menu: this._menu,
                     isOpen: this.isOpen,
                     ...extra
                 },
@@ -1207,7 +1211,7 @@
             // data-nds-dropmenu-initialized while losing the .ndsDropmenu expando,
             // which left the element permanently ineligible for re-init.
             this.abortController.abort();
-            // Undo setupSearch's injection and its filtering. The clone used to
+            // Undo _setupSearch's injection and its filtering. The clone used to
             // discard both for free; now that the wrapper survives, a destroy →
             // re-init would otherwise stack a second search box and leave items
             // hidden behind a search field that reads as empty.
@@ -1216,13 +1220,13 @@
             // A stale instance destroyed after the wrapper was re-initialized would
             // otherwise strip the new instance's expando and stamp.
             if (this.dropmenu.ndsDropmenu !== this) return;
-            this.menu.removeAttribute('popover');
-            if (!this.menu.showPopover) this.menu.style.position = '';
+            this._menu.removeAttribute('popover');
+            if (!this._menu.showPopover) this._menu.style.position = '';
             delete this.dropmenu.ndsDropmenu;
             this.dropmenu.removeAttribute('data-nds-dropmenu-initialized');
             this._ariaWritten?.forEach(([el, attribute]) => el.removeAttribute(attribute));
             this._undoSelect?.();
-            this._ownItems().forEach(item => { if (this._roleWritten?.has(item)) item.removeAttribute('role'); });
+            this._getOwnItems().forEach(item => { if (this._roleWritten?.has(item)) item.removeAttribute('role'); });
             this._unstamp?.();
         }
     }
@@ -1264,7 +1268,7 @@
 
     // The first part on the WRAPPER that is this dropmenu's, not a nested sub-dropmenu's:
     // trigger, menu, select mode's hidden input, and the scan before an instance exists.
-    // Everything scoped to the MENU uses the menu-boundary readers (_ownItems / _ownFirst).
+    // Everything scoped to the MENU uses the menu-boundary readers (_getOwnItems / _findOwnItem).
     function findOwnFirstIn(root, selector) {
         return NDS.ownParts(root, selector, '.nds-dropmenu')[0] || null;
     }

@@ -108,60 +108,60 @@
 
     class NdsPassword {
         constructor(container) {
-            this.container = container;
+            this._container = container;
             // Success signal — init() only runs (and registers container.ndsPassword)
             // when construction succeeds, so a bail below never hands consumers a
             // half-built instance.
-            this.valid = false;
+            this._valid = false;
             if (container.hasAttribute('data-nds-password-initialized')) return;
 
-            this.input = container.querySelector('.nds-form-control > input[type="password"], .nds-form-control > input[type="text"]');
-            if (!this.input) {
+            this._input = container.querySelector('.nds-form-control > input[type="password"], .nds-form-control > input[type="text"]');
+            if (!this._input) {
                 console.warn('NDS Password: no password input in', container);
                 return;
             }
 
             // Native attribute — the browser enforces it too, so the length rule
             // still gates before this JS loads (or with it deleted).
-            this.minLength = parseInt(this.input.getAttribute('minlength'), 10) || 8;
+            this.minLength = parseInt(this._input.getAttribute('minlength'), 10) || 8;
             // Keep every authored chip — tests resolve per check, so a rule
             // registered after init (addRule) activates its chips on the next input.
-            this.ruleChips = Array.from(container.querySelectorAll('[data-rule]'));
+            this._ruleChips = Array.from(container.querySelectorAll('[data-rule]'));
 
-            this.matchSelector = container.getAttribute('data-password-match') || '';
-            this.matchSource = this.matchSelector ? document.querySelector(this.matchSelector) : null;
-            if (this.matchSelector && !this.matchSource) {
-                console.warn('NDS Password: data-password-match "' + this.matchSelector + '" resolved nothing', container);
+            this._matchSelector = container.getAttribute('data-password-match') || '';
+            this._matchSource = this._matchSelector ? document.querySelector(this._matchSelector) : null;
+            if (this._matchSelector && !this._matchSource) {
+                console.warn('NDS Password: data-password-match "' + this._matchSelector + '" resolved nothing', container);
             }
 
             // Silent no-op when the container carries the marker but neither
             // rules nor a match target — the toggle/clear buttons come from
             // Forms, so Password has nothing to do.
-            if (!this.ruleChips.length && !this.matchSource) return;
+            if (!this._ruleChips.length && !this._matchSource) return;
 
             this.abortController = new AbortController();
 
-            this.statusEl = container.querySelector('.nds-password-status');
-            if (this.statusEl) {
+            this._statusElement = container.querySelector('.nds-password-status');
+            if (this._statusElement) {
                 var self = this;
                 // Debounced: a polite live region rewritten on every keystroke queues
                 // announcements instead of replacing them. destroy() cancels a pending one.
                 this._announce = NDS.debounce(function (text) {
-                    self.statusEl.textContent = text;
+                    self._statusElement.textContent = text;
                 }, 500);
             }
 
             this.init();
-            this.valid = true;
+            this._valid = true;
         }
 
         init() {
             var signal = this.abortController.signal;
             var self = this;
 
-            this.input.addEventListener('input', function () { self.check(); }, { signal: signal });
+            this._input.addEventListener('input', function () { self.check(); }, { signal: signal });
             // A form reset changes the value without an input event.
-            if (this.input.form) this.input.form.addEventListener('reset', function (e) {
+            if (this._input.form) this._input.form.addEventListener('reset', function (e) {
                 setTimeout(function () { if (!e.defaultPrevented && self.abortController) self.check(); });
             }, { signal: signal });
 
@@ -169,12 +169,12 @@
             // re-check the confirm field too. Same-tab typing order is
             // source → confirm; without this, a confirm chip lingers on "pass"
             // when the user edits the source afterwards.
-            if (this.matchSource) {
-                this.matchSource.addEventListener('input', function () { self.check(); }, { signal: signal });
+            if (this._matchSource) {
+                this._matchSource.addEventListener('input', function () { self.check(); }, { signal: signal });
             }
 
-            this.container.ndsPassword = this;
-            this.container.setAttribute('data-nds-password-initialized', 'true');
+            this._container.ndsPassword = this;
+            this._container.setAttribute('data-nds-password-initialized', 'true');
 
             // First paint: reflect the current value (a pre-filled form should show
             // its rule status without waiting for a keystroke — browser autofill
@@ -184,16 +184,16 @@
         }
 
         check() {
-            var value = this.input.value;
+            var value = this._input.value;
             var passing = 0;
             var active = 0;
             var results = {};
             // null when this container has no match source — the match rule reads it
             // to tell "no source wired" apart from "source is empty".
-            var matchValue = this.matchSource ? this.matchSource.value : null;
+            var matchValue = this._matchSource ? this._matchSource.value : null;
             var context = { minLength: this.minLength, matchValue: matchValue };
 
-            this.ruleChips.forEach(function (chip) {
+            this._ruleChips.forEach(function (chip) {
                 var test = resolveTest(chip);
                 if (!test) return; // inert — stays neutral, never counted
                 // An empty field demonstrates nothing, so no rule passes on it —
@@ -213,43 +213,43 @@
             var mismatched = matchValue !== null && matchValue !== value;
             // A match-only field has no chips to count, so the mismatch decides it.
             var allPass = !!value && !mismatched && passing === active;
-            if (active) this.container.setAttribute('data-password-strength', passing);
+            if (active) this._container.setAttribute('data-password-strength', passing);
 
             // A red chip already names the cause, so the block is blank (' ': Forms shows no
             // message). Only a mismatch with no match chip needs words.
             // Nothing fires on an empty field: required owns that message.
             var message = '';
             if (value && !allPass) message = mismatched && !('match' in results) ? strings.text('mismatch') : ' ';
-            this.input.setCustomValidity(message);
+            this._input.setCustomValidity(message);
 
             // Announce the error, else progress. Empty field says nothing — otherwise
             // every page load would announce "0 of 6 rules met".
-            if (this.statusEl) {
+            if (this._statusElement) {
                 this._announce(value ? (message.trim() || (active ? strings.text('met', { n: passing, total: active }) : '')) : '');
             }
 
             // No raw value in the detail — a listener that needs it reads the input.
-            this.last = { strength: passing, allPass: allPass, rules: results };
-            this.container.dispatchEvent(new CustomEvent('nds:password:change', {
-                detail: this.last,
+            this._last = { strength: passing, allPass: allPass, rules: results };
+            this._container.dispatchEvent(new CustomEvent('nds:password:change', {
+                detail: this._last,
                 bubbles: true
             }));
-            return this.last;
+            return this._last;
         }
 
-        getStrength() { return this.last; }
+        getStrength() { return this._last; }
 
         destroy() {
             if (this.abortController) { this.abortController.abort(); this.abortController = null; }
             if (this._announce) this._announce.cancel();
             // Lift the submit gate and repaint chips — a stale customValidity
             // has no owner left to clear it and would block the form forever.
-            this.input.setCustomValidity('');
-            this.ruleChips.forEach(function (chip) { NDS.status.set(chip, 'neutral'); });
-            if (this.statusEl) this.statusEl.textContent = '';
-            this.container.removeAttribute('data-password-strength');
-            this.container.removeAttribute('data-nds-password-initialized');
-            this.container.ndsPassword = null;
+            this._input.setCustomValidity('');
+            this._ruleChips.forEach(function (chip) { NDS.status.set(chip, 'neutral'); });
+            if (this._statusElement) this._statusElement.textContent = '';
+            this._container.removeAttribute('data-password-strength');
+            this._container.removeAttribute('data-nds-password-initialized');
+            this._container.ndsPassword = null;
         }
     }
 
@@ -267,7 +267,7 @@
         create: function (element) {
             if (element.ndsPassword) return element.ndsPassword;
             var instance = new NdsPassword(element);
-            return instance.valid ? instance : null;
+            return instance._valid ? instance : null;
         },
         destroy: function (element) { if (element.ndsPassword) element.ndsPassword.destroy(); },
         check: function (element) { return element.ndsPassword ? element.ndsPassword.check() : null; },

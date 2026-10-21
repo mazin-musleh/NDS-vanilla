@@ -16,6 +16,19 @@
  *                                      not: the server owns their result set. Prefer
  *                                      NDS.init.refresh(root),
  *                                      which calls this and every other affected component
+ *   instance.setFilterValues(name, values) / .setSearchValue(text)   pick, and apply
+ *   instance.removeFilterValue(name, value) / .removeSearchFilter() / .resetRangeFilter(name)
+ *   instance.populateFilter(name, values, type)   build a group's options from values
+ *   instance.getCriteria()             a copy: {search, filters: {name: [values]}}
+ *   instance.getVisibleItems() / .getHiddenItems()
+ *   instance.applyFilters() / .submitForm() / .clear() / .reset()
+ *   instance.reapplyUrlParamsForFilter(name)   the URL's values, for inputs added after load
+ *   instance.showNoResultsAlert() / .dismissNoResultsAlert()
+ *   instance.clearDropmenuFilters()    empty every dropmenu group
+ *   instance.updateUrlParams()         write the criteria to the URL
+ *   instance.queryAll(selector)        matches inside the filter's own surfaces only
+ *   instance.targetId / .items / .criteria / .filterInputs / .sort / .isFormMode / .isAjaxMode
+ *                                      read-only state
  * Events (bubble from the filter surface element):
  *   nds:filter:ready       detail = the instance
  *   nds:filter:change      detail {filter, criteria, totalItems, visibleItems, hiddenItems}
@@ -80,7 +93,7 @@
  *     rows, or one page? All rows (the client pages them via data-auto-pagination)
  *     → CLIENT sort: author data-sort triggers, which ARE the client-side engine.
  *     One page (a data-page-url nav) → SERVER sort: author no data-sort at all
- *     (with no triggers setupSort() returns early and no engine is created) and
+ *     (with no triggers _setupSort() returns early and no engine is created) and
  *     give the form your own named control — <select name="sort"> rides FormData
  *     like any criterion, and the server's row order arrives untouched.
  *     The presence of data-sort IS the switch, so the two cannot conflict; author
@@ -143,9 +156,9 @@
 
     class NdsFilter {
         constructor(filterContainer, surfaces = null) {
-            this.filterContainer = filterContainer;
+            this._filterContainer = filterContainer;
             this.targetId = filterContainer.getAttribute('data-filter-target');
-            this.targetContainer = this.targetId ? document.getElementById(this.targetId) : null;
+            this._targetContainer = this.targetId ? document.getElementById(this.targetId) : null;
 
             // Every element carrying this filter's data-filter-target — the
             // filter's surfaces (search box, dropmenu, applied-chips, auto-fill,
@@ -155,7 +168,7 @@
             // document. Recomputed in refresh() for the dynamic-DOM path.
             // `surfaces` (when passed by the loader) is this target's already-grouped
             // surface set, so the constructor skips re-scanning the document for them.
-            this._targetRoots = this.resolveTargetRoots(surfaces);
+            this._targetRoots = this._resolveTargetRoots(surfaces);
 
             // Identifier on the filter's own dropmenu menu (rule: a component-owned
             // menu names itself). The .nds-filter anchor IS the dropmenu wrapper
@@ -169,7 +182,7 @@
             });
 
             // Get all filterable items (empty array if no target)
-            this.items = this.resolveItems();
+            this.items = this._resolveItems();
 
             // Filter criteria storage - dynamic structure.
             // Sort state lives inside the NDS.Sort instance (this.sort); read via this.sort.getState().
@@ -182,7 +195,7 @@
             this.filterInputs = {};  // { filterName: { inputs: [], type: 'checkbox'|'radio' } }
 
             // Search inputs storage
-            this.searchInputs = {
+            this._searchInputs = {
                 direct: null,
                 dropmenu: null
             };
@@ -195,34 +208,34 @@
             // this filter's data-filter-target) rather than re-scanning the whole
             // document — a root IS the linked element, so .matches() on the small
             // root set replaces a document-wide attribute query per surface.
-            this.submissionForm = this._targetRoots.find(targetRoot => targetRoot.matches('form[data-filter-submit]')) || null;
+            this._submissionForm = this._targetRoots.find(targetRoot => targetRoot.matches('form[data-filter-submit]')) || null;
 
-            this.isFormMode = !!this.submissionForm;
-            this.isAjaxMode = this.isFormMode && this.submissionForm.hasAttribute('data-ajax');
+            this.isFormMode = !!this._submissionForm;
+            this.isAjaxMode = this.isFormMode && this._submissionForm.hasAttribute('data-ajax');
 
             // Hidden inputs container for form mode
-            this.hiddenInputsContainer = null;
+            this._hiddenInputsContainer = null;
 
             // Resolve applied-chips container: inside filter first, then a linked root.
-            this.appliedContainer = filterContainer.querySelector('.nds-filter-applied')
+            this._appliedContainer = filterContainer.querySelector('.nds-filter-applied')
                 || this._targetRoots.find(targetRoot => targetRoot.matches('.nds-filter-applied'))
                 || null;
 
             // Resolve external auto-fill linked by data-filter-target.
-            this.autoFillElement = this._targetRoots.find(targetRoot => targetRoot.matches('.nds-auto-fill')) || null;
+            this._autoFillElement = this._targetRoots.find(targetRoot => targetRoot.matches('.nds-auto-fill')) || null;
 
             // Resolve search-query slot — a root carrying [data-filter-query] or one
             // holding it as a descendant. When present, the search keyword is routed
             // into this slot instead of the applied-chips row.
-            this.searchQuerySlot = this.query('[data-filter-query]');
+            this._searchQuerySlot = this._query('[data-filter-query]');
 
-            this.filterLabels = {};  // { filterName: { value: label } } — auto-built from data-filter-value
+            this._filterLabels = {};  // { filterName: { value: label } } — auto-built from data-filter-value
 
             this.abortController = new AbortController();
-            // Pool subscriber handles from setupManualFilter's NDS.onDOMAdd
+            // Pool subscriber handles from _setupManualFilter's NDS.onDOMAdd
             // calls; released atomically in destroy() so the per-element
             // closures don't outlive the filter instance.
-            this._offDOMAdds = [];
+            this._offDomAdds = [];
             // Per-filter-element AbortControllers stored on the elements
             // themselves (element._ndsFilterAC); tracked here so destroy()
             // can release them all in one sweep.
@@ -240,10 +253,10 @@
             this._cacheBuilt = false;
 
             // Auto-populated filters (data-filter-type without data-filter-values)
-            // whose options come from a full item scan via collectFilterValues.
+            // whose options come from a full item scan via _collectFilterValues.
             // When such a filter is hidden at rest (inside a dropmenu, or behind a
             // search input) AND not active in the URL, its option build is deferred
-            // here and triggered on first engagement (buildDeferredFilters). Manual,
+            // here and triggered on first engagement (_buildDeferredFilters). Manual,
             // static-values, and URL-active filters build eagerly during init.
             this._deferredFilters = [];
 
@@ -256,25 +269,25 @@
         // items, and a detail row is part of its parent rather than an item in its
         // own right. Non-table containers are untouched, where a wrapper between the
         // container and its cards is normal.
-        resolveItems() {
-            if (!this.targetContainer) return [];
+        _resolveItems() {
+            if (!this._targetContainer) return [];
             // The no-results alert is ours, not an item: it carries .nds-card, and in a table its row is a tr.
             const alertId = `nds-filter-no-results-${this.targetId}`;
-            return NDS.ownItems(this.targetContainer, this.targetContainer.querySelectorAll(this.getItemSelector()))
+            return NDS.ownItems(this._targetContainer, this._targetContainer.querySelectorAll(this._getItemSelector()))
                 .filter(el => el.id !== alertId && !el.classList.contains('nds-filter-no-results-row'));
         }
 
-        getItemSelector() {
-            const ref = this.targetContainer?.getAttribute('data-filter-items');
+        _getItemSelector() {
+            const ref = this._targetContainer?.getAttribute('data-filter-items');
             if (!ref) return '.nds-card';
             // Canonical form is a bare class (matches data-filter-target / data-auto-pagination
             // style). Selectors with punctuation pass through unchanged for back-compat; bare
             // tokens resolve as a class first, then fall back to a tag selector (e.g. "tr").
             if (/[.#\[:\s>+~,*=]/.test(ref)) return ref;
-            return this.targetContainer.querySelector(`.${ref}`) ? `.${ref}` : ref;
+            return this._targetContainer.querySelector(`.${ref}`) ? `.${ref}` : ref;
         }
 
-        getFilterValue(el) {
+        _getFilterValue(el) {
             return el.getAttribute('data-filter-value') || el.textContent.trim();
         }
 
@@ -285,13 +298,13 @@
         // `surfaces`, when supplied (loader init path), is the pre-grouped set for
         // this target — used as-is to avoid a redundant document scan; refresh()
         // and create() pass nothing, so they re-scan for the current DOM.
-        resolveTargetRoots(surfaces = null) {
+        _resolveTargetRoots(surfaces = null) {
             const roots = surfaces
                 ? surfaces.slice()
                 : (this.targetId
                     ? Array.from(document.querySelectorAll(`[data-filter-target="${this.targetId}"]`))
                     : []);
-            if (!roots.includes(this.filterContainer)) roots.unshift(this.filterContainer);
+            if (!roots.includes(this._filterContainer)) roots.unshift(this._filterContainer);
             return roots;
         }
 
@@ -315,14 +328,14 @@
             }
 
             let matches = Array.from(set);
-            if (this.targetContainer) {
-                matches = matches.filter(el => !this.targetContainer.contains(el));
+            if (this._targetContainer) {
+                matches = matches.filter(el => !this._targetContainer.contains(el));
             }
 
             return matches;
         }
 
-        query(selector) {
+        _query(selector) {
             return this.queryAll(selector)[0] || null;
         }
 
@@ -331,31 +344,31 @@
             // applyFilters(). One wrapper per instance so rapid filter passes
             // share the same 500ms timer.
             this._clearLoadingDebounced = NDS.debounce(() => {
-                if (this.targetContainer) this.targetContainer.classList.remove('nds-loading');
+                if (this._targetContainer) this._targetContainer.classList.remove('nds-loading');
             }, 500);
 
-            this.setupFilterElements();
-            this.setupActionButtons();
-            this.setupChipStyle();
-            this.applyUrlParams();
+            this._setupFilterElements();
+            this._setupActionButtons();
+            this._setupChipStyle();
+            this._readUrlParams();
 
-            // Create the sort engine AFTER applyUrlParams so its URL-read DOM reorder
+            // Create the sort engine AFTER _readUrlParams so its URL-read DOM reorder
             // happens on items whose filter visibility is already settled.
-            this.setupSort();
+            this._setupSort();
 
             // Setup form submission mode
             if (this.isFormMode) {
-                this.setupFormSubmission();
+                this._setupFormSubmission();
             }
 
             // Populate filter-count slots on first load even without URL params
-            this.updateFilterCount();
+            this._syncFilterCount();
         }
 
-        setupChipStyle() {
+        _setupChipStyle() {
             // Get chip classes from data-chip-class attribute on .nds-filter-applied
-            const chipClass = this.appliedContainer?.getAttribute('data-chip-class') || 'nds-primary nds-lg';
-            this.chipClass = chipClass;
+            const chipClass = this._appliedContainer?.getAttribute('data-chip-class') || 'nds-primary nds-lg';
+            this._chipClass = chipClass;
         }
 
         // ==============================================
@@ -365,15 +378,15 @@
         /**
          * Setup form submission handlers
          */
-        setupFormSubmission() {
+        _setupFormSubmission() {
             // Create hidden inputs container inside the form that will be submitted
-            this.hiddenInputsContainer = document.createElement('div');
-            this.hiddenInputsContainer.className = 'nds-filter-hidden-inputs';
-            this.hiddenInputsContainer.style.display = 'none';
-            this.submissionForm.appendChild(this.hiddenInputsContainer);
+            this._hiddenInputsContainer = document.createElement('div');
+            this._hiddenInputsContainer.className = 'nds-filter-hidden-inputs';
+            this._hiddenInputsContainer.style.display = 'none';
+            this._submissionForm.appendChild(this._hiddenInputsContainer);
 
             // Handle form submission
-            this.submissionForm.addEventListener('submit', (e) => {
+            this._submissionForm.addEventListener('submit', (e) => {
                 // Both branches read the form's named controls — AJAX through
                 // FormData, native through the browser — so criteria that no
                 // control carries must exist as real inputs before either runs.
@@ -381,9 +394,9 @@
 
                 if (this.isAjaxMode) {
                     e.preventDefault();
-                    this.handleAjaxSubmit();
+                    this._handleAjaxSubmit();
                 } else {
-                    this.handleFormSubmit(e);
+                    this._handleFormSubmit(e);
                 }
             }, { signal: this.abortController.signal });
         }
@@ -402,7 +415,7 @@
          * would rename a parameter consumers may already read.
          */
         _writeCriteriaInputs() {
-            const box = this.hiddenInputsContainer;
+            const box = this._hiddenInputsContainer;
             if (!box) return;
             box.textContent = '';
 
@@ -421,10 +434,10 @@
                 }
             }
 
-            // The direct search box is the form-associated one (setupDirectSearch);
+            // The direct search box is the form-associated one (_setupDirectSearch);
             // an unnamed one submits nothing, so carry the keyword here instead.
-            if (this.criteria.search && !this.searchInputs.direct?.input.name) {
-                add(this.getSearchInputName(), this.criteria.search);
+            if (this.criteria.search && !this._searchInputs.direct?.input.name) {
+                add(this._getSearchInputName(), this.criteria.search);
             }
         }
 
@@ -439,16 +452,16 @@
         /**
          * Handle standard form submission
          */
-        handleFormSubmit(e) {
+        _handleFormSubmit(e) {
             // Validate the submission form (may differ from the anchor)
-            const result = NDS.Form.validate(this.submissionForm, {
+            const result = NDS.Form.validate(this._submissionForm, {
                 showMessages: true,
                 focusFirst: true
             });
 
             if (!result.valid) {
                 e.preventDefault();
-                this.filterContainer.dispatchEvent(new CustomEvent('nds:form:invalid', {
+                this._filterContainer.dispatchEvent(new CustomEvent('nds:form:invalid', {
                     detail: { invalidFields: result.invalidFields, errors: result.errors },
                     bubbles: true
                 }));
@@ -460,23 +473,23 @@
                 detail: {
                     // A copy, as nds:filter:change hands out: a handler must not edit live filter state.
                     criteria: this.getCriteria(),
-                    form: this.submissionForm
+                    form: this._submissionForm
                 },
                 cancelable: true,
                 bubbles: true
             });
 
-            const shouldContinue = this.filterContainer.dispatchEvent(submitEvent);
+            const shouldContinue = this._filterContainer.dispatchEvent(submitEvent);
 
             if (!shouldContinue) {
                 e.preventDefault();
                 return;
             }
 
-            NDS.state.set(this.filterContainer, 'submitting');
+            NDS.state.set(this._filterContainer, 'submitting');
             this._showTriggerLoading();
 
-            this.filterContainer.dispatchEvent(new CustomEvent('nds:form:valid', {
+            this._filterContainer.dispatchEvent(new CustomEvent('nds:form:valid', {
                 detail: {},
                 bubbles: true
             }));
@@ -487,10 +500,10 @@
          * a private helper so the fetch chain stays scannable. Only form-mode
          * AJAX filters reach this; it never runs at first paint.
          */
-        handleAjaxSubmit() {
+        _handleAjaxSubmit() {
             // Snapshot the applied state BEFORE updateUrlParams overwrites it. The
             // URL is the component's own record of what is currently applied, and
-            // applyUrlParams() can rebuild criteria + controls + chips from it — so
+            // _readUrlParams() can rebuild criteria + controls + chips from it — so
             // one string is the whole rollback. Taken here, after a reset() has
             // already cleared the controls but before the URL is rewritten, so a
             // failed Clear restores the filters it was about to drop.
@@ -499,14 +512,14 @@
             this._commitAppliedUi();
 
             // Unified change event (fires in all modes)
-            this.dispatchFilterEvent();
+            this._dispatchFilterEvent();
 
             // Dispatch preventable AJAX submit event
             const ajaxEvent = new CustomEvent('nds:filter:request', {
                 detail: {
                     criteria: this.getCriteria(),
-                    form: this.submissionForm,
-                    hiddenInputsContainer: this.hiddenInputsContainer,
+                    form: this._submissionForm,
+                    hiddenInputsContainer: this._hiddenInputsContainer,
                     // Chips, badge and URL are already committed above, so a
                     // consumer who preventDefaults and then fails has no way back
                     // to the state the displayed results represent. Same rollback
@@ -516,11 +529,11 @@
                 cancelable: true,
                 bubbles: true
             });
-            if (!this.filterContainer.dispatchEvent(ajaxEvent)) return;
+            if (!this._filterContainer.dispatchEvent(ajaxEvent)) return;
 
-            NDS.state.set(this.filterContainer, 'submitting');
+            NDS.state.set(this._filterContainer, 'submitting');
             this._showTriggerLoading();
-            if (this.targetContainer) this.targetContainer.classList.add('nds-loading');
+            if (this._targetContainer) this._targetContainer.classList.add('nds-loading');
 
             const { url, options } = this._buildAjaxRequest();
             const { signal } = options;
@@ -529,10 +542,10 @@
             // ceiling against a runaway response, not a target.
             NDS.request(url, { ...options, maxBytes: 4194304 })
                 .then(({ isJson, data }) => {
-                    const eventDetail = this._applyAjaxResponse({ isJson, data });
+                    const eventDetail = this._renderAjaxResponse({ isJson, data });
                     // Swapped-in results start before the complete event, so its handlers find them live.
                     // A bundle that fails to load leaves them unstarted; it does not undo the filters.
-                    const mounted = isJson ? null : NDS.init.mount(this.targetContainer).catch(() => {});
+                    const mounted = isJson ? null : NDS.init.mount(this._targetContainer).catch(() => {});
                     return Promise.resolve(mounted).then(() => {
                         // A newer request took over while this one mounted: it owns the loading state.
                         if (!signal.aborted) this._finishAjaxSubmit(eventDetail, isJson);
@@ -547,8 +560,8 @@
          * before the new one starts.
          */
         _buildAjaxRequest() {
-            const method = this.submissionForm.method.toUpperCase() || 'GET';
-            let action = this.submissionForm.action || window.location.href;
+            const method = this._submissionForm.method.toUpperCase() || 'GET';
+            let action = this._submissionForm.action || window.location.href;
 
             // Handle # or empty action - use current page URL without hash
             if (!action || action === '#' || action.endsWith('#')) {
@@ -557,7 +570,7 @@
 
             // Abort any in-flight submission so a faster second Apply click
             // can't be overtaken by the slower first response (replaceWith
-            // in _applyAjaxResponse would otherwise install stale results).
+            // in _renderAjaxResponse would otherwise install stale results).
             if (this.fetchAbortController) this.fetchAbortController.abort();
             this.fetchAbortController = new AbortController();
 
@@ -569,7 +582,7 @@
 
             // Collect form data from the submission form (respects HTML `form="id"`
             // attribute on scattered inputs associated with this form).
-            const formData = new FormData(this.submissionForm);
+            const formData = new FormData(this._submissionForm);
 
             let url = action;
             if (method === 'GET') {
@@ -588,10 +601,10 @@
          * with the response's matching #id subtree. Returns the eventDetail
          * object that _finishAjaxSubmit will dispatch.
          */
-        _applyAjaxResponse({ isJson, data }) {
+        _renderAjaxResponse({ isJson, data }) {
             const eventDetail = {
                 success: true,
-                form: this.filterContainer,
+                form: this._filterContainer,
                 isJson
             };
 
@@ -605,7 +618,7 @@
             eventDetail.html = data;
             eventDetail.fullHtml = data;
 
-            if (!this.targetContainer || !this.targetId) return eventDetail;
+            if (!this._targetContainer || !this.targetId) return eventDetail;
 
             const parser = new DOMParser();
             const parsedDocument = parser.parseFromString(data, 'text/html');
@@ -613,10 +626,10 @@
 
             if (targetInResponse) {
                 const newContainer = targetInResponse.cloneNode(true);
-                NDS.init.destroy(this.targetContainer);
-                this.targetContainer.replaceWith(newContainer);
-                this.targetContainer = newContainer;
-                this.items = this.resolveItems();
+                NDS.init.destroy(this._targetContainer);
+                this._targetContainer.replaceWith(newContainer);
+                this._targetContainer = newContainer;
+                this.items = this._resolveItems();
                 this._cacheBuilt = false;
                 this._resyncSort();
                 this._revealTargetContainer();
@@ -638,22 +651,22 @@
          * keep hidden/display:none on the placeholder shell).
          */
         _revealTargetContainer() {
-            if (!this.targetContainer) return;
-            this.targetContainer.removeAttribute('hidden');
-            if (this.targetContainer.style.display === 'none') {
-                this.targetContainer.style.display = '';
+            if (!this._targetContainer) return;
+            this._targetContainer.removeAttribute('hidden');
+            if (this._targetContainer.style.display === 'none') {
+                this._targetContainer.style.display = '';
             }
             // A swapped-in container arrives without the init stamp, and the crit
             // hold in _skeleton.scss keys on exactly that attribute — so a fresh
             // result set would render visibility:hidden and never come back.
-            this.targetContainer.setAttribute('data-nds-filter-initialized', 'true');
+            this._targetContainer.setAttribute('data-nds-filter-initialized', 'true');
         }
 
-        // Undo what handleAjaxSubmit set on start; success and failure both release through here.
+        // Undo what _handleAjaxSubmit set on start; success and failure both release through here.
         _releaseSubmitUi() {
-            if (this.targetContainer) this.targetContainer.classList.remove('nds-loading');
-            NDS.state.clear(this.filterContainer);
-            if (this._triggerBtn) { NDS.state.remove(this._triggerBtn, 'loading'); this._triggerBtn = null; }
+            if (this._targetContainer) this._targetContainer.classList.remove('nds-loading');
+            NDS.state.clear(this._filterContainer);
+            if (this._triggerButton) { NDS.state.remove(this._triggerButton, 'loading'); this._triggerButton = null; }
         }
 
         /**
@@ -665,7 +678,7 @@
 
             this._commitAppliedUi();
 
-            this.filterContainer.dispatchEvent(new CustomEvent('nds:filter:success', {
+            this._filterContainer.dispatchEvent(new CustomEvent('nds:filter:success', {
                 detail: eventDetail,
                 bubbles: true
             }));
@@ -673,7 +686,7 @@
             // JSON developers render inside the complete-event handler and may set
             // data-total-count on the target container there — re-run the count so
             // the slots reflect their updates.
-            if (isJson) this.updateFilterCount();
+            if (isJson) this._syncFilterCount();
         }
 
         /**
@@ -692,10 +705,10 @@
 
             // Cancelable so a consumer with its own error UI can suppress the
             // toast — same opt-out idiom as nds:filter:request.
-            const shouldToast = this.filterContainer.dispatchEvent(new CustomEvent('nds:filter:error', {
+            const shouldToast = this._filterContainer.dispatchEvent(new CustomEvent('nds:filter:error', {
                 detail: {
                     error: error.message,
-                    form: this.filterContainer
+                    form: this._filterContainer
                 },
                 cancelable: true,
                 bubbles: true
@@ -709,10 +722,10 @@
          * must not either — a failed Clear that still emptied the chips would claim
          * no filters while filtered results are displayed.
          *
-         * Restores from the snapshotted URL because applyUrlParams() is the same
+         * Restores from the snapshotted URL because _readUrlParams() is the same
          * path that rebuilds this state on page load, so every control type it
          * already handles (checkbox, radio, range) is covered for free. Clear first:
-         * applyUrlParams only sets what the params contain, it never unsets.
+         * _readUrlParams only sets what the params contain, it never unsets.
          */
         _rollbackApplied(appliedUrl) {
             NDS.writeUrlParams(appliedUrl || '');
@@ -720,14 +733,14 @@
             this._mirrorSearchInputs('');
             this.criteria.search = '';
             this._resetFilterInputs();
-            this.applyUrlParams();
+            this._readUrlParams();
 
-            // applyUrlParams re-renders these only when the URL had params; call
+            // _readUrlParams re-renders these only when the URL had params; call
             // them unconditionally so a rollback to "nothing applied" lands too.
             // Both are pure renders, so the double call when params exist is free.
-            this.updateFilterButtonBadge();
-            this.updateAppliedChips();
-            this.updateApplyButtonLabel();
+            this._syncFilterButtonBadge();
+            this._syncAppliedChips();
+            this._syncApplyButtonLabel();
         }
 
         /**
@@ -760,13 +773,13 @@
         /**
          * Get the custom name for search input or return default
          */
-        getSearchInputName() {
-            if (this.searchInputs.direct && this.searchInputs.direct.input.name) {
-                return this.searchInputs.direct.input.name;
+        _getSearchInputName() {
+            if (this._searchInputs.direct && this._searchInputs.direct.input.name) {
+                return this._searchInputs.direct.input.name;
             }
 
-            if (this.searchInputs.dropmenu && this.searchInputs.dropmenu.input.name) {
-                return this.searchInputs.dropmenu.input.name;
+            if (this._searchInputs.dropmenu && this._searchInputs.dropmenu.input.name) {
+                return this._searchInputs.dropmenu.input.name;
             }
 
             return 'search';
@@ -789,19 +802,19 @@
         // so the equality match against input.value succeeds. Safe because the
         // value is only compared, never rendered as HTML (stored criteria come
         // from input.value itself).
-        sanitizeFilterValue(text) {
+        _sanitizeFilterValue(text) {
             if (!text) return '';
             return text.replace(/<[^>]*>/g, '').substring(0, 100);
         }
 
-        applyUrlParams() {
+        _readUrlParams() {
             const params = new URLSearchParams(window.location.search);
             let hasParams = false;
 
             // Each filter reads its own input's `name` as the URL key. Multi-filter
             // pages are responsible for using distinct input names; there is no
             // automatic URL namespacing.
-            const searchParamName = this.getSearchInputName();
+            const searchParamName = this._getSearchInputName();
             const searchParam = params.get(searchParamName);
 
             if (searchParam) {
@@ -810,8 +823,8 @@
                 hasParams = true;
             }
 
-            // Sort URL params (?sort=…&order=…) are owned by NDS.Sort (see setupSort) when the
-            // filter has sort buttons; it reads them in its init, after applyUrlParams.
+            // Sort URL params (?sort=…&order=…) are owned by NDS.Sort (see _setupSort) when the
+            // filter has sort buttons; it reads them in its init, after _readUrlParams.
             const sorted = this.queryAll('[data-sort]').length > 0;
 
             // Apply dynamic filter params — plain input names as URL keys
@@ -820,10 +833,10 @@
 
                 if (this.filterInputs[key]) {
                     if (this.filterInputs[key].type === 'range') {
-                        this._applyRangeFromUrl(key, value);
+                        this._setRangeFromUrl(key, value);
                     } else {
                         this._checkInputsForValues(this.filterInputs[key], value);
-                        this.updateFilterCriteria(key);
+                        this._syncFilterCriteria(key);
                     }
                     hasParams = true;
                 }
@@ -836,7 +849,7 @@
 
         // Check every input in a filter group whose value matches one of the
         // comma-separated values in `rawValue` (URL-param sourced). Values are
-        // length-capped via sanitizeFilterValue but keep their literal chars so
+        // length-capped via _sanitizeFilterValue but keep their literal chars so
         // matching against trusted input.value succeeds (e.g. "Healthcare & Social").
         //
         // Only checkbox/switch groups hold several values, so only their param is
@@ -847,8 +860,8 @@
         // values stay unsupported on checkbox/switch, where comma is the delimiter.
         _checkInputsForValues(filterData, rawValue) {
             const values = filterData.type === 'radio'
-                ? [this.sanitizeFilterValue(rawValue).trim()]
-                : rawValue.split(',').map(item => this.sanitizeFilterValue(item).trim());
+                ? [this._sanitizeFilterValue(rawValue).trim()]
+                : rawValue.split(',').map(item => this._sanitizeFilterValue(item).trim());
             filterData.inputs.forEach(input => {
                 if (values.some(entry => entry.toLowerCase() === input.value.toLowerCase())) {
                     input.checked = true;
@@ -860,10 +873,10 @@
         // In form mode we update UI only — calling applyFilters() would run
         // updateUrlParams() and rewrite the URL we just read from.
         _settleAfterCriteriaChange() {
-            this.updateApplyButtonLabel();
+            this._syncApplyButtonLabel();
             if (this.isFormMode) {
-                this.updateFilterButtonBadge();
-                this.updateAppliedChips();
+                this._syncFilterButtonBadge();
+                this._syncAppliedChips();
             } else {
                 this.applyFilters();
             }
@@ -880,17 +893,17 @@
             // Re-scan the element for current inputs (handles async/dynamic content)
             const filterData = this.filterInputs[filterName];
             if (!filterData) return;
-            this.setupManualFilter(filterData.element, filterName);
+            this._setupManualFilter(filterData.element, filterName);
 
             this._checkInputsForValues(this.filterInputs[filterName], value);
-            this.updateFilterCriteria(filterName);
+            this._syncFilterCriteria(filterName);
             this._settleAfterCriteriaChange();
         }
 
         updateUrlParams() {
             // Preserve existing params not managed by this filter
             const params = new URLSearchParams(window.location.search);
-            const searchParamName = this.getSearchInputName();
+            const searchParamName = this._getSearchInputName();
 
             // Managed param keys: this filter's own search + filter names.
             // Sort/order are owned by NDS.Sort and preserved untouched here.
@@ -917,29 +930,29 @@
             NDS.writeUrlParams(params);
         }
 
-        setupActionButtons() {
+        _setupActionButtons() {
             const actionButtons = this.queryAll('[data-filter-action]');
 
             actionButtons.forEach(button => {
                 const action = button.getAttribute('data-filter-action');
 
                 switch (action) {
-                    case 'apply':  this._bindApplyButton(button); break;
-                    case 'clear':  this._bindClearButton(button); break;
-                    case 'reset':  this._bindResetButton(button); break;
+                    case 'apply':  this._addApplyButtonListeners(button); break;
+                    case 'clear':  this._addClearButtonListeners(button); break;
+                    case 'reset':  this._addResetButtonListeners(button); break;
                 }
             });
         }
 
-        _bindApplyButton(button) {
+        _addApplyButtonListeners(button) {
             const { signal } = this.abortController;
 
-            this.applyButton = button;
+            this._applyButton = button;
             // Tag as the dropmenu's primary action so Enter inside
             // any filter dropmenu panel triggers Apply.
             button.setAttribute('data-dropmenu-primary', '');
             const labelEl = button.querySelector('.nds-label');
-            this.applyButtonBaseLabel = labelEl ? labelEl.textContent : strings.text('apply');
+            this._applyButtonBaseLabel = labelEl ? labelEl.textContent : strings.text('apply');
 
             // In form mode, turn the apply button into a submit for the
             // submission form — works whether the button is inside the form
@@ -947,8 +960,8 @@
             if (this.isFormMode && button.type !== 'submit') {
                 button.type = 'submit';
             }
-            if (this.isFormMode && this.submissionForm.id && button.form !== this.submissionForm) {
-                button.setAttribute('form', this.submissionForm.id);
+            if (this.isFormMode && this._submissionForm.id && button.form !== this._submissionForm) {
+                button.setAttribute('form', this._submissionForm.id);
             }
 
             button.addEventListener('click', (e) => {
@@ -960,7 +973,7 @@
                 // dropmenu closes on apply and hides it.
                 if (this.isFormMode) {
                     e.preventDefault();
-                    this.submitForm(this._resolveFilterBtn() || this.applyButton);
+                    this.submitForm(this._resolveFilterButton() || this._applyButton);
                     return;
                 }
 
@@ -970,7 +983,7 @@
             }, { signal });
         }
 
-        _bindClearButton(button) {
+        _addClearButtonListeners(button) {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -978,7 +991,7 @@
             }, { signal: this.abortController.signal });
         }
 
-        _bindResetButton(button) {
+        _addResetButtonListeners(button) {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.reset();
@@ -990,13 +1003,13 @@
         // search input. Used by the apply button and any other path that needs
         // to settle search state from the dropmenu surface.
         _syncSearchFromDropmenu() {
-            if (!this.searchInputs.dropmenu) return;
-            this._setSearch(this.searchInputs.dropmenu.input.value);
-            if (this.searchInputs.direct) {
-                this.searchInputs.direct.input.value = this.searchInputs.dropmenu.input.value;
-                this.updateClearButtonVisibility(
-                    this.searchInputs.direct.input,
-                    this.searchInputs.direct.clearBtn
+            if (!this._searchInputs.dropmenu) return;
+            this._setSearch(this._searchInputs.dropmenu.input.value);
+            if (this._searchInputs.direct) {
+                this._searchInputs.direct.input.value = this._searchInputs.dropmenu.input.value;
+                this._syncClearButtonVisibility(
+                    this._searchInputs.direct.input,
+                    this._searchInputs.direct.clearBtn
                 );
             }
         }
@@ -1007,18 +1020,18 @@
 
         // Re-root the sort engine when the container it was created on is no longer
         // the live one — an AJAX response and refresh() both replace or re-resolve
-        // targetContainer, leaving the old instance driving a detached node while
+        // _targetContainer, leaving the old instance driving a detached node while
         // its triggers still fire. Both paths route here so only one has to remember.
         _resyncSort() {
-            if (this.sort && this.sort.root !== this.targetContainer) {
+            if (this.sort && this.sort.root !== this._targetContainer) {
                 this.sort.destroy();
                 this.sort = null;
             }
-            if (!this.sort) this.setupSort();
+            if (!this.sort) this._setupSort();
         }
 
-        setupSort() {
-            if (!this.targetContainer) return;
+        _setupSort() {
+            if (!this._targetContainer) return;
 
             // Sort buttons may live inside the filter container OR externally
             // via data-filter-target="<id>". queryAll() spans both; pass a live
@@ -1031,9 +1044,9 @@
             // dispatches from the items container (bubbles to document
             // unchanged), and two filter controls pointing at the same target
             // share one sort instance via NDS.Sort's root.ndsSort dedup cache.
-            this.sort = NDS.Sort.create(this.targetContainer, {
+            this.sort = NDS.Sort.create(this._targetContainer, {
                 items: () => this.items,
-                reorderIn: this.targetContainer,
+                reorderIn: this._targetContainer,
                 triggers: () => this.queryAll('[data-sort]'),
                 // As markup wiring reads it (NDS.Sort.init): one cycle trigger makes the set cycle.
                 mode: this.queryAll('[data-sort][data-sort-mode="cycle"]').length ? 'cycle' : 'direct',
@@ -1043,21 +1056,21 @@
                 urlSync: { keyParam: 'sort', orderParam: 'order' },
                 onChange: ({ orderedItems }) => {
                     this.items = orderedItems;
-                    this.updatePagination();
+                    this._syncPagination();
                     // Counts are null in form mode only, as filter.md documents for nds:filter:change.
-                    if (this.isFormMode) this.dispatchFilterEvent();
-                    else this.dispatchFilterEvent(this.getVisibleItems().length);
+                    if (this.isFormMode) this._dispatchFilterEvent();
+                    else this._dispatchFilterEvent(this.getVisibleItems().length);
                 }
             });
         }
 
-        getActiveFilterCount() {
-            const searchActive = this.searchInputs.dropmenu
-                && this.searchInputs.dropmenu.input.value.trim();
-            return this.getAppliedFilterCount() + (searchActive ? 1 : 0);
+        _getActiveFilterCount() {
+            const searchActive = this._searchInputs.dropmenu
+                && this._searchInputs.dropmenu.input.value.trim();
+            return this._getAppliedFilterCount() + (searchActive ? 1 : 0);
         }
 
-        getAppliedFilterCount() {
+        _getAppliedFilterCount() {
             let count = 0;
             for (const values of Object.values(this.criteria.filters)) {
                 count += values.length;
@@ -1065,42 +1078,42 @@
             return count;
         }
 
-        updateApplyButtonLabel() {
-            if (!this.applyButton) return;
+        _syncApplyButtonLabel() {
+            if (!this._applyButton) return;
 
-            const count = this.getActiveFilterCount();
-            const labelEl = this.applyButton.querySelector('.nds-label');
+            const count = this._getActiveFilterCount();
+            const labelEl = this._applyButton.querySelector('.nds-label');
 
             if (labelEl) {
                 labelEl.textContent = count > 0
-                    ? `${this.applyButtonBaseLabel} (${count})`
-                    : this.applyButtonBaseLabel;
+                    ? `${this._applyButtonBaseLabel} (${count})`
+                    : this._applyButtonBaseLabel;
             }
         }
 
         // The always-visible filter dropmenu trigger (.nds-filter-btn). Cached on
         // first resolve — walked once, not on every filter change.
-        _resolveFilterBtn() {
-            if (this.filterButtonEl === undefined) {
-                this.filterButtonEl = this.query('.nds-filter-btn, [data-filter-btn]');
+        _resolveFilterButton() {
+            if (this._filterButton === undefined) {
+                this._filterButton = this._query('.nds-filter-btn, [data-filter-btn]');
             }
-            return this.filterButtonEl;
+            return this._filterButton;
         }
 
-        updateFilterButtonBadge() {
-            const filterBtn = this._resolveFilterBtn();
+        _syncFilterButtonBadge() {
+            const filterBtn = this._resolveFilterButton();
             if (!filterBtn) return;
 
-            NDS.badge(filterBtn, this.getAppliedFilterCount());
+            NDS.badge(filterBtn, this._getAppliedFilterCount());
         }
 
-        updateAppliedChips() {
+        _syncAppliedChips() {
             // Refresh filter-count slots (query + count) regardless of whether
             // an applied-chips container exists on this page.
-            this.updateFilterCount();
-            this._updateAccordionCounts();
+            this._syncFilterCount();
+            this._syncAccordionCounts();
 
-            const appliedContainer = this.appliedContainer;
+            const appliedContainer = this._appliedContainer;
             if (!appliedContainer) return;
 
             // Find chips container inside applied container
@@ -1108,8 +1121,8 @@
             if (!chipsContainer) return;
 
             // Find auto-fill container (optional): external first, then internal.
-            const autoFillContainer = this.autoFillElement
-                || this.filterContainer.querySelector('.nds-auto-fill');
+            const autoFillContainer = this._autoFillElement
+                || this._filterContainer.querySelector('.nds-auto-fill');
 
             // A removed chip takes focus with it: the chip now in its place gets it, else the Filter button.
             const focusAt = [...chipsContainer.children].findIndex(chip => chip.contains(document.activeElement));
@@ -1117,8 +1130,8 @@
             this._refocusChips(chipsContainer, focusAt);
 
             // When a [data-filter-query] slot is present, the search keyword is routed
-            // into that slot (via updateFilterCount) instead of rendering as a chip here.
-            const searchInChips = !!(this.criteria.search && !this.searchQuerySlot);
+            // into that slot (via _syncFilterCount) instead of rendering as a chip here.
+            const searchInChips = !!(this.criteria.search && !this._searchQuerySlot);
             const hasFilters = searchInChips ||
                 Object.values(this.criteria.filters).some(values => values.length > 0);
 
@@ -1139,7 +1152,7 @@
 
             // Add search chip (skipped when routed to [data-filter-query])
             if (searchInChips) {
-                const searchChip = this.createFilterChip('search', this.criteria.search, () => {
+                const searchChip = this._buildFilterChip('search', this.criteria.search, () => {
                     this.removeSearchFilter();
                 });
                 chipsContainer.appendChild(searchChip);
@@ -1152,7 +1165,7 @@
                 // restores the full bounds rather than unchecking an input.
                 if (filterData?.type === 'range') {
                     if (values.length) {
-                        const chip = this.createFilterChip(filterName, values[0], () => {
+                        const chip = this._buildFilterChip(filterName, values[0], () => {
                             this.resetRangeFilter(filterName);
                         }, this._buildRangeChipLabel(filterName, values[0]));
                         chipsContainer.appendChild(chip);
@@ -1161,7 +1174,7 @@
                 }
                 values.forEach(value => {
                     const displayLabel = filterData?.labels?.[value.toLowerCase()] || value;
-                    const chip = this.createFilterChip(filterName, value, () => {
+                    const chip = this._buildFilterChip(filterName, value, () => {
                         this.removeFilterValue(filterName, value);
                     }, displayLabel);
                     chipsContainer.appendChild(chip);
@@ -1174,7 +1187,7 @@
             // After the rebuild: the chips are back in the container by then.
             queueMicrotask(() => {
                 const chips = chipsContainer.children;
-                const target = chips[Math.min(at, chips.length - 1)] || this._resolveFilterBtn();
+                const target = chips[Math.min(at, chips.length - 1)] || this._resolveFilterButton();
                 target?.focus({ preventScroll: true });
             });
         }
@@ -1188,22 +1201,22 @@
                 || Object.values(this.criteria.filters).some(values => values.length > 0);
         }
 
-        updateFilterCount() {
+        _syncFilterCount() {
             // Query slot — quoted keyword; empty when no search
-            if (this.searchQuerySlot) {
+            if (this._searchQuerySlot) {
                 const query = this.criteria.search || '';
-                this.searchQuerySlot.textContent = query ? '\u201C' + query + '\u201D' : '';
+                this._searchQuerySlot.textContent = query ? '\u201C' + query + '\u201D' : '';
             }
 
             // Count slot — a linked root carrying [data-filter-count] or holding it.
-            const countSlot = this.query('[data-filter-count]');
-            if (!countSlot || !this.targetContainer) return;
+            const countSlot = this._query('[data-filter-count]');
+            if (!countSlot || !this._targetContainer) return;
 
             // Count source priority:
             //   1. Server-provided: data-total-count on the target container
             //      (for SSR pages or JSON-AJAX developers)
             //   2. DOM enumeration: visible (non-`[data-filtered]`) items
-            const totalAttribute = this.targetContainer.getAttribute('data-total-count');
+            const totalAttribute = this._targetContainer.getAttribute('data-total-count');
             if (totalAttribute !== null && totalAttribute !== '') {
                 countSlot.textContent = NDS.formatNumber(parseInt(totalAttribute, 10) || 0);
                 this._announceCount(countSlot);
@@ -1243,9 +1256,9 @@
         // displayLabel may be a DOM node (range chips render formatted
         // nds-number-format price nodes) or a plain string — NDS.buildChip
         // accepts both.
-        createFilterChip(type, value, onRemove, displayLabel) {
+        _buildFilterChip(type, value, onRemove, displayLabel) {
             return NDS.buildChip(displayLabel || value, {
-                chipClass: this.chipClass,
+                chipClass: this._chipClass,
                 data: { filterType: type, filterValue: value },
                 onRemove,
                 signal: this.abortController.signal,
@@ -1256,7 +1269,7 @@
             this.criteria.search = '';
 
             this._mirrorSearchInputs('');
-            if (this.searchInputs.dropmenu) this.updateApplyButtonLabel();
+            if (this._searchInputs.dropmenu) this._syncApplyButtonLabel();
 
             this._commitCriteriaChange();
         }
@@ -1270,22 +1283,22 @@
                     input.checked = false;
                 }
             });
-            this._recheckAllRadio(filterData);
+            this._syncAllRadio(filterData);
 
-            this.updateFilterCriteria(filterName);
-            this.updateApplyButtonLabel();
+            this._syncFilterCriteria(filterName);
+            this._syncApplyButtonLabel();
 
             this._commitCriteriaChange();
         }
 
         // A radio group must never sit with nothing checked: unchecking its
         // chosen option restores the auto-prepended "All" (value=""), which
-        // updateFilterCriteria then reads as no filter. No-op for the other
+        // _syncFilterCriteria then reads as no filter. No-op for the other
         // types — only radios get an All option, and only radios can't self-clear.
-        _recheckAllRadio(filterData) {
+        _syncAllRadio(filterData) {
             if (filterData.type !== 'radio') return;
             // inputs is a NodeList (querySelectorAll) — wrap before .some/.find,
-            // matching updateFilterCriteria's Array.from use.
+            // matching _syncFilterCriteria's Array.from use.
             const inputs = Array.from(filterData.inputs);
             // Only the empty group needs restoring: setFilterValues may have just
             // checked a real option, and checking All would silently unselect it
@@ -1295,7 +1308,7 @@
             if (allInput) allInput.checked = true;
         }
 
-        setupFilterElements() {
+        _setupFilterElements() {
             // queryAll already excludes elements inside the target container
             // (e.g. <span data-filter> markers on cards).
             const filterElements = this.queryAll('[data-filter]');
@@ -1303,14 +1316,14 @@
             const deferringMenus = this._classifyDeferringMenus(filterElements, params);
             filterElements.forEach(element => this._dispatchFilterElement(element, params, deferringMenus));
             this._flushAccordionInit();
-            this._autoDetectDirectSearch();
-            this._wireDeferredFilterDropmenus();
-            this._wireMenuDraft();
+            this._detectDirectSearch();
+            this._addDeferredDropmenuListeners();
+            this._addMenuDraftListeners();
         }
 
         // The menu's ticks are a draft until Apply: closing it any other way puts the applied
         // filters back, so a search, a chip or a sort never applies a tick nobody applied.
-        _wireMenuDraft() {
+        _addMenuDraftListeners() {
             const { signal } = this.abortController;
             this._targetRoots.forEach(dm => {
                 if (!dm.matches?.('.nds-dropmenu') || dm._ndsFilterDraft === this) return;
@@ -1333,13 +1346,13 @@
                 const fd = this.filterInputs[name];
                 if (!fd || !values.length) continue;
                 if (fd.type === 'range') {
-                    this._applyRangeFromUrl(name, values[0]);
+                    this._setRangeFromUrl(name, values[0]);
                 } else {
                     this._checkInputsForValues(fd, values.join(','));
-                    this.updateFilterCriteria(name);
+                    this._syncFilterCriteria(name);
                 }
             }
-            this.updateApplyButtonLabel();
+            this._syncApplyButtonLabel();
         }
 
         // Dropmenus that will defer an auto-populated filter (hidden + not
@@ -1347,7 +1360,7 @@
         // static-values filter in the same menu can defer its DOM build onto that
         // same hook for free. A static filter in a menu that wouldn't otherwise
         // defer stays eager — deferring it would add a needless first-open delay
-        // for no real init saving (static builds skip the collectFilterValues scan).
+        // for no real init saving (static builds skip the _collectFilterValues scan).
         _classifyDeferringMenus(filterElements, params) {
             const deferringMenus = new Set();
             filterElements.forEach(element => {
@@ -1365,12 +1378,12 @@
             const filterType = element.getAttribute('data-filter-type');
 
             if (filterName === 'search') {
-                this.setupSearchFilter(element);
+                this._setupSearchFilter(element);
                 return;
             }
             // A group holding a slider you wrote is a range filter too, with no data-filter-type.
             if (filterType === 'slider' || element.querySelector('.nds-slider-container')) {
-                this.setupRangeFilter(element, filterName);
+                this._setupRangeFilter(element, filterName);
                 return;
             }
             if (filterType === 'checkbox' || filterType === 'radio' || filterType === 'switch') {
@@ -1384,17 +1397,17 @@
                     } else {
                         // Object form: keys = values, values = labels
                         values = Object.keys(raw);
-                        this.filterLabels[filterName] = raw;
+                        this._filterLabels[filterName] = raw;
                     }
                 }
 
                 // Hidden at rest (inside a dropmenu) and not URL-active: defer the
                 // option build to first engagement. Auto-populated filters defer the
-                // collectFilterValues scan; static-values filters defer the DOM build
+                // _collectFilterValues scan; static-values filters defer the DOM build
                 // but only when their menu already defers an auto filter (see
                 // _classifyDeferringMenus above). The parsed `values` ride along so
                 // the prepare hook builds without re-reading the attribute. URL-active
-                // filters fall through to the eager build so applyUrlParams can check
+                // filters fall through to the eager build so _readUrlParams can check
                 // inputs on load.
                 const menu = element.closest('.nds-dropmenu-menu');
                 const canDefer = !!menu && !params.has(filterName)
@@ -1402,16 +1415,16 @@
                 if (canDefer) {
                     this._deferredFilters.push({ element, filterName, filterType, values });
                 } else {
-                    this.setupDynamicFilter(element, filterName, filterType, values);
+                    this._setupDynamicFilter(element, filterName, filterType, values);
                 }
                 return;
             }
-            this.setupManualFilter(element, filterName);
+            this._setupManualFilter(element, filterName);
         }
 
         // Auto-detect direct search input (anywhere linked to this filter).
-        _autoDetectDirectSearch() {
-            if (this.searchInputs.direct) return;
+        _detectDirectSearch() {
+            if (this._searchInputs.direct) return;
             const candidates = this.queryAll('input.nds-search-input, input[name="search"], input[type="search"]');
 
             for (const input of candidates) {
@@ -1421,13 +1434,13 @@
                 const wrapper = input.closest('.nds-form-control') || input.parentElement;
                 const clearBtn = wrapper?.querySelector('.nds-clear');
 
-                this.searchInputs.direct = {
+                this._searchInputs.direct = {
                     input: input,
                     clearBtn: clearBtn,
                     element: wrapper || input
                 };
 
-                this.setupDirectSearch(input, clearBtn);
+                this._setupDirectSearch(input, clearBtn);
                 return;
             }
         }
@@ -1440,7 +1453,7 @@
         // never races the open animation, and the dropmenu clears data-delay
         // after the first open so later opens are immediate. Released via the
         // shared abort signal in destroy().
-        _wireDeferredFilterDropmenus() {
+        _addDeferredDropmenuListeners() {
             if (!this._deferredFilters.length) return;
             const { signal } = this.abortController;
             const dropmenus = new Set();
@@ -1454,16 +1467,16 @@
                     dm.setAttribute('data-delay', '500');
                     (this._ownDelay ||= []).push(dm);
                 }
-                dm.addEventListener('nds:dropmenu:prepare', () => this.buildDeferredFilters(), { signal });
+                dm.addEventListener('nds:dropmenu:prepare', () => this._buildDeferredFilters(), { signal });
             });
         }
 
         // Build options for filters whose option build was deferred at init (see
-        // setupFilterElements) — auto-populated (collectFilterValues scan) and
+        // _setupFilterElements) — auto-populated (_collectFilterValues scan) and
         // static-values (DOM build) alike. Idempotent: the first engagement event
         // builds the whole set; later events no-op. Deferred filters are never
         // URL-active, so there is no URL state to re-apply after building.
-        buildDeferredFilters() {
+        _buildDeferredFilters() {
             if (!this._deferredFilters.length) return;
             const deferred = this._deferredFilters;
             this._deferredFilters = [];
@@ -1471,7 +1484,7 @@
                 // Skip if already built (e.g. refresh() rebuilt it eagerly before
                 // first engagement) — re-running would scan + wire into a stale node.
                 if (this.filterInputs[filterName]) return;
-                this.setupDynamicFilter(element, filterName, filterType, values || null);
+                this._setupDynamicFilter(element, filterName, filterType, values || null);
             });
             this._flushAccordionInit();
         }
@@ -1480,7 +1493,7 @@
         // SEARCH FILTER
         // ==============================================
 
-        setupSearchFilter(element) {
+        _setupSearchFilter(element) {
             let searchInput;
             if (element.matches('input')) {
                 searchInput = element;
@@ -1505,21 +1518,21 @@
             const searchRef = { input: searchInput, clearBtn: clearBtn, element: element };
 
             if (isInsideDropmenu) {
-                this.searchInputs.dropmenu = searchRef;
-                this.setupDropmenuSearch(searchInput, clearBtn);
+                this._searchInputs.dropmenu = searchRef;
+                this._setupDropmenuSearch(searchInput, clearBtn);
             } else {
-                this.searchInputs.direct = searchRef;
-                this.setupDirectSearch(searchInput, clearBtn);
+                this._searchInputs.direct = searchRef;
+                this._setupDirectSearch(searchInput, clearBtn);
             }
         }
 
-        setupDropmenuSearch(searchInput, clearBtn) {
+        _setupDropmenuSearch(searchInput, clearBtn) {
             const signal = this.abortController.signal;
             searchInput.addEventListener('input', () => {
                 if (clearBtn) {
-                    this.updateClearButtonVisibility(searchInput, clearBtn);
+                    this._syncClearButtonVisibility(searchInput, clearBtn);
                 }
-                this.updateApplyButtonLabel();
+                this._syncApplyButtonLabel();
             }, { signal });
 
             searchInput.addEventListener('keydown', (e) => {
@@ -1541,16 +1554,16 @@
             if (clearBtn) {
                 clearBtn.addEventListener('click', () => {
                     searchInput.value = '';
-                    this.updateClearButtonVisibility(searchInput, clearBtn);
-                    this.updateApplyButtonLabel();
+                    this._syncClearButtonVisibility(searchInput, clearBtn);
+                    this._syncApplyButtonLabel();
                 }, { signal });
             }
         }
 
-        setupDirectSearch(searchInput, clearBtn) {
+        _setupDirectSearch(searchInput, clearBtn) {
             const signal = this.abortController.signal;
             // Both entry paths land here — the explicit data-filter="search"
-            // element and _autoDetectDirectSearch — so the form association is
+            // element and _detectDirectSearch — so the form association is
             // set once. The dropmenu search is deliberately left out: its value
             // is mirrored onto this input before submit, and naming both would
             // put two `search` entries in the same FormData.
@@ -1561,11 +1574,11 @@
             // closest(), not button:has(): :has() in a selector throws below Chrome 105 / Firefox 121.
             const searchBtn = searchContainer?.querySelector('button.nds-search-btn, button[type="submit"]') ||
                               searchContainer?.querySelector('button .nds-hgi-search-01')?.closest('button');
-            this.directSearchBtn = searchBtn || null;
+            this._directSearchButton = searchBtn || null;
 
             searchInput.addEventListener('input', () => {
                 if (clearBtn) {
-                    this.updateClearButtonVisibility(searchInput, clearBtn);
+                    this._syncClearButtonVisibility(searchInput, clearBtn);
                 }
             }, { signal });
 
@@ -1573,15 +1586,15 @@
                 if (e.key === 'Enter') {
                     e.preventDefault();
 
-                    // Centralized logic: applyDirectSearch → applyFilters (handles both modes)
-                    this.applyDirectSearch(searchInput);
+                    // Centralized logic: _runDirectSearch → applyFilters (handles both modes)
+                    this._runDirectSearch(searchInput);
                 }
             }, { signal });
 
             if (searchBtn) {
                 searchBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    this.applyDirectSearch(searchInput);
+                    this._runDirectSearch(searchInput);
                 }, { signal });
             }
 
@@ -1592,20 +1605,20 @@
             }
         }
 
-        applyDirectSearch(searchInput) {
+        _runDirectSearch(searchInput) {
             this._setSearch(searchInput.value);
-            if (this.searchInputs.dropmenu) {
-                this.searchInputs.dropmenu.input.value = searchInput.value;
-                this.updateClearButtonVisibility(
-                    this.searchInputs.dropmenu.input,
-                    this.searchInputs.dropmenu.clearBtn
+            if (this._searchInputs.dropmenu) {
+                this._searchInputs.dropmenu.input.value = searchInput.value;
+                this._syncClearButtonVisibility(
+                    this._searchInputs.dropmenu.input,
+                    this._searchInputs.dropmenu.clearBtn
                 );
-                this.updateApplyButtonLabel();
+                this._syncApplyButtonLabel();
             }
 
             // In form mode, submit the form directly (spinner on the search button)
             if (this.isFormMode) {
-                this.submitForm(this.directSearchBtn);
+                this.submitForm(this._directSearchButton);
                 return;
             }
 
@@ -1618,37 +1631,37 @@
         // Clear-then-add are adjacent here so the current button always ends up
         // stamped (never removed-without-re-add).
         _showTriggerLoading() {
-            [this.filterButtonEl, this.directSearchBtn].forEach(btn => {
-                if (btn && btn !== this._triggerBtn) NDS.state.remove(btn, 'loading');
+            [this._filterButton, this._directSearchButton].forEach(btn => {
+                if (btn && btn !== this._triggerButton) NDS.state.remove(btn, 'loading');
             });
-            if (this._triggerBtn) NDS.state.add(this._triggerBtn, 'loading');
+            if (this._triggerButton) NDS.state.add(this._triggerButton, 'loading');
         }
 
         /**
          * Submit the form (only called from user actions, not programmatically)
          */
         submitForm(triggerBtn) {
-            if (!this.submissionForm) return;
+            if (!this._submissionForm) return;
             // This call is the submission, so drop any commit queued in the same
             // tick — a setter followed by submitForm() sends one request.
             this._commitQueued = false;
             // Track which button triggered this submit so its spinner shows at
             // submit and clears via the AJAX lifecycle (native submits self-clear
             // on navigation). null for programmatic submits with no button.
-            this._triggerBtn = triggerBtn || null;
+            this._triggerButton = triggerBtn || null;
 
             // Dismiss any feedback in filter container
-            NDS.Feedback.dismissAll(this.filterContainer);
+            NDS.Feedback.dismissAll(this._filterContainer);
 
             // requestSubmit, never .submit(): .submit() skips the submit event, so
-            // setupFormSubmission's listener never fires — validation is bypassed and
+            // _setupFormSubmission's listener never fires — validation is bypassed and
             // AJAX mode silently degrades to a full-page navigation. The old fallback
             // only ever reached Safari 15.4–15.6 (this file already requires :has()
             // in querySelector), where it submitted wrongly instead of failing loudly.
-            this.submissionForm.requestSubmit();
+            this._submissionForm.requestSubmit();
         }
 
-        updateClearButtonVisibility(input, clearBtn) {
+        _syncClearButtonVisibility(input, clearBtn) {
             if (!clearBtn) return;
             clearBtn.hidden = !input.value.trim();
         }
@@ -1657,18 +1670,18 @@
         // sync each one's clear button. Callers handle apply-label / filter
         // application / form submission separately.
         _mirrorSearchInputs(value) {
-            if (this.searchInputs.direct) {
-                this.searchInputs.direct.input.value = value;
-                this.updateClearButtonVisibility(
-                    this.searchInputs.direct.input,
-                    this.searchInputs.direct.clearBtn
+            if (this._searchInputs.direct) {
+                this._searchInputs.direct.input.value = value;
+                this._syncClearButtonVisibility(
+                    this._searchInputs.direct.input,
+                    this._searchInputs.direct.clearBtn
                 );
             }
-            if (this.searchInputs.dropmenu) {
-                this.searchInputs.dropmenu.input.value = value;
-                this.updateClearButtonVisibility(
-                    this.searchInputs.dropmenu.input,
-                    this.searchInputs.dropmenu.clearBtn
+            if (this._searchInputs.dropmenu) {
+                this._searchInputs.dropmenu.input.value = value;
+                this._syncClearButtonVisibility(
+                    this._searchInputs.dropmenu.input,
+                    this._searchInputs.dropmenu.clearBtn
                 );
             }
         }
@@ -1677,15 +1690,15 @@
         // DYNAMIC FILTER (AUTO-GENERATED)
         // ==============================================
 
-        setupDynamicFilter(element, filterName, inputType, explicitValues = null) {
+        _setupDynamicFilter(element, filterName, inputType, explicitValues = null) {
             // Generate filter inputs (may replace element with fieldset)
-            const actualElement = this.generateFilterInputs(element, filterName, inputType, explicitValues) || element;
+            const actualElement = this._buildFilterInputs(element, filterName, inputType, explicitValues) || element;
 
             // Setup the filter after generation
-            this.setupManualFilter(actualElement, filterName);
+            this._setupManualFilter(actualElement, filterName);
         }
 
-        setupManualFilter(element, filterName) {
+        _setupManualFilter(element, filterName) {
             const inputs = element.querySelectorAll('input[type="checkbox"], input[type="radio"], .nds-switch-input');
 
             // Always set up the DOM observer, even with 0 inputs (handles cascading/async filters)
@@ -1696,12 +1709,12 @@
                     // being moved, not genuinely inserted.
                     const fresh = nodes.filter(node => element.contains(node) && !node._ndsFilterBound);
                     if (fresh.length > 0) {
-                        this.setupManualFilter(element, filterName);
+                        this._setupManualFilter(element, filterName);
                         this.reapplyUrlParamsForFilter(filterName);
                     }
                 });
                 // The flag goes with the watcher, so a re-create watches again.
-                this._offDOMAdds.push(() => { off(); delete element._ndsFilterObserver; });
+                this._offDomAdds.push(() => { off(); delete element._ndsFilterObserver; });
             }
 
             if (inputs.length === 0) {
@@ -1742,7 +1755,7 @@
             };
 
             // Per-filter-element controller: refresh()/populateFilter()/onDOMAdd
-            // cascades may re-call setupManualFilter on the same element with a
+            // cascades may re-call _setupManualFilter on the same element with a
             // fresh input set (or the same set after innerHTML='' rebuild).
             // Aborting+resetting here releases the prior listener-target entries
             // atomically so they don't accumulate on the long-lived this.abortController.signal
@@ -1758,8 +1771,8 @@
                 input._ndsFilterBound = true;
                 this._associateWithForm(input);
                 input.addEventListener('change', () => {
-                    this.updateFilterCriteria(filterName);
-                    this.updateApplyButtonLabel();
+                    this._syncFilterCriteria(filterName);
+                    this._syncApplyButtonLabel();
                 }, { signal: element._ndsFilterAC.signal });
             });
         }
@@ -1775,8 +1788,8 @@
         // floor) when narrower than full bounds (empty = inactive), so the existing
         // count / chip / URL machinery treats it like a single-value filter.
 
-        setupRangeFilter(element, filterName) {
-            const root = this.generateRangeControl(element, filterName);
+        _setupRangeFilter(element, filterName) {
+            const root = this._buildRangeControl(element, filterName);
             if (!root) return;
 
             const container = root.querySelector('.nds-slider-container');
@@ -1800,15 +1813,15 @@
                 unit: root.getAttribute('data-filter-unit') || ''
             };
 
-            // Per-element controller mirrors setupManualFilter so destroy()
+            // Per-element controller mirrors _setupManualFilter so destroy()
             // releases the thumb listener(s) atomically.
             if (root._ndsFilterAC) root._ndsFilterAC.abort();
             root._ndsFilterAC = new AbortController();
             this._filterElementACs.add(root);
 
             const handleInput = () => {
-                this.updateRangeCriteria(filterName);
-                this.updateApplyButtonLabel();
+                this._syncRangeCriteria(filterName);
+                this._syncApplyButtonLabel();
             };
             if (minInput) minInput.addEventListener('input', handleInput, { signal: root._ndsFilterAC.signal });
             maxInput.addEventListener('input', handleInput, { signal: root._ndsFilterAC.signal });
@@ -1825,7 +1838,7 @@
         // markup (see components/slider.md). Mode is inferred from the bounds:
         // both data-filter-min + data-filter-max → dual range (two thumbs);
         // data-filter-max alone → single "up to" (one thumb, floor 0).
-        generateRangeControl(placeholder, filterName) {
+        _buildRangeControl(placeholder, filterName) {
             // Your own slider markup is used as written.
             if (placeholder.querySelector('.nds-slider-container')) return placeholder;
             const hasMin = placeholder.hasAttribute('data-filter-min');
@@ -1910,7 +1923,7 @@
 
         // Read both thumbs into criteria. Empty (inactive) when the span covers the
         // full bounds; otherwise one "lo-hi" encoded string.
-        updateRangeCriteria(filterName) {
+        _syncRangeCriteria(filterName) {
             const fd = this.filterInputs[filterName];
             if (!fd || fd.type !== 'range') return;
             let lo, hi;
@@ -1944,7 +1957,7 @@
             // Soft dependency on NDS.Slider — same cross-bundle contract declared where
             // the slider is built; without it the thumbs keep their last paint.
             if (NDS.Slider && NDS.Slider.reinit) NDS.Slider.reinit(fd.controlContainer);
-            this.updateRangeCriteria(filterName);
+            this._syncRangeCriteria(filterName);
         }
 
         // Decode "lo-hi"; '-' is the delimiter, so each bound may carry its own
@@ -1954,10 +1967,10 @@
             return match ? [parseFloat(match[1]), parseFloat(match[2])] : null;
         }
 
-        _applyRangeFromUrl(filterName, raw) {
+        _setRangeFromUrl(filterName, raw) {
             const fd = this.filterInputs[filterName];
             if (!fd || fd.type !== 'range') return;
-            const pair = this._parseEncodedRange(this.sanitizeFilterValue(raw));
+            const pair = this._parseEncodedRange(this._sanitizeFilterValue(raw));
             if (!pair) return;
             let [lo, hi] = pair;
             lo = Math.min(Math.max(lo, fd.min), fd.max);
@@ -1966,7 +1979,7 @@
             this._setRangeValues(filterName, lo, hi);
         }
 
-        _itemMatchesRange(item, filterName, encoded) {
+        _matchesRange(item, filterName, encoded) {
             const pair = this._parseEncodedRange(encoded);
             if (!pair) return true;
             const [lo, hi] = pair;
@@ -2019,7 +2032,7 @@
             const fd = this.filterInputs[filterName];
             if (!fd || fd.type !== 'range') return;
             this._setRangeValues(filterName, fd.min, fd.max);
-            this.updateApplyButtonLabel();
+            this._syncApplyButtonLabel();
             this._commitCriteriaChange();
         }
 
@@ -2027,14 +2040,14 @@
         // AUTO-GENERATION
         // ==============================================
 
-        collectFilterValues(filterName) {
+        _collectFilterValues(filterName) {
             const values = new Set();
             const labelMap = {};
 
             // Record one marker element's value; map machine value → display
             // label when data-filter-value provides one.
             const harvest = el => {
-                const value = this.getFilterValue(el);
+                const value = this._getFilterValue(el);
                 if (!value) return;
                 values.add(value);
                 const machineValue = el.getAttribute('data-filter-value');
@@ -2049,17 +2062,17 @@
                 if (itemHasFilter) harvest(card);
             });
 
-            // Store auto-collected labels for use by generateFilterInputs
+            // Store auto-collected labels for use by _buildFilterInputs
             if (Object.keys(labelMap).length > 0) {
-                this.filterLabels[filterName] = labelMap;
+                this._filterLabels[filterName] = labelMap;
             }
 
             return Array.from(values).sort((left, right) => left.localeCompare(right, 'ar'));
         }
 
-        generateFilterInputs(container, filterName, inputType, explicitValues = null) {
+        _buildFilterInputs(container, filterName, inputType, explicitValues = null) {
             // Use explicit values if provided, otherwise collect from cards
-            const collectedValues = explicitValues || this.collectFilterValues(filterName);
+            const collectedValues = explicitValues || this._collectFilterValues(filterName);
 
             if (collectedValues.length === 0) {
                 if (!explicitValues) {
@@ -2077,7 +2090,7 @@
             const collapsible = container.hasAttribute('data-filter-accordion');
 
             // Radios cannot be deselected once chosen, so auto-prepend an "All"
-            // option with value="" — updateFilterCriteria already excludes empty
+            // option with value="" — _syncFilterCriteria already excludes empty
             // values, so selecting it clears the filter.
             const includeAllOption = inputType === 'radio'
                 && !container.hasAttribute('data-filter-no-all');
@@ -2115,7 +2128,7 @@
                 variant,
                 includeAllOption,
                 allLabel,
-                labelMap: this.filterLabels[filterName] || {},
+                labelMap: this._filterLabels[filterName] || {},
                 // Row-level search opt-in gated on the parent dropmenu opting in.
                 searchable,
             };
@@ -2200,8 +2213,8 @@
 
         // Sync applied-count tags on filter-accordion headers with the current
         // criteria. Hidden at 0, shows the number of selected values otherwise.
-        _updateAccordionCounts() {
-            const tags = this.filterContainer.querySelectorAll('[data-filter-count-for]');
+        _syncAccordionCounts() {
+            const tags = this._filterContainer.querySelectorAll('[data-filter-count-for]');
             tags.forEach(tag => {
                 const name = tag.getAttribute('data-filter-count-for');
                 const count = (this.criteria.filters[name] || []).length;
@@ -2277,13 +2290,13 @@
         // by nesting, so its controls — authored or generated — may live
         // anywhere on the page. Associate them with the submission form via
         // HTML's native `form` attribute so FormData/GET submissions include
-        // them (matching the Apply button's association in _bindApplyButton).
+        // them (matching the Apply button's association in _addApplyButtonListeners).
         // No-op outside form mode, when the form has no id to reference, or
         // when the input already belongs to it.
         _associateWithForm(input) {
-            if (!this.isFormMode || !this.submissionForm.id) return;
-            if (input.form !== this.submissionForm) {
-                input.setAttribute('form', this.submissionForm.id);
+            if (!this.isFormMode || !this._submissionForm.id) return;
+            if (input.form !== this._submissionForm) {
+                input.setAttribute('form', this._submissionForm.id);
             }
         }
 
@@ -2367,12 +2380,12 @@
             return formContainer;
         }
 
-        updateFilterCriteria(filterName) {
+        _syncFilterCriteria(filterName) {
             const filterData = this.filterInputs[filterName];
             if (!filterData) return;
 
             if (filterData.type === 'range') {
-                this.updateRangeCriteria(filterName);
+                this._syncRangeCriteria(filterName);
                 return;
             }
 
@@ -2391,8 +2404,8 @@
             // Committed while the menu is open (its Reset): this is now what closing puts back.
             if (this._appliedFilters) this._appliedFilters = structuredClone(this.criteria.filters);
             this.updateUrlParams();
-            this.updateFilterButtonBadge();
-            this.updateAppliedChips();
+            this._syncFilterButtonBadge();
+            this._syncAppliedChips();
         }
 
         // How a criteria change gets committed. Form mode, AJAX or not, asks the
@@ -2425,33 +2438,33 @@
 
         applyFilters() {
             // Dismiss any feedback in filter container
-            NDS.Feedback.dismissAll(this.filterContainer);
+            NDS.Feedback.dismissAll(this._filterContainer);
 
             // In form mode, just update state (don't submit form programmatically)
             // Form submission only happens from explicit user actions via submitForm()
             if (this.isFormMode) {
                 this._commitAppliedUi();
-                this.dispatchFilterEvent();
+                this._dispatchFilterEvent();
                 return;
             }
 
             // If no criteria, show all items and update UI
             if (!this._hasActiveCriteria()) {
-                // Un-hide every item — same as showItem() (used by reset()/destroy()).
-                this.items.forEach(item => this.showItem(item));
+                // Un-hide every item — same as _showItem() (used by reset()/destroy()).
+                this.items.forEach(item => this._showItem(item));
 
                 // Dismiss no-results alert if exists
                 this.dismissNoResultsAlert();
 
                 this._commitAppliedUi();
-                this.updatePagination(this._pageOptions());
+                this._syncPagination(this._getPageOptions());
 
                 // Always dispatch change event, even when clearing all criteria
-                this.dispatchFilterEvent(this.items.length);
+                this._dispatchFilterEvent(this.items.length);
                 return;
             }
 
-            if (this.targetContainer) this.targetContainer.classList.add('nds-loading');
+            if (this._targetContainer) this._targetContainer.classList.add('nds-loading');
 
             this._ensureCacheBuilt();
 
@@ -2462,26 +2475,26 @@
             // final filtered set. Chunking it across frames would show every
             // item first and collapse to the matches after — do not defer.
             this.items.forEach(item => {
-                const isVisible = this.itemMatchesCriteria(item);
+                const isVisible = this._matchesCriteria(item);
 
                 if (isVisible) {
-                    this.showItem(item);
+                    this._showItem(item);
                     visibleCount++;
                 } else {
-                    this.hideItem(item);
+                    this._hideItem(item);
                 }
             });
 
-            this.dispatchFilterEvent(visibleCount);
-            this.updatePagination(this._pageOptions());
-            this.updateNoResultsAlert(visibleCount);
+            this._dispatchFilterEvent(visibleCount);
+            this._syncPagination(this._getPageOptions());
+            this._syncNoResultsAlert(visibleCount);
             this._commitAppliedUi();
 
             this._clearLoadingDebounced();
         }
 
-        updateNoResultsAlert(visibleCount) {
-            if (!this.targetContainer) return;
+        _syncNoResultsAlert(visibleCount) {
+            if (!this._targetContainer) return;
 
             if (visibleCount === 0) {
                 this.showNoResultsAlert();
@@ -2492,8 +2505,8 @@
 
         showNoResultsAlert() {
             // Public entry point (form/AJAX modes call it directly) — no container
-            // to render into means no alert, not a crash on targetContainer.tagName.
-            if (!this.targetContainer) return;
+            // to render into means no alert, not a crash on _targetContainer.tagName.
+            if (!this._targetContainer) return;
             const alertId = `nds-filter-no-results-${this.targetId}`;
             // Soft dependency — filter skips no-results alert banner if NDS.Alert isn't bundled.
             if (document.getElementById(alertId) || !NDS.Alert) return;
@@ -2503,12 +2516,12 @@
             // If the target container is a <table>/<tbody>, wrap the alert in a
             // full-width <tr><td colspan=N> so it spans the table instead of
             // collapsing into a single cell.
-            let insertTarget = this.targetContainer;
-            const tag = this.targetContainer.tagName;
+            let insertTarget = this._targetContainer;
+            const tag = this._targetContainer.tagName;
             if (tag === 'TBODY' || tag === 'TABLE') {
                 const tbody = tag === 'TBODY'
-                    ? this.targetContainer
-                    : (this.targetContainer.querySelector('tbody') || this.targetContainer);
+                    ? this._targetContainer
+                    : (this._targetContainer.querySelector('tbody') || this._targetContainer);
                 const table = tbody.closest('table') || tbody;
                 const headerRow = table.querySelector('tr');
                 const colspan = headerRow ? headerRow.querySelectorAll('th, td').length : 1;
@@ -2551,15 +2564,15 @@
             if (tableRow && tableRow.isConnected) tableRow.remove();
         }
 
-        itemMatchesCriteria(item) {
+        _matchesCriteria(item) {
             // Check search criteria
-            if (this.criteria.search && !this.itemMatchesSearch(item)) {
+            if (this.criteria.search && !this._matchesSearch(item)) {
                 return false;
             }
 
             // Check all dynamic filter criteria
             for (const [filterName, selectedValues] of Object.entries(this.criteria.filters)) {
-                if (selectedValues.length > 0 && !this.itemMatchesFilter(item, filterName, selectedValues)) {
+                if (selectedValues.length > 0 && !this._matchesFilter(item, filterName, selectedValues)) {
                     return false;
                 }
             }
@@ -2590,13 +2603,13 @@
                     const el = filterElements[i];
                     const name = el.getAttribute('data-filter');
                     if (!filterValues[name]) filterValues[name] = [];
-                    filterValues[name].push(this.getFilterValue(el).toLowerCase());
+                    filterValues[name].push(this._getFilterValue(el).toLowerCase());
                 }
 
                 const itemFilter = item.getAttribute('data-filter');
                 if (itemFilter) {
                     if (!filterValues[itemFilter]) filterValues[itemFilter] = [];
-                    filterValues[itemFilter].push(this.getFilterValue(item).toLowerCase());
+                    filterValues[itemFilter].push(this._getFilterValue(item).toLowerCase());
                 }
 
                 item._ndsFilterValues = filterValues;
@@ -2606,18 +2619,18 @@
             }
         }
 
-        itemMatchesSearch(item) {
+        _matchesSearch(item) {
             const searchText = this.criteria.search;
             if (!searchText) return true;
             return (item._ndsSearchText || '').includes(searchText);
         }
 
-        itemMatchesFilter(item, filterName, selectedValues) {
+        _matchesFilter(item, filterName, selectedValues) {
             if (selectedValues.length === 0) return true;
 
             // Range: numeric in-bounds test against the item's cached value.
             if (this.filterInputs[filterName]?.type === 'range') {
-                return this._itemMatchesRange(item, filterName, selectedValues[0]);
+                return this._matchesRange(item, filterName, selectedValues[0]);
             }
 
             const itemValues = item._ndsFilterValues?.[filterName];
@@ -2634,13 +2647,13 @@
         // ITEM VISIBILITY
         // ==============================================
 
-        showItem(item) {
+        _showItem(item) {
             // Visual hide is owned by CSS: `[data-filtered]{display:none!important}`
             // in the critical layer. Clearing the attribute un-hides; no inline style.
             item.removeAttribute('data-filtered');
         }
 
-        hideItem(item) {
+        _hideItem(item) {
             item.setAttribute('data-filtered', 'true');
         }
 
@@ -2654,14 +2667,14 @@
         _resetFilterInputs() {
             for (const [filterName, filterData] of Object.entries(this.filterInputs)) {
                 if (filterData.type === 'range') {
-                    // Restore the full span (updateRangeCriteria clears the criteria).
+                    // Restore the full span (_syncRangeCriteria clears the criteria).
                     this._setRangeValues(filterName, filterData.min, filterData.max);
                     continue;
                 }
                 filterData.inputs.forEach(input => {
                     input.checked = false;
                 });
-                this._recheckAllRadio(filterData);
+                this._syncAllRadio(filterData);
                 this.criteria.filters[filterName] = [];
             }
         }
@@ -2672,15 +2685,15 @@
             // and the Apply count dropped, while the results stayed filtered and the
             // search chip stayed up until the next Apply. _mirrorSearchInputs is the
             // same pair every other clear path uses, and keeps the direct box in step.
-            if (this.searchInputs.dropmenu) {
+            if (this._searchInputs.dropmenu) {
                 this.criteria.search = '';
                 this._mirrorSearchInputs('');
             }
 
             this._resetFilterInputs();
 
-            this.updateApplyButtonLabel();
-            this.dispatchClearEvent();
+            this._syncApplyButtonLabel();
+            this._dispatchClearEvent();
 
             this._commitCriteriaChange();
         }
@@ -2699,23 +2712,23 @@
 
             // Clear form state if in form mode
             if (this.isFormMode) {
-                NDS.state.clear(this.filterContainer);
+                NDS.state.clear(this._filterContainer);
             }
 
-            this.updateApplyButtonLabel();
-            this.dispatchClearEvent();
+            this._syncApplyButtonLabel();
+            this._dispatchClearEvent();
         }
 
         reset() {
             this.clear();
-            this.items.forEach(item => this.showItem(item));
+            this.items.forEach(item => this._showItem(item));
 
             this.dismissNoResultsAlert();
 
             // Dismiss any feedback in filter container
-            NDS.Feedback.dismissAll(this.filterContainer);
+            NDS.Feedback.dismissAll(this._filterContainer);
 
-            this.dispatchResetEvent();
+            this._dispatchResetEvent();
 
             // In form mode, resubmit: the server's results still carry the old criteria
             if (this.isFormMode) {
@@ -2724,14 +2737,14 @@
             }
 
             this._commitAppliedUi();
-            this.updatePagination();
+            this._syncPagination();
         }
 
         // ==============================================
         // EVENTS
         // ==============================================
 
-        dispatchFilterEvent(visibleCount) {
+        _dispatchFilterEvent(visibleCount) {
             const hasCount = arguments.length > 0;
             const event = new CustomEvent('nds:filter:change', {
                 detail: {
@@ -2748,10 +2761,10 @@
                 bubbles: true
             });
 
-            this.filterContainer.dispatchEvent(event);
+            this._filterContainer.dispatchEvent(event);
         }
 
-        dispatchResetEvent() {
+        _dispatchResetEvent() {
             const event = new CustomEvent('nds:filter:reset', {
                 detail: {
                     filter: this,
@@ -2760,10 +2773,10 @@
                 bubbles: true
             });
 
-            this.filterContainer.dispatchEvent(event);
+            this._filterContainer.dispatchEvent(event);
         }
 
-        dispatchClearEvent() {
+        _dispatchClearEvent() {
             const event = new CustomEvent('nds:filter:clear', {
                 detail: {
                     filter: this
@@ -2771,7 +2784,7 @@
                 bubbles: true
             });
 
-            this.filterContainer.dispatchEvent(event);
+            this._filterContainer.dispatchEvent(event);
         }
 
         // ==============================================
@@ -2782,13 +2795,13 @@
         // is right: the result set is different, so the old page number is meaningless.
         // A refresh() is not a criteria change — the rows moved under an unchanged filter
         // — so it passes { keepPage: true } and the user stays where they were.
-        updatePagination(options = {}) {
-            if (!this.targetContainer) return;
+        _syncPagination(options = {}) {
+            if (!this._targetContainer) return;
 
             // Walk up to find the .nds-paged-content wrapper (pagination expects this as the container).
             // Pagination resolves the nav itself (explicit data-auto-pagination="#id" or adjacency) and
             // no-ops when there's none, so we just hand it the wrapper.
-            const pagedContent = this.targetContainer.closest('.nds-paged-content');
+            const pagedContent = this._targetContainer.closest('.nds-paged-content');
             if (pagedContent) NDS.Pagination.refresh(pagedContent, options);
         }
 
@@ -2813,25 +2826,25 @@
          * Refresh items list and regenerate filters
          */
         refresh() {
-            // Re-resolve targetContainer in case it was null at init or replaced
+            // Re-resolve _targetContainer in case it was null at init or replaced
             if (this.targetId) {
-                this.targetContainer = document.getElementById(this.targetId);
+                this._targetContainer = document.getElementById(this.targetId);
             }
 
             // Re-resolve target surfaces in case the surrounding UI changed
-            this._targetRoots = this.resolveTargetRoots();
+            this._targetRoots = this._resolveTargetRoots();
             // Re-stamp: a container or surface rendered (or re-rendered) after
             // createInstance is otherwise held by the skeleton gate under a live instance.
             this._targetRoots.forEach(root => root.setAttribute('data-nds-filter-initialized', 'true'));
-            this.targetContainer?.setAttribute('data-nds-filter-initialized', 'true');
+            this._targetContainer?.setAttribute('data-nds-filter-initialized', 'true');
 
             // A replaced search box leaves the cached ref (and its listeners) on a
             // detached node; drop it so detection rebinds to the live one.
-            if (this.searchInputs.direct && !this.searchInputs.direct.input.isConnected) this.searchInputs.direct = null;
-            this._autoDetectDirectSearch();
+            if (this._searchInputs.direct && !this._searchInputs.direct.input.isConnected) this._searchInputs.direct = null;
+            this._detectDirectSearch();
 
             // Update items list
-            this.items = this.resolveItems();
+            this.items = this._resolveItems();
             this._cacheBuilt = false;
             this._resyncSort();
 
@@ -2847,13 +2860,13 @@
                 element.innerHTML = '';
 
                 // Regenerate (may replace element with fieldset)
-                const actualEl = this.generateFilterInputs(element, filterName, filterType) || element;
-                this.setupManualFilter(actualEl, filterName);
+                const actualEl = this._buildFilterInputs(element, filterName, filterType) || element;
+                this._setupManualFilter(actualEl, filterName);
             });
             this._flushAccordionInit();
 
             // Reapply current filters. The criteria did not change, only the rows, so
-            // pagination must hold the user's page — see _pageOptions/updatePagination.
+            // pagination must hold the user's page — see _getPageOptions/_syncPagination.
             // A row edited on page 3 that snapped the list back to page 1 was the bug.
             this._refreshing = true;
             try {
@@ -2864,7 +2877,7 @@
         }
 
         // Page-1 reset belongs to a criteria change, not to a re-scan of the same filter.
-        _pageOptions() {
+        _getPageOptions() {
             return this._refreshing ? { keepPage: true } : {};
         }
 
@@ -2873,7 +2886,7 @@
 
             this._mirrorSearchInputs(value);
 
-            this.updateApplyButtonLabel();
+            this._syncApplyButtonLabel();
             // Not applyFilters(): in AJAX mode that repaints chips, badge and URL
             // from the new criteria without fetching, so the page would state a
             // keyword the displayed results were never filtered by. Same commit
@@ -2884,7 +2897,7 @@
 
         setFilterValues(filterName, values) {
             // A group in a menu never opened has no inputs yet.
-            this.buildDeferredFilters();
+            this._buildDeferredFilters();
             const filterData = this.filterInputs[filterName];
             if (!filterData) return;
 
@@ -2894,27 +2907,27 @@
             });
             // setFilterValues(name, []) is the per-filter clear — a radio group
             // lands back on "All" rather than empty, same as the chip and clear paths.
-            this._recheckAllRadio(filterData);
+            this._syncAllRadio(filterData);
 
-            this.updateFilterCriteria(filterName);
-            this.updateApplyButtonLabel();
+            this._syncFilterCriteria(filterName);
+            this._syncApplyButtonLabel();
             // See setSearchValue — commit, don't just repaint, so AJAX mode
             // re-fetches instead of showing chips for an unrequested filter.
             this._commitCriteriaChange();
         }
 
         populateFilter(filterName, values, inputType = null) {
-            const container = this.filterContainer.querySelector(`[data-filter="${filterName}"]`);
+            const container = this._filterContainer.querySelector(`[data-filter="${filterName}"]`);
             if (!container) return;
 
             // Determine input type from data attribute or parameter
             const type = inputType || container.getAttribute('data-filter-type') || 'checkbox';
 
             // Generate inputs with explicit values
-            const actualElement = this.generateFilterInputs(container, filterName, type, values) || container;
+            const actualElement = this._buildFilterInputs(container, filterName, type, values) || container;
 
             // Re-setup the filter listeners
-            this.setupManualFilter(actualElement, filterName);
+            this._setupManualFilter(actualElement, filterName);
             this._flushAccordionInit();
         }
 
@@ -2925,26 +2938,26 @@
             // listeners live on surfaces that outlive the target container.
             if (this.sort) { this.sort.destroy(); this.sort = null; }
             // Release pooled NDS.onDOMAdd subscribers registered per filter
-            // element by setupManualFilter; without this, each filter instance
+            // element by _setupManualFilter; without this, each filter instance
             // would leak one closure per filter element for the page lifetime.
-            this._offDOMAdds.forEach(off => off());
-            this._offDOMAdds.length = 0;
+            this._offDomAdds.forEach(off => off());
+            this._offDomAdds.length = 0;
             this._ownDelay?.forEach(dm => dm.removeAttribute('data-delay'));
             this._filterElementACs.forEach(el => {
                 if (el._ndsFilterAC) { el._ndsFilterAC.abort(); delete el._ndsFilterAC; }
             });
             this._filterElementACs.clear();
-            this.items.forEach(item => this.showItem(item));
+            this.items.forEach(item => this._showItem(item));
             // Only release shared registry/backref state when THIS instance owns it.
             // A stale reference — destroyed, then re-inited on the same element —
             // shares the representative and targetId with the live instance, so its
             // destroy must not clobber that one's backref, stamps, or map entry.
-            if (this.filterContainer.ndsFilter === this) {
+            if (this._filterContainer.ndsFilter === this) {
                 // _targetRoots covers every stamped surface (incl. the
                 // representative); the target container is stamped separately.
                 this._targetRoots.forEach(root => root.removeAttribute('data-nds-filter-initialized'));
-                this.targetContainer?.removeAttribute('data-nds-filter-initialized');
-                delete this.filterContainer.ndsFilter;
+                this._targetContainer?.removeAttribute('data-nds-filter-initialized');
+                delete this._filterContainer.ndsFilter;
             }
             if (this.targetId && instancesByTarget.get(this.targetId) === this) {
                 instancesByTarget.delete(this.targetId);
@@ -2971,7 +2984,7 @@
     function getLiveInstance(id) {
         const instance = instancesByTarget.get(id);
         if (!instance) return null;
-        if (instance.filterContainer?.isConnected) return instance;
+        if (instance._filterContainer?.isConnected) return instance;
         console.warn(`NDS Filter: reclaiming target "${id}" — its instance was removed from the DOM without NDS.init.destroy(). Call destroy() on unmount.`);
         instance.destroy();
         instancesByTarget.delete(id);
@@ -2995,7 +3008,7 @@
         // both paths — the loader's grouped surfaces, or the document scan a manual
         // create() falls back to — so neither leaves a linked surface unstamped.
         instance._targetRoots.forEach(root => root.setAttribute('data-nds-filter-initialized', 'true'));
-        instance.targetContainer?.setAttribute('data-nds-filter-initialized', 'true');
+        instance._targetContainer?.setAttribute('data-nds-filter-initialized', 'true');
         if (instance.targetId) {
             instancesByTarget.set(instance.targetId, instance);
         }
@@ -3114,7 +3127,7 @@
                 if (!getLiveInstance(instance.targetId)) return;
                 const target = instance.targetId
                     ? document.getElementById(instance.targetId)
-                    : instance.targetContainer;
+                    : instance._targetContainer;
                 // No scope: refresh all. Scoped: the target is root, inside it, or
                 // wraps it (a tbody handed in for a table-level target).
                 if (scope && target && !(scope === target || scope.contains(target) || target.contains(scope))) return;

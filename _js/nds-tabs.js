@@ -60,20 +60,20 @@
 
     class NdsTabs {
         constructor(tabsContainer) {
-            this.tabsContainer = tabsContainer;
-            this.scrollMore = tabsContainer.querySelector('.nds-scroll-more');
-            this.tabList = tabsContainer.querySelector('.nds-tab-list');
-            this.tabs = getOwnParts(tabsContainer, '.nds-tab:not(.nds-show-more)');
-            this.panels = getOwnParts(tabsContainer, '.nds-tab-panel');
+            this._tabsContainer = tabsContainer;
+            this._scrollMore = tabsContainer.querySelector('.nds-scroll-more');
+            this._tabList = tabsContainer.querySelector('.nds-tab-list');
+            this._tabs = getOwnParts(tabsContainer, '.nds-tab:not(.nds-show-more)');
+            this._panels = getOwnParts(tabsContainer, '.nds-tab-panel');
 
-            if (!this.tabList || this.tabs.length === 0 || this.panels.length === 0) {
+            if (!this._tabList || this._tabs.length === 0 || this._panels.length === 0) {
                 console.warn('NDS Tabs: Invalid tab structure found');
                 return;
             }
 
             this.abortController = new AbortController();
-            this.currentTabIndex = this.findActiveTabIndex();
-            this.valid = true;
+            this._currentTabIndex = this._findActiveTabIndex();
+            this._valid = true;
             // Registered here, not in the sweep, so every construction path —
             // sweep, reinit() and programmatic create() — publishes el.ndsTabs and
             // the stamp that ends the skeleton and stops a second sweep.
@@ -82,27 +82,27 @@
             tabsContainer.setAttribute('data-nds-tabs-initialized', 'true');
         }
 
-        get isVertical() {
-            return this.tabsContainer.classList.contains('nds-vertical');
+        get _isVertical() {
+            return this._tabsContainer.classList.contains('nds-vertical');
         }
 
         init() {
-            this.setupEventListeners();
-            this.setupInitialState();
-            this.setupWheelAndDrag();
+            this._addEventListeners();
+            this._setupInitialState();
+            this._setupWheelAndDrag();
         }
 
-        findActiveTabIndex() {
-            const activeTab = this.tabs.find(tab => tab.ariaSelected === 'true');
-            return activeTab ? this.tabs.indexOf(activeTab) : 0;
+        _findActiveTabIndex() {
+            const activeTab = this._tabs.find(tab => tab.ariaSelected === 'true');
+            return activeTab ? this._tabs.indexOf(activeTab) : 0;
         }
 
-        setupInitialState() {
-            this.tabs.forEach((tab, index) => {
-                if (index === this.currentTabIndex) {
-                    this.activateTab(tab, index);
+        _setupInitialState() {
+            this._tabs.forEach((tab, index) => {
+                if (index === this._currentTabIndex) {
+                    this._activateTab(tab, index);
                 } else {
-                    this.deactivateTab(tab, index);
+                    this._deactivateTab(tab, index);
                 }
             });
         }
@@ -111,15 +111,15 @@
         // SCROLL BEHAVIOR
         // nds-scroll-more owns overflow detection, mask, show-more button, and
         // has-more/at-start/at-end state writing. This module only adds tabs-
-        // specific UX on top: click-to-scroll-into-view (in setupEventListeners),
+        // specific UX on top: click-to-scroll-into-view (in _addEventListeners),
         // wheel→horizontal conversion, and drag-to-scroll (both below).
         // ==============================================
 
-        needsScroll() {
-            return !!this.scrollMore && NDS.state.has(this.scrollMore, 'has-more');
+        _isScrollable() {
+            return !!this._scrollMore && NDS.state.has(this._scrollMore, 'has-more');
         }
 
-        scrollToTarget(target) {
+        _scrollToTarget(target) {
             if (!target) return;
             // 'auto' defers to the list's CSS scroll-behavior, which _tabs.scss drops
             // to auto under reduced motion — so this is a real instant scroll there.
@@ -130,40 +130,40 @@
             });
         }
 
-        setupWheelAndDrag() {
-            if (this.isVertical) return;
+        _setupWheelAndDrag() {
+            if (this._isVertical) return;
 
-            NDS.dragScroll(this.tabList, { canScroll: () => this.needsScroll(), signal: this.abortController.signal });
+            NDS.dragScroll(this._tabList, { canScroll: () => this._isScrollable(), signal: this.abortController.signal });
         }
 
         // ==============================================
         // TAB SWITCHING & KEYBOARD
         // ==============================================
 
-        setupEventListeners() {
-            this.tabs.forEach((tab, index) => {
+        _addEventListeners() {
+            this._tabs.forEach((tab, index) => {
                 tab.addEventListener('click', (e) => {
                     if (tab.tagName.toLowerCase() === 'a' && tab.getAttribute('href')) {
                         e.preventDefault();
                     }
-                    this.switchToTab(index);
+                    this._switchToTab(index);
 
-                    if (!this.isVertical && this.needsScroll()) {
-                        setTimeout(() => this.scrollToTarget(tab), 10);
+                    if (!this._isVertical && this._isScrollable()) {
+                        setTimeout(() => this._scrollToTarget(tab), 10);
                     }
                 }, { signal: this.abortController.signal });
-                tab.addEventListener('focus', () => this.handleTabFocus(index), { signal: this.abortController.signal });
+                tab.addEventListener('focus', () => this._handleTabFocus(index), { signal: this.abortController.signal });
             });
 
-            this.tabList.addEventListener('keydown', (e) => this.handleKeyDown(e), { signal: this.abortController.signal });
+            this._tabList.addEventListener('keydown', (e) => this._handleKeyDown(e), { signal: this.abortController.signal });
         }
 
-        handleKeyDown(e) {
+        _handleKeyDown(e) {
             const currentTab = e.target;
             if (!currentTab.classList.contains('nds-tab')) return;
 
-            const currentIndex = this.tabs.indexOf(currentTab);
-            const lastIndex = this.tabs.length - 1;
+            const currentIndex = this._tabs.indexOf(currentTab);
+            const lastIndex = this._tabs.length - 1;
             const isRtl = NDS.isRTL;
             const prev = () => currentIndex > 0 ? currentIndex - 1 : lastIndex;
             const next = () => currentIndex < lastIndex ? currentIndex + 1 : 0;
@@ -171,12 +171,12 @@
 
             switch (e.key) {
                 case 'ArrowLeft':
-                    if (this.isVertical) return;
+                    if (this._isVertical) return;
                     targetIndex = isRtl ? next() : prev();
                     break;
 
                 case 'ArrowRight':
-                    if (this.isVertical) return;
+                    if (this._isVertical) return;
                     targetIndex = isRtl ? prev() : next();
                     break;
 
@@ -200,7 +200,7 @@
                 case 'Enter':
                 case ' ':
                     e.preventDefault();
-                    this.switchToTab(currentIndex);
+                    this._switchToTab(currentIndex);
                     return;
 
                 default:
@@ -208,35 +208,35 @@
             }
 
             e.preventDefault();
-            this.focusTab(targetIndex);
+            this._focusTab(targetIndex);
         }
 
-        handleTabFocus(index) {
-            this.tabs.forEach((tab, i) => {
+        _handleTabFocus(index) {
+            this._tabs.forEach((tab, i) => {
                 tab.setAttribute('tabindex', i === index ? '0' : '-1');
             });
         }
 
-        focusTab(index) {
-            if (index >= 0 && index < this.tabs.length) {
-                this.tabs[index].focus();
+        _focusTab(index) {
+            if (index >= 0 && index < this._tabs.length) {
+                this._tabs[index].focus();
             }
         }
 
-        switchToTab(index) {
-            if (index === this.currentTabIndex || index < 0 || index >= this.tabs.length) return;
+        _switchToTab(index) {
+            if (index === this._currentTabIndex || index < 0 || index >= this._tabs.length) return;
 
-            const previousTab = this.tabs[this.currentTabIndex];
-            const newTab = this.tabs[index];
+            const previousTab = this._tabs[this._currentTabIndex];
+            const newTab = this._tabs[index];
 
-            this.deactivateTab(previousTab, this.currentTabIndex);
-            this.activateTab(newTab, index);
-            this.currentTabIndex = index;
-            this.dispatchTabChangeEvent(index, previousTab, newTab);
+            this._deactivateTab(previousTab, this._currentTabIndex);
+            this._activateTab(newTab, index);
+            this._currentTabIndex = index;
+            this._dispatchTabChangeEvent(index, previousTab, newTab);
         }
 
-        activateTab(tab, index) {
-            const panel = this.panels[index];
+        _activateTab(tab, index) {
+            const panel = this._panels[index];
             if (!panel) return;
 
             NDS.aria.selected(tab, true);
@@ -247,8 +247,8 @@
             panel.setAttribute('tabindex', '0');
         }
 
-        deactivateTab(tab, index) {
-            const panel = this.panels[index];
+        _deactivateTab(tab, index) {
+            const panel = this._panels[index];
             if (!panel) return;
 
             NDS.aria.selected(tab, false);
@@ -259,14 +259,14 @@
             panel.setAttribute('tabindex', '-1');
         }
 
-        dispatchTabChangeEvent(index, previousTab, newTab) {
-            this.tabsContainer.dispatchEvent(new CustomEvent('nds:tabs:change', {
+        _dispatchTabChangeEvent(index, previousTab, newTab) {
+            this._tabsContainer.dispatchEvent(new CustomEvent('nds:tabs:change', {
                 detail: {
                     tabIndex: index,
                     tab: newTab,
-                    panel: this.panels[index],
+                    panel: this._panels[index],
                     previousTab,
-                    previousPanel: this.panels[this.tabs.indexOf(previousTab)]
+                    previousPanel: this._panels[this._tabs.indexOf(previousTab)]
                 },
                 bubbles: true
             }));
@@ -276,15 +276,15 @@
         // PUBLIC API
         // ==============================================
 
-        getActiveTabIndex() { return this.currentTabIndex; }
-        getActiveTab() { return this.tabs[this.currentTabIndex]; }
-        getActivePanel() { return this.panels[this.currentTabIndex]; }
-        goTo(index) { this.switchToTab(index); }
+        getActiveTabIndex() { return this._currentTabIndex; }
+        getActiveTab() { return this._tabs[this._currentTabIndex]; }
+        getActivePanel() { return this._panels[this._currentTabIndex]; }
+        goTo(index) { this._switchToTab(index); }
 
         destroy() {
             if (this.abortController) this.abortController.abort();
-            this.tabsContainer.removeAttribute('data-nds-tabs-initialized');
-            delete this.tabsContainer.ndsTabs;
+            this._tabsContainer.removeAttribute('data-nds-tabs-initialized');
+            delete this._tabsContainer.ndsTabs;
         }
     }
 

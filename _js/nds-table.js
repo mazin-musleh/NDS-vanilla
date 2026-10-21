@@ -16,6 +16,8 @@
  *   ↳ handle.sub.setContent(htmlOrNode)         put YOUR markup in the sub (chainable)
  *   ↳ handle.sub.open() / .close() / .toggle()  show / hide it (chainable)
  *   NDS.Table.setColumnHidden(table, i, bool)  hide or show a column by cell index
+ *   instance.getSortColumn() / .getSortOrder() / .resetSort()   on create()'s instance
+ *   instance.recheckWidth()                    on createResponsive()'s: measure the scroll state again
  * Events (bubble from the <table>):
  *   nds:table:columns      detail {table, index, hidden, restored} — restored:true is a saved
  *                          hide replayed at init, not a user action
@@ -40,7 +42,7 @@
  *   - Column hides persist in localStorage whenever the table has an id.
  *   - Hiding a column stamps data-export-skip on its <th> so exports match the view, and a
  *     header with no text falls back to its data-export-label for the menu entry.
- *   - The column menu's rows come from buildRow(): div.nds-form-container.nds-checkbox
+ *   - The column menu's rows come from _buildRow(): div.nds-form-container.nds-checkbox
  *     wrapping div.nds-form-header > label[for] > span.nds-label and div.nds-form-control >
  *     the input — the same skeleton nds-filter generates. Hand-written rows must match it.
  */
@@ -68,61 +70,61 @@
 
     class NdsTable {
         constructor(tableElement) {
-            this.valid = false;
-            this.table = tableElement;
+            this._valid = false;
+            this._table = tableElement;
             // Direct children throughout: a sub-row's nested <table> carries its
             // own thead/tbody, and an unscoped query sweeps the inner table's
             // sort buttons and checkboxes into the outer table's sets.
-            this.thead = tableElement.querySelector(':scope > thead');
-            this.tbody = tableElement.querySelector(':scope > tbody');
-            this.sortButtons = Array.from(this.thead?.querySelectorAll('.nds-sort-btn') || []);
+            this._thead = tableElement.querySelector(':scope > thead');
+            this._tbody = tableElement.querySelector(':scope > tbody');
+            this._sortButtons = Array.from(this._thead?.querySelectorAll('.nds-sort-btn') || []);
 
-            if (!this.thead || !this.tbody) {
+            if (!this._thead || !this._tbody) {
                 console.warn('NDS Table: Invalid table structure found');
                 return;
             }
 
-            this.isSortable = this.sortButtons.length > 0;
+            this._isSortable = this._sortButtons.length > 0;
 
-            this.valid = true;
-            this.table.ndsTableControls = this;
+            this._valid = true;
+            this._table.ndsTableControls = this;
             this.init();
         }
 
         init() {
-            if (this.isSortable) {
-                this.setupSort();
+            if (this._isSortable) {
+                this._setupSort();
             }
-            this.setupSelectAll();
+            this._setupSelectAll();
         }
 
         // The header checkbox selects this table's rows through nds-selection.js. Stamped
         // here, after the loader's detection pass, so this table starts Selection itself.
-        setupSelectAll() {
-            const all = this.thead.querySelector('th input.nds-checkbox-input');
+        _setupSelectAll() {
+            const all = this._thead.querySelector('th input.nds-checkbox-input');
             if (!all || all.hasAttribute('data-selection-target')) return;
-            this._ownSelect = { box: all, id: !this.tbody.id };
-            this.tbody.id ||= NDS.uniqueId('nds-rows-');
-            all.setAttribute('data-selection-target', this.tbody.id);
+            this._ownSelect = { box: all, id: !this._tbody.id };
+            this._tbody.id ||= NDS.uniqueId('nds-rows-');
+            all.setAttribute('data-selection-target', this._tbody.id);
             NDS.Selection.init();
-            NDS.Selection.refresh(this.tbody);
+            NDS.Selection.refresh(this._tbody);
         }
 
         // ── Sort (delegated to NDS.Sort) ─────────────────────────────────
 
-        setupSort() {
+        _setupSort() {
             // Sort seeds from, and writes, sorted-asc / sorted-desc on the <th> (its a11yTarget).
-            this.sort = NDS.Sort.create(this.table, {
+            this._sort = NDS.Sort.create(this._table, {
                 // Direct children only — a nested <table> inside a <td> is valid
                 // HTML (row-expansion / master-detail views), and its rows would
                 // otherwise get swept into the outer sort and reparented under
                 // this tbody via reorderIn, destroying the nested table.
-                items: () => Array.from(this.tbody.querySelectorAll(':scope > tr')),
-                reorderIn: this.tbody,
+                items: () => Array.from(this._tbody.querySelectorAll(':scope > tr')),
+                reorderIn: this._tbody,
                 // The already-scoped set, not a selector — NDS.Sort resolves a
                 // string against the whole table, which would bind a nested
                 // sub-table's headers to the outer sort.
-                triggers: () => this.sortButtons,
+                triggers: () => this._sortButtons,
                 mode: 'cycle',
                 a11y: 'sort',
                 a11yTarget: (btn) => btn.closest('th'),
@@ -138,9 +140,9 @@
                 keyFrom: (btn) => getHeaderIndex(btn.closest('th')),
                 onChange: () => {
                     // Runs after NDS.Sort has already re-appended the parent rows.
-                    repairSubPairing(this.tbody);
+                    repairSubPairing(this._tbody);
 
-                    const pagedContent = this.tbody.closest('.nds-paged-content');
+                    const pagedContent = this._tbody.closest('.nds-paged-content');
                     if (pagedContent) NDS.Pagination.refresh(pagedContent);
                 }
             });
@@ -148,37 +150,37 @@
 
         // Public API methods
         getSortColumn() {
-            const state = this.sort?.getState();
+            const state = this._sort?.getState();
             return state && state.key != null ? state.key : -1;
         }
 
         getSortOrder() {
-            return this.sort?.getState().order || null;
+            return this._sort?.getState().order || null;
         }
 
         resetSort() {
-            this.sort?.reset();
+            this._sort?.reset();
         }
 
         destroy() {
-            this.sort?.destroy();
+            this._sort?.destroy();
             // Selection is delegated: the header box leaves it with the link it was given.
             if (this._ownSelect) {
                 this._ownSelect.box.removeAttribute('data-selection-target');
-                if (this._ownSelect.id) this.tbody.removeAttribute('id');
+                if (this._ownSelect.id) this._tbody.removeAttribute('id');
                 this._ownSelect = null;
             }
-            delete this.table.ndsTableControls;   // the table stays initialized; only its controls go
+            delete this._table.ndsTableControls;   // the table stays initialized; only its controls go
         }
     }
 
     // Responsive table handler (similar to expandable pattern)
     class NdsTableResponsive {
         constructor(tableElement) {
-            this.table = tableElement;
-            this.wrapper = null;
-            this.needsScroll = false;
-            this.currentScrollState = null; // Track current state to avoid redundant DOM operations
+            this._table = tableElement;
+            this._wrapper = null;
+            this._needsScroll = false;
+            this._currentScrollState = null; // Track current state to avoid redundant DOM operations
             this.abortController = new AbortController();
 
             // Registered here, not in the sweep, so every construction path —
@@ -189,55 +191,55 @@
         }
 
         init() {
-            this.setupWrapper();
-            this.setupEventListeners();
+            this._setupWrapper();
+            this._addEventListeners();
         }
 
-        setupWrapper() {
-            if (this.table.parentElement.classList.contains('nds-table-wrapper')) {
-                this.wrapper = this.table.parentElement;
+        _setupWrapper() {
+            if (this._table.parentElement.classList.contains('nds-table-wrapper')) {
+                this._wrapper = this._table.parentElement;
             } else {
                 this._builtWrapper = true;
-                this.wrapper = document.createElement('div');
-                this.wrapper.className = 'nds-table-wrapper';
-                this.table.parentElement.insertBefore(this.wrapper, this.table);
-                this.wrapper.appendChild(this.table);
+                this._wrapper = document.createElement('div');
+                this._wrapper.className = 'nds-table-wrapper';
+                this._table.parentElement.insertBefore(this._wrapper, this._table);
+                this._wrapper.appendChild(this._table);
             }
-            this.copyMaxWidthToWrapper();
+            this._copyMaxWidthToWrapper();
         }
 
-        copyMaxWidthToWrapper() {
+        _copyMaxWidthToWrapper() {
             // --max-width is only ever set inline — the SCSS consumes it via
             // var(--max-width, 100%) and never sets it as a rule — so read the
             // inline style directly. getComputedStyle here forced a full style
             // recalc of the just-reparented table (~46ms@6.6x on a 100-row table)
             // to read a value that's almost always unset.
-            const tableMaxWidth = this.table.style.getPropertyValue('--max-width');
-            if (tableMaxWidth && tableMaxWidth.trim() && !this.wrapper.style.getPropertyValue('--max-width')) {
-                this.wrapper.style.setProperty('--max-width', tableMaxWidth.trim());
+            const tableMaxWidth = this._table.style.getPropertyValue('--max-width');
+            if (tableMaxWidth && tableMaxWidth.trim() && !this._wrapper.style.getPropertyValue('--max-width')) {
+                this._wrapper.style.setProperty('--max-width', tableMaxWidth.trim());
                 this._ownMaxWidth = true;
             }
         }
 
-        checkTableWidth() {
-            const { scrollWidth, clientWidth } = this.wrapper;
+        _checkTableWidth() {
+            const { scrollWidth, clientWidth } = this._wrapper;
 
             if (scrollWidth > clientWidth) {
-                this.needsScroll = true;
-                this.currentScrollState = null; // Force handleScroll to update
-                this.handleScroll();
+                this._needsScroll = true;
+                this._currentScrollState = null; // Force _handleScroll to update
+                this._handleScroll();
             } else {
-                NDS.state.clear(this.wrapper);
-                this.needsScroll = false;
-                this.currentScrollState = null;
+                NDS.state.clear(this._wrapper);
+                this._needsScroll = false;
+                this._currentScrollState = null;
             }
-            this.setScrollFocus(this.needsScroll);
+            this._setScrollFocus(this._needsScroll);
         }
 
         // A sideways scroll box the keyboard can reach: Safari never focuses one on its own.
         // Named after the table, so a screen reader says what it scrolls. What the author wrote stays.
-        setScrollFocus(on) {
-            const wrapper = this.wrapper;
+        _setScrollFocus(on) {
+            const wrapper = this._wrapper;
             if (on === !!this._scrollStamp) return;
             if (!on) {
                 this._scrollStamp.forEach((attribute) => wrapper.removeAttribute(attribute));
@@ -247,16 +249,16 @@
             const stamp = this._scrollStamp = [];
             const set = (attribute, value) => { if (value && !wrapper.hasAttribute(attribute)) { wrapper.setAttribute(attribute, value); stamp.push(attribute); } };
             set('tabindex', '0');
-            const name = this.table.getAttribute('aria-label') || this.table.caption?.textContent.trim();
-            const by = this.table.getAttribute('aria-labelledby');
+            const name = this._table.getAttribute('aria-label') || this._table.caption?.textContent.trim();
+            const by = this._table.getAttribute('aria-labelledby');
             if (name || by) set('role', 'region');
             if (name) set('aria-label', name); else set('aria-labelledby', by);
         }
 
-        handleScroll() {
-            if (!this.needsScroll) return;
+        _handleScroll() {
+            if (!this._needsScroll) return;
 
-            const { scrollLeft, scrollWidth, clientWidth } = this.wrapper;
+            const { scrollLeft, scrollWidth, clientWidth } = this._wrapper;
             const maxScroll = scrollWidth - clientWidth;
             const isRtl = NDS.isRTL;
 
@@ -271,14 +273,14 @@
             }
 
             const newState = tokens.join(' ');
-            if (this.currentScrollState !== newState) {
-                NDS.state.set(this.wrapper, ...tokens);
-                this.currentScrollState = newState;
+            if (this._currentScrollState !== newState) {
+                NDS.state.set(this._wrapper, ...tokens);
+                this._currentScrollState = newState;
             }
         }
 
-        setupEventListeners() {
-            this.wrapper.addEventListener('scroll', NDS.rafThrottle(() => this.handleScroll()), {
+        _addEventListeners() {
+            this._wrapper.addEventListener('scroll', NDS.rafThrottle(() => this._handleScroll()), {
                 signal: this.abortController.signal
             });
 
@@ -288,21 +290,21 @@
             // nds-pagination.js, grow-only per shown page). Later
             // deliveries are debounced to coalesce resize storms.
             let firstMeasure = true;
-            const checkTable = NDS.debounce(() => this.checkTableWidth(), 100);
+            const checkTable = NDS.debounce(() => this._checkTableWidth(), 100);
             const handleSizeChange = () => {
                 if (firstMeasure) {
                     firstMeasure = false;
-                    this.checkTableWidth();
+                    this._checkTableWidth();
                 } else {
                     checkTable();
                 }
             };
-            this._offResizeTable = NDS.onElementResize(this.table, handleSizeChange);
-            this._offResizeWrapper = NDS.onElementResize(this.wrapper, handleSizeChange);
+            this._offResizeTable = NDS.onElementResize(this._table, handleSizeChange);
+            this._offResizeWrapper = NDS.onElementResize(this._wrapper, handleSizeChange);
 
             // Detect visibility changes (when tab becomes visible)
-            const onVisibleDebounced = NDS.debounce(() => this.checkTableWidth(), 150);
-            this._offIntersect = NDS.onIntersect(this.wrapper, (entry) => {
+            const onVisibleDebounced = NDS.debounce(() => this._checkTableWidth(), 150);
+            this._offIntersect = NDS.onIntersect(this._wrapper, (entry) => {
                 if (entry.isIntersecting) onVisibleDebounced();
             }, { threshold: 0.1 });
 
@@ -310,7 +312,7 @@
         }
 
         recheckWidth() {
-            this.checkTableWidth();
+            this._checkTableWidth();
         }
 
         destroy() {
@@ -320,15 +322,15 @@
             if (this._offResizeWrapper) { this._offResizeWrapper(); this._offResizeWrapper = null; }
             if (this._offIntersect) { this._offIntersect(); this._offIntersect = null; }
 
-            NDS.state.clear(this.wrapper);
-            this.setScrollFocus(false);
-            this.currentScrollState = null;
-            this.needsScroll = false;
+            NDS.state.clear(this._wrapper);
+            this._setScrollFocus(false);
+            this._currentScrollState = null;
+            this._needsScroll = false;
             // A wrapper this built goes, the table back in its place; an authored one keeps its own style.
-            if (this._builtWrapper) this.wrapper.replaceWith(this.table);
-            else if (this._ownMaxWidth) this.wrapper.style.removeProperty('--max-width');
-            this.table.removeAttribute('data-nds-table-initialized');
-            delete this.table.ndsTableResponsive;
+            if (this._builtWrapper) this._wrapper.replaceWith(this._table);
+            else if (this._ownMaxWidth) this._wrapper.style.removeProperty('--max-width');
+            this._table.removeAttribute('data-nds-table-initialized');
+            delete this._table.ndsTableResponsive;
         }
     }
 
@@ -409,48 +411,48 @@
 
     class NdsTableColumnToggle {
         constructor(root) {
-            this.valid = false;
-            this.root = root;
-            this.table = NDS.resolveEl(root.getAttribute('data-columns-target') || '');
-            this.list = root.querySelector('[data-columns-list]');
+            this._valid = false;
+            this._root = root;
+            this._table = NDS.resolveEl(root.getAttribute('data-columns-target') || '');
+            this._list = root.querySelector('[data-columns-list]');
 
-            if (!this.table || !this.list) {
+            if (!this._table || !this._list) {
                 console.warn('NDS Table: column toggle needs a [data-columns-target] table and a [data-columns-list] host', root);
                 return;
             }
 
-            this.valid = true;
+            this._valid = true;
             // Stamped here so a programmatic create() is skipped by the next sweep.
-            this.root.ndsColumnToggle = this;
-            this.root.setAttribute('data-nds-columns-initialized', 'true');
-            this.persist = !!this.table.id;
+            this._root.ndsColumnToggle = this;
+            this._root.setAttribute('data-nds-columns-initialized', 'true');
+            this._persist = !!this._table.id;
 
             this.abortController = new AbortController();
             // Before init(): render() runs on the menu's first open, so the
             // checklist reads the restored [hidden] and paints the right boxes.
-            if (this.persist) restoreHiddenColumns(this.table);
+            if (this._persist) restoreHiddenColumns(this._table);
             this.init();
         }
 
         // Same affordance as the filter button: an icon badge counting the hidden
         // columns, so a persisted hide is visible without opening the menu.
         // The footer rides along — it only earns its space while something is hidden.
-        updateTriggerBadge() {
-            const count = getHeadCells(this.table).filter(th => th.hasAttribute('hidden')).length;
-            NDS.badge(this.root.querySelector('.nds-dropmenu-trigger'), count);
-            this.footer.hidden = !count;
+        _syncTriggerBadge() {
+            const count = getHeadCells(this._table).filter(th => th.hasAttribute('hidden')).length;
+            NDS.badge(this._root.querySelector('.nds-dropmenu-trigger'), count);
+            this._footer.hidden = !count;
         }
 
         // The filter dropmenu's footer, built rather than authored: divider + action
         // row outside .nds-dropmenu-scroll, so Reset stays pinned while a long column
         // list scrolls. Sibling of the scroll box — never inside the checklist, so
         // render()'s rows can't land under it.
-        buildFooter(signal) {
+        _buildFooter(signal) {
             const btn = document.createElement('button');
             btn.type = 'button';
             btn.className = 'nds-btn nds-secondary nds-md nds-dropmenu-item';
             btn.setAttribute('data-no-auto-close', '');
-            btn.addEventListener('click', () => this.showAllColumns(), { signal });
+            btn.addEventListener('click', () => this._showAllColumns(), { signal });
 
             const label = document.createElement('span');
             label.className = 'nds-label';
@@ -468,33 +470,33 @@
             footer.className = 'nds-dropmenu-footer';
             footer.append(divider, action);
 
-            (this.list.closest('.nds-dropmenu-menu') || this.root).appendChild(footer);
+            (this._list.closest('.nds-dropmenu-menu') || this._root).appendChild(footer);
             return footer;
         }
 
-        showAllColumns() {
-            getHeadCells(this.table).forEach((th, index) => {
-                if (th.hasAttribute('hidden')) setColumnHidden(this.table, index, false);
+        _showAllColumns() {
+            getHeadCells(this._table).forEach((th, index) => {
+                if (th.hasAttribute('hidden')) setColumnHidden(this._table, index, false);
             });
             // No-op before the checklist is built — render() reads [hidden] fresh.
-            this.list.querySelectorAll('input[data-column-index]').forEach(input => {
+            this._list.querySelectorAll('input[data-column-index]').forEach(input => {
                 input.checked = true;
             });
 
-            this.updateTriggerBadge();
-            if (this.persist) saveHiddenColumns(this.table);
+            this._syncTriggerBadge();
+            if (this._persist) saveHiddenColumns(this._table);
         }
 
         init() {
             const { signal } = this.abortController;
 
-            this.footer = this.buildFooter(signal);
-            this.updateTriggerBadge();
+            this._footer = this._buildFooter(signal);
+            this._syncTriggerBadge();
 
             // An authored list wins — a server-rendered checklist paints before
             // this bundle lands. The host's <legend> is always authored, so test
             // for a generated row rather than for children.
-            if (!this.list.querySelector('.nds-form-container')) {
+            if (!this._list.querySelector('.nds-form-container')) {
                 // Populate on first open, not at init: reading <thead> and building
                 // a row per column costs more than an unopened menu is worth. Same
                 // deferred-build hook nds-filter.js uses (_wireDeferredFilterDropmenus):
@@ -503,36 +505,36 @@
                 // in place — never empty, never mis-measured. One-shot; later opens are
                 // immediate. Released by the same abort signal in destroy().
                 // An authored delay wins; destroy() takes back only this one.
-                if (!this.root.hasAttribute('data-delay')) {
-                    this.root.setAttribute('data-delay', '500');
+                if (!this._root.hasAttribute('data-delay')) {
+                    this._root.setAttribute('data-delay', '500');
                     this._ownDelay = true;
                 }
-                this.root.addEventListener('nds:dropmenu:prepare', () => this.render(), { once: true, signal });
+                this._root.addEventListener('nds:dropmenu:prepare', () => this._render(), { once: true, signal });
             }
 
-            this.list.addEventListener('change', (e) => {
+            this._list.addEventListener('change', (e) => {
                 if (!e.target.matches('input[data-column-index]')) return;
-                setColumnHidden(this.table, Number(e.target.dataset.columnIndex), !e.target.checked);
-                this.updateTriggerBadge();
-                if (this.persist) saveHiddenColumns(this.table);
+                setColumnHidden(this._table, Number(e.target.dataset.columnIndex), !e.target.checked);
+                this._syncTriggerBadge();
+                if (this._persist) saveHiddenColumns(this._table);
             }, { signal });
         }
 
-        render() {
+        _render() {
             const frag = document.createDocumentFragment();
-            getHeadCells(this.table).forEach((th, index) => {
+            getHeadCells(this._table).forEach((th, index) => {
                 // Locked columns and the row-selection column stay off the list.
                 if (th.hasAttribute('data-columns-lock')) return;
                 if (th.querySelector('input[type="checkbox"].nds-checkbox-input')) return;
-                frag.appendChild(this.buildRow(th, index));
+                frag.appendChild(this._buildRow(th, index));
             });
-            this.list.appendChild(frag);
+            this._list.appendChild(frag);
         }
 
         // The .nds-checkbox field nds-filter.js and nds-multiselect.js put
         // in a dropmenu. No .nds-dropmenu-item class — that's what keeps the menu
         // open while columns are toggled.
-        buildRow(th, index) {
+        _buildRow(th, index) {
             const id = NDS.uniqueId('nds-col-');
 
             const container = document.createElement('div');
@@ -567,10 +569,10 @@
         destroy() {
             this.abortController?.abort();
             // The rows render() built stay: the next create() reads them as the list.
-            this.footer?.remove();
-            if (this._ownDelay) this.root.removeAttribute('data-delay');
-            this.root.removeAttribute('data-nds-columns-initialized');
-            delete this.root.ndsColumnToggle;
+            this._footer?.remove();
+            if (this._ownDelay) this._root.removeAttribute('data-delay');
+            this._root.removeAttribute('data-nds-columns-initialized');
+            delete this._root.ndsColumnToggle;
         }
     }
 

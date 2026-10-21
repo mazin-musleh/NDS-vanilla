@@ -13,23 +13,27 @@ Status: IN PROGRESS, step 3 of section 7. Design agreed 2026-10-20; PERSONA land
 | `57aafd6d` | Step 3: no `_` on bindings (P12.13), `scripts/rename-bindings.mjs` |
 | `c5a9a143` | Step 3: classes `Nds{Name}[Part]` (P12.7), PascalCase module objects camelCase |
 | `621b9846` | Step 3: UPPER_CASE only for a primitive (P12.8); loader registry is `components` |
-| next commit | Step 3: verbs, acronyms, whole words on every binding, 1,979 renames (P10.4 / P10.3 / P10.8 / P10.0) |
+| `7433f0d7` | Step 3: verbs, acronyms, whole words on every binding, 1,979 renames (P10.4 / P10.3 / P10.8 / P10.0) |
+| next commit | Step 3: class members, 520 renames in 25 files (P12.11 + their verbs and words); 58 public members onto 13 banners; `scripts/rename-members.mjs` |
 
 **Where the work list stands** (`node scripts/check-js-rules.mjs --names`, a count per rule on the last lines):
-672 findings, 195 to verify. P12.11 members not on a banner 463; P10.4 replaced verbs 108 and P10.3 acronyms 6 and
-P10.8 short words 28, nearly all class methods; P12.14 element data 50 (+46 verify); P12.12 cross-file `_` 13 (+4);
-P12.3 storage keys 4; P10.0 noun-first 129 (verify: class methods, public names, a few real verbs). Lines tagged
+94 findings, 121 to verify. P12.11 0; P10.4 22, P10.3 2, P10.8 4, all on a banner but `Sort.opts` (public: section 3);
+P12.14 element data 50 (+49 verify); P12.12 cross-file `_` 12 (+4); P12.3 storage keys 4; P10.0 57 verify. Lines tagged
 "on the banner" are public: section 3, step 4, not step 3.
 
-**Next: class members** (P12.11 plus the verbs, acronyms and short words on methods and `this.x` fields), one
-commit, or one per component family if it grows. Per member, first yes wins: another file, a doc page or a
-`scripts/check-*.mjs` reads it → it is public, add it to the file's banner (Methods), keep the name if it passes
-entry 10, else it is a section 3 rename; otherwise → `_` plus a passing name in one rename (`updatePagination` →
-`_syncPagination`). Members are properties: Terser keeps them, so the bundles change, and each touched component
-gets its browser check (section 7 step 3 lists them). `rename-bindings.mjs` renames bindings only; members need a
-`scripts/rename-members.mjs` that renames the key and every `this.<name>` inside the class, and REFUSES (prints the
-sites) when `.<name>` appears outside the class body anywhere in `_js/`, `scripts/` or the docs, since only a type
-could tell another object's member of the same name apart.
+**Public members the step found, for section 3** (names that fail entry 10): `Dropmenu.applyPosition` → `syncPosition`,
+`applySelection` → `setSelection`; `Filter.updateUrlParams` → `syncUrlParams`, `applyFilters` → `syncFilters`,
+`populateFilter` → `renderFilter`; `Table.recheckWidth` (responsive) → `syncWidth`; `Multiselect.apply` (no rule fits:
+`commit`?); `Sort.opts` → `options`; `Swiper.updateState` → `syncState` (the national-day-96 pack overrides it on the
+instance: rename both in one step); `Toc.update` (already listed). Checks read internals as public API
+(`TimePicker.elements` / `isPanelCreated`, Filter's `criteria` / `queryAll` …): the plan's rule made them banner lines.
+
+**How the member step was made:** `node scripts/rename-members.mjs <map.json>` (header: `at`, `not`, `foreign`,
+`--sites`, `--comments`), batches per component family to Sonnet with a brief (the BRIEF lived in `tmp/members/`:
+the rules of section 2, a cross-file table so one meaning gets one name: `setupEventListeners` / `bindEvents` →
+`_addEventListeners`, `emitEvent` → `_dispatchEvent`, `handleKeydown` → `_handleKeyDown`, `valid` → `_valid`). Traps met:
+`check-banners.mjs` matched `emitEvent(` (now `_dispatchEvent(`); JSD-19 matched `.valid` (now `._?valid`); the names
+check skipped the words of a `_` field (now checked); the rule files cite members (RULES-JSA/JSD/JSP/JSS).
 
 **After members:** P12.12 cross-file `_` (each break names its home first, section 1 "Breaks today"); the WeakMap
 move (P12.14, entry 12 rule 14, browser checks); then step 4, public renames with Migration rows (section 3,

@@ -148,15 +148,15 @@
 
     class NdsChart {
         constructor(el, opts) {
-            this.el = el;
-            this.opts = this._resolveOpts(opts);
+            this._element = el;
+            this._options = this._resolveOptions(opts);
             this._tooltip = null;
             this._lastW = 0;
             this._activeHover = null;
             this.abortController = new AbortController();
             this._setupDelegation();
             // Holds the drawing's height until the first render, so a chart mounted into a live view does not collapse for two frames.
-            if (!el.firstElementChild) { this._heldMin = el.style.minHeight; el.style.minHeight = this.opts.height + 'px'; }
+            if (!el.firstElementChild) { this._heldMin = el.style.minHeight; el.style.minHeight = this._options.height + 'px'; }
             // The first render is triggered by the ResizeObserver's initial
             // delivery (_setupResize): it reads clientWidth post-layout and
             // schedules render() off a rAF, so construction never forces a
@@ -164,7 +164,7 @@
             this._setupResize();
         }
 
-        _resolveOpts(opts) {
+        _resolveOptions(opts) {
             const type = opts.type || 'bar';
             const defaults = typeDefaults[type] || typeDefaults.bar;
             const merged = mergeDeep(defaults, opts);
@@ -172,22 +172,22 @@
             return merged;
         }
 
-        _fmtVal(value) {
-            const formatter = this.opts.dataLabels?.format;
+        _formatValue(value) {
+            const formatter = this._options.dataLabels?.format;
             if (typeof formatter === 'function') return formatter(value);
             if (typeof formatter === 'string') return formatNumber(value) + formatter;
             return formatNumber(value);
         }
 
-        _color(index) {
-            if (this.opts.colors) return this.opts.colors[index % this.opts.colors.length];
+        _getColor(index) {
+            if (this._options.colors) return this._options.colors[index % this._options.colors.length];
             return getChartColor(index);
         }
 
         // ── Public API ─────────────────────────────────────────────
 
         update(newOpts) {
-            this.opts = this._resolveOpts(mergeDeep(this.opts, newOpts));
+            this._options = this._resolveOptions(mergeDeep(this._options, newOpts));
             this.render();
         }
 
@@ -196,13 +196,13 @@
             this.abortController.abort();
             if (this.renderAbortController) { this.renderAbortController.abort(); this.renderAbortController = null; }
             if (this._offResize) { this._offResize(); this._offResize = null; }
-            this.el.innerHTML = '';
-            if (this._heldMin != null) this.el.style.minHeight = this._heldMin;
+            this._element.innerHTML = '';
+            if (this._heldMin != null) this._element.style.minHeight = this._heldMin;
             // Drop the init sentinel with the instance: leaving it on makes teardown
             // one-way — the init sweep skips a stamped element, so a view that unmounts
             // and mounts again gets an emptied chart no instance will ever claim.
-            this.el.removeAttribute('data-nds-chart-initialized');
-            delete this.el.ndsChart;
+            this._element.removeAttribute('data-nds-chart-initialized');
+            delete this._element.ndsChart;
         }
 
         // ── Event delegation ──────────────────────────────────────
@@ -210,7 +210,7 @@
         _setupDelegation() {
             const signal = this.abortController.signal;
 
-            this.el.addEventListener('mouseover', (e) => {
+            this._element.addEventListener('mouseover', (e) => {
                 const data = tipData.get(e.target);
                 if (!data) return;
                 this._clearHover();
@@ -220,11 +220,11 @@
                 if (data.activeClass) el.classList.add(data.activeClass);
             }, { signal });
 
-            this.el.addEventListener('mousemove', (e) => {
+            this._element.addEventListener('mousemove', (e) => {
                 if (this._activeHover) this._moveTooltip(e);
             }, { signal });
 
-            this.el.addEventListener('mouseout', (e) => {
+            this._element.addEventListener('mouseout', (e) => {
                 if (!this._activeHover) return;
                 if (e.relatedTarget && tipData.has(e.relatedTarget)) return;
                 this._clearHover();
@@ -239,7 +239,7 @@
             this._activeHover = null;
         }
 
-        _bindTip(el, html, activeEl, activeClass) {
+        _addTipListeners(el, html, activeEl, activeClass) {
             tipData.set(el, { html, activeEl, activeClass });
         }
 
@@ -250,8 +250,8 @@
         // new width (a metric chart flashed when its container query flipped).
         _setupResize() {
             const renderLater = NDS.rafThrottle(() => this.render());
-            this._offResize = NDS.onElementResize(this.el, () => {
-                const width = this.el.clientWidth;
+            this._offResize = NDS.onElementResize(this._element, () => {
+                const width = this._element.clientWidth;
                 if (!width || width === this._lastW) return;
                 const first = !this._lastW;
                 this._lastW = width;
@@ -262,19 +262,19 @@
 
         // ── Layout helpers ────────────────────────────────────────
 
-        _normSeries(series) {
+        _normalizeSeries(series) {
             return series.map((entry, i) => ({
                 name: entry.name || `Series ${i + 1}`,
                 data: Array.isArray(entry.data) ? entry.data : [entry],
             }));
         }
 
-        _layout(wrap, height, extraPadBottom = 0, startReach = 0) {
-            const isRtl = this._isRTL;
-            const totalWidth = wrap.clientWidth || this.el.clientWidth || 600;
+        _computeLayout(wrap, height, extraPadBottom = 0, startReach = 0) {
+            const isRtl = this._isRtl;
+            const totalWidth = wrap.clientWidth || this._element.clientWidth || 600;
             const totalHeight = height || 350;
-            const hasY = this.opts.yaxis?.show !== false;
-            const pad = this.opts.padding || {};
+            const hasY = this._options.yaxis?.show !== false;
+            const pad = this._options.padding || {};
             const axisPad = hasY ? 55 : 20;
             const padTop = pad.top ?? 20;
             const padBottom = (pad.bottom ?? 40) + extraPadBottom;
@@ -294,8 +294,8 @@
         // Decide whether x-axis labels should be decimated and/or rotated.
         // Returns { step, rotate, extraPad, startReach }. Char width is estimated, not measured —
         // an explicit labelRotate/labelDecimate overrides the auto decision.
-        _xaxisStrategy(catLabels, plotW) {
-            const xaxis = this.opts.xaxis || {};
+        _getXAxisStrategy(catLabels, plotW) {
+            const xaxis = this._options.xaxis || {};
             // Hidden labels take no room: a tilt reserved for them shrank a sparkline's plot.
             if (!xaxis.show) return { step: 1, rotate: 0, extraPad: 0, startReach: 0 };
             const isMobile = window.matchMedia(NDS.breakpoints['tablet-max']).matches;
@@ -335,53 +335,53 @@
             // How far the tilted first label reaches sideways past the plot's edge; one font size spare,
             // since the width is a guess. A bar's label sits half a slot in from the edge.
             const rad = rotate * Math.PI / 180;
-            const inset = this.opts.type === 'bar' ? plotW / Math.max(1, catLabels.length) / 2 : 0;
+            const inset = this._options.type === 'bar' ? plotW / Math.max(1, catLabels.length) / 2 : 0;
             const startReach = rotate ? Math.ceil(String(catLabels[0] ?? '').length * charW * Math.cos(rad) + fontSize - inset) : 0;
 
             return { step, rotate, extraPad, startReach };
         }
 
-        _valToY(value, scale, layout) {
+        _getValueY(value, scale, layout) {
             return layout.padTop + layout.plotH - ((value - scale.min) / (scale.max - scale.min)) * layout.plotH;
         }
 
-        _createSvg(layout, ariaLabel) {
+        _buildSvg(layout, ariaLabel) {
             return buildSvgElement('svg', {
                 width: layout.w, height: layout.h,
                 class: 'nds-chart-svg',
                 role: 'img',
                 // The chart element's own aria-label names what it shows; the type is the fallback.
-                'aria-label': this.el.getAttribute('aria-label') || ariaLabel,
+                'aria-label': this._element.getAttribute('aria-label') || ariaLabel,
             });
         }
 
         // ── Shared axis chart setup (bar + line) ──────────────────
 
-        _axisChart(wrap, ariaLabel, computeScale) {
-            const { series, labels, height } = this.opts;
+        _renderAxisChart(wrap, ariaLabel, computeScale) {
+            const { series, labels, height } = this._options;
             if (!series?.length) return null;
 
-            const seriesList = this._normSeries(series);
+            const seriesList = this._normalizeSeries(series);
             const catCount = Math.max(...seriesList.map(entry => entry.data.length));
             const catLabels = labels || Array.from({ length: catCount }, (_, i) => `${i + 1}`);
 
             // Two-step layout: provisional plotW → x-axis strategy → final layout with extraPad
-            const provisional = this._layout(wrap, height);
-            const xStrategy = this._xaxisStrategy(catLabels, provisional.plotW);
-            const layout = this._layout(wrap, height, xStrategy.extraPad, xStrategy.startReach);
+            const provisional = this._computeLayout(wrap, height);
+            const xStrategy = this._getXAxisStrategy(catLabels, provisional.plotW);
+            const layout = this._computeLayout(wrap, height, xStrategy.extraPad, xStrategy.startReach);
 
             const scale = computeScale(seriesList, catCount);
-            const svg = this._createSvg(layout, ariaLabel);
+            const svg = this._buildSvg(layout, ariaLabel);
 
-            if (this.opts.grid?.show) this._renderGrid(svg, scale, layout);
-            if (this.opts.yaxis?.show) this._renderYAxis(svg, scale, layout);
+            if (this._options.grid?.show) this._renderGrid(svg, scale, layout);
+            if (this._options.yaxis?.show) this._renderYAxis(svg, scale, layout);
 
             return { seriesArr: seriesList, catCount, catLabels, L: layout, scale, svg, xStrategy };
         }
 
         _renderGrid(svg, scale, layout) {
             scale.steps.forEach(value => {
-                const y = this._valToY(value, scale, layout);
+                const y = this._getValueY(value, scale, layout);
                 svg.appendChild(buildSvgElement('line', {
                     x1: layout.padLeft, y1: y,
                     x2: layout.padLeft + layout.plotW, y2: y,
@@ -394,11 +394,11 @@
             scale.steps.forEach(value => {
                 const textElement = buildSvgElement('text', {
                     x: layout.isRTL ? layout.w - 8 - layout.extraStart : layout.padLeft - 8,
-                    y: this._valToY(value, scale, layout) + 4,
+                    y: this._getValueY(value, scale, layout) + 4,
                     class: 'nds-chart-axis-label',
                     'text-anchor': layout.isRTL ? 'start' : 'end',
                 });
-                textElement.textContent = this._fmtVal(value);
+                textElement.textContent = this._formatValue(value);
                 svg.appendChild(textElement);
             });
         }
@@ -435,7 +435,7 @@
         render() {
             // A deferred or throttled frame can land after destroy(); it must not draw into the emptied element.
             if (this._destroyed) return;
-            if (!this.el.clientWidth) {
+            if (!this._element.clientWidth) {
                 this._deferCount = (this._deferCount || 0) + 1;
                 if (this._deferCount < 10) {
                     requestAnimationFrame(() => this.render());
@@ -449,27 +449,27 @@
             // instead of accumulating on the instance-lifetime this.abortController until destroy.
             if (this.renderAbortController) this.renderAbortController.abort();
             this.renderAbortController = new AbortController();
-            this.el.innerHTML = '';
-            if (this._heldMin != null) { this.el.style.minHeight = this._heldMin; this._heldMin = null; }
-            this.el.classList.add('nds-chart');
-            this.el.setAttribute('data-chart-type', this.opts.type);
+            this._element.innerHTML = '';
+            if (this._heldMin != null) { this._element.style.minHeight = this._heldMin; this._heldMin = null; }
+            this._element.classList.add('nds-chart');
+            this._element.setAttribute('data-chart-type', this._options.type);
 
-            const { type } = this.opts;
+            const { type } = this._options;
             // Direction resolution:
             //   1. opts.direction              — explicit config override ('ltr' | 'rtl')
             //   2. computed CSS direction      — covers both `dir="…"` attribute on any
             //      ancestor AND CSS `direction: …` set on a wrapper (e.g. metric chart)
             // Computed direction always returns 'ltr' or 'rtl' (HTML default is ltr),
             // so no explicit page fallback is needed.
-            if (this.opts.direction) {
-                this._isRTL = this.opts.direction === 'rtl';
+            if (this._options.direction) {
+                this._isRtl = this._options.direction === 'rtl';
             } else {
-                this._isRTL = getComputedStyle(this.el).direction === 'rtl';
+                this._isRtl = getComputedStyle(this._element).direction === 'rtl';
             }
 
             const hasAxes = type === 'bar' || type === 'line';
-            const yTitle = this.opts.yaxis?.title;
-            const xTitle = this.opts.xaxis?.title;
+            const yTitle = this._options.yaxis?.title;
+            const xTitle = this._options.xaxis?.title;
 
             const body = buildHtmlElement('div', 'nds-chart-body');
             if (hasAxes && yTitle) {
@@ -479,7 +479,7 @@
             const canvasWrap = buildHtmlElement('div', 'nds-chart-canvas-wrap');
             const canvas = buildHtmlElement('div', 'nds-chart-canvas');
 
-            if (this.opts.legend?.show && this.opts.legend.position === 'top') {
+            if (this._options.legend?.show && this._options.legend.position === 'top') {
                 canvasWrap.appendChild(this._buildLegend());
             }
 
@@ -489,26 +489,26 @@
                 canvasWrap.appendChild(buildHtmlElement('div', 'nds-chart-axis-title nds-chart-axis-title--x', xTitle));
             }
 
-            if (this.opts.legend?.show && this.opts.legend.position === 'bottom') {
+            if (this._options.legend?.show && this._options.legend.position === 'bottom') {
                 canvasWrap.appendChild(this._buildLegend());
             }
 
             body.appendChild(canvasWrap);
-            this.el.appendChild(body);
+            this._element.appendChild(body);
 
             if (type === 'pie' || type === 'donut') this._renderPie(canvas);
             else if (type === 'bar') this._renderBar(canvas);
             else if (type === 'line') this._renderLine(canvas);
 
             this._tooltip = buildHtmlElement('div', 'nds-chart-tooltip');
-            this.el.appendChild(this._tooltip);
-            this._lastW = this.el.clientWidth;
+            this._element.appendChild(this._tooltip);
+            this._lastW = this._element.clientWidth;
         }
 
         // ── Pie / Donut ──────────────────────────────────────────
 
         _renderPie(wrap) {
-            const { series, labels, height, stroke, startAngle } = this.opts;
+            const { series, labels, height, stroke, startAngle } = this._options;
             const data = Array.isArray(series) ? series : [];
             const total = data.reduce((sum, value) => sum + (typeof value === 'number' ? value : 0), 0);
             if (!total) return;
@@ -516,14 +516,14 @@
             const size = height || 300;
             const cx = size / 2, cy = size / 2;
             const outerR = size / 2 - 10;
-            const isDonut = this.opts.type === 'donut';
-            const innerR = isDonut ? outerR * (this.opts.donut?.size || 0.5) : 0;
+            const isDonut = this._options.type === 'donut';
+            const innerR = isDonut ? outerR * (this._options.donut?.size || 0.5) : 0;
 
             const svg = buildSvgElement('svg', {
                 viewBox: `0 0 ${size} ${size}`,
                 class: 'nds-chart-svg',
                 role: 'img',
-                'aria-label': this.el.getAttribute('aria-label') || strings.text('chart'),
+                'aria-label': this._element.getAttribute('aria-label') || strings.text('chart'),
                 style: `max-height:${size}px`,
             });
 
@@ -535,8 +535,8 @@
                 const end = current + angle;
 
                 const slice = buildSvgElement('path', {
-                    d: this._arcPath(cx, cy, outerR, innerR, current, end),
-                    fill: this._color(i),
+                    d: this._buildArcPath(cx, cy, outerR, innerR, current, end),
+                    fill: this._getColor(i),
                     class: 'nds-chart-slice',
                 });
 
@@ -547,12 +547,12 @@
 
                 const label = labels?.[i] || `Item ${i + 1}`;
                 const percent = ((value / total) * 100).toFixed(1) + '%';
-                this._bindTip(slice,
+                this._addTipListeners(slice,
                     `<strong>${NDS.escapeHtml(label)}</strong><br>${NDS.escapeHtml(formatNumber(value))} (${NDS.escapeHtml(percent)})`,
                     null, 'nds-chart-slice--active');
                 svg.appendChild(slice);
 
-                if (this.opts.dataLabels?.show && angle > 20) {
+                if (this._options.dataLabels?.show && angle > 20) {
                     const labelR = isDonut ? (outerR + innerR) / 2 : outerR * 0.65;
                     const position = toCartesian(cx, cy, labelR, current + angle / 2);
                     const textElement = buildSvgElement('text', {
@@ -572,7 +572,7 @@
             wrap.appendChild(svg);
         }
 
-        _arcPath(cx, cy, outerR, innerR, startAngle, endAngle) {
+        _buildArcPath(cx, cy, outerR, innerR, startAngle, endAngle) {
             const sweep = Math.min(endAngle - startAngle, 359.999);
             const end = startAngle + sweep;
             const outerStart = toCartesian(cx, cy, outerR, startAngle);
@@ -602,10 +602,10 @@
         // ── Bar Chart ────────────────────────────────────────────
 
         _renderBar(wrap) {
-            const { bar, dataLabels } = this.opts;
+            const { bar, dataLabels } = this._options;
             const stacked = bar?.stacked || false;
 
-            const context = this._axisChart(wrap, strings.text('bar'), (seriesEntries, catCount) => {
+            const context = this._renderAxisChart(wrap, strings.text('bar'), (seriesEntries, catCount) => {
                 let maxValue = 0;
                 if (stacked) {
                     for (let category = 0; category < catCount; category++) {
@@ -650,12 +650,12 @@
 
                     const cornerRadius = stacked ? (si === topIndex ? radius : 0) : radius;
                     const rectWidth = stacked ? usableW : barW;
-                    const rect = this._roundedRect(x, y, rectWidth, barH, cornerRadius);
-                    rect.setAttribute('fill', this._color(si));
+                    const rect = this._buildRoundedRect(x, y, rectWidth, barH, cornerRadius);
+                    rect.setAttribute('fill', this._getColor(si));
                     rect.setAttribute('class', 'nds-chart-bar');
 
-                    this._bindTip(rect,
-                        `<strong>${NDS.escapeHtml(entry.name)}</strong><br>${NDS.escapeHtml(catLabels[category])}: ${NDS.escapeHtml(this._fmtVal(value))}`,
+                    this._addTipListeners(rect,
+                        `<strong>${NDS.escapeHtml(entry.name)}</strong><br>${NDS.escapeHtml(catLabels[category])}: ${NDS.escapeHtml(this._formatValue(value))}`,
                         null, 'nds-chart-bar--active');
                     svg.appendChild(rect);
 
@@ -665,7 +665,7 @@
                             class: 'nds-chart-data-label',
                             'text-anchor': 'middle',
                         });
-                        labelElement.textContent = this._fmtVal(stacked ? stackTotal : value);
+                        labelElement.textContent = this._formatValue(stacked ? stackTotal : value);
                         svg.appendChild(labelElement);
                     }
 
@@ -673,7 +673,7 @@
                 });
             }
 
-            if (this.opts.xaxis?.show) {
+            if (this._options.xaxis?.show) {
                 const xPositions = catLabels.map((_, category) => {
                     const ci = layout.isRTL ? catCount - 1 - category : category;
                     return layout.padLeft + ci * groupW + groupW / 2;
@@ -684,7 +684,7 @@
             wrap.appendChild(svg);
         }
 
-        _roundedRect(x, y, width, height, radius) {
+        _buildRoundedRect(x, y, width, height, radius) {
             if (height <= 0) return buildSvgElement('path', { d: '' });
             radius = Math.min(radius, height / 2, width / 2);
             return buildSvgElement('path', { d: [
@@ -702,14 +702,14 @@
         // ── Line Chart ───────────────────────────────────────────
 
         _renderLine(wrap) {
-            const { line } = this.opts;
+            const { line } = this._options;
             const smooth = line?.smooth !== false;
             const showDots = line?.dots !== false;
             const dotR = line?.dotRadius || 4;
             const lineW = line?.width || 2;
             const showArea = line?.area || false;
 
-            const context = this._axisChart(wrap, strings.text('line'), (seriesEntries) => {
+            const context = this._renderAxisChart(wrap, strings.text('line'), (seriesEntries) => {
                 let maxValue = 0, minValue = 0;
                 seriesEntries.forEach(entry => entry.data.forEach(value => {
                     if (value > maxValue) maxValue = value;
@@ -731,9 +731,9 @@
 
             const computed = seriesList.map((entry, si) => {
                 const pts = entry.data.map((value, index) => ({
-                    x: xPositions[index], y: this._valToY(value, scale, layout), val: value, idx: index,
+                    x: xPositions[index], y: this._getValueY(value, scale, layout), val: value, idx: index,
                 }));
-                return { s: entry, pts, pathD: this._buildPath(pts, smooth), color: this._color(si) };
+                return { s: entry, pts, pathD: this._buildPath(pts, smooth), color: this._getColor(si) };
             });
 
             // Layer 1: Areas (gradient mask fades from peaks to baseline)
@@ -808,7 +808,7 @@
             // showDots is false). Single rendering path covers both visible and sparkline modes.
             const enableCrosshair = line?.crosshair !== false;
             const dotsByIndex = catLabels.map(() => []);
-            this.el.classList.toggle('nds-chart--show-dots', showDots);
+            this._element.classList.toggle('nds-chart--show-dots', showDots);
 
             computed.forEach(({ s: entry, pts, color }) => {
                 pts.forEach(point => {
@@ -827,8 +827,8 @@
                             cx: point.x, cy: point.y, r: dotR * 3,
                             fill: 'transparent', class: 'nds-chart-dot-hit',
                         });
-                        this._bindTip(hitArea,
-                            `<strong>${NDS.escapeHtml(entry.name)}</strong><br>${NDS.escapeHtml(catLabels[point.idx])}: ${NDS.escapeHtml(this._fmtVal(point.val))}`,
+                        this._addTipListeners(hitArea,
+                            `<strong>${NDS.escapeHtml(entry.name)}</strong><br>${NDS.escapeHtml(catLabels[point.idx])}: ${NDS.escapeHtml(this._formatValue(point.val))}`,
                             dot, 'nds-chart-dot--active');
                         svg.appendChild(hitArea);
                     }
@@ -875,7 +875,7 @@
                 // behavior since that is not the same problem.
                 const setTipPosition = (e, crosshairX) => {
                     if (!this._tooltip) return;
-                    const rect = this.el.getBoundingClientRect();
+                    const rect = this._element.getBoundingClientRect();
                     const tw = this._tooltip.offsetWidth;
                     if (e.pointerType && e.pointerType !== 'mouse') {
                         const gap = 8;
@@ -917,7 +917,7 @@
                         marker.className = 'nds-chart-tip-marker';
                         marker.style.backgroundColor = colors[si];
                         this._tooltip.appendChild(marker);
-                        this._tooltip.appendChild(document.createTextNode(entry.name + ': ' + this._fmtVal(value)));
+                        this._tooltip.appendChild(document.createTextNode(entry.name + ': ' + this._formatValue(value)));
                     }
                     this._tooltip.classList.add('nds-chart-tooltip--visible');
                 };
@@ -945,7 +945,7 @@
                         dotsByIndex[i].forEach(dot => dot.classList[action]('nds-chart-dot--active'));
                     }
 
-                    if (this.opts.tooltip?.show !== false && this._tooltip) {
+                    if (this._options.tooltip?.show !== false && this._tooltip) {
                         fillTip(nearest);
                         setTipPosition(e, xPositions[nearest]);
                     }
@@ -983,7 +983,7 @@
                 }, { signal });
             }
 
-            if (this.opts.xaxis?.show) {
+            if (this._options.xaxis?.show) {
                 this._renderXLabels(svg, catLabels, xPositions, layout, xStrategy, true);
             }
 
@@ -1014,7 +1014,7 @@
         // ── Legend ────────────────────────────────────────────────
 
         _buildLegend() {
-            const { series, labels, type } = this.opts;
+            const { series, labels, type } = this._options;
             const legend = buildHtmlElement('div', 'nds-chart-legend');
             const isPie = type === 'pie' || type === 'donut';
             const items = isPie
@@ -1024,7 +1024,7 @@
             items.forEach((name, i) => {
                 const item = buildHtmlElement('div', 'nds-chart-legend-item');
                 const marker = buildHtmlElement('span', 'nds-chart-legend-marker');
-                marker.style.backgroundColor = this._color(i);
+                marker.style.backgroundColor = this._getColor(i);
                 item.appendChild(marker);
                 item.appendChild(buildHtmlElement('span', 'nds-chart-legend-label', name));
                 legend.appendChild(item);
@@ -1036,7 +1036,7 @@
         // ── Tooltip ──────────────────────────────────────────────
 
         _showTooltip(e, html) {
-            if (!this.opts.tooltip?.show || !this._tooltip) return;
+            if (!this._options.tooltip?.show || !this._tooltip) return;
             this._tooltip.innerHTML = html;
             this._tooltip.classList.add('nds-chart-tooltip--visible');
             this._moveTooltip(e);
@@ -1044,7 +1044,7 @@
 
         _moveTooltip(e) {
             if (!this._tooltip) return;
-            const rect = this.el.getBoundingClientRect();
+            const rect = this._element.getBoundingClientRect();
             let x = e.clientX - rect.left + 12;
             let y = e.clientY - rect.top - 10;
             const tw = this._tooltip.offsetWidth;

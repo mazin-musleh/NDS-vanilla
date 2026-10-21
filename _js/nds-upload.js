@@ -26,6 +26,7 @@
  *                                                checks without staging anything
  *   instance.getConfig()                         the resolved, frozen config
  *   instance.enable() / .disable() / .refreshUI() / .destroy()
+ *   instance.container                           the .nds-upload root, read-only
  * Events (bubble from the .nds-upload container):
  *   nds:upload:ready             detail {instance}
  *   nds:upload:select            detail {files, allFiles, fileData} — files that passed checks
@@ -149,7 +150,7 @@
             this._dropZone = container.querySelector('.nds-form-control');
             this._fileList = container.querySelector('.nds-file-list');
             this._uploadZone = container.querySelector('.nds-upload-zone');
-            this._browseBtn = container.querySelector('.nds-browse-btn');
+            this._browseButton = container.querySelector('.nds-browse-btn');
 
             if (!this._fileInput || !this._dropZone || !this._fileList) return;
 
@@ -163,7 +164,7 @@
             // A native reset never touches the list: clear it with the form.
             container.closest('form')?.addEventListener('reset', () => this.clearAllFiles(), { signal });
             const openPicker = this._openPicker.bind(this);
-            if (this._browseBtn) this._browseBtn.addEventListener('click', openPicker, { signal });
+            if (this._browseButton) this._browseButton.addEventListener('click', openPicker, { signal });
 
             // Drag and drop: wired once, gated per event, so dropbox/disabled can flip at any time.
             this._dropZone.addEventListener('dragover', this._handleDragOver.bind(this), { signal });
@@ -263,7 +264,7 @@
             }
 
             // Opt-in: run the same size/type/MIME checks dragged/selected files get.
-            const fileData = this._entry(file, options.validate ? this._validateFile(file, config) : [], options);
+            const fileData = this._buildEntry(file, options.validate ? this._validateFile(file, config) : [], options);
             this._setFiles(isSingle ? [fileData] : this._files.concat(fileData));
             return fileData.id;
         }
@@ -292,7 +293,7 @@
         }
 
         // One shape for every staged file. A file the checks failed is _rejected and never uploads.
-        _entry(file, errors, extra = {}) {
+        _buildEntry(file, errors, extra = {}) {
             return {
                 file: file,
                 id: NDS.uniqueId('file-'),
@@ -311,7 +312,7 @@
             const dropped = this._files.filter(entry => !files.includes(entry));
             dropped.forEach(entry => { if (entry._xhr) entry._xhr.abort(); });
             this._files = files;
-            this._updateFileList();
+            this._syncFileList();
             dropped.forEach(entry => this._dispatchEvent('nds:upload:removed', { fileData: this._toPublic(entry), fileId: entry.id }));
         }
 
@@ -341,7 +342,7 @@
             fileData.error = null;
             fileData.response = null;
             fileData._xhr = null;
-            this._updateFileItem(fileId);
+            this._syncFileItem(fileId);
             this._uploadFile(fileData);
             return true;
         }
@@ -353,7 +354,7 @@
             fileData._xhr = null;
             fileData.status = 'error';
             fileData.error = strings.text('cancelled');
-            this._updateFileItem(fileId);
+            this._syncFileItem(fileId);
             return true;
         }
 
@@ -367,7 +368,7 @@
             file.status = status;
             if (options.progress !== undefined) file.progress = options.progress;
             if (options.error) file.error = options.error;
-            this._updateFileItem(fileId);
+            this._syncFileItem(fileId);
             return true;
         }
 
@@ -389,7 +390,7 @@
                 this._setProgress(fileItem, progress);
                 // Full update only on status transition to processing
                 if (progress >= 100) {
-                    this._updateFileItem(fileId);
+                    this._syncFileItem(fileId);
                 }
             }
             return true;
@@ -409,7 +410,7 @@
         }
 
         refreshUI() {
-            this._updateFileList();
+            this._syncFileList();
         }
 
         // Tooltips first: one open on a row holds document listeners its removal would strand.
@@ -484,7 +485,7 @@
 
             filesToProcess.forEach(file => {
                 const errors = this._validateFile(file, config);
-                const fileData = this._entry(file, errors);
+                const fileData = this._buildEntry(file, errors);
                 if (errors.length === 0) {
                     validFiles.push(fileData);
                 } else {
@@ -494,7 +495,7 @@
 
             // Collect all rejected files (validation errors + excess)
             const rejectedFiles = validationErrors.map(e => e.fileData)
-                .concat(excessFiles.map(file => this._entry(file, [strings.text('max_files', { n: config.maxFiles })])));
+                .concat(excessFiles.map(file => this._buildEntry(file, [strings.text('max_files', { n: config.maxFiles })])));
 
             if (excessFiles.length > 0) {
                 this._dispatchEvent('nds:upload:max-files', {
@@ -562,7 +563,7 @@
             // Update status
             fileData.status = 'uploading';
             fileData._xhr = xhr;
-            this._updateFileItem(fileData.id);
+            this._syncFileItem(fileData.id);
 
             xhr.upload.addEventListener('progress', (e) => {
                 if (e.lengthComputable) {
@@ -572,7 +573,7 @@
                     // Every byte sent: the server works on it now.
                     if (progress >= 100 && fileData.status === 'uploading') {
                         fileData.status = 'processing';
-                        this._updateFileItem(fileData.id);
+                        this._syncFileItem(fileData.id);
                     }
                     const fileItem = this._fileList.querySelector(`[data-file-id="${fileData.id}"]`);
                     if (fileItem) this._setProgress(fileItem, progress);
@@ -607,7 +608,7 @@
                         response: xhr.response
                     });
                 }
-                this._updateFileItem(fileData.id);
+                this._syncFileItem(fileData.id);
             });
 
             // No HTTP answer: a network failure, or the opt-in time limit ran out.
@@ -619,7 +620,7 @@
                     fileData: this._toPublic(fileData),
                     error: fileData.error
                 });
-                this._updateFileItem(fileData.id);
+                this._syncFileItem(fileData.id);
             };
             xhr.addEventListener('error', () => fail('network_error'));
             xhr.addEventListener('timeout', () => fail('timed_out'));
@@ -632,9 +633,9 @@
         // INTERNAL: DOM / UI
         // ==============================================
 
-        _updateFileList() {
+        _syncFileList() {
             this._clearList();
-            this._files.forEach(fileData => this._fileList.appendChild(this._createFileItem(fileData)));
+            this._files.forEach(fileData => this._fileList.appendChild(this._buildFileItem(fileData)));
         }
 
         // Returns the .nds-file-item node to clone for a row. A consumer-supplied
@@ -651,7 +652,7 @@
             return this._fallbackTemplate.content.querySelector('.nds-file-item');
         }
 
-        _createFileItem(fileData) {
+        _buildFileItem(fileData) {
             const source = this._getFileItemSource();
             if (!source) return document.createElement('div');
 
@@ -691,7 +692,7 @@
             if (errorMessage && fileData.error) errorMessage.textContent = fileData.error;
 
             // Apply state and status via data attributes (CSS handles visibility)
-            this._applyFileItemState(fileItem, fileData);
+            this._syncFileItemState(fileItem, fileData);
 
             // Set progress if applicable
             if ((fileData.status === 'uploading' || fileData.status === 'processing') && fileData.progress > 0) {
@@ -701,12 +702,12 @@
             return fileItem;
         }
 
-        _updateFileItem(fileId) {
+        _syncFileItem(fileId) {
             const fileData = this._files.find(entry => entry.id === fileId);
             const fileItem = this._fileList.querySelector(`[data-file-id="${fileId}"]`);
             if (!fileData || !fileItem) {
                 // If no element exists yet, do a full list rebuild
-                if (fileData) this._updateFileList();
+                if (fileData) this._syncFileList();
                 return;
             }
 
@@ -715,7 +716,7 @@
             if (errorMessage) errorMessage.textContent = fileData.error || '';
 
             // Update state/status attributes
-            this._applyFileItemState(fileItem, fileData);
+            this._syncFileItemState(fileItem, fileData);
 
             // Update progress
             if (fileData.status === 'uploading' || fileData.status === 'processing') {
@@ -723,7 +724,7 @@
             }
         }
 
-        _applyFileItemState(fileItem, fileData) {
+        _syncFileItemState(fileItem, fileData) {
             const status = fileData.status;
 
             // Clear all transient states

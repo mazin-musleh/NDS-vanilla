@@ -1,7 +1,7 @@
 // What does a server-driven (AJAX form-mode) filter actually send, and which
 // public API calls cause it to re-fetch?
 //
-// _buildAjaxRequest builds its query from `new FormData(this.submissionForm)` —
+// _buildAjaxRequest builds its query from `new FormData(this._submissionForm)` —
 // so the request carries exactly the form-associated NAMED inputs, and nothing
 // from `this.criteria`. Any control the component renders without a `name` is
 // therefore invisible to the server while still showing a chip, a badge and a
@@ -42,7 +42,7 @@ const report = await page.evaluate(async () => {
     const realRequest = NDS.request;
     NDS.request = (url, options) => {
         sent.push({ url, method: options?.method || 'GET' });
-        // The id MUST match data-filter-target: _applyAjaxResponse throws when the
+        // The id MUST match data-filter-target: _renderAjaxResponse throws when the
         // response carries no #<targetId>, and the throw routes to _rollbackApplied,
         // which silently restores the pre-submit criteria — every later reading
         // would then describe a rolled-back filter, not a working one.
@@ -297,7 +297,7 @@ const report = await page.evaluate(async () => {
     // applyFilters there, and setFilterValues must still hide rows and fire no
     // request. Without this the change could silently turn ordinary filtering
     // into a no-op and the AJAX assertions above would never notice.
-    // A new instance reads the live URL in applyUrlParams(), so it would inherit
+    // A new instance reads the live URL in _readUrlParams(), so it would inherit
     // the search and filters the AJAX probes above left there — hiding every row
     // for a keyword this fixture never set. Reset before mounting.
     history.replaceState({}, '', location.pathname);

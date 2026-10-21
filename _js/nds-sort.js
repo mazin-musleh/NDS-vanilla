@@ -13,6 +13,7 @@
  *   instance.reset()                    back to the authored order
  *   instance.refresh()                  re-run the active sort over the items as they stand
  *   instance.getState()                 {key, order}
+ *   instance.root / .opts               read-only: the sorted list, the resolved options
  *   instance.destroy()
  * Events (bubble from the root):
  *   nds:sort:change   detail {key, order, orderedItems, sort}
@@ -174,7 +175,7 @@
             }, options || {});
 
             this.abortController = new AbortController();
-            this.state = { key: null, order: null };
+            this._state = { key: null, order: null };
             this._originalOrder = null;
 
             this.init();
@@ -182,10 +183,10 @@
 
         init() {
             this._originalOrder = [...this._resolveItems()];
-            this._bindTriggers();
+            this._addTriggerListeners();
 
             // A sort in the URL wins over the markup's: a shared link opens as it was shared.
-            const urlKey = this.opts.urlSync && this._urlKey();
+            const urlKey = this.opts.urlSync && this._getUrlKey();
             if (urlKey) {
                 this.apply(urlKey, new URLSearchParams(window.location.search).get(this.opts.urlSync.orderParam));
                 return;
@@ -194,7 +195,7 @@
             // Seed state without reordering — used when HTML arrives pre-sorted
             const seed = this.opts.initialState || this._readSeed();
             if (seed && seed.key != null) {
-                this.state = { key: seed.key, order: String(seed.order).toLowerCase() === 'desc' ? 'desc' : 'asc' };
+                this._state = { key: seed.key, order: String(seed.order).toLowerCase() === 'desc' ? 'desc' : 'asc' };
             }
 
             this._render();
@@ -202,13 +203,13 @@
 
         // The state host carries sorted-asc / sorted-desc: the header cell in
         // a11y 'sort' (it carries aria-sort too), else the trigger itself.
-        _stateHost(trigger) {
+        _getStateHost(trigger) {
             return (this.opts.a11y === 'sort' && this.opts.a11yTarget?.(trigger)) || trigger;
         }
 
         _readSeed() {
             for (const trigger of this._resolveTriggers()) {
-                const host = this._stateHost(trigger);
+                const host = this._getStateHost(trigger);
                 const order = NDS.state.has(host, 'sorted-asc') ? 'asc'
                           : NDS.state.has(host, 'sorted-desc') ? 'desc' : null;
                 if (order) return { key: this.opts.keyFrom(trigger), order };
@@ -259,33 +260,33 @@
             return this._resolveLike(this.opts.triggers);
         }
 
-        _bindTriggers() {
+        _addTriggerListeners() {
             const triggers = this._resolveTriggers();
             const { signal } = this.abortController;
             triggers.forEach(trigger => {
                 trigger.addEventListener('click', (e) => {
                     e.preventDefault();
-                    this._onTrigger(trigger);
+                    this._handleTrigger(trigger);
                 }, { signal });
                 trigger.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        this._onTrigger(trigger);
+                        this._handleTrigger(trigger);
                     }
                 }, { signal });
             });
         }
 
-        _onTrigger(trigger) {
+        _handleTrigger(trigger) {
             const key = this.opts.keyFrom(trigger);
 
             if (this.opts.mode === 'cycle') {
                 if (!isKeySet(key)) { this.apply(null, null); return; }
                 let nextOrder;
-                if (this.state.key === key) {
+                if (this._state.key === key) {
                     // asc → desc → reset
-                    nextOrder = this.state.order === 'asc' ? 'desc'
-                            : this.state.order === 'desc' ? null
+                    nextOrder = this._state.order === 'asc' ? 'desc'
+                            : this._state.order === 'desc' ? null
                             : 'asc';
                 } else {
                     nextOrder = 'asc';
@@ -307,7 +308,7 @@
             const hasKey = isKeySet(key);
 
             // Anything but desc is asc: a hand-edited URL or a caller's typo never becomes the state.
-            this.state = {
+            this._state = {
                 key: hasKey ? key : null,
                 order: hasKey ? (String(order).toLowerCase() === 'desc' ? 'desc' : 'asc') : null
             };
@@ -330,7 +331,7 @@
                 const calendar = NDS.Date.calendarFor(this.root);
                 const type = (this.opts.types && this.opts.types[key]) || detectType(sample, dateFormat, calendar);
                 ordered = [...items].sort((left, right) =>
-                    compare(accessor(left, key), accessor(right, key), type, this.state.order, dateFormat, calendar)
+                    compare(accessor(left, key), accessor(right, key), type, this._state.order, dateFormat, calendar)
                 );
             } else {
                 // Drop snapshot entries the container no longer holds. appendChild
@@ -347,11 +348,11 @@
 
             if (this.opts.urlSync) this._writeUrl();
             if (typeof this.opts.onChange === 'function') {
-                this.opts.onChange({ key: this.state.key, order: this.state.order, orderedItems: ordered, state: this.getState() });
+                this.opts.onChange({ key: this._state.key, order: this._state.order, orderedItems: ordered, state: this.getState() });
             }
 
             this.root.dispatchEvent(new CustomEvent('nds:sort:change', {
-                detail: { key: this.state.key, order: this.state.order, orderedItems: ordered, sort: this },
+                detail: { key: this._state.key, order: this._state.order, orderedItems: ordered, sort: this },
                 bubbles: true
             }));
         }
@@ -362,9 +363,9 @@
         // arrive after create() — an async list, an AJAX swap — miss init()'s pass
         // entirely: a URL-seeded sort settles its state with nothing to sort, and
         // nothing re-applies it on its own. No-op when no sort is active.
-        refresh() { if (isKeySet(this.state.key)) this.apply(this.state.key, this.state.order); }
+        refresh() { if (isKeySet(this._state.key)) this.apply(this._state.key, this._state.order); }
 
-        getState() { return { key: this.state.key, order: this.state.order }; }
+        getState() { return { key: this._state.key, order: this._state.order }; }
 
         // ── a11y / active render ─────────────────────────────────────────
 
@@ -372,7 +373,7 @@
             const triggers = this._resolveTriggers();
             const a11y = this.opts.a11y;
             // Cleared in a pass of its own: two triggers can share one host.
-            triggers.forEach(trigger => NDS.state.remove(this._stateHost(trigger), 'sorted-asc', 'sorted-desc'));
+            triggers.forEach(trigger => NDS.state.remove(this._getStateHost(trigger), 'sorted-asc', 'sorted-desc'));
 
             triggers.forEach(trigger => {
                 const key = this.opts.keyFrom(trigger);
@@ -380,14 +381,14 @@
 
                 let isActive;
                 if (this.opts.mode === 'cycle') {
-                    isActive = this.state.key !== null && this.state.key === key && this.state.order !== null;
+                    isActive = this._state.key !== null && this._state.key === key && this._state.order !== null;
                 } else {
-                    isActive = this.state.key !== null
-                            && key === this.state.key
-                            && (!orderAttribute || orderAttribute === this.state.order);
+                    isActive = this._state.key !== null
+                            && key === this._state.key
+                            && (!orderAttribute || orderAttribute === this._state.order);
                 }
 
-                if (isActive && this.state.order) NDS.state.add(this._stateHost(trigger), 'sorted-' + this.state.order);
+                if (isActive && this._state.order) NDS.state.add(this._getStateHost(trigger), 'sorted-' + this._state.order);
 
                 if (a11y === 'pressed') {
                     NDS.aria.pressed(trigger, isActive);
@@ -396,8 +397,8 @@
                 } else if (a11y === 'sort') {
                     const target = this.opts.a11yTarget ? this.opts.a11yTarget(trigger) : null;
                     if (target) {
-                        if (isActive && this.state.order) {
-                            NDS.aria.sort(target, this.state.order === 'asc' ? 'ascending' : 'descending');
+                        if (isActive && this._state.order) {
+                            NDS.aria.sort(target, this._state.order === 'asc' ? 'ascending' : 'descending');
                         } else {
                             NDS.aria.sort(target, 'none');
                         }
@@ -421,7 +422,7 @@
             const triggerIcon = dropmenu.querySelector('.nds-dropmenu-trigger > i, .nds-dropmenu-trigger .nds-icon, .nds-dropmenu-trigger .hgi');
             if (!triggerIcon) return;
 
-            const { key: activeKey, order: activeOrder } = this.state;
+            const { key: activeKey, order: activeOrder } = this._state;
             const isDirect = this.opts.mode === 'direct';
 
             const activeBtn = triggers.find(trigger => {
@@ -444,13 +445,13 @@
 
         // Whether one of the triggers sorts by `key`. Another use of the same param
         // (a server's own sort select, a second sort on the page) is not this sort's.
-        _ownsKey(key) {
+        _isOwnKey(key) {
             return !!key && this._resolveTriggers().some(trigger => this.opts.keyFrom(trigger) === key);
         }
 
-        _urlKey() {
+        _getUrlKey() {
             const key = new URLSearchParams(window.location.search).get(this.opts.urlSync.keyParam);
-            return this._ownsKey(key) ? key : null;
+            return this._isOwnKey(key) ? key : null;
         }
 
         // Clears only values this sort could have written, so a site's own ?order=12345 survives.
@@ -459,14 +460,14 @@
             const { keyParam, orderParam } = this.opts.urlSync;
             const ownOrder = /^(asc|desc)$/i.test(params.get(orderParam) || '');
 
-            if (this.state.key) {
-                params.set(keyParam, this.state.key);
-                if (this.state.order === 'desc') params.set(orderParam, 'desc');
+            if (this._state.key) {
+                params.set(keyParam, this._state.key);
+                if (this._state.order === 'desc') params.set(orderParam, 'desc');
                 else if (ownOrder) params.delete(orderParam);
             } else {
                 // The order goes with its key: another sort's key keeps its order=desc.
                 const key = params.get(keyParam);
-                if (!key || this._ownsKey(key)) {
+                if (!key || this._isOwnKey(key)) {
                     params.delete(keyParam);
                     if (ownOrder) params.delete(orderParam);
                 }

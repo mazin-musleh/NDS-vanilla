@@ -176,7 +176,7 @@ const report = await page.evaluate(async () => {
 
     // ── Q5 — the clean server-sort setup: no data-sort triggers anywhere ───
     // This is what a dev who owns sorting server-side actually authors. With no
-    // [data-sort], setupSort() returns early and NDS.Sort is never created, so
+    // [data-sort], _setupSort() returns early and NDS.Sort is never created, so
     // nothing client-side claims the ?sort= key. Question: does the dev's sort
     // value reach the SHAREABLE URL, or does updateUrlParams' unconditional
     // sort/order skip drop it?

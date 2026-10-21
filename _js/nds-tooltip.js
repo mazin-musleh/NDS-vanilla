@@ -5,6 +5,7 @@
  *   NDS.Tooltip.create(el)           instance one tooltip
  *   NDS.Tooltip.destroy(el)          undo create(): the markup it built and the attributes it wrote go
  *   instance.open() / .close()       show or hide the balloon
+ *   instance.balloon                 the balloon element, read-only
  *   instance.destroy()               detach and un-stamp
  * Events (bubble from the .nds-tooltip):
  *   nds:tooltip:opened   detail {tooltip, trigger, balloon, isOpen}
@@ -78,14 +79,14 @@
 
     class NdsTooltip {
         constructor(root) {
-            this.root = root;
+            this._root = root;
             if (root.hasAttribute('data-nds-tooltip-initialized')) return;
 
             // What this writes on the author's markup, taken back in reverse by destroy().
             this._undo = [];
-            this.autoMarkup();
+            this._setupMarkup();
 
-            this.trigger = root.querySelector('.nds-tooltip-trigger') || root;
+            this._trigger = root.querySelector('.nds-tooltip-trigger') || root;
             this.balloon = root.querySelector('.nds-tooltip-balloon');
 
             if (!this.balloon && !this._lazyBalloon) {
@@ -94,7 +95,7 @@
                 return;
             }
 
-            this.isOpen = false;
+            this._isOpen = false;
             this._offScroll = null;
             // Two lifetimes: abortController holds the trigger listeners until destroy();
             // openAbortController holds the document listeners of one open, aborted by close().
@@ -117,36 +118,36 @@
          *  now — assistive tech reads the hidden balloon as the trigger's
          *  description before it ever opens.
          */
-        autoMarkup() {
+        _setupMarkup() {
             // `title` opt-in: with no data-tooltip-message the native title is
             // the message. Stripped so it can't double up with the balloon
             // (native covers the pre-init gap).
-            const nativeTitle = this.root.getAttribute('title');
-            const fromTitle = !!nativeTitle && !this.root.dataset.tooltipMessage;
+            const nativeTitle = this._root.getAttribute('title');
+            const fromTitle = !!nativeTitle && !this._root.dataset.tooltipMessage;
             if (fromTitle) {
-                this.root.dataset.tooltipMessage = nativeTitle;
-                this.root.removeAttribute('title');
-                this._undo.push(() => { this.root.setAttribute('title', nativeTitle); delete this.root.dataset.tooltipMessage; });
+                this._root.dataset.tooltipMessage = nativeTitle;
+                this._root.removeAttribute('title');
+                this._undo.push(() => { this._root.setAttribute('title', nativeTitle); delete this._root.dataset.tooltipMessage; });
                 // A marked title may still be English (pack past its cap): its marker follows the words.
-                this._messageRef = this.root.getAttribute('data-i18n-title');
+                this._messageRef = this._root.getAttribute('data-i18n-title');
                 // The title was the control's only name — keep it as one.
-                if (!this.root.hasAttribute('aria-label') && !this.root.hasAttribute('aria-labelledby')
-                    && !this.root.textContent.trim()) {
-                    NDS.aria.label(this.root, nativeTitle);
-                    if (this._messageRef) this.root.setAttribute('data-i18n-aria-label', this._messageRef);
-                    this._undo.push(() => { this.root.removeAttribute('aria-label'); this.root.removeAttribute('data-i18n-aria-label'); });
+                if (!this._root.hasAttribute('aria-label') && !this._root.hasAttribute('aria-labelledby')
+                    && !this._root.textContent.trim()) {
+                    NDS.aria.label(this._root, nativeTitle);
+                    if (this._messageRef) this._root.setAttribute('data-i18n-aria-label', this._messageRef);
+                    this._undo.push(() => { this._root.removeAttribute('aria-label'); this._root.removeAttribute('data-i18n-aria-label'); });
                 }
             }
 
-            const { tooltipTitle: title, tooltipMessage: message } = this.root.dataset;
+            const { tooltipTitle: title, tooltipMessage: message } = this._root.dataset;
             if (!title && !message) return;
 
-            const hasTrigger = this.root.querySelector('.nds-tooltip-trigger');
-            const hasBalloon = this.root.querySelector('.nds-tooltip-balloon');
+            const hasTrigger = this._root.querySelector('.nds-tooltip-trigger');
+            const hasBalloon = this._root.querySelector('.nds-tooltip-balloon');
 
             // Any non-whitespace child (text or element, excluding the balloon
             // we may be about to skip) means the root itself is the trigger.
-            const hasOwnContent = Array.from(this.root.childNodes).some(node => {
+            const hasOwnContent = Array.from(this._root.childNodes).some(node => {
                 if (node.nodeType === Node.TEXT_NODE) return node.nodeValue.trim().length > 0;
                 if (node.nodeType === Node.ELEMENT_NODE) return !node.matches('.nds-tooltip-balloon');
                 return false;
@@ -159,18 +160,18 @@
                 trigger.type = 'button';
                 trigger.className = 'nds-tooltip-trigger';
                 if (title) NDS.aria.label(trigger, title); else strings.set(trigger, 'aria-label', 'more_info');
-                trigger.appendChild(buildChip(this.root.dataset.tooltipStatus));
-                this.root.prepend(trigger);
+                trigger.appendChild(buildChip(this._root.dataset.tooltipStatus));
+                this._root.prepend(trigger);
                 this._undo.push(() => trigger.remove());
             }
 
             if (hasBalloon) return;
             if (fromTitle) this._lazyBalloon = true;
-            else this.root.appendChild(this.buildBalloon());
+            else this._root.appendChild(this._buildBalloon());
         }
 
-        buildBalloon() {
-            const { tooltipTitle: title, tooltipMessage: message, tooltipStatus } = this.root.dataset;
+        _buildBalloon() {
+            const { tooltipTitle: title, tooltipMessage: message, tooltipStatus } = this._root.dataset;
             const balloon = document.createElement('div');
             balloon.className = 'nds-tooltip-balloon';
             balloon.hidden = true;
@@ -202,7 +203,7 @@
         // ARIA and, in hover mode, the grace listeners that keep the balloon
         // open while the pointer crosses into it. Runs at init for an existing
         // balloon and on first open for a lazy one.
-        adoptBalloon(balloon) {
+        _adoptBalloon(balloon) {
             this.balloon = balloon;
             // An authored balloon gets its own attributes back; a built one leaves whole.
             const had = ['role', 'popover', 'id'].filter((attribute) => balloon.hasAttribute(attribute));
@@ -227,46 +228,46 @@
             // value is the open delay in ms (bare attr = 120) — a pointer-
             // intent filter only; keyboard focus and touch tap always open
             // immediately. Default stays click-toggle.
-            this._hoverMode = this.root.hasAttribute('data-tooltip-hover');
-            const delay = parseInt(this.root.dataset.tooltipHover, 10);
+            this._hoverMode = this._root.hasAttribute('data-tooltip-hover');
+            const delay = parseInt(this._root.dataset.tooltipHover, 10);
             this._hoverDelay = Number.isNaN(delay) ? 120 : delay;
             // Reserved now so aria-describedby holds whether the balloon
             // exists yet or is built on first open.
             const id = this._balloonId = (this.balloon && this.balloon.id) || NDS.uniqueId('nds-tooltip-');
 
-            const existing = this.trigger.getAttribute('aria-describedby');
+            const existing = this._trigger.getAttribute('aria-describedby');
             if (!existing || !existing.split(/\s+/).includes(id)) {
-                this.trigger.setAttribute('aria-describedby',
+                this._trigger.setAttribute('aria-describedby',
                     existing ? `${existing} ${id}` : id);
                 this._undo.push(() => {
-                    const rest = (this.trigger.getAttribute('aria-describedby') || '').split(/\s+/).filter((token) => token && token !== id);
-                    rest.length ? this.trigger.setAttribute('aria-describedby', rest.join(' ')) : this.trigger.removeAttribute('aria-describedby');
+                    const rest = (this._trigger.getAttribute('aria-describedby') || '').split(/\s+/).filter((token) => token && token !== id);
+                    rest.length ? this._trigger.setAttribute('aria-describedby', rest.join(' ')) : this._trigger.removeAttribute('aria-describedby');
                 });
             }
 
             // A text trigger (span root) has no native activation — Enter/Space
-            // are handled in bindEvents(). Hover mode opens on focus instead.
-            this._isTextTrigger = !this.trigger.matches('a, button, input, select, textarea');
-            if (this._isTextTrigger && !this.trigger.hasAttribute('tabindex')) {
-                this.trigger.setAttribute('tabindex', '0');
-                this._undo.push(() => this.trigger.removeAttribute('tabindex'));
+            // are handled in _addEventListeners(). Hover mode opens on focus instead.
+            this._isTextTrigger = !this._trigger.matches('a, button, input, select, textarea');
+            if (this._isTextTrigger && !this._trigger.hasAttribute('tabindex')) {
+                this._trigger.setAttribute('tabindex', '0');
+                this._undo.push(() => this._trigger.removeAttribute('tabindex'));
             }
-            if (this._isTextTrigger && !this._hoverMode && !this.trigger.hasAttribute('role')) {
-                this.trigger.setAttribute('role', 'button');
-                this._undo.push(() => this.trigger.removeAttribute('role'));
+            if (this._isTextTrigger && !this._hoverMode && !this._trigger.hasAttribute('role')) {
+                this._trigger.setAttribute('role', 'button');
+                this._undo.push(() => this._trigger.removeAttribute('role'));
             }
             // A link/button root owns its data-state (a nav toggle's open look),
             // so the balloon's open stamp stays off it there.
-            this._rootIsControl = this.trigger === this.root && !this._isTextTrigger;
+            this._rootIsControl = this._trigger === this._root && !this._isTextTrigger;
 
-            this.bindEvents();
-            if (this.balloon) this.adoptBalloon(this.balloon);
+            this._addEventListeners();
+            if (this.balloon) this._adoptBalloon(this.balloon);
 
-            this.root.ndsTooltip = this;
-            this.root.setAttribute('data-nds-tooltip-initialized', 'true');
+            this._root.ndsTooltip = this;
+            this._root.setAttribute('data-nds-tooltip-initialized', 'true');
         }
 
-        bindEvents() {
+        _addEventListeners() {
             const { signal } = this.abortController;
 
             if (this._hoverMode) {
@@ -277,7 +278,7 @@
                 const hoverOpen = (e) => {
                     if (e.pointerType !== 'mouse') return;
                     clearTimeout(this._hoverTimer);
-                    if (this.isOpen) return;
+                    if (this._isOpen) return;
                     if (this._hoverDelay) this._hoverTimer = setTimeout(() => this.open(), this._hoverDelay);
                     else this.open();
                 };
@@ -286,13 +287,13 @@
                     // Always clears first — this also cancels a still-pending
                     // delayed open when the pointer leaves during the wait.
                     clearTimeout(this._hoverTimer);
-                    if (!this.isOpen) return;
+                    if (!this._isOpen) return;
                     this._hoverTimer = setTimeout(() => this.close(), 120);
                 };
-                this.trigger.addEventListener('pointerenter', hoverOpen, { signal });
-                this.trigger.addEventListener('pointerleave', this._hoverClose, { signal });
+                this._trigger.addEventListener('pointerenter', hoverOpen, { signal });
+                this._trigger.addEventListener('pointerleave', this._hoverClose, { signal });
 
-                this.trigger.addEventListener('click', (e) => {
+                this._trigger.addEventListener('click', (e) => {
                     // Only touch taps on a text term toggle. Every click on a
                     // link/button lets the action proceed and gets the balloon out
                     // of its way — a tap must not hijack a nav action or a link.
@@ -306,54 +307,54 @@
                         return;
                     }
                     e.preventDefault();
-                    this.isOpen ? this.close() : this.open();
+                    this._isOpen ? this.close() : this.open();
                 }, { signal });
 
                 // Sighted keyboard users: show on visible focus, drop on blur.
-                this.trigger.addEventListener('focus', () => {
-                    if (this.trigger.matches(':focus-visible')) this.open();
+                this._trigger.addEventListener('focus', () => {
+                    if (this._trigger.matches(':focus-visible')) this.open();
                 }, { signal });
-                this.trigger.addEventListener('blur', () => this.close(), { signal });
+                this._trigger.addEventListener('blur', () => this.close(), { signal });
             } else {
                 // Default: click-toggle for every input type.
-                this.trigger.addEventListener('click', (e) => {
+                this._trigger.addEventListener('click', (e) => {
                     e.preventDefault();
-                    this.isOpen ? this.close() : this.open();
+                    this._isOpen ? this.close() : this.open();
                 }, { signal });
             }
 
-            this.trigger.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && this.isOpen) {
+            this._trigger.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && this._isOpen) {
                     e.stopPropagation();
                     this.close();
-                    this.trigger.focus();
+                    this._trigger.focus();
                 } else if (this._isTextTrigger && !this._hoverMode && (e.key === 'Enter' || e.key === ' ')) {
                     e.preventDefault();
-                    this.isOpen ? this.close() : this.open();
+                    this._isOpen ? this.close() : this.open();
                 }
             }, { signal });
         }
 
         open() {
-            if (this.isOpen) return;
-            if (!this.balloon) this.adoptBalloon(this.root.appendChild(this.buildBalloon()));
-            this.isOpen = true;
+            if (this._isOpen) return;
+            if (!this.balloon) this._adoptBalloon(this._root.appendChild(this._buildBalloon()));
+            this._isOpen = true;
 
             // Only one tooltip open at a time
             if (openTooltip && openTooltip !== this) openTooltip.close();
             openTooltip = this;
 
-            if (!this._rootIsControl) addState(this.root, 'open');
+            if (!this._rootIsControl) addState(this._root, 'open');
             this.balloon.hidden = false;
             // Top layer before measuring: nothing around the trigger clips or traps it there.
             NDS.topLayer(this.balloon, true);
-            this.applyPosition();
+            this._syncPosition();
 
             // The balloon is inside the root, so one containment check covers both.
             this.openAbortController = new AbortController();
             const { signal } = this.openAbortController;
             document.addEventListener('click', (e) => {
-                if (this.root.contains(e.target)) return;
+                if (this._root.contains(e.target)) return;
                 this.close();
             }, { signal });
             // A hover tooltip has no focus on its trigger; Escape still dismisses it (WCAG 1.4.13).
@@ -363,17 +364,17 @@
             // NDS.onOutsideScroll ignores scrolls inside the balloon itself.
             this._offScroll = NDS.onOutsideScroll(this.balloon, () => this.close());
 
-            this.emitEvent('nds:tooltip:opened');
+            this._dispatchEvent('nds:tooltip:opened');
         }
 
         close() {
-            if (!this.isOpen) return;
-            this.isOpen = false;
+            if (!this._isOpen) return;
+            this._isOpen = false;
             if (openTooltip === this) openTooltip = null;
 
-            if (!this._rootIsControl) removeState(this.root, 'open');
+            if (!this._rootIsControl) removeState(this._root, 'open');
             this.balloon.hidden = true;
-            this.root.removeAttribute('data-position-vertical');
+            this._root.removeAttribute('data-position-vertical');
             this.balloon.removeAttribute('data-position-vertical');
 
             this.openAbortController?.abort();
@@ -382,10 +383,10 @@
 
             NDS.topLayer(this.balloon, false);
 
-            this.emitEvent('nds:tooltip:closed');
+            this._dispatchEvent('nds:tooltip:closed');
         }
 
-        applyPosition() {
+        _syncPosition() {
             const gap = 8, pad = 8, edge = NDS.viewportPadding(this.balloon);
 
             // Reset inline placement so the balloon's natural size can be
@@ -399,7 +400,7 @@
             // raw space values. Recompute spaceAbove from triggerRect rather
             // than reusing p.spaceAbove because p.spaceAbove uses the
             // unclamped p.topEdge (which is 0 when no nav is present).
-            const placement = NDS.flipPosition(this.trigger, this.balloon);
+            const placement = NDS.flipPosition(this._trigger, this.balloon);
             const topEdge = Math.max(placement.box.top + pad, placement.topEdge);
             const bW = placement.menuRect.width, bH = placement.menuRect.height;
             const spaceBelow = placement.spaceBelow - gap - pad;
@@ -407,10 +408,10 @@
             const flipUp = spaceBelow < bH && spaceAbove > spaceBelow;
 
             if (flipUp) {
-                this.root.setAttribute('data-position-vertical', 'top');
+                this._root.setAttribute('data-position-vertical', 'top');
                 this.balloon.setAttribute('data-position-vertical', 'top');
             } else {
-                this.root.removeAttribute('data-position-vertical');
+                this._root.removeAttribute('data-position-vertical');
                 this.balloon.removeAttribute('data-position-vertical');
             }
 
@@ -432,13 +433,13 @@
             this.balloon.style.setProperty('--_arrow-inline-start', `${arrowInlineStart}px`);
         }
 
-        emitEvent(name) {
-            this.root.dispatchEvent(new CustomEvent(name, {
+        _dispatchEvent(name) {
+            this._root.dispatchEvent(new CustomEvent(name, {
                 detail: {
-                    tooltip: this.root,
-                    trigger: this.trigger,
+                    tooltip: this._root,
+                    trigger: this._trigger,
                     balloon: this.balloon,
-                    isOpen: this.isOpen
+                    isOpen: this._isOpen
                 },
                 bubbles: true
             }));
@@ -452,11 +453,11 @@
         // the page lifetime.
         destroy() {
             clearTimeout(this._hoverTimer);
-            if (this.isOpen) this.close();
+            if (this._isOpen) this.close();
             if (this.abortController) { this.abortController.abort(); this.abortController = null; }
             this._unstamp();
-            this.root.removeAttribute('data-nds-tooltip-initialized');
-            delete this.root.ndsTooltip;
+            this._root.removeAttribute('data-nds-tooltip-initialized');
+            delete this._root.ndsTooltip;
         }
 
         _unstamp() {

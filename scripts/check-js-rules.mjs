@@ -38,7 +38,7 @@ const VOCAB = new Set(['open', 'closing', 'opening', 'closed', 'show', 'hide', '
 // JSD-01 (c) skips the rule row names, each a selector its writer list cannot decide.
 const ALLOW = [
     // Mixed writers: Custom Select stamps `selected` on the items Dropmenu marks; one selector reads both.
-    { file: 'nds-dropmenu.js', near: 'getCurrentItem()' },
+    { file: 'nds-dropmenu.js', near: '_getCurrentItem()' },
     // The nav's flag must hold through the close, and openDropdowns drops a menu when it STARTS closing.
     { file: 'nds-main-nav.js', near: 'function syncOpenFlags()' },
 ];
@@ -830,7 +830,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
             ? body.match(/\breturn\b[^;]*?\bnew\s+([\w$]+)\s*\(/) || (viaVar && new RegExp(`\\breturn\\s+${viaVar[1]}\\s*;`).test(body) ? [null, viaVar[2]] : null)
             : body.match(/\bnew\s+([\w$]+)\s*\(/);
         if (!made || !bails.has(made[1])) continue;
-        if (/\.valid\b|\binstanceof\b|\?\s*inst|return\s+[\w$]+\.valid/.test(body)) continue; // it checks the build
+        if (/\._?valid\b|\binstanceof\b|\?\s*inst|return\s+[\w$]+\._?valid/.test(body)) continue; // it checks the build
         hit('JSD-19', m.index, `create returns new ${made[1]}() unchecked, and its constructor can bail: return null or the live instance`);
     }
 
@@ -1266,9 +1266,9 @@ const CASES = [
     [`(function(){ function f() { return document.documentElement.dir === 'rtl'; } })();`, ['JSD-04?']],
     [`(function(){ function f() { document.documentElement.dir = 'rtl'; } })();`, []], // a write reads nothing
     [`(function(){ function f(els) { els.forEach((el) => { el.style.width = '1px'; const h = el.offsetHeight; use(h); }); } })();`, ['JSD-06']],
-    [`(function(){ class D { constructor(el) { if (!el.menu) return; this.valid = true; } } NDS.D = { create: (el) => el.ndsD || new D(el) }; })();`, ['JSD-19']],
-    [`(function(){ class D { constructor(el) { if (!el.menu) return; this.valid = true; } } NDS.D = { create(el) { const d = new D(el); return d.valid ? d : null; } }; })();`, []],
-    [`(function(){ class D { constructor(el) { if (!el.menu) return; this.valid = true; } } NDS.D = { create(el) { const d = new D(el); wire(d); return d; } }; })();`, ['JSD-19']], // the dud through a variable
+    [`(function(){ class D { constructor(el) { if (!el.menu) return; this._valid = true; } } NDS.D = { create: (el) => el.ndsD || new D(el) }; })();`, ['JSD-19']],
+    [`(function(){ class D { constructor(el) { if (!el.menu) return; this._valid = true; } } NDS.D = { create(el) { const d = new D(el); return d._valid ? d : null; } }; })();`, []],
+    [`(function(){ class D { constructor(el) { if (!el.menu) return; this._valid = true; } } NDS.D = { create(el) { const d = new D(el); wire(d); return d; } }; })();`, ['JSD-19']], // the dud through a variable
     [`(function(){ class D { constructor(el) { if (!el.menu) return; el.ndsD = this; } } NDS.D = { create(el) { if (!el.ndsD) new D(el); return el.ndsD || null; } }; })();`, []], // published on success only
     [`(function(){ const html = document.documentElement; function f() { return html.dir === 'rtl'; } })();`, ['JSD-04?']], // an alias of the root
     [`(function(){ let _offLang; function init() { _offLang = NDS.onAttrChange('html', ['lang'], f); } })();`, ['JSD-09?']], // module handle, never called
@@ -1312,7 +1312,8 @@ const NAME_CASES = [
     [`(function(){ const map = new WeakMap(); function run(el) { map.set(el, new AbortController()); } })();`, ['P12.15']],
     [`(function(){ const filterAbortControllers = new WeakMap(); function run(el) { filterAbortControllers.set(el, new AbortController()); } })();`, []],
     [`(function(){ class NdsA { #x = 1; } })();`, ['P12.16']],
-    [`(function(){ class NdsA { constructor() { this._ac = new AbortController(); } } })();`, ['P1']],
+    [`(function(){ class NdsA { constructor() { this._ac = new AbortController(); } } })();`, ['P1', 'P10.8']],
+    [`(function(){ class NdsA { constructor() { this._listBtn = null; } } })();`, ['P10.8']], // `_` lifts the banner rule, not the words
     [`/* NDS.A — public surface\n * Methods:\n *   el.ndsA.open()   open it\n */\n(function(){ class NdsA { constructor() { this.abortController = new AbortController(); this.box = 1; this._menu = 2; } open() {} close() {} } })();`, ['P12.11', 'P12.11']], // box, close
     [`(function(){ const SEL = '.x'; const CONFIG = { a: 1 }; const FROZEN = Object.freeze({}); const delayMs = 200; })();`, ['P12.8?', 'P12.8?']],
     [`/* NDS.T — public surface

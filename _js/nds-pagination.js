@@ -155,13 +155,13 @@
 
     class NdsPagination {
         constructor(paginationNav) {
-            this.paginationNav = paginationNav;
+            this._paginationNav = paginationNav;
             const list = resolveList(paginationNav);
 
             // Silently skip empty pagination (likely auto-pagination that will be populated)
             if (!list.querySelector('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next)')) return;
 
-            this.valid = true;
+            this._valid = true;
             // Registered here, not in the sweep, so every construction path —
             // sweep, reinit() and programmatic create() — reaches destroy() and is stamped.
             paginationNav.ndsPagination = this;
@@ -173,14 +173,14 @@
             // Initial collapse runs through the same re-runnable reconcile the
             // dynamic watcher uses, so the markup-preserving collapse logic lives
             // in exactly one place.
-            reconcileCollapse(this.paginationNav);
+            reconcileCollapse(this._paginationNav);
             // A re-create after destroy() finds the ellipsis built but its menu torn down.
-            const dm = this.paginationNav.querySelector('.nds-pagination-ellipsis .nds-dropmenu');
+            const dm = this._paginationNav.querySelector('.nds-pagination-ellipsis .nds-dropmenu');
             if (dm) NDS.Dropmenu.create(dm);
         }
 
         destroy() {
-            destroyPaginationNav(this.paginationNav);
+            destroyPaginationNav(this._paginationNav);
         }
     }
 
@@ -1663,7 +1663,7 @@
             const instance = container.hasAttribute('data-auto-pagination')
                 ? new NdsPagination(container)
                 : setupNav(container);
-            return instance.valid ? instance : null;
+            return instance._valid ? instance : null;
         },
         refresh: syncAutoPagination,
         destroy: destroyPaginationNav,

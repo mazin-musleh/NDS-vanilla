@@ -60,7 +60,7 @@
 
     class NdsIpv {
         constructor() {
-            this.state = {
+            this._state = {
                 zoom: 1,
                 isDragging: false,
                 startX: 0,
@@ -77,13 +77,13 @@
                 thumbnails: []
             };
 
-            // Overlay elements are cached by ensureOverlay() on the first open —
+            // Overlay elements are cached by _ensureOverlay() on the first open —
             // until then the page carries no overlay DOM at all.
-            this.el = {};
+            this._elements = {};
 
             // The live full-size <img>, cached so the transform hot path never
-            // re-queries the DOM. Set in loadImage(), cleared in removeImage().
-            this.image = null;
+            // re-queries the DOM. Set in _loadImage(), cleared in _removeImage().
+            this._image = null;
 
             // The container size is stable while the overlay is open; cache its rect
             // so wheel/pinch never call getBoundingClientRect per event. Invalidated
@@ -91,10 +91,10 @@
             this._containerRect = null;
 
             // Element focused before opening, restored on close().
-            this.lastFocused = null;
+            this._lastFocused = null;
 
             // Tab focus trap. It lives for one open, on openAbortController.
-            this.trapFocus = NDS.trapFocus(() => this.el.overlay);
+            this._trapFocus = NDS.trapFocus(() => this._elements.overlay);
 
             // One controller for every instance-lifetime listener; destroy() detaches all.
             this.abortController = new AbortController();
@@ -106,17 +106,17 @@
         }
 
         init() {
-            this.attachThumbnailEvents();
+            this._addThumbnailListeners();
         }
 
         // Build + wire the overlay on the first open. Deferring the control and
         // document-level listeners with it means a no-click session pays for
         // neither the ~50 overlay nodes nor a mousemove handler.
-        ensureOverlay() {
-            if (this.el.overlay) return;
+        _ensureOverlay() {
+            if (this._elements.overlay) return;
             buildOverlayMarkup();
 
-            this.el = {
+            this._elements = {
                 overlay: document.getElementById('nds-ipv-popup-overlay'),
                 container: document.querySelector('.nds-ipv-popup-container'),
                 zoomInfo: document.getElementById('nds-ipv-zoom-info'),
@@ -128,153 +128,153 @@
                 nextBtn: document.querySelector('.nds-ipv-next-btn')
             };
 
-            this.attachControlEvents();
-            this.attachGlobalEvents();
+            this._addControlListeners();
+            this._addGlobalListeners();
         }
 
         // ── Utilities ────────────────────────────────────────────────────
-        clamp(value, min, max) {
+        _clamp(value, min, max) {
             return Math.min(Math.max(value, min), max);
         }
 
-        getContainerRect() {
-            if (!this._containerRect && this.el.container) {
-                this._containerRect = this.el.container.getBoundingClientRect();
+        _getContainerRect() {
+            if (!this._containerRect && this._elements.container) {
+                this._containerRect = this._elements.container.getBoundingClientRect();
             }
             return this._containerRect;
         }
 
-        showSpinner() {
-            if (this.el.container) {
-                this.el.container.classList.add('nds-loading', 'nds-lg', 'nds-oncolor');
+        _showSpinner() {
+            if (this._elements.container) {
+                this._elements.container.classList.add('nds-loading', 'nds-lg', 'nds-oncolor');
             }
         }
 
-        hideSpinner() {
-            if (this.el.container) {
-                this.el.container.classList.remove('nds-loading', 'nds-lg', 'nds-oncolor');
+        _hideSpinner() {
+            if (this._elements.container) {
+                this._elements.container.classList.remove('nds-loading', 'nds-lg', 'nds-oncolor');
             }
         }
 
-        removeImage() {
-            if (this.image) {
-                this.image.remove();
-                this.image = null;
+        _removeImage() {
+            if (this._image) {
+                this._image.remove();
+                this._image = null;
             }
         }
 
         // ── Transform ────────────────────────────────────────────────────
-        updateTransform() {
-            if (this.image) {
-                this.image.style.transform =
-                    `translate(${this.state.translateX}px, ${this.state.translateY}px) scale(${this.state.zoom})`;
+        _syncTransform() {
+            if (this._image) {
+                this._image.style.transform =
+                    `translate(${this._state.translateX}px, ${this._state.translateY}px) scale(${this._state.zoom})`;
             }
-            if (this.el.zoomInfo) {
-                this.el.zoomInfo.textContent = `${Math.round(this.state.zoom * 100)}%`;
+            if (this._elements.zoomInfo) {
+                this._elements.zoomInfo.textContent = `${Math.round(this._state.zoom * 100)}%`;
             }
         }
 
-        resetTransform() {
-            this.state.zoom = 1;
-            this.state.translateX = 0;
-            this.state.translateY = 0;
-            this.updateTransform();
+        _resetTransform() {
+            this._state.zoom = 1;
+            this._state.translateX = 0;
+            this._state.translateY = 0;
+            this._syncTransform();
         }
 
         // ── Zoom ─────────────────────────────────────────────────────────
-        setZoom(zoom) {
-            this.state.zoom = this.clamp(zoom, zoomLimits.min, zoomLimits.max);
+        _setZoom(zoom) {
+            this._state.zoom = this._clamp(zoom, zoomLimits.min, zoomLimits.max);
         }
 
-        zoomBy(factor) {
-            this.setZoom(this.state.zoom * factor);
-            this.updateTransform();
+        _zoomBy(factor) {
+            this._setZoom(this._state.zoom * factor);
+            this._syncTransform();
         }
 
         // Zoom toward a point (centerX/centerY are relative to the container's
         // top-left). Shared by wheel and pinch so the math lives in one place.
-        zoomAt(centerX, centerY, newZoom) {
-            const rect = this.getContainerRect();
-            if (!rect || newZoom === this.state.zoom) return;
+        _zoomAt(centerX, centerY, newZoom) {
+            const rect = this._getContainerRect();
+            if (!rect || newZoom === this._state.zoom) return;
 
-            const { zoom, translateX, translateY } = this.state;
+            const { zoom, translateX, translateY } = this._state;
             const pointX = (centerX - translateX - rect.width / 2) / zoom;
             const pointY = (centerY - translateY - rect.height / 2) / zoom;
 
-            this.state.zoom = newZoom;
-            this.state.translateX = centerX - rect.width / 2 - pointX * newZoom;
-            this.state.translateY = centerY - rect.height / 2 - pointY * newZoom;
-            this.updateTransform();
+            this._state.zoom = newZoom;
+            this._state.translateX = centerX - rect.width / 2 - pointX * newZoom;
+            this._state.translateY = centerY - rect.height / 2 - pointY * newZoom;
+            this._syncTransform();
         }
 
         // ── UI chrome ────────────────────────────────────────────────────
-        setUIHidden(hidden) {
-            this.state.isUIHidden = hidden;
-            this.el.overlay.classList.toggle('nds-ipv-ui-hidden', hidden);
+        _setUiHidden(hidden) {
+            this._state.isUIHidden = hidden;
+            this._elements.overlay.classList.toggle('nds-ipv-ui-hidden', hidden);
             // Focus on a control the hidden UI took away goes to the button that brings it back.
             const focused = document.activeElement;
-            if (hidden && this.el.overlay.contains(focused) && !focused.getClientRects().length) {
-                this.el.overlay.querySelector('.nds-ipv-ui-toggle-btn')?.focus();
+            if (hidden && this._elements.overlay.contains(focused) && !focused.getClientRects().length) {
+                this._elements.overlay.querySelector('.nds-ipv-ui-toggle-btn')?.focus();
             }
         }
 
-        toggleUI() {
-            this.setUIHidden(!this.state.isUIHidden);
+        _toggleUi() {
+            this._setUiHidden(!this._state.isUIHidden);
         }
 
         // ── Navigation ───────────────────────────────────────────────────
-        showPrev() {
-            if (this.state.currentIndex > 0) {
-                this.state.currentIndex--;
-                this.open(this.state.thumbnails[this.state.currentIndex], true);
+        _showPrev() {
+            if (this._state.currentIndex > 0) {
+                this._state.currentIndex--;
+                this.open(this._state.thumbnails[this._state.currentIndex], true);
             }
         }
 
-        showNext() {
-            if (this.state.currentIndex < this.state.thumbnails.length - 1) {
-                this.state.currentIndex++;
-                this.open(this.state.thumbnails[this.state.currentIndex], true);
+        _showNext() {
+            if (this._state.currentIndex < this._state.thumbnails.length - 1) {
+                this._state.currentIndex++;
+                this.open(this._state.thumbnails[this._state.currentIndex], true);
             }
         }
 
-        updateNavButtons() {
-            const { currentIndex, thumbnails } = this.state;
+        _syncNavButtons() {
+            const { currentIndex, thumbnails } = this._state;
             const total = thumbnails.length;
             const focused = document.activeElement;
 
-            if (this.el.prevBtn) this.el.prevBtn.disabled = currentIndex === 0;
-            if (this.el.nextBtn) this.el.nextBtn.disabled = currentIndex === total - 1;
+            if (this._elements.prevBtn) this._elements.prevBtn.disabled = currentIndex === 0;
+            if (this._elements.nextBtn) this._elements.nextBtn.disabled = currentIndex === total - 1;
             // A disabled button drops focus: the other one, or Close, takes it.
-            if (focused?.disabled && (focused === this.el.prevBtn || focused === this.el.nextBtn)) {
-                const other = focused === this.el.prevBtn ? this.el.nextBtn : this.el.prevBtn;
-                (other && !other.disabled ? other : this.el.closeBtn)?.focus();
+            if (focused?.disabled && (focused === this._elements.prevBtn || focused === this._elements.nextBtn)) {
+                const other = focused === this._elements.prevBtn ? this._elements.nextBtn : this._elements.prevBtn;
+                (other && !other.disabled ? other : this._elements.closeBtn)?.focus();
             }
 
             // Hide nav + counter when there's only one image.
-            if (this.el.navControls) this.el.navControls.hidden = total <= 1;
-            if (this.el.imageCounter) {
-                this.el.imageCounter.textContent = `${currentIndex + 1} / ${total}`;
-                this.el.imageCounter.hidden = total <= 1;
+            if (this._elements.navControls) this._elements.navControls.hidden = total <= 1;
+            if (this._elements.imageCounter) {
+                this._elements.imageCounter.textContent = `${currentIndex + 1} / ${total}`;
+                this._elements.imageCounter.hidden = total <= 1;
             }
         }
 
         // ── Image loading ────────────────────────────────────────────────
-        loadImage(src, alt) {
-            this.removeImage();
-            this.showSpinner();
+        _loadImage(src, alt) {
+            this._removeImage();
+            this._showSpinner();
 
             const img = document.createElement('img');
             img.id = 'nds-ipv-popup-image';
             img.className = 'nds-ipv-popup-image';
             img.alt = alt || '';
             img.src = src;
-            img.onload = () => this.hideSpinner();
-            img.onerror = () => this.hideSpinner();
+            img.onload = () => this._hideSpinner();
+            img.onerror = () => this._hideSpinner();
 
-            if (this.el.container && this.el.controls) {
-                this.el.container.insertBefore(img, this.el.controls);
-                this.image = img;
-                this.attachImageEvents(img);
+            if (this._elements.container && this._elements.controls) {
+                this._elements.container.insertBefore(img, this._elements.controls);
+                this._image = img;
+                this._addImageListeners(img);
             }
         }
 
@@ -283,102 +283,102 @@
         // every open, and tying them to the instance signal would pin every
         // previously-viewed image in memory until destroy(). Element removal frees
         // them instead.
-        attachImageEvents(img) {
-            img.addEventListener('mousedown', (e) => this.handleMouseDown(e));
-            img.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: false });
-            img.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: false });
-            img.addEventListener('touchend', () => this.handleTouchEnd());
-            img.addEventListener('dblclick', () => this.resetTransform());
+        _addImageListeners(img) {
+            img.addEventListener('mousedown', (e) => this._handleMouseDown(e));
+            img.addEventListener('touchstart', (e) => this._handleTouchStart(e), { passive: false });
+            img.addEventListener('touchmove', (e) => this._handleTouchMove(e), { passive: false });
+            img.addEventListener('touchend', () => this._handleTouchEnd());
+            img.addEventListener('dblclick', () => this._resetTransform());
         }
 
-        handleMouseDown(e) {
+        _handleMouseDown(e) {
             e.preventDefault();
-            this.state.isDragging = true;
-            this.state.startX = e.clientX - this.state.translateX;
-            this.state.startY = e.clientY - this.state.translateY;
+            this._state.isDragging = true;
+            this._state.startX = e.clientX - this._state.translateX;
+            this._state.startY = e.clientY - this._state.translateY;
         }
 
-        handleMouseMove(e) {
-            if (!this.state.isDragging) return;
+        _handleMouseMove(e) {
+            if (!this._state.isDragging) return;
             e.preventDefault();
-            this.state.translateX = e.clientX - this.state.startX;
-            this.state.translateY = e.clientY - this.state.startY;
-            this.updateTransform();
+            this._state.translateX = e.clientX - this._state.startX;
+            this._state.translateY = e.clientY - this._state.startY;
+            this._syncTransform();
         }
 
-        handleMouseUp() {
-            this.state.isDragging = false;
+        _handleMouseUp() {
+            this._state.isDragging = false;
         }
 
-        handleWheel(e) {
+        _handleWheel(e) {
             e.preventDefault();
-            const rect = this.getContainerRect();
-            if (!this.image || !rect) return;
+            const rect = this._getContainerRect();
+            if (!this._image || !rect) return;
 
-            const newZoom = this.clamp(
-                this.state.zoom * (e.deltaY > 0 ? zoomLimits.wheelOut : zoomLimits.wheelIn),
+            const newZoom = this._clamp(
+                this._state.zoom * (e.deltaY > 0 ? zoomLimits.wheelOut : zoomLimits.wheelIn),
                 zoomLimits.min, zoomLimits.max
             );
-            this.zoomAt(e.clientX - rect.left, e.clientY - rect.top, newZoom);
+            this._zoomAt(e.clientX - rect.left, e.clientY - rect.top, newZoom);
         }
 
-        handleTouchStart(e) {
+        _handleTouchStart(e) {
             if (e.touches.length === 1) {
-                this.state.touchStartX = e.touches[0].clientX - this.state.translateX;
-                this.state.touchStartY = e.touches[0].clientY - this.state.translateY;
-                this.state.isDragging = true;
+                this._state.touchStartX = e.touches[0].clientX - this._state.translateX;
+                this._state.touchStartY = e.touches[0].clientY - this._state.translateY;
+                this._state.isDragging = true;
             } else if (e.touches.length === 2) {
                 const [t1, t2] = e.touches;
-                this.state.touchDistance = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+                this._state.touchDistance = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
 
-                const rect = this.getContainerRect();
+                const rect = this._getContainerRect();
                 if (rect) {
-                    this.state.touchCenterX = (t1.clientX + t2.clientX) / 2 - rect.left;
-                    this.state.touchCenterY = (t1.clientY + t2.clientY) / 2 - rect.top;
+                    this._state.touchCenterX = (t1.clientX + t2.clientX) / 2 - rect.left;
+                    this._state.touchCenterY = (t1.clientY + t2.clientY) / 2 - rect.top;
                 }
-                this.state.isDragging = false;
+                this._state.isDragging = false;
             }
         }
 
-        handleTouchMove(e) {
+        _handleTouchMove(e) {
             e.preventDefault();
-            if (e.touches.length === 1 && this.state.isDragging) {
-                this.state.translateX = e.touches[0].clientX - this.state.touchStartX;
-                this.state.translateY = e.touches[0].clientY - this.state.touchStartY;
-                this.updateTransform();
-            } else if (e.touches.length === 2 && this.state.touchDistance > 0) {
+            if (e.touches.length === 1 && this._state.isDragging) {
+                this._state.translateX = e.touches[0].clientX - this._state.touchStartX;
+                this._state.translateY = e.touches[0].clientY - this._state.touchStartY;
+                this._syncTransform();
+            } else if (e.touches.length === 2 && this._state.touchDistance > 0) {
                 const [t1, t2] = e.touches;
                 const newDistance = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
-                const newZoom = this.clamp(
-                    this.state.zoom * (newDistance / this.state.touchDistance),
+                const newZoom = this._clamp(
+                    this._state.zoom * (newDistance / this._state.touchDistance),
                     zoomLimits.min, zoomLimits.max
                 );
-                this.zoomAt(this.state.touchCenterX, this.state.touchCenterY, newZoom);
-                this.state.touchDistance = newDistance;
+                this._zoomAt(this._state.touchCenterX, this._state.touchCenterY, newZoom);
+                this._state.touchDistance = newDistance;
             }
         }
 
-        handleTouchEnd() {
-            this.state.isDragging = false;
-            this.state.touchDistance = 0;
-            this.state.touchCenterX = 0;
-            this.state.touchCenterY = 0;
+        _handleTouchEnd() {
+            this._state.isDragging = false;
+            this._state.touchDistance = 0;
+            this._state.touchCenterX = 0;
+            this._state.touchCenterY = 0;
         }
 
-        handleKeydown(e) {
-            if (!this.el.overlay || !this.el.overlay.classList.contains('nds-ipv-active')) return;
+        _handleKeyDown(e) {
+            if (!this._elements.overlay || !this._elements.overlay.classList.contains('nds-ipv-active')) return;
 
             const actions = {
                 'Escape': () => this.close(),
-                '+': () => this.zoomBy(zoomLimits.step),
-                '=': () => this.zoomBy(zoomLimits.step),
-                '-': () => this.zoomBy(1 / zoomLimits.step),
-                '0': () => this.resetTransform(),
-                'h': () => this.toggleUI(),
-                'H': () => this.toggleUI(),
+                '+': () => this._zoomBy(zoomLimits.step),
+                '=': () => this._zoomBy(zoomLimits.step),
+                '-': () => this._zoomBy(1 / zoomLimits.step),
+                '0': () => this._resetTransform(),
+                'h': () => this._toggleUi(),
+                'H': () => this._toggleUi(),
                 // Arrows follow the screen: prev sits at inline-start, which is right in RTL.
-                'ArrowLeft': () => (NDS.isRTL ? this.showNext() : this.showPrev()),
-                'ArrowRight': () => (NDS.isRTL ? this.showPrev() : this.showNext())
+                'ArrowLeft': () => (NDS.isRTL ? this._showNext() : this._showPrev()),
+                'ArrowRight': () => (NDS.isRTL ? this._showPrev() : this._showNext())
             };
 
             const action = actions[e.key];
@@ -390,61 +390,61 @@
 
         // ── Open / close ─────────────────────────────────────────────────
         open(thumb, skipIndexUpdate = false) {
-            this.ensureOverlay();
+            this._ensureOverlay();
 
             // Prefer the lazy-load / full-resolution source, fall back to the src.
             const src = thumb.dataset.ipvFull || thumb.dataset.src || thumb.src;
 
-            if (this.el.overlay) {
-                this.el.overlay.classList.add('nds-ipv-active');
+            if (this._elements.overlay) {
+                this._elements.overlay.classList.add('nds-ipv-active');
             }
 
             // First open (not gallery prev/next): start a fresh modal session.
             if (!skipIndexUpdate) {
-                this.state.thumbnails = this.collectThumbnails(thumb);
-                this.state.currentIndex = this.state.thumbnails.indexOf(thumb);
+                this._state.thumbnails = this._collectThumbnails(thumb);
+                this._state.currentIndex = this._state.thumbnails.indexOf(thumb);
                 this._containerRect = null; // recompute against the now-visible overlay
 
                 NDS.Backdrop.show({ zIndex: 999, clickToClose: false, escapeClose: false });
 
                 // Move focus into the dialog, trap Tab, and remember where to return.
-                this.lastFocused = document.activeElement;
+                this._lastFocused = document.activeElement;
                 this.openAbortController?.abort();
                 this.openAbortController = new AbortController();
-                document.addEventListener('keydown', this.trapFocus, { signal: this.openAbortController.signal });
-                if (this.el.closeBtn) this.el.closeBtn.focus();
+                document.addEventListener('keydown', this._trapFocus, { signal: this.openAbortController.signal });
+                if (this._elements.closeBtn) this._elements.closeBtn.focus();
             }
 
-            this.setUIHidden(false);
-            this.resetTransform();
-            this.loadImage(src, thumb.getAttribute('alt'));
-            this.updateNavButtons();
+            this._setUiHidden(false);
+            this._resetTransform();
+            this._loadImage(src, thumb.getAttribute('alt'));
+            this._syncNavButtons();
         }
 
         close() {
-            if (this.el.overlay) {
-                this.el.overlay.classList.remove('nds-ipv-active');
+            if (this._elements.overlay) {
+                this._elements.overlay.classList.remove('nds-ipv-active');
                 NDS.Backdrop.hide();
             }
 
             // Release the trap and return focus to the triggering thumbnail.
             this.openAbortController?.abort();
-            if (this.lastFocused && typeof this.lastFocused.focus === 'function') {
-                this.lastFocused.focus();
+            if (this._lastFocused && typeof this._lastFocused.focus === 'function') {
+                this._lastFocused.focus();
             }
-            this.lastFocused = null;
+            this._lastFocused = null;
 
-            this.removeImage();
-            this.hideSpinner();
+            this._removeImage();
+            this._hideSpinner();
             // Reset the transform after the fade-out so the next open starts clean.
-            setTimeout(() => this.resetTransform(), NDS.transitionSpeed());
+            setTimeout(() => this._resetTransform(), NDS.transitionSpeed());
         }
 
         // ── Event attachment ─────────────────────────────────────────────
         // Thumbnails on the page now, minus any inside code examples; with a thumb,
         // only its gallery. Read at open, so a thumbnail added after init joins
         // the gallery with no reinit.
-        collectThumbnails(thumb) {
+        _collectThumbnails(thumb) {
             const all = Array.from(document.querySelectorAll('.nds-ipv-thumbnail'))
                 .filter(thumbnail => !thumbnail.closest('code'));
             return thumb ? all.filter(thumbnail => thumbnail.dataset.ipvGallery === thumb.dataset.ipvGallery) : all;
@@ -454,17 +454,17 @@
         // Deferred: thumbnails already paint correctly without JS (this is an
         // a11y-only enhancement), so a gallery page with many images doesn't
         // pay this as one blocking task.
-        enhanceThumbnails() {
+        _enhanceThumbnails() {
             NDS.onIdle(() => {
-                this.collectThumbnails().forEach(thumb => {
+                this._collectThumbnails().forEach(thumb => {
                     if (!thumb.hasAttribute('tabindex')) thumb.tabIndex = 0;
                     if (!thumb.hasAttribute('role')) thumb.setAttribute('role', 'button');
                 });
             });
         }
 
-        attachThumbnailEvents() {
-            this.enhanceThumbnails();
+        _addThumbnailListeners() {
+            this._enhanceThumbnails();
 
             const { signal } = this.abortController;
             const isKnownThumb = (el) => el && !el.closest('code');
@@ -485,20 +485,20 @@
             }, { signal });
         }
 
-        attachControlEvents() {
+        _addControlListeners() {
             const actions = {
-                '.nds-ipv-zoom-in-btn': () => this.zoomBy(zoomLimits.step),
-                '.nds-ipv-zoom-out-btn': () => this.zoomBy(1 / zoomLimits.step),
-                '.nds-ipv-reset-zoom-btn': () => this.resetTransform(),
-                '.nds-ipv-ui-toggle-btn': () => this.toggleUI(),
+                '.nds-ipv-zoom-in-btn': () => this._zoomBy(zoomLimits.step),
+                '.nds-ipv-zoom-out-btn': () => this._zoomBy(1 / zoomLimits.step),
+                '.nds-ipv-reset-zoom-btn': () => this._resetTransform(),
+                '.nds-ipv-ui-toggle-btn': () => this._toggleUi(),
                 '.nds-ipv-close-btn': () => this.close(),
-                '.nds-ipv-prev-btn': () => this.showPrev(),
-                '.nds-ipv-next-btn': () => this.showNext()
+                '.nds-ipv-prev-btn': () => this._showPrev(),
+                '.nds-ipv-next-btn': () => this._showNext()
             };
 
             const { signal } = this.abortController;
             Object.entries(actions).forEach(([selector, fn]) => {
-                const btn = this.el.overlay.querySelector(selector);
+                const btn = this._elements.overlay.querySelector(selector);
                 if (btn) {
                     btn.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -508,23 +508,23 @@
             });
         }
 
-        attachGlobalEvents() {
+        _addGlobalListeners() {
             const { signal } = this.abortController;
-            if (this.el.overlay) {
-                this.el.overlay.addEventListener('wheel', (e) => this.handleWheel(e), { passive: false, signal });
+            if (this._elements.overlay) {
+                this._elements.overlay.addEventListener('wheel', (e) => this._handleWheel(e), { passive: false, signal });
             }
-            document.addEventListener('mousemove', (e) => this.handleMouseMove(e), { signal });
-            document.addEventListener('mouseup', () => this.handleMouseUp(), { signal });
-            document.addEventListener('keydown', (e) => this.handleKeydown(e), { signal });
+            document.addEventListener('mousemove', (e) => this._handleMouseMove(e), { signal });
+            document.addEventListener('mouseup', () => this._handleMouseUp(), { signal });
+            document.addEventListener('keydown', (e) => this._handleKeyDown(e), { signal });
         }
 
         destroy() {
-            if (this.el.overlay && this.el.overlay.classList.contains('nds-ipv-active')) this.close();
+            if (this._elements.overlay && this._elements.overlay.classList.contains('nds-ipv-active')) this.close();
             this.abortController.abort();
             this._offResize();
             this.openAbortController?.abort();
-            if (this.el.overlay) this.el.overlay.remove();
-            this.el = {};
+            if (this._elements.overlay) this._elements.overlay.remove();
+            this._elements = {};
             // Free the slot so init() can build a fresh viewer.
             if (viewer === this) viewer = null;
         }
@@ -589,7 +589,7 @@
     // the instance's first open, so the singleton guard is the instance itself.
     // A repeat call gives thumbnails added since then keyboard access.
     function setupIpv() {
-        if (viewer) viewer.enhanceThumbnails();
+        if (viewer) viewer._enhanceThumbnails();
         else viewer = new NdsIpv();
     }
 
@@ -598,10 +598,10 @@
         reinit: setupIpv,
         open: (thumb) => { if (!viewer) setupIpv(); viewer.open(thumb); },
         close: () => viewer?.close(),
-        next: () => viewer?.showNext(),
-        prev: () => viewer?.showPrev(),
-        resetZoom: () => viewer?.resetTransform(),
-        toggleControls: () => viewer?.toggleUI(),
+        next: () => viewer?._showNext(),
+        prev: () => viewer?._showPrev(),
+        resetZoom: () => viewer?._resetTransform(),
+        toggleControls: () => viewer?._toggleUi(),
         destroy: () => viewer?.destroy(),
     };
 })();

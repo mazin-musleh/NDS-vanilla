@@ -59,59 +59,59 @@
 
     class NdsTaginput {
         constructor(root) {
-            this.root = root;
+            this._root = root;
             // Success signal — init() only runs (and registers root.ndsTaginput)
             // when construction succeeds, so a bail below never hands consumers
             // a half-built instance.
-            this.valid = false;
+            this._valid = false;
             if (root.hasAttribute('data-nds-taginput-initialized')) return;
 
-            this.formControl = root.querySelector('.nds-form-control');
-            this.input = this.formControl && this.formControl.querySelector(':scope > input:not([type="hidden"])');
+            this._formControl = root.querySelector('.nds-form-control');
+            this._input = this._formControl && this._formControl.querySelector(':scope > input:not([type="hidden"])');
 
-            if (!this.formControl || !this.input) {
+            if (!this._formControl || !this._input) {
                 console.warn('NDS Taginput: missing required elements', root);
                 return;
             }
 
             // Name for the hidden carriers: attribute wins, else adopt from a
             // server-rendered hidden input ("skills[]" → "skills").
-            const seed = this.formControl.querySelector(':scope > input[type="hidden"]');
-            this.name = root.getAttribute('data-taginput-name')
+            const seed = this._formControl.querySelector(':scope > input[type="hidden"]');
+            this._name = root.getAttribute('data-taginput-name')
                 || (seed ? seed.name.replace(/\[\]$/, '') : '');
-            this.maxTags = parseInt(root.getAttribute('data-max-tags'), 10) || Infinity;
+            this._maxTags = parseInt(root.getAttribute('data-max-tags'), 10) || Infinity;
             // Strict mode (assist fields only): typed text never commits —
             // only picked suggestions and the programmatic API add tags.
-            this.strict = root.hasAttribute('data-strict') && root.hasAttribute('data-url');
-            this.chipClass = root.getAttribute('data-chip-class') || 'nds-primary nds-sm';
+            this._strict = root.hasAttribute('data-strict') && root.hasAttribute('data-url');
+            this._chipClass = root.getAttribute('data-chip-class') || 'nds-primary nds-sm';
             this.abortController = new AbortController();
             this.init();
-            this.valid = true;
+            this._valid = true;
         }
 
         init() {
             // Server-rendered restore: hidden inputs seed the tag list.
-            this.tags = Array.from(
-                this.formControl.querySelectorAll(':scope > input[type="hidden"]')
+            this._tags = Array.from(
+                this._formControl.querySelectorAll(':scope > input[type="hidden"]')
             ).map(hiddenInput => hiddenInput.value).filter(Boolean);
             // The page's own tags: what a form reset goes back to.
-            this._initialTags = [...this.tags];
-            this.bindEvents();
-            this.renderChips();
+            this._initialTags = [...this._tags];
+            this._addEventListeners();
+            this._renderChips();
             // Registered here, not in the init sweep, so create() gets the backref
             // destroy() reads — every guard has passed by the time init() runs.
-            this.root.ndsTaginput = this;
-            this.root.setAttribute('data-nds-taginput-initialized', 'true');
+            this._root.ndsTaginput = this;
+            this._root.setAttribute('data-nds-taginput-initialized', 'true');
         }
 
-        bindEvents() {
+        _addEventListeners() {
             const { signal } = this.abortController;
 
             // The browser restores the form after the reset event: wait for it, unless it was cancelled.
-            this.root.closest('form')?.addEventListener('reset', (e) => setTimeout(() => {
+            this._root.closest('form')?.addEventListener('reset', (e) => setTimeout(() => {
                 if (e.defaultPrevented) return;
-                this.tags = [...this._initialTags];
-                this.renderChips();
+                this._tags = [...this._initialTags];
+                this._renderChips();
             }), { signal });
 
             // Assist mode — a root carrying data-url is ALSO an NDS.Autocomplete
@@ -119,28 +119,28 @@
             // highlighted suggestion owns Enter (the pick lands through
             // nds:autocomplete:select below), and the mousedown-blur that
             // precedes a suggestion click must not commit the typed fragment.
-            const isAutocompleteMenuOpen = () => this.root.hasAttribute('data-url')
-                && NDS.state.has(this.formControl, 'open');
+            const isAutocompleteMenuOpen = () => this._root.hasAttribute('data-url')
+                && NDS.state.has(this._formControl, 'open');
 
-            this.input.addEventListener('keydown', (e) => {
+            this._input.addEventListener('keydown', (e) => {
                 if (e.isComposing) return;
                 if (e.key === 'Enter') {
-                    if (isAutocompleteMenuOpen() && this.input.getAttribute('aria-activedescendant')) return;
+                    if (isAutocompleteMenuOpen() && this._input.getAttribute('aria-activedescendant')) return;
                     // Empty Enter falls through — the form's normal submit.
-                    if (this.input.value.trim() === '') return;
+                    if (this._input.value.trim() === '') return;
                     e.preventDefault();
-                    if (this.strict) { this._strictReject(); return; }
-                    this.addTag(this.input.value);
-                    this.input.value = '';
-                } else if (e.key === 'Backspace' && this.input.value === '' && this.tags.length && !this.isReadonly()) {
+                    if (this._strict) { this._showStrictError(); return; }
+                    this.addTag(this._input.value);
+                    this._input.value = '';
+                } else if (e.key === 'Backspace' && this._input.value === '' && this._tags.length && !this._isReadonly()) {
                     // Pop the last tag back into the input for editing
                     // (Gmail-recipient behavior) rather than deleting it.
                     e.preventDefault();
-                    const last = this.tags.pop();
-                    this.renderChips();
-                    this.input.value = last;
+                    const last = this._tags.pop();
+                    this._renderChips();
+                    this._input.value = last;
                     NDS.announce(strings.text('editing', { value: last }));
-                    this.emitChange();
+                    this._dispatchChange();
                 }
             }, { signal });
 
@@ -148,69 +148,69 @@
             // Latin ',' and Arabic '،' from physical keys, paste, and
             // mobile/IME insertText don't all fire per-key keydown. Text
             // after the last separator stays pending in the input.
-            this.input.addEventListener('input', (e) => {
+            this._input.addEventListener('input', (e) => {
                 if (e.isComposing) return;
                 // Synthetic input on an assist host is autocomplete's pick
                 // notification (committed whole via nds:autocomplete:select
                 // below) — never split a picked value on its own commas.
-                if (!e.isTrusted && this.root.hasAttribute('data-url')) return;
-                const value = this.input.value;
+                if (!e.isTrusted && this._root.hasAttribute('data-url')) return;
+                const value = this._input.value;
                 if (!/[,،\n]/.test(value)) return;
-                if (this.strict) { this._strictReject(); return; }
+                if (this._strict) { this._showStrictError(); return; }
                 const parts = value.split(/[,،\n]/);
                 const pending = parts.pop();
                 parts.forEach(part => this.addTag(part));
-                this.input.value = pending.replace(/^\s+/, '');
+                this._input.value = pending.replace(/^\s+/, '');
             }, { signal });
 
             // Leaving the field commits pending text instead of losing it.
             // Skipped while a suggestion menu is open — the text stays pending.
             // Strict fields never blur-commit (typed text is not a valid tag).
-            this.input.addEventListener('blur', () => {
-                if (isAutocompleteMenuOpen() || this.strict) return;
-                if (this.input.value.trim() !== '') {
-                    this.addTag(this.input.value);
-                    this.input.value = '';
+            this._input.addEventListener('blur', () => {
+                if (isAutocompleteMenuOpen() || this._strict) return;
+                if (this._input.value.trim() !== '') {
+                    this.addTag(this._input.value);
+                    this._input.value = '';
                 }
             }, { signal });
 
             // Picked suggestion → committed tag. Autocomplete writes the pick
             // into the input first; committing consumes it.
-            if (this.root.hasAttribute('data-url')) {
-                this.root.addEventListener('nds:autocomplete:select', (e) => {
+            if (this._root.hasAttribute('data-url')) {
+                this._root.addEventListener('nds:autocomplete:select', (e) => {
                     this.addTag(e.detail.text);
-                    this.input.value = '';
+                    this._input.value = '';
                 }, { signal });
             }
 
             // Click anywhere on the field puts the caret in the input.
-            this.root.addEventListener('click', (e) => {
-                if (e.target.closest('.nds-chip') || e.target === this.input) return;
-                this.input.focus();
+            this._root.addEventListener('click', (e) => {
+                if (e.target.closest('.nds-chip') || e.target === this._input) return;
+                this._input.focus();
             }, { signal });
         }
 
         destroy() {
             this.abortController?.abort();
-            delete this.root.ndsTaginput;
-            this.root.removeAttribute('data-nds-taginput-initialized');
+            delete this._root.ndsTaginput;
+            this._root.removeAttribute('data-nds-taginput-initialized');
         }
 
         getValues() {
-            return this.tags.slice();
+            return this._tags.slice();
         }
 
         // Readonly blocks the user only: chips are keyboard-reachable past the
         // readonly CSS, while removeTag()/clear() stay callable from code.
-        isReadonly() {
-            return NDS.state.has(this.root, 'readonly');
+        _isReadonly() {
+            return NDS.state.has(this._root, 'readonly');
         }
 
         // Strict-mode rejection of typed commits — same feedback shape as the
         // duplicate/max rejections in addTag (incl. the macrotask deferral).
-        _strictReject() {
+        _showStrictError() {
             const message = strings.text('strict');
-            setTimeout(() => NDS.Form.setStatus(this.root, 'error', { message: message }), 0);
+            setTimeout(() => NDS.Form.setStatus(this._root, 'error', { message: message }), 0);
             NDS.announce(message);
         }
 
@@ -225,90 +225,90 @@
             // clears field status after this handler (a microtask would still
             // run between the two listeners) — the status must land once the
             // whole event dispatch has finished.
-            if (this.tags.length >= this.maxTags) {
-                const message = strings.text('max', { n: this.maxTags });
-                setTimeout(() => NDS.Form.setStatus(this.root, 'error', { message: message }), 0);
+            if (this._tags.length >= this._maxTags) {
+                const message = strings.text('max', { n: this._maxTags });
+                setTimeout(() => NDS.Form.setStatus(this._root, 'error', { message: message }), 0);
                 NDS.announce(message);
                 return;
             }
-            if (this.tags.some(tag => tag.toLowerCase() === value.toLowerCase())) {
+            if (this._tags.some(tag => tag.toLowerCase() === value.toLowerCase())) {
                 // Same macrotask deferral as the max rejection above.
-                setTimeout(() => NDS.Form.setStatus(this.root, 'error', { message: strings.text('duplicate') }), 0);
+                setTimeout(() => NDS.Form.setStatus(this._root, 'error', { message: strings.text('duplicate') }), 0);
                 NDS.announce(strings.text('duplicate'));
                 return;
             }
-            this.tags.push(value);
-            this.renderChips();
+            this._tags.push(value);
+            this._renderChips();
             NDS.announce(strings.text('added', { value }));
-            this.emitChange();
+            this._dispatchChange();
         }
 
         removeTag(value) {
-            const index = this.tags.indexOf(value);
+            const index = this._tags.indexOf(value);
             if (index === -1) return;
-            NDS.keepChipFocus(() => this.formControl.querySelectorAll('.nds-chip'), () => {
-                this.tags.splice(index, 1);
-                this.renderChips();
-            }, this.input);
+            NDS.keepChipFocus(() => this._formControl.querySelectorAll('.nds-chip'), () => {
+                this._tags.splice(index, 1);
+                this._renderChips();
+            }, this._input);
             NDS.announce(strings.text('removed', { value }));
-            this.emitChange();
+            this._dispatchChange();
         }
 
         clear() {
-            if (!this.tags.length) return;
-            this.tags = [];
-            this.renderChips();
+            if (!this._tags.length) return;
+            this._tags = [];
+            this._renderChips();
             NDS.announce(strings.text('cleared'));
-            this.emitChange();
+            this._dispatchChange();
         }
 
         // Chips render as direct flex items before the input — no wrapper, so
         // their wrap point is a pure function of field width.
-        renderChips() {
-            this.formControl.querySelectorAll('.nds-chip').forEach(chip => chip.remove());
-            this.tags.forEach(value => {
-                this.formControl.insertBefore(this.buildChip(value), this.input);
+        _renderChips() {
+            this._formControl.querySelectorAll('.nds-chip').forEach(chip => chip.remove());
+            this._tags.forEach(value => {
+                this._formControl.insertBefore(this._buildChip(value), this._input);
             });
             // New chips take the field's disabled.
-            NDS.state.apply(this.root, 'disabled');
+            NDS.state.apply(this._root, 'disabled');
             this._syncHiddenInputs();
             // 'filled' is the field's public styling hook (multiselect parity)
             // — consumers style it; no in-repo reader by design.
-            NDS.state[this.tags.length ? 'add' : 'remove'](this.root, 'filled');
+            NDS.state[this._tags.length ? 'add' : 'remove'](this._root, 'filled');
         }
 
-        // Rebuild the hidden carriers to mirror this.tags (also consumes any
+        // Rebuild the hidden carriers to mirror this._tags (also consumes any
         // server-rendered seeds, so restore and runtime share one shape).
         _syncHiddenInputs() {
-            this.formControl.querySelectorAll(':scope > input[type="hidden"]').forEach(hiddenInput => hiddenInput.remove());
-            if (!this.name) return;
-            this.tags.forEach(value => {
+            this._formControl.querySelectorAll(':scope > input[type="hidden"]').forEach(hiddenInput => hiddenInput.remove());
+            if (!this._name) return;
+            this._tags.forEach(value => {
                 const hidden = document.createElement('input');
                 hidden.type = 'hidden';
-                hidden.name = this.name + '[]';
+                hidden.name = this._name + '[]';
                 hidden.value = value;
-                this.formControl.appendChild(hidden);
+                this._formControl.appendChild(hidden);
             });
         }
 
-        buildChip(value) {
+        _buildChip(value) {
             return NDS.buildChip(value, {
-                chipClass: this.chipClass,
+                chipClass: this._chipClass,
                 // Public chip-identity hook (data-taginput-value) for
                 // consumer/e2e selectors — removal routes through the closure.
                 data: { taginputValue: value },
-                disabled: NDS.state.has(this.root, 'disabled'),
-                onRemove: () => { if (!this.isReadonly()) this.removeTag(value); },
+                disabled: NDS.state.has(this._root, 'disabled'),
+                onRemove: () => { if (!this._isReadonly()) this.removeTag(value); },
                 signal: this.abortController.signal,
             });
         }
 
-        emitChange() {
+        _dispatchChange() {
             // Every successful commit clears rejection/validation feedback —
             // the user is actively fixing the field.
-            NDS.Form.clearStatus(this.root);
-            this.root.dispatchEvent(new CustomEvent('nds:taginput:change', {
-                detail: { name: this.name, values: this.getValues() },
+            NDS.Form.clearStatus(this._root);
+            this._root.dispatchEvent(new CustomEvent('nds:taginput:change', {
+                detail: { name: this._name, values: this.getValues() },
                 bubbles: true
             }));
         }
@@ -326,7 +326,7 @@
     // The instance's tags (carriers exist only with a name); before init, the server-rendered carriers.
     // data-max-tags blocks a submit too: tags written in the markup or set by a script skip the add-time check.
     const checkField = (ti) => {
-        const count = ti.ndsTaginput ? ti.ndsTaginput.tags.length : ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
+        const count = ti.ndsTaginput ? ti.ndsTaginput._tags.length : ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
         const max = parseInt(ti.getAttribute('data-max-tags'), 10);
         const over = max > 0 && count > max;
         const valid = !over && (!NDS.validation.isRequired(ti) || count > 0);
@@ -346,7 +346,7 @@
         create: (element) => {
             if (element.ndsTaginput) return element.ndsTaginput;
             const instance = new NdsTaginput(element);
-            return instance.valid ? instance : null;
+            return instance._valid ? instance : null;
         },
         destroy: (element) => element.ndsTaginput?.destroy()
     };

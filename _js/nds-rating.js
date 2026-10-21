@@ -49,30 +49,30 @@
   class NdsRating {
     constructor(element) {
       this.rating = element;
-      this.stars = element.querySelectorAll('.nds-rating-star');
-      this.currentRating = parseFloat(element.dataset.rating) || 0;
-      this.startRating = this.currentRating;
+      this._stars = element.querySelectorAll('.nds-rating-star');
+      this._currentRating = parseFloat(element.dataset.rating) || 0;
+      this._startRating = this._currentRating;
       // ponytail: one input per group; two ratings in one .nds-form-group share the first.
-      this.valueInput = (element.closest('.nds-form-group') || element).querySelector('input[data-rating-value]');
-      this.syncValue();
+      this._valueInput = (element.closest('.nds-form-group') || element).querySelector('input[data-rating-value]');
+      this._syncValue();
 
-      this.isButtons = this.stars[0]?.tagName === 'BUTTON';
+      this._isButtons = this._stars[0]?.tagName === 'BUTTON';
       // Set data-value on stars for delegation lookups; only a button star takes a name.
-      for (let i = 0; i < this.stars.length; i++) {
-        this.stars[i].dataset.value = i + 1;
-        if (this.isButtons) strings.set(this.stars[i], 'aria-label', 'stars', { n: i + 1 });
+      for (let i = 0; i < this._stars.length; i++) {
+        this._stars[i].dataset.value = i + 1;
+        if (this._isButtons) strings.set(this._stars[i], 'aria-label', 'stars', { n: i + 1 });
       }
-      this.labelScore();
+      this._labelScore();
 
       // Auto-detect interactive from button elements
-      if (this.isButtons && !hasState(this.rating, 'disabled')) {
+      if (this._isButtons && !hasState(this.rating, 'disabled')) {
         addState(this.rating, 'interactive');
       }
 
       if (hasState(this.rating, 'interactive') && !hasState(this.rating, 'disabled')) {
         this.init();
       } else {
-        this.updateVisualState();
+        this._syncVisualState();
       }
     }
 
@@ -85,37 +85,37 @@
       // Delegated listeners on the container
       this.rating.addEventListener('click', (e) => {
         const star = e.target.closest('.nds-rating-star');
-        if (star && !hasState(this.rating, 'disabled')) this.setRating(+star.dataset.value);
+        if (star && !hasState(this.rating, 'disabled')) this._setRating(+star.dataset.value);
       }, { signal });
 
       this.rating.addEventListener('mouseenter', (e) => {
         const star = e.target.closest('.nds-rating-star');
-        if (star && !hasState(this.rating, 'disabled')) this.showPreview(+star.dataset.value);
+        if (star && !hasState(this.rating, 'disabled')) this._showPreview(+star.dataset.value);
       }, { capture: true, signal });
 
       this.rating.addEventListener('mouseleave', (e) => {
         const star = e.target.closest('.nds-rating-star');
-        if (star && !hasState(this.rating, 'disabled')) this.hidePreview();
+        if (star && !hasState(this.rating, 'disabled')) this._hidePreview();
       }, { capture: true, signal });
 
       this.rating.addEventListener('keydown', (e) => {
         const star = e.target.closest('.nds-rating-star');
-        if (star && !hasState(this.rating, 'disabled')) this.handleKeyboard(e, +star.dataset.value);
+        if (star && !hasState(this.rating, 'disabled')) this._handleKeyboard(e, +star.dataset.value);
       }, { signal });
 
       // The browser restores the form after the reset event; a hidden input keeps what JS wrote.
       const form = this.rating.closest('form');
       if (form) form.addEventListener('reset', (e) => {
-        setTimeout(() => { if (!e.defaultPrevented) this.setRating(this.startRating); });
+        setTimeout(() => { if (!e.defaultPrevented) this._setRating(this._startRating); });
       }, { signal });
 
-      this.updateVisualState();
+      this._syncVisualState();
     }
 
     // Through NDS.setValue, so a framework binding on the input hears it.
-    syncValue() {
-      const value = String(this.currentRating);
-      if (this.valueInput && this.valueInput.value !== value) NDS.setValue(this.valueInput, value);
+    _syncValue() {
+      const value = String(this._currentRating);
+      if (this._valueInput && this._valueInput.value !== value) NDS.setValue(this._valueInput, value);
     }
 
     destroy() {
@@ -124,13 +124,13 @@
       if (this.rating.ndsRating === this) delete this.rating.ndsRating;   // create() then builds a fresh one
     }
 
-    setRating(value) {
-      if (value === this.currentRating) return;
-      this.currentRating = value;
+    _setRating(value) {
+      if (value === this._currentRating) return;
+      this._currentRating = value;
       this.rating.dataset.rating = value;
-      this.syncValue();
-      this.labelScore();
-      this.updateVisualState();
+      this._syncValue();
+      this._labelScore();
+      this._syncVisualState();
 
       this.rating.dispatchEvent(new CustomEvent('nds:rating:change', {
         detail: { rating: value, element: this.rating },
@@ -139,83 +139,83 @@
     }
 
     // A display rating reads as one image with its score: "3.5 of 5".
-    labelScore() {
-      if (this.isButtons) return;
+    _labelScore() {
+      if (this._isButtons) return;
       if (!this.rating.hasAttribute('role')) this.rating.setAttribute('role', 'img');
-      strings.set(this.rating, 'aria-label', 'score', { n: this.currentRating, total: this.stars.length });
+      strings.set(this.rating, 'aria-label', 'score', { n: this._currentRating, total: this._stars.length });
     }
 
-    showPreview(value) {
-      for (let i = 0; i < this.stars.length; i++) {
-        if (i < value) addState(this.stars[i], 'preview');
-        else removeState(this.stars[i], 'preview');
+    _showPreview(value) {
+      for (let i = 0; i < this._stars.length; i++) {
+        if (i < value) addState(this._stars[i], 'preview');
+        else removeState(this._stars[i], 'preview');
       }
     }
 
-    hidePreview() {
-      for (let i = 0; i < this.stars.length; i++) {
-        removeState(this.stars[i], 'preview');
+    _hidePreview() {
+      for (let i = 0; i < this._stars.length; i++) {
+        removeState(this._stars[i], 'preview');
       }
     }
 
-    updateVisualState() {
-      const whole = Math.floor(this.currentRating);
-      const hasHalf = (this.currentRating % 1) >= 0.3;
+    _syncVisualState() {
+      const whole = Math.floor(this._currentRating);
+      const hasHalf = (this._currentRating % 1) >= 0.3;
 
-      for (let i = 0; i < this.stars.length; i++) {
+      for (let i = 0; i < this._stars.length; i++) {
         const states = [];
         if (i < whole) states.push('selected');
         if (hasHalf && i === whole) states.push('half');
 
         // Preserve preview state if present
-        if (hasState(this.stars[i], 'preview')) states.push('preview');
+        if (hasState(this._stars[i], 'preview')) states.push('preview');
 
-        NDS.state.set(this.stars[i], ...states);
+        NDS.state.set(this._stars[i], ...states);
       }
     }
 
-    handleKeyboard(e, value) {
+    _handleKeyboard(e, value) {
       const index = value - 1;
       const isRtl = NDS.isRTL;
-      const last = this.stars.length - 1;
+      const last = this._stars.length - 1;
 
       switch(e.key) {
         case 'Enter':
         case ' ':
           e.preventDefault();
-          this.setRating(value);
+          this._setRating(value);
           break;
 
         case 'ArrowRight':
           e.preventDefault();
-          if (isRtl) { if (index > 0) this.stars[index - 1].focus(); }
-          else { if (index < last) this.stars[index + 1].focus(); }
+          if (isRtl) { if (index > 0) this._stars[index - 1].focus(); }
+          else { if (index < last) this._stars[index + 1].focus(); }
           break;
 
         case 'ArrowLeft':
           e.preventDefault();
-          if (isRtl) { if (index < last) this.stars[index + 1].focus(); }
-          else { if (index > 0) this.stars[index - 1].focus(); }
+          if (isRtl) { if (index < last) this._stars[index + 1].focus(); }
+          else { if (index > 0) this._stars[index - 1].focus(); }
           break;
 
         case 'ArrowUp':
           e.preventDefault();
-          if (index < last) this.stars[index + 1].focus();
+          if (index < last) this._stars[index + 1].focus();
           break;
 
         case 'ArrowDown':
           e.preventDefault();
-          if (index > 0) this.stars[index - 1].focus();
+          if (index > 0) this._stars[index - 1].focus();
           break;
 
         case 'Home':
           e.preventDefault();
-          this.stars[0].focus();
+          this._stars[0].focus();
           break;
 
         case 'End':
           e.preventDefault();
-          this.stars[last].focus();
+          this._stars[last].focus();
           break;
 
         case 'Escape':
@@ -226,28 +226,28 @@
     }
 
     getValue() {
-      return this.currentRating;
+      return this._currentRating;
     }
 
     setValue(value) {
-      if (value >= 0 && value <= this.stars.length) {
-        this.setRating(value);
+      if (value >= 0 && value <= this._stars.length) {
+        this._setRating(value);
       }
     }
 
     _setDisabled(disabled) {
-      for (let i = 0; i < this.stars.length; i++) {
-        this.stars[i].disabled = disabled;
-        if (disabled) NDS.aria.disabled(this.stars[i], true);
-        else NDS.aria.disabled(this.stars[i], null);
+      for (let i = 0; i < this._stars.length; i++) {
+        this._stars[i].disabled = disabled;
+        if (disabled) NDS.aria.disabled(this._stars[i], true);
+        else NDS.aria.disabled(this._stars[i], null);
       }
 
       if (disabled) {
         addState(this.rating, 'disabled');
-        this.hidePreview();
+        this._hidePreview();
       } else {
         removeState(this.rating, 'disabled');
-        if (this.stars[0]?.tagName === 'BUTTON') addState(this.rating, 'interactive');
+        if (this._stars[0]?.tagName === 'BUTTON') addState(this.rating, 'interactive');
         this.init();
       }
     }
@@ -262,7 +262,7 @@
 
     isDisabled() {
       return hasState(this.rating, 'disabled') ||
-             (this.stars[0] && this.stars[0].disabled);
+             (this._stars[0] && this._stars[0].disabled);
     }
   }
 

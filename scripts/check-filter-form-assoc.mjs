@@ -67,7 +67,7 @@ const report = await page.evaluate(() => {
 
     // 2. OUTSIDE: form holds only the submit button; every filter surface is a
     //    sibling. No data-filter-type on the group, so it takes the authored
-    //    (setupManualFilter) path — the one that was broken.
+    //    (_setupManualFilter) path — the one that was broken.
     mount(`
         <form id="assocOutForm" data-filter-target="assocOut" data-filter-submit
               method="get" action="#">
@@ -174,7 +174,7 @@ const report = await page.evaluate(() => {
         authData.get('category') === auth.boxes[0].value && !authData.has('filter-category'),
         `keys=${[...authData.keys()].join(',')}`);
     // The component's own URL contract keys off data-filter, so an authored name
-    // matching it round-trips: submit ?category=… , reload, applyUrlParams restores.
+    // matching it round-trips: submit ?category=… , reload, _readUrlParams restores.
     const authInstance = NDS.Filter.getByTarget('assocAuth');
     check('authored: name matches the URL key the component reads back',
         Object.keys(authInstance.filterInputs).includes('category'),
