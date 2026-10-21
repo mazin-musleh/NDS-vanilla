@@ -44,8 +44,9 @@
             if (btn.tagName === 'BUTTON') btn.disabled = on;
         });
     });
+    // An input that stays interactive is readonly by design (Custom Select's display): leaving the state keeps it so.
     NDS.state.onToggle('readonly', SCOPE, (el, on) => {
-        el.querySelectorAll('input, textarea, select').forEach((input) => { input.readOnly = on; });
+        el.querySelectorAll('input, textarea, select').forEach((input) => { if (!isInteractive(input)) input.readOnly = on; });
     });
 
     // ── Parts ──────────────────────────────────────────────────────────

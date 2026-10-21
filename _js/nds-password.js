@@ -163,7 +163,7 @@
 
             this._input.addEventListener('input', function () { self.check(); }, { signal: signal });
             // A form reset changes the value without an input event.
-            NDS.field.onReset(this._input.form, function () { if (self.abortController) self.check(); }, { signal: signal });
+            NDS.field.onReset(this._input.form, function () { self.check(); }, { signal: signal });
 
             // Match mode: an input on the SOURCE (the first password) must
             // re-check the confirm field too. Same-tab typing order is

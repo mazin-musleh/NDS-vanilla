@@ -25,9 +25,9 @@
 /**
  * NDS Multiselect — UI-only chips + trigger label over a native checkbox
  * group. Checkboxes are the source of truth: each toggle commits
- * immediately, chips reflect the current checked set, and the browser
- * submits the checked checkboxes' name/value pairs directly. No draft
- * state, no hidden inputs, no Apply/commit ceremony.
+ * immediately (unless an Apply button stages them), chips reflect the
+ * checked set, and the browser submits the checked checkboxes' name/value
+ * pairs directly. No hidden inputs.
  *
  * Options can be hand-written markup or populated (data-filter-values
  * precedent): `data-multiselect-options` takes a JSON array (value = label),
@@ -223,7 +223,8 @@
             input.className = 'nds-checkbox-input';
             input.value = value;
             input.dataset.label = label;
-            input.checked = checked;
+            // The default too: a form reset brings the pre-selected values back.
+            input.defaultChecked = checked;
             control.appendChild(input);
 
             container.append(header, control);
@@ -248,12 +249,11 @@
                 NDS.state.add(this._root, 'focus');
             }, { signal });
             this._dropmenu.addEventListener('nds:dropmenu:closed', () => {
-                NDS.state.remove(this._root, 'focus');
+                // A close by Escape hands focus back to the trigger, which keeps the focus state.
+                if (document.activeElement !== this._trigger) NDS.state.remove(this._root, 'focus');
                 // Apply mode: closing without Apply discards staged toggles.
                 // No-op after Apply — it re-syncs `applied` before the close.
-                if (this._applyMode) {
-                    this._checkboxes.forEach(checkbox => { checkbox.checked = this._applied.includes(checkbox.value); });
-                }
+                if (this._applyMode) this._dropStaged();
             }, { signal });
 
             // ── Trigger interaction states ──────────────────────────
@@ -330,21 +330,21 @@
                 this._applyButton.addEventListener('click', () => this.commit(), { signal });
             }
 
-            // ── Submit guard (apply mode) ───────────────────────────
-            // A submit racing the open panel (Enter key, requestSubmit, or
-            // the async close gap after clicking Submit — the closed event
-            // fires deferred) must post/validate the APPLIED set, not staged
-            // toggles. Capture phase beats NDS.Form' submit validation.
             // A form reset ticks the boxes back without a change event.
             NDS.field.onReset(this._root.closest('form'), () => {
                 this._applied = this.getSelected();
                 this._renderChips();
             }, { signal });
 
+            // ── Submit guard (apply mode) ───────────────────────────
+            // A submit racing the open panel (Enter key, requestSubmit, or
+            // the async close gap after clicking Submit — the closed event
+            // fires deferred) must post/validate the APPLIED set, not staged
+            // toggles. Capture phase beats NDS.Form's submit validation.
             const form = this._applyMode && this._root.closest('form');
             if (form) {
                 form.addEventListener('submit', () => {
-                    this._checkboxes.forEach(checkbox => { checkbox.checked = this._applied.includes(checkbox.value); });
+                    this._dropStaged();
                     if (this._isOpen()) this._dropmenu.ndsDropmenu?.close();
                 }, { signal, capture: true });
             }
@@ -410,12 +410,20 @@
             }
         }
 
+        // Apply mode: the boxes go back to the applied set.
+        _dropStaged() {
+            this._checkboxes.forEach(checkbox => { checkbox.checked = this._applied.includes(checkbox.value); });
+        }
+
         removeValue(value) {
             const checkbox = this._checkboxes.find(item => item.value === value);
-            if (!checkbox || !checkbox.checked) return;
+            // Apply mode: a chip is an applied value, whatever its box shows while staged.
+            if (!checkbox || !(this._applyMode ? this._applied.includes(value) : checkbox.checked)) return;
             NDS.keepChipFocus(() => this._chipsElement.children, () => {
                 checkbox.checked = false;
                 this._applied = this._applied.filter(item => item !== value);
+                // Staged toggles drop, as on a close: the chips and the event show the applied set.
+                if (this._applyMode) this._dropStaged();
                 this._renderChips();
             }, this._trigger);
             NDS.announce(strings.text('removed', { value: this._getLabel(value) }));

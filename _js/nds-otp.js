@@ -20,8 +20,8 @@
  *     group; a label that is not that English stays.
  *   - setValue() writes the boxes and the hidden carrier but fires NO event.
  *   - A multi-digit paste spreads across the boxes from the focused one.
- *   - There is no reinit(): init() runs once and later .nds-otp-group nodes are picked up
- *     by the shared DOM bus.
+ *   - There is no reinit(): every init() sweeps, and later groups and boxes are picked up
+ *     by the shared DOM bus. NDS.init.destroy(view) releases a group (group.ndsOtp).
  */
 // NDS OTP Input Controller
 // File: nds-otp.js
@@ -29,14 +29,8 @@
 (function () {
     'use strict';
 
-    // One-shot init guard. A re-run of init (e.g. NDS.init.initialize())
-    // would otherwise re-stack the two pool subscriptions in init() — onDomAdd
-    // and onDomRemove push unconditionally with no (selector, fn) dedup in core.
-    // The single init at page load wires the subscribers; subsequent .nds-otp-group
-    // mutations are already handled by those long-lived subscribers.
+    // The two pool subscriptions are wired once: core does not dedup a re-run's.
     var subscribed = false;
-
-    var otpAbortControllers = new WeakMap();   // group → AbortController of its listeners
 
     var strings = NDS.i18n.getStrings('otp', {
         digit: 'Digit {n} of {total}',
@@ -153,6 +147,8 @@
         var data = e.data || (e.dataTransfer && e.dataTransfer.getData('text')) || '';
         if (data.length <= 1) return;
         e.preventDefault();
+        // No input event follows: drop a stale message here, as handleInput does.
+        clearStaleStatus(group);
 
         var digits = NDS.toLatinDigits(data).replace(/\D/g, '');
         if (!digits.length) return;
@@ -253,8 +249,15 @@
 
         group.setAttribute('data-nds-otp-initialized', '');
         var abortController = new AbortController();
-        otpAbortControllers.set(group, abortController);
         var signal = abortController.signal;
+        group.ndsOtp = {
+            boxes: inputs.length,
+            destroy: function () {
+                abortController.abort();
+                group.removeAttribute('data-nds-otp-initialized');
+                delete group.ndsOtp;
+            }
+        };
 
         // A form reset empties the boxes but not the hidden carrier: a hidden input's value is its attribute.
         NDS.field.onReset(inputs[0].form, function () { syncHidden(group); }, { signal: signal });
@@ -284,24 +287,27 @@
     // MAIN INIT
     // ==============================================
 
+    // Every run sweeps, so a view mounted later is wired too.
     function init() {
+        document.querySelectorAll('.nds-otp-group').forEach(setupOtpGroup);
         if (subscribed) return;
         subscribed = true;
-        document.querySelectorAll('.nds-otp-group').forEach(setupOtpGroup);
 
-        NDS.onDomAdd('.nds-otp-group', function (nodes) {
-            nodes.forEach(setupOtpGroup);
+        // A box added to a wired group wires it again, so every box counts and carries its label.
+        NDS.onDomAdd('.nds-otp-group, .nds-otp-container input', function (nodes) {
+            new Set(Array.from(nodes, function (node) { return node.closest('.nds-otp-group'); })).forEach(function (group) {
+                if (!group) return;
+                if (group.ndsOtp) {
+                    // Already wired with these boxes (init's sweep ran first): leave it, and its focus.
+                    if (group.ndsOtp.boxes === getOtpInputs(group).length) return;
+                    group.ndsOtp.destroy();
+                }
+                setupOtpGroup(group);
+            });
         });
 
         NDS.onDomRemove('.nds-otp-group', function (nodes) {
-            nodes.forEach(function (group) {
-                var abortController = otpAbortControllers.get(group);
-                if (abortController) {
-                    abortController.abort();
-                    otpAbortControllers.delete(group);
-                }
-                group.removeAttribute('data-nds-otp-initialized');
-            });
+            nodes.forEach(function (group) { if (group.ndsOtp) group.ndsOtp.destroy(); });
         });
     }
 

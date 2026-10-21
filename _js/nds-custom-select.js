@@ -23,30 +23,27 @@
  */
 // NDS Custom Select — styled dropdown over a .nds-select-input
 //
-// Delegated + lazy (mirrors the voice-input pattern): init() installs two
-// document-level listeners and does NO per-select work. A select's dropmenu is
+// Delegated + lazy: init() paints pre-selected labels and wires the document
+// listeners (focusin, option click, form reset) once. A select's dropmenu is
 // built on its FIRST focusin — only selects the user actually reaches ever get
-// constructed, and construction lands on an interaction rather than any init
-// pass. focusin (not click) is the trigger because it fires for BOTH mouse
+// constructed. focusin (not click) is the trigger because it fires for BOTH mouse
 // (mousedown → focusin → click) and keyboard (Tab → focusin), so keyboard-open
 // keeps working; the dropmenu instance is ready before the open gesture, and
 // NDS.Dropmenu then owns open/close/keyboard/outside-click/positioning natively.
 //
 // The only "select" behaviour layered on top of a plain dropmenu: copy the
 // picked option's text/value into the input (delegated option-click), mark the
-// selected option, and mirror open-state for the arrow. Initial DISPLAY text is
-// authored in the input's markup `value` (declarative — there is no load-time
-// pass to derive it).
+// selected option, and mirror open-state for the arrow.
 (function () {
     'use strict';
 
     var documentWired = false;
 
-    // Render a pre-selected value's display label. The hidden `.nds-select-value`
-    // is the source of truth (it submits); the visible `.nds-select-input` is a
-    // readonly, non-submitting display surface, so its label is DERIVED from the
-    // matching option's text — never hand-authored. Display-only: no dropmenu
-    // build. No-op once a label is present. init() runs it over every
+    // The option carrying value in this field: the first, as every path reads it.
+    function findOption(formControl, value) {
+        return formControl.querySelector('.nds-select-option[data-value="' + CSS.escape(value) + '"]');
+    }
+
     // The visible label for an option. Prefers a nested .nds-label inside
     // .nds-option-text (the shape that carries a description alongside the
     // label — reading .textContent would return "Label Description" glued
@@ -60,6 +57,11 @@
         return label ? label.textContent : textEl.textContent;
     }
 
+    // Render a pre-selected value's display label. The hidden `.nds-select-value`
+    // is the source of truth (it submits); the visible `.nds-select-input` is a
+    // readonly, non-submitting display surface, so its label is DERIVED from the
+    // matching option's text — never hand-authored. Display-only: no dropmenu
+    // build. No-op once a label is present. init() runs it over every
     // select-input on the page, so a pre-filled label paints without waiting
     // for the field's deferred build.
     function restoreDisplay(selectInput) {
@@ -69,14 +71,8 @@
         var hidden = formControl.querySelector('.nds-select-value');
         var current = hidden ? hidden.value : '';
         if (!current) return;
-        var options = formControl.querySelectorAll('.nds-select-option');
-        for (var i = 0; i < options.length; i++) {
-            if (options[i].dataset.value === current) {
-                var label = getOptionLabel(options[i]);
-                selectInput.value = label || current;
-                return;
-            }
-        }
+        var option = findOption(formControl, current);
+        if (option) selectInput.value = getOptionLabel(option) || current;
     }
 
     // Build the dropmenu for one select (first focus). Idempotent via the
@@ -113,7 +109,7 @@
         // custom property (see _form.scss) — not an inline style here, which
         // the dropmenu wipes via `menu.style.cssText = ''` on close.
 
-        // Mark the initially-selected option (display text is in markup).
+        // Mark the initially-selected option (restoreDisplay painted its label).
         var current = (hiddenInput ? hiddenInput.value : '') || selectInput.value;
         if (current) {
             options.forEach(function (option) {
@@ -122,7 +118,7 @@
         }
 
         // Mirror dropmenu open/close onto the form-container so the arrow
-        // rotation rule (`.nds-form-container[data-state~="open"]`) keeps working.
+        // rotation rule (`.nds-select[data-state~="open"]`) keeps working.
         var controller = new AbortController(), signal = controller.signal;
         formControl.addEventListener('nds:dropmenu:opened', function () {
             NDS.state.add(formContainer, 'open');
@@ -171,13 +167,12 @@
         build(selectInput);
     }
 
-    // The full write sequence a user pick runs — shared by the delegated
-    // click path and the public setValue/clear. `option` null = clear back to
-    // placeholder.
     // A hidden input's value IS its attribute, so a form reset cannot bring the first value back: keep it here.
     var initial = new WeakMap();
 
-    // quiet: a form reset, which fires no input, change or select event.
+    // The full write sequence a user pick runs — shared by the delegated
+    // click path and the public setValue/clear. `option` null = clear back to
+    // placeholder. quiet: a form reset, which fires no input, change or select event.
     function setOption(formControl, option, quiet) {
         addDocumentListeners();
         var selectInput = formControl.querySelector('.nds-select-input');
@@ -246,10 +241,8 @@
     function handleReset(form) {
         form.querySelectorAll('.nds-select-value').forEach(function (hidden) {
             var formControl = hidden.closest('.nds-form-control');
-            var value = initial.has(hidden) ? initial.get(hidden) : hidden.value, match = null;
             if (!formControl) return;
-            formControl.querySelectorAll('.nds-select-option').forEach(function (option) { if (option.dataset.value === value) match = option; });
-            setOption(formControl, match, true);
+            setOption(formControl, findOption(formControl, initial.has(hidden) ? initial.get(hidden) : hidden.value), true);
         });
     }
 
@@ -305,13 +298,8 @@
         setValue: function (el, value) {
             var formControl = findFormControl(el);
             if (!formControl) return false;
-            var options = formControl.querySelectorAll('.nds-select-option');
-            for (var i = 0; i < options.length; i++) {
-                if (options[i].dataset.value === String(value)) {
-                    return setOption(formControl, options[i]);
-                }
-            }
-            return false;
+            var option = findOption(formControl, String(value));
+            return option ? setOption(formControl, option) : false;
         },
         // Back to placeholder: both inputs emptied, markers off, same events.
         clear: function (el) {

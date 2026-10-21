@@ -27,7 +27,7 @@
 /**
  * NDS TagInput — free-text tags committed as removable chips while typing.
  * Enter or comma commits the typed text, Backspace on an empty input removes
- * the last tag, paste splits on commas/newlines, blur commits pending text.
+ * the last tag, paste splits on commas, blur commits pending text.
  * Duplicates (case-insensitive) are rejected and announced.
  *
  * Form carrier: one <input type="hidden" name="X[]"> per tag, kept in the
@@ -154,9 +154,9 @@
                 // below) — never split a picked value on its own commas.
                 if (!e.isTrusted && this._root.hasAttribute('data-url')) return;
                 const value = this._input.value;
-                if (!/[,،\n]/.test(value)) return;
+                if (!/[,،]/.test(value)) return;
                 if (this._strict) { this._showStrictError(); return; }
-                const parts = value.split(/[,،\n]/);
+                const parts = value.split(/[,،]/);
                 const pending = parts.pop();
                 parts.forEach(part => this.addTag(part));
                 this._input.value = pending.replace(/^\s+/, '');
@@ -191,6 +191,9 @@
 
         destroy() {
             this.abortController?.abort();
+            // Chips hold their own remove listeners; create() rebuilds them from the carriers, which keep the value.
+            this._formControl.querySelectorAll('.nds-chip').forEach(chip => chip.remove());
+            NDS.state.remove(this._root, 'filled');
             delete this._root.ndsTaginput;
             this._root.removeAttribute('data-nds-taginput-initialized');
         }
@@ -268,9 +271,9 @@
             this._tags.forEach(value => {
                 this._formControl.insertBefore(this._buildChip(value), this._input);
             });
-            // New chips take the field's disabled.
-            NDS.state.refresh(this._root, 'disabled');
+            // After the carrier rebuild: new chips and carriers take the field's disabled, so a disabled field posts no tag.
             this._syncHiddenInputs();
+            NDS.state.refresh(this._root, 'disabled');
             // 'filled' is the field's public styling hook (multiselect parity)
             // — consumers style it; no in-repo reader by design.
             NDS.state[this._tags.length ? 'add' : 'remove'](this._root, 'filled');
