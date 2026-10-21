@@ -2,7 +2,7 @@
 // timing), NDS.Form.create over N copies of a field (20 / 50 / 100), and the handler time of one keystroke and
 // one click in a field (every listener, stamped before NDS and after it). Phone, CPU x6.6, median of RUNS.
 //   node scripts/check-form-speed.mjs            BASE=<commit> (default HEAD) · RUNS=5 · CPU=6.6 · PAGES="a.html b.html"
-// Needs the dev server on :4002. Chromium only (CDP). The past commit's bundles are served in place of today's.
+// Needs the dev server on :4002 (SITE=<base url> for another). Chromium only (CDP). The past commit's bundles are served in place of today's.
 import { launch, cdp } from './lib/browser.mjs';
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
@@ -13,7 +13,7 @@ const BASE = process.env.BASE || 'HEAD';
 const RUNS = +(process.env.RUNS || 5);
 const CPU = +(process.env.CPU || 6.6);
 const PAGES = (process.env.PAGES || 'examples/registration.html components/form.html').split(/\s+/);
-const SITE = 'http://localhost:4002/NDS-vanilla';
+const SITE = (process.env.SITE || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
 
 // The past commit's bundles, written once to tmp/form-speed/<sha>/.
 const git = (...a) => execFileSync('git', a, { cwd: ROOT, encoding: 'buffer', maxBuffer: 64 << 20 });

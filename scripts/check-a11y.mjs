@@ -1,7 +1,7 @@
 // axe (WCAG 2.x A + AA) and a keyboard walk on every built page, as built (LTR) and in RTL.
 // The walk Tabs through the page: each stop must be visible, outside aria-hidden/inert, and
 // draw a focus ring (outline or box-shadow); a walk that never gets back to the start is a trap.
-//   node scripts/check-a11y.mjs [page.html …] [--dir ltr|rtl] [--no-keys] [--jobs n]
+//   node scripts/check-a11y.mjs [page.html …] [--dir ltr|rtl] [--no-keys] [--jobs n]   SITE=<base url> for another server
 //   ENGINE=webkit for Safari. Needs the dev server (bundle exec jekyll serve).
 import { launch, ENGINE } from './lib/browser.mjs';
 import { readdirSync, statSync } from 'node:fs';
@@ -9,7 +9,7 @@ import { join, relative } from 'node:path';
 import { createRequire } from 'node:module';
 
 const SITE = join(import.meta.dirname, '..', '_site');
-const BASE = 'http://localhost:4002/NDS-vanilla/';
+const BASE = (process.env.SITE || 'http://localhost:4002/NDS-vanilla').replace(/\/?$/, '/');
 const AXE = createRequire(import.meta.url).resolve('axe-core/axe.min.js');
 const args = process.argv.slice(2);
 const opt = (name) => { const i = args.indexOf(name); return i < 0 ? null : args.splice(i, 2)[1]; };

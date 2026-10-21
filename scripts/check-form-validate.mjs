@@ -2,7 +2,7 @@
 // <form class="nds-form">, in four states — as written, required, filled, disabled and required. Lists each
 // difference (valid, which field failed, its message). The Form split must change nothing it did not mean to.
 //   node scripts/check-form-validate.mjs        BASE=<commit> (default HEAD) · ENGINE=webkit · ONLY=<page stem> · DUMP=1 prints today's results
-// Needs the dev server on :4002. The past commit's bundles are served in place of today's.
+// Needs the dev server on :4002 (SITE=<base url> for another). The past commit's bundles are served in place of today's.
 import { launch } from './lib/browser.mjs';
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
@@ -10,7 +10,7 @@ import { join } from 'node:path';
 
 const ROOT = join(import.meta.dirname, '..');
 const BASE = process.env.BASE || 'HEAD';
-const SITE = 'http://localhost:4002/NDS-vanilla';
+const SITE = (process.env.SITE || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
 const PAGES = ['form', 'checkbox', 'radio', 'switch', 'multiselect', 'taginput', 'upload', 'custom-select', 'dropmenu',
     'autocomplete', 'otp', 'rating', 'time-picker', 'date-picker', 'password'].filter((p) => !process.env.ONLY || p === process.env.ONLY);
 

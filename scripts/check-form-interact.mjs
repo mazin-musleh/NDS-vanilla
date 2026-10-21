@@ -4,7 +4,7 @@
 // reset. After each step it records each field's states and status, the inputs, the action buttons, the
 // messages and where focus is, then lists each difference.
 //   node scripts/check-form-interact.mjs        BASE=<commit> (default HEAD) · ENGINE=webkit · ONLY=<page stem>
-// Needs the dev server on :4002. The past commit's bundles are served in place of today's.
+// Needs the dev server on :4002 (SITE=<base url> for another). The past commit's bundles are served in place of today's.
 import { launch } from './lib/browser.mjs';
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
@@ -12,7 +12,7 @@ import { join } from 'node:path';
 
 const ROOT = join(import.meta.dirname, '..');
 const BASE = process.env.BASE || 'HEAD';
-const SITE = 'http://localhost:4002/NDS-vanilla';
+const SITE = (process.env.SITE || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
 const PAGES = ['form', 'password', 'checkbox', 'radio', 'switch', 'otp', 'taginput', 'custom-select', 'multiselect', 'date-picker', 'time-picker']
     .filter((p) => !process.env.ONLY || p === process.env.ONLY);
 

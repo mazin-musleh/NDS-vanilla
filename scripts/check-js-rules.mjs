@@ -235,7 +235,7 @@ for (const m of readFileSync(join(REPO, '_plugins', 'js_processor.rb'), 'utf8').
 const HOME = {};
 for (const f of readdirSync(join(REPO, '_js')).filter((x) => /^nds-.*\.js$/.test(x))) {
     const src = readFileSync(join(REPO, '_js', f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
-    for (const m of src.matchAll(/(?<![\w.$])NDS\.([A-Za-z]\w*)\s*=(?!=)/g)) HOME[m[1]] ??= f;
+    for (const m of src.matchAll(/(?<![\w.$])(?:window\.)?NDS\.([A-Za-z]\w*)\s*=(?!=)/g)) HOME[m[1]] ??= f;
 }
 const inMain = (ns) => BUNDLE[HOME[ns]] === 'main';
 const POOLS = 'Resize|ElementResize|Intersect|OutsideScroll|AttrChange|DOMAdd|DOMRemove|ChildrenChange';
@@ -355,7 +355,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     // JSD-12 a guard on a sibling namespace no comment in its scope explains.
     const own = pascal(name.replace(/^nds-|\.js$/g, ''));
     const guarded = new Set();
-    for (const m of code.matchAll(/\bNDS\.([A-Z]\w*)\s*(?:\?\.|&&|\))|typeof\s+NDS\.([A-Z]\w*)/g)) {
+    for (const m of code.matchAll(/\bNDS\.([A-Z]\w*)\s*(?:\?\.|&&|\|\||\))|typeof\s+NDS\.([A-Z]\w*)/g)) {
         const sib = m[1] || m[2];
         if (sib === own) continue;
         const ctx = code.slice(Math.max(0, m.index - 12), m.index);
