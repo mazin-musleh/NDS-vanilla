@@ -4,9 +4,14 @@ Status: PARKED 2026-10-21, design agreed, reviewed against PERSONA the same day 
 changed yet. Facts first measured on `main` at `e035b198`, spot-checked at `7edd18a1`. `plans/shared-logic.md`
 finished its code (owner, 2026-10-21); its doc-check and speed steps rename nothing.
 
-**Resume here.** 1) Re-measure: shared-logic moved files and symbols, so every count, file and line below is
-a hint, not the work list. The check built in section 7 step 2 gives the real list. 2) Follow section 7 in
-order, minding section 6.
+**Resume here.** Section 4 landed (PERSONA entries 1, 2, 5, 6, 10, 12; JSA-23(a), JSD-18, JSP-06, JSP-09). Next:
+section 7 step 1's rest: the once-per-page bundle guard (entry 12 rule 17) with its double-load check, then the
+table flag goes. PERSONA now names `initDone`, `dateInitDone`, `wired`, `reconciled`: the module-scope commit
+lands them in the code, and heals the citations still on old names (entries 3 and 5, JSA-23's `_wired`). Start only on a clean tree: the plan edits nearly every
+`_js/` file. Then step 2 (the checks), whose list is the work list: every count, file and line below is a hint.
+Step 3's commits go safest first: module-scope `_`, constants and classes; then verbs, acronyms and whole
+words; then cross-file `_`; the WeakMap move last of the internal ones (it changes runtime, so browser checks).
+Mind section 6. Bulk renames go to subagents; each commit message to the owner first.
 
 **Owner directives (2026-10-20), do not reopen:**
 - Every name is decided by the rules in this plan, never by an owner A/B. A meaning the rules leave open
@@ -243,7 +248,10 @@ callback is not a value).
 - **Hooks, tokens, constants, `detail` keys** (rules 5, 6, 8, 10): the check lists them (135 hooks on banners
   carry no component name; most sit on their own component and pass). Each hook or token rename is a row.
 
-## 4. What this changes in PERSONA
+## 4. What this changes in PERSONA (landed 2026-10-21)
+
+Plan rules 1–7 and 9 are entry 12 rules 11–17 (rule 7 folded into 13); section 2's table and whole-words rule
+are entry 10's "Internal functions" and rule 8.
 
 Each rule lands in PERSONA's own four fields (Canonical, Why, Carve-outs, Audit behavior with severities).
 The owner's go on this plan is PERSONA's "user makes a deliberate decision" path, so the edits land

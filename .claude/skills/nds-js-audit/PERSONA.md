@@ -43,11 +43,12 @@ Clarity beats brevity for fields read during teardown work and code review: a re
 **Carve-outs (NOT divergence)**
 
 - **Secondary controllers** that scope a sub-concern, named for what they scope: `this.fetchAbortController` (`_js/nds-filter.js`, `_js/nds-autocomplete.js` — each paired with the primary `this.abortController`, aborting one in-flight request without touching listeners) and `this.renderAbortController` (`_js/nds-chart.js`, scopes one render cycle).
-- **Per-element AbortControllers stored on the element** (`el._ndsFilterAC` in `_js/nds-filter.js`) are scoped to the element's lifetime, not the instance's. Structurally different shape; the leading underscore IS correct here because the property is on a foreign element.
+- **Per-element AbortControllers** are scoped to the element's lifetime, not the instance's. They live in a module `WeakMap` keyed by the element, never on the element (entry 12 rule 14), and the map is named for what it holds, ending in `AbortControllers` (`filterAbortControllers`).
+- The `_` rule (entry 12 rule 11) leaves these names plain: the reason above holds, and the banner, not the mark, is the contract.
 
 **Audit behavior**
 
-Flag any `this.<name> = new AbortController()` where `<name>` is neither `abortController` nor ends in `AbortController` — that covers ≤4-character names, `_ac` / `_ctrl` / `_fp`, `controller`, and mixed-case abbreviations like `_docAC`. Secondary controllers with domain-named full words (any name containing `AbortController` as a suffix) pass.
+Flag any `this.<name> = new AbortController()` where `<name>` is neither `abortController` nor ends in `AbortController` — that covers ≤4-character names, `_ac` / `_ctrl` / `_fp`, `controller`, and mixed-case abbreviations like `_docAC`. Secondary controllers with domain-named full words (any name containing `AbortController` as a suffix) pass. Flag a `WeakMap` that holds AbortControllers and whose name does not end in `AbortControllers`.
 
 ---
 
@@ -61,7 +62,7 @@ Flag any `this.<name> = new AbortController()` where `<name>` is neither `abortC
 destroy() {
     this.abortController.abort();
     this._offDomAdds.forEach(off => off());
-    this.root.removeAttribute('data-nds-<name>-initialized');
+    this._root.removeAttribute('data-nds-<name>-initialized');
 }
 ```
 
@@ -188,42 +189,41 @@ if (!el.hasAttribute('data-nds-<name>-initialized')) { /* init */ }
 
 `<name>` is the kebab-case form of the component (matches the file suffix: `filter`, `dropmenu`, `cooldown-button`).
 
-#### 5.2 Singleton modules → module-scope `_initDone` closure flag
+#### 5.2 Singleton modules → module-scope `initDone` closure flag
 
 **Canonical**
 
 ```js
-let _initDone = false;
+let initDone = false;
 function init() {
-    if (_initDone) return;
-    _initDone = true;
+    if (initDone) return;
+    initDone = true;
     // wire body/document listeners, attach singleton observers
 }
 ```
 
 **Why (and rejected alternatives — whole entry)**
 
-A factory creates per-element instances; the guard must distinguish "this specific element is initialized" from "any element of this type was once initialized," so the marker belongs on the element. A singleton has no per-element target to mark; pinning an attribute to `document.body` would pollute a shared namespace and force unrelated singletons to coordinate names. The guard's location should match the guard's scope. Rejected: factory using a closure flag — can't distinguish per-element state, re-init scans become impossible; singleton using a `document.body` attribute — namespace pollution; `window.nds<Name>Initialized` global flag — leaks state into the window namespace; acceptable only for a listener wired at bundle scope (carve-out below).
+A factory creates per-element instances; the guard must distinguish "this specific element is initialized" from "any element of this type was once initialized," so the marker belongs on the element. A singleton has no per-element target to mark; pinning an attribute to `document.body` would pollute a shared namespace and force unrelated singletons to coordinate names. The guard's location should match the guard's scope. Rejected: factory using a closure flag — can't distinguish per-element state, re-init scans become impossible; singleton using a `document.body` attribute — namespace pollution; `window.nds<Name>Initialized` global flag — leaks state into the window namespace, and a second copy of the bundle is already stopped by the build (entry 12 rule 17).
 
 **Carve-outs (NOT divergence)**
 
 Each shape below matches its form to what it actually guards, so none is divergence:
 
-- **Per-element scope, non-attribute form.** The marker lives on the element without being an attribute when the structure justifies it: a JS property on a document-sweeping controller (`_js/nds-field.js` `_ndsInitialized`, `_js/nds-form.js` `_ndsFormInitialized`) — per-element, just not CSS-selectable, so re-sweeps check inline; the instance expando where `create(el)` is idempotent through the back-ref (`_js/nds-date-picker.js` `ndsDatePicker`) — the instance IS the init state and a parallel attribute channel could drift, so it must be gated on successful construction (JSD-18); or init's own DOM mutation as the marker (`_js/nds-custom-select.js` `build()` checks the `.nds-dropmenu` class it stamps). A *registered* factory with a per-instance selector still prefers the attribute form so loader rescans can selector-filter — see Audit behavior step 7.
+- **Per-element scope, non-attribute form.** The marker lives on the element without being an attribute when the structure justifies it: a module `WeakSet` of the elements a document-sweeping controller has wired (`_js/nds-field.js`, `_js/nds-form.js`) — per-element, just not CSS-selectable, so re-sweeps check inline (never a JS property on the element: entry 12 rule 14); the instance expando where `create(el)` is idempotent through the back-ref (`_js/nds-date-picker.js` `ndsDatePicker`) — the instance IS the init state and a parallel attribute channel could drift, so it must be gated on successful construction (JSD-18); or init's own DOM mutation as the marker (`_js/nds-custom-select.js` `build()` checks the `.nds-dropmenu` class it stamps). A *registered* factory with a per-instance selector still prefers the attribute form so loader rescans can selector-filter — see Audit behavior step 7.
 - **Resource scope, no flag at all.** When init is idempotent or deliberately re-armable, the resource IS the guard: `_js/nds-selection.js` `_controller` (nulled by `destroy()` so `init()` re-arms by design — a one-way flag would break the cycle), `_js/nds-share.js` `init()` (documented abort-and-rebind of its own `_abortController`).
-- **Bundle-scope listener, window flag.** A document listener wired at module eval has no per-element target, and a module-scope flag resets if a second copy of the bundle evaluates; the flag that stops a second listener belongs on `window`: `_js/nds-table.js` `window.ndsTableSubHandlerInitialized` (~L835), covering the document-delegated sub-row toggle (independent of the sort/checkbox-gated `NDSTables` instance). Requires the inline comment named in Audit behavior step 4.
-- **Sub-concern latch, named for what it latches.** A guard gating one arm of init — narrower than the module's own guard, so it carries a descriptive name instead of `_initDone`. Three shapes: one-time page-level setup inside a factory (document delegation, singleton observers, a body-appended sentinel) — `runtimeSet` guarding `setupRuntime` (`_js/nds-fab.js` ~L195), `togglesBound` guarding `bindToggles` (`_js/nds-panel.js` ~L462), both files carrying the canonical attribute for their own init; and per-branch latches in a singleton wiring independently-present widgets — `_js/nds-time-date.js` `_dateInitDone` / `_clockInitDone`, whose declaration documents the reasoning ("The date and clock topbar widgets can appear independently, so the latches are separate — a page that ships only one widget can still wire the other if it's injected later"). One shared `_initDone` would latch on the first widget and strand the second. A singleton whose `init()` re-runs on purpose has no module-wide latch at all, only its arms': `_js/nds-theme.js` `_wired` (listeners) / `_reconciled` (saved-palette restore) — its `init()` comment: "the sync runs every time, the restore and the listeners once", so `mount()` / `refresh()` reach a later view's toggles. And the attribute form of the same idea — a second `data-nds-<sub-mode>-initialized` on the SAME element beside the component's canonical guard, gating an init arm the canonical one doesn't cover: `_js/nds-pagination.js` `data-nds-auto-pagination-initialized` (guards `setupAutoContainer`, while `data-nds-pagination-initialized` guards the manual sweep) and `_js/nds-table.js` `data-nds-columns-initialized` (guards the column-toggle arm beside `data-nds-table-initialized`). Discriminator for the attribute shape: the component's canonical guard is present on the element, and the second attribute names an init path it does not cover. Step 5's name check governs a singleton module's OWN guard only, and step 6's `data-nds-<name>-initialized` check governs the component's OWN guard only — neither fires on these.
+- **Sub-concern latch, named for what it latches.** A guard gating one arm of init — narrower than the module's own guard, so it carries a descriptive name instead of `initDone`. Three shapes: one-time page-level setup inside a factory (document delegation, singleton observers, a body-appended sentinel) — `runtimeSet` guarding `setupRuntime` (`_js/nds-fab.js` ~L195), `togglesBound` guarding `bindToggles` (`_js/nds-panel.js` ~L462), both files carrying the canonical attribute for their own init; and per-branch latches in a singleton wiring independently-present widgets — `_js/nds-time-date.js` `dateInitDone` / `clockInitDone`, whose declaration documents the reasoning ("The date and clock topbar widgets can appear independently, so the latches are separate — a page that ships only one widget can still wire the other if it's injected later"). One shared `initDone` would latch on the first widget and strand the second. A singleton whose `init()` re-runs on purpose has no module-wide latch at all, only its arms': `_js/nds-theme.js` `wired` (listeners) / `reconciled` (saved-palette restore) — its `init()` comment: "the sync runs every time, the restore and the listeners once", so `mount()` / `refresh()` reach a later view's toggles. And the attribute form of the same idea — a second `data-nds-<sub-mode>-initialized` on the SAME element beside the component's canonical guard, gating an init arm the canonical one doesn't cover: `_js/nds-pagination.js` `data-nds-auto-pagination-initialized` (guards `setupAutoContainer`, while `data-nds-pagination-initialized` guards the manual sweep) and `_js/nds-table.js` `data-nds-columns-initialized` (guards the column-toggle arm beside `data-nds-table-initialized`). Discriminator for the attribute shape: the component's canonical guard is present on the element, and the second attribute names an init path it does not cover. Step 5's name check governs a singleton module's OWN guard only, and step 6's `data-nds-<name>-initialized` check governs the component's OWN guard only — neither fires on these.
 - **CSS-contract reveal stamp on a foreign element.** An attribute a component writes on an element it does not own, consumed by critical CSS as a paint-release hook, is not that component's init guard — it names the region being revealed, so step 6's `data-nds-<name>-initialized` check must not fire on it. Cite: `_js/nds-pagination.js` `data-paged-initialized`, stamped on the paged CONTENT container (file header documents the crit-CSS hold it releases) while the component's own canonical `data-nds-pagination-initialized` stays on the nav. Discriminator: the attribute is written to a different element than the one the sweep guard reads.
 
 **Audit behavior**
 
 1. Classify the file via init pattern: iterates `querySelectorAll(...)` over content elements → factory (expect 5.1); binds only to `document.body` / `document.documentElement` / module-level state → singleton (expect 5.2).
-2. Factory using `_initDone` or `window.<flag>` → flag.
+2. Factory using `initDone` or `window.<flag>` → flag.
 3. Singleton using `data-nds-<name>-initialized` → flag.
-4. Window-global flag requires an inline comment within 3 lines naming why it lives on `window` (a second copy of the bundle must not add a second listener); otherwise flag.
-5. Singleton using a module-scope closure flag NOT named `_initDone` (e.g. `_installed`, `_wired`, `_ready`) → flag as a name divergence; migrate to `_initDone` or open a Phase 7 revision.
+4. A component flag on `window` → flag: the build's once-per-page guard (entry 12 rule 17) stops a second copy of the bundle, so a module latch does the job.
+5. Singleton using a module-scope closure flag NOT named `initDone` (e.g. `installed`, `ready`) → flag as a name divergence; migrate to `initDone` or open a Phase 7 revision.
 6. Factory whose per-element guard IS a DOM attribute but does NOT match `data-nds-<name>-initialized` (e.g. missing the `nds-` infix, like `data-swiper-initialized`) → flag as a name divergence; migrate or open a Phase 7 revision. Does NOT apply to the non-attribute carve-out above.
-7. *Registered* factory with a per-instance selector using a JS-property guard (`el._ndsXxxInitialized`) where the attribute form would let loader rescans selector-filter → flag as a form divergence; migrate to `data-nds-<name>-initialized` or open a Phase 7 revision.
+7. *Registered* factory with a per-instance selector using a `WeakSet` guard where the attribute form would let loader rescans selector-filter → flag as a form divergence; migrate to `data-nds-<name>-initialized` or open a Phase 7 revision. A JS-property guard on the element (`el._ndsXxxInitialized`) → flag (entry 12 rule 14).
 8. Singleton `init()` that arms listeners/observers/timers with NO guard at all — no flag, no resource-presence check, none of the repeat-safe shapes in the carve-outs — → flag (a re-run stacks or re-schedules work).
 
 ---
@@ -252,7 +252,7 @@ Listener teardown should be atomic by default: one `.abort()` releases every lis
 
 **Carve-outs (NOT divergence)**
 
-- **Per-element AbortControllers stored on the element** (`el._ndsFilterAC`) scope a different lifetime (the element's, not the instance's). Out of scope.
+- **Per-element AbortControllers** in a module `WeakMap` (entry 1) scope a different lifetime (the element's, not the instance's). Out of scope.
 - **Pooled-handle abort bridge.** `signal.addEventListener('abort', off)` that releases an `NDS.on*` unsubscribe handle is the canonical way to tie a pooled subscription to the same teardown as the signal's listeners — the pooled helpers take no `signal`, so there is no native alternative to strip it in favour of. Exemplars: the `offResize` bridges in `_js/nds-panel.js` (~L161) and `_js/nds-accessibility.js` (~L581, ~L1492). Discriminator vs Audit behavior #5: that shape wraps a plain `removeEventListener` which `{ signal }` covers natively; this one has no `{ signal }` route at all.
 
 **Audit behavior**
@@ -382,9 +382,9 @@ For each loader-registered component: the JS file suffix, the registry `name` tu
 
 ### 10. Method names
 
-**Canonical** — for namespace methods (`NDS.X.method`) and instance methods (`el.ndsX.method`) alike:
+**Canonical** — for namespace methods (`NDS.X.method`) and instance methods (`el.ndsX.method`) alike. Rules 1–3 apply to every function, public or not; internal functions add the table under "Internal functions" below.
 
-1. camelCase, verb first. A true/false value starts with `is` or `has`. A class exposed on a namespace is PascalCase (`DatePicker.Calendar`). A name starting with `_` is internal.
+1. camelCase, verb first. A true/false value starts with `is` or `has`. A class exposed on a namespace is PascalCase (`DatePicker.Calendar`). Which names take `_` is entry 12's rules 11–13.
 2. The noun after the verb names what the method acts on, never the namespace: `Form.validate`, not `validateForm`. Leave it out for the component itself (`Modal.open()`); name the part for a child (`openItem(i)`, `addFile`).
 3. An acronym is one word (`toCsv`, `isIban`), as in entry 9.
 4. One verb per meaning. The table names the meanings that had rival verbs; a meaning it does not name takes any verb-first whole word, and only a listed synonym is flagged:
@@ -404,10 +404,36 @@ For each loader-registered component: the JS file suffix, the registry `name` tu
 5. Arguments: the element first, then the values, then one options object. More than two values go in the options object; a callback is not a value and takes its own place, as in `addEventListener(type, listener, options)`. A name used in two places takes the same arguments in both (`Form.setStatus(el, status, opts)`, `UserFeedback.setStatus(el, status)`, `NDS.status.set(el, status)`).
 6. A namespace method and its instance method use the same verb; the namespace one takes the element first (`NDS.Rating.enable(el)` mirrors `el.ndsRating.enable()`).
 7. `create` returns the instance (entry 3.3's `create({...})` returns the surface it inserted: the call is the open), `getInstance` the instance or `null`, a check its result, and a method that waits a Promise.
+8. Whole words for function and member names (`formatValue`, not `fmtVal`; `closeButton`, not `closeBtn`). Locals and parameters may use this list and no other short word: `el`, `e`, `i`, `j`, `x`, `y`, `fn`, `opts`, `btn`. One compound, one spelling (`fileName` or `filename`, not both).
+
+#### Internal functions
+
+The table is a ban list, like the one above: it names the meanings that had rival verbs. Any other verb-first whole word passes (`setX`, `scheduleX`, `placeX`), and the platform's own verbs stay (`format` as in `Intl`, `parse` as in `JSON`).
+
+| Meaning | Verb | Replaces |
+|---|---|---|
+| Make new nodes and return them | `buildX` | `createX` for DOM, `generateX`, a `…Dom` suffix |
+| Make a node exist, once | `ensureX` | — |
+| Put built nodes into a container, replacing its children | `renderX` | `populateX` |
+| Make existing nodes match state (attributes, properties, classes; no new nodes, no input) | `syncX` | `updateX()` and `applyX()` with no input, `paintX`, an internal `refreshX`, `recheckX` |
+| Take a value and write it in | `setX(value)` | `updateX(value)`, `applyX(value)` |
+| Add listeners | `addXListeners` | `bindX`, `wireX`, `attachX` |
+| One-time wiring of a part, and its undo | `setupX` / `cleanupX` | `initializeX`, `initX`; `teardownX`, `unwireX` |
+| A listener function | `handleX` | `onX`, `xHandler` |
+| The handle `NDS.on*` returns | `offX` (entry 6) | `unsubX`, `stopX` |
+| Fire an event | `dispatchX` | `emitX` |
+| A value as held: stored or computed | `getX` | a noun name (`pageBounds`, `labelFor`, `navOf`) |
+| A string (attribute, URL, storage) parsed into a typed value, and back | `readX` / `writeX` | — |
+| Search the DOM, may return `null` | `findX` | — |
+| Turn an argument (id, selector, element) into the thing | `resolveX` | — |
+| Convert | `toX` / `fromX` | — |
+| True/false | `isX` / `hasX`, or the DOM's `matches` / `contains` | `inX`, `xExists`, `itemMatchesX` |
+
+Every row comes from a canonical here, the platform or a library, by entry 12's pick order: `create` returns an instance (rule 7); `render` is React's, Vue's and Lit's; `update` meant two things (`Chart.update(newOpts)` takes input, `Toc.update()` does not) and `apply` is `Function.prototype.apply`; `addEventListener` and `dispatchEvent` are the DOM's, and `bind` is `Function.prototype.bind`; a React effect is a setup function that returns a cleanup, and `init` already names the loader hook; `handleX` for the listener and `onX` for subscribing are React's; `Clipboard.readText` / `writeText`, `Array.prototype.find`, `Promise.resolve`, `toString` and `Array.from` name the rest. `ensureX` is the one decision with no outside name: it says the call is safe to repeat.
 
 **Why (and rejected alternatives)**
 
-A name a reader or an agent can guess from another component, or from the DOM and Bootstrap, is a name nobody looks up. The verbs come from the libraries people already know, so a guess lands. Rejected: `measure()` for a size change (no library uses it; a caller should not have to know which kind of change it made); `setDisabled(bool)` (the common pair is `enable()` / `disable()`); `previous()` (the common pair is `next()` / `prev()`); acronyms in capitals (`toCSV`), which need a list of what counts as one.
+A name a reader or an agent can guess from another component, or from the DOM and Bootstrap, is a name nobody looks up. The verbs come from the libraries people already know, so a guess lands. Rejected: `measure()` for a size change (no library uses it; a caller should not have to know which kind of change it made); `setDisabled(bool)` (the common pair is `enable()` / `disable()`); `previous()` (the common pair is `next()` / `prev()`); acronyms in capitals (`toCSV`), which need a list of what counts as one. An acronym as one word follows Google's camelCase rule (`loadHttpUrl`); the DOM is mixed (`innerHTML`, `getElementById`), so it gives no answer. Rule 8 follows entry 1's reason: the characters an abbreviation saves are paid back at every read.
 
 **Carve-outs (NOT divergence)**
 
@@ -417,10 +443,13 @@ A name a reader or an agent can guess from another component, or from the DOM an
 - A markup value is not a method: `data-stepper-control="previous"` stays.
 - `NDS.init` is the loader's namespace (entry 9), not the `init()` verb; its methods keep the loader-hook meanings (`mount`, `refresh`, `destroy`). Its `initialize()` runs the full pass: `init.init()` would repeat the namespace (rule 2).
 - `NDS.validation.check(el)`: `validation.validate` would repeat the namespace (rule 2).
+- `setupX` is for internal functions only; a public method uses the first table's verbs.
+- A public callback key keeps `onX`: an option a caller passes (`onClick`, `onRemove`, `onChange`) and a part key `NDS.field.addType` reads. React passes a `handleX` function as an `onX` prop; the `handleX` row names the function only.
+- Single-letter axis names (`X`, `Y` in `renderXLabels`) are not acronyms.
 
 **Audit behavior**
 
-Flag a public method whose verb is a synonym the table replaces (`recheck…`, `recount`, `checkOverflow`, `setDisabled`, `previous`, `switchTo`, `slideTo`, `initialize…`, `setup…`), a name that repeats its namespace, or two public names that call the same code → LOW, as a migration target for the next major.
+Flag a public method whose verb is a synonym the table replaces (`recheck…`, `recount`, `checkOverflow`, `setDisabled`, `previous`, `switchTo`, `slideTo`, `initialize…`, `setup…`), a name that repeats its namespace, or two public names that call the same code → LOW, as a migration target for the next major. `check-js-rules.mjs`, for every function: a verb the internal table replaces → finding; a first word it does not know → verify; an acronym in capitals → finding; a short word outside rule 8's list → finding. Each is LOW; an internal rename needs no Migration line.
 
 ---
 
@@ -462,11 +491,19 @@ Direction keeps a change local: a base that knows no user changes without breaki
 
 Scope: the whole of `_js/`, core, the loader, docs and the event packs included. A new kind of name gets a row here before it ships.
 
+**How a name is picked.** When two names mean the same thing, the first rule that decides wins:
+1. A canonical in this file already gives that meaning a name (a canonical, not a symbol an entry cites), if its Why is true and it passes every other entry. If not, fix the entry first (Update workflow).
+2. The web platform's name (DOM, ECMAScript).
+3. The name well-known libraries use (Bootstrap, React, Vue).
+4. A name that already means something else, in NDS or in JavaScript, loses.
+
+Use counts never decide. A meaning these four leave open is a new decision here, with its reason.
+
 | Kind | Rule |
 |---|---|
 | Component: file, namespace, instance, init stamp, doc page | entry 9 |
-| Public methods | entry 10 |
-| Internal functions, `_` members, module-scope names, WeakMaps | `plans/js-naming-rules.md` sections 1–2, until they land in this entry and entry 10 |
+| Public methods, and every function's verb | entry 10 |
+| `_` members, module-scope names, per-element data | this entry, rules 11–16 |
 | Events | entry 8 |
 | Console prefix | entry 4 |
 | AbortControllers | entry 1 |
@@ -489,9 +526,21 @@ Scope: the whole of `_js/`, core, the loader, docs and the event packs included.
 9. **A true/false value**: a public property or method is `isX` / `hasX` (entry 10 rule 1); a latch is named for what it latched, as a past participle (`initDone`, `wired`; entry 5).
 10. **An event `detail` key** is camelCase whole words: the instance under the component's name (`detail.stepper`), a new value under `value`.
 
+The underscore and private data:
+
+11. **Public means on the banner** (entry 7). A class or namespace-object member that is not on its file's banner takes `_`, which means "reachable from outside, not API".
+12. **Only the file that defines a `_` name reads or writes it.** Another file that needs it gets a public name, or the value moves to a base or core (entry 11).
+13. **A module-scope name (IIFE or ES module) takes no `_`**, a flag a public namespace needs included: nothing outside can reach it, so the mark says nothing.
+14. **Private data per element lives in a module `WeakMap` keyed by the element, never on the element.** Only its own file can reach it, so rule 12 holds by construction. A `WeakMap` never holds the instance: the instance stays `el.nds{Name}` (entry 9), the backref `NDS.init.destroy(view)` walks. An entry is not freed by itself while a live AbortController or `NDS.on*` handle keeps the element reachable, so what `create()` stores, `destroy()` deletes, as with a stamp (entry 11).
+15. **A `WeakMap` or `WeakSet` is named for what it holds** (`perPageDefaults`, `wiredInputs`); one holding AbortControllers ends in `AbortControllers` (entry 1).
+16. **No `#private`.** `_` is the one mark.
+17. **A bundle runs once per page.** `js_processor.rb` wraps each bundle in a check of `window.__NDS_LOADED_{BUNDLE}`: a second copy (the tag written twice, Turbo or pjax re-running body scripts, a view adding the tag on mount) runs nothing and warns. No component carries its own defence. Ceiling: two different versions on one page, the first wins.
+
 **Why (and rejected alternatives)**
 
 A name an agent can guess from its kind is a name nobody looks up, and a kind with no rule grows one spelling per author (`cookieConsent` beside `nds-theme`; `NDSTables` beside `NDS.Table`). Rule 1: one plain public global and double underscores on the internal ones is what libraries do (`Vue` and `__VUE__`, `jQuery`, `bootstrap`, `__NEXT_DATA__`), and a single `_` already means an internal member. Rule 3: the key shows in devtools beside the class it belongs to, so it carries the same name. Rule 5 follows HTML, which names an attribute per element (`min` on `<input>`): a hook on its own component cannot clash, and only one on a foreign element needs the component's name. Rule 8 is Google's JavaScript style. Rejected: Bootstrap's prefix on every hook (`data-bs-*`), which would rename 135 hooks in every consumer page to prevent clashes that element scoping already prevents; a bare class name (`class Table`), which can shadow a browser global (`Selection`, `Image`) and needs a list of exceptions; `nds_` with an underscore for keys, which no other NDS surface uses.
+
+Rule 11 makes the banner the one contract. Rejected: "a plain name is public", which made every plain instance field (`this.dropmenu`, `this.box`) a promise, each rename a breaking change. Airbnb bans a leading `_` everywhere because it hides nothing; Bootstrap 5, Lodash and most DOM libraries use it anyway, and NDS has no other mark that works on an object literal (rule 16). Rule 13 matches Airbnb (22.4) and Google: no underscore on a name nothing outside can reach. Rule 14 is how Bootstrap 5 keeps its per-element data (its `Data` module), and the page can neither see the data nor clash with it. Rule 16: `#` works only inside a `class`, and most NDS namespaces are object literals, which cannot hold it. Rule 17: a second copy resets every module latch and wires every singleton again; Stripe.js and Alpine.js skip it and warn, and one check per bundle replaces a defence in every component. CSS already uses the same mark: `--_x` is a private knob.
 
 **Carve-outs (NOT divergence)**
 
@@ -499,10 +548,12 @@ A name an agent can guess from its kind is a name nobody looks up, and a kind wi
 - A field's hook that mirrors an HTML attribute keeps the HTML word (`data-required`, `data-min-checked`).
 - `NDS.cache` keys carry the caller's id after `nds-cache:`.
 - A key that already starts with `nds-` keeps its name (`nds-a11y`, `nds-palette`): a renamed key loses the visitor's saved choice, and the prefix already prevents a clash. Only a key without the prefix is renamed.
+- Entry 1's AbortController names stay plain under rule 11.
+- `el.nds{Name}` and a part's `el.nds{Part}` (entry 9) are the instance backref, not private data (rule 14).
 
 **Audit behavior**
 
-`check-js-rules.mjs`: a `window.` write other than `__NDS_*` or `NDS` → finding; a storage or cookie key literal that does not start with `nds-` → finding; a class not named `Nds[A-Z]…` → finding; an event `detail` key that is not camelCase → finding; an upper-case constant holding a non-primitive, or a camelCase one holding a primitive literal → verify; a `data-*` hook read on an element outside the component's root without the component's name → verify. Each is LOW, a migration target. A storage key, hook, token or `detail` key is observable, so its rename ships in a major with a Migration line (AGENTS.md, Framework Hosts).
+`check-js-rules.mjs`: a member missing from its banner without `_` → finding; a `_` name read or written outside the file that defines it → finding; a module-scope name with `_` → finding; a property written on an element other than `nds{Name}` → finding; a `#` member → finding; a `window.` write other than `__NDS_*` or `NDS` → finding; a storage or cookie key literal that does not start with `nds-` → finding; a class not named `Nds[A-Z]…` → finding; an event `detail` key that is not camelCase → finding; an upper-case constant holding a non-primitive, or a camelCase one holding a primitive literal → verify; a `data-*` hook read on an element outside the component's root without the component's name → verify. Each is LOW, a migration target. A storage key, hook, token or `detail` key is observable, so its rename ships in a major with a Migration line (AGENTS.md, Framework Hosts).
 
 ---
 
