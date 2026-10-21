@@ -130,6 +130,7 @@
     }
 
     // A form-container's own field: never one inside a nested container, never a hidden carrier.
+    // Copies NDS.field.findOwnInput: field names this base, so the build order bars naming field back.
     function findOwnField(container) {
         const fields = container.querySelectorAll('input:not([type="hidden"]), textarea, select');
         for (let i = 0; i < fields.length; i++) {

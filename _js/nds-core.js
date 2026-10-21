@@ -182,8 +182,8 @@
         // A promise of a section's words, in the page's language or lang. A marked word needs no
         // wait: core writes it, and the CSS holds it as a bar until then.
         load(component, lang) {
-            if (this._fromFiles(component, lang) !== undefined) return Promise.resolve(this._section(component, lang));
-            return this._get(component, lang).then(() => this._section(component, lang));
+            if (this._fromFiles(component, lang) !== undefined) return Promise.resolve(this._getSection(component, lang));
+            return this._get(component, lang).then(() => this._getSection(component, lang));
         },
 
         // The page's language, or the one a component passes ('ar-SA' → 'ar'). Anything
@@ -210,7 +210,7 @@
 
         // The files' text with the inline override laid over it key by key. Until they
         // land, the override stands alone.
-        _section(component, lang) {
+        _getSection(component, lang) {
             const inline = window.NDS_I18N && window.NDS_I18N[component];
             const data = this._fromFiles(component, lang);
             if (!inline) return data;
@@ -223,11 +223,11 @@
         // capped promise the loader waits on.
         pack(lang) {
             lang = this.resolveLang(lang);
-            return lang === 'en' ? Promise.resolve(null) : this._file(lang);
+            return lang === 'en' ? Promise.resolve(null) : this._loadFile(lang);
         },
 
         // One fetch per pack per page. A missing pack is null, so English shows.
-        _file(path) {
+        _loadFile(path) {
             return this._loads[path] || (this._loads[path] = this._fetchOne(path)
                 .then(data => (this._files[path] = data || null)));
         },
@@ -250,7 +250,7 @@
             const write = (el, attribute, value) => (attribute === 'text' ? (el.textContent = value) : el.setAttribute(attribute, value));
             const translate = (key, vars, lang) => {
                 if (lang && i18n._fromFiles(component, lang) === undefined) i18n._get(component, lang);
-                const section = i18n._section(component, lang);
+                const section = i18n._getSection(component, lang);
                 // Own keys only: a key from outside (a cached value, a browser error name) never reaches Object.prototype.
                 // The English every getStrings() call for this section declared, not only this one's.
                 const seed = i18n._seeds[component];
@@ -322,7 +322,7 @@
 
         // The word a marker names, through text()'s chain: the override, the pack, the script's
         // English. Also that English (the JS default): the guard's baseline. word null: leave the markup.
-        _word(ref) {
+        _resolveWord(ref) {
             const match = /^([a-z][a-z0-9-]*)\.([A-Za-z0-9_]+)$/.exec(ref);
             if (!match) {
                 this._warnOnce(`marker "${ref}" is not section.key: a 1.x marker; write the section too, such as accessibility.${ref}`);
@@ -330,7 +330,7 @@
             }
             const [, section, key] = match;
             const hasOwn = (object) => !!object && Object.prototype.hasOwnProperty.call(object, key);
-            const data = this._section(section), seed = this._seeds[section];
+            const data = this._getSection(section), seed = this._seeds[section];
             const value = hasOwn(data) ? data[key] : hasOwn(seed) ? seed[key] : undefined;
             const english = hasOwn(seed) ? seed[key] : undefined;
             if (typeof value === 'string' && !/\{\w+\}/.test(value)) return { word: value, english };
@@ -352,7 +352,7 @@
                     this._warnOnce(`${name} with no value: a 1.x marker; name its word, ${name}="section.key"`);
                     continue;
                 }
-                const { word: word, english } = this._word(ref.trim());
+                const { word: word, english } = this._resolveWord(ref.trim());
                 if (word === null) continue;
                 const target = i18nMarks[name];
                 const isText = target === 'text';
