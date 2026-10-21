@@ -563,8 +563,9 @@ react to a sibling, not to run an effect for a token.
 - RULES-JSD.md: JSD-05's `verify` judgment points at A2; JSD-08 and JSD-12 at A4; JSD-07 gets the type-part
   carve-out.
 - `NDS-INDEX.md` (3 old names), `core/init.md` (`pending`), `_data/migrations.yml` (`kind: api`).
-- `_includes/NDS-IQ-draft.md`: check whether the consumer rules need the naming pattern (it has no naming
-  line today); load `nds-iq-eval` first.
+- `_includes/NDS-IQ-draft.md`: checked 2026-10-21, no line. The pattern lets an agent guess a name, and the
+  rules forbid guessing (copy canon, no path or `.nds-*` markup from memory); `check_rules()` refuses any class or
+  API in the file; no field incident asks for it. A consumer meets the renames through the Migration lines.
 - The CHANGELOG is written at release.
 
 ## 7. Fresh review, 2026-10-20 (Opus)
