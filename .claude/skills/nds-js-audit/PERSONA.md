@@ -405,6 +405,7 @@ For each loader-registered component: the JS file suffix, the registry `name` tu
 6. A namespace method and its instance method use the same verb; the namespace one takes the element first (`NDS.Rating.enable(el)` mirrors `el.ndsRating.enable()`).
 7. `create` returns the instance (entry 3.3's `create({...})` returns the surface it inserted: the call is the open), `getInstance` the instance or `null`, a check its result, and a method that waits a Promise.
 8. Whole words for function and member names (`formatValue`, not `fmtVal`; `closeButton`, not `closeBtn`). Locals and parameters may use this list and no other short word: `el`, `e`, `i`, `j`, `x`, `y`, `fn`, `opts`, `btn`. One compound, one spelling (`fileName` or `filename`, not both).
+9. One function, one name. A function on a namespace is declared under its public name (`function onReset` with `{ onReset }`). Never add a second local name to get past a check: a name the check refuses means a rename, or a check to fix.
 
 #### Internal functions
 
@@ -450,7 +451,7 @@ A name a reader or an agent can guess from another component, or from the DOM an
 
 **Audit behavior**
 
-Flag a public method whose verb is a synonym the table replaces (`recheck…`, `recount`, `checkOverflow`, `setDisabled`, `previous`, `switchTo`, `slideTo`, `initialize…`, `setup…`), a name that repeats its namespace, or two public names that call the same code → LOW, as a migration target for the next major. `check-js-rules.mjs --names` (rule ids `P10.<rule>`), for every function: a verb the internal table replaces → finding; a first word it does not know → verify; an acronym in capitals → finding; a short word outside rule 8's list → finding. Each is LOW; an internal rename needs no Migration line.
+Flag a public method whose verb is a synonym the table replaces (`recheck…`, `recount`, `checkOverflow`, `setDisabled`, `previous`, `switchTo`, `slideTo`, `initialize…`, `setup…`), a name that repeats its namespace, or two public names that call the same code → LOW, as a migration target for the next major. `check-js-rules.mjs --names` (rule ids `P10.<rule>`), for every function: a verb the internal table replaces → finding; a first word it does not know → verify; an acronym in capitals → finding; a short word outside rule 8's list → finding; a public `onX` / `initX` key on a local function of another name → finding (rule 9). Each is LOW; an internal rename needs no Migration line.
 
 ---
 

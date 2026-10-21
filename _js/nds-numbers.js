@@ -111,7 +111,7 @@
         requestAnimationFrame(tick);
     }
 
-    function setupCounterAnimations() {
+    function initCounters() {
         const reduced = NDS.prefersReducedMotion;
         document.querySelectorAll(COUNTER).forEach(el => {
             // reinit() re-arms: release a subscription that has not fired yet.
@@ -130,13 +130,13 @@
     // Exposed at once: the loader's init system calls it.
     function init() {
         formatNumbers();
-        setupCounterAnimations();
+        initCounters();
     }
 
     NDS.Numbers = {
         format,
         formatAll: formatNumbers,
-        initCounters: setupCounterAnimations,
+        initCounters,
         init,
         reinit: init
     };

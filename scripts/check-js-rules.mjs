@@ -1331,6 +1331,10 @@ const NAME_CASES = [
     [`(function(){ function onReset() {} NDS.T = { onReset }; })();`, []], // exported under its own name: a public onX subscribes
     [`(function(){ function onClick() {} NDS.T = { handleClick: onClick }; })();`, ['P10.4']], // the local name is no public one
     [`(function(){ function onClick() {} })();`, ['P10.4']], // a listener: handleX
+    [`(function(){ function watchReset() {} NDS.T = { onReset: watchReset }; })();`, ['P10.9']], // a second name to pass the check
+    [`(function(){ function setupParts() {} NDS.T = { initParts: setupParts }; })();`, ['P10.9']],
+    [`(function(){ function initParts() {} function setupAll() {} NDS.T = { initParts, init: setupAll }; })();`, []], // a loader hook maps to its function
+    [`(function(){ NDS.T = (() => { const onAdd = () => {}; return { onAdd }; })(); })();`, []], // declared in the namespace's own factory
 ];
 
 const args = process.argv.slice(2);

@@ -821,7 +821,7 @@
         };
         NDS.onAttributeChange('*', ['data-state'], elements => elements.forEach(runEffects));
 
-        const addEffect = (state, scope, fn, { className } = {}) => {
+        const onToggle = (state, scope, fn, { className } = {}) => {
             const selector = `[data-state~="${state}"]` + (className ? `,.${className}` : '');
             effectTokens.add(state);
             if (className) NDS.onAttributeChange(scope, ['class'], elements => elements.forEach(runEffects));
@@ -909,10 +909,10 @@
             }
         };
 
-        const subscribeAdd = (state, scope, fn) => subscribe(addHooks[state] ||= [], { scope, fn });
-        const subscribeRemove = (state, scope, fn) => subscribe(removeHooks[state] ||= [], { scope, fn });
+        const onAdd = (state, scope, fn) => subscribe(addHooks[state] ||= [], { scope, fn });
+        const onRemove = (state, scope, fn) => subscribe(removeHooks[state] ||= [], { scope, fn });
 
-        return { parse, add, remove, has, get, set, clear, refresh: syncEffects, onAdd: subscribeAdd, onRemove: subscribeRemove, onToggle: addEffect };
+        return { parse, add, remove, has, get, set, clear, refresh: syncEffects, onAdd, onRemove, onToggle };
     })();
 
     // ── Token mirrors ────────────────────────────────────────────────

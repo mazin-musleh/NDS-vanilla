@@ -201,7 +201,7 @@ function scanFile(file, source) {
                 for (const d of node.declarations) {
                     for (const id of bound(d.id)) {
                         if (/^_[A-Za-z]/.test(id.name)) push('P12.13', id, `\`${id.name}\` is a binding: no \`_\` on a name nothing outside can reach`);
-                        if (isFn(d.init)) fnName(d, id, { pub: ctx.module && exported.has(id.name) });
+                        if (isFn(d.init)) fnName(d, id, { pub: exported.has(id.name) });
                         else if (ctx.module && d.id.type === 'Identifier') {
                             if (node.kind === 'const' && constCase(id.name) && d.init && !yieldsPrimitive(d.init) && !/^Object\.freeze/.test(source.slice(d.init.start, d.init.start + 13)) && !(d.init.type === 'NewExpression' && /^RegExp$/.test(d.init.callee.name)) && d.init.type !== 'Literal')
                                 push('P12.8', id, `\`${id.name}\` is upper case but holds ${kindOf(d.init)}`, 'upper case only for a primitive or frozen value never reassigned');
@@ -219,7 +219,7 @@ function scanFile(file, source) {
                 break;
             case 'FunctionDeclaration':
                 if (/^_[A-Za-z]/.test(node.id.name)) push('P12.13', node.id, `function \`${node.id.name}\`: no \`_\` on a name nothing outside can reach`);
-                fnName(node, node.id, { pub: ctx.module && exported.has(node.id.name) });
+                fnName(node, node.id, { pub: exported.has(node.id.name) });
                 break;
             case 'ClassDeclaration':
             case 'ClassExpression':
@@ -321,6 +321,11 @@ function scanFile(file, source) {
                         if (/^[A-Z]/.test(q.key.name)) continue; // a class on a namespace (DatePicker.Calendar): entry 10 rule 1
                         if (isFn(q.value) || q.method || (q.value.type === 'Identifier' && fnBindings.has(q.value.name)))
                             fnName(q, q.key, { pub: !q.key.name.startsWith('_') });
+                        // Rule 9: `onX` and `initX` pass only as public names, so a second local name is how a check gets dodged.
+                        const ws = words(q.key.name);
+                        if (q.value.type === 'Identifier' && q.value.name !== q.key.name && fnBindings.has(q.value.name)
+                            && ws.length > 1 && ['on', 'init'].includes(ws[0].toLowerCase()))
+                            push('P10.9', q, `\`${q.key.name}: ${q.value.name}\`: one function, two names — declare it \`${q.key.name}\``);
                     }
                 }
                 break;

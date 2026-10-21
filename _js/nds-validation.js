@@ -90,7 +90,7 @@
         rules.push(rule);
         watchers.forEach((watcher) => watcher(rule));
     }
-    function watchRules(fn) {
+    function onRule(fn) {
         watchers.push(fn);
         rules.forEach(fn);
     }
@@ -184,5 +184,5 @@
         return validationResult;
     }
 
-    NDS.validation = { addRule, onRule: watchRules, isOwned, check, checkAll, getMessage, isVisible, isRequired, checkCount, rules };
+    NDS.validation = { addRule, onRule, isOwned, check, checkAll, getMessage, isVisible, isRequired, checkCount, rules };
 })();

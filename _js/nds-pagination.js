@@ -679,7 +679,7 @@
     }
 
     // Auto-Pagination Generator for content-based pagination
-    function setupAutoPagination() {
+    function initAuto() {
         document.querySelectorAll('.nds-pagination[data-auto-pagination]').forEach(setupAutoContainer);
         addPerPagePickerListeners();
     }
@@ -1662,8 +1662,8 @@
     // Expose global API for unified init system
     NDS.Pagination = {
         init: setupPagination,
-        reinit: () => { setupPagination(); setupAutoPagination(); },
-        initAuto: setupAutoPagination,
+        reinit: () => { setupPagination(); initAuto(); },
+        initAuto,
         create: (container) => {
             // A live nav is returned as-is — re-wiring its click handler would
             // stack a second listener on the same element.

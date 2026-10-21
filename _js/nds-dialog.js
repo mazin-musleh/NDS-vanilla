@@ -109,7 +109,7 @@
   }
 
   // Down and up both outside: a text selection dragged out of the box is not a dismiss.
-  function addOutsideListeners(dialog, fn, signal) {
+  function onOutside(dialog, fn, signal) {
     let down = false;
     document.addEventListener('pointerdown', (e) => { down = isAway(dialog, e); }, { capture: true, signal });
     document.addEventListener('click', (e) => { if (down && isAway(dialog, e)) fn(); }, { capture: true, signal });
@@ -120,6 +120,6 @@
     close,
     getTop,
     hideMenus,
-    onOutside: addOutsideListeners
+    onOutside
   };
 })();
