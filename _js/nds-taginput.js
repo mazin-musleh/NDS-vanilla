@@ -205,8 +205,8 @@
             return NDS.state.has(this._root, 'readonly');
         }
 
-        // Strict-mode rejection of typed commits — same feedback shape as the
-        // duplicate/max rejections in addTag (incl. the macrotask deferral).
+        // Strict-mode rejection of typed commits, shown like addTag's rejections: a macrotask
+        // later, or the forms layer's document 'input' listener clears the status after this.
         _showStrictError() {
             const message = strings.text('strict');
             setTimeout(() => NDS.Form.setStatus(this._root, 'error', { message: message }), 0);

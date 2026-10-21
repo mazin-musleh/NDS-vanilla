@@ -22,7 +22,8 @@ mkdirSync(DIR, { recursive: true });
 const fixture = (copies) => {
     const tags = `<script defer src="${JS}nds-main.min.js"></script>\n`.repeat(copies);
     const file = join(DIR, `x${copies}.html`);
-    writeFileSync(file, `<!doctype html><html lang="en" dir="ltr"><head><meta charset="utf-8">${tags}</head><body><p>fixture</p></body></html>`);
+    // data-cookies="false": the notice opens at 6 s and starts Panel's click listener, which one page caught and the other not.
+    writeFileSync(file, `<!doctype html><html lang="en" dir="ltr" data-cookies="false"><head><meta charset="utf-8">${tags}</head><body><p>fixture</p></body></html>`);
     return pathToFileURL(file).href;
 };
 
