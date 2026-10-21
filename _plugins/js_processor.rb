@@ -6,6 +6,7 @@
 # USAGE:
 #   ruby _plugins/js_processor.rb          # Process files once
 #   ruby _plugins/js_processor.rb watch    # Watch for changes and auto-process
+#   ruby _plugins/js_processor.rb check-audit   # pre-commit: is the staged audit bundle built from the staged inputs?
 #
 # WORKFLOW:
 #   1. Original JS files are stored in _js/ directory
@@ -32,6 +33,7 @@ require 'json'
 require 'fileutils'
 require 'yaml'
 require 'tempfile'
+require 'digest'
 
 class JSProcessor
   def initialize
@@ -261,7 +263,7 @@ class JSProcessor
   # bundle list, what its server reads or what its code reads.
   MIGRATIONS = '_data/migrations.yml'
   def migrations_js
-    rows = YAML.load_file(MIGRATIONS).reject { |r| %w[event param api file storage].include?(r['kind']) }.map do |r|
+    rows = YAML.load(read_text(MIGRATIONS)).reject { |r| %w[event param api file storage].include?(r['kind']) }.map do |r|
       fix = r['fix'] == "Use #{r['use']}." ? 0 : r['fix']
       [r['kind'], r['name'], r['scope'] || 0, r['status'], r['use'] || 0, r['since'].to_s, fix || 0, r['inert'] ? 1 : 0]
     end
@@ -275,14 +277,14 @@ class JSProcessor
   ANATOMY_NAME = /(?<![\w-])nds-[a-z0-9]+(?:-[a-z0-9]+)*/
   VOID_TAGS = %w[area base br col embed hr img input link meta source track wbr].freeze
   def anatomy_sources
-    Dir.glob(ANATOMY_DOCS) + Dir.glob('{templates,examples}/*.md') + Dir.glob('{_includes,_layouts}/**/*.html') +
-      Dir.glob('_js/**/*.js') + Dir.glob('_data/**/*.yml') + Dir.glob('_plugins/*.rb')
+    find_files(ANATOMY_DOCS) + find_files('{templates,examples}/*.md') + find_files('{_includes,_layouts}/**/*.html') +
+      find_files('_js/**/*.js') + find_files('_data/**/*.yml') + find_files('_plugins/*.rb')
   end
-  def anatomy_js
-    known = anatomy_sources.flat_map { |f| File.read(f, encoding: 'utf-8').scan(ANATOMY_NAME) }.uniq.sort
+  def anatomy_data
+    known = anatomy_sources.flat_map { |f| read_text(f).scan(ANATOMY_NAME) }.uniq.sort
     ancestors = Hash.new { |h, k| h[k] = [] }
-    Dir.glob(ANATOMY_DOCS).each do |f|
-      File.read(f, encoding: 'utf-8').scan(/<script\b([^>]*\bdata-canon\b[^>]*)>(.*?)<\/script>/m) do |attrs, body|
+    find_files(ANATOMY_DOCS).each do |f|
+      read_text(f).scan(/<script\b([^>]*\bdata-canon\b[^>]*)>(.*?)<\/script>/m) do |attrs, body|
         next if attrs =~ /data-lang="(js|css)"|data-generated|data-escaped/
         stack = []
         body.gsub(/<!--.*?-->/m, '').scan(/<(\/)?([a-zA-Z][\w-]*)([^>]*?)(\/)?>/) do |close, tag, rest, self_close|
@@ -307,15 +309,74 @@ class JSProcessor
       next if sets.any? { |a| a.any? { |x| x.end_with?('-menu') } }
       parts[c] = root if sets.all? { |a| a.include?(root) }
     end
-    JSON.generate({ known: known, parts: parts, requires: requires_rows })
+    { known: known, parts: parts, requires: requires_rows }
+  end
+
+  # One short hash per part of the audit's data, written into the bundle's header. Order-free, so
+  # check-audit reading the staged index agrees with a build reading the disk.
+  def audit_stamp(migrations, anatomy)
+    parts = { 'migrations' => migrations, 'known' => anatomy[:known], 'parts' => anatomy[:parts].sort.to_h, 'requires' => anatomy[:requires] }
+    parts.map { |k, v| "#{k}:#{Digest::SHA1.hexdigest(v.is_a?(String) ? v : JSON.generate(v))[0, 10]}" }.join(' ')
+  end
+
+  # The audit's inputs come from the disk, or from the staged index for check-audit: the commit
+  # hook asks whether THIS commit leaves the bundle behind, whatever else is unstaged.
+  def read_text(path)
+    return File.read(path, encoding: 'utf-8') unless @index
+    @index.fetch(path)
+  end
+
+  # Dir.glob's order: one brace alternative after another, each sorted.
+  def find_files(pattern)
+    return Dir.glob(pattern) unless @index
+    alternatives = pattern =~ /\{([^}]*)\}/ ? $1.split(',').map { |alt| pattern.sub(/\{[^}]*\}/, alt) } : [pattern]
+    alternatives.flat_map { |alt| @index.keys.select { |p| File.fnmatch(alt, p, File::FNM_PATHNAME) }.sort }
+  end
+
+  AUDIT_INPUTS = %r{\A(?:foundations|components|ui-shell|layout|utilities|core|templates|examples|_includes|_layouts|_js|_data|_plugins)/.+\.(?:md|html|js|yml|rb)\z}
+  def staged_file(path)
+    out = IO.popen(['git', 'show', ":#{path}"], &:read)
+    $?.success? ? out.force_encoding('utf-8') : nil
+  end
+
+  # pre-commit: is the staged nds-audit.min.js built from the staged files that feed it? Prints what
+  # moved and the fix when not.
+  def check_audit
+    paths = IO.popen(['git', 'ls-files', '-z'], &:read).split("\0").grep(AUDIT_INPUTS)
+    @index = {}
+    IO.popen(['git', 'cat-file', '--batch'], 'r+') do |io|
+      paths.each do |p|
+        io.puts ":#{p}"
+        size = io.gets.split[2].to_i
+        @index[p] = io.read(size).force_encoding('utf-8')
+        io.read(1)
+      end
+    end
+    bundle = staged_file('assets/js/nds-audit.min.js') or return true
+    anatomy = anatomy_data
+    want = audit_stamp(migrations_js, anatomy)
+    have = bundle[/^ \* Audit data: (.+)$/, 1]
+    return true if have == want
+    moved = have ? want.split.reject { |part| have.split.include?(part) }.map { |part| part.split(':').first } : ['no stamp yet']
+    puts "pre-commit: assets/js/nds-audit.min.js is behind the staged files that feed it (#{moved.join(', ')})."
+    old_known = (bundle[/known:\[(.*?)\]/m, 1] || '').scan(/"([^"]+)"/).flatten
+    if moved.include?('known') && !old_known.empty?
+      added = anatomy[:known] - old_known
+      gone = old_known - anatomy[:known]
+      puts "  names: #{(added.first(10).map { |n| "+#{n}" } + gone.first(10).map { |n| "-#{n}" }).join(' ')}"
+    end
+    staged = IO.popen(['git', 'diff', '--cached', '--name-only'], &:read).split("\n").grep(AUDIT_INPUTS)
+    puts "  from: #{staged.first(8).join(', ')}#{staged.size > 8 ? ' …' : ''}" unless staged.empty?
+    puts '  fix: ruby _plugins/js_processor.rb && git add assets/js/nds-audit.min.js'
+    false
   end
 
   # Each banner's Requires lines: "<host> needs|needs one X per|sits in|sits outside|is|with|points at X via" … " — why".
   # Rows: [component, host, verb, arg, extra, why]. A line that does not parse fails the build.
   REQUIRES_LINE = /\A(.+?) (needs one|points at|sits outside|sits in|needs|is|with) (.+?) — (.+)\z/
   def requires_rows
-    Dir.glob('_js/**/*.js').sort.flat_map do |f|
-      head = File.read(f, encoding: 'utf-8')[/\A\/\*.*?\*\//m] || ''
+    find_files('_js/**/*.js').sort.flat_map do |f|
+      head = read_text(f)[/\A\/\*.*?\*\//m] || ''
       name = head[/\A\/\*\s*NDS\.(\S+)/, 1]
       block = head[/^ \* Requires:\s*\n(.*?)(?=^ \* (?:Methods|Events|Hooks|Gotchas))/m, 1]
       next [] unless name && block
@@ -466,9 +527,12 @@ class JSProcessor
         if source_file == 'nds-audit.js'
           # A lost marker would ship an audit that silently finds no old names.
           raise 'nds-audit.js: /*@migrations*/[] marker missing' unless original_content.include?('/*@migrations*/[]')
-          original_content = original_content.sub('/*@migrations*/[]') { migrations_js }
+          migrations = migrations_js
+          anatomy = anatomy_data
+          @audit_stamp = audit_stamp(migrations, anatomy)
+          original_content = original_content.sub('/*@migrations*/[]') { migrations }
           raise 'nds-audit.js: /*@anatomy*/{} marker missing' unless original_content.include?('/*@anatomy*/{}')
-          original_content = original_content.sub('/*@anatomy*/{}') { anatomy_js }
+          original_content = original_content.sub('/*@anatomy*/{}') { JSON.generate(anatomy) }
         end
         processed_files << file_path
         bundle_size += original_content.length
@@ -502,6 +566,8 @@ class JSProcessor
         header_comment += " * Repository: #{repo_url}\n"
         header_comment += " * Author: #{author_name}\n"
         header_comment += " * Profile: #{author_profile}\n" unless author_profile.empty?
+        # The pre-commit hook (check-audit) compares this stamp with the staged inputs.
+        header_comment += " * Audit data: #{@audit_stamp}\n" if bundle_name == 'nds-audit.min.js'
         header_comment += " */\n"
         # The loader reads window.__NDS_BUNDLES (namespace→bundle map) before any
         # component or the loader itself runs, so it must be prepended ahead of the
@@ -634,7 +700,9 @@ end
 if __FILE__ == $0
   processor = JSProcessor.new
   
-  if ARGV[0] == 'watch'
+  if ARGV[0] == 'check-audit'
+    exit(processor.check_audit ? 0 : 1)
+  elsif ARGV[0] == 'watch'
     processor.watch
   elsif ['force', 'all', '-f'].include?(ARGV[0])
     # Rebuild every bundle + standalone file regardless of mtimes. Use after a

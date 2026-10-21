@@ -10,6 +10,7 @@ RTL (Arabic) by default, with LTR (English) support. Font: IBM Plex Sans Arabic.
 ```bash
 bundle exec jekyll serve      # Dev server (port 4002, auto-displays network IP)
 ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minifies → assets/js/*.min.js)
+ruby _plugins/js_processor.rb check-audit   # the pre-commit hook: is the staged nds-audit.min.js built from the staged files it embeds?
 python scripts/optimize-assets.py <path>        # shrink SVG/PNG/JPG — dry-run report; add --apply to write
 node scripts/svg-render-diff.mjs <path>         # REQUIRED after an SVG --apply: proves the render is unchanged
 python scripts/check-data-state-tails.py        # after any [data-state]/[data-status] rule change, or a rule on a flag the JS writes on <html>/<body> — --report lists every tail
@@ -43,6 +44,8 @@ node scripts/check-form-interact.mjs             # how every field canon reacts 
 node scripts/profile-load.mjs [page] [ms]       # V8 CPU profile of a page load: self/total time per function in the NDS bundles
 node scripts/release-template/nds-verify.mjs <config.json>  # consumer verify tool, shipped at the zip root: every page and state, both widths, light and dark, audit + console + a sheet beside the reference; to try it here, NDS_SITE=<a release zip's _site>
 ```
+
+**`nds-audit.min.js` embeds data from all over the repo, so a commit with no JS change can leave it behind.** It holds every `nds-*` name in the doc pages, includes, `_data` and scripts, the class/attribute/id/property rows of `_data/migrations.yml`, and each banner's Requires lines. The `pre-commit` hook (`scripts/hooks`, installed once per clone with `git config core.hooksPath scripts/hooks`) stops a commit that leaves it behind and names what moved: run `ruby _plugins/js_processor.rb` and stage the bundle in that same commit.
 
 **Browser checks launch through `scripts/lib/browser.mjs` (Playwright)** — `ENGINE=webkit node scripts/<check>.mjs` runs one as Safari. The root ships `playwright-core` only (no browser download; Chromium is your installed Chrome); WebKit lives in Playwright's per-user cache and downloads itself on the first Safari run. CDP calls (throttling, touch, traces) are Chromium-only.
 

@@ -1,0 +1,5 @@
+#!/bin/sh
+# nds-audit.min.js embeds names and rows from docs, includes, _data and banners: a commit that
+# moves them carries the rebuilt bundle. Install once per clone: git config core.hooksPath scripts/hooks
+git diff --cached --name-only | grep -qE '^(foundations|components|ui-shell|layout|utilities|core|templates|examples|_includes|_layouts|_js|_data|_plugins)/|^assets/js/nds-audit\.min\.js$' || exit 0
+exec ruby _plugins/js_processor.rb check-audit
