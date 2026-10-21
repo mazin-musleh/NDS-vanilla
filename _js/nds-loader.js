@@ -309,7 +309,7 @@
         },
         {
             // Delegated: crit hides each [data-filter-items] until its own stamp, which lands after
-            // applyUrlParams(), so a URL filter never flashes the full list. MUST stay before Pagination:
+            // _readUrlParams(), so a URL filter never flashes the full list. MUST stay before Pagination:
             // it stamps data-filtered before Pagination reads items. Keyed on the target, not
             // .nds-filter, so a search-only filter still inits.
             name: 'Filter',

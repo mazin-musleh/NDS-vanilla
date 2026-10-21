@@ -98,7 +98,6 @@
     const lazyRanges = new WeakMap(); // ellipsis scroll container → { from, to }
     const lazyWindows = new WeakMap(); // ellipsis scroll container → open window state (cleared on close)
     const scrollWiredMenus = new WeakSet(); // scroll containers with the window scroll listener
-    const autoClickWiredLists = new WeakSet(); // lists with the auto click listener
     const offResizes = new WeakMap(); // paged content → onElementResize unsubscribe
     const clickAbortControllers = new WeakMap(); // manual nav → click listener AbortController
 
@@ -452,10 +451,9 @@
         setupPaginationStates(container);
 
         // Wire the per-nav click handler. Auto-paginations are wired
-        // separately by addAutoNavListeners (with a live items getter) and skip
+        // separately by rebuildAutoNav (with a live items getter) and skip
         // this path. Listener is scoped to the nav — DOM removal GCs it
-        // automatically; the AbortController stash on the element is the
-        // explicit handle a future destroy() can abort.
+        // automatically; destroy() aborts its clickAbortControllers entry.
         if (!container.hasAttribute('data-auto-pagination')) {
             addManualNavClickListeners(container);
             addCollapseWatchListeners(); // live ellipsis re-collapse on dynamic <li> changes
@@ -684,8 +682,8 @@
         addPerPagePickerListeners();
     }
 
-    // Wire one auto-pagination container: paginate to final state now, then
-    // call addAutoNavListeners for click handlers + the --per-page resize observer.
+    // Wire one auto-pagination container: paginate to final state now (the
+    // rebuild wires clicks), then addAutoNavListeners for the --per-page resize observer.
     // Skips already-initialized navs and navs inside <code>; the content
     // container is the previous sibling.
     function setupAutoContainer(paginationNav) {
@@ -702,7 +700,7 @@
         // Filter-aware: skip [data-filtered] items so a URL-active filter at
         // page open doesn't paint a full-items nav now, then trim it to
         // display:none post-paint → CLS. Filter is registered
-        // before Pagination in nds-loader.js so applyUrlParams() has already
+        // before Pagination in nds-loader.js so its _readUrlParams() has already
         // stamped data-filtered by the time we get here; on plain pages this
         // filter is a no-op (no items carry the attribute).
         const items = getPagedItems(contentContainer);
@@ -729,11 +727,8 @@
             }
         }
 
-        // Wire interaction: clicks + the --per-page ResizeObserver.
-        // addAutoNavListeners re-queries items live (per click, per resize), so it
-        // takes only the per-container handles + the perPage baseline
-        // (which the resize observer detects changes against).
-        addAutoNavListeners(paginationNav, contentContainer, perPage);
+        // Clicks were wired by the rebuild above; add the --per-page ResizeObserver.
+        addAutoNavListeners(paginationNav, contentContainer);
 
         // Re-paginate automatically when items are added/removed. Default for all
         // auto-pagination; wired once per page, subsequent calls no-op.
@@ -770,13 +765,14 @@
         nav.innerHTML = buildPaginationHtml(totalPages, page);
         showPage(items, page, perPage);
         setupGeneratedPagination(nav, page, totalPages);
+        // The fresh <ul> has no listener. Items are re-read per click, so a later filter change counts.
+        addAutoClickListeners(nav.querySelector('.nds-pagination-list'), () => getPagedItems(content), perPage);
         return page;
     }
 
     // Rebuild an auto-pagination nav for the given --per-page, preserving the
-    // current page. Callers (setupAutoContainer's initial paint, addAutoNavListeners's
-    // resize callback) are responsible for wiring click handlers afterwards via
-    // addAutoClickListeners; syncAutoPagination rebuilds independently.
+    // current page. Callers: setupAutoContainer's initial paint, addAutoNavListeners's
+    // resize callback; syncAutoPagination calls rebuildAutoNav directly.
     function setAutoPagination(paginationNav, items, perPage) {
         // Preserve the current page across a --per-page change — read it before
         // rebuildAutoNav destroys the list it lives on.
@@ -991,7 +987,7 @@
     // Generated menus ship an empty shell; on open a fixed-size window of rows
     // around the active page renders into the scroll container, re-windowed
     // from scrollTop as the user scrolls. Spacer divs keep scrollHeight exact
-    // (rows are a uniform 40px — .nds-pagination-ellipsis pins min-height so
+    // (rows are a uniform 40px — .nds-pagination-menu .nds-dropmenu-item pins min-height so
     // every size variant matches), so the DOM stays bounded at ~2×LAZY_OVERSCAN
     // rows regardless of totalPages. Keyboard nav needs no extra wiring:
     // dropmenu re-enumerates focusables per keypress, and focusing a row near
@@ -1305,10 +1301,9 @@
     }
 
     // Page-change scroll is on by default; opt out per nav with
-    // data-pagination-no-scroll. Server-driven pages get it from setPage(), which
-    // the consumer calls once its fetch resolves — real response timing, no delay
-    // to guess. NDS.Pagination.scrollToContent() ignores the attribute: calling it
-    // explicitly is the intent.
+    // data-pagination-no-scroll. A click scrolls at once, server-driven or not;
+    // setPage() scrolls too. NDS.Pagination.scrollToContent() ignores the
+    // attribute: calling it explicitly is the intent.
     function scrollOnPageChange(pagination) {
         const nav = resolveNav(pagination);
         if (nav.hasAttribute('data-pagination-no-scroll')) return;
@@ -1342,23 +1337,18 @@
     // Per-nav click handler for an auto-pagination's <ul>. getItems() returns
     // the current page-item set live (each call); totalPages is derived from it
     // per click so a post-init filter change is reflected in the next/prev
-    // bounds without re-wiring.
-    //
-    // Idempotent on the pagination element: Filter (registered before Pagination)
-    // calls refresh on interaction; refresh re-wires the nav. The flag stops a
-    // second pass from double-wiring (every click would otherwise fire goToPage
-    // twice).
+    // bounds without re-wiring. Called once per list: only rebuildAutoNav calls
+    // it, right after it creates the <ul>.
     function addAutoClickListeners(newPagination, getItems, perPage) {
-        if (autoClickWiredLists.has(newPagination)) return;
-        autoClickWiredLists.add(newPagination);
+        // The nav's controller, so destroy() releases this listener too.
+        const nav = resolveNav(newPagination);
+        let abortController = clickAbortControllers.get(nav);
+        if (!abortController) {
+            abortController = new AbortController();
+            clickAbortControllers.set(nav, abortController);
+        }
         newPagination.addEventListener('click', (e) => {
-            // Strip control, or an own-ellipsis row — same guard as
-            // addManualNavClickListeners. The two are mutually exclusive:
-            // PAGE_ITEM_SELECTOR excludes .nds-pagination-ellipsis.
-            const strip = e.target.closest(PAGE_CONTROL_SELECTOR);
-            const row = e.target.closest('.nds-dropmenu-item');
-            const pageElement = strip ||
-                (row && newPagination.contains(row.closest('.nds-dropmenu')) ? row : null);
+            const { page: pageElement, prev: prevElement, next: nextElement } = resolveClickedControl(newPagination, e.target);
 
             if (pageElement) {
                 if (pageElement.tagName.toLowerCase() === 'a') e.preventDefault();
@@ -1369,9 +1359,6 @@
                 return;
             }
 
-            // Prev/next (button or anchor).
-            const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
-            const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
             if (!prevElement && !nextElement) return;
 
             e.preventDefault();
@@ -1383,37 +1370,36 @@
             } else if (nextElement && currentPage < totalPages) {
                 goToPage(newPagination, items, currentPage + 1, perPage, totalPages);
             }
-        });
+        }, { signal: abortController.signal });
     }
 
-    // Wire one auto-pagination's interaction layer: per-nav click handler +
-    // the --per-page ResizeObserver + (once) the shared .nds-paged-content
-    // onDomRemove cleanup. Called from setupAutoContainer's initial paint and
-    // for any auto-pagination registered after init.
-    function addAutoNavListeners(paginationNav, contentContainer, perPage) {
-        // Live item set: re-queried each click + each resize so a filter
-        // change after init (Filter calls refresh; refresh replaces the list
-        // + the OLD click closure with it, but THIS resize observer survives
-        // unaltered) doesn't paginate over a stale snapshot.
-        const getLiveItems = () => getPagedItems(contentContainer);
+    // What a click on a list hit, shared by the auto and manual handlers: a page
+    // (a strip control, or a row of this list's own ellipsis menu), prev or next.
+    // The page match excludes .nds-pagination-ellipsis (PAGE_ITEM_SELECTOR).
+    function resolveClickedControl(list, target) {
+        const row = target.closest('.nds-dropmenu-item');
+        return {
+            page: target.closest(PAGE_CONTROL_SELECTOR) ||
+                (row && list.contains(row.closest('.nds-dropmenu')) ? row : null),
+            prev: target.closest('.nds-pagination-prev button, .nds-pagination-prev a'),
+            next: target.closest('.nds-pagination-next button, .nds-pagination-next a'),
+        };
+    }
 
-        const pagination = paginationNav.querySelector('.nds-pagination-list');
-        if (pagination) addAutoClickListeners(pagination, getLiveItems, perPage);
-
+    // Wire one auto-pagination's --per-page ResizeObserver + (once) the shared
+    // .nds-paged-content onDomRemove cleanup. Click wiring rides rebuildAutoNav.
+    // Called from setupAutoContainer's initial paint.
+    function addAutoNavListeners(paginationNav, contentContainer) {
         // Watch for --per-page changes on resize. Stored handle lets the
         // shared .nds-paged-content removal listener release the pooled
         // ResizeObserver entry when this container leaves the DOM.
-        let lastPerPage = perPage;
+        // perPageSizes is the baseline: the picker writes it too, so a pick never reads as a resize change.
         offResizes.set(contentContainer, NDS.onElementResize(contentContainer, NDS.debounce(() => {
             const currentPerPage = readPerPage(contentContainer);
-            if (currentPerPage === lastPerPage) return;
-            lastPerPage = currentPerPage;
+            if (currentPerPage === perPageSizes.get(contentContainer)) return;
             perPageSizes.set(contentContainer, currentPerPage);
-            const currentItems = getLiveItems();
-            setAutoPagination(paginationNav, currentItems, currentPerPage);
-            // innerHTML replace just created a fresh <ul> with no listener; re-wire.
-            const newPaginationList = paginationNav.querySelector('.nds-pagination-list');
-            if (newPaginationList) addAutoClickListeners(newPaginationList, getLiveItems, currentPerPage);
+            // Items re-queried live, so a filter change since init is respected.
+            setAutoPagination(paginationNav, getPagedItems(contentContainer), currentPerPage);
         }, 150)));
 
         // Release pooled ResizeObserver subscriptions when paged-content
@@ -1469,21 +1455,7 @@
         // Keep the opted-in URL param truthful across filter/refresh resets
         // (collapsed or reset → 1 deletes it; keepPage clamps update it). Never
         // runs at init — pre-init refreshes bail above.
-        if (!page) {
-            writePageParam(paginationNav, 1);
-            return;
-        }
-
-        // Wire clicks; re-filter the item set on each click in case the
-        // filter changed since this nav was generated. totalPages is derived
-        // from the live items inside addAutoClickListeners (same getItems closure).
-        addAutoClickListeners(
-            paginationNav.querySelector('.nds-pagination-list'),
-            () => getPagedItems(contentContainer),
-            perPage
-        );
-
-        writePageParam(paginationNav, page);
+        writePageParam(paginationNav, page || 1);
     }
 
     // Auto-refresh: every auto-pagination re-paginates itself when .nds-page-item
@@ -1564,11 +1536,10 @@
     }
 
     // Per-nav click handler for manual pagination. Scoped to the nav element,
-    // so DOM removal releases the listener automatically — the AbortController
-    // stash on the element is the explicit handle a future destroy() can abort.
-    // Idempotent: a re-wire on an already-wired nav no-ops, so init()/create()
-    // are safe to repeat. Auto-paginations are wired separately by addAutoNavListeners
-    // and skip this path.
+    // so DOM removal releases the listener automatically; destroy() aborts its
+    // clickAbortControllers entry. Idempotent: a re-wire on an already-wired nav
+    // no-ops, so init()/create() are safe to repeat. Auto-paginations are wired
+    // separately by rebuildAutoNav and skip this path.
     function addManualNavClickListeners(paginationNav) {
         if (clickAbortControllers.has(paginationNav)) return;
         const abortController = new AbortController();
@@ -1580,14 +1551,7 @@
             // the list element).
             const pagination = resolveList(paginationNav);
 
-            const pageElement = e.target.closest(PAGE_CONTROL_SELECTOR);
-            // Own ellipsis only: the row's wrapper must sit in this list.
-            const row = e.target.closest('.nds-dropmenu-item');
-            const dropdownItem = row && pagination.contains(row.closest('.nds-dropmenu')) ? row : null;
-            const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
-            const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
-
-            const clickedElement = pageElement || dropdownItem;
+            const { page: clickedElement, prev: prevElement, next: nextElement } = resolveClickedControl(pagination, e.target);
             if (!clickedElement && !prevElement && !nextElement) return;
 
             // Defensive: if auto-pagination wiring landed on this nav after init
@@ -1671,7 +1635,7 @@
             // A page with no pagination at load never runs init(), so create() wires the cleanup too.
             addNavCleanupListeners();
             // Manual navs take init's full path (URL page, states, reveal); auto-paginations
-            // are wired by addAutoNavListeners.
+            // are wired by reinit() (setupAutoContainer).
             const instance = container.hasAttribute('data-auto-pagination')
                 ? new NdsPagination(container)
                 : setupNav(container);

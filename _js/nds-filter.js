@@ -780,15 +780,7 @@
          * Get the custom name for search input or return default
          */
         _getSearchInputName() {
-            if (this._searchInputs.direct && this._searchInputs.direct.input.name) {
-                return this._searchInputs.direct.input.name;
-            }
-
-            if (this._searchInputs.dropmenu && this._searchInputs.dropmenu.input.name) {
-                return this._searchInputs.dropmenu.input.name;
-            }
-
-            return 'search';
+            return this._searchInputs.direct?.input.name || this._searchInputs.dropmenu?.input.name || 'search';
         }
 
         // ==============================================
@@ -1661,9 +1653,7 @@
 
             // requestSubmit, never .submit(): .submit() skips the submit event, so
             // _setupFormSubmission's listener never fires — validation is bypassed and
-            // AJAX mode silently degrades to a full-page navigation. The old fallback
-            // only ever reached Safari 15.4–15.6 (this file already requires :has()
-            // in querySelector), where it submitted wrongly instead of failing loudly.
+            // AJAX mode silently degrades to a full-page navigation.
             this._submissionForm.requestSubmit();
         }
 
@@ -2226,13 +2216,8 @@
             tags.forEach(tag => {
                 const name = tag.getAttribute('data-filter-count-for');
                 const count = (this.criteria.filters[name] || []).length;
-                if (count > 0) {
-                    tag.textContent = count;
-                    tag.removeAttribute('hidden');
-                } else {
-                    tag.textContent = '';
-                    tag.setAttribute('hidden', '');
-                }
+                tag.textContent = count || '';
+                tag.toggleAttribute('hidden', !count);
             });
         }
 
@@ -3123,15 +3108,16 @@
 
             const scope = root && root !== document ? root : null;
             instancesByTarget.forEach(instance => {
+                // Reap an instance whose surfaces left the DOM (route change with
+                // no NDS.init.destroy()) instead of refreshing a detached filter.
+                // Before the form-mode skip, so a detached form-mode instance is released too.
+                if (!getLiveInstance(instance.targetId)) return;
                 // isFormMode, not isAjaxMode: a <form data-filter-submit> WITHOUT
                 // data-ajax is server-driven too — the browser submits and the server
                 // returns the filtered page. Re-scanning it would rebuild the option
                 // list from the rows currently rendered and hand back unchecked inputs,
                 // so the next real submit would silently drop the applied filter.
                 if (instance.isFormMode) return;
-                // Reap an instance whose surfaces left the DOM (route change with
-                // no NDS.init.destroy()) instead of refreshing a detached filter.
-                if (!getLiveInstance(instance.targetId)) return;
                 const target = instance.targetId
                     ? document.getElementById(instance.targetId)
                     : instance._targetContainer;

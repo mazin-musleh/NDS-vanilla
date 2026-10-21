@@ -48,7 +48,7 @@
 }
 
 // Filter group opted into accordion (data-filter-accordion). Retune the
-// accordion header to match the standard dropmenu-group legend (text-xs
+// accordion header to match the standard dropmenu-group legend (text-sm
 // bold, --text-display) instead of the default text-md button style, and
 // shrink the click target via the header-height/padding knobs.
 .nds-dropmenu-scroll > .nds-accordion {
@@ -71,8 +71,8 @@
         }
     }
 
-    // Applied-count tag on the header — knob-tuned so it matches the
-    // header's text-xs font instead of the tag default (text-md, 32px).
+    // Applied-count tag on the header — knob-tuned to text-xs, a step under
+    // the header's text-sm, instead of the tag default (text-md, 32px).
     .nds-tag[data-filter-count-for] {
         --tag-fs: var(--typo-text-xs-FS);
         --tag-height: var(--typo-text-xs-LH);
