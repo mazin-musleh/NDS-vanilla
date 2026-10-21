@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 01:04 AM"
+last_edit: "21/10/2026 - 09:30 AM"
 lang: en
 direction: ltr
 ---
@@ -357,7 +357,7 @@ Every NDS field uses these states, and the other field pages link here for them.
 ### Submit Validation
 {: .nds-block-title}
 
-A `<form class="nds-form">` checks every visible field when the user submits it. A field that fails shows its message under it, the first one takes focus, and the submit stops. The API lists each check and its message. A message clears as soon as the user edits the field. Add `data-ajax` to stop the page from reloading after a passing submit, and send the request from `nds:form:valid`.
+A `<form class="nds-form">` checks every visible field when the user submits it. A field that fails shows its message under it, the first in page order takes focus, and the submit stops. The API lists each check and its message. A message clears as soon as the user edits the field. A required field whose component has not started yet, such as a Rating or an Upload, fails with "Still loading. Try again in a moment": see [Fields Still Loading](../core/init#fields-still-loading). Add `data-ajax` to stop the page from reloading after a passing submit, and send the request from `nds:form:valid`.
 
 <script type="text/html" id="forms-submit" data-canon data-form data-preview="none">
 <form class="nds-form" data-ajax>
@@ -670,7 +670,7 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 | `NDS.Form.getStatus(el)` | Returns `{ status, message, isValid }`. `isValid` is `false` only for `error` |
 | `NDS.Form.setState(el, name, add)` | Adds or removes (`add: false`) a state on the field. `'required'` sets `data-required` and the inputs' `required` |
 | `NDS.Form.refresh(el)` | Updates the field after a script sets its value or `checked`: an input updates its field, any other element every field inside it. It fires no event |
-| `NDS.Form.validate(el, options)` | Checks every visible field in the form that holds `el`, and returns `{ valid, invalidFields, errors }`. `options` is `{ showMessages, focusFirst }`, both `true` by default. Pass both: an object with one key turns the other off |
+| `NDS.Form.validate(el, options)` | Checks every visible field in the form that holds `el`, and returns `{ valid, invalidFields, errors }`, in page order. `options` is `{ showMessages, focusFirst }`, both `true` by default. Pass both: an object with one key turns the other off |
 | `NDS.Form.validateField(el, options)` | Checks one field by its component's rule and returns its result, or `null` when no rule answers for `el`. Each component's `validate(el)` calls it: `NDS.Checkbox.validate(group)`, `NDS.Radio.validate(group)`, `NDS.Otp.validate(group)`, `NDS.Multiselect.validate(el)`, `NDS.Taginput.validate(el)` and the others. A field that shows a message is checked again on each change |
 | `NDS.Form.isNationalId(value)`, `isIban(value)` | Return `true` when the string passes the `.nds-national-id` or `.nds-iban` check. They take the clean value: digits only, or capitals with no spaces |
 {: .nds-table .nds-responsive}

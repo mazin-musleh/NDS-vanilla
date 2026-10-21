@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 07:46 AM"
+last_edit: "21/10/2026 - 09:30 AM"
 ---
 
 <section id="switch-overview" class="nds-content-section nds-doc-overview">
@@ -259,7 +259,7 @@ Source: the `switch` group in `_sass/tokens/_components.scss`.
 | `nds:switch:change` | `.nds-switch-toggle` (bubbles) | `{ checked, value, input }` |
 {: .nds-table .nds-responsive}
 
-To change a switch from code, set `checked` on the input and dispatch `change`. The full API is in the banner of `_js/nds-form.js`.
+To change a switch from code, set `checked` on the input and dispatch `change`. The full API is in the banner of `_js/nds-switch.js`.
 
 <script type="text/html" id="switch-js" data-canon data-lang="js">
 document.querySelector('.nds-switch-toggle').addEventListener('nds:switch:change', function (e) {

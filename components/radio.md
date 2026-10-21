@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 01:04 AM"
+last_edit: "21/10/2026 - 09:30 AM"
 ---
 
 <section id="radio-overview" class="nds-content-section nds-doc-overview">
@@ -241,7 +241,7 @@ radio.checked = true;
 NDS.Form.refresh(radio);
 </script>
 
-The full API is in the banner of `_js/nds-form.js`.
+The full API is in the banner of `_js/nds-radio.js`.
 
 </div>
   </div>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 09:23 AM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -116,6 +116,11 @@ The loader calls `NDS.init.initialize()` at load. The components the first scree
 Some parts reach outside `el`. A FAB docks on `<body>`, an open menu sits in the browser's top layer, and an open modal holds a backdrop and a scroll lock. `destroy()` puts each one back or releases it, so nothing stays on the page after the view.
 
 Only components inside `el` are reached. A filter toolbar can sit beside the grid it drives, so pass the root of the view you remove, not the list inside it.
+
+### Fields Still Loading
+{: .nds-block-title}
+
+Some fields get their rule from their own component, such as Rating, Upload, Time Picker and Autocomplete. Until that component starts, the field has no rule, and `NDS.init.pending(el)` is true. A form check then fails a required pending field with "Still loading. Try again in a moment", and calls `mount()` on the form so the next check can pass. A bundle that failed to load does not count: its field is checked as if it had no rule, so the form is never blocked for good.
 
 </div>
   </div>
@@ -338,8 +343,10 @@ Set these on `window` before the main bundle loads. A `window.NDSInitConfig` key
 | `NDS.init.refresh(el)` | Tells every started component that the contents of `el` changed. Without `el`, it covers the whole page |
 | `NDS.init.mount(el)` | Loads the bundles the markup in `el` needs, then calls `refresh(el)`. Returns a promise |
 | `NDS.init.destroy(el)` | Releases every component instance inside `el`. Returns the number released. Without `el`, it covers the whole page |
+| `NDS.init.pending(el)` | `true` while `el` holds a field whose rule has not started: its bundle is still loading, or its component has not built it yet. See [Fields Still Loading](#fields-still-loading) |
+| `NDS.init.owns(el)` | `true` when `el` is a field whose value its component keeps, not its input (Upload). Such a field gets no `required` on its input and no browser check |
 | `NDS.init.audit()` | Runs the [Audit](../core/audit) and returns its findings: page problems that fail with no error, and names an NDS release changed. The first call loads the audit bundle and returns a promise of them |
-| `NDS.init.components` | The component registry: one entry per component, with its `name`, `selector` and `init` |
+| `NDS.init.components` | The component registry: one entry per component, with its `name`, `selector` and `init`. A field component's entry adds `rule` (`true`: `pending()` waits for its instance, `'loaded'`: for its bundle only) and `owns` (`owns()` answers for it) |
 | `NDS.init.config` | The settings in use, from the Configuration table |
 | `NDS.loadBundle(name)` | Loads one bundle, such as `'extras'`. Returns a promise. `mount()` calls it for you |
 {: .nds-table .nds-responsive}

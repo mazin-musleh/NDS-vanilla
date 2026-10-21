@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 01:04 AM"
+last_edit: "21/10/2026 - 09:30 AM"
 ---
 
 <section id="checkbox-overview" class="nds-content-section nds-doc-overview">
@@ -285,7 +285,7 @@ var result = NDS.Checkbox.validate(document.querySelector('.nds-checkbox-group')
 // { valid: false, checked: 1, min: 2, max: 3, message: 'Please select at least 2 options' }
 </script>
 
-The full API is in the banner of `_js/nds-form.js`.
+The full API is in the banner of `_js/nds-checkbox.js`.
 
 </div>
   </div>

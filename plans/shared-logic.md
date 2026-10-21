@@ -5,7 +5,8 @@ AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Fa
 
 **Resume here.** Changes #1, #2, #4 to #10 are done (#3 dropped); see the "Landed" notes under section 3's
 Mechanical checks. `doc-check.mjs` on form.md, checkbox.md, radio.md, switch.md: no findings, sheets clean in both
-themes (2026-10-21). The doc pass waits for the docs plan.
+themes (2026-10-21). Doc pass done 2026-10-21 (grid, core/init, form, and the checkbox, radio and switch banner
+paths), except `NDS.field.addType`: it waits for section 8, which may change it.
 
 > **OPEN — a click in a field is slower than before the split. Form is not done until it is solved (section 8).**
 > Owner, 2026-10-21: deep-dive it and fix it, even if the fix changes the architecture (P1, P3 included).
@@ -21,7 +22,6 @@ themes (2026-10-21). The doc pass waits for the docs plan.
   now passes the delegated parts), a keystroke about +0.3 ms.
 - Checks run on my own server (`--port 4010 --destination tmp/site-4010`), never the owner's :4002; the form
   checks and `check-a11y` take `SITE=<base url>`, the others a base argument.
-- The doc pass for form pages (A6 outcomes, NDS.field, NDS.Grid, core/init `pending`) waits for the docs plan.
 - Guards: `check-form-validate`, `check-form-interact`, `check-form-speed`.
 
 ## Goal
