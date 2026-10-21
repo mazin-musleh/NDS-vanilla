@@ -995,6 +995,7 @@
     // name is taken from the button's own visible label, captured once before any
     // count lands, so no translated string is needed here: "Columns" → "Columns (2)".
     // Usage: NDS.badge(filterBtn, 3);
+    const badgeBases = new WeakMap();   // button → its accessible name before any count landed
     NDS.badge = (btn, count) => {
         const icon = btn && btn.querySelector('i, .nds-icon');
         if (!icon) return;
@@ -1011,14 +1012,15 @@
             badge.remove();
         }
 
-        if (btn._ndsBadgeBase === undefined) {
+        if (!badgeBases.has(btn)) {
             const label = btn.querySelector('.nds-label');
             // Icon-only buttons carry their name on aria-label — read it before we overwrite it.
-            btn._ndsBadgeBase = (label ? label.textContent : btn.getAttribute('aria-label') || '').trim();
+            badgeBases.set(btn, (label ? label.textContent : btn.getAttribute('aria-label') || '').trim());
         }
         // Keeps the visible label inside the accessible name (WCAG 2.5.3).
-        if (btn._ndsBadgeBase) {
-            btn.setAttribute('aria-label', count ? `${btn._ndsBadgeBase} (${count})` : btn._ndsBadgeBase);
+        const base = badgeBases.get(btn);
+        if (base) {
+            btn.setAttribute('aria-label', count ? `${base} (${count})` : base);
         }
     };
 
@@ -1595,11 +1597,13 @@
     // ponytail: only those three methods answer for the node; replaceChild or a textContent
     // write on the old parent still sees the move.
     const home = new WeakMap();   // moved node → { mark, parent }
+    const guardCounts = new WeakMap();   // old parent → how many moved nodes it is guarding
     const nodePrototype = Node.prototype;
     const getStandIn = (parent, node) => { const entry = node && home.get(node); return entry && entry.mark.parentNode === parent ? entry.mark : node; };
     function guardParent(parent) {
-        parent._ndsMoved = (parent._ndsMoved || 0) + 1;
-        if (parent._ndsMoved > 1) return;
+        const count = (guardCounts.get(parent) || 0) + 1;
+        guardCounts.set(parent, count);
+        if (count > 1) return;
         parent.insertBefore = function (node, ref) { return nodePrototype.insertBefore.call(this, getStandIn(this, node), getStandIn(this, ref)); };
         parent.appendChild = function (node) { return nodePrototype.appendChild.call(this, getStandIn(this, node)); };
         parent.removeChild = function (node) {
@@ -1610,8 +1614,9 @@
         };
     }
     function unguard(parent) {
-        if (--parent._ndsMoved > 0) return;
-        delete parent._ndsMoved;
+        const count = guardCounts.get(parent) - 1;
+        if (count > 0) return void guardCounts.set(parent, count);
+        guardCounts.delete(parent);
         delete parent.insertBefore;
         delete parent.appendChild;
         delete parent.removeChild;

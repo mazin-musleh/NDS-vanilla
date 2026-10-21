@@ -37,6 +37,9 @@
     // our own output, which other locales group with "." ("3.240.000").
     const written = new WeakMap();
 
+    // Counters mid-animation; a reinit() leaves them alone.
+    const countingElements = new WeakSet();
+
     function getSourceText(node) {
         const record = written.get(node);
         return record && record[0] === node.textContent ? record[1] : node.textContent;
@@ -93,10 +96,10 @@
         const finish = () => {
             show(parsed.value);
             el.setAttribute('data-animated', 'true');
-            delete el._ndsCounting;
+            countingElements.delete(el);
         };
 
-        el._ndsCounting = true;
+        countingElements.add(el);
         if (!duration) return finish();
         const t0 = performance.now();
         const tick = (now) => {
@@ -113,7 +116,7 @@
         document.querySelectorAll(COUNTER).forEach(el => {
             // reinit() re-arms: release a subscription that has not fired yet.
             el.ndsCounter?.destroy();
-            if (el.closest('code') || el.hasAttribute('data-animated') || el._ndsCounting) return;
+            if (el.closest('code') || el.hasAttribute('data-animated') || countingElements.has(el)) return;
             // A backref, so NDS.init.destroy(view) releases a counter that never scrolled into view.
             const off = NDS.onIntersect(el, (entry) => {
                 if (!entry.isIntersecting) return;

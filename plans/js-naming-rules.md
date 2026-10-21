@@ -1,6 +1,6 @@
 # Naming: the underscore and internal function names
 
-Status: IN PROGRESS, step 3 of section 7. Design agreed 2026-10-20; PERSONA landed 2026-10-21.
+Status: IN PROGRESS, step 4 of section 7. Design agreed 2026-10-20; PERSONA landed 2026-10-21.
 
 ## Progress (read this first)
 
@@ -16,12 +16,14 @@ Status: IN PROGRESS, step 3 of section 7. Design agreed 2026-10-20; PERSONA land
 | `7433f0d7` | Step 3: verbs, acronyms, whole words on every binding, 1,979 renames (P10.4 / P10.3 / P10.8 / P10.0) |
 | `80360ddc` | Step 3: class members, 520 renames in 25 files (P12.11 + their verbs and words); 58 public members onto 13 banners; `scripts/rename-members.mjs` |
 | "no file reads another file's _ name" | Step 3: P12.12, each cross-file `_` given a home (below) |
+| "the WeakMap move" | Step 3: P12.14, data on elements and foreign objects in module WeakMaps/WeakSets (below) |
 
 **Where the work list stands** (`node scripts/check-js-rules.mjs --names`, a count per rule on the last lines):
-79 findings, 113 to verify. P12.11 0; P12.12 0 (2 verify, read: Dropmenu's own `_unstamp`, Pagination's own
-`_offResize` expando, which the WeakMap move takes); P10.4 22, P10.3 2, P10.8 4, all on a banner but `Sort.opts`
-(public: section 3); P12.14 element data 47 (+44 verify); P12.3 storage keys 4; P10.0 56 verify. Lines tagged
-"on the banner" are public: section 3, step 4, not step 3.
+32 findings, 79 to verify. P12.11 0; P12.12 0 (1 verify, read: Dropmenu's and Tooltip's `_unstamp` are each
+their own class's member); P12.14 0 (11 verify, read and kept: Dropmenu `instance._unstamp`, Stepper `stepper._*`
+and Upload `fileData._xhr` are their own file's instance or record, Main Nav `state._navChanged` its own module
+object); P10.4 22, P10.3 2, P10.8 4, all on a banner but `Sort.opts` (public: section 3); P12.3 storage keys 4;
+P10.0 56 verify. Lines tagged "on the banner" are public: section 3, step 4, not step 3.
 
 **P12.12 homes (landed):** `NDS.i18n._lang` → public `resolveLang(lang)`, the audit's `_files` read → `isMissing(lang)`
 (core/i18n.md); `_ndsScrollStop` (Code, Scroll More) → core `NDS.setScrollStop(el, on)` on a WeakSet; Date Picker's
@@ -46,23 +48,21 @@ the rules of section 2, a cross-file table so one meaning gets one name: `setupE
 `check-banners.mjs` matched `emitEvent(` (now `_dispatchEvent(`); JSD-19 matched `.valid` (now `._?valid`); the names
 check skipped the words of a `_` field (now checked); the rule files cite members (RULES-JSA/JSD/JSP/JSS).
 
-**Next session starts here: the WeakMap move** (P12.14; section 1 rules 4 and 5; entry 12 rule 14). Work list:
-`node scripts/check-js-rules.mjs --names | grep P12.14` (47 findings, 44 verify; also Pagination's `_offResize`
-P12.12 verify). Per name, first yes wins:
-- A `verify` line on an instance of a class in the same file (`fileData._xhr` in Upload, `instance._nd96Adopted` in
-  the pack): read it; a same-file instance keeps its `_` member, an element or a foreign object moves.
-- Data on a page element (`el._ndsFilterAC`, `panel._modal`, `feedback._onDismiss`, `content._offResize` …) → a module
-  `WeakMap` keyed by the element, named for what it holds (`abortControllers`, `offResizes`); one holding
-  AbortControllers ends in `AbortController(s)`. Several values for one element → one WeakMap of a small record.
-- A true/false guard on an element (`el._ndsInitialized`, `_ndsFormInitialized`, `= true` writes) → a module `WeakSet`.
-- `destroy()` deletes the entry it set, as with a stamp (AGENTS.md "Undo"): a framework host reuses nodes.
-- A WeakMap never holds the instance (`el.nds{Name}` stays, JSA-23(a)).
-- Section 6 trap: `check-js-rules.mjs` finds guards by `_nds\w*Initialized` and `._nds\w+ = true` (two places, with
-  self-test fixtures): change the regex and fixtures in the same commit, diff the full check before and after.
-Bulk edits to Sonnet subagents per component family with a brief (the decisions stay here); this is not a rename, so
-no script does it: each site is read. One commit, or one per family if it grows. Then step 4, public renames with
-Migration rows (section 3, the "Public members the step found" list above, the storage keys and
-`window.NDSInitConfig`); step 5 speed; step 6 the checks fail the release.
+**Next session starts here: step 4, public renames with Migration rows** (section 3, the "Public members the step
+found" list above, the storage keys and `window.NDSInitConfig`); then step 5 speed; step 6 the checks fail the release.
+
+**How the WeakMap move was made** (P12.14, done): four Sonnet batches by family, one brief (in `tmp/weakmap/`, gone
+with `tmp/`): a mark → a module `WeakSet`, a value → a `WeakMap` named for what it holds, values with one lifetime →
+one record, the old clears and deletes kept where they were. Decisions made in review:
+- **"Which instance wired this element" is the instance's own set** (`this._wiredButtons` in Accordion,
+  `this._draftMenus` in Filter), not a module map keyed by the element holding the instance or its controller: a new
+  instance starts empty, so it re-binds, and `destroy()` has nothing to release.
+- **A Date the file hands out moves too:** Date Picker's Hijri trio is `hijriParts` (Date → `{ day, month, year }`),
+  since `CalendarConfig` returns those Dates.
+- The guard checks now read a WeakSet: JSP-06a's guard and JSD-18's stamp accept `set.add(el)` for any module
+  `WeakSet` (two self-test cases); the old `_nds…` forms are gone from both regexes.
+- `check-bundle-once.mjs` flakes about 1 run in 6, on HEAD's bundles too: ONCE sometimes settles at 51 listeners
+  (document click 7, change 3) and TWICE at 48. Three readings instead of two did not help; the cause is open.
 
 **Also next: two gaps in `--names` P10.8** (found 2026-10-21, when the loader's `ns` passed step 3). Close both
 before step 6 makes the check fail the release:

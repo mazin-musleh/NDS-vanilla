@@ -274,6 +274,9 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     const writers = [stateCall(['set', 'add', 'toggle', 'apply'])];
     const writesToken = (token) => new RegExp(`(?:${writers.join('|')})\\s*\\([^;]*?['"\`][^'"\`]*\\b${token}\\b`).test(code);
     const gated = (value) => value.split(/\s+/).filter(Boolean).some((t) => VOCAB.has(t));
+    // A per-element guard is a module WeakSet (entry 12 rule 14): `wired.add(el)`.
+    const weakSets = [...code.matchAll(/\b(?:const|let|var)\s+([\w$]+)\s*=\s*new\s+WeakSet\b/g)].map((m) => m[1]);
+    const addsTo = (target) => weakSets.length ? `\\b(?:${weakSets.join('|')})\\.add\\s*\\(\\s*${target}` : '(?!)';
 
     // JSD-01 (a) direct data-state access, (b) a data-*-state twin; a literal value outside the vocabulary passes.
     for (const m of code.matchAll(/\.(set|get|remove|has)Attribute\(\s*(['"])data-((?:[a-z]+-)*)state\2\s*(?:,\s*(['"])([^'"]*)\4)?/g)) {
@@ -532,7 +535,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         if (/\.innerHTML\s*=\s*['"`]{2}|replaceChildren\s*\(|\.remove\s*\(\s*\)/.test(scope.slice(0, m.index - fn))) continue; // old nodes left with their listeners
         if (loopsHit.has(loop)) continue; // one line per loop
         loopsHit.add(loop);
-        const guard = /\._nds\w+\s*=\s*true|data-nds-[\w-]+-initialized/.test(scope);
+        const guard = /data-nds-[\w-]+-initialized/.test(scope) || new RegExp(addsTo('')).test(scope);
         hit('JSP-06a', m.index, `${m[1]}.addEventListener('${m[3]}') in a loop, no signal`, guard || !/\bdestroy\b/.test(code) ? 'element-bound listeners behind a per-element guard self-clean' : 'one finding per loop: count its listeners');
     }
 
@@ -815,7 +818,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     }).map((c) => c[1]));
     for (const m of code.matchAll(/new\s+([\w$]+)\s*\(\s*([\w$]+)[^)]*\)\s*;?([\s\S]{0,200})/g)) {
         if (!bails.has(m[1])) continue;
-        const stamp = m[3].match(new RegExp(`${m[2]}\\s*\\.\\s*(?:setAttribute\\(\\s*['"]data-nds-[\\w-]+-initialized|_nds\\w*Initialized\\s*=|nds[A-Z]\\w*\\s*=)`));
+        const stamp = m[3].match(new RegExp(`${m[2]}\\s*\\.\\s*(?:setAttribute\\(\\s*['"]data-nds-[\\w-]+-initialized|nds[A-Z]\\w*\\s*=)|${addsTo(`${m[2]}\\s*\\)`)}`));
         if (!stamp || /\bif\s*\(/.test(m[3].slice(0, stamp.index))) continue;
         hit('JSD-18', m.index, `${m[2]} stamped after new ${m[1]}(), whose constructor can bail`, 'gate the stamp on the instance being valid');
     }
@@ -1225,6 +1228,8 @@ const CASES = [
     [`(function(){ function wire(list) { list.forEach((b) => { b.addEventListener('click', go); }); } function destroy() {} })();`, ['JSP-06a?']],
     [`(function(){ function wire(list) { list.forEach((b) => { b.addEventListener('click', go); b.addEventListener('keydown', go); }); } function destroy() {} })();`, ['JSP-06a?']], // one line per loop
     [`(function(){ function render(box, items) { box.innerHTML = ''; items.forEach((b) => { b.addEventListener('click', go); }); } })();`, []], // old nodes left
+    [`(function(){ const built = new WeakSet(); class A { constructor(el) { if (!el.id) return; } } function sweep(el) { new A(el); built.add(el); } })();`, ['JSD-18?']],
+    [`(function(){ const built = new WeakSet(); class A { constructor(el) { if (!el.id) return; } } function sweep(el) { new A(el); if (el.ndsA) built.add(el); } })();`, []],
     [`(function(){ function f() { clearTimeout(t); t = setTimeout(run, 200); } })();`, ['JSP-07?']],
     [`(function(){ function f() { clearTimeout(t); t = setTimeout(run, 200); } function cancel() { clearTimeout(t); } })();`, []], // latch
     [`(function(){ function f() { clearTimeout(t); t = setTimeout(run, delay); } })();`, []], // a scheduler

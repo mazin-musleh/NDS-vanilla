@@ -64,6 +64,11 @@
     // A field owns the messages inside it, except those of a field nested in it.
     const FIELD = '.nds-form-container, .nds-form-group';
 
+    // Private per-message state, set at different times, so one map each.
+    const dismissCallbacks = new WeakMap();
+    const hiddenPermanents = new WeakMap();
+    const hiddenTargetFeedbacks = new WeakSet();
+
     const api = {
         /**
          * Create and insert a feedback element
@@ -120,7 +125,7 @@
 
             // Store onDismiss callback if provided
             if (onDismiss) {
-                feedback._onDismiss = onDismiss;
+                dismissCallbacks.set(feedback, onDismiss);
             }
 
             // Build HTML structure
@@ -172,7 +177,7 @@
             if (!el) return false;
 
             // Store target element before removal
-            const targetWasHidden = el._targetWasHidden;
+            const targetWasHidden = hiddenTargetFeedbacks.has(el);
             const parent = el.parentNode;
 
             // Dispatch dismiss event
@@ -183,13 +188,15 @@
             document.dispatchEvent(event);
 
             // Call onDismiss callback if stored
-            if (el._onDismiss && typeof el._onDismiss === 'function') {
-                el._onDismiss();
+            const dismissCallback = dismissCallbacks.get(el);
+            if (typeof dismissCallback === 'function') {
+                dismissCallback.call(el);
             }
 
             // Restore hidden permanent feedback elements
-            if (el._hiddenPermanent && el._hiddenPermanent.length > 0) {
-                el._hiddenPermanent.forEach(permanentFeedback => {
+            const hiddenPermanent = hiddenPermanents.get(el);
+            if (hiddenPermanent && hiddenPermanent.length > 0) {
+                hiddenPermanent.forEach(permanentFeedback => {
                     if (permanentFeedback && permanentFeedback.parentNode) {
                         permanentFeedback.removeAttribute('hidden');
                     }
@@ -253,7 +260,7 @@
                     hiddenPermanent.push(existing);
                     return;
                 }
-                existing._hiddenPermanent = null;
+                hiddenPermanents.delete(existing);
                 this.dismiss(existing);
             };
 
@@ -273,13 +280,13 @@
 
             // Store references to hidden permanent feedback on the new feedback element
             if (hiddenPermanent.length > 0) {
-                feedback._hiddenPermanent = hiddenPermanent;
+                hiddenPermanents.set(feedback, hiddenPermanent);
             }
 
             // Remove hidden attribute from target if it exists (for progressive enhancement)
             // Store if target was hidden so we can restore it later
             if (targetEl.hasAttribute('hidden')) {
-                feedback._targetWasHidden = true;
+                hiddenTargetFeedbacks.add(feedback);
                 targetEl.removeAttribute('hidden');
             }
 

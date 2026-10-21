@@ -122,6 +122,8 @@
     // The end-of-animation step a submenu is waiting on. A reversal cancels it: two queued
     // ends would both run, and the open one would leave the <li> marked open.
     const pendingEnd = new WeakMap();
+    const togglesAbortControllers = new WeakMap();
+    const searchTeardowns = new WeakMap();
     function cancelPending(submenu) {
         pendingEnd.get(submenu)?.();
         pendingEnd.delete(submenu);
@@ -199,9 +201,10 @@
     }
 
     function setupToggles(drawer) {
-        if (drawer._togglesAC) drawer._togglesAC.abort();
-        drawer._togglesAC = new AbortController();
-        const { signal } = drawer._togglesAC;
+        togglesAbortControllers.get(drawer)?.abort();
+        const togglesAbortController = new AbortController();
+        togglesAbortControllers.set(drawer, togglesAbortController);
+        const { signal } = togglesAbortController;
 
         drawer.querySelectorAll('.nds-drawer-list li').forEach(listItem => {
             const submenu = listItem.querySelector(':scope > ul');
@@ -329,7 +332,7 @@
         // The branches open before the first query, so clearing the box puts the menu back as it was.
         let before = null;
         const filter = () => {
-            if (!drawer._searchTeardown) return; // a debounced call after destroy()
+            if (!searchTeardowns.has(drawer)) return; // a debounced call after destroy()
             const query = normalizeText(input.value.trim());
             const getGroups = () => [...list.querySelectorAll('li')].filter(listItem => listItem.querySelector(':scope > ul'));
             if (query && !before) before = getGroups().filter(isOpen);
@@ -353,14 +356,14 @@
             filter();
         }, { signal: controller.signal });
 
-        drawer._searchTeardown = () => {
+        searchTeardowns.set(drawer, () => {
             controller.abort();
             input.value = '';
             filter();
             box.remove();
             empty.remove();
-            drawer._searchTeardown = null;
-        };
+            searchTeardowns.delete(drawer);
+        });
     }
 
     // ==============================================
@@ -388,11 +391,9 @@
 
     function destroyDrawer(drawer) {
         // Abort all submenu-toggle listeners attached in setupToggles
-        if (drawer._togglesAC) {
-            drawer._togglesAC.abort();
-            delete drawer._togglesAC;
-        }
-        drawer._searchTeardown?.();
+        togglesAbortControllers.get(drawer)?.abort();
+        togglesAbortControllers.delete(drawer);
+        searchTeardowns.get(drawer)?.();
 
         drawer.removeAttribute('data-nds-drawer-initialized');
     }

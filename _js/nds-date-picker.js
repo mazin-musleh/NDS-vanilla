@@ -42,16 +42,15 @@
 (() => {
     'use strict';
 
+    var hijriParts = new WeakMap();   // Date -> { day, month, year }
+
     /**
      * Clones a Date and preserves any attached Hijri metadata
      */
     function copyDateWithHijri(date) {
         var copy = new Date(date);
-        if (date._hijriDay) {
-            copy._hijriDay = date._hijriDay;
-            copy._hijriMonth = date._hijriMonth;
-            copy._hijriYear = date._hijriYear;
-        }
+        var parts = hijriParts.get(date);
+        if (parts && parts.day) hijriParts.set(copy, { day: parts.day, month: parts.month, year: parts.year });
         return copy;
     }
 
@@ -59,9 +58,7 @@
     // the file's data contract — the month/year grids, getYearRange and
     // getDisplayDayNumber read it — so it lives in one place.
     function stampHijri(date, hYear, hMonth, hDay) {
-        date._hijriDay = hDay;
-        date._hijriMonth = hMonth;
-        date._hijriYear = hYear;
+        hijriParts.set(date, { day: hDay, month: hMonth, year: hYear });
         return date;
     }
 
@@ -698,8 +695,8 @@
         },
 
         getDisplayDayNumber: function (date) {
-            if (this.state.calendarType === 'hijri' && date._hijriDay) {
-                return date._hijriDay;
+            if (this.state.calendarType === 'hijri' && hijriParts.get(date)?.day) {
+                return hijriParts.get(date).day;
             }
             return date.getDate();
         },
@@ -1045,11 +1042,12 @@
 
         getCurrentHijriDate: function () {
             // If current date already has Hijri data, use it
-            if (this.state.currentDate._hijriMonth && this.state.currentDate._hijriYear) {
+            var parts = hijriParts.get(this.state.currentDate);
+            if (parts?.month && parts.year) {
                 return {
-                    day: this.state.currentDate._hijriDay || 1,
-                    month: this.state.currentDate._hijriMonth,
-                    year: this.state.currentDate._hijriYear
+                    day: parts.day || 1,
+                    month: parts.month,
+                    year: parts.year
                 };
             }
 
@@ -1283,10 +1281,10 @@
             // the currently viewed year (grid is one year at a time).
             var selectedMonth = -1;
             if (this.state.selectedDate) {
-                var selectedYear = isHijri ? this.state.selectedDate._hijriYear : this.state.selectedDate.getFullYear();
+                var selectedYear = isHijri ? hijriParts.get(this.state.selectedDate)?.year : this.state.selectedDate.getFullYear();
                 if (selectedYear === currentYear) {
                     selectedMonth = isHijri
-                        ? this.state.selectedDate._hijriMonth
+                        ? hijriParts.get(this.state.selectedDate)?.month
                         : this.state.selectedDate.getMonth();
                 }
             }
@@ -1330,7 +1328,7 @@
             var currentYear = this.getCurrentYear();
             var selectedYear = -1;
             if (this.state.selectedDate) {
-                selectedYear = isHijri ? this.state.selectedDate._hijriYear : this.state.selectedDate.getFullYear();
+                selectedYear = isHijri ? hijriParts.get(this.state.selectedDate)?.year : this.state.selectedDate.getFullYear();
             }
             var todaysYear = isHijri ? this.getTodaysHijriDate().year : NDS.Date.today().getFullYear();
 
@@ -1616,7 +1614,7 @@
             if (!this.isRangeMode()) {
                 this.state.selectedDate = copyDateWithHijri(today);
             }
-            this.state.currentDate = isHijri ? fromHijri(today._hijriYear, today._hijriMonth, 1) : new Date(today);
+            this.state.currentDate = isHijri ? fromHijri(hijriParts.get(today)?.year, hijriParts.get(today)?.month, 1) : new Date(today);
 
             this._refreshView();
             // Today only mutates state; Save commits (matches selectDate).
@@ -1787,11 +1785,11 @@
             var end = todayYear + yearRangeAfter;
 
             if (this.state.minDate) {
-                var minY = isHijri ? this.state.minDate._hijriYear : this.state.minDate.getFullYear();
+                var minY = isHijri ? hijriParts.get(this.state.minDate)?.year : this.state.minDate.getFullYear();
                 if (minY > start) start = minY;
             }
             if (this.state.maxDate) {
-                var maxY = isHijri ? this.state.maxDate._hijriYear : this.state.maxDate.getFullYear();
+                var maxY = isHijri ? hijriParts.get(this.state.maxDate)?.year : this.state.maxDate.getFullYear();
                 if (maxY < end) end = maxY;
             }
             return { start: start, end: end };

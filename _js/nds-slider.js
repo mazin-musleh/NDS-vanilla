@@ -41,6 +41,7 @@
 
     var SENTINEL = 'data-nds-slider-initialized';
     var STEP_KEYS = /^(Arrow(Up|Down|Left|Right)|Home|End|Page(Up|Down))$/;
+    var offResizes = new WeakMap();
 
     function getPercent(input) {
         var min = parseFloat(input.min);
@@ -151,8 +152,8 @@
         // Cold-init: the pooled observer's initial callback applies the reservation
         // off the sync path and re-runs it on font-load / resize. .nds-stacked
         // toggles are handled by the onAttrChange watcher in addDocumentListeners.
-        if (container._sliderOffResize) container._sliderOffResize();
-        container._sliderOffResize = NDS.onElementResize(container, function () { syncReservation(container); });
+        if (offResizes.has(container)) offResizes.get(container)();
+        offResizes.set(container, NDS.onElementResize(container, function () { syncReservation(container); }));
     }
 
     var bound = false;
@@ -202,7 +203,7 @@
             var list = el ? [el] : document.querySelectorAll('[' + SENTINEL + ']');
             list.forEach(function (container) {
                 container.removeAttribute(SENTINEL);
-                if (container._sliderOffResize) { container._sliderOffResize(); delete container._sliderOffResize; }
+                if (offResizes.has(container)) { offResizes.get(container)(); offResizes.delete(container); }
             });
             // ponytail: delegated input listener stays bound for the page lifetime —
             // reinit re-uses it. Upgrade to AbortController if a future variant

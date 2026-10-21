@@ -207,14 +207,15 @@
     // ── First paint ────────────────────────────────────────────────────
     // Elements the init tail (autofocus, the reveal) has already handled.
     const tail = new WeakSet();
+    const initializedInputs = new WeakSet();
     const getSelfAndInner = (el, selector) => {
         const inner = Array.from(el.querySelectorAll(selector));
         return el.matches && el.matches(selector) ? [el].concat(inner) : inner;
     };
 
     function setupInput(input, fc) {
-        if (input._ndsInitialized) return;
-        input._ndsInitialized = true;
+        if (initializedInputs.has(input)) return;
+        initializedInputs.add(input);
         const container = fc.closest('.nds-form-container');
         // A required container marks its input; one whose value a component owns never stamps required,
         // which would false-fail checkValidity, but still announces it.

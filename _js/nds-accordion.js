@@ -54,6 +54,7 @@
             }
 
             this.abortController = new AbortController();
+            this._wiredButtons = new WeakSet();
             this._valid = true;
             this.init();
         }
@@ -102,12 +103,12 @@
         // refresh() can adopt an item inserted anywhere in the root, which would
         // leave every earlier closure pointing at the wrong panel.
         //
-        // The guard records the OWNING instance, not a boolean: destroy() aborts
-        // this instance's listeners, so a later controller on the same DOM must
-        // be free to re-bind — a boolean would leave it click-dead.
+        // The guard is per instance, not on the button: destroy() aborts this
+        // instance's listeners, so a later controller on the same DOM must be
+        // free to re-bind — a mark on the button would leave it click-dead.
         _addButtonListeners(button) {
-            if (button._ndsAcc === this) return;
-            button._ndsAcc = this;
+            if (this._wiredButtons.has(button)) return;
+            this._wiredButtons.add(button);
             button.addEventListener('click', (e) => {
                 e.preventDefault();
                 this._toggle(this._buttons.indexOf(button));
@@ -122,7 +123,7 @@
             this._buttons = findOwnParts(this._accordionContainer, '.nds-accordion-btn');
             this._collapses = findOwnParts(this._accordionContainer, '.nds-accordion-collapse');
             this._buttons.forEach((button, index) => {
-                if (button._ndsAcc === this) return;
+                if (this._wiredButtons.has(button)) return;
                 this._syncItem(button, this._collapses[index]);
                 this._addButtonListeners(button);
             });
@@ -330,11 +331,6 @@
 
         destroy() {
             if (this.abortController) this.abortController.abort();
-            // Release the ownership marks too, so the buttons don't pin this
-            // instance after its listeners are gone.
-            this._buttons.forEach(button => {
-                if (button._ndsAcc === this) delete button._ndsAcc;
-            });
             // Release the container backref + init stamp so create()/init() can
             // rebuild — without this, create() returns the dead controller and
             // init() calls refresh() on it. Identity-guard the delete: a later

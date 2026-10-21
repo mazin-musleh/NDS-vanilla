@@ -52,6 +52,9 @@
 
     const { add: addState, remove: removeState, has: hasState } = NDS.state;
 
+    // Per wrapper, set by setupElement and dropped by destroy: { content, builtDivider, abortController, offResize }.
+    const wrapperSetups = new WeakMap();
+
     // Return 'vertical' | 'horizontal' | null.
     // If both axes overflow, prefer vertical (more common list case).
     function detectAxis(content) {
@@ -87,7 +90,7 @@
     // wrapper's reads before any write (a write between reads forces a layout
     // per wrapper — 68ms@6.6x on a page with 34 of them).
     function measure(wrapper) {
-        const content = wrapper._content || wrapper.querySelector(config.selectors.content);
+        const content = wrapperSetups.get(wrapper)?.content || wrapper.querySelector(config.selectors.content);
         if (!content) return;
         const axis = detectAxis(content);
         if (!axis) return wrapper.hasAttribute('data-axis') ? Object.assign(() => {
@@ -110,14 +113,14 @@
     }
 
     function checkScrollPosition(wrapper) {
-        const content = wrapper._content || wrapper.querySelector(config.selectors.content);
+        const content = wrapperSetups.get(wrapper)?.content || wrapper.querySelector(config.selectors.content);
         const axis = wrapper.getAttribute('data-axis');
         if (!content || !axis) return;
         syncEdges(wrapper, getScrollPosition(content, axis), getMaxScroll(content, axis));
     }
 
     function scrollStep(wrapper) {
-        const content = wrapper._content;
+        const content = wrapperSetups.get(wrapper)?.content;
         if (!content) return;
         const axis = wrapper.getAttribute('data-axis');
         if (!axis) return;
@@ -166,7 +169,8 @@
         const content = wrapper.querySelector(config.selectors.content);
         if (!content) return;
 
-        wrapper._content = content;
+        const setup = { content };
+        wrapperSetups.set(wrapper, setup);
         // The content can hold a nested scroll-more, whose button comes first in document order.
         const btn = [...wrapper.querySelectorAll(config.selectors.btn)].find(candidate => candidate.closest(config.selectors.wrapper) === wrapper);
 
@@ -178,11 +182,11 @@
             const divider = document.createElement('div');
             divider.className = 'nds-divider';
             wrapper.insertBefore(divider, btn);
-            wrapper._builtDivider = divider;
+            setup.builtDivider = divider;
         }
 
-        wrapper._abortController = new AbortController();
-        const { signal } = wrapper._abortController;
+        setup.abortController = new AbortController();
+        const { signal } = setup.abortController;
 
         content.addEventListener('scroll', NDS.rafThrottle(() => checkScrollPosition(wrapper)), { passive: true, signal });
 
@@ -195,10 +199,10 @@
         // forced layout and hidden (display:none) instances measure on reveal.
         // Watch the wrapper: the button and padding measure() stamps shrink the content, a self-resize (RO loop error).
         // Clearing them shrinks a wrapper its content sizes, so that write lands next frame, re-checked.
-        wrapper._offResizeObs = NDS.onElementResize(wrapper, () => {
+        setup.offResize = NDS.onElementResize(wrapper, () => {
             const write = measure(wrapper);
             if (!write?.clears) return write;
-            requestAnimationFrame(() => { if (wrapper._offResizeObs) checkOverflow(wrapper); });
+            requestAnimationFrame(() => { if (wrapperSetups.get(wrapper)?.offResize) checkOverflow(wrapper); });
         });
         // NDS.init.destroy(view) finds instances through an nds* backref on the element.
         wrapper.ndsScrollMore = { destroy: () => destroy(wrapper) };
@@ -213,18 +217,12 @@
     }
 
     function destroy(wrapper) {
-        if (wrapper._abortController) {
-            wrapper._abortController.abort();
-            delete wrapper._abortController;
-        }
-        if (wrapper._offResizeObs) {
-            wrapper._offResizeObs();
-            delete wrapper._offResizeObs;
-        }
-        if (wrapper._content) scrollStop(wrapper._content, false);
-        delete wrapper._content;
-        wrapper._builtDivider?.remove();
-        delete wrapper._builtDivider;
+        const setup = wrapperSetups.get(wrapper);
+        wrapperSetups.delete(wrapper);
+        setup?.abortController?.abort();
+        setup?.offResize?.();
+        if (setup?.content) scrollStop(setup.content, false);
+        setup?.builtDivider?.remove();
         // What measure() wrote: a re-create measures again.
         wrapper.removeAttribute('data-axis');
         removeState(wrapper, config.overflow.hasMore, config.overflow.atStart, config.overflow.atEnd);

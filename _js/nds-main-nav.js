@@ -81,6 +81,7 @@
 
     // State helpers — delegated to NDS.state (nds-core.js)
     const { add: addState, remove: removeState, has: hasState } = NDS.state;
+    const lastSizes = new WeakMap();
 
     // Minimal-mode breakpoint. Reads the canonical `--nds-minimal-nav-bp`
     // CSS var once at module load, then drives mode detection via
@@ -996,9 +997,9 @@
         // size changes — observing just primary is enough.
         const handleNavResize = (entry) => {
             const { width, height } = entry.contentRect;
-            const last = entry.target._lastSize;
+            const last = lastSizes.get(entry.target);
             if (last && Math.abs(width - last.w) <= 5 && Math.abs(height - last.h) <= 5) return;
-            entry.target._lastSize = { w: width, h: height };
+            lastSizes.set(entry.target, { w: width, h: height });
             onNavResize();
         };
 

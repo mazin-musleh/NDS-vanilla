@@ -68,6 +68,12 @@
     // a checkbox or actions column has no button, so the two index spaces diverge.
     const getHeaderIndex = (th) => th.cellIndex;
 
+    const ownedExportSkips = new WeakSet();       // th whose data-export-skip we set (an authored one stays)
+    const revealTimers = new WeakMap();           // row → pending sub reveal timeout
+    const loadStarts = new WeakMap();             // row → performance.now() when its sub-request began
+    const subAbortControllers = new WeakMap();    // row → AbortController of its outstanding sub-request
+    const subRows = new WeakMap();                // sub row → its parent row
+
     class NdsTable {
         constructor(tableElement) {
             this._valid = false;
@@ -367,10 +373,10 @@
         // a hide/show round trip.
         if (hidden && !th.hasAttribute('data-export-skip')) {
             th.setAttribute('data-export-skip', '');
-            th._ndsExportSkipOwned = true;
-        } else if (!hidden && th._ndsExportSkipOwned) {
+            ownedExportSkips.add(th);
+        } else if (!hidden && ownedExportSkips.has(th)) {
             th.removeAttribute('data-export-skip');
-            th._ndsExportSkipOwned = false;
+            ownedExportSkips.delete(th);
         }
 
         getBodyRows(table).forEach(tr => {
@@ -653,13 +659,14 @@
     });
 
     // Minimum spinner-visible time: a sub-fast fetch would flash the loading state.
-    // Only the initial-load path stamps _ndsLoadStart in open(); a refresh of an
+    // Only the initial-load path records a loadStarts entry in open(); a refresh of an
     // already-open sub reveals immediately. Cancel paths clear the clock so a
     // second click aborts without waiting out the timer.
     const SUB_MIN_VISIBLE_MS = 500;
     const clearLoadClock = (tr) => {
-        if (tr._ndsRevealTimer) { clearTimeout(tr._ndsRevealTimer); tr._ndsRevealTimer = null; }
-        tr._ndsLoadStart = null;
+        clearTimeout(revealTimers.get(tr));
+        revealTimers.delete(tr);
+        loadStarts.delete(tr);
     };
 
     function dispatchSub(table, name, tr, sub, extra) {
@@ -677,7 +684,7 @@
         // Direct backref so re-pairing after a sort holds; the aria-controls walk
         // below covers authored subs
         // JS has never touched.
-        sub._ndsRow = tr;
+        subRows.set(sub, tr);
 
         // Re-derive colspan on every touch rather than trusting the markup: an
         // authored value goes stale the moment a column is added or dropped, and
@@ -699,7 +706,7 @@
 
         sub.appendChild(document.createElement('td'));
         tr.after(sub);
-        return linkSub(tr, sub);   // sets colSpan, id and the _ndsRow backref
+        return linkSub(tr, sub);   // sets colSpan, id and the subRows backref
     }
 
     function setSubOpen(tr, sub, open) {
@@ -723,22 +730,22 @@
         if (NDS.state.has(table, 'always-open')) return;
         table.querySelectorAll(':scope > tbody > tr.nds-sub:not([hidden])').forEach(other => {
             // Backref first: setSubOpen re-runs linkSub, so handing it a wrong row
-            // wouldn't just mis-report the event — it would rewrite _ndsRow and
+            // wouldn't just mis-report the event — it would rewrite subRows and
             // corrupt the pairing for good.
-            const parent = other._ndsRow || other.previousElementSibling;
+            const parent = subRows.get(other) || other.previousElementSibling;
             if (other !== keep && parent && parent !== other) setSubOpen(parent, other, false);
         });
     }
 
     // Sort's item set is ':scope > tr', so subs are re-appended by their own (empty)
-    // sort value and end up detached from their parent. Re-pair through the _ndsRow
+    // sort value and end up detached from their parent. Re-pair through the subRows
     // backref, falling back to each sub's id → the toggle controlling it → that
     // toggle's row, so a sub whose backref went stale travels with its parent too.
     // Skips a toggle that sits inside the sub.
     function repairSubPairing(tbody) {
         const isInBody = (row) => !!row && row.parentElement === tbody;
         tbody.querySelectorAll(':scope > tr.nds-sub').forEach(sub => {
-            let parent = sub._ndsRow;
+            let parent = subRows.get(sub);
             if (!isInBody(parent) && sub.id) {
                 parent = Array.from(tbody.querySelectorAll(`${SUB_TOGGLE}[aria-controls="${CSS.escape(sub.id)}"]`))
                     .map(btn => btn.closest('tr'))
@@ -778,10 +785,11 @@
                 // detail.signal lets a cancel drop the request itself rather than
                 // just ignore its answer — pass it to fetch / NDS.request.
                 if (!el) {
-                    tr._ndsSubAbort = new AbortController();
-                    tr._ndsLoadStart = performance.now();
+                    const abortController = new AbortController();
+                    subAbortControllers.set(tr, abortController);
+                    loadStarts.set(tr, performance.now());
                     setToggleLoading(tr, true);
-                    dispatchSub(table, 'sub-request', tr, null, { signal: tr._ndsSubAbort.signal });
+                    dispatchSub(table, 'sub-request', tr, null, { signal: abortController.signal });
                     return sub;
                 }
 
@@ -789,18 +797,18 @@
                 // answer arrived late and must not pop the sub open — the content
                 // still lands, cached for the next click. This is what protects a
                 // consumer who never threaded the signal through.
-                const pending = tr._ndsSubAbort;
-                tr._ndsSubAbort = null;
+                const pending = subAbortControllers.get(tr);
+                subAbortControllers.delete(tr);
                 if (pending?.signal.aborted) { clearLoadClock(tr); return sub; }
 
                 // Hold the reveal until the spinner has been visible long enough.
                 // setContent() just cleared loading synchronously; re-arm so the
                 // spinner keeps painting through the wait — no repaint happened
                 // between the two calls, so this is a state fixup, not a flicker.
-                const start = tr._ndsLoadStart;
+                const start = loadStarts.get(tr);
                 clearLoadClock(tr);
                 const reveal = () => {
-                    tr._ndsRevealTimer = null;
+                    revealTimers.delete(tr);
                     if (start) setToggleLoading(tr, false);   // only clear if we armed it (fetch path)
                     closeOtherSubs(table, el);
                     setSubOpen(tr, el, true);
@@ -808,7 +816,7 @@
                 const wait = start ? SUB_MIN_VISIBLE_MS - (performance.now() - start) : 0;
                 if (wait > 0) {
                     setToggleLoading(tr, true);
-                    tr._ndsRevealTimer = setTimeout(reveal, wait);
+                    revealTimers.set(tr, setTimeout(reveal, wait));
                 } else reveal();
                 return sub;
             },
@@ -818,7 +826,7 @@
             // toggle would spin forever. The abort is a no-op once
             // open() has consumed the controller, so closing a loaded sub is clean.
             close() {
-                tr._ndsSubAbort?.abort();
+                subAbortControllers.get(tr)?.abort();
                 clearLoadClock(tr);
                 setToggleLoading(tr, false);
                 const el = findSub(tr);
@@ -838,14 +846,14 @@
     // Init pass over authored subs. linkSub normalizes colspan — derived, not
     // authored intent, so unlike open/closed state it IS safe to rewrite here, and
     // without it a sub that ships open keeps a stale span until its first toggle.
-    // It also stamps the id and the _ndsRow backref, so repairSubPairing resolves
+    // It also stamps the id and the subRows backref, so repairSubPairing resolves
     // an authored sub off the backref instead of a per-sub tbody-wide query.
     function linkAuthoredSubs(table) {
         table.querySelectorAll(':scope > tbody > tr.nds-sub').forEach(sub => {
             // Backref first, same as closeOtherSubs: re-deriving from adjacency
-            // would rewrite _ndsRow with the wrong row whenever a reinit lands
+            // would rewrite subRows with the wrong row whenever a reinit lands
             // while a sort has the sub detached from its parent.
-            const parent = sub._ndsRow || sub.previousElementSibling;
+            const parent = subRows.get(sub) || sub.previousElementSibling;
             if (parent && !parent.classList.contains('nds-sub')) linkSub(parent, sub);
         });
     }
@@ -866,7 +874,7 @@
         // that's three exits — the control can't be stranded whatever the
         // consumer does or forgets to do.
         if (NDS.state.has(btn, 'loading')) {
-            handle.el._ndsSubAbort?.abort();
+            subAbortControllers.get(handle.el)?.abort();
             clearLoadClock(handle.el);
             setToggleLoading(handle.el, false);
             return;

@@ -66,6 +66,7 @@
 
     const INIT_ATTR = 'data-nds-fab-initialized';
     const DEFAULT_POS = 'right';   // physical default edge
+    const createdDocks = new WeakSet();   // docks we built; an authored one is not ours to remove
 
     const order = (el) => parseInt(el.dataset.fabOrder, 10) || 0;
     // Measured px, trimmed to 2dp: a hundredth of a pixel is far under a device
@@ -111,7 +112,7 @@
             el = document.createElement('div');
             el.className = 'nds-fab-dock';
             el.dataset.fabDockPos = want;   // always stamp (incl. 'right') so the DOM is unambiguous
-            el._ndsFabCreated = true;       // ours to remove once it empties; an authored dock is not
+            createdDocks.add(el);           // ours to remove once it empties
             document.body.appendChild(el);
         }
         return el;
@@ -282,7 +283,7 @@
 
             // Drop the empty slots we created; an authored dock stays, it is the app's.
             document.querySelectorAll('.nds-fab-dock').forEach(slot => {
-                if (slot._ndsFabCreated && !slot.children.length) slot.remove();
+                if (createdDocks.has(slot) &&!slot.children.length) slot.remove();
             });
             if (!document.querySelector('.nds-fab[' + INIT_ATTR + ']')) cleanupRuntime();
             return 1;

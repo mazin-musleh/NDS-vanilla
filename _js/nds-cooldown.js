@@ -116,6 +116,8 @@
     // the cooldown mid-session.
     const config = new WeakMap();
 
+    const abortControllers = new WeakMap();
+
     function getConfig(btn) {
         let buttonConfig = config.get(btn);
         if (!buttonConfig) {
@@ -269,11 +271,12 @@
         getConfig(btn); // freeze cooldown durations at wire time
         warnNoCountdown(btn);
         stampSizers(btn); // reserve the label width before the first click
-        btn._cooldownAC = new AbortController();
+        const abortController = new AbortController();
+        abortControllers.set(btn, abortController);
         btn.addEventListener('click', () => {
             if (btn.disabled || active.has(btn)) return;
             start(btn);
-        }, { signal: btn._cooldownAC.signal });
+        }, { signal: abortController.signal });
     }
 
     // Paired with onDOMRemove so a detached + re-added button gets a clean
@@ -281,10 +284,8 @@
     // WIRED_ATTR guard.
     function cleanupButton(btn) {
         if (!btn || !btn.hasAttribute(WIRED_ATTR)) return;
-        if (btn._cooldownAC) {
-            btn._cooldownAC.abort();
-            btn._cooldownAC = null;
-        }
+        abortControllers.get(btn)?.abort();
+        abortControllers.delete(btn);
         btn.removeAttribute(WIRED_ATTR);
     }
 

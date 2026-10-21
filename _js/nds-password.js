@@ -81,21 +81,23 @@
         match:   function (value, context) { return context.matchValue !== null && value === context.matchValue; }
     });
 
-    // A chip's test: data-rule-pattern (compiled once, cached on the chip) wins,
+    var ruleTests = new WeakMap();   // chip → its compiled data-rule-pattern test (null = invalid regex)
+
+    // A chip's test: data-rule-pattern (compiled once, cached per chip) wins,
     // else the RULES entry (built-in or addRule-registered). null = inert chip.
     function resolveTest(chip) {
         var pattern = chip.getAttribute('data-rule-pattern');
         if (pattern) {
-            if (chip._ndsRuleTest === undefined) {
+            if (!ruleTests.has(chip)) {
                 try {
                     var re = new RegExp(pattern);
-                    chip._ndsRuleTest = function (value) { return re.test(value); };
+                    ruleTests.set(chip, function (value) { return re.test(value); });
                 } catch (e) {
                     console.warn('NDS Password: invalid data-rule-pattern', chip);
-                    chip._ndsRuleTest = null;
+                    ruleTests.set(chip, null);
                 }
             }
-            return chip._ndsRuleTest;
+            return ruleTests.get(chip);
         }
         return RULES[chip.getAttribute('data-rule')] || null;
     }

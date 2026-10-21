@@ -375,6 +375,7 @@
     // slide's theme class, which is all the stylesheet keys on.
     var DECK_CLASS = 'nds-nd96';
     var siteSlides = [], siteTotal = '', navHadCenter = false, pageHadMd = false, siteLoop = false;
+    var adoptedSwipers = new WeakSet(), draggedDecks = new WeakSet();
     var deckAbort = null, typeTimer = 0, holdTimer = 0, current = -1, paused = false, wordDone = false;
 
     function getFullTitle(spec) { return translate(LEAD) + ' ' + translate(spec.word); }
@@ -637,8 +638,8 @@
     // switch.
     function adoptDeck(swiper) {
         var instance = getSwiperInstance(swiper);
-        if (!instance || instance._nd96Adopted) return;
-        instance._nd96Adopted = true;
+        if (!instance || adoptedSwipers.has(instance)) return;
+        adoptedSwipers.add(instance);
         var cards = Array.prototype.slice.call(swiper.querySelectorAll('.nds-swiper-card'));
         var count = cards.length;
         if (!count) return;
@@ -701,8 +702,8 @@
 
         // Stacked layout: the cards follow the finger, release pages or opens a card.
         var deck = swiper.querySelector('.nds-swiper-deck');
-        if (deck && !deck._nd96Drag) {
-            deck._nd96Drag = true;
+        if (deck && !draggedDecks.has(deck)) {
+            draggedDecks.add(deck);
             var mediaQuery = window.matchMedia((window.NDS && NDS.breakpoints && NDS.breakpoints.desktop) || '(min-width: 960px)');
             var sig = deckAbort ? deckAbort.signal : undefined;
             var x0 = null, dx = 0, pressed = -1;

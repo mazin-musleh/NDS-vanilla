@@ -154,6 +154,11 @@
         max_value: 'Maximum value',
     });
 
+    const observedElements = new WeakSet(); // filter elements with a DOM-add watcher
+    const filterAbortControllers = new WeakMap(); // filter element / range root → its listener controller
+    const boundInputs = new WeakSet(); // inputs whose change listener was wired
+    const itemCaches = new WeakMap(); // item → { values, searchText }, built by _buildItemCache
+
     class NdsFilter {
         constructor(filterContainer, surfaces = null) {
             this._filterContainer = filterContainer;
@@ -232,12 +237,13 @@
             this._filterLabels = {};  // { filterName: { value: label } } — auto-built from data-filter-value
 
             this.abortController = new AbortController();
+            this._draftMenus = new WeakSet();
             // Pool subscriber handles from _setupManualFilter's NDS.onDOMAdd
             // calls; released atomically in destroy() so the per-element
             // closures don't outlive the filter instance.
             this._offDomAdds = [];
-            // Per-filter-element AbortControllers stored on the elements
-            // themselves (element._ndsFilterAC); tracked here so destroy()
+            // Per-filter-element AbortControllers, kept in the
+            // filterAbortControllers map; tracked here so destroy()
             // can release them all in one sweep.
             this._filterElementACs = new Set();
             // In-flight AJAX submission controller. Re-created per submit so a
@@ -245,7 +251,7 @@
             // fresh results with stale ones.
             this.fetchAbortController = null;
 
-            // Per-item match cache (_ndsFilterValues + _ndsSearchText) is
+            // Per-item match cache (itemCaches) is
             // built lazily on the first applyFilters() pass that has criteria
             // — pages where the user never interacts with the filter skip the
             // cost entirely. Flipped to false whenever this.items is
@@ -1326,8 +1332,8 @@
         _addMenuDraftListeners() {
             const { signal } = this.abortController;
             this._targetRoots.forEach(dm => {
-                if (!dm.matches?.('.nds-dropmenu') || dm._ndsFilterDraft === this) return;
-                dm._ndsFilterDraft = this;
+                if (!dm.matches?.('.nds-dropmenu') || this._draftMenus.has(dm)) return;
+                this._draftMenus.add(dm);
                 dm.addEventListener('nds:dropmenu:opened', () => {
                     this._appliedFilters = structuredClone(this.criteria.filters);
                 }, { signal });
@@ -1702,19 +1708,19 @@
             const inputs = element.querySelectorAll('input[type="checkbox"], input[type="radio"], .nds-switch-input');
 
             // Always set up the DOM observer, even with 0 inputs (handles cascading/async filters)
-            if (!element._ndsFilterObserver) {
-                element._ndsFilterObserver = true;
+            if (!observedElements.has(element)) {
+                observedElements.add(element);
                 const off = NDS.onDOMAdd('input[type="checkbox"], input[type="radio"], .nds-switch-input', (nodes) => {
                     // Ignore nodes that already have listeners bound — they are
                     // being moved, not genuinely inserted.
-                    const fresh = nodes.filter(node => element.contains(node) && !node._ndsFilterBound);
+                    const fresh = nodes.filter(node => element.contains(node) && !boundInputs.has(node));
                     if (fresh.length > 0) {
                         this._setupManualFilter(element, filterName);
                         this.reapplyUrlParamsForFilter(filterName);
                     }
                 });
                 // The flag goes with the watcher, so a re-create watches again.
-                this._offDomAdds.push(() => { off(); delete element._ndsFilterObserver; });
+                this._offDomAdds.push(() => { off(); observedElements.delete(element); });
             }
 
             if (inputs.length === 0) {
@@ -1759,21 +1765,22 @@
             // fresh input set (or the same set after innerHTML='' rebuild).
             // Aborting+resetting here releases the prior listener-target entries
             // atomically so they don't accumulate on the long-lived this.abortController.signal
-            // until destroy(). The per-input _ndsFilterBound flag is preserved
+            // until destroy(). The per-input boundInputs mark is preserved
             // (it's used by the onDOMAdd filter above to distinguish moves from
             // genuine inserts), but it no longer gates the bind itself — every
             // call re-wires every current input.
-            if (element._ndsFilterAC) element._ndsFilterAC.abort();
-            element._ndsFilterAC = new AbortController();
+            filterAbortControllers.get(element)?.abort();
+            const elementController = new AbortController();
+            filterAbortControllers.set(element, elementController);
             this._filterElementACs.add(element);
 
             inputs.forEach(input => {
-                input._ndsFilterBound = true;
+                boundInputs.add(input);
                 this._associateWithForm(input);
                 input.addEventListener('change', () => {
                     this._syncFilterCriteria(filterName);
                     this._syncApplyButtonLabel();
-                }, { signal: element._ndsFilterAC.signal });
+                }, { signal: elementController.signal });
             });
         }
 
@@ -1815,16 +1822,17 @@
 
             // Per-element controller mirrors _setupManualFilter so destroy()
             // releases the thumb listener(s) atomically.
-            if (root._ndsFilterAC) root._ndsFilterAC.abort();
-            root._ndsFilterAC = new AbortController();
+            filterAbortControllers.get(root)?.abort();
+            const rootController = new AbortController();
+            filterAbortControllers.set(root, rootController);
             this._filterElementACs.add(root);
 
             const handleInput = () => {
                 this._syncRangeCriteria(filterName);
                 this._syncApplyButtonLabel();
             };
-            if (minInput) minInput.addEventListener('input', handleInput, { signal: root._ndsFilterAC.signal });
-            maxInput.addEventListener('input', handleInput, { signal: root._ndsFilterAC.signal });
+            if (minInput) minInput.addEventListener('input', handleInput, { signal: rootController.signal });
+            maxInput.addEventListener('input', handleInput, { signal: rootController.signal });
 
             // Filter builds the slider, so it kicks off Slider for it (the loader
             // only auto-inits Slider when a static .nds-slider exists at load).
@@ -1983,7 +1991,7 @@
             const pair = this._parseEncodedRange(encoded);
             if (!pair) return true;
             const [lo, hi] = pair;
-            const itemValues = item._ndsFilterValues?.[filterName];
+            const itemValues = itemCaches.get(item)?.values[filterName];
             if (!itemValues || !itemValues.length) return false;
             const value = parseFloat(itemValues[0]);
             if (isNaN(value)) return false;
@@ -2612,17 +2620,15 @@
                     filterValues[itemFilter].push(this._getFilterValue(item).toLowerCase());
                 }
 
-                item._ndsFilterValues = filterValues;
-
                 const textSource = item.querySelector('.nds-card-content') || item;
-                item._ndsSearchText = textSource.textContent.toLowerCase();
+                itemCaches.set(item, { values: filterValues, searchText: textSource.textContent.toLowerCase() });
             }
         }
 
         _matchesSearch(item) {
             const searchText = this.criteria.search;
             if (!searchText) return true;
-            return (item._ndsSearchText || '').includes(searchText);
+            return (itemCaches.get(item)?.searchText || '').includes(searchText);
         }
 
         _matchesFilter(item, filterName, selectedValues) {
@@ -2633,7 +2639,7 @@
                 return this._matchesRange(item, filterName, selectedValues[0]);
             }
 
-            const itemValues = item._ndsFilterValues?.[filterName];
+            const itemValues = itemCaches.get(item)?.values[filterName];
             if (!itemValues || itemValues.length === 0) return false;
 
             // Radio (AND-style single selection) and checkbox (OR) share the
@@ -2944,7 +2950,8 @@
             this._offDomAdds.length = 0;
             this._ownDelay?.forEach(dm => dm.removeAttribute('data-delay'));
             this._filterElementACs.forEach(el => {
-                if (el._ndsFilterAC) { el._ndsFilterAC.abort(); delete el._ndsFilterAC; }
+                filterAbortControllers.get(el)?.abort();
+                filterAbortControllers.delete(el);
             });
             this._filterElementACs.clear();
             this.items.forEach(item => this._showItem(item));

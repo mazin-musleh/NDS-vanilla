@@ -36,6 +36,8 @@
     // mutations are already handled by those long-lived subscribers.
     var subscribed = false;
 
+    var otpAbortControllers = new WeakMap();   // group → AbortController of its listeners
+
     var strings = NDS.i18n.strings('otp', {
         digit: 'Digit {n} of {total}',
         otp_incomplete: 'Please enter all {n} digits',
@@ -250,8 +252,9 @@
         if (!inputs.length) return;
 
         group.setAttribute('data-nds-otp-initialized', '');
-        group._ndsOtpAC = new AbortController();
-        var signal = group._ndsOtpAC.signal;
+        var abortController = new AbortController();
+        otpAbortControllers.set(group, abortController);
+        var signal = abortController.signal;
 
         // A form reset empties the boxes but not the hidden carrier: a hidden input's value is its attribute.
         if (inputs[0].form) inputs[0].form.addEventListener('reset', function (e) {
@@ -294,9 +297,10 @@
 
         NDS.onDOMRemove('.nds-otp-group', function (nodes) {
             nodes.forEach(function (group) {
-                if (group._ndsOtpAC) {
-                    group._ndsOtpAC.abort();
-                    group._ndsOtpAC = null;
+                var abortController = otpAbortControllers.get(group);
+                if (abortController) {
+                    abortController.abort();
+                    otpAbortControllers.delete(group);
                 }
                 group.removeAttribute('data-nds-otp-initialized');
             });

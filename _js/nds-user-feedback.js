@@ -75,6 +75,9 @@ NDS.UserFeedback = (() => {
         error: 'An error occurred, please try again',
     });
 
+    const finishers = new WeakMap();          // widget → finish(status), what setStatus() calls
+    const abortControllers = new WeakMap();   // widget → AbortController of its listeners
+
     // Helper function to generate cookie name for current page
     function getFeedbackCookieName() {
         const pagePath = window.location.pathname;
@@ -197,7 +200,7 @@ NDS.UserFeedback = (() => {
                 offsetEl: feedbackComponent,
             });
         }
-        feedbackComponent._ndsUfFinish = finish;
+        finishers.set(feedbackComponent, finish);
 
         // Rating variant: carry the picked score to the form field and the recap.
         // The stars are not a form control, so the hidden input is what posts.
@@ -252,8 +255,9 @@ NDS.UserFeedback = (() => {
         }
 
         // Scope all listeners to an AbortController so a future destroy/reinit can detach atomically
-        feedbackComponent._ndsUfAC = new AbortController();
-        const ufSignal = feedbackComponent._ndsUfAC.signal;
+        const abortController = new AbortController();
+        abortControllers.set(feedbackComponent, abortController);
+        const ufSignal = abortController.signal;
 
         // Add click handlers to answer buttons
         answerButtons.forEach(button => {
@@ -316,20 +320,20 @@ NDS.UserFeedback = (() => {
         document.querySelectorAll('.nds-user-feedback').forEach(create);
     }
 
-    // Releases the listeners create() wired via _ndsUfAC (a no-op when the
+    // Releases the listeners create() wired via abortControllers (a no-op when the
     // "already submitted" path never created one) and clears the init marker
     // so a later create() can re-wire the element.
     function destroy(feedbackComponent) {
-        feedbackComponent._ndsUfAC?.abort();
-        delete feedbackComponent._ndsUfAC;
-        delete feedbackComponent._ndsUfFinish;
+        abortControllers.get(feedbackComponent)?.abort();
+        abortControllers.delete(feedbackComponent);
+        finishers.delete(feedbackComponent);
         delete feedbackComponent.ndsUserFeedback;
         feedbackComponent.removeAttribute('data-nds-user-feedback-initialized');
     }
 
     // Ends a send that a nds:user-feedback:submit listener took over.
     function setStatus(feedbackComponent, status = 'success') {
-        feedbackComponent._ndsUfFinish?.(status);
+        finishers.get(feedbackComponent)?.(status);
     }
 
     return { init, reinit: init, create, destroy, setStatus };

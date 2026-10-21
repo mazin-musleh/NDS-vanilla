@@ -82,6 +82,16 @@
     // collapses to one close + one open, never a queue of animations.
     let pendingOpen = null;
 
+    // Private per-panel state, off the element. Lifetimes differ, so one map each.
+    const animationCancels = new WeakMap();
+    const resizeCancels = new WeakMap();
+    const modalPanels = new WeakSet();
+    const openAbortControllers = new WeakMap();
+    const panelAbortControllers = new WeakMap();
+    const noFocusPanels = new WeakSet();
+    const silentPanels = new WeakSet();
+    const openers = new WeakMap();
+
     const findToggles = (panel) =>
         panel.id ? document.querySelectorAll('[data-panel-toggle="' + panel.id + '"]') : [];
 
@@ -89,11 +99,11 @@
     // in-flight open, so the pending handle is cancelled before re-arming —
     // otherwise the open's focus step would fire at the end of the CLOSE.
     function armTransition(panel, fn) {
-        if (panel._cancelAnim) panel._cancelAnim();
-        panel._cancelAnim = NDS.onTransitionEnd(panel, () => {
-            delete panel._cancelAnim;
+        animationCancels.get(panel)?.();
+        animationCancels.set(panel, NDS.onTransitionEnd(panel, () => {
+            animationCancels.delete(panel);
             fn();
-        }, { fallbackMs: NDS.transitionSpeed() + 100 });
+        }, { fallbackMs: NDS.transitionSpeed() + 100 }));
     }
 
     // ==============================================
@@ -106,20 +116,22 @@
         const isStatic = panel.hasAttribute('data-panel-static');
         // Recorded: data-panel-modal is consumer-mutable, and close() must undo the open it got.
         // One the user opens over a modal dialog goes modal too; one the page opens stays under it.
-        panel._modal = panel.hasAttribute('data-panel-modal') || (!panel._noFocus && !!NDS.dialog.top());
+        if (panel.hasAttribute('data-panel-modal') || (!noFocusPanels.has(panel) && !!NDS.dialog.top())) modalPanels.add(panel);
+        else modalPanels.delete(panel);
 
         // Listeners that only exist while open — zero cost when closed.
-        panel._openAC = new AbortController();
-        const { signal } = panel._openAC;
+        const openAbortController = new AbortController();
+        openAbortControllers.set(panel, openAbortController);
+        const { signal } = openAbortController;
 
-        if (panel._modal) {
+        if (modalPanels.has(panel)) {
             NDS.dialog.show(panel, signal);
             if (!isStatic) NDS.dialog.onOutside(panel, () => close(panel), signal);
         } else {
             // show() moves focus into the dialog; a panel opened with { focus: false } gives it back.
             const prev = document.activeElement;
             panel.show();
-            if (panel._noFocus && document.activeElement !== prev) {
+            if (noFocusPanels.has(panel) && document.activeElement !== prev) {
                 if (prev && prev !== document.body) prev.focus({ preventScroll: true });
                 else document.activeElement?.blur();
             }
@@ -144,7 +156,7 @@
             // mid-dispatch isn't called for that same event, but relying on it
             // would make the opening click close the panel if that ever shifted.
             // A modal panel needs none: NDS.dialog stops every outside click and onOutside() above closes it.
-            if (!panel._modal) document.addEventListener('click', (e) => {
+            if (!modalPanels.has(panel)) document.addEventListener('click', (e) => {
                 // A Modal closes before its click reaches here, so its parts are named too.
                 if (!isTop(panel) || panel.contains(e.target)
                     || e.target.closest('.nds-modal, .nds-backdrop, [data-modal-target]')) return;
@@ -170,14 +182,14 @@
 
         armTransition(panel, () => {
             removeState(panel, 'opening');
-            if (!panel._noFocus) {
+            if (!noFocusPanels.has(panel)) {
                 // Skips a close inside a hidden view: focus() on it does nothing.
                 const target = findOwnControls(panel, '[data-panel-close]').find(el => !el.closest('[hidden]')) || panel;
                 if (target === panel && !panel.hasAttribute('tabindex')) panel.tabIndex = -1;
                 target.focus();
             }
-            delete panel._noFocus;
-            if (panel._silent) delete panel._silent;
+            noFocusPanels.delete(panel);
+            if (silentPanels.has(panel)) silentPanels.delete(panel);
             else panel.dispatchEvent(new CustomEvent('nds:panel:opened', {
                 detail: { panel }, bubbles: true,
             }));
@@ -189,8 +201,8 @@
     // A static panel giving way: hidden but still open to its owner, until resume().
     function park(panel) {
         if (hasState(panel, 'closing')) return;
-        panel._silent = true;
-        panel._noFocus = true;
+        silentPanels.add(panel);
+        noFocusPanels.add(panel);
         close(panel);
         waiting.push(panel);
     }
@@ -209,7 +221,7 @@
         createPanel(panel);
         if (!panel.hasAttribute(INIT_ATTR)) return;
         // On the panel, not a local: a swap opens it later from close()'s cleanup.
-        if (focus) delete panel._noFocus; else panel._noFocus = true;
+        if (focus) noFocusPanels.delete(panel); else noFocusPanels.add(panel);
 
         // Re-opening the panel that is mid-close: queue behind its own close
         // rather than fighting the running transition.
@@ -219,7 +231,7 @@
         }
         if (panel.hasAttribute('data-panel-modal')) { openPanel(panel); return; }
         // Only a static panel the page opens on its own waits; one the user asks for takes the screen.
-        if (panel.hasAttribute('data-panel-static') && panel._noFocus) {
+        if (panel.hasAttribute('data-panel-static') && noFocusPanels.has(panel)) {
             if (!stack.length && !pendingOpen) openPanel(panel);
             else if (!waiting.includes(panel)) waiting.push(panel);
             return;
@@ -243,8 +255,8 @@
         if (!panel) return;
         if (drop(waiting, panel)) {
             // A parked panel was still open to its owner, so it gets its closed event.
-            if (panel._silent) {
-                delete panel._silent;
+            if (silentPanels.has(panel)) {
+                silentPanels.delete(panel);
                 if (!hasState(panel, 'open')) panel.dispatchEvent(buildClosedEvent(panel));
             }
             return;
@@ -253,9 +265,9 @@
 
         addState(panel, 'closing');
 
-        if (panel._openAC) {
-            panel._openAC.abort();
-            delete panel._openAC;
+        if (openAbortControllers.has(panel)) {
+            openAbortControllers.get(panel).abort();
+            openAbortControllers.delete(panel);
         }
         NDS.dialog.hideMenus(panel);
 
@@ -264,9 +276,9 @@
         armTransition(panel, () => {
             clearState(panel);
             NDS.dialog.close(panel);
-            delete panel._modal;
+            modalPanels.delete(panel);
             drop(stack, panel);
-            const silent = panel._silent;
+            const silent = silentPanels.has(panel);
 
             // Return focus to the opener only when nothing is queued — the
             // incoming panel takes focus itself a moment later. Drop the
@@ -277,8 +289,8 @@
             // A swap to a different panel does drop it — holding it would later
             // throw focus at a button that open never came from.
             // A parked panel keeps its opener for the close that really ends it.
-            const opener = panel._opener;
-            if (pendingOpen !== panel && !silent) delete panel._opener;
+            const opener = openers.get(panel);
+            if (pendingOpen !== panel && !silent) openers.delete(panel);
             // preventScroll: the page may have scrolled while the panel was open; focus goes
             // back to the opener without jumping the page to it.
             if (!silent && !pendingOpen && opener && typeof opener.focus === 'function' && document.contains(opener)) {
@@ -344,11 +356,11 @@
         panel.setAttribute('data-panel-size', sizes[to]);
         syncResize(panel);
         // Measure the cap again once the size has settled.
-        if (panel._cancelResize) panel._cancelResize();
-        panel._cancelResize = NDS.onTransitionEnd(panel, () => {
-            delete panel._cancelResize;
+        resizeCancels.get(panel)?.();
+        resizeCancels.set(panel, NDS.onTransitionEnd(panel, () => {
+            resizeCancels.delete(panel);
             syncResize(panel);
-        }, { fallbackMs: NDS.transitionSpeed() + 100 });
+        }, { fallbackMs: NDS.transitionSpeed() + 100 }));
         panel.dispatchEvent(new CustomEvent('nds:panel:resized', {
             detail: { panel, size: sizes[to] }, bubbles: true,
         }));
@@ -389,8 +401,9 @@
             console.warn('NDS Panel: panel has no id — toggles cannot target it', panel);
         }
 
-        panel._panelAC = new AbortController();
-        const { signal } = panel._panelAC;
+        const panelAbortController = new AbortController();
+        panelAbortControllers.set(panel, panelAbortController);
+        const { signal } = panelAbortController;
 
         // Closed without close(): a <form method="dialog">, or Chrome's repeat Escape on a modal panel.
         // The event is queued: open again by the time it lands (a re-open mid-close), it is stale.
@@ -422,33 +435,26 @@
         const pending = pendingOpen !== panel ? pendingOpen : null;
         pendingOpen = null;
 
-        if (panel._cancelAnim) {
-            panel._cancelAnim();
-            delete panel._cancelAnim;
-        }
-        if (panel._cancelResize) {
-            panel._cancelResize();
-            delete panel._cancelResize;
-        }
-        if (panel._panelAC) {
-            panel._panelAC.abort();
-            delete panel._panelAC;
-        }
-        if (panel._openAC) {
-            panel._openAC.abort();
-            delete panel._openAC;
-        }
+        animationCancels.get(panel)?.();
+        animationCancels.delete(panel);
+        resizeCancels.get(panel)?.();
+        resizeCancels.delete(panel);
+        panelAbortControllers.get(panel)?.abort();
+        panelAbortControllers.delete(panel);
+        openAbortControllers.get(panel)?.abort();
+        openAbortControllers.delete(panel);
         // Mirrors close()'s toggle reset: destroy skips the close path, so without
         // this a destroyed-while-open panel leaves every toggle claiming
         // aria-expanded="true" for a surface that is now hidden and unwired.
         if (hasState(panel, 'open')) findToggles(panel).forEach(btn => NDS.aria.expanded(btn, false));
         clearState(panel);
         NDS.dialog.close(panel);
-        delete panel._modal;
+        modalPanels.delete(panel);
         drop(stack, panel);
         drop(waiting, panel);
-        delete panel._opener;
-        delete panel._silent;
+        openers.delete(panel);
+        silentPanels.delete(panel);
+        noFocusPanels.delete(panel);
         panel.removeAttribute(INIT_ATTR);
 
         // Another panel still sliding out flushes the slot itself.
@@ -472,7 +478,7 @@
             const panel = NDS.fromTemplate(btn.dataset.panelToggle);
             if (!panel) return;
             e.preventDefault();
-            if (!hasState(panel, 'open')) panel._opener = btn;
+            if (!hasState(panel, 'open')) openers.set(panel, btn);
             toggle(panel);
         });
     }

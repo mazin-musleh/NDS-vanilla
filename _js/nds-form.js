@@ -106,6 +106,10 @@
     // ==============================================
 
     var FORM_SCOPE = '.nds-form-container, .nds-form-group';
+    var loadingRefs = new WeakMap();
+    var strippedEvents = new WeakSet();
+    var pendingEnds = new WeakMap();
+    var initializedForms = new WeakSet();
 
     // ── Loading state — form-scope opt-in ──────────────────────────────
     // Any consumer (autocomplete, remote-validate, custom fetch) can flip
@@ -149,8 +153,9 @@
     }
 
     function enterLoading(fc) {
-        if (!fc || fc._ndsLoading) return;
-        var refs = fc._ndsLoading = { shell: ensureLoadingShell(fc) };
+        if (!fc || loadingRefs.has(fc)) return;
+        var refs = { shell: ensureLoadingShell(fc) };
+        loadingRefs.set(fc, refs);
         // Snapshot each sibling's resting hidden state, so exit restores it.
         refs.rest = new Map();
         fc.querySelectorAll(LOADING_SLOTS).forEach(function(slot) {
@@ -163,9 +168,9 @@
     }
 
     function exitLoading(fc) {
-        var refs = fc && fc._ndsLoading;
+        var refs = fc && loadingRefs.get(fc);
         if (!refs) return;
-        fc._ndsLoading = null;
+        loadingRefs.delete(fc);
         NDS.state.remove(refs.shell, 'loading');
         refs.shell.hidden = true;
         var input = fc.querySelector('input, textarea, select');
@@ -543,7 +548,7 @@
                 input.dispatchEvent(new InputEvent('input', { inputType: e.inputType, data: latin, bubbles: true }));
             },
             input: function(e, context) {
-                if (!context || e._ndsArabicStripped) return;
+                if (!context || strippedEvents.has(e)) return;
                 var input = context.input;
                 // Digits only (a paste may bring spaces, dashes or +), no leading zero: the country code
                 // is already prepended. The browser enforces any maxlength.
@@ -678,7 +683,7 @@
                 var cleaned = input.value.replace(/[؀-ۿ]/g, '');
                 if (cleaned === input.value) return;
                 NDS.setValue(input, cleaned, { change: false });
-                e._ndsArabicStripped = true;
+                strippedEvents.add(e);
                 if (context.container) statusManager.set({ element: context.container, status: 'error', message: strings.text('no_arabic') });
             },
             submit: hideShown,
@@ -747,7 +752,7 @@
             },
             input: function(e, context) {
                 // A stripped letter keeps its message up.
-                if (!context || e._ndsArabicStripped) return;
+                if (!context || strippedEvents.has(e)) return;
                 syncClear(context.input, context.control);
                 if (context.container && NDS.status.get(context.container) !== '') statusManager.clear(context.container);
                 // A group without its own rule drops its message on input too.
@@ -808,11 +813,11 @@
     function setPending(form, btn, until) {
         var mine = !!btn && !NDS.state.has(btn, 'loading');
         var end = function() {
-            if (form._ndsPendingEnd !== end) return;
-            form._ndsPendingEnd = null;
+            if (pendingEnds.get(form) !== end) return;
+            pendingEnds.delete(form);
             if (mine) NDS.state.remove(btn, 'loading');
         };
-        form._ndsPendingEnd = end;
+        pendingEnds.set(form, end);
         if (mine) NDS.state.add(btn, 'loading');
         if (until) until.then(end);
     }
@@ -823,8 +828,8 @@
         var form = formElement.closest('.nds-form') || formElement;
         // .nds-form is also a layout marker on non-form elements (wizard step divs): only a real
         // <form> gets novalidate and a submit listener.
-        if (form.tagName !== 'FORM' || form._ndsFormInitialized) return;
-        form._ndsFormInitialized = true;
+        if (form.tagName !== 'FORM' || initializedForms.has(form)) return;
+        initializedForms.add(form);
         form.setAttribute('novalidate', '');
 
         form.addEventListener('submit', function(e) {
@@ -864,19 +869,19 @@
             // other listener: a script that cancelled the submit sends it itself. A GET twice does no harm.
             window.addEventListener('submit', function(e) {
                 var form = e.target, sub = e.submitter;
-                if (!form._ndsFormInitialized || form._ndsPendingEnd || e.defaultPrevented || form.hasAttribute('data-no-pending')) return;
+                if (!initializedForms.has(form) || pendingEnds.has(form) || e.defaultPrevented || form.hasAttribute('data-no-pending')) return;
                 var readFormAttribute = function(attributeName) { return (sub && sub.getAttribute('form' + attributeName)) || form.getAttribute(attributeName) || ''; };
                 if (readFormAttribute('method').toLowerCase() === 'post' && /^(_self)?$/i.test(readFormAttribute('target'))) setPending(form, sub);
             });
             // Back on a page from the browser's cache: nothing it sent is pending.
             window.addEventListener('pageshow', function(e) {
-                if (e.persisted) document.querySelectorAll('form').forEach(function(form) { if (form._ndsPendingEnd) form._ndsPendingEnd(); });
+                if (e.persisted) document.querySelectorAll('form').forEach(function(form) { if (pendingEnds.has(form)) pendingEnds.get(form)(); });
             });
         },
         on: {
             // A pending form drops the submit. Capture runs before the form's own listeners and a framework's root.
             'submit:capture': function(e) {
-                if (e.target._ndsPendingEnd) { e.preventDefault(); e.stopImmediatePropagation(); }
+                if (pendingEnds.has(e.target)) { e.preventDefault(); e.stopImmediatePropagation(); }
             }
         }
     });

@@ -52,6 +52,8 @@
         close: 'Close',
     });
 
+    const abortControllers = new WeakMap();   // placeholder → its scroll-sync AbortController
+
     const api = {
         /**
          * Create and insert an alert
@@ -295,15 +297,16 @@
             // Sync top offset to the sticky chrome's bottom edge. A topbar counts as
             // much as the nav and either can be absent, so the measurement is core's —
             // it takes whichever sits lower and clamps a scrolled-away one at 0.
-            if (position.startsWith('top') && !placeholder._ndsAlertAC
+            if (position.startsWith('top') && !abortControllers.has(placeholder)
                 && document.querySelector('.nds-main-nav, .nds-topbar')) {
                 const syncTop = () => placeholder.style.setProperty('--_toast-top', NDS.stickyHeaderBottom() + 'px');
                 syncTop();
-                const controller = placeholder._ndsAlertAC = new AbortController();
+                const controller = new AbortController();
+                abortControllers.set(placeholder, controller);
                 window.addEventListener('scroll', NDS.rafThrottle(() => {
                     if (!placeholder.isConnected) {
                         controller.abort();
-                        placeholder._ndsAlertAC = null;
+                        abortControllers.delete(placeholder);
                         return;
                     }
                     if (window.scrollY < 200) syncTop();
@@ -329,8 +332,8 @@
                     NDS.onTransitionEnd(el, () => {
                         el.remove();
                         if (placeholder && !placeholder.children.length) {
-                            placeholder._ndsAlertAC?.abort();
-                            placeholder._ndsAlertAC = null;
+                            abortControllers.get(placeholder)?.abort();
+                            abortControllers.delete(placeholder);
                             placeholder.remove();
                         }
                     });
