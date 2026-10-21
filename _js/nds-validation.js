@@ -10,8 +10,9 @@
  *   NDS.validation.isRequired(el)     data-required or .nds-required on el
  *   NDS.validation.checkCount(field, boxes)   the checked-count check (data-min-checked /
  *                                     data-max-checked; required means at least one)
- *   NDS.validation.checkAll(form, opts)   every field in form → {invalidFields, errors: [{field, input, message}]};
- *                                     opts.extra(container, input) → a message the native pass adds
+ *   NDS.validation.checkAll(form, opts)   every field in form → {invalidFields, errors: [{field, input, message}],
+ *                                     passed: the rule fields that passed}; opts.extra(container, input) → a
+ *                                     message the native pass adds
  *   NDS.validation.getMessage(input)  the native message for an invalid input
  *   NDS.validation.isVisible(el, form)   no [hidden] and no display:none up to form
  *   NDS.validation.rules              the registered rules, to read: {selector, fn, on, owns}
@@ -160,6 +161,7 @@
 
         // The rules: an element answers to the first that answers for it.
         const answered = new Set(validationResult.invalidFields);
+        validationResult.passed = [];
         for (const rule of rules) {
             form.querySelectorAll(rule.selector).forEach((el) => {
                 if (answered.has(el) || !isVisible(el, form)) return;
@@ -167,6 +169,7 @@
                 if (!result) return;
                 answered.add(el);
                 if (!result.valid && !isDisabled(el, result.focus)) fail(el, result.focus || null, result.message);
+                else validationResult.passed.push(el);
             });
         }
 

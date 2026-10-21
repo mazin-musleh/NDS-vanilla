@@ -84,8 +84,6 @@
  *     pending, until the promise settles; call it in the listener, not after an await.
  */
 
-// NDS Forms Controller - Form Control Logic
-
 (function () {
     'use strict';
 
@@ -106,6 +104,8 @@
     // ==============================================
 
     var FORM_SCOPE = '.nds-form-container, .nds-form-group';
+    // Where a status lives: the nearest of these.
+    var STATUS_HOST = '.nds-form-container, .nds-form-group, .nds-feedback';
     var loadingRefs = new WeakMap();
     var strippedEvents = new WeakSet();
     var pendingEnds = new WeakMap();
@@ -187,12 +187,17 @@
     // ==============================================
     // UTILITY FUNCTIONS
     // ==============================================
+    // A number field's min and max: a missing or blank bound is no bound.
+    function getBounds(input) {
+        var min = parseInt(input.min), max = parseInt(input.max);
+        return { min: isNaN(min) ? -Infinity : min, max: isNaN(max) ? Infinity : max };
+    }
+
     var numberRangeCheck = {
         validateNumberRange: function(input) {
             var value = parseInt(input.value);
             if (input.value === '' || isNaN(value)) return null;
-            var min = input.hasAttribute('min') ? parseInt(input.min) : -Infinity;
-            var max = input.hasAttribute('max') ? parseInt(input.max) : Infinity;
+            var bounds = getBounds(input), min = bounds.min, max = bounds.max;
             if (value < min) return { clamped: min, message: validator.getNumberRangeMessage('min', min) };
             if (value > max) return { clamped: max, message: validator.getNumberRangeMessage('max', max) };
             return null;
@@ -208,7 +213,7 @@
         // fields sit in the toolbar BEFORE the field's own footer; same rationale as ownField).
         var marked = container.querySelectorAll('[data-feedback-target]');
         for (var i = 0; i < marked.length; i++) {
-            if (marked[i].closest('.nds-form-container, .nds-form-group, .nds-feedback') === container) return marked[i];
+            if (marked[i].closest(STATUS_HOST) === container) return marked[i];
         }
         return container;
     }
@@ -237,7 +242,7 @@
 
             if (!element) return false;
 
-            var container = element.closest('.nds-form-container, .nds-form-group, .nds-feedback');
+            var container = element.closest(STATUS_HOST);
             if (!container) return false;
 
             // Handle standalone feedback
@@ -306,7 +311,7 @@
                     }
                 }
             } else {
-                this.clear(container);
+                return this.clear(container);
             }
 
             container.dispatchEvent(new CustomEvent('nds:form:status', {
@@ -325,7 +330,7 @@
                 return true;
             }
 
-            var container = element.closest('.nds-form-container, .nds-form-group, .nds-feedback');
+            var container = element.closest(STATUS_HOST);
             if (!container) return false;
 
             NDS.status.clear(container);
@@ -350,7 +355,7 @@
         get: function(element) {
             if (!element) return { status: '', message: '', isValid: true };
 
-            var container = element.closest('.nds-form-container, .nds-form-group, .nds-feedback');
+            var container = element.closest(STATUS_HOST);
             if (!container) return { status: '', message: '', isValid: true };
             var status = NDS.status.get(container);
             return {
@@ -443,11 +448,7 @@
             if (options.showMessages) {
                 validationResult.errors.forEach(function(e) { statusManager.set({ element: e.field, status: 'error', message: e.message }); });
                 // A rule's field that passed drops the error it showed.
-                NDS.validation.rules.forEach(function(rule) {
-                    form.querySelectorAll(rule.selector).forEach(function(el) {
-                        if (validationResult.invalidFields.indexOf(el) === -1 && NDS.validation.isVisible(el, form) && NDS.validation.check(el)) statusManager.clear(el);
-                    });
-                });
+                validationResult.passed.forEach(function(el) { statusManager.clear(el); });
             }
             var first = validationResult.errors.find(function(e) { return e.input; });
             if (options.focusFirst && first) first.input.focus();
@@ -575,8 +576,7 @@
         var input = formControl && formControl.querySelector('input');
         if (!input || input.disabled || input.readOnly) return false;
         var current = parseInt(input.value) || 0;
-        var min = input.hasAttribute('min') ? parseInt(input.min) : -Infinity;
-        var max = input.hasAttribute('max') ? parseInt(input.max) : Infinity;
+        var bounds = getBounds(input), min = bounds.min, max = bounds.max;
         var step = (parseInt(input.step) || 1) * (multiplier || 1);
         var isIncrement = btn.classList.contains('nds-number-increment');
         var next = Math.max(min, Math.min(max, isIncrement ? current + step : current - step));

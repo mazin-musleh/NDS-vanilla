@@ -37,7 +37,7 @@
     };
 
     NDS.field.addType('switch', {
-        // The container's states from the input: the input sits in the track, so the base's input pass misses it.
+        // The container's states from the input: the input sits in its toggle, so the base's input pass misses it.
         create: (el) => {
             const inputs = Array.from(el.querySelectorAll('.nds-form-control .nds-switch-input'));
             if (el.matches && el.matches('.nds-switch-input')) inputs.unshift(el);

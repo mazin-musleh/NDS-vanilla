@@ -90,7 +90,7 @@
         return null;
     }
 
-    // A container's own field: never one inside a nested container, never a hidden carrier.
+    // A container's own field: never one inside a nested container, never a hidden carrier. A group's: its first field.
     function findOwnInput(container) {
         const fields = container.querySelectorAll('input:not([type="hidden"]), textarea, select');
         if (!container.classList.contains('nds-form-container')) return fields[0] || null;
@@ -154,7 +154,7 @@
         if (field && isActive(field.input)) sync(field.input, field.control);
     };
     handlers.keydown = handlers.paste = (e, field) => {
-        if (field && field.container && (e.type === 'paste' || isActive(field.input))) NDS.state.add(field.container, 'typing');
+        if (field && field.container && isActive(field.input)) NDS.state.add(field.container, 'typing');
     };
     // The browser ignores readOnly on a checkbox or a radio, and the readonly CSS blocks only the pointer:
     // cancel the click that Space or an arrow key sends, so the value stays.
@@ -168,10 +168,7 @@
     // The browser restores the values after the reset event: re-sync then, unless it was cancelled.
     handlers.reset = (e) => {
         const form = e.target;
-        setTimeout(() => {
-            if (e.defaultPrevented || !form.querySelectorAll) return;
-            form.querySelectorAll('.nds-form-control input, .nds-form-control textarea, .nds-form-control select').forEach((i) => refresh(i));
-        });
+        setTimeout(() => { if (!e.defaultPrevented) refresh(form); });
     };
 
     // The same wait for a component that keeps its own value: a hidden carrier, a chip list, a file list.
@@ -209,7 +206,7 @@
                 roots.add(root);
             });
             roots.forEach((root) => {
-                for (const other of roots) if (other !== root && other.contains(root)) return;
+                for (let node = root.parentElement; node; node = node.parentElement) if (roots.has(node)) return;
                 create(root);
             });
         });
