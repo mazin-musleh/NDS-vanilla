@@ -33,3 +33,14 @@ export async function launch(opts = {}) {
 }
 
 export const cdp = (page) => page.context().newCDPSession(page);
+
+// Fast-fail kit (AGENTS.md): every line carries its elapsed time, and a stuck await fails
+// in STEP_MS naming its step instead of waiting out a library default.
+export const STEP_MS = 10000;
+const t0 = Date.now();
+export const log = (msg) => console.log(`[${((Date.now() - t0) / 1000).toFixed(1)}s] ${msg}`);
+export const step = async (name, fn, ms = STEP_MS) => {
+    let timer;
+    const stuck = new Promise((_, rej) => { timer = setTimeout(() => rej(new Error(`stuck > ${ms / 1000}s: ${name}`)), ms); });
+    try { return await Promise.race([fn(), stuck]); } finally { clearTimeout(timer); }
+};

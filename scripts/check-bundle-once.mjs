@@ -12,22 +12,12 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { launch, cdp } from './lib/browser.mjs';
+import { launch, cdp, log, step, STEP_MS } from './lib/browser.mjs';
 
 const ROOT = join(import.meta.dirname, '..');
 const DIR = join(ROOT, 'tmp', 'check-bundle-once');
 const JS = pathToFileURL(join(process.env.JS || join(ROOT, 'assets', 'js'), '/')).href;
-const STEP_MS = 10000;
 mkdirSync(DIR, { recursive: true });
-
-const t0 = Date.now();
-const log = (msg) => console.log(`[${((Date.now() - t0) / 1000).toFixed(1)}s] ${msg}`);
-// Every await goes through here, so a hang names its step instead of waiting out a default timeout.
-const step = async (name, fn) => {
-    let timer;
-    const stuck = new Promise((_, rej) => { timer = setTimeout(() => rej(new Error(`stuck > ${STEP_MS / 1000}s: ${name}`)), STEP_MS); });
-    try { return await Promise.race([fn(), stuck]); } finally { clearTimeout(timer); }
-};
 
 const fixture = (copies) => {
     const tags = `<script defer src="${JS}nds-main.min.js"></script>\n`.repeat(copies);
