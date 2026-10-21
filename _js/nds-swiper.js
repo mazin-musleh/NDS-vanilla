@@ -144,7 +144,7 @@
     // MAIN CLASS
     // ==============================================
 
-    class NDSSwiper {
+    class NdsSwiper {
         constructor(container) {
             this.container = container;
             this.wrapper = container.querySelector('.nds-swiper-wrapper');
@@ -1030,7 +1030,7 @@
             // A loop clone's nested swiper is a dead copy — reinit must not wire it.
             if (swiper.closest('code, .nds-swiper-clone')) return;
             if (swiper.hasAttribute('data-nds-swiper-initialized')) return;
-            const instance = new NDSSwiper(swiper);
+            const instance = new NdsSwiper(swiper);
             // Expando only on successful construction — retries must not inherit
             // a half-built instance.
             if (instance.valid) swiper.ndsSwiper = instance;
@@ -1042,7 +1042,7 @@
         reinit: initializeComponents,
         create: (element) => {
             if (element.ndsSwiper) return element.ndsSwiper;
-            const instance = new NDSSwiper(element);
+            const instance = new NdsSwiper(element);
             if (!instance.valid) return null;
             element.ndsSwiper = instance;
             return instance;

@@ -4,7 +4,7 @@ Client-side web-security sink catalog for `nds-js-audit`. Read during Phase 2/3 
 
 #### JS Security (JSS)
 
-Web-security sinks that commonly appear in vanilla-JS component code. Severity is calibrated to exploitability in a Jekyll static-site context: a reflected XSS through an NDS component is HIGH because the component ships everywhere; a same-origin `window.open` with a developer-controlled `data-*` attribute is MEDIUM. Each JSS finding must name the untrusted-input source in plain language — "this `${title}` comes from `NDSAlert.create()` options, which callers can fill with arbitrary strings" — so the fix cost is visible alongside the risk.
+Web-security sinks that commonly appear in vanilla-JS component code. Severity is calibrated to exploitability in a Jekyll static-site context: a reflected XSS through an NDS component is HIGH because the component ships everywhere; a same-origin `window.open` with a developer-controlled `data-*` attribute is MEDIUM. Each JSS finding must name the untrusted-input source in plain language — "this `${title}` comes from `NDS.Alert.create()` options, which callers can fill with arbitrary strings" — so the fix cost is visible alongside the risk.
 
 | ID | What to detect | Severity | Fix |
 |---|---|---|---|

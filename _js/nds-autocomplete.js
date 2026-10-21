@@ -58,7 +58,7 @@
     // AUTOCOMPLETE CLASS
     // ==============================================
 
-    class NDSAutocomplete {
+    class NdsAutocomplete {
         constructor(containerElement, options) {
             if (!containerElement) return;
             if (containerElement.hasAttribute('data-nds-autocomplete-initialized')) return;
@@ -478,7 +478,7 @@
         }
 
         // ==============================================
-        // OPEN / CLOSE (delegates to NDSDropmenu)
+        // OPEN / CLOSE (delegates to NDS.Dropmenu)
         // ==============================================
 
         open() {
@@ -702,7 +702,7 @@
             if (!t || !t.closest) return;
             // The constructor skips an incomplete field itself.
             var container = t.closest('.nds-form-container[data-url]');
-            if (container && !container.ndsAutocomplete && !container.closest('code')) new NDSAutocomplete(container);
+            if (container && !container.ndsAutocomplete && !container.closest('code')) new NdsAutocomplete(container);
         });
     }
 
@@ -736,7 +736,7 @@
             if (!element) return null;
             if (element.ndsAutocomplete) return element.ndsAutocomplete;
             // The constructor sets the backref only once the field is complete.
-            var inst = new NDSAutocomplete(element, options);
+            var inst = new NdsAutocomplete(element, options);
             return element.ndsAutocomplete === inst ? inst : null;
         }
     };

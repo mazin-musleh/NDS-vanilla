@@ -46,7 +46,7 @@
   // State helpers — delegated to NDS.state (nds-core.js)
   const { add: addState, remove: removeState, has: hasState } = NDS.state;
 
-  class NDSRating {
+  class NdsRating {
     constructor(element) {
       this.rating = element;
       this.stars = element.querySelectorAll('.nds-rating-star');
@@ -266,7 +266,7 @@
     }
   }
 
-  const create = (element) => element.ndsRating || (element.ndsRating = new NDSRating(element));
+  const create = (element) => element.ndsRating || (element.ndsRating = new NdsRating(element));
 
   function initializeRatings() {
     document.querySelectorAll('.nds-rating').forEach(create);

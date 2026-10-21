@@ -58,7 +58,7 @@
     // tabs[i] ↔ panels[i] pairing every method here depends on.
     const ownParts = (container, selector) => NDS.ownParts(container, selector, '.nds-tabs');
 
-    class NDSTabs {
+    class NdsTabs {
         constructor(tabsContainer) {
             this.tabsContainer = tabsContainer;
             this.scrollMore = tabsContainer.querySelector('.nds-scroll-more');
@@ -297,7 +297,7 @@
             if (container.closest('code')) return;
             if (container.hasAttribute('data-nds-tabs-initialized')) return;
             // Only a valid construction stamps, so late-filled markup stays eligible.
-            new NDSTabs(container);
+            new NdsTabs(container);
         });
     }
 
@@ -306,7 +306,7 @@
         reinit: initializeTabs,
         // The constructor publishes el.ndsTabs only on success → null on a bail.
         create: (container) => {
-            if (!container.ndsTabs) new NDSTabs(container);
+            if (!container.ndsTabs) new NdsTabs(container);
             return container.ndsTabs || null;
         },
         destroy: (container) => container?.ndsTabs?.destroy(),

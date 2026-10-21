@@ -329,7 +329,7 @@
         }), { signal: picker.instanceAbortController.signal });
     }
 
-    class TimePicker {
+    class NdsTimePicker {
         constructor(input, formControl) {
             // Success signal — create() gates the expando on it, so a bailed
             // construction stays eligible for a later reinit() sweep.
@@ -467,7 +467,7 @@
             }, { signal });
         }
 
-        // Adopt NDSDropmenu for the panel's open/close/escape/outside-click.
+        // Adopt NDS.Dropmenu for the panel's open/close/escape/outside-click.
         // No click: the input and toggle drive the toggle, and a native click-toggle
         //   would fight the text caret.
         // No keys: the panel's keyboard belongs to the unit selects inside it;
@@ -870,7 +870,7 @@
 
     // ---- box mode: .nds-time-fields, an hour box and a minute box, 24h only ----
 
-    class TimeFields {
+    class NdsTimePickerFields {
         constructor(group) {
             this.valid = false;
             const hour = group.querySelector('.nds-time-hour');
@@ -1039,7 +1039,7 @@
         const group = groupOf(input);
         if (group) {
             if (!group.ndsTimePicker) {
-                const instance = new TimeFields(group);
+                const instance = new NdsTimePickerFields(group);
                 if (instance.valid) group.ndsTimePicker = instance;
             }
             return group.ndsTimePicker || null;
@@ -1052,7 +1052,7 @@
             console.warn('NDS TimePicker: .nds-form-control not found');
             return null;
         }
-        const instance = new TimePicker(el, fc);
+        const instance = new NdsTimePicker(el, fc);
         if (!instance.valid) return null;
         el.ndsTimePicker = instance;
         return instance;

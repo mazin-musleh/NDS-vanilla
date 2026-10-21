@@ -57,7 +57,7 @@
         tag_required: 'Please add at least one tag',
     });
 
-    class NDSTagInput {
+    class NdsTaginput {
         constructor(root) {
             this.root = root;
             // Success signal — init() only runs (and registers root.ndsTaginput)
@@ -318,7 +318,7 @@
         document.querySelectorAll('.nds-taginput').forEach(el => {
             if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-taginput-initialized')) return;
-            new NDSTagInput(el);
+            new NdsTaginput(el);
         });
     }
 
@@ -345,7 +345,7 @@
         // initialized) → null, never a dud instance whose every method throws.
         create: (element) => {
             if (element.ndsTaginput) return element.ndsTaginput;
-            const inst = new NDSTagInput(element);
+            const inst = new NdsTaginput(element);
             return inst.valid ? inst : null;
         },
         destroy: (element) => element.ndsTaginput?.destroy()

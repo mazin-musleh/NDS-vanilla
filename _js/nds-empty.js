@@ -204,7 +204,7 @@
   // to do beyond what they're already doing.
   let initDone = false;
 
-  const NDSEmpty = {
+  const api = {
     init() {
       if (initDone) return;
       initDone = true;
@@ -221,5 +221,5 @@
     refresh: evaluate,
   };
 
-  window.NDS.Empty = NDSEmpty;
+  window.NDS.Empty = api;
 })();

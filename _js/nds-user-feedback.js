@@ -36,7 +36,7 @@
  * Handles user feedback interaction flow using data attributes
  *
  * Dependencies:
- * - nds-feedback.js (NDSFeedback API for displaying feedback messages)
+ * - nds-feedback.js (NDS.Feedback API for displaying feedback messages)
  * - nds-cookies.js (for persisting feedback submission status)
  * - nds-form.js (required when the component lives inside a form; provides NDS.Form.validate)
  *
@@ -146,7 +146,7 @@ NDS.UserFeedback = (() => {
             if (submitEl) submitEl.removeAttribute('hidden');
         }
 
-        // Show status state with success/error using NDSFeedback API
+        // Show status state with success/error using NDS.Feedback API
         function setStatus(status = 'success') {
             const ok = status === 'success';
             // An error keeps the form open, so the visitor can send it again.
@@ -156,7 +156,7 @@ NDS.UserFeedback = (() => {
             const errorMessage = feedbackComponent.getAttribute('data-error-message') || strings.text('error');
             const message = status === 'success' ? successMessage : errorMessage;
 
-            // Create feedback message using NDSFeedback API
+            // Create feedback message using NDS.Feedback API
             if (statusEl) {
                 // Clear any existing feedback in status element
                 NDS.Feedback.dismissAll(statusEl);
@@ -173,8 +173,8 @@ NDS.UserFeedback = (() => {
 
                 statusEl.removeAttribute('hidden');
             } else {
-                // Fallback if NDSFeedback is not available
-                console.warn('NDS UserFeedback: NDSFeedback API not available');
+                // Fallback if NDS.Feedback is not available
+                console.warn('NDS UserFeedback: NDS.Feedback API not available');
                 NDS.status.set(feedbackComponent, status);
             }
             if (!ok) return;
@@ -221,7 +221,7 @@ NDS.UserFeedback = (() => {
             NDS.status.clear(feedbackComponent);
             feedbackComponent.removeAttribute('data-answer');
 
-            // Dismiss any feedback messages created by NDSFeedback API
+            // Dismiss any feedback messages created by NDS.Feedback API
             if (statusEl) {
                 NDS.Feedback.dismissAll(statusEl);
             }

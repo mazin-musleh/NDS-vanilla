@@ -1297,6 +1297,7 @@ const NAME_CASES = [
     [`(function(){ function fmtVal() {} })();`, ['P10.0?', 'P10.8']],
     [`(function(){ class NDSTables {} })();`, ['P12.7']],
     [`(function(){ class NdsTable {} class NdsDatePickerCalendar {} })();`, []],
+    [`(function(){ const CooldownButton = { init() {} }; const NdsX = class {}; })();`, ['P12.8']], // PascalCase is for classes
     [`(function(){ function run(el) { el._ndsFoo = 1; } })();`, ['P12.14']],
     [`(function(){ function run(row) { row._x = 1; } })();`, ['P12.14?']],
     [`(function(){ function run(el) { el.ndsDone = true; el.dataset.ndsSeen = 'true'; } })();`, ['P12.14']],

@@ -30,7 +30,7 @@
     // MAIN CLASS
     // ==============================================
 
-    class NDSSideInfo {
+    class NdsSideinfo {
         constructor(element) {
             this.sideInfo = element;
             this.sideInfoParent = element.parentElement;
@@ -177,7 +177,7 @@
         sideInfoElements.forEach(element => {
             if (element.closest('code')) return;
             if (!element.hasAttribute('data-nds-sideinfo-initialized')) {
-                const instance = new NDSSideInfo(element);
+                const instance = new NdsSideinfo(element);
                 // Expando only on successful construction (sentinel is stamped post-guard by init()).
                 if (instance.valid) element.ndsSideinfo = instance;
             }
@@ -190,7 +190,7 @@
         reinit: initializeComponents,
         create: (element) => {
             if (element.ndsSideinfo) return element.ndsSideinfo;
-            const instance = new NDSSideInfo(element);
+            const instance = new NdsSideinfo(element);
             if (!instance.valid) return null;
             element.ndsSideinfo = instance;
             return instance;

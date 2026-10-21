@@ -13,7 +13,9 @@ P10.0 first word 416, P12.8 constant case 78, P12.14 46, P10.4 `createX` 15, P12
 Step 3, first commit: P12.13 done by `scripts/rename-bindings.mjs --underscore` (167 renames, 12 hand-named
 where the plain name was taken; citations in PERSONA and RULES-* healed). Every built bundle came out
 byte-identical, since Terser mangles locals: a binding rename needs no browser check, and a pack's rebuild
-differs only in line endings and zip times (restored). Next: P12.7 classes, then P12.8 constants.
+differs only in line endings and zip times (restored). Second commit: P12.7, 27 classes and
+`DatePickerCalendar` to `Nds{Name}[Part]`, and PascalCase module objects to camelCase (`NDSAlert` → `api`, a
+check added for them). Next: P12.8 constants (verify), then verbs, acronyms and whole words.
 Start each step on a clean tree. Step 2's list is the work list: every count, file and line below is a hint.
 Step 3's commits go safest first: module-scope `_`, constants and classes; then verbs, acronyms and whole
 words; then cross-file `_`; the WeakMap move last of the internal ones (it changes runtime, so browser checks).
@@ -223,7 +225,7 @@ banner"): `NDS.isRTL` (acronym), `NDS.onAttrChange` and `NDS.resolveEl` (short w
 `createColumnToggle` (DOM or instance?), and noun-first names: core's `strings`, `safeMerge`, `rafThrottle`,
 `afterPaint`, `latinDigits`, `uniqueId`, `cellText`, `ownParts`, `ownItems`, `safeUrl`, `stickyHeaderBottom`,
 `viewportPadding`, `visibleBox`, `homeOf`, `topLayer`; `Dropmenu.menuOf`; `Export.csv` / `xls` / `pdf`; the
-loader's `audit` and `owns`; Accessibility's `state`. Each shipped in v1.12.0 gets a Migration row.
+loader's `audit` and `owns`; Accessibility's `state`; `NDS.DatePicker.CalendarConfig`, an object in PascalCase (rule 8: camelCase). Each shipped in v1.12.0 gets a Migration row.
 
 **Born in v2 (shared-logic), no row:**
 

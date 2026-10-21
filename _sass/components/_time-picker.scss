@@ -1,7 +1,7 @@
 @use '../mixins' as *;
 
 // The panel lives inside `.nds-form-control` (which nds-time-picker.js promotes
-// to an NDSDropmenu wrapper) and carries both `.nds-time-picker-menu` and
+// to an NDS.Dropmenu wrapper) and carries both `.nds-time-picker-menu` and
 // `.nds-dropmenu-menu`, so dropmenu's own surface, width and positioning apply.
 // The unit pickers inside it are stock `.nds-select`s — _form.scss styles those.
 // Only the panel width and the row that holds the units belong here.

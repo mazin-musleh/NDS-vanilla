@@ -66,7 +66,7 @@
     // a checkbox or actions column has no button, so the two index spaces diverge.
     const thIndex = (th) => th.cellIndex;
 
-    class NDSTables {
+    class NdsTable {
         constructor(tableElement) {
             this.valid = false;
             this.table = tableElement;
@@ -173,7 +173,7 @@
     }
 
     // Responsive table handler (similar to expandable pattern)
-    class NDSResponsiveTable {
+    class NdsTableResponsive {
         constructor(tableElement) {
             this.table = tableElement;
             this.wrapper = null;
@@ -407,7 +407,7 @@
         hidden.forEach(index => setColumnHidden(table, index, true, true));
     }
 
-    class NDSColumnToggle {
+    class NdsTableColumnToggle {
         constructor(root) {
             this.valid = false;
             this.root = root;
@@ -849,7 +849,7 @@
     }
 
     // Delegated on document: covers content injected later, needs no per-table
-    // wiring, and is independent of the sort/checkbox-gated NDSTables instance —
+    // wiring, and is independent of the sort/checkbox-gated NdsTable instance —
     // a plain table with no sorting or selection can still carry sub-rows.
     document.addEventListener('click', (e) => {
         const btn = e.target.closest(SUB_TOGGLE);
@@ -898,7 +898,7 @@
             // table controls the scroll breakpoint. The stamp is the component's
             // one init signal: the pre-init cell skeleton and the global handlers
             // below key on it, so it lands for every table, sortable or not.
-            if (!table.ndsTableResponsive) new NDSResponsiveTable(table);   // registers and stamps itself
+            if (!table.ndsTableResponsive) new NdsTableResponsive(table);   // registers and stamps itself
 
             // Own header only, matching the constructor's own scoping: a sub-row's
             // nested table carrying sort buttons or a select-all would otherwise
@@ -909,7 +909,7 @@
             // Sorting / selection is opt-in by markup and guarded by the instance,
             // so a table whose <tbody> arrives later stays eligible for reinit().
             if ((hasSortButtons || hasCheckboxes) && !table.ndsTableControls) {
-                new NDSTables(table); // constructor self-registers table.ndsTableControls when valid
+                new NdsTable(table); // constructor self-registers table.ndsTableControls when valid
             }
         });
 
@@ -918,7 +918,7 @@
             if (root.closest('code')) return;
             if (root.hasAttribute('data-nds-columns-initialized')) return;
 
-            new NDSColumnToggle(root); // stamps and registers itself when valid
+            new NdsTableColumnToggle(root); // stamps and registers itself when valid
         });
     }
 
@@ -937,12 +937,12 @@
         refresh: recheckAllWidths,
         // The constructors publish their expando only on success → null on a bail.
         create: (table) => {
-            if (!table.ndsTableControls) new NDSTables(table);
+            if (!table.ndsTableControls) new NdsTable(table);
             return table.ndsTableControls || null;
         },
-        createResponsive: (table) => table.ndsTableResponsive || new NDSResponsiveTable(table),
+        createResponsive: (table) => table.ndsTableResponsive || new NdsTableResponsive(table),
         createColumnToggle: (root) => {
-            if (!root.ndsColumnToggle) new NDSColumnToggle(root);
+            if (!root.ndsColumnToggle) new NdsTableColumnToggle(root);
             return root.ndsColumnToggle || null;
         },
         destroy: (el) => {

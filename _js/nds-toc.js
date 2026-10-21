@@ -38,7 +38,7 @@
 (function () {
     'use strict';
 
-    class NDSToc {
+    class NdsToc {
         constructor(toc) {
             this.toc = toc;
             this.populate();
@@ -263,7 +263,7 @@
             // The instance, not the stamp: an empty TOC is stamped to release its skeleton,
             // and builds on a later refresh once its headings arrive.
             if (toc.ndsToc) return;
-            const instance = new NDSToc(toc);
+            const instance = new NdsToc(toc);
             // Expando only on successful construction (sentinel is stamped post-guard by init()).
             if (instance.valid) toc.ndsToc = instance;
         });
@@ -274,7 +274,7 @@
         reinit: initializeComponents,
         create: (el) => {
             if (el.ndsToc) return el.ndsToc;
-            const inst = new NDSToc(el);
+            const inst = new NdsToc(el);
             if (!inst.valid) return null;
             el.ndsToc = inst;
             return inst;

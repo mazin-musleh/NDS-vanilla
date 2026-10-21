@@ -58,7 +58,7 @@
     // The page's one viewer, built by init().
     let viewer = null;
 
-    class NDSImagePopupViewer {
+    class NdsIpv {
         constructor() {
             this.state = {
                 zoom: 1,
@@ -590,7 +590,7 @@
     // A repeat call gives thumbnails added since then keyboard access.
     function initializeIPV() {
         if (viewer) viewer.enhanceThumbnails();
-        else viewer = new NDSImagePopupViewer();
+        else viewer = new NdsIpv();
     }
 
     NDS.Ipv = {

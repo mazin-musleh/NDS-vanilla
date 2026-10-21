@@ -54,7 +54,7 @@
         applied: 'Applied {value}',
     });
 
-    class NDSMultiselect {
+    class NdsMultiselect {
         constructor(root) {
             this.root = root;
             if (root.hasAttribute('data-nds-multiselect-initialized')) return;
@@ -479,7 +479,7 @@
         document.querySelectorAll('.nds-multiselect').forEach(el => {
             if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-multiselect-initialized')) return;
-            new NDSMultiselect(el);
+            new NdsMultiselect(el);
         });
     }
 
@@ -500,7 +500,7 @@
         validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-multiselect') || el, opts, fieldCheck),
         create: (element) => {
             if (element.ndsMultiselect) return element.ndsMultiselect;
-            const inst = new NDSMultiselect(element);
+            const inst = new NdsMultiselect(element);
             return inst.valid ? inst : null;
         },
         destroy: (element) => element.ndsMultiselect?.destroy()

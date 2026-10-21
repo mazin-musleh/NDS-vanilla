@@ -28,7 +28,7 @@
  * Status variants: error, success, warning, info, neutral
  *
  * Usage:
- * NDSFeedback.create({
+ * NDS.Feedback.create({
  *     message: 'This field is required',
  *     status: 'error',
  *     target: '#email',
@@ -38,7 +38,7 @@
  * });
  *
  * // Icon-only feedback
- * NDSFeedback.create({
+ * NDS.Feedback.create({
  *     status: 'error',
  *     target: '#field',
  *     size: 'md',
@@ -46,7 +46,7 @@
  * });
  *
  * // Permanent feedback (tips/hints that persist)
- * NDSFeedback.create({
+ * NDS.Feedback.create({
  *     message: 'This is a tip',
  *     status: 'neutral',
  *     target: '#container',
@@ -64,7 +64,7 @@
     // A field owns the messages inside it, except those of a field nested in it.
     const FIELD = '.nds-form-container, .nds-form-group';
 
-    const NDSFeedback = {
+    const api = {
         /**
          * Create and insert a feedback element
          * @param {Object} options
@@ -304,5 +304,5 @@
     };
 
     // Export to window
-    NDS.Feedback = NDSFeedback;
+    NDS.Feedback = api;
 })();

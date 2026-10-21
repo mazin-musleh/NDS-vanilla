@@ -146,7 +146,7 @@
 
     // ── Chart class ────────────────────────────────────────────────
 
-    class NDSChartInstance {
+    class NdsChart {
         constructor(el, opts) {
             this.el = el;
             this.opts = this._resolveOpts(opts);
@@ -1096,7 +1096,7 @@
             // that throws. The markup for a JS-created chart carries the type as a hint
             // and gets its data from NDS.Chart.create — this sweep must leave those alone.
             if (config.series) {
-                el.ndsChart = new NDSChartInstance(el, config);
+                el.ndsChart = new NdsChart(el, config);
                 el.setAttribute('data-nds-chart-initialized', '');
             }
         });
@@ -1122,7 +1122,7 @@
         }
         setupDirObserver();
         if (el.ndsChart) el.ndsChart.destroy();
-        el.ndsChart = new NDSChartInstance(el, opts);
+        el.ndsChart = new NdsChart(el, opts);
         el.setAttribute('data-nds-chart-initialized', '');
         return el.ndsChart;
     }

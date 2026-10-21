@@ -40,7 +40,7 @@
         show_less: 'Show Less',
     });
 
-    class NDSExpandable {
+    class NdsExpandable {
         constructor(expandableContainer) {
             this.expandableContainer = expandableContainer;
             // Look for .nds-expandable-content as child element first, then check if the container itself has nds-expandable-content class
@@ -294,7 +294,7 @@
             // Skip elements rendered inside <code> tags (markup text, not live components)
             if (container.closest('code')) return;
             // Only a valid construction stamps, so content that renders late stays eligible.
-            if (!container.hasAttribute('data-nds-expandable-initialized')) new NDSExpandable(container);
+            if (!container.hasAttribute('data-nds-expandable-initialized')) new NdsExpandable(container);
         });
     }
 
@@ -317,7 +317,7 @@
         refresh: recheckAllHeights,
         create: (container) => {
             if (container.ndsExpandable) return container.ndsExpandable;
-            const inst = new NDSExpandable(container);
+            const inst = new NdsExpandable(container);
             return inst.valid ? inst : null;
         },
         destroy: (container) => container?.ndsExpandable?.destroy(),

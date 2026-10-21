@@ -76,7 +76,7 @@
         return wrap;
     }
 
-    class NDSTooltip {
+    class NdsTooltip {
         constructor(root) {
             this.root = root;
             if (root.hasAttribute('data-nds-tooltip-initialized')) return;
@@ -469,7 +469,7 @@
         document.querySelectorAll('.nds-tooltip').forEach(el => {
             if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-tooltip-initialized')) return;
-            new NDSTooltip(el);
+            new NdsTooltip(el);
         });
     }
 
@@ -478,7 +478,7 @@
         reinit: initializeTooltips,
         // The constructor publishes el.ndsTooltip only on success → null on a bail.
         create: (el) => {
-            if (!el.ndsTooltip) new NDSTooltip(el);
+            if (!el.ndsTooltip) new NdsTooltip(el);
             return el.ndsTooltip || null;
         },
         destroy: (el) => el?.ndsTooltip?.destroy(),

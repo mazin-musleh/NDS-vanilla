@@ -10,7 +10,7 @@
 // DATE PICKER WRAPPER (form-control container)
 // ==============================================
 // The calendar dropdown lives inside `.nds-form-control` (which date-picker.js
-// promotes to an NDSDropmenu wrapper). The dropdown carries both
+// promotes to an NDS.Dropmenu wrapper). The dropdown carries both
 // `.nds-date-picker-menu` and `.nds-dropmenu-menu`, so dropmenu's
 // default positioning (`position: absolute`, anchored to the form-control)
 // applies — the calendar scrolls naturally with its trigger.
@@ -52,7 +52,7 @@
 
 .nds-date-picker-menu {
     --btn-size: 32px;
-    // Drive sizing through NDSDropmenu tokens so the menu picks up the
+    // Drive sizing through NDS.Dropmenu tokens so the menu picks up the
     // calendar's width/clamp/padding without an inline-style stomp from JS.
     // `--dropmenu-width: 100%` fills the form-control (the absolute-positioned
     // wrapper); min/max-width clamp it on narrow / wide screens. menu-padding

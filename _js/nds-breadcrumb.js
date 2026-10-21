@@ -32,7 +32,7 @@
         more: 'More',
     });
 
-    class NDSBreadcrumb {
+    class NdsBreadcrumb {
         constructor(breadcrumbNav) {
             this.breadcrumbNav = breadcrumbNav;
             this.breadcrumb = breadcrumbNav.querySelector('.nds-breadcrumb');
@@ -139,7 +139,7 @@
             }
 
             // Only a valid construction stamps, so an empty breadcrumb rendered late stays eligible.
-            if (!nav.hasAttribute('data-nds-breadcrumb-initialized')) new NDSBreadcrumb(nav);
+            if (!nav.hasAttribute('data-nds-breadcrumb-initialized')) new NdsBreadcrumb(nav);
         });
     }
 
@@ -149,7 +149,7 @@
         reinit: initializeBreadcrumbs,
         create: (nav) => {
             if (nav.ndsBreadcrumb) return nav.ndsBreadcrumb;
-            const inst = new NDSBreadcrumb(nav);
+            const inst = new NdsBreadcrumb(nav);
             return inst.valid ? inst : null;
         },
         destroy: (nav) => nav?.ndsBreadcrumb?.destroy(),

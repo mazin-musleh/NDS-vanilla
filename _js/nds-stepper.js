@@ -113,7 +113,7 @@
         });
     }
 
-    class NDSStepper {
+    class NdsStepper {
         constructor(element) {
             this.element = element;
             this.steps = element.querySelectorAll('.nds-stepper-step');
@@ -240,7 +240,7 @@
     function create(el) {
         if (el.ndsStepper) return el.ndsStepper;
         wireGlobals();
-        const stepper = new NDSStepper(el);
+        const stepper = new NdsStepper(el);
         el.setAttribute('data-nds-stepper-initialized', 'true');
         el.ndsStepper = stepper;
         return stepper;

@@ -32,7 +32,7 @@
  * Variants: success, warning, error, info, neutral
  *
  * Usage:
- * NDSAlert.create({
+ * NDS.Alert.create({
  *     variant: 'info',
  *     title: 'Update Available',
  *     description: 'A new version is available.',
@@ -52,7 +52,7 @@
         close: 'Close',
     });
 
-    const NDSAlert = {
+    const api = {
         /**
          * Create and insert an alert
          * @param {Object} options
@@ -364,5 +364,5 @@
         },
     };
 
-    NDS.Alert = NDSAlert;
+    NDS.Alert = api;
 })();

@@ -41,7 +41,7 @@
     // and index-pairs nodes the nested controller already drives.
     const ownParts = (container, selector) => NDS.ownParts(container, selector, '.nds-accordion');
 
-    class NDSAccordion {
+    class NdsAccordion {
         constructor(accordionContainer) {
             this.accordionContainer = accordionContainer;
             this.buttons = ownParts(accordionContainer, '.nds-accordion-btn');
@@ -372,7 +372,7 @@
             // panel back closed on the first click. Guard on the instance
             // property above, which lands synchronously.
             if (!container.hasAttribute('data-nds-accordion-initialized')) {
-                activate(container, new NDSAccordion(container));
+                activate(container, new NdsAccordion(container));
             }
         });
     }
@@ -411,7 +411,7 @@
         create: (container) => {
             if (!container) return null;
             if (container.ndsAccordion) return container.ndsAccordion;
-            const instance = new NDSAccordion(container);
+            const instance = new NdsAccordion(container);
             activate(container, instance);
             return instance.valid ? instance : null;
         },

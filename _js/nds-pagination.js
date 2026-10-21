@@ -38,7 +38,7 @@
  * container's --per-page, once the loader's init-time split stamped data-paged-split —
  * until init stamps data-paged-initialized, so init landing
  * post-reveal inserts the list without shifting content. The state init sets:
- *   - HTML builders + the manual-collapse path (NDSPagination →
+ *   - HTML builders + the manual-collapse path (NdsPagination →
  *     reconcileCollapse): more than 5 pages collapse to
  *     [Prev] 1 2 3 [ellipsis] N [Next] so author-written full lists never
  *     paint then collapse (horizontal CLS).
@@ -153,7 +153,7 @@
         return { min: Math.min(...nums), max: Math.max(...nums) };
     }
 
-    class NDSPagination {
+    class NdsPagination {
         constructor(paginationNav) {
             this.paginationNav = paginationNav;
             const list = listOf(paginationNav);
@@ -434,7 +434,7 @@
         }
 
         // Only a valid construction stamps, so a bailed (empty) nav stays eligible.
-        const inst = new NDSPagination(container);
+        const inst = new NdsPagination(container);
         // A data-driven nav left empty (0 or 1 page) is done too: the stamp releases its placeholder.
         if (container.hasAttribute('data-total-pages')) container.setAttribute('data-nds-pagination-initialized', 'true');
 
@@ -835,7 +835,7 @@
 
     // Build a pagination list. Above 5 pages, emits the collapsed shape directly
     // — [Prev] 1 2 3 [ellipsis of 4..N-1] N [Next] — so every generated nav skips
-    // a build-all-then-collapse round-trip (no NDSPagination needed).
+    // a build-all-then-collapse round-trip (no NdsPagination needed).
     // Author-written markup takes the separate reconcileCollapse path, which
     // preserves the href/label markup this data-driven builder doesn't carry.
     // pageUrl (a "?page={page}" template) makes every control a navigable <a href>.
@@ -856,7 +856,7 @@
     }
 
     // Wire a directly-generated collapsed list: create the ellipsis dropmenu (if
-    // present) and stamp active state. Replaces `new NDSPagination` for the
+    // present) and stamp active state. Replaces `new NdsPagination` for the
     // auto-pagination paths — the collapse already lives in the markup.
     // totalPages marks the menu as lazily windowed: the collapsed range lands as
     // an element property on the scroll container (dies with the node on any
@@ -1661,7 +1661,7 @@
             // Manual navs take init's full path (URL page, states, reveal); auto-paginations
             // are wired by wireAutoNav.
             const inst = container.hasAttribute('data-auto-pagination')
-                ? new NDSPagination(container)
+                ? new NdsPagination(container)
                 : initNav(container);
             return inst.valid ? inst : null;
         },

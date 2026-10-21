@@ -106,7 +106,7 @@
         met: '{n} of {total} password rules met',
     });
 
-    class NDSPassword {
+    class NdsPassword {
         constructor(container) {
             this.container = container;
             // Success signal — init() only runs (and registers container.ndsPassword)
@@ -257,7 +257,7 @@
         document.querySelectorAll('.nds-form-container.nds-password').forEach(function (el) {
             if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-password-initialized')) return;
-            new NDSPassword(el);
+            new NdsPassword(el);
         });
     }
 
@@ -266,7 +266,7 @@
         reinit: initializePasswords,
         create: function (element) {
             if (element.ndsPassword) return element.ndsPassword;
-            var inst = new NDSPassword(element);
+            var inst = new NdsPassword(element);
             return inst.valid ? inst : null;
         },
         destroy: function (element) { if (element.ndsPassword) element.ndsPassword.destroy(); },

@@ -288,7 +288,7 @@
         btn.removeAttribute(WIRED_ATTR);
     }
 
-    const CooldownButton = {
+    const api = {
         init() {
             if (subscribed) return;
             subscribed = true;
@@ -300,5 +300,5 @@
         reset
     };
 
-    NDS.Cooldown = CooldownButton;
+    NDS.Cooldown = api;
 })();

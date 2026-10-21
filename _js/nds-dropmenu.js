@@ -71,7 +71,7 @@
     // DROPMENU CLASS
     // ==============================================
 
-    class NDSDropmenu {
+    class NdsDropmenu {
         constructor(dropmenuElement) {
             this.dropmenu = dropmenuElement;
             // Find the trigger that belongs to THIS dropmenu — not one nested
@@ -92,7 +92,7 @@
             if (dropmenuElement.hasAttribute('data-nds-dropmenu-initialized')) return;
 
             // Expose the instance on the wrapper so the auto-close-others
-            // loop in open() can find every NDSDropmenu, including those
+            // loop in open() can find every NdsDropmenu, including those
             // built via `NDS.Dropmenu.create()` (autocomplete, date-picker
             // month/year, multiselect). Without this, manually-created
             // dropmenus stayed open when another one was opened.
@@ -1302,7 +1302,7 @@
         trigger.addEventListener('click', (e) => {
             wrapper.ndsDropmenuArm.destroy();
             stampMenuTemplate(wrapper);
-            if (!wrapper.ndsDropmenu) new NDSDropmenu(wrapper);
+            if (!wrapper.ndsDropmenu) new NdsDropmenu(wrapper);
             const instance = wrapper.ndsDropmenu;
             if (!instance) return;
             // Mirror the real trigger handler for this one click.
@@ -1331,7 +1331,7 @@
             }
 
             // Expando is self-assigned post-guard in the ctor — never stamp a bailed construction.
-            new NDSDropmenu(el);
+            new NdsDropmenu(el);
         });
     }
 
@@ -1361,7 +1361,7 @@
             // Prefer the live instance: refresh inside the stamp may already have
             // constructed this wrapper. The constructor publishes el.ndsDropmenu
             // only on success → null on a bail.
-            if (!element.ndsDropmenu) new NDSDropmenu(element);
+            if (!element.ndsDropmenu) new NdsDropmenu(element);
             const instance = element.ndsDropmenu || null;
             if (unstamp && instance) instance._unstamp = unstamp;
             else if (unstamp) unstamp();

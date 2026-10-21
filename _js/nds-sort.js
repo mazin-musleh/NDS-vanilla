@@ -53,7 +53,7 @@
  * the same engine serves both widgets without copy-pasted comparator logic.
  *
  * Public API:
- *   NDS.Sort.create(root, options)      — factory → NDSSort instance
+ *   NDS.Sort.create(root, options)      — factory → NdsSort instance
  *   NDS.Sort.getInstance(root)          — retrieve existing instance
  *   NDS.Sort.detectType(sampleValues, dateFormat, calendar)   — pure helper
  *   NDS.Sort.parseValue(raw, type, dateFormat, calendar)      — pure helper
@@ -162,7 +162,7 @@
 
     // ── Instance ─────────────────────────────────────────────────────────
 
-    class NDSSort {
+    class NdsSort {
         constructor(root, options) {
             this.root = root;
             this.opts = Object.assign({
@@ -527,7 +527,7 @@
         create: (root, options) => {
             if (!root) return null;
             if (root.ndsSort) return root.ndsSort;
-            const instance = new NDSSort(root, options);
+            const instance = new NdsSort(root, options);
             root.ndsSort = instance;
             root.setAttribute('data-nds-sort-initialized', 'true');
             return instance;

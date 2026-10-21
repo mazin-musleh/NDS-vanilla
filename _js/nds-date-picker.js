@@ -135,7 +135,7 @@
     }
 
     // Calendar System Configuration
-    var CalendarConfig = {
+    var calendarConfig = {
         gregorian: {
             type: 'gregorian',
             formatDate: function (date, format) {
@@ -212,7 +212,7 @@
     };
 
     // Calendar Instance Class
-    function DatePickerCalendar(dateInput, formControl) {
+    function NdsDatePickerCalendar(dateInput, formControl) {
         // Success signal — createInstance gates the init-guard expando on it,
         // so a bailed construction stays eligible for a later reinit() sweep.
         this.valid = false;
@@ -245,7 +245,7 @@
         this.valid = true;
     }
 
-    DatePickerCalendar.prototype = {
+    NdsDatePickerCalendar.prototype = {
         // Bind events that trigger dropdown creation
         bindInitEvents: function () {
             var self = this;
@@ -268,12 +268,12 @@
 
                     self.isDropdownCreated = true;
 
-                    // Wire the form-control as an NDSDropmenu so we get
+                    // Wire the form-control as an NDS.Dropmenu so we get
                     // open/close/auto-close-others/outside-click/escape for free.
                     // `data-dropmenu-no-click` — we drive toggle from the input
                     //   and toggle-button click handlers below.
                     // `data-dropmenu-no-keys` — calendar grid keyboard nav is
-                    //   2D; NDSDropmenu's flat trigger/menu key handling would
+                    //   2D; NDS.Dropmenu's flat trigger/menu key handling would
                     //   conflict with both input typing and day-cell movement.
                     self.setupDropmenu();
                 }
@@ -289,7 +289,7 @@
                     ? e.clientX
                     : null;
 
-                // Toggle through the NDSDropmenu instance so auto-close-others
+                // Toggle through the NDS.Dropmenu instance so auto-close-others
                 // and other dropmenu invariants apply uniformly.
                 if (e) e.stopPropagation();
                 self.dropmenuInstance.toggle();
@@ -315,7 +315,7 @@
             if (form) form.addEventListener('reset', function () { setTimeout(function () { self._validateInput(true); self._syncValueInputs(); }); }, { signal: signal });
         },
 
-        // Adopt NDSDropmenu for the calendar's open/close/escape/outside-click
+        // Adopt NDS.Dropmenu for the calendar's open/close/escape/outside-click
         // lifecycle. The form-control becomes the dropmenu wrapper and the
         // dropdown becomes the dropmenu menu, placed by the dropmenu's own applyPosition.
         setupDropmenu: function () {
@@ -538,7 +538,7 @@
         _readBounds: function () {
             var format = this.state.format;
             var calendarType = this.state.calendarType;
-            var calendar = CalendarConfig[calendarType];
+            var calendar = calendarConfig[calendarType];
             // 'today' or 'today±N' (d, m or y; days by default) round-trips through the format, so it
             // carries the calendar's fields like a written date.
             var bound = function (s) {
@@ -683,7 +683,7 @@
         },
 
         getCurrentCalendar: function () {
-            return CalendarConfig[this.state.calendarType];
+            return calendarConfig[this.state.calendarType];
         },
 
         isRangeMode: function () {
@@ -1066,7 +1066,7 @@
             return toHijri(this.state.currentDate);
         },
 
-        // Bind dropdown events — initialize NDSDropmenu instances
+        // Bind dropdown events — initialize NDS.Dropmenu instances
         bindDropdownEvents: function () {
             var self = this;
 
@@ -1704,7 +1704,7 @@
             outs.forEach(function (out, i) {
                 var date = null;
                 var part = range ? parts[i] : text;
-                try { date = part && CalendarConfig[type].parseDate(part.trim(), format); } catch (e) {}
+                try { date = part && calendarConfig[type].parseDate(part.trim(), format); } catch (e) {}
                 var v = date ? NDS.Date.format(date, {
                     format: out.getAttribute('data-date-format') || format,
                     calendar: out.getAttribute('data-calendar') || (type === 'hijri' ? 'hijri' : 'gregory')
@@ -1717,7 +1717,7 @@
         getConvertedDate: function (date) {
             if (!date) return '';
             var other = this.state.calendarType === 'hijri' ? 'gregorian' : 'hijri';
-            return CalendarConfig[other].formatDate(date, this.state.format);
+            return calendarConfig[other].formatDate(date, this.state.format);
         },
 
         // Utility methods
@@ -1905,7 +1905,7 @@
             // Destroy inner month/year dropmenus FIRST — they hold their own
             // document-level outside-click listeners, and removeDropdownDOM()
             // below detaches the subtree they live in. Tearing them down while
-            // still attached lets NDSDropmenu.destroy() unwind against live nodes.
+            // still attached lets NDS.Dropmenu.destroy() unwind against live nodes.
             if (this.monthDropmenuInstance) {
                 this.monthDropmenuInstance.destroy();
                 this.monthDropmenuInstance = null;
@@ -1943,7 +1943,7 @@
                 NDS.Form.clearStatus(container);
             }
 
-            // Drop the back-ref on the input so the DatePickerCalendar can
+            // Drop the back-ref on the input so the NdsDatePickerCalendar can
             // be GC'd. Without this the input retains a chain to all the
             // detached DOM nodes the calendar held.
             if (this.elements.input && this.elements.input.ndsDatePicker === this) {
@@ -1952,7 +1952,7 @@
 
             // cleanup() first — it releases listeners on the dropdown's children,
             // so it needs them still attached. Then drop the dropdown subtree the
-            // instance built. NDSDropmenu.destroy() un-stamps the month/year
+            // instance built. NDS.Dropmenu.destroy() un-stamps the month/year
             // wrappers, so leaving them behind would let a later
             // NDS.Dropmenu.reinit() adopt them as bare menus wired to no calendar.
             // isDropdownCreated resets so a re-created picker rebuilds from scratch.
@@ -1969,7 +1969,7 @@
         if (!formControl) return null;
         // A page with no picker at load never runs init(), so create() wires the bounds watch too.
         watchBounds();
-        var instance = new DatePickerCalendar(dateInput, formControl);
+        var instance = new NdsDatePickerCalendar(dateInput, formControl);
         if (!instance.valid) return null;
         dateInput.ndsDatePicker = instance;
         return instance;
@@ -1999,8 +1999,8 @@
     // calls init() itself. Not the critical tier — this ships in nds-extras.min.js,
     // injected after the reveal.
     NDS.DatePicker = {
-        Calendar: DatePickerCalendar,
-        CalendarConfig,
+        Calendar: NdsDatePickerCalendar,
+        CalendarConfig: calendarConfig,
         init: initializeCalendar,
         reinit: initializeCalendar,
         create: createInstance,

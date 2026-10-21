@@ -181,14 +181,14 @@
     // ==============================================
     // UTILITY FUNCTIONS
     // ==============================================
-    var Utils = {
+    var numberRangeCheck = {
         validateNumberRange: function(input) {
             var val = parseInt(input.value);
             if (input.value === '' || isNaN(val)) return null;
             var min = input.hasAttribute('min') ? parseInt(input.min) : -Infinity;
             var max = input.hasAttribute('max') ? parseInt(input.max) : Infinity;
-            if (val < min) return { clamped: min, message: Validator.getNumberRangeMessage('min', min) };
-            if (val > max) return { clamped: max, message: Validator.getNumberRangeMessage('max', max) };
+            if (val < min) return { clamped: min, message: validator.getNumberRangeMessage('min', min) };
+            if (val > max) return { clamped: max, message: validator.getNumberRangeMessage('max', max) };
             return null;
         },
     };
@@ -223,7 +223,7 @@
     // ==============================================
     // STATUS MANAGEMENT API
     // ==============================================
-    var StatusManager = {
+    var statusManager = {
         set: function(options) {
             var element = options.element;
             var status = options.status;
@@ -281,7 +281,7 @@
                     delete feedbackOptions.element;
                     feedback = NDS.Feedback.create(feedbackOptions);
                 } else if (message === '') {
-                    // A blank message (Validator's blank custom error) drops the old one: the
+                    // A blank message (validator's blank custom error) drops the old one: the
                     // component shows the cause itself. An omitted message keeps it.
                     container.removeAttribute('data-message');
                     NDS.Feedback.dismissAll(container, { own: true });
@@ -405,7 +405,7 @@
         input.setCustomValidity(clean && !ok ? msg : '');
     }
 
-    var Validator = {
+    var validator = {
         getNumberRangeMessage: function(type, value) {
             return strings.text(type === 'min' ? 'min_value' : 'max_value', { n: value });
         },
@@ -419,8 +419,8 @@
             var shown = {};
             Object.keys(result).forEach(function(k) { if (k !== 'empty' && k !== 'focus') shown[k] = result[k]; });
             if (options.showMessage) {
-                if (!shown.valid) StatusManager.set({ element: el, status: 'error', message: shown.message });
-                else StatusManager.clear(el);
+                if (!shown.valid) statusManager.set({ element: el, status: 'error', message: shown.message });
+                else statusManager.clear(el);
             }
             return shown;
         },
@@ -435,11 +435,11 @@
             if (acc.pending) NDS.init.mount(form);
 
             if (options.showMessages) {
-                acc.errors.forEach(function(e) { StatusManager.set({ element: e.field, status: 'error', message: e.message }); });
+                acc.errors.forEach(function(e) { statusManager.set({ element: e.field, status: 'error', message: e.message }); });
                 // A rule's field that passed drops the error it showed.
                 NDS.validation.rules.forEach(function(rule) {
                     form.querySelectorAll(rule.selector).forEach(function(el) {
-                        if (acc.invalidFields.indexOf(el) === -1 && NDS.validation.isVisible(el, form) && NDS.validation.check(el)) StatusManager.clear(el);
+                        if (acc.invalidFields.indexOf(el) === -1 && NDS.validation.isVisible(el, form) && NDS.validation.check(el)) statusManager.clear(el);
                     });
                 });
             }
@@ -477,7 +477,7 @@
                         seen.push(el);
                         // The status sits on the field that holds el: a picker shows its message there.
                         var holder = el.closest('.nds-form-container, .nds-form-group') || el;
-                        if (NDS.status.get(holder) !== '') Validator.validateField(el);
+                        if (NDS.status.get(holder) !== '') validator.validateField(el);
                     });
                 });
             });
@@ -487,7 +487,7 @@
     // A number stepper's text input carries min/max that checkValidity ignores on type="text".
     function numberRange(container, input) {
         if (!container.querySelector('.nds-number-increment, .nds-number-decrement')) return null;
-        var rangeError = Utils.validateNumberRange(input);
+        var rangeError = numberRangeCheck.validateNumberRange(input);
         return rangeError ? rangeError.message : null;
     }
 
@@ -517,9 +517,9 @@
         if (!isInvalid && input.validationMessage) input.setCustomValidity('');
         if (!container) return;
         if (isInvalid) {
-            StatusManager.set({ element: container, status: 'error', message: NDS.validation.message(input) });
+            statusManager.set({ element: container, status: 'error', message: NDS.validation.message(input) });
         } else if (NDS.status.get(container) === 'error') {
-            StatusManager.clear(container);
+            statusManager.clear(container);
         }
     }
 
@@ -585,13 +585,13 @@
         var next = Math.max(min, Math.min(max, isIncrement ? current + step : current - step));
         var container = fc.closest('.nds-form-container');
         if (next !== current) {
-            if (container && NDS.status.get(container) === 'error') StatusManager.clear(container);
+            if (container && NDS.status.get(container) === 'error') statusManager.clear(container);
             NDS.setValue(input, next, { change: false });
             return true;
         }
         if (container && NDS.status.get(container) !== 'error') {
-            var msg = Validator.getNumberRangeMessage(isIncrement ? 'max' : 'min', isIncrement ? max : min);
-            StatusManager.set({ element: container, status: 'error', message: msg });
+            var msg = validator.getNumberRangeMessage(isIncrement ? 'max' : 'min', isIncrement ? max : min);
+            statusManager.set({ element: container, status: 'error', message: msg });
         }
         return false;
     }
@@ -637,10 +637,10 @@
                 var input = c.input;
                 var val = parseInt(input.value);
                 if (isNaN(val)) { if (input.value || input.validity.badInput) NDS.setValue(input, ''); return; }
-                var rangeError = Utils.validateNumberRange(input);
+                var rangeError = numberRangeCheck.validateNumberRange(input);
                 if (rangeError) {
                     NDS.setValue(input, rangeError.clamped);
-                    StatusManager.set({ element: c.container, status: 'error', message: rangeError.message });
+                    statusManager.set({ element: c.container, status: 'error', message: rangeError.message });
                 }
             }
         }
@@ -679,7 +679,7 @@
                 if (cleaned === input.value) return;
                 NDS.setValue(input, cleaned, { change: false });
                 e._ndsArabicStripped = true;
-                if (c.container) StatusManager.set({ element: c.container, status: 'error', message: strings.text('no_arabic') });
+                if (c.container) statusManager.set({ element: c.container, status: 'error', message: strings.text('no_arabic') });
             },
             submit: hideShown,
             reset: hideShown
@@ -749,12 +749,12 @@
                 // A stripped letter keeps its message up.
                 if (!c || e._ndsArabicStripped) return;
                 syncClear(c.input, c.control);
-                if (c.container && NDS.status.get(c.container) !== '') StatusManager.clear(c.container);
+                if (c.container && NDS.status.get(c.container) !== '') statusManager.clear(c.container);
                 // A group without its own rule drops its message on input too.
                 var group = c.control.closest('.nds-form-group');
                 if (group && NDS.status.get(group) !== ''
                     && !group.hasAttribute('data-min-checked') && !group.hasAttribute('data-max-checked') && !group.hasAttribute('data-required')) {
-                    StatusManager.clear(group);
+                    statusManager.clear(group);
                 }
             },
             change: function(e, c) {
@@ -768,7 +768,7 @@
                 setTimeout(function() {
                     if (e.defaultPrevented || !form.querySelectorAll) return;
                     form.querySelectorAll('.nds-form-container[data-status], .nds-form-group[data-status]').forEach(function(el) {
-                        StatusManager.clear(el);
+                        statusManager.clear(el);
                     });
                 });
             }
@@ -828,7 +828,7 @@
         form.setAttribute('novalidate', '');
 
         form.addEventListener('submit', function(e) {
-            var result = Validator.validateForm(form, { showMessages: true, focusFirst: true });
+            var result = validator.validateForm(form, { showMessages: true, focusFirst: true });
             if (!result.valid) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -891,10 +891,10 @@
 
         // Status Management API
         setStatus: function(element, status, options) {
-            return StatusManager.set(Object.assign({}, options, { element: element, status: status }));
+            return statusManager.set(Object.assign({}, options, { element: element, status: status }));
         },
-        clearStatus: StatusManager.clear.bind(StatusManager),
-        getStatus: StatusManager.get.bind(StatusManager),
+        clearStatus: statusManager.clear.bind(statusManager),
+        getStatus: statusManager.get.bind(statusManager),
 
         // State Management
         setState: function(element, stateName, add) {
@@ -922,9 +922,9 @@
         refresh: function(el) { NDS.field.refresh(el); },
 
         // Form Validation
-        validate: Validator.validateForm.bind(Validator),
+        validate: validator.validateForm.bind(validator),
         // One field by its component's rule: each component's validate() calls it
-        validateField: Validator.validateField.bind(Validator),
+        validateField: validator.validateField.bind(validator),
 
         // Identifier checks (the .nds-national-id / .nds-iban rules, for your own code)
         isNationalId: isNationalId,

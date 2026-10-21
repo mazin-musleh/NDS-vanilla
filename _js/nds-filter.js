@@ -39,7 +39,7 @@
  *   data-filter-min · data-filter-max · data-filter-step · data-filter-currency · data-filter-unit
  *   data-filtered · data-total-count · data-ajax · data-chip-class
  * Gotchas:
- *   - Always NDS.Filter.create(); a bare `new NDSFilter` skips the registry, the init stamp
+ *   - Always NDS.Filter.create(); a bare `new NdsFilter` skips the registry, the init stamp
  *     and the ready event, so getInstance/getByTarget/whenReady never see it.
  *   - NDS.Filter rides the delegated bundle, so until that bundle lands NDS.Filter is the
  *     loader's lazy stub and EVERY call on it returns a Promise. getInstance()/getByTarget()
@@ -141,7 +141,7 @@
         max_value: 'Maximum value',
     });
 
-    class NDSFilter {
+    class NdsFilter {
         constructor(filterContainer, surfaces = null) {
             this.filterContainer = filterContainer;
             this.targetId = filterContainer.getAttribute('data-filter-target');
@@ -2187,7 +2187,7 @@
         // stamps data-nds-accordion-initialized (clears the skeleton), and sets
         // .ndsAccordion on the container.
         //
-        // Once per build pass, never per group: NDSAccordion snapshots its
+        // Once per build pass, never per group: NDS.Accordion snapshots its
         // buttons at construction and the initializer skips a root that already
         // has .ndsAccordion, so initializing after the first of several groups
         // sharing one author-supplied .nds-accordion root (the documented
@@ -2982,7 +2982,7 @@
     // backref, init-guard attribute, and dispatches the filter's events) and
     // register it by target id.
     function createInstance(representative, surfaces) {
-        const instance = new NDSFilter(representative, surfaces);
+        const instance = new NdsFilter(representative, surfaces);
         representative.ndsFilter = instance;
         // Stamp every linked surface + the target container: the constructor's
         // init has applied URL params by now, so this releases the crit holds

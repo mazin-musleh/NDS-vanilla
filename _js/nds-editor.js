@@ -879,7 +879,7 @@
 
     // ---------- Editor ----------
 
-    class NDSEditor {
+    class NdsEditor {
         constructor(root) {
             this.root = root;
             // Success signal — init() only runs (and registers root.ndsEditor) when construction succeeds.
@@ -2890,7 +2890,7 @@
         document.querySelectorAll('.nds-editor').forEach(el => {
             if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-editor-initialized')) return;
-            new NDSEditor(el);
+            new NdsEditor(el);
         });
     }
 
@@ -2901,7 +2901,7 @@
         // dud instance whose every method throws.
         create: (element) => {
             if (element.ndsEditor) return element.ndsEditor;
-            const inst = new NDSEditor(element);
+            const inst = new NdsEditor(element);
             return inst.valid ? inst : null;
         },
         destroy: (element) => element.ndsEditor?.destroy(),

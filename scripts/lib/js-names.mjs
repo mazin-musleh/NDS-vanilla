@@ -175,6 +175,8 @@ function scanFile(file, source) {
                             if (node.kind === 'const' && !constCase(id.name) && isPrimitive(d.init))
                                 push('P12.8', id, `\`${id.name}\` holds a primitive constant`, 'upper snake case, unless it is a setting read per call');
                             if (acronym(id.name)) push('P10.3', id, `\`${id.name}\` writes an acronym in capitals`);
+                            if (/^[A-Z][a-z]/.test(id.name) && d.init && d.init.type !== 'ClassExpression')
+                                push('P12.8', id, `\`${id.name}\` is PascalCase but is not a class: camelCase`);
                             if (d.init?.type === 'Literal' && typeof d.init.value === 'string') topStrings.set(id.name, d.init.value);
                             if (d.init?.type === 'NewExpression' && /^Weak(Map|Set)$/.test(d.init.callee.name)) weakMaps.add(id.name);
                         } else if (!ctx.module && ctx.fnDepth) local(id, d);

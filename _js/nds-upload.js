@@ -132,10 +132,10 @@
         '</div>';
 
     // ==============================================
-    // CLASS: NDSUpload
+    // CLASS: NdsUpload
     // ==============================================
 
-    class NDSUpload {
+    class NdsUpload {
         constructor(container, options = {}) {
             if (!container || container.hasAttribute('data-nds-upload-initialized')) return;
             if (container.closest('code')) return;
@@ -836,7 +836,7 @@
         document.querySelectorAll('.nds-upload').forEach(el => {
             if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-upload-initialized')) return;
-            new NDSUpload(el);
+            new NdsUpload(el);
         });
     }
 
@@ -869,7 +869,7 @@
                 if (options) container.ndsUpload._setOptions(options);
                 return container.ndsUpload;
             }
-            const instance = new NDSUpload(container, options);
+            const instance = new NdsUpload(container, options);
             return instance._initialized ? instance : null;       // null if the constructor bailed
         },
         destroy: (container) => NDS.resolveEl(container)?.ndsUpload?.destroy(),
@@ -897,7 +897,7 @@
     NDS.onDOMAdd('.nds-upload', function (nodes) {
         nodes.forEach(el => {
             if (!el.hasAttribute('data-nds-upload-initialized')) {
-                new NDSUpload(el);
+                new NdsUpload(el);
             }
         });
     });
