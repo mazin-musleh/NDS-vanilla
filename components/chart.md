@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="chart-overview" class="nds-content-section nds-doc-overview">
@@ -201,7 +201,7 @@ NDS.Chart.create('#chart-days-root', {
             <i class="hgi hgi-stroke hgi-chart-line-data-01"></i>
             <span class="nds-label">Programmatic Control</span>
           </span>
-          <p class="nds-item-desc">Create, update and destroy a chart from your code. <code class="nds-inline-code lang-js">update()</code> merges the new options into the current ones and redraws.</p>
+          <p class="nds-item-desc">Create, update and destroy a chart from your code. <code class="nds-inline-code lang-js">setOptions()</code> merges the new options into the current ones and redraws.</p>
         </div>
       </div>
     </div>
@@ -315,7 +315,7 @@ Set them on the chart or on any parent.
 | `NDS.Chart.create(el, options)` | Draws a chart on an element or a selector, and returns the instance. A chart already on the element is destroyed first. Returns `null` when nothing matches. |
 | `NDS.Chart.init()` | Draws every `.nds-chart` with a series in its attributes that has no chart yet, and redraws a chart whose element was emptied. |
 | `NDS.Chart.reinit()` | The same as `init()`. |
-| `chart.update(options)` | Merges the options into the current ones and redraws. An array, such as `series` or `labels`, replaces the old one. |
+| `chart.setOptions(options)` | Merges the options into the current ones and redraws. An array, such as `series` or `labels`, replaces the old one. |
 | `chart.render()` | Redraws from the current options. |
 | `chart.destroy()` | Empties the element, removes its observers and listeners, and deletes `el.ndsChart`. |
 {: .nds-table .nds-responsive}
@@ -331,7 +331,7 @@ const chart = NDS.Chart.create('#requests-chart', {
   dataLabels: { format: (v) => v.toLocaleString() }
 });
 
-chart.update({ series: [{ name: 'Requests', data: [130, 175, 160, 240] }] });
+chart.setOptions({ series: [{ name: 'Requests', data: [130, 175, 160, 240] }] });
 chart.destroy();
 </script>
 

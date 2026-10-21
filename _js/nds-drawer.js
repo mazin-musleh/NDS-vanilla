@@ -38,7 +38,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('drawer', {
+    const strings = NDS.i18n.getStrings('drawer', {
         search: 'Search the menu',
         search_placeholder: 'Search…',
         clear_search: 'Clear search',
@@ -257,7 +257,7 @@
     function watchActive() {
         if (watchingActive) return;
         watchingActive = true;
-        NDS.onAttrChange('.nds-drawer[data-nds-drawer-initialized] li', ['data-state'], items => items.forEach(item => {
+        NDS.onAttributeChange('.nds-drawer[data-nds-drawer-initialized] li', ['data-state'], items => items.forEach(item => {
             const btn = item.querySelector(':scope > .nds-btn');
             if (!btn) return;
             if (hasState(item, config.states.active)) {

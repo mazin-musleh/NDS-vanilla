@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:24 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="export-overview" class="nds-content-section nds-doc-overview">
@@ -425,7 +425,7 @@ A source is an element or a CSS selector. A scope is `"auto"` (the default), `"s
 |---|---|
 | `NDS.Export.init()` | Adds the click listener for `data-export` buttons. The loader calls it |
 | `NDS.Export.export(source, format, scope, options)` | Exports the source. `format` is `"csv"`, `"xls"` or `"pdf"` |
-| `NDS.Export.csv(source, scope, options)` | Exports the source as CSV. `xls()` and `pdf()` work the same way |
+| `NDS.Export.exportCsv(source, scope, options)` | Exports the source as CSV. `exportXls()` and `exportPdf()` work the same way |
 | `NDS.Export.collect(source, scope)` | Returns `{ columns, rows }` and downloads nothing. `columns` holds `{ key, label }` items. Each row maps a key to its value |
 | `NDS.Export.download(data, format, options)` | Downloads a `collect()` result, or opens the print dialog for `"pdf"` |
 | `NDS.Export.toCsv(data)` | Returns a `collect()` result as CSV text, with a UTF-8 byte order mark at the start |
@@ -447,7 +447,7 @@ A source is an element or a CSS selector. A scope is `"auto"` (the default), `"s
 
 <script type="text/html" id="export-js" data-canon data-lang="js">
 // Export every row, with a file name of your own
-NDS.Export.xls('#export-orders', 'all', { filename: 'orders-q3.xls' });
+NDS.Export.exportXls('#export-orders', 'all', { filename: 'orders-q3.xls' });
 
 // Change the data before the download: leave out orders under 100 SAR
 var data = NDS.Export.collect('#export-orders');

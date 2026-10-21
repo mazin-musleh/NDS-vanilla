@@ -40,7 +40,7 @@
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
     const ariaAttributes = ['role', 'aria-expanded', 'aria-autocomplete', 'aria-controls', 'aria-activedescendant'];
 
-    const strings = NDS.i18n.strings('autocomplete', {
+    const strings = NDS.i18n.getStrings('autocomplete', {
         no_results: 'No results',
         load_failed: 'Could not load suggestions',
         pick_suggestion: 'Choose from the suggestions',
@@ -159,7 +159,7 @@
             menu.setAttribute('role', 'listbox');
             menu.setAttribute('hidden', '');
 
-            var menuId = 'nds-ac-' + (this._input.id || NDS.uniqueId());
+            var menuId = 'nds-ac-' + (this._input.id || NDS.getUniqueId());
             menu.id = menuId;
 
             // Scrollable container for items — an .nds-empty container so a
@@ -728,7 +728,7 @@
     NDS.Autocomplete = {
         init: setupAutocompletes,
         reinit: setupAutocompletes,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-form-container') || el, opts, checkField),
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-form-container') || el, checkField, opts),
         destroy: (element) => element?.ndsAutocomplete?.destroy(),
         // Programmatic construction. Pass { filter, renderItem } to override
         // the default substring match and dropdown-row renderer.

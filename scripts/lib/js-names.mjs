@@ -34,7 +34,7 @@ wrap unwrap rebuild place download query rollback release settle resync capture 
 reserve trigger persist cycle animate pause resume say hit look highlight try change reprocess sniff split resend pack
 translate compose subscribe unsubscribe swap delete lock unlock unguard pad tick append prepend cache cleanup setup
 reposition serialize call unapply flatten limit undo choose fit visit wait leave clean rename interpret strip scrub
-reload hydrate compute embed prevent align unlink evaluate infer export order register unregister ride make reapply
+reload hydrate compute embed prevent align unlink evaluate infer export order register unregister ride make reapply audit control
 refocus classify submit harvest associate enter exit describe repeat watch unwatch enhance queue mount unmount manage
 distribute relabel park match matches contains repaint measure remeasure store renew extend recompute invalidate compare
 fix calculate clone recenter jump repair switch complete relocalize slugify hover unstamp retry abort upload fail play
@@ -122,6 +122,7 @@ function scanFile(file, source) {
         const short = ws.map((w) => w.toLowerCase()).filter((w) => ABBREV.has(w));
         if (short.length) push('P10.8', node, `\`${n}\` shortens ${short.map((w) => `\`${w}\``).join(', ')}: whole words${tag}`);
         if (pub && first === 'on') return; // a public onX subscribes (NDS.onResize: entry 6); the ban is for listener functions
+        if (pub && first === 'init') return; // a public initX runs init() for one part (entry 10 carve-out)
         if (BANNED[first]) return push('P10.4', node, `\`${n}\`: \`${first}\` → ${BANNED[first]}${tag}`);
         if (BANNED_PREFIX[first] && ws.length > 1) return push('P10.4', node, `\`${n}\`: \`${first}X\` → ${BANNED_PREFIX[first]}${tag}`);
         if (ws.length > 1 && BANNED_SUFFIX[last]) return push('P10.4', node, `\`${n}\`: \`…${last}\` → ${BANNED_SUFFIX[last]}${tag}`);
@@ -252,7 +253,7 @@ function scanFile(file, source) {
             }
             case 'CallExpression': {
                 const c = node.callee;
-                // Object.defineProperty(NDS, 'isRTL', …): a public value by another road.
+                // Object.defineProperty(NDS, 'isRtl', …): a public value by another road.
                 if (source.slice(c.start, c.end) === 'Object.defineProperty' && rootName(node.arguments[0]) === 'NDS' && typeof node.arguments[1]?.value === 'string') {
                     const k = node.arguments[1].value, tag = banner?.has(k) ? ' (on the banner: section 3 decides)' : '';
                     if (acronym(k)) push('P10.3', node, `\`${k}\` writes an acronym in capitals${tag}`);

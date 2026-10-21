@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 11:24 AM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="upload-overview" class="nds-content-section nds-doc-overview">
@@ -363,7 +363,7 @@ A file is an object `{ file, id, status, progress, error, response }`. `file` is
 | `instance.validateFile(file)` | Runs the checks on a `File` without adding it. Returns `[]` when it passes, or an array of messages |
 | `instance.getConfig()` | Returns the settings in use, from the attributes and the `create()` options, as a frozen object |
 | `instance.enable()`, `instance.disable()` | Enables or disables the field |
-| `instance.refreshUI()` | Draws every row again |
+| `instance.refresh()` | Draws every row again |
 | `instance.destroy()` | Removes the listeners, stops the uploads and empties the list |
 {: .nds-table .nds-responsive}
 

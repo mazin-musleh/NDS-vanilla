@@ -54,7 +54,7 @@ Write a throwaway ESM script to the repo's `tmp/nds-browser-{name}.mjs`, run it 
 
 Turn the HTTP cache off before `goto`: `await page.route('**/*.js*', (r) => r.continue());`. A bundle's `?ver=` is fixed at server start, so a cached copy is the pre-fix bundle and the after-fix run silently tests old code.
 
-To test a date, replace `NDS.Date.today` after `NDS.init.ready` (`NDS.Date.today = () => new Date(2028, 1, 29)`), then mount the fixture. Never freeze the clock with `page.clock.setFixedTime`: a page script waits for time to pass and the tab crashes.
+To test a date, replace `NDS.Date.getToday` after `NDS.init.ready` (`NDS.Date.getToday = () => new Date(2028, 1, 29)`), then mount the fixture. Never freeze the clock with `page.clock.setFixedTime`: a page script waits for time to pass and the tab crashes.
 
 ```js
 import { launch } from '../scripts/lib/browser.mjs';

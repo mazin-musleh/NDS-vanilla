@@ -204,10 +204,11 @@ function keysFromBlock(lines, start) {
         if (depth <= 0) break;
         if (depthAtStart !== 1) continue;
         // Every key on the line, one or several: `reset,` · `init, reinit: x, refresh: () => {…},`.
-        // Inner (…) and {…} are blanked first so their commas don't split a value.
-        const flat = line.replace(/\([^()]*\)/g, '()').replace(/\{[^{}]*\}/g, '{}');
+        // Inner (…) and {…}, nested ones too, become ¤ first so their commas don't split a value.
+        let flat = line, prev;
+        do { prev = flat; flat = flat.replace(/\([^()]*\)/g, '¤').replace(/\{[^{}]*\}/g, '¤'); } while (flat !== prev);
         for (const part of flat.split(',')) {
-            const m = part.match(/^\s*(?:async\s+)?(?:get\s+|set\s+)?([A-Za-z_$][\w$]*)\s*(?:[:(]|$)/);
+            const m = part.match(/^\s*(?:async\s+)?(?:get\s+|set\s+)?([A-Za-z_$][\w$]*)\s*(?:[:(¤]|$)/);
             if (m && !RESERVED.has(m[1])) keys.add(m[1]);
         }
     }
@@ -442,7 +443,8 @@ function checkNames() {
     const namespaces = [...SCOPE.filter(([, ns]) => ns), ...[...core.matchAll(/\bNDS\.([A-Z]\w*)\s*=(?!=)/g)].map((m) => ['nds-core.js', m[1]])];
     for (const [file, ns] of namespaces) {
         const x = kebab(ns);
-        const builds = file !== 'nds-core.js' && new RegExp(`['"\`\\s]nds-${x}['"\`\\s]`).test(readFileSync(join(REPO, '_js', file), 'utf8'));
+        // Written as a class, not any string: a storage key may read 'nds-consent'.
+        const builds = file !== 'nds-core.js' && new RegExp(`(?:className\\s*[=:+]+\\s*|classList\\.(?:add|toggle)\\(\\s*|class=)['"\`]?[^'"\`]*?\\bnds-${x}(?![\\w-])`).test(readFileSync(join(REPO, '_js', file), 'utf8'));
         const component = registered.includes(ns) || new RegExp(`\\.nds-${x}(?![\\w-])`).test(sass) || builds;
         const ok = /^[A-Z]/.test(ns) === component;
         if (CASE_PENDING[ns]) {

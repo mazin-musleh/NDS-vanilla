@@ -173,7 +173,7 @@
          * @returns {boolean} Success
          */
         dismiss(feedback) {
-            const el = NDS.resolveEl(feedback);
+            const el = NDS.resolveElement(feedback);
             if (!el) return false;
 
             // Store target element before removal
@@ -222,7 +222,7 @@
          * @param {string|HTMLElement} container - Container selector or element
          */
         dismissAll(container, { own = false } = {}) {
-            const el = NDS.resolveEl(container);
+            const el = NDS.resolveElement(container);
             if (!el) return;
             // own: a field's status clear must not take a nested field's message and leave its error outline.
             const owner = own && el.closest(FIELD);
@@ -243,7 +243,7 @@
          * @private
          */
         _insertIntoTarget(feedback, target, position) {
-            const targetEl = NDS.resolveEl(target);
+            const targetEl = NDS.resolveElement(target);
             if (!targetEl) {
                 console.warn('NDS Feedback: target element not found', target);
                 return false;

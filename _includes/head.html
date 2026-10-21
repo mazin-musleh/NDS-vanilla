@@ -57,7 +57,7 @@
     {%- endif %}
     {%- if site.debug %}
     {%- comment %} Debug: enable the loader's per-component init logging + timing (pre-eval). {% endcomment %}
-    <script>window.NDSInitConfig = { enableTiming: true, enableLogging: true };</script>
+    <script>window.NDS_INIT_CONFIG = { enableTiming: true, enableLogging: true };</script>
     {%- endif %}
     {%- comment -%} Site-wide WebSite + Organization entity graph (every page) {%- endcomment -%}
     {% include website-jsonld.html %}

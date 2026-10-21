@@ -444,6 +444,7 @@ A name a reader or an agent can guess from another component, or from the DOM an
 - `NDS.init` is the loader's namespace (entry 9), not the `init()` verb; its methods keep the loader-hook meanings (`mount`, `refresh`, `destroy`). Its `initialize()` runs the full pass: `init.init()` would repeat the namespace (rule 2).
 - `NDS.validation.check(el)`: `validation.validate` would repeat the namespace (rule 2).
 - `setupX` is for internal functions only; a public method uses the first table's verbs.
+- `initX()` on a namespace runs `init()` for one part only (`Numbers.initCounters`, `Pagination.initAuto`): `init` already means "wire every element", and no other verb says "the same, for this part".
 - A public callback key keeps `onX`: an option a caller passes (`onClick`, `onRemove`, `onChange`) and a part key `NDS.field.addType` reads. React passes a `handleX` function as an `onX` prop; the `handleX` row names the function only.
 - Single-letter axis names (`X`, `Y` in `renderXLabels`) are not acronyms.
 

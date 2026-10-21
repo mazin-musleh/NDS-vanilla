@@ -60,12 +60,12 @@ for (const timezoneId of ['Asia/Tokyo', 'America/Los_Angeles']) {
         eq('numerals arab', D.format(new Date(2026, 3, 3), { numerals: 'arab' }), '٢٠٢٦/٠٤/٠٣');
         eq('numerals arabext', D.format(new Date(2026, 3, 3), { format: 'D/M', numerals: 'arabext' }), '۳/۴');
         eq('intl path', D.format(new Date(2026, 3, 3), { locale: 'en', year: 'numeric', month: 'long', day: 'numeric' }), 'April 3, 2026');
-        // today(): the visitor's day when unset, the site zone's day when set.
+        // getToday(): the visitor's day when unset, the site zone's day when set.
         const now = new Date();
-        eq('today, no zone', iso(D.today()), iso(new Date(now.getFullYear(), now.getMonth(), now.getDate())));
+        eq('today, no zone', iso(D.getToday()), iso(new Date(now.getFullYear(), now.getMonth(), now.getDate())));
         document.documentElement.dataset.timezone = 'Pacific/Kiritimati';
         const p = {}; for (const x of new Intl.DateTimeFormat('en', { timeZone: 'Pacific/Kiritimati', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(now)) p[x.type] = x.value;
-        eq('today, site zone', iso(D.today()), `${p.year}-${p.month}-${p.day}`);
+        eq('today, site zone', iso(D.getToday()), `${p.year}-${p.month}-${p.day}`);
         document.documentElement.dataset.timezone = 'Mars/Olympus';
         eq('bad zone falls back', D.site.timeZone, undefined);
         return { days, bad };

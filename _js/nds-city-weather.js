@@ -5,8 +5,8 @@
  *   #nds-city-name with #nds-weather-info — the widget starts only when both are on the page
  * Methods:
  *   NDS.CityWeather.init()            wire the city and weather widgets, if present
- *   NDS.CityWeather.updateWeather()   re-fetch and re-render the weather
- *   NDS.CityWeather.updateCity()      re-render the city name
+ *   NDS.CityWeather.loadWeather()     re-fetch and re-render the weather
+ *   NDS.CityWeather.syncCity()        re-render the city name
  * Events:
  *   (none)
  * Hooks:
@@ -26,7 +26,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('city-weather', {
+    const strings = NDS.i18n.getStrings('city-weather', {
         weather: '{desc}, {temp}°C',
         clear: 'Clear',
         partly_cloudy: 'Partly Cloudy',
@@ -187,7 +187,7 @@
         }
     }
 
-    // Guards the setInterval and the NDS.onAttrChange subscription: neither
+    // Guards the setInterval and the NDS.onAttributeChange subscription: neither
     // has (selector, fn) dedup in core, so a re-run of init would re-stack them.
     let initDone = false;
 
@@ -214,13 +214,13 @@
         setInterval(syncWeather, 15 * 60 * 1000);
 
         // City doesn't need interval - coordinates don't change, cached for 30 days
-        NDS.onAttrChange('html', ['lang'], () => { syncWeather(); syncCity(); });
+        NDS.onAttributeChange('html', ['lang'], () => { syncWeather(); syncCity(); });
     }
 
     NDS.CityWeather = {
         init: setupCityWeather,
-        updateWeather: syncWeather,
-        updateCity: syncCity
+        loadWeather: syncWeather,
+        syncCity
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

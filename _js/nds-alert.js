@@ -48,7 +48,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('alert', {
+    const strings = NDS.i18n.getStrings('alert', {
         close: 'Close',
     });
 
@@ -158,8 +158,8 @@
                 actions.forEach((action, index) => {
                     const classes = action.class || `nds-btn nds-${action.variant || 'subtle'} nds-${action.size || 'sm'}`;
                     let el;
-                    // NDS.safeUrl rejects javascript:/data: payloads → null downgrades the action to a plain button.
-                    const validatedHref = NDS.safeUrl(action.href);
+                    // NDS.toSafeUrl rejects javascript:/data: payloads → null downgrades the action to a plain button.
+                    const validatedHref = NDS.toSafeUrl(action.href);
                     if (validatedHref) {
                         el = document.createElement('a');
                         el.setAttribute('href', validatedHref);
@@ -229,7 +229,7 @@
                 }
 
                 // Add entrance animation
-                NDS.afterPaint(() => NDS.state.add(alert, 'toast-show'));
+                NDS.onNextPaint(() => NDS.state.add(alert, 'toast-show'));
 
                 // Auto-dismiss with duration; hover pauses, click pins the pause
                 // (touch has no hover — tap keeps the toast until closed)
@@ -264,7 +264,7 @@
                     run();
                 }
             } else if (target) {
-                const targetEl = NDS.resolveEl(target);
+                const targetEl = NDS.resolveElement(target);
                 if (targetEl) {
                     if (prepend) {
                         targetEl.prepend(alert);
@@ -299,11 +299,11 @@
             // it takes whichever sits lower and clamps a scrolled-away one at 0.
             if (position.startsWith('top') && !abortControllers.has(placeholder)
                 && document.querySelector('.nds-main-nav, .nds-topbar')) {
-                const syncTop = () => placeholder.style.setProperty('--_toast-top', NDS.stickyHeaderBottom() + 'px');
+                const syncTop = () => placeholder.style.setProperty('--_toast-top', NDS.getStickyHeaderBottom() + 'px');
                 syncTop();
                 const controller = new AbortController();
                 abortControllers.set(placeholder, controller);
-                window.addEventListener('scroll', NDS.rafThrottle(() => {
+                window.addEventListener('scroll', NDS.throttleToFrame(() => {
                     if (!placeholder.isConnected) {
                         controller.abort();
                         abortControllers.delete(placeholder);
@@ -320,7 +320,7 @@
          * Dismiss an alert
          */
         dismiss(alert) {
-            const el = NDS.resolveEl(alert);
+            const el = NDS.resolveElement(alert);
             if (el) {
                 const placeholder = el.closest('.nds-alert-placeholder');
 
@@ -347,7 +347,7 @@
          * Dismiss all alerts in a container or by ID pattern
          */
         dismissAll(container) {
-            const el = NDS.resolveEl(container);
+            const el = NDS.resolveElement(container);
             if (el) {
                 el.querySelectorAll('.nds-alert').forEach(alertElement => this.dismiss(alertElement));
             }

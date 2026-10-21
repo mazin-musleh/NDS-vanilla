@@ -6,9 +6,9 @@
  *   NDS.Multiselect.create(el)           instance one field (reuses an existing instance)
  *   NDS.Multiselect.validate(el, opts)   its check → {valid, message, checked, min, max}; opts {showMessage}
  *   NDS.Multiselect.destroy(el)          tear one field down
- *   instance.populate(options, selected) rebuild the option set at runtime
+ *   instance.renderOptions(options, selected) rebuild the option set at runtime
  *   instance.getSelected()               the picked values
- *   instance.apply() / .reset()          commit the menu's picks / clear them
+ *   instance.commit() / .reset()         commit the menu's picks / clear them
  *   instance.removeValue(value)          unpick one value
  * Events (bubble from .nds-multiselect):
  *   nds:multiselect:change   detail {name, values, labels} — on every commit
@@ -33,7 +33,7 @@
  * precedent): `data-multiselect-options` takes a JSON array (value = label),
  * a {value: label} object, or a nested {legend: {value: label}} object for
  * grouped fieldsets; `data-multiselect-selected` pre-checks values.
- * `instance.populate(options, selected)` does the same at runtime.
+ * `instance.renderOptions(options, selected)` does the same at runtime.
  *
  * Commit timing: instant by default. A `[data-multiselect-action="apply"]`
  * footer button switches the field to filter-style staging — toggles inside
@@ -49,7 +49,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('multiselect', {
+    const strings = NDS.i18n.getStrings('multiselect', {
         none: '{label}: No selection',
         added: 'Added {value}',
         removed: 'Removed {value}',
@@ -197,7 +197,7 @@
         // One .nds-checkbox row — same structure as the canonical
         // hand-written markup (and filter/tables' generated rows).
         _buildOptionRow(value, label, checked) {
-            const id = NDS.uniqueId('nds-ms-');
+            const id = NDS.getUniqueId('nds-ms-');
 
             const container = document.createElement('div');
             container.className = 'nds-form-container nds-checkbox';
@@ -233,7 +233,7 @@
         // Runtime population (fetch results, dependent fields). Same shapes as
         // data-multiselect-options; `selected` pre-checks values. Rebuilds the
         // rows and chips without emitting a change event — setup, not input.
-        populate(options, selected) {
+        renderOptions(options, selected) {
             this._buildOptions(options, selected || []);
             this._collectCheckboxes();
             this._applied = this.getSelected();
@@ -277,7 +277,7 @@
 
             // ── Checkbox change (delegated) ─────────────────────────
             // Each toggle commits immediately; chips + a11y summary refresh
-            // live. One listener on the menu element survives populate()
+            // live. One listener on the menu element survives renderOptions()
             // rebuilding the rows.
             this._menu.addEventListener('change', (e) => {
                 if (!e.target.matches('input[type="checkbox"]')) return;
@@ -327,7 +327,7 @@
             // No data-no-auto-close on Apply — the dropmenu closes it and
             // hands focus back to the trigger.
             if (this._applyButton) {
-                this._applyButton.addEventListener('click', () => this.apply(), { signal });
+                this._applyButton.addEventListener('click', () => this.commit(), { signal });
             }
 
             // ── Submit guard (apply mode) ───────────────────────────
@@ -384,7 +384,7 @@
         // Commit the current checked set: chips, a11y summary, change event.
         // In apply mode this is the Apply button's handler; callable directly
         // in either mode.
-        apply() {
+        commit() {
             this._applied = this.getSelected();
             this._renderChips();
             const labels = this._applied.map(value => this._getLabel(value));
@@ -441,7 +441,7 @@
             this._chipsElement.replaceChildren();
             selected.forEach(value => { this._chipsElement.appendChild(this._buildChip(value)); });
             // New chips take the field's disabled.
-            NDS.state.apply(this._root, 'disabled');
+            NDS.state.refresh(this._root, 'disabled');
             NDS.state[selected.length ? 'add' : 'remove'](this._root, 'filled');
 
             if (this._trigger && this._triggerLabelOriginal) {
@@ -490,7 +490,7 @@
     // The option checkboxes are the source of truth, scoped to the nested menu.
     const checkField = (ms) => {
         const menu = ms.querySelector('.nds-dropmenu-menu');
-        return NDS.validation.checkedCount(ms, menu ? menu.querySelectorAll('input[type="checkbox"]') : []);
+        return NDS.validation.checkCount(ms, menu ? menu.querySelectorAll('input[type="checkbox"]') : []);
     };
     NDS.validation.addRule('.nds-multiselect[data-required], .nds-multiselect.nds-required, .nds-multiselect[data-min-checked], .nds-multiselect[data-max-checked]',
         (ms) => Object.assign(checkField(ms), { focus: ms.querySelector('.nds-dropmenu-trigger') }),
@@ -500,7 +500,7 @@
     NDS.Multiselect = {
         init: setupMultiselects,
         reinit: setupMultiselects,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-multiselect') || el, opts, checkField),
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-multiselect') || el, checkField, opts),
         create: (element) => {
             if (element.ndsMultiselect) return element.ndsMultiselect;
             const instance = new NdsMultiselect(element);

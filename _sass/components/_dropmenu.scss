@@ -59,7 +59,7 @@
 // ==============================================
 // 2. MENU CONTAINER
 // ==============================================
-// The open menu is a [popover] in the top layer (NDS.topLayer): absolute, placed
+// The open menu is a [popover] in the top layer (NDS.setTopLayer): absolute, placed
 // once by JS so page scroll carries it, still a DOM child of its wrapper. State-driven rules key
 // on the menu's own data-state.
 

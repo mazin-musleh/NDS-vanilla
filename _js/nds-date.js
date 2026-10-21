@@ -1,10 +1,10 @@
 /* NDS.Date — public surface
  * Rides: (none — base component)
  * Methods:
- *   NDS.Date.parse(text, opts) · .format(date, opts) · .convert(text, from, to) · .today() · .site
+ *   NDS.Date.parse(text, opts) · .format(date, opts) · .convert(text, from, to) · .getToday() · .site
  *   NDS.Date.formatFor(el)           the nearest data-date-format (<html> is the site's)
- *   NDS.Date.calendarFor(el, fb)     the nearest data-calendar: hijri | gregory (else fb, gregory)
- *   NDS.Date.monthNames(calendar, lang) · .weekdayNames(lang)   names in a language, Sunday first
+ *   NDS.Date.getCalendar(el, fb)     the nearest data-calendar: hijri | gregory (else fb, gregory)
+ *   NDS.Date.getMonthNames(calendar, lang) · .getWeekdayNames(lang)   names in a language, Sunday first
  *   NDS.Date.fill(root)              write every such <time> in root, and root itself
  *   NDS.Date.init()                  fill the page (the loader calls it)
  * Events:
@@ -34,7 +34,7 @@
 
     // THE date rule: Date Picker, the topbar date and Export parse and print here.
     // A date is a calendar day: a Date at local midnight, never shifted by a timezone.
-    // The site's timezone (<html data-timezone>) enters only through today().
+    // The site's timezone (<html data-timezone>) enters only through getToday().
     // ponytail: built for Saudi Arabia's two calendars, gregory and hijri; any other calendar when a site asks.
     NDS.Date = (() => {
         const TOKENS = /YYYY|YY|MMMM|MM|M|DD|D/g;
@@ -98,7 +98,7 @@
         // The nearest data-date-format wins, like a dark area; <html> holds the site's.
         // Hijri names come from the pack: Android's ICU renders Umm al-Qura month
         // symbols from the Gregorian set (month 1 → "January").
-        const names = NDS.i18n.strings('date', {
+        const names = NDS.i18n.getStrings('date', {
             hijri_months: ['Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani', 'Jumada al-Ula', 'Jumada al-Akhirah', 'Rajab', 'Shaban', 'Ramadan', 'Shawwal', 'Dhu al-Qadah', 'Dhu al-Hijjah'],
         });
         const getIntlNames = (lang, opts, at) => {
@@ -120,12 +120,12 @@
             get site() { return { timeZone: readTimeZone(), format: getSiteFormat() }; },
 
             formatFor,
-            calendarFor: resolveCalendar,
-            monthNames: getMonthNames,
-            weekdayNames: getWeekdayNames,
+            getCalendar: resolveCalendar,
+            getMonthNames,
+            getWeekdayNames,
 
             // Today in the site's timezone (the visitor's when unset), as a local day.
-            today() {
+            getToday() {
                 const tz = readTimeZone();
                 if (!tz) { const now = new Date(); return new Date(now.getFullYear(), now.getMonth(), now.getDate()); }
                 const parts = getDayParts(getDateFormatter('en', { timeZone: tz, numberingSystem: 'latn', year: 'numeric', month: 'numeric', day: 'numeric' }), new Date());
@@ -147,7 +147,7 @@
                     regs.set(format, re = { rx: new RegExp('^' + src + '$'), order });
                 }
                 // Arabic digits to ASCII, and the bidi marks Intl writes in Arabic out.
-                const normalized = NDS.latinDigits(text).replace(/[\u200e\u200f\u061c]/g, '').trim();
+                const normalized = NDS.toLatinDigits(text).replace(/[\u200e\u200f\u061c]/g, '').trim();
                 const match = normalized.match(re.rx);
                 if (!match) return null;
                 let y = null, month = 1, day = 1;
@@ -194,7 +194,7 @@
 
     // ── <time> text ──────────────────────────────────────────────────
     const SEL = 'time[datetime][data-date-to], time[datetime][data-date-format]';
-    const strings = NDS.i18n.strings('date', { hijri_era: 'AH' });
+    const strings = NDS.i18n.getStrings('date', { hijri_era: 'AH' });
     const DATETIME = /^(\d{4})-(\d{2})-(\d{2})(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(Z|[+-]\d{2}:?\d{2})?)?$/;
 
     // The day a datetime names, as a local date. With a zone it is an instant: its day in the

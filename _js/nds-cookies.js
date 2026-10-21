@@ -7,7 +7,7 @@
  *   NDS.Cookies.open(view?, opener?)       open on 'notice' (default) or 'manage'
  *   NDS.Cookies.close()
  * Events:
- *   (none — the choice fires nds:cookies:consent from NDS.consent.save)
+ *   (none — the choice fires nds:cookies:consent from NDS.consent.set)
  * Hooks:
  *   #nds-cookies-panel               a page's own panel, in the DOM or a <template>, replaces the
  *                                  built one: text, links and categories are then the page's
@@ -23,7 +23,7 @@
  *   - The built panel's text comes from the cookies section of assets/i18n/{lang}.json, loaded before it is
  *     built, so it never shows English first. A page's own panel keeps its own text.
  *   - Closing without a choice stores none and hides the auto-open for 30 minutes under
- *     cookieConsentDismissed. That key is never read as consent.
+ *     nds-cookies-dismissed. That key is never read as consent.
  *   - The auto-open never takes focus, and waits while another panel is open.
  *   - Before the auto-open, the panel is built (or a page's template unpacked) while the
  *     page is idle, hidden: #nds-cookies-panel exists before it first shows.
@@ -32,12 +32,12 @@
     'use strict';
 
     const PANEL_ID = 'nds-cookies-panel';
-    const DISMISS_KEY = 'cookieConsentDismissed';
+    const DISMISS_KEY = 'nds-cookies-dismissed';
     const DELAY = 6000;
     const categories = ['performance', 'functional', 'targeting'];
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('cookies', {
+    const strings = NDS.i18n.getStrings('cookies', {
         panel_label: 'Cookie settings',
         title: 'Cookies',
         description: 'Use of Cookies by this site is just to guarantee Ease of Access and better user experience while browsing. Continuation of your browsing acknowledges your approval for Terms and Conditions of this site and its use of Cookies.',
@@ -156,7 +156,7 @@
         if (name === 'manage') {
             // A stored choice shows as it is; with none, every optional category starts off.
             panel.querySelectorAll('[data-cookies-category]').forEach(input => {
-                if (!input.disabled) input.checked = NDS.consent.allowed(input.dataset.cookiesCategory);
+                if (!input.disabled) input.checked = NDS.consent.isAllowed(input.dataset.cookiesCategory);
             });
         }
     }
@@ -181,9 +181,9 @@
         const action = btn.dataset.cookiesAction;
         if (!['accept', 'reject', 'save', 'manage', 'undo'].includes(action)) return;
         if (action === 'save') {
-            NDS.consent.save(Array.from(panel.querySelectorAll('[data-cookies-category]:checked'), i => i.dataset.cookiesCategory));
+            NDS.consent.set(Array.from(panel.querySelectorAll('[data-cookies-category]:checked'), i => i.dataset.cookiesCategory));
         } else if (action === 'accept' || action === 'reject') {
-            NDS.consent.save(action === 'accept');
+            NDS.consent.set(action === 'accept');
         }
         if (action !== 'manage' && action !== 'undo') chose = true;
         // Undo goes back to the choice: the stored one stays until the next replaces it.

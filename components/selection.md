@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:24 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="selection-overview" class="nds-content-section nds-doc-overview">
@@ -378,7 +378,7 @@ The script starts on its own. Call `recount()` or `reinit()` after a change that
 | `NDS.Selection.init()` | Adds the document listeners. The loader calls it |
 | `NDS.Selection.selectAll(list, on, scope)` | Selects every item the filter shows, or clears them when `on` is `false`. `on` defaults to `true`. With `scope` set to `'page'`, it acts only on the items on the current page |
 | `NDS.Selection.clear(list)` | Clears every item, including items a filter hides and items with no checkbox. Call it after a bulk action |
-| `NDS.Selection.selected(list)` | Returns the selected items, in page order |
+| `NDS.Selection.getSelected(list)` | Returns the selected items, in page order |
 | `NDS.Selection.isSelected(item)` | Returns `true` when the item is selected. [Export](../components/export) uses it to pick the selected rows |
 | `NDS.Selection.reinit()` | Updates every list |
 | `NDS.Selection.refresh(list)` | Updates one list's states, select-all and counters. With no list, it adds the listeners if they are missing and updates every list. `NDS.init.refresh()` calls it that way |
@@ -401,7 +401,7 @@ list.addEventListener('nds:selection:change', function (e) {
 
 // Remove the selected items: the count drops, so the event hides the button again
 removeButton.addEventListener('click', function () {
-  NDS.Selection.selected(list).forEach(function (item) {
+  NDS.Selection.getSelected(list).forEach(function (item) {
     item.remove();
   });
 });

@@ -59,7 +59,7 @@
     // Everything that is neither the target nor a parent of it is skipped (display: none
     // on paper, so no blank pages); the parents print as plain boxes, so their frames stay off.
     function print(ref) {
-        const target = NDS.resolveEl(ref);
+        const target = NDS.resolveElement(ref);
         if (!target) {
             console.warn('[NDS.Print] no element resolved for', ref);
             return false;

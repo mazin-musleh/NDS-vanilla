@@ -25,7 +25,7 @@
  *   instance.validateFile(file)                  [] when it passes, [messages] when it fails —
  *                                                checks without staging anything
  *   instance.getConfig()                         the resolved, frozen config
- *   instance.enable() / .disable() / .refreshUI() / .destroy()
+ *   instance.enable() / .disable() / .refresh() / .destroy()
  *   instance.container                           the .nds-upload root, read-only
  * Events (bubble from the .nds-upload container):
  *   nds:upload:ready             detail {instance}
@@ -84,7 +84,7 @@
     }
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('upload', {
+    const strings = NDS.i18n.getStrings('upload', {
         size_exceeds: 'File size exceeds {size}',
         type_not_allowed: 'File type not allowed',
         type_not_allowed_ext: 'File type not allowed (.{ext})',
@@ -296,7 +296,7 @@
         _buildEntry(file, errors, extra = {}) {
             return {
                 file: file,
-                id: NDS.uniqueId('file-'),
+                id: NDS.getUniqueId('file-'),
                 status: errors.length ? 'error' : (extra.status || 'ready'),
                 progress: extra.progress || 0,
                 error: errors.length ? errors.join(', ') : (extra.error || null),
@@ -409,7 +409,7 @@
             NDS.state.add(this.container, 'disabled');
         }
 
-        refreshUI() {
+        refresh() {
             this._syncFileList();
         }
 
@@ -862,9 +862,9 @@
     NDS.Upload = {
         init: setupUploads,
         reinit: setupUploads,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-upload') || el, opts, checkField),
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-upload') || el, checkField, opts),
         create: (container, options) => {
-            container = NDS.resolveEl(container);
+            container = NDS.resolveElement(container);
             if (!container) { warn('create: container not found'); return null; }
             if (container.ndsUpload) {                              // already built → merge, return it
                 if (options) container.ndsUpload._setOptions(options);
@@ -873,14 +873,14 @@
             const instance = new NdsUpload(container, options);
             return instance._initialized ? instance : null;       // null if the constructor bailed
         },
-        destroy: (container) => NDS.resolveEl(container)?.ndsUpload?.destroy(),
+        destroy: (container) => NDS.resolveElement(container)?.ndsUpload?.destroy(),
 
         getInstance: (container) => {
-            return NDS.resolveEl(container)?.ndsUpload || null;
+            return NDS.resolveElement(container)?.ndsUpload || null;
         },
 
         whenReady: (container, callback) => {
-            container = NDS.resolveEl(container);
+            container = NDS.resolveElement(container);
             if (!container) return;
 
             if (container.ndsUpload) {
@@ -895,7 +895,7 @@
     };
 
     // Self-register for dynamic elements
-    NDS.onDOMAdd('.nds-upload', function (nodes) {
+    NDS.onDomAdd('.nds-upload', function (nodes) {
         nodes.forEach(el => {
             if (!el.hasAttribute('data-nds-upload-initialized')) {
                 new NdsUpload(el);
@@ -907,7 +907,7 @@
     // aborts in-flight XHRs and clears the
     // init marker — without which a re-added node would short-circuit re-init
     // behind the stale marker.
-    NDS.onDOMRemove('.nds-upload', function (nodes) {
+    NDS.onDomRemove('.nds-upload', function (nodes) {
         nodes.forEach(el => {
             if (el.ndsUpload) el.ndsUpload.destroy();
         });

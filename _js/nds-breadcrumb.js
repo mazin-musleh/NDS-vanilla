@@ -28,7 +28,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('breadcrumb', {
+    const strings = NDS.i18n.getStrings('breadcrumb', {
         more: 'More',
     });
 

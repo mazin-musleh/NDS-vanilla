@@ -42,7 +42,7 @@
     const ENDED_ID = 'nds-session-ended';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('session-timeout', {
+    const strings = NDS.i18n.getStrings('session-timeout', {
         warning_title: 'Your session is about to end',
         warning_description: 'You have not used the page for a while. When the time runs out, you are signed out and lose any data you have not saved.',
         stay: 'Stay signed in',
@@ -192,9 +192,9 @@
         initDone = true;
         // Activity renews before the warning could open, so an active user never sees it.
         renewEvery = Math.min(60000, (timeout - warn) / 2);
-        extendUrl = NDS.safeUrl(config.extend);
-        logoutUrl = NDS.safeUrl(config.logout);
-        signinUrl = NDS.safeUrl(config.signin);
+        extendUrl = NDS.toSafeUrl(config.extend);
+        logoutUrl = NDS.toSafeUrl(config.logout);
+        signinUrl = NDS.toSafeUrl(config.signin);
         key = 'nds-session:' + (config.key || extendUrl || '');
         strings.load();
         // The warning's buttons close through Modal's delegated handlers, unwired on a page with no other modal.

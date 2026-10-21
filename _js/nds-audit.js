@@ -3,7 +3,7 @@
  * Methods:
  *   NDS.audit.run(opts)   run the rules once; prints [NDS.audit] lines and returns the findings.
  *                         opts: { group, rule, quiet } (group/rule: a name or an array; quiet: no console)
- *   NDS.audit.rule(def)   add a rule: { id, group, severity, docs, check(ctx) }. ctx.find(selector)
+ *   NDS.audit.addRule(def)   add a rule: { id, group, severity, docs, check(ctx) }. ctx.find(selector)
  *                         returns the elements a rule may judge; ctx.report(el, message, fix, severity)
  *   NDS.audit.rules       every rule, in run order
  * Findings: { rule, group, severity, message, fix, docs, el, count }
@@ -90,21 +90,21 @@
 
     // ── page ─────────────────────────────────────────────────────────
 
-    // NDS.isRTL tests dir alone (no lang fallback), and CSS flips off the same
+    // NDS.isRtl tests dir alone (no lang fallback), and CSS flips off the same
     // attribute — so lang/dir disagreement runs components in one direction
     // under content written for the other, with nothing else reporting it.
     // Not auto-corrected: writing dir here flips the whole document a frame
     // after paint, and cannot help the pre-JS paint at all.
     addRule({ id: 'lang-dir', group: 'page', docs: 'ui-shell/head.html', check(context) {
         const html = document.documentElement;
-        const htmlDir = html.dir; // raw read for the diagnostic text only — comparisons below use NDS.isRTL
+        const htmlDir = html.dir; // raw read for the diagnostic text only — comparisons below use NDS.isRtl
         const htmlLang = html.lang || 'unset';
         // ponytail: the common right-to-left languages; Intl.Locale's text info is missing in Firefox.
         const rtlLang = /^(ar|fa|ur|he|ps|ckb|dv|yi|sd|ug)$/.test(NDS.lang);
         if (!html.lang) context.report(null, '<html> has no lang attribute — components write their text in English and the pack never loads for the page\'s language.', 'Set lang on <html>, such as lang="ar".');
-        if (rtlLang && !NDS.isRTL) {
-            context.report(null, `<html lang="${htmlLang}"> without dir="rtl"${htmlDir ? ` (dir="${htmlDir}")` : ' (no dir attribute)'} — NDS.isRTL reads false, so components run left-to-right under right-to-left content.`, 'Set dir="rtl" in the markup.');
-        } else if (!rtlLang && NDS.isRTL) {
+        if (rtlLang && !NDS.isRtl) {
+            context.report(null, `<html lang="${htmlLang}"> without dir="rtl"${htmlDir ? ` (dir="${htmlDir}")` : ' (no dir attribute)'} — NDS.isRtl reads false, so components run left-to-right under right-to-left content.`, 'Set dir="rtl" in the markup.');
+        } else if (!rtlLang && NDS.isRtl) {
             context.report(null, `<html dir="rtl"> with lang="${htmlLang}" — direction and language disagree.`, 'Set dir="ltr", or lang to a right-to-left language.');
         }
     } });
@@ -386,7 +386,7 @@
     };
     // A template-held modal or panel is real: NDS.fromTemplate moves it in on first open.
     const isInTemplate = (id) => [...document.querySelectorAll('template')].some(template => template.content.getElementById(id));
-    const isResolved = (attribute, value) => !!NDS.resolveEl(value) || isInTemplate(value.replace(/^#/, ''))
+    const isResolved = (attribute, value) => !!NDS.resolveElement(value) || isInTemplate(value.replace(/^#/, ''))
         || (attribute === 'data-voice-target' && !!document.querySelector(`[name="${CSS.escape(value)}"]`));
     addRule({ id: 'id-reference', severity: 'error', check(context) {
         for (const attribute in refs) {
@@ -885,5 +885,5 @@
             'Set palette tokens at :root. On a wrapper, set the token the component reads.', undefined, selectors.length);
     } });
 
-    NDS.audit = { run, rule: addRule, rules: rules };
+    NDS.audit = { run, addRule, rules: rules };
 })();

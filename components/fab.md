@@ -6,7 +6,7 @@ hero_description: A floating action button (FAB) stays at an edge of the screen 
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 lang: en
 direction: ltr
 ---
@@ -321,8 +321,8 @@ A FAB in the page docks by itself. Call the API for a FAB that a script makes af
 | `NDS.Fab.init()` | Docks every `nds-fab` that is not docked yet. `reinit()` is the same |
 | `NDS.Fab.register(fab, edge)` | Docks one FAB now and returns its dock. `edge` is optional and replaces the FAB's `data-fab-pos` |
 | `NDS.Fab.destroy(fab)` | Puts a FAB back where it was written, hidden again. Pass a container to do this for every FAB written inside it. Returns the count |
-| `NDS.Fab.dock(edge)` | Returns the dock at `left`, `right` or `bottom`, and makes it if it is missing |
-| `NDS.Fab.resolvePos(fab)` | Returns the edge the FAB docks on: `left`, `right` or `bottom` |
+| `NDS.Fab.getDock(edge)` | Returns the dock at `left`, `right` or `bottom`, and makes it if it is missing |
+| `NDS.Fab.resolvePosition(fab)` | Returns the edge the FAB docks on: `left`, `right` or `bottom` |
 {: .nds-table .nds-responsive}
 
 A FAB fires no events.

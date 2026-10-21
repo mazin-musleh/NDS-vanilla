@@ -7,7 +7,7 @@
  *   instance.next() / .prev()       move by one page
  *   instance.goTo(index, animate = true)  move to a slide index, clamped to the
  *                                   last page (a loop has none); false = instant
- *   instance.updateState()          sync buttons, bullets and classes to the current slide
+ *   instance.syncState()            sync buttons, bullets and classes to the current slide
  *   instance.wrapper / .currentIndex / .lastIndex / .slidesPerView   read-only state
  *   instance.realIndex              the current slide, clones not counted (currentIndex counts them)
  *   instance.toRealIndex(index)     a row index (clones counted) → its slide
@@ -61,7 +61,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('swiper', {
+    const strings = NDS.i18n.getStrings('swiper', {
         go_to_page: 'Go to page {n}',
     });
 
@@ -159,7 +159,7 @@
             // hands us the nested swiper's controls. Slides are direct wrapper
             // children by contract (flex row; _setupLoop inserts clones as siblings),
             // so :scope > is exact there; the rest are ownership-checked.
-            const findOwnPart = (selector) => NDS.ownParts(container, selector, '.nds-swiper')[0] || null;
+            const findOwnPart = (selector) => NDS.findOwnParts(container, selector, '.nds-swiper')[0] || null;
             this._slides = this.wrapper
                 ? Array.from(this.wrapper.querySelectorAll(':scope > .nds-swiper-slide'))
                 : [];
@@ -319,7 +319,7 @@
                     // One reveal, two scroll contexts — a later addition to it must
                     // reach both directions, not just the RTL default.
                     const reveal = () => this._slides.forEach(slide => slide.removeAttribute('hidden'));
-                    if (NDS.isRTL) {
+                    if (NDS.isRtl) {
                         // WebKit RTL: keep scroll-behavior: auto through the entire
                         // update so Safari/WebKit doesn't jump scroll on reflow.
                         this._runInstant(() => {
@@ -539,7 +539,7 @@
                 ? this.wrapper.scrollWidth - this.wrapper.clientWidth
                 : this._getOffset(targetSlide);
 
-            const left = NDS.isRTL ? -offset : offset;
+            const left = NDS.isRtl ? -offset : offset;
             // Where a smooth move rests; the loop's settle waits for it (_setupLoop).
             this._aim = instant ? null : offset;
             // The spotlight opens the target at the click, not as the row crosses halfway.
@@ -650,7 +650,7 @@
             if (i >= headCount && i < headCount + realCount) return;
             this._jumpTo(headCount + this.realIndex);
             this._detectCurrentSlide();
-            this.updateState();
+            this.syncState();
         }
 
         // Shift the row by whole real cycles from where it ACTUALLY is. _jumpTo
@@ -666,7 +666,7 @@
             const landing = this._getPosition() + dir * realCount;
             if (landing < 0 || landing > this._maxIndex) return false;
             const cycle = Math.abs(this._slides[this._headCount + realCount].offsetLeft - this._slides[this._headCount].offsetLeft);
-            this._runInstant(() => { this.wrapper.scrollLeft += NDS.isRTL ? -dir * cycle : dir * cycle; });
+            this._runInstant(() => { this.wrapper.scrollLeft += NDS.isRtl ? -dir * cycle : dir * cycle; });
             return true;
         }
 
@@ -675,7 +675,7 @@
             const target = this._slides[index];
             if (!target) return;
             const offset = this._getOffset(target);
-            this._runInstant(() => { this.wrapper.scrollLeft = NDS.isRTL ? -offset : offset; });
+            this._runInstant(() => { this.wrapper.scrollLeft = NDS.isRtl ? -offset : offset; });
         }
 
         // Scroll distance from the start that rests this slide. A spotlight centres
@@ -693,9 +693,9 @@
         _setupScrollSync() {
             const { signal } = this.abortController;
             const wrapper = this.wrapper;
-            wrapper.addEventListener('scroll', NDS.rafThrottle(() => {
+            wrapper.addEventListener('scroll', NDS.throttleToFrame(() => {
                 this._detectCurrentSlide();
-                this.updateState();
+                this.syncState();
             }), { passive: true, signal });
 
             // The shadow clip cuts cards short of the screen edge; CSS lifts it while the row moves.
@@ -732,7 +732,7 @@
                 return position;
             }
             const step = this._measuredStep || (this._slides[0].offsetWidth + this._getGap()) || 1;
-            return (NDS.isRTL ? -this.wrapper.scrollLeft : this.wrapper.scrollLeft) / step;
+            return (NDS.isRtl ? -this.wrapper.scrollLeft : this.wrapper.scrollLeft) / step;
         }
 
         // ==============================================
@@ -820,7 +820,7 @@
         }
 
         _handleKeydown(e) {
-            const rtl = NDS.isRTL;
+            const rtl = NDS.isRtl;
             switch (e.key) {
                 case 'ArrowLeft':
                     e.preventDefault();
@@ -920,7 +920,7 @@
         // STATE UPDATE
         // ==============================================
 
-        updateState() {
+        syncState() {
             if (this.lastIndex === this.currentIndex) return;
             this.lastIndex = this.currentIndex;
 

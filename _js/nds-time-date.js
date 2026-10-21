@@ -2,8 +2,8 @@
  * Rides: (none — base component)
  * Methods:
  *   NDS.TimeDate.init()                     wire the date widget and the clock, if present
- *   NDS.TimeDate.updateDate()               re-render the date now
- *   NDS.TimeDate.updateClock()              re-render the clock now
+ *   NDS.TimeDate.syncDate()                 re-render the date now
+ *   NDS.TimeDate.syncClock()                re-render the clock now
  * Events:
  *   (none)
  * Hooks:
@@ -44,14 +44,14 @@
     }
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('time-date', {
+    const strings = NDS.i18n.getStrings('time-date', {
         hijri_date: '{month} {day}, {year} AH',
     });
 
     // Month names from NDS.Date: Android's ICU names Umm al-Qura months from the Gregorian set.
     function formatHijriText(day) {
         const [dayText, monthText, y] = NDS.Date.format(day, { calendar: 'hijri', format: 'D M YYYY' }).split(' ');
-        return strings.text('hijri_date', { day: dayText, month: NDS.Date.monthNames('hijri')[monthText - 1], year: y });
+        return strings.text('hijri_date', { day: dayText, month: NDS.Date.getMonthNames('hijri')[monthText - 1], year: y });
     }
 
     // The site's wall clock, [h, m, s]. No data-timezone = the visitor's.
@@ -78,8 +78,8 @@
         scheduleMidnight();
 
         const isArabic = NDS.isArabic;
-        const today = NDS.Date.today();
-        const type = NDS.Date.calendarFor(el, isArabic ? 'hijri' : 'gregory');
+        const today = NDS.Date.getToday();
+        const type = NDS.Date.getCalendar(el, isArabic ? 'hijri' : 'gregory');
         renderDate(el, type === 'hijri'
             ? formatHijriText(today)
             : NDS.Date.format(today, {
@@ -141,7 +141,7 @@
     }
 
     // Per-branch init guards. A re-run of init (e.g. NDS.init.initialize())
-    // would otherwise re-stack NDS.onAttrChange (no dedup in core)
+    // would otherwise re-stack NDS.onAttributeChange (no dedup in core)
     // and document.addEventListener('visibilitychange')
     // (no removal path) on every re-call. The date and clock topbar widgets can
     // appear independently, so the latches are separate — a page that ships
@@ -164,7 +164,7 @@
             NDS.onIdle(syncDate);
             if (!dateInitDone) {
                 dateInitDone = true;
-                NDS.onAttrChange('html', ['lang'], syncDate);
+                NDS.onAttributeChange('html', ['lang'], syncDate);
             }
         }
 
@@ -193,8 +193,8 @@
 
     NDS.TimeDate = {
         init: setupTimeDate,
-        updateDate: syncDate,
-        updateClock: syncClock
+        syncDate,
+        syncClock
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

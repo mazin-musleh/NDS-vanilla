@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:24 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="multiselect-overview" class="nds-content-section nds-doc-overview">
@@ -235,7 +235,7 @@ A row on `.nds-checkbox` changes every option row. A Reset or Apply row inserts 
 ### Data-driven Options
 {: .nds-block-title}
 
-The script builds the option rows from the JSON in `data-multiselect-options` on `.nds-multiselect`. It puts them in the empty `.nds-dropmenu-scroll`. The JSON is an array of values, where each value is also its label, or an object of `value: label` pairs. An object of objects, `{"Technology": {"ai": "AI & ML"}}`, makes one fieldset per key, with the key as its legend. `data-multiselect-selected` holds an array of the values to check at load. The built rows replace any rows in the menu. `populate()` does the same from code.
+The script builds the option rows from the JSON in `data-multiselect-options` on `.nds-multiselect`. It puts them in the empty `.nds-dropmenu-scroll`. The JSON is an array of values, where each value is also its label, or an object of `value: label` pairs. An object of objects, `{"Technology": {"ai": "AI & ML"}}`, makes one fieldset per key, with the key as its legend. `data-multiselect-selected` holds an array of the values to check at load. The built rows replace any rows in the menu. `renderOptions()` does the same from code.
 
 ### Apply Button
 {: .nds-block-title}
@@ -260,7 +260,7 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
 ### Disabled and Read-only
 {: .nds-block-title}
 
-`data-state~="disabled"` on `.nds-multiselect` disables the menu button and every chip. With `data-state~="readonly"`, the menu button still works, so the user can open the menu and see all options. The options, the chips and Reset do not change anything. Code can still change the value with `removeValue()`, `reset()` and `populate()`.
+`data-state~="disabled"` on `.nds-multiselect` disables the menu button and every chip. With `data-state~="readonly"`, the menu button still works, so the user can open the menu and see all options. The options, the chips and Reset do not change anything. Code can still change the value with `removeValue()`, `reset()` and `renderOptions()`.
 
 </div>
   </div>
@@ -403,10 +403,10 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
 | `NDS.Multiselect.destroy(el)` | Removes the listeners and the chips. The checked options stay. Call it before you remove the field from the page |
 | `el.ndsMultiselect` | The instance of a field that has started |
 | `instance.getSelected()` | Returns the values of the checked options, in menu order |
-| `instance.apply()` | Commits the checked options: the chips change and the change event fires. The Apply button calls it |
+| `instance.commit()` | Commits the checked options: the chips change and the change event fires. The Apply button calls it |
 | `instance.reset()` | Unchecks every option and commits. With an Apply button and the menu open, it unchecks them in the menu only |
 | `instance.removeValue(value)` | Unchecks one option and commits |
-| `instance.populate(options, selected)` | Replaces the options. It takes the shapes that `data-multiselect-options` takes, and an array of values to check. It fires no change event |
+| `instance.renderOptions(options, selected)` | Replaces the options. It takes the shapes that `data-multiselect-options` takes, and an array of values to check. It fires no change event |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |
@@ -424,7 +424,7 @@ field.addEventListener('nds:multiselect:change', function (e) {
 
 // Load the options from the server, and keep the saved ones checked
 NDS.request('/api/cities').then(function (res) {
-  field.ndsMultiselect.populate(res.data, ['riyadh']);
+  field.ndsMultiselect.renderOptions(res.data, ['riyadh']);
 });
 </script>
 

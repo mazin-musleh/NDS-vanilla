@@ -43,7 +43,7 @@
 
     // DGA's wording, in English; the assets/i18n/{lang}.json pack overrides it. The markup carries
     // the same words as markers: this is their baseline.
-    NDS.i18n.strings('digital-stamp', {
+    NDS.i18n.getStrings('digital-stamp', {
         tab: 'A government website registered with the Digital Government Authority.',
         tab_short: 'Government website registered with DGA',
         verify: 'How you know?',
@@ -121,7 +121,7 @@
         NDS.aria.expanded(tab, true);
         addState(tab, 'expanded');
 
-        NDS.afterPaint(() => removeState(panel, 'opening'));
+        NDS.onNextPaint(() => removeState(panel, 'opening'));
 
         panel.dispatchEvent(new CustomEvent('nds:digital-stamp:opened', { bubbles: true }));
     }

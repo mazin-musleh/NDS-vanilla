@@ -48,7 +48,7 @@
     // Falls back to the page URL when the attribute is missing or its
     // scheme is outside the navigation allowlist.
     function getShareUrl(wrapper) {
-        return NDS.safeUrl(wrapper.getAttribute('data-share-url')) || window.location.href;
+        return NDS.toSafeUrl(wrapper.getAttribute('data-share-url')) || window.location.href;
     }
 
     async function copyLink(url, button) {
@@ -78,7 +78,7 @@
     }
 
     function shareOnHref(template, url, title) {
-        const href = NDS.safeUrl(template && template.replace(/\{(url|title)\}/g, (_, key) => encodeURIComponent(key === 'url' ? url : title)));
+        const href = NDS.toSafeUrl(template && template.replace(/\{(url|title)\}/g, (_, key) => encodeURIComponent(key === 'url' ? url : title)));
         if (!href) return;
         // A mail or phone link opens its app; in a popup it would leave an empty window
         if (/^(mailto|tel):/.test(href)) window.location.href = href;

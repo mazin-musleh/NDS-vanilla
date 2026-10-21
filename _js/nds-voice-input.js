@@ -54,7 +54,7 @@
     var VOICE_TIMEOUT = 30000; // auto-stop after 30s of listening
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    var strings = NDS.i18n.strings('voice-input', {
+    var strings = NDS.i18n.getStrings('voice-input', {
         start: 'Start voice input ({language})',
         stop: 'Stop voice input',
         language: 'English',
@@ -333,7 +333,7 @@
         // If a button is removed mid-listening, stop its session so the mic
         // doesn't stay open until the 30s timeout. Pooled observer, fires only
         // on real removals (reparents are filtered out by the bus).
-        NDS.onDOMRemove('.nds-voice-input', function(buttons) {
+        NDS.onDomRemove('.nds-voice-input', function(buttons) {
             buttons.forEach(function(btn) {
                 var session = sessions.get(btn);
                 if (session) session.stop();

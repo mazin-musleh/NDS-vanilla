@@ -151,7 +151,7 @@
         syncSlider(container);
         // Cold-init: the pooled observer's initial callback applies the reservation
         // off the sync path and re-runs it on font-load / resize. .nds-stacked
-        // toggles are handled by the onAttrChange watcher in addDocumentListeners.
+        // toggles are handled by the onAttributeChange watcher in addDocumentListeners.
         if (offResizes.has(container)) offResizes.get(container)();
         offResizes.set(container, NDS.onElementResize(container, function () { syncReservation(container); }));
     }
@@ -180,10 +180,10 @@
         });
         // Toggling .nds-stacked (a class change) neither re-runs init nor fires a
         // resize — re-apply the reservation when a container's class changes.
-        // onAttrChange hands the callback a nodes array.
-        NDS.onAttrChange('.nds-slider-container', ['class'], function (containers) { containers.forEach(syncReservation); });
-        // onDOMAdd hands the callback a nodes array, not one element.
-        NDS.onDOMAdd('.nds-slider-container', function (nodes) { nodes.forEach(setupContainer); });
+        // onAttributeChange hands the callback a nodes array.
+        NDS.onAttributeChange('.nds-slider-container', ['class'], function (containers) { containers.forEach(syncReservation); });
+        // onDomAdd hands the callback a nodes array, not one element.
+        NDS.onDomAdd('.nds-slider-container', function (nodes) { nodes.forEach(setupContainer); });
     }
 
     NDS.Slider = {

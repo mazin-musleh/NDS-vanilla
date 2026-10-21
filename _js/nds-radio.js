@@ -17,7 +17,7 @@
 (() => {
     'use strict';
 
-    const strings = NDS.i18n.strings('radio', {
+    const strings = NDS.i18n.getStrings('radio', {
         select_option: 'Please select an option',
     });
 
@@ -52,6 +52,6 @@
     });
 
     NDS.Radio = {
-        validate: (el, opts) => NDS.Form.validateField(getGroup(el), opts, check),
+        validate: (el, opts) => NDS.Form.validateField(getGroup(el), check, opts),
     };
 })();

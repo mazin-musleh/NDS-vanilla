@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 01:47 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -457,7 +457,7 @@ Set these on the `.nds-dropmenu` wrapper. The menu inherits them.
 | `NDS.Dropmenu.create(wrapper)` | Starts one wrapper and returns its instance, or `null` when it has no menu |
 | `NDS.Dropmenu.destroy(wrapper)` | Removes its listeners. Call it before you remove the wrapper from the page: otherwise its listener on the document keeps the removed wrapper in memory |
 | `NDS.Dropmenu.from(el)` | Returns the wrapper of any element in the dropmenu |
-| `NDS.Dropmenu.menuOf(wrapper)` | Returns the menu of a wrapper |
+| `NDS.Dropmenu.getMenu(wrapper)` | Returns the menu of a wrapper |
 | `wrapper.ndsDropmenu.open()`, `.close()`, `.toggle(event)` | Opens or closes the menu. Pass the click `event` to `toggle()`: on a `data-anchor-cursor` menu, the menu then opens under the pointer |
 | `wrapper.ndsDropmenu.destroy()` | The same as `NDS.Dropmenu.destroy(wrapper)` |
 {: .nds-table .nds-responsive}

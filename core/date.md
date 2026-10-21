@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="date-overview" class="nds-content-section nds-doc-overview">
@@ -141,7 +141,7 @@ Format goes on the `<time>` that shows the date: in Both Calendars, the Hijri on
 ### Calendar Days
 {: #date-calendar-days}
 
-A date is a calendar day: a JavaScript `Date` at local midnight. `parse` returns one, and `format` reads one. No timezone moves it, so a day typed in Riyadh is the same day for a visitor in Tokyo. The site's timezone changes only which day `today()` returns.
+A date is a calendar day: a JavaScript `Date` at local midnight. `parse` returns one, and `format` reads one. No timezone moves it, so a day typed in Riyadh is the same day for a visitor in Tokyo. The site's timezone changes only which day `getToday()` returns.
 
 ### Nearest Format
 {: #date-nearest-format}
@@ -199,7 +199,7 @@ The script reads the date from `datetime`, never from the text, and writes the t
             <i class="hgi hgi-stroke hgi-time-zone"></i>
             <span class="nds-label">Site Timezone</span>
           </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">today()</code> returns today in the timezone that <code class="nds-inline-code lang-html">data-timezone</code> names. An invalid name logs one warning, and the visitor's timezone applies.</p>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-js">getToday()</code> returns today in the timezone that <code class="nds-inline-code lang-html">data-timezone</code> names. An invalid name logs one warning, and the visitor's timezone applies.</p>
         </div>
       </div>
     </div>
@@ -217,7 +217,7 @@ The script reads the date from `datetime`, never from the text, and writes the t
 - Check the result of `parse` for `null` before you use it.
 - Send a date to a server as `YYYY-MM-DD`. Show the user any format or calendar.
 - Write a readable date as the text of a `<time>`, not an empty tag. It shows before the script runs, without JavaScript, and to search engines.
-- Use `today()` for today's date, not `new Date()`. `new Date()` is the visitor's clock and ignores `data-timezone`.
+- Use `getToday()` for today's date, not `new Date()`. `new Date()` is the visitor's clock and ignores `data-timezone`.
 - Set `data-timezone` when today must be the same day for every visitor, such as a deadline in Riyadh.
 - Do not pass `timeZone` to `format` for a parsed date. It moves the day for a visitor in another timezone. Pass it only for a moment in time, such as `new Date()` in a clock.
 - For a Hijri month name, use `MMMM`, not `month: 'long'`. On Android, the browser can print a Gregorian month name for a Hijri month, and `MMMM` takes the name from the [string pack](../core/i18n).
@@ -239,7 +239,7 @@ The script reads the date from `datetime`, never from the text, and writes the t
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-timezone` | `<html>` | The site's timezone, as an IANA name such as `Asia/Riyadh`. It sets today in `today()`, Date Picker, the top bar date and clock, and the date in an Export file name. Without it, the visitor's timezone applies |
+| `data-timezone` | `<html>` | The site's timezone, as an IANA name such as `Asia/Riyadh`. It sets today in `getToday()`, Date Picker, the top bar date and clock, and the date in an Export file name. Without it, the visitor's timezone applies |
 | `data-date-format` | `<html>` | The site's date format, in the tokens below. `parse` and `format` use it when you name no format. The default is `DD/MM/YYYY` |
 | `data-date-format` | any element | The date format of the content inside it. The nearest one wins over the one on `<html>`. A Date Picker without its own `data-format`, and Sort when it reads a date from text, use it |
 | `data-calendar` | `<html>`, or any element | `hijri` or `gregory`, the calendar of the dates inside it. The nearest one wins. Date Picker, the top bar date and Sort read it. The default is Gregorian, and the top bar date follows the page language |
@@ -284,19 +284,19 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 | `NDS.Date.parse(text, options)` | Returns the date in `text` as a `Date` at local midnight, or `null` when `text` does not match the format or names a day that does not exist. Reads `format` and `calendar` |
 | `NDS.Date.format(date, options)` | Returns the date as text. With `format`, it fills the tokens. With other options and no `format`, the browser writes the text. With neither, it uses the site's format. An invalid date returns `''` |
 | `NDS.Date.convert(text, from, to)` | Parses `text` with the options in `from` and formats it with the options in `to`. Returns `null` when `text` does not parse |
-| `NDS.Date.today()` | Returns today, in the site's timezone, as a `Date` at local midnight |
+| `NDS.Date.getToday()` | Returns today, in the site's timezone, as a `Date` at local midnight |
 | `NDS.Date.formatFor(element)` | Returns the nearest `data-date-format` around `element`, the element's own included, or `DD/MM/YYYY` when there is none. Pass it as `format` for content in that part of the page |
-| `NDS.Date.calendarFor(element, fallback)` | Returns the nearest `data-calendar` around `element`, the element's own included, or `fallback` (default `'gregory'`) when there is none. Pass it as `calendar` |
+| `NDS.Date.getCalendar(element, fallback)` | Returns the nearest `data-calendar` around `element`, the element's own included, or `fallback` (default `'gregory'`) when there is none. Pass it as `calendar` |
 | `NDS.Date.site` | Returns `{ timeZone, format }` from `<html>`. `timeZone` is `undefined` when the attribute is missing or invalid |
-| `NDS.Date.monthNames(calendar, lang)` | Returns the 12 month names of `'gregory'` or `'hijri'`, in `lang` or the page's language. The Hijri names come from the `date` section of the [string pack](../core/i18n) |
-| `NDS.Date.weekdayNames(lang)` | Returns the 7 short weekday names, Sunday first, in `lang` or the page's language |
+| `NDS.Date.getMonthNames(calendar, lang)` | Returns the 12 month names of `'gregory'` or `'hijri'`, in `lang` or the page's language. The Hijri names come from the `date` section of the [string pack](../core/i18n) |
+| `NDS.Date.getWeekdayNames(lang)` | Returns the 7 short weekday names, Sunday first, in `lang` or the page's language |
 | `NDS.Date.fill(root)` | Writes the text of every `<time>` in `root`, and of `root` itself, that has `data-date-to` or its own `data-date-format`. The loader runs it at load, and `NDS.init.mount()` on markup added later |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="date-api-js" data-canon data-lang="js">
 // Today's Hijri date as numbers, in the site's timezone.
 const [day, month, year] = NDS.Date
-  .format(NDS.Date.today(), { calendar: 'hijri', format: 'D M YYYY' })
+  .format(NDS.Date.getToday(), { calendar: 'hijri', format: 'D M YYYY' })
   .split(' ')
   .map(Number);
 </script>
@@ -314,9 +314,9 @@ The full API is in the banner of `_js/nds-date.js`.
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Date Picker](../components/date-picker): parses and writes the field's value with `NDS.Date`, and marks today with `today()`.
+- [Date Picker](../components/date-picker): parses and writes the field's value with `NDS.Date`, and marks today with `getToday()`.
 - [Top Bar](../ui-shell/topbar): the date and the clock follow `data-timezone`.
-- [Export](../components/export): the date in a file name is `today()`.
+- [Export](../components/export): the date in a file name is `getToday()`.
 - [Head](../ui-shell/head): the other attributes that go on `<html>`.
 
 </div>

@@ -56,7 +56,7 @@
     // The two lists would then interleave differently (all outer tabs sit in the
     // tablist; nested panels sit INSIDE an outer panel), desynchronizing the
     // tabs[i] ↔ panels[i] pairing every method here depends on.
-    const getOwnParts = (container, selector) => NDS.ownParts(container, selector, '.nds-tabs');
+    const getOwnParts = (container, selector) => NDS.findOwnParts(container, selector, '.nds-tabs');
 
     class NdsTabs {
         constructor(tabsContainer) {
@@ -164,7 +164,7 @@
 
             const currentIndex = this._tabs.indexOf(currentTab);
             const lastIndex = this._tabs.length - 1;
-            const isRtl = NDS.isRTL;
+            const isRtl = NDS.isRtl;
             const prev = () => currentIndex > 0 ? currentIndex - 1 : lastIndex;
             const next = () => currentIndex < lastIndex ? currentIndex + 1 : 0;
             let targetIndex = currentIndex;

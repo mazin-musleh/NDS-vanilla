@@ -185,7 +185,7 @@ for (const md of pages) {
                         await page.waitForTimeout(700 + delay);
                         const open = await page.evaluate(({ id, c }) => {
                             const box = document.getElementById(id).nextElementSibling.nextElementSibling.nextElementSibling;
-                            const menu = NDS.Dropmenu.menuOf(NDS.Dropmenu.from(box.querySelector('.nds-dropmenu-trigger')));
+                            const menu = NDS.Dropmenu.getMenu(NDS.Dropmenu.from(box.querySelector('.nds-dropmenu-trigger')));
                             if (!menu || menu.hidden) return null;
                             const m = menu.getBoundingClientRect(), pad = 16;
                             const x1 = Math.max(0, Math.min(c.x, m.left - pad)), y1 = Math.max(0, Math.min(c.y, m.top - pad));

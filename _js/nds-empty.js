@@ -36,7 +36,7 @@
   'use strict';
 
   // English defaults; the assets/i18n/{lang}.json pack overrides them.
-  const strings = NDS.i18n.strings('empty', {
+  const strings = NDS.i18n.getStrings('empty', {
     message: 'No content to show',
   });
   const PLACEHOLDER_ATTR = 'data-nds-empty-placeholder';
@@ -197,7 +197,7 @@
 
   // One-shot init guard. A re-run of init (e.g. NDS.init.initialize()) would
   // otherwise re-stack the four pool subscriptions below on every
-  // re-call — onDOMAdd / onChildrenChange / onAttrChange all push
+  // re-call — onDomAdd / onChildrenChange / onAttributeChange all push
   // unconditionally with no (selector, fn) dedup in core. The single init at
   // page load wires the subscribers; subsequent .nds-empty mutations are
   // already handled by those long-lived subscribers, so a re-call has nothing
@@ -209,12 +209,12 @@
       if (initDone) return;
       initDone = true;
       document.querySelectorAll('.nds-empty').forEach(evaluate);
-      NDS.onDOMAdd('.nds-empty', hits => hits.forEach(evaluate));
+      NDS.onDomAdd('.nds-empty', hits => hits.forEach(evaluate));
       NDS.onChildrenChange('.nds-empty', hits => hits.forEach(evaluate));
       NDS.onChildrenChange('table.nds-empty > tbody', hits => {
         hits.forEach(tb => evaluate(tb.parentElement));
       });
-      NDS.onAttrChange('.nds-empty', ['data-empty-message', 'data-empty-icon'], hits => {
+      NDS.onAttributeChange('.nds-empty', ['data-empty-message', 'data-empty-icon'], hits => {
         hits.forEach(container => { syncMessage(container); syncIcon(container); });
       });
     },

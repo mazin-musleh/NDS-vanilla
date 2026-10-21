@@ -59,7 +59,7 @@ async function open(variant, url, opts = {}) {
     }, DROP);
     const inits = [];
     if (opts.inits) {
-        await page.addInitScript(() => { window.NDSInitConfig = { enableLogging: true, enableTiming: true }; });
+        await page.addInitScript(() => { window.NDS_INIT_CONFIG = window.NDSInitConfig = { enableLogging: true, enableTiming: true }; }); // NDSInitConfig: a BASE before v2
         page.on('console', (m) => { const x = m.text().match(/^\[NDS:init\] (\S+) ([\d.]+)ms/); if (x) inits.push([x[1], +x[2]]); });
     }
     const s = await cdp(page);

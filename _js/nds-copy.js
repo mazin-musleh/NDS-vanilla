@@ -4,7 +4,7 @@
  *   .nds-copy:not([data-copy]):not([data-copy-target]) sits in .nds-code — with no text source it copies nothing
  * Methods:
  *   NDS.Copy.init()                     delegate clicks on .nds-copy
- *   NDS.Copy.bind(selector, opts)       delegate on your own selector; one listener per
+ *   NDS.Copy.addListeners(selector, opts)   delegate on your own selector; one listener per
  *                                       selector, so calling it again replaces the old one.
  *                                       opts {duration, onRestore}
  *   NDS.Copy.writeText(text)            → Promise<boolean>. Clipboard write only
@@ -31,7 +31,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('copy', {
+    const strings = NDS.i18n.getStrings('copy', {
         copied: 'Copied',
     });
 
@@ -172,7 +172,7 @@
 
     NDS.Copy = {
         init,
-        bind: addClickListener,
+        addListeners: addClickListener,
         writeText,
         flash,
         copyFrom

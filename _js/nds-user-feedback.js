@@ -70,7 +70,7 @@ NDS.UserFeedback = (() => {
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('user-feedback', {
+    const strings = NDS.i18n.getStrings('user-feedback', {
         success: 'Your feedback is submitted!',
         error: 'An error occurred, please try again',
     });

@@ -46,7 +46,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('taginput', {
+    const strings = NDS.i18n.getStrings('taginput', {
         added: 'Added {value}',
         removed: 'Removed {value}',
         editing: 'Editing {value}',
@@ -270,7 +270,7 @@
                 this._formControl.insertBefore(this._buildChip(value), this._input);
             });
             // New chips take the field's disabled.
-            NDS.state.apply(this._root, 'disabled');
+            NDS.state.refresh(this._root, 'disabled');
             this._syncHiddenInputs();
             // 'filled' is the field's public styling hook (multiselect parity)
             // — consumers style it; no in-repo reader by design.
@@ -340,7 +340,7 @@
     NDS.Taginput = {
         init: setupTagInputs,
         reinit: setupTagInputs,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-taginput') || el, opts, checkField),
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-taginput') || el, checkField, opts),
         // Construction fails (missing required elements, or the root is already
         // initialized) → null, never a dud instance whose every method throws.
         create: (element) => {

@@ -23,7 +23,7 @@
  *   NDS.Form.validate(el, opts)           validate everything → {valid, invalidFields, errors};
  *                                          el is the .nds-form or anything inside it — works on
  *                                          a non-<form> container too (see the Gotcha below)
- *   NDS.Form.validateField(el, opts, check)     one field by check, or its component's rule → {valid,
+ *   NDS.Form.validateField(el, check, opts)     one field by check, or its component's rule → {valid,
  *                                          message, …}, or null when none answers; opts {showMessage}
  *                                          (default on). Each component's validate(el) calls it
  *   NDS.Form.isNationalId(str) / .isIban(str)   the checksum rules behind .nds-national-id / .nds-iban
@@ -90,7 +90,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    var strings = NDS.i18n.strings('form', {
+    var strings = NDS.i18n.getStrings('form', {
         min_value:           'Minimum value is {n}',
         max_value:           'Maximum value is {n}',
         invalid_national_id: 'Invalid national ID number',
@@ -181,7 +181,7 @@
     }
 
     // nds-loading is the canon on every container, so the class spells loading too.
-    NDS.state.effect('loading', FORM_SCOPE, setLoading, 'nds-loading');
+    NDS.state.onToggle('loading', FORM_SCOPE, setLoading, { className: 'nds-loading' });
 
     // ==============================================
     // UTILITY FUNCTIONS
@@ -213,7 +213,7 @@
     }
 
     // A container's own field, never a nested container's (NDS.field).
-    var ownField = NDS.field.ownInput;
+    var ownField = NDS.field.findOwnInput;
 
     // Keep the field's aria-describedby pointing at its CURRENT message only: strip
     // our earlier tokens, keep the consumer's, append `id` when given.
@@ -270,7 +270,7 @@
                     // No slot: right after the field's control row, not the container's end,
                     // so a row the field carries below it (a search box's suggestions) stays below.
                     var position = 'append';
-                    var row = target === container && container.classList.contains('nds-form-container') && NDS.field.ownControl(container);
+                    var row = target === container && container.classList.contains('nds-form-container') && NDS.field.findOwnControl(container);
                     while (row && row.parentNode !== container) row = row.parentNode;
                     if (row) { target = row; position = 'after'; }
 
@@ -298,7 +298,7 @@
                     input.setAttribute('aria-invalid', status === 'error' ? 'true' : 'false');
                     // Name the reason, not just the state: point the field at its message.
                     if (feedback) {
-                        if (!feedback.id) feedback.id = NDS.uniqueId('nds-fb-');
+                        if (!feedback.id) feedback.id = NDS.getUniqueId('nds-fb-');
                         describeBy(input, feedback.id);
                     } else if (message === '') {
                         describeBy(input, null);
@@ -390,11 +390,11 @@
     function stampIdentifier(input) {
         var original = input.value, clean, ok, message;
         if (input.classList.contains('nds-national-id')) {
-            clean = NDS.latinDigits(original).replace(/\D/g, '');
+            clean = NDS.toLatinDigits(original).replace(/\D/g, '');
             ok = isNationalId(clean);
             message = strings.text('invalid_national_id');
         } else if (input.classList.contains('nds-iban')) {
-            clean = NDS.latinDigits(original).toUpperCase().replace(/[^A-Z0-9]/g, '');
+            clean = NDS.toLatinDigits(original).toUpperCase().replace(/[^A-Z0-9]/g, '');
             // Banking apps copy a Saudi IBAN without its SA: a value starting with a digit gets it back.
             if (/^\d/.test(clean)) clean = 'SA' + clean;
             ok = isIban(clean);
@@ -417,7 +417,7 @@
 
         // One field by its rule (or check, the component's own): the result each component's
         // validate() returns, its status shown when asked.
-        validateField: function(el, options, check) {
+        validateField: function(el, check, options) {
             options = options || { showMessage: true };
             var result = NDS.validation.check(el, check);
             if (!result) return null;
@@ -435,7 +435,7 @@
         validateForm: function(formElement, options) {
             options = options || { showMessages: true, focusFirst: true };
             var form = formElement.closest('.nds-form') || formElement;
-            var acc = NDS.validation.run(form, { extra: getRangeMessage });
+            var acc = NDS.validation.checkAll(form, { extra: getRangeMessage });
             // A field still waiting for its component: load what it waits for, so the next submit can pass.
             if (acc.pending) NDS.init.mount(form);
 
@@ -522,7 +522,7 @@
         if (!isInvalid && input.validationMessage) input.setCustomValidity('');
         if (!container) return;
         if (isInvalid) {
-            statusManager.set({ element: container, status: 'error', message: NDS.validation.message(input) });
+            statusManager.set({ element: container, status: 'error', message: NDS.validation.getMessage(input) });
         } else if (NDS.status.get(container) === 'error') {
             statusManager.clear(container);
         }
@@ -531,11 +531,11 @@
     // Digits: inputmode="numeric" takes Arabic digits as 0-9 and blocks the rest; .nds-phone keeps a
     // local number without its leading zero; .nds-national-id and .nds-iban stamp their checksum.
     NDS.field.addType('digits', {
-        init: function(input) { stampIdentifier(input); },
+        setupInput: function(input) { stampIdentifier(input); },
         on: {
             beforeinput: function(e, context) {
                 if (!context || context.input.getAttribute('inputmode') !== 'numeric' || !e.data) return;
-                var latin = NDS.latinDigits(e.data);
+                var latin = NDS.toLatinDigits(e.data);
                 if (latin === e.data && !/\D/.test(latin)) return;
                 e.preventDefault();
                 if (/\D/.test(latin)) return;
@@ -555,7 +555,7 @@
                 if (input.classList.contains('nds-phone')) {
                     var caret = input.selectionStart;
                     var original = input.value;
-                    var stripped = NDS.latinDigits(original).replace(/\D/g, '').replace(/^0+/, '');
+                    var stripped = NDS.toLatinDigits(original).replace(/\D/g, '').replace(/^0+/, '');
                     if (stripped !== original) {
                         var diff = original.length - stripped.length;
                         NDS.setValue(input, stripped, { change: false });
@@ -666,7 +666,7 @@
     };
     NDS.field.addType('password', {
         // Remember the original type: the toggle swaps it.
-        init: function(input) { if (input.type === 'password') input.dataset.type = 'password'; },
+        setupInput: function(input) { if (input.type === 'password') input.dataset.type = 'password'; },
         around: {
             click: function(e) {
                 var toggle = e.target.closest && e.target.closest('.nds-toggle-password');
@@ -739,7 +739,7 @@
     // Messages: typing drops a message, leaving the field checks it again once it shows an error,
     // and a reset clears every message. The clear button follows the value.
     NDS.field.addType('status', {
-        init: function(input, fc) { syncClear(input, fc); },
+        setupInput: function(input, fc) { syncClear(input, fc); },
         refresh: function(input, fc, opts) {
             syncClear(input, fc);
             if (opts.validate) validateInput(input, fc);
@@ -910,7 +910,7 @@
                 else container.removeAttribute('data-required');
                 // Propagate to inputs, skip radios (always in groups, validated at group level). A field whose
                 // value a component owns never stamps required.
-                if (!NDS.validation.owns(container)) container.querySelectorAll('input, textarea, select').forEach(function(input) {
+                if (!NDS.validation.isOwned(container)) container.querySelectorAll('input, textarea, select').forEach(function(input) {
                     if (input.type !== 'radio') input.required = add;
                 });
             } else {

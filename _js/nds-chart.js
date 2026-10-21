@@ -7,7 +7,7 @@
  *                                     element. Returns the instance. No opts: the data-chart-*
  *                                     its markup declares (null when it declares no series)
  *   NDS.Chart.destroy(elOrSel)        undo create()
- *   instance.update(newOpts)          MERGE new options in and re-render
+ *   instance.setOptions(newOpts)      MERGE new options in and re-render
  *   instance.render()                 redraw in place from the current options
  *   instance.destroy()                empty the element and release its observers
  * Events:
@@ -36,7 +36,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('chart', {
+    const strings = NDS.i18n.getStrings('chart', {
         chart: 'Chart',
         bar: 'Bar chart',
         line: 'Line chart',
@@ -186,7 +186,7 @@
 
         // ── Public API ─────────────────────────────────────────────
 
-        update(newOpts) {
+        setOptions(newOpts) {
             this._options = this._resolveOptions(mergeDeep(this._options, newOpts));
             this.render();
         }
@@ -249,7 +249,7 @@
         // observer's write phase, before paint: a frame late, the old drawing showed at the
         // new width (a metric chart flashed when its container query flipped).
         _setupResize() {
-            const renderLater = NDS.rafThrottle(() => this.render());
+            const renderLater = NDS.throttleToFrame(() => this.render());
             this._offResize = NDS.onElementResize(this._element, () => {
                 const width = this._element.clientWidth;
                 if (!width || width === this._lastW) return;
@@ -1066,13 +1066,13 @@
     // ── Public interface ───────────────────────────────────────────
 
     // Re-render every chart instance when document direction or lang changes.
-    // Lang switcher uses View Transitions; the shared NDS.onAttrChange dispatch fires
+    // Lang switcher uses View Transitions; the shared NDS.onAttributeChange dispatch fires
     // before the new snapshot is captured, so the new render is animated cleanly.
     let dirObserverReady = false;
     function setupDirObserver() {
         if (dirObserverReady) return;
         dirObserverReady = true;
-        NDS.onAttrChange('html', ['dir', 'lang'], () => {
+        NDS.onAttributeChange('html', ['dir', 'lang'], () => {
             document.querySelectorAll('.nds-chart[data-nds-chart-initialized]').forEach(el => {
                 if (el.ndsChart) el.ndsChart.render();
             });

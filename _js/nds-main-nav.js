@@ -107,7 +107,7 @@
     // syncMode then finds both in sync and takes its no-change PAB path.
     // Auto-init off (the loader reads the same switch): nothing changes before
     // initialize(), so a framework hydrates the markup it rendered.
-    const autoInit = (window.NDSInitConfig || {}).autoInitialize
+    const autoInit = (window.NDS_INIT_CONFIG || {}).autoInitialize
         ?? document.documentElement.getAttribute('data-nds-auto-init') !== 'false';
     if (autoInit && dom.nav && dom.collapse) {
         dom.nav.classList.toggle('nds-minimal', mqMinimal.matches);
@@ -464,7 +464,7 @@
                 syncOpenFlags();
                 dispatchNavEvent(element, 'opened');
                 onStart?.();
-                NDS.afterPaint(() => removeState(element, 'opening'));
+                NDS.onNextPaint(() => removeState(element, 'opening'));
                 runAfterDelay(duration, () => { addState(element, 'opened'); finish(); });
             } else {
                 addState(element, 'closing');
@@ -514,8 +514,8 @@
             // LTR, on the left in RTL.
             const innerW = window.innerWidth;
             const sb = innerW - document.documentElement.clientWidth;
-            const left = NDS.isRTL ? sb : 0;
-            const right = NDS.isRTL ? innerW : innerW - sb;
+            const left = NDS.isRtl ? sb : 0;
+            const right = NDS.isRtl ? innerW : innerW - sb;
 
             let shift = 0;
             if (rect.left < left + FIT_SHIFT_PAD) shift = (left + FIT_SHIFT_PAD) - rect.left;
@@ -800,7 +800,7 @@
                 });
                 dom.primary.scrollTo({ top: atEnd ? 0 : dom.primary.scrollTop + amount, behavior: getScrollBehavior() });
             } else {
-                const dir = NDS.isRTL ? -1 : 1;
+                const dir = NDS.isRtl ? -1 : 1;
                 dom.primary.scrollTo({ left: atEnd ? 0 : dom.primary.scrollLeft + amount * dir, behavior: getScrollBehavior() });
             }
             // Fallback for browsers without `scrollend` (the listener below
@@ -814,7 +814,7 @@
     }
 
     function addScrollTrackingListeners(signal) {
-        const onScroll = NDS.rafThrottle(() => {
+        const onScroll = NDS.throttleToFrame(() => {
             if (state.isMinimal && !hasState(dom.collapse, 'open')) return;
             overflow.checkEnd();
         });
@@ -853,7 +853,7 @@
     // ==============================================
     // EVENT HANDLERS
     // ==============================================
-    const scheduleUpdate = NDS.rafThrottle(() => {
+    const scheduleUpdate = NDS.throttleToFrame(() => {
         const modeChanged = syncMode();
 
         // A mode flip with something open: close the menus and the drawer, and drop
@@ -970,8 +970,8 @@
         offDomWatches.splice(0).forEach(off => off());
         const navChanged = NDS.debounce(() => { state._navChanged = true; scheduleUpdate(); }, 100);
         offDomWatches.push(
-            NDS.onDOMAdd('.nds-nav-item, .nds-has-menu', navChanged),
-            NDS.onDOMRemove('.nds-nav-item, .nds-has-menu', navChanged),
+            NDS.onDomAdd('.nds-nav-item, .nds-has-menu', navChanged),
+            NDS.onDomRemove('.nds-nav-item, .nds-has-menu', navChanged),
         );
 
         // Steady-state resize: coalesce storms before the recompute.
@@ -1042,10 +1042,10 @@
     // refresh call a page makes — most about a table or a card grid, nothing to do with the
     // nav — and re-wiring on each one would re-attach every listener and reset an open
     // drawer for nothing. Items added or removed INSIDE a live nav need no call at all: the
-    // onDOMAdd/onDOMRemove watchers already pick those up.
+    // onDomAdd/onDomRemove watchers already pick those up.
     //
     // Safe to call repeatedly. setupEventListeners aborts the previous batch, and the
-    // pooled onResize / onElementResize / onDOMAdd handles are all released before re-registering.
+    // pooled onResize / onElementResize / onDomAdd handles are all released before re-registering.
     function reinit() {
         const live = document.querySelector('.nds-main-nav');
         if (!live) return;

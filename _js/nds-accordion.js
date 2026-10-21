@@ -39,7 +39,7 @@
     // so a nested .nds-accordion is legal — and its buttons/collapses match the
     // same selectors. An unguarded walk claims them: the outer controller wires
     // and index-pairs nodes the nested controller already drives.
-    const findOwnParts = (container, selector) => NDS.ownParts(container, selector, '.nds-accordion');
+    const findOwnParts = (container, selector) => NDS.findOwnParts(container, selector, '.nds-accordion');
 
     class NdsAccordion {
         constructor(accordionContainer) {

@@ -37,7 +37,7 @@
   'use strict';
 
   // English defaults; the assets/i18n/{lang}.json pack overrides them.
-  const strings = NDS.i18n.strings('rating', {
+  const strings = NDS.i18n.getStrings('rating', {
     stars: { one: '{n} star', other: '{n} stars' },
     score: '{n} of {total}',
     rating_required: 'Please choose a rating',
@@ -176,7 +176,7 @@
 
     _handleKeyboard(e, value) {
       const index = value - 1;
-      const isRtl = NDS.isRTL;
+      const isRtl = NDS.isRtl;
       const last = this._stars.length - 1;
 
       switch(e.key) {
@@ -292,13 +292,13 @@
   NDS.Rating = {
     init: setupRatings,
     reinit: setupRatings,
-    validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-form-group') || el, opts, checkField),
+    validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-form-group') || el, checkField, opts),
     create,
     destroy: (element) => element?.ndsRating?.destroy(),
     enable: enableRating,
   };
 
-  NDS.onDOMAdd('.nds-rating', (nodes) => nodes.forEach(create));
+  NDS.onDomAdd('.nds-rating', (nodes) => nodes.forEach(create));
 
-  NDS.onDOMRemove('.nds-rating', (nodes) => nodes.forEach((el) => el.ndsRating?.destroy()));
+  NDS.onDomRemove('.nds-rating', (nodes) => nodes.forEach((el) => el.ndsRating?.destroy()));
 })();

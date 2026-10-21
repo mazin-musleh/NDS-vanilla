@@ -131,7 +131,7 @@
         const positionKey = isVertical ? 'top' : 'left';
         const position = isVertical ? content.scrollTop : content.scrollLeft;
         const size = isVertical ? content.clientHeight : content.clientWidth;
-        const sign = !isVertical && NDS.isRTL ? -1 : 1;
+        const sign = !isVertical && NDS.isRtl ? -1 : 1;
 
         // Step = viewport minus one item AND the mask fade distance, so the anchor
         // item lands in the fully-opaque zone rather than under the fade.
@@ -188,7 +188,7 @@
         setup.abortController = new AbortController();
         const { signal } = setup.abortController;
 
-        content.addEventListener('scroll', NDS.rafThrottle(() => checkScrollPosition(wrapper)), { passive: true, signal });
+        content.addEventListener('scroll', NDS.throttleToFrame(() => checkScrollPosition(wrapper)), { passive: true, signal });
 
         if (btn) {
             btn.addEventListener('click', () => scrollStep(wrapper), { signal });

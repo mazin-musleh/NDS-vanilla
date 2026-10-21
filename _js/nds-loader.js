@@ -10,7 +10,7 @@
  *                              + optional refresh(root) — owner hook for NDS.init.refresh;
  *                              + optional destroy(root) / destroyEach / destroySelector —
  *                              NDS.init.destroy hooks for components with no element backref;
- *                              + optional rule — its field has a validity rule NDS.init.pending
+ *                              + optional rule — its field has a validity rule NDS.init.isPending
  *                              waits for: true, its instance (el.nds{Name}); 'loaded', its bundle;
  *                              + optional owns — the field's value lives in the component, not its
  *                              input: no required stamp and no native check, before its bundle too)
@@ -23,8 +23,8 @@
  *                              needs, then init them against it → Promise
  *   NDS.init.destroy(el)       tear down every instance inside el before it leaves the page.
  *                              Returns how many instances it destroyed
- *   NDS.init.owns(el)          el is a field whose value an owns entry keeps (see the registry)
- *   NDS.init.pending(el)       true while el holds a field whose rule has not started: its
+ *   NDS.init.isOwned(el)       el is a field whose value an owns entry keeps (see the registry)
+ *   NDS.init.isPending(el)     true while el holds a field whose rule has not started: its
  *                              bundle on the way, or its instance not built yet. A bundle that
  *                              failed to load is not pending, so it never blocks for good
  *   NDS.init.ready             Promise: every component found at load has started, late
@@ -33,7 +33,7 @@
  * Events:
  *   (none)
  * Hooks (window globals — set these BEFORE the bundle loads):
- *   window.NDSInitConfig   {autoInitialize, disableAll, enableLogging, enableTiming, initBudgetMs}
+ *   window.NDS_INIT_CONFIG   {autoInitialize, disableAll, enableLogging, enableTiming, initBudgetMs}
  *   window.NDS_ASSETS_PATH the assets/ folder; the injected bundles load from its js/
  *   window.__NDS_BUNDLES   the build-generated bundle manifest — never hand-write it
  *   written by the loader: data-nds-loaded on <html> — the reveal stamp, set once the
@@ -250,7 +250,7 @@
             },
             // A page with <html data-cookies="false"> (a kiosk, a TV) skips the bundle until a toggle press.
             eager: () => document.documentElement.getAttribute('data-cookies') !== 'false'
-                && !NDS.consent.get() && !NDS.cookie.get('cookieConsentDismissed'),
+                && !NDS.consent.get() && !NDS.cookie.get('nds-cookies-dismissed'),
         },
         {
             // Deferred: stars paint from markup; nothing else reads NDS.Rating.
@@ -612,7 +612,7 @@
             if (!size || !picker.querySelector(`.nds-dropmenu-item[data-value="${CSS.escape(size)}"]`)) return;
             picker.setAttribute('data-select-value', size);
             const ref = picker.getAttribute('data-per-page-target');
-            const content = ref && NDS.resolveEl(ref);
+            const content = ref && NDS.resolveElement(ref);
             if (content && !content.hasAttribute('data-paged-initialized')) content.style.setProperty('--per-page', size);
         });
     }
@@ -628,7 +628,7 @@
             const parsed = parseInt(raw, 10);
             const perPage = parsed > 0 ? parsed : 6;
             // Pagination's own item set: a tbody counts its own rows only (sub-rows ride their parent).
-            const items = NDS.ownItems(container, container.querySelectorAll('.nds-page-item'));
+            const items = NDS.findOwnItems(container, container.querySelectorAll('.nds-page-item'));
             for (let i = perPage; i < items.length; i++) items[i].hidden = true;
             container.setAttribute('data-paged-split', '');
         });
@@ -699,7 +699,7 @@
                     // One page: init keeps the nav hidden, so its reserve goes now.
                     swiper.toggleAttribute('data-swiper-single', pages <= 1);
                     swiper.setAttribute('data-swiper-preset', '');
-                    if (pages > 1 && NDS.isRTL) tracks.push(wrapper);
+                    if (pages > 1 && NDS.isRtl) tracks.push(wrapper);
                 });
                 return tracks;
             };
@@ -857,11 +857,11 @@
         else window.addEventListener('load', run, { once: true });
     }
 
-    // window.NDSInitConfig wins over the <html> data-attributes.
+    // window.NDS_INIT_CONFIG wins over the <html> data-attributes.
     const rootEl = document.documentElement;
     const attrAutoInit = rootEl.getAttribute('data-nds-auto-init');
     const attrDisableAll = rootEl.getAttribute('data-nds-disable-all');
-    const initConfig = window.NDSInitConfig || {};
+    const initConfig = window.NDS_INIT_CONFIG || {};
 
     const config = {
         // Below ~40 keeps clear of TBT's 50ms long-task threshold on throttled CPUs.
@@ -876,7 +876,7 @@
 
     // Does el hold a field whose rule has not started? Only flagged entries count, so a
     // Tooltip or Copy inside a field never blocks it; a lazy component is never flagged.
-    function hasPending(el) {
+    function isPending(el) {
         const root = el || document;
         return components.some((component) => {
             if (!component.rule || component.lazy) return false;
@@ -1015,8 +1015,8 @@
         refresh: syncContainer,
         mount: mountContainer,
         destroy: destroyContainer,
-        owns: (el) => components.some((component) => component.owns && el.matches(component.selector)),
-        pending: hasPending,
+        isOwned: (el) => components.some((component) => component.owns && el.matches(component.selector)),
+        isPending,
         ready,
     };
 

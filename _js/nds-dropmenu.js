@@ -9,11 +9,11 @@
  *   NDS.Dropmenu.validate(el, opts)  a select-mode picker's check → {valid, message, value}; opts {showMessage}
  *   NDS.Dropmenu.destroy(el)             tear one down before you discard its wrapper; undoes what opts wrote
  *   NDS.Dropmenu.from(el)                the wrapper that owns any element inside it
- *   NDS.Dropmenu.menuOf(dropmenu)        the wrapper's menu
+ *   NDS.Dropmenu.getMenu(dropmenu)       the wrapper's menu
  *   instance.open() / .close() / .toggle(event?)   a click event anchors the menu under the
  *                                        pointer when the wrapper has data-anchor-cursor
- *   instance.applyPosition()             place the open menu again
- *   instance.applySelection(item)        pick an item in a select-mode picker
+ *   instance.syncPosition()             place the open menu again
+ *   instance.setSelection(item)        pick an item in a select-mode picker
  *   instance.isOpen / .trigger / .dropmenu   read-only state; dropmenu is the wrapper
  * Events (bubble from the .nds-dropmenu wrapper):
  *   nds:dropmenu:prepare   detail {dropmenu, trigger, menu, isOpen, waitUntil(promise)} — before lazy content builds
@@ -55,7 +55,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('dropmenu', {
+    const strings = NDS.i18n.getStrings('dropmenu', {
         search: 'Search items',
         search_placeholder: 'Search…',
         clear_search: 'Clear search',
@@ -126,7 +126,7 @@
 
         /** Every own element matching `selector`, in DOM order. */
         _getOwnItems(selector = '.nds-dropmenu-item') {
-            return NDS.ownParts(this._menu, selector, '.nds-dropmenu-menu');
+            return NDS.findOwnParts(this._menu, selector, '.nds-dropmenu-menu');
         }
 
         /** First own element matching `selector`, or null. */
@@ -442,11 +442,11 @@
                 if (builtHidden) hidden.remove();
                 if (triggerLabel) triggerLabel.textContent = startLabel;
             };
-            if (initialItem) this.applySelection(initialItem, { silent: true });
+            if (initialItem) this.setSelection(initialItem, { silent: true });
             // A form reset never touches a hidden input or a label: go back to the first pick.
             hidden.form?.addEventListener('reset', (e) => setTimeout(() => {
                 if (e.defaultPrevented) return;
-                if (initialItem) { this.applySelection(initialItem, { silent: true }); return; }
+                if (initialItem) { this.setSelection(initialItem, { silent: true }); return; }
                 hidden.value = '';
                 this._getOwnItems().forEach((entry) => NDS.state.clear(entry));
                 if (triggerLabel) triggerLabel.textContent = startLabel;
@@ -460,11 +460,11 @@
                 // CHILD's value lands in THIS picker's hidden input, trigger
                 // label and nds:dropmenu:select payload.
                 if (!this._isOwnItem(item)) return;
-                if (item.hasAttribute('data-value')) this.applySelection(item);
+                if (item.hasAttribute('data-value')) this.setSelection(item);
             }, { signal });
         }
 
-        applySelection(item, opts = {}) {
+        setSelection(item, opts = {}) {
             const value = item.getAttribute('data-value') || '';
             if (this._selectHidden && opts.silent) this._selectHidden.value = value;
 
@@ -783,7 +783,7 @@
             // _unsubResize, stranding the pooled subscribers the first one
             // registered (close() only releases the last pair). Reachable via
             // _handleTriggerKeydown, which calls open() unconditionally on
-            // Arrow keys. Reposition with applyPosition(), not a re-open.
+            // Arrow keys. Reposition with syncPosition(), not a re-open.
             if (this.isOpen) return;
             // Delayed-first-open mode (opt-in via data-delay="<ms>"). The first
             // open shows a loading state on the trigger, waits <ms>, emits nds:dropmenu:prepare
@@ -850,7 +850,7 @@
 
             this._stampItemRoles();
             this._menu.removeAttribute('hidden');
-            NDS.topLayer(this._menu, true);
+            NDS.setTopLayer(this._menu, true);
 
             addState(this.dropmenu, 'open', 'opening');
             addState(this._menu,     'open', 'opening');
@@ -858,12 +858,12 @@
             NDS.aria.expanded(this.trigger, true);
             NDS.aria.hidden(this._menu, false);
 
-            this.applyPosition();
+            this.syncPosition();
 
             // Absolute in the top layer: page scroll carries the menu with no JS. Only a
             // scroll box around the trigger moves one without the other. rAF-throttled.
             // Without popover the menu is fixed, so page scroll moves it too.
-            const reposition = NDS.rafThrottle(() => this._trackPosition());
+            const reposition = NDS.throttleToFrame(() => this._trackPosition());
             const fixed = !this._menu.showPopover;
             const handleScroll = (e) => { if (e.target === document ? fixed : e.target.contains?.(this.trigger)) reposition(); };
             const { signal } = this.documentAbortController;   // close() aborts it with the other document listeners
@@ -880,15 +880,15 @@
             // Resize-reposition (not close) — mobile browsers fire resize as
             // the address bar shows/hides during scroll, which would close
             // the menu mid-interaction otherwise. NDS.onResize is debounced
-            // 150ms so the heavy applyPosition only runs once resize settles.
+            // 150ms so the heavy syncPosition only runs once resize settles.
             // The visual viewport also resizes for the on-screen keyboard and a pinch zoom,
             // which fire no window resize; the page-wide bus stays off them.
             const vv = window.visualViewport;
             if (vv) {
-                const handleViewportResize = NDS.debounce(() => this.applyPosition(), 150);
+                const handleViewportResize = NDS.debounce(() => this.syncPosition(), 150);
                 vv.addEventListener('resize', handleViewportResize, { signal });
                 this._unsubResize = handleViewportResize.cancel;
-            } else this._unsubResize = NDS.onResize(() => this.applyPosition());
+            } else this._unsubResize = NDS.onResize(() => this.syncPosition());
             // Keep scroll momentum off the page (its scroll closes the menu), but only while
             // the list scrolls: on a list that fits, `contain` swallows the page's wheel.
             // Watched while open, since search, results and populate change its length.
@@ -960,7 +960,7 @@
             const scroll = this._findOwnItem('.nds-dropmenu-scroll');
             if (scroll) scroll.style.maxHeight = '';
             NDS.aria.hidden(this._menu, true);
-            NDS.topLayer(this._menu, false);
+            NDS.setTopLayer(this._menu, false);
             // Restore the intrinsic [hidden] state so the menu can't
             // flash on the next paint if it re-enters the viewport.
             this._menu.setAttribute('hidden', '');
@@ -978,10 +978,10 @@
          * horizontal prefers trigger-edge alignment (RTL-aware) then clamps
          * to the viewport.
          */
-        applyPosition() {
+        syncPosition() {
             const gap = 4, pad = 8;
             // Kept for the scroll follower: a read there, after its own writes, would force a style pass.
-            const edge = this._edge = NDS.viewportPadding(this._menu);
+            const edge = this._edge = NDS.getViewportPadding(this._menu);
 
             // Own scroll region only — a bare querySelector would grab a
             // NESTED dropmenu's scroll (the date-picker calendar contains
@@ -1093,11 +1093,11 @@
         }
 
         /**
-         * Horizontal placement in viewport coords, shared by applyPosition()
+         * Horizontal placement in viewport coords, shared by syncPosition()
          * and _trackPosition() so an open menu can't re-place itself by a
          * different rule on the first scroll frame than the one that opened
          * it (the cursor anchor and the edge-flip used to live only in
-         * applyPosition, so a tracked menu jumped on first scroll).
+         * syncPosition, so a tracked menu jumped on first scroll).
          *
          * Default anchors the menu on click x (so wide triggers open near
          * where the user clicked), falling back to trigger center for
@@ -1112,10 +1112,10 @@
          * clamped inside the trigger's horizontal bounds so they never
          * overshoot its edges. Then clamp to the viewport.
          *
-         * `box` (NDS.visibleBox) is a parameter so a caller that already read
+         * `box` (NDS.getVisibleBox) is a parameter so a caller that already read
          * it can avoid forcing a second layout.
          */
-        _getLeft(triggerRect, menuWidth, box = NDS.visibleBox(), pad = NDS.viewportPadding(this._menu)) {
+        _getLeft(triggerRect, menuWidth, box = NDS.getVisibleBox(), pad = NDS.getViewportPadding(this._menu)) {
             const anchor = this.dropmenu.getAttribute('data-anchor');
             const min = box.left + pad, max = box.right - pad;
             let left;
@@ -1138,7 +1138,7 @@
         }
 
         // Placement while a scroll box around the trigger scrolls. Reuses the
-        // flip direction cached by applyPosition() and only re-reads the
+        // flip direction cached by syncPosition() and only re-reads the
         // trigger rect + menu size, so each frame is a single read + write
         // pair. Critically: no vertical viewport clamp — letting the menu
         // follow the trigger off-screen is what "tracking" means; clamping
@@ -1264,7 +1264,7 @@
     // trigger, menu, select mode's hidden input, and the scan before an instance exists.
     // Everything scoped to the MENU uses the menu-boundary readers (_getOwnItems / _findOwnItem).
     function findOwnFirstIn(root, selector) {
-        return NDS.ownParts(root, selector, '.nds-dropmenu')[0] || null;
+        return NDS.findOwnParts(root, selector, '.nds-dropmenu')[0] || null;
     }
 
     function findOwnMenuTemplate(wrapper) {
@@ -1346,7 +1346,7 @@
     NDS.Dropmenu = {
         init: setupDropmenus,
         reinit: setupDropmenus,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-dropmenu') || el, opts, checkField),
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-dropmenu') || el, checkField, opts),
         create: (element, opts) => {
             if (!element) return null;
             if (element.ndsDropmenu) return element.ndsDropmenu;
@@ -1366,6 +1366,6 @@
         destroy: (element) => element?.ndsDropmenu?.destroy(),
         from: (el) => el?.closest('.nds-dropmenu') || null,
         // First match is the wrapper's own menu: a nested one sits inside it.
-        menuOf: (dropmenu) => dropmenu?.querySelector('.nds-dropmenu-menu') || null,
+        getMenu: (dropmenu) => dropmenu?.querySelector('.nds-dropmenu-menu') || null,
     };
 })();

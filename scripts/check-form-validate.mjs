@@ -58,7 +58,7 @@ async function probe() {
         form.querySelectorAll('.nds-rating').forEach((r) => r.ndsRating?.setValue(3));
         form.querySelectorAll('.nds-otp-container input').forEach((i) => NDS.setValue(i, '1'));
         form.querySelectorAll('.nds-upload').forEach((u) => u.ndsUpload?.addFile(new File(['x'], 'a.pdf', { type: 'application/pdf' })));
-        form.querySelectorAll('.nds-dropmenu[data-select-name]').forEach((d) => { const it = d.querySelector('.nds-dropmenu-item[data-value]'); if (it) d.ndsDropmenu?.applySelection(it); });
+        form.querySelectorAll('.nds-dropmenu[data-select-name]').forEach((d) => { const it = d.querySelector('.nds-dropmenu-item[data-value]'); if (it) { const menu = d.ndsDropmenu; (menu?.setSelection || menu?.applySelection)?.call(menu, it); } }); // applySelection before v2's rename: BASE may be older
     }
     const out = {};
     for (const s of document.querySelectorAll('script[data-canon]:not([data-lang])')) {

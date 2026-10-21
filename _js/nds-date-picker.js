@@ -76,7 +76,7 @@
     }
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    var strings = NDS.i18n.strings('date-picker', {
+    var strings = NDS.i18n.getStrings('date-picker', {
         select_month: 'Select month',
         select_year: 'Select year',
         prev_month: 'Previous month',
@@ -113,7 +113,7 @@
     // Today moved by n days, months or years, counted in the field's calendar. A day past the
     // target month's end becomes its last day: 31 March minus 1m is the last day of February.
     function shiftToday(amount, unit, hijri) {
-        var today = NDS.Date.today();
+        var today = NDS.Date.getToday();
         if (unit === 'd') return new Date(today.getFullYear(), today.getMonth(), today.getDate() + amount);
         var parts = hijri ? toHijri(today) : { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
         var totalMonths = parts.year * 12 + parts.month - 1 + (unit === 'y' ? amount * 12 : amount);
@@ -304,7 +304,7 @@
 
         // Adopt NDS.Dropmenu for the calendar's open/close/escape/outside-click
         // lifecycle. The form-control becomes the dropmenu wrapper and the
-        // dropdown becomes the dropmenu menu, placed by the dropmenu's own applyPosition.
+        // dropdown becomes the dropmenu menu, placed by the dropmenu's own syncPosition.
         setupDropmenu: function () {
             var self = this;
             var formControl = this.elements.formControl;
@@ -504,7 +504,7 @@
                 this.elements.container.setAttribute('data-picker-mode', mode);
             }
             return {
-                currentDate: NDS.Date.today(),
+                currentDate: NDS.Date.getToday(),
                 selectedDate: null,
                 rangeStart: null,
                 rangeEnd: null,
@@ -635,7 +635,7 @@
             }
 
             // Check hijri class dynamically each time
-            return NDS.Date.calendarFor(this.elements.container) === 'hijri' ? 'hijri' : 'gregorian';
+            return NDS.Date.getCalendar(this.elements.container) === 'hijri' ? 'hijri' : 'gregorian';
         },
 
         detectCalendarTypeFromValue: function (inputValue, format) {
@@ -702,16 +702,16 @@
         },
 
         getMonthNames: function (lang) {
-            return NDS.Date.monthNames(this.state.calendarType, lang);
+            return NDS.Date.getMonthNames(this.state.calendarType, lang);
         },
 
         isTodayDate: function (date) {
             // Per-render hoist: generateCalendarDates stamps _renderToday once per grid.
-            return this.isSameDay(date, this._renderToday || NDS.Date.today());
+            return this.isSameDay(date, this._renderToday || NDS.Date.getToday());
         },
 
         getTodaysHijriDate: function () {
-            return toHijri(NDS.Date.today());
+            return toHijri(NDS.Date.getToday());
         },
 
         initializeCalendar: function () {
@@ -934,11 +934,11 @@
                     e.preventDefault();
                     // RTL flips left/right semantics so the focus moves with
                     // the day order on screen.
-                    this.focusDayCell(btn, NDS.isRTL ? 1 : -1);
+                    this.focusDayCell(btn, NDS.isRtl ? 1 : -1);
                     break;
                 case 'ArrowRight':
                     e.preventDefault();
-                    this.focusDayCell(btn, NDS.isRTL ? -1 : 1);
+                    this.focusDayCell(btn, NDS.isRtl ? -1 : 1);
                     break;
                 case 'ArrowUp':
                     e.preventDefault();
@@ -1063,10 +1063,10 @@
                 this.elements.monthDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderMonthOptions();
                     self.scrollToSelected(self.elements.monthDropdownMenu, '.nds-month-option');
-                    // Re-measure after content is appended — applyPosition
+                    // Re-measure after content is appended — syncPosition
                     // ran with an empty menu (width 0), so the inline width
                     // it wrote is wrong until we re-trigger positioning.
-                    self.monthDropmenuInstance.applyPosition();
+                    self.monthDropmenuInstance.syncPosition();
                 }, { signal: this.instanceAbortController.signal });
             }
 
@@ -1075,7 +1075,7 @@
                 this.elements.yearDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderYearOptions();
                     self.scrollToSelected(self.elements.yearDropdownMenu, '.nds-year-option');
-                    self.yearDropmenuInstance.applyPosition();
+                    self.yearDropmenuInstance.syncPosition();
                 }, { signal: this.instanceAbortController.signal });
             }
         },
@@ -1177,7 +1177,7 @@
 
             weekdaysContainer.innerHTML = '';
 
-            var weekdayNames = NDS.Date.weekdayNames(this.getLanguage());
+            var weekdayNames = NDS.Date.getWeekdayNames(this.getLanguage());
 
             weekdayNames.forEach(function (name) {
                 var weekdayElement = document.createElement('div');
@@ -1250,7 +1250,7 @@
          */
         _reposition: function () {
             if (this.dropmenuInstance && this.dropmenuInstance.isOpen) {
-                this.dropmenuInstance.applyPosition();
+                this.dropmenuInstance.syncPosition();
             }
         },
 
@@ -1272,7 +1272,7 @@
                 todaysMonth = todaysHijri.month;
                 todaysYear = todaysHijri.year;
             } else {
-                var todayNow = NDS.Date.today();
+                var todayNow = NDS.Date.getToday();
                 todaysMonth = todayNow.getMonth();
                 todaysYear = todayNow.getFullYear();
             }
@@ -1330,7 +1330,7 @@
             if (this.state.selectedDate) {
                 selectedYear = isHijri ? hijriParts.get(this.state.selectedDate)?.year : this.state.selectedDate.getFullYear();
             }
-            var todaysYear = isHijri ? this.getTodaysHijriDate().year : NDS.Date.today().getFullYear();
+            var todaysYear = isHijri ? this.getTodaysHijriDate().year : NDS.Date.getToday().getFullYear();
 
             for (var year = startYear; year <= endYear; year++) {
                 var btn = document.createElement('button');
@@ -1415,7 +1415,7 @@
         // aren't present (year mode hides them).
         updateNavArrows: function () {
             if (this.elements.todayBtn) {
-                this.elements.todayBtn.disabled = !this.isDateAllowed(NDS.Date.today());
+                this.elements.todayBtn.disabled = !this.isDateAllowed(NDS.Date.getToday());
             }
             if (!this.elements.prevBtn || !this.elements.nextBtn) return;
             var range = this.getYearRange();
@@ -1438,7 +1438,7 @@
 
         // 42 days from the month's first day; a Hijri cell reads its own day.
         generateCalendarDates: function (calendarData) {
-            this._renderToday = NDS.Date.today();
+            this._renderToday = NDS.Date.getToday();
             var first = calendarData.firstDay;
             var isHijri = this.state.calendarType === 'hijri';
             for (var i = -calendarData.startOffset; i < 42 - calendarData.startOffset; i++) {
@@ -1603,7 +1603,7 @@
         },
 
         selectToday: function () {
-            var today = NDS.Date.today();
+            var today = NDS.Date.getToday();
             var isHijri = this.state.calendarType === 'hijri';
             if (isHijri) {
                 var hijriDate = toHijri(today);
@@ -1780,7 +1780,7 @@
             var isHijri = this.state.calendarType === 'hijri';
             var todayYear = isHijri
                 ? this.getTodaysHijriDate().year
-                : NDS.Date.today().getFullYear();
+                : NDS.Date.getToday().getFullYear();
             var start = todayYear - yearRangeBefore;
             var end = todayYear + yearRangeAfter;
 
@@ -1871,7 +1871,7 @@
         setupLanguageObserver: function () {
             if (this._offLangChange) this._offLangChange();
             var self = this;
-            this._offLangChange = NDS.onAttrChange('html', ['lang'], function () {
+            this._offLangChange = NDS.onAttributeChange('html', ['lang'], function () {
                 if (self.state.isInitialized) {
                     self.renderWeekdays();
                     self.renderButtonLabels();
@@ -1974,7 +1974,7 @@
         if (boundsWatched) return;
         boundsWatched = true;
         // A new bound re-checks the value silently (submit shows the error) and redraws an open calendar.
-        NDS.onAttrChange('.nds-date-input', ['data-min-date', 'data-max-date'], (inputs) => inputs.forEach((input) => {
+        NDS.onAttributeChange('.nds-date-input', ['data-min-date', 'data-max-date'], (inputs) => inputs.forEach((input) => {
             var instance = input.ndsDatePicker;
             if (!instance) return;
             instance._readBounds();

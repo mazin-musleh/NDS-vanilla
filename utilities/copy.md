@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 05:55 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="copy-overview" class="nds-content-section nds-doc-overview">
@@ -219,7 +219,7 @@ The script reads these attributes on `.nds-copy` and on the elements that match 
 | Method | Effect |
 |---|---|
 | `NDS.Copy.init()` | Listens for clicks on every `.nds-copy`. The loader calls it |
-| `NDS.Copy.bind(selector, options)` | Listens for clicks on your own selector, including elements added later. A second call with the same selector replaces the first. Add `nds-btn` to the elements for the success color |
+| `NDS.Copy.addListeners(selector, options)` | Listens for clicks on your own selector, including elements added later. A second call with the same selector replaces the first. Add `nds-btn` to the elements for the success color |
 | `NDS.Copy.writeText(text)` | Writes the text to the clipboard. Returns a promise of `true` or `false`. Empty text returns `false` |
 | `NDS.Copy.flash(button, options)` | Shows the checkmark, the label swap and the announcement, with no copy. A call during a flash does nothing. It does not call `onRestore` |
 | `NDS.Copy.copyFrom(button, options)` | Finds the button's text, copies it, and shows the checkmark. Returns a promise of `true` or `false` |

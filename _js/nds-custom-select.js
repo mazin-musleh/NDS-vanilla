@@ -266,7 +266,7 @@
     }
 
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
-    var strings = NDS.i18n.strings('custom-select', { select_option: 'Please select an option' });
+    var strings = NDS.i18n.getStrings('custom-select', { select_option: 'Please select an option' });
     // The readonly display input is barred from constraint validation: required reads the carrier.
     function checkField(container) {
         var carrier = container.querySelector('.nds-select-value');
@@ -274,7 +274,7 @@
         return { valid: valid, message: valid ? '' : strings.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
     }
     // The readonly display input opens the menu: it still takes the active and focus states.
-    NDS.field.addType('custom-select', { readonlyActive: function (input) { return input.classList.contains('nds-select-input'); } });
+    NDS.field.addType('custom-select', { isReadonlyActive: function (input) { return input.classList.contains('nds-select-input'); } });
 
     // Keyed on the carrier: a native <select> shares the .nds-select shell and stays with the native pass.
     // Re-checked on the carrier's change: a pick writes it and dispatches input and change.
@@ -285,7 +285,7 @@
     NDS.CustomSelect = {
         init: init,
         reinit: init,
-        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-select') || el, opts, checkField); },
+        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-select') || el, checkField, opts); },
         // Programmatic build for a select input (or its form-control).
         create: function (el) {
             if (!el) return;

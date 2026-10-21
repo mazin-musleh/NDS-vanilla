@@ -34,7 +34,7 @@
 
     // Slide-in only: clear the visible header and fit the list below it
     const syncDrawerMaxHeight = (accMenu, drawer) => {
-        const visibleHeader = NDS.stickyHeaderBottom();
+        const visibleHeader = NDS.getStickyHeaderBottom();
 
         accMenu.style.paddingTop = (visibleHeader > 0 ? visibleHeader + 8 : 0) + 'px';
         drawer.style.setProperty('--drawer-max-height', Math.max(window.innerHeight - visibleHeader - 16, 100) + 'px');
@@ -150,7 +150,7 @@
             return cachedRect;
         };
 
-        const mousemoveHandler = NDS.rafThrottle((e) => {
+        const mousemoveHandler = NDS.throttleToFrame((e) => {
             const rect = getRect();
             const cx = rect.left + rect.width / 2;
             const cy = rect.top + rect.height / 2;
@@ -223,7 +223,7 @@
         toggleBtn.removeAttribute('hidden');
         syncToggleLabel(accMenu, toggleBtn, isTopMode);
         // The label follows an active mark a client-side route moves.
-        const offLabel = NDS.onAttrChange('.nds-sidemenu li', ['data-state'], () => syncToggleLabel(accMenu, toggleBtn, isTopMode));
+        const offLabel = NDS.onAttributeChange('.nds-sidemenu li', ['data-state'], () => syncToggleLabel(accMenu, toggleBtn, isTopMode));
         abortController.signal.addEventListener('abort', offLabel);
         setupScrollPeek(toggleBtn, abortController);
 

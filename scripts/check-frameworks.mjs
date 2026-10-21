@@ -82,7 +82,7 @@ async function open(libs) {
 // The same assertions for every host: `p` is the id prefix, `unmount`/`remount` drive the framework.
 async function lifecycle(page, name, p, unmount, remount) {
     const menuOpen = () => page.evaluate((p) => {
-        const menu = NDS.Dropmenu.menuOf(document.getElementById(p + '-dm'));
+        const menu = NDS.Dropmenu.getMenu(document.getElementById(p + '-dm'));
         return !!menu && !menu.hidden && menu.matches(':popover-open');
     }, p);
     const trigger = page.locator(`#${p}-dm .nds-dropmenu-trigger`);
@@ -346,7 +346,7 @@ async function hydrationRun(name, serverHtml, hydrate, manual) {
     const works = await page.evaluate(async () => {
         document.querySelector('#ssr-root .nds-dropmenu-trigger').click();
         await new Promise((r) => setTimeout(r, 350));
-        const menu = NDS.Dropmenu.menuOf(document.querySelector('#ssr-root .nds-dropmenu'));
+        const menu = NDS.Dropmenu.getMenu(document.querySelector('#ssr-root .nds-dropmenu'));
         return !!menu && !menu.hidden;
     });
     await page.close();
@@ -648,7 +648,7 @@ const IDIOMORPH = 'idiomorph@0.7.3/dist/idiomorph.min.js';
         dm.addEventListener('nds:dropmenu:select', (e) => picks.push(e.detail.value));
         dm.querySelector('.nds-dropmenu-trigger').click();
         await window.__wait();
-        const menu = NDS.Dropmenu.menuOf(dm);
+        const menu = NDS.Dropmenu.getMenu(dm);
         const opened = !!menu && !menu.hidden;
         menu?.querySelector('[data-value="AE"]')?.click();
         await window.__wait();
@@ -843,7 +843,7 @@ for (const v of REACT) {
     await page.evaluate(() => window.__wait());
     const moved = await page.evaluate(() => ({
         node: document.getElementById('mv-node')?.parentElement === document.body,
-        menu: !!NDS.Dropmenu.menuOf(document.getElementById('mv-dm'))?.matches(':popover-open')
+        menu: !!NDS.Dropmenu.getMenu(document.getElementById('mv-dm'))?.matches(':popover-open')
     }));
     ok(`${R} moved nodes: setup, the node sits in <body>, the menu in the top layer`, moved.node && moved.menu, JSON.stringify(moved));
 
@@ -853,7 +853,7 @@ for (const v of REACT) {
         siblings: !!document.getElementById('mv-before') && !!document.getElementById('mv-dm-before'),
         // React's sibling lands where the moved node was: right before its marker.
         order: document.getElementById('mv-before')?.nextSibling?.nodeType === 8,
-        menuOpen: !NDS.Dropmenu.menuOf(document.getElementById('mv-dm'))?.hidden
+        menuOpen: !NDS.Dropmenu.getMenu(document.getElementById('mv-dm'))?.hidden
     }));
     ok(`${R} moved nodes: a sibling React adds before them renders, where they were`, s.siblings && s.order && s.menuOpen
         && errors.length === before, JSON.stringify({ ...s, thrown: errors.slice(before) }));
@@ -983,8 +983,8 @@ for (const v of REACT) {
     // Main nav: a pinned item moves into the minimal bar on a narrow screen and back on a wide one.
     const { page, errors } = await open([]);
     const spots = () => page.evaluate(() => [...document.querySelectorAll('.nds-main-nav .nds-nav-item.nds-pinned')].map((item) => ({
-        inMinimal: !!item.closest('.nds-nav-minimal, [class*="minimal"]') && item.parentElement !== NDS.homeOf(item),
-        home: !!NDS.homeOf(item),
+        inMinimal: !!item.closest('.nds-nav-minimal, [class*="minimal"]') && item.parentElement !== NDS.getHome(item),
+        home: !!NDS.getHome(item),
         prev: item.previousSibling?.nodeType === 8 ? 'marker' : (item.previousElementSibling?.className || 'none')
     })));
     await page.setViewportSize({ width: 1280, height: 800 });

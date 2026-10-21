@@ -1160,7 +1160,7 @@ hideFeedback: true
       if (editing) {
         // Collapse first: replacing the row's cells resets its toggle, and an
         // open detail row would be left showing under a closed toggle.
-        NDS.Table.row(editing).sub.close();
+        NDS.Table.getRow(editing).sub.close();
         releaseRow(editing);
         editing.innerHTML = rowHtml(record);
       } else {
@@ -1188,7 +1188,7 @@ hideFeedback: true
     document.getElementById('delete-confirm').addEventListener('click', function () {
       var count = toDelete.length;
       toDelete.forEach(function (row) {
-        var sub = NDS.Table.row(row).sub.el;   // the detail row, when the record has one
+        var sub = NDS.Table.getRow(row).sub.el;   // the detail row, when the record has one
         if (sub) sub.remove();
         releaseRow(row);
         row.remove();
@@ -1229,7 +1229,7 @@ hideFeedback: true
       var row = event.detail.row;
       var record = readRow(row);
       var timer = setTimeout(function () {
-        NDS.Table.row(row).sub.setContent(detailHtml(record)).open();
+        NDS.Table.getRow(row).sub.setContent(detailHtml(record)).open();
       }, 700);
       event.detail.signal.addEventListener('abort', function () {
         clearTimeout(timer);   // a second click cancelled it

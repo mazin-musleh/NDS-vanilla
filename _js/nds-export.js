@@ -11,7 +11,7 @@
  *                                                format: csv | xls | pdf;
  *                                                scope: selected | all | auto;
  *                                                opts {filename, title, dir}
- *   NDS.Export.csv / .xls / .pdf (source, scope, opts)   the same, per format
+ *   NDS.Export.exportCsv / .exportXls / .exportPdf (source, scope, opts)   the same, per format
  *   NDS.Export.collect(source, scope)            → {columns, rows} without downloading
  *   NDS.Export.toCsv(data) / .toXlsHtml(data, opts)   serialize a collect() result
  *   NDS.Export.openPrint(data, opts)             open the print window (the PDF path)
@@ -57,13 +57,13 @@
  *                    from [data-export-field="key"] descendants per row.
  *
  * Cell value precedence (both adapters):
- *   data-export-value > NDS.cellText / textContent
+ *   data-export-value > NDS.getCellText / textContent
  */
 (function () {
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('export', {
+    const strings = NDS.i18n.getStrings('export', {
         exported: { one: 'Exported {n} row', other: 'Exported {n} rows' },
     });
 
@@ -96,7 +96,7 @@
                 // Skip the row-selection checkbox column (auto-detected)
                 if (th.querySelector('input[type="checkbox"].nds-checkbox-input')) return;
                 const label = th.dataset.exportLabel
-                    || NDS.cellText(th)
+                    || NDS.getCellText(th)
                     || ('col_' + index);
                 cols.push({ index, key: 'c' + index, label });
             });
@@ -133,7 +133,7 @@
             // cells should hold raw numbers so CSV/Excel can do math on them.
             const override = td.getAttribute('data-export-value');
             if (override !== null) return override;
-            return NDS.cellText(td);
+            return NDS.getCellText(td);
         }
     };
 
@@ -267,7 +267,7 @@
 
     function toXlsHtml(data, opts) {
         opts = opts || {};
-        const dir = opts.dir || (NDS.isRTL ? 'rtl' : 'ltr');
+        const dir = opts.dir || (NDS.isRtl ? 'rtl' : 'ltr');
         const lang = NDS.lang || 'en';
         const escapeHtml = NDS.escapeHtml;
         return BOM + '<!doctype html><html lang="' + escapeHtml(lang) + '" dir="' + escapeHtml(dir) + '">'
@@ -314,7 +314,7 @@
     // so a card list and a <dl> both print as the same tidy grid.
     function openPrint(data, opts) {
         opts = opts || {};
-        const dir = opts.dir || (NDS.isRTL ? 'rtl' : 'ltr');
+        const dir = opts.dir || (NDS.isRtl ? 'rtl' : 'ltr');
         const lang = NDS.lang || 'en';
         const title = opts.title || 'nds-export';
         const escapeHtml = NDS.escapeHtml;
@@ -344,7 +344,7 @@
             + '</body></html>';
 
         const iframe = document.createElement('iframe');
-        iframe.id = NDS.uniqueId('nds-export-pdf-');
+        iframe.id = NDS.getUniqueId('nds-export-pdf-');
         iframe.setAttribute('aria-hidden', 'true');
         iframe.style.cssText = 'position:fixed;left:-9999px;top:0;width:0;height:0;border:0;';
         document.body.appendChild(iframe);
@@ -416,7 +416,7 @@
     }
 
     // The site's day (<html data-timezone>), not toISOString's UTC day.
-    const getToday = () => NDS.Date.format(NDS.Date.today(), { format: 'YYYY-MM-DD' });
+    const getToday = () => NDS.Date.format(NDS.Date.getToday(), { format: 'YYYY-MM-DD' });
 
     function buildDefaultFilename(source, ext) {
         const raw = source && source.dataset && source.dataset.exportName;
@@ -502,10 +502,10 @@
         init,
         export: exportFrom,
         // Per-format shortcuts — thin wrappers around export() so callers can
-        // write NDS.Export.csv('#orders') instead of .export('#orders','csv').
-        csv: (source, scope, opts) => exportFrom(source, 'csv', scope, opts),
-        xls: (source, scope, opts) => exportFrom(source, 'xls', scope, opts),
-        pdf: (source, scope, opts) => exportFrom(source, 'pdf', scope, opts),
+        // write NDS.Export.exportCsv('#orders') instead of .export('#orders','csv').
+        exportCsv: (source, scope, opts) => exportFrom(source, 'csv', scope, opts),
+        exportXls: (source, scope, opts) => exportFrom(source, 'xls', scope, opts),
+        exportPdf: (source, scope, opts) => exportFrom(source, 'pdf', scope, opts),
         collect,
         toCsv: toCsv,
         toXlsHtml: toXlsHtml,

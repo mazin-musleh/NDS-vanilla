@@ -347,7 +347,7 @@ ok('a lang toggle re-renders the display and keeps the value', await (async () =
 // ---- SCROLLING ---------------------------------------------------------
 
 // The panel is a dropmenu, so flipping and the top layer are dropmenu's job — but this
-// component uses the DEFAULT applyPosition (date-picker overrides it with its
+// component uses the DEFAULT syncPosition (date-picker overrides it with its
 // own), so it has to be confirmed that the default path actually holds here.
 // A panel that detaches from its field on scroll is the classic failure.
 // `filler` only for the scrollable-container cases — in the bottom-pinned case it

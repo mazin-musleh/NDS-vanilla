@@ -1,5 +1,5 @@
 // NDS words: check them, and with --build write the packs NDS ships.
-// English is built in: a script's words are its NDS.i18n.strings() defaults, a marker's word is its
+// English is built in: a script's words are its NDS.i18n.getStrings() defaults, a marker's word is its
 // markup. Each pack in _i18n/<lang>.json (NDS maintainers edit these) holds every English word and
 // no other. A marker names a plain word its markup matches. No _js/ file carries Arabic or reads NDS.langKey.
 // --build writes assets/i18n/<lang>.json (minified, banner key "_") and _data/i18n.json, the word
@@ -41,11 +41,11 @@ function literalAt(src, from) {
     return null;
 }
 
-// 1. English from the scripts: every NDS.i18n.strings('section', { … }) default.
+// 1. English from the scripts: every NDS.i18n.getStrings('section', { … }) default.
 const english = {};
 for (const f of jsFiles) {
     const src = read(join(JS, f));
-    for (const m of src.matchAll(/NDS\.i18n\.strings\(\s*'([\w-]+)'\s*,/g)) {
+    for (const m of src.matchAll(/NDS\.i18n\.getStrings\(\s*'([\w-]+)'\s*,/g)) {
         english[m[1]] = Object.assign(english[m[1]] || {}, runInNewContext('(' + literalAt(src, m.index) + ')'));
     }
 }

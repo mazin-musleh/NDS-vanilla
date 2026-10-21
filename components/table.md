@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:24 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -557,7 +557,7 @@ To start one open, leave out its `hidden` attribute. Write `aria-expanded="true"
 ### Sub-Rows on Demand
 {: .nds-block-title}
 
-A toggle whose row has no sub-row yet shows a spinner and fires `nds:table:sub-request`. Your code fetches the detail and calls `NDS.Table.row(row).sub.setContent(html).open()`. On an error, call `close()`, or the spinner keeps turning. A second click on a spinning toggle cancels the request through `detail.signal`. NDS never fetches the detail itself. The content stays, so the next open shows it with no new request. `setContent()` starts a table inside the content: for any other component in it, call `NDS.init.mount(sub)`.
+A toggle whose row has no sub-row yet shows a spinner and fires `nds:table:sub-request`. Your code fetches the detail and calls `NDS.Table.getRow(row).sub.setContent(html).open()`. On an error, call `close()`, or the spinner keeps turning. A second click on a spinning toggle cancels the request through `detail.signal`. NDS never fetches the detail itself. The content stays, so the next open shows it with no new request. `setContent()` starts a table inside the content: for any other component in it, call `NDS.init.mount(sub)`.
 
 ### Column Alignment
 {: .nds-block-title}
@@ -645,7 +645,7 @@ Keep Selection only when the page has a bulk action that acts on the selected ro
             <i class="hgi hgi-stroke hgi-text-font"></i>
             <span class="nds-label">Clean Cell Text</span>
           </span>
-          <p class="nds-item-desc">Sort and export read the cell's own text, not the text of the icons or buttons in it. <code class="nds-inline-code lang-js">NDS.cellText()</code> gives the same value to your code.</p>
+          <p class="nds-item-desc">Sort and export read the cell's own text, not the text of the icons or buttons in it. <code class="nds-inline-code lang-js">NDS.getCellText()</code> gives the same value to your code.</p>
         </div>
       </div>
     </div>
@@ -766,7 +766,7 @@ Source: the `table` group in `_sass/tokens/_components.scss`.
 | `NDS.Table.createResponsive(table)` | Adds the scroll box to one table and returns its instance |
 | `NDS.Table.createColumnToggle(menu)` | Starts one column menu, and returns its instance, or the instance it already has. Returns `null` when the table or `[data-columns-list]` is missing |
 | `NDS.Table.setColumnHidden(table, index, hidden)` | Hides or shows the column at this index: it sets `hidden` on the header cell and on its cell in every row, and fires `nds:table:columns`. The menu does not save this change |
-| `NDS.Table.row(tr).sub` | The handle of a row's sub-row. `tr` is the row or its sub-row |
+| `NDS.Table.getRow(tr).sub` | The handle of a row's sub-row. `tr` is the row or its sub-row |
 | `.sub.setContent(html)` | Puts your markup or node in the sub-row. It builds the sub-row when there is none, and stops the spinner. It returns the handle |
 | `.sub.open()`, `.close()`, `.toggle()` | Opens, closes or flips the sub-row. `open()` with no sub-row fires `nds:table:sub-request`. Each returns the handle |
 | `.sub.el` | The `tr.nds-sub`, or `null` |
@@ -778,7 +778,7 @@ Source: the `table` group in `_sass/tokens/_components.scss`.
 | `create()` | `getSortOrder()` | `"asc"`, `"desc"` or `null` |
 | `create()` | `resetSort()` | Clears the sort and puts the rows back in their first order |
 | `create()` | `destroy()` | Stops sorting. The table keeps its scroll box |
-| `createResponsive()` | `recheckWidth()` | Measures this table again |
+| `createResponsive()` | `refresh()` | Measures this table again |
 | `createResponsive()` | `destroy()` | Stops the scroll checks and marks the table as not started. The box stays |
 {: .nds-table .nds-responsive}
 
@@ -796,10 +796,10 @@ var table = document.getElementById('requests');
 table.addEventListener('nds:table:sub-request', function (e) {
   var row = e.detail.row;
   NDS.request('/requests/' + row.dataset.id + '/details', { signal: e.detail.signal })
-    .then(function (res) { NDS.Table.row(row).sub.setContent(res.data).open(); })
+    .then(function (res) { NDS.Table.getRow(row).sub.setContent(res.data).open(); })
     .catch(function (err) {
       // A cancel already stopped the spinner. Any other error must close it.
-      if (err.name !== 'AbortError') NDS.Table.row(row).sub.close();
+      if (err.name !== 'AbortError') NDS.Table.getRow(row).sub.close();
     });
 });
 </script>

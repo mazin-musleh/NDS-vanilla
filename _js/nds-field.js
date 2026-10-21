@@ -2,20 +2,20 @@
  * Rides: (none — a base: Form and the field components plug their parts into it)
  * Methods:
  *   NDS.field.addType(name, part)     a part of the field another component owns: part.on maps an event
- *                                     name to fn(e, c), c the field the target is the input of (control(),
+ *                                     name to fn(e, c), c the field the target is the input of (findControl(),
  *                                     looked up once per event) or null; 'input:capture' for the capture phase;
  *                                     part.around the same as fn(e), for a target that is no field's own input
- *                                     (a button, a track, a chip): a click in a field never runs it; part.init(input,
+ *                                     (a button, a track, a chip): a click in a field never runs it; part.setupInput(input,
  *                                     control) runs for each input in the first-paint pass, part.create(el)
  *                                     after it, part.refresh(input, control, opts) after a value is set from
- *                                     code; part.readonlyActive(input) says a readonly input stays interactive
+ *                                     code; part.isReadonlyActive(input) says a readonly input stays interactive
  *   NDS.field.create(el)              the first-paint pass over el: states, required marks, autofocus, and
- *                                     un-hiding the [hidden] wrappers; then each part's init
+ *                                     un-hiding the [hidden] wrappers; then each part's setupInput
  *   NDS.field.refresh(el, opts)       re-sync after a value or checked is set from code: an input its field,
  *                                     any other element every field inside it; then every part's refresh
- *   NDS.field.control(target)         {input, control, container} when target is a field's own input
+ *   NDS.field.findControl(target)     {input, control, container} when target is a field's own input
  *   NDS.field.isActive(input)         it takes the active and focus states: not readonly, or interactive
- *   NDS.field.ownControl(container) · NDS.field.ownInput(container)   a container's own, never a nested one's
+ *   NDS.field.findOwnControl(container) · NDS.field.findOwnInput(container)   a container's own, never a nested one's
  * Events:
  *   (none)
  * Hooks:
@@ -34,15 +34,15 @@
     const SCOPE = '.nds-form-container, .nds-form-group';
 
     // ── Field states ───────────────────────────────────────────────────
-    // Chips are built after load: their component re-applies with NDS.state.apply after a render.
-    NDS.state.effect('disabled', SCOPE, (el, on) => {
+    // Chips are built after load: their component re-applies with NDS.state.refresh after a render.
+    NDS.state.onToggle('disabled', SCOPE, (el, on) => {
         el.querySelectorAll('input, textarea, select').forEach((inp) => { inp.disabled = on; });
         el.querySelectorAll('.nds-form-action .nds-btn, button.nds-chip').forEach((btn) => {
             NDS.aria.disabled(btn, on);
             if (btn.tagName === 'BUTTON') btn.disabled = on;
         });
     });
-    NDS.state.effect('readonly', SCOPE, (el, on) => {
+    NDS.state.onToggle('readonly', SCOPE, (el, on) => {
         el.querySelectorAll('input, textarea, select').forEach((inp) => { inp.readOnly = on; });
     });
 
@@ -56,7 +56,7 @@
         listening.add(type);
         const [name, phase] = type.split(':');
         document.addEventListener(name, (e) => {
-            const field = control(e.target);
+            const field = findControl(e.target);
             if (handlers[type]) handlers[type](e, field);
             for (const part of parts) {
                 if (part.on && part.on[type]) part.on[type](e, field);
@@ -72,7 +72,7 @@
 
     // ── Resolving a field ──────────────────────────────────────────────
     // The input an event belongs to: a direct input / textarea / select of a .nds-form-control that is no code sample.
-    function control(target) {
+    function findControl(target) {
         if (!target || !target.matches || !target.matches('input, textarea, select')) return null;
         const fc = target.parentElement;
         if (!fc || !fc.classList || !fc.classList.contains('nds-form-control') || fc.closest('code')) return null;
@@ -80,7 +80,7 @@
     }
 
     // A container's own control: the first whose nearest container is this one (an Editor's popover fields are not).
-    function ownControl(container) {
+    function findOwnControl(container) {
         const controls = container.querySelectorAll('.nds-form-control');
         for (let i = 0; i < controls.length; i++) {
             if (controls[i].closest('.nds-form-container') === container) return controls[i];
@@ -89,7 +89,7 @@
     }
 
     // A container's own field: never one inside a nested container, never a hidden carrier.
-    function ownInput(container) {
+    function findOwnInput(container) {
         const fields = container.querySelectorAll('input:not([type="hidden"]), textarea, select');
         if (!container.classList.contains('nds-form-container')) return fields[0] || null;
         for (let i = 0; i < fields.length; i++) {
@@ -99,7 +99,7 @@
     }
 
     // A readonly input that stays interactive: its part opens a menu from it (Custom Select).
-    const isInteractive = (input) => input.readOnly && parts.some((part) => part.readonlyActive && part.readonlyActive(input));
+    const isInteractive = (input) => input.readOnly && parts.some((part) => part.isReadonlyActive && part.isReadonlyActive(input));
     // A readonly input takes no active or focus state, unless it stays interactive.
     const isActive = (input) => !input.readOnly || isInteractive(input);
 
@@ -114,7 +114,7 @@
         // Radios and checkboxes answer as a group; a component that owns the value keeps the container's mark.
         // Ownership is asked only when the mark would change: never while typing.
         if (input.type !== 'radio' && input.type !== 'checkbox' && container.hasAttribute('data-required') !== input.required
-            && !NDS.validation.owns(container)) {
+            && !NDS.validation.isOwned(container)) {
             container.toggleAttribute('data-required', input.required);
         }
     }
@@ -175,7 +175,7 @@
     // While a container is focus or active, its own control carries `target`, so the CSS
     // (container[state] .control[target]) reaches that one control and never a nested container's.
     const syncTarget = (container) => {
-        const fc = ownControl(container);
+        const fc = findOwnControl(container);
         if (!fc) return;
         if (NDS.state.has(container, 'focus') || NDS.state.has(container, 'active')) NDS.state.add(fc, 'target');
         else NDS.state.remove(fc, 'target');
@@ -186,11 +186,11 @@
         if (started) return;
         started = true;
         Object.keys(handlers).forEach(listen);
-        NDS.state.effect('focus', '.nds-form-container', syncTarget);
-        NDS.state.effect('active', '.nds-form-container', syncTarget);
+        NDS.state.onToggle('focus', '.nds-form-container', syncTarget);
+        NDS.state.onToggle('active', '.nds-form-container', syncTarget);
         // Sweep only the outermost form, group or field around each added control:
         // a page-wide sweep cost 63 ms per added row at 1,000 fields (6.6x CPU).
-        NDS.onDOMAdd('.nds-form-control', (controls) => {
+        NDS.onDomAdd('.nds-form-control', (controls) => {
             const roots = new Set();
             controls.forEach((fc) => {
                 let root = fc;
@@ -220,11 +220,11 @@
         // A required container marks its input; one whose value a component owns never stamps required,
         // which would false-fail checkValidity, but still announces it.
         if (container && (container.hasAttribute('data-required') || container.classList.contains('nds-required'))) {
-            if (!NDS.validation.owns(container) && !input.hasAttribute('required')) input.setAttribute('required', '');
+            if (!NDS.validation.isOwned(container) && !input.hasAttribute('required')) input.setAttribute('required', '');
             input.setAttribute('aria-required', 'true');
         }
         // Container → input: a state shipped in the markup; then input → container.
-        if (container) NDS.state.apply(container, 'disabled', 'readonly', 'loading');
+        if (container) NDS.state.refresh(container, 'disabled', 'readonly', 'loading');
         sync(input, fc);
     }
 
@@ -236,10 +236,10 @@
             // A slider's inputs sit in its track, one level down.
             fc.querySelectorAll(':scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input').forEach((input) => {
                 setupInput(input, fc);
-                for (const part of parts) if (part.init) part.init(input, fc);
+                for (const part of parts) if (part.setupInput) part.setupInput(input, fc);
             });
         });
-        getSelfAndInner(el, '.nds-form-group').forEach((group) => NDS.state.apply(group, 'disabled', 'readonly', 'loading'));
+        getSelfAndInner(el, '.nds-form-group').forEach((group) => NDS.state.refresh(group, 'disabled', 'readonly', 'loading'));
         for (const part of parts) if (part.create) part.create(el);
         // Restore autofocus, once per element: a re-sweep would pull focus from the field the user is in.
         // preventScroll: a plain focus() forces a layout in the middle of the init burst.
@@ -259,5 +259,5 @@
         });
     }
 
-    NDS.field = { addType, create, refresh, control, isActive, ownControl, ownInput };
+    NDS.field = { addType, create, refresh, findControl, isActive, findOwnControl, findOwnInput };
 })();

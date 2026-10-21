@@ -75,7 +75,7 @@
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them. The panel markup carries
     // the same words as data-i18n markers, which core translates.
-    const words = NDS.i18n.strings('accessibility', {
+    const words = NDS.i18n.getStrings('accessibility', {
         panel_title: 'Accessibility Tools',
         panel_label: 'Accessibility settings',
         close_panel: 'Close accessibility panel',
@@ -274,10 +274,10 @@
             const raw = localStorage.getItem(STORAGE_KEY);
             if (!raw) return getDefaultState();
             const parsed = JSON.parse(raw);
-            // Route the localStorage payload through safeMerge so a planted
+            // Route the localStorage payload through NDS.i18n.mergeOwnKeys so a planted
             // __proto__ key can't replace the rehydrated state's prototype.
-            const result = NDS.i18n.safeMerge(getDefaultState(), parsed);
-            result.settings = NDS.i18n.safeMerge(getDefaultState().settings, parsed.settings || {});
+            const result = NDS.i18n.mergeOwnKeys(getDefaultState(), parsed);
+            result.settings = NDS.i18n.mergeOwnKeys(getDefaultState().settings, parsed.settings || {});
             if (!Array.isArray(result.modes))    result.modes = [];
             if (!Array.isArray(result.bundles))  result.bundles = [];
             if (!Array.isArray(result.excluded)) result.excluded = [];
@@ -538,7 +538,7 @@
             // drag) collapse to one DOM write per frame. The dragging guard
             // stays OUTSIDE the rAF closure so a stale move queued between
             // pointerup and the next frame can't render a frame after release.
-            const onMaskMove = NDS.rafThrottle((deltaY) => {
+            const onMaskMove = NDS.throttleToFrame((deltaY) => {
                 if (!dragging) return;
                 moveTo(dragStartBandY + deltaY);
             });

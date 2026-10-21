@@ -10,7 +10,7 @@
  *   NDS.Pagination.setPage(nav, page)          move a manual nav to a page
  *   NDS.Pagination.setTotalPages(nav, total, activePage)   rebuild a manual / data-driven list
  *   NDS.Pagination.scrollToContent(nav)        scroll to the paged content
- *   NDS.Pagination.updateRecords(listOrId, {from, to, count})   stamp the record slots
+ *   NDS.Pagination.setRecords(listOrId, {from, to, count})   stamp the record slots
  * Events (bubble from the .nds-pagination nav):
  *   nds:pagination:change   detail {page, previousPage, totalPages, pagination} — user-initiated
  *                           page changes only
@@ -60,14 +60,14 @@
  *     via data-pagination-no-scroll)
  *   - syncAutoPagination (filter-driven; the NDS.Pagination.refresh entry)
  *   - The per-container --per-page ResizeObserver + the .nds-paged-content
- *     onDOMRemove cleanup
+ *     onDomRemove cleanup
  *
  * Lifecycle:
- *   - Shared NDS.onDOMRemove('.nds-pagination') sweep aborts the click AC
+ *   - Shared NDS.onDomRemove('.nds-pagination') sweep aborts the click AC
  *     and releases offResizes for navs torn down without an explicit destroy.
  *   - NDS.Pagination.destroy(nav) — explicit teardown for SPA consumers
  *     (aborts the click AC, releases offResizes, clears the init stamps)
- *   - NDS.Pagination.updateRecords(listOrId, {from, to, count}) — stamp the
+ *   - NDS.Pagination.setRecords(listOrId, {from, to, count}) — stamp the
  *     records slots ("x of y") from server/manual pagination
  *
  * Display pattern: [Prev] 1 2 3 ... [Last] [Next]
@@ -118,10 +118,10 @@
     // THE paged-item set for a container: the .nds-page-item elements it owns,
     // minus anything a filter removed. Every scheduling, counting and records
     // path reads through here, so a sixth caller can't re-derive it differently.
-    // Breadth is NDS.ownItems': a sub-row's nested paged table has its own
+    // Breadth is NDS.findOwnItems': a sub-row's nested paged table has its own
     // .nds-paged-content and must not be paged by this nav.
     function getPagedItems(content) {
-        return NDS.ownItems(content, content.querySelectorAll('.nds-page-item'))
+        return NDS.findOwnItems(content, content.querySelectorAll('.nds-page-item'))
             .filter(item => !item.hasAttribute('data-filtered'));
     }
 
@@ -398,7 +398,7 @@
     function addNavCleanupListeners() {
         if (navCleanupReady) return;
         navCleanupReady = true;
-        NDS.onDOMRemove('.nds-pagination', removed => {
+        NDS.onDomRemove('.nds-pagination', removed => {
             removed.forEach(destroyPaginationNav);
         });
     }
@@ -620,7 +620,7 @@
     function findNavContent(paginationNav, quiet) {
         const ref = paginationNav.getAttribute('data-auto-pagination');
         if (ref) {
-            const el = NDS.resolveEl(ref);
+            const el = NDS.resolveElement(ref);
             if (el && el.classList.contains('nds-paged-content')) return el;
             if (!quiet) console.warn(`NDS Pagination: data-auto-pagination="${ref}" matched no .nds-paged-content element.`, paginationNav);
             return null;
@@ -637,7 +637,7 @@
             const navs = document.querySelectorAll('.nds-pagination[data-auto-pagination]');
             for (const nav of navs) {
                 const ref = nav.getAttribute('data-auto-pagination');
-                if (ref && NDS.resolveEl(ref) === contentContainer) return nav;
+                if (ref && NDS.resolveElement(ref) === contentContainer) return nav;
             }
         }
         // Adjacency fallback: a descendant search from the shared parent, so for a
@@ -668,7 +668,7 @@
             writePerPageParam(dropmenu, value);
             const ref = dropmenu.getAttribute('data-per-page-target');
             if (!ref) return;
-            const target = NDS.resolveEl(ref);
+            const target = NDS.resolveElement(ref);
             if (!target || !target.classList.contains('nds-paged-content')) return;
             const perPage = parseInt(value, 10);
             if (!(perPage > 0)) return;
@@ -791,7 +791,7 @@
     // vocab never leaks into a literal attribute. aria-current IS emitted; it's
     // semantic and valid pre-JS.
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('pagination', {
+    const strings = NDS.i18n.getStrings('pagination', {
         prev: 'Previous page',
         next: 'Next page',
         page: 'Page {n}',
@@ -1063,14 +1063,14 @@
         win.start = start;
         win.end = end;
 
-        // Jump input for large ranges — injected BEFORE applyPosition so the
+        // Jump input for large ranges — injected BEFORE syncPosition so the
         // menu is positioned/clamped with its real height.
         if (to - from + 1 > LAZY_JUMP_MIN) ensureJumpBox(nav, scroll);
 
         // open() positioned/clamped the menu while empty — re-run against the
-        // real content (applyPosition self-clears its inline width/maxHeight).
+        // real content (syncPosition self-clears its inline width/maxHeight).
         const instance = wrapper.ndsDropmenu;
-        if (instance && instance.applyPosition) instance.applyPosition();
+        if (instance && instance.syncPosition) instance.syncPosition();
 
         // True pitch (40 by CSS contract; measured to avoid a JS↔CSS constant).
         const row = scroll.querySelector('.nds-dropmenu-item');
@@ -1084,7 +1084,7 @@
 
         if (!scrollWiredMenus.has(scroll)) {
             scrollWiredMenus.add(scroll);
-            scroll.addEventListener('scroll', NDS.rafThrottle(() => shiftWindow(scroll)), { passive: true });
+            scroll.addEventListener('scroll', NDS.throttleToFrame(() => shiftWindow(scroll)), { passive: true });
         }
     }
 
@@ -1388,7 +1388,7 @@
 
     // Wire one auto-pagination's interaction layer: per-nav click handler +
     // the --per-page ResizeObserver + (once) the shared .nds-paged-content
-    // onDOMRemove cleanup. Called from setupAutoContainer's initial paint and
+    // onDomRemove cleanup. Called from setupAutoContainer's initial paint and
     // for any auto-pagination registered after init.
     function addAutoNavListeners(paginationNav, contentContainer, perPage) {
         // Live item set: re-queried each click + each resize so a filter
@@ -1420,7 +1420,7 @@
         // containers leave the DOM. Wired once per page; idempotent.
         if (!autoCleanupReady) {
             autoCleanupReady = true;
-            NDS.onDOMRemove('.nds-paged-content', removed => {
+            NDS.onDomRemove('.nds-paged-content', removed => {
                 removed.forEach(el => {
                     if (offResizes.has(el)) {
                         offResizes.get(el)();
@@ -1490,7 +1490,7 @@
     // nodes are added/removed anywhere in its content — no NDS.Pagination.refresh()
     // call needed, at ANY nesting (grid/list direct children, table rows under
     // <tbody>, any wrapper). Wired once per page (on the first auto container's
-    // setup), riding the shared body MutationObserver via onDOMAdd/onDOMRemove —
+    // setup), riding the shared body MutationObserver via onDomAdd/onDomRemove —
     // no new observer. Watches the items themselves, not a parent selector, so it
     // is content-shape agnostic.
     //
@@ -1514,7 +1514,7 @@
             pending.clear();
         }, 150);
 
-        NDS.onDOMAdd('.nds-page-item', added => {
+        NDS.onDomAdd('.nds-page-item', added => {
             // Dedupe to containers first — a bulk insert reports N added nodes, but
             // the pre-paint visibility pass need only run once per container.
             const containers = new Set();
@@ -1530,7 +1530,7 @@
             if (queued) flush();
         });
 
-        NDS.onDOMRemove('.nds-page-item', () => {
+        NDS.onDomRemove('.nds-page-item', () => {
             const navs = document.querySelectorAll('.nds-pagination[data-nds-auto-pagination-initialized]');
             let queued = false;
             navs.forEach(nav => { const content = findNavContent(nav); if (content) { pending.add(content); queued = true; } });
@@ -1695,8 +1695,8 @@
         },
         // Server/manual pagination hook: push your own numbers through the same
         // [data-paged-target] slot grammar the auto path stamps.
-        // NDS.Pagination.updateRecords('listId', { from: 21, to: 30, count: 214 })
-        updateRecords: function(listOrId, { from = 0, to = 0, count = 0 } = {}) {
+        // NDS.Pagination.setRecords('listId', { from: 21, to: 30, count: 214 })
+        setRecords: function(listOrId, { from = 0, to = 0, count = 0 } = {}) {
             const id = typeof listOrId === 'string' ? listOrId : (listOrId && listOrId.id);
             if (id) stampRecordSlots(id, from, to, count);
         },

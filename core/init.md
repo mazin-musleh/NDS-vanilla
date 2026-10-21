@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 09:23 AM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -120,7 +120,7 @@ Only components inside `el` are reached. A filter toolbar can sit beside the gri
 ### Fields Still Loading
 {: .nds-block-title}
 
-Some fields get their rule from their own component, such as Rating, Upload, Time Picker and Autocomplete. Until that component starts, the field has no rule, and `NDS.init.pending(el)` is true. A form check then fails a required pending field with "Still loading. Try again in a moment", and calls `mount()` on the form so the next check can pass. A bundle that failed to load does not count: its field is checked as if it had no rule, so the form is never blocked for good.
+Some fields get their rule from their own component, such as Rating, Upload, Time Picker and Autocomplete. Until that component starts, the field has no rule, and `NDS.init.isPending(el)` is true. A form check then fails a required pending field with "Still loading. Try again in a moment", and calls `mount()` on the form so the next check can pass. A bundle that failed to load does not count: its field is checked as if it had no rule, so the form is never blocked for good.
 
 </div>
   </div>
@@ -264,7 +264,7 @@ Keep the `<style>` gate and the inline script out of your bundler. A minifier ch
 - Skip it for content that was in the HTML at load, and after a filter, sort or page change. NDS already keeps those in step.
 - Do not call it from a handler for an event it can fire, such as `nds:filter:change`. That starts a loop.
 - To sort late rows into a client-side sort, call `NDS.Sort.getInstance(table).refresh()` yourself. `refresh()` never sorts, because a server-sorted page is one slice of a larger sort.
-- For server pagination, call `NDS.Pagination.setTotalPages()` and `NDS.Pagination.updateRecords()` when your response arrives.
+- For server pagination, call `NDS.Pagination.setTotalPages()` and `NDS.Pagination.setRecords()` when your response arrives.
 - To replay a finished counter, remove its `data-animated` attribute before the call.
 - Fetch the data, build the rows and show the loading state yourself: the calls do none of them. A component you set up through its own API keeps that setup.
 
@@ -321,15 +321,15 @@ NDS.init.ready.then(function () {
 ### Configuration
 {: .nds-block-title}
 
-Set these on `window` before the main bundle loads. A `window.NDSInitConfig` key wins over the matching attribute on `<html>`.
+Set these on `window` before the main bundle loads. A `window.NDS_INIT_CONFIG` key wins over the matching attribute on `<html>`.
 
 | Global | Default | Effect |
 |---|---|---|
-| `NDSInitConfig.autoInitialize` | `true` | `false` is the same as `data-nds-auto-init="false"` |
-| `NDSInitConfig.disableAll` | `false` | `true` is the same as `data-nds-disable-all="true"` |
-| `NDSInitConfig.enableLogging` | `false` | Logs each component as it starts, and runs `NDS.init.audit()` after load |
-| `NDSInitConfig.enableTiming` | `false` | Logs the total init time. With `enableLogging`, it also logs the time of each component |
-| `NDSInitConfig.initBudgetMs` | `5` | Milliseconds of init work before the loader yields to the browser |
+| `NDS_INIT_CONFIG.autoInitialize` | `true` | `false` is the same as `data-nds-auto-init="false"` |
+| `NDS_INIT_CONFIG.disableAll` | `false` | `true` is the same as `data-nds-disable-all="true"` |
+| `NDS_INIT_CONFIG.enableLogging` | `false` | Logs each component as it starts, and runs `NDS.init.audit()` after load |
+| `NDS_INIT_CONFIG.enableTiming` | `false` | Logs the total init time. With `enableLogging`, it also logs the time of each component |
+| `NDS_INIT_CONFIG.initBudgetMs` | `5` | Milliseconds of init work before the loader yields to the browser |
 | `NDS_ASSETS_PATH` | the folder above the one that holds `nds-main.min.js` | The `assets/` folder. The other bundles load from its `js/` folder, and the language files from its `i18n/` folder |
 {: .nds-table .nds-responsive}
 
@@ -343,10 +343,10 @@ Set these on `window` before the main bundle loads. A `window.NDSInitConfig` key
 | `NDS.init.refresh(el)` | Tells every started component that the contents of `el` changed. Without `el`, it covers the whole page |
 | `NDS.init.mount(el)` | Loads the bundles the markup in `el` needs, then calls `refresh(el)`. Returns a promise |
 | `NDS.init.destroy(el)` | Releases every component instance inside `el`. Returns the number released. Without `el`, it covers the whole page |
-| `NDS.init.pending(el)` | `true` while `el` holds a field whose rule has not started: its bundle is still loading, or its component has not built it yet. See [Fields Still Loading](#fields-still-loading) |
-| `NDS.init.owns(el)` | `true` when `el` is a field whose value its component keeps, not its input (Upload). Such a field gets no `required` on its input and no browser check |
+| `NDS.init.isPending(el)` | `true` while `el` holds a field whose rule has not started: its bundle is still loading, or its component has not built it yet. See [Fields Still Loading](#fields-still-loading) |
+| `NDS.init.isOwned(el)` | `true` when `el` is a field whose value its component keeps, not its input (Upload). Such a field gets no `required` on its input and no browser check |
 | `NDS.init.audit()` | Runs the [Audit](../core/audit) and returns its findings: page problems that fail with no error, and names an NDS release changed. The first call loads the audit bundle and returns a promise of them |
-| `NDS.init.components` | The component registry: one entry per component, with its `name`, `selector` and `init`. A field component's entry adds `rule` (`true`: `pending()` waits for its instance, `'loaded'`: for its bundle only) and `owns` (`owns()` answers for it) |
+| `NDS.init.components` | The component registry: one entry per component, with its `name`, `selector` and `init`. A field component's entry adds `rule` (`true`: `isPending()` waits for its instance, `'loaded'`: for its bundle only) and `owns` (`isOwned()` answers for it) |
 | `NDS.init.config` | The settings in use, from the Configuration table |
 | `NDS.loadBundle(name)` | Loads one bundle, such as `'extras'`. Returns a promise. `mount()` calls it for you |
 {: .nds-table .nds-responsive}

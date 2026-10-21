@@ -9,7 +9,7 @@
  *   NDS.Toc.create(el)           instance one table of contents — null when no link has a
  *                                target; the live one if started
  *   NDS.Toc.destroy(el)          tear one down — the NDS.init.destroy entry point
- *   instance.update()            re-pick the active entry now
+ *   instance.refresh()           re-pick the active entry now
  *   instance.destroy()
  * Events:
  *   (none)
@@ -136,7 +136,7 @@
 
         init() {
             this._handleClick = this._handleClick.bind(this);
-            this.update = this.update.bind(this);
+            this.refresh = this.refresh.bind(this);
             this.abortController = new AbortController();
             const { signal } = this.abortController;
 
@@ -149,9 +149,9 @@
             this._links.forEach(link => link.addEventListener('click', this._handleClick, { signal }));
 
             // Scroll + resize both change which section is at the top;
-            // rafThrottle keeps the scroll handler off the layout thread.
+            // throttleToFrame keeps the scroll handler off the layout thread.
             // Capture sees element scrolls too: the headings may scroll in a panel or a modal, not the page.
-            const onScroll = NDS.rafThrottle(this.update);
+            const onScroll = NDS.throttleToFrame(this.refresh);
             document.addEventListener('scroll', (e) => {
                 const target = e.target;
                 if (target === document) this._box = null;
@@ -160,7 +160,7 @@
                 onScroll();
             }, { capture: true, passive: true, signal });
             // Pooled handle takes no signal — bridge it onto the same teardown.
-            const offResize = NDS.onResize(this.update);
+            const offResize = NDS.onResize(this.refresh);
             signal.addEventListener('abort', offResize);
 
             // The first highlight pass measures heading positions
@@ -168,7 +168,7 @@
             // idle slot keeps that read out of the component-init burst, where
             // the DOM is dirty and the read would force a synchronous reflow.
             // The scrollspy itself is already live via the scroll listener.
-            NDS.onIdle(() => { this._box = this._findBox(); this.update(); }, 2000);
+            NDS.onIdle(() => { this._box = this._findBox(); this.refresh(); }, 2000);
             this._toc.setAttribute('data-nds-toc-initialized', 'true');
         }
 
@@ -224,7 +224,7 @@
             }
         }
 
-        update() {
+        refresh() {
             this._setActive(this._findActive());
         }
 

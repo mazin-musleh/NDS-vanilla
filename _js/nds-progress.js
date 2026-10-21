@@ -28,7 +28,7 @@
  * Sets CSS custom properties and populates text for percentage & "out of" displays
  * Initial value is applied as the indicator scrolls into view (NDS.onIntersect)
  * so the fill animates where it's seen; reduced motion applies it immediately
- * Observes attribute changes via NDS.onAttrChange for live updates
+ * Observes attribute changes via NDS.onAttributeChange for live updates
  *
  * Data attributes (priority over inline style):
  *   data-value  — progress percentage (0–100), sets --progress-value
@@ -95,7 +95,7 @@
     // A page with no indicator at load never runs init(), so the public writers wire this too.
     function watch() {
         if (offAttrChange) return;
-        offAttrChange = NDS.onAttrChange(SEL, attributes, elements => elements.forEach(syncFromData));
+        offAttrChange = NDS.onAttributeChange(SEL, attributes, elements => elements.forEach(syncFromData));
     }
 
     // Public API

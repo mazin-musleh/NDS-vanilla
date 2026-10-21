@@ -201,11 +201,11 @@
     // ─────────────────────────────────────────────────────────────────────────
 
     // Text follows the page direction, not its lang: RTL reads the Arabic set,
-    // LTR the English one. NDS.isRTL when core is already here (switcher path);
+    // LTR the English one. NDS.isRtl when core is already here (switcher path);
     // its own definition otherwise — this runs in <head>, before the bundles.
     // Read live: the direction can flip in place (the docs' language toggle).
     function getLanguage() {
-        var rtl = window.NDS && 'isRTL' in NDS ? NDS.isRTL : document.documentElement.dir === 'rtl';
+        var rtl = window.NDS && 'isRtl' in NDS ? NDS.isRtl : document.documentElement.dir === 'rtl';
         return rtl ? 'ar' : 'en';
     }
     function translate(value) {
@@ -669,8 +669,10 @@
 
         // Every index change the runtime settles on, plus the target the moment a
         // move starts: goToFull carries every move after 1.12, _goToFull in 1.12, goTo before that.
-        var update = instance.updateState;
-        instance.updateState = function () {
+        // The state sync is syncState after 1.12, updateState in 1.12.
+        var syncKey = instance.syncState ? 'syncState' : 'updateState';
+        var update = instance[syncKey];
+        instance[syncKey] = function () {
             var before = this.lastIndex;
             update.call(this);
             if (this.lastIndex !== before) place(getRealIndex());
@@ -729,7 +731,7 @@
                 var live = getSwiperInstance(swiper);
                 if (!live) return;
                 // By index, so the ends wrap on a runtime without loop too.
-                if (Math.abs(dx) >= 40) { var fwd = (window.NDS && NDS.isRTL) ? dx > 0 : dx < 0; live.goTo((getRealIndex() + (fwd ? 1 : count - 1)) % count); return; }
+                if (Math.abs(dx) >= 40) { var fwd = (window.NDS && 'isRtl' in NDS ? NDS.isRtl : document.documentElement.dir === 'rtl') ? dx > 0 : dx < 0; live.goTo((getRealIndex() + (fwd ? 1 : count - 1)) % count); return; }
                 if (e.type === 'pointerup' && pressed >= 0) live.goTo(pressed);
             };
             deck.addEventListener('pointerup', release, { signal: sig });

@@ -35,7 +35,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('expandable', {
+    const strings = NDS.i18n.getStrings('expandable', {
         show_more: 'Show More',
         show_less: 'Show Less',
     });

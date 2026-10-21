@@ -18,14 +18,14 @@
  *                                      which calls this and every other affected component
  *   instance.setFilterValues(name, values) / .setSearchValue(text)   pick, and apply
  *   instance.removeFilterValue(name, value) / .removeSearchFilter() / .resetRangeFilter(name)
- *   instance.populateFilter(name, values, type)   build a group's options from values
+ *   instance.renderFilter(name, values, type)     build a group's options from values
  *   instance.getCriteria()             a copy: {search, filters: {name: [values]}}
  *   instance.getVisibleItems() / .getHiddenItems()
- *   instance.applyFilters() / .submitForm() / .clear() / .reset()
+ *   instance.syncFilters() / .submitForm() / .clear() / .reset()
  *   instance.reapplyUrlParamsForFilter(name)   the URL's values, for inputs added after load
  *   instance.showNoResultsAlert() / .dismissNoResultsAlert()
  *   instance.clearDropmenuFilters()    empty every dropmenu group
- *   instance.updateUrlParams()         write the criteria to the URL
+ *   instance.syncUrlParams()         write the criteria to the URL
  *   instance.queryAll(selector)        matches inside the filter's own surfaces only
  *   instance.targetId / .items / .criteria / .filterInputs / .sort / .isFormMode / .isAjaxMode
  *                                      read-only state
@@ -141,7 +141,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('filter', {
+    const strings = NDS.i18n.getStrings('filter', {
         update_failed: 'Could not update results',
         update_failed_description: 'Something went wrong applying the filter. The results shown are unchanged.',
         no_results: 'No Result',
@@ -238,7 +238,7 @@
 
             this.abortController = new AbortController();
             this._draftMenus = new WeakSet();
-            // Pool subscriber handles from _setupManualFilter's NDS.onDOMAdd
+            // Pool subscriber handles from _setupManualFilter's NDS.onDomAdd
             // calls; released atomically in destroy() so the per-element
             // closures don't outlive the filter instance.
             this._offDomAdds = [];
@@ -252,7 +252,7 @@
             this.fetchAbortController = null;
 
             // Per-item match cache (itemCaches) is
-            // built lazily on the first applyFilters() pass that has criteria
+            // built lazily on the first syncFilters() pass that has criteria
             // — pages where the user never interacts with the filter skip the
             // cost entirely. Flipped to false whenever this.items is
             // reassigned (AJAX HTML inject, refresh()).
@@ -279,7 +279,7 @@
             if (!this._targetContainer) return [];
             // The no-results alert is ours, not an item: it carries .nds-card, and in a table its row is a tr.
             const alertId = `nds-filter-no-results-${this.targetId}`;
-            return NDS.ownItems(this._targetContainer, this._targetContainer.querySelectorAll(this._getItemSelector()))
+            return NDS.findOwnItems(this._targetContainer, this._targetContainer.querySelectorAll(this._getItemSelector()))
                 .filter(el => el.id !== alertId && !el.classList.contains('nds-filter-no-results-row'));
         }
 
@@ -347,7 +347,7 @@
 
         init() {
             // Trailing-edge debounce for the loading-class cleanup at the end of
-            // applyFilters(). One wrapper per instance so rapid filter passes
+            // syncFilters(). One wrapper per instance so rapid filter passes
             // share the same 500ms timer.
             this._clearLoadingDebounced = NDS.debounce(() => {
                 if (this._targetContainer) this._targetContainer.classList.remove('nds-loading');
@@ -412,7 +412,7 @@
          * this.criteria claims. A range filter renders two unnamed thumbs for one
          * encoded value, so nothing about it reaches the server otherwise — while
          * its chip, badge and URL param all say it is applied. Rebuilt on every
-         * submit; the key is the one updateUrlParams writes, so the request and
+         * submit; the key is the one syncUrlParams writes, so the request and
          * the URL agree.
          *
          * Only fills genuine gaps. A filter whose own controls already put
@@ -507,7 +507,7 @@
          * AJAX filters reach this; it never runs at first paint.
          */
         _handleAjaxSubmit() {
-            // Snapshot the applied state BEFORE updateUrlParams overwrites it. The
+            // Snapshot the applied state BEFORE syncUrlParams overwrites it. The
             // URL is the component's own record of what is currently applied, and
             // _readUrlParams() can rebuild criteria + controls + chips from it — so
             // one string is the whole rollback. Taken here, after a reset() has
@@ -860,7 +860,7 @@
         //
         // Only checkbox/switch groups hold several values, so only their param is
         // a comma-joined list. A radio group carries one value or none — its param
-        // is whatever updateUrlParams wrote for the single checked input, matched
+        // is whatever syncUrlParams wrote for the single checked input, matched
         // whole. Splitting it broke options whose own value contains commas
         // (value="1,2,3", one option standing for a group of ids). Comma-bearing
         // values stay unsupported on checkbox/switch, where comma is the delimiter.
@@ -876,15 +876,15 @@
         }
 
         // Settle filter UI after a criteria change sourced from URL params.
-        // In form mode we update UI only — calling applyFilters() would run
-        // updateUrlParams() and rewrite the URL we just read from.
+        // In form mode we update UI only — calling syncFilters() would run
+        // syncUrlParams() and rewrite the URL we just read from.
         _settleAfterCriteriaChange() {
             this._syncApplyButtonLabel();
             if (this.isFormMode) {
                 this._syncFilterButtonBadge();
                 this._syncAppliedChips();
             } else {
-                this.applyFilters();
+                this.syncFilters();
             }
         }
 
@@ -906,7 +906,7 @@
             this._settleAfterCriteriaChange();
         }
 
-        updateUrlParams() {
+        syncUrlParams() {
             // Preserve existing params not managed by this filter
             const params = new URLSearchParams(window.location.search);
             const searchParamName = this._getSearchInputName();
@@ -985,7 +985,7 @@
 
                 // Standard client-side filtering mode
                 e.preventDefault();
-                this.applyFilters();
+                this.syncFilters();
             }, { signal });
         }
 
@@ -1110,7 +1110,7 @@
             const filterBtn = this._resolveFilterButton();
             if (!filterBtn) return;
 
-            NDS.badge(filterBtn, this._getAppliedFilterCount());
+            NDS.setBadge(filterBtn, this._getAppliedFilterCount());
         }
 
         _syncAppliedChips() {
@@ -1200,7 +1200,7 @@
 
         // Whether anything is filtering right now. One derivation for both
         // readers — the count slot (which skips its scan when nothing filters)
-        // and applyFilters (which skips filtering entirely). If they disagree,
+        // and syncFilters (which skips filtering entirely). If they disagree,
         // the slot reports the unfiltered total beside a filtered grid.
         _hasActiveCriteria() {
             return !!(this.criteria.search && this.criteria.search.trim() !== '')
@@ -1553,7 +1553,7 @@
                         return;
                     }
 
-                    this.applyFilters();
+                    this.syncFilters();
                 }
             }, { signal });
 
@@ -1592,7 +1592,7 @@
                 if (e.key === 'Enter') {
                     e.preventDefault();
 
-                    // Centralized logic: _runDirectSearch → applyFilters (handles both modes)
+                    // Centralized logic: _runDirectSearch → syncFilters (handles both modes)
                     this._runDirectSearch(searchInput);
                 }
             }, { signal });
@@ -1629,7 +1629,7 @@
             }
 
             // Client-side mode: apply filters
-            this.applyFilters();
+            this.syncFilters();
         }
 
         // Spin the current trigger button, first clearing any other trigger that
@@ -1710,7 +1710,7 @@
             // Always set up the DOM observer, even with 0 inputs (handles cascading/async filters)
             if (!observedElements.has(element)) {
                 observedElements.add(element);
-                const off = NDS.onDOMAdd('input[type="checkbox"], input[type="radio"], .nds-switch-input', (nodes) => {
+                const off = NDS.onDomAdd('input[type="checkbox"], input[type="radio"], .nds-switch-input', (nodes) => {
                     // Ignore nodes that already have listeners bound — they are
                     // being moved, not genuinely inserted.
                     const fresh = nodes.filter(node => element.contains(node) && !boundInputs.has(node));
@@ -1760,13 +1760,13 @@
                 labels: labels           // Store value-to-label map
             };
 
-            // Per-filter-element controller: refresh()/populateFilter()/onDOMAdd
+            // Per-filter-element controller: refresh()/renderFilter()/onDomAdd
             // cascades may re-call _setupManualFilter on the same element with a
             // fresh input set (or the same set after innerHTML='' rebuild).
             // Aborting+resetting here releases the prior listener-target entries
             // atomically so they don't accumulate on the long-lived this.abortController.signal
             // until destroy(). The per-input boundInputs mark is preserved
-            // (it's used by the onDOMAdd filter above to distinguish moves from
+            // (it's used by the onDomAdd filter above to distinguish moves from
             // genuine inserts), but it no longer gates the bind itself — every
             // call re-wires every current input.
             filterAbortControllers.get(element)?.abort();
@@ -2084,7 +2084,7 @@
 
             if (collectedValues.length === 0) {
                 if (!explicitValues) {
-                    console.warn(`NDS Filter: No values found for filter "${filterName}". Use data-filter-values or populateFilter() to provide values.`);
+                    console.warn(`NDS Filter: No values found for filter "${filterName}". Use data-filter-values or renderFilter() to provide values.`);
                 }
                 return;
             }
@@ -2131,7 +2131,7 @@
 
             const inputContext = {
                 inputType,
-                groupName: `filter-${filterName}-${NDS.uniqueId()}`,
+                groupName: `filter-${filterName}-${NDS.getUniqueId()}`,
                 filterName,
                 variant,
                 includeAllOption,
@@ -2163,7 +2163,7 @@
             if (legend) legend.remove();
             fieldset.classList.remove('nds-dropmenu-group');
 
-            // Already wrapped — refresh()/populateFilter() replaced this group's
+            // Already wrapped — refresh()/renderFilter() replaced this group's
             // inputs in place, so the header, collapse and count tag still hold.
             // Building a second item here would nest it inside the old one's body.
             // Keyed on our own marker rather than the parent's class: an author
@@ -2173,7 +2173,7 @@
             fieldset.setAttribute('data-filter-wrapped', '');
 
             const filterName = fieldset.getAttribute('data-filter') || '';
-            const id = `nds-filter-acc-${NDS.uniqueId()}`;
+            const id = `nds-filter-acc-${NDS.getUniqueId()}`;
             const item = document.createElement('div');
             item.className = 'nds-accordion-item';
             item.innerHTML =
@@ -2411,7 +2411,7 @@
         _commitAppliedUi() {
             // Committed while the menu is open (its Reset): this is now what closing puts back.
             if (this._appliedFilters) this._appliedFilters = structuredClone(this.criteria.filters);
-            this.updateUrlParams();
+            this.syncUrlParams();
             this._syncFilterButtonBadge();
             this._syncAppliedChips();
         }
@@ -2422,7 +2422,7 @@
         // clear and range-reset paths all route here.
         _commitCriteriaChange() {
             if (!this.isFormMode) {
-                this.applyFilters();
+                this.syncFilters();
                 return;
             }
 
@@ -2444,7 +2444,7 @@
             });
         }
 
-        applyFilters() {
+        syncFilters() {
             // Dismiss any feedback in filter container
             NDS.Feedback.dismissAll(this._filterContainer);
 
@@ -2588,10 +2588,10 @@
             return true;
         }
 
-        // Build the cache on demand — the first applyFilters() with criteria
+        // Build the cache on demand — the first syncFilters() with criteria
         // triggers it via _ensureCacheBuilt. Sites that reassign this.items
         // flip _cacheBuilt to false; this method then re-runs on the next
-        // applyFilters pass.
+        // syncFilters pass.
         _ensureCacheBuilt() {
             if (this._cacheBuilt) return;
             this._buildItemCache();
@@ -2599,7 +2599,7 @@
         }
 
         // Walk each item once and stash its filter values + lowercased search
-        // text on the element itself. applyFilters() then matches against the
+        // text on the element itself. syncFilters() then matches against the
         // cache instead of re-querying every item's [data-filter] descendants
         // and re-walking textContent on every pass.
         _buildItemCache() {
@@ -2876,7 +2876,7 @@
             // A row edited on page 3 that snapped the list back to page 1 was the bug.
             this._refreshing = true;
             try {
-                this.applyFilters();
+                this.syncFilters();
             } finally {
                 this._refreshing = false;
             }
@@ -2893,7 +2893,7 @@
             this._mirrorSearchInputs(value);
 
             this._syncApplyButtonLabel();
-            // Not applyFilters(): in AJAX mode that repaints chips, badge and URL
+            // Not syncFilters(): in AJAX mode that repaints chips, badge and URL
             // from the new criteria without fetching, so the page would state a
             // keyword the displayed results were never filtered by. Same commit
             // path as removeFilterValue — the closest sibling, also a programmatic
@@ -2922,7 +2922,7 @@
             this._commitCriteriaChange();
         }
 
-        populateFilter(filterName, values, inputType = null) {
+        renderFilter(filterName, values, inputType = null) {
             const container = this._filterContainer.querySelector(`[data-filter="${filterName}"]`);
             if (!container) return;
 
@@ -2943,7 +2943,7 @@
             // Sort is created by this filter, so it dies with it — its trigger
             // listeners live on surfaces that outlive the target container.
             if (this.sort) { this.sort.destroy(); this.sort = null; }
-            // Release pooled NDS.onDOMAdd subscribers registered per filter
+            // Release pooled NDS.onDomAdd subscribers registered per filter
             // element by _setupManualFilter; without this, each filter instance
             // would leak one closure per filter element for the page lifetime.
             this._offDomAdds.forEach(off => off());
@@ -2987,7 +2987,7 @@
     // its id: every claim below would then skip the remount and the crit hold
     // (data-nds-filter-initialized) would keep the new region hidden forever.
     // A detached representative means that filter is gone — destroy it (which
-    // releases its pooled NDS.onDOMAdd/listener subscriptions) and free the id.
+    // releases its pooled NDS.onDomAdd/listener subscriptions) and free the id.
     function getLiveInstance(id) {
         const instance = instancesByTarget.get(id);
         if (!instance) return null;

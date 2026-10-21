@@ -50,7 +50,7 @@
  *   - Progress display: --progress-value on the ring, when there is one (Progress draws the arc) +
  *     .nds-progress-number + .nds-progress-steps text.
  *   - One delegated document click listener for [data-stepper-control] and one
- *     data-current/data-total NDS.onAttrChange observer, shared by every stepper.
+ *     data-current/data-total NDS.onAttributeChange observer, shared by every stepper.
  */
 
 (function () {
@@ -85,7 +85,7 @@
         });
 
         // The instance's own writes match its fields, so they change nothing here.
-        NDS.onAttrChange('.nds-stepper', ['data-current', 'data-total'], elements => {
+        NDS.onAttributeChange('.nds-stepper', ['data-current', 'data-total'], elements => {
             elements.forEach(el => {
                 const stepper = el.ndsStepper;
                 if (!stepper) return;

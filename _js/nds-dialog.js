@@ -1,11 +1,11 @@
 /* NDS.dialog — public surface (internal: the core Modal and Panel share for a <dialog>)
- * Rides: <dialog> show() + popover through NDS.topLayer (the top layer, the dim layer); an inert
+ * Rides: <dialog> show() + popover through NDS.setTopLayer (the top layer, the dim layer); an inert
  *        page, set once the open animation ends. No popover support: showModal()
  * Methods:
  *   NDS.dialog.show(dlg, signal)     open it modal; the first one locks scroll. NDS owns Escape and
  *                                    every click outside it while signal lives
  *   NDS.dialog.close(dlg)            hide its menus and close it; the last one unlocks scroll
- *   NDS.dialog.top()                 the newest open modal dialog, or undefined
+ *   NDS.dialog.getTop()              the newest open modal dialog, or undefined
  *   NDS.dialog.hideMenus(dlg)        close the open popovers inside it
  *   NDS.dialog.onOutside(dlg, fn, signal)  fn on a click outside it, while it is the top one
  * Events:
@@ -85,14 +85,14 @@
     inerted.forEach((el) => { if (el.contains(dlg)) { el.inert = false; inerted.delete(el); } });
     dlg.setAttribute('popover', 'manual');
     dlg.show();
-    NDS.topLayer(dlg, true);
+    NDS.setTopLayer(dlg, true);
     // After the open slide: its frames would wait on the restyle.
     NDS.onTransitionEnd(dlg, syncInert, { fallbackMs: NDS.transitionSpeed() + 150 });
   }
 
   function close(dlg) {
     hideMenus(dlg);
-    NDS.topLayer(dlg, false);
+    NDS.setTopLayer(dlg, false);
     if (dlg.open) dlg.close();
     const i = open.indexOf(dlg);
     if (i < 0) return;
@@ -118,7 +118,7 @@
   NDS.dialog = {
     show,
     close,
-    top: getTop,
+    getTop,
     hideMenus,
     onOutside: addOutsideListeners
   };

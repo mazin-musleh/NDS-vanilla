@@ -1,6 +1,6 @@
 # Naming: the underscore and internal function names
 
-Status: IN PROGRESS, step 4 of section 7. Design agreed 2026-10-20; PERSONA landed 2026-10-21.
+Status: IN PROGRESS, step 5 of section 7. Design agreed 2026-10-20; PERSONA landed 2026-10-21.
 
 ## Progress (read this first)
 
@@ -17,6 +17,7 @@ Status: IN PROGRESS, step 4 of section 7. Design agreed 2026-10-20; PERSONA land
 | `80360ddc` | Step 3: class members, 520 renames in 25 files (P12.11 + their verbs and words); 58 public members onto 13 banners; `scripts/rename-members.mjs` |
 | "no file reads another file's _ name" | Step 3: P12.12, each cross-file `_` given a home (below) |
 | "the WeakMap move" | Step 3: P12.14, data on elements and foreign objects in module WeakMaps/WeakSets (below) |
+| "public names follow entry 10" | Step 4: section 3's table, the born-in-v2 table, storage keys, `NDS_INIT_CONFIG`; 39 Migration rows (kind `storage` is new) |
 
 **Where the work list stands** (`node scripts/check-js-rules.mjs --names`, a count per rule on the last lines):
 32 findings, 79 to verify. P12.11 0; P12.12 0 (1 verify, read: Dropmenu's and Tooltip's `_unstamp` are each
@@ -36,8 +37,8 @@ runtimes). The names check counts a `_x` method on any object literal as its fil
 
 **Public members the step found, for section 3** (names that fail entry 10): `Dropmenu.applyPosition` → `syncPosition`,
 `applySelection` → `setSelection`; `Filter.updateUrlParams` → `syncUrlParams`, `applyFilters` → `syncFilters`,
-`populateFilter` → `renderFilter`; `Table.recheckWidth` (responsive) → `syncWidth`; `Multiselect.apply` (no rule fits:
-`commit`?); `Sort.opts` → `options`; `Swiper.updateState` → `syncState` (the national-day-96 pack overrides it on the
+`populateFilter` → `renderFilter`; `Table.recheckWidth` (responsive) → `refresh`; `Multiselect.apply` → `commit`
+(decided below); `Sort.opts` → `options`; `Swiper.updateState` → `syncState` (the national-day-96 pack overrides it on the
 instance: rename both in one step); `Toc.update` (already listed). Checks read internals as public API
 (`TimePicker.elements` / `isPanelCreated`, Filter's `criteria` / `queryAll` …): the plan's rule made them banner lines.
 
@@ -48,8 +49,13 @@ the rules of section 2, a cross-file table so one meaning gets one name: `setupE
 `check-banners.mjs` matched `emitEvent(` (now `_dispatchEvent(`); JSD-19 matched `.valid` (now `._?valid`); the names
 check skipped the words of a `_` field (now checked); the rule files cite members (RULES-JSA/JSD/JSP/JSS).
 
-**Next session starts here: step 4, public renames with Migration rows** (section 3, the "Public members the step
-found" list above, the storage keys and `window.NDSInitConfig`); then step 5 speed; step 6 the checks fail the release.
+**Next session starts here: step 5, speed** (section 7), then step 6, the checks fail the release. Open from step 4:
+- The nds-iq-eval scenarios S14 and S25 and the `fixtures/mini-root/_source` snapshot name old API (`updateRecords`,
+  `populate`, `menuOf`): load the `nds-iq-eval` skill before touching them.
+- The v2 method renames listed in CHANGELOG's Migrating entry (`validateForm` → `validate`, `slideTo` → `goTo` …)
+  have no rows in `_data/migrations.yml`, so the Migration page misses them; step 4's rows are there.
+- A/B checks run HEAD's bundles against today's: a renamed name they call needs both spellings
+  (`check-form-validate`'s `setSelection || applySelection`, `check-form-speed`'s two config names).
 
 **How the WeakMap move was made** (P12.14, done): four Sonnet batches by family, one brief (in `tmp/weakmap/`, gone
 with `tmp/`): a mark → a module `WeakSet`, a value → a `WeakMap` named for what it holds, values with one lifetime →
@@ -320,18 +326,50 @@ agents read them) and gets a Migration row when a released template shipped it (
   10's "read again"; `apply` is `Function.prototype.apply`.
 - `NDS.badge(el, count)` → `setBadge(el, count)` (rule 1: verb first).
 
-**Found by the check (2026-10-21), to decide by the pick order before step 4** (`--names`, lines tagged "on the
-banner"): `NDS.isRTL` (acronym), `NDS.onAttrChange` and `NDS.resolveEl` (short words), `Multiselect.populate`,
-`Pagination.updateRecords`, `Sort.apply`, `Upload.refreshUI` (replaced verbs), `Table.createResponsive` /
-`createColumnToggle` (DOM or instance?), and noun-first names: core's `strings`, `safeMerge`, `rafThrottle`,
-`afterPaint`, `latinDigits`, `uniqueId`, `cellText`, `ownParts`, `ownItems`, `safeUrl`, `stickyHeaderBottom`,
-`viewportPadding`, `visibleBox`, `homeOf`, `topLayer`; `Dropmenu.menuOf`; `Export.csv` / `xls` / `pdf`; the
-loader's `audit` and `owns`; Accessibility's `state`; `NDS.DatePicker.CalendarConfig`, an object in PascalCase (rule 8: camelCase). The consumer setting
-`window.NDSInitConfig` (rule 2: `NDS_{NAME}`). Shorthand namespaces the check first missed: `TimeDate.updateDate` /
-`updateClock`, `CityWeather.updateCity` / `updateWeather`, `Date.calendarFor` / `monthNames` / `weekdayNames` / `today`,
-`Fab.resolvePos` / `dock`, `Numbers.initCounters`, `Pagination.initAuto`, `Selection.selected`, `Table.row`,
-`Copy.bind`, `dialog.top`, `consent.allowed`, `field.control`, `Stepper.control`, `audit.rule`. Run `--names` and
-read the lines tagged "on the banner" for the whole list. Each shipped in v1.12.0 gets a Migration row.
+**Found by the check (2026-10-21), decided 2026-10-21** (entry 10's tables; a row only when the name is on
+v1.12.0's public surface, checked per name against the tag):
+
+| Today | Becomes | Why |
+|---|---|---|
+| `NDS.isRTL` | `isRtl` | 10.3 |
+| `NDS.i18n.strings(c, d)` | `getStrings(c, d)` | a value held: `getX` |
+| `NDS.i18n.safeMerge(t, s)` | `mergeOwnKeys(t, s)` | verb first; what it copies is the name (a bare `merge` read as merging packs, and JSD-10 cannot watch it) |
+| `NDS.rafThrottle(fn)` | `throttleToFrame(fn)` | verb first, whole words |
+| `NDS.afterPaint(fn)` | `onNextPaint(fn)` | a one-shot schedule, as `onIdle` / `onTransitionEnd` beside it |
+| `NDS.latinDigits(s)` | `toLatinDigits(s)` | convert: `toX` |
+| `NDS.onAttrChange` | `onAttributeChange` | 10.8 |
+| `NDS.uniqueId(prefix)` | `getUniqueId(prefix)` | a value computed: `getX` |
+| `NDS.resolveEl(x)` | `resolveElement(x)` | 10.8 |
+| `NDS.cellText(cell)` | `getCellText(cell)` | `getX` (v1.12's `Table.getCellText` row now points here) |
+| `NDS.ownParts` / `ownItems` | `findOwnParts` / `findOwnItems` | searches the DOM: `findX` (Accordion's local is already `findOwnParts`) |
+| `NDS.safeUrl(url)` | `toSafeUrl(url)` | convert |
+| `NDS.stickyHeaderBottom()` / `viewportPadding(el)` / `visibleBox()` | `getStickyHeaderBottom` / `getViewportPadding` / `getVisibleBox` | `getX` |
+| `NDS.homeOf(el)` | `getHome(el)` | `getX`, beside `markHome` / `sendHome` |
+| `NDS.topLayer(el, on)` | `setTopLayer(el, on)` | takes a value: `setX` |
+| `NDS.audit.rule(def)` | `addRule(def)` | items in a list; matches `validation.addRule` |
+| `CityWeather.updateWeather()` / `updateCity()` | `loadWeather()` / `syncCity()` | re-fetch is a load; the city re-renders from state |
+| `TimeDate.updateDate()` / `updateClock()` | `syncDate()` / `syncClock()` | no input: `syncX` |
+| `Copy.bind(sel, opts)` | `addListeners(sel, opts)` | `bind` is `Function.prototype.bind` |
+| `Date.calendarFor` / `monthNames` / `weekdayNames` / `today` | `getCalendar` / `getMonthNames` / `getWeekdayNames` / `getToday` | `getX` |
+| `dialog.top()` | `getTop()` | `getX` |
+| Dropmenu `menuOf(dropmenu)` | `getMenu(dropmenu)` | `getX` |
+| Export `csv` / `xls` / `pdf` | `exportCsv` / `exportXls` / `exportPdf` | verb first (`export` is the module's verb) |
+| Fab `dock()` / `resolvePos(fab, o)` | `getDock()` / `resolvePosition(fab, o)` | `getX`; 10.8 |
+| `init.owns(el)` / `init.pending(el)` | `isOwned(el)` / `isPending(el)` | 10.1 true/false |
+| Multiselect `populate(options, selected)` / `apply()` | `renderOptions(options, selected)` / `commit()` | `renderX`; `commit` as `IDBTransaction.commit()`: the picks take effect |
+| Pagination `updateRecords(listOrId, r)` | `setRecords(listOrId, r)` | takes a value |
+| Selection `selected(list)` | `getSelected(list)` | `getX` |
+| Sort `apply(key, order)` / `opts` | `setSort(key, order)` / `options` | takes a value; 10.8 |
+| Table `row(tr)` | `getRow(tr)` | `getX` |
+| Table instance `recheckWidth()` | `refresh()` | entry 10's first table: measure again is `refresh` (the namespace's is already) |
+| Upload instance `refreshUI()` | `refresh()` | the same meaning; 10.3 |
+| `window.NDSInitConfig` | `window.NDS_INIT_CONFIG` | entry 12 rule 2, as `NDS_ASSETS_PATH` |
+
+**Kept, with the reason:** `NDS.init.audit()` and `Stepper.control(t, action)` (verbs); `Accessibility.state`
+and `Date.site` (properties are nouns: entry 10 names methods); `Table.createResponsive` / `createColumnToggle`
+(`create` returns the instance, 10.7, and the noun names the part, 10.2); `Numbers.initCounters()` and
+`Pagination.initAuto()`: a new carve-out in entry 10, "`initX` on a namespace runs `init()` for one part only",
+since the loader hook already means "wire every element" and no other verb says "the same, for this part".
 
 **Born in v2 (shared-logic), no row:**
 

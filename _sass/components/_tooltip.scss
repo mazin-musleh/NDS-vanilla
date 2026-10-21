@@ -87,7 +87,7 @@
 // ==============================================
 // 3. BALLOON
 // ==============================================
-// A [popover] in the top layer while open (NDS.topLayer), still a DOM child of
+// A [popover] in the top layer while open (NDS.setTopLayer), still a DOM child of
 // its .nds-tooltip.
 
 .nds-tooltip-balloon {

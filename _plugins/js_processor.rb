@@ -257,11 +257,11 @@ class JSProcessor
 
   # _data/migrations.yml as the audit's rows: [kind, name, scope, status, use, since, fix, inert],
   # 0 for an empty field. A fix that only says "Use <use>." is rebuilt at runtime. Events, URL
-  # params, JS APIs and file names stay out: a page cannot see a listener, a call, a bundle list or
-  # what its server reads.
+  # params, JS APIs, file names and storage keys stay out: a page cannot see a listener, a call, a
+  # bundle list, what its server reads or what its code reads.
   MIGRATIONS = '_data/migrations.yml'
   def migrations_js
-    rows = YAML.load_file(MIGRATIONS).reject { |r| %w[event param api file].include?(r['kind']) }.map do |r|
+    rows = YAML.load_file(MIGRATIONS).reject { |r| %w[event param api file storage].include?(r['kind']) }.map do |r|
       fix = r['fix'] == "Use #{r['use']}." ? 0 : r['fix']
       [r['kind'], r['name'], r['scope'] || 0, r['status'], r['use'] || 0, r['since'].to_s, fix || 0, r['inert'] ? 1 : 0]
     end

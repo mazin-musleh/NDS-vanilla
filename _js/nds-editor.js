@@ -116,7 +116,7 @@
     const URL_SCHEMES = /^(?:https?|mailto|tel):/i;
     const SRC_SCHEMES = /^(?:https?:|data:image\/)/i;
     const cleanUrl = (url) => url.replace(/^[\u0000-\u0020]+|[\u0000-\u0020]+$/g, '').replace(/[\t\n\r]/g, '');
-    // Local fork of the NDS.safeUrl name — answers a boolean and keeps a
+    // Local fork of the NDS.toSafeUrl name — answers a boolean and keeps a
     // relative URL exactly as authored, where core returns an absolutized
     // href; the doc-example canon above depends on that. Do not swap.
     const isSafeUrl = (url) => URL_SCHEMES.test(url) || !HAS_SCHEME.test(url);
@@ -660,7 +660,7 @@
     // The editable and toolbar aren't native form controls, so the field's
     // disabled/readonly effects don't reach them.
     ['disabled', 'readonly'].forEach(token =>
-        NDS.state.effect(token, '.nds-editor', el => el.ndsEditor?._syncAccessState()));
+        NDS.state.onToggle(token, '.nds-editor', el => el.ndsEditor?._syncAccessState()));
 
     // ---------- Toolbar generation ----------
 
@@ -702,7 +702,7 @@
         remove:    { icon: 'delete-02' },
     };
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('editor', {
+    const strings = NDS.i18n.getStrings('editor', {
         undo: 'Undo',
         redo: 'Redo',
         clear: 'Clear formatting',
@@ -2304,7 +2304,7 @@
 
         // Popover fields live in the menu.
         _getMenu(dropmenu) {
-            return (dropmenu && NDS.Dropmenu.menuOf(dropmenu)) || dropmenu;
+            return (dropmenu && NDS.Dropmenu.getMenu(dropmenu)) || dropmenu;
         }
 
         _getImageUploadHost() {

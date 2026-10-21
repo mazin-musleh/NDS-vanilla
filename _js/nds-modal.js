@@ -63,7 +63,7 @@
     activeModal = modal;
 
     // The from-state paints first, so the CSS transition runs.
-    NDS.afterPaint(() => {
+    NDS.onNextPaint(() => {
       if (activeModal !== modal) return;
       NDS.state.set(modal, 'open');
       modal.dispatchEvent(new CustomEvent('nds:modal:opened', { bubbles: true }));
@@ -72,7 +72,7 @@
     const isStatic = () => modal.hasAttribute('data-modal-static');
     const handleEscape = (e) => {
       // A dialog above it (a modal panel inside) answers instead.
-      if (e.key !== 'Escape' || e.defaultPrevented || NDS.dialog.top() !== modal) return;
+      if (e.key !== 'Escape' || e.defaultPrevented || NDS.dialog.getTop() !== modal) return;
       // The native close skips the fade.
       e.preventDefault();
       if (!isStatic()) close();

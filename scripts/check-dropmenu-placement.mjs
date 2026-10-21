@@ -86,7 +86,7 @@ const inModal = async (page, { rows = 8, row = 3 } = {}) => page.evaluate(async 
     await new Promise((r) => setTimeout(r, 400));
 
     const control = field.querySelector('.nds-form-control');
-    const menu = NDS.Dropmenu.menuOf(control);
+    const menu = NDS.Dropmenu.getMenu(control);
     const r = menu.getBoundingClientRect();
     return {
         inTopLayer: menu.matches(':popover-open') && control.contains(menu),
@@ -141,11 +141,11 @@ await page.setViewportSize({ width: 1280, height: 900 });
 await inModal(page, { row: 3 });
 const nested = await page.evaluate(async () => {
     const control = document.querySelectorAll('#probe-modal .nds-form-control')[3];
-    const menu = NDS.Dropmenu.menuOf(control);
+    const menu = NDS.Dropmenu.getMenu(control);
     const subWrapper = menu.querySelector('.nds-dropmenu.nds-month-dropmenu');
     subWrapper.querySelector('.nds-dropmenu-trigger').click();
     await new Promise((r) => setTimeout(r, 300));
-    const subMenu = NDS.Dropmenu.menuOf(subWrapper);
+    const subMenu = NDS.Dropmenu.getMenu(subWrapper);
     const out = {
         calendarStillOpen: !menu.hasAttribute('hidden'),
         subOpen: !!subMenu && subMenu.matches(':popover-open'),
@@ -171,7 +171,7 @@ const plain = await page.evaluate(async () => {
     (field.querySelector('.date-picker-toggle') || input).click();
     await new Promise((r) => setTimeout(r, 400));
     const control = field.querySelector('.nds-form-control');
-    const menu = NDS.Dropmenu.menuOf(control);
+    const menu = NDS.Dropmenu.getMenu(control);
     const r = menu.getBoundingClientRect();
     return { inPlace: control.contains(menu), inViewport: r.top >= 0 && r.bottom <= window.innerHeight };
 });
@@ -202,7 +202,7 @@ const table = await tablePage.evaluate(async () => {
     await new Promise((r) => setTimeout(r, 150));
     trigger.click();
     await new Promise((r) => setTimeout(r, 300));
-    const menu = NDS.Dropmenu.menuOf(wrapper);
+    const menu = NDS.Dropmenu.getMenu(wrapper);
     const r = menu.getBoundingClientRect();
     const out = {
         inTopLayer: menu.matches(':popover-open') && wrapper.contains(menu),
@@ -238,7 +238,7 @@ const table = await tablePage.evaluate(async () => {
     await new Promise((r) => setTimeout(r, 150));
     dTrigger.click();
     await new Promise((r) => setTimeout(r, 300));
-    const darkBg = getComputedStyle(NDS.Dropmenu.menuOf(darkWrapper)).backgroundColor;
+    const darkBg = getComputedStyle(NDS.Dropmenu.getMenu(darkWrapper)).backgroundColor;
     out.darkDiffers = darkBg !== getComputedStyle(menu).backgroundColor;
     out.darkBg = darkBg;
     return out;

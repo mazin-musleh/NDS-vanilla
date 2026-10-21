@@ -98,7 +98,7 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
     click('m1-reset');
 
     // Cycle: mode from one trigger
-    out.m2Mode = document.getElementById('m2').ndsSort.opts.mode;
+    out.m2Mode = document.getElementById('m2').ndsSort.options.mode;
     click('m2-a'); out.m2c1 = [T('m2'), st('m2-a')];
     click('m2-a'); out.m2c2 = [T('m2'), st('m2-a')];
     click('m2-b'); out.m2Other = [T('m2'), st('m2-a'), st('m2-b')];
@@ -152,14 +152,14 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
     const s1 = NDS.Sort.create(r1, { items: '.row', triggers: '.t', onChange: a => { order.push('onChange'); changeArg = a; } });
     r1.querySelector('.t').click();
     out.c1 = [L(r1), order.join('>'), detail.key, detail.order, detail.orderedItems.length, detail.sort === s1, changeArg.key, changeArg.order, JSON.stringify(changeArg.state), changeArg.orderedItems.length];
-    out.sameInstance = NDS.Sort.create(r1, { mode: 'cycle' }) === s1 && s1.opts.mode === 'direct';
+    out.sameInstance = NDS.Sort.create(r1, { mode: 'cycle' }) === s1 && s1.options.mode === 'direct';
     r1.id = 'r1x';
     out.getInstance = [NDS.Sort.getInstance(r1) === s1, NDS.Sort.getInstance('#r1x') === s1, NDS.Sort.getInstance(document.body), NDS.Sort.create(null)];
 
     // apply / reset / getState / refresh no-op / destroy
-    s1.apply('p', 'asc'); out.apply = [L(r1), JSON.stringify(s1.getState())];
-    s1.apply(null); out.applyNull = [L(r1), JSON.stringify(s1.getState())];
-    s1.apply('d', 'asc'); out.dateSort = L(r1);
+    s1.setSort('p', 'asc'); out.apply = [L(r1), JSON.stringify(s1.getState())];
+    s1.setSort(null); out.applyNull = [L(r1), JSON.stringify(s1.getState())];
+    s1.setSort('d', 'asc'); out.dateSort = L(r1);
     s1.reset(); out.reset = L(r1);
     order.length = 0; s1.refresh(); out.refreshNoop = order.length;
     s1.destroy(); r1.querySelector('.t').click();
@@ -172,7 +172,7 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
     outside.firstChild.click(); out.arrayItems = L(r2);
     const r3 = mk(rows);
     const s3 = NDS.Sort.create(r3, { items: r3.querySelectorAll('.row'), triggers: [], reorderIn: r3.querySelector('.list') });
-    s3.apply('p', 'desc'); out.nodeList = L(r3);
+    s3.setSort('p', 'desc'); out.nodeList = L(r3);
 
     // selector out of scope warns once
     const r4 = mk(rows);
@@ -188,8 +188,8 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
     hb.click(); out.a11ySort1 = [L(r5), th.getAttribute('aria-sort'), th.getAttribute('data-state'), hb.getAttribute('data-state')];
     hb.click(); out.a11ySort2 = [th.getAttribute('aria-sort'), th.getAttribute('data-state')];
     hb.click(); out.a11ySort3 = [th.getAttribute('aria-sort'), th.getAttribute('data-state') || '', hb.getAttribute('data-state') || ''];
-    s5.apply('z', 'asc');
-    s5.opts.types = {}; s5.apply('z', 'asc'); out.typesNumber = L(r5);
+    s5.setSort('z', 'asc');
+    s5.options.types = {}; s5.setSort('z', 'asc'); out.typesNumber = L(r5);
 
     // a11y none
     const r6 = mk('<button class="t6" data-sort="p">p</button>' + rows);
@@ -209,8 +209,8 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
     const r9 = mk('<button class="t9" data-sort="n">n</button><ul><li class="row" data-sort-n="1">1</li><li class="row" data-sort-n="3">3</li><li class="row" data-sort-n="2">2</li></ul>');
     const s9 = NDS.Sort.create(r9, { items: '.row', triggers: '.t9', urlSync: { keyParam: 'sk', orderParam: 'sd' } });
     out.urlRead = [L(r9), JSON.stringify(s9.getState())];
-    s9.apply('n', 'asc'); out.urlAsc = location.search;
-    s9.apply('n', 'desc'); out.urlDesc = location.search;
+    s9.setSort('n', 'asc'); out.urlAsc = location.search;
+    s9.setSort('n', 'desc'); out.urlDesc = location.search;
     s9.reset(); out.urlReset = location.search;
 
     // URL guards: a key no trigger has never wins, values Sort did not write survive, the order is normalized
@@ -219,12 +219,12 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
     const s10 = NDS.Sort.create(r10, { items: '.row', triggers: '.t10', urlSync: { keyParam: 'sk', orderParam: 'sd' } });
     out.urlForeignKey = JSON.stringify(s10.getState());
     s10.reset(); out.urlForeignKept = location.search + location.hash;
-    s10.apply('p', 'asc'); out.urlForeignOrderKept = location.search + location.hash;
+    s10.setSort('p', 'asc'); out.urlForeignOrderKept = location.search + location.hash;
     history.replaceState({}, '', location.pathname + '?sk=p&sd=DESC');
     const r11 = mk('<button class="t11" data-sort="p">p</button>' + rows);
     const s11 = NDS.Sort.create(r11, { items: '.row', triggers: '.t11', urlSync: { keyParam: 'sk', orderParam: 'sd' } });
     out.urlUpper = [JSON.stringify(s11.getState()), L(r11)];
-    s11.apply('p', 'bogus'); out.badOrder = JSON.stringify(s11.getState());
+    s11.setSort('p', 'bogus'); out.badOrder = JSON.stringify(s11.getState());
     // A trigger's order in another case still marks it; resetting one sort keeps another sort's order
     const r12 = mk('<button class="t12" data-sort="p" data-sort-order="DESC">p</button>' + rows);
     NDS.Sort.create(r12, { items: '.row', triggers: '.t12' });
@@ -324,8 +324,8 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
   release();
   const after = await page.evaluate(async () => {
     const inst = await window.__p;
-    inst.apply('n', 'asc');
-    return [typeof inst.apply, [...window.__d.querySelectorAll('.row')].map(e => e.textContent).join(',')];
+    inst.setSort('n', 'asc');
+    return [typeof inst.setSort, [...window.__d.querySelectorAll('.row')].map(e => e.textContent).join(',')];
   });
   ok('stub before bundle: create() returns a Promise', stub.isStub && stub.promise, stub);
   ok('Promise resolves to a working instance', JSON.stringify(after) === JSON.stringify(['function', '1,2']), after);

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 02:03 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="topbar-overview" class="nds-content-section nds-doc-overview">
@@ -380,11 +380,11 @@ The widgets also work outside the top bar, such as in a kiosk header or a dashbo
 | `NDS.DigitalStamp.toggle()` | Opens or closes the stamp panel |
 | `NDS.DigitalStamp.isOpen()` | Returns `true` while the panel is open and not closing |
 | `NDS.TimeDate.init()` | Starts the date and the clock, and renders them again. Call it after you add or replace a widget |
-| `NDS.TimeDate.updateDate()` | Renders the date now |
-| `NDS.TimeDate.updateClock()` | Renders the clock now |
+| `NDS.TimeDate.syncDate()` | Renders the date now |
+| `NDS.TimeDate.syncClock()` | Renders the clock now |
 | `NDS.CityWeather.init()` | Starts the city and the weather, and renders them again. Call it after you add or replace a widget |
-| `NDS.CityWeather.updateWeather()` | Fetches the weather and renders it |
-| `NDS.CityWeather.updateCity()` | Renders the city name |
+| `NDS.CityWeather.loadWeather()` | Fetches the weather and renders it |
+| `NDS.CityWeather.syncCity()` | Renders the city name |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |

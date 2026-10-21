@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 01:47 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="pagination-overview" class="nds-content-section nds-doc-overview">
@@ -369,14 +369,14 @@ On a nav the script builds, the menu of hidden pages opens on the current page. 
 ### Per-Page Picker
 {: .nds-block-title}
 
-The per-page picker is a [Dropmenu](../components/dropmenu) picker (`data-select-name`). `data-per-page-target` names the `id` of the container, and each item's `data-value` becomes its `--per-page`. A new size goes back to page 1. When a server sends the items, leave out `data-per-page-target`, listen for `nds:dropmenu:select`, and load the page with its `detail.value` yourself. Then call `setTotalPages()` and `updateRecords()` with the server's numbers.
+The per-page picker is a [Dropmenu](../components/dropmenu) picker (`data-select-name`). `data-per-page-target` names the `id` of the container, and each item's `data-value` becomes its `--per-page`. A new size goes back to page 1. When a server sends the items, leave out `data-per-page-target`, listen for `nds:dropmenu:select`, and load the page with its `detail.value` yourself. Then call `setTotalPages()` and `setRecords()` with the server's numbers.
 
 `data-per-page-param` on the picker keeps the page size in the address as `?per-page=9`. A reload or a shared link then opens the same size. At load, the script reads the size before the list shows, and sets the picker to it. A size that is not in the menu is ignored. When the user picks a size, the script writes it to the address. When the user picks the default size, the `data-select-value` you wrote, the script removes it. The script keeps that size in `data-per-page-default`. A server that already applied `?per-page=` to `data-select-value` writes `data-per-page-default` itself, with the size it uses when the address has no size. To use a name other than `per-page`, give the attribute a value, as with `data-page-param`. When a server sends the items, read the picker's `data-select-value` for the first request.
 
 ### Records Counter
 {: .nds-block-title}
 
-An element with `data-paged-target` shows the range and the count of the container with that `id`. The script writes the numbers into its `data-paged-from`, `data-paged-to` and `data-paged-count` slots, with thousand separators. The sentence around the slots is yours, in your language. When a server sends the items, call `NDS.Pagination.updateRecords()` with your own numbers.
+An element with `data-paged-target` shows the range and the count of the container with that `id`. The script writes the numbers into its `data-paged-from`, `data-paged-to` and `data-paged-count` slots, with thousand separators. The sentence around the slots is yours, in your language. When a server sends the items, call `NDS.Pagination.setRecords()` with your own numbers.
 
 ### URL Sync
 {: .nds-block-title}
@@ -543,7 +543,7 @@ After a page change, the script scrolls the content back into view when its top 
 | `NDS.Pagination.setPage(nav, page)` | Moves the current page and scrolls to the content, unless the nav has `data-pagination-no-scroll`. It fires no event |
 | `NDS.Pagination.setTotalPages(nav, total, page)` | Builds a written or data-driven nav again with a new page count. It keeps the current page, or the last page when the count drops below it. `page` goes to that page instead. A count of 0 or 1 hides the nav. The same count does not build the nav again: it only moves the current page. It does nothing on a content nav |
 | `NDS.Pagination.refresh(content, { keepPage })` | Counts the pages of a `.nds-paged-content` again and goes to page 1. `keepPage: true` stays on the current page. Added and removed items need no call |
-| `NDS.Pagination.updateRecords(id, { from, to, count })` | Writes your numbers into the counter slots of `[data-paged-target="id"]` |
+| `NDS.Pagination.setRecords(id, { from, to, count })` | Writes your numbers into the counter slots of `[data-paged-target="id"]` |
 | `NDS.Pagination.scrollToContent(nav)` | Scrolls to the content now, also on a nav with `data-pagination-no-scroll` |
 | `NDS.Pagination.destroy(nav)` | Removes the nav's listeners and marks it as not started, so `init()` can start it again. The items keep the page they show |
 {: .nds-table .nds-responsive}
@@ -562,7 +562,7 @@ async function loadPage(page) {
   var res = await NDS.request('/requests?page=' + page, { json: true, signal: pending.signal });
   renderRows(res.data.rows);
   NDS.Pagination.setTotalPages(nav, res.data.totalPages);
-  NDS.Pagination.updateRecords('requestsList', { from: res.data.from, to: res.data.to, count: res.data.count });
+  NDS.Pagination.setRecords('requestsList', { from: res.data.from, to: res.data.to, count: res.data.count });
 }
 NDS.init.ready.then(function () {
   return loadPage(nav.dataset.activePage || 1);

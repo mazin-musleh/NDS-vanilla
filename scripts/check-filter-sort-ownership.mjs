@@ -4,7 +4,7 @@
 // calls _resyncSort(), which re-creates NDS.Sort on the swapped-in container
 // with urlSync — and NDS.Sort's init() reads ?sort=&order= and REORDERS. Meanwhile
 // _buildAjaxRequest builds its query from FormData alone, so sort/order never
-// reach the server (updateUrlParams deliberately preserves them as NDS.Sort's).
+// reach the server (syncUrlParams deliberately preserves them as NDS.Sort's).
 //
 // This harness reports the split as data rather than reasoning about it:
 //   Q1  after an AJAX swap, does the client re-order the server's rows?
@@ -178,7 +178,7 @@ const report = await page.evaluate(async () => {
     // This is what a dev who owns sorting server-side actually authors. With no
     // [data-sort], _setupSort() returns early and NDS.Sort is never created, so
     // nothing client-side claims the ?sort= key. Question: does the dev's sort
-    // value reach the SHAREABLE URL, or does updateUrlParams' unconditional
+    // value reach the SHAREABLE URL, or does syncUrlParams' unconditional
     // sort/order skip drop it?
     const host2 = document.createElement('div');
     host2.innerHTML = `

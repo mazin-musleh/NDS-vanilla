@@ -16,7 +16,7 @@ for (const pg of PAGES) {
   const inits = [];
   if (INITS) {
     // The loader's own per-component timing; logging would also pull the audit bundle, so it is blocked.
-    await page.addInitScript(() => { window.NDSInitConfig = { enableLogging: true, enableTiming: true }; });
+    await page.addInitScript(() => { window.NDS_INIT_CONFIG = { enableLogging: true, enableTiming: true }; });
     await page.route('**/nds-audit.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
     page.on('console', (m) => { const x = m.text().match(/^\[NDS:init\] (\S+) ([\d.]+)ms/); if (x) inits.push([x[1], +x[2]]); });
   }

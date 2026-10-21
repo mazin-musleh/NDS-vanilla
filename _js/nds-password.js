@@ -103,7 +103,7 @@
     }
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    var strings = NDS.i18n.strings('password', {
+    var strings = NDS.i18n.getStrings('password', {
         mismatch: 'The two passwords do not match',
         met: '{n} of {total} password rules met',
     });

@@ -249,7 +249,7 @@ const report = await page.evaluate(async () => {
     await probeApi('clear()', () => f.clear(), true);
     await probeApi('clearDropmenuFilters() [clear BUTTON]', () => f.clearDropmenuFilters());
     await probeApi('reset()', () => f.reset());
-    await probeApi('applyFilters()', () => f.applyFilters());
+    await probeApi('syncFilters()', () => f.syncFilters());
     await probeApi('submitForm() [documented escape hatch]', () => f.submitForm());
     // Private (underscore) — listed for completeness, not a consumer surface.
     await probeApi('_setRangeValues (internal)', () => f._setRangeValues('price', 100, 400), true);
@@ -286,7 +286,7 @@ const report = await page.evaluate(async () => {
     if (thumbs.length === 2) {
         thumbs[0].value = '300'; thumbs[1].value = '700';
         thumbs.forEach((t) => t.dispatchEvent(new Event('input', { bubbles: true })));
-        f.updateUrlParams();
+        f.syncUrlParams();
         findings.push({ id: 'slider round-trips through the URL', detail: window.location.search || '(no params)' });
     }
 
@@ -294,7 +294,7 @@ const report = await page.evaluate(async () => {
     //
     // The setters were rerouted for every mode, not just AJAX, so a client-side
     // filter is the control group: _commitCriteriaChange falls through to
-    // applyFilters there, and setFilterValues must still hide rows and fire no
+    // syncFilters there, and setFilterValues must still hide rows and fire no
     // request. Without this the change could silently turn ordinary filtering
     // into a no-op and the AJAX assertions above would never notice.
     // A new instance reads the live URL in _readUrlParams(), so it would inherit

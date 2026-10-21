@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:24 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -341,7 +341,7 @@ Every card carries two marks: `sector` and `fee`. A group in the menu filters by
 ### Option Groups
 {: .nds-block-title}
 
-An element with `data-filter` in the menu is a group. Its options come from one of four places: the marks on the items (`data-filter-type`), a list on the group (`data-filter-values`), inputs you write, or your script (`populateFilter()`). From the marks, the script makes one option per value it finds, sorted, in a `<fieldset>` that replaces the element.
+An element with `data-filter` in the menu is a group. Its options come from one of four places: the marks on the items (`data-filter-type`), a list on the group (`data-filter-values`), inputs you write, or your script (`renderFilter()`). From the marks, the script makes one option per value it finds, sorted, in a `<fieldset>` that replaces the element.
 
 The user picks values in the menu, and Apply applies them all at once. Closing the menu without Apply puts back the values that were applied, so the search box or a chip never applies a value the user did not apply. A checkbox or switch group matches an item that has any picked value. An item must match every group that has a value.
 
@@ -365,13 +365,13 @@ A group that holds a range [Slider](../components/slider) (`.nds-slider-containe
 ### Options from a Script
 {: .nds-block-title}
 
-`populateFilter(name, values, type)` builds a group's options from values your script fetched, and a second call replaces them. Use it for cascading groups: call it again when the parent group changes. Leave `data-filter-type` off that group, as below. `refresh()` rebuilds every group that has it from the items, and would replace your values.
+`renderFilter(name, values, type)` builds a group's options from values your script fetched, and a second call replaces them. Use it for cascading groups: call it again when the parent group changes. Leave `data-filter-type` off that group, as below. `refresh()` rebuilds every group that has it from the items, and would replace your values.
 
 <script type="text/html" id="filter-populate-js" data-canon data-lang="js" data-preview="none">
 // In the menu: <div data-filter="entity" data-filter-legend="Entity"></div>
 NDS.Filter.whenReady('.nds-filter[data-filter-target="services-results"]', function (filter) {
   NDS.request('/api/entities', { json: true }).then(function (res) {
-    filter.populateFilter('entity', res.data.map(function (entity) { return entity.name; }), 'checkbox');
+    filter.renderFilter('entity', res.data.map(function (entity) { return entity.name; }), 'checkbox');
   });
 });
 </script>
@@ -660,7 +660,7 @@ Sort is not a filter value and is never sent with the form. Decide by what the s
 | `data-search` | `.nds-filter` | A search box at the top of the menu narrows the options. A number shows it only from that many options. See [Dropmenu](../components/dropmenu) |
 | `data-filter` | an element in a surface | A group. The value is the group's name and its URL key |
 | `data-filter="search"` | a text field in a surface, or its wrapper | The search field. In the menu, Apply runs it. A `.nds-search-input` outside the menu needs no attribute |
-| `data-filter-type` | a group | `checkbox`, `radio`, `switch` or `slider`: the script builds the options. Without it, the script uses the inputs you write in the group, or the options of `populateFilter()` |
+| `data-filter-type` | a group | `checkbox`, `radio`, `switch` or `slider`: the script builds the options. Without it, the script uses the inputs you write in the group, or the options of `renderFilter()` |
 | `data-filter-legend` | a group | The group's heading |
 | `data-filter-values` | a group with `checkbox`, `radio` or `switch` | The options as JSON: an array of values, or an object of value-label pairs. The script reads no items for this group |
 | `data-filter-variant` | a group | A class the script adds to each input (on a switch, to its `.nds-switch-toggle`), such as `nds-primary` |
@@ -715,10 +715,10 @@ Sort is not a filter value and is never sent with the form. Decide by what the s
 | `removeFilterValue(name, value)` | Removes one value, and applies the rest |
 | `removeSearchFilter()` | Clears the search term, and applies |
 | `resetRangeFilter(name)` | Puts a slider group back to its full range, and applies |
-| `populateFilter(name, values, type)` | Builds the group's options from `values`. `type` is `checkbox` by default |
+| `renderFilter(name, values, type)` | Builds the group's options from `values`. `type` is `checkbox` by default |
 | `getCriteria()` | A copy of the criteria: `{ search, filters: { name: [values] } }` |
 | `getVisibleItems()`, `getHiddenItems()` | The matching items, and the others |
-| `applyFilters()` | Applies the picked values. In form mode it updates the chips, the badge and the URL, and does not submit |
+| `syncFilters()` | Applies the picked values. In form mode it updates the chips, the badge and the URL, and does not submit |
 | `submitForm()` | Submits the form in form mode |
 | `clear()` | Clears every value, the search term and the sort, and applies nothing |
 | `reset()` | Clears everything and shows every item. In form mode it submits the form again |

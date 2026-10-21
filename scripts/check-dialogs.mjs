@@ -63,7 +63,7 @@ const st = (id) => page.evaluate((id) => {
   const d = document.getElementById(id), r = d.getBoundingClientRect();
   return { open: d.open, modal: d.hasAttribute('data-nds-modal') && (d.matches(':modal') || ('showPopover' in HTMLElement.prototype && d.matches(':popover-open'))), state: d.getAttribute('data-state') || '', under: d.hasAttribute('data-nds-under'),
     shown: getComputedStyle(d).display !== 'none', top: Math.round(r.top), left: Math.round(r.left), right: Math.round(r.right),
-    locked: document.body.hasAttribute('data-nds-scroll-lock'), topDialog: NDS.dialog.top()?.id, focusIn: d.contains(document.activeElement) };
+    locked: document.body.hasAttribute('data-nds-scroll-lock'), topDialog: NDS.dialog.getTop()?.id, focusIn: d.contains(document.activeElement) };
 }, id);
 const open = async (id, opts) => { await page.evaluate(([id, o]) => NDS.Panel.open(id, o), [id, opts]); await wait(); };
 const key = async (k = 'Escape') => { await page.keyboard.press(k); await wait(); };

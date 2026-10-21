@@ -167,7 +167,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
   border: 0;
 }
 
-// A popup NDS.topLayer shows as a [popover]: undo the browser's popover box (centred,
+// A popup NDS.setTopLayer shows as a [popover]: undo the browser's popover box (centred,
 // inset 0, its own overflow and colours) so the component's placement and look apply.
 // Absolute: in the top layer the page is its containing block, so page scroll carries it.
 @mixin top-layer {

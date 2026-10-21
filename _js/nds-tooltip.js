@@ -52,7 +52,7 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('tooltip', {
+    const strings = NDS.i18n.getStrings('tooltip', {
         more_info: 'More info',
     });
 
@@ -231,7 +231,7 @@
             this._hoverMode = this._root.hasAttribute('data-tooltip-hover');
             // Reserved now so aria-describedby holds whether the balloon
             // exists yet or is built on first open.
-            const id = this._balloonId = (this.balloon && this.balloon.id) || NDS.uniqueId('nds-tooltip-');
+            const id = this._balloonId = (this.balloon && this.balloon.id) || NDS.getUniqueId('nds-tooltip-');
 
             const existing = this._trigger.getAttribute('aria-describedby');
             if (!existing || !existing.split(/\s+/).includes(id)) {
@@ -348,7 +348,7 @@
             if (!this._rootIsControl) addState(this._root, 'open');
             this.balloon.hidden = false;
             // Top layer before measuring: nothing around the trigger clips or traps it there.
-            NDS.topLayer(this.balloon, true);
+            NDS.setTopLayer(this.balloon, true);
             this._syncPosition();
 
             // The balloon is inside the root, so one containment check covers both.
@@ -382,13 +382,13 @@
             this.openAbortController = null;
             if (this._offScroll) { this._offScroll(); this._offScroll = null; }
 
-            NDS.topLayer(this.balloon, false);
+            NDS.setTopLayer(this.balloon, false);
 
             this._dispatchEvent('nds:tooltip:closed');
         }
 
         _syncPosition() {
-            const gap = 8, pad = 8, edge = NDS.viewportPadding(this.balloon);
+            const gap = 8, pad = 8, edge = NDS.getViewportPadding(this.balloon);
 
             // Reset inline placement so the balloon's natural size can be
             // measured before re-placing.

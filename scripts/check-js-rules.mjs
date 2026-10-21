@@ -242,15 +242,15 @@ for (const f of readdirSync(join(REPO, '_js')).filter((x) => /^nds-.*\.js$/.test
     for (const m of src.matchAll(/(?<![\w.$])(?:window\.)?NDS\.([A-Za-z]\w*)\s*=(?!=)/g)) HOME[m[1]] ??= f;
 }
 const inMain = (ns) => BUNDLE[HOME[ns]] === 'main';
-const POOLS = 'Resize|ElementResize|Intersect|OutsideScroll|AttrChange|DOMAdd|DOMRemove|ChildrenChange';
+const POOLS = 'Resize|ElementResize|Intersect|OutsideScroll|AttributeChange|DomAdd|DomRemove|ChildrenChange';
 // JSD-08's core-utility allowlist; the values among them are read, not called, so only `?.` guards them.
-const CORE_UTILS = ['state', 'status', 'breakpoints', 'lang', 'isRTL', 'isArabic', 'langKey', 'escapeHtml', 'debounce',
-    'rafThrottle', 'onResize', 'onElementResize', 'onIntersect', 'onDOMAdd', 'onDOMRemove', 'onChildrenChange',
-    'onAttrChange', 'onOutsideScroll', 'trapFocus', 'scrollLock', 'cache', 'i18n', 'topLayer', 'place', 'flipPosition',
-    'uniqueId', 'transitionSpeed', 'focusableSel', 'onIdle'];
+const CORE_UTILS = ['state', 'status', 'breakpoints', 'lang', 'isRtl', 'isArabic', 'langKey', 'escapeHtml', 'debounce',
+    'throttleToFrame', 'onResize', 'onElementResize', 'onIntersect', 'onDomAdd', 'onDomRemove', 'onChildrenChange',
+    'onAttributeChange', 'onOutsideScroll', 'trapFocus', 'scrollLock', 'cache', 'i18n', 'setTopLayer', 'place', 'flipPosition',
+    'getUniqueId', 'transitionSpeed', 'focusableSel', 'onIdle'];
 // JSD-10: core functions a component must not re-declare.
-const CORE_FNS = new Set(['escapeHtml', 'debounce', 'rafThrottle', 'uniqueId', 'transitionSpeed', 'onIdle', 'trapFocus', 'flipPosition', 'safeUrl', 'safeMerge', 'setValue', 'announce']);
-const CORE_VALUES = new Set(['lang', 'isRTL', 'isArabic', 'langKey', 'focusableSel']);
+const CORE_FNS = new Set(['escapeHtml', 'debounce', 'throttleToFrame', 'getUniqueId', 'transitionSpeed', 'onIdle', 'trapFocus', 'flipPosition', 'toSafeUrl', 'mergeOwnKeys', 'setValue', 'announce']);
+const CORE_VALUES = new Set(['lang', 'isRtl', 'isArabic', 'langKey', 'focusableSel']);
 // JSD-13: the CSS transition durations NDS uses, and the tokens a transition writes.
 const DURATIONS = new Set([150, 200, 250, 300, 400]);
 const TRANSITION = new Set(['closing', 'opening', 'show', 'hide', 'shown', 'hidden', 'entering', 'exiting', 'collapsing', 'expanding']);
@@ -271,7 +271,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         }
     }
     const stateCall = (methods) => `(?:NDS\\.state\\.(?:${methods.join('|')})|${methods.flatMap((k) => aliases[k] || []).join('|') || '(?!)'})`;
-    const writers = [stateCall(['set', 'add', 'toggle', 'apply'])];
+    const writers = [stateCall(['set', 'add', 'toggle', 'refresh'])];
     const writesToken = (token) => new RegExp(`(?:${writers.join('|')})\\s*\\([^;]*?['"\`][^'"\`]*\\b${token}\\b`).test(code);
     const gated = (value) => value.split(/\s+/).filter(Boolean).some((t) => VOCAB.has(t));
     // A per-element guard is a module WeakSet (entry 12 rule 14): `wired.add(el)`.
@@ -306,7 +306,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     const hooksOn = (method) => [...code.matchAll(new RegExp(`${stateCall([method])}\\s*\\(\\s*([^,]+?)\\s*,`, 'g'))];
     const removes = new Set(hooksOn('onRemove').map((m) => m[1]));
     for (const m of hooksOn('onAdd')) {
-        if (removes.has(m[1])) hit('JSD-01d', m.index, m[0], 'register one NDS.state.effect unless the two hooks run different work');
+        if (removes.has(m[1])) hit('JSD-01d', m.index, m[0], 'register one NDS.state.onToggle unless the two hooks run different work');
     }
 
     // JSD-02 data-status outside NDS.status, read or write.
@@ -328,7 +328,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     }
 
     // JSP-04 (b) a pool call whose unsubscribe handle is dropped (a statement of its own).
-    const removed = new Set([...code.matchAll(/NDS\.onDOMRemove\(\s*(['"`])([^'"`]+)\1/g)].map((m) => m[2]));
+    const removed = new Set([...code.matchAll(/NDS\.onDomRemove\(\s*(['"`])([^'"`]+)\1/g)].map((m) => m[2]));
     for (const m of code.matchAll(new RegExp(`NDS\\.on(${POOLS})\\(`, 'g'))) {
         const before = bare.slice(0, m.index).trimEnd().at(-1);
         if (before && !';{})'.includes(before)) continue; // assigned, returned, passed or chained
@@ -336,7 +336,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         if (opens.length <= 1) continue; // the module IIFE's own body runs once
         const args = code.slice(m.index + m[0].length, m.index + m[0].length + 300);
         if (/^\s*(document\.documentElement|document\.body|document)\b/.test(args)) continue; // outlives the page
-        if (m[1] === 'DOMAdd' && removed.has((args.match(/^\s*(['"`])([^'"`]+)\1/) || [])[2])) continue;
+        if (m[1] === 'DomAdd' && removed.has((args.match(/^\s*(['"`])([^'"`]+)\1/) || [])[2])) continue;
         if (/^(ElementResize|Intersect)$/.test(m[1]) && /^[^,]+,\s*[A-Za-z_$][\w$.]*\s*[,)]/.test(args)) continue; // dedup pool + stable ref
         const fnOpen = outerFn(bare, m.index);
         const fnBody = bare.slice(fnOpen, blockEnd(bare, fnOpen)); // the latch may be set after the call
@@ -408,7 +408,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     }
 
     // A handler argument's body: inline, or the same-file function it names. `wrap` is the callee
-    // when the name is bound to a call (`const h = NDS.rafThrottle(fn)`).
+    // when the name is bound to a call (`const h = NDS.throttleToFrame(fn)`).
     const bodyAt = (open) => code.slice(open, blockEnd(bare, open));
     const bodyOf = (arg) => {
         const t = arg.text.replace(/\.bind\([^)]*\)$/, '');
@@ -447,7 +447,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     for (const m of code.matchAll(coreGuard)) {
         if (topLevel(m.index)) continue;
         const ns = m[1] || m[2];
-        if (m[3] && m[3] !== '?.' && CORE_VALUES.has(ns)) continue; // NDS.isRTL && x reads a value
+        if (m[3] && m[3] !== '?.' && CORE_VALUES.has(ns)) continue; // NDS.isRtl && x reads a value
         if (m[3] === ')' && !/(?:\bif\s*\(\s*|!\s*|&&\s*|\|\|\s*)$/.test(code.slice(Math.max(0, m.index - 12), m.index))) continue;
         hit('JSD-08', m.index, m[0].trim(), annotated(m.index) ? 'the comment above must name it and say why it is optional' : undefined);
     }
@@ -482,17 +482,17 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         const b = handler && bodyOf(handler);
         if (!b) { hit('JSP-02', m.index, 'scroll listener', 'its handler is not defined in this file: trace it'); continue; }
         if (b.wrap) {
-            if (/^NDS\.(rafThrottle|debounce)$/.test(b.wrap)) continue;
+            if (/^NDS\.(throttleToFrame|debounce)$/.test(b.wrap)) continue;
             const w = bodyOf({ text: b.wrap, at: 0 });
             if (w && /requestAnimationFrame\s*\(/.test(w.text)) continue;
         }
         const t = b.text;
-        if (/requestAnimationFrame\s*\(|NDS\.(?:debounce|rafThrottle|onResize)\s*\(|removeEventListener\s*\(/.test(t)) continue;
+        if (/requestAnimationFrame\s*\(|NDS\.(?:debounce|throttleToFrame|onResize)\s*\(|removeEventListener\s*\(/.test(t)) continue;
         if (/^\{\s*if\s*\(\s*![\w$.]+\.hasAttribute\([^)]*\)\s*\)\s*[\w$.]+\.setAttribute\([^)]*\)\s*;?\s*\}$/.test(t.trim())) continue; // one-time flag
         const called = [...t.matchAll(/(?:this\.)?([\w$]+)\s*\(/g)].map((c) => bodyOf({ text: c[1], at: 0 }) || {});
         if (called.some((c) => /removeEventListener\s*\(/.test(c.text || ''))) continue; // a single-shot dismiss
-        if (called.some((c) => c.wrap && /^NDS\.(rafThrottle|debounce)$/.test(c.wrap))) continue; // calls a throttled function
-        hit('JSP-02', m.index, 'scroll handler with no rAF / NDS.rafThrottle / NDS.debounce');
+        if (called.some((c) => c.wrap && /^NDS\.(throttleToFrame|debounce)$/.test(c.wrap))) continue; // calls a throttled function
+        hit('JSP-02', m.index, 'scroll handler with no rAF / NDS.throttleToFrame / NDS.debounce');
     }
 
     // JSA-21 (a) an explicit smooth scroll the reduced-motion preference never reaches.
@@ -557,15 +557,15 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         hit('JSP-08', m.index, `MutationObserver ${name} never disconnected`);
     }
 
-    // JSP-09 per-element listeners wired in an onDOMAdd callback with no matching onDOMRemove.
-    for (const m of code.matchAll(/NDS\.onDOMAdd\s*\(\s*(['"`])([^'"`]+)\1\s*,/g)) {
+    // JSP-09 per-element listeners wired in an onDomAdd callback with no matching onDomRemove.
+    for (const m of code.matchAll(/NDS\.onDomAdd\s*\(\s*(['"`])([^'"`]+)\1\s*,/g)) {
         if (removed.has(m[2])) continue;
         const [, cb] = argsAt(code, bare, code.indexOf('(', m.index));
         const body = cb && bodyOf(cb)?.text;
         if (!body || !/\.addEventListener\s*\(/.test(body)) continue; // only refreshes or restyles: nothing to tear down
         const delegated = [...body.matchAll(/([\w$.]+)\.addEventListener\s*\(/g)].every((l) => /^(document|window|document\.body)$/.test(l[1]));
         if (delegated) continue;
-        hit('JSP-09', m.index, `onDOMAdd('${m[2]}') wires listeners, no onDOMRemove`, 'a stable parent (delegation) or a self-guarding routine exempts it');
+        hit('JSP-09', m.index, `onDomAdd('${m[2]}') wires listeners, no onDomRemove`, 'a stable parent (delegation) or a self-guarding routine exempts it');
     }
 
     // JSP-10 a DOM walk at the top of a loader-registered module's IIFE, inside bundle eval.
@@ -625,7 +625,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         for (const n of s.text.matchAll(/(?:min|max)-(?:width|height)\s*:\s*(\d+)/g)) if (inBp(n[1])) { hit('JSD-03c', s.at, `matchMedia('${s.text}')`); break; }
     }
 
-    // JSD-04 a document-level dir / lang read that re-derives NDS.isRTL / NDS.lang. A full tag
+    // JSD-04 a document-level dir / lang read that re-derives NDS.isRtl / NDS.lang. A full tag
     // handed to Intl or speech is exempt: NDS.lang keeps only the primary subtag.
     const rootAlias = [...code.matchAll(/(?:const|let|var)\s+([\w$]+)\s*=\s*document\.(?:documentElement|body)\s*[;,\n]/g)].map((a) => esc(a[1]));
     const ROOT = `(?:document\\.(?:documentElement|body)${rootAlias.map((a) => `|(?<![\\w$.])${a}`).join('')})`;
@@ -658,7 +658,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     }
 
     // JSD-17 a bare element-arity function handed to a DOM-bus subscription, which passes an array.
-    for (const m of code.matchAll(/NDS\.on(?:DOMAdd|DOMRemove|ChildrenChange)\s*\(/g)) {
+    for (const m of code.matchAll(/NDS\.on(?:DomAdd|DomRemove|ChildrenChange)\s*\(/g)) {
         const [, cb] = argsAt(code, bare, m.index + m[0].length - 1);
         if (!cb || !/^[\w$.]+$/.test(cb.text)) continue; // an inline callback shows its own shape
         const fn = cb.text.split('.').at(-1);
@@ -1064,7 +1064,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     for (const p of code.matchAll(parsedFrom)) {
         const v = p[1];
         for (const u of code.matchAll(new RegExp(`Object\\.assign\\s*\\([^;]*?,\\s*${v}\\b|\\.\\.\\.\\s*${v}\\b`, 'g'))) {
-            if (/Object\.create\(null\)/.test(code.slice(u.index, u.index + 80)) || /safeMerge|delete\s+[\w$.]+\.__proto__/.test(code.slice(lineStart(code, u.index, 4), u.index))) continue;
+            if (/Object\.create\(null\)/.test(code.slice(u.index, u.index + 80)) || /i18n\.mergeOwnKeys\b|delete\s+[\w$.]+\.__proto__/.test(code.slice(lineStart(code, u.index, 4), u.index))) continue;
             hit('JSS-06', u.index, `${v} from a writable store merged without an own-key filter`, annotated(u.index) ? 'the comment above may say why the payload is trusted' : undefined);
         }
     }
@@ -1189,9 +1189,9 @@ const CASES = [
     [`(function(){ class A { constructor() { NDS.onResize(() => this.fit()); } } })();`, ['JSP-04b?']],
     [`(function(){ class A { constructor() { this.off = NDS.onResize(() => this.fit()); } destroy() { this.off(); } } })();`, []], // stored and released
     [`(function(){ class A { constructor() { this.off = NDS.onResize(() => this.fit()); } } })();`, ['JSD-09']], // stored, never released
-    [`(function(){ NDS.onDOMAdd('.x', wire); })();`, []], // module body runs once
+    [`(function(){ NDS.onDomAdd('.x', wire); })();`, []], // module body runs once
     [`(function(){ function init() { NDS.onResize(fit, document.body); } })();`, ['JSP-04b?']],
-    [`(function(){ function init() { NDS.onAttrChange(document.documentElement, ['lang'], f); } })();`, []], // outlives the page
+    [`(function(){ function init() { NDS.onAttributeChange(document.documentElement, ['lang'], f); } })();`, []], // outlives the page
     [`(function(){ function init() { if (done) return; done = true; NDS.onResize(fit); } })();`, []], // latch
     [`(function(){ function init() { if (!done) { done = true; NDS.onResize(fit); } } })();`, []], // latch, block form
     [`(function(){ function init() { NDS.onElementResize(el, fit); } })();`, []], // dedup pool, stable ref
@@ -1206,7 +1206,7 @@ const CASES = [
     [`(function(){ function f() { log(NDS.Modal); } })();`, []], // passed as an argument, not a test
     [`(function(){ function f() { if (NDS.debounce) NDS.debounce(g); } })();`, ['JSD-08']],
     [`(function(){ function f() { NDS.init?.refresh(el); } })();`, ['JSD-08']], // the loader's own API
-    [`(function(){ function f() { if (NDS.isRTL && x) go(); } })();`, []], // a value read, not a guard
+    [`(function(){ function f() { if (NDS.isRtl && x) go(); } })();`, []], // a value read, not a guard
     [`(function(){ NDS.init?.refresh(el); })();`, []], // module top level runs before the loader
     [`(function(){ NDS.Case = {}; function f() { NDS.Case?.init(); } })();`, ['JSD-08']], // own namespace
     [`(function(){ function close() { NDS.state.add(el, 'closing'); setTimeout(() => { NDS.state.clear(el); }, 300); } })();`, ['JSD-13']],
@@ -1215,8 +1215,8 @@ const CASES = [
     [`(function(){ function close() { NDS.state.add(el, 'closing'); setTimeout(() => poll(), 300); } })();`, []], // callback leaves el alone
     [`(function(){ const CONFIG = { transitionDuration: 250 }; function hide() { NDS.state.add(el, 'hide'); setTimeout(() => el.setAttribute('hidden', ''), CONFIG.transitionDuration); } })();`, ['JSD-13']],
     [`(function(){ function f() { el.addEventListener('scroll', () => { fit(); }); } })();`, ['JSP-02']],
-    [`(function(){ function f() { el.addEventListener('scroll', NDS.rafThrottle(fit)); } })();`, []],
-    [`(function(){ function f() { const r = NDS.rafThrottle(fit); el.addEventListener('scroll', (e) => { if (ok(e)) r(); }); } })();`, []], // calls a throttled function
+    [`(function(){ function f() { el.addEventListener('scroll', NDS.throttleToFrame(fit)); } })();`, []],
+    [`(function(){ function f() { const r = NDS.throttleToFrame(fit); el.addEventListener('scroll', (e) => { if (ok(e)) r(); }); } })();`, []], // calls a throttled function
     [`(function(){ function f() { const off = () => document.removeEventListener('scroll', h); function h() { close(); off(); } document.addEventListener('scroll', h); } })();`, []], // single-shot dismiss
     [`(function(){ function f() { el.scrollTo({ left: 0, behavior: 'smooth' }); } })();`, ['JSA-21a']],
     [`(function(){ function f() { if (NDS.prefersReducedMotion) return el.scrollTo(0, 0); el.scrollTo({ left: 0, behavior: 'smooth' }); } })();`, []],
@@ -1234,9 +1234,9 @@ const CASES = [
     [`(function(){ function f() { clearTimeout(t); t = setTimeout(run, 200); } function cancel() { clearTimeout(t); } })();`, []], // latch
     [`(function(){ function f() { clearTimeout(t); t = setTimeout(run, delay); } })();`, []], // a scheduler
     [`(function(){ function f() { const mo = new MutationObserver(cb); mo.observe(document.body); } })();`, ['JSP-05']], // page-lifetime root
-    [`(function(){ NDS.onDOMAdd('.x', (nodes) => nodes.forEach((n) => n.addEventListener('click', go))); })();`, ['JSP-09?']],
-    [`(function(){ NDS.onDOMAdd('.x', (nodes) => nodes.forEach((n) => n.addEventListener('click', go))); NDS.onDOMRemove('.x', unwire); })();`, []],
-    [`(function(){ NDS.onDOMAdd('.x', (nodes) => refresh(nodes)); })();`, []], // no listener of its own
+    [`(function(){ NDS.onDomAdd('.x', (nodes) => nodes.forEach((n) => n.addEventListener('click', go))); })();`, ['JSP-09?']],
+    [`(function(){ NDS.onDomAdd('.x', (nodes) => nodes.forEach((n) => n.addEventListener('click', go))); NDS.onDomRemove('.x', unwire); })();`, []],
+    [`(function(){ NDS.onDomAdd('.x', (nodes) => refresh(nodes)); })();`, []], // no listener of its own
     [`(function(){ class A { constructor(el) { this.w = el.getBoundingClientRect().width; } } })();`, ['JSP-11?']],
     [`(function(){ class A { constructor(el) { this.off = NDS.onElementResize(el, () => { this.w = el.offsetWidth; }); } destroy() { this.off(); } } })();`, []], // measured later
     [`(function(){ class A { close() { this.cancel = NDS.onTransitionEnd(el, done); } } })();`, ['JSP-12']],
@@ -1264,8 +1264,8 @@ const CASES = [
     [`(function(){ function f() { this._onClick = h; el.removeEventListener('click', this._onClick); } })();`, []],
     [`(function(){ class A { constructor() { this.items = []; } destroy() { this.items.forEach((o) => o.stop()); } } })();`, ['JSD-09']],
     [`(function(){ function escapeHtml(s) { return s; } })();`, ['JSD-10?']],
-    [`(function(){ function wire(el) { el.classList.add('x'); } NDS.onDOMAdd('.x', wire); })();`, ['JSD-17']],
-    [`(function(){ function wire(nodes) { nodes.forEach(go); } NDS.onDOMAdd('.x', wire); })();`, []],
+    [`(function(){ function wire(el) { el.classList.add('x'); } NDS.onDomAdd('.x', wire); })();`, ['JSD-17']],
+    [`(function(){ function wire(nodes) { nodes.forEach(go); } NDS.onDomAdd('.x', wire); })();`, []],
     [`(function(){ function f() { if (window.innerWidth < 768) go(); } })();`, ['JSD-03a']],
     [`(function(){ function f() { return window.matchMedia('(max-width: 600px)').matches; } })();`, ['JSD-03c']],
     [`(function(){ function f() { return document.documentElement.dir === 'rtl'; } })();`, ['JSD-04?']],
@@ -1276,8 +1276,8 @@ const CASES = [
     [`(function(){ class D { constructor(el) { if (!el.menu) return; this._valid = true; } } NDS.D = { create(el) { const d = new D(el); wire(d); return d; } }; })();`, ['JSD-19']], // the dud through a variable
     [`(function(){ class D { constructor(el) { if (!el.menu) return; el.ndsD = this; } } NDS.D = { create(el) { if (!el.ndsD) new D(el); return el.ndsD || null; } }; })();`, []], // published on success only
     [`(function(){ const html = document.documentElement; function f() { return html.dir === 'rtl'; } })();`, ['JSD-04?']], // an alias of the root
-    [`(function(){ let _offLang; function init() { _offLang = NDS.onAttrChange('html', ['lang'], f); } })();`, ['JSD-09?']], // module handle, never called
-    [`(function(){ let _offLang; function init() { _offLang = NDS.onAttrChange('html', ['lang'], f); } function destroy() { _offLang?.(); } })();`, []],
+    [`(function(){ let _offLang; function init() { _offLang = NDS.onAttributeChange('html', ['lang'], f); } })();`, ['JSD-09?']], // module handle, never called
+    [`(function(){ let _offLang; function init() { _offLang = NDS.onAttributeChange('html', ['lang'], f); } function destroy() { _offLang?.(); } })();`, []],
     [`(function(){ function f(form) { form.addEventListener('reset', () => setTimeout(go)); } })();`, ['JSA-04']], // no comment at all
     [`(function(){ // The restore lands after the reset event.\nfunction f(form) { form.addEventListener('reset', () => setTimeout(go)); } })();`, ['JSA-04?']],
     [`(function(){ async function f(el) { if (!el) return; await x(); if (el) el.focus(); } })();`, []], // await re-opens it

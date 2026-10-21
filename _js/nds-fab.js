@@ -8,8 +8,8 @@
  *   NDS.Fab.destroy(fabOrContainer)     un-route a FAB back to where it was authored, or
  *                                       every FAB authored inside a container. Returns the
  *                                       count. NDS.init.destroy(view) calls the second form
- *   NDS.Fab.dock(pos)                   the dock element at that edge, created if missing
- *   NDS.Fab.resolvePos(fab, override)   which edge this FAB resolves to
+ *   NDS.Fab.getDock(pos)                the dock element at that edge, created if missing
+ *   NDS.Fab.resolvePosition(fab, override)   which edge this FAB resolves to
  * Events:
  *   (none)
  * Hooks:
@@ -83,8 +83,8 @@
     // a FAB move between edges while the docks themselves stay static.
     function toEdge(side) {
         if (side === 'left' || side === 'right' || side === 'bottom') return side;
-        if (side === 'start') return NDS.isRTL ? 'right' : 'left';
-        return NDS.isRTL ? 'left' : 'right';   // 'end' (default), a top sheet, or unknown
+        if (side === 'start') return NDS.isRtl ? 'right' : 'left';
+        return NDS.isRtl ? 'left' : 'right';   // 'end' (default), a top sheet, or unknown
     }
 
     // Resolve a FAB's target dock. Any explicit position resolves directly;
@@ -231,12 +231,12 @@
         }, { rootMargin: '-85% 0px 0px 0px' }));
 
         // One pooled observer for every panel on the page.
-        runtimeOffs.push(NDS.onAttrChange('.nds-panel', ['data-state'], (panels) => panels.forEach(ridePanel)));
+        runtimeOffs.push(NDS.onAttributeChange('.nds-panel', ['data-state'], (panels) => panels.forEach(ridePanel)));
 
         // Re-route on a runtime direction flip: a logical start/end (or auto)
         // FAB resolves to the opposite edge, so it must move to stay with its
         // panel (which flips via CSS). Physical FABs and the docks don't move.
-        runtimeOffs.push(NDS.onAttrChange('html', ['dir'], () => {
+        runtimeOffs.push(NDS.onAttributeChange('html', ['dir'], () => {
             document.querySelectorAll('.nds-fab').forEach(fab => {
                 if (fab.closest('code')) return;
                 if (fab.parentElement?.closest('.nds-fab')) return;   // outermost wins, as in init()
@@ -261,7 +261,7 @@
     // The container form is what NDS.init.destroy needs, and it cannot be a plain scan:
     // register() MOVED the button to a dock on <body>, so a docked FAB is no longer inside
     // the view that authored it and no querySelectorAll on that view will ever find it.
-    // The marker register() left (NDS.homeOf) is the only link back, so the match is on
+    // The marker register() left (NDS.getHome) is the only link back, so the match is on
     // where the FAB CAME FROM, not on where it sits now.
     //
     // Putting it back matters beyond tidiness: a framework unmounts the view by removing
@@ -291,7 +291,7 @@
 
         let count = 0;
         document.querySelectorAll('.nds-fab[' + INIT_ATTR + ']').forEach(fab => {
-            const parent = NDS.homeOf(fab);
+            const parent = NDS.getHome(fab);
             if (elOrRoot === document || (parent && (parent === elOrRoot || elOrRoot.contains?.(parent)))) {
                 count += destroy(fab);
             }
@@ -322,7 +322,7 @@
         reinit: init,
         register,
         destroy,
-        dock: getDock,
-        resolvePos: resolvePosition,
+        getDock,
+        resolvePosition,
     };
 })();

@@ -8,7 +8,7 @@
  *   NDS.Selection.selectAll(list, on=true, scope)  check or clear every item a filter shows;
  *                                           scope 'page' = only the items on the current page
  *   NDS.Selection.clear(list)               clear EVERY item, filter-hidden and box-less too
- *   NDS.Selection.selected(list)            the selected items, in DOM order
+ *   NDS.Selection.getSelected(list)         the selected items, in DOM order
  *   NDS.Selection.isSelected(item)          the one "is this item selected" rule (export reads it)
  *   NDS.Selection.destroy()                 detach the listeners
  * Events (bubble from the list):
@@ -51,10 +51,10 @@
     const getBox = (item) => item.querySelector('input.nds-checkbox-input');
     const isSelected = (item) => NDS.state.has(item, 'selected') || !!getBox(item)?.checked;
 
-    // A sub row's nested table stays its own list (NDS.ownItems).
+    // A sub row's nested table stays its own list (NDS.findOwnItems).
     function getItems(list) {
         const paged = list.querySelectorAll('.nds-page-item');
-        return NDS.ownItems(list, paged.length ? paged : list.children);
+        return NDS.findOwnItems(list, paged.length ? paged : list.children);
     }
 
     // The list a select-all box drives, or null for an item box.
@@ -131,7 +131,7 @@
     }
 
     function recount(list) {
-        list = NDS.resolveEl(list);
+        list = NDS.resolveElement(list);
         if (!list) return;
         mirror(getItems(list));
         sync(list, false);
@@ -142,7 +142,7 @@
     }
 
     function selectAll(list, on = true, scope) {
-        list = NDS.resolveEl(list);
+        list = NDS.resolveElement(list);
         if (!list) return;
         const shown = getScope(getItems(list), scope === 'page');
         shown.forEach(item => { const box = getBox(item); if (box) box.checked = on; });
@@ -152,7 +152,7 @@
 
     // Every item, filter-hidden and box-less ones too: the reset after a bulk action.
     function clear(list) {
-        list = NDS.resolveEl(list);
+        list = NDS.resolveElement(list);
         if (!list) return;
         getItems(list).forEach(item => {
             const box = getBox(item);
@@ -163,7 +163,7 @@
     }
 
     function getSelected(list) {
-        list = NDS.resolveEl(list);
+        list = NDS.resolveElement(list);
         return list ? getItems(list).filter(isSelected) : [];
     }
 
@@ -186,7 +186,7 @@
     function handleClick(e) {
         const btn = e.target instanceof Element && e.target.closest('[data-selection-all], [data-selection-clear]');
         const wrap = btn?.closest('[data-selection-target]');
-        const list = wrap && NDS.resolveEl(wrap.getAttribute('data-selection-target'));
+        const list = wrap && NDS.resolveElement(wrap.getAttribute('data-selection-target'));
         if (!list) return;
         if (btn.hasAttribute('data-selection-all')) selectAll(list);
         else clear(list);
@@ -200,7 +200,7 @@
     // Wired on first sight of a box, so pages without one never add `hidden` to the shared observer.
     function watchPages() {
         if (pagesOff || !controller) return;
-        pagesOff = NDS.onAttrChange('.nds-page-item', ['hidden'], resyncFor);
+        pagesOff = NDS.onAttributeChange('.nds-page-item', ['hidden'], resyncFor);
     }
 
     function resyncFor(elements) {
@@ -217,10 +217,10 @@
         // (every selectable item carries an input.nds-checkbox-input).
         const refresh = NDS.debounce(recountAll, 150);
         offs = [
-            NDS.onDOMAdd('input.nds-checkbox-input', refresh),
-            NDS.onDOMRemove('input.nds-checkbox-input', refresh),
+            NDS.onDomAdd('input.nds-checkbox-input', refresh),
+            NDS.onDomRemove('input.nds-checkbox-input', refresh),
             // A filter moves which items select-all covers, with no change event.
-            NDS.onAttrChange('*', ['data-filtered'], resyncFor),
+            NDS.onAttributeChange('*', ['data-filtered'], resyncFor),
         ];
 
         // Server-rendered checked boxes count from the first pass.
@@ -243,6 +243,6 @@
     // load, the listener was never wired.
     NDS.Selection = {
         init, reinit: recountAll, refresh: (list) => { if (list) return recount(list); init(); recountAll(); },
-        selectAll, clear, selected: getSelected, isSelected, destroy
+        selectAll, clear, getSelected, isSelected, destroy
     };
 })();

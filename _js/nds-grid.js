@@ -58,7 +58,7 @@
         offs.set(grid, first ? NDS.onElementResize(first, () => (isHeld(grid) ? undefined : mark(grid))) : () => {});
         if (releasing) return;
         releasing = true;
-        NDS.onDOMRemove(SEL, (grids) => grids.forEach(unwatch));
+        NDS.onDomRemove(SEL, (grids) => grids.forEach(unwatch));
         // A re-observed first item delivers again, so the grid re-marks in the observer without forcing layout.
         NDS.onChildrenChange(SEL, (grids) => grids.forEach((gridEl) => { if (offs.has(gridEl)) { unwatch(gridEl); watch(gridEl); } }));
     }
@@ -73,7 +73,7 @@
         const sec = grid.closest('.nds-content-section');
         if (!sec || sec.getBoundingClientRect().top < innerHeight || getComputedStyle(sec).contentVisibility !== 'auto') return false;
         if (!waiting.size) {
-            const off = NDS.onAttrChange('html', ['data-nds-loaded'], () => {
+            const off = NDS.onAttributeChange('html', ['data-nds-loaded'], () => {
                 off();
                 waiting.forEach((gridEl) => { if (gridEl.isConnected) { unwatch(gridEl); watch(gridEl); } });
                 waiting.clear();

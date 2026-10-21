@@ -55,7 +55,7 @@ Each doc, example and template has a built page at the same path under `_site/`,
 ## Audit
 
 - `NDS.init.audit()`, in the browser console of a loaded page, runs every check and prints each finding with its fix. `NDS.audit.run({ group: 'migration' })` runs one group.
-- `window.NDSInitConfig = { enableLogging: true }`, set before the NDS scripts, runs the audit after load.
+- `window.NDS_INIT_CONFIG = { enableLogging: true }`, set before the NDS scripts, runs the audit after load.
 - The checks and what they cannot see: `_source/core/audit.md`, the API's Rules section and the Behavior's Limits section.
 
 ## Upgrade

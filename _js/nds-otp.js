@@ -30,15 +30,15 @@
     'use strict';
 
     // One-shot init guard. A re-run of init (e.g. NDS.init.initialize())
-    // would otherwise re-stack the two pool subscriptions in init() — onDOMAdd
-    // and onDOMRemove push unconditionally with no (selector, fn) dedup in core.
+    // would otherwise re-stack the two pool subscriptions in init() — onDomAdd
+    // and onDomRemove push unconditionally with no (selector, fn) dedup in core.
     // The single init at page load wires the subscribers; subsequent .nds-otp-group
     // mutations are already handled by those long-lived subscribers.
     var subscribed = false;
 
     var otpAbortControllers = new WeakMap();   // group → AbortController of its listeners
 
-    var strings = NDS.i18n.strings('otp', {
+    var strings = NDS.i18n.getStrings('otp', {
         digit: 'Digit {n} of {total}',
         otp_incomplete: 'Please enter all {n} digits',
     });
@@ -118,7 +118,7 @@
         var input = e.target;
         var inputs = getOtpInputs(group);
         var index = inputs.indexOf(input);
-        var digits = NDS.latinDigits(input.value).replace(/\D/g, '');
+        var digits = NDS.toLatinDigits(input.value).replace(/\D/g, '');
 
         if (digits.length > 1) {
             input.value = '';
@@ -154,7 +154,7 @@
         if (data.length <= 1) return;
         e.preventDefault();
 
-        var digits = NDS.latinDigits(data).replace(/\D/g, '');
+        var digits = NDS.toLatinDigits(data).replace(/\D/g, '');
         if (!digits.length) return;
 
         var last = distributeDigits(group, digits, inputs.indexOf(input));
@@ -173,7 +173,7 @@
         var input = e.target;
         var inputs = getOtpInputs(group);
         var index = inputs.indexOf(input);
-        var isRtl = NDS.isRTL;
+        var isRtl = NDS.isRtl;
 
         clearStaleStatus(group);
         // preventDefault still: WebKit reads Backspace in a read-only field as Back.
@@ -247,7 +247,7 @@
         if (!group || group.hasAttribute('data-nds-otp-initialized')) return;
 
         // Guard before stamping — a group whose inputs render late must stay
-        // eligible for the onDOMAdd re-arm, and the AC must not leak unaborted.
+        // eligible for the onDomAdd re-arm, and the AC must not leak unaborted.
         var inputs = getOtpInputs(group);
         if (!inputs.length) return;
 
@@ -291,11 +291,11 @@
         subscribed = true;
         document.querySelectorAll('.nds-otp-group').forEach(setupOtpGroup);
 
-        NDS.onDOMAdd('.nds-otp-group', function (nodes) {
+        NDS.onDomAdd('.nds-otp-group', function (nodes) {
             nodes.forEach(setupOtpGroup);
         });
 
-        NDS.onDOMRemove('.nds-otp-group', function (nodes) {
+        NDS.onDomRemove('.nds-otp-group', function (nodes) {
             nodes.forEach(function (group) {
                 var abortController = otpAbortControllers.get(group);
                 if (abortController) {
@@ -324,13 +324,13 @@
 
     NDS.Otp = {
         init: init,
-        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-form-group') || el, opts, checkField); },
+        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-form-group') || el, checkField, opts); },
 
         getValue: getValue,
 
         setValue: function (group, value) {
             clearInputs(group);
-            distributeDigits(group, NDS.latinDigits(value).replace(/\D/g, ''), 0);
+            distributeDigits(group, NDS.toLatinDigits(value).replace(/\D/g, ''), 0);
         },
 
         clear: function (group) {

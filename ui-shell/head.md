@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:38 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="head-overview" class="nds-content-section nds-doc-overview">
@@ -277,7 +277,7 @@ The inline script runs once, at page load. The stylesheet links it adds and the 
 | `data-nds-loaded` | `<html>` | The loader sets it once the main CSS has applied, and the page shows. Do not set it yourself |
 {: .nds-table .nds-responsive}
 
-The loader's window settings (`NDSInitConfig`, `NDS_ASSETS_PATH`) are on [Init](../core/init).
+The loader's window settings (`NDS_INIT_CONFIG`, `NDS_ASSETS_PATH`) are on [Init](../core/init).
 
 ### Content Security Policy
 {: .nds-block-title #csp}

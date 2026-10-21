@@ -2,8 +2,8 @@
  * Rides: (none — a base: the consent store). Its UI is NDS.Cookies (nds-cookies.js).
  * Methods:
  *   NDS.consent.get()                 'accepted' | 'declined' | 'custom' | null
- *   NDS.consent.allowed(category)     true when the visitor allowed it; 'necessary' always is
- *   NDS.consent.save(categories)      store a choice: true (all), false (none) or an array of
+ *   NDS.consent.isAllowed(category)   true when the visitor allowed it; 'necessary' always is
+ *   NDS.consent.set(categories)       store a choice: true (all), false (none) or an array of
  *                                     allowed categories; applies it and fires the event
  * Events:
  *   nds:cookies:consent   on document — detail { consent, categories: { necessary, performance, … } }
@@ -17,15 +17,15 @@
  *     tracker, and it runs deferred, after the consumer's head snippet has fired.
  *   - gtag keys: performance → analytics_storage · functional → functionality_storage,
  *     personalization_storage · targeting → ad_storage, ad_user_data, ad_personalization.
- *     Any other category only reaches allowed() and the event.
+ *     Any other category only reaches isAllowed() and the event.
  *   - Denying performance sets window['ga-disable-<id>'] for every tracking id and clears
  *     _ga, _gid, _gat. Denying targeting clears _fbp, _fbc.
- *   - Stored as cookieConsent (NDS.cookie): 'accepted', 'declined', or the allowed categories comma-joined.
+ *   - Stored as nds-consent (NDS.cookie): 'accepted', 'declined', or the allowed categories comma-joined.
  */
 (() => {
     'use strict';
 
-    const KEY = 'cookieConsent';
+    const KEY = 'nds-consent';
     const gtagSignals = {
         performance: ['analytics_storage'],
         functional: ['functionality_storage', 'personalization_storage'],
@@ -39,7 +39,7 @@
         return !value ? null : (value === 'accepted' || value === 'declined') ? value : 'custom';
     }
 
-    function allowed(category) {
+    function isAllowed(category) {
         if (category === 'necessary') return true;
         const value = NDS.cookie.get(KEY);
         return value === 'accepted' || (!!value && value !== 'declined' && value.split(',').includes(category));
@@ -55,26 +55,26 @@
     }
 
     function syncConsent() {
-        const perf = allowed('performance');
+        const perf = isAllowed('performance');
         // The flag is in-memory only, so it is set again on every load.
         getTrackingIds().forEach(id => { window['ga-disable-' + id] = !perf; });
         const names = document.cookie.split(';').map(cookie => cookie.split('=')[0].trim());
         Object.keys(trackers).forEach(category => {
-            if (!allowed(category)) names.filter(cookieName => trackers[category].some(prefix => cookieName.startsWith(prefix))).forEach(NDS.cookie.delete);
+            if (!isAllowed(category)) names.filter(cookieName => trackers[category].some(prefix => cookieName.startsWith(prefix))).forEach(NDS.cookie.delete);
         });
         if (typeof gtag === 'function') {
             const update = {};
-            Object.keys(gtagSignals).forEach(category => gtagSignals[category].forEach(signal => { update[signal] = allowed(category) ? 'granted' : 'denied'; }));
+            Object.keys(gtagSignals).forEach(category => gtagSignals[category].forEach(signal => { update[signal] = isAllowed(category) ? 'granted' : 'denied'; }));
             gtag('consent', 'update', update);
         }
     }
 
-    function save(choice) {
+    function set(choice) {
         const list = Array.isArray(choice) ? choice.filter(category => category !== 'necessary') : [];
         NDS.cookie.set(KEY, choice === true ? 'accepted' : list.length ? list.join(',') : 'declined', 365);
         syncConsent();
         const categories = { necessary: true };
-        Object.keys(gtagSignals).concat(list).forEach(category => { categories[category] = allowed(category); });
+        Object.keys(gtagSignals).concat(list).forEach(category => { categories[category] = isAllowed(category); });
         // The hook for anything NDS does not know (Clarity, a vendor pixel): the listener owns its SDK.
         document.dispatchEvent(new CustomEvent('nds:cookies:consent', {
             detail: { consent: get(), categories },
@@ -83,5 +83,5 @@
 
     syncConsent();
 
-    NDS.consent = { get, allowed, save };
+    NDS.consent = { get, isAllowed, set };
 })();

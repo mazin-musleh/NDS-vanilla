@@ -68,7 +68,7 @@
     };
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('time-picker', {
+    const strings = NDS.i18n.getStrings('time-picker', {
         hour: 'Hour',
         minute: 'Minute',
         second: 'Second',
@@ -84,7 +84,7 @@
     });
 
     const pad = (value) => String(value).padStart(2, '0');
-    const latin = NDS.latinDigits;
+    const latin = NDS.toLatinDigits;
     const isPm = (token) => /^(PM|pm|م)$/.test(token);
 
     // Token presence drives the panel, so the format string stays the single
@@ -491,7 +491,7 @@
                 if (e.target !== formControl) return;
                 NDS.state.add(this.elements.container, 'open');
                 this._syncBounds();
-                this._dropmenu.applyPosition();
+                this._dropmenu.syncPosition();
             }, { signal });
             formControl.addEventListener('nds:dropmenu:closed', (e) => {
                 if (e.target !== formControl) return;
@@ -810,7 +810,7 @@
         // ---- lifecycle ---------------------------------------------------
 
         _setupLanguageObserver() {
-            this._offLangChange = NDS.onAttrChange('html', ['lang'], () => this._relocalize());
+            this._offLangChange = NDS.onAttributeChange('html', ['lang'], () => this._relocalize());
             // Built before the pack landed: its AM/PM went out in English.
             if (!strings.ready()) this._relocalize();
         }
@@ -1090,7 +1090,7 @@
     NDS.TimePicker = {
         init: init,
         reinit: init,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-time-fields') || el, opts, checkField),
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-time-fields') || el, checkField, opts),
         create: create,
         destroy: (el) => {
             const instance = getInstance(el);

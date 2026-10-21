@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -62,7 +62,7 @@ Skip markup you cannot change yet, such as a block your CMS writes. Name the rul
 Add a rule of your own. It runs with the others on every call.
 
 <script type="text/html" id="audit-rule" data-canon data-lang="js" data-preview="none">
-NDS.audit.rule({
+NDS.audit.addRule({
   id: 'service-card-link',
   group: 'structure',
   severity: 'error',
@@ -170,7 +170,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
             <i class="hgi hgi-stroke hgi-plug-01"></i>
             <span class="nds-label">Your Own Rules</span>
           </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.audit.rule()</code> adds a check for your own markup, and it reports like the built-in ones.</p>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.audit.addRule()</code> adds a check for your own markup, and it reports like the built-in ones.</p>
         </div>
       </div>
     </div>
@@ -280,7 +280,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | Global | Default | Effect |
 |---|---|---|
 | `NDS_AUDIT_RULES` | — | An array of rule definitions that every run reads. Use it to set rules in a script that runs before NDS |
-| `NDSInitConfig.enableLogging` | `false` | Runs the audit once the page has loaded. See [Init](../core/init) |
+| `NDS_INIT_CONFIG.enableLogging` | `false` | Runs the audit once the page has loaded. See [Init](../core/init) |
 {: .nds-table .nds-responsive}
 
 ### Findings
@@ -305,7 +305,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 |---|---|
 | `NDS.init.audit()` | Runs every rule and returns the findings. The first call loads the audit and returns a promise of them |
 | `NDS.audit.run(options)` | Runs the rules once and returns the findings. `group` and `rule` take a name or an array, and `quiet: true` prints nothing. Before the audit loads, the call loads it and returns a promise |
-| `NDS.audit.rule(definition)` | Adds a rule, or replaces the rule with the same id. It takes `id`, `group`, `severity`, `docs` and `check(ctx)`. Before the audit loads, the call loads it first |
+| `NDS.audit.addRule(definition)` | Adds a rule, or replaces the rule with the same id. It takes `id`, `group`, `severity`, `docs` and `check(ctx)`. Before the audit loads, the call loads it first |
 | `NDS.audit.rules` | Every rule, in run order |
 | `ctx.find(selector)` | In `check`: the matching elements, without the ones in `<code>` or skipped by `data-nds-audit-ignore` |
 | `ctx.report(el, message, fix, severity)` | In `check`: adds a finding. `severity` overrides the rule's own |

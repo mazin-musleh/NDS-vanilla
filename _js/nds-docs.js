@@ -301,7 +301,7 @@
             // The free space is below a top panel, or between the header and a bottom panel.
             var box = preview.getBoundingClientRect(), top = box.top, sheetRect = sheet.getBoundingClientRect();
             var down = sheet.getAttribute('data-panel-side') === 'top';
-            var head = down ? sheetRect.bottom : NDS.stickyHeaderBottom();
+            var head = down ? sheetRect.bottom : NDS.getStickyHeaderBottom();
             var room = (down ? window.innerHeight : sheetRect.top) - head, fits = box.height <= room - 32;
             if (top >= head && top + (fits ? box.height : 160) <= head + room) return;
             var at = fits ? head + (room - box.height) / 2 : head + 16;

@@ -10,19 +10,19 @@
  *   NDS.Table.createResponsive(table)          the scroll wrapper only
  *   NDS.Table.createColumnToggle(root)         one [data-columns-target] menu
  *   NDS.Table.destroy(el)                      undo whichever of the three lives on el
- *   NDS.Table.row(tr)                          per-row handle {el, sub}; the sub row itself
+ *   NDS.Table.getRow(tr)                       per-row handle {el, sub}; the sub row itself
  *                                               is accepted too
  *   ↳ handle.sub.el                             the <tr class="nds-sub">, or null
  *   ↳ handle.sub.setContent(htmlOrNode)         put YOUR markup in the sub (chainable)
  *   ↳ handle.sub.open() / .close() / .toggle()  show / hide it (chainable)
  *   NDS.Table.setColumnHidden(table, i, bool)  hide or show a column by cell index
  *   instance.getSortColumn() / .getSortOrder() / .resetSort()   on create()'s instance
- *   instance.recheckWidth()                    on createResponsive()'s: measure the scroll state again
+ *   instance.refresh()                    on createResponsive()'s: measure the scroll state again
  * Events (bubble from the <table>):
  *   nds:table:columns      detail {table, index, hidden, restored} — restored:true is a saved
  *                          hide replayed at init, not a user action
  *   nds:table:sub-request  detail {row, sub, table, signal} — there is nothing to show yet.
- *                          Fetch, then answer: NDS.Table.row(row).sub.setContent(html).open().
+ *                          Fetch, then answer: NDS.Table.getRow(row).sub.setContent(html).open().
  *                          Pass detail.signal to fetch / NDS.request so a cancel drops it
  *   nds:table:sub-opened   detail {row, sub, table}
  *   nds:table:sub-closed   detail {row, sub, table}
@@ -56,13 +56,13 @@
     'use strict';
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
-    const strings = NDS.i18n.strings('table', {
+    const strings = NDS.i18n.getStrings('table', {
         reset: 'Reset',
         column: 'Column {n}',
     });
 
     // The shared cell-text reader lives in core: Export (extras) reads it before Tables loads.
-    const getCellText = NDS.cellText;
+    const getCellText = NDS.getCellText;
 
     // Sort keys are <th> cell indexes, never positions in the sort-button array:
     // a checkbox or actions column has no button, so the two index spaces diverge.
@@ -110,7 +110,7 @@
             const all = this._thead.querySelector('th input.nds-checkbox-input');
             if (!all || all.hasAttribute('data-selection-target')) return;
             this._ownSelect = { box: all, id: !this._tbody.id };
-            this._tbody.id ||= NDS.uniqueId('nds-rows-');
+            this._tbody.id ||= NDS.getUniqueId('nds-rows-');
             all.setAttribute('data-selection-target', this._tbody.id);
             NDS.Selection.init();
             NDS.Selection.refresh(this._tbody);
@@ -266,7 +266,7 @@
 
             const { scrollLeft, scrollWidth, clientWidth } = this._wrapper;
             const maxScroll = scrollWidth - clientWidth;
-            const isRtl = NDS.isRTL;
+            const isRtl = NDS.isRtl;
 
             const tokens = ['has-more'];
 
@@ -286,7 +286,7 @@
         }
 
         _addEventListeners() {
-            this._wrapper.addEventListener('scroll', NDS.rafThrottle(() => this._handleScroll()), {
+            this._wrapper.addEventListener('scroll', NDS.throttleToFrame(() => this._handleScroll()), {
                 signal: this.abortController.signal
             });
 
@@ -317,7 +317,7 @@
             // Tab-change rechecks are wired once at module scope, not per instance.
         }
 
-        recheckWidth() {
+        refresh() {
             this._checkTableWidth();
         }
 
@@ -419,7 +419,7 @@
         constructor(root) {
             this._valid = false;
             this._root = root;
-            this._table = NDS.resolveEl(root.getAttribute('data-columns-target') || '');
+            this._table = NDS.resolveElement(root.getAttribute('data-columns-target') || '');
             this._list = root.querySelector('[data-columns-list]');
 
             if (!this._table || !this._list) {
@@ -445,7 +445,7 @@
         // The footer rides along — it only earns its space while something is hidden.
         _syncTriggerBadge() {
             const count = getHeadCells(this._table).filter(th => th.hasAttribute('hidden')).length;
-            NDS.badge(this._root.querySelector('.nds-dropmenu-trigger'), count);
+            NDS.setBadge(this._root.querySelector('.nds-dropmenu-trigger'), count);
             this._footer.hidden = !count;
         }
 
@@ -541,7 +541,7 @@
         // in a dropmenu. No .nds-dropmenu-item class — that's what keeps the menu
         // open while columns are toggled.
         _buildRow(th, index) {
-            const id = NDS.uniqueId('nds-col-');
+            const id = NDS.getUniqueId('nds-col-');
 
             const container = document.createElement('div');
             container.className = 'nds-form-container nds-checkbox';
@@ -680,7 +680,7 @@
     // found and how sort re-pairing relinks it. Authored subs usually carry one;
     // this covers a generated sub and an authored one that left it off.
     function linkSub(tr, sub) {
-        if (!sub.id) sub.id = NDS.uniqueId('nds-sub-');
+        if (!sub.id) sub.id = NDS.getUniqueId('nds-sub-');
         // Direct backref so re-pairing after a sort holds; the aria-controls walk
         // below covers authored subs
         // JS has never touched.
@@ -755,7 +755,7 @@
         });
     }
 
-    // NDS.Table.row(tr) — per-row handle. Accepts the sub row itself too, so a
+    // NDS.Table.getRow(tr) — per-row handle. Accepts the sub row itself too, so a
     // collapse control inside the expanded content uses the same call shape as
     // the chevron up in the parent row.
     function getRowHandle(tr) {
@@ -936,7 +936,7 @@
         // Keyed on the instance, not the sweep's stamp, so createResponsive()-built
         // tables are rechecked too.
         document.querySelectorAll('.nds-table').forEach(table => {
-            table.ndsTableResponsive?.recheckWidth();
+            table.ndsTableResponsive?.refresh();
         });
     }
 
@@ -960,7 +960,7 @@
             el?.ndsTableResponsive?.destroy();
             el?.ndsColumnToggle?.destroy();
         },
-        row: getRowHandle,
+        getRow: getRowHandle,
         setColumnHidden
     };
 })();

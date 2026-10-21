@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "21/10/2026 - 04:08 PM"
 ---
 
 <section id="sort-overview" class="nds-content-section nds-doc-overview">
@@ -414,7 +414,7 @@ Markup wiring is a `create()` call on the list with the defaults below: `items` 
 | `NDS.Sort.detectType(values, dateFormat)` | Returns `'number'`, `'date'` or `'string'`. `dateFormat` is the format a date in the values uses: the site's when you leave it out. |
 | `NDS.Sort.parseValue(raw, type, dateFormat)` | Returns the value as the type sorts it. |
 | `NDS.Sort.compare(a, b, type, order, dateFormat)` | Returns a negative, zero or positive number. |
-| `sort.apply(key, order)` | Sorts now. A `null` key restores the original order. |
+| `sort.setSort(key, order)` | Sorts now. A `null` key restores the original order. |
 | `sort.reset()` | Restores the original order. |
 | `sort.refresh()` | Sorts the items again by the active key. Does nothing when no sort is active. |
 | `sort.getState()` | Returns `{ key, order }`. |
@@ -453,7 +453,7 @@ const sort = NDS.Sort.create(document.getElementById('list'), {
   urlSync: { keyParam: 'sort', orderParam: 'order' }
 });
 
-sort.apply('price', 'desc');
+sort.setSort('price', 'desc');
 sort.reset();
 
 document.addEventListener('nds:sort:change', (e) => {

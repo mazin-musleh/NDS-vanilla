@@ -34,7 +34,7 @@
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them. The overlay markup carries
     // the same words as data-i18n markers.
-    NDS.i18n.strings('ipv', {
+    NDS.i18n.getStrings('ipv', {
         viewerLabel: 'Image viewer',
         zoomIn: 'Zoom in',
         zoomOut: 'Zoom out',
@@ -377,8 +377,8 @@
                 'h': () => this._toggleUi(),
                 'H': () => this._toggleUi(),
                 // Arrows follow the screen: prev sits at inline-start, which is right in RTL.
-                'ArrowLeft': () => (NDS.isRTL ? this._showNext() : this._showPrev()),
-                'ArrowRight': () => (NDS.isRTL ? this._showPrev() : this._showNext())
+                'ArrowLeft': () => (NDS.isRtl ? this._showNext() : this._showPrev()),
+                'ArrowRight': () => (NDS.isRtl ? this._showPrev() : this._showNext())
             };
 
             const action = actions[e.key];

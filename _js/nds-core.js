@@ -2,47 +2,47 @@
  * Rides: (none — every other file rides THIS one)
  * Methods:
  *   state + status
- *     NDS.state.add / .remove / .set / .has / .get / .clear / .apply (el, ...tokens)
+ *     NDS.state.add / .remove / .set / .has / .get / .clear / .refresh (el, ...tokens)
  *                                     the data-state token list
  *     NDS.state.parse(el)              the tokens as a Set
  *     NDS.state.onAdd / .onRemove (token, scope, fn)   react to a token; returns off()
- *     NDS.state.effect(token, scope, fn, cls)  fn(el, on) once per real change, however the token
- *                                     was written; cls also spells the token; returns off()
+ *     NDS.state.onToggle(token, scope, fn, { className })  fn(el, on) once per real change, however the token
+ *                                     was written; className also spells the token; returns off()
  *     NDS.status.set / .get / .clear (el, status)      the data-status value
  *     NDS.aria.expanded / .hidden / .pressed / .selected / .disabled / .label / .current
  *              / .sort (el, value)     write an ARIA attribute (null removes it)
  *   page facts (live getters, not snapshots)
- *     NDS.lang · NDS.isArabic · NDS.isRTL · NDS.prefersReducedMotion
+ *     NDS.lang · NDS.isArabic · NDS.isRtl · NDS.prefersReducedMotion
  *     NDS.breakpoints                  the media-query strings the components share
  *   pooled observers — each returns an off() function, and you must call it
  *     NDS.onResize(fn) · NDS.onIntersect(el, fn, opts) · NDS.onElementResize(el, fn)
- *     NDS.onDOMAdd(sel, fn) · NDS.onDOMRemove(sel, fn) · NDS.onChildrenChange(sel, fn)
- *     NDS.onAttrChange(sel, attrs, fn) · NDS.onOutsideScroll(el, fn)
+ *     NDS.onDomAdd(sel, fn) · NDS.onDomRemove(sel, fn) · NDS.onChildrenChange(sel, fn)
+ *     NDS.onAttributeChange(sel, attrs, fn) · NDS.onOutsideScroll(el, fn)
  *   scheduling
- *     NDS.debounce(fn, ms) (.cancel() drops a pending call) · NDS.rafThrottle(fn) · NDS.onIdle(fn, timeout)
- *     NDS.afterPaint(fn) · NDS.onTransitionEnd(el, fn, opts) → cancel()
+ *     NDS.debounce(fn, ms) (.cancel() drops a pending call) · NDS.throttleToFrame(fn) · NDS.onIdle(fn, timeout)
+ *     NDS.onNextPaint(fn) · NDS.onTransitionEnd(el, fn, opts) → cancel()
  *     NDS.transitionSpeed()            the token-sourced duration in ms
  *   DOM
- *     NDS.markHome(el) / .sendHome(el) / .homeOf(el)   move a node the app owns; its old spot answers for it
- *     NDS.topLayer(el, on)             show or hide a [popover] in the top layer, in place
- *     NDS.resolveEl(idOrElOrSel) · NDS.fromTemplate(id) · NDS.flipPosition(trigger, menu) · NDS.place(el, t, l)
- *     NDS.stickyHeaderBottom() · NDS.viewportPadding(el) · NDS.visibleBox() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
+ *     NDS.markHome(el) / .sendHome(el) / .getHome(el)   move a node the app owns; its old spot answers for it
+ *     NDS.setTopLayer(el, on)             show or hide a [popover] in the top layer, in place
+ *     NDS.resolveElement(idOrElOrSel) · NDS.fromTemplate(id) · NDS.flipPosition(trigger, menu) · NDS.place(el, t, l)
+ *     NDS.getStickyHeaderBottom() · NDS.getViewportPadding(el) · NDS.getVisibleBox() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
  *     NDS.dragScroll(el, { canScroll, signal })   wheel + mouse-drag sideways scroll; a drag swallows its click
  *     NDS.trapFocus(getEl) · NDS.focusableSel
  *     NDS.setScrollStop(el, on)        give a scroller a tab stop so keys scroll it; an authored tabindex stays
- *     NDS.cellText(cell)               a table cell's own text, the value sort and export read
- *     NDS.ownParts(root, sel, ownerSelector)   root's own matches, not a nested instance's
- *     NDS.ownItems(list, items)        a list's own items: never .nds-sub; a <tbody> keeps its direct rows
+ *     NDS.getCellText(cell)               a table cell's own text, the value sort and export read
+ *     NDS.findOwnParts(root, sel, ownerSelector)   root's own matches, not a nested instance's
+ *     NDS.findOwnItems(list, items)        a list's own items: never .nds-sub; a <tbody> keeps its direct rows
  *   data + text
  *     NDS.request(url, opts) → Promise<{isJson, data}>     the shared fetch wrapper
  *     NDS.writeUrlParams(params|string)   rewrite the URL's ?params in place; path, hash and history.state stay
  *     NDS.cache.get / .clear (key) · .set (key, value, minutes)   localStorage with expiry
  *     NDS.cookie.get / .delete (name) · .set (name, value, days)   a cookie, no consent check; delete covers parent domains
- *     NDS.formatNumber(n, opts) · NDS.latinDigits(s) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
+ *     NDS.formatNumber(n, opts) · NDS.toLatinDigits(s) · NDS.escapeHtml(s) · NDS.toSafeUrl(url) · NDS.getUniqueId(prefix)
  *     NDS.Date                         dates in Gregorian and Hijri: _js/nds-date.js
  *     NDS.announce(text)               say something in the shared live region
  *     NDS.i18n.load(component, lang)   a promise of a section's words
- *     NDS.i18n.strings(component, defaults) → { text, set, load, ready, has, defaults }   a component's strings;
+ *     NDS.i18n.getStrings(component, defaults) → { text, set, load, ready, has, defaults }   a component's strings;
  *                                      set() marks a fixed word for core, re-writes one with {vars}
  *     data-i18n="section.key" · data-i18n-{aria-label|aria-description|title|alt|placeholder|label}
  *                                      a marker: core writes the word in the page language, unless
@@ -53,9 +53,9 @@
  *     NDS.i18n.resolveLang(lang?)       the page's language or lang as a base tag ('ar-SA' → 'ar'); else 'en'
  *     NDS.i18n.isMissing(lang?)         true when that language's file failed to load
  *     NDS.i18n.format(value, vars)     fill {name}; a plural value picks by vars.n
- *     NDS.i18n.safeMerge(target, src)  copy own keys, skipping __proto__ / constructor / prototype
+ *     NDS.i18n.mergeOwnKeys(target, src)  copy own keys, skipping __proto__ / constructor / prototype
  *     NDS.setValue(el, value, { change }) write value (checked: a click), fire input + change
- *     NDS.badge(el, count) · NDS.buildChip(value, opts) · NDS.keepChipFocus(chips, render, fallback)
+ *     NDS.setBadge(el, count) · NDS.buildChip(value, opts) · NDS.keepChipFocus(chips, render, fallback)
  * Events:
  *   nds:template:ready    on the stamped root, bubbles — detail.id is the summoned id.
  *                         Fires after NDS.init.refresh wires the arrivals, so page JS
@@ -123,7 +123,7 @@
     // BCP 47: 'ar', 'ar-SA', 'ar-EG' → 'ar'  |  'en', 'en-US' → 'en'
     // Usage: NDS.lang    → 'ar' | 'en' | ...
     //        NDS.isArabic → true/false
-    //        NDS.isRTL   → true/false
+    //        NDS.isRtl   → true/false
     // Live getters so runtime language/direction toggles (e.g. language switcher) stay correct.
     Object.defineProperty(NDS, 'lang', {
         get() { return (document.documentElement.lang || 'en').split('-')[0].toLowerCase(); }
@@ -131,14 +131,14 @@
     Object.defineProperty(NDS, 'isArabic', {
         get() { return NDS.lang === 'ar'; }
     });
-    Object.defineProperty(NDS, 'isRTL', {
+    Object.defineProperty(NDS, 'isRtl', {
         get() { return document.documentElement.dir === 'rtl'; }
     });
 
     // ── Reduced-motion preference (live getter) ──────────────────────
     // Reads the user's prefers-reduced-motion preference live so callers
     // react to runtime toggles (OS setting changes, DevTools Rendering
-    // panel). Mirrors NDS.isRTL — a live boolean derived from a single
+    // panel). Mirrors NDS.isRtl — a live boolean derived from a single
     // system source. Components that need to re-render on a runtime
     // toggle still want raw `window.matchMedia(...).addEventListener` —
     // this getter only exposes the snapshot read.
@@ -240,7 +240,7 @@
         //   s.load(lang)                a promise of the section's words
         //   s.ready(lang)               true once the text for that language is known
         //   s.has(key)                  the component defines this key (for keys from outside)
-        strings(component, defaults) {
+        getStrings(component, defaults) {
             const i18n = this, queue = [];
             // The section's English: text() and its markers fall back to it when no file has the key.
             i18n._seeds[component] = Object.assign(i18n._seeds[component] || {}, defaults);
@@ -252,7 +252,7 @@
                 if (lang && i18n._fromFiles(component, lang) === undefined) i18n._get(component, lang);
                 const section = i18n._section(component, lang);
                 // Own keys only: a key from outside (a cached value, a browser error name) never reaches Object.prototype.
-                // The English every strings() call for this section declared, not only this one's.
+                // The English every getStrings() call for this section declared, not only this one's.
                 const seed = i18n._seeds[component];
                 return i18n.format(has(section, key) ? section[key] : has(seed, key) ? seed[key] : key, vars, lang);
             };
@@ -306,7 +306,7 @@
         // Copy own enumerable keys from src onto target, skipping prototype
         // pollution vectors. Use this anywhere a component overlays JSON-
         // sourced data onto a runtime object (e.g. a strings dictionary).
-        safeMerge(target, src) {
+        mergeOwnKeys(target, src) {
             if (!src) return target;
             for (const key of Object.keys(src)) {
                 if (key === '__proto__' || key === 'constructor' || key === 'prototype') continue;
@@ -315,7 +315,7 @@
             return target;
         },
 
-        _seeds: Object.create(null),   // section → the JS defaults its strings() call registered
+        _seeds: Object.create(null),   // section → the JS defaults its getStrings() call registered
         _written: new WeakMap(),       // element → { target: { wrote: core's last write, was: the markup word it replaced } }
         _warned: new Set(),
         _warnOnce(message) { if (!this._warned.has(message)) { this._warned.add(message); console.warn('[NDS.i18n] ' + message); } },
@@ -400,8 +400,8 @@
             this.settled.then(() => {
                 this.translate();
                 document.documentElement.setAttribute('data-nds-i18n', '');
-                NDS.onDOMAdd(I18N_MARK_SEL, elements => elements.forEach(el => this._mark(el)));
-                NDS.onAttrChange(I18N_MARK_SEL, Object.keys(i18nMarks), elements => elements.forEach(el => this._mark(el, true)));
+                NDS.onDomAdd(I18N_MARK_SEL, elements => elements.forEach(el => this._mark(el)));
+                NDS.onAttributeChange(I18N_MARK_SEL, Object.keys(i18nMarks), elements => elements.forEach(el => this._mark(el, true)));
                 this.pack().then(() => this.translate());
             });
         },
@@ -507,8 +507,8 @@
 
     // ── RAF Throttle ─────────────────────────────────────────────────
     // Single-in-flight requestAnimationFrame throttle for scroll/mousemove handlers
-    // Usage: el.addEventListener('scroll', NDS.rafThrottle(handler), { passive: true })
-    NDS.rafThrottle = fn => {
+    // Usage: el.addEventListener('scroll', NDS.throttleToFrame(handler), { passive: true })
+    NDS.throttleToFrame = fn => {
         let ticking = false;
         return (...args) => {
             if (ticking) return;
@@ -524,8 +524,8 @@
     // (priming the transition by stamping one state, then removing it
     // after the browser has painted the from-state so the change to
     // the to-state animates instead of jumping).
-    // Usage: NDS.afterPaint(() => NDS.state.remove(panel, 'opening'));
-    NDS.afterPaint = (fn) => requestAnimationFrame(() => requestAnimationFrame(fn));
+    // Usage: NDS.onNextPaint(() => NDS.state.remove(panel, 'opening'));
+    NDS.onNextPaint = (fn) => requestAnimationFrame(() => requestAnimationFrame(fn));
 
     // ── Number formatting rule ───────────────────────────────────────
     // THE separator rule for every number NDS renders — .nds-number-format
@@ -538,7 +538,7 @@
     };
 
     // Arabic digits (both Unicode forms) → ASCII by their low nibble: what a field reads from a paste or autofill.
-    NDS.latinDigits = (text) => String(text ?? '').replace(/[٠-٩۰-۹]/g, (char) => char.charCodeAt(0) & 15);
+    NDS.toLatinDigits = (text) => String(text ?? '').replace(/[٠-٩۰-۹]/g, (char) => char.charCodeAt(0) & 15);
 
 
     // ── Run-When-Idle ────────────────────────────────────────────────
@@ -655,8 +655,8 @@
     // release their subscription without the pool's array growing
     // unboundedly across instances. Mirrors NDS.onResize / onElementResize
     // / onIntersect / onOutsideScroll.
-    // Usage: const off = NDS.onDOMAdd('.selector', nodes => { ... })
-    //        const off = NDS.onDOMRemove('.selector', nodes => { ... })
+    // Usage: const off = NDS.onDomAdd('.selector', nodes => { ... })
+    //        const off = NDS.onDomRemove('.selector', nodes => { ... })
     //        const off = NDS.onChildrenChange('.selector', parents => { ... })
     //        // later: off();  releases the subscriber
     //          onChildrenChange fires when a matched element's direct
@@ -726,8 +726,8 @@
     })();
 
     const makeDomSubscriber = (list) => (selector, fn) => { domBus.start(); return subscribe(list, { sel: selector, fn }); };
-    NDS.onDOMAdd = makeDomSubscriber(domBus.addSubs);
-    NDS.onDOMRemove = makeDomSubscriber(domBus.removeSubs);
+    NDS.onDomAdd = makeDomSubscriber(domBus.addSubs);
+    NDS.onDomRemove = makeDomSubscriber(domBus.removeSubs);
     NDS.onChildrenChange = makeDomSubscriber(domBus.childrenSubs);
 
     // ── Attribute Change Observer ────────────────────────────────────
@@ -736,12 +736,12 @@
     // e.g. lang/dir changes for direction-aware components.
     // Returns an unsubscribe handle so per-instance callers can release
     // their subscription. Mirrors the DOM Mutation Bus shape above.
-    // Usage: const off = NDS.onAttrChange('.nds-progress-circle', ['data-value', 'data-num'], els => { ... })
+    // Usage: const off = NDS.onAttributeChange('.nds-progress-circle', ['data-value', 'data-num'], els => { ... })
     //        // later: off();  releases the subscriber
     const attrSubs = [];
     const attrNames = new Set();
     let attrMo;
-    NDS.onAttrChange = (selector, attributes, fn) => {
+    NDS.onAttributeChange = (selector, attributes, fn) => {
         if (!attrMo) {
             attrMo = new MutationObserver(mutations => {
                 const changed = new Map();
@@ -782,10 +782,10 @@
     //        NDS.state.set(el, 'open')     → replaces all tokens
     //        NDS.state.get(el)            → 'open active' (raw string)
     //        NDS.state.clear(el)           → removes data-state entirely
-    //        NDS.state.apply(el, ...states) → re-run the effects and onAdd hooks for the states el holds (after a render)
+    //        NDS.state.refresh(el, ...states) → re-run the effects and onAdd hooks for the states el holds (after a render)
     //        NDS.state.onAdd(state, scope, fn)    → register hook: fn(el) fires when state added on el matching scope; returns off()
     //        NDS.state.onRemove(state, scope, fn) → register hook: fn(el) fires when state removed; returns off()
-    //        NDS.state.effect(state, scope, fn, cls) → fn(el, on) once per real change, whoever wrote it; returns off()
+    //        NDS.state.onToggle(state, scope, fn, { className }) → fn(el, on) once per real change, whoever wrote it; returns off()
     NDS.state = (() => {
         // Null prototype: a token named like an Object.prototype key ('constructor') has no hooks.
         const addHooks = Object.create(null);    // { 'disabled': [{ scope, fn }, ...] }
@@ -803,7 +803,7 @@
         // effect has entered, so it runs once per real change and never undoes what it did not do.
         const effects = [], effectTokens = new Set(), effectSelectors = new Set(), pendingSelectors = new Set();
         let offAdded;
-        const isHeld = (e, el, current) => (current.has(e.token) || (!!e.cls && el.classList.contains(e.cls))) && el.matches(e.scope);
+        const isHeld = (e, el, current) => (current.has(e.token) || (!!e.className && el.classList.contains(e.className))) && el.matches(e.scope);
         const runEffects = (el) => {
             const current = parse(el);
             callEach(effects, e => {
@@ -819,17 +819,17 @@
             pendingSelectors.clear();
             document.querySelectorAll(selector).forEach(runEffects);
         };
-        NDS.onAttrChange('*', ['data-state'], elements => elements.forEach(runEffects));
+        NDS.onAttributeChange('*', ['data-state'], elements => elements.forEach(runEffects));
 
-        const addEffect = (state, scope, fn, cls) => {
-            const selector = `[data-state~="${state}"]` + (cls ? `,.${cls}` : '');
+        const addEffect = (state, scope, fn, { className } = {}) => {
+            const selector = `[data-state~="${state}"]` + (className ? `,.${className}` : '');
             effectTokens.add(state);
-            if (cls) NDS.onAttrChange(scope, ['class'], elements => elements.forEach(runEffects));
+            if (className) NDS.onAttributeChange(scope, ['class'], elements => elements.forEach(runEffects));
             // One pooled selector for added markup, re-subscribed as it grows.
             if (!effectSelectors.has(selector)) {
                 effectSelectors.add(selector);
                 offAdded?.();
-                offAdded = NDS.onDOMAdd([...effectSelectors].join(','), elements => elements.forEach(runEffects));
+                offAdded = NDS.onDomAdd([...effectSelectors].join(','), elements => elements.forEach(runEffects));
             }
             // A registration after load (an injected bundle) scans once for its token.
             if (!pendingSelectors.size) {
@@ -837,7 +837,7 @@
                 else queueMicrotask(scan);
             }
             pendingSelectors.add(selector);
-            return subscribe(effects, { token: state, scope, fn, cls, on: new WeakSet() });
+            return subscribe(effects, { token: state, scope, fn, className, on: new WeakSet() });
         };
 
         const add = (el, ...states) => {
@@ -912,7 +912,7 @@
         const subscribeAdd = (state, scope, fn) => subscribe(addHooks[state] ||= [], { scope, fn });
         const subscribeRemove = (state, scope, fn) => subscribe(removeHooks[state] ||= [], { scope, fn });
 
-        return { parse, add, remove, has, get, set, clear, apply: syncEffects, onAdd: subscribeAdd, onRemove: subscribeRemove, effect: addEffect };
+        return { parse, add, remove, has, get, set, clear, refresh: syncEffects, onAdd: subscribeAdd, onRemove: subscribeRemove, onToggle: addEffect };
     })();
 
     // ── Token mirrors ────────────────────────────────────────────────
@@ -929,13 +929,13 @@
     const getMirrorSet = (el) => mirrored.get(el) || mirrored.set(el, new Set()).get(el);
     for (const token in mirrors) {
         const cls = mirrors[token];
-        NDS.state.effect(token, '*', (el, on) => {
+        NDS.state.onToggle(token, '*', (el, on) => {
             if (on && !el.classList.contains(cls)) { el.classList.add(cls); getMirrorSet(el).add(cls); }
             else if (!on && mirrored.get(el)?.delete(cls)) el.classList.remove(cls);
         });
     }
     // Loading tells a screen reader too: wait for the content.
-    NDS.state.effect('loading', '*', (el, on) => {
+    NDS.state.onToggle('loading', '*', (el, on) => {
         if (on && !el.hasAttribute('aria-busy')) { el.setAttribute('aria-busy', 'true'); getMirrorSet(el).add('aria-busy'); }
         else if (!on && mirrored.get(el)?.delete('aria-busy')) el.removeAttribute('aria-busy');
     });
@@ -994,9 +994,9 @@
     // so the count is mirrored into the button's accessible name instead. The base
     // name is taken from the button's own visible label, captured once before any
     // count lands, so no translated string is needed here: "Columns" → "Columns (2)".
-    // Usage: NDS.badge(filterBtn, 3);
+    // Usage: NDS.setBadge(filterBtn, 3);
     const badgeBases = new WeakMap();   // button → its accessible name before any count landed
-    NDS.badge = (btn, count) => {
+    NDS.setBadge = (btn, count) => {
         const icon = btn && btn.querySelector('i, .nds-icon');
         if (!icon) return;
 
@@ -1078,7 +1078,7 @@
 
     // ── HTML Escape ──────────────────────────────────────────────────
     // Escape a string for text and QUOTED attribute values. Not for unquoted
-    // attributes, URLs (NDS.safeUrl), or style/script contents.
+    // attributes, URLs (NDS.toSafeUrl), or style/script contents.
     // Usage: el.innerHTML = `<span title="${NDS.escapeHtml(v)}">${NDS.escapeHtml(v)}</span>`
     const htmlEscapes = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
     NDS.escapeHtml = (text) => text == null ? '' : String(text).replace(/[&<>"']/g, (char) => htmlEscapes[char]);
@@ -1088,9 +1088,9 @@
     // aria-controls targets, per-upload file handles). Uses crypto.randomUUID
     // when available for stronger uniqueness; falls back to time + Math.random
     // otherwise. Optional prefix keeps IDs grep-friendly when inspected.
-    // Usage: NDS.uniqueId()         → 'c9d7...' or '1745232...nt3m42'
-    //        NDS.uniqueId('file-')  → 'file-c9d7...'
-    NDS.uniqueId = (prefix = '') => {
+    // Usage: NDS.getUniqueId()         → 'c9d7...' or '1745232...nt3m42'
+    //        NDS.getUniqueId('file-')  → 'file-c9d7...'
+    NDS.getUniqueId = (prefix = '') => {
         if (typeof crypto !== 'undefined' && crypto.randomUUID) {
             return prefix + crypto.randomUUID();
         }
@@ -1102,8 +1102,8 @@
     // a bare id ('resultsGrid' — matches data-auto-pagination /
     // data-columns-target); '#id', any CSS selector, or an Element also
     // work. Misses and invalid selectors return null.
-    // Usage: const grid = NDS.resolveEl('resultsGrid');
-    NDS.resolveEl = (ref) => {
+    // Usage: const grid = NDS.resolveElement('resultsGrid');
+    NDS.resolveElement = (ref) => {
         if (!ref) return null;
         if (typeof ref !== 'string') return ref;
         const byId = document.getElementById(ref.replace(/^#/, ''));
@@ -1115,8 +1115,8 @@
     // A table cell's own text: its direct text nodes, so a sort button, icon or badge
     // inside it stays out; textContent when it has none. The one reader Sort, Export
     // and the column toggle share — in core, so Export (extras) never waits on Tables.
-    // Usage: const label = NDS.cellText(th);
-    NDS.cellText = (cell) => {
+    // Usage: const label = NDS.getCellText(th);
+    NDS.getCellText = (cell) => {
         if (!cell) return '';
         const own = Array.from(cell.childNodes)
             .filter(node => node.nodeType === Node.TEXT_NODE)
@@ -1131,8 +1131,8 @@
     // whose nearest ownerSelector is root, or sits outside root. A nested instance's parts are
     // not root's. Never tests root.matches(ownerSelector), so a create() on an element without
     // the class still finds its parts.
-    // Usage: const buttons = NDS.ownParts(container, '.nds-accordion-btn', '.nds-accordion');
-    NDS.ownParts = (root, selector, ownerSelector) => [...root.querySelectorAll(selector)].filter(el => {
+    // Usage: const buttons = NDS.findOwnParts(container, '.nds-accordion-btn', '.nds-accordion');
+    NDS.findOwnParts = (root, selector, ownerSelector) => [...root.querySelectorAll(selector)].filter(el => {
         const owner = el.closest(ownerSelector);
         return owner === root || !root.contains(owner);
     });
@@ -1141,8 +1141,8 @@
     // A list's own items. A .nds-sub row is never one: it rides its parent row. A <tbody>
     // owns only its direct rows, so a nested table in a sub row is a list of its own; a grid
     // or list may nest items under a wrapper, so it keeps them all.
-    // Usage: const rows = NDS.ownItems(tbody, tbody.querySelectorAll('.nds-page-item'));
-    NDS.ownItems = (list, items) => [...items].filter(el => !el.classList.contains('nds-sub')
+    // Usage: const rows = NDS.findOwnItems(tbody, tbody.querySelectorAll('.nds-page-item'));
+    NDS.findOwnItems = (list, items) => [...items].filter(el => !el.classList.contains('nds-sub')
         && (list.tagName !== 'TBODY' || el.parentElement === list));
 
     // ── Template Resolver ────────────────────────────────────────────
@@ -1202,8 +1202,8 @@
     // rejected. Relative URLs resolve against the page. Returns the
     // normalized href, or null when the value is missing, unparsable, or
     // off-allowlist (http/https/mailto/tel).
-    // Usage: const href = NDS.safeUrl(btn.dataset.href);
-    NDS.safeUrl = (raw) => {
+    // Usage: const href = NDS.toSafeUrl(btn.dataset.href);
+    NDS.toSafeUrl = (raw) => {
         if (!raw) return null;
         try {
             const url = new URL(raw, window.location.href);
@@ -1230,8 +1230,8 @@
     // Consumers position panels/drawers below it. Queries + gBCR reads run
     // fresh per call (the nav's bottom moves on scroll) — cheap enough for
     // rAF-throttled scroll handlers; keep it out of unthrottled loops.
-    // Usage: panel.style.setProperty('--panel-top', NDS.stickyHeaderBottom() + 'px');
-    NDS.stickyHeaderBottom = () => {
+    // Usage: panel.style.setProperty('--panel-top', NDS.getStickyHeaderBottom() + 'px');
+    NDS.getStickyHeaderBottom = () => {
         const nav = document.querySelector('.nds-main-nav');
         const topbar = document.querySelector('.nds-topbar');
         const navBottom = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
@@ -1242,12 +1242,12 @@
     // The page's side gutter in px. Menus and tooltips keep it from the screen's
     // side edges, so they line up with the content. Internal. 16 where the browser
     // has no @property and reads the token as a calc() string.
-    NDS.viewportPadding = (el = document.documentElement) =>
+    NDS.getViewportPadding = (el = document.documentElement) =>
         parseFloat(getComputedStyle(el).getPropertyValue('--nds-viewport-padding')) || 16;
 
     // The part of the screen the visitor sees, in getBoundingClientRect() coords. A pinch
     // zoom or an on-screen keyboard shrinks it; the layout viewport keeps its size. Internal.
-    NDS.visibleBox = () => {
+    NDS.getVisibleBox = () => {
         const viewport = window.visualViewport, root = document.documentElement;
         const top = viewport ? viewport.offsetTop : 0, left = viewport ? viewport.offsetLeft : 0;
         return { top, left, right: left + (viewport ? viewport.width : root.clientWidth), bottom: top + (viewport ? viewport.height : root.clientHeight) };
@@ -1285,7 +1285,7 @@
         el.addEventListener('wheel', (e) => {
             if (!canScroll(e) || Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
             e.preventDefault();
-            el.scrollBy({ left: e.deltaY * (NDS.isRTL ? -0.8 : 0.8), behavior: getScrollBehavior() });
+            el.scrollBy({ left: e.deltaY * (NDS.isRtl ? -0.8 : 0.8), behavior: getScrollBehavior() });
         }, { passive: false, signal });
         // A link's native drag-and-drop would steal the gesture — only while el scrolls.
         el.addEventListener('dragstart', (e) => { if (canScroll(e)) e.preventDefault(); }, { signal });
@@ -1463,7 +1463,7 @@
     // expiry (stale entries are evicted on read). Setter stamps
     // `Date.now() + minutes * 60 * 1000`. All storage operations are
     // try/catch'd so callers never have to handle quota / disabled-storage
-    // exceptions. Keys are namespaced under an `nds_` prefix so the
+    // exceptions. Keys are namespaced under an `nds-cache:` prefix so the
     // cache shares the origin's localStorage cleanly with non-NDS code.
     //
     // Cache safety: callers are responsible for treating cached values as
@@ -1478,7 +1478,7 @@
     //   if (cached) renderWeather(el, cached);
     //   NDS.cache.clear('weather_v2_ar_24.71'); // optional manual eviction
     NDS.cache = (() => {
-        const PREFIX = 'nds_';
+        const PREFIX = 'nds-cache:';
         return {
             get(key) {
                 try {
@@ -1506,7 +1506,7 @@
 
     // ── Cookies ────────────────────────────────────────────────────────
     // Plain reads and writes, no consent check: essential values only. Under file:// there
-    // are no cookies, so values fall back to NDS.cache (its nds_ prefix and envelope).
+    // are no cookies, so values fall back to NDS.cache (its nds-cache: prefix and envelope).
     NDS.cookie = (() => {
         const isLocalFile = window.location.protocol === 'file:';
         return {
@@ -1646,14 +1646,14 @@
     };
 
     // The element a marked node was moved out of, or null.
-    NDS.homeOf = (el) => home.get(el)?.parent || null;
+    NDS.getHome = (el) => home.get(el)?.parent || null;
 
     // Put a [popover] element in the browser's top layer (on) or take it out (off). It
     // escapes every clip and stacking context without leaving its place in the DOM, so
     // closest(), bubbling and inherited styles still work. No popover support (Safari < 17,
     // Firefox < 125): it stays where it is; the component's CSS decides what clips it.
-    // Usage: NDS.topLayer(menu, true); … NDS.topLayer(menu, false);
-    NDS.topLayer = (el, on) => {
+    // Usage: NDS.setTopLayer(menu, true); … NDS.setTopLayer(menu, false);
+    NDS.setTopLayer = (el, on) => {
         if (!el.showPopover || on === el.matches(':popover-open')) return;
         if (!on) el.hidePopover();
         else if (el.isConnected) el.showPopover();
@@ -1712,7 +1712,7 @@
         const vw = root.clientWidth;
         const vh = root.clientHeight;
         // Space is measured inside what the visitor sees, so a menu never opens under the keyboard.
-        const box = NDS.visibleBox();
+        const box = NDS.getVisibleBox();
 
         let topEdge = box.top;
         if (respectNav) {
@@ -1782,7 +1782,7 @@
                 };
                 if (root.hasAttribute('data-nds-loaded')) restore();
                 else {
-                    const off = NDS.onAttrChange('html', ['data-nds-loaded'], () => {
+                    const off = NDS.onAttributeChange('html', ['data-nds-loaded'], () => {
                         if (root.hasAttribute('data-nds-loaded')) { off(); restore(); }
                     });
                 }

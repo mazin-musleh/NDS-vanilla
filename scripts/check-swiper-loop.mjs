@@ -66,7 +66,7 @@ async function run(page, which, dir) {
         })();
         const r = el.getBoundingClientRect();
         const slides = [...wrap.children], reals = slides.filter((c) => !c.classList.contains('nds-swiper-clone'));
-        return { real: reals.length, head: slides.indexOf(reals[0]), spv: s.slidesPerView, rtl: !!window.NDS?.isRTL, y: r.y + r.height / 2 };
+        return { real: reals.length, head: slides.indexOf(reals[0]), spv: s.slidesPerView, rtl: !!window.NDS?.isRtl, y: r.y + r.height / 2 };
     }, which);
 
     const cy = Math.round(info.y), x0 = 206, span = 150 * (info.rtl ? -dir : dir);

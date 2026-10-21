@@ -70,7 +70,7 @@
     const stack = [];
     const getTopPanel = () => stack[stack.length - 1];
     // A modal dialog above (a Modal, or a newer modal panel) answers instead.
-    const isTop = (panel) => (NDS.dialog.top() ? NDS.dialog.top() === panel : getTopPanel() === panel);
+    const isTop = (panel) => (NDS.dialog.getTop() ? NDS.dialog.getTop() === panel : getTopPanel() === panel);
     // Static panels kept off the screen by another; the newest returns once none is open.
     const waiting = [];
     const drop = (list, panel) => {
@@ -116,7 +116,7 @@
         const isStatic = panel.hasAttribute('data-panel-static');
         // Recorded: data-panel-modal is consumer-mutable, and close() must undo the open it got.
         // One the user opens over a modal dialog goes modal too; one the page opens stays under it.
-        if (panel.hasAttribute('data-panel-modal') || (!noFocusPanels.has(panel) && !!NDS.dialog.top())) modalPanels.add(panel);
+        if (panel.hasAttribute('data-panel-modal') || (!noFocusPanels.has(panel) && !!NDS.dialog.getTop())) modalPanels.add(panel);
         else modalPanels.delete(panel);
 
         // Listeners that only exist while open — zero cost when closed.
@@ -167,7 +167,7 @@
 
         // Re-measure while open: the topbar scrolls away and returns, so the
         // header bottom moves. rAF-throttled — safe on scroll.
-        const onScroll = NDS.rafThrottle(() => syncHeaderOffset(panel));
+        const onScroll = NDS.throttleToFrame(() => syncHeaderOffset(panel));
         window.addEventListener('scroll', onScroll, { passive: true, signal });
         const offResize = NDS.onResize(() => { syncHeaderOffset(panel); syncResize(panel); });
         signal.addEventListener('abort', offResize);
@@ -213,7 +213,7 @@
     }
 
     function open(ref, { focus = true } = {}) {
-        let panel = NDS.resolveEl(ref);
+        let panel = NDS.resolveElement(ref);
         // A string ref that missed may name a template-wrapped panel.
         if (!panel && typeof ref === 'string') panel = NDS.fromTemplate(ref.replace(/^#/, ''));
         if (!panel) return;
@@ -251,7 +251,7 @@
     }
 
     function close(ref) {
-        const panel = NDS.resolveEl(ref);
+        const panel = NDS.resolveElement(ref);
         if (!panel) return;
         if (drop(waiting, panel)) {
             // A parked panel was still open to its owner, so it gets its closed event.
@@ -309,7 +309,7 @@
     }
 
     function toggle(ref) {
-        let panel = NDS.resolveEl(ref);
+        let panel = NDS.resolveElement(ref);
         if (!panel && typeof ref === 'string') panel = NDS.fromTemplate(ref.replace(/^#/, ''));
         if (!panel) return;
         if (hasState(panel, 'open') && !hasState(panel, 'closing')) close(panel);
@@ -338,7 +338,7 @@
     }
 
     // A panel's body is open content, so a nested panel's controls are not this panel's.
-    const findOwnControls = (panel, selector) => NDS.ownParts(panel, selector, SELECTOR);
+    const findOwnControls = (panel, selector) => NDS.findOwnParts(panel, selector, SELECTOR);
 
     // aria-disabled, not disabled: a disabled button drops the focus the user just clicked into.
     function syncResize(panel) {
@@ -367,7 +367,7 @@
     }
 
     const isOpen = (ref) => {
-        const panel = NDS.resolveEl(ref);
+        const panel = NDS.resolveElement(ref);
         return !!panel && hasState(panel, 'open') && !hasState(panel, 'closing');
     };
 
@@ -375,7 +375,7 @@
     // Writes the private --_header-offset, NOT the --panel-top knob, so a
     // consumer-set --panel-top still wins via the var() fallback chain.
     function syncHeaderOffset(panel) {
-        const visible = NDS.stickyHeaderBottom();
+        const visible = NDS.getStickyHeaderBottom();
         const next = visible > 0 ? visible + 'px' : '';
         // Skip the redundant write when nothing moved — this runs rAF-throttled
         // on every scroll frame, so an unchanged value shouldn't touch the DOM.

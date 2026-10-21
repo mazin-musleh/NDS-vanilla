@@ -102,8 +102,8 @@
     const TOKEN = /\{s\}/g;
 
     // One-shot init guard. A re-run of init (e.g. NDS.init.initialize())
-    // would otherwise re-stack the two pool subscriptions in init() — onDOMAdd
-    // and onDOMRemove push unconditionally with no (selector, fn) dedup in core.
+    // would otherwise re-stack the two pool subscriptions in init() — onDomAdd
+    // and onDomRemove push unconditionally with no (selector, fn) dedup in core.
     // The single init at page load wires the subscribers; subsequent button
     // mutations are already handled by those long-lived subscribers.
     let subscribed = false;
@@ -279,7 +279,7 @@
         }, { signal: abortController.signal });
     }
 
-    // Paired with onDOMRemove so a detached + re-added button gets a clean
+    // Paired with onDomRemove so a detached + re-added button gets a clean
     // re-wire rather than having the old closure state persist behind the
     // WIRED_ATTR guard.
     function cleanupButton(btn) {
@@ -294,8 +294,8 @@
             if (subscribed) return;
             subscribed = true;
             document.querySelectorAll(SEL).forEach(setupButton);
-            NDS.onDOMAdd(SEL, (nodes) => nodes.forEach(setupButton));
-            NDS.onDOMRemove(SEL, (nodes) => nodes.forEach(cleanupButton));
+            NDS.onDomAdd(SEL, (nodes) => nodes.forEach(setupButton));
+            NDS.onDomRemove(SEL, (nodes) => nodes.forEach(cleanupButton));
         },
         start,
         reset
