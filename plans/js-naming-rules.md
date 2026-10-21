@@ -4,11 +4,11 @@ Status: PARKED 2026-10-21, design agreed, reviewed against PERSONA the same day 
 changed yet. Facts first measured on `main` at `e035b198`, spot-checked at `7edd18a1`. `plans/shared-logic.md`
 finished its code (owner, 2026-10-21); its doc-check and speed steps rename nothing.
 
-**Resume here.** Section 4 landed (PERSONA entries 1, 2, 5, 6, 10, 12; JSA-23(a), JSD-18, JSP-06, JSP-09). Next:
-section 7 step 1's rest: the once-per-page bundle guard (entry 12 rule 17) with its double-load check, then the
-table flag goes. PERSONA now names `initDone`, `dateInitDone`, `wired`, `reconciled`: the module-scope commit
-lands them in the code, and heals the citations still on old names (entries 3 and 5, JSA-23's `_wired`). Start only on a clean tree: the plan edits nearly every
-`_js/` file. Then step 2 (the checks), whose list is the work list: every count, file and line below is a hint.
+**Resume here.** Step 1 done: PERSONA per section 4, the once-per-page bundle guard in `js_processor.rb`
+(`scripts/check-bundle-once.mjs` proves it; HEAD's old bundles fail it) and the table flag gone. Next: step 2,
+the checks. PERSONA now names `initDone`, `dateInitDone`, `wired`, `reconciled`: the module-scope commit lands
+them in the code, and heals the citations still on old names (entries 3 and 5, JSA-23's `_wired`).
+Start each step on a clean tree. Step 2's list is the work list: every count, file and line below is a hint.
 Step 3's commits go safest first: module-scope `_`, constants and classes; then verbs, acronyms and whole
 words; then cross-file `_`; the WeakMap move last of the internal ones (it changes runtime, so browser checks).
 Mind section 6. Bulk renames go to subagents; each commit message to the owner first.

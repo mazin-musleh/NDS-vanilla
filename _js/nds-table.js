@@ -851,40 +851,35 @@
     // Delegated on document: covers content injected later, needs no per-table
     // wiring, and is independent of the sort/checkbox-gated NDSTables instance —
     // a plain table with no sorting or selection can still carry sub-rows.
-    // On window, not a module let: a second copy of the bundle must not add a second listener.
-    if (!window.ndsTableSubHandlerInitialized) {
-        window.ndsTableSubHandlerInitialized = true;
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest(SUB_TOGGLE);
+        if (!btn || btn.closest('code')) return;
 
-        document.addEventListener('click', (e) => {
-            const btn = e.target.closest(SUB_TOGGLE);
-            if (!btn || btn.closest('code')) return;
+        const handle = rowHandle(rowFor(btn));
+        if (!handle) return;
 
-            const handle = rowHandle(rowFor(btn));
-            if (!handle) return;
+        // Second click while a sub-request is outstanding cancels it rather
+        // than re-requesting: abort the request, release the toggle. With
+        // setContent() on success and close() on the consumer's error path,
+        // that's three exits — the control can't be stranded whatever the
+        // consumer does or forgets to do.
+        if (NDS.state.has(btn, 'loading')) {
+            handle.el._ndsSubAbort?.abort();
+            clearLoadClock(handle.el);
+            setToggleLoading(handle.el, false);
+            return;
+        }
 
-            // Second click while a sub-request is outstanding cancels it rather
-            // than re-requesting: abort the request, release the toggle. With
-            // setContent() on success and close() on the consumer's error path,
-            // that's three exits — the control can't be stranded whatever the
-            // consumer does or forgets to do.
-            if (NDS.state.has(btn, 'loading')) {
-                handle.el._ndsSubAbort?.abort();
-                clearLoadClock(handle.el);
-                setToggleLoading(handle.el, false);
-                return;
-            }
+        // A dangling aria-controls is an authoring typo. The lazy path is the
+        // one with no aria-controls at all — it legitimately has no target
+        // until the consumer answers nds:table:sub-request.
+        const target = btn.getAttribute('aria-controls');
+        if (target && !handle.sub.el && !document.getElementById(target)) {
+            console.warn(`NDS Table: [data-sub-toggle] aria-controls="${target}" matches no element.`, btn);
+        }
 
-            // A dangling aria-controls is an authoring typo. The lazy path is the
-            // one with no aria-controls at all — it legitimately has no target
-            // until the consumer answers nds:table:sub-request.
-            const target = btn.getAttribute('aria-controls');
-            if (target && !handle.sub.el && !document.getElementById(target)) {
-                console.warn(`NDS Table: [data-sub-toggle] aria-controls="${target}" matches no element.`, btn);
-            }
-
-            handle.sub.toggle();
-        });
-    }
+        handle.sub.toggle();
+    });
 
     // Auto-initialize tables on page load (sortable and/or selectable)
     // The init sentinel is stamped only on a construction that succeeded — a table

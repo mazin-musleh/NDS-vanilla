@@ -477,6 +477,12 @@ class JSProcessor
       end
       
       if !processed_files.empty?
+        # A bundle runs once per page (PERSONA entry 12 rule 17): a second copy would reset every
+        # module latch and wire every singleton again. Safe as a block: every file is an IIFE.
+        flag = "window.__NDS_LOADED_#{bundle_key(bundle_name).upcase.tr('-', '_')}"
+        bundle_content = "if (#{flag}) console.warn('[NDS] #{bundle_name} loaded twice; the second copy does nothing.');\n" \
+                         "else {\n#{flag} = true;\n#{bundle_content}}\n"
+
         # Now compress the clean bundle with Terser
         final_content = compress_with_terser(bundle_content)
 

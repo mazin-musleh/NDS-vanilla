@@ -29,6 +29,7 @@ node scripts/doc-check.mjs <page.md>            # clicks every builder option: f
 node scripts/check-menus-in-modal.mjs           # six menu components in a scrolling Modal: place, follow, close, pick; PHONE=1, ENGINE=webkit
 node scripts/check-ipv.mjs                      # Image Popup Viewer: NDS.Ipv methods, no window global, data-ipv-gallery grouping, rebuild after destroy
 node scripts/check-dialogs.mjs                  # Modal + Panel on <dialog>: plain/static/modal, stacking, Escape, outside click, lazy panels; ENGINE=webkit, NO_POPOVER=1 (Safari < 17)
+node scripts/check-bundle-once.mjs              # a bundle loaded twice runs once: no error, no extra listener, a warning; JS=<dir> for other bundles
 node scripts/check-a11y.mjs [page.html …]       # axe (WCAG A/AA) + a Tab walk (visible stop, focus ring, no trap) on every built page, LTR and RTL; --dir, --no-keys, ENGINE=webkit
 node scripts/check-form-reset.mjs               # every form field's doc canon: a reset puts it back (value, message, chips, status), a cancelled one keeps the change; ENGINE=webkit, OLD_JS=<dir of old bundles> for an A/B
 node scripts/check-pagination-data.mjs          # data-driven Pagination in a server flow: focus kept, 0/1 page hides, placeholder releases, data-active-page + ?page= current, ?per-page= read before the split; ENGINE=webkit, OLD_JS=<dir>
@@ -43,6 +44,8 @@ node scripts/release-template/nds-verify.mjs <config.json>  # consumer verify to
 ```
 
 **Browser checks launch through `scripts/lib/browser.mjs` (Playwright)** — `ENGINE=webkit node scripts/<check>.mjs` runs one as Safari. The root ships `playwright-core` only (no browser download; Chromium is your installed Chrome); WebKit lives in Playwright's per-user cache and downloads itself on the first Safari run. CDP calls (throttling, touch, traces) are Chromium-only.
+
+**A new script or check is fast and fails loud, never silent.** Log each step with its elapsed time; give every await a short limit (~10 s) that fails with the step's name, not a library default (30 s, or 180 s for a Chrome launch); print failed requests and page errors as they happen; run independent pages in parallel; wait on a condition (a count that holds across two readings), never a fixed sleep. Then run it once on a broken input and see it stop quickly with a line that names the cause. Model: `scripts/check-bundle-once.mjs` (`step()`, `log()`). On 2026-10-21 its first draft sat 30 s on a wrong path with no clue.
 
 **Judge an SVG by its GZIP size, not its bytes on disk** — Pages serves SVG compressed, so a 331 KB Figma export is 113 KB on the wire and disk numbers send you optimizing the wrong file. `optimize-assets.py` reports both. It also always encodes raster BOTH lossless and lossy and keeps whichever is smaller: flat-colour artwork (logos, UI graphics, hard edges) goes smaller AND pixel-perfect lossless, while photos and gradients want lossy — a 201 KB PNG here landed at 74 KB lossless vs 102 KB at q95. Never pick from the file extension.
 
