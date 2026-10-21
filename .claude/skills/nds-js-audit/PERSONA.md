@@ -60,14 +60,14 @@ Flag any `this.<name> = new AbortController()` where `<name>` is neither `abortC
 ```js
 destroy() {
     this.abortController.abort();
-    this._offDOMAdds.forEach(off => off());
+    this._offDomAdds.forEach(off => off());
     this.root.removeAttribute('data-nds-<name>-initialized');
 }
 ```
 
 **Why (and rejected alternatives)**
 
-`destroy()` matches the JS-component ecosystem (Web Components pairings, Vue/React class lifecycles, Backbone), so consumers writing `instance.destroy()` never have to ask "is it destroy, teardown, cleanup, or dispose?" — project-local lifecycle vocabulary is friction for every consumer. Rejected: `cleanup()` — too generic, reads as per-action tidy-up and collides with the legitimate per-cycle use (carve-out below); `teardown()` — test-framework-flavored; `dispose()` — C#/IDisposable-flavored, foreign vocabulary with no upside.
+`destroy()` is what the widget libraries a consumer already uses call it (Swiper, Chart.js, Choices.js, flatpickr, Splide, Tippy), so consumers writing `instance.destroy()` never have to ask "is it destroy, teardown, cleanup, or dispose?" — project-local lifecycle vocabulary is friction for every consumer. Rejected: `cleanup()` — too generic, reads as per-action tidy-up and collides with the legitimate per-cycle use (carve-out below); `teardown()` — test-framework-flavored; `dispose()` — Bootstrap 5's name, but every NDS release already ships `destroy()`, so a switch breaks every consumer for no gain.
 
 **Carve-outs (NOT divergence)**
 
@@ -87,7 +87,7 @@ The verb pair encodes the concept, not the DOM mutation. Two components making a
 
 **Canonical:** `open()` / `close()` as the public lifecycle pair.
 
-**Concept:** the surface fully captures attention. Singleton-open. Focus-trapped and dimmed: a `<dialog>` opened with `showModal()`, or `NDS.trapFocus` with `NDS.Backdrop.show`. Opening is a state transition for the whole page.
+**Concept:** singleton-open: the surface is the one open at a time, and opening it closes or covers any other. Opening is a state transition for the whole page. The strongest form also traps focus and dims the page: a `<dialog>` opened with `showModal()`, or `NDS.trapFocus` with `NDS.Backdrop.show`. A menu or tooltip that closes the others on open is the light form.
 
 **Discriminator** (mechanically checkable): file invokes `showModal()`, `NDS.trapFocus` OR `NDS.Backdrop.show`, OR enforces singleton-open another way — delegating its lifecycle to `NDS.Dropmenu` (`NDS.Dropmenu.create` + `open()`/`close()` passthrough: `_js/nds-autocomplete.js`) or to `NDS.Panel`, whose `<dialog>` owns the page's attention (`_js/nds-accessibility.js` `NDS.Panel?.open`), or closing every other open instance on open (`_js/nds-dropmenu.js` `_openDropmenus`, `_js/nds-tooltip.js` `_openTooltip`).
 
@@ -160,6 +160,7 @@ Component-emitted diagnostics carry the component's identity at the start of the
 **Carve-outs (NOT divergence)**
 
 - `_js/nds-core.js` and `_js/nds-loader.js` use the bracket form `[NDS.<api>]` / `[NDS]` / `[NDS:init]` because they're API namespaces and orchestration, not components. Out of scope of this entry.
+- **A base** (entry 11: `NDS.field`, `NDS.validation`, `NDS.dialog`) is an API namespace too and logs `[NDS.<name>] …`.
 - **Programmatic-API-namespace modules** whose public surface is invoked as `NDS.<Name>.<method>(...)` (a sub-API, not a DOM-attached per-element component instance) may use the bracket form `[NDS.<Name>]` — same shape as core's `[NDS.i18n]`. Cite: `_js/nds-export.js` — `NDS.Export` (`export`/`csv`/`xls`/`pdf`/`collect`) is a stateless library/API namespace (loader-registered for detection only), so it emits `[NDS.Export] …`.
 
 **Audit behavior**
@@ -208,7 +209,7 @@ A factory creates per-element instances; the guard must distinguish "this specif
 
 Each shape below matches its form to what it actually guards, so none is divergence:
 
-- **Per-element scope, non-attribute form.** The marker lives on the element without being an attribute when the structure justifies it: a JS property on a document-sweeping controller (`_js/nds-form.js` `_ndsInitialized` / `_ndsFormInitialized` / `_switchInitialized`) — per-element, just not CSS-selectable, so re-sweeps check inline; the instance expando where `create(el)` is idempotent through the back-ref (`_js/nds-date-picker.js` `ndsDatePicker`) — the instance IS the init state and a parallel attribute channel could drift, so it must be gated on successful construction (JSD-18); or init's own DOM mutation as the marker (`_js/nds-custom-select.js` `build()` checks the `.nds-dropmenu` class it stamps). A *registered* factory with a per-instance selector still prefers the attribute form so loader rescans can selector-filter — see Audit behavior step 7.
+- **Per-element scope, non-attribute form.** The marker lives on the element without being an attribute when the structure justifies it: a JS property on a document-sweeping controller (`_js/nds-field.js` `_ndsInitialized`, `_js/nds-form.js` `_ndsFormInitialized`) — per-element, just not CSS-selectable, so re-sweeps check inline; the instance expando where `create(el)` is idempotent through the back-ref (`_js/nds-date-picker.js` `ndsDatePicker`) — the instance IS the init state and a parallel attribute channel could drift, so it must be gated on successful construction (JSD-18); or init's own DOM mutation as the marker (`_js/nds-custom-select.js` `build()` checks the `.nds-dropmenu` class it stamps). A *registered* factory with a per-instance selector still prefers the attribute form so loader rescans can selector-filter — see Audit behavior step 7.
 - **Resource scope, no flag at all.** When init is idempotent or deliberately re-armable, the resource IS the guard: `_js/nds-selection.js` `_controller` (nulled by `destroy()` so `init()` re-arms by design — a one-way flag would break the cycle), `_js/nds-share.js` `init()` (documented abort-and-rebind of its own `_abortController`).
 - **Bundle-scope listener, window flag.** A document listener wired at module eval has no per-element target, and a module-scope flag resets if a second copy of the bundle evaluates; the flag that stops a second listener belongs on `window`: `_js/nds-table.js` `window.ndsTableSubHandlerInitialized` (~L835), covering the document-delegated sub-row toggle (independent of the sort/checkbox-gated `NDSTables` instance). Requires the inline comment named in Audit behavior step 4.
 - **Sub-concern latch, named for what it latches.** A guard gating one arm of init — narrower than the module's own guard, so it carries a descriptive name instead of `_initDone`. Three shapes: one-time page-level setup inside a factory (document delegation, singleton observers, a body-appended sentinel) — `runtimeSet` guarding `setupRuntime` (`_js/nds-fab.js` ~L195), `togglesBound` guarding `bindToggles` (`_js/nds-panel.js` ~L462), both files carrying the canonical attribute for their own init; and per-branch latches in a singleton wiring independently-present widgets — `_js/nds-time-date.js` `_dateInitDone` / `_clockInitDone`, whose declaration documents the reasoning ("The date and clock topbar widgets can appear independently, so the latches are separate — a page that ships only one widget can still wire the other if it's injected later"). One shared `_initDone` would latch on the first widget and strand the second. A singleton whose `init()` re-runs on purpose has no module-wide latch at all, only its arms': `_js/nds-theme.js` `_wired` (listeners) / `_reconciled` (saved-palette restore) — its `init()` comment: "the sync runs every time, the restore and the listeners once", so `mount()` / `refresh()` reach a later view's toggles. And the attribute form of the same idea — a second `data-nds-<sub-mode>-initialized` on the SAME element beside the component's canonical guard, gating an init arm the canonical one doesn't cover: `_js/nds-pagination.js` `data-nds-auto-pagination-initialized` (guards `setupAutoContainer`, while `data-nds-pagination-initialized` guards the manual sweep) and `_js/nds-table.js` `data-nds-columns-initialized` (guards the column-toggle arm beside `data-nds-table-initialized`). Discriminator for the attribute shape: the component's canonical guard is present on the element, and the second attribute names an init path it does not cover. Step 5's name check governs a singleton module's OWN guard only, and step 6's `data-nds-<name>-initialized` check governs the component's OWN guard only — neither fires on these.
@@ -294,7 +295,7 @@ Every in-scope file opens with a banner comment — the first lines of the file,
 - **Hooks** — consumer-facing `data-*` attributes and action roles, hand-enumerated. Excludes init sentinels (`data-nds-*-initialized`) and base-owned attributes — a rider restating a base's hooks (e.g. `data-anchor` in a dropmenu-rider's Hooks) is a violation.
 - **Gotchas** — one-liners, only what THIS file owns.
 
-No version stamps inside banners. Scaled-down banners (~6–10 lines) are the norm for tiny surfaces. Tooling: `node scripts/check-banners.mjs --generate <file>` prints a skeleton (Methods/Events pre-filled, Hooks grep candidates); `--verify <file>` / `--all` checks presence, section order, and Methods/Events drift. The `SCOPE` array in that script (57 files: 53 components + core, loader, accessibility, theme) is the single source of truth for which files carry a banner.
+No version stamps inside banners. Scaled-down banners (~6–10 lines) are the norm for tiny surfaces. Tooling: `node scripts/check-banners.mjs --generate <file>` prints a skeleton (Methods/Events pre-filled, Hooks grep candidates); `--verify <file>` / `--all` checks presence, section order, and Methods/Events drift. The `SCOPE` array in that script is the single source of truth for which files carry a banner.
 
 **Why (and rejected alternatives)**
 
@@ -359,7 +360,7 @@ A component has one singular kebab name `x`, taken from its root class `.nds-x`,
 
 A component with one instance per page (Main Nav, Digital Stamp, Backdrop, Image Popup Viewer) keeps it private and exposes namespace methods (`NDS.Ipv.open(img)`), never a `window` global. A component without one of these surfaces skips it. A part of a component stamps and names its own part (`data-nds-columns-initialized`, `data-paged-initialized`). An acronym is one word: `.nds-otp` → `NDS.Otp`, `el.ndsIpv`.
 
-**The case tells the layer** (entry 11). A component, which has a root class or a loader entry, is PascalCase, named from its class; one with a loader entry and no root class takes its registry name (`NDS.Sort`, `NDS.Print`). Every other namespace is lowercase: a core module, a helper set, a base, the loader's API (`NDS.state`, `NDS.aria`, `NDS.dialog`, `NDS.init`). A function on `NDS` is camelCase per entry 10 (`NDS.badge`, `NDS.debounce`), whatever it builds.
+**The case tells the layer** (entry 11). A component, which has a root class or a loader entry, is PascalCase, named from its class; one with a loader entry and no root class takes its registry name (`NDS.Sort`, `NDS.Print`). Every other namespace is lowercase: a core module, a helper set, a base, the loader's API (`NDS.state`, `NDS.aria`, `NDS.dialog`, `NDS.init`). A function on `NDS` is camelCase per entry 10 (`NDS.buildChip`, `NDS.debounce`), whatever it builds.
 
 **Why (and rejected alternatives)**
 
@@ -386,7 +387,7 @@ For each loader-registered component: the JS file suffix, the registry `name` tu
 1. camelCase, verb first. A true/false value starts with `is` or `has`. A class exposed on a namespace is PascalCase (`DatePicker.Calendar`). A name starting with `_` is internal.
 2. The noun after the verb names what the method acts on, never the namespace: `Form.validate`, not `validateForm`. Leave it out for the component itself (`Modal.open()`); name the part for a child (`openItem(i)`, `addFile`).
 3. An acronym is one word (`toCsv`, `isIban`), as in entry 9.
-4. One verb per meaning:
+4. One verb per meaning. The table names the meanings that had rival verbs; a meaning it does not name takes any verb-first whole word, and only a listed synonym is flagged:
 
 | Meaning | Verb |
 |---|---|
@@ -397,12 +398,12 @@ For each loader-registered component: the JS file suffix, the registry `name` tu
 | On and off | `enable()` / `disable()` (Bootstrap, Swiper, Choices.js) |
 | Items in a list | `addX` / `removeX` |
 | Find an instance / wait for one | `getInstance(elOrSelOrId)` → the instance or `null` (Bootstrap) / `whenReady(el, cb)` (as `customElements.whenDefined`) |
-| Move | `goTo(i)`, `next()`, `prev()` (Bootstrap's carousel) |
+| Move | `goTo(i)`, `next()`, `prev()` (Bootstrap's carousel has `next`/`prev`; its `to(i)` is not verb first, so `goTo`) |
 | Check | `validate(el)` → `{ valid, … }` |
 
-5. Arguments: the element first, then the values, then one options object. More than two values go in the options object. A name used in two places takes the same arguments in both (`Form.setStatus(el, status, opts)`, `UserFeedback.setStatus(el, status)`, `NDS.status.set(el, status)`).
+5. Arguments: the element first, then the values, then one options object. More than two values go in the options object; a callback is not a value and takes its own place, as in `addEventListener(type, listener, options)`. A name used in two places takes the same arguments in both (`Form.setStatus(el, status, opts)`, `UserFeedback.setStatus(el, status)`, `NDS.status.set(el, status)`).
 6. A namespace method and its instance method use the same verb; the namespace one takes the element first (`NDS.Rating.enable(el)` mirrors `el.ndsRating.enable()`).
-7. `create` returns the instance, `getInstance` the instance or `null`, a check its result, and a method that waits a Promise.
+7. `create` returns the instance (entry 3.3's `create({...})` returns the surface it inserted: the call is the open), `getInstance` the instance or `null`, a check its result, and a method that waits a Promise.
 
 **Why (and rejected alternatives)**
 
@@ -414,7 +415,8 @@ A name a reader or an agent can guess from another component, or from the DOM an
 - `Filter.getByTarget(id)` takes a different key from `getInstance`; `Dropmenu.from(el)` returns an element, not an instance.
 - A loader-hook name (`init`, `reinit`, `refresh`, `destroy`) keeps the loader's meaning.
 - A markup value is not a method: `data-stepper-control="previous"` stays.
-- `NDS.init` is the loader's namespace (entry 9), not the `init()` verb; its methods keep the loader-hook meanings (`mount`, `refresh`, `destroy`).
+- `NDS.init` is the loader's namespace (entry 9), not the `init()` verb; its methods keep the loader-hook meanings (`mount`, `refresh`, `destroy`). Its `initialize()` runs the full pass: `init.init()` would repeat the namespace (rule 2).
+- `NDS.validation.check(el)`: `validation.validate` would repeat the namespace (rule 2).
 
 **Audit behavior**
 
@@ -475,5 +477,6 @@ Persona edits are never silent and never unprompted — every candidate lands in
 - **User makes a deliberate decision** (e.g. "switch entry 3.2 to `expand()`/`collapse()`"). The edit lands directly per instruction.
 - **A motivating finding's file gets migrated.** The rule stays; Phase 7 **deletes** the stale "Motivating finding:" pointer on the next run that observes zero divergence — it does not rewrite it into a "Resolved (was …)" note. Every entry here is read on every run, so a resolved example is pure carrying cost against a rule that already states what to detect.
 - **A cited symbol drifts.** Phase 7 heals it by the symbol, not the line: citations are symbol-anchored (the greppable identifier/token is authoritative, the line number a decaying hint). Symbol moved → rewrite the line hint; symbol gone → flag the citation expired rather than silently trusting it. New citations must name a symbol, never a bare line.
+- **An entry breaks another, or its Why cites a source wrongly.** A canonical example must pass every other entry, and a cited library or platform name must be true. Fix the entry before anything is picked from it: a corrected reason or example lands as bookkeeping; a changed outcome is a user decision.
 
 **What never triggers a canonical revision:** raw adoption counts ("11 new files used `_ac`") or "the corpus changed" — those are migration targets, not canonical revisions. The canonical is the deliberate choice; the corpus catches up.
