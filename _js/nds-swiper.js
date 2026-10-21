@@ -87,18 +87,18 @@
     // One document listener and one breakpoint subscription serve every initialized
     // swiper. Without these, N swipers attach N keydown listeners and N resize
     // callbacks — wasted work on every keystroke and every resize tick.
-    const _activeSwipers = new Set();
-    let _sharedKeydownAttached = false;
+    const activeSwipers = new Set();
+    let sharedKeydownAttached = false;
 
     function ensureSharedKeydown() {
-        if (_sharedKeydownAttached) return;
-        _sharedKeydownAttached = true;
+        if (sharedKeydownAttached) return;
+        sharedKeydownAttached = true;
         document.addEventListener('keydown', (e) => {
             if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' &&
                 e.key !== 'Home' && e.key !== 'End') return;
             // A field in a slide owns its caret keys.
             if (e.defaultPrevented || e.target.matches?.('input, textarea, select') || e.target.isContentEditable) return;
-            const inst = _ownerOf(document.activeElement);
+            const inst = ownerOf(document.activeElement);
             if (inst) inst._handleKeydown(e);
         });
     }
@@ -107,16 +107,16 @@
     // slide, and :hover matches every ancestor too, so taking the first Set hit
     // (= document order) would always hand the event to the outer deck. Same
     // ownership question the constructor answers.
-    function _ownerOf(active) {
+    function ownerOf(active) {
         for (let el = active && active.closest('.nds-swiper'); el;
              el = el.parentElement && el.parentElement.closest('.nds-swiper')) {
-            if (_activeSwipers.has(el.ndsSwiper)) return el.ndsSwiper;
+            if (activeSwipers.has(el.ndsSwiper)) return el.ndsSwiper;
         }
         // Nothing focused inside a swiper — fall back to the innermost hovered one,
         // but only when nothing else holds focus: a field elsewhere owns its arrows.
         if (active && active !== document.body && active !== document.documentElement) return null;
         let best = null;
-        for (const s of _activeSwipers) {
+        for (const s of activeSwipers) {
             if (s.container.matches(':hover') && (!best || best.container.contains(s.container))) best = s;
         }
         return best;
@@ -125,19 +125,19 @@
     // slidesPerView only changes when the viewport crosses one of
     // NDS.breakpoints.{tablet,desktop} — MediaQueryList `change` fires only on
     // those transitions, skipping the resize bus's every-tick fan-out entirely.
-    // Separate set from _activeSwipers: single-slide swipers skip keyboard/nav
+    // Separate set from activeSwipers: single-slide swipers skip keyboard/nav
     // setup but still need --slides re-derived on breakpoint crossings.
-    const _resizeSwipers = new Set();
-    const _mqDesktop = window.matchMedia(NDS.breakpoints.desktop);
-    const _mqTablet = window.matchMedia(NDS.breakpoints.tablet);
-    let _resizeAttached = false;
+    const resizeSwipers = new Set();
+    const mqDesktop = window.matchMedia(NDS.breakpoints.desktop);
+    const mqTablet = window.matchMedia(NDS.breakpoints.tablet);
+    let resizeAttached = false;
 
     function ensureSharedResize() {
-        if (_resizeAttached) return;
-        _resizeAttached = true;
-        const trigger = () => _resizeSwipers.forEach(inst => inst._handleResize());
-        _mqDesktop.addEventListener('change', trigger);
-        _mqTablet.addEventListener('change', trigger);
+        if (resizeAttached) return;
+        resizeAttached = true;
+        const trigger = () => resizeSwipers.forEach(inst => inst._handleResize());
+        mqDesktop.addEventListener('change', trigger);
+        mqTablet.addEventListener('change', trigger);
     }
 
     // ==============================================
@@ -204,8 +204,8 @@
         // ==============================================
 
         calculateSlidesPerView() {
-            if (_mqDesktop.matches) return this._slidesMax;
-            if (_mqTablet.matches) return this._slidesMid;
+            if (mqDesktop.matches) return this._slidesMax;
+            if (mqTablet.matches) return this._slidesMid;
             return this._slidesMin;
         }
 
@@ -263,7 +263,7 @@
             // must keep tracking --max/mid/min-slides or the lone card holds its
             // init-time width across resizes.
             if (this.slides.length === 1) {
-                _resizeSwipers.add(this);
+                resizeSwipers.add(this);
                 ensureSharedResize();
                 this.container.setAttribute('data-nds-swiper-initialized', 'true');
                 return;
@@ -375,8 +375,8 @@
 
         setupResize() {
             // Breakpoint-driven slidesPerView: shared via ensureSharedResize; instance
-            // is invoked through _resizeSwipers membership.
-            _resizeSwipers.add(this);
+            // is invoked through resizeSwipers membership.
+            resizeSwipers.add(this);
             ensureSharedResize();
 
             // Pixel-geometry caches (_measuredStep, _cachedGap) go stale on ANY size
@@ -803,7 +803,7 @@
             this._ownsTabindex = !this.container.hasAttribute('tabindex');
             if (this._ownsTabindex) this.container.setAttribute('tabindex', '0');
 
-            _activeSwipers.add(this);
+            activeSwipers.add(this);
             ensureSharedKeydown();
         }
 
@@ -1008,8 +1008,8 @@
             if (this.navigation) this.navigation.toggleAttribute('hidden', this._navHadHidden);
             if (this.prevBtn) this.prevBtn.style.removeProperty('display');
             if (this.nextBtn) this.nextBtn.style.removeProperty('display');
-            _activeSwipers.delete(this);
-            _resizeSwipers.delete(this);
+            activeSwipers.delete(this);
+            resizeSwipers.delete(this);
             if (this._offResize) { this._offResize(); this._offResize = null; }
             if (this._offSlideResize) { this._offSlideResize(); this._offSlideResize = null; }
             if (this._offVisibility) { this._offVisibility(); this._offVisibility = null; }

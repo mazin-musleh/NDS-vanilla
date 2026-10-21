@@ -34,7 +34,7 @@
     // and onDOMRemove push unconditionally with no (selector, fn) dedup in core.
     // The single init at page load wires the subscribers; subsequent .nds-otp-group
     // mutations are already handled by those long-lived subscribers.
-    var _subscribed = false;
+    var subscribed = false;
 
     var strings = NDS.i18n.strings('otp', {
         digit: 'Digit {n} of {total}',
@@ -284,8 +284,8 @@
     // ==============================================
 
     function init() {
-        if (_subscribed) return;
-        _subscribed = true;
+        if (subscribed) return;
+        subscribed = true;
         document.querySelectorAll('.nds-otp-group').forEach(initOtpGroup);
 
         NDS.onDOMAdd('.nds-otp-group', function (nodes) {

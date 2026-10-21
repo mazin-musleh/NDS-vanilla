@@ -55,12 +55,12 @@
 (function () {
     'use strict';
 
-    let _globalsWired = false;
+    let globalsWired = false;
 
     // Page-wide and shared by every stepper, so create(el) wires them too.
-    function _wireGlobals() {
-        if (_globalsWired) return;
-        _globalsWired = true;
+    function wireGlobals() {
+        if (globalsWired) return;
+        globalsWired = true;
 
         // Delegated click listener — one per page.
         document.addEventListener('click', (e) => {
@@ -239,7 +239,7 @@
     // A page with no stepper at load never runs init(), so this wires the globals too.
     function create(el) {
         if (el.ndsStepper) return el.ndsStepper;
-        _wireGlobals();
+        wireGlobals();
         const stepper = new NDSStepper(el);
         el.setAttribute('data-nds-stepper-initialized', 'true');
         el.ndsStepper = stepper;
@@ -247,7 +247,7 @@
     }
 
     function init() {
-        _wireGlobals();
+        wireGlobals();
         document.querySelectorAll('.nds-stepper:not([data-nds-stepper-initialized])').forEach(el => {
             if (!el.closest('code')) create(el);
         });
@@ -255,7 +255,7 @@
 
     NDS.Stepper = {
         init,
-        // init is idempotent (the sweep skips started steppers, _wireGlobals runs once).
+        // init is idempotent (the sweep skips started steppers, wireGlobals runs once).
         reinit:      init,
         create,
         destroy: (target) => getInstance(target)?.destroy(),

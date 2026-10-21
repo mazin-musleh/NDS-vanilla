@@ -100,7 +100,7 @@
     let abortController = null;
     // Cancel handle for the in-flight close cleanup, so a re-open mid-close
     // discards the pending hide() instead of letting it fire late.
-    let _cancelClose = null;
+    let cancelClose = null;
 
     // "open" stays set through the close animation (paired with "closing"), so
     // gate on the absence of "closing" — that treats a closing panel as not-open,
@@ -109,8 +109,8 @@
 
     function open() {
         if (!panel || !tab || isOpen()) return;
-        _cancelClose?.();
-        _cancelClose = null;
+        cancelClose?.();
+        cancelClose = null;
 
         // Reveal, then start collapsed: "open opening" paints display:grid at
         // rows:0fr. Two frames later drop "opening" so grid-template-rows
@@ -135,8 +135,8 @@
         NDS.aria.expanded(tab, false);
         removeState(tab, 'expanded');
 
-        _cancelClose = NDS.onTransitionEnd(panel, () => {
-            _cancelClose = null;
+        cancelClose = NDS.onTransitionEnd(panel, () => {
+            cancelClose = null;
             clearState(panel);
             panel.setAttribute('hidden', '');
             panel.dispatchEvent(new CustomEvent('nds:digital-stamp:closed', { bubbles: true }));
@@ -154,8 +154,8 @@
         if (!t || !p || (t === tab && p === panel)) return;
         tab = t;
         panel = p;
-        _cancelClose?.();
-        _cancelClose = null;
+        cancelClose?.();
+        cancelClose = null;
 
         // Scope all listeners to one AbortController so a re-init detaches the
         // prior batch atomically instead of stacking handlers on document.

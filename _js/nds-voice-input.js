@@ -312,7 +312,7 @@
     }
 
     // ── Delegated click handler (the whole "init") ────────────────────
-    var _initDone = false;
+    var initDone = false;
 
     function onVoiceClick(e) {
         var button = e.target.closest && e.target.closest('.nds-voice-input');
@@ -326,8 +326,8 @@
     }
 
     function init() {
-        if (_initDone) return;
-        _initDone = true;
+        if (initDone) return;
+        initDone = true;
         document.addEventListener('click', onVoiceClick);
         document.addEventListener('focusout', function(e) { lastBlurred = e.target; });
         // If a button is removed mid-listening, stop its session so the mic

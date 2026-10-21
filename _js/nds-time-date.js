@@ -146,9 +146,9 @@
     // (no removal path) on every re-call. The date and clock topbar widgets can
     // appear independently, so the latches are separate — a page that ships
     // only one widget can still wire the other if it's injected later.
-    let _dateInitDone = false;
-    let _clockInitDone = false;
-    let _resizeInitDone = false;
+    let dateInitDone = false;
+    let clockInitDone = false;
+    let resizeInitDone = false;
 
     function initializeTimeDate() {
         const dateEl = document.getElementById('nds-date');
@@ -162,8 +162,8 @@
             // during post-DCL hydration. The lang-change handler still runs
             // inline so it responds promptly when triggered.
             NDS.onIdle(updateDate);
-            if (!_dateInitDone) {
-                _dateInitDone = true;
+            if (!dateInitDone) {
+                dateInitDone = true;
                 NDS.onAttrChange('html', ['lang'], updateDate);
             }
         }
@@ -173,16 +173,16 @@
             // per-second DOM mutations no one can see. On resume, startClock()
             // ticks immediately so the time isn't a second stale.
             if (!document.hidden) startClock();
-            if (!_clockInitDone) {
-                _clockInitDone = true;
+            if (!clockInitDone) {
+                clockInitDone = true;
                 document.addEventListener('visibilitychange', () => {
                     document.hidden ? stopClock() : startClock();
                 });
             }
         }
 
-        if ((dateEl || clockEl) && !_resizeInitDone) {
-            _resizeInitDone = true;
+        if ((dateEl || clockEl) && !resizeInitDone) {
+            resizeInitDone = true;
             NDS.onResize(() => {
                 updateDate();
                 const el = document.getElementById('nds-real-time-clock');

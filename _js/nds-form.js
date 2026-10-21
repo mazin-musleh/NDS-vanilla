@@ -121,7 +121,7 @@
     // re-computed from the current input value.
     var LOADING_SLOTS = '.nds-form-action:not(.nds-prefix)';
 
-    function _ensureLoadingShell(fc) {
+    function ensureLoadingShell(fc) {
         var shell = fc.querySelector(LOADING_SLOTS + ' [data-loading-slot]');
         if (shell) return shell;
         var slots = fc.querySelectorAll(LOADING_SLOTS);
@@ -143,14 +143,14 @@
         return shell;
     }
 
-    function _setLoading(el, on) {
+    function setLoading(el, on) {
         var fc = el.classList.contains('nds-form-control') ? el : el.querySelector('.nds-form-control');
-        if (on) _enterLoading(fc); else _exitLoading(fc);
+        if (on) enterLoading(fc); else exitLoading(fc);
     }
 
-    function _enterLoading(fc) {
+    function enterLoading(fc) {
         if (!fc || fc._ndsLoading) return;
-        var refs = fc._ndsLoading = { shell: _ensureLoadingShell(fc) };
+        var refs = fc._ndsLoading = { shell: ensureLoadingShell(fc) };
         // Snapshot each sibling's resting hidden state, so exit restores it.
         refs.rest = new Map();
         fc.querySelectorAll(LOADING_SLOTS).forEach(function(slot) {
@@ -162,7 +162,7 @@
         NDS.state.add(refs.shell, 'loading');
     }
 
-    function _exitLoading(fc) {
+    function exitLoading(fc) {
         var refs = fc && fc._ndsLoading;
         if (!refs) return;
         fc._ndsLoading = null;
@@ -176,7 +176,7 @@
     }
 
     // nds-loading is the canon on every container, so the class spells loading too.
-    NDS.state.effect('loading', FORM_SCOPE, _setLoading, 'nds-loading');
+    NDS.state.effect('loading', FORM_SCOPE, setLoading, 'nds-loading');
 
     // ==============================================
     // UTILITY FUNCTIONS
@@ -458,14 +458,14 @@
     // A field that shows an error is checked again after its rule's events, so the message
     // follows the fix. One document listener per event name, added the first time a rule asks,
     // a rule from a later bundle included.
-    var _recheckOn = null;
+    var recheckOn = null;
     function wireRechecks() {
-        if (_recheckOn) return;
-        _recheckOn = {};
+        if (recheckOn) return;
+        recheckOn = {};
         NDS.validation.onRule(function(rule) {
             rule.on.forEach(function(type) {
-                if (_recheckOn[type]) return;
-                _recheckOn[type] = true;
+                if (recheckOn[type]) return;
+                recheckOn[type] = true;
                 document.addEventListener(type, function(e) {
                     var t = e.target;
                     if (!t || !t.closest) return;
@@ -848,7 +848,7 @@
         });
     }
 
-    var _windowWired = false;
+    var windowWired = false;
     // The el itself counts: a sweep can start on a form, a group or a field.
     var selfAndInner = function(el, sel) {
         var inner = Array.from(el.querySelectorAll(sel));
@@ -858,8 +858,8 @@
         create: function(el) {
             selfAndInner(el, '.nds-form').forEach(initForm);
             wireRechecks();
-            if (_windowWired) return;
-            _windowWired = true;
+            if (windowWired) return;
+            windowWired = true;
             // A POST that loads a page in this tab is pending until the page goes. On window, after every
             // other listener: a script that cancelled the submit sends it itself. A GET twice does no harm.
             window.addEventListener('submit', function(e) {

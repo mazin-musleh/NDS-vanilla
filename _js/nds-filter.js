@@ -2946,8 +2946,8 @@
                 this.targetContainer?.removeAttribute('data-nds-filter-initialized');
                 delete this.filterContainer.ndsFilter;
             }
-            if (this.targetId && _instancesByTarget.get(this.targetId) === this) {
-                _instancesByTarget.delete(this.targetId);
+            if (this.targetId && instancesByTarget.get(this.targetId) === this) {
+                instancesByTarget.delete(this.targetId);
             }
         }
     }
@@ -2960,7 +2960,7 @@
     // Tracks the live instances so init is idempotent per target and so
     // getByTarget/getInstance can resolve without depending on a .nds-filter
     // element existing (e.g. a search-only filter).
-    const _instancesByTarget = new Map();
+    const instancesByTarget = new Map();
 
     // Resolve the LIVE instance for a target id, or null. A framework view
     // unmounted without NDS.init.destroy() leaves a detached instance squatting
@@ -2969,12 +2969,12 @@
     // A detached representative means that filter is gone — destroy it (which
     // releases its pooled NDS.onDOMAdd/listener subscriptions) and free the id.
     function liveInstance(id) {
-        const instance = _instancesByTarget.get(id);
+        const instance = instancesByTarget.get(id);
         if (!instance) return null;
         if (instance.filterContainer?.isConnected) return instance;
         console.warn(`NDS Filter: reclaiming target "${id}" — its instance was removed from the DOM without NDS.init.destroy(). Call destroy() on unmount.`);
         instance.destroy();
-        _instancesByTarget.delete(id);
+        instancesByTarget.delete(id);
         return null;
     }
 
@@ -2997,7 +2997,7 @@
         instance._targetRoots.forEach(s => s.setAttribute('data-nds-filter-initialized', 'true'));
         instance.targetContainer?.setAttribute('data-nds-filter-initialized', 'true');
         if (instance.targetId) {
-            _instancesByTarget.set(instance.targetId, instance);
+            instancesByTarget.set(instance.targetId, instance);
         }
         representative.dispatchEvent(new CustomEvent('nds:filter:ready', {
             detail: instance,
@@ -3102,7 +3102,7 @@
             initializeFilters(root);
 
             const scope = root && root !== document ? root : null;
-            _instancesByTarget.forEach(instance => {
+            instancesByTarget.forEach(instance => {
                 // isFormMode, not isAjaxMode: a <form data-filter-submit> WITHOUT
                 // data-ajax is server-driven too — the browser submits and the server
                 // returns the filtered page. Re-scanning it would rebuild the option

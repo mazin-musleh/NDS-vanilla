@@ -51,7 +51,7 @@
     const DEFAULT_STEP = 5;
 
     // Only used to name the unit inputs when the field itself has no id.
-    let _uid = 0;
+    let uid = 0;
 
     // Longest first so the alternation prefers HH over H.
     const FORMAT_TOKEN_REGEX = /(HH|H|hh|h|mm|ss|A|a)/g;
@@ -130,9 +130,9 @@
     // Per-format regex + capture order, cached. Literals between tokens are
     // escaped so a format like "hh.mm A" can't smuggle in regex syntax.
     // A Map, not an object: a format named "constructor" would hit the prototype.
-    const _parseCache = new Map();
+    const parseCache = new Map();
     function getParseConfig(format) {
-        if (_parseCache.has(format)) return _parseCache.get(format);
+        if (parseCache.has(format)) return parseCache.get(format);
         const order = [];
         let source = '';
         let last = 0;
@@ -144,7 +144,7 @@
         }
         source += format.slice(last).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const config = { re: new RegExp('^\\s*' + source + '\\s*$'), order };
-        _parseCache.set(format, config);
+        parseCache.set(format, config);
         return config;
     }
 
@@ -350,7 +350,7 @@
 
             // Derived from the field, so the unit ids survive a panel rebuild
             // (a lang change discards and re-creates the panel).
-            this.uid = input.id || ('nds-time-picker-' + (++_uid));
+            this.uid = input.id || ('nds-time-picker-' + (++uid));
 
             this.format = container.getAttribute('data-format') || DEFAULT_FORMAT;
             this.units = unitsFor(this.format);

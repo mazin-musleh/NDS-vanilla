@@ -59,7 +59,7 @@
 
     // Only one tooltip is open at a time — track it module-locally so open()
     // doesn't need to sweep the DOM by attribute selector.
-    let _openTooltip = null;
+    let openTooltip = null;
 
     // Leading icon chip, shared by the auto trigger and a titled balloon.
     function buildChip(status) {
@@ -340,8 +340,8 @@
             this.isOpen = true;
 
             // Only one tooltip open at a time
-            if (_openTooltip && _openTooltip !== this) _openTooltip.close();
-            _openTooltip = this;
+            if (openTooltip && openTooltip !== this) openTooltip.close();
+            openTooltip = this;
 
             if (!this._rootIsControl) addState(this.root, 'open');
             this.balloon.hidden = false;
@@ -369,7 +369,7 @@
         close() {
             if (!this.isOpen) return;
             this.isOpen = false;
-            if (_openTooltip === this) _openTooltip = null;
+            if (openTooltip === this) openTooltip = null;
 
             if (!this._rootIsControl) removeState(this.root, 'open');
             this.balloon.hidden = true;

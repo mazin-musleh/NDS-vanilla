@@ -24,7 +24,7 @@
 (function () {
     'use strict';
 
-    let _initDone = false;
+    let initDone = false;
 
     // Paper is white: the page and every dark area on it print in their light
     // variant (other theme tokens stay), then dark comes back. A print target's own
@@ -84,8 +84,8 @@
 
     // Loader-driven (registered on selector [data-print-target]).
     function init() {
-        if (_initDone) return;
-        _initDone = true;
+        if (initDone) return;
+        initDone = true;
         document.addEventListener('click', onPrintClick);
     }
 

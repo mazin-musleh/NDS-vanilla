@@ -1068,10 +1068,10 @@
     // Re-render every chart instance when document direction or lang changes.
     // Lang switcher uses View Transitions; the shared NDS.onAttrChange dispatch fires
     // before the new snapshot is captured, so the new render is animated cleanly.
-    let _dirObserverReady = false;
+    let dirObserverReady = false;
     function setupDirObserver() {
-        if (_dirObserverReady) return;
-        _dirObserverReady = true;
+        if (dirObserverReady) return;
+        dirObserverReady = true;
         NDS.onAttrChange('html', ['dir', 'lang'], () => {
             document.querySelectorAll('.nds-chart[data-nds-chart-initialized]').forEach(el => {
                 if (el.ndsChart) el.ndsChart.render();

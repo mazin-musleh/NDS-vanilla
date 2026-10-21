@@ -64,7 +64,7 @@
     // Panel.js needs it to open an already-built panel later) but a custom
     // trigger passed into open()/toggle() has no obligation to carry it, and
     // trusting it here silently orphaned the whole component: resolvePanel()
-    // returned null, but _initDone was already set, so nothing — not even the
+    // returned null, but initDone was already set, so nothing — not even the
     // real FAB — could ever arm it again for the rest of the page.
     const PANEL_ID = 'nds-accessibility-panel';
 
@@ -239,8 +239,8 @@
     let resetTimer = null;          // armed by first reset click
     let resetDoneTimer = null;      // post-reset visible-flash
     let resetCountdownTimer = null; // mid-arming SR announcement
-    let _initDone = false;
-    let _arming = false;       // cold build in flight — see armedThen()
+    let initDone = false;
+    let arming = false;       // cold build in flight — see armedThen()
 
     function defaultState() {
         return {
@@ -959,7 +959,7 @@
     // a component with no panel reference yet and get silence. Arming here keeps
     // the no-prefs, no-interaction session at zero init cost either way.
     function ensureArmed() {
-        if (!_initDone) init();
+        if (!initDone) init();
         return !!panel;
     }
 
@@ -970,22 +970,22 @@
     // proceed. Already armed: proceed immediately, same tick. ponytail: a
     // flat 1000ms, not an actual "CSS has loaded" wait.
     //
-    // The _arming check comes FIRST and swallows the call: init() sets
-    // _initDone synchronously, so a second activation inside the build window
+    // The arming check comes FIRST and swallows the call: init() sets
+    // initDone synchronously, so a second activation inside the build window
     // would otherwise take the warm branch, open at once, and then get closed
     // again when this build's own proceed() fires. Repeat activations during a
     // cold build are noise, not a queue — the trigger is already spinning.
     // (The FAB's pointer-events go dead under .nds-loading, but keyboard
     // activation and a consumer's own open()/toggle() call do not.)
     function armedThen(proceed, triggerEl) {
-        if (_arming) return;
-        if (_initDone) { if (ensureArmed()) proceed(); return; }
-        _arming = true;
+        if (arming) return;
+        if (initDone) { if (ensureArmed()) proceed(); return; }
+        arming = true;
         const fab = triggerEl || document.querySelector('[data-accessibility-toggle]');
         if (fab) NDS.state.add(fab, 'loading');
         init(triggerEl);
         setTimeout(() => {
-            _arming = false;
+            arming = false;
             if (fab) NDS.state.remove(fab, 'loading');
             if (panel) proceed();
         }, 1000);
@@ -1440,8 +1440,8 @@
     // document-order first-match. Falls back to a plain query when arming
     // with no trigger (the saved-prefs path).
     function init(triggerEl) {
-        if (_initDone) destroy();
-        _initDone = true;
+        if (initDone) destroy();
+        initDone = true;
 
         toggleBtn = triggerEl || document.querySelector('[data-accessibility-toggle]');
         panel = resolvePanel();
@@ -1510,9 +1510,9 @@
         // stamps partway through the cold build — the boot gate has to tell
         // "still building" (swallow the click) from "done" (let Panel's own
         // delegated toggle have it) and the attribute answers yes to both.
-        get isReady() { return _initDone && !_arming && !!panel; },
+        get isReady() { return initDone && !arming && !!panel; },
         // Started, by a press or by the loader: the loader then skips its own init().
-        get isStarted() { return _initDone; },
+        get isStarted() { return initDone; },
         get state() { return structuredClone(state); },
     };
 })();

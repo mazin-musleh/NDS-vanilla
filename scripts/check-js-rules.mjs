@@ -39,7 +39,7 @@ const VOCAB = new Set(['open', 'closing', 'opening', 'closed', 'show', 'hide', '
 const ALLOW = [
     // Mixed writers: Custom Select stamps `selected` on the items Dropmenu marks; one selector reads both.
     { file: 'nds-dropmenu.js', near: 'getCurrentItem()' },
-    // The nav's flag must hold through the close, and _openDropdowns drops a menu when it STARTS closing.
+    // The nav's flag must hold through the close, and openDropdowns drops a menu when it STARTS closing.
     { file: 'nds-main-nav.js', near: 'function syncOpenFlags()' },
 ];
 

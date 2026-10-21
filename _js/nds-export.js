@@ -471,7 +471,7 @@
     // listener resolves its button per click, so buttons injected later (modals,
     // dropmenus, dynamic toolbars) are covered with no re-arm.
     const VALID_FORMATS = { csv: 1, xls: 1, pdf: 1 };
-    let _initDone = false;
+    let initDone = false;
 
     function onExportClick(e) {
         const btn = e.target.closest && e.target.closest('[data-export]');
@@ -491,8 +491,8 @@
 
     // Loader-driven (registered on selector [data-export], extras bundle).
     function init() {
-        if (_initDone) return;
-        _initDone = true;
+        if (initDone) return;
+        initDone = true;
         document.addEventListener('click', onExportClick);
         // Loads Selection's bundle now: isSelected is read synchronously per row, and a stub would answer with a Promise.
         NDS.Selection.init();

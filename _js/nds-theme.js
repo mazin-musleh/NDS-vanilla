@@ -220,7 +220,7 @@
         catch (e) { /* storage blocked */ }
     }
     function syncSwitcher(active) {
-        _active = active;
+        currentValue = active;
         const els = document.querySelectorAll(SWITCH_SEL);
         for (let i = 0; i < els.length; i++) {
             const on = (els[i].getAttribute('data-theme-value') || '') === active;
@@ -231,8 +231,8 @@
         }
     }
 
-    let _sheet = '';   // active stylesheet theme value ('' otherwise)
-    let _active = '';  // the switcher value marked current, for a switcher mounted later
+    let sheet = '';   // active stylesheet theme value ('' otherwise)
+    let currentValue = '';  // the switcher value marked current, for a switcher mounted later
     // Apply a clicked switcher item — inside the shared reveal so a theme change ripples
     // from the clicked item, exactly like the dark toggle. (Predefined/custom recolour
     // synchronously inside the transition; a stylesheet theme's CSS loads async, so it
@@ -250,7 +250,7 @@
             const css = off ? null : el.getAttribute('data-theme-css');
 
             // Leaving a stylesheet theme → tear it down first.
-            if (_sheet && _sheet !== value) { runHook(_sheet, 'teardown'); window.__NDS_THEME_ACTIVE = ''; _sheet = ''; }
+            if (sheet && sheet !== value) { runHook(sheet, 'teardown'); window.__NDS_THEME_ACTIVE = ''; sheet = ''; }
 
             if (pack || css) {
                 clearInline(); savePalette(null);
@@ -260,7 +260,7 @@
                 if (css) ensureStylesheet(css);             // each asset the option declares, independently
                 if (pack) ensureThemeJS(value, pack);
                 runHook(value, 'inject');                   // re-activation; first activation self-injects on load
-                _sheet = value;
+                sheet = value;
             } else if (!off && el.getAttribute('data-seed-primary')) {
                 removeStylesheet(); setThemeToken('');      // custom rides [data-palette], not a token
                 clearInline();
@@ -314,7 +314,7 @@
         const pack = el && el.getAttribute('data-theme-js');
         const css = el && el.getAttribute('data-theme-css');
         if (pack || css) {                                   // active token is a stylesheet theme → load what it declares
-            _sheet = active; window.__NDS_THEME_ACTIVE = active;
+            sheet = active; window.__NDS_THEME_ACTIVE = active;
             if (css) ensureStylesheet(css);
             if (pack) ensureThemeJS(active, pack);
             runHook(active, 'inject');
@@ -326,12 +326,12 @@
     // loader runs it on a toggle, a switcher or the theme-color meta, and mount()/refresh()
     // run it again for a later view: the sync runs every time, the restore and the
     // listeners once. First paint is owned by the pre-paint FOUC script.
-    let _wired = false, _reconciled = false;
+    let wired = false, reconciled = false;
     function init() {
         updateToggles(getTheme());
-        if (_reconciled) syncSwitcher(_active);
+        if (reconciled) syncSwitcher(currentValue);
         else if (document.querySelector(SWITCH_SEL)) {
-            _reconciled = true;
+            reconciled = true;
             reconcileSwitcher();
 
             // ?theme=<token> applies that switcher option as if clicked (and persists
@@ -348,8 +348,8 @@
         }
         syncThemeColor();
 
-        if (_wired) return;
-        _wired = true;
+        if (wired) return;
+        wired = true;
 
         // A switcher item is usually a button (click); it can also be a switch — then
         // the input's 'change' drives it, so skip the click to avoid a double-toggle.

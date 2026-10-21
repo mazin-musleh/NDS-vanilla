@@ -96,7 +96,7 @@
         return document.getElementById(id);
     }
 
-    let _initDone = false;
+    let initDone = false;
     let abortController = null;
     let warnEl = null, endedEl = null;
     let timeout, warn, renewEvery, extendUrl, logoutUrl, signinUrl, key;
@@ -180,7 +180,7 @@
     }
 
     function init(options) {
-        if (_initDone) return;
+        if (initDone) return;
         const o = options || {};
         timeout = o.timeout * 1000;
         warn = (o.warn || 120) * 1000;
@@ -189,7 +189,7 @@
             return;
         }
         if (warn < 20000) console.warn('NDS SessionTimeout: a warn under 20 seconds fails WCAG 2.2.1', o);
-        _initDone = true;
+        initDone = true;
         // Activity renews before the warning could open, so an active user never sees it.
         renewEvery = Math.min(60000, (timeout - warn) / 2);
         extendUrl = NDS.safeUrl(o.extend);
@@ -224,7 +224,7 @@
     }
 
     function destroy() {
-        if (!_initDone) return;
+        if (!initDone) return;
         clearTimeout(timer);
         abortController.abort();
         // A sign-out in a single-page app: no session modal stays up.
@@ -234,20 +234,20 @@
         warnEl?.remove();
         endedEl?.remove();
         warnEl = endedEl = null;
-        _initDone = warning = ended = redirected = false;
+        initDone = warning = ended = redirected = false;
         renewed = tried = 0;
     }
 
     NDS.SessionTimeout = {
         init,
-        extend: () => _initDone && extend('api'),
+        extend: () => initDone && extend('api'),
         reset: () => {
-            if (!_initDone) return;
+            if (!initDone) return;
             if (ended && endedEl && NDS.state.has(endedEl, 'open')) NDS.Modal.close();
             ended = false;
             renew(Date.now());
         },
-        end: () => _initDone && end(),
+        end: () => initDone && end(),
         destroy
     };
 })();

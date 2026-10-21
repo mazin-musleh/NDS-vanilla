@@ -64,7 +64,7 @@
     // Currently-open dropmenu wrappers, tracked module-locally so open() can
     // close peers without a DOM sweep by attribute selector. Maintained in
     // open()/close(); also cleared by destroy() via the close() it dispatches.
-    const _openDropmenus = new Set();
+    const openDropmenus = new Set();
 
 
     // ==============================================
@@ -79,9 +79,9 @@
             // contains month/year sub-dropmenus, and a naive querySelector
             // would grab the first sub-trigger instead of falling back to the
             // wrapper). Same nesting-aware pattern as the menu click handler.
-            this.trigger = _ownFirstIn(dropmenuElement, '.nds-dropmenu-trigger')
+            this.trigger = ownFirstIn(dropmenuElement, '.nds-dropmenu-trigger')
                 || dropmenuElement;
-            this.menu = _ownFirstIn(dropmenuElement, '.nds-dropmenu-menu');
+            this.menu = ownFirstIn(dropmenuElement, '.nds-dropmenu-menu');
             this.isOpen = false;
 
             if (!this.menu) {
@@ -403,7 +403,7 @@
             // Wrapper-boundary lookup: a nested select-mode dropmenu keeps its
             // own hidden input inside our menu, and a bare querySelector would
             // adopt it (renaming the child's field) on a destroy → re-init.
-            let hidden = _ownFirstIn(this.dropmenu, 'input[type="hidden"][data-nds-select-value]');
+            let hidden = ownFirstIn(this.dropmenu, 'input[type="hidden"][data-nds-select-value]');
             const builtHidden = !hidden;
             if (!hidden) {
                 hidden = document.createElement('input');
@@ -625,7 +625,7 @@
             // Safari leaves focus on the page or the modal around a clicked trigger: Escape there closes
             // the newest open menu, or cancels a pending open, before a <dialog> around it reads the key as its own close.
             document.addEventListener('keydown', (e) => {
-                if (e.key !== 'Escape' || (!this._delaying && [..._openDropmenus].pop() !== this.dropmenu)
+                if (e.key !== 'Escape' || (!this._delaying && [...openDropmenus].pop() !== this.dropmenu)
                     || this.dropmenu.contains(e.target) || !e.target.contains?.(this.dropmenu)) return;
                 e.stopImmediatePropagation();
                 this._onEscape(e);
@@ -819,7 +819,7 @@
             // Close other open dropmenus — but skip ancestors of this one.
             // Date-picker has month/year sub-dropmenus inside the calendar's
             // dropmenu; opening a sub-dropmenu must not close its parent.
-            _openDropmenus.forEach(el => {
+            openDropmenus.forEach(el => {
                 if (el === this.dropmenu) return;
                 if (el.contains(this.dropmenu)) return; // ancestor — keep open
                 if (el.ndsDropmenu) el.ndsDropmenu.close();
@@ -828,7 +828,7 @@
             removeState(this.dropmenu, 'closing');
             removeState(this.menu,     'closing');
             this.isOpen = true;
-            _openDropmenus.add(this.dropmenu);
+            openDropmenus.add(this.dropmenu);
             this._listenDocument();
 
             // A % width (`--dropmenu-min-width: 100%` on custom-select, autocomplete,
@@ -909,11 +909,11 @@
 
         close() {
             this.isOpen = false;
-            _openDropmenus.delete(this.dropmenu);
+            openDropmenus.delete(this.dropmenu);
             this._unlistenDocument();
             // A nested open menu (date-picker month/year) is its own popover: it
             // would stay in the top layer after this one leaves.
-            _openDropmenus.forEach(el => {
+            openDropmenus.forEach(el => {
                 if (this.dropmenu.contains(el)) el.ndsDropmenu?.close();
             });
             this._lastClickX = null;
@@ -1229,7 +1229,7 @@
 
     // create(el, opts) adopts a field another component owns. What it writes, destroy()
     // takes back; a class or flag the author wrote stays.
-    function _stampField(el, { menu, menuClass, click = true, keys = true, anchor } = {}) {
+    function stampField(el, { menu, menuClass, click = true, keys = true, anchor } = {}) {
         const undo = [];
         const addClass = (node, cls) => {
             if (!node.classList.contains(cls)) { node.classList.add(cls); undo.push(() => node.classList.remove(cls)); }
@@ -1265,11 +1265,11 @@
     // The first part on the WRAPPER that is this dropmenu's, not a nested sub-dropmenu's:
     // trigger, menu, select mode's hidden input, and the scan before an instance exists.
     // Everything scoped to the MENU uses the menu-boundary readers (_ownItems / _ownFirst).
-    function _ownFirstIn(root, selector) {
+    function ownFirstIn(root, selector) {
         return NDS.ownParts(root, selector, '.nds-dropmenu')[0] || null;
     }
 
-    function _ownMenuTemplate(wrapper) {
+    function ownMenuTemplate(wrapper) {
         const tpls = wrapper.querySelectorAll('template');
         for (let i = 0; i < tpls.length; i++) {
             if (tpls[i].closest('.nds-dropmenu') === wrapper
@@ -1281,11 +1281,11 @@
     // Stamp the wrapper's menu template in place and wake what arrived.
     // NDS.init.refresh may construct this wrapper too (a nested sub-dropmenu
     // re-enters the scan), so callers read wrapper.ndsDropmenu afterwards.
-    function _stampMenuTemplate(wrapper) {
-        const tpl = _ownMenuTemplate(wrapper);
+    function stampMenuTemplate(wrapper) {
+        const tpl = ownMenuTemplate(wrapper);
         if (!tpl) return null;
         tpl.replaceWith(tpl.content);
-        const menu = _ownFirstIn(wrapper, '.nds-dropmenu-menu');
+        const menu = ownFirstIn(wrapper, '.nds-dropmenu-menu');
         if (menu) NDS.init.refresh(menu);
         return menu;
     }
@@ -1293,15 +1293,15 @@
     // One-shot arm on the trigger. Enter/Space on a button trigger synthesize a
     // click, so keyboard opens work; ArrowDown-to-open no-ops once and recovers
     // after construction (the established pre-wire-gap pattern).
-    function _armTemplateDropmenu(wrapper) {
+    function armTemplateDropmenu(wrapper) {
         if (wrapper.ndsDropmenuArm) return;
-        const trigger = _ownFirstIn(wrapper, '.nds-dropmenu-trigger') || wrapper;
+        const trigger = ownFirstIn(wrapper, '.nds-dropmenu-trigger') || wrapper;
         const arm = new AbortController();
         // NDS.init.destroy(view) disarms a menu never opened through this backref.
         wrapper.ndsDropmenuArm = { destroy: () => { arm.abort(); delete wrapper.ndsDropmenuArm; } };
         trigger.addEventListener('click', (e) => {
             wrapper.ndsDropmenuArm.destroy();
-            _stampMenuTemplate(wrapper);
+            stampMenuTemplate(wrapper);
             if (!wrapper.ndsDropmenu) new NDSDropmenu(wrapper);
             const instance = wrapper.ndsDropmenu;
             if (!instance) return;
@@ -1325,8 +1325,8 @@
 
             // Menu asleep in an own <template> → arm instead of constructing.
             // no-click wrappers are the consumer's to create() programmatically.
-            if (!_ownFirstIn(el, '.nds-dropmenu-menu') && _ownMenuTemplate(el)) {
-                if (!el.hasAttribute('data-dropmenu-no-click')) _armTemplateDropmenu(el);
+            if (!ownFirstIn(el, '.nds-dropmenu-menu') && ownMenuTemplate(el)) {
+                if (!el.hasAttribute('data-dropmenu-no-click')) armTemplateDropmenu(el);
                 return;
             }
 
@@ -1354,10 +1354,10 @@
         create: (element, opts) => {
             if (!element) return null;
             if (element.ndsDropmenu) return element.ndsDropmenu;
-            const unstamp = opts && _stampField(element, opts);
+            const unstamp = opts && stampField(element, opts);
             // A templated menu stamps immediately on programmatic creation —
             // the consumer is instancing NOW, so there is nothing to defer.
-            if (!_ownFirstIn(element, '.nds-dropmenu-menu')) _stampMenuTemplate(element);
+            if (!ownFirstIn(element, '.nds-dropmenu-menu')) stampMenuTemplate(element);
             // Prefer the live instance: refresh inside the stamp may already have
             // constructed this wrapper. The constructor publishes el.ndsDropmenu
             // only on success → null on a bail.

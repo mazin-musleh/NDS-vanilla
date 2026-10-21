@@ -151,14 +151,14 @@
         return ok;
     }
 
-    const _controllers = new Map();
+    const controllers = new Map();
     function bind(selector, options) {
         const sel = selector || '.nds-copy';
         const opts = options || {};
 
-        if (_controllers.has(sel)) _controllers.get(sel).abort();
+        if (controllers.has(sel)) controllers.get(sel).abort();
         const abortController = new AbortController();
-        _controllers.set(sel, abortController);
+        controllers.set(sel, abortController);
 
         document.addEventListener('click', (e) => {
             const btn = e.target.closest(sel);

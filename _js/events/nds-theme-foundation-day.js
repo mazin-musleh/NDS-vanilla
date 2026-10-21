@@ -218,22 +218,22 @@
     // inject the moment the hero wrapper enters the DOM (before first paint, before
     // delegated Swiper init). DOMContentLoaded is the no-hero/missed-race fallback;
     // it no-ops if the observer was already cancelled (injected or torn down).
-    var _observer = null;
+    var observer = null;
     function cancelPending() {
-        if (_observer) { _observer.disconnect(); _observer = null; }
+        if (observer) { observer.disconnect(); observer = null; }
     }
     function scheduleSlide() {
         if (document.readyState !== 'loading') { injectSlide(); return; }
-        if (_observer) return;
-        _observer = new MutationObserver(function () {
+        if (observer) return;
+        observer = new MutationObserver(function () {
             if (document.querySelector(SWIPER_SEL + ' .nds-swiper-wrapper')) {
                 cancelPending();
                 injectSlide();
             }
         });
-        _observer.observe(document.documentElement, { childList: true, subtree: true });
+        observer.observe(document.documentElement, { childList: true, subtree: true });
         document.addEventListener('DOMContentLoaded', function () {
-            if (!_observer) return;
+            if (!observer) return;
             cancelPending();
             injectSlide();
         }, { once: true });

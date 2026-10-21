@@ -106,7 +106,7 @@
     // and onDOMRemove push unconditionally with no (selector, fn) dedup in core.
     // The single init at page load wires the subscribers; subsequent button
     // mutations are already handled by those long-lived subscribers.
-    let _subscribed = false;
+    let subscribed = false;
 
     // Per-button runtime: { tickTimer, labelEl, originalLabel }
     const active = new WeakMap();
@@ -290,8 +290,8 @@
 
     const CooldownButton = {
         init() {
-            if (_subscribed) return;
-            _subscribed = true;
+            if (subscribed) return;
+            subscribed = true;
             document.querySelectorAll(SEL).forEach(wire);
             NDS.onDOMAdd(SEL, (nodes) => nodes.forEach(wire));
             NDS.onDOMRemove(SEL, (nodes) => nodes.forEach(unwire));

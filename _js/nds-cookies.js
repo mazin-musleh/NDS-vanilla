@@ -218,10 +218,10 @@
         open('notice', null, { focus: false });
     }
 
-    let _initDone = false;
+    let initDone = false;
     function init() {
-        if (_initDone) return;
-        _initDone = true;
+        if (initDone) return;
+        initDone = true;
         wire();
         if (skipAuto()) return;
         // Build and unpack the panel during the wait: hidden, it costs no styling, so

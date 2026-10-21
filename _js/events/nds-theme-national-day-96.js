@@ -336,22 +336,22 @@
     // inject the moment the hero wrapper enters the DOM (before first paint, before
     // delegated Swiper init). DOMContentLoaded is the no-hero/missed-race fallback;
     // it no-ops if the observer was already cancelled (injected or torn down).
-    var _observer = null;
+    var observer = null;
     function cancelPending() {
-        if (_observer) { _observer.disconnect(); _observer = null; }
+        if (observer) { observer.disconnect(); observer = null; }
     }
     function scheduleSlide() {
         if (document.readyState !== 'loading') { injectHero(); return; }
-        if (_observer) return;
-        _observer = new MutationObserver(function () {
+        if (observer) return;
+        observer = new MutationObserver(function () {
             if (document.querySelector(SWIPER_SEL + ' .nds-swiper-wrapper')) {
                 cancelPending();
                 injectHero();
             }
         });
-        _observer.observe(document.documentElement, { childList: true, subtree: true });
+        observer.observe(document.documentElement, { childList: true, subtree: true });
         document.addEventListener('DOMContentLoaded', function () {
-            if (!_observer) return;
+            if (!observer) return;
             cancelPending();
             injectHero();
         }, { once: true });
@@ -374,8 +374,8 @@
     // (.nds-deck, drawn by the pack's stylesheet). The section carries nds-nd96 + the active
     // slide's theme class, which is all the stylesheet keys on.
     var DECK_CLASS = 'nds-nd96';
-    var _siteSlides = [], _siteTotal = '', _navHadCenter = false, _pageHadMd = false, _siteLoop = false;
-    var _deckAbort = null, _typeTimer = 0, _holdTimer = 0, _current = -1, _paused = false, _wordDone = false;
+    var siteSlides = [], siteTotal = '', navHadCenter = false, pageHadMd = false, siteLoop = false;
+    var deckAbort = null, typeTimer = 0, holdTimer = 0, current = -1, paused = false, wordDone = false;
 
     function fullTitle(s) { return t(LEAD) + ' ' + t(s.word); }
 
@@ -433,7 +433,7 @@
             if (el.classList.contains(DECK_SLIDE)) return;
             // A live loop's clones would come back as real slides; the swiper re-clones.
             if (el.classList.contains('nds-swiper-clone')) { el.remove(); return; }
-            _siteSlides.push(el);
+            siteSlides.push(el);
             el.remove();
         });
     }
@@ -445,7 +445,7 @@
         var section = swiper.closest('.nds-hero-section');
         if (!wrapper || !section || section.classList.contains(DECK_CLASS)) return;   // idempotent
         section.classList.add(DECK_CLASS);
-        _siteTotal = swiper.style.getPropertyValue('--total');
+        siteTotal = swiper.style.getPropertyValue('--total');
         stashSiteSlides(wrapper);
 
         var deck = document.createElement('div');
@@ -456,17 +456,17 @@
         });
         wrapper.parentNode.insertBefore(deck, wrapper.nextSibling);
         swiper.classList.add('nds-deck');
-        _siteLoop = swiper.hasAttribute('data-swiper-loop');
+        siteLoop = swiper.hasAttribute('data-swiper-loop');
         swiper.setAttribute('data-swiper-loop', '');   // the deck wraps, so the track does too
         swiper.style.setProperty('--total', String(SLIDES.length));
         var nav = swiper.querySelector('.nds-swiper-navigation'), page = swiper.querySelector('.nds-swiper-pagination');
-        _navHadCenter = !!(nav && nav.classList.contains('nds-center'));
-        _pageHadMd = !!(page && page.classList.contains('nds-md'));
+        navHadCenter = !!(nav && nav.classList.contains('nds-center'));
+        pageHadMd = !!(page && page.classList.contains('nds-md'));
         if (nav) nav.classList.add('nds-center');
         if (page) page.classList.add('nds-md');
 
-        _deckAbort = new AbortController();
-        var sig = _deckAbort.signal;
+        deckAbort = new AbortController();
+        var sig = deckAbort.signal;
         swiper.addEventListener('nds:swiper:change', function (e) { setActive(e.detail.index); }, { signal: sig });
         section.addEventListener('pointerenter', pause, { signal: sig });
         section.addEventListener('pointerleave', resume, { signal: sig });
@@ -512,23 +512,23 @@
             if (cards[i]) cards[i].setAttribute('aria-label', fullTitle(s));
         });
         syncClones(section);
-        if (_current >= 0) typeWord(slides[_current]);
+        if (current >= 0) typeWord(slides[current]);
     }
 
     function setActive(i) {
-        if (i === _current) return;
+        if (i === current) return;
         var section = deckSection();
         if (!section) return;
-        var first = _current < 0;
+        var first = current < 0;
         if (!first) {
             // Cross-fade: park the outgoing gradient on ::before, then fade it out
             // over the new one (compositor opacity, one repaint — see the stylesheet).
             var cs = getComputedStyle(section);
             section.style.setProperty('--_nd96-prev-from', cs.getPropertyValue('--_nd96-from'));
             section.style.setProperty('--_nd96-prev-to', cs.getPropertyValue('--_nd96-to'));
-            section.classList.remove('nds-nd96-' + SLIDES[_current].theme);
+            section.classList.remove('nds-nd96-' + SLIDES[current].theme);
         }
-        _current = i;
+        current = i;
         section.classList.add('nds-nd96-' + SLIDES[i].theme);
         if (!first && section.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             try { section.animate([{ opacity: 1 }, { opacity: 0 }], { duration: SETTLE_MS, easing: 'ease', pseudoElement: '::before' }); } catch (e) { /* no pseudo-element animation: the colour just snaps */ }
@@ -537,8 +537,8 @@
     }
 
     function stopTimers() {
-        clearInterval(_typeTimer); clearTimeout(_holdTimer);
-        _typeTimer = _holdTimer = 0;
+        clearInterval(typeTimer); clearTimeout(holdTimer);
+        typeTimer = holdTimer = 0;
     }
 
     // Types the slide's word one letter at a time (a mark rides its base letter),
@@ -546,7 +546,7 @@
     // the move to the next slide.
     function typeWord(slide) {
         stopTimers();
-        _wordDone = false;
+        wordDone = false;
         if (!slide) return;
         var span = slide.querySelector('.nds-nd96-typed');
         if (!span) return;
@@ -554,26 +554,26 @@
         var chars = word.match(/\P{M}\p{M}*/gu) || [];
         var n = 0;
         function done() {
-            _wordDone = true;
+            wordDone = true;
             var section = deckSection();
             if (section) syncClones(section);
             scheduleAdvance();
         }
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             span.textContent = word;
-            _typeTimer = setTimeout(done, chars.length * TYPE_MS);   // same beat, no letters
+            typeTimer = setTimeout(done, chars.length * TYPE_MS);   // same beat, no letters
             return;
         }
         span.textContent = '';
-        _typeTimer = setInterval(function () {
+        typeTimer = setInterval(function () {
             span.textContent = chars.slice(0, ++n).join('');
-            if (n >= chars.length) { clearInterval(_typeTimer); _typeTimer = 0; done(); }
+            if (n >= chars.length) { clearInterval(typeTimer); typeTimer = 0; done(); }
         }, TYPE_MS);
     }
 
     function scheduleAdvance() {
-        clearTimeout(_holdTimer);
-        _holdTimer = _paused ? 0 : setTimeout(prewarm, HOLD_MS - WARM_MS);
+        clearTimeout(holdTimer);
+        holdTimer = paused ? 0 : setTimeout(prewarm, HOLD_MS - WARM_MS);
     }
 
     // A phone idling through the hold has clocked its GPU down, so the first
@@ -585,45 +585,45 @@
         if (deck && deck.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             deck.animate([{ opacity: 1 }, { opacity: 0.999 }, { opacity: 1 }], { duration: WARM_MS + 100 });
         }
-        _holdTimer = setTimeout(advance, WARM_MS);
+        holdTimer = setTimeout(advance, WARM_MS);
     }
 
     function advance() {
         var swiper = document.querySelector(SWIPER_SEL);
         var inst = instOf(swiper);
-        if (inst) inst.goTo((_current + 1) % SLIDES.length);   // by index: wraps with or without loop (the text switch is instant)
+        if (inst) inst.goTo((current + 1) % SLIDES.length);   // by index: wraps with or without loop (the text switch is instant)
     }
 
-    function pause() { _paused = true; clearTimeout(_holdTimer); _holdTimer = 0; }
+    function pause() { paused = true; clearTimeout(holdTimer); holdTimer = 0; }
     function resume() {
-        if (!_paused) return;
-        _paused = false;
+        if (!paused) return;
+        paused = false;
         // Word already finished while paused: pick the hold back up.
-        if (_wordDone) scheduleAdvance();
+        if (wordDone) scheduleAdvance();
     }
 
     function removeDeck() {
         stopTimers();
-        if (_deckAbort) { _deckAbort.abort(); _deckAbort = null; }
+        if (deckAbort) { deckAbort.abort(); deckAbort = null; }
         var section = deckSection();
         if (!section) return;
         var swiper = section.querySelector('.nds-swiper.nds-hero');
         var wrapper = swiper.querySelector('.nds-swiper-wrapper');
-        if (_current >= 0) section.classList.remove('nds-nd96-' + SLIDES[_current].theme);
+        if (current >= 0) section.classList.remove('nds-nd96-' + SLIDES[current].theme);
         section.classList.remove(DECK_CLASS);
-        _current = -1; _paused = false;
+        current = -1; paused = false;
 
         var deck = swiper.querySelector('.nds-swiper-deck');
         if (deck) deck.remove();
         Array.prototype.forEach.call(section.querySelectorAll('.nds-swiper-slide.' + DECK_SLIDE), function (s) { s.remove(); });
-        _siteSlides.forEach(function (s) { wrapper.appendChild(s); });
-        _siteSlides = [];
+        siteSlides.forEach(function (s) { wrapper.appendChild(s); });
+        siteSlides = [];
         swiper.classList.remove('nds-deck');
-        if (!_siteLoop) swiper.removeAttribute('data-swiper-loop');
+        if (!siteLoop) swiper.removeAttribute('data-swiper-loop');
         var nav = swiper.querySelector('.nds-swiper-navigation'), page = swiper.querySelector('.nds-swiper-pagination');
-        if (nav && !_navHadCenter) nav.classList.remove('nds-center');
-        if (page && !_pageHadMd) page.classList.remove('nds-md');
-        if (_siteTotal) swiper.style.setProperty('--total', _siteTotal);
+        if (nav && !navHadCenter) nav.classList.remove('nds-center');
+        if (page && !pageHadMd) page.classList.remove('nds-md');
+        if (siteTotal) swiper.style.setProperty('--total', siteTotal);
         else swiper.style.removeProperty('--total');
         if (swiper.hasAttribute('data-nds-swiper-initialized')) reinit(swiper);
     }
@@ -699,7 +699,7 @@
         if (deck && !deck._nd96Drag) {
             deck._nd96Drag = true;
             var mq = window.matchMedia((window.NDS && NDS.breakpoints && NDS.breakpoints.desktop) || '(min-width: 960px)');
-            var sig = _deckAbort ? _deckAbort.signal : undefined;
+            var sig = deckAbort ? deckAbort.signal : undefined;
             var x0 = null, dx = 0, pressed = -1;
             deck.addEventListener('pointerdown', function (e) {
                 if (e.pointerType === 'mouse' && e.button !== 0) return;
@@ -769,19 +769,19 @@
 
     // The footer sits at the end of the document and paints nothing above the fold,
     // so DOMContentLoaded is soon enough — no parser observer needed.
-    var _logoAbort = null;
+    var logoAbort = null;
     function scheduleLogo() {
         if (document.readyState !== 'loading') { injectLogo(); return; }
-        if (_logoAbort) return;
-        _logoAbort = new AbortController();
+        if (logoAbort) return;
+        logoAbort = new AbortController();
         document.addEventListener('DOMContentLoaded', function () {
-            _logoAbort = null;
+            logoAbort = null;
             injectLogo();
-        }, { once: true, signal: _logoAbort.signal });
+        }, { once: true, signal: logoAbort.signal });
     }
 
     function removeLogo() {
-        if (_logoAbort) { _logoAbort.abort(); _logoAbort = null; }
+        if (logoAbort) { logoAbort.abort(); logoAbort = null; }
         var img = document.querySelector('.' + LOGO_CLASS);
         if (!img) return;
         var strip = img.parentNode;

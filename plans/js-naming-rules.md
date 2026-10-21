@@ -9,9 +9,11 @@ finished its code (owner, 2026-10-21); its doc-check and speed steps rename noth
 findings, 559 to verify, over 76 files: P10.8 short words 1,547 (1,041 single-letter locals, 455 other locals,
 64 functions and fields), P12.11 not on a banner 463, P10.4 replaced verbs 255, P12.13 `_` bindings 179,
 P12.14 element data 50, P10.3 acronyms 36, P12.7 classes 27, P12.12 cross-file 13, P12.3 keys 4; to verify:
-P10.0 first word 416, P12.8 constant case 78, P12.14 46, P10.4 `createX` 15, P12.12 4. Next: step 3.
-PERSONA now names `initDone`, `dateInitDone`, `wired`, `reconciled`: the module-scope commit lands them in the
-code, and heals the citations still on old names (entries 3 and 5, JSA-23's `_wired`).
+P10.0 first word 416, P12.8 constant case 78, P12.14 46, P10.4 `createX` 15, P12.12 4.
+Step 3, first commit: P12.13 done by `scripts/rename-bindings.mjs --underscore` (167 renames, 12 hand-named
+where the plain name was taken; citations in PERSONA and RULES-* healed). Every built bundle came out
+byte-identical, since Terser mangles locals: a binding rename needs no browser check, and a pack's rebuild
+differs only in line endings and zip times (restored). Next: P12.7 classes, then P12.8 constants.
 Start each step on a clean tree. Step 2's list is the work list: every count, file and line below is a hint.
 Step 3's commits go safest first: module-scope `_`, constants and classes; then verbs, acronyms and whole
 words; then cross-file `_`; the WeakMap move last of the internal ones (it changes runtime, so browser checks).
@@ -341,4 +343,6 @@ are module-scope names: their citations follow the rename (PERSONA's "a cited sy
 4. Public renames last (section 3), with their Migration rows and doc edits.
 5. Speed, once, at the end: the WeakMap reads on hot paths (table rows, form fields, `NDS.field`'s
    delegated handlers), interleaved, medians.
+   Also the input click speed (owner, 2026-10-21): `node scripts/check-form-speed.mjs` (its one click and one
+   keystroke, `BASE=` the commit before step 3), since the renames and the WeakMap move touch `NDS.field`'s click path.
 6. Make the new checks fail the release, not just report.

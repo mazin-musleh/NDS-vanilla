@@ -189,7 +189,7 @@
 
     // Guards the setInterval and the NDS.onAttrChange subscription: neither
     // has (selector, fn) dedup in core, so a re-run of init would re-stack them.
-    let _initDone = false;
+    let initDone = false;
 
     function initializeCityWeather() {
         const weatherEl = document.getElementById('nds-weather-info');
@@ -207,8 +207,8 @@
             updateCity();
         });
 
-        if (_initDone) return;
-        _initDone = true;
+        if (initDone) return;
+        initDone = true;
 
         // Update weather every 15 minutes
         setInterval(updateWeather, 15 * 60 * 1000);

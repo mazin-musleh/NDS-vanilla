@@ -34,7 +34,7 @@
   let activeModal = null;
   let initAbortController = null;
   let openAbortController = null; // the open modal's own listeners; aborted when it closes
-  let _initDone = false;
+  let initDone = false;
   let opener = null; // element focused before the first open; the last close returns focus to it
 
   function open(target) {
@@ -143,8 +143,8 @@
   }
 
   function init() {
-    if (_initDone) return;
-    // Init runs once (_initDone latches), so there is no prior batch to abort.
+    if (initDone) return;
+    // Init runs once (initDone latches), so there is no prior batch to abort.
     initAbortController = new AbortController();
     const { signal } = initAbortController;
 
@@ -173,7 +173,7 @@
       e.target.dispatchEvent(new CustomEvent('nds:modal:closed', { bubbles: true }));
     }, { capture: true, signal });
 
-    _initDone = true;
+    initDone = true;
   }
 
   NDS.Modal = {

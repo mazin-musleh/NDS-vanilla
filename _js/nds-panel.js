@@ -100,7 +100,7 @@
     // OPEN / CLOSE
     // ==============================================
 
-    function _open(panel) {
+    function openPanel(panel) {
         stack.push(panel);
 
         const isStatic = panel.hasAttribute('data-panel-static');
@@ -197,7 +197,7 @@
 
     function resume() {
         if (stack.length || pendingOpen || !waiting.length) return;
-        _open(waiting.pop());
+        openPanel(waiting.pop());
     }
 
     function open(ref, { focus = true } = {}) {
@@ -217,10 +217,10 @@
             pendingOpen = hasState(panel, 'closing') ? panel : null;
             return;
         }
-        if (panel.hasAttribute('data-panel-modal')) { _open(panel); return; }
+        if (panel.hasAttribute('data-panel-modal')) { openPanel(panel); return; }
         // Only a static panel the page opens on its own waits; one the user asks for takes the screen.
         if (panel.hasAttribute('data-panel-static') && panel._noFocus) {
-            if (!stack.length && !pendingOpen) _open(panel);
+            if (!stack.length && !pendingOpen) openPanel(panel);
             else if (!waiting.includes(panel)) waiting.push(panel);
             return;
         }
@@ -235,7 +235,7 @@
             out.forEach(p => (p.hasAttribute('data-panel-static') ? park(p) : close(p)));
             return;
         }
-        _open(panel);
+        openPanel(panel);
     }
 
     function close(ref) {
@@ -291,7 +291,7 @@
             // `closed` event can queue its own open without being dropped.
             const next = pendingOpen;
             pendingOpen = null;
-            if (next) _open(next);
+            if (next) openPanel(next);
             resume();
         });
     }
@@ -453,7 +453,7 @@
 
         // Another panel still sliding out flushes the slot itself.
         if (pending && stack.some(p => hasState(p, 'closing'))) pendingOpen = pending;
-        else if (pending) _open(pending);
+        else if (pending) openPanel(pending);
         resume();
     }
 

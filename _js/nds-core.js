@@ -93,12 +93,12 @@
     //   3. auto-derived from script src
     //   4. 'assets/' (page-relative fallback)
     // Set the override BEFORE this bundle loads.
-    const _scriptSrc = (document.currentScript
+    const scriptSrc = (document.currentScript
         || [...document.scripts].find(s => /nds-main(\.min)?\.js/.test(s.src)) || {}).src || '';
-    const _isOwnPath = /\/js\/[^/?#]+\.js(?:[?#]|$)|nds-main(\.min)?\.js/.test(_scriptSrc);
-    const ASSETS_VER = (_scriptSrc.match(/\?ver=[^&#]*/) || [''])[0];
+    const isOwnPath = /\/js\/[^/?#]+\.js(?:[?#]|$)|nds-main(\.min)?\.js/.test(scriptSrc);
+    const ASSETS_VER = (scriptSrc.match(/\?ver=[^&#]*/) || [''])[0];
     const ASSETS_BASE = window.NDS_ASSETS_PATH
-                     || (_isOwnPath ? new URL('../', _scriptSrc).href : '');
+                     || (isOwnPath ? new URL('../', scriptSrc).href : '');
 
     // ── Breakpoints (matches _mixins.scss) ─────────────────────────
     // Usage: NDS.breakpoints.desktop → '(width >= 960px)'
@@ -782,10 +782,10 @@
     //        NDS.state.effect(state, scope, fn, cls) → fn(el, on) once per real change, whoever wrote it; returns off()
     NDS.state = (() => {
         // Null prototype: a token named like an Object.prototype key ('constructor') has no hooks.
-        const _onAdd = Object.create(null);    // { 'disabled': [{ scope, fn }, ...] }
-        const _onRemove = Object.create(null);
+        const addHooks = Object.create(null);    // { 'disabled': [{ scope, fn }, ...] }
+        const removeHooks = Object.create(null);
 
-        function _fire(hooks, token, el) {
+        function runHooks(hooks, token, el) {
             const fns = hooks[token];
             if (fns) each(fns, sub => { if (el.matches(sub.scope)) sub.fn(el, token); });
         }
@@ -795,43 +795,43 @@
         // Effects: an NDS.state write runs them synchronously (Form relies on it); a bare attribute,
         // markup at load and added markup in the observers' microtask. `on` remembers each element an
         // effect has entered, so it runs once per real change and never undoes what it did not do.
-        const _effects = [], _effectTokens = new Set(), _effectSels = new Set(), _pending = new Set();
-        let _offAdded;
-        const _holds = (e, el, cur) => (cur.has(e.token) || (!!e.cls && el.classList.contains(e.cls))) && el.matches(e.scope);
-        const _run = (el) => {
+        const effects = [], effectTokens = new Set(), effectSels = new Set(), pendingSelectors = new Set();
+        let offAdded;
+        const holds = (e, el, cur) => (cur.has(e.token) || (!!e.cls && el.classList.contains(e.cls))) && el.matches(e.scope);
+        const runEffects = (el) => {
             const cur = parse(el);
-            each(_effects, e => {
-                const now = _holds(e, el, cur);
+            each(effects, e => {
+                const now = holds(e, el, cur);
                 if (now === e.on.has(el)) return;
                 now ? e.on.add(el) : e.on.delete(el);
                 e.fn(el, now);
             });
         };
-        const _sync = (el, tokens) => { if (tokens.some(t => _effectTokens.has(t))) _run(el); };
-        const _scan = () => {
-            const sel = [..._pending].join(',');
-            _pending.clear();
-            document.querySelectorAll(sel).forEach(_run);
+        const sync = (el, tokens) => { if (tokens.some(t => effectTokens.has(t))) runEffects(el); };
+        const scan = () => {
+            const sel = [...pendingSelectors].join(',');
+            pendingSelectors.clear();
+            document.querySelectorAll(sel).forEach(runEffects);
         };
-        NDS.onAttrChange('*', ['data-state'], els => els.forEach(_run));
+        NDS.onAttrChange('*', ['data-state'], els => els.forEach(runEffects));
 
         const effect = (state, scope, fn, cls) => {
             const sel = `[data-state~="${state}"]` + (cls ? `,.${cls}` : '');
-            _effectTokens.add(state);
-            if (cls) NDS.onAttrChange(scope, ['class'], els => els.forEach(_run));
+            effectTokens.add(state);
+            if (cls) NDS.onAttrChange(scope, ['class'], els => els.forEach(runEffects));
             // One pooled selector for added markup, re-subscribed as it grows.
-            if (!_effectSels.has(sel)) {
-                _effectSels.add(sel);
-                _offAdded?.();
-                _offAdded = NDS.onDOMAdd([..._effectSels].join(','), els => els.forEach(_run));
+            if (!effectSels.has(sel)) {
+                effectSels.add(sel);
+                offAdded?.();
+                offAdded = NDS.onDOMAdd([...effectSels].join(','), els => els.forEach(runEffects));
             }
             // A registration after load (an injected bundle) scans once for its token.
-            if (!_pending.size) {
-                if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _scan, { once: true });
-                else queueMicrotask(_scan);
+            if (!pendingSelectors.size) {
+                if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan, { once: true });
+                else queueMicrotask(scan);
             }
-            _pending.add(sel);
-            return subscribe(_effects, { token: state, scope, fn, cls, on: new WeakSet() });
+            pendingSelectors.add(sel);
+            return subscribe(effects, { token: state, scope, fn, cls, on: new WeakSet() });
         };
 
         const add = (el, ...states) => {
@@ -843,8 +843,8 @@
             }
             if (!added.length) return;
             el.setAttribute('data-state', [...cur].join(' '));
-            _sync(el, added);
-            for (let i = 0; i < added.length; i++) _fire(_onAdd, added[i], el);
+            sync(el, added);
+            for (let i = 0; i < added.length; i++) runHooks(addHooks, added[i], el);
         };
 
         const remove = (el, ...states) => {
@@ -857,8 +857,8 @@
             if (!removed.length) return;
             cur.size ? el.setAttribute('data-state', [...cur].join(' '))
                      : el.removeAttribute('data-state');
-            _sync(el, removed);
-            for (let i = 0; i < removed.length; i++) _fire(_onRemove, removed[i], el);
+            sync(el, removed);
+            for (let i = 0; i < removed.length; i++) runHooks(removeHooks, removed[i], el);
         };
 
         // No Set for a read: has() runs per row on every selection recount.
@@ -870,11 +870,11 @@
         const get = el => el ? (el.getAttribute('data-state') || '') : '';
 
         // set and clear replace the list, so the hooks hear each token that left or arrived.
-        const _swap = (el, before) => {
+        const swap = (el, before) => {
             const after = parse(el);
-            _sync(el, [...before, ...after]);
-            before.forEach(t => { if (!after.has(t)) _fire(_onRemove, t, el); });
-            after.forEach(t => { if (!before.has(t)) _fire(_onAdd, t, el); });
+            sync(el, [...before, ...after]);
+            before.forEach(t => { if (!after.has(t)) runHooks(removeHooks, t, el); });
+            after.forEach(t => { if (!before.has(t)) runHooks(addHooks, t, el); });
         };
 
         const set = (el, ...states) => {
@@ -882,29 +882,29 @@
             const before = parse(el);
             states.length ? el.setAttribute('data-state', states.join(' '))
                           : el.removeAttribute('data-state');
-            _swap(el, before);
+            swap(el, before);
         };
 
         const clear = el => {
             if (!el) return;
             const before = parse(el);
             el.removeAttribute('data-state');
-            _swap(el, before);
+            swap(el, before);
         };
 
         const apply = (el, ...states) => {
             if (!el) return;
             const cur = parse(el);
-            each(_effects, e => {
-                if (states.includes(e.token) && _holds(e, el, cur)) { e.on.add(el); e.fn(el, true); }
+            each(effects, e => {
+                if (states.includes(e.token) && holds(e, el, cur)) { e.on.add(el); e.fn(el, true); }
             });
             for (let i = 0; i < states.length; i++) {
-                if (cur.has(states[i])) _fire(_onAdd, states[i], el);
+                if (cur.has(states[i])) runHooks(addHooks, states[i], el);
             }
         };
 
-        const onAdd = (state, scope, fn) => subscribe(_onAdd[state] ||= [], { scope, fn });
-        const onRemove = (state, scope, fn) => subscribe(_onRemove[state] ||= [], { scope, fn });
+        const onAdd = (state, scope, fn) => subscribe(addHooks[state] ||= [], { scope, fn });
+        const onRemove = (state, scope, fn) => subscribe(removeHooks[state] ||= [], { scope, fn });
 
         return { parse, add, remove, has, get, set, clear, apply, onAdd, onRemove, effect };
     })();
@@ -917,21 +917,21 @@
     // must reach descendants — loading's `> *`, the drawer's and upload's `.nds-btn`
     // / `.nds-form-control` rules, the table stripe's `of` list — key on their
     // class, whose set only they touch.
-    // A class or aria-busy the author wrote stays theirs: _mirrored holds only what this wrote.
+    // A class or aria-busy the author wrote stays theirs: mirrored holds only what this wrote.
     const MIRRORS = { loading: 'nds-loading', hidden: 'nds-hidden', 'has-more': 'nds-has-more', 'always-open': 'nds-always-open', dropbox: 'nds-dropbox' };
-    const _mirrored = new WeakMap();
-    const mine = (el) => _mirrored.get(el) || _mirrored.set(el, new Set()).get(el);
+    const mirrored = new WeakMap();
+    const mine = (el) => mirrored.get(el) || mirrored.set(el, new Set()).get(el);
     for (const token in MIRRORS) {
         const cls = MIRRORS[token];
         NDS.state.effect(token, '*', (el, on) => {
             if (on && !el.classList.contains(cls)) { el.classList.add(cls); mine(el).add(cls); }
-            else if (!on && _mirrored.get(el)?.delete(cls)) el.classList.remove(cls);
+            else if (!on && mirrored.get(el)?.delete(cls)) el.classList.remove(cls);
         });
     }
     // Loading tells a screen reader too: wait for the content.
     NDS.state.effect('loading', '*', (el, on) => {
         if (on && !el.hasAttribute('aria-busy')) { el.setAttribute('aria-busy', 'true'); mine(el).add('aria-busy'); }
-        else if (!on && _mirrored.get(el)?.delete('aria-busy')) el.removeAttribute('aria-busy');
+        else if (!on && mirrored.get(el)?.delete('aria-busy')) el.removeAttribute('aria-busy');
     });
 
     // ── Status Management (data-status) ─────────────────────────────
@@ -961,22 +961,22 @@
     //        NDS.aria.label(button, '');           // removes the attribute
     //        if (button.ariaExpanded === 'true') { ... }   // read via IDL
     // To add a new aria-* helper, extend the NDS.aria object below with
-    // `<name>: _aria('aria-<name>', <isBool>)`. Do NOT add a flat
+    // `<name>: aria('aria-<name>', <isBool>)`. Do NOT add a flat
     // NDS.aria<Name> at the top level.
-    const _aria = (attr, isBool) => (el, value) => {
+    const aria = (attr, isBool) => (el, value) => {
         if (!el) return;
         if (value == null || value === '') return el.removeAttribute(attr);
         el.setAttribute(attr, isBool ? String(Boolean(value)) : value);
     };
     NDS.aria = {
-        expanded: _aria('aria-expanded', true),
-        hidden:   _aria('aria-hidden',   true),
-        pressed:  _aria('aria-pressed',  true),
-        selected: _aria('aria-selected', true),
-        disabled: _aria('aria-disabled', true),
-        label:    _aria('aria-label',    false),
-        current:  _aria('aria-current',  false),
-        sort:     _aria('aria-sort',     false),
+        expanded: aria('aria-expanded', true),
+        hidden:   aria('aria-hidden',   true),
+        pressed:  aria('aria-pressed',  true),
+        selected: aria('aria-selected', true),
+        disabled: aria('aria-disabled', true),
+        label:    aria('aria-label',    false),
+        current:  aria('aria-current',  false),
+        sort:     aria('aria-sort',     false),
     };
 
     // ── Count Badge ──────────────────────────────────────────────────
@@ -1536,16 +1536,16 @@
     // Usage: NDS.scrollLock.lock();
     //        // ... overlay shown ...
     //        NDS.scrollLock.unlock();
-    let _scrollLocks = 0;
+    let scrollLocks = 0;
     NDS.scrollLock = {
         lock() {
-            if (_scrollLocks++) return;
+            if (scrollLocks++) return;
             const scrollY = window.pageYOffset;
             document.body.style.top = `-${scrollY}px`;
             document.body.setAttribute('data-nds-scroll-lock', '');
         },
         unlock() {
-            if (!_scrollLocks || --_scrollLocks) return;
+            if (!scrollLocks || --scrollLocks) return;
             const scrollY = -parseFloat(document.body.style.top); // fractional under zoom
             document.body.style.top = '';
             document.body.removeAttribute('data-nds-scroll-lock');
@@ -1579,22 +1579,22 @@
     // Usage: NDS.markHome(menu); document.body.appendChild(menu); … NDS.sendHome(menu);
     // ponytail: only those three methods answer for the node; replaceChild or a textContent
     // write on the old parent still sees the move.
-    const _home = new WeakMap();   // moved node → { mark, parent }
-    const _node = Node.prototype;
-    const _standIn = (parent, n) => { const h = n && _home.get(n); return h && h.mark.parentNode === parent ? h.mark : n; };
-    function _guard(parent) {
+    const home = new WeakMap();   // moved node → { mark, parent }
+    const nodePrototype = Node.prototype;
+    const standIn = (parent, n) => { const h = n && home.get(n); return h && h.mark.parentNode === parent ? h.mark : n; };
+    function guardParent(parent) {
         parent._ndsMoved = (parent._ndsMoved || 0) + 1;
         if (parent._ndsMoved > 1) return;
-        parent.insertBefore = function (node, ref) { return _node.insertBefore.call(this, _standIn(this, node), _standIn(this, ref)); };
-        parent.appendChild = function (node) { return _node.appendChild.call(this, _standIn(this, node)); };
+        parent.insertBefore = function (node, ref) { return nodePrototype.insertBefore.call(this, standIn(this, node), standIn(this, ref)); };
+        parent.appendChild = function (node) { return nodePrototype.appendChild.call(this, standIn(this, node)); };
         parent.removeChild = function (node) {
-            if (_standIn(this, node) === node) return _node.removeChild.call(this, node);
+            if (standIn(this, node) === node) return nodePrototype.removeChild.call(this, node);
             // Back home first, through its owner's own exit, then out as the app asked.
             NDS.sendHome(node);
-            return _node.removeChild.call(this, node);
+            return nodePrototype.removeChild.call(this, node);
         };
     }
-    function _unguard(parent) {
+    function unguard(parent) {
         if (--parent._ndsMoved > 0) return;
         delete parent._ndsMoved;
         delete parent.insertBefore;
@@ -1604,29 +1604,29 @@
 
     NDS.markHome = (el) => {
         const parent = el?.parentNode;
-        if (!parent || _home.has(el)) return;
+        if (!parent || home.has(el)) return;
         const mark = document.createComment(' moved by NDS ');   // no nds- prefix: the audit reads those as class names
-        _node.insertBefore.call(parent, mark, el);
-        _home.set(el, { mark, parent });
-        _guard(parent);
+        nodePrototype.insertBefore.call(parent, mark, el);
+        home.set(el, { mark, parent });
+        guardParent(parent);
     };
 
     // Put a node NDS.markHome marked back at its marker. True when it went home; when the marker is
     // gone it goes to the end of its old parent while that parent is on the page, else off it.
     NDS.sendHome = (el) => {
-        const h = _home.get(el);
+        const h = home.get(el);
         if (!h) return false;
-        _home.delete(el);
+        home.delete(el);
         const parent = h.mark.parentNode;
-        if (parent) _node.replaceChild.call(parent, el, h.mark);
-        else if (h.parent.isConnected) _node.appendChild.call(h.parent, el);
+        if (parent) nodePrototype.replaceChild.call(parent, el, h.mark);
+        else if (h.parent.isConnected) nodePrototype.appendChild.call(h.parent, el);
         else el.remove();
-        _unguard(h.parent);
+        unguard(h.parent);
         return !!el.parentNode;
     };
 
     // The element a marked node was moved out of, or null.
-    NDS.homeOf = (el) => _home.get(el)?.parent || null;
+    NDS.homeOf = (el) => home.get(el)?.parent || null;
 
     // Put a [popover] element in the browser's top layer (on) or take it out (off). It
     // escapes every clip and stacking context without leaving its place in the DOM, so
@@ -1666,7 +1666,7 @@
     // the nav DOM on route changes leave a detached element in the cache;
     // isConnected re-lookups in that case (null stays sticky to avoid
     // re-querying on every popup when no nav is present).
-    let _navEl;
+    let navEl;
 
     // ── Viewport Flip-Position Measurement ─────────────────────────────
     // Measures available space around a trigger so popup-like components
@@ -1696,18 +1696,18 @@
 
         let topEdge = box.top;
         if (respectNav) {
-            if (_navEl === undefined || (_navEl && !_navEl.isConnected)) {
-                _navEl = document.querySelector('.nds-main-nav');
+            if (navEl === undefined || (navEl && !navEl.isConnected)) {
+                navEl = document.querySelector('.nds-main-nav');
             }
-            if (_navEl) {
-                const navRect = _navEl.getBoundingClientRect();
+            if (navEl) {
+                const navRect = navEl.getBoundingClientRect();
                 // The sticky nav is a top boundary only for triggers BELOW it. A
                 // trigger ABOVE the nav (e.g. a topbar dropmenu) opens a downward
                 // menu that passes in front of the nav, so the nav must not clamp
                 // it down past itself — leaving a gap below the trigger. Same for
                 // a trigger INSIDE the nav (a nav-link tooltip): its popup opens
                 // in front of the nav, and the clamp pushed it navGap below it.
-                if (navRect.bottom > 0 && triggerRect.bottom > navRect.top && !_navEl.contains(trigger)) {
+                if (navRect.bottom > 0 && triggerRect.bottom > navRect.top && !navEl.contains(trigger)) {
                     topEdge = Math.max(topEdge, navRect.bottom + navGap);
                 }
             }

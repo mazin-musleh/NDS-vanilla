@@ -234,11 +234,11 @@
         }
     }
 
-    let _initDone = false;
+    let initDone = false;
     function init() {
         fill();
-        if (_initDone) return;
-        _initDone = true;
+        if (initDone) return;
+        initDone = true;
         // Hijri month names come from the pack: write a month-name format again once it lands.
         if (!strings.ready()) strings.load().then(() => fill());
     }

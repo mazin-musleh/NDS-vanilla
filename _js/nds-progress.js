@@ -91,16 +91,16 @@
         }
     }
 
-    let _offAttrChange;
+    let offAttrChange;
     // A page with no indicator at load never runs init(), so the public writers wire this too.
-    function _watch() {
-        if (_offAttrChange) return;
-        _offAttrChange = NDS.onAttrChange(SEL, ATTRS, els => els.forEach(syncFromData));
+    function watch() {
+        if (offAttrChange) return;
+        offAttrChange = NDS.onAttrChange(SEL, ATTRS, els => els.forEach(syncFromData));
     }
 
     // Public API
-    function setValue(el, value) { _watch(); el.dataset.value = value; }
-    function setOutOf(el, num, max) { _watch(); el.dataset.num = num; el.dataset.max = max; }
+    function setValue(el, value) { watch(); el.dataset.value = value; }
+    function setOutOf(el, num, max) { watch(); el.dataset.num = num; el.dataset.max = max; }
 
     function init() {
         const reduced = NDS.prefersReducedMotion;
@@ -127,8 +127,8 @@
             el.ndsProgress = reveal;
         });
 
-        _watch();
+        watch();
     }
 
-    NDS.Progress = { init, create: el => { _watch(); syncFromData(el); }, destroy: el => el?.ndsProgress?.destroy(), setValue, setOutOf };
+    NDS.Progress = { init, create: el => { watch(); syncFromData(el); }, destroy: el => el?.ndsProgress?.destroy(), setValue, setOutOf };
 })();

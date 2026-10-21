@@ -41,11 +41,11 @@
 (function () {
     'use strict';
 
-    let _controller = null;
-    let _offs = [];
-    let _pagesOff = null;
+    let controller = null;
+    let offs = [];
+    let pagesOff = null;
     // Last count per list: a DOM-driven resync fires the event only when the count moved.
-    const _counts = new WeakMap();
+    const counts = new WeakMap();
 
     // An item's own box is its FIRST input.nds-checkbox-input, so a checklist inside a card never selects the card.
     const boxOf = (item) => item.querySelector('input.nds-checkbox-input');
@@ -120,8 +120,8 @@
             });
         }
 
-        const prev = _counts.get(list);
-        _counts.set(list, count);
+        const prev = counts.get(list);
+        counts.set(list, count);
         if (fire || (prev !== undefined && prev !== count)) {
             list.dispatchEvent(new CustomEvent('nds:selection:change', {
                 bubbles: true,
@@ -199,8 +199,8 @@
     // A page turn moves which items a select-all box covers, with no change event.
     // Wired on first sight of a box, so pages without one never add `hidden` to the shared observer.
     function watchPages() {
-        if (_pagesOff || !_controller) return;
-        _pagesOff = NDS.onAttrChange('.nds-page-item', ['hidden'], resyncFor);
+        if (pagesOff || !controller) return;
+        pagesOff = NDS.onAttrChange('.nds-page-item', ['hidden'], resyncFor);
     }
 
     function resyncFor(els) {
@@ -208,15 +208,15 @@
     }
 
     function init() {
-        if (_controller) return;
-        _controller = new AbortController();
-        document.addEventListener('change', onChange, { signal: _controller.signal });
-        document.addEventListener('click', onClick, { signal: _controller.signal });
+        if (controller) return;
+        controller = new AbortController();
+        document.addEventListener('change', onChange, { signal: controller.signal });
+        document.addEventListener('click', onClick, { signal: controller.signal });
 
         // Items added or removed fire no change event — ride the shared DOM bus
         // (every selectable item carries an input.nds-checkbox-input).
         const refresh = NDS.debounce(recountAll, 150);
-        _offs = [
+        offs = [
             NDS.onDOMAdd('input.nds-checkbox-input', refresh),
             NDS.onDOMRemove('input.nds-checkbox-input', refresh),
             // A filter moves which items select-all covers, with no change event.
@@ -228,13 +228,13 @@
     }
 
     function destroy() {
-        if (!_controller) return;
-        _controller.abort();
-        _controller = null;
-        _offs.forEach(off => off());
-        _offs = [];
-        _pagesOff?.();
-        _pagesOff = null;
+        if (!controller) return;
+        controller.abort();
+        controller = null;
+        offs.forEach(off => off());
+        offs = [];
+        pagesOff?.();
+        pagesOff = null;
     }
 
     // refresh ignores the container on purpose: counters and select-all boxes sit outside

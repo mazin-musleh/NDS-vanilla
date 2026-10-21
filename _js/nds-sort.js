@@ -85,7 +85,7 @@
     // ── Pure helpers (also exposed under NDS.Sort) ──────────────────────
 
     // Treat key=0 (column index) as present; only null/undefined/'' mean "no key → reset".
-    function _hasKey(key) {
+    function isKeySet(key) {
         return key !== null && key !== undefined && key !== '';
     }
 
@@ -280,7 +280,7 @@
             const key = this.opts.keyFrom(trigger);
 
             if (this.opts.mode === 'cycle') {
-                if (!_hasKey(key)) { this.apply(null, null); return; }
+                if (!isKeySet(key)) { this.apply(null, null); return; }
                 let nextOrder;
                 if (this.state.key === key) {
                     // asc → desc → reset
@@ -295,7 +295,7 @@
             }
 
             // direct mode
-            if (!_hasKey(key)) { this.apply(null, null); return; }
+            if (!isKeySet(key)) { this.apply(null, null); return; }
             this.apply(key, this._triggerOrder(trigger));
         }
 
@@ -304,7 +304,7 @@
         apply(key, order) {
             const items = this._resolveItems();
             const container = this._resolveContainer(items);
-            const hasKey = _hasKey(key);
+            const hasKey = isKeySet(key);
 
             // Anything but desc is asc: a hand-edited URL or a caller's typo never becomes the state.
             this.state = {
@@ -362,7 +362,7 @@
         // arrive after create() — an async list, an AJAX swap — miss init()'s pass
         // entirely: a URL-seeded sort settles its state with nothing to sort, and
         // nothing re-applies it on its own. No-op when no sort is active.
-        refresh() { if (_hasKey(this.state.key)) this.apply(this.state.key, this.state.order); }
+        refresh() { if (isKeySet(this.state.key)) this.apply(this.state.key, this.state.order); }
 
         getState() { return { key: this.state.key, order: this.state.order }; }
 
@@ -426,7 +426,7 @@
 
             const activeBtn = triggers.find(t => {
                 const k = this.opts.keyFrom(t);
-                if (!_hasKey(activeKey)) return !_hasKey(k);
+                if (!isKeySet(activeKey)) return !isKeySet(k);
                 if (!isDirect) return k === activeKey;
                 return k === activeKey && (!t.hasAttribute('data-sort-order') || this._triggerOrder(t) === activeOrder);
             });

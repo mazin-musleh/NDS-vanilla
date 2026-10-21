@@ -87,10 +87,10 @@
 
     const TARGET_SELECTOR = '.nds-share-x, .nds-share-linkedin, .nds-share-whatsapp, .nds-share-copy, [data-share-href]';
 
-    let _abortController = null;
+    let abortController = null;
     function init() {
-        if (_abortController) _abortController.abort();
-        _abortController = new AbortController();
+        if (abortController) abortController.abort();
+        abortController = new AbortController();
         // Identifier on each share menu (rule: a component-owned menu names
         // itself). Share items are plain buttons — no nested dropmenu to
         // mis-stamp — so a scoped sweep is unambiguous.
@@ -100,7 +100,7 @@
             const button = e.target.closest(TARGET_SELECTOR);
             if (!button) return;
             handleClick(button);
-        }, { signal: _abortController.signal });
+        }, { signal: abortController.signal });
     }
 
     NDS.Share = { init };

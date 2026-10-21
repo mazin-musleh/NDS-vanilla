@@ -450,15 +450,15 @@
 
     // scheduler.yield() lets input/paint preempt between batches; the fallback channel
     // is allocated once per page so SPA reinits don't leak channels.
-    const _yieldChannel = new MessageChannel();
-    const _yieldQueue = [];
-    _yieldChannel.port1.onmessage = () => {
-        const cb = _yieldQueue.shift();
+    const yieldChannel = new MessageChannel();
+    const yieldQueue = [];
+    yieldChannel.port1.onmessage = () => {
+        const cb = yieldQueue.shift();
         if (cb) cb();
     };
     const yieldToBrowser = (typeof scheduler !== 'undefined' && scheduler.yield)
         ? (cb) => scheduler.yield().then(cb)
-        : (cb) => { _yieldQueue.push(cb); _yieldChannel.port2.postMessage(null); };
+        : (cb) => { yieldQueue.push(cb); yieldChannel.port2.postMessage(null); };
 
     // ponytail: rIC fallback for Safari fires almost at once, not at true idle; the 5ms slot
     // still caps each task. The slot starts when the callback FIRES — timed from scheduling,
@@ -490,14 +490,14 @@
     const nsToBundle = {};
     for (const b in MAP) for (const ns of (MAP[b].ns || [])) nsToBundle[ns] = b;
     // A bundle that failed stops counting as pending; a later load that succeeds clears it.
-    const _failedBundles = new Set();
+    const failedBundles = new Set();
 
     // Trusted Types sink for script.src. A policy name the consumer did not allowlist
     // falls back to a plain string for their default policy.
-    let _ttPolicy;
+    let ttPolicy;
     if (window.trustedTypes && trustedTypes.createPolicy) {
         try {
-            _ttPolicy = trustedTypes.createPolicy('nds', { createScriptURL: (u) => u });
+            ttPolicy = trustedTypes.createPolicy('nds', { createScriptURL: (u) => u });
         } catch (e) { /* policy name not allowed — fall back to plain string */ }
     }
 
@@ -538,39 +538,39 @@
 
     // Idempotent; resolves on load OR error so callers never hang. A failed fetch is
     // removed and uncached, so the lazy stub can retry once.
-    const _bundlePromises = {};
+    const bundlePromises = {};
     function loadBundle(name) {
-        if (_bundlePromises[name]) return _bundlePromises[name];
+        if (bundlePromises[name]) return bundlePromises[name];
         const file = MAP[name] && MAP[name].file;
         // Sheets first, before any early return: a self-hosted or inlined bundle still needs them.
         if (MAP[name]) for (const sheet of MAP[name].css || []) addSheet(sheet);
-        if (!file || !ASSET.dir) return (_bundlePromises[name] = Promise.resolve());
+        if (!file || !ASSET.dir) return (bundlePromises[name] = Promise.resolve());
         // Self-hosted under a no-injection CSP: their own <script> tag, our init.
         if ([...document.scripts].some((s) => s.src && s.src.includes(file))) {
-            return (_bundlePromises[name] = Promise.resolve());
+            return (bundlePromises[name] = Promise.resolve());
         }
         // Inlined or concatenated into the consumer's build: every namespace already real.
         const bundleNs = MAP[name].ns || [];
         if (bundleNs.length && bundleNs.every((n) => NDS[n] && !NDS[n].__ndsStub)) {
-            return (_bundlePromises[name] = Promise.resolve());
+            return (bundlePromises[name] = Promise.resolve());
         }
-        _bundlePromises[name] = new Promise((resolve) => {
+        bundlePromises[name] = new Promise((resolve) => {
             const url = bundleUrl(file);
             const s = document.createElement('script');
-            s.src = _ttPolicy ? _ttPolicy.createScriptURL(url) : url;
+            s.src = ttPolicy ? ttPolicy.createScriptURL(url) : url;
             s.fetchPriority = 'low';
             if (SELF && SELF.nonce) s.nonce = SELF.nonce;
-            s.onload = () => { _failedBundles.delete(name); resolve(); };
+            s.onload = () => { failedBundles.delete(name); resolve(); };
             s.onerror = () => {
                 console.warn(`[NDS] bundle '${name}' failed to load (${url})`);
-                _failedBundles.add(name);
+                failedBundles.add(name);
                 s.remove();
-                delete _bundlePromises[name];
+                delete bundlePromises[name];
                 resolve();
             };
             (document.body || document.head).appendChild(s);
         });
-        return _bundlePromises[name];
+        return bundlePromises[name];
     }
 
     // Lazy stubs: NDS.X.method() before its bundle arrives loads it and replays the call
@@ -882,7 +882,7 @@
             const found = [...(root.matches?.(c.selector) ? [root] : []), ...root.querySelectorAll(c.selector)];
             if (!found.length) return false;
             const ns = NDS[c.name];
-            if (!ns || _failedBundles.has(nsToBundle[c.name])) return false;   // nothing is coming
+            if (!ns || failedBundles.has(nsToBundle[c.name])) return false;   // nothing is coming
             if (ns.__ndsStub) return true;                                     // its bundle is on the way
             return c.rule === true && found.some((f) => !f['nds' + c.name]);
         });

@@ -202,12 +202,12 @@
   // page load wires the subscribers; subsequent .nds-empty mutations are
   // already handled by those long-lived subscribers, so a re-call has nothing
   // to do beyond what they're already doing.
-  let _initDone = false;
+  let initDone = false;
 
   const NDSEmpty = {
     init() {
-      if (_initDone) return;
-      _initDone = true;
+      if (initDone) return;
+      initDone = true;
       document.querySelectorAll('.nds-empty').forEach(evaluate);
       NDS.onDOMAdd('.nds-empty', hits => hits.forEach(evaluate));
       NDS.onChildrenChange('.nds-empty', hits => hits.forEach(evaluate));
