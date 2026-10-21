@@ -518,6 +518,18 @@ function checkCallers() {
         for (const m of text.matchAll(/NDS\.([A-Z]\w*)\.([A-Za-z$][\w$]*)/g)) {
             if (surfaces[m[1]] && !surfaces[m[1]].has(m[2])) note(`NDS.${m[1]}.${m[2]}`, file, text, m.index);
         }
+        // A read through an alias (`const api = NDS.X; api.y`): the FAB gate read a renamed `ready` this way.
+        // ponytail: an alias reaches the next declaration of its name, not its block; parse scopes if that misleads.
+        for (const a of text.matchAll(/(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*=\s*(?:window\.)?NDS\.([A-Z]\w*)\s*[;,\n]/g)) {
+            if (!surfaces[a[2]]) continue;
+            const name = a[1].replace(/\$/g, '\\$');
+            const start = a.index + a[0].length;
+            const next = text.slice(start).search(new RegExp(`(?:const|let|var)\\s+${name}\\b`));
+            const reach = text.slice(0, next < 0 ? text.length : start + next);
+            for (const m of reach.slice(start).matchAll(new RegExp(`(?<![\\w$.'"])${name}\\.([A-Za-z$][\\w$]*)`, 'g'))) {
+                if (m[1] !== '__ndsStub' && !surfaces[a[2]].has(m[1])) note(`NDS.${a[2]}.${m[1]} (as ${a[1]})`, file, text, start + m.index);
+            }
+        }
         for (const m of text.matchAll(/nds:[a-z]+(?:-[a-z]+)*:[a-z]+(?:-[a-z]+)*/g)) {
             if (!m[0].startsWith('nds:x:') && !dispatched.has(m[0])) note(m[0], file, text, m.index); // nds:x: is the docs' placeholder
         }

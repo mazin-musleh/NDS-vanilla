@@ -113,9 +113,10 @@ before step 6 makes the check fail the release:
   with Python: a `git grep -E` alternation of hundreds of names fails silently and prints nothing.
 - A whole-name rename rewrites comments, but never for a plain word (`active`): such a comment keeps the old name.
 - A shorthand `{ old }` becomes `{ old: new }`, so a public key never moves in step 3.
-- `check-banners.mjs`' callers check only matches `NDS.X.y` written out in full, so a read through an alias (`const
-  api = NDS.X; api.y`) is not checked. The `ready` → `isReady` rename (ad8db5c8) left the loader's FAB gate reading
-  `ready`, so the FAB stayed loading from the second press on. After a public rename, search for `.oldName` too.
+- `check-banners.mjs`' callers check matched only `NDS.X.y` written out in full, so the `ready` → `isReady` rename
+  (ad8db5c8) left the loader's FAB gate reading `ns.ready` (`const ns = NDS.Accessibility`): the FAB stayed loading
+  from the second press on. The check now follows `const a = NDS.X` aliases too; a dynamic `NDS[name]` read it still
+  cannot see, so after a public rename search for `.oldName` as well.
 
 **Gates:** start each step on a clean tree; another session may work in this repo, so stage files by name and
 leave its changes alone; bulk renames go to subagents (Sonnet), the decisions and the review stay here; each
