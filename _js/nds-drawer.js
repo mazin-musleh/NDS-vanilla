@@ -28,11 +28,6 @@
  *   - An <li> marked data-state="active" opens every ancestor branch at init; moving the
  *     mark later (a client-side route) marks its button and opens its branch too.
  */
-/**
- * NDS Drawer Component
- * Handles expand/collapse of nested menus
- * Uses data-state for state management
- */
 
 (function () {
     'use strict';
@@ -63,31 +58,25 @@
     // STATE MANAGEMENT
     // ==============================================
 
-    // State helpers — delegated to NDS.state (nds-core.js)
-    const { add: addState, remove: removeState, has: hasState } = NDS.state;
+    const { add: addState, remove: removeState, has: hasState, clear: clearState } = NDS.state;
 
     // Transition states that are mutually exclusive
     const transitionStates = ['open', 'opening', 'closing'];
 
+    // An empty state clears the transition states only: an <li>'s `active` is the author's current-page mark.
     function setState(element, state) {
-        if (state) {
-            // Remove sibling transition states before adding new one
-            removeState(element, ...transitionStates);
-            addState(element, state);
-        } else {
-            // Empty state = clear transition states only: an <li>'s `active` is the author's current-page mark
-            removeState(element, ...transitionStates);
-        }
+        removeState(element, ...transitionStates);
+        if (state) addState(element, state);
     }
 
     // A closed toggle keeps its highlight while its <li> is the current page.
     function clearButton(listItem, button) {
         if (hasState(listItem, config.states.active)) setState(button, config.states.active);
-        else NDS.state.clear(button);
+        else clearState(button);
     }
 
     function isOpen(listItem) {
-        return NDS.state.has(listItem, config.states.open) || NDS.state.has(listItem, config.states.opening);
+        return hasState(listItem, config.states.open) || hasState(listItem, config.states.opening);
     }
 
     // ==============================================
@@ -390,7 +379,6 @@
     }
 
     function destroyDrawer(drawer) {
-        // Abort all submenu-toggle listeners attached in setupToggles
         togglesAbortControllers.get(drawer)?.abort();
         togglesAbortControllers.delete(drawer);
         searchTeardowns.get(drawer)?.();

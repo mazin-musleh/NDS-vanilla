@@ -313,8 +313,6 @@
             this._offIntersect = NDS.onIntersect(this._wrapper, (entry) => {
                 if (entry.isIntersecting) onVisibleDebounced();
             }, { threshold: 0.1 });
-
-            // Tab-change rechecks are wired once at module scope, not per instance.
         }
 
         refresh() {
@@ -360,6 +358,20 @@
     const getHeadCells = (table) => Array.from(table.querySelector(':scope > thead > tr')?.cells || []);
     const getBodyRows = (table) => table.querySelectorAll(':scope > tbody > tr:not(.nds-sub)');
 
+    // Rows added after a hide (a fetch, a page, a framework render) take the hidden columns too.
+    // Wired on the first hide, so a page that hides nothing never watches its tables.
+    let watchingRows = false;
+    function watchNewRows() {
+        if (watchingRows) return;
+        watchingRows = true;
+        NDS.onChildrenChange('table.nds-table, table.nds-table > tbody', (parents) => {
+            new Set(parents.map(parent => parent.closest('table'))).forEach(table => {
+                const hidden = getHeadCells(table).flatMap((th, index) => th.hasAttribute('hidden') ? [index] : []);
+                if (hidden.length) getBodyRows(table).forEach(tr => hidden.forEach(index => tr.cells[index]?.setAttribute('hidden', '')));
+            });
+        });
+    }
+
     // `restored` marks a hide replayed from storage at init rather than chosen by
     // the user, so a consumer syncing the event to a server can ignore the replay.
     function setColumnHidden(table, index, hidden, restored = false) {
@@ -383,6 +395,7 @@
             const cell = tr.cells[index];
             if (cell) cell.toggleAttribute('hidden', hidden);
         });
+        if (hidden) watchNewRows();
 
         table.dispatchEvent(new CustomEvent('nds:table:columns', {
             detail: { table, index, hidden, restored },
@@ -484,12 +497,6 @@
             getHeadCells(this._table).forEach((th, index) => {
                 if (th.hasAttribute('hidden')) setColumnHidden(this._table, index, false);
             });
-            // No-op before the checklist is built — render() reads [hidden] fresh.
-            this._list.querySelectorAll('input[data-column-index]').forEach(input => {
-                input.checked = true;
-            });
-
-            this._syncTriggerBadge();
             if (this._persist) saveHiddenColumns(this._table);
         }
 
@@ -521,8 +528,16 @@
             this._list.addEventListener('change', (e) => {
                 if (!e.target.matches('input[data-column-index]')) return;
                 setColumnHidden(this._table, Number(e.target.dataset.columnIndex), !e.target.checked);
-                this._syncTriggerBadge();
                 if (this._persist) saveHiddenColumns(this._table);
+            }, { signal });
+
+            // Every hide moves the box and the badge, one from code too; only the menu's own is saved.
+            // Before the checklist is built there is no box: render() reads [hidden] fresh.
+            this._table.addEventListener('nds:table:columns', (e) => {
+                if (e.target !== this._table) return; // a nested table's event bubbles through
+                const box = this._list.querySelector(`input[data-column-index="${e.detail.index}"]`);
+                if (box) box.checked = !e.detail.hidden;
+                this._syncTriggerBadge();
             }, { signal });
         }
 
@@ -891,7 +906,7 @@
         handle.sub.toggle();
     });
 
-    // Auto-initialize tables on page load (sortable and/or selectable)
+    // Starts every table and column menu not started yet.
     // The init sentinel is stamped only on a construction that succeeded — a table
     // whose <tbody> arrives later must stay eligible for the next reinit().
     function setupTables() {

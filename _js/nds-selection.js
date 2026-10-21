@@ -217,6 +217,7 @@
         // (every selectable item carries an input.nds-checkbox-input).
         const refresh = NDS.debounce(recountAll, 150);
         offs = [
+            refresh.cancel,
             NDS.onDomAdd('input.nds-checkbox-input', refresh),
             NDS.onDomRemove('input.nds-checkbox-input', refresh),
             // A filter moves which items select-all covers, with no change event.
