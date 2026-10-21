@@ -44,17 +44,19 @@
             inputs.forEach((input) => { if (!input.closest('code')) NDS.field.refresh(input); });
         },
         on: {
-            mousedown: (e) => {
-                const track = trackOf(e.target), sw = toggleOf(track);
+            // A field's own input (c) is never in a track: skip the lookups.
+            mousedown: (e, c) => {
+                const track = !c && trackOf(e.target), sw = toggleOf(track);
                 if (sw && !off(sw, inputOf(sw))) active(sw, true);
             },
-            mouseup: (e) => { const sw = toggleOf(trackOf(e.target)); if (sw) active(sw, false); },
+            mouseup: (e, c) => { const sw = !c && toggleOf(trackOf(e.target)); if (sw) active(sw, false); },
             // mouseleave does not bubble: a mouseout to outside the track stands in for it.
             mouseout: (e) => {
                 const track = trackOf(e.target), sw = toggleOf(track);
                 if (sw && !track.contains(e.relatedTarget)) active(sw, false);
             },
-            click: (e) => {
+            click: (e, c) => {
+                if (c) return;
                 const sw = toggleOf(trackOf(e.target));
                 if (sw) { e.preventDefault(); toggle(sw); return; }
                 // A label in the same control: its own click would toggle the input with no event.

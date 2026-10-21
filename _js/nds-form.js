@@ -602,16 +602,17 @@
         hold.tiers.forEach(clearTimeout);
         hold = null;
     }
-    // Simple class selectors first: every click on the page passes through these parts.
+    // Simple class selectors first: every click on the page passes through these parts. A click on the
+    // field's own input (c) holds no button, so each click part returns before its lookups.
     var stepButton = function(t) {
         var btn = t && t.closest && t.closest('.nds-number-increment, .nds-number-decrement');
         return btn && btn.closest('.nds-form-control') ? btn : null;
     };
     NDS.field.addType('number', {
         on: {
-            click: function(e) { var btn = stepButton(e.target); if (btn) stepValue(btn); },
-            pointerdown: function(e) {
-                var btn = stepButton(e.target);
+            click: function(e, c) { var btn = !c && stepButton(e.target); if (btn) stepValue(btn); },
+            pointerdown: function(e, c) {
+                var btn = !c && stepButton(e.target);
                 if (!btn || e.button !== 0) return;
                 stopHold();
                 var h = hold = { btn: btn, tiers: [], repeat: null };
@@ -661,8 +662,8 @@
         // Remember the original type: the toggle swaps it.
         init: function(input) { if (input.type === 'password') input.dataset.type = 'password'; },
         on: {
-            click: function(e) {
-                var toggle = e.target.closest && e.target.closest('.nds-toggle-password');
+            click: function(e, c) {
+                var toggle = !c && e.target.closest && e.target.closest('.nds-toggle-password');
                 if (!toggle || !toggle.closest('.nds-form-control .nds-form-action')) return;
                 e.preventDefault();
                 showPassword(toggle, !toggle.classList.contains('show'));
@@ -704,8 +705,8 @@
     // Clear button: empties the field and hands focus back to it, since the button hides itself.
     NDS.field.addType('clear', {
         on: {
-            click: function(e) {
-                var btn = e.target.closest && e.target.closest('.nds-clear');
+            click: function(e, c) {
+                var btn = !c && e.target.closest && e.target.closest('.nds-clear');
                 if (!btn || !btn.closest('.nds-form-control .nds-form-action')) return;
                 e.preventDefault();
                 var fc = btn.closest('.nds-form-control');
@@ -775,8 +776,8 @@
     // (it sends Enter to the target).
     NDS.field.addType('autofill', {
         on: {
-            click: function(e) {
-                var item = e.target.closest && e.target.closest('.nds-item');
+            click: function(e, c) {
+                var item = !c && e.target.closest && e.target.closest('.nds-item');
                 if (!item || !item.closest('.nds-auto-fill[data-target]')) return;
                 e.preventDefault();
                 e.stopPropagation();

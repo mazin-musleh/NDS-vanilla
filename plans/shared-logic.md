@@ -4,9 +4,16 @@ Status: DESIGN AGREED 2026-10-20; reviewed by a fresh Opus pass the same day (se
 AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Facts measured on `main` at `9fd54151`.
 
 **Resume here.** Changes #1, #2, #4 to #10 are done (#3 dropped); see the "Landed" notes under section 3's
-Mechanical checks. **Left:** `doc-check.mjs` on form.md, checkbox.md, radio.md, switch.md (owner's go-ahead first,
-AGENTS.md), then speed, last (owner, 2026-10-21: measure once the plan's code is done; this machine is slow, so
-interleave and give medians).
+Mechanical checks. `doc-check.mjs` on form.md, checkbox.md, radio.md, switch.md: no findings, sheets clean in both
+themes (2026-10-21). The doc pass waits for the docs plan.
+
+> **OPEN — a click in a field is slower than before the split. Form is not done until it is solved (section 8).**
+> Owner, 2026-10-21: deep-dive it and fix it, even if the fix changes the architecture (P1, P3 included).
+> First click in a field +1.6 to +3.1 ms at x6.6 after a first trim (it was +4.2 to +5.7); section 5's target
+> stays "no slower".
+
+- Final speed, 2026-10-21, against `448fa728`, x6.6, median of 9 (`check-form-speed`): Form's init −1.8 ms
+  (registration) and −1.5 ms (form.md); create ×20/50/100 −0.4/−1.5/−2.0 ms; a keystroke even. The click: section 8.
 - 9f correctness, against `448fa728` (before the Form split): `check-form-validate` differs only in the 17 intended
   "disabled" cases; `check-form-interact` all 216 the same (one earlier run's single difference did not repeat);
   `check-form-reset` and `check-a11y` on the four form pages pass. A first speed read (median of 9, x6.6), to redo
@@ -497,7 +504,7 @@ Migration line. The dead `NDS.Form?.` guards in callers go (A4).
 
 **Targets** (interleaved A/B, median of 3):
 - Form's init: no slower than today, by June's method and by `trace-busy.mjs INITS=1`.
-- One tap and one keystroke in a field (`trace-click.mjs`): no slower than today.
+- One tap and one keystroke in a field: no slower than today. The tap misses it today (section 8).
 - `check-form-reset.mjs` (with `OLD_JS=`), `check-a11y.mjs` on the form pages; `doc-check.mjs` on `form.md`,
   `checkbox.md`, `radio.md`, `switch.md` after the owner's go-ahead (AGENTS.md).
 
@@ -576,6 +583,47 @@ changed the design:
 - "A base draws nothing" contradicted `NDS.dialog`: now "creates no markup and shows no message" (A1).
 - The loader has its own layer; the hook list covers every event Form uses; P2 lists the whole init tail;
   Time Picker boxes are a rule; the change order puts the state mechanism before the Form split.
+
+## 8. Open: the click cost
+
+**Measured 2026-10-21** against `448fa728`, phone, x6.6, median of 9, three clicks on the first text field of
+form.md per load (every listener on window and document, stamped before NDS and after it):
+
+| | first click | second | third |
+|---|---|---|---|
+| `448fa728` | 8.4 ms | 4.0 | 4.3 |
+| after the split | 14.1 ms | 5.6 | 5.3 |
+| after the trim (click parts return on `c`) | 11.4 ms (base 9.8 that run) | 4.7 (4.1) | 3.5 (5.3) |
+
+`check-form-speed` read the first click at +4.2 before the trim and +3.1 after. Noise here is about ±2 ms: the
+same run read the unchanged keystroke at +2.2. The 9f read (+0.5 ms first click) disagrees with all of these.
+
+**What a click runs now.** A press and release fires ten events NDS.field listens to on document: `pointerout`,
+`mouseout`, `pointerdown`, `mousedown`, `focusout` (the field before), `focusin`, `pointerup`, `mouseup`, `click`
+(bubble and capture). Each runs the dispatch: `control(e.target)` (`matches`, `parentElement`, `closest('code')`,
+`closest('.nds-form-container')`), then the base's handler, then every part that has one for the event. Before the
+split, a click on a text field ran only the listeners on that field.
+
+**Profile of the first click** (CPU profile, 50 µs sampling, mean of 6, x6.6; Playwright's own work left out):
+3.0 ms self in the dispatch closure, 1.1 ms `closest`, 0.7 ms `matches`, none of which showed in the base. The first
+click is the costly one: each handler runs for the first time and each selector string is parsed once. The
+trim (no `closest()` on the field's own input) cut most of the gap, so selector work is the main cost.
+
+**Leads to test, cheapest first:**
+- Measure the parts one at a time (remove each from the dispatch) to find which events and parts own the rest.
+- `control()` once per target instead of once per event: one press resolves the same input ten times.
+- Fewer document listeners: `pointerout` / `mouseout` run on every pointer move over the page (number hold and
+  switch only). Bind them on `pointerdown` and drop them on release.
+- Dispatch by target: a part names what it acts on (a selector or "the field's input"), and the dispatch resolves
+  it once per event, so a part never runs for a target it cannot own.
+- A hybrid (architecture change, against P1): keep `focusin` / `pointerdown` delegated and attach a field's other
+  listeners to that field on its first touch, so later events skip the document fan-out. Init stays free.
+- One NDS-wide dispatcher per event name in core, shared with the other components' document listeners
+  (Dropmenu, Tooltip …), resolving the target once for all of them.
+
+**Before the deep dive:** the harness lives in `tmp/form-speed/` (`click-only.mjs`: three clicks with each event's
+share; `click-prof.mjs`: a CPU profile per side), and tmp is disposable. Fold both into `check-form-speed`
+(`CLICKS=3`, `PROFILE=1`), and judge a lead by the first click and the warm click separately.
 
 ## Order
 
