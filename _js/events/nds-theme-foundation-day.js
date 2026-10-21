@@ -59,17 +59,17 @@
         return DATA[key] !== undefined ? DATA[key] : fallback;
     }
     // Reject any explicit scheme except http(s) — config lands in src/href attributes.
-    function safeUrl(v) {
-        return /^[a-z][a-z0-9+.-]*:/i.test(v) ? /^https?:/i.test(v) : true;
+    function isSafeUrl(url) {
+        return /^[a-z][a-z0-9+.-]*:/i.test(url) ? /^https?:/i.test(url) : true;
     }
     // Bare filename → this pack's folder; absolute URL / rooted path → verbatim.
-    function assetUrl(v) {
-        if (!v || !safeUrl(v)) return '';
-        return (/^https?:/i.test(v) || v.charAt(0) === '/' || v.charAt(0) === '.') ? v : BASE + v;
+    function resolveAssetUrl(url) {
+        if (!url || !isSafeUrl(url)) return '';
+        return (/^https?:/i.test(url) || url.charAt(0) === '/' || url.charAt(0) === '.') ? url : BASE + url;
     }
 
     var ctaUrl = pick('ctaUrl', 'https://www.foundingday.sa/');
-    if (!safeUrl(ctaUrl)) {
+    if (!isSafeUrl(ctaUrl)) {
         console.warn('NDS FoundationDay: data-cta-url rejected (https or path-relative only)');
         ctaUrl = 'https://www.foundingday.sa/';
     }
@@ -93,28 +93,28 @@
 
     // Page language (ar | en); resolve a string or a { ar, en } field to text.
     var LANG = (document.documentElement.lang || 'en').slice(0, 2);
-    function t(v) {
-        if (v && typeof v === 'object') return v[LANG] || v.en || v.ar || '';
-        return v || '';
+    function getText(value) {
+        if (value && typeof value === 'object') return value[LANG] || value.en || value.ar || '';
+        return value || '';
     }
     // Content is externally configurable (data-*) → escape everything interpolated.
-    function esc(s) {
-        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    function escapeHtml(text) {
+        return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;')
             .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
     function buildSlide() {
-        var imgUrl = assetUrl(HERO.image);
+        var imgUrl = resolveAssetUrl(HERO.image);
         var img = imgUrl
-            ? '<picture><img src="' + esc(imgUrl) + '" class="nds-hero-image" alt="" fetchpriority="high"></picture>'
+            ? '<picture><img src="' + escapeHtml(imgUrl) + '" class="nds-hero-image" alt="" fetchpriority="high"></picture>'
             : '';
-        var desc = t(HERO.description) ? '<p class="nds-section-description">' + esc(t(HERO.description)) + '</p>' : '';
-        var iconUrl = HERO.cta ? assetUrl(HERO.cta.icon) : '';
+        var desc = getText(HERO.description) ? '<p class="nds-section-description">' + escapeHtml(getText(HERO.description)) + '</p>' : '';
+        var iconUrl = HERO.cta ? resolveAssetUrl(HERO.cta.icon) : '';
         var cta = HERO.cta
             ? '<div class="nds-section-action">' +
-                '<a class="nds-btn nds-primary nds-oncolor" href="' + esc(HERO.cta.url) + '" target="_blank">' +
-                  (iconUrl ? '<img src="' + esc(iconUrl) + '" class="nds-icon" width="24" height="24" alt="">' : '') +
-                  '<span class="nds-label">' + esc(t(HERO.cta.label)) + '</span>' +
+                '<a class="nds-btn nds-primary nds-oncolor" href="' + escapeHtml(HERO.cta.url) + '" target="_blank">' +
+                  (iconUrl ? '<img src="' + escapeHtml(iconUrl) + '" class="nds-icon" width="24" height="24" alt="">' : '') +
+                  '<span class="nds-label">' + escapeHtml(getText(HERO.cta.label)) + '</span>' +
                 '</a>' +
               '</div>'
             : '';
@@ -125,7 +125,7 @@
             '<div class="nds-hero-image-wrapper" style="--overlay:0;">' + img + '</div>' +
             '<div class="nds-section-body nds-full-width">' +
               '<div class="nds-block nds-content-wrapper"><div>' +
-                '<h2 class="nds-section-title">' + esc(t(HERO.title)) + '</h2>' +
+                '<h2 class="nds-section-title">' + escapeHtml(getText(HERO.title)) + '</h2>' +
                 desc + cta +
               '</div></div>' +
             '</div>';
@@ -145,11 +145,11 @@
         if (document.getElementById(LINK_ID)) return;
         if (document.querySelector('[data-nds-event-style]')) return;
         if (CSS_TEXT) {
-            var s = document.createElement('style');
-            s.setAttribute('data-nds-event-style', THEME);
-            if (NONCE) s.setAttribute('nonce', NONCE);
-            s.textContent = CSS_TEXT;
-            document.head.appendChild(s);
+            var style = document.createElement('style');
+            style.setAttribute('data-nds-event-style', THEME);
+            if (NONCE) style.setAttribute('nonce', NONCE);
+            style.textContent = CSS_TEXT;
+            document.head.appendChild(style);
             return;
         }
         if (document.readyState === 'loading') {
@@ -158,20 +158,20 @@
             document.write('<link id="' + LINK_ID + '" rel="stylesheet" href="' + CSS_HREF + '">');
             if (document.getElementById(LINK_ID)) return;
         }
-        var l = document.createElement('link');
-        l.rel = 'stylesheet'; l.id = LINK_ID; l.href = CSS_HREF;
-        l.blocking = 'render';
-        document.head.appendChild(l);
+        var link = document.createElement('link');
+        link.rel = 'stylesheet'; link.id = LINK_ID; link.href = CSS_HREF;
+        link.blocking = 'render';
+        document.head.appendChild(link);
     }
     function removeStyles() {
-        var l = document.getElementById(LINK_ID);
-        if (l) l.remove();
-        var s = document.querySelector('[data-nds-event-style="' + THEME + '"]');
-        if (s) s.remove();
+        var link = document.getElementById(LINK_ID);
+        if (link) link.remove();
+        var style = document.querySelector('[data-nds-event-style="' + THEME + '"]');
+        if (style) style.remove();
     }
 
     // ── Marker token on <html data-theme> (attribute-only, no storage) ──────
-    function tokens() {
+    function getTokens() {
         return (document.documentElement.getAttribute('data-theme') || '').split(/\s+/).filter(Boolean);
     }
     function writeTokens(toks) {
@@ -179,11 +179,11 @@
         else document.documentElement.removeAttribute('data-theme');
     }
     function addToken() {
-        var toks = tokens();
+        var toks = getTokens();
         if (toks.indexOf(THEME) === -1) { toks.push(THEME); writeTokens(toks); }
     }
     function removeToken() {
-        writeTokens(tokens().filter(function (x) { return x !== THEME; }));
+        writeTokens(getTokens().filter(function (x) { return x !== THEME; }));
     }
 
     // ── Hero slide ──────────────────────────────────────────────────────────
@@ -191,11 +191,11 @@
         var old = swiper.ndsSwiper || swiper._ndsSwiper; // _ndsSwiper: runtimes before 2.0
         if (old) old.destroy();
         if (!(window.NDS && NDS.Swiper)) return;
-        var inst = NDS.Swiper.create(swiper);
+        var instance = NDS.Swiper.create(swiper);
         // A fresh instance detects its index from the re-used DOM's scroll position,
         // so it won't auto-land on the new first slide — move to it once layout settles.
-        if (inst && typeof inst.goTo === 'function') {
-            requestAnimationFrame(function () { inst.goTo(0); });
+        if (instance && typeof instance.goTo === 'function') {
+            requestAnimationFrame(function () { instance.goTo(0); });
         }
     }
 
@@ -257,7 +257,7 @@
         addToken();
         scheduleSlide();
     }
-    function teardown() {
+    function cleanup() {
         cancelPending();
         removeSlide();
         removeToken();
@@ -265,7 +265,7 @@
     }
 
     window.__NDS_THEME_HOOKS = window.__NDS_THEME_HOOKS || {};
-    window.__NDS_THEME_HOOKS[THEME] = { inject: inject, teardown: teardown };
+    window.__NDS_THEME_HOOKS[THEME] = { inject: inject, teardown: cleanup };
 
     // undefined → no switcher orchestration on this page (downstream one-tag): self-activate.
     // === THEME → the switcher activated us (first-load fetch race resolved): activate.

@@ -7,7 +7,7 @@ panel is shown. It ships `hidden` — nds-fab.js strips that once the button is
 routed into its dock. Drop this include and nothing is ever fetched.
 
 The panel itself ships nowhere in this page's HTML — nds-accessibility.js
-carries its markup (panelMarkup() in _js/nds-accessibility.js) and builds it
+carries its markup (buildPanelMarkup() in _js/nds-accessibility.js) and builds it
 into a <template> on arm (saved prefs or FAB press), same as a page-authored
 <template> would be. See ui-shell/accessibility.md for the markup reference.
 

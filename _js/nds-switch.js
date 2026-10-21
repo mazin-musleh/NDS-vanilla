@@ -14,13 +14,13 @@
 (() => {
     'use strict';
 
-    const toggleOf = (t) => t && t.closest && t.closest('.nds-form-control .nds-switch-toggle');
-    const trackOf = (t) => t && t.closest && t.closest('.nds-switch-track');
-    const inputOf = (sw) => sw.querySelector('.nds-switch-input');
+    const toggleOf = (target) => target && target.closest && target.closest('.nds-form-control .nds-switch-toggle');
+    const trackOf = (target) => target && target.closest && target.closest('.nds-switch-track');
+    const findInput = (sw) => sw.querySelector('.nds-switch-input');
     const off = (sw, input) => !input || input.disabled || sw.classList.contains('disabled');
 
     function toggle(sw) {
-        const input = inputOf(sw);
+        const input = findInput(sw);
         if (off(sw, input) || input.readOnly) return;
         NDS.setValue(input, !input.checked);
         NDS.field.refresh(input, { validate: true });
@@ -31,7 +31,7 @@
     }
 
     // A press on the track marks the field active, as on an input.
-    const active = (sw, on) => {
+    const setActive = (sw, on) => {
         const container = sw.closest('.nds-form-container');
         if (container) on ? NDS.state.add(container, 'active') : NDS.state.remove(container, 'active');
     };
@@ -47,16 +47,16 @@
             // mouseleave does not bubble: a mouseout to outside the track stands in for it.
             mouseout: (e) => {
                 const track = trackOf(e.target), sw = toggleOf(track);
-                if (sw && !track.contains(e.relatedTarget)) active(sw, false);
+                if (sw && !track.contains(e.relatedTarget)) setActive(sw, false);
             },
         },
         // The switch input sits in its toggle, never a field's own input.
         around: {
             mousedown: (e) => {
                 const track = trackOf(e.target), sw = toggleOf(track);
-                if (sw && !off(sw, inputOf(sw))) active(sw, true);
+                if (sw && !off(sw, findInput(sw))) setActive(sw, true);
             },
-            mouseup: (e) => { const sw = toggleOf(trackOf(e.target)); if (sw) active(sw, false); },
+            mouseup: (e) => { const sw = toggleOf(trackOf(e.target)); if (sw) setActive(sw, false); },
             click: (e) => {
                 const sw = toggleOf(trackOf(e.target));
                 if (sw) { e.preventDefault(); toggle(sw); return; }

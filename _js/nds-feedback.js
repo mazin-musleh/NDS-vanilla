@@ -106,7 +106,7 @@
 
             // Create feedback element with size and style classes on parent
             const feedback = document.createElement('span');
-            const feedbackClasses = ['nds-feedback', sizeClass, styleClass, className].filter(c => c).join(' ');
+            const feedbackClasses = ['nds-feedback', sizeClass, styleClass, className].filter(token => token).join(' ');
             feedback.className = feedbackClasses;
             if (id) feedback.id = id;
             NDS.status.set(feedback, status);

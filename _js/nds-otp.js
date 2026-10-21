@@ -101,7 +101,7 @@
         syncHidden(group);
     }
 
-    function autoClearStatus(group) {
+    function clearStaleStatus(group) {
         if (NDS.status.get(group) !== '') {
             NDS.Form.clearStatus(group);
         }
@@ -112,15 +112,15 @@
     // ==============================================
 
     function handleInput(e, group) {
-        autoClearStatus(group);
+        clearStaleStatus(group);
         var input = e.target;
         var inputs = getOtpInputs(group);
-        var idx = inputs.indexOf(input);
+        var index = inputs.indexOf(input);
         var digits = NDS.latinDigits(input.value).replace(/\D/g, '');
 
         if (digits.length > 1) {
             input.value = '';
-            var last = distributeDigits(group, digits, idx);
+            var last = distributeDigits(group, digits, index);
 
             if (!isAllFilled(group)) {
                 var next = inputs[last + 1];
@@ -132,7 +132,7 @@
             input.value = digits;
 
             if (digits.length === 1) {
-                var next = inputs[idx + 1];
+                var next = inputs[index + 1];
                 if (next) next.focus();
             }
         }
@@ -170,10 +170,10 @@
     function handleKeydown(e, group) {
         var input = e.target;
         var inputs = getOtpInputs(group);
-        var idx = inputs.indexOf(input);
-        var isRTL = NDS.isRTL;
+        var index = inputs.indexOf(input);
+        var isRtl = NDS.isRTL;
 
-        autoClearStatus(group);
+        clearStaleStatus(group);
         // preventDefault still: WebKit reads Backspace in a read-only field as Back.
         if (input.readOnly && (e.key === 'Backspace' || e.key === 'Delete')) { e.preventDefault(); return; }
 
@@ -182,7 +182,7 @@
                 e.preventDefault();
                 input.value = '';
                 syncHidden(group);
-                if (inputs[idx - 1]) inputs[idx - 1].focus();
+                if (inputs[index - 1]) inputs[index - 1].focus();
                 dispatch(group, 'nds:otp:change', { filled: false });
                 break;
 
@@ -190,19 +190,19 @@
                 e.preventDefault();
                 input.value = '';
                 syncHidden(group);
-                if (inputs[idx + 1]) inputs[idx + 1].focus();
+                if (inputs[index + 1]) inputs[index + 1].focus();
                 dispatch(group, 'nds:otp:change', { filled: false });
                 break;
 
             case 'ArrowLeft':
                 e.preventDefault();
-                var left = isRTL ? inputs[idx + 1] : inputs[idx - 1];
+                var left = isRtl ? inputs[index + 1] : inputs[index - 1];
                 if (left) left.focus();
                 break;
 
             case 'ArrowRight':
                 e.preventDefault();
-                var right = isRTL ? inputs[idx - 1] : inputs[idx + 1];
+                var right = isRtl ? inputs[index - 1] : inputs[index + 1];
                 if (right) right.focus();
                 break;
 
@@ -241,7 +241,7 @@
     // INITIALIZATION
     // ==============================================
 
-    function initOtpGroup(group) {
+    function setupOtpGroup(group) {
         if (!group || group.hasAttribute('data-nds-otp-initialized')) return;
 
         // Guard before stamping — a group whose inputs render late must stay
@@ -286,10 +286,10 @@
     function init() {
         if (subscribed) return;
         subscribed = true;
-        document.querySelectorAll('.nds-otp-group').forEach(initOtpGroup);
+        document.querySelectorAll('.nds-otp-group').forEach(setupOtpGroup);
 
         NDS.onDOMAdd('.nds-otp-group', function (nodes) {
-            nodes.forEach(initOtpGroup);
+            nodes.forEach(setupOtpGroup);
         });
 
         NDS.onDOMRemove('.nds-otp-group', function (nodes) {
@@ -308,19 +308,19 @@
     // ==============================================
 
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
-    function fieldCheck(group) {
+    function checkField(group) {
         var inputs = Array.from(group.querySelectorAll('.nds-otp-container input'));
         var filled = inputs.length > 0 && inputs.every(function (i) { return i.value.length === 1; });
         return { valid: filled, message: filled ? '' : strings.text('otp_incomplete', { n: inputs.length }),
             empty: inputs.every(function (i) { return !i.value; }), filled: filled };
     }
     NDS.validation.addRule('.nds-form-group.nds-otp-group[data-min-checked], .nds-form-group.nds-otp-group[data-max-checked], .nds-form-group.nds-otp-group[data-required], .nds-form-group.nds-otp-group.nds-required',
-        function (group) { return Object.assign(fieldCheck(group), { focus: group.querySelector('.nds-otp-container input') }); },
+        function (group) { return Object.assign(checkField(group), { focus: group.querySelector('.nds-otp-container input') }); },
         { on: ['input'] });
 
     NDS.Otp = {
         init: init,
-        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-form-group') || el, opts, fieldCheck); },
+        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-form-group') || el, opts, checkField); },
 
         getValue: getValue,
 

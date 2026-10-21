@@ -64,7 +64,7 @@
 
     // Sort keys are <th> cell indexes, never positions in the sort-button array:
     // a checkbox or actions column has no button, so the two index spaces diverge.
-    const thIndex = (th) => th.cellIndex;
+    const getHeaderIndex = (th) => th.cellIndex;
 
     class NdsTable {
         constructor(tableElement) {
@@ -126,16 +126,16 @@
                 mode: 'cycle',
                 a11y: 'sort',
                 a11yTarget: (btn) => btn.closest('th'),
-                accessor: (row, colIdx) => {
+                accessor: (row, columnIndex) => {
                     // Escape hatch for display/sort-value divergence: authors set
                     // data-sort-value on the <td> when the rendered text would mis-type
                     // (e.g. "Free" in a numeric column, localized dates, etc.)
-                    const cell = row.cells[colIdx];
+                    const cell = row.cells[columnIndex];
                     if (!cell) return '';
                     const override = cell.getAttribute('data-sort-value');
                     return override !== null ? override : getCellText(cell);
                 },
-                keyFrom: (btn) => thIndex(btn.closest('th')),
+                keyFrom: (btn) => getHeaderIndex(btn.closest('th')),
                 onChange: () => {
                     // Runs after NDS.Sort has already re-appended the parent rows.
                     repairSubPairing(this.tbody);
@@ -148,8 +148,8 @@
 
         // Public API methods
         getSortColumn() {
-            const s = this.sort?.getState();
-            return s && s.key != null ? s.key : -1;
+            const state = this.sort?.getState();
+            return state && state.key != null ? state.key : -1;
         }
 
         getSortOrder() {
@@ -237,15 +237,15 @@
         // A sideways scroll box the keyboard can reach: Safari never focuses one on its own.
         // Named after the table, so a screen reader says what it scrolls. What the author wrote stays.
         setScrollFocus(on) {
-            const w = this.wrapper;
+            const wrapper = this.wrapper;
             if (on === !!this._scrollStamp) return;
             if (!on) {
-                this._scrollStamp.forEach((a) => w.removeAttribute(a));
+                this._scrollStamp.forEach((attribute) => wrapper.removeAttribute(attribute));
                 this._scrollStamp = null;
                 return;
             }
             const stamp = this._scrollStamp = [];
-            const set = (a, v) => { if (v && !w.hasAttribute(a)) { w.setAttribute(a, v); stamp.push(a); } };
+            const set = (attribute, value) => { if (value && !wrapper.hasAttribute(attribute)) { wrapper.setAttribute(attribute, value); stamp.push(attribute); } };
             set('tabindex', '0');
             const name = this.table.getAttribute('aria-label') || this.table.caption?.textContent.trim();
             const by = this.table.getAttribute('aria-labelledby');
@@ -258,11 +258,11 @@
 
             const { scrollLeft, scrollWidth, clientWidth } = this.wrapper;
             const maxScroll = scrollWidth - clientWidth;
-            const isRTL = NDS.isRTL;
+            const isRtl = NDS.isRTL;
 
             const tokens = ['has-more'];
 
-            if (isRTL) {
+            if (isRtl) {
                 if (Math.abs(scrollLeft) <= 5) tokens.push('at-start');
                 if (Math.abs(scrollLeft) >= maxScroll - 5) tokens.push('at-end');
             } else {
@@ -289,7 +289,7 @@
             // deliveries are debounced to coalesce resize storms.
             let firstMeasure = true;
             const checkTable = NDS.debounce(() => this.checkTableWidth(), 100);
-            const onSizeChange = () => {
+            const handleSizeChange = () => {
                 if (firstMeasure) {
                     firstMeasure = false;
                     this.checkTableWidth();
@@ -297,8 +297,8 @@
                     checkTable();
                 }
             };
-            this._offResizeTable = NDS.onElementResize(this.table, onSizeChange);
-            this._offResizeWrapper = NDS.onElementResize(this.wrapper, onSizeChange);
+            this._offResizeTable = NDS.onElementResize(this.table, handleSizeChange);
+            this._offResizeWrapper = NDS.onElementResize(this.wrapper, handleSizeChange);
 
             // Detect visibility changes (when tab becomes visible)
             const onVisibleDebounced = NDS.debounce(() => this.checkTableWidth(), 150);
@@ -345,17 +345,17 @@
     // own thead/tbody whose cells share no column index with this one. Sub rows
     // are skipped as well — their single colspan <td> isn't a column either.
     // The first header row's cells, not ':scope > thead th': array position has to
-    // equal cellIndex — the one space thIndex, applyColumnAlign and the tr.cells
+    // equal cellIndex — the one space getHeaderIndex, syncColumnAlign and the tr.cells
     // writes below all address. A <td> in the header row or a second thead row
     // shifts a th-filtered, thead-wide list out of it, and .cells (not .children)
     // is what skips the <script>/<template> a <tr> may legally carry.
-    const headCells = (table) => Array.from(table.querySelector(':scope > thead > tr')?.cells || []);
-    const bodyRows = (table) => table.querySelectorAll(':scope > tbody > tr:not(.nds-sub)');
+    const getHeadCells = (table) => Array.from(table.querySelector(':scope > thead > tr')?.cells || []);
+    const getBodyRows = (table) => table.querySelectorAll(':scope > tbody > tr:not(.nds-sub)');
 
     // `restored` marks a hide replayed from storage at init rather than chosen by
     // the user, so a consumer syncing the event to a server can ignore the replay.
     function setColumnHidden(table, index, hidden, restored = false) {
-        const th = headCells(table)[index];
+        const th = getHeadCells(table)[index];
         if (!th) return;
 
         th.toggleAttribute('hidden', hidden);
@@ -371,7 +371,7 @@
             th._ndsExportSkipOwned = false;
         }
 
-        bodyRows(table).forEach(tr => {
+        getBodyRows(table).forEach(tr => {
             const cell = tr.cells[index];
             if (cell) cell.toggleAttribute('hidden', hidden);
         });
@@ -387,23 +387,23 @@
     // consent-tier cookie. The saved value is "<columnCount>-<hiddenIndex>-…";
     // the count is a fingerprint, so adding or dropping a column in a later
     // deploy discards the stale set instead of hiding the wrong ones.
-    const columnsKey = (table) => 'nds-cols-' + table.id;
+    const getColumnsKey = (table) => 'nds-cols-' + table.id;
 
     function saveHiddenColumns(table) {
-        const ths = headCells(table);
+        const ths = getHeadCells(table);
         const hidden = ths.flatMap((th, i) => th.hasAttribute('hidden') ? [i] : []);
         try {
-            localStorage.setItem(columnsKey(table), [ths.length, ...hidden].join('-'));
+            localStorage.setItem(getColumnsKey(table), [ths.length, ...hidden].join('-'));
         } catch {}
     }
 
     function restoreHiddenColumns(table) {
         let saved = null;
-        try { saved = localStorage.getItem(columnsKey(table)); } catch {}
+        try { saved = localStorage.getItem(getColumnsKey(table)); } catch {}
         if (!saved) return;
 
         const [count, ...hidden] = saved.split('-').map(Number);
-        if (count !== headCells(table).length) return;
+        if (count !== getHeadCells(table).length) return;
         hidden.forEach(index => setColumnHidden(table, index, true, true));
     }
 
@@ -436,7 +436,7 @@
         // columns, so a persisted hide is visible without opening the menu.
         // The footer rides along — it only earns its space while something is hidden.
         updateTriggerBadge() {
-            const count = headCells(this.table).filter(th => th.hasAttribute('hidden')).length;
+            const count = getHeadCells(this.table).filter(th => th.hasAttribute('hidden')).length;
             NDS.badge(this.root.querySelector('.nds-dropmenu-trigger'), count);
             this.footer.hidden = !count;
         }
@@ -473,7 +473,7 @@
         }
 
         showAllColumns() {
-            headCells(this.table).forEach((th, index) => {
+            getHeadCells(this.table).forEach((th, index) => {
                 if (th.hasAttribute('hidden')) setColumnHidden(this.table, index, false);
             });
             // No-op before the checklist is built — render() reads [hidden] fresh.
@@ -520,7 +520,7 @@
 
         render() {
             const frag = document.createDocumentFragment();
-            headCells(this.table).forEach((th, index) => {
+            getHeadCells(this.table).forEach((th, index) => {
                 // Locked columns and the row-selection column stay off the list.
                 if (th.hasAttribute('data-columns-lock')) return;
                 if (th.querySelector('input[type="checkbox"].nds-checkbox-input')) return;
@@ -585,11 +585,11 @@
     let alignSheet = null;
     let alignSeq = 0;
 
-    function applyColumnAlign(table) {
-        // Through headCells so the nth-child index lands in the same column space
+    function syncColumnAlign(table) {
+        // Through getHeadCells so the nth-child index lands in the same column space
         // the hide/show writes use — a second thead row's cellIndex addresses a
         // different column than its position in a thead-wide list.
-        const heads = headCells(table).filter(th => th.hasAttribute('data-align'));
+        const heads = getHeadCells(table).filter(th => th.hasAttribute('data-align'));
         if (!heads.length) return;
 
         const rules = [];
@@ -610,7 +610,7 @@
             alignSheet = new CSSStyleSheet();
             document.adoptedStyleSheets = [...document.adoptedStyleSheets, alignSheet];
         }
-        rules.forEach(r => alignSheet.insertRule(r, alignSheet.cssRules.length));
+        rules.forEach(rule => alignSheet.insertRule(rule, alignSheet.cssRules.length));
     }
 
     // ── Sub-rows (master-detail expansion) ───────────────────────────
@@ -623,22 +623,22 @@
 
     const SUB_TOGGLE = '[data-sub-toggle]';
 
-    const subOf = (tr) => {
+    const findSub = (tr) => {
         const next = tr.nextElementSibling;
         return next && next.matches('tr.nds-sub') ? next : null;
     };
 
     // A toggle may live in a dropmenu item rather than on a chevron of its own.
-    const rowFor = (btn) => btn.closest('tr');
+    const findRow = (btn) => btn.closest('tr');
 
     // Toggles belonging to a row, a dropmenu item among them.
-    const rowToggles = (tr) => Array.from(tr.querySelectorAll(SUB_TOGGLE));
+    const getRowToggles = (tr) => Array.from(tr.querySelectorAll(SUB_TOGGLE));
 
     // Every toggle driving this sub — the row's own control plus any collapse
     // button authored inside the content. Those are the only two places one can
     // sit, so this beats a table-wide id query and needs no selector escaping.
-    const togglesFor = (tr, sub) =>
-        [...rowToggles(tr), ...sub.querySelectorAll(SUB_TOGGLE)]
+    const getSubToggles = (tr, sub) =>
+        [...getRowToggles(tr), ...sub.querySelectorAll(SUB_TOGGLE)]
             .filter(btn => btn.getAttribute('aria-controls') === sub.id);
 
     // The toggle spins while the consumer resolves a sub-request. add/remove, not
@@ -646,7 +646,7 @@
     // pointer-events:none and _table.scss re-enables it here so a second click
     // cancels — every exit path below still has to clear it or the spinner never
     // stops: setContent() on success, close() on error or abort.
-    const setToggleLoading = (tr, on) => rowToggles(tr).forEach(btn => {
+    const setToggleLoading = (tr, on) => getRowToggles(tr).forEach(btn => {
         if (on) NDS.state.add(btn, 'loading'); else NDS.state.remove(btn, 'loading');
     });
 
@@ -660,7 +660,7 @@
         tr._ndsLoadStart = null;
     };
 
-    function emitSub(table, name, tr, sub, extra) {
+    function dispatchSub(table, name, tr, sub, extra) {
         table.dispatchEvent(new CustomEvent('nds:table:' + name, {
             detail: { row: tr, sub, table, ...extra },
             bubbles: true
@@ -684,7 +684,7 @@
         // corrects it on the first toggle.
         const cell = sub.firstElementChild;
         if (cell) cell.colSpan = tr.cells.length;
-        rowToggles(tr).forEach(btn => {
+        getRowToggles(tr).forEach(btn => {
             if (!btn.getAttribute('aria-controls')) btn.setAttribute('aria-controls', sub.id);
         });
         return sub;
@@ -705,12 +705,12 @@
         linkSub(tr, sub);
         sub.hidden = !open;
 
-        togglesFor(tr, sub).forEach(btn => {
+        getSubToggles(tr, sub).forEach(btn => {
             NDS.aria.expanded(btn, open);
             if (open) NDS.state.set(btn, 'open'); else NDS.state.clear(btn);
         });
 
-        emitSub(table, open ? 'sub-opened' : 'sub-closed', tr, sub);
+        dispatchSub(table, open ? 'sub-opened' : 'sub-closed', tr, sub);
     }
 
     // Single-open is the default (accordion parity); a table opts into
@@ -734,42 +734,42 @@
     // toggle's row, so a sub whose backref went stale travels with its parent too.
     // Skips a toggle that sits inside the sub.
     function repairSubPairing(tbody) {
-        const inBody = (row) => !!row && row.parentElement === tbody;
+        const isInBody = (row) => !!row && row.parentElement === tbody;
         tbody.querySelectorAll(':scope > tr.nds-sub').forEach(sub => {
             let parent = sub._ndsRow;
-            if (!inBody(parent) && sub.id) {
+            if (!isInBody(parent) && sub.id) {
                 parent = Array.from(tbody.querySelectorAll(`${SUB_TOGGLE}[aria-controls="${CSS.escape(sub.id)}"]`))
                     .map(btn => btn.closest('tr'))
-                    .find(row => row !== sub && inBody(row));
+                    .find(row => row !== sub && isInBody(row));
             }
-            if (inBody(parent) && parent !== sub) parent.after(sub);
+            if (isInBody(parent) && parent !== sub) parent.after(sub);
         });
     }
 
     // NDS.Table.row(tr) — per-row handle. Accepts the sub row itself too, so a
     // collapse control inside the expanded content uses the same call shape as
     // the chevron up in the parent row.
-    function rowHandle(tr) {
+    function getRowHandle(tr) {
         if (tr?.classList?.contains('nds-sub')) tr = tr.previousElementSibling;
         if (!tr || tr.tagName !== 'TR') return null;
 
         const sub = {
-            get el() { return subOf(tr); },
+            get el() { return findSub(tr); },
 
             // Takes consumer HTML the same way DataTables' child() does — the
             // markup inside a sub is the consumer's, NDS never renders it.
             setContent(content) {
-                const el = subOf(tr);
+                const el = findSub(tr);
                 const cell = (el ? linkSub(tr, el) : buildSub(tr)).firstElementChild;
                 if (typeof content === 'string') cell.innerHTML = content;
                 else cell.replaceChildren(content);
                 setToggleLoading(tr, false);
-                initializeTables();   // wire a nested .nds-table in the new content
+                setupTables();   // wire a nested .nds-table in the new content
                 return sub;
             },
 
             open() {
-                const el = subOf(tr);
+                const el = findSub(tr);
                 const table = tr.closest('table');
                 // No sub yet: the consumer answers this by fetching and calling
                 // setContent(html).open(). NDS never fetches it (see tables.md).
@@ -779,7 +779,7 @@
                     tr._ndsSubAbort = new AbortController();
                     tr._ndsLoadStart = performance.now();
                     setToggleLoading(tr, true);
-                    emitSub(table, 'sub-request', tr, null, { signal: tr._ndsSubAbort.signal });
+                    dispatchSub(table, 'sub-request', tr, null, { signal: tr._ndsSubAbort.signal });
                     return sub;
                 }
 
@@ -819,13 +819,13 @@
                 tr._ndsSubAbort?.abort();
                 clearLoadClock(tr);
                 setToggleLoading(tr, false);
-                const el = subOf(tr);
+                const el = findSub(tr);
                 if (el) setSubOpen(tr, el, false);
                 return sub;
             },
 
             toggle() {
-                const el = subOf(tr);
+                const el = findSub(tr);
                 return el && !el.hidden ? sub.close() : sub.open();
             }
         };
@@ -855,7 +855,7 @@
         const btn = e.target.closest(SUB_TOGGLE);
         if (!btn || btn.closest('code')) return;
 
-        const handle = rowHandle(rowFor(btn));
+        const handle = getRowHandle(findRow(btn));
         if (!handle) return;
 
         // Second click while a sub-request is outstanding cancels it rather
@@ -884,12 +884,12 @@
     // Auto-initialize tables on page load (sortable and/or selectable)
     // The init sentinel is stamped only on a construction that succeeded — a table
     // whose <tbody> arrives later must stay eligible for the next reinit().
-    function initializeTables() {
+    function setupTables() {
         document.querySelectorAll('.nds-table').forEach(table => {
             if (table.closest('code')) return;
 
             // Guarded by the scope stamp: reinit() must not append the rules twice.
-            if (!table.hasAttribute('data-nds-align')) applyColumnAlign(table);
+            if (!table.hasAttribute('data-nds-align')) syncColumnAlign(table);
 
             linkAuthoredSubs(table);
 
@@ -922,7 +922,7 @@
         });
     }
 
-    function recheckAllWidths() {
+    function syncAllWidths() {
         // Keyed on the instance, not the sweep's stamp, so createResponsive()-built
         // tables are rechecked too.
         document.querySelectorAll('.nds-table').forEach(table => {
@@ -932,9 +932,9 @@
 
     // Public API — the loader calls init(); see components/table.md for the surface.
     NDS.Table = {
-        init: initializeTables,
-        reinit: initializeTables,
-        refresh: recheckAllWidths,
+        init: setupTables,
+        reinit: setupTables,
+        refresh: syncAllWidths,
         // The constructors publish their expando only on success → null on a bail.
         create: (table) => {
             if (!table.ndsTableControls) new NdsTable(table);
@@ -950,7 +950,7 @@
             el?.ndsTableResponsive?.destroy();
             el?.ndsColumnToggle?.destroy();
         },
-        row: rowHandle,
+        row: getRowHandle,
         setColumnHidden
     };
 })();

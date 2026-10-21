@@ -1,28 +1,65 @@
 # Naming: the underscore and internal function names
 
-Status: PARKED 2026-10-21, design agreed, reviewed against PERSONA the same day (section 0 landed), no code
-changed yet. Facts first measured on `main` at `e035b198`, spot-checked at `7edd18a1`. `plans/shared-logic.md`
-finished its code (owner, 2026-10-21); its doc-check and speed steps rename nothing.
+Status: IN PROGRESS, step 3 of section 7. Design agreed 2026-10-20; PERSONA landed 2026-10-21.
 
-**Resume here.** Steps 1 and 2 done. `node scripts/check-js-rules.mjs --names` is the work list (rule ids
-`P<entry>.<rule>`, a count per rule at the end; the pass is `scripts/lib/js-names.mjs`). On 2026-10-21: 2,574
-findings, 559 to verify, over 76 files: P10.8 short words 1,547 (1,041 single-letter locals, 455 other locals,
-64 functions and fields), P12.11 not on a banner 463, P10.4 replaced verbs 255, P12.13 `_` bindings 179,
-P12.14 element data 50, P10.3 acronyms 36, P12.7 classes 27, P12.12 cross-file 13, P12.3 keys 4; to verify:
-P10.0 first word 416, P12.8 constant case 78, P12.14 46, P10.4 `createX` 15, P12.12 4.
-Step 3, first commit: P12.13 done by `scripts/rename-bindings.mjs --underscore` (167 renames, 12 hand-named
-where the plain name was taken; citations in PERSONA and RULES-* healed). Every built bundle came out
-byte-identical, since Terser mangles locals: a binding rename needs no browser check, and a pack's rebuild
-differs only in line endings and zip times (restored). Second commit: P12.7, 27 classes and
-`DatePickerCalendar` to `Nds{Name}[Part]`, and PascalCase module objects to camelCase (`NDSAlert` → `api`, a
-check added for them). Third commit: P12.8, 69 UPPER_CASE objects, arrays, Sets and elements to camelCase
-(rule 8 allows UPPER for a primitive or a frozen value; renaming keeps the bundles byte-identical, freezing would
-not); the loader's registry is now `components`, and the build aborts when it cannot find it. Three computed
-strings stay UPPER as verify lines (`ASSETS_VER`, `ASSETS_BASE`, `I18N_MARK_SEL`). Next: verbs, acronyms and whole words.
-Start each step on a clean tree. Step 2's list is the work list: every count, file and line below is a hint.
-Step 3's commits go safest first: module-scope `_`, constants and classes; then verbs, acronyms and whole
-words; then cross-file `_`; the WeakMap move last of the internal ones (it changes runtime, so browser checks).
-Mind section 6. Bulk renames go to subagents; each commit message to the owner first.
+## Progress (read this first)
+
+**Done, on `main` (2026-10-21):**
+| Commit | What |
+|---|---|
+| `a654d432` | Step 1: PERSONA entries 1, 2, 5, 6, 10, 12 per section 4; JSA-23(a), JSD-18, JSP-06, JSP-09 |
+| `9d582268` | Step 1: once-per-page bundle guard (`js_processor.rb`, entry 12 rule 17), `scripts/check-bundle-once.mjs`; table window flag gone |
+| `9d014bcb` | Step 2: `check-js-rules.mjs --names` (the pass is `scripts/lib/js-names.mjs`) |
+| `57aafd6d` | Step 3: no `_` on bindings (P12.13), `scripts/rename-bindings.mjs` |
+| `c5a9a143` | Step 3: classes `Nds{Name}[Part]` (P12.7), PascalCase module objects camelCase |
+| `621b9846` | Step 3: UPPER_CASE only for a primitive (P12.8); loader registry is `components` |
+| next commit | Step 3: verbs, acronyms, whole words on every binding, 1,979 renames (P10.4 / P10.3 / P10.8 / P10.0) |
+
+**Where the work list stands** (`node scripts/check-js-rules.mjs --names`, a count per rule on the last lines):
+672 findings, 195 to verify. P12.11 members not on a banner 463; P10.4 replaced verbs 108 and P10.3 acronyms 6 and
+P10.8 short words 28, nearly all class methods; P12.14 element data 50 (+46 verify); P12.12 cross-file `_` 13 (+4);
+P12.3 storage keys 4; P10.0 noun-first 129 (verify: class methods, public names, a few real verbs). Lines tagged
+"on the banner" are public: section 3, step 4, not step 3.
+
+**Next: class members** (P12.11 plus the verbs, acronyms and short words on methods and `this.x` fields), one
+commit, or one per component family if it grows. Per member, first yes wins: another file, a doc page or a
+`scripts/check-*.mjs` reads it → it is public, add it to the file's banner (Methods), keep the name if it passes
+entry 10, else it is a section 3 rename; otherwise → `_` plus a passing name in one rename (`updatePagination` →
+`_syncPagination`). Members are properties: Terser keeps them, so the bundles change, and each touched component
+gets its browser check (section 7 step 3 lists them). `rename-bindings.mjs` renames bindings only; members need a
+`scripts/rename-members.mjs` that renames the key and every `this.<name>` inside the class, and REFUSES (prints the
+sites) when `.<name>` appears outside the class body anywhere in `_js/`, `scripts/` or the docs, since only a type
+could tell another object's member of the same name apart.
+
+**After members:** P12.12 cross-file `_` (each break names its home first, section 1 "Breaks today"); the WeakMap
+move (P12.14, entry 12 rule 14, browser checks); then step 4, public renames with Migration rows (section 3,
+including the names the check added below it, the storage keys and `window.NDSInitConfig`); step 5 speed; step 6
+the checks fail the release.
+
+**How the step-3 commits were made** (`tmp/` is disposable, so the method lives here):
+- Work list per file: grep the `--names` lines for the rules, drop "on the banner"; pack the files into batches of
+  about 280 lines; one Sonnet subagent per batch writes `{ "file.js": { "name": "new", "c@123": "cell" } }` after
+  reading the code, with the verb table (entry 10) and the short-word list (rule 8) as its brief, and fixes every
+  `skip` the dry run prints. A name keyed `name@line` renames one binding; a bare name renames every binding of it.
+- Review the function renames (bare keys) by hand: one name per meaning across files (`fieldCheck` → `checkField`
+  everywhere), and a local behind a public key takes the name section 3 gives the key.
+- `node scripts/rename-bindings.mjs --map <json>` dry run, then `--apply`; `ruby _plugins/js_processor.rb`; a binding
+  rename leaves the bundles byte-identical or changes only Terser's choices (read every changed token). Event packs:
+  `bundle exec jekyll build`, `python scripts/mkevent.py`; a pack that differs only in line endings and zip times is
+  restored with `git checkout -- docs-assets/events`.
+- Diff `node scripts/check-js-rules.mjs` before and after (line numbers stripped), `--self-test`, `node
+  scripts/check-banners.mjs --all`, `node scripts/check-audit-citations.mjs`, `node scripts/check-bundle-once.mjs`.
+
+**Traps met so far** (section 6 has the rest):
+- Scripts read `_js/` by name: `js_processor.rb`'s registry regex (`const components = [`), `check-i18n.mjs`
+  markers (`'const isPm ='`), `check-js-rules.mjs` FULL_TAG and ALLOW. Search every old name over all tracked files
+  with Python: a `git grep -E` alternation of hundreds of names fails silently and prints nothing.
+- A whole-name rename rewrites comments, but never for a plain word (`active`): such a comment keeps the old name.
+- A shorthand `{ old }` becomes `{ old: new }`, so a public key never moves in step 3.
+
+**Gates:** start each step on a clean tree; another session may work in this repo, so stage files by name and
+leave its changes alone; bulk renames go to subagents (Sonnet), the decisions and the review stay here; each
+commit message goes to the owner first; no push; the speed check of step 5 includes the input click (owner).
 
 **Owner directives (2026-10-20), do not reopen:**
 - Every name is decided by the rules in this plan, never by an owner A/B. A meaning the rules leave open
@@ -229,7 +266,11 @@ banner"): `NDS.isRTL` (acronym), `NDS.onAttrChange` and `NDS.resolveEl` (short w
 `afterPaint`, `latinDigits`, `uniqueId`, `cellText`, `ownParts`, `ownItems`, `safeUrl`, `stickyHeaderBottom`,
 `viewportPadding`, `visibleBox`, `homeOf`, `topLayer`; `Dropmenu.menuOf`; `Export.csv` / `xls` / `pdf`; the
 loader's `audit` and `owns`; Accessibility's `state`; `NDS.DatePicker.CalendarConfig`, an object in PascalCase (rule 8: camelCase). The consumer setting
-`window.NDSInitConfig` (rule 2: `NDS_{NAME}`). Each shipped in v1.12.0 gets a Migration row.
+`window.NDSInitConfig` (rule 2: `NDS_{NAME}`). Shorthand namespaces the check first missed: `TimeDate.updateDate` /
+`updateClock`, `CityWeather.updateCity` / `updateWeather`, `Date.calendarFor` / `monthNames` / `weekdayNames` / `today`,
+`Fab.resolvePos` / `dock`, `Numbers.initCounters`, `Pagination.initAuto`, `Selection.selected`, `Table.row`,
+`Copy.bind`, `dialog.top`, `consent.allowed`, `field.control`, `Stepper.control`, `audit.rule`. Run `--names` and
+read the lines tagged "on the banner" for the whole list. Each shipped in v1.12.0 gets a Migration row.
 
 **Born in v2 (shared-logic), no row:**
 

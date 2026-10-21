@@ -74,7 +74,7 @@
     // first start — nothing here runs until a voice button is clicked.
     var audioContext = null;
 
-    function initAudioContext() {
+    function getAudioContext() {
         if (!audioContext) {
             try {
                 audioContext = new AudioContext();
@@ -86,14 +86,14 @@
     }
 
     function playTone(frequency, duration) {
-        var ctx = initAudioContext();
-        if (!ctx) return;
+        var context = getAudioContext();
+        if (!context) return;
         try {
-            if (ctx.state === 'suspended') ctx.resume();
-            var osc = ctx.createOscillator();
-            var gain = ctx.createGain();
-            var now = ctx.currentTime;
-            osc.connect(gain).connect(ctx.destination);
+            if (context.state === 'suspended') context.resume();
+            var osc = context.createOscillator();
+            var gain = context.createGain();
+            var now = context.currentTime;
+            osc.connect(gain).connect(context.destination);
             osc.frequency.setValueAtTime(frequency, now);
             osc.type = 'sine';
             gain.gain.setValueAtTime(0.1, now);
@@ -206,9 +206,9 @@
     var sessions = new WeakMap();
 
     function getSession(button) {
-        var s = sessions.get(button);
-        if (!s) { s = createSession(button); sessions.set(button, s); }
-        return s;
+        var session = sessions.get(button);
+        if (!session) { session = createSession(button); sessions.set(button, session); }
+        return session;
     }
 
     function createSession(button) {
@@ -223,12 +223,12 @@
         // Dictation goes in at the caret (or over the selection), like OS dictation;
         // a field the user was not in, or one with no caret (email), takes it at the end.
         function markInsertPoint() {
-            var value = input.value, s = null, e = null;
+            var value = input.value, selectionStart = null, e = null;
             if (document.activeElement === input || lastBlurred === input) {
-                try { s = input.selectionStart; e = input.selectionEnd; } catch (err) {}
+                try { selectionStart = input.selectionStart; e = input.selectionEnd; } catch (error) {}
             }
-            if (s == null) s = e = value.length;
-            before = value.slice(0, s);
+            if (selectionStart == null) selectionStart = e = value.length;
+            before = value.slice(0, selectionStart);
             after = value.slice(e);
         }
 
@@ -238,7 +238,7 @@
             if (text && after && !/^\s/.test(after)) text += ' ';
             NDS.setValue(input, before + text + after, { change: !!done });
             var caret = before.length + text.length;
-            try { input.setSelectionRange(caret, caret); } catch (err) {}
+            try { input.setSelectionRange(caret, caret); } catch (error) {}
         }
 
         function stop() {
@@ -314,7 +314,7 @@
     // ── Delegated click handler (the whole "init") ────────────────────
     var initDone = false;
 
-    function onVoiceClick(e) {
+    function handleVoiceClick(e) {
         var button = e.target.closest && e.target.closest('.nds-voice-input');
         if (!button) return;
         if (!isSupported()) {
@@ -328,15 +328,15 @@
     function init() {
         if (initDone) return;
         initDone = true;
-        document.addEventListener('click', onVoiceClick);
+        document.addEventListener('click', handleVoiceClick);
         document.addEventListener('focusout', function(e) { lastBlurred = e.target; });
         // If a button is removed mid-listening, stop its session so the mic
         // doesn't stay open until the 30s timeout. Pooled observer, fires only
         // on real removals (reparents are filtered out by the bus).
         NDS.onDOMRemove('.nds-voice-input', function(buttons) {
             buttons.forEach(function(btn) {
-                var s = sessions.get(btn);
-                if (s) s.stop();
+                var session = sessions.get(btn);
+                if (session) session.stop();
             });
         });
     }

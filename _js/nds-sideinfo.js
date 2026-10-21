@@ -38,7 +38,7 @@
             this.abortController = new AbortController();
             // Remember which sticky classes the author wrote, so we can re-apply
             // them after a viewport/content change makes the card fit again.
-            this.stickyClasses = ['nds-sticky', 'nds-sticky-sm', 'nds-sticky-md'].filter(c => element.classList.contains(c));
+            this.stickyClasses = ['nds-sticky', 'nds-sticky-sm', 'nds-sticky-md'].filter(className => element.classList.contains(className));
 
             // A sideinfo without a hero is a valid plain sticky-aside config — it
             // skips the hero-alignment offset but still gets sticky-fit + resize
@@ -82,7 +82,7 @@
                 top = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nds-nav-height')) || 0;
             }
             const fits = this.sideInfo.offsetHeight + top <= document.documentElement.clientHeight;
-            this.stickyClasses.forEach(c => this.sideInfo.classList.toggle(c, fits));
+            this.stickyClasses.forEach(className => this.sideInfo.classList.toggle(className, fits));
         }
 
         updatePosition() {
@@ -172,7 +172,7 @@
     // GLOBAL API
     // ==============================================
 
-    function initializeComponents() {
+    function setupSideinfos() {
         const sideInfoElements = document.querySelectorAll('.nds-sideinfo');
         sideInfoElements.forEach(element => {
             if (element.closest('code')) return;
@@ -186,8 +186,8 @@
 
     // Export to window
     NDS.Sideinfo = {
-        init: initializeComponents,
-        reinit: initializeComponents,
+        init: setupSideinfos,
+        reinit: setupSideinfos,
         create: (element) => {
             if (element.ndsSideinfo) return element.ndsSideinfo;
             const instance = new NdsSideinfo(element);

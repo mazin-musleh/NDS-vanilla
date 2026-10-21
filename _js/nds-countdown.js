@@ -59,88 +59,88 @@
     const zoneFormats = new Map();
     const unitFormats = new Map();
 
-    const pad = (n) => String(n).padStart(2, '0');
+    const pad = (number) => String(number).padStart(2, '0');
 
     // The elements the root names by id: data-countdown-hide ones go at zero, data-countdown-show ones come.
     function toggleLinked(el, ended) {
-        for (const [attr, hide] of [['data-countdown-hide', ended], ['data-countdown-show', !ended]]) {
-            for (const id of (el.getAttribute(attr) || '').split(/\s+/)) {
+        for (const [attribute, hide] of [['data-countdown-hide', ended], ['data-countdown-show', !ended]]) {
+            for (const id of (el.getAttribute(attribute) || '').split(/\s+/)) {
                 if (!id) continue;
-                const t = document.getElementById(id);
-                if (t) t.hidden = hide;
-                else console.warn(`NDS Countdown: ${attr} names no element with id "${id}"`, el);
+                const linked = document.getElementById(id);
+                if (linked) linked.hidden = hide;
+                else console.warn(`NDS Countdown: ${attribute} names no element with id "${id}"`, el);
             }
         }
     }
 
     // The wall clock of epoch `t` in `tz`, as if it were UTC.
-    function wallOf(t, tz) {
-        let f = zoneFormats.get(tz);
-        if (!f) {
-            f = new Intl.DateTimeFormat('en', { timeZone: tz, hourCycle: 'h23', numberingSystem: 'latn',
+    function getWallTime(epoch, tz) {
+        let formatter = zoneFormats.get(tz);
+        if (!formatter) {
+            formatter = new Intl.DateTimeFormat('en', { timeZone: tz, hourCycle: 'h23', numberingSystem: 'latn',
                 year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
-            zoneFormats.set(tz, f);
+            zoneFormats.set(tz, formatter);
         }
-        const p = {};
-        for (const { type, value } of f.formatToParts(t)) p[type] = +value;
-        return Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second);
+        const parts = {};
+        for (const { type, value } of formatter.formatToParts(epoch)) parts[type] = +value;
+        return Date.UTC(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute, parts.second);
     }
 
     // ISO text → epoch ms, or NaN. An offset is read as written; without one it is a wall
     // time in the site timezone (the visitor's when <html data-timezone> is unset).
     // ponytail: lives here until a second component reads a wall time in the site timezone, then it moves to NDS.Date.
     function parseIso(text) {
-        const s = String(text ?? '').trim();
-        const m = /^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?)?(Z|([+-])(\d{2}):?(\d{2}))?$/.exec(s);
-        if (!m) return NaN;
-        const [y, mo, d] = [+m[1], +m[2], +m[3]];
-        const [h, mi, sec] = [+m[4] || 0, +m[5] || 0, +m[6] || 0];
-        const wall = Date.UTC(y, mo - 1, d, h, mi, sec);
+        const trimmed = String(text ?? '').trim();
+        const match = /^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?)?(Z|([+-])(\d{2}):?(\d{2}))?$/.exec(trimmed);
+        if (!match) return NaN;
+        const [y, mo, day] = [+match[1], +match[2], +match[3]];
+        const [hour, mi, sec] = [+match[4] || 0, +match[5] || 0, +match[6] || 0];
+        const wall = Date.UTC(y, mo - 1, day, hour, mi, sec);
         // Not Date.parse: it rejects a date-only offset (Chrome) and +0300 (Safari).
-        if (m[7]) return m[7] === 'Z' ? wall : wall - (m[8] === '-' ? -1 : 1) * (m[9] * 60 + +m[10]) * 6e4;
+        if (match[7]) return match[7] === 'Z' ? wall : wall - (match[8] === '-' ? -1 : 1) * (match[9] * 60 + +match[10]) * 6e4;
         const tz = NDS.Date.site.timeZone;
-        if (!tz) return new Date(y, mo - 1, d, h, mi, sec).getTime();
+        if (!tz) return new Date(y, mo - 1, day, hour, mi, sec).getTime();
         // Shift by the zone's offset at the guess, then once more in case the guess sat across a DST edge.
-        let t = wall;
-        for (let i = 0; i < 2; i++) t = wall - (wallOf(t, tz) - t);
-        return t;
+        let epoch = wall;
+        for (let i = 0; i < 2; i++) epoch = wall - (getWallTime(epoch, tz) - epoch);
+        return epoch;
     }
 
     // The unit word for `value` in `lang`, with the language's own plural ("3 أيام", "11 يومًا").
-    function unitWord(lang, unit, value) {
+    function getUnitWord(lang, unit, value) {
         const key = lang + unit;
-        let f = unitFormats.get(key);
-        if (!f) {
-            f = new Intl.NumberFormat(lang, { style: 'unit', unit: unitNames[unit], unitDisplay: 'long' });
-            unitFormats.set(key, f);
+        let formatter = unitFormats.get(key);
+        if (!formatter) {
+            formatter = new Intl.NumberFormat(lang, { style: 'unit', unit: unitNames[unit], unitDisplay: 'long' });
+            unitFormats.set(key, formatter);
         }
-        return f.formatToParts(value).find((p) => p.type === 'unit')?.value ?? '';
+        return formatter.formatToParts(value).find((part) => part.type === 'unit')?.value ?? '';
     }
 
     // Every form the unit word takes, one per line: the CSS reserves the widest, so a label never
     // resizes its box ("seconds" → "second"). One number per plural category: 0 1 2 3 11 100.
-    const wordForms = (lang, unit) => [...new Set([0, 1, 2, 3, 11, 100].map((n) => unitWord(lang, unit, n)))].join('\n');
+    const getWordForms = (lang, unit) => [...new Set([0, 1, 2, 3, 11, 100].map((number) => getUnitWord(lang, unit, number)))].join('\n');
 
     function fire(el, type, detail) {
         el.dispatchEvent(new CustomEvent(type, { bubbles: true, detail: detail || {} }));
     }
 
-    const remainingOf = (it) => Math.max(0, Math.round((it.target - Date.now() - it.offset) / 1000));
+    const getRemaining = (it) => Math.max(0, Math.round((it.target - Date.now() - it.offset) / 1000));
 
     function render(el, it) {
-        const rem = remainingOf(it);
+        const rem = getRemaining(it);
         // The largest written unit takes everything above it; a skipped unit carries down.
-        const vals = {};
+        const values = {};
         let left = rem;
-        for (const u of it.order) {
-            vals[u] = Math.floor(left / unitSeconds[u]);
-            left -= vals[u] * unitSeconds[u];
+        for (const unit of it.order) {
+            values[unit] = Math.floor(left / unitSeconds[unit]);
+            left -= values[unit] * unitSeconds[unit];
         }
         for (const x of it.units) {
-            const v = vals[x.unit];
-            x.value.textContent = x.unit === 'd' ? v : pad(v);
-            if (x.label) x.label.textContent = unitWord(it.lang, x.unit, v);
-            if (x.hideZero) x.box.hidden = v === 0;
+            const value = values[x.unit];
+            x.value.textContent = x.unit === 'd' ? value : pad(value);
+            if (x.label) x.label.textContent = getUnitWord(it.lang, x.unit, value);
+            if (x.hideZero) x.box.hidden = value === 0;
         }
         fire(el, 'nds:countdown:tick', { remaining: rem });
         // A listener's set() replaced this run and rendered itself: this one stops.
@@ -191,14 +191,14 @@
 
     function track(el, target) {
         const offset = offsets.get(el) || 0;
-        let t = typeof target === 'number' ? Date.now() + offset + target * 1000
+        let epoch = typeof target === 'number' ? Date.now() + offset + target * 1000
             : target instanceof Date ? target.getTime() : parseIso(target);
-        if (!Number.isFinite(t)) {
+        if (!Number.isFinite(epoch)) {
             console.warn('NDS Countdown: target is not a date or a number of seconds', el);
             return false;
         }
         // On a whole visitor second, like the timer: a late tick then never flips the rounding (15, 15).
-        t = Math.round((t - offset) / 1000) * 1000 + offset;
+        epoch = Math.round((epoch - offset) / 1000) * 1000 + offset;
         const swap = endedSwap.get(el);
         if (swap) {
             el.replaceChildren(...swap.nodes);
@@ -218,18 +218,18 @@
             const label = box.querySelector('.nds-countdown-label');
             // A written label stays as the author wrote it. An empty one is ours: the sizes stamp marks it after the fill.
             const auto = label && (!label.textContent.trim() || label.hasAttribute('data-countdown-sizes'));
-            if (auto) label.setAttribute('data-countdown-sizes', wordForms(lang, unit));
+            if (auto) label.setAttribute('data-countdown-sizes', getWordForms(lang, unit));
             units.push({ unit, box, value: box.querySelector('.nds-countdown-value') || box,
                 label: auto ? label : null, hideZero: box.hasAttribute('data-countdown-hide-zero') });
         });
-        const order = Object.keys(unitSeconds).filter((u) => units.some((x) => x.unit === u));
-        const it = { target: t, offset, warn: parseInt(el.getAttribute('data-countdown-warn'), 10) || 0, warned: false,
+        const order = Object.keys(unitSeconds).filter((unit) => units.some((x) => x.unit === unit));
+        const it = { target: epoch, offset, warn: parseInt(el.getAttribute('data-countdown-warn'), 10) || 0, warned: false,
             lang, order, units };
         // Only the largest unit can lose a digit (10 → 9 days): its value holds the width of its start.
         const top = order[0];
         if (top) {
-            const v = Math.floor(remainingOf(it) / unitSeconds[top]);
-            units.forEach((x) => { if (x.unit === top) x.value.setAttribute('data-countdown-sizes', top === 'd' ? String(v) : pad(v)); });
+            const value = Math.floor(getRemaining(it) / unitSeconds[top]);
+            units.forEach((x) => { if (x.unit === top) x.value.setAttribute('data-countdown-sizes', top === 'd' ? String(value) : pad(value)); });
         }
         NDS.state.remove(el, 'ended', 'warning');
         toggleLinked(el, false);
@@ -239,20 +239,20 @@
         return true;
     }
 
-    function wire(el) {
+    function setupCountdown(el) {
         if (el.hasAttribute(WIRED_ATTR) || el.closest('code')) return;
         // Once: a waiter is re-wired by every reinit(), and the server time in the markup does not move.
         const src = !offsets.has(el) && el.closest('[data-countdown-now]');
         if (src) {
-            const t = parseIso(src.getAttribute('data-countdown-now'));
-            if (Number.isFinite(t)) offsets.set(el, t - Date.now());
+            const serverNow = parseIso(src.getAttribute('data-countdown-now'));
+            if (Number.isFinite(serverNow)) offsets.set(el, serverNow - Date.now());
             else console.warn('NDS Countdown: data-countdown-now is not a date', src);
         }
         if (!el.querySelector('[data-unit]')) el.insertAdjacentHTML('afterbegin', DEFAULT_MARKUP);
         // A time is left to right in every script. Without this, the sized largest unit (an inline box,
         // which bidi treats as a neutral) flips "02:03" to "03:02" on an Arabic page.
         if (!el.hasAttribute('dir')) el.dir = 'auto';
-        el.querySelectorAll('.nds-countdown-ended:not([dir])').forEach((m) => { m.dir = 'auto'; });
+        el.querySelectorAll('.nds-countdown-ended:not([dir])').forEach((message) => { message.dir = 'auto'; });
         const seconds = el.getAttribute('data-countdown-seconds');
         if (seconds === null && el.getAttribute('data-countdown') === '') return; // waits for set()
         // Stamped only on success, so reinit() retries a target filled in later.
@@ -260,20 +260,20 @@
     }
 
     // A page with no countdown at load never runs init(), so set() binds this too.
-    function bindVisibility() {
+    function addVisibilityListeners() {
         if (visibilityBound) return;
         visibilityBound = true;
         document.addEventListener('visibilitychange', () => { document.hidden ? stopTimer() : tick(); });
     }
 
     function init() {
-        document.querySelectorAll(SEL).forEach(wire);
-        bindVisibility();
+        document.querySelectorAll(SEL).forEach(setupCountdown);
+        addVisibilityListeners();
     }
 
     NDS.Countdown = {
         init,
         reinit: init,
-        setTarget(el, target) { if (el) { bindVisibility(); track(el, target); } }
+        setTarget(el, target) { if (el) { addVisibilityListeners(); track(el, target); } }
     };
 })();

@@ -30,7 +30,7 @@
  *     NDS.dragScroll(el, { canScroll, signal })   wheel + mouse-drag sideways scroll; a drag swallows its click
  *     NDS.trapFocus(getEl) · NDS.focusableSel
  *     NDS.cellText(cell)               a table cell's own text, the value sort and export read
- *     NDS.ownParts(root, sel, ownerSel)   root's own matches, not a nested instance's
+ *     NDS.ownParts(root, sel, ownerSelector)   root's own matches, not a nested instance's
  *     NDS.ownItems(list, items)        a list's own items: never .nds-sub; a <tbody> keeps its direct rows
  *   data + text
  *     NDS.request(url, opts) → Promise<{isJson, data}>     the shared fetch wrapper
@@ -94,7 +94,7 @@
     //   4. 'assets/' (page-relative fallback)
     // Set the override BEFORE this bundle loads.
     const scriptSrc = (document.currentScript
-        || [...document.scripts].find(s => /nds-main(\.min)?\.js/.test(s.src)) || {}).src || '';
+        || [...document.scripts].find(script => /nds-main(\.min)?\.js/.test(script.src)) || {}).src || '';
     const isOwnPath = /\/js\/[^/?#]+\.js(?:[?#]|$)|nds-main(\.min)?\.js/.test(scriptSrc);
     const ASSETS_VER = (scriptSrc.match(/\?ver=[^&#]*/) || [''])[0];
     const ASSETS_BASE = window.NDS_ASSETS_PATH
@@ -171,7 +171,7 @@
         'data-i18n-placeholder': 'placeholder',
         'data-i18n-label': 'label',
     };
-    const I18N_MARK_SEL = Object.keys(i18nMarks).map(a => `[${a}]`).join(',');
+    const I18N_MARK_SEL = Object.keys(i18nMarks).map(attribute => `[${attribute}]`).join(',');
     NDS.i18n = {
         _files: Object.create(null),   // 'ar' → the pack, once landed (null when none)
         _loads: Object.create(null),   // same keys → Promise<data>
@@ -187,8 +187,8 @@
         // that isn't a BCP-47 base tag (2–3 letters) is 'en' — guards the fetch URL
         // against <html lang="../foo"> traversal.
         _lang(lang) {
-            const l = String(lang || NDS.lang).split('-')[0].toLowerCase();
-            return /^[a-z]{2,3}$/.test(l) ? l : 'en';
+            const code = String(lang || NDS.lang).split('-')[0].toLowerCase();
+            return /^[a-z]{2,3}$/.test(code) ? code : 'en';
         },
 
         // A section's words in a language: undefined until known, then the pack's section, or
@@ -235,38 +235,38 @@
         //   s.ready(lang)               true once the text for that language is known
         //   s.has(key)                  the component defines this key (for keys from outside)
         strings(component, defaults) {
-            const I = this, queue = [];
+            const i18n = this, queue = [];
             // The section's English: text() and its markers fall back to it when no file has the key.
-            I._seeds[component] = Object.assign(I._seeds[component] || {}, defaults);
-            const has = (o, k) => !!o && Object.prototype.hasOwnProperty.call(o, k);
-            const landed = () => I._fromFiles(component) !== undefined;
-            const read = (el, attr) => (attr === 'text' ? el.textContent : el.getAttribute(attr));
-            const write = (el, attr, v) => (attr === 'text' ? (el.textContent = v) : el.setAttribute(attr, v));
-            const t = (key, vars, lang) => {
-                if (lang && I._fromFiles(component, lang) === undefined) I._get(component, lang);
-                const d = I._section(component, lang);
+            i18n._seeds[component] = Object.assign(i18n._seeds[component] || {}, defaults);
+            const has = (object, key) => !!object && Object.prototype.hasOwnProperty.call(object, key);
+            const hasLanded = () => i18n._fromFiles(component) !== undefined;
+            const read = (el, attribute) => (attribute === 'text' ? el.textContent : el.getAttribute(attribute));
+            const write = (el, attribute, value) => (attribute === 'text' ? (el.textContent = value) : el.setAttribute(attribute, value));
+            const translate = (key, vars, lang) => {
+                if (lang && i18n._fromFiles(component, lang) === undefined) i18n._get(component, lang);
+                const section = i18n._section(component, lang);
                 // Own keys only: a key from outside (a cached value, a browser error name) never reaches Object.prototype.
                 // The English every strings() call for this section declared, not only this one's.
-                const seed = I._seeds[component];
-                return I.format(has(d, key) ? d[key] : has(seed, key) ? seed[key] : key, vars, lang);
+                const seed = i18n._seeds[component];
+                return i18n.format(has(section, key) ? section[key] : has(seed, key) ? seed[key] : key, vars, lang);
             };
             return {
-                text: t,
+                text: translate,
                 defaults,
-                load: lang => I.load(component, lang),
-                ready: lang => I._fromFiles(component, lang) !== undefined,
+                load: lang => i18n.load(component, lang),
+                ready: lang => i18n._fromFiles(component, lang) !== undefined,
                 has: key => has(defaults, key),
-                set(el, attr, key, vars) {
-                    const v = t(key, vars);
-                    write(el, attr, v);
+                set(el, attribute, key, vars) {
+                    const value = translate(key, vars);
+                    write(el, attribute, value);
                     // A fixed word becomes a marker, so core owns it from here, as markup would.
-                    const mark = attr === 'text' ? 'data-i18n' : 'data-i18n-' + attr;
+                    const mark = attribute === 'text' ? 'data-i18n' : 'data-i18n-' + attribute;
                     if (!vars && mark in i18nMarks) { el.setAttribute(mark, component + '.' + key); return; }
-                    if (landed()) return;
-                    if (!queue.length) I.load(component).then(() => queue.splice(0).forEach(([e, a, was, k, vs]) => {
-                        if (read(e, a) === was) write(e, a, t(k, vs));
+                    if (hasLanded()) return;
+                    if (!queue.length) i18n.load(component).then(() => queue.splice(0).forEach(([e, attribute, was, key, vs]) => {
+                        if (read(e, attribute) === was) write(e, attribute, translate(key, vs));
                     }));
-                    queue.push([el, attr, v, key, vars]);
+                    queue.push([el, attribute, value, key, vars]);
                 },
             };
         },
@@ -280,7 +280,7 @@
                 value = value[rules.select(vars && vars.n)] || value.other;
             }
             if (typeof value !== 'string' || !vars) return value;
-            return value.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
+            return value.replace(/\{(\w+)\}/g, (match, key) => (key in vars ? vars[key] : match));
         },
         _plural: Object.create(null),
 
@@ -290,9 +290,9 @@
             try {
                 const { data } = await NDS.request(base + path + '.json' + ASSETS_VER, { cache: 'default', json: true });
                 return data;
-            } catch (err) {
+            } catch (error) {
                 // A 404 is a language NDS does not ship: English shows, and a site adds its words with NDS_I18N.
-                if (err.status !== 404) console.warn('[NDS.i18n] ' + path + ' failed', err);
+                if (error.status !== 404) console.warn('[NDS.i18n] ' + path + ' failed', error);
                 return null;
             }
         },
@@ -302,9 +302,9 @@
         // sourced data onto a runtime object (e.g. a strings dictionary).
         safeMerge(target, src) {
             if (!src) return target;
-            for (const k of Object.keys(src)) {
-                if (k === '__proto__' || k === 'constructor' || k === 'prototype') continue;
-                target[k] = src[k];
+            for (const key of Object.keys(src)) {
+                if (key === '__proto__' || key === 'constructor' || key === 'prototype') continue;
+                target[key] = src[key];
             }
             return target;
         },
@@ -312,25 +312,25 @@
         _seeds: Object.create(null),   // section → the JS defaults its strings() call registered
         _written: new WeakMap(),       // element → { target: { wrote: core's last write, was: the markup word it replaced } }
         _warned: new Set(),
-        _warnOnce(msg) { if (!this._warned.has(msg)) { this._warned.add(msg); console.warn('[NDS.i18n] ' + msg); } },
+        _warnOnce(message) { if (!this._warned.has(message)) { this._warned.add(message); console.warn('[NDS.i18n] ' + message); } },
 
         // The word a marker names, through text()'s chain: the override, the pack, the script's
         // English. Also that English (the JS default): the guard's baseline. word null: leave the markup.
         _word(ref) {
-            const m = /^([a-z][a-z0-9-]*)\.([A-Za-z0-9_]+)$/.exec(ref);
-            if (!m) {
+            const match = /^([a-z][a-z0-9-]*)\.([A-Za-z0-9_]+)$/.exec(ref);
+            if (!match) {
                 this._warnOnce(`marker "${ref}" is not section.key: a 1.x marker; write the section too, such as accessibility.${ref}`);
                 return { word: null };
             }
-            const [, section, key] = m;
-            const own = (o) => !!o && Object.prototype.hasOwnProperty.call(o, key);
-            const d = this._section(section), seed = this._seeds[section];
-            const v = own(d) ? d[key] : own(seed) ? seed[key] : undefined;
-            const english = own(seed) ? seed[key] : undefined;
-            if (typeof v === 'string' && !/\{\w+\}/.test(v)) return { word: v, english };
+            const [, section, key] = match;
+            const hasOwn = (object) => !!object && Object.prototype.hasOwnProperty.call(object, key);
+            const data = this._section(section), seed = this._seeds[section];
+            const value = hasOwn(data) ? data[key] : hasOwn(seed) ? seed[key] : undefined;
+            const english = hasOwn(seed) ? seed[key] : undefined;
+            if (typeof value === 'string' && !/\{\w+\}/.test(value)) return { word: value, english };
             // A missing word is no error: the pack may not be in yet, or the section's script not
             // loaded, and the markup's English shows. check-i18n catches a misspelled section.
-            if (v !== undefined) this._warnOnce(`${ref} has {vars} or plural forms: write it with set(), not a marker`);
+            if (value !== undefined) this._warnOnce(`${ref} has {vars} or plural forms: write it with set(), not a marker`);
             return { word: null };
         },
 
@@ -346,8 +346,8 @@
                     this._warnOnce(`${name} with no value: a 1.x marker; name its word, ${name}="section.key"`);
                     continue;
                 }
-                const { word: v, english } = this._word(ref.trim());
-                if (v === null) continue;
+                const { word: word, english } = this._word(ref.trim());
+                if (word === null) continue;
                 const target = i18nMarks[name];
                 const isText = target === 'text';
                 if (isText && el.firstElementChild) {
@@ -357,18 +357,18 @@
                 if (!isText && !el.hasAttribute(target)) continue;
                 const seen = this._written.get(el) || {};
                 const prev = seen[target];
-                const cur = isText ? el.textContent : el.getAttribute(target);
+                const current = isText ? el.textContent : el.getAttribute(target);
                 // prev.was: the markup word core replaced. A morph (Livewire, Turbo, htmx) puts it back, and it is still NDS's.
-                if (!force && (prev ? cur !== prev.wrote && cur !== prev.was : typeof english === 'string' && cur.trim() !== english)) continue;
-                if (cur.trim() !== v) {
-                    if (!isText) el.setAttribute(target, v);
+                if (!force && (prev ? current !== prev.wrote && current !== prev.was : typeof english === 'string' && current.trim() !== english)) continue;
+                if (current.trim() !== word) {
+                    if (!isText) el.setAttribute(target, word);
                     else {
                         // Write the lone text node: a framework's node and comment anchors survive, and no childList record fires.
-                        const texts = [...el.childNodes].filter(n => n.nodeType === 3);
-                        if (texts.length === 1) texts[0].nodeValue = v; else el.textContent = v;
+                        const texts = [...el.childNodes].filter(node => node.nodeType === 3);
+                        if (texts.length === 1) texts[0].nodeValue = word; else el.textContent = word;
                     }
                 }
-                seen[target] = { wrote: isText ? el.textContent : v, was: prev && !force ? prev.was : cur };
+                seen[target] = { wrote: isText ? el.textContent : word, was: prev && !force ? prev.was : current };
                 this._written.set(el, seen);
             }
         },
@@ -376,10 +376,10 @@
         // Translate every marker in root (the document by default): root itself, its
         // descendants, and the content of each <template>, so a later clone lands translated.
         translate(root = document) {
-            const walk = (r) => {
-                if (r.nodeType === 1 && r.matches(I18N_MARK_SEL)) this._mark(r);
-                r.querySelectorAll(I18N_MARK_SEL).forEach(el => this._mark(el));
-                r.querySelectorAll('template').forEach(t => walk(t.content));
+            const walk = (node) => {
+                if (node.nodeType === 1 && node.matches(I18N_MARK_SEL)) this._mark(node);
+                node.querySelectorAll(I18N_MARK_SEL).forEach(el => this._mark(el));
+                node.querySelectorAll('template').forEach(template => walk(template.content));
             };
             walk(root);
         },
@@ -394,8 +394,8 @@
             this.settled.then(() => {
                 this.translate();
                 document.documentElement.setAttribute('data-nds-i18n', '');
-                NDS.onDOMAdd(I18N_MARK_SEL, els => els.forEach(el => this._mark(el)));
-                NDS.onAttrChange(I18N_MARK_SEL, Object.keys(i18nMarks), els => els.forEach(el => this._mark(el, true)));
+                NDS.onDOMAdd(I18N_MARK_SEL, elements => elements.forEach(el => this._mark(el)));
+                NDS.onAttrChange(I18N_MARK_SEL, Object.keys(i18nMarks), elements => elements.forEach(el => this._mark(el, true)));
                 this.pack().then(() => this.translate());
             });
         },
@@ -430,30 +430,30 @@
     // burning the obvious spelling for "no timeout".
     const composeSignal = (signal, timeout) => {
         if (AbortSignal.any) return AbortSignal.any([signal, timeout && AbortSignal.timeout(timeout)].filter(Boolean));
-        const ctrl = new AbortController();
-        if (signal?.aborted) ctrl.abort(signal.reason);
-        else signal?.addEventListener('abort', () => ctrl.abort(signal.reason), { once: true });
-        if (timeout) setTimeout(() => ctrl.abort(new DOMException('Request timed out', 'TimeoutError')), timeout);
-        return ctrl.signal;
+        const controller = new AbortController();
+        if (signal?.aborted) controller.abort(signal.reason);
+        else signal?.addEventListener('abort', () => controller.abort(signal.reason), { once: true });
+        if (timeout) setTimeout(() => controller.abort(new DOMException('Request timed out', 'TimeoutError')), timeout);
+        return controller.signal;
     };
     NDS.request = async (url, { signal, timeout = 15000, maxBytes = 1048576, json, ...init } = {}) => {
-        const res = await fetch(url, {
+        const response = await fetch(url, {
             ...init,
             signal: composeSignal(signal, timeout)
         });
-        if (!res.ok) {
+        if (!response.ok) {
             // Best-effort body slice so the thrown Error tells the operator what
             // the server actually said (typical error page > 512 bytes; we truncate).
             // A read failure here must not mask the HTTP error — swallow and move on.
             let body;
-            try { body = await readCapped(res, 512, true); } catch {}
-            throw Object.assign(new Error(`HTTP ${res.status}: ${res.statusText}`),
-                                { status: res.status, url, body });
+            try { body = await readCapped(response, 512, true); } catch {}
+            throw Object.assign(new Error(`HTTP ${response.status}: ${response.statusText}`),
+                                { status: response.status, url, body });
         }
         // Callers that know their endpoint pass json:true — a wrong Content-Type
         // must not silently downgrade a JSON response to a string.
-        const isJson = json ?? (res.headers.get('Content-Type') || '').includes('application/json');
-        const text = await readCapped(res, maxBytes);
+        const isJson = json ?? (response.headers.get('Content-Type') || '').includes('application/json');
+        const text = await readCapped(response, maxBytes);
         return { isJson, data: isJson && text ? JSON.parse(text) : text };
     };
 
@@ -462,12 +462,12 @@
     // Content-Length check alone can be omitted or lied about.
     // truncate=true: don't throw on oversize — cancel and return what fits.
     // Used by the error path where a slice is diagnostic, not the payload.
-    const readCapped = async (res, maxBytes, truncate) => {
-        if (!res.body) return '';   // 204 / HEAD
-        const declared = res.headers.get('Content-Length');
+    const readCapped = async (response, maxBytes, truncate) => {
+        if (!response.body) return '';   // 204 / HEAD
+        const declared = response.headers.get('Content-Length');
         if (declared && parseInt(declared, 10) > maxBytes && !truncate) throw new Error('Response too large');
 
-        const reader = res.body.getReader();
+        const reader = response.body.getReader();
         const decoder = new TextDecoder();
         let text = '';
         let totalBytes = 0;
@@ -488,15 +488,15 @@
     // Start the pack now: nearly every page needs it, and most components init after it lands.
     // settled: the pack landed or failed, or 3 s passed. The loader and the marker pass wait on it.
     // ponytail: past 3 s a slow pack starts the late components and the markers in English.
-    NDS.i18n.settled = Promise.race([NDS.i18n.pack(), new Promise(r => setTimeout(r, 3000))]);
+    NDS.i18n.settled = Promise.race([NDS.i18n.pack(), new Promise(resolve => setTimeout(resolve, 3000))]);
 
     // ── Debounce ─────────────────────────────────────────────────────
     // Usage: const fn = NDS.debounce(handler, 150)
     NDS.debounce = (fn, ms) => {
-        let t;
-        const debounced = (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
-        debounced.cancel = () => clearTimeout(t); // destroy paths drop the pending call
-        return debounced;
+        let timer;
+        const debounceCall = (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), ms); };
+        debounceCall.cancel = () => clearTimeout(timer); // destroy paths drop the pending call
+        return debounceCall;
     };
 
     // ── RAF Throttle ─────────────────────────────────────────────────
@@ -526,13 +526,13 @@
     // (nds-numbers.js), the pagination records slots, and the selection
     // count all route here so they can never drift.
     // Page lang, Latin digits: one look whatever the browser's language. A bad lang falls back to en.
-    NDS.formatNumber = (n, opts) => {
-        try { return n.toLocaleString(`${document.documentElement.lang || 'en'}-u-nu-latn`, opts); }
-        catch { return n.toLocaleString('en', opts); }
+    NDS.formatNumber = (number, opts) => {
+        try { return number.toLocaleString(`${document.documentElement.lang || 'en'}-u-nu-latn`, opts); }
+        catch { return number.toLocaleString('en', opts); }
     };
 
     // Arabic digits (both Unicode forms) → ASCII by their low nibble: what a field reads from a paste or autofill.
-    NDS.latinDigits = (s) => String(s ?? '').replace(/[٠-٩۰-۹]/g, (c) => c.charCodeAt(0) & 15);
+    NDS.latinDigits = (text) => String(text ?? '').replace(/[٠-٩۰-۹]/g, (char) => char.charCodeAt(0) & 15);
 
 
     // ── Run-When-Idle ────────────────────────────────────────────────
@@ -559,7 +559,7 @@
         return () => { const i = list.indexOf(sub); if (i !== -1) list.splice(i, 1); };
     };
     // A callback that calls its own off() shifts the list: step back, or the next subscriber is skipped.
-    const each = (list, call) => {
+    const callEach = (list, call) => {
         for (let i = 0; i < list.length; i++) { const sub = list[i]; call(sub); if (list[i] !== sub) i--; }
     };
 
@@ -568,7 +568,7 @@
     // Usage: const off = NDS.onResize(handler)
     NDS.onResize = (() => {
         const subs = [];
-        const fire = NDS.debounce(() => each(subs, fn => fn()), 150);
+        const fire = NDS.debounce(() => callEach(subs, fn => fn()), 150);
         window.addEventListener('resize', fire, { passive: true });
         return fn => subscribe(subs, fn);
     })();
@@ -663,22 +663,22 @@
         let started = false;
 
         function dispatch(nodes, subs) {
-            each(subs, sub => {
+            callEach(subs, sub => {
                 // A Set: a parent and its child added in one batch both reach the child.
                 const hits = new Set();
                 for (let i = 0; i < nodes.length; i++) {
                     if (nodes[i].matches(sub.sel)) hits.add(nodes[i]);
                     const ch = nodes[i].querySelectorAll(sub.sel);
-                    for (let c = 0; c < ch.length; c++) hits.add(ch[c]);
+                    for (let j = 0; j < ch.length; j++) hits.add(ch[j]);
                 }
                 if (hits.size) sub.fn([...hits]);
             });
         }
 
         function dispatchParents(parents, subs) {
-            each(subs, sub => {
+            callEach(subs, sub => {
                 const hits = [];
-                parents.forEach(p => { if (p.matches(sub.sel)) hits.push(p); });
+                parents.forEach(parent => { if (parent.matches(sub.sel)) hits.push(parent); });
                 if (hits.length) sub.fn(hits);
             });
         }
@@ -689,12 +689,12 @@
             new MutationObserver(mutations => {
                 const added = [], removed = [], parents = new Set();
                 for (let i = 0; i < mutations.length; i++) {
-                    const m = mutations[i];
-                    if (m.target && m.target.nodeType === 1) parents.add(m.target);
-                    for (let j = 0; j < m.addedNodes.length; j++)
-                        if (m.addedNodes[j].nodeType === 1) added.push(m.addedNodes[j]);
-                    for (let j = 0; j < m.removedNodes.length; j++)
-                        if (m.removedNodes[j].nodeType === 1) removed.push(m.removedNodes[j]);
+                    const mutation = mutations[i];
+                    if (mutation.target && mutation.target.nodeType === 1) parents.add(mutation.target);
+                    for (let j = 0; j < mutation.addedNodes.length; j++)
+                        if (mutation.addedNodes[j].nodeType === 1) added.push(mutation.addedNodes[j]);
+                    for (let j = 0; j < mutation.removedNodes.length; j++)
+                        if (mutation.removedNodes[j].nodeType === 1) removed.push(mutation.removedNodes[j]);
                 }
                 // A reparent (e.g. NDS.markHome, then appendChild elsewhere) emits
                 // both a remove and an add for the same node in one batch. Treat
@@ -705,8 +705,8 @@
                 let realAdded = added, realRemoved = removed;
                 if (added.length && removed.length) {
                     const addedSet = new Set(added), removedSet = new Set(removed);
-                    realAdded = added.filter(n => !removedSet.has(n));
-                    realRemoved = removed.filter(n => !addedSet.has(n));
+                    realAdded = added.filter(node => !removedSet.has(node));
+                    realRemoved = removed.filter(node => !addedSet.has(node));
                 }
                 // Removes before adds: for unrelated mutations batched together,
                 // tearing down old state before constructing new state is safer.
@@ -719,10 +719,10 @@
         return { addSubs, removeSubs, childrenSubs, start };
     })();
 
-    const onDOM = (list) => (sel, fn) => { domBus.start(); return subscribe(list, { sel, fn }); };
-    NDS.onDOMAdd = onDOM(domBus.addSubs);
-    NDS.onDOMRemove = onDOM(domBus.removeSubs);
-    NDS.onChildrenChange = onDOM(domBus.childrenSubs);
+    const makeDomSubscriber = (list) => (selector, fn) => { domBus.start(); return subscribe(list, { sel: selector, fn }); };
+    NDS.onDOMAdd = makeDomSubscriber(domBus.addSubs);
+    NDS.onDOMRemove = makeDomSubscriber(domBus.removeSubs);
+    NDS.onChildrenChange = makeDomSubscriber(domBus.childrenSubs);
 
     // ── Attribute Change Observer ────────────────────────────────────
     // Single MutationObserver on <html> for attribute changes, selector-based dispatch.
@@ -735,7 +735,7 @@
     const attrSubs = [];
     const attrNames = new Set();
     let attrMo;
-    NDS.onAttrChange = (sel, attrs, fn) => {
+    NDS.onAttrChange = (selector, attributes, fn) => {
         if (!attrMo) {
             attrMo = new MutationObserver(mutations => {
                 const changed = new Map();
@@ -744,13 +744,13 @@
                     if (!changed.has(el)) changed.set(el, new Set());
                     changed.get(el).add(mutations[i].attributeName);
                 }
-                each(attrSubs, sub => {
+                callEach(attrSubs, sub => {
                     const hits = [];
-                    changed.forEach((attrs, el) => {
+                    changed.forEach((names, el) => {
                         // Attribute check before matches(): this observer sees every
                         // attribute write on the page, and matches() is the expensive half.
                         let watched = false;
-                        for (const a of attrs) { if (sub.attrs.has(a)) { watched = true; break; } }
+                        for (const attribute of names) { if (sub.attrs.has(attribute)) { watched = true; break; } }
                         if (watched && el.matches(sub.sel)) hits.push(el);
                     });
                     if (hits.length) sub.fn(hits);
@@ -761,11 +761,11 @@
         // grows. Without it the observer records EVERY attribute write on the page
         // for its lifetime — class, aria, style, init stamps — and runs the callback.
         const before = attrNames.size;
-        attrs.forEach(a => attrNames.add(a));
+        attributes.forEach(attribute => attrNames.add(attribute));
         if (attrNames.size !== before) {
             attrMo.observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: [...attrNames] });
         }
-        return subscribe(attrSubs, { sel, attrs: new Set(attrs), fn });
+        return subscribe(attrSubs, { sel: selector, attrs: new Set(attributes), fn });
     };
 
     // ── State Management (data-state) ─────────────────────────────────
@@ -787,7 +787,7 @@
 
         function runHooks(hooks, token, el) {
             const fns = hooks[token];
-            if (fns) each(fns, sub => { if (el.matches(sub.scope)) sub.fn(el, token); });
+            if (fns) callEach(fns, sub => { if (el.matches(sub.scope)) sub.fn(el, token); });
         }
 
         const parse = el => new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
@@ -795,67 +795,67 @@
         // Effects: an NDS.state write runs them synchronously (Form relies on it); a bare attribute,
         // markup at load and added markup in the observers' microtask. `on` remembers each element an
         // effect has entered, so it runs once per real change and never undoes what it did not do.
-        const effects = [], effectTokens = new Set(), effectSels = new Set(), pendingSelectors = new Set();
+        const effects = [], effectTokens = new Set(), effectSelectors = new Set(), pendingSelectors = new Set();
         let offAdded;
-        const holds = (e, el, cur) => (cur.has(e.token) || (!!e.cls && el.classList.contains(e.cls))) && el.matches(e.scope);
+        const isHeld = (e, el, current) => (current.has(e.token) || (!!e.cls && el.classList.contains(e.cls))) && el.matches(e.scope);
         const runEffects = (el) => {
-            const cur = parse(el);
-            each(effects, e => {
-                const now = holds(e, el, cur);
+            const current = parse(el);
+            callEach(effects, e => {
+                const now = isHeld(e, el, current);
                 if (now === e.on.has(el)) return;
                 now ? e.on.add(el) : e.on.delete(el);
                 e.fn(el, now);
             });
         };
-        const sync = (el, tokens) => { if (tokens.some(t => effectTokens.has(t))) runEffects(el); };
+        const sync = (el, tokens) => { if (tokens.some(token => effectTokens.has(token))) runEffects(el); };
         const scan = () => {
-            const sel = [...pendingSelectors].join(',');
+            const selector = [...pendingSelectors].join(',');
             pendingSelectors.clear();
-            document.querySelectorAll(sel).forEach(runEffects);
+            document.querySelectorAll(selector).forEach(runEffects);
         };
-        NDS.onAttrChange('*', ['data-state'], els => els.forEach(runEffects));
+        NDS.onAttrChange('*', ['data-state'], elements => elements.forEach(runEffects));
 
-        const effect = (state, scope, fn, cls) => {
-            const sel = `[data-state~="${state}"]` + (cls ? `,.${cls}` : '');
+        const addEffect = (state, scope, fn, cls) => {
+            const selector = `[data-state~="${state}"]` + (cls ? `,.${cls}` : '');
             effectTokens.add(state);
-            if (cls) NDS.onAttrChange(scope, ['class'], els => els.forEach(runEffects));
+            if (cls) NDS.onAttrChange(scope, ['class'], elements => elements.forEach(runEffects));
             // One pooled selector for added markup, re-subscribed as it grows.
-            if (!effectSels.has(sel)) {
-                effectSels.add(sel);
+            if (!effectSelectors.has(selector)) {
+                effectSelectors.add(selector);
                 offAdded?.();
-                offAdded = NDS.onDOMAdd([...effectSels].join(','), els => els.forEach(runEffects));
+                offAdded = NDS.onDOMAdd([...effectSelectors].join(','), elements => elements.forEach(runEffects));
             }
             // A registration after load (an injected bundle) scans once for its token.
             if (!pendingSelectors.size) {
                 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan, { once: true });
                 else queueMicrotask(scan);
             }
-            pendingSelectors.add(sel);
+            pendingSelectors.add(selector);
             return subscribe(effects, { token: state, scope, fn, cls, on: new WeakSet() });
         };
 
         const add = (el, ...states) => {
             if (!el) return;
-            const cur = parse(el);
+            const current = parse(el);
             const added = [];
             for (let i = 0; i < states.length; i++) {
-                if (!cur.has(states[i])) { cur.add(states[i]); added.push(states[i]); }
+                if (!current.has(states[i])) { current.add(states[i]); added.push(states[i]); }
             }
             if (!added.length) return;
-            el.setAttribute('data-state', [...cur].join(' '));
+            el.setAttribute('data-state', [...current].join(' '));
             sync(el, added);
             for (let i = 0; i < added.length; i++) runHooks(addHooks, added[i], el);
         };
 
         const remove = (el, ...states) => {
             if (!el) return;
-            const cur = parse(el);
+            const current = parse(el);
             const removed = [];
             for (let i = 0; i < states.length; i++) {
-                if (cur.has(states[i])) { cur.delete(states[i]); removed.push(states[i]); }
+                if (current.has(states[i])) { current.delete(states[i]); removed.push(states[i]); }
             }
             if (!removed.length) return;
-            cur.size ? el.setAttribute('data-state', [...cur].join(' '))
+            current.size ? el.setAttribute('data-state', [...current].join(' '))
                      : el.removeAttribute('data-state');
             sync(el, removed);
             for (let i = 0; i < removed.length; i++) runHooks(removeHooks, removed[i], el);
@@ -863,8 +863,8 @@
 
         // No Set for a read: has() runs per row on every selection recount.
         const has = (el, state) => {
-            const cur = el && el.getAttribute('data-state');
-            return !!cur && !!state && (cur === state || cur.split(/\s+/).includes(state));
+            const current = el && el.getAttribute('data-state');
+            return !!current && !!state && (current === state || current.split(/\s+/).includes(state));
         };
 
         const get = el => el ? (el.getAttribute('data-state') || '') : '';
@@ -873,8 +873,8 @@
         const swap = (el, before) => {
             const after = parse(el);
             sync(el, [...before, ...after]);
-            before.forEach(t => { if (!after.has(t)) runHooks(removeHooks, t, el); });
-            after.forEach(t => { if (!before.has(t)) runHooks(addHooks, t, el); });
+            before.forEach(token => { if (!after.has(token)) runHooks(removeHooks, token, el); });
+            after.forEach(token => { if (!before.has(token)) runHooks(addHooks, token, el); });
         };
 
         const set = (el, ...states) => {
@@ -892,21 +892,21 @@
             swap(el, before);
         };
 
-        const apply = (el, ...states) => {
+        const syncEffects = (el, ...states) => {
             if (!el) return;
-            const cur = parse(el);
-            each(effects, e => {
-                if (states.includes(e.token) && holds(e, el, cur)) { e.on.add(el); e.fn(el, true); }
+            const current = parse(el);
+            callEach(effects, e => {
+                if (states.includes(e.token) && isHeld(e, el, current)) { e.on.add(el); e.fn(el, true); }
             });
             for (let i = 0; i < states.length; i++) {
-                if (cur.has(states[i])) runHooks(addHooks, states[i], el);
+                if (current.has(states[i])) runHooks(addHooks, states[i], el);
             }
         };
 
-        const onAdd = (state, scope, fn) => subscribe(addHooks[state] ||= [], { scope, fn });
-        const onRemove = (state, scope, fn) => subscribe(removeHooks[state] ||= [], { scope, fn });
+        const subscribeAdd = (state, scope, fn) => subscribe(addHooks[state] ||= [], { scope, fn });
+        const subscribeRemove = (state, scope, fn) => subscribe(removeHooks[state] ||= [], { scope, fn });
 
-        return { parse, add, remove, has, get, set, clear, apply, onAdd, onRemove, effect };
+        return { parse, add, remove, has, get, set, clear, apply: syncEffects, onAdd: subscribeAdd, onRemove: subscribeRemove, effect: addEffect };
     })();
 
     // ── Token mirrors ────────────────────────────────────────────────
@@ -920,17 +920,17 @@
     // A class or aria-busy the author wrote stays theirs: mirrored holds only what this wrote.
     const mirrors = { loading: 'nds-loading', hidden: 'nds-hidden', 'has-more': 'nds-has-more', 'always-open': 'nds-always-open', dropbox: 'nds-dropbox' };
     const mirrored = new WeakMap();
-    const mine = (el) => mirrored.get(el) || mirrored.set(el, new Set()).get(el);
+    const getMirrorSet = (el) => mirrored.get(el) || mirrored.set(el, new Set()).get(el);
     for (const token in mirrors) {
         const cls = mirrors[token];
         NDS.state.effect(token, '*', (el, on) => {
-            if (on && !el.classList.contains(cls)) { el.classList.add(cls); mine(el).add(cls); }
+            if (on && !el.classList.contains(cls)) { el.classList.add(cls); getMirrorSet(el).add(cls); }
             else if (!on && mirrored.get(el)?.delete(cls)) el.classList.remove(cls);
         });
     }
     // Loading tells a screen reader too: wait for the content.
     NDS.state.effect('loading', '*', (el, on) => {
-        if (on && !el.hasAttribute('aria-busy')) { el.setAttribute('aria-busy', 'true'); mine(el).add('aria-busy'); }
+        if (on && !el.hasAttribute('aria-busy')) { el.setAttribute('aria-busy', 'true'); getMirrorSet(el).add('aria-busy'); }
         else if (!on && mirrored.get(el)?.delete('aria-busy')) el.removeAttribute('aria-busy');
     });
 
@@ -963,20 +963,20 @@
     // To add a new aria-* helper, extend the NDS.aria object below with
     // `<name>: aria('aria-<name>', <isBool>)`. Do NOT add a flat
     // NDS.aria<Name> at the top level.
-    const aria = (attr, isBool) => (el, value) => {
+    const makeAriaSetter = (attribute, isBool) => (el, value) => {
         if (!el) return;
-        if (value == null || value === '') return el.removeAttribute(attr);
-        el.setAttribute(attr, isBool ? String(Boolean(value)) : value);
+        if (value == null || value === '') return el.removeAttribute(attribute);
+        el.setAttribute(attribute, isBool ? String(Boolean(value)) : value);
     };
     NDS.aria = {
-        expanded: aria('aria-expanded', true),
-        hidden:   aria('aria-hidden',   true),
-        pressed:  aria('aria-pressed',  true),
-        selected: aria('aria-selected', true),
-        disabled: aria('aria-disabled', true),
-        label:    aria('aria-label',    false),
-        current:  aria('aria-current',  false),
-        sort:     aria('aria-sort',     false),
+        expanded: makeAriaSetter('aria-expanded', true),
+        hidden:   makeAriaSetter('aria-hidden',   true),
+        pressed:  makeAriaSetter('aria-pressed',  true),
+        selected: makeAriaSetter('aria-selected', true),
+        disabled: makeAriaSetter('aria-disabled', true),
+        label:    makeAriaSetter('aria-label',    false),
+        current:  makeAriaSetter('aria-current',  false),
+        sort:     makeAriaSetter('aria-sort',     false),
     };
 
     // ── Count Badge ──────────────────────────────────────────────────
@@ -1038,7 +1038,7 @@
         chip.className = 'nds-chip' + (opts.chipClass ? ' ' + opts.chipClass : '');
         chip.type = 'button';
         if (opts.disabled) chip.disabled = true;
-        for (const k in (opts.data || {})) chip.dataset[k] = opts.data[k];
+        for (const key in (opts.data || {})) chip.dataset[key] = opts.data[key];
 
         const text = document.createElement('span');
         text.className = 'nds-label';
@@ -1073,7 +1073,7 @@
     // attributes, URLs (NDS.safeUrl), or style/script contents.
     // Usage: el.innerHTML = `<span title="${NDS.escapeHtml(v)}">${NDS.escapeHtml(v)}</span>`
     const htmlEscapes = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
-    NDS.escapeHtml = (str) => str == null ? '' : String(str).replace(/[&<>"']/g, (c) => htmlEscapes[c]);
+    NDS.escapeHtml = (text) => text == null ? '' : String(text).replace(/[&<>"']/g, (char) => htmlEscapes[char]);
 
     // ── Unique ID ─────────────────────────────────────────────────────
     // Short collision-resistant ID for DOM-scoped needs (input names,
@@ -1120,12 +1120,12 @@
 
     // ── Own Parts ────────────────────────────────────────────────────
     // The elements under root matching selector that root's own instance drives: a part
-    // whose nearest ownerSel is root, or sits outside root. A nested instance's parts are
-    // not root's. Never tests root.matches(ownerSel), so a create() on an element without
+    // whose nearest ownerSelector is root, or sits outside root. A nested instance's parts are
+    // not root's. Never tests root.matches(ownerSelector), so a create() on an element without
     // the class still finds its parts.
     // Usage: const buttons = NDS.ownParts(container, '.nds-accordion-btn', '.nds-accordion');
-    NDS.ownParts = (root, selector, ownerSel) => [...root.querySelectorAll(selector)].filter(el => {
-        const owner = el.closest(ownerSel);
+    NDS.ownParts = (root, selector, ownerSelector) => [...root.querySelectorAll(selector)].filter(el => {
+        const owner = el.closest(ownerSelector);
         return owner === root || !root.contains(owner);
     });
 
@@ -1198,8 +1198,8 @@
     NDS.safeUrl = (raw) => {
         if (!raw) return null;
         try {
-            const u = new URL(raw, window.location.href);
-            return ['http:', 'https:', 'mailto:', 'tel:'].includes(u.protocol) ? u.href : null;
+            const url = new URL(raw, window.location.href);
+            return ['http:', 'https:', 'mailto:', 'tel:'].includes(url.protocol) ? url.href : null;
         } catch {
             return null;
         }
@@ -1240,9 +1240,9 @@
     // The part of the screen the visitor sees, in getBoundingClientRect() coords. A pinch
     // zoom or an on-screen keyboard shrinks it; the layout viewport keeps its size. Internal.
     NDS.visibleBox = () => {
-        const v = window.visualViewport, doc = document.documentElement;
-        const top = v ? v.offsetTop : 0, left = v ? v.offsetLeft : 0;
-        return { top, left, right: left + (v ? v.width : doc.clientWidth), bottom: top + (v ? v.height : doc.clientHeight) };
+        const viewport = window.visualViewport, root = document.documentElement;
+        const top = viewport ? viewport.offsetTop : 0, left = viewport ? viewport.offsetLeft : 0;
+        return { top, left, right: left + (viewport ? viewport.width : root.clientWidth), bottom: top + (viewport ? viewport.height : root.clientHeight) };
     };
 
     // ── Scroll Below Sticky Nav ──────────────────────────────────────
@@ -1273,11 +1273,11 @@
     // a link or picks a tab. canScroll(e) gates the wheel and the drag start.
     // Usage: NDS.dragScroll(list, { canScroll: () => list.scrollWidth > list.clientWidth, signal });
     NDS.dragScroll = (el, { canScroll = () => true, signal } = {}) => {
-        const behavior = () => NDS.prefersReducedMotion ? 'auto' : 'smooth';
+        const getScrollBehavior = () => NDS.prefersReducedMotion ? 'auto' : 'smooth';
         el.addEventListener('wheel', (e) => {
             if (!canScroll(e) || Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
             e.preventDefault();
-            el.scrollBy({ left: e.deltaY * (NDS.isRTL ? -0.8 : 0.8), behavior: behavior() });
+            el.scrollBy({ left: e.deltaY * (NDS.isRTL ? -0.8 : 0.8), behavior: getScrollBehavior() });
         }, { passive: false, signal });
         // A link's native drag-and-drop would steal the gesture — only while el scrolls.
         el.addEventListener('dragstart', (e) => { if (canScroll(e)) e.preventDefault(); }, { signal });
@@ -1287,17 +1287,17 @@
             let dragged = false;
             const drag = new AbortController();
             Object.assign(el.style, { cursor: 'grabbing', userSelect: 'none', scrollBehavior: 'auto' });
-            document.addEventListener('mousemove', (ev) => {
-                if (Math.abs(ev.pageX - startX) > 3) dragged = true;
-                el.scrollLeft = startLeft - (ev.pageX - startX);
+            document.addEventListener('mousemove', (moveEvent) => {
+                if (Math.abs(moveEvent.pageX - startX) > 3) dragged = true;
+                el.scrollLeft = startLeft - (moveEvent.pageX - startX);
             }, { signal: drag.signal });
             document.addEventListener('mouseup', () => {
                 drag.abort();
-                Object.assign(el.style, { cursor: '', userSelect: '', scrollBehavior: behavior() });
+                Object.assign(el.style, { cursor: '', userSelect: '', scrollBehavior: getScrollBehavior() });
                 if (!dragged) return;
                 // Capture on el runs before any target inside it; a click that lands outside never comes.
                 const guard = new AbortController();
-                el.addEventListener('click', (ev) => { ev.preventDefault(); ev.stopImmediatePropagation(); },
+                el.addEventListener('click', (clickEvent) => { clickEvent.preventDefault(); clickEvent.stopImmediatePropagation(); },
                     { capture: true, once: true, signal: guard.signal });
                 setTimeout(() => guard.abort(), 100);
             }, { signal: drag.signal });
@@ -1314,8 +1314,8 @@
         let cached;
         return () => {
             if (cached !== undefined) return cached;
-            const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nds-transition-speed'));
-            cached = isFinite(v) ? v * 1000 : 200;
+            const speed = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nds-transition-speed'));
+            cached = isFinite(speed) ? speed * 1000 : 200;
             return cached;
         };
     })();
@@ -1351,17 +1351,17 @@
             if (done) return;
             done = true;
             clearTimeout(timer);
-            el.removeEventListener('transitionend', onEnd);
+            el.removeEventListener('transitionend', handleEnd);
             fn();
         };
-        const onEnd = (e) => { if (e.target === el) run(); };
-        el.addEventListener('transitionend', onEnd);
+        const handleEnd = (e) => { if (e.target === el) run(); };
+        el.addEventListener('transitionend', handleEnd);
         timer = setTimeout(run, fallbackMs);
         return () => {
             if (done) return;
             done = true;
             clearTimeout(timer);
-            el.removeEventListener('transitionend', onEnd);
+            el.removeEventListener('transitionend', handleEnd);
         };
     };
 
@@ -1373,7 +1373,7 @@
     NDS.focusableSel = [
         'a[href]', 'button:not([disabled])', 'textarea:not([disabled])',
         'input:not([disabled]):not([type="hidden"])', 'select:not([disabled])', '[tabindex]'
-    ].map(s => s + ':not([tabindex="-1"])').join(', ');
+    ].map(selector => selector + ':not([tabindex="-1"])').join(', ');
 
     // Build a keydown handler that traps Tab/Shift+Tab inside `containerFn()`'s
     // returned element. Pass either a function (re-evaluated on every Tab —
@@ -1388,20 +1388,20 @@
     //          { signal });
     NDS.trapFocus = (containerFn) => (e) => {
         if (e.key !== 'Tab') return;
-        const c = typeof containerFn === 'function' ? containerFn() : containerFn;
-        if (!c) return;
+        const container = typeof containerFn === 'function' ? containerFn() : containerFn;
+        if (!container) return;
         // An unrendered match as `last` never takes focus, so Tab would leave instead of wrapping.
         // Only the ends decide the wrap: walk in from each, not over every match.
-        const f = c.querySelectorAll(NDS.focusableSel);
-        const shown = (el) => el.checkVisibility?.({ visibilityProperty: true }) ?? el.getClientRects().length > 0;
-        let i = 0, j = f.length - 1;
-        while (i <= j && !shown(f[i])) i++;
-        while (j > i && !shown(f[j])) j--;
+        const focusables = container.querySelectorAll(NDS.focusableSel);
+        const isShown = (el) => el.checkVisibility?.({ visibilityProperty: true }) ?? el.getClientRects().length > 0;
+        let i = 0, j = focusables.length - 1;
+        while (i <= j && !isShown(focusables[i])) i++;
+        while (j > i && !isShown(focusables[j])) j--;
         if (i > j) return;
-        const first = f[i];
-        const last = f[j];
+        const first = focusables[i];
+        const last = focusables[j];
         // From the container itself (focused when it has no control to start on), Shift+Tab would leave.
-        if (e.shiftKey && (document.activeElement === first || document.activeElement === c)) { e.preventDefault(); last.focus(); }
+        if (e.shiftKey && (document.activeElement === first || document.activeElement === container)) { e.preventDefault(); last.focus(); }
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     };
 
@@ -1421,7 +1421,7 @@
     NDS.announce = (() => {
         const DELAY = 50;
         let shared;
-        const defaultRegion = () => {
+        const ensureDefaultRegion = () => {
             if (!shared || !shared.isConnected) {
                 shared = document.createElement('div');
                 shared.className = 'nds-sr-only';
@@ -1433,7 +1433,7 @@
         };
         return (message, region) => {
             if (!message) return;
-            const el = region === undefined ? defaultRegion() : region;
+            const el = region === undefined ? ensureDefaultRegion() : region;
             if (!el) return;
             el.textContent = '';
             setTimeout(() => { el.textContent = message; }, DELAY);
@@ -1496,7 +1496,7 @@
             get(name) {
                 if (isLocalFile) return NDS.cache.get(name);
                 const prefix = name + '=';
-                const hit = document.cookie.split(';').map(c => c.trim()).find(c => c.startsWith(prefix));
+                const hit = document.cookie.split(';').map(pair => pair.trim()).find(pair => pair.startsWith(prefix));
                 return hit ? hit.slice(prefix.length) : null;
             },
             set(name, value, days) {
@@ -1562,12 +1562,12 @@
     // Usage: const off = NDS.onOutsideScroll(this.menu, () => this.close());
     //        // later: off();
     NDS.onOutsideScroll = (scopeEl, onClose) => {
-        const handler = (e) => {
+        const handleScroll = (e) => {
             if (e?.target?.nodeType && scopeEl.contains(e.target)) return;
             onClose();
         };
-        document.addEventListener('scroll', handler, { capture: true, passive: true });
-        return () => document.removeEventListener('scroll', handler, { capture: true });
+        document.addEventListener('scroll', handleScroll, { capture: true, passive: true });
+        return () => document.removeEventListener('scroll', handleScroll, { capture: true });
     };
 
     // ── Mark home / Send home ───────────────────────────────────────────
@@ -1581,14 +1581,14 @@
     // write on the old parent still sees the move.
     const home = new WeakMap();   // moved node → { mark, parent }
     const nodePrototype = Node.prototype;
-    const standIn = (parent, n) => { const h = n && home.get(n); return h && h.mark.parentNode === parent ? h.mark : n; };
+    const getStandIn = (parent, node) => { const entry = node && home.get(node); return entry && entry.mark.parentNode === parent ? entry.mark : node; };
     function guardParent(parent) {
         parent._ndsMoved = (parent._ndsMoved || 0) + 1;
         if (parent._ndsMoved > 1) return;
-        parent.insertBefore = function (node, ref) { return nodePrototype.insertBefore.call(this, standIn(this, node), standIn(this, ref)); };
-        parent.appendChild = function (node) { return nodePrototype.appendChild.call(this, standIn(this, node)); };
+        parent.insertBefore = function (node, ref) { return nodePrototype.insertBefore.call(this, getStandIn(this, node), getStandIn(this, ref)); };
+        parent.appendChild = function (node) { return nodePrototype.appendChild.call(this, getStandIn(this, node)); };
         parent.removeChild = function (node) {
-            if (standIn(this, node) === node) return nodePrototype.removeChild.call(this, node);
+            if (getStandIn(this, node) === node) return nodePrototype.removeChild.call(this, node);
             // Back home first, through its owner's own exit, then out as the app asked.
             NDS.sendHome(node);
             return nodePrototype.removeChild.call(this, node);
@@ -1614,14 +1614,14 @@
     // Put a node NDS.markHome marked back at its marker. True when it went home; when the marker is
     // gone it goes to the end of its old parent while that parent is on the page, else off it.
     NDS.sendHome = (el) => {
-        const h = home.get(el);
-        if (!h) return false;
+        const entry = home.get(el);
+        if (!entry) return false;
         home.delete(el);
-        const parent = h.mark.parentNode;
-        if (parent) nodePrototype.replaceChild.call(parent, el, h.mark);
-        else if (h.parent.isConnected) nodePrototype.appendChild.call(h.parent, el);
+        const parent = entry.mark.parentNode;
+        if (parent) nodePrototype.replaceChild.call(parent, el, entry.mark);
+        else if (entry.parent.isConnected) nodePrototype.appendChild.call(entry.parent, el);
         else el.remove();
-        unguard(h.parent);
+        unguard(entry.parent);
         return !!el.parentNode;
     };
 
@@ -1650,10 +1650,10 @@
     NDS.place = (el, top, left) => {
         el.style.top = top + 'px';
         el.style.left = left + 'px';
-        const r = el.getBoundingClientRect();
+        const rect = el.getBoundingClientRect();
         const { m41: tx, m42: ty } = new DOMMatrixReadOnly(getComputedStyle(el).transform);
-        const dx = (r.left - tx) - left;
-        const dy = (r.top  - ty) - top;
+        const dx = (rect.left - tx) - left;
+        const dy = (rect.top  - ty) - top;
         if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
             el.style.top  = (top  - dy) + 'px';
             el.style.left = (left - dx) + 'px';
@@ -1688,9 +1688,9 @@
     NDS.flipPosition = (trigger, menuEl, opts = {}) => {
         const { respectNav = true, navGap = 16 } = opts;
         const triggerRect = trigger.getBoundingClientRect();
-        const doc = document.documentElement;
-        const vw = doc.clientWidth;
-        const vh = doc.clientHeight;
+        const root = document.documentElement;
+        const vw = root.clientWidth;
+        const vh = root.clientHeight;
         // Space is measured inside what the visitor sees, so a menu never opens under the keyboard.
         const box = NDS.visibleBox();
 

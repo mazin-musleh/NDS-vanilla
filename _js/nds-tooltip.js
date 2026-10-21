@@ -183,17 +183,17 @@
             const body = document.createElement('span');
             body.className = 'nds-tooltip-body';
             if (title) {
-                const t = document.createElement('span');
-                t.className = 'nds-tooltip-title';
-                t.textContent = title;
-                body.appendChild(t);
+                const titleEl = document.createElement('span');
+                titleEl.className = 'nds-tooltip-title';
+                titleEl.textContent = title;
+                body.appendChild(titleEl);
             }
             if (message) {
-                const p = document.createElement('p');
-                p.className = 'nds-tooltip-message';
-                p.textContent = message;
-                if (this._messageRef) p.setAttribute('data-i18n', this._messageRef);
-                body.appendChild(p);
+                const messageEl = document.createElement('p');
+                messageEl.className = 'nds-tooltip-message';
+                messageEl.textContent = message;
+                if (this._messageRef) messageEl.setAttribute('data-i18n', this._messageRef);
+                body.appendChild(messageEl);
             }
             balloon.appendChild(body);
             return balloon;
@@ -205,10 +205,10 @@
         adoptBalloon(balloon) {
             this.balloon = balloon;
             // An authored balloon gets its own attributes back; a built one leaves whole.
-            const had = ['role', 'popover', 'id'].filter((a) => balloon.hasAttribute(a));
+            const had = ['role', 'popover', 'id'].filter((attribute) => balloon.hasAttribute(attribute));
             const style = balloon.getAttribute('style');   // open() places it inline
             this._undo.push(() => {
-                ['role', 'popover', 'id'].forEach((a) => { if (!had.includes(a)) balloon.removeAttribute(a); });
+                ['role', 'popover', 'id'].forEach((attribute) => { if (!had.includes(attribute)) balloon.removeAttribute(attribute); });
                 if (style === null) balloon.removeAttribute('style'); else balloon.setAttribute('style', style);
             });
             balloon.setAttribute('role', 'tooltip');
@@ -239,7 +239,7 @@
                 this.trigger.setAttribute('aria-describedby',
                     existing ? `${existing} ${id}` : id);
                 this._undo.push(() => {
-                    const rest = (this.trigger.getAttribute('aria-describedby') || '').split(/\s+/).filter((t) => t && t !== id);
+                    const rest = (this.trigger.getAttribute('aria-describedby') || '').split(/\s+/).filter((token) => token && token !== id);
                     rest.length ? this.trigger.setAttribute('aria-describedby', rest.join(' ')) : this.trigger.removeAttribute('aria-describedby');
                 });
             }
@@ -399,11 +399,11 @@
             // raw space values. Recompute spaceAbove from triggerRect rather
             // than reusing p.spaceAbove because p.spaceAbove uses the
             // unclamped p.topEdge (which is 0 when no nav is present).
-            const p = NDS.flipPosition(this.trigger, this.balloon);
-            const topEdge = Math.max(p.box.top + pad, p.topEdge);
-            const bW = p.menuRect.width, bH = p.menuRect.height;
-            const spaceBelow = p.spaceBelow - gap - pad;
-            const spaceAbove = p.triggerRect.top - gap - topEdge;
+            const placement = NDS.flipPosition(this.trigger, this.balloon);
+            const topEdge = Math.max(placement.box.top + pad, placement.topEdge);
+            const bW = placement.menuRect.width, bH = placement.menuRect.height;
+            const spaceBelow = placement.spaceBelow - gap - pad;
+            const spaceAbove = placement.triggerRect.top - gap - topEdge;
             const flipUp = spaceBelow < bH && spaceAbove > spaceBelow;
 
             if (flipUp) {
@@ -414,16 +414,16 @@
                 this.balloon.removeAttribute('data-position-vertical');
             }
 
-            let top = flipUp ? p.triggerRect.top - bH - gap : p.triggerRect.bottom + gap;
-            top = Math.max(topEdge, Math.min(top, p.box.bottom - bH - pad));
+            let top = flipUp ? placement.triggerRect.top - bH - gap : placement.triggerRect.bottom + gap;
+            top = Math.max(topEdge, Math.min(top, placement.box.bottom - bH - pad));
 
-            let left = p.triggerRect.left + (p.triggerRect.width / 2) - (bW / 2);
-            left = Math.max(p.box.left + edge, Math.min(left, p.box.right - bW - edge));
+            let left = placement.triggerRect.left + (placement.triggerRect.width / 2) - (bW / 2);
+            left = Math.max(placement.box.left + edge, Math.min(left, placement.box.right - bW - edge));
 
             NDS.place(this.balloon, top, left);
 
             // Arrow points at the trigger center, clamped inside balloon edges
-            const triggerCenterX = p.triggerRect.left + p.triggerRect.width / 2;
+            const triggerCenterX = placement.triggerRect.left + placement.triggerRect.width / 2;
             const arrowHalf = 5;
             const arrowInlineStart = Math.max(
                 12,
@@ -465,7 +465,7 @@
         }
     }
 
-    function initializeTooltips() {
+    function setupTooltips() {
         document.querySelectorAll('.nds-tooltip').forEach(el => {
             if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-tooltip-initialized')) return;
@@ -474,8 +474,8 @@
     }
 
     NDS.Tooltip = {
-        init: initializeTooltips,
-        reinit: initializeTooltips,
+        init: setupTooltips,
+        reinit: setupTooltips,
         // The constructor publishes el.ndsTooltip only on success → null on a bail.
         create: (el) => {
             if (!el.ndsTooltip) new NdsTooltip(el);

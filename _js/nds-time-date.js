@@ -25,11 +25,11 @@
     // the check is free in the init drain and in an idle slot. `sr` keeps the
     // text for screen readers. A breakpoint crossing re-runs via NDS.onResize.
     const bandAlias = { sm: 'mobile', md: 'tablet', lg: 'desktop' };
-    function rendered(el) {
+    function isRendered(el) {
         const tokens = (el.dataset.hidden || '').split(/\s+/);
         if (tokens.includes('sr')) return true;
-        const mq = (q) => window.matchMedia(NDS.breakpoints[q]).matches;
-        const band = mq('mobile') ? 'sm' : mq('tablet-max') ? 'md' : mq('desktop-max') ? 'lg' : 'xl';
+        const isBreakpoint = (query) => window.matchMedia(NDS.breakpoints[query]).matches;
+        const band = isBreakpoint('mobile') ? 'sm' : isBreakpoint('tablet-max') ? 'md' : isBreakpoint('desktop-max') ? 'lg' : 'xl';
         return !tokens.includes(band) && !tokens.includes(bandAlias[band]);
     }
     // Built imperatively: the text flows through textContent, never the HTML parser.
@@ -49,13 +49,13 @@
     });
 
     // Month names from NDS.Date: Android's ICU names Umm al-Qura months from the Gregorian set.
-    function hijriText(day) {
-        const [d, m, y] = NDS.Date.format(day, { calendar: 'hijri', format: 'D M YYYY' }).split(' ');
-        return strings.text('hijri_date', { day: d, month: NDS.Date.monthNames('hijri')[m - 1], year: y });
+    function formatHijriText(day) {
+        const [dayText, monthText, y] = NDS.Date.format(day, { calendar: 'hijri', format: 'D M YYYY' }).split(' ');
+        return strings.text('hijri_date', { day: dayText, month: NDS.Date.monthNames('hijri')[monthText - 1], year: y });
     }
 
     // The site's wall clock, [h, m, s]. No data-timezone = the visitor's.
-    function zoneTime() {
+    function getZoneTime() {
         return NDS.Date.format(new Date(), {
             locale: 'en', timeZone: NDS.Date.site.timeZone,
             hour: 'numeric', minute: 'numeric', second: 'numeric', hourCycle: 'h23'
@@ -66,22 +66,22 @@
     let dateTimer = null;
     function scheduleMidnight() {
         clearTimeout(dateTimer);
-        const [h, m, s] = zoneTime();
-        dateTimer = setTimeout(updateDate, 864e5 - (h * 3600 + m * 60 + s) * 1000 + 1000);
+        const [hours, minutes, seconds] = getZoneTime();
+        dateTimer = setTimeout(syncDate, 864e5 - (hours * 3600 + minutes * 60 + seconds) * 1000 + 1000);
     }
 
-    function updateDate() {
+    function syncDate() {
         const el = document.getElementById('nds-date');
-        if (!el || !rendered(el)) return;
+        if (!el || !isRendered(el)) return;
         // The authored placeholder stays until the month names land.
-        if (!strings.ready()) { strings.load().then(updateDate); return; }
+        if (!strings.ready()) { strings.load().then(syncDate); return; }
         scheduleMidnight();
 
         const isArabic = NDS.isArabic;
         const today = NDS.Date.today();
         const type = NDS.Date.calendarFor(el, isArabic ? 'hijri' : 'gregory');
         renderDate(el, type === 'hijri'
-            ? hijriText(today)
+            ? formatHijriText(today)
             : NDS.Date.format(today, {
                 locale: isArabic ? 'ar-SA' : undefined, // undefined = the page's lang
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
@@ -96,7 +96,7 @@
     let clockText = null;
     let clockTimer = null;
 
-    function ensureClockDOM() {
+    function ensureClockDom() {
         // A replaced clock element strands the old text node: rebuild into the new one.
         if (clockText?.isConnected) return true;
         const el = document.getElementById('nds-real-time-clock');
@@ -112,25 +112,25 @@
         return true;
     }
 
-    function updateClock() {
-        if (!ensureClockDOM()) return;
-        const [h, m] = zoneTime();
-        clockText.nodeValue = `${h % 12 || 12}:${m.toString().padStart(2, '0')} ${h >= 12 ? 'PM' : 'AM'}`;
+    function syncClock() {
+        if (!ensureClockDom()) return;
+        const [hours, minutes] = getZoneTime();
+        clockText.nodeValue = `${hours % 12 || 12}:${minutes.toString().padStart(2, '0')} ${hours >= 12 ? 'PM' : 'AM'}`;
     }
 
     function scheduleNextMinute() {
         const now = new Date();
         const msUntilNext = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
         clockTimer = setTimeout(() => {
-            updateClock();
+            syncClock();
             scheduleNextMinute();
         }, msUntilNext);
     }
 
     function startClock() {
         const el = document.getElementById('nds-real-time-clock');
-        if (!el || !rendered(el)) return;
-        updateClock();
+        if (!el || !isRendered(el)) return;
+        syncClock();
         if (!clockTimer) scheduleNextMinute();
     }
 
@@ -150,7 +150,7 @@
     let clockInitDone = false;
     let resizeInitDone = false;
 
-    function initializeTimeDate() {
+    function setupTimeDate() {
         const dateEl = document.getElementById('nds-date');
         const clockEl = document.getElementById('nds-real-time-clock');
 
@@ -161,10 +161,10 @@
             // (formatter construction) doesn't compete with critical resources
             // during post-DCL hydration. The lang-change handler still runs
             // inline so it responds promptly when triggered.
-            NDS.onIdle(updateDate);
+            NDS.onIdle(syncDate);
             if (!dateInitDone) {
                 dateInitDone = true;
-                NDS.onAttrChange('html', ['lang'], updateDate);
+                NDS.onAttrChange('html', ['lang'], syncDate);
             }
         }
 
@@ -184,17 +184,17 @@
         if ((dateEl || clockEl) && !resizeInitDone) {
             resizeInitDone = true;
             NDS.onResize(() => {
-                updateDate();
+                syncDate();
                 const el = document.getElementById('nds-real-time-clock');
-                if (el && rendered(el) && !document.hidden) startClock(); else stopClock();
+                if (el && isRendered(el) && !document.hidden) startClock(); else stopClock();
             });
         }
     }
 
     NDS.TimeDate = {
-        init: initializeTimeDate,
-        updateDate,
-        updateClock
+        init: setupTimeDate,
+        updateDate: syncDate,
+        updateClock: syncClock
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

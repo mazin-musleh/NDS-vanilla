@@ -68,9 +68,9 @@
 
     // Open panels, bottom to top; a closing one stays until its slide ends.
     const stack = [];
-    const top = () => stack[stack.length - 1];
+    const getTopPanel = () => stack[stack.length - 1];
     // A modal dialog above (a Modal, or a newer modal panel) answers instead.
-    const isTop = (panel) => (NDS.dialog.top() ? NDS.dialog.top() === panel : top() === panel);
+    const isTop = (panel) => (NDS.dialog.top() ? NDS.dialog.top() === panel : getTopPanel() === panel);
     // Static panels kept off the screen by another; the newest returns once none is open.
     const waiting = [];
     const drop = (list, panel) => {
@@ -82,7 +82,7 @@
     // collapses to one close + one open, never a queue of animations.
     let pendingOpen = null;
 
-    const togglesFor = (panel) =>
+    const findToggles = (panel) =>
         panel.id ? document.querySelectorAll('[data-panel-toggle="' + panel.id + '"]') : [];
 
     // Only one transition callback may be armed per panel. A swap can abort an
@@ -130,7 +130,7 @@
         // z-index), and bottom sheets cap their height against it so a tall
         // sheet can't clip under the nav. Layout read before any style write,
         // refining the CSS nav-height baseline to the live header bottom.
-        updateHeaderOffset(panel);
+        syncHeaderOffset(panel);
 
         if (!isStatic) {
             document.addEventListener('keydown', (e) => {
@@ -155,12 +155,12 @@
 
         // Re-measure while open: the topbar scrolls away and returns, so the
         // header bottom moves. rAF-throttled — safe on scroll.
-        const onScroll = NDS.rafThrottle(() => updateHeaderOffset(panel));
+        const onScroll = NDS.rafThrottle(() => syncHeaderOffset(panel));
         window.addEventListener('scroll', onScroll, { passive: true, signal });
-        const offResize = NDS.onResize(() => { updateHeaderOffset(panel); syncResize(panel); });
+        const offResize = NDS.onResize(() => { syncHeaderOffset(panel); syncResize(panel); });
         signal.addEventListener('abort', offResize);
 
-        togglesFor(panel).forEach(btn => NDS.aria.expanded(btn, true));
+        findToggles(panel).forEach(btn => NDS.aria.expanded(btn, true));
 
         // Force reflow so the closed offset paints before the open transition.
         void panel.offsetHeight;
@@ -172,7 +172,7 @@
             removeState(panel, 'opening');
             if (!panel._noFocus) {
                 // Skips a close inside a hidden view: focus() on it does nothing.
-                const target = ownControls(panel, '[data-panel-close]').find(el => !el.closest('[hidden]')) || panel;
+                const target = findOwnControls(panel, '[data-panel-close]').find(el => !el.closest('[hidden]')) || panel;
                 if (target === panel && !panel.hasAttribute('tabindex')) panel.tabIndex = -1;
                 target.focus();
             }
@@ -184,7 +184,7 @@
         });
     }
 
-    const closedEvent = (panel) => new CustomEvent('nds:panel:closed', { detail: { panel }, bubbles: true });
+    const buildClosedEvent = (panel) => new CustomEvent('nds:panel:closed', { detail: { panel }, bubbles: true });
 
     // A static panel giving way: hidden but still open to its owner, until resume().
     function park(panel) {
@@ -227,12 +227,12 @@
 
         pendingOpen = null;              // supersede any swap already waiting
         drop(waiting, panel);
-        const out = stack.filter(p => !p.hasAttribute('data-panel-modal'));
+        const out = stack.filter(stackedPanel => !stackedPanel.hasAttribute('data-panel-modal'));
         if (out.length) {
             // Swap: let the outgoing panel's close cleanup start this one, so
             // the two never animate across each other.
             pendingOpen = panel;
-            out.forEach(p => (p.hasAttribute('data-panel-static') ? park(p) : close(p)));
+            out.forEach(stackedPanel => (stackedPanel.hasAttribute('data-panel-static') ? park(stackedPanel) : close(stackedPanel)));
             return;
         }
         openPanel(panel);
@@ -245,7 +245,7 @@
             // A parked panel was still open to its owner, so it gets its closed event.
             if (panel._silent) {
                 delete panel._silent;
-                if (!hasState(panel, 'open')) panel.dispatchEvent(closedEvent(panel));
+                if (!hasState(panel, 'open')) panel.dispatchEvent(buildClosedEvent(panel));
             }
             return;
         }
@@ -259,7 +259,7 @@
         }
         NDS.dialog.hideMenus(panel);
 
-        togglesFor(panel).forEach(btn => NDS.aria.expanded(btn, false));
+        findToggles(panel).forEach(btn => NDS.aria.expanded(btn, false));
 
         armTransition(panel, () => {
             clearState(panel);
@@ -271,7 +271,7 @@
             // Return focus to the opener only when nothing is queued — the
             // incoming panel takes focus itself a moment later. Drop the
             // reference unless THIS panel is the one coming back: a re-open
-            // mid-close never re-stamps it (bindToggles only stamps a panel that
+            // mid-close never re-stamps it (addToggleListeners only stamps a panel that
             // isn't open, and `open` is still set while closing), so deleting it
             // here would strand the next close with no trigger to return to.
             // A swap to a different panel does drop it — holding it would later
@@ -285,7 +285,7 @@
                 opener.focus({ preventScroll: true });
             }
 
-            if (!silent) panel.dispatchEvent(closedEvent(panel));
+            if (!silent) panel.dispatchEvent(buildClosedEvent(panel));
 
             // Flush the swap slot. Read-then-clear so a listener on the
             // `closed` event can queue its own open without being dropped.
@@ -308,14 +308,14 @@
     // RESIZE
     // ==============================================
 
-    const sizeIndex = (panel) => {
+    const getSizeIndex = (panel) => {
         const i = sizes.indexOf(panel.getAttribute('data-panel-size'));
         return i < 0 ? 1 : i;
     };
 
     // Already as big as the screen allows: the full width for a side panel, header to floor for a sheet.
     // ponytail: reads --_panel-top as px; a consumer --panel-top in rem skews the sheet check.
-    function atMax(panel) {
+    function isAtMax(panel) {
         if (!panel.open) return false;
         const side = panel.getAttribute('data-panel-side');
         if (side === 'top' || side === 'bottom') {
@@ -326,21 +326,21 @@
     }
 
     // A panel's body is open content, so a nested panel's controls are not this panel's.
-    const ownControls = (panel, sel) => NDS.ownParts(panel, sel, SELECTOR);
+    const findOwnControls = (panel, selector) => NDS.ownParts(panel, selector, SELECTOR);
 
     // aria-disabled, not disabled: a disabled button drops the focus the user just clicked into.
     function syncResize(panel) {
-        const i = sizeIndex(panel);
-        const full = i === sizes.length - 1 || atMax(panel);
-        ownControls(panel, '[data-panel-resize]').forEach(btn => {
+        const i = getSizeIndex(panel);
+        const full = i === sizes.length - 1 || isAtMax(panel);
+        findOwnControls(panel, '[data-panel-resize]').forEach(btn => {
             NDS.aria.disabled(btn, btn.dataset.panelResize === 'grow' ? full : i === 0);
         });
     }
 
     function resize(panel, step) {
-        const from = sizeIndex(panel);
+        const from = getSizeIndex(panel);
         const to = Math.min(Math.max(from + step, 0), sizes.length - 1);
-        if (to === from || (step > 0 && atMax(panel))) return;
+        if (to === from || (step > 0 && isAtMax(panel))) return;
         panel.setAttribute('data-panel-size', sizes[to]);
         syncResize(panel);
         // Measure the cap again once the size has settled.
@@ -362,7 +362,7 @@
     // Keep the panel below the sticky header (topbar + mainnav) while it moves.
     // Writes the private --_header-offset, NOT the --panel-top knob, so a
     // consumer-set --panel-top still wins via the var() fallback chain.
-    function updateHeaderOffset(panel) {
+    function syncHeaderOffset(panel) {
         const visible = NDS.stickyHeaderBottom();
         const next = visible > 0 ? visible + 'px' : '';
         // Skip the redundant write when nothing moved — this runs rAF-throttled
@@ -379,7 +379,7 @@
     function createPanel(panel) {
         if (panel.hasAttribute(INIT_ATTR)) return;
         // A page with no panel at load never runs init(), so create() wires the toggles too.
-        bindToggles();
+        addToggleListeners();
 
         if (!(panel instanceof HTMLDialogElement)) {
             console.error('NDS Panel: .nds-panel must be a <dialog>.', panel);
@@ -441,7 +441,7 @@
         // Mirrors close()'s toggle reset: destroy skips the close path, so without
         // this a destroyed-while-open panel leaves every toggle claiming
         // aria-expanded="true" for a surface that is now hidden and unwired.
-        if (hasState(panel, 'open')) togglesFor(panel).forEach(btn => NDS.aria.expanded(btn, false));
+        if (hasState(panel, 'open')) findToggles(panel).forEach(btn => NDS.aria.expanded(btn, false));
         clearState(panel);
         NDS.dialog.close(panel);
         delete panel._modal;
@@ -452,7 +452,7 @@
         panel.removeAttribute(INIT_ATTR);
 
         // Another panel still sliding out flushes the slot itself.
-        if (pending && stack.some(p => hasState(p, 'closing'))) pendingOpen = pending;
+        if (pending && stack.some(stackedPanel => hasState(stackedPanel, 'closing'))) pendingOpen = pending;
         else if (pending) openPanel(pending);
         resume();
     }
@@ -460,7 +460,7 @@
     // Toggles are delegated from the document: a toggle may live anywhere
     // (a FAB dock, a nav, injected later) and never needs its own wiring.
     let togglesBound = false;
-    function bindToggles() {
+    function addToggleListeners() {
         if (togglesBound) return;
         togglesBound = true;
         document.addEventListener('click', (e) => {
@@ -478,7 +478,7 @@
     }
 
     function init() {
-        bindToggles();
+        addToggleListeners();
         // Closed before the first open too, lazy panels' toggles included.
         document.querySelectorAll('[data-panel-toggle]:not([aria-expanded])').forEach(btn => NDS.aria.expanded(btn, false));
         document.querySelectorAll(SELECTOR).forEach(panel => {

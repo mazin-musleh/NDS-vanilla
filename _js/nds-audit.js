@@ -38,40 +38,40 @@
     const DOCS = 'https://mazin-musleh.github.io/NDS-vanilla/';
     const rules = [];
 
-    function rule(def) {
+    function addRule(def) {
         if (!def || !def.id || typeof def.check !== 'function') return console.warn('[NDS.audit] a rule needs an id and a check()', def);
-        const at = rules.findIndex(r => r.id === def.id);
-        const r = { group: 'structure', severity: 'warn', ...def };
-        if (at < 0) rules.push(r); else rules[at] = r;
+        const at = rules.findIndex(existing => existing.id === def.id);
+        const entry = { group: 'structure', severity: 'warn', ...def };
+        if (at < 0) rules.push(entry); else rules[at] = entry;
     }
 
     // data-nds-audit-ignore="" skips every rule; a value names the ones to skip.
-    function ignored(el, id) {
+    function isIgnored(el, id) {
         const host = el.closest('[data-nds-audit-ignore]');
         if (!host) return false;
-        const v = host.getAttribute('data-nds-audit-ignore').trim();
-        return !v || v.split(/[\s,]+/).includes(id);
+        const value = host.getAttribute('data-nds-audit-ignore').trim();
+        return !value || value.split(/[\s,]+/).includes(id);
     }
 
     function run({ group, rule: only, quiet } = {}) {
         // Read on every run: rule() replaces by id, and a site may push to the array later.
-        (window.NDS_AUDIT_RULES || []).forEach(rule);
+        (window.NDS_AUDIT_RULES || []).forEach(addRule);
         const groups = group == null ? null : [].concat(group);
         const ids = only == null ? null : [].concat(only);
         const findings = [];
-        for (const r of rules) {
-            if ((groups && !groups.includes(r.group)) || (ids && !ids.includes(r.id))) continue;
+        for (const entry of rules) {
+            if ((groups && !groups.includes(entry.group)) || (ids && !ids.includes(entry.id))) continue;
             // Markup inside <code> is a sample, never the page.
-            const skip = (el) => !!el && el.nodeType === 1 && (!!el.closest('code') || ignored(el, r.id));
-            const ctx = {
-                find: (sel) => [...document.querySelectorAll(sel)].filter(el => !skip(el)),
+            const skip = (el) => !!el && el.nodeType === 1 && (!!el.closest('code') || isIgnored(el, entry.id));
+            const context = {
+                find: (selector) => [...document.querySelectorAll(selector)].filter(el => !skip(el)),
                 report(el, message, fix, severity, count) {
                     if (skip(el)) return;
-                    findings.push({ rule: r.id, group: r.group, severity: severity || r.severity, message, fix,
-                                    docs: r.docs ? DOCS + r.docs : undefined, el: el || undefined, count });
+                    findings.push({ rule: entry.id, group: entry.group, severity: severity || entry.severity, message, fix,
+                                    docs: entry.docs ? DOCS + entry.docs : undefined, el: el || undefined, count });
                 },
             };
-            try { r.check(ctx); } catch (e) { console.warn(`[NDS.audit] rule ${r.id} failed:`, e); }
+            try { entry.check(context); } catch (e) { console.warn(`[NDS.audit] rule ${entry.id} failed:`, e); }
         }
         if (!quiet) print(findings);
         return findings;
@@ -79,13 +79,13 @@
 
     function print(findings) {
         const out = { error: console.error, warn: console.warn, info: console.info };
-        const n = { error: 0, warn: 0, info: 0 };
-        for (const f of findings) {
-            n[f.severity]++;
-            const text = `[NDS.audit] ${f.rule}: ${f.group === 'practice' ? 'tip: ' : ''}${f.message}${f.fix ? ' ' + f.fix : ''}${f.docs ? ' ' + f.docs : ''}`;
-            (out[f.severity] || console.warn)(text, ...(f.el ? [f.el] : []));
+        const counts = { error: 0, warn: 0, info: 0 };
+        for (const finding of findings) {
+            counts[finding.severity]++;
+            const text = `[NDS.audit] ${finding.rule}: ${finding.group === 'practice' ? 'tip: ' : ''}${finding.message}${finding.fix ? ' ' + finding.fix : ''}${finding.docs ? ' ' + finding.docs : ''}`;
+            (out[finding.severity] || console.warn)(text, ...(finding.el ? [finding.el] : []));
         }
-        console.info(`[NDS.audit] ${n.error} errors, ${n.warn} warnings, ${n.info} notes.`);
+        console.info(`[NDS.audit] ${counts.error} errors, ${counts.warn} warnings, ${counts.info} notes.`);
     }
 
     // ── page ─────────────────────────────────────────────────────────
@@ -95,37 +95,37 @@
     // under content written for the other, with nothing else reporting it.
     // Not auto-corrected: writing dir here flips the whole document a frame
     // after paint, and cannot help the pre-JS paint at all.
-    rule({ id: 'lang-dir', group: 'page', docs: 'ui-shell/head.html', check(ctx) {
+    addRule({ id: 'lang-dir', group: 'page', docs: 'ui-shell/head.html', check(context) {
         const html = document.documentElement;
         const htmlDir = html.dir; // raw read for the diagnostic text only — comparisons below use NDS.isRTL
         const htmlLang = html.lang || 'unset';
         // ponytail: the common right-to-left languages; Intl.Locale's text info is missing in Firefox.
         const rtlLang = /^(ar|fa|ur|he|ps|ckb|dv|yi|sd|ug)$/.test(NDS.lang);
-        if (!html.lang) ctx.report(null, '<html> has no lang attribute — components write their text in English and the pack never loads for the page\'s language.', 'Set lang on <html>, such as lang="ar".');
+        if (!html.lang) context.report(null, '<html> has no lang attribute — components write their text in English and the pack never loads for the page\'s language.', 'Set lang on <html>, such as lang="ar".');
         if (rtlLang && !NDS.isRTL) {
-            ctx.report(null, `<html lang="${htmlLang}"> without dir="rtl"${htmlDir ? ` (dir="${htmlDir}")` : ' (no dir attribute)'} — NDS.isRTL reads false, so components run left-to-right under right-to-left content.`, 'Set dir="rtl" in the markup.');
+            context.report(null, `<html lang="${htmlLang}"> without dir="rtl"${htmlDir ? ` (dir="${htmlDir}")` : ' (no dir attribute)'} — NDS.isRTL reads false, so components run left-to-right under right-to-left content.`, 'Set dir="rtl" in the markup.');
         } else if (!rtlLang && NDS.isRTL) {
-            ctx.report(null, `<html dir="rtl"> with lang="${htmlLang}" — direction and language disagree.`, 'Set dir="ltr", or lang to a right-to-left language.');
+            context.report(null, `<html dir="rtl"> with lang="${htmlLang}" — direction and language disagree.`, 'Set dir="ltr", or lang to a right-to-left language.');
         }
     } });
 
     // The component token tier ships in the main sheet only, so an empty value means it never applied.
-    rule({ id: 'css-missing', group: 'page', severity: 'error', docs: 'ui-shell/head.html', check(ctx) {
+    addRule({ id: 'css-missing', group: 'page', severity: 'error', docs: 'ui-shell/head.html', check(context) {
         if (!getComputedStyle(document.documentElement).getPropertyValue('--avatar-background').trim()) {
-            ctx.report(null, 'the NDS main stylesheet is not applied — components render without their styles.', 'Check the nds-main.min.css link in <head>, and NDS_ASSETS_PATH when the files sit elsewhere.');
+            context.report(null, 'the NDS main stylesheet is not applied — components render without their styles.', 'Check the nds-main.min.css link in <head>, and NDS_ASSETS_PATH when the files sit elsewhere.');
         }
     } });
 
-    rule({ id: 'skip-link', group: 'page', docs: 'layout/page-layout.html', check(ctx) {
+    addRule({ id: 'skip-link', group: 'page', docs: 'layout/page-layout.html', check(context) {
         const content = document.querySelector('.nds-content');
         const link = document.querySelector('a.nds-skip-link');
         if (!link) {
-            if (content) ctx.report(content, 'the page has no skip link — keyboard users tab through the whole header on every page.', 'Add <a class="nds-skip-link" href="#main-content"> first in <body>, and id="main-content" on .nds-content.');
+            if (content) context.report(content, 'the page has no skip link — keyboard users tab through the whole header on every page.', 'Add <a class="nds-skip-link" href="#main-content"> first in <body>, and id="main-content" on .nds-content.');
             return;
         }
         const target = document.getElementById((link.getAttribute('href') || '').replace(/^#/, ''));
-        if (!target) ctx.report(link, `the skip link points at "${link.getAttribute('href')}", which no element has — it moves focus nowhere.`, 'Give .nds-content id="main-content".', 'error');
-        else if (target.tagName === 'MAIN' && content) ctx.report(target, 'the skip link lands on <main>, which opens with the hero and the side menu (the 1.11.0 pattern).', 'Move id="main-content" to .nds-content.');
+        if (!target) context.report(link, `the skip link points at "${link.getAttribute('href')}", which no element has — it moves focus nowhere.`, 'Give .nds-content id="main-content".', 'error');
+        else if (target.tagName === 'MAIN' && content) context.report(target, 'the skip link lands on <main>, which opens with the hero and the side menu (the 1.11.0 pattern).', 'Move id="main-content" to .nds-content.');
     } });
 
     // A framework mount root between <body> and <main> breaks the vertical
@@ -134,17 +134,17 @@
     // footer rides up the viewport. Nothing errors and the page still paints.
     // No <main> at all is not a finding — a client-rendered app audited before
     // its first mount has nothing to judge yet.
-    rule({ id: 'main-flex', group: 'page', docs: 'layout/page-layout.html', check(ctx) {
-        const mainEl = ctx.find('body main')[0];
+    addRule({ id: 'main-flex', group: 'page', docs: 'layout/page-layout.html', check(context) {
+        const mainEl = context.find('body main')[0];
         if (!mainEl || mainEl.parentElement === document.body) return;
-        for (let n = mainEl.parentElement; n && n !== document.body; n = n.parentElement) {
-            const cs = getComputedStyle(n);
+        for (let node = mainEl.parentElement; node && node !== document.body; node = node.parentElement) {
+            const cs = getComputedStyle(node);
             // The two treatments layout/page-layout.md prescribes: vanish from
             // the layout, or become the growing column yourself.
             if (cs.display === 'contents') continue;
             if (cs.display === 'flex' && cs.flexDirection === 'column' && parseFloat(cs.flexGrow) > 0) continue;
-            const label = n.tagName.toLowerCase() + (n.id ? `#${n.id}` : '');
-            ctx.report(n, `<${label}> sits between <body> and <main> with display:${cs.display} — main no longer grows, so the footer rides up the viewport instead of sitting at the bottom.`, 'Give it "display: contents", or "flex: 1; display: flex; flex-direction: column" when the app styles the mount root itself.');
+            const label = node.tagName.toLowerCase() + (node.id ? `#${node.id}` : '');
+            context.report(node, `<${label}> sits between <body> and <main> with display:${cs.display} — main no longer grows, so the footer rides up the viewport instead of sitting at the bottom.`, 'Give it "display: contents", or "flex: 1; display: flex; flex-direction: column" when the app styles the mount root itself.');
             break; // one warning per page: the outermost break is the one to fix
         }
     } });
@@ -152,194 +152,194 @@
     // .nds-content-layout is a grid — one column, or side-menu + content under
     // nds-has-sidemenu. A component that returns a wrapper <div> instead of a
     // fragment lands an extra element in it, which takes a column of its own.
-    rule({ id: 'content-layout-child', group: 'page', docs: 'layout/page-layout.html', check(ctx) {
-        ctx.find('.nds-content-layout').forEach(layout => {
+    addRule({ id: 'content-layout-child', group: 'page', docs: 'layout/page-layout.html', check(context) {
+        context.find('.nds-content-layout').forEach(layout => {
             Array.from(layout.children).forEach(child => {
                 if (child.matches('.nds-content, .nds-sidemenu')) return;
                 const display = getComputedStyle(child).display;
                 if (display === 'contents' || display === 'none') return; // none: a <template>, a script, a hidden element
-                ctx.report(child, `<${child.tagName.toLowerCase()}> is a direct child of .nds-content-layout but is neither .nds-content nor .nds-sidemenu — it takes a grid column and shifts the layout.`, 'Return a fragment from the component instead of a wrapper, or give the wrapper "display: contents".');
+                context.report(child, `<${child.tagName.toLowerCase()}> is a direct child of .nds-content-layout but is neither .nds-content nor .nds-sidemenu — it takes a grid column and shifts the layout.`, 'Return a fragment from the component instead of a wrapper, or give the wrapper "display: contents".');
             });
         });
     } });
 
     // nds-has-sidemenu keeps the menu's grid column even when no menu shows in it.
-    rule({ id: 'sidemenu-missing', group: 'page', docs: 'layout/page-layout.html', check(ctx) {
-        ctx.find('.nds-has-sidemenu').forEach(layout => {
-            const menu = Array.from(layout.children).find(c => c.matches('.nds-sidemenu'));
+    addRule({ id: 'sidemenu-missing', group: 'page', docs: 'layout/page-layout.html', check(context) {
+        context.find('.nds-has-sidemenu').forEach(layout => {
+            const menu = Array.from(layout.children).find(child => child.matches('.nds-sidemenu'));
             if (menu && !menu.hidden) return;
-            ctx.report(layout, `nds-has-sidemenu with ${menu ? 'a hidden' : 'no'} .nds-sidemenu — the layout keeps the menu column, so the content squeezes into it.`, 'Add the side menu as its first child, or remove nds-has-sidemenu on a page that shows no side menu.');
+            context.report(layout, `nds-has-sidemenu with ${menu ? 'a hidden' : 'no'} .nds-sidemenu — the layout keeps the menu column, so the content squeezes into it.`, 'Add the side menu as its first child, or remove nds-has-sidemenu on a page that shows no side menu.');
         });
     } });
 
     // A view whose only content is an alert is a page state, which Status Section is built for.
-    rule({ id: 'alert-as-page', group: 'page', docs: 'layout/status-section.html', check(ctx) {
-        const shown = el => el.checkVisibility ? el.checkVisibility() : el.getClientRects().length > 0;
-        const sections = ctx.find('main .nds-content-section').filter(shown);
-        const alert = sections.flatMap(s => [...s.querySelectorAll('.nds-alert')]).find(shown);
+    addRule({ id: 'alert-as-page', group: 'page', docs: 'layout/status-section.html', check(context) {
+        const isShown = el => el.checkVisibility ? el.checkVisibility() : el.getClientRects().length > 0;
+        const sections = context.find('main .nds-content-section').filter(isShown);
+        const alert = sections.flatMap(section => [...section.querySelectorAll('.nds-alert')]).find(isShown);
         if (!alert) return;
         const content = 'p, li, dt, dd, td, img, figure, canvas, input, select, textarea, .nds-card, .nds-btn';
         const chrome = '.nds-alert, .nds-tabs, .nds-breadcrumb, .nds-pagination, nav, [role="tablist"]';
-        if (sections.some(s => [...s.querySelectorAll(content)].some(el => !el.closest(chrome) && shown(el)))) return;
-        ctx.report(alert, 'the only content this view shows is an alert: a view that cannot show its content (sign in first, no permission, not found, a failed load) is a Status Section.',
+        if (sections.some(section => [...section.querySelectorAll(content)].some(el => !el.closest(chrome) && isShown(el)))) return;
+        context.report(alert, 'the only content this view shows is an alert: a view that cannot show its content (sign in first, no permission, not found, a failed load) is a Status Section.',
             'Replace the alert with a Status Section that carries the same title, text and action.');
     } });
 
     // An NDS page runs NDS and vanilla JS only; a legacy library loaded beside it
     // restyles or re-wires NDS markup with nothing else reporting it.
-    rule({ id: 'legacy-library', group: 'page', check(ctx) {
-        const $ = window.jQuery;
+    addRule({ id: 'legacy-library', group: 'page', check(context) {
+        const jquery = window.jQuery;
         const found = [];
-        if ($) found.push('jQuery');
-        if ($ && $.fn && $.fn.select2) found.push('Select2');
-        if ($ && $.fn && ($.fn.DataTable || $.fn.dataTable)) found.push('DataTables');
-        const sheets = [...document.querySelectorAll('link[rel="stylesheet"][href]')].map(l => l.href.toLowerCase());
-        if (sheets.some(h => /bootstrap/.test(h))) found.push('Bootstrap CSS');
-        if (sheets.some(h => /font-?awesome/.test(h)) || document.querySelector('.fa, .fas, .far, .fab, [class^="fa-"], [class*=" fa-"]')) found.push('Font Awesome');
-        if (found.length) ctx.report(null, `legacy UI loaded on an NDS page: ${found.join(', ')}.`, 'Replace it with the NDS component or API for the same job, and load the legacy library only on legacy pages.');
+        if (jquery) found.push('jQuery');
+        if (jquery && jquery.fn && jquery.fn.select2) found.push('Select2');
+        if (jquery && jquery.fn && (jquery.fn.DataTable || jquery.fn.dataTable)) found.push('DataTables');
+        const sheets = [...document.querySelectorAll('link[rel="stylesheet"][href]')].map(link => link.href.toLowerCase());
+        if (sheets.some(href => /bootstrap/.test(href))) found.push('Bootstrap CSS');
+        if (sheets.some(href => /font-?awesome/.test(href)) || document.querySelector('.fa, .fas, .far, .fab, [class^="fa-"], [class*=" fa-"]')) found.push('Font Awesome');
+        if (found.length) context.report(null, `legacy UI loaded on an NDS page: ${found.join(', ')}.`, 'Replace it with the NDS component or API for the same job, and load the legacy library only on legacy pages.');
     } });
 
     // The loader injects each bundle itself, and a script it inserts is async.
     // ponytail: a hand-written tag with an async attribute passes; check the HTML if it matters.
-    rule({ id: 'bundle-tag', group: 'page', docs: 'ui-shell/head.html', check(ctx) {
-        const files = Object.values(window.__NDS_BUNDLES || {}).map(b => b.file).filter(Boolean);
-        ctx.find('script[src]').forEach(s => {
-            const file = files.find(f => s.getAttribute('src').split(/[?#]/)[0].endsWith(f));
-            if (file && !s.async) ctx.report(s, `${file} has a tag in the page. The loader adds each bundle when the page needs it.`, 'Remove the tag.');
+    addRule({ id: 'bundle-tag', group: 'page', docs: 'ui-shell/head.html', check(context) {
+        const files = Object.values(window.__NDS_BUNDLES || {}).map(bundle => bundle.file).filter(Boolean);
+        context.find('script[src]').forEach(script => {
+            const file = files.find(bundleFile => script.getAttribute('src').split(/[?#]/)[0].endsWith(bundleFile));
+            if (file && !script.async) context.report(script, `${file} has a tag in the page. The loader adds each bundle when the page needs it.`, 'Remove the tag.');
         });
     } });
 
     // defer has no effect without src: the code runs at parse time, before the deferred NDS scripts.
-    rule({ id: 'inline-defer', group: 'page', check(ctx) {
-        ctx.find('script:not([src])[defer]').forEach(s => {
-            ctx.report(s, 'an inline <script defer> runs at once: defer works only on a script with src, so this code runs before NDS loads.', 'Use <script type="module">, which waits for the page, or move the code to a file loaded with defer after the NDS scripts.');
+    addRule({ id: 'inline-defer', group: 'page', check(context) {
+        context.find('script:not([src])[defer]').forEach(script => {
+            context.report(script, 'an inline <script defer> runs at once: defer works only on a script with src, so this code runs before NDS loads.', 'Use <script type="module">, which waits for the page, or move the code to a file loaded with defer after the NDS scripts.');
         });
     } });
 
     // A swapped picture that keeps the template's width/height is stretched, or reserves the wrong space.
     // An SVG with no width, height or viewBox reports the browser's 300×150 default, so that size is no evidence.
-    rule({ id: 'img-size', group: 'page', check(ctx) {
-        ctx.find('img[width][height]').forEach(img => {
+    addRule({ id: 'img-size', group: 'page', check(context) {
+        context.find('img[width][height]').forEach(img => {
             if (!img.complete || !img.naturalWidth) return;
             if (img.naturalWidth === 300 && img.naturalHeight === 150 && /\.svg([?#]|$)|^data:image\/svg/i.test(img.currentSrc)) return;
-            const w = +img.getAttribute('width'), h = +img.getAttribute('height');
-            if (!w || !h || Math.abs((w / h) / (img.naturalWidth / img.naturalHeight) - 1) < 0.05) return;
-            ctx.report(img, `<img width="${w}" height="${h}"> shows a ${img.naturalWidth}×${img.naturalHeight} picture: the shapes differ, so it stretches or the layout jumps when it loads.`,
+            const width = +img.getAttribute('width'), height = +img.getAttribute('height');
+            if (!width || !height || Math.abs((width / height) / (img.naturalWidth / img.naturalHeight) - 1) < 0.05) return;
+            context.report(img, `<img width="${width}" height="${height}"> shows a ${img.naturalWidth}×${img.naturalHeight} picture: the shapes differ, so it stretches or the layout jumps when it loads.`,
                 'Set width and height to the picture\'s real pixel size.');
         });
     } });
 
 
     // A browser date or time field skips the NDS picker: no Hijri, no site format, its own look.
-    rule({ id: 'native-date-time', group: 'page', check(ctx) {
-        ctx.find('input[type="date"], input[type="month"], input[type="week"], input[type="datetime-local"], input[type="time"]').forEach(el => {
+    addRule({ id: 'native-date-time', group: 'page', check(context) {
+        context.find('input[type="date"], input[type="month"], input[type="week"], input[type="datetime-local"], input[type="time"]').forEach(el => {
             const time = el.type === 'time';
-            ctx.report(el, `<input type="${el.type}"> on an NDS page: the browser's own picker, not the NDS ${time ? 'time' : 'date'} picker.`,
+            context.report(el, `<input type="${el.type}"> on an NDS page: the browser's own picker, not the NDS ${time ? 'time' : 'date'} picker.`,
                 `Use the ${time ? 'Time Picker' : 'Date Picker'} canon.`);
         });
     } });
 
     // A CSP without 'unsafe-inline' in style-src drops every style attribute, so el.style reads empty;
     // a style NDS or a framework sets through the CSSOM is never blocked, and its attribute reads back full.
-    rule({ id: 'style-blocked', group: 'page', docs: 'ui-shell/head.html', check(ctx) {
-        const dead = ctx.find('[style*="--"]').filter(el => !el.style.length);
-        if (dead.length) ctx.report(dead[0], `the page's Content Security Policy blocked ${dead.length} style attribute${dead.length > 1 ? 's' : ''} with a knob in ${dead.length > 1 ? 'them' : 'it'}: those knobs never apply.`,
+    addRule({ id: 'style-blocked', group: 'page', docs: 'ui-shell/head.html', check(context) {
+        const dead = context.find('[style*="--"]').filter(el => !el.style.length);
+        if (dead.length) context.report(dead[0], `the page's Content Security Policy blocked ${dead.length} style attribute${dead.length > 1 ? 's' : ''} with a knob in ${dead.length > 1 ? 'them' : 'it'}: those knobs never apply.`,
             'Move each knob to a class in your own stylesheet (Inline Knobs).', undefined, dead.length);
     } });
 
     // A toolbar part lifted out of .nds-toolbar still lays out as a bar, so nothing else shows the
     // lost wrapper: stacked rows touch, and the bar loses its gap to the content below.
     // Every nds-toolbar-* class is a toolbar part. One finding per lost bar: a part inside a reported one is skipped.
-    rule({ id: 'toolbar-part', group: 'structure', docs: 'components/toolbar.html', check(ctx) {
-        ctx.find('[class*="nds-toolbar-"]').forEach(el => {
-            const part = [...el.classList].find(c => c.startsWith('nds-toolbar-'));
+    addRule({ id: 'toolbar-part', group: 'structure', docs: 'components/toolbar.html', check(context) {
+        context.find('[class*="nds-toolbar-"]').forEach(el => {
+            const part = [...el.classList].find(className => className.startsWith('nds-toolbar-'));
             if (!part || el.closest('.nds-toolbar') || el.parentElement?.closest('[class*="nds-toolbar-"]')) return;
-            ctx.report(el, `.${part} outside a .nds-toolbar.`, 'Wrap the bar in <div class="nds-toolbar">, as the toolbar canon has it.');
+            context.report(el, `.${part} outside a .nds-toolbar.`, 'Wrap the bar in <div class="nds-toolbar">, as the toolbar canon has it.');
         });
     } });
 
     // A search box needs most of its line, on a phone above all. The chip lines take a line of their own.
-    rule({ id: 'toolbar-search-row', group: 'structure', docs: 'components/toolbar.html', check(ctx) {
-        ctx.find('.nds-toolbar .nds-search-box').forEach(box => {
+    addRule({ id: 'toolbar-search-row', group: 'structure', docs: 'components/toolbar.html', check(context) {
+        context.find('.nds-toolbar .nds-search-box').forEach(box => {
             const line = box.closest('.nds-toolbar-row') || box.closest('.nds-toolbar');
             const others = [...line.children]
                 .flatMap(el => el.matches('.nds-toolbar-start, .nds-toolbar-end') ? [...el.children] : [el])
                 .filter(el => el !== box && !el.matches('.nds-toolbar-row, .nds-filter-applied, .nds-auto-fill, script, template'));
-            if (others.length > 1) ctx.report(box, `.nds-search-box shares its line with ${others.length} other items.`, 'Keep one beside it, a Filter or a sort menu, and move the rest to another .nds-toolbar-row.');
+            if (others.length > 1) context.report(box, `.nds-search-box shares its line with ${others.length} other items.`, 'Keep one beside it, a Filter or a sort menu, and move the rest to another .nds-toolbar-row.');
         });
     } });
 
     // The applied filters read as the result of the search and filter line, so they sit right under it.
-    rule({ id: 'toolbar-applied', group: 'structure', docs: 'components/toolbar.html', check(ctx) {
+    addRule({ id: 'toolbar-applied', group: 'structure', docs: 'components/toolbar.html', check(context) {
         const fix = 'Put it in the toolbar, in its own .nds-toolbar-row under the search and filter row.';
-        ctx.find('.nds-filter-applied').forEach(el => {
+        context.find('.nds-filter-applied').forEach(el => {
             const bar = el.closest('.nds-toolbar');
-            if (!bar) return ctx.report(el, '.nds-filter-applied outside a .nds-toolbar.', fix);
+            if (!bar) return context.report(el, '.nds-filter-applied outside a .nds-toolbar.', fix);
             const controls = [...bar.querySelectorAll('.nds-search-box, .nds-filter')];
             const row = el.closest('.nds-toolbar-row');
-            if (row && controls.some(c => row.contains(c))) ctx.report(el, '.nds-filter-applied shares a row with the search or filter.', fix);
-            else if (controls.some(c => el.compareDocumentPosition(c) & Node.DOCUMENT_POSITION_FOLLOWING)) ctx.report(el, '.nds-filter-applied above the search or filter it shows.', fix);
+            if (row && controls.some(control => row.contains(control))) context.report(el, '.nds-filter-applied shares a row with the search or filter.', fix);
+            else if (controls.some(control => el.compareDocumentPosition(control) & Node.DOCUMENT_POSITION_FOLLOWING)) context.report(el, '.nds-filter-applied above the search or filter it shows.', fix);
         });
     } });
 
     // One line, one control height: a 32px button beside a 40px one reads as a mistake. Hidden items are skipped.
-    rule({ id: 'toolbar-sizes', group: 'structure', docs: 'components/toolbar.html', check(ctx) {
-        ctx.find('.nds-toolbar-row, .nds-toolbar:not(:has(> .nds-toolbar-row))').forEach(line => {
+    addRule({ id: 'toolbar-sizes', group: 'structure', docs: 'components/toolbar.html', check(context) {
+        context.find('.nds-toolbar-row, .nds-toolbar:not(:has(> .nds-toolbar-row))').forEach(line => {
             const heights = new Set([...line.children]
                 .flatMap(el => el.matches('.nds-toolbar-start, .nds-toolbar-end') ? [...el.children] : [el])
                 .map(el => el.matches('.nds-btn') ? el : el.querySelector('.nds-form-control, .nds-btn:not(.nds-dropmenu-menu *)'))
-                .filter(c => c?.getClientRects().length)
-                .map(c => Math.round(c.getBoundingClientRect().height)));
-            if (heights.size > 1) ctx.report(line, `Toolbar items in one line differ in height: ${[...heights].sort().join('px, ')}px.`, 'Give the buttons on a line one size: all default (40px) or all nds-md (32px), to match the search box when there is one.');
+                .filter(control => control?.getClientRects().length)
+                .map(control => Math.round(control.getBoundingClientRect().height)));
+            if (heights.size > 1) context.report(line, `Toolbar items in one line differ in height: ${[...heights].sort().join('px, ')}px.`, 'Give the buttons on a line one size: all default (40px) or all nds-md (32px), to match the search box when there is one.');
         });
     } });
 
     // ── i18n ─────────────────────────────────────────────────────────
 
-    rule({ id: 'i18n-pack', group: 'i18n', severity: 'error', docs: 'core/i18n.html', check(ctx) {
+    addRule({ id: 'i18n-pack', group: 'i18n', severity: 'error', docs: 'core/i18n.html', check(context) {
         const lang = NDS.i18n._lang();
         // undefined: still loading. null: the file and its en fallback both failed.
         if (lang && NDS.i18n._files[lang] === null) {
-            ctx.report(null, `the language file for "${lang}" did not load — components show their English text.`, 'Keep the i18n/ folder beside the folder that holds nds-main.min.js, or set NDS_I18N_PATH.');
+            context.report(null, `the language file for "${lang}" did not load — components show their English text.`, 'Keep the i18n/ folder beside the folder that holds nds-main.min.js, or set NDS_I18N_PATH.');
         }
     } });
 
     // ── structure ────────────────────────────────────────────────────
 
-    rule({ id: 'filter-unclaimed', severity: 'error', docs: 'components/filter.html', check(ctx) {
-        ctx.find('[data-filter-items]:not([data-nds-filter-initialized])').forEach(el =>
-            ctx.report(el, 'data-filter-items container never claimed by a filter — it stays skeleton-held.', 'Remove the attribute or add the filter UI.'));
+    addRule({ id: 'filter-unclaimed', severity: 'error', docs: 'components/filter.html', check(context) {
+        context.find('[data-filter-items]:not([data-nds-filter-initialized])').forEach(el =>
+            context.report(el, 'data-filter-items container never claimed by a filter — it stays skeleton-held.', 'Remove the attribute or add the filter UI.'));
     } });
 
-    rule({ id: 'filter-no-target', severity: 'error', docs: 'components/filter.html', check(ctx) {
-        ctx.find('.nds-filter:not([data-filter-target])').forEach(el =>
-            ctx.report(el, '.nds-filter has no data-filter-target — no filter instance binds it, so its options never render and its criteria go nowhere.', 'Add data-filter-target="<results container id>".'));
+    addRule({ id: 'filter-no-target', severity: 'error', docs: 'components/filter.html', check(context) {
+        context.find('.nds-filter:not([data-filter-target])').forEach(el =>
+            context.report(el, '.nds-filter has no data-filter-target — no filter instance binds it, so its options never render and its criteria go nowhere.', 'Add data-filter-target="<results container id>".'));
     } });
 
-    rule({ id: 'paged-no-nav', severity: 'error', docs: 'components/pagination.html', check(ctx) {
-        ctx.find('.nds-paged-content:not([data-paged-initialized])').forEach(el =>
-            ctx.report(el, '.nds-paged-content has no pagination nav — it stays skeleton-held and its data-paged-* slots never stamp.', 'Unpaged lists use a plain container + data-filter-count.'));
+    addRule({ id: 'paged-no-nav', severity: 'error', docs: 'components/pagination.html', check(context) {
+        context.find('.nds-paged-content:not([data-paged-initialized])').forEach(el =>
+            context.report(el, '.nds-paged-content has no pagination nav — it stays skeleton-held and its data-paged-* slots never stamp.', 'Unpaged lists use a plain container + data-filter-count.'));
     } });
 
-    rule({ id: 'icon-unregistered', severity: 'error', docs: 'foundations/icons.html', check(ctx) {
-        ctx.find('i.nds-icon[class*="nds-hgi-"]').forEach(el => {
+    addRule({ id: 'icon-unregistered', severity: 'error', docs: 'foundations/icons.html', check(context) {
+        context.find('i.nds-icon[class*="nds-hgi-"]').forEach(el => {
             // An unknown name leaves --nds-icon unset, and the mask falls back to transparent.
             if (getComputedStyle(el).getPropertyValue('--nds-icon').trim()) return;
-            const cls = [...el.classList].find(c => c.startsWith('nds-hgi-'));
-            ctx.report(el, `inline icon "${cls}" is not in the registered set and paints nothing.`, `Use the HGI font class: <i class="hgi hgi-stroke ${cls.replace('nds-', '')}">`);
+            const cls = [...el.classList].find(className => className.startsWith('nds-hgi-'));
+            context.report(el, `inline icon "${cls}" is not in the registered set and paints nothing.`, `Use the HGI font class: <i class="hgi hgi-stroke ${cls.replace('nds-', '')}">`);
         });
     } });
 
     // A font icon whose name the HGI sheet lacks gets no ::before glyph, so it paints nothing.
-    rule({ id: 'font-icon-unknown', severity: 'error', docs: 'foundations/icons.html', check(ctx) {
-        if (![...document.querySelectorAll('link[href*="hgi-rounded-stroke-min.css"]')].some(l => l.sheet)) return;
-        const bad = ctx.find('i.hgi[class*="hgi-"]').filter(el => {
-            const c = getComputedStyle(el, '::before').content;
-            return !c || c === 'none' || c === 'normal';
+    addRule({ id: 'font-icon-unknown', severity: 'error', docs: 'foundations/icons.html', check(context) {
+        if (![...document.querySelectorAll('link[href*="hgi-rounded-stroke-min.css"]')].some(link => link.sheet)) return;
+        const bad = context.find('i.hgi[class*="hgi-"]').filter(el => {
+            const content = getComputedStyle(el, '::before').content;
+            return !content || content === 'none' || content === 'normal';
         });
         if (bad.length) {
-            const name = [...bad[0].classList].find(c => c.startsWith('hgi-') && c !== 'hgi-stroke') || bad[0].className;
-            ctx.report(bad[0], `font icon "${name}" is not in the HGI stroke rounded set, so it shows nothing${bad.length > 1 ? ` (${bad.length} icons; the first is shown)` : ''}.`,
+            const name = [...bad[0].classList].find(className => className.startsWith('hgi-') && className !== 'hgi-stroke') || bad[0].className;
+            context.report(bad[0], `font icon "${name}" is not in the HGI stroke rounded set, so it shows nothing${bad.length > 1 ? ` (${bad.length} icons; the first is shown)` : ''}.`,
                 'Pick a name from the HGI stroke rounded set, written as <i class="hgi hgi-stroke hgi-…">.', undefined, bad.length);
         }
     } });
@@ -349,27 +349,27 @@
     // one warning per link: an href that resolves to this page, or
     // aria-current without the token. A page genuinely absent from the nav
     // fires neither — silence is correct there, not a miss.
-    const normalizePath = (p) => p.replace(/\/index\.html$/, '/');
-    rule({ id: 'nav-current', docs: 'ui-shell/main-nav.html', check(ctx) {
+    const normalizePath = (path) => path.replace(/\/index\.html$/, '/');
+    addRule({ id: 'nav-current', docs: 'ui-shell/main-nav.html', check(context) {
         const here = normalizePath(location.pathname);
-        ctx.find('.nds-main-nav .nds-nav-primary a.nds-nav-link').forEach(a => {
-            if (a.matches('[data-state~="current"]')) return;
-            const href = a.getAttribute('href');
+        context.find('.nds-main-nav .nds-nav-primary a.nds-nav-link').forEach(link => {
+            if (link.matches('[data-state~="current"]')) return;
+            const href = link.getAttribute('href');
             let samePage = false;
             if (href && href !== '#' && !href.startsWith('javascript:')) {
                 // A hash router serves every route from one pathname, so the hash is
                 // the route — without it every nav link reads as the current page.
                 try {
-                    const u = new URL(a.href);
-                    samePage = normalizePath(u.pathname) === here && (!u.hash || u.hash === location.hash);
+                    const url = new URL(link.href);
+                    samePage = normalizePath(url.pathname) === here && (!url.hash || url.hash === location.hash);
                 } catch (e) { /* opaque href — skip */ }
             }
-            const ariaCurrent = a.getAttribute('aria-current') === 'page';
+            const ariaCurrent = link.getAttribute('aria-current') === 'page';
             if (!samePage && !ariaCurrent) return;
-            if (a.matches('[data-state~="active"]')) {
-                ctx.report(a, 'current-page nav link uses data-state="active" — the main navigation marks the current page with "current" only.', 'Use data-state="current".');
+            if (link.matches('[data-state~="active"]')) {
+                context.report(link, 'current-page nav link uses data-state="active" — the main navigation marks the current page with "current" only.', 'Use data-state="current".');
             } else {
-                ctx.report(a, `this nav link ${samePage ? 'points at the current page' : 'carries aria-current="page"'} but has no data-state="current" — the current-page highlight never renders.`, `Add data-state="current"${ariaCurrent ? '' : ' and aria-current="page"'}.`);
+                context.report(link, `this nav link ${samePage ? 'points at the current page' : 'carries aria-current="page"'} but has no data-state="current" — the current-page highlight never renders.`, `Add data-state="current"${ariaCurrent ? '' : ' and aria-current="page"'}.`);
             }
         });
     } });
@@ -386,49 +386,49 @@
         'data-print-target': 'utilities/print.html',
     };
     // A template-held modal or panel is real: NDS.fromTemplate moves it in on first open.
-    const inTemplate = (id) => [...document.querySelectorAll('template')].some(t => t.content.getElementById(id));
-    const resolves = (attr, v) => !!NDS.resolveEl(v) || inTemplate(v.replace(/^#/, ''))
-        || (attr === 'data-voice-target' && !!document.querySelector(`[name="${CSS.escape(v)}"]`));
-    rule({ id: 'id-reference', severity: 'error', check(ctx) {
-        for (const attr in refs) {
-            ctx.find(`[${attr}]`).forEach(el => {
-                const v = el.getAttribute(attr).trim();
+    const isInTemplate = (id) => [...document.querySelectorAll('template')].some(template => template.content.getElementById(id));
+    const isResolved = (attribute, value) => !!NDS.resolveEl(value) || isInTemplate(value.replace(/^#/, ''))
+        || (attribute === 'data-voice-target' && !!document.querySelector(`[name="${CSS.escape(value)}"]`));
+    addRule({ id: 'id-reference', severity: 'error', check(context) {
+        for (const attribute in refs) {
+            context.find(`[${attribute}]`).forEach(el => {
+                const value = el.getAttribute(attribute).trim();
                 // An empty data-auto-pagination uses the container right before the nav.
-                if (!v || resolves(attr, v)) return;
-                ctx.report(el, `${attr}="${v}" names no element on the page — the component it wires does nothing.`, `Give the element id="${v.replace(/^#/, '')}", or fix the value. See ${DOCS}${refs[attr]}`);
+                if (!value || isResolved(attribute, value)) return;
+                context.report(el, `${attribute}="${value}" names no element on the page — the component it wires does nothing.`, `Give the element id="${value.replace(/^#/, '')}", or fix the value. See ${DOCS}${refs[attribute]}`);
             });
         }
     } });
 
     // A screen reader announces the link to nothing, and a table sub-row toggle opens nothing.
-    rule({ id: 'aria-controls', check(ctx) {
-        ctx.find('[aria-controls]').forEach(el => {
+    addRule({ id: 'aria-controls', check(context) {
+        context.find('[aria-controls]').forEach(el => {
             const missing = el.getAttribute('aria-controls').trim().split(/\s+/)
-                .filter(id => id && !document.getElementById(id) && !inTemplate(id));
-            if (missing.length) ctx.report(el, `aria-controls="${missing.join(' ')}" names no element on the page.`, 'Give the controlled element that id, or remove the attribute.');
+                .filter(id => id && !document.getElementById(id) && !isInTemplate(id));
+            if (missing.length) context.report(el, `aria-controls="${missing.join(' ')}" names no element on the page.`, 'Give the controlled element that id, or remove the attribute.');
         });
     } });
 
     // getElementById, a label's for and every data-*-target reach only the first of two.
     // SVG ids are left out: an inline logo used twice repeats its gradient ids.
-    rule({ id: 'id-duplicate', severity: 'error', check(ctx) {
+    addRule({ id: 'id-duplicate', severity: 'error', check(context) {
         const byId = new Map();
-        ctx.find('[id]').forEach(el => {
+        context.find('[id]').forEach(el => {
             if (el.closest('svg')) return;
             byId.set(el.id, (byId.get(el.id) || []).concat(el));
         });
-        byId.forEach((els, id) => {
-            if (els.length > 1) ctx.report(els[1], `id="${id}" is on ${els.length} elements: a lookup by id reaches only the first, ${els[0].tagName.toLowerCase()}.`, 'Give each element its own id, and point each reference at the one it means.', undefined, els.length);
+        byId.forEach((elements, id) => {
+            if (elements.length > 1) context.report(elements[1], `id="${id}" is on ${elements.length} elements: a lookup by id reaches only the first, ${elements[0].tagName.toLowerCase()}.`, 'Give each element its own id, and point each reference at the one it means.', undefined, elements.length);
         });
     } });
 
     // Markup sort wires a list no other sorter owns: a Filter or a Table sorts its own,
     // and the button is left unbound.
-    rule({ id: 'sort-target-owned', docs: 'components/sort.html', check(ctx) {
-        ctx.find('[data-sort-target]').forEach(btn => {
-            const list = document.getElementById(btn.getAttribute('data-sort-target'));
-            if (list && (list.closest('.nds-table') || (list.ndsSort && !list.ndsSort._markup))) {
-                ctx.report(btn, `data-sort-target="${list.id}" names a list a Filter or a Table already sorts — this button does nothing.`, "Use data-filter-target on a Filter's sort button, or the table's header sort buttons.");
+    addRule({ id: 'sort-target-owned', docs: 'components/sort.html', check(context) {
+        context.find('[data-sort-target]').forEach(btn => {
+            const formatList = document.getElementById(btn.getAttribute('data-sort-target'));
+            if (formatList && (formatList.closest('.nds-table') || (formatList.ndsSort && !formatList.ndsSort._markup))) {
+                context.report(btn, `data-sort-target="${formatList.id}" names a list a Filter or a Table already sorts — this button does nothing.`, "Use data-filter-target on a Filter's sort button, or the table's header sort buttons.");
             }
         });
     } });
@@ -436,9 +436,9 @@
     // The stepper hands off a submit-typed control (see its banner), so the
     // attribute is inert here — the author expects a move that never comes.
     // `button` with no type IS submit-typed inside a form.
-    rule({ id: 'stepper-submit', docs: 'components/stepper.html', check(ctx) {
-        ctx.find('form :is(button:not([type="button"]):not([type="reset"]), input[type="submit"])[data-stepper-control]').forEach(el =>
-            ctx.report(el, 'submit-typed button with data-stepper-control — the stepper hands this click to the form and does not move, so the attribute does nothing.', 'A form step is gated, so drive it from JS: call NDS.Stepper.next() after NDS.Form.validate() passes, or from nds:form:valid once your request succeeds.'));
+    addRule({ id: 'stepper-submit', docs: 'components/stepper.html', check(context) {
+        context.find('form :is(button:not([type="button"]):not([type="reset"]), input[type="submit"])[data-stepper-control]').forEach(el =>
+            context.report(el, 'submit-typed button with data-stepper-control — the stepper hands this click to the form and does not move, so the attribute does nothing.', 'A form step is gated, so drive it from JS: call NDS.Stepper.next() after NDS.Form.validate() passes, or from nds:form:valid once your request succeeds.'));
     } });
 
     // ── migration ────────────────────────────────────────────────────
@@ -447,65 +447,65 @@
     const rows = migrations.map(([kind, name, scope, status, use, since, fix, inert]) =>
         ({ kind, name, scope: scope || null, status, use: use || null, since, fix: fix || (use ? `Use ${use}.` : ''), inert: !!inert }));
     const byKind = {};
-    rows.forEach(r => ((byKind[r.kind] ||= new Map()).get(r.name) || byKind[r.kind].set(r.name, []).get(r.name)).push(r));
+    rows.forEach(row => ((byKind[row.kind] ||= new Map()).get(row.name) || byKind[row.kind].set(row.name, []).get(row.name)).push(row));
     const severityByKind = { renamed: 'error', removed: 'error', deprecated: 'warn' };
     const label = { class: 'class', attribute: 'attribute', property: 'property', id: 'id', global: 'window setting' };
-    const say = (r, inCss) => {
-        const what = `${label[r.kind]} "${r.name}"`;
-        if (r.status === 'deprecated') return `${what} is deprecated since ${r.since}: it still works, until the next major release.`;
-        if (inCss) return `${what} was ${r.status} in ${r.since}.`;
-        const effect = r.kind === 'global' ? 'NDS no longer reads it' : 'this part gets no NDS style or behavior';
-        return `${what} was ${r.status} in ${r.since}, so ${effect}.`;
+    const say = (row, inCss) => {
+        const what = `${label[row.kind]} "${row.name}"`;
+        if (row.status === 'deprecated') return `${what} is deprecated since ${row.since}: it still works, until the next major release.`;
+        if (inCss) return `${what} was ${row.status} in ${row.since}.`;
+        const effect = row.kind === 'global' ? 'NDS no longer reads it' : 'this part gets no NDS style or behavior';
+        return `${what} was ${row.status} in ${row.since}, so ${effect}.`;
     };
     // A name NDS never read had no effect when set, so it is a note, not a break.
-    const reportRow = (ctx, r, el, msg, inert, count) => ctx.report(el, msg,
-        inert ? `${r.fix} Setting the old name never had an effect.` : r.fix, inert ? 'info' : severityByKind[r.status], count);
+    const reportRow = (context, row, el, message, inert, count) => context.report(el, message,
+        inert ? `${row.fix} Setting the old name never had an effect.` : row.fix, inert ? 'info' : severityByKind[row.status], count);
     // A leading & tests the element itself; any other scope, the element or an ancestor.
-    const inScope = (el, scope) => !scope || (scope[0] === '&' ? el.matches(scope.slice(1)) : !!el.closest(scope));
+    const isInScope = (el, scope) => !scope || (scope[0] === '&' ? el.matches(scope.slice(1)) : !!el.closest(scope));
 
     // The site's own sheets: NDS's carry the deprecated aliases on purpose, and a cross-origin
     // sheet throws on cssRules.
     const OWN = /\/(nds[-.][\w.-]*|hgi-[\w-]*)\.css(\?|#|$)|\/docs-assets\//;
     // NDS's inline <style>s: an event pack's sheet, the docs site's, and the head's fold copy.
     // ponytail: the fold is known by its topbar reservation; mark the tag if that ever moves.
-    const ownStyle = (n) => n?.tagName === 'STYLE' && (n.hasAttribute('data-nds-event-style') || n.hasAttribute('data-nds-doc') || n.textContent.includes(':where(.nds-topbar)'));
+    const isOwnStyle = (node) => node?.tagName === 'STYLE' && (node.hasAttribute('data-nds-event-style') || node.hasAttribute('data-nds-doc') || node.textContent.includes(':where(.nds-topbar)'));
     const walkRules = (sheet, fn) => {
-        const walk = (list) => { for (const r of list) { if (r.selectorText) fn(r); if (r.cssRules) walk(r.cssRules); } };
+        const walk = (formatList) => { for (const cssRule of formatList) { if (cssRule.selectorText) fn(cssRule); if (cssRule.cssRules) walk(cssRule.cssRules); } };
         try { walk(sheet.cssRules); return true; } catch (e) { return false; /* cross-origin */ }
     };
-    function siteRules() {
+    function getSiteRules() {
         const out = [];
         for (const sheet of document.styleSheets) {
-            if ((sheet.href && OWN.test(sheet.href)) || ownStyle(sheet.ownerNode)) continue;
+            if ((sheet.href && OWN.test(sheet.href)) || isOwnStyle(sheet.ownerNode)) continue;
             const where = sheet.href || 'an inline <style>';
-            walkRules(sheet, r => out.push({ sel: r.selectorText, style: r.style, where }));
+            walkRules(sheet, cssRule => out.push({ sel: cssRule.selectorText, style: cssRule.style, where }));
         }
         return out;
     }
 
     // A selector list split at its top-level commas only: :is(a, b) stays one item.
-    const selItems = (sel) => {
+    const splitSelectors = (selector) => {
         const out = [];
         let depth = 0, from = 0;
-        for (let i = 0; i < sel.length; i++) {
-            const c = sel[i];
-            if (c === '(' || c === '[') depth++;
-            else if (c === ')' || c === ']') depth--;
-            else if (c === ',' && !depth) { out.push(sel.slice(from, i).trim()); from = i + 1; }
+        for (let i = 0; i < selector.length; i++) {
+            const char = selector[i];
+            if (char === '(' || char === '[') depth++;
+            else if (char === ')' || char === ']') depth--;
+            else if (char === ',' && !depth) { out.push(selector.slice(from, i).trim()); from = i + 1; }
         }
-        out.push(sel.slice(from).trim());
+        out.push(selector.slice(from).trim());
         return out;
     };
     const DARK_MODE = /^:root\[data-theme~?="dark"\]/;
     const DARK_AREA = /\[data-theme~?="dark"\]:not\(:root\)/;
     const STATE = /^(--[\w-]+)-(default|hovered|pressed|selected|focused|disabled)$/;
-    const customOnly = (style) => [...style].every(p => p.startsWith('--'));
+    const isCustomOnly = (style) => [...style].every(property => property.startsWith('--'));
     // The site's selectors that pick keeps, by sheet. A rule that only sets custom properties restyles nothing.
-    const selectorsBySheet = (pick) => {
+    const collectSelectorsBySheet = (pick) => {
         const bySheet = new Map();
-        for (const { sel, style, where } of siteRules()) {
-            if (customOnly(style)) continue;
-            const kept = selItems(sel).filter(pick);
+        for (const { sel: selector, style, where } of getSiteRules()) {
+            if (isCustomOnly(style)) continue;
+            const kept = splitSelectors(selector).filter(pick);
             if (kept.length) (bySheet.get(where) || bySheet.set(where, []).get(where)).push(...kept);
         }
         return bySheet;
@@ -514,151 +514,151 @@
     // What NDS's own sheets declare: their classes, the nds- classes of each selector, and the tokens
     // at :root in light mode, in dark mode, and with the dark-area selector. null when the sheets
     // come from another origin.
-    function ndsSheets() {
+    function readNdsSheets() {
         const nds = { classes: new Set(), items: [], light: new Set(), dark: new Set(), area: new Set() };
         let readable = false;
         for (const sheet of document.styleSheets) {
             if (!sheet.href || !OWN.test(sheet.href)) continue;
-            readable = walkRules(sheet, r => {
-                const it = selItems(r.selectorText);
-                for (const s of it) {
-                    const cls = new Set([...s.matchAll(/\.(nds-[\w-]+)/g)].map(m => m[1]));
-                    if (cls.size) { nds.items.push(cls); cls.forEach(c => nds.classes.add(c)); }
+            readable = walkRules(sheet, cssRule => {
+                const it = splitSelectors(cssRule.selectorText);
+                for (const selector of it) {
+                    const cls = new Set([...selector.matchAll(/\.(nds-[\w-]+)/g)].map(match => match[1]));
+                    if (cls.size) { nds.items.push(cls); cls.forEach(className => nds.classes.add(className)); }
                 }
-                const dark = it.some(s => DARK_MODE.test(s)), root = it.includes(':root'), area = it.some(s => DARK_AREA.test(s));
+                const dark = it.some(selector => DARK_MODE.test(selector)), root = it.includes(':root'), area = it.some(selector => DARK_AREA.test(selector));
                 if (!dark && !root) return;
-                for (const p of r.style) if (p.startsWith('--')) { nds[dark ? 'dark' : 'light'].add(p); if (area) nds.area.add(p); }
+                for (const property of cssRule.style) if (property.startsWith('--')) { nds[dark ? 'dark' : 'light'].add(property); if (area) nds.area.add(property); }
             }) || readable;
         }
         return readable ? nds : null;
     }
-    const isToken = (nds, p) => nds.light.has(p) || nds.dark.has(p);
+    const isToken = (nds, property) => nds.light.has(property) || nds.dark.has(property);
 
     // A site sheet before the NDS one loses every tie with it, so its overrides of NDS do nothing.
-    rule({ id: 'css-order', group: 'page', docs: 'foundations/tokens.html', check(ctx) {
+    addRule({ id: 'css-order', group: 'page', docs: 'foundations/tokens.html', check(context) {
         const main = document.querySelector('link[rel="stylesheet"][href*="nds-main"]');
-        const nds = main && ndsSheets();
+        const nds = main && readNdsSheets();
         if (!nds) return;
         for (const sheet of document.styleSheets) {
-            const n = sheet.ownerNode;
-            if (!n || (sheet.href && OWN.test(sheet.href)) || ownStyle(n) || !(main.compareDocumentPosition(n) & Node.DOCUMENT_POSITION_PRECEDING)) continue;
+            const node = sheet.ownerNode;
+            if (!node || (sheet.href && OWN.test(sheet.href)) || isOwnStyle(node) || !(main.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_PRECEDING)) continue;
             let touches = false;
-            walkRules(sheet, r => { touches ||= /\.nds-/.test(r.selectorText) || [...r.style].some(p => isToken(nds, p)); });
-            if (touches) ctx.report(n, `${sheet.href || 'an inline <style>'} styles NDS but loads before the NDS stylesheet, so NDS wins every tie and the override does nothing.`,
+            walkRules(sheet, cssRule => { touches ||= /\.nds-/.test(cssRule.selectorText) || [...cssRule.style].some(property => isToken(nds, property)); });
+            if (touches) context.report(node, `${sheet.href || 'an inline <style>'} styles NDS but loads before the NDS stylesheet, so NDS wins every tie and the override does nothing.`,
                 'Load it after the NDS stylesheet.');
         }
     } });
 
     // An override is the last resort, and it names a project hook so it never restyles NDS everywhere.
-    rule({ id: 'nds-restyle', group: 'page', docs: 'foundations/tokens.html', check(ctx) {
+    addRule({ id: 'nds-restyle', group: 'page', docs: 'foundations/tokens.html', check(context) {
         // A project class, an id, or a data-* that is not an NDS state names the site's own scope.
-        selectorsBySheet(s => /\.(nds|hgi)-/.test(s) && !/\.(?!nds-|hgi-)-?[_a-zA-Z]|#|\[data-(?!state|status|theme|nds-)/.test(s)).forEach((sels, where) => ctx.report(null,
-            `${where} restyles NDS classes with no project class in the selector (${[...new Set(sels)].slice(0, 3).join(', ')}${sels.length > 3 ? ', …' : ''}): ${sels.length} selector${sels.length > 1 ? 's' : ''}.`,
-            'Use the component\'s knobs or a token. When an override is the only way, scope it under a project class or data-* attribute, and comment why.', undefined, sels.length));
+        collectSelectorsBySheet(selector => /\.(nds|hgi)-/.test(selector) && !/\.(?!nds-|hgi-)-?[_a-zA-Z]|#|\[data-(?!state|status|theme|nds-)/.test(selector)).forEach((selectors, where) => context.report(null,
+            `${where} restyles NDS classes with no project class in the selector (${[...new Set(selectors)].slice(0, 3).join(', ')}${selectors.length > 3 ? ', …' : ''}): ${selectors.length} selector${selectors.length > 1 ? 's' : ''}.`,
+            'Use the component\'s knobs or a token. When an override is the only way, scope it under a project class or data-* attribute, and comment why.', undefined, selectors.length));
     } });
 
     // A site rule on bare tags (body, h1, a, input) reaches every NDS element on the page.
-    rule({ id: 'global-element-css', group: 'page', check(ctx) {
-        selectorsBySheet(s => !/[.#]|\[(data-|class|id)\b|:root/.test(s)).forEach((sels, where) => ctx.report(null,
-            `${where} styles bare elements (${[...new Set(sels)].slice(0, 4).join(', ')}${sels.length > 4 ? ', …' : ''}): ${sels.length} selector${sels.length > 1 ? 's' : ''} that reach${sels.length > 1 ? '' : 'es'} every NDS element on the page.`,
-            'Scope them under a project class, or keep the sheet off NDS pages.', undefined, sels.length));
+    addRule({ id: 'global-element-css', group: 'page', check(context) {
+        collectSelectorsBySheet(selector => !/[.#]|\[(data-|class|id)\b|:root/.test(selector)).forEach((selectors, where) => context.report(null,
+            `${where} styles bare elements (${[...new Set(selectors)].slice(0, 4).join(', ')}${selectors.length > 4 ? ', …' : ''}): ${selectors.length} selector${selectors.length > 1 ? 's' : ''} that reach${selectors.length > 1 ? '' : 'es'} every NDS element on the page.`,
+            'Scope them under a project class, or keep the sheet off NDS pages.', undefined, selectors.length));
     } });
 
     // A token override follows the tokens doc: every state of a family, a dark value when NDS has one,
     // and the dark-area selector on both rules. Judged only when NDS's own sheets are readable.
-    rule({ id: 'token-dark', group: 'page', docs: 'foundations/tokens.html', check(ctx) {
-        const nds = ndsSheets();
+    addRule({ id: 'token-dark', group: 'page', docs: 'foundations/tokens.html', check(context) {
+        const nds = readNdsSheets();
         if (!nds) return;
         const set = new Map();   // name → { light, dark, lightArea, darkArea }
-        for (const { sel, style } of siteRules()) {
-            const it = selItems(sel);
-            const dark = it.some(s => DARK_MODE.test(s)), root = it.includes(':root'), area = it.some(s => DARK_AREA.test(s));
+        for (const { sel: selector, style } of getSiteRules()) {
+            const it = splitSelectors(selector);
+            const dark = it.some(selector => DARK_MODE.test(selector)), root = it.includes(':root'), area = it.some(selector => DARK_AREA.test(selector));
             if (!dark && !root) continue;
-            for (const p of style) {
-                if (!isToken(nds, p)) continue;
-                const s = set.get(p) || set.set(p, {}).get(p);
-                if (dark) { s.dark = true; s.darkArea ||= area; } else { s.light = true; s.lightArea ||= area; }
+            for (const property of style) {
+                if (!isToken(nds, property)) continue;
+                const state = set.get(property) || set.set(property, {}).get(property);
+                if (dark) { state.dark = true; state.darkArea ||= area; } else { state.light = true; state.lightArea ||= area; }
             }
         }
-        const list = (names) => names.slice(0, 5).join(', ') + (names.length > 5 ? ` and ${names.length - 5} more` : '');
-        const noDark = [...set].filter(([p, s]) => s.light && !s.dark && nds.dark.has(p)).map(([p]) => p);
-        if (noDark.length) ctx.report(null, `token override with no dark value: ${list(noDark)}. Dark mode shows the NDS value.`,
+        const formatList = (names) => names.slice(0, 5).join(', ') + (names.length > 5 ? ` and ${names.length - 5} more` : '');
+        const noDark = [...set].filter(([property, state]) => state.light && !state.dark && nds.dark.has(property)).map(([property]) => property);
+        if (noDark.length) context.report(null, `token override with no dark value: ${formatList(noDark)}. Dark mode shows the NDS value.`,
             'Add a dark rule for each, as the tokens doc\'s Override Scope shows.', undefined, noDark.length);
         if (document.querySelector('[data-theme~="dark"]:not(html)')) {
-            const noArea = [...set].filter(([p, s]) => nds.area.has(p) && ((s.light && !s.lightArea) || (s.dark && !s.darkArea))).map(([p]) => p);
-            if (noArea.length) ctx.report(null, `token override that skips dark areas: ${list(noArea)}. A dark area declares every token again, so it keeps the NDS value.`,
+            const noArea = [...set].filter(([property, state]) => nds.area.has(property) && ((state.light && !state.lightArea) || (state.dark && !state.darkArea))).map(([property]) => property);
+            if (noArea.length) context.report(null, `token override that skips dark areas: ${formatList(noArea)}. A dark area declares every token again, so it keeps the NDS value.`,
                 'List [data-theme~="dark"]:not(:root) in both override rules, as the tokens doc\'s Override Scope shows.', undefined, noArea.length);
         }
         const missing = [];
-        set.forEach((s, p) => {
-            const m = p.match(STATE);
-            if (!m) return;
+        set.forEach((state, property) => {
+            const match = property.match(STATE);
+            if (!match) return;
             for (const st of ['default', 'hovered', 'pressed', 'selected', 'focused', 'disabled']) {
-                const sib = `${m[1]}-${st}`;
+                const sib = `${match[1]}-${st}`;
                 if (nds.light.has(sib) && !set.has(sib) && !missing.includes(sib)) missing.push(sib);
             }
         });
-        if (missing.length) ctx.report(null, `token override sets part of a state family: ${list(missing)} still hold the NDS value, so the states no longer match.`,
+        if (missing.length) context.report(null, `token override sets part of a state family: ${formatList(missing)} still hold the NDS value, so the states no longer match.`,
             'Set every state of the family.', undefined, missing.length);
     } });
     // Generic classes the site styles itself are the site's own (a Tailwind .sr-only). An nds- or hgi- name never is.
-    const siteClasses = (sheetRules) => new Set(sheetRules.flatMap(r => (r.sel.match(/\.(-?[_a-zA-Z][\w-]*)/g) || []).map(c => c.slice(1)))
-        .filter(c => !/^(nds|hgi)-/.test(c)));
+    const getSiteClasses = (sheetRules) => new Set(sheetRules.flatMap(cssRule => (cssRule.sel.match(/\.(-?[_a-zA-Z][\w-]*)/g) || []).map(className => className.slice(1)))
+        .filter(className => !/^(nds|hgi)-/.test(className)));
 
-    rule({ id: 'migration-markup', group: 'migration', check(ctx) {
+    addRule({ id: 'migration-markup', group: 'migration', check(context) {
         if (!rows.length) return;
-        const own = siteClasses(siteRules());
+        const own = getSiteClasses(getSiteRules());
         const hits = new Map();   // row → elements
-        const hit = (r, el) => (hits.get(r) || hits.set(r, []).get(r)).push(el);
+        const hit = (row, el) => (hits.get(row) || hits.set(row, []).get(row)).push(el);
         // A property name is specific enough on its own: its scope only says where it applied.
-        const look = (kind, name, el) => (byKind[kind]?.get(name) || []).forEach(r => { if (kind === 'property' || inScope(el, r.scope)) hit(r, el); });
+        const look = (kind, name, el) => (byKind[kind]?.get(name) || []).forEach(row => { if (kind === 'property' || isInScope(el, row.scope)) hit(row, el); });
         // A <template>'s content too: a custom panel (Accessibility) waits there until it opens.
-        const tpl = [...document.querySelectorAll('template')].flatMap(t => [...t.content.querySelectorAll('*')]);
-        for (const el of [...ctx.find('body *, body'), ...tpl]) {
-            for (const c of el.classList) if (!own.has(c)) look('class', c, el);
-            for (const a of el.attributes) if (a.name !== 'class' && a.name !== 'style') look('attribute', a.name, el);
+        const templateNodes = [...document.querySelectorAll('template')].flatMap(template => [...template.content.querySelectorAll('*')]);
+        for (const el of [...context.find('body *, body'), ...templateNodes]) {
+            for (const className of el.classList) if (!own.has(className)) look('class', className, el);
+            for (const attribute of el.attributes) if (attribute.name !== 'class' && attribute.name !== 'style') look('attribute', attribute.name, el);
             if (el.id) look('id', el.id, el);
             const style = el.getAttribute('style');
-            if (style && style.includes('--')) for (const [, p] of style.matchAll(/(--[\w-]+)\s*:/g)) look('property', p, el);
+            if (style && style.includes('--')) for (const [, property] of style.matchAll(/(--[\w-]+)\s*:/g)) look('property', property, el);
         }
         // A window setting NDS read before: set by a script that runs before NDS.
-        byKind.global?.forEach((rs, name) => { if (name in window) rs.forEach(r => hit(r, null)); });
-        hits.forEach((els, r) => reportRow(ctx, r, els[0],
-            say(r) + (els.length > 1 ? ` (${els.length} elements; the first is shown)` : ''), r.inert, els.length));
+        byKind.global?.forEach((rs, name) => { if (name in window) rs.forEach(row => hit(row, null)); });
+        hits.forEach((elements, row) => reportRow(context, row, elements[0],
+            say(row) + (elements.length > 1 ? ` (${elements.length} elements; the first is shown)` : ''), row.inert, elements.length));
     } });
 
-    rule({ id: 'migration-css', group: 'migration', check(ctx) {
+    addRule({ id: 'migration-css', group: 'migration', check(context) {
         if (!rows.length) return;
         const hits = new Map();   // row + sheet → { rule selectors, read }
-        const hit = (r, where, sel, read) => {
-            const k = r.kind + r.name + '\n' + where;
-            const h = hits.get(k) || hits.set(k, { r, where, sels: new Set(), read: false }).get(k);
-            h.sels.add(sel); h.read ||= read;
+        const hit = (row, where, selector, read) => {
+            const key = row.kind + row.name + '\n' + where;
+            const record = hits.get(key) || hits.set(key, { r: row, where, sels: new Set(), read: false }).get(key);
+            record.sels.add(selector); record.read ||= read;
         };
         // A scoped name only counts when the same selector names its scope's class too. A scope
         // with no class (body, &[data-cooldown]) leaves an nds- or data- name to stand alone; a
         // generic one (.sr-only, .hidden) may be the site's own.
-        const scoped = (r, sel) => {
+        const isScoped = (row, selector) => {
             // A class that only changed element (div.nds-modal, aside.nds-panel → <dialog>) is still right in CSS.
-            if (r.kind === 'class' && /^&(?:[a-z]+|:not\([a-z]+\))$/.test(r.scope || '')) return false;
-            const cls = r.scope && r.scope.match(/\.[\w-]+/g);
-            return !r.scope || (cls ? cls.some(c => sel.includes(c)) : /^(nds|data)-/.test(r.name));
+            if (row.kind === 'class' && /^&(?:[a-z]+|:not\([a-z]+\))$/.test(row.scope || '')) return false;
+            const cls = row.scope && row.scope.match(/\.[\w-]+/g);
+            return !row.scope || (cls ? cls.some(className => selector.includes(className)) : /^(nds|data)-/.test(row.name));
         };
-        for (const { sel, style, where } of siteRules()) {
-            for (const [, c] of sel.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)) (byKind.class?.get(c) || []).forEach(r => { if (scoped(r, sel)) hit(r, where, sel); });
-            for (const [, a] of sel.matchAll(/\[([\w-]+)/g)) (byKind.attribute?.get(a) || []).forEach(r => { if (scoped(r, sel)) hit(r, where, sel); });
-            for (const [, i] of sel.matchAll(/#([\w-]+)/g)) (byKind.id?.get(i) || []).forEach(r => hit(r, where, sel));
+        for (const { sel: selector, style, where } of getSiteRules()) {
+            for (const [, className] of selector.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)) (byKind.class?.get(className) || []).forEach(row => { if (isScoped(row, selector)) hit(row, where, selector); });
+            for (const [, attribute] of selector.matchAll(/\[([\w-]+)/g)) (byKind.attribute?.get(attribute) || []).forEach(row => { if (isScoped(row, selector)) hit(row, where, selector); });
+            for (const [, i] of selector.matchAll(/#([\w-]+)/g)) (byKind.id?.get(i) || []).forEach(row => hit(row, where, selector));
             for (let i = 0; i < style.length; i++) {
-                const p = style[i];
-                if (p.startsWith('--')) (byKind.property?.get(p) || []).forEach(r => hit(r, where, sel, false));
+                const property = style[i];
+                if (property.startsWith('--')) (byKind.property?.get(property) || []).forEach(row => hit(row, where, selector, false));
             }
-            for (const [, p] of style.cssText.matchAll(/var\(\s*(--[\w-]+)/g)) (byKind.property?.get(p) || []).forEach(r => hit(r, where, sel, true));
+            for (const [, property] of style.cssText.matchAll(/var\(\s*(--[\w-]+)/g)) (byKind.property?.get(property) || []).forEach(row => hit(row, where, selector, true));
         }
-        hits.forEach(({ r, where, sels, read }) => {
-            const first = [...sels][0];
-            const msg = `${say(r, true)} Your CSS uses it in ${where}: ${first}${sels.size > 1 ? ` and ${sels.size - 1} more rules` : ''}.`;
+        hits.forEach(({ r: row, where, sels: selectors, read }) => {
+            const first = [...selectors][0];
+            const message = `${say(row, true)} Your CSS uses it in ${where}: ${first}${selectors.size > 1 ? ` and ${selectors.size - 1} more rules` : ''}.`;
             // Reading a gone property gets nothing, even one NDS never read.
-            reportRow(ctx, r, null, msg, r.inert && !read, sels.size);
+            reportRow(context, row, null, message, row.inert && !read, selectors.size);
         });
     } });
 
@@ -667,199 +667,199 @@
 
     // An nds- class that no NDS sheet, doc or script has is invented markup: it gets nothing.
     // Judged only when NDS's own sheets are readable; an old name is migration-markup's.
-    rule({ id: 'unknown-class', check(ctx) {
-        const nds = ndsSheets();
+    addRule({ id: 'unknown-class', check(context) {
+        const nds = readNdsSheets();
         if (!nds) return;
         const known = new Set([...(anatomy.known || []), ...nds.classes]);
         const hits = new Map();
-        for (const el of ctx.find('[class*="nds-"]')) {
-            for (const c of el.classList) {
-                if (!c.startsWith('nds-') || c.startsWith('nds-hgi-') || known.has(c) || byKind.class?.has(c)) continue;
-                (hits.get(c) || hits.set(c, []).get(c)).push(el);
+        for (const el of context.find('[class*="nds-"]')) {
+            for (const className of el.classList) {
+                if (!className.startsWith('nds-') || className.startsWith('nds-hgi-') || known.has(className) || byKind.class?.has(className)) continue;
+                (hits.get(className) || hits.set(className, []).get(className)).push(el);
             }
         }
-        hits.forEach((els, c) => ctx.report(els[0], `class "${c}" is not an NDS class, so it gets no NDS style or behavior${els.length > 1 ? ` (${els.length} elements; the first is shown)` : ''}.`,
-            'Copy the class from the component\'s canon.', undefined, els.length));
+        hits.forEach((elements, className) => context.report(elements[0], `class "${className}" is not an NDS class, so it gets no NDS style or behavior${elements.length > 1 ? ` (${elements.length} elements; the first is shown)` : ''}.`,
+            'Copy the class from the component\'s canon.', undefined, elements.length));
     } });
 
     // A part outside its component root still renders, but loses what the root gives it. A part
     // NDS also styles on its own is free to stand alone. toolbar-part covers the toolbar.
-    rule({ id: 'part-outside', check(ctx) {
-        const nds = ndsSheets();
+    addRule({ id: 'part-outside', check(context) {
+        const nds = readNdsSheets();
         if (!nds) return;
         for (const [part, root] of Object.entries(anatomy.parts || {})) {
-            if (root === 'nds-toolbar' || nds.items.some(s => s.has(part) && !s.has(root))) continue;
-            const lost = ctx.find('.' + part).filter(el => !el.closest('.' + root));
-            if (lost.length) ctx.report(lost[0], `.${part} outside a .${root}${lost.length > 1 ? ` (${lost.length} elements; the first is shown)` : ''}.`,
+            if (root === 'nds-toolbar' || nds.items.some(classes => classes.has(part) && !classes.has(root))) continue;
+            const lost = context.find('.' + part).filter(el => !el.closest('.' + root));
+            if (lost.length) context.report(lost[0], `.${part} outside a .${root}${lost.length > 1 ? ` (${lost.length} elements; the first is shown)` : ''}.`,
                 `Keep it inside its .${root}, as the canon has it.`, undefined, lost.length);
         }
     } });
 
     // Each component banner's Requires lines: the markup its script needs to work, missing with no warning.
     const require = {
-        'needs': (el, s) => el.matches(s) || !!el.querySelector(s),
-        'needs one': (el, s, per) => el.querySelectorAll(s).length >= el.querySelectorAll(per).length,
-        'sits in': (el, s) => !!el.parentElement?.closest(s),
-        'sits outside': (el, s) => !el.parentElement?.closest(s),
-        'is': (el, s) => el.matches(s),
-        'with': (el, s) => !!document.querySelector(s),
-        'points at': (el, s, attr) => {
-            const t = document.getElementById((el.getAttribute(attr) || '').replace(/^#/, ''));
-            const m = t?.tagName === 'TEMPLATE' ? t.content.firstElementChild : t;
-            return !!m?.matches(s);
+        'needs': (el, selector) => el.matches(selector) || !!el.querySelector(selector),
+        'needs one': (el, selector, per) => el.querySelectorAll(selector).length >= el.querySelectorAll(per).length,
+        'sits in': (el, selector) => !!el.parentElement?.closest(selector),
+        'sits outside': (el, selector) => !el.parentElement?.closest(selector),
+        'is': (el, selector) => el.matches(selector),
+        'with': (el, selector) => !!document.querySelector(selector),
+        'points at': (el, selector, attribute) => {
+            const target = document.getElementById((el.getAttribute(attribute) || '').replace(/^#/, ''));
+            const node = target?.tagName === 'TEMPLATE' ? target.content.firstElementChild : target;
+            return !!node?.matches(selector);
         },
     };
-    rule({ id: 'required-part', severity: 'error', check(ctx) {
+    addRule({ id: 'required-part', severity: 'error', check(context) {
         for (const [name, host, verb, arg, extra, why] of anatomy.requires || []) {
             let missing;
-            try { missing = ctx.find(host).filter(el => !require[verb](el, arg, extra)); } catch (e) { continue; /* a selector this browser cannot parse */ }
+            try { missing = context.find(host).filter(el => !require[verb](el, arg, extra)); } catch (e) { continue; /* a selector this browser cannot parse */ }
             if (!missing.length) continue;
             const need = { 'needs': arg, 'needs one': `one ${arg} per ${extra}`, 'sits in': `a ${arg} around it`, 'sits outside': `no ${arg} around it`,
                 'is': `to be ${arg}`, 'with': `${arg} on the page`, 'points at': `its ${extra} to name a ${arg}` }[verb];
-            ctx.report(missing[0], `${host} needs ${need}: ${why}${missing.length > 1 ? ` (${missing.length} elements; the first is shown)` : ''}.`,
+            context.report(missing[0], `${host} needs ${need}: ${why}${missing.length > 1 ? ` (${missing.length} elements; the first is shown)` : ''}.`,
                 verb === 'sits outside' ? `Move it out of the ${arg}, as the ${name} canon has it.` : `Copy the missing part from the ${name} canon.`, undefined, missing.length);
         }
     } });
 
     // Without nds-icon-only a button keeps its text padding, so an icon-only button renders wider than tall.
     // A full-width bar (nds-full, Show More) is not a square, and a main-nav link takes its size from the nav.
-    rule({ id: 'icon-only-btn', docs: 'components/button.html', check(ctx) {
-        const els = ctx.find('.nds-btn:not(.nds-icon-only, .nds-show-more, .nds-full, .nds-nav-link)')
-            .filter(b => b.querySelector('i, svg, img') && !b.textContent.trim());
-        if (els.length) ctx.report(els[0], `an icon-only button without nds-icon-only${els.length > 1 ? ` (${els.length} buttons; the first is shown)` : ''}: it keeps its text padding and renders wider than tall.`,
-            'Add nds-icon-only to the button.', undefined, els.length);
+    addRule({ id: 'icon-only-btn', docs: 'components/button.html', check(context) {
+        const elements = context.find('.nds-btn:not(.nds-icon-only, .nds-show-more, .nds-full, .nds-nav-link)')
+            .filter(button => button.querySelector('i, svg, img') && !button.textContent.trim());
+        if (elements.length) context.report(elements[0], `an icon-only button without nds-icon-only${elements.length > 1 ? ` (${elements.length} buttons; the first is shown)` : ''}: it keeps its text padding and renders wider than tall.`,
+            'Add nds-icon-only to the button.', undefined, elements.length);
     } });
 
     // On phones nds-minimal hides every label in the action (_section-layout.scss), so a button with no icon is an empty box.
-    rule({ id: 'minimal-action-icon', severity: 'error', docs: 'ui-shell/hero.html', check(ctx) {
-        const els = ctx.find(':is(.nds-section-head > .nds-section-action.nds-minimal, .nds-section-head > .nds-section-action.nds-minimal > .nds-dropmenu) > .nds-btn, .nds-btn.nds-minimal')
-            .filter(b => !b.querySelector('i, svg, img'));
-        if (els.length) ctx.report(els[0], `a button with no icon in an nds-minimal action${els.length > 1 ? ` (${els.length} buttons; the first is shown)` : ''}: on phones its label hides and it shows an empty box.`,
-            'Give it a leading icon, as the hero canon does, or take nds-minimal off the action.', undefined, els.length);
+    addRule({ id: 'minimal-action-icon', severity: 'error', docs: 'ui-shell/hero.html', check(context) {
+        const elements = context.find(':is(.nds-section-head > .nds-section-action.nds-minimal, .nds-section-head > .nds-section-action.nds-minimal > .nds-dropmenu) > .nds-btn, .nds-btn.nds-minimal')
+            .filter(button => !button.querySelector('i, svg, img'));
+        if (elements.length) context.report(elements[0], `a button with no icon in an nds-minimal action${elements.length > 1 ? ` (${elements.length} buttons; the first is shown)` : ''}: on phones its label hides and it shows an empty box.`,
+            'Give it a leading icon, as the hero canon does, or take nds-minimal off the action.', undefined, elements.length);
     } });
 
     // The icon styles key on <i> (_icons.scss), so the same classes on any other tag paint nothing.
-    rule({ id: 'icon-tag', severity: 'error', docs: 'foundations/icons.html', check(ctx) {
-        const els = ctx.find('.nds-icon[class*="nds-hgi-"]:not(i)');
-        if (els.length) ctx.report(els[0], `a UI icon on a <${els[0].tagName.toLowerCase()}>: the icon styles apply to <i> only, so it shows nothing${els.length > 1 ? ` (${els.length} elements; the first is shown)` : ''}.`,
-            'Write it as <i class="nds-icon nds-hgi-…" aria-hidden="true">.', undefined, els.length);
+    addRule({ id: 'icon-tag', severity: 'error', docs: 'foundations/icons.html', check(context) {
+        const elements = context.find('.nds-icon[class*="nds-hgi-"]:not(i)');
+        if (elements.length) context.report(elements[0], `a UI icon on a <${elements[0].tagName.toLowerCase()}>: the icon styles apply to <i> only, so it shows nothing${elements.length > 1 ? ` (${elements.length} elements; the first is shown)` : ''}.`,
+            'Write it as <i class="nds-icon nds-hgi-…" aria-hidden="true">.', undefined, elements.length);
     } });
 
     // Prose styles its bare headings (_prose.scss); the section title class gives one a page-level size.
-    rule({ id: 'prose-section-title', docs: 'layout/prose.html', check(ctx) {
-        const els = ctx.find('.nds-prose .nds-section-title');
-        if (els.length) ctx.report(els[0], `nds-section-title on a heading inside nds-prose${els.length > 1 ? ` (${els.length} headings; the first is shown)` : ''}: it renders at the page title's size, not the text's.`,
-            'Remove nds-section-title: prose already styles a bare h2 to h6.', undefined, els.length);
+    addRule({ id: 'prose-section-title', docs: 'layout/prose.html', check(context) {
+        const elements = context.find('.nds-prose .nds-section-title');
+        if (elements.length) context.report(elements[0], `nds-section-title on a heading inside nds-prose${elements.length > 1 ? ` (${elements.length} headings; the first is shown)` : ''}: it renders at the page title's size, not the text's.`,
+            'Remove nds-section-title: prose already styles a bare h2 to h6.', undefined, elements.length);
     } });
 
     // The visible box of a select or time field and each OTP digit hold display text; the hidden input holds the value.
-    rule({ id: 'name-on-display', severity: 'error', check(ctx) {
-        ctx.find('.nds-select-input[name], .nds-time-input[name], .nds-otp-container input[name]:not(.nds-otp-value)').forEach(el => {
-            ctx.report(el, `name="${el.getAttribute('name')}" on a display input: the form sends the text it shows, not the value.`,
+    addRule({ id: 'name-on-display', severity: 'error', check(context) {
+        context.find('.nds-select-input[name], .nds-time-input[name], .nds-otp-container input[name]:not(.nds-otp-value)').forEach(el => {
+            context.report(el, `name="${el.getAttribute('name')}" on a display input: the form sends the text it shows, not the value.`,
                 'Move name to the hidden value input (.nds-select-value, .nds-time-value or .nds-otp-value).');
         });
     } });
 
     // Forms wires submit checks on .nds-form only (NDS.Form.create), and .nds-form is display:contents,
     // which a modal's flex column needs (_form.scss). A filter's submission form is the filter's own.
-    rule({ id: 'form-class', docs: 'components/form.html', check(ctx) {
-        ctx.find('form:not(.nds-form, [data-filter-submit])').filter(f => f.querySelector('.nds-form-container, .nds-form-group')).forEach(el =>
-            ctx.report(el, 'a <form> with NDS fields but no nds-form class: its fields are not checked on submit, and in a modal it breaks the layout.',
+    addRule({ id: 'form-class', docs: 'components/form.html', check(context) {
+        context.find('form:not(.nds-form, [data-filter-submit])').filter(form => form.querySelector('.nds-form-container, .nds-form-group')).forEach(el =>
+            context.report(el, 'a <form> with NDS fields but no nds-form class: its fields are not checked on submit, and in a modal it breaks the layout.',
                 'Add class="nds-form" to the form.'));
     } });
 
     // data-error-message has one job per host (nds-form.js getMessage, _finishGroupValidation): a field's
     // pattern, a group's "nothing picked". On a host that can never fail that way it never shows.
-    rule({ id: 'error-message-unused', docs: 'components/form.html', check(ctx) {
-        ctx.find('input[data-error-message]:not([pattern]), textarea[data-error-message], select[data-error-message]').forEach(el =>
-            ctx.report(el, 'data-error-message on a field with no pattern: it shows only when the value does not match pattern, so it never shows.',
+    addRule({ id: 'error-message-unused', docs: 'components/form.html', check(context) {
+        context.find('input[data-error-message]:not([pattern]), textarea[data-error-message], select[data-error-message]').forEach(el =>
+            context.report(el, 'data-error-message on a field with no pattern: it shows only when the value does not match pattern, so it never shows.',
                 'Add the pattern it describes, or remove it: every other check has its own message.'));
-        ctx.find(':is(.nds-form-group:not(.nds-otp-group), .nds-select, .nds-multiselect, .nds-taginput, .nds-upload)[data-error-message]:not([data-required], .nds-required, [data-min-checked])').forEach(el =>
-            ctx.report(el, 'data-error-message on a group that may be left empty: it shows only when nothing is picked, so it never shows.',
+        context.find(':is(.nds-form-group:not(.nds-otp-group), .nds-select, .nds-multiselect, .nds-taginput, .nds-upload)[data-error-message]:not([data-required], .nds-required, [data-min-checked])').forEach(el =>
+            context.report(el, 'data-error-message on a group that may be left empty: it shows only when nothing is picked, so it never shows.',
                 'Add data-required, or remove it: the count limits and a file still uploading have their own messages.'));
     } });
 
     // ── names: what a screen reader announces ───────────────────────
     // An element it never reaches (an aria-hidden loop clone, an inert background) needs no name.
-    const unread = (el) => !!el.closest('[aria-hidden="true"], [inert]') || /^(presentation|none)$/.test(el.getAttribute('role') || '');
-    const nameText = (el) => (el.getAttribute('aria-label') || el.textContent || '').trim();
+    const isUnread = (el) => !!el.closest('[aria-hidden="true"], [inert]') || /^(presentation|none)$/.test(el.getAttribute('role') || '');
+    const getNameText = (el) => (el.getAttribute('aria-label') || el.textContent || '').trim();
     // aria-labelledby, aria-label and title, in the order a browser reads them.
-    const ownName = (el) => (el.getAttribute('aria-labelledby') || '').split(/\s+/).filter(Boolean)
-        .map(id => document.getElementById(id)).filter(Boolean).map(nameText).join(' ').trim()
+    const getOwnName = (el) => (el.getAttribute('aria-labelledby') || '').split(/\s+/).filter(Boolean)
+        .map(id => document.getElementById(id)).filter(Boolean).map(getNameText).join(' ').trim()
         || (el.getAttribute('aria-label') || '').trim() || (el.getAttribute('title') || '').trim();
-    const firstOf = (els, what) => els.length > 1 ? ` (${els.length} ${what}; the first is shown)` : '';
+    const getFirstNote = (elements, what) => elements.length > 1 ? ` (${elements.length} ${what}; the first is shown)` : '';
 
     // An icon-only control has no words of its own: the icon is aria-hidden or a CSS mask.
-    rule({ id: 'button-name', severity: 'error', docs: 'components/button.html', check(ctx) {
-        const els = ctx.find('button, a[href], [role="button"], input[type="button"], input[type="image"]').filter(el => !unread(el) && !(
-            ownName(el) || el.textContent.trim() || el.querySelector('img[alt]:not([alt=""]), svg[aria-label], svg title')
+    addRule({ id: 'button-name', severity: 'error', docs: 'components/button.html', check(context) {
+        const elements = context.find('button, a[href], [role="button"], input[type="button"], input[type="image"]').filter(el => !isUnread(el) && !(
+            getOwnName(el) || el.textContent.trim() || el.querySelector('img[alt]:not([alt=""]), svg[aria-label], svg title')
             || (el.matches('input[type="button"]') && el.value.trim()) || (el.matches('img, input[type="image"]') && el.alt.trim())));
-        if (els.length) ctx.report(els[0], `a ${els[0].matches('a') ? 'link' : 'button'} with no name${firstOf(els, 'controls')}: a screen reader announces it with no words, so nobody knows what it does.`,
-            'Add aria-label with its action, or a label inside it with nds-label (hidden on icon-only buttons).', undefined, els.length);
+        if (elements.length) context.report(elements[0], `a ${elements[0].matches('a') ? 'link' : 'button'} with no name${getFirstNote(elements, 'controls')}: a screen reader announces it with no words, so nobody knows what it does.`,
+            'Add aria-label with its action, or a label inside it with nds-label (hidden on icon-only buttons).', undefined, elements.length);
     } });
 
     // A placeholder names a field in every browser, though it goes once typing starts.
-    rule({ id: 'field-label', severity: 'error', docs: 'components/form.html', check(ctx) {
-        const els = ctx.find('input:not([type="hidden"], [type="button"], [type="submit"], [type="reset"], [type="image"]), select, textarea').filter(el => !unread(el) && !(
-            ownName(el) || [...(el.labels || [])].some(l => l.textContent.trim()) || (el.getAttribute('placeholder') || '').trim()));
-        if (els.length) ctx.report(els[0], `a form field with no label${firstOf(els, 'fields')}: a screen reader announces it with no name.`,
-            'Give it a <label for> with its name, as the field canons do, or aria-label when no label shows.', undefined, els.length);
+    addRule({ id: 'field-label', severity: 'error', docs: 'components/form.html', check(context) {
+        const elements = context.find('input:not([type="hidden"], [type="button"], [type="submit"], [type="reset"], [type="image"]), select, textarea').filter(el => !isUnread(el) && !(
+            getOwnName(el) || [...(el.labels || [])].some(fieldLabel => fieldLabel.textContent.trim()) || (el.getAttribute('placeholder') || '').trim()));
+        if (elements.length) context.report(elements[0], `a form field with no label${getFirstNote(elements, 'fields')}: a screen reader announces it with no name.`,
+            'Give it a <label for> with its name, as the field canons do, or aria-label when no label shows.', undefined, elements.length);
     } });
 
     // With no alt a screen reader reads the file name; alt="" marks a picture that only decorates.
-    rule({ id: 'img-alt', severity: 'error', check(ctx) {
-        const els = ctx.find('img:not([alt])').filter(el => !unread(el));
-        if (els.length) ctx.report(els[0], `an <img> with no alt${firstOf(els, 'images')}: a screen reader reads its file name.`,
-            'Add alt with what the picture shows, or alt="" when it only decorates.', undefined, els.length);
+    addRule({ id: 'img-alt', severity: 'error', check(context) {
+        const elements = context.find('img:not([alt])').filter(el => !isUnread(el));
+        if (elements.length) context.report(elements[0], `an <img> with no alt${getFirstNote(elements, 'images')}: a screen reader reads its file name.`,
+            'Add alt with what the picture shows, or alt="" when it only decorates.', undefined, elements.length);
     } });
 
-    rule({ id: 'content-layout-once', group: 'page', docs: 'layout/page-layout.html', check(ctx) {
-        const all = ctx.find('.nds-content-layout');
-        if (all.length > 1) ctx.report(all[1], `${all.length} .nds-content-layout elements on one page: the page grid is set once.`,
+    addRule({ id: 'content-layout-once', group: 'page', docs: 'layout/page-layout.html', check(context) {
+        const all = context.find('.nds-content-layout');
+        if (all.length > 1) context.report(all[1], `${all.length} .nds-content-layout elements on one page: the page grid is set once.`,
             'Keep one .nds-content-layout, around the page content.', undefined, all.length);
     } });
 
     // The missing-menu half is sidemenu-missing's.
-    rule({ id: 'sidemenu-pair', group: 'page', docs: 'layout/page-layout.html', check(ctx) {
-        ctx.find('.nds-sidemenu').forEach(m => {
-            if (!m.closest('.nds-has-sidemenu')) ctx.report(m, '.nds-sidemenu outside a layout with nds-has-sidemenu: the layout gives it no column.',
+    addRule({ id: 'sidemenu-pair', group: 'page', docs: 'layout/page-layout.html', check(context) {
+        context.find('.nds-sidemenu').forEach(menu => {
+            if (!menu.closest('.nds-has-sidemenu')) context.report(menu, '.nds-sidemenu outside a layout with nds-has-sidemenu: the layout gives it no column.',
                 'Add nds-has-sidemenu to its .nds-content-layout.');
         });
     } });
 
     // ── practice: tips from the docs' Best Practices, info only ─────────────
-    const practice = (id, docs, sel, message, fix) => rule({ id, group: 'practice', severity: 'info', docs, check(ctx) {
-        const els = ctx.find(sel);
-        if (els.length) ctx.report(els[0], message + (els.length > 1 ? ` (${els.length} elements; the first is shown).` : '.'), fix, undefined, els.length);
+    const addPractice = (id, documentationPath, selector, message, fix) => addRule({ id, group: 'practice', severity: 'info', docs: documentationPath, check(context) {
+        const elements = context.find(selector);
+        if (elements.length) context.report(elements[0], message + (elements.length > 1 ? ` (${elements.length} elements; the first is shown).` : '.'), fix, undefined, elements.length);
     } });
-    practice('card-link-nested', 'components/card.html', ':is(a, button).nds-card :is(a, button)',
+    addPractice('card-link-nested', 'components/card.html', ':is(a, button).nds-card :is(a, button)',
         'a link or a button inside a clickable card', 'Keep one control: make the card a plain .nds-card, or drop the inner link.');
-    practice('section-nested', 'layout/section.html', '.nds-content-section .nds-content-section',
+    addPractice('section-nested', 'layout/section.html', '.nds-content-section .nds-content-section',
         'a section inside a section', 'Divide the section body with .nds-block instead.');
-    practice('card-actions-place', 'components/card.html', '.nds-card-content .nds-card-actions',
+    addPractice('card-actions-place', 'components/card.html', '.nds-card-content .nds-card-actions',
         '.nds-card-actions inside .nds-card-content: in a modal, only the content scrolls', 'Put .nds-card-actions after .nds-card-content.');
-    practice('dark-nested', 'foundations/themes.html', '[data-theme~="dark"]:not(html) [data-theme~="dark"]',
+    addPractice('dark-nested', 'foundations/themes.html', '[data-theme~="dark"]:not(html) [data-theme~="dark"]',
         'data-theme="dark" inside a dark area, which is already dark', 'Write data-theme="dark" once, on the surface.');
-    practice('prose-nested', 'layout/prose.html', '.nds-prose .nds-prose',
+    addPractice('prose-nested', 'layout/prose.html', '.nds-prose .nds-prose',
         '.nds-prose inside .nds-prose', 'Put nds-prose once, on the element the text renders into.');
-    practice('loading-field', 'components/loading.html', ':is(.nds-form-control, .nds-input).nds-loading',
+    addPractice('loading-field', 'components/loading.html', ':is(.nds-form-control, .nds-input).nds-loading',
         'nds-loading on a form field, which has a loading look of its own', 'Remove it. See Forms for the field loading state.');
 
-    rule({ id: 'voice-secret', group: 'practice', severity: 'info', docs: 'components/voice-input.html', check(ctx) {
-        ctx.find('.nds-voice-input').forEach(btn => {
-            const t = btn.getAttribute('data-voice-target') || btn.getAttribute('data-target');
-            const input = t ? (document.getElementById(t) || document.querySelector(`[name="${CSS.escape(t)}"]`))
+    addRule({ id: 'voice-secret', group: 'practice', severity: 'info', docs: 'components/voice-input.html', check(context) {
+        context.find('.nds-voice-input').forEach(btn => {
+            const target = btn.getAttribute('data-voice-target') || btn.getAttribute('data-target');
+            const input = target ? (document.getElementById(target) || document.querySelector(`[name="${CSS.escape(target)}"]`))
                 : btn.closest('.nds-form-control')?.querySelector(':scope > input, :scope > textarea, :scope > select');
             if (input && (input.matches('[type="password"], [readonly], select') || input.closest('.nds-otp-group'))) {
-                ctx.report(btn, 'voice input on a password, OTP, read-only field or select', 'Remove the button. People nearby hear a spoken secret, and the other fields take no dictation.');
+                context.report(btn, 'voice input on a password, OTP, read-only field or select', 'Remove the button. People nearby hear a spoken secret, and the other fields take no dictation.');
             }
         });
     } });
 
     // One table column is one field: a status tag on some rows and a standard tag on others shows one state two ways.
-    rule({ id: 'tag-kind-mix', group: 'practice', severity: 'info', docs: 'components/tag.html', check(ctx) {
+    addRule({ id: 'tag-kind-mix', group: 'practice', severity: 'info', docs: 'components/tag.html', check(context) {
         const cols = new Map();
-        ctx.find('td .nds-tag').forEach(tag => {
+        context.find('td .nds-tag').forEach(tag => {
             const td = tag.closest('td'), key = td.closest('table');
             if (td.querySelectorAll('.nds-tag').length > 1) return; // a tag group mixes kinds on purpose
             if (!cols.has(key)) cols.set(key, new Map());
@@ -868,23 +868,23 @@
             col.get(td.cellIndex).push(tag);
         });
         for (const col of cols.values()) for (const tags of col.values()) {
-            const plain = tags.filter(t => !NDS.status.get(t));
-            if (plain.length && plain.length < tags.length) ctx.report(plain[0], `a table column shows a status tag on some rows and a standard tag on others (${plain.length} of ${tags.length} standard).`,
+            const plain = tags.filter(tag => !NDS.status.get(tag));
+            if (plain.length && plain.length < tags.length) context.report(plain[0], `a table column shows a status tag on some rows and a standard tag on others (${plain.length} of ${tags.length} standard).`,
                 'Give every tag in the column data-status. A state that needs no color takes "neutral".', undefined, plain.length);
         }
     } });
 
-    rule({ id: 'dark-selector', group: 'practice', severity: 'info', docs: 'foundations/themes.html', check(ctx) {
-        const sels = siteRules().map(r => r.sel).filter(s => s.includes('[data-theme="dark"]'));
-        if (sels.length) ctx.report(null, `[data-theme="dark"] in the site's CSS (${sels[0]}${sels.length > 1 ? ` and ${sels.length - 1} more` : ''}): it misses a data-theme with more than one value.`,
-            'Write [data-theme~="dark"].', undefined, sels.length);
+    addRule({ id: 'dark-selector', group: 'practice', severity: 'info', docs: 'foundations/themes.html', check(context) {
+        const selectors = getSiteRules().map(siteRule => siteRule.sel).filter(selector => selector.includes('[data-theme="dark"]'));
+        if (selectors.length) context.report(null, `[data-theme="dark"] in the site's CSS (${selectors[0]}${selectors.length > 1 ? ` and ${selectors.length - 1} more` : ''}): it misses a data-theme with more than one value.`,
+            'Write [data-theme~="dark"].', undefined, selectors.length);
     } });
 
-    rule({ id: 'palette-scope', group: 'practice', severity: 'info', docs: 'foundations/tokens.html', check(ctx) {
-        const sels = siteRules().filter(r => [...r.style].some(p => p.startsWith('--colors-')) && selItems(r.sel).some(s => !/^(:root|html)\b/.test(s))).map(r => r.sel);
-        if (sels.length) ctx.report(null, `a palette token (--colors-*) set below :root (${sels[0]}${sels.length > 1 ? ` and ${sels.length - 1} more` : ''}): the tokens built from the palette read it at :root, so they keep the NDS value.`,
-            'Set palette tokens at :root. On a wrapper, set the token the component reads.', undefined, sels.length);
+    addRule({ id: 'palette-scope', group: 'practice', severity: 'info', docs: 'foundations/tokens.html', check(context) {
+        const selectors = getSiteRules().filter(siteRule => [...siteRule.style].some(property => property.startsWith('--colors-')) && splitSelectors(siteRule.sel).some(selector => !/^(:root|html)\b/.test(selector))).map(siteRule => siteRule.sel);
+        if (selectors.length) context.report(null, `a palette token (--colors-*) set below :root (${selectors[0]}${selectors.length > 1 ? ` and ${selectors.length - 1} more` : ''}): the tokens built from the palette read it at :root, so they keep the NDS value.`,
+            'Set palette tokens at :root. On a wrapper, set the token the component reads.', undefined, selectors.length);
     } });
 
-    NDS.audit = { run, rule, rules: rules };
+    NDS.audit = { run, rule: addRule, rules: rules };
 })();

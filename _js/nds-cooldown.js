@@ -116,31 +116,31 @@
     // the cooldown mid-session.
     const config = new WeakMap();
 
-    function configFor(btn) {
-        let cfg = config.get(btn);
-        if (!cfg) {
+    function getConfig(btn) {
+        let buttonConfig = config.get(btn);
+        if (!buttonConfig) {
             const labelEl = btn.querySelector('.nds-label');
-            cfg = {
-                cooldown: seconds(btn.getAttribute('data-cooldown'), 0),
+            buttonConfig = {
+                cooldown: readSeconds(btn.getAttribute('data-cooldown'), 0),
                 // Authored label, frozen before any swap can overwrite it — the width
                 // reservation needs it for every later cycle.
                 label: labelEl ? labelEl.textContent.trim() : ''
             };
-            config.set(btn, cfg);
+            config.set(btn, buttonConfig);
         }
-        return cfg;
+        return buttonConfig;
     }
 
-    function seconds(val, fallback) {
-        const n = parseInt(val, 10);
-        return Number.isFinite(n) && n >= 0 ? n : fallback;
+    function readSeconds(value, fallback) {
+        const parsed = parseInt(value, 10);
+        return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
     }
 
     function fire(btn, type, detail) {
         btn.dispatchEvent(new CustomEvent(type, { bubbles: true, detail: detail || {} }));
     }
 
-    function labelTemplate(btn) {
+    function getLabelTemplate(btn) {
         return btn.getAttribute('data-cooldown-label') || DEFAULT_TEMPLATE;
     }
 
@@ -157,14 +157,14 @@
     function stampSizers(btn, total) {
         const labelEl = btn.querySelector('.nds-label');
         if (!labelEl) return;
-        const cfg = configFor(btn);
-        const start = total == null ? cfg.cooldown : total;
-        const texts = [cfg.label, labelTemplate(btn).replace(TOKEN, start), resendLabel(btn)];
-        labelEl.setAttribute('data-cooldown-sizes', texts.filter((t) => t).join('\n'));
+        const buttonConfig = getConfig(btn);
+        const start = total == null ? buttonConfig.cooldown : total;
+        const texts = [buttonConfig.label, getLabelTemplate(btn).replace(TOKEN, start), resendLabel(btn)];
+        labelEl.setAttribute('data-cooldown-sizes', texts.filter((text) => text).join('\n'));
     }
 
-    function render(ctx, template, remaining) {
-        if (ctx.labelEl) ctx.labelEl.textContent = template.replace(TOKEN, remaining);
+    function render(cycle, template, remaining) {
+        if (cycle.labelEl) cycle.labelEl.textContent = template.replace(TOKEN, remaining);
     }
 
     // opts.seconds  run for this many seconds instead of data-cooldown — the remainder
@@ -175,15 +175,15 @@
     function start(btn, opts) {
         if (!btn || active.has(btn)) return;
 
-        const cfg = configFor(btn);
+        const buttonConfig = getConfig(btn);
         opts = opts || {};
         // An explicit duration is its own opt-in, so a button with no data-cooldown
         // can still be driven entirely from JS.
-        const total = opts.seconds == null ? cfg.cooldown : seconds(opts.seconds, cfg.cooldown);
+        const total = opts.seconds == null ? buttonConfig.cooldown : readSeconds(opts.seconds, buttonConfig.cooldown);
         if (total <= 0) return;
 
         const labelEl = btn.querySelector('.nds-label');
-        const ctx = {
+        const cycle = {
             labelEl,
             originalLabel: labelEl ? labelEl.textContent : '',
             // The end of the cycle must not enable a button the page had disabled.
@@ -196,7 +196,7 @@
         // The label attributes are re-read every cycle, so re-stamp the width
         // sizers in case the page changed the countdown or resend text.
         stampSizers(btn, total);
-        active.set(btn, ctx);
+        active.set(btn, cycle);
 
         NDS.state.add(btn, 'cooldown');
         btn.disabled = true;
@@ -205,41 +205,41 @@
         // at the right number when the request resolves and the state comes off.
         if (!opts.silent) fire(btn, 'nds:cooldown:start');
 
-        const template = labelTemplate(btn);
+        const template = getLabelTemplate(btn);
         let remaining = total;
-        render(ctx, template, remaining);
+        render(cycle, template, remaining);
         fire(btn, 'nds:cooldown:tick', { remaining });
 
         // Count against the clock, not the ticks: a hidden tab pauses or throttles
         // timers (the user switching to the SMS app), and the server's limit keeps running.
         const end = Date.now() + total * 1000;
-        ctx.tickTimer = setInterval(() => {
+        cycle.tickTimer = setInterval(() => {
             const next = Math.ceil((end - Date.now()) / 1000);
             if (next === remaining) return; // an early fire: no second has passed
             remaining = next;
             if (remaining <= 0) {
                 finish(btn);
             } else {
-                render(ctx, template, remaining);
+                render(cycle, template, remaining);
                 fire(btn, 'nds:cooldown:tick', { remaining });
             }
         }, 1000);
     }
 
     function finish(btn) {
-        const ctx = active.get(btn);
-        if (!ctx) return;
-        if (ctx.tickTimer) clearInterval(ctx.tickTimer);
+        const cycle = active.get(btn);
+        if (!cycle) return;
+        if (cycle.tickTimer) clearInterval(cycle.tickTimer);
         // 'loading' is the page's to set and clear — the component never touches it,
         // so a request still in flight keeps its spinner past the countdown.
         NDS.state.remove(btn, 'cooldown');
-        if (!ctx.wasDisabled) btn.disabled = false;
-        if (ctx.hadFocus && !btn.disabled && (!document.activeElement || document.activeElement === document.body)) {
+        if (!cycle.wasDisabled) btn.disabled = false;
+        if (cycle.hadFocus && !btn.disabled && (!document.activeElement || document.activeElement === document.body)) {
             btn.focus({ preventScroll: true });
         }
-        if (ctx.labelEl) {
+        if (cycle.labelEl) {
             const resend = resendLabel(btn);
-            ctx.labelEl.textContent = resend != null ? resend : ctx.originalLabel;
+            cycle.labelEl.textContent = resend != null ? resend : cycle.originalLabel;
         }
         active.delete(btn);
         fire(btn, 'nds:cooldown:end');
@@ -263,10 +263,10 @@
         }
     }
 
-    function wire(btn) {
+    function setupButton(btn) {
         if (!btn || btn.hasAttribute(WIRED_ATTR)) return;
         btn.setAttribute(WIRED_ATTR, '');
-        configFor(btn); // freeze cooldown durations at wire time
+        getConfig(btn); // freeze cooldown durations at wire time
         warnNoCountdown(btn);
         stampSizers(btn); // reserve the label width before the first click
         btn._cooldownAC = new AbortController();
@@ -279,7 +279,7 @@
     // Paired with onDOMRemove so a detached + re-added button gets a clean
     // re-wire rather than having the old closure state persist behind the
     // WIRED_ATTR guard.
-    function unwire(btn) {
+    function cleanupButton(btn) {
         if (!btn || !btn.hasAttribute(WIRED_ATTR)) return;
         if (btn._cooldownAC) {
             btn._cooldownAC.abort();
@@ -292,9 +292,9 @@
         init() {
             if (subscribed) return;
             subscribed = true;
-            document.querySelectorAll(SEL).forEach(wire);
-            NDS.onDOMAdd(SEL, (nodes) => nodes.forEach(wire));
-            NDS.onDOMRemove(SEL, (nodes) => nodes.forEach(unwire));
+            document.querySelectorAll(SEL).forEach(setupButton);
+            NDS.onDOMAdd(SEL, (nodes) => nodes.forEach(setupButton));
+            NDS.onDOMRemove(SEL, (nodes) => nodes.forEach(cleanupButton));
         },
         start,
         reset

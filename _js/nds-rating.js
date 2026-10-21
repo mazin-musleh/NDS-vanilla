@@ -114,8 +114,8 @@
 
     // Through NDS.setValue, so a framework binding on the input hears it.
     syncValue() {
-      const v = String(this.currentRating);
-      if (this.valueInput && this.valueInput.value !== v) NDS.setValue(this.valueInput, v);
+      const value = String(this.currentRating);
+      if (this.valueInput && this.valueInput.value !== value) NDS.setValue(this.valueInput, value);
     }
 
     destroy() {
@@ -175,8 +175,8 @@
     }
 
     handleKeyboard(e, value) {
-      const idx = value - 1;
-      const isRTL = NDS.isRTL;
+      const index = value - 1;
+      const isRtl = NDS.isRTL;
       const last = this.stars.length - 1;
 
       switch(e.key) {
@@ -188,24 +188,24 @@
 
         case 'ArrowRight':
           e.preventDefault();
-          if (isRTL) { if (idx > 0) this.stars[idx - 1].focus(); }
-          else { if (idx < last) this.stars[idx + 1].focus(); }
+          if (isRtl) { if (index > 0) this.stars[index - 1].focus(); }
+          else { if (index < last) this.stars[index + 1].focus(); }
           break;
 
         case 'ArrowLeft':
           e.preventDefault();
-          if (isRTL) { if (idx < last) this.stars[idx + 1].focus(); }
-          else { if (idx > 0) this.stars[idx - 1].focus(); }
+          if (isRtl) { if (index < last) this.stars[index + 1].focus(); }
+          else { if (index > 0) this.stars[index - 1].focus(); }
           break;
 
         case 'ArrowUp':
           e.preventDefault();
-          if (idx < last) this.stars[idx + 1].focus();
+          if (index < last) this.stars[index + 1].focus();
           break;
 
         case 'ArrowDown':
           e.preventDefault();
-          if (idx > 0) this.stars[idx - 1].focus();
+          if (index > 0) this.stars[index - 1].focus();
           break;
 
         case 'Home':
@@ -268,7 +268,7 @@
 
   const create = (element) => element.ndsRating || (element.ndsRating = new NdsRating(element));
 
-  function initializeRatings() {
+  function setupRatings() {
     document.querySelectorAll('.nds-rating').forEach(create);
   }
 
@@ -278,7 +278,7 @@
 
   // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
   // The stars are buttons, not form controls: the score lives on the .nds-rating root. Zero = nothing picked.
-  const fieldCheck = (group) => {
+  const checkField = (group) => {
     const rating = group.querySelector('.nds-rating');
     const value = rating ? (rating.ndsRating ? rating.ndsRating.getValue() : Number(rating.dataset.rating) || 0) : 0;
     const valid = !NDS.validation.isRequired(group) || value > 0;
@@ -286,13 +286,13 @@
   };
   // The stars are buttons, so focus lands on the first one.
   NDS.validation.addRule('.nds-form-group[data-min-checked], .nds-form-group[data-max-checked], .nds-form-group[data-required], .nds-form-group.nds-required',
-    (group) => (group.querySelector('.nds-rating') ? Object.assign(fieldCheck(group), { focus: group.querySelector('.nds-rating-star') }) : null),
+    (group) => (group.querySelector('.nds-rating') ? Object.assign(checkField(group), { focus: group.querySelector('.nds-rating-star') }) : null),
     { on: ['nds:rating:change'] });
 
   NDS.Rating = {
-    init: initializeRatings,
-    reinit: initializeRatings,
-    validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-form-group') || el, opts, fieldCheck),
+    init: setupRatings,
+    reinit: setupRatings,
+    validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-form-group') || el, opts, checkField),
     create,
     destroy: (element) => element?.ndsRating?.destroy(),
     enable: enableRating,

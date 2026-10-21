@@ -188,19 +188,19 @@
 
         _readConfig() {
             const ds = this.container.dataset;
-            const fromAttrs = {
+            const attributeConfig = {
                 uploadUrl: ds.uploadUrl || null,
                 autoUpload: ds.autoUpload === 'true',
                 maxFileSize: parseInt(ds.maxFileSize) || 10 * 1024 * 1024,
-                allowedTypes: ds.allowedTypes ? ds.allowedTypes.split(',').map(t => t.trim().toLowerCase()) : null,
-                allowedMimeTypes: ds.allowedMimeTypes ? ds.allowedMimeTypes.split(',').map(t => t.trim().toLowerCase()) : null,
+                allowedTypes: ds.allowedTypes ? ds.allowedTypes.split(',').map(type => type.trim().toLowerCase()) : null,
+                allowedMimeTypes: ds.allowedMimeTypes ? ds.allowedMimeTypes.split(',').map(type => type.trim().toLowerCase()) : null,
                 maxFiles: parseInt(ds.maxFiles) || Infinity,
                 fieldName: ds.fieldName || 'file',
                 uploadTimeout: parseFloat(ds.uploadTimeout) || 0
             };
             // JS options (passed to NDS.Upload.create / the constructor) override the
             // declarative data-* attributes; _options only holds keys the caller set.
-            return { ...fromAttrs, ...this._options };
+            return { ...attributeConfig, ...this._options };
         }
 
         // Normalize a JS options object into the _readConfig shape, keeping only the
@@ -208,15 +208,15 @@
         // them. allowedTypes / allowedMimeTypes accept an array or a comma string.
         _normalizeOptions(options) {
             if (!options || typeof options !== 'object') return {};
-            const list = (v) => (Array.isArray(v) ? v : String(v).split(','))
-                .map(t => t.trim().toLowerCase()).filter(Boolean);
+            const toList = (value) => (Array.isArray(value) ? value : String(value).split(','))
+                .map(token => token.trim().toLowerCase()).filter(Boolean);
             const out = {};
             if (options.uploadUrl != null) out.uploadUrl = options.uploadUrl;
             if (options.autoUpload != null) out.autoUpload = options.autoUpload === true || options.autoUpload === 'true';
             if (options.maxFileSize != null) out.maxFileSize = parseInt(options.maxFileSize, 10);
             if (options.maxFiles != null) out.maxFiles = options.maxFiles === Infinity ? Infinity : parseInt(options.maxFiles, 10);
-            if (options.allowedTypes != null) out.allowedTypes = list(options.allowedTypes);
-            if (options.allowedMimeTypes != null) out.allowedMimeTypes = list(options.allowedMimeTypes);
+            if (options.allowedTypes != null) out.allowedTypes = toList(options.allowedTypes);
+            if (options.allowedMimeTypes != null) out.allowedMimeTypes = toList(options.allowedMimeTypes);
             if (options.fieldName != null) out.fieldName = String(options.fieldName);
             if (options.uploadTimeout != null) out.uploadTimeout = parseFloat(options.uploadTimeout) || 0;
             return out;
@@ -236,7 +236,7 @@
         // the input's accept so authors never hand-write it and it can't drift.
         _syncAccept() {
             const { allowedTypes } = this._readConfig();
-            if (allowedTypes) this._fileInput.setAttribute('accept', allowedTypes.map(t => '.' + t).join(','));
+            if (allowedTypes) this._fileInput.setAttribute('accept', allowedTypes.map(type => '.' + type).join(','));
         }
 
         // Public: run size/extension/MIME checks against the live config
@@ -269,8 +269,8 @@
         }
 
         removeFile(fileId) {
-            if (!this._files.some(f => f.id === fileId)) return false;
-            this._setFiles(this._files.filter(f => f.id !== fileId));
+            if (!this._files.some(entry => entry.id === fileId)) return false;
+            this._setFiles(this._files.filter(entry => entry.id !== fileId));
             return true;
         }
 
@@ -279,16 +279,16 @@
         }
 
         getFile(fileId) {
-            const found = this._files.find(f => f.id === fileId);
+            const found = this._files.find(entry => entry.id === fileId);
             return found ? this._toPublic(found) : null;
         }
 
         getAllFiles() {
-            return this._files.map(f => this._toPublic(f));
+            return this._files.map(entry => this._toPublic(entry));
         }
 
         getFilesByStatus(status) {
-            return this._files.filter(f => f.status === status).map(f => this._toPublic(f));
+            return this._files.filter(entry => entry.status === status).map(entry => this._toPublic(entry));
         }
 
         // One shape for every staged file. A file the checks failed is _rejected and never uploads.
@@ -308,15 +308,15 @@
         // Every way a file leaves the list (remove, clear, reset, Single replacing it)
         // stops its upload and fires removed, so a page that tracks server copies stays in step.
         _setFiles(files) {
-            const dropped = this._files.filter(f => !files.includes(f));
-            dropped.forEach(f => { if (f._xhr) f._xhr.abort(); });
+            const dropped = this._files.filter(entry => !files.includes(entry));
+            dropped.forEach(entry => { if (entry._xhr) entry._xhr.abort(); });
             this._files = files;
             this._updateFileList();
-            dropped.forEach(f => this._dispatchEvent('nds:upload:removed', { fileData: this._toPublic(f), fileId: f.id }));
+            dropped.forEach(entry => this._dispatchEvent('nds:upload:removed', { fileData: this._toPublic(entry), fileId: entry.id }));
         }
 
-        _toPublic(f) {
-            return { file: f.file, id: f.id, status: f.status, progress: f.progress, error: f.error, response: f.response };
+        _toPublic(entry) {
+            return { file: entry.file, id: entry.id, status: entry.status, progress: entry.progress, error: entry.error, response: entry.response };
         }
 
         // ==============================================
@@ -325,15 +325,15 @@
 
         startUpload(fileId) {
             if (fileId) {
-                const fileData = this._files.find(f => f.id === fileId);
+                const fileData = this._files.find(entry => entry.id === fileId);
                 if (fileData && fileData.status === 'ready') this._uploadFile(fileData);
             } else {
-                this._files.filter(f => f.status === 'ready').forEach(f => this._uploadFile(f));
+                this._files.filter(entry => entry.status === 'ready').forEach(entry => this._uploadFile(entry));
             }
         }
 
         retry(fileId) {
-            const fileData = this._files.find(f => f.id === fileId);
+            const fileData = this._files.find(entry => entry.id === fileId);
             // A file the checks rejected stays rejected: re-sending it would skip them.
             if (!fileData || fileData.status !== 'error' || fileData._rejected) return false;
             fileData.status = 'ready';
@@ -347,7 +347,7 @@
         }
 
         abort(fileId) {
-            const fileData = this._files.find(f => f.id === fileId);
+            const fileData = this._files.find(entry => entry.id === fileId);
             if (!fileData || !fileData._xhr) return false;
             fileData._xhr.abort();
             fileData._xhr = null;
@@ -362,7 +362,7 @@
         // ==============================================
 
         setFileStatus(fileId, status, options = {}) {
-            const file = this._files.find(f => f.id === fileId);
+            const file = this._files.find(entry => entry.id === fileId);
             if (!file) return false;
             file.status = status;
             if (options.progress !== undefined) file.progress = options.progress;
@@ -372,7 +372,7 @@
         }
 
         setFileProgress(fileId, progress) {
-            const file = this._files.find(f => f.id === fileId);
+            const file = this._files.find(entry => entry.id === fileId);
             if (!file) return false;
 
             file.progress = progress;
@@ -423,7 +423,7 @@
             NDS.state.remove(this._dropZone, 'drag-over');
 
             // Abort in-progress uploads
-            this._files.forEach(f => { if (f._xhr) f._xhr.abort(); });
+            this._files.forEach(entry => { if (entry._xhr) entry._xhr.abort(); });
 
             // Clean DOM
             this._clearList();
@@ -454,9 +454,9 @@
             // MIME type check
             if (config.allowedMimeTypes && file.type) {
                 const mime = file.type.toLowerCase();
-                const allowed = config.allowedMimeTypes.some(t => {
-                    if (t.endsWith('/*')) return mime.startsWith(t.slice(0, -1));
-                    return mime === t;
+                const allowed = config.allowedMimeTypes.some(type => {
+                    if (type.endsWith('/*')) return mime.startsWith(type.slice(0, -1));
+                    return mime === type;
                 });
                 if (!allowed) {
                     errors.push(strings.text('type_not_allowed'));
@@ -508,13 +508,13 @@
             // Dispatch events
             if (validFiles.length > 0) {
                 this._dispatchEvent('nds:upload:select', {
-                    files: validFiles.map(f => f.file),
-                    allFiles: this._files.map(f => f.file),
-                    fileData: validFiles.map(f => this._toPublic(f))
+                    files: validFiles.map(entry => entry.file),
+                    allFiles: this._files.map(entry => entry.file),
+                    fileData: validFiles.map(entry => this._toPublic(entry))
                 });
 
                 if (config.autoUpload && config.uploadUrl) {
-                    validFiles.forEach(f => this._uploadFile(f, config));
+                    validFiles.forEach(entry => this._uploadFile(entry, config));
                 }
             }
 
@@ -531,7 +531,7 @@
 
         _uploadFile(fileData, config) {
             if (!config) config = this._readConfig();
-            const index = this._files.findIndex(f => f.id === fileData.id);
+            const index = this._files.findIndex(entry => entry.id === fileData.id);
             if (index === -1) return;
 
             if (!config.uploadUrl) {
@@ -597,9 +597,9 @@
                     fileData.status = 'error';
                     // Chip message: server's JSON {error} convention, else
                     // statusText (empty over HTTP/2), else localized generic.
-                    let serverMsg = '';
-                    try { serverMsg = JSON.parse(xhr.response)?.error || ''; } catch { /* non-JSON body */ }
-                    fileData.error = serverMsg || xhr.statusText || strings.text('failed');
+                    let serverMessage = '';
+                    try { serverMessage = JSON.parse(xhr.response)?.error || ''; } catch { /* non-JSON body */ }
+                    fileData.error = serverMessage || xhr.statusText || strings.text('failed');
                     this._dispatchEvent('nds:upload:error', {
                         fileData: this._toPublic(fileData),
                         error: fileData.error,
@@ -662,7 +662,7 @@
             const fileName = fileItem.querySelector('.nds-file-name');
             const removeBtn = fileItem.querySelector('.nds-remove-file');
             if (removeBtn && !removeBtn.hasAttribute('aria-label')) strings.set(removeBtn, 'aria-label', 'remove_file');
-            const errorMsg = fileItem.querySelector('.nds-error-message');
+            const errorMessage = fileItem.querySelector('.nds-error-message');
 
             if (fileName) {
                 // The base truncates and the extension stays; a hover tooltip shows the whole name.
@@ -688,7 +688,7 @@
             const fileSize = fileItem.querySelector('.nds-file-size');
             if (fileSize && fileData.file.size) fileSize.textContent = formatFileSize(fileData.file.size);
             if (removeBtn) removeBtn.setAttribute('data-file-id', fileData.id);
-            if (errorMsg && fileData.error) errorMsg.textContent = fileData.error;
+            if (errorMessage && fileData.error) errorMessage.textContent = fileData.error;
 
             // Apply state and status via data attributes (CSS handles visibility)
             this._applyFileItemState(fileItem, fileData);
@@ -702,7 +702,7 @@
         }
 
         _updateFileItem(fileId) {
-            const fileData = this._files.find(f => f.id === fileId);
+            const fileData = this._files.find(entry => entry.id === fileId);
             const fileItem = this._fileList.querySelector(`[data-file-id="${fileId}"]`);
             if (!fileData || !fileItem) {
                 // If no element exists yet, do a full list rebuild
@@ -711,8 +711,8 @@
             }
 
             // Update text content
-            const errorMsg = fileItem.querySelector('.nds-error-message');
-            if (errorMsg) errorMsg.textContent = fileData.error || '';
+            const errorMessage = fileItem.querySelector('.nds-error-message');
+            if (errorMessage) errorMessage.textContent = fileData.error || '';
 
             // Update state/status attributes
             this._applyFileItemState(fileItem, fileData);
@@ -832,7 +832,7 @@
     // AUTO-INITIALIZATION
     // ==============================================
 
-    function initializeUploads() {
+    function setupUploads() {
         document.querySelectorAll('.nds-upload').forEach(el => {
             if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-upload-initialized')) return;
@@ -847,7 +847,7 @@
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
     // The file input is emptied after each pick: required counts the staged rows, a rejected one not counted.
     // A row still uploading blocks every upload field: the submit would go without that file.
-    const fieldCheck = (up) => {
+    const checkField = (up) => {
         const count = up.querySelectorAll('.nds-file-list .nds-file-item:not([data-status="error"])').length;
         const pending = !!up.querySelector('.nds-file-list .nds-file-item:is([data-state~="uploading"], [data-state~="processing"])');
         const valid = !pending && (!NDS.validation.isRequired(up) || count > 0);
@@ -855,13 +855,13 @@
             empty: !pending && count === 0, count, pending };
     };
     NDS.validation.addRule('.nds-upload',
-        (up) => Object.assign(fieldCheck(up), { focus: up.querySelector('.nds-browse-btn') || up.querySelector('input[type="file"]') }),
-        { owns: (c) => c.classList.contains('nds-upload'), on: ['nds:upload:select', 'nds:upload:success', 'nds:upload:error', 'nds:upload:removed'] });
+        (up) => Object.assign(checkField(up), { focus: up.querySelector('.nds-browse-btn') || up.querySelector('input[type="file"]') }),
+        { owns: (el) => el.classList.contains('nds-upload'), on: ['nds:upload:select', 'nds:upload:success', 'nds:upload:error', 'nds:upload:removed'] });
 
     NDS.Upload = {
-        init: initializeUploads,
-        reinit: initializeUploads,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-upload') || el, opts, fieldCheck),
+        init: setupUploads,
+        reinit: setupUploads,
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-upload') || el, opts, checkField),
         create: (container, options) => {
             container = NDS.resolveEl(container);
             if (!container) { warn('create: container not found'); return null; }

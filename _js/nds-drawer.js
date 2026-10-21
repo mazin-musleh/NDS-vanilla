@@ -163,7 +163,7 @@
     }
 
     // Opens or closes a branch at once, with no animation; drops one in flight, or its end would undo this.
-    function paintBranch(listItem, open) {
+    function setBranch(listItem, open) {
         const button = listItem.querySelector(':scope > .nds-btn');
         const submenu = listItem.querySelector(':scope > ul');
         setState(listItem, open ? config.states.open : config.states.closed);
@@ -190,24 +190,24 @@
     // INITIAL STATE
     // ==============================================
 
-    function initOpenState(drawer) {
+    function setupOpenState(drawer) {
         drawer.querySelectorAll('.nds-drawer-list li').forEach(item => {
             if (!item.querySelector(':scope > ul') || !item.querySelector(':scope > .nds-btn')) return;
             // Open where the markup says so
-            paintBranch(item, hasState(item, config.states.open));
+            setBranch(item, hasState(item, config.states.open));
         });
     }
 
-    function initToggles(drawer) {
+    function setupToggles(drawer) {
         if (drawer._togglesAC) drawer._togglesAC.abort();
         drawer._togglesAC = new AbortController();
         const { signal } = drawer._togglesAC;
 
-        drawer.querySelectorAll('.nds-drawer-list li').forEach(li => {
-            const submenu = li.querySelector(':scope > ul');
+        drawer.querySelectorAll('.nds-drawer-list li').forEach(listItem => {
+            const submenu = listItem.querySelector(':scope > ul');
             if (!submenu) return;
 
-            const button = li.querySelector(':scope > .nds-btn');
+            const button = listItem.querySelector(':scope > .nds-btn');
             if (!button) return;
 
             button.classList.add('nds-menu-btn');
@@ -239,12 +239,12 @@
         }
         closed.forEach(item => {
             const btn = item.querySelector(':scope > .nds-btn');
-            if (!animate) return paintBranch(item, true);
+            if (!animate) return setBranch(item, true);
             if (btn && item.querySelector(':scope > ul')) toggleSubmenu(btn);
         });
     }
 
-    function initActiveStates(drawer) {
+    function setupActiveStates(drawer) {
         drawer.querySelectorAll('li[data-state~="active"]').forEach(item => activateItem(drawer, item, false));
     }
 
@@ -270,15 +270,15 @@
     // ==============================================
 
     // Case and accents ignored, as Dropmenu's search: "مطار" finds "المَطار".
-    const norm = (s) => (s || '').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
+    const normalizeText = (text) => (text || '').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
 
     function setupSearch(drawer) {
-        const attr = drawer.getAttribute('data-search');
+        const attribute = drawer.getAttribute('data-search');
         const list = drawer.querySelector('.nds-drawer-list');
-        if (attr === null || !list) return;
-        const leaves = () => [...list.querySelectorAll('li')].filter(li => !li.querySelector(':scope > ul'));
-        const threshold = parseInt(attr, 10) || 0;
-        if (threshold && leaves().length < threshold) return;
+        if (attribute === null || !list) return;
+        const getLeaves = () => [...list.querySelectorAll('li')].filter(listItem => !listItem.querySelector(':scope > ul'));
+        const threshold = parseInt(attribute, 10) || 0;
+        if (threshold && getLeaves().length < threshold) return;
 
         // The field styles Forms names: outline (none), lighter, darker (the default).
         const style = { outline: '', lighter: ' nds-lighter' }[drawer.getAttribute('data-search-style')] ?? ' nds-darker';
@@ -303,47 +303,47 @@
         strings.set(input, 'aria-label', 'search');
         strings.set(input, 'placeholder', 'search_placeholder');
         strings.set(box.querySelector('.nds-clear'), 'aria-label', 'clear_search');
-        const msg = empty.querySelector('.nds-empty-message');
+        const message = empty.querySelector('.nds-empty-message');
         const customEmpty = drawer.getAttribute('data-search-empty');
-        if (customEmpty) msg.textContent = customEmpty; else strings.set(msg, 'text', 'no_results');
+        if (customEmpty) message.textContent = customEmpty; else strings.set(message, 'text', 'no_results');
         // Forms init ran before this injection: wire its clear button.
         NDS.Form.create(box);
 
-        const setOpen = (li, open) => {
-            if (!li.querySelector(':scope > .nds-btn') || !li.querySelector(':scope > ul') || isOpen(li) === open) return;
-            paintBranch(li, open);
+        const setOpen = (listItem, open) => {
+            if (!listItem.querySelector(':scope > .nds-btn') || !listItem.querySelector(':scope > ul') || isOpen(listItem) === open) return;
+            setBranch(listItem, open);
         };
         // A label match shows the item and everything under it; a group stays, and opens, while anything inside matches.
-        const visit = (li, q, shown) => {
-            const sub = li.querySelector(':scope > ul');
-            const own = li.querySelector(':scope > :is(.nds-btn, a)');
+        const visit = (listItem, query, shown) => {
+            const sub = listItem.querySelector(':scope > ul');
+            const own = listItem.querySelector(':scope > :is(.nds-btn, a)');
             // The label only: a group button's count tag must not match a digit.
-            const text = own ? (own.querySelector('.nds-label') || own).textContent : sub ? '' : li.textContent;
-            const match = shown || norm(text + ' ' + (li.getAttribute('data-search-value') || '')).includes(q);
+            const text = own ? (own.querySelector('.nds-label') || own).textContent : sub ? '' : listItem.textContent;
+            const match = shown || normalizeText(text + ' ' + (listItem.getAttribute('data-search-value') || '')).includes(query);
             let found = sub ? 0 : +match;
-            if (sub) for (const child of sub.children) found += visit(child, q, match);
-            li.hidden = !match && !found;
-            if (sub && q && found) setOpen(li, true);
+            if (sub) for (const child of sub.children) found += visit(child, query, match);
+            listItem.hidden = !match && !found;
+            if (sub && query && found) setOpen(listItem, true);
             return found;
         };
         // The branches open before the first query, so clearing the box puts the menu back as it was.
         let before = null;
         const filter = () => {
             if (!drawer._searchTeardown) return; // a debounced call after destroy()
-            const q = norm(input.value.trim());
-            const groups = () => [...list.querySelectorAll('li')].filter(li => li.querySelector(':scope > ul'));
-            if (q && !before) before = groups().filter(isOpen);
+            const query = normalizeText(input.value.trim());
+            const getGroups = () => [...list.querySelectorAll('li')].filter(listItem => listItem.querySelector(':scope > ul'));
+            if (query && !before) before = getGroups().filter(isOpen);
             let found = 0;
-            for (const li of list.children) found += visit(li, q, !q);
-            if (!q && before) {
-                groups().forEach(li => setOpen(li, before.includes(li)));
+            for (const listItem of list.children) found += visit(listItem, query, !query);
+            if (!query && before) {
+                getGroups().forEach(listItem => setOpen(listItem, before.includes(listItem)));
                 before = null;
             }
-            empty.hidden = !q || found > 0;
+            empty.hidden = !query || found > 0;
         };
 
-        const ac = new AbortController();
-        input.addEventListener('input', NDS.debounce(filter, 120), { signal: ac.signal });
+        const controller = new AbortController();
+        input.addEventListener('input', NDS.debounce(filter, 120), { signal: controller.signal });
         input.addEventListener('keydown', (e) => {
             // First Escape clears the query; the next one goes to the page.
             if (e.key !== 'Escape' || !input.value) return;
@@ -351,10 +351,10 @@
             input.value = '';
             input.dispatchEvent(new Event('input', { bubbles: true }));
             filter();
-        }, { signal: ac.signal });
+        }, { signal: controller.signal });
 
         drawer._searchTeardown = () => {
-            ac.abort();
+            controller.abort();
             input.value = '';
             filter();
             box.remove();
@@ -367,27 +367,27 @@
     // INITIALIZATION
     // ==============================================
 
-    function createDrawer(drawer) {
+    function setupDrawer(drawer) {
         if (drawer.hasAttribute('data-nds-drawer-initialized')) return;
 
-        initOpenState(drawer);
-        initToggles(drawer);
-        initActiveStates(drawer);
+        setupOpenState(drawer);
+        setupToggles(drawer);
+        setupActiveStates(drawer);
         setupSearch(drawer);
         watchActive();
 
         drawer.setAttribute('data-nds-drawer-initialized', 'true');
     }
 
-    function initAllDrawers() {
+    function setupAllDrawers() {
         document.querySelectorAll(config.selectors.drawer).forEach(drawer => {
             if (drawer.closest('code')) return;
-            createDrawer(drawer);
+            setupDrawer(drawer);
         });
     }
 
     function destroyDrawer(drawer) {
-        // Abort all submenu-toggle listeners attached in initToggles
+        // Abort all submenu-toggle listeners attached in setupToggles
         if (drawer._togglesAC) {
             drawer._togglesAC.abort();
             delete drawer._togglesAC;
@@ -402,9 +402,9 @@
     // ==============================================
 
     NDS.Drawer = {
-        init: initAllDrawers,
-        reinit: initAllDrawers,
-        create: createDrawer,
+        init: setupAllDrawers,
+        reinit: setupAllDrawers,
+        create: setupDrawer,
         destroy: destroyDrawer,
         toggle: toggleSubmenu
     };

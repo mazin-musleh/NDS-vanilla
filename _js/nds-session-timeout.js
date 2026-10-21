@@ -53,8 +53,8 @@
     });
 
 
-    const html = (key) => NDS.escapeHtml(strings.text(key));
-    const icon = (name) => `<div class="nds-card-header">
+    const getEscapedText = (key) => NDS.escapeHtml(strings.text(key));
+    const buildIcon = (name) => `<div class="nds-card-header">
     <div class="nds-card-featured-icon">
       <span class="nds-featured-icon nds-xl nds-circle">
         <i class="nds-icon nds-hgi-${name}" aria-hidden="true"></i>
@@ -62,31 +62,31 @@
     </div>
   </div>`;
 
-    const warningMarkup = () => `<dialog id="${WARN_ID}" class="nds-session-timeout nds-modal nds-card nds-stroke nds-sm nds-center" data-status="warning" role="alertdialog" aria-labelledby="${WARN_ID}-title" aria-describedby="${WARN_ID}-desc ${WARN_ID}-countdown">
-  ${icon('alert-circle')}
+    const buildWarningMarkup = () => `<dialog id="${WARN_ID}" class="nds-session-timeout nds-modal nds-card nds-stroke nds-sm nds-center" data-status="warning" role="alertdialog" aria-labelledby="${WARN_ID}-title" aria-describedby="${WARN_ID}-desc ${WARN_ID}-countdown">
+  ${buildIcon('alert-circle')}
   <div class="nds-card-content">
     <div class="nds-card-text">
-      <span class="nds-card-title" id="${WARN_ID}-title">${html('warning_title')}</span>
-      <p class="nds-card-description" id="${WARN_ID}-desc">${html('warning_description')}</p>
+      <span class="nds-card-title" id="${WARN_ID}-title">${getEscapedText('warning_title')}</span>
+      <p class="nds-card-description" id="${WARN_ID}-desc">${getEscapedText('warning_description')}</p>
       <span class="nds-card-number"><span class="nds-countdown" id="${WARN_ID}-countdown" data-countdown=""><span class="nds-countdown-value" data-unit="m">--</span>:<span class="nds-countdown-value" data-unit="s">--</span></span></span>
     </div>
   </div>
   <div class="nds-card-actions">
-    <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close><span class="nds-label">${html('stay')}</span></button>${logoutUrl ? `
-    <a class="nds-btn nds-secondary-outline nds-lg" href="${NDS.escapeHtml(logoutUrl)}"><span class="nds-label">${html('sign_out')}</span></a>` : ''}
+    <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close><span class="nds-label">${getEscapedText('stay')}</span></button>${logoutUrl ? `
+    <a class="nds-btn nds-secondary-outline nds-lg" href="${NDS.escapeHtml(logoutUrl)}"><span class="nds-label">${getEscapedText('sign_out')}</span></a>` : ''}
   </div>
 </dialog>`;
 
-    const endedMarkup = () => `<dialog id="${ENDED_ID}" class="nds-session-timeout nds-modal nds-card nds-stroke nds-sm nds-center" data-status="error" data-modal-static role="alertdialog" aria-labelledby="${ENDED_ID}-title" aria-describedby="${ENDED_ID}-desc">
-  ${icon('cancel-circle')}
+    const buildEndedMarkup = () => `<dialog id="${ENDED_ID}" class="nds-session-timeout nds-modal nds-card nds-stroke nds-sm nds-center" data-status="error" data-modal-static role="alertdialog" aria-labelledby="${ENDED_ID}-title" aria-describedby="${ENDED_ID}-desc">
+  ${buildIcon('cancel-circle')}
   <div class="nds-card-content">
     <div class="nds-card-text">
-      <span class="nds-card-title" id="${ENDED_ID}-title">${html('ended_title')}</span>
-      <p class="nds-card-description" id="${ENDED_ID}-desc">${html('ended_description')}</p>
+      <span class="nds-card-title" id="${ENDED_ID}-title">${getEscapedText('ended_title')}</span>
+      <p class="nds-card-description" id="${ENDED_ID}-desc">${getEscapedText('ended_description')}</p>
     </div>
   </div>
   <div class="nds-card-actions">
-    <a class="nds-btn nds-primary nds-lg" href="${NDS.escapeHtml(signinUrl || location.href)}"><span class="nds-label">${html('sign_in')}</span></a>
+    <a class="nds-btn nds-primary nds-lg" href="${NDS.escapeHtml(signinUrl || location.href)}"><span class="nds-label">${getEscapedText('sign_in')}</span></a>
   </div>
 </dialog>`;
 
@@ -107,19 +107,19 @@
     let ended = false;
     let redirected = false;
 
-    const stored = () => { try { return +localStorage.getItem(key) || 0; } catch { return 0; } };
+    const readStoredTime = () => { try { return +localStorage.getItem(key) || 0; } catch { return 0; } };
 
     // One timeout to the next edge: the warning, then the end. Hidden, asleep or restored tabs re-check on return.
     function check() {
         clearTimeout(timer);
         if (ended) return;
-        renewed = Math.max(renewed, stored()); // another tab may have renewed
+        renewed = Math.max(renewed, readStoredTime()); // another tab may have renewed
         const left = renewed + timeout - Date.now();
         if (left <= 0) return end();
         if (left <= warn) {
             if (!warning) {
                 warning = true;
-                warnEl = build(WARN_ID, warningMarkup);
+                warnEl = build(WARN_ID, buildWarningMarkup);
                 // Before the focus, so a screen reader reads the real time left.
                 const countdown = warnEl.querySelector('.nds-countdown');
                 if (countdown) NDS.Countdown.setTarget(countdown, Math.ceil(left / 1000));
@@ -139,7 +139,7 @@
     const store = (ms) => { try { localStorage.setItem(key, String(ms)); } catch {} };
 
     function renew(at) {
-        renewed = Math.max(at, stored()); // never behind another tab's renewal
+        renewed = Math.max(at, readStoredTime()); // never behind another tab's renewal
         store(renewed);
         check();
     }
@@ -152,11 +152,11 @@
         const at = renewed;
         document.dispatchEvent(new CustomEvent('nds:session:extend', { detail: { reason } }));
         if (!extendUrl) return;
-        NDS.request(extendUrl, { method: 'POST', credentials: 'same-origin', redirect: 'manual' }).catch((err) => {
+        NDS.request(extendUrl, { method: 'POST', credentials: 'same-origin', redirect: 'manual' }).catch((error) => {
             // Status 0 is a redirect under redirect: 'manual', the server sending the user to sign in.
-            if (err.status === 401 || err.status === 0) return end();
+            if (error.status === 401 || error.status === 0) return end();
             console.warn('NDS SessionTimeout: the extend request failed; the old deadline stands'
-                + (err.status === 403 ? '. A 403 is often a missing CSRF token: renew in nds:session:extend instead' : ''), err);
+                + (error.status === 403 ? '. A 403 is often a missing CSRF token: renew in nds:session:extend instead' : ''), error);
             // Not renewed after all: back to the old deadline, unless something renewed since.
             // ponytail: other tabs keep the optimistic deadline; their own extend fails or ends it.
             if (renewed === at) { renewed = before; store(before); check(); }
@@ -170,32 +170,32 @@
         const go = document.dispatchEvent(new CustomEvent('nds:session:end', { cancelable: true }));
         if (go && logoutUrl) { redirected = true; location.assign(logoutUrl); }
         // A new dialog, not the warning restyled: opening it moves focus, so the change is announced.
-        else if (go) NDS.Modal.open(endedEl = build(ENDED_ID, endedMarkup));
+        else if (go) NDS.Modal.open(endedEl = build(ENDED_ID, buildEndedMarkup));
         // Nothing replaced the warning: its Stay button would do nothing now.
         else if (warnEl && NDS.state.has(warnEl, 'open')) NDS.Modal.close();
     }
 
-    function onActivity() {
+    function handleActivity() {
         if (!warning && !ended && Date.now() - Math.max(renewed, tried) >= renewEvery) extend('activity');
     }
 
     function init(options) {
         if (initDone) return;
-        const o = options || {};
-        timeout = o.timeout * 1000;
-        warn = (o.warn || 120) * 1000;
+        const config = options || {};
+        timeout = config.timeout * 1000;
+        warn = (config.warn || 120) * 1000;
         if (!(timeout > warn)) {
-            console.warn('NDS SessionTimeout: init() needs timeout, a number of seconds above warn', o);
+            console.warn('NDS SessionTimeout: init() needs timeout, a number of seconds above warn', config);
             return;
         }
-        if (warn < 20000) console.warn('NDS SessionTimeout: a warn under 20 seconds fails WCAG 2.2.1', o);
+        if (warn < 20000) console.warn('NDS SessionTimeout: a warn under 20 seconds fails WCAG 2.2.1', config);
         initDone = true;
         // Activity renews before the warning could open, so an active user never sees it.
         renewEvery = Math.min(60000, (timeout - warn) / 2);
-        extendUrl = NDS.safeUrl(o.extend);
-        logoutUrl = NDS.safeUrl(o.logout);
-        signinUrl = NDS.safeUrl(o.signin);
-        key = 'nds-session:' + (o.key || extendUrl || '');
+        extendUrl = NDS.safeUrl(config.extend);
+        logoutUrl = NDS.safeUrl(config.logout);
+        signinUrl = NDS.safeUrl(config.signin);
+        key = 'nds-session:' + (config.key || extendUrl || '');
         strings.load();
         // The warning's buttons close through Modal's delegated handlers, unwired on a page with no other modal.
         NDS.Modal.init();
@@ -203,7 +203,7 @@
         abortController = new AbortController();
         const { signal } = abortController;
         for (const type of ['pointerdown', 'keydown', 'wheel']) {
-            document.addEventListener(type, onActivity, { signal, passive: true, capture: true });
+            document.addEventListener(type, handleActivity, { signal, passive: true, capture: true });
         }
         document.addEventListener('visibilitychange', () => { if (!document.hidden) check(); }, { signal });
         // Back/forward cache restore. Back after the logout redirect would show the old page again: leave again.
@@ -219,7 +219,7 @@
         // The page was just served, or a view was just mounted, with `left` seconds left.
         // ponytail: up to the bundle's load delay (~1-3 s) later than the server's clock; a Stay click in
         // that gap gets a 401, which ends the session. The server can pass a smaller `left`.
-        const left = parseInt(o.left, 10);
+        const left = parseInt(config.left, 10);
         renew(Date.now() - (left >= 0 ? timeout - Math.min(left * 1000, timeout) : 0));
     }
 

@@ -62,7 +62,7 @@
         return !!element;
     }
 
-    function message(input) {
+    function getMessage(input) {
         const validity = input.validity;
         // A blank custom message: the component shows the cause itself (password's red chips).
         if (validity.customError && !input.validationMessage.trim()) return '';
@@ -82,15 +82,15 @@
     }
 
     // A rule says so, or the loader's registry does for a component whose bundle has not landed.
-    const owns = (container) => rules.some((r) => r.owns && r.owns(container)) || NDS.init.owns(container);
+    const isOwned = (container) => rules.some((rule) => rule.owns && rule.owns(container)) || NDS.init.owns(container);
 
     const watchers = [];
     function addRule(selector, fn, opts = {}) {
         const rule = { selector, fn, on: opts.on || [], owns: opts.owns };
         rules.push(rule);
-        watchers.forEach((w) => w(rule));
+        watchers.forEach((watcher) => watcher(rule));
     }
-    function onRule(fn) {
+    function watchRules(fn) {
         watchers.push(fn);
         rules.forEach(fn);
     }
@@ -109,8 +109,8 @@
     const isRequired = (el) => el.hasAttribute('data-required') || el.classList.contains('nds-required');
 
     // Min defaults to 1 when required, max to the option count.
-    function checkedCount(field, boxes) {
-        const checked = Array.from(boxes).filter((b) => b.checked).length;
+    function checkCount(field, boxes) {
+        const checked = Array.from(boxes).filter((box) => box.checked).length;
         const min = parseInt(field.getAttribute('data-min-checked') || (isRequired(field) ? 1 : 0), 10);
         const max = parseInt(field.getAttribute('data-max-checked') || boxes.length, 10);
         const valid = checked >= min && checked <= max;
@@ -130,7 +130,7 @@
     }
 
     // A form-container's own field: never one inside a nested container, never a hidden carrier.
-    function ownField(container) {
+    function findOwnField(container) {
         const fields = container.querySelectorAll('input:not([type="hidden"]), textarea, select');
         for (let i = 0; i < fields.length; i++) {
             if (fields[i].closest('.nds-form-container') === container) return fields[i];
@@ -140,9 +140,9 @@
 
     function run(form, opts = {}) {
         const acc = { invalidFields: [], errors: [] };
-        const fail = (field, input, msg) => {
+        const fail = (field, input, errorText) => {
             acc.invalidFields.push(field);
-            acc.errors.push({ field, input, message: msg });
+            acc.errors.push({ field, input, message: errorText });
         };
 
         // The native pass: a field whose own input holds the value. A group answers as a whole,
@@ -150,11 +150,11 @@
         form.querySelectorAll('.nds-form-container').forEach((container) => {
             if (!isVisible(container, form)) return;
             if (container.classList.contains('nds-otp-container') || container.closest('.nds-form-group')) return;
-            if (owns(container)) return;
-            const input = ownField(container);
+            if (isOwned(container)) return;
+            const input = findOwnField(container);
             if (!input || input.disabled) return;
-            const msg = !input.checkValidity() ? message(input) : opts.extra && opts.extra(container, input);
-            if (msg != null && msg !== false) fail(container, input, msg);
+            const errorText = !input.checkValidity() ? getMessage(input) : opts.extra && opts.extra(container, input);
+            if (errorText != null && errorText !== false) fail(container, input, errorText);
         });
 
         // The rules: an element answers to the first that answers for it.
@@ -171,18 +171,18 @@
 
         // A required field whose rule has not started gets no verdict from its markup. The innermost
         // pending field answers; Form's field classes are the structure every component sits in.
-        const waiting = [...form.querySelectorAll('.nds-form-container, .nds-form-group')].filter((f) =>
-            !answered.has(f) && isVisible(f, form) && !isDisabled(f) && (isRequired(f) || f.querySelector('[required]')) && NDS.init.pending(f));
-        waiting.filter((f) => !waiting.some((g) => g !== f && f.contains(g))).forEach((f) => {
-            fail(f, f.querySelector(NDS.focusableSel), strings.text('still_loading'));
+        const waiting = [...form.querySelectorAll('.nds-form-container, .nds-form-group')].filter((field) =>
+            !answered.has(field) && isVisible(field, form) && !isDisabled(field) && (isRequired(field) || field.querySelector('[required]')) && NDS.init.pending(field));
+        waiting.filter((field) => !waiting.some((other) => other !== field && field.contains(other))).forEach((field) => {
+            fail(field, field.querySelector(NDS.focusableSel), strings.text('still_loading'));
             acc.pending = true;
         });
         // Page order, whatever order the rules registered in.
-        const order = (a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
-        acc.errors.sort((a, b) => order(a.field, b.field));
+        const order = (left, right) => (left.compareDocumentPosition(right) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
+        acc.errors.sort((left, right) => order(left.field, right.field));
         acc.invalidFields = acc.errors.map((e) => e.field);
         return acc;
     }
 
-    NDS.validation = { addRule, onRule, owns, check, run, message, isVisible, isRequired, checkedCount, rules };
+    NDS.validation = { addRule, onRule: watchRules, owns: isOwned, check, run, message: getMessage, isVisible, isRequired, checkedCount: checkCount, rules };
 })();

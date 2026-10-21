@@ -303,7 +303,7 @@ def verify(out, version, rules=None):
         return _markup(m.group(1)) if m else ''
     built = re.search(r'return `(<dialog.*?</dialog>)`', _read('_js/nds-accessibility.js'), re.S).group(1)
     if _canon('a11y-panel') != _markup('<template class="nds-panel-template">' + built.replace('${side}', 'end') + '</template>'):
-        sys.exit('Custom Panel in ui-shell/accessibility.md has drifted from panelMarkup() in '
+        sys.exit('Custom Panel in ui-shell/accessibility.md has drifted from buildPanelMarkup() in '
                  '_js/nds-accessibility.js. Copy it from there.')
     if _canon('a11y-fab') != _markup(_read('_includes/accessibility-panel.html')):
         sys.exit('FAB in ui-shell/accessibility.md has drifted from _includes/accessibility-panel.html.')

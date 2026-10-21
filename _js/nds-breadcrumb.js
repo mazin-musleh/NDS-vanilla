@@ -77,8 +77,8 @@
         }
 
         createDropdown(hiddenItems) {
-            const li = document.createElement('li');
-            li.className = 'nds-breadcrumb-ellipsis';
+            const ellipsisItem = document.createElement('li');
+            ellipsisItem.className = 'nds-breadcrumb-ellipsis';
 
             // Create nds-dropmenu structure
             const dropmenu = document.createElement('div');
@@ -110,9 +110,9 @@
 
             dropmenu.appendChild(button);
             dropmenu.appendChild(menu);
-            li.appendChild(dropmenu);
+            ellipsisItem.appendChild(dropmenu);
 
-            return li;
+            return ellipsisItem;
         }
 
         destroy() {
@@ -129,7 +129,7 @@
     }
 
     // Auto-initialize breadcrumbs on page load
-    function initializeBreadcrumbs() {
+    function setupBreadcrumbs() {
         const breadcrumbNavs = document.querySelectorAll('.nds-breadcrumb-nav');
 
         breadcrumbNavs.forEach(nav => {
@@ -145,12 +145,12 @@
 
     // Assigned at module eval so the loader's lazy stub resolves.
     NDS.Breadcrumb = {
-        init: initializeBreadcrumbs,
-        reinit: initializeBreadcrumbs,
+        init: setupBreadcrumbs,
+        reinit: setupBreadcrumbs,
         create: (nav) => {
             if (nav.ndsBreadcrumb) return nav.ndsBreadcrumb;
-            const inst = new NdsBreadcrumb(nav);
-            return inst.valid ? inst : null;
+            const instance = new NdsBreadcrumb(nav);
+            return instance.valid ? instance : null;
         },
         destroy: (nav) => nav?.ndsBreadcrumb?.destroy(),
     };

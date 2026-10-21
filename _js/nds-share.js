@@ -95,7 +95,7 @@
         // itself). Share items are plain buttons — no nested dropmenu to
         // mis-stamp — so a scoped sweep is unambiguous.
         document.querySelectorAll('.nds-share .nds-dropmenu-menu')
-            .forEach(m => m.classList.add('nds-share-menu'));
+            .forEach(menu => menu.classList.add('nds-share-menu'));
         document.addEventListener('click', (e) => {
             const button = e.target.closest(TARGET_SELECTOR);
             if (!button) return;

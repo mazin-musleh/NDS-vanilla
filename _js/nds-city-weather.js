@@ -63,7 +63,7 @@
     }
 
     // The cache holds the condition key, not text, so one entry serves every language.
-    async function updateWeather() {
+    async function syncWeather() {
         const el = document.getElementById('nds-weather-info');
         if (!el) return;
 
@@ -128,7 +128,7 @@
     }
 
     // City function with API caching
-    async function updateCity() {
+    async function syncCity() {
         const cityEl = document.getElementById('nds-city-name');
         const weatherEl = document.getElementById('nds-weather-info');
         if (!cityEl || !weatherEl) return;
@@ -191,7 +191,7 @@
     // has (selector, fn) dedup in core, so a re-run of init would re-stack them.
     let initDone = false;
 
-    function initializeCityWeather() {
+    function setupCityWeather() {
         const weatherEl = document.getElementById('nds-weather-info');
         const cityEl = document.getElementById('nds-city-name');
 
@@ -203,24 +203,24 @@
         // racing critical resources during post-DCL hydration. Runs on
         // every init, so a replaced widget element fills in again.
         NDS.onIdle(() => {
-            updateWeather();
-            updateCity();
+            syncWeather();
+            syncCity();
         });
 
         if (initDone) return;
         initDone = true;
 
         // Update weather every 15 minutes
-        setInterval(updateWeather, 15 * 60 * 1000);
+        setInterval(syncWeather, 15 * 60 * 1000);
 
         // City doesn't need interval - coordinates don't change, cached for 30 days
-        NDS.onAttrChange('html', ['lang'], () => { updateWeather(); updateCity(); });
+        NDS.onAttrChange('html', ['lang'], () => { syncWeather(); syncCity(); });
     }
 
     NDS.CityWeather = {
-        init: initializeCityWeather,
-        updateWeather,
-        updateCity
+        init: setupCityWeather,
+        updateWeather: syncWeather,
+        updateCity: syncCity
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

@@ -47,12 +47,12 @@
 
     // ── Utilities ──────────────────────────────────────────────────
 
-    function deepMerge(target, source) {
+    function mergeDeep(target, source) {
         const out = Object.assign({}, target);
         for (const key in source) {
             if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])
                 && target[key] && typeof target[key] === 'object' && !Array.isArray(target[key])) {
-                out[key] = deepMerge(target[key], source[key]);
+                out[key] = mergeDeep(target[key], source[key]);
             } else {
                 out[key] = source[key];
             }
@@ -60,56 +60,56 @@
         return out;
     }
 
-    function svgEl(tag, attrs) {
+    function buildSvgElement(tag, attributes) {
         const el = document.createElementNS(SVG_NS, tag);
-        if (attrs) for (const k in attrs) el.setAttribute(k, attrs[k]);
+        if (attributes) for (const key in attributes) el.setAttribute(key, attributes[key]);
         return el;
     }
 
-    function htmlEl(tag, cls, text) {
+    function buildHtmlElement(tag, cls, text) {
         const el = document.createElement(tag);
         if (cls) el.className = cls;
         if (text !== undefined) el.textContent = text;
         return el;
     }
 
-    function polarToCart(cx, cy, r, angleDeg) {
+    function toCartesian(cx, cy, radius, angleDeg) {
         const rad = (angleDeg - 90) * Math.PI / 180;
-        return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+        return { x: cx + radius * Math.cos(rad), y: cy + radius * Math.sin(rad) };
     }
 
-    function niceScale(min, max, ticks) {
+    function getNiceScale(min, max, ticks) {
         if (max === min) max = min + 1;
         const range = max - min;
         const roughStep = range / (ticks || 5);
         const mag = Math.pow(10, Math.floor(Math.log10(roughStep)));
-        const norm = roughStep / mag;
+        const normalized = roughStep / mag;
         let step;
-        if (norm <= 1) step = mag;
-        else if (norm <= 2) step = 2 * mag;
-        else if (norm <= 5) step = 5 * mag;
+        if (normalized <= 1) step = mag;
+        else if (normalized <= 2) step = 2 * mag;
+        else if (normalized <= 5) step = 5 * mag;
         else step = 10 * mag;
         const niceMin = Math.floor(min / step) * step;
         const niceMax = Math.ceil(max / step) * step;
         const steps = [];
-        for (let v = niceMin; v <= niceMax + step * 0.01; v += step) {
-            steps.push(Math.round(v * 1e10) / 1e10);
+        for (let value = niceMin; value <= niceMax + step * 0.01; value += step) {
+            steps.push(Math.round(value * 1e10) / 1e10);
         }
         return { min: niceMin, max: niceMax, step, steps };
     }
 
     // Compact notation for the K/M tiers in the page's language (e.g. "1.2K", Arabic "1.2 ألف");
     // values below 1000 keep the old full-precision String(n) path.
-    function formatNumber(n) {
-        return Math.abs(n) >= 1e3 ? NDS.formatNumber(n, { notation: 'compact', maximumFractionDigits: 1 }) : String(n);
+    function formatNumber(value) {
+        return Math.abs(value) >= 1e3 ? NDS.formatNumber(value, { notation: 'compact', maximumFractionDigits: 1 }) : String(value);
     }
 
-    function chartColor(index) {
+    function getChartColor(index) {
         return 'var(--_chart-color-' + (index % 6 + 1) + ')';
     }
 
-    function tryParse(str) {
-        try { return JSON.parse(str); } catch { return null; }
+    function tryParse(text) {
+        try { return JSON.parse(text); } catch { return null; }
     }
 
     // ── Tooltip data store ──────────────────────────────────────────
@@ -167,27 +167,27 @@
         _resolveOpts(opts) {
             const type = opts.type || 'bar';
             const defaults = typeDefaults[type] || typeDefaults.bar;
-            const merged = deepMerge(defaults, opts);
+            const merged = mergeDeep(defaults, opts);
             merged.type = type;
             return merged;
         }
 
-        _fmtVal(v) {
-            const f = this.opts.dataLabels?.format;
-            if (typeof f === 'function') return f(v);
-            if (typeof f === 'string') return formatNumber(v) + f;
-            return formatNumber(v);
+        _fmtVal(value) {
+            const formatter = this.opts.dataLabels?.format;
+            if (typeof formatter === 'function') return formatter(value);
+            if (typeof formatter === 'string') return formatNumber(value) + formatter;
+            return formatNumber(value);
         }
 
         _color(index) {
             if (this.opts.colors) return this.opts.colors[index % this.opts.colors.length];
-            return chartColor(index);
+            return getChartColor(index);
         }
 
         // ── Public API ─────────────────────────────────────────────
 
         update(newOpts) {
-            this.opts = this._resolveOpts(deepMerge(this.opts, newOpts));
+            this.opts = this._resolveOpts(mergeDeep(this.opts, newOpts));
             this.render();
         }
 
@@ -251,10 +251,10 @@
         _setupResize() {
             const renderLater = NDS.rafThrottle(() => this.render());
             this._offResize = NDS.onElementResize(this.el, () => {
-                const w = this.el.clientWidth;
-                if (!w || w === this._lastW) return;
+                const width = this.el.clientWidth;
+                if (!width || width === this._lastW) return;
                 const first = !this._lastW;
-                this._lastW = w;
+                this._lastW = width;
                 if (first) renderLater();
                 else return () => this.render();
             });
@@ -263,31 +263,31 @@
         // ── Layout helpers ────────────────────────────────────────
 
         _normSeries(series) {
-            return series.map((s, i) => ({
-                name: s.name || `Series ${i + 1}`,
-                data: Array.isArray(s.data) ? s.data : [s],
+            return series.map((entry, i) => ({
+                name: entry.name || `Series ${i + 1}`,
+                data: Array.isArray(entry.data) ? entry.data : [entry],
             }));
         }
 
         _layout(wrap, height, extraPadBottom = 0, startReach = 0) {
-            const isRTL = this._isRTL;
-            const w = wrap.clientWidth || this.el.clientWidth || 600;
-            const h = height || 350;
+            const isRtl = this._isRTL;
+            const totalWidth = wrap.clientWidth || this.el.clientWidth || 600;
+            const totalHeight = height || 350;
             const hasY = this.opts.yaxis?.show !== false;
             const pad = this.opts.padding || {};
             const axisPad = hasY ? 55 : 20;
             const padTop = pad.top ?? 20;
             const padBottom = (pad.bottom ?? 40) + extraPadBottom;
-            const baseLeft = pad.left ?? (isRTL ? 20 : axisPad);
-            const baseRight = pad.right ?? (isRTL ? axisPad : 20);
+            const baseLeft = pad.left ?? (isRtl ? 20 : axisPad);
+            const baseRight = pad.right ?? (isRtl ? axisPad : 20);
             // A tilted first label leans out past the y-axis side: widen that side to hold it.
-            const extraStart = Math.max(0, startReach - (isRTL ? baseRight : baseLeft));
-            const padLeft = baseLeft + (isRTL ? 0 : extraStart);
-            const padRight = baseRight + (isRTL ? extraStart : 0);
+            const extraStart = Math.max(0, startReach - (isRtl ? baseRight : baseLeft));
+            const padLeft = baseLeft + (isRtl ? 0 : extraStart);
+            const padRight = baseRight + (isRtl ? extraStart : 0);
             return {
-                w, h, padTop, padBottom, padLeft, padRight, isRTL, extraStart,
-                plotW: w - padLeft - padRight,
-                plotH: h - padTop - padBottom,
+                w: totalWidth, h: totalHeight, padTop, padBottom, padLeft, padRight, isRTL: isRtl, extraStart,
+                plotW: totalWidth - padLeft - padRight,
+                plotH: totalHeight - padTop - padBottom,
             };
         }
 
@@ -303,9 +303,9 @@
             const charW = fontSize * 0.6;
             const padding = 8;
 
-            const labelStrs = catLabels.map(l => String(l));
-            const maxLen = Math.max(1, ...labelStrs.map(s => s.length));
-            const maxLabelW = maxLen * charW;
+            const labelStrs = catLabels.map(label => String(label));
+            const maxLength = Math.max(1, ...labelStrs.map(labelText => labelText.length));
+            const maxLabelW = maxLength * charW;
 
             let step = 1;
             const dec = xaxis.labelDecimate;
@@ -341,13 +341,13 @@
             return { step, rotate, extraPad, startReach };
         }
 
-        _valToY(val, scale, L) {
-            return L.padTop + L.plotH - ((val - scale.min) / (scale.max - scale.min)) * L.plotH;
+        _valToY(value, scale, layout) {
+            return layout.padTop + layout.plotH - ((value - scale.min) / (scale.max - scale.min)) * layout.plotH;
         }
 
-        _createSvg(L, ariaLabel) {
-            return svgEl('svg', {
-                width: L.w, height: L.h,
+        _createSvg(layout, ariaLabel) {
+            return buildSvgElement('svg', {
+                width: layout.w, height: layout.h,
                 class: 'nds-chart-svg',
                 role: 'img',
                 // The chart element's own aria-label names what it shows; the type is the fallback.
@@ -361,53 +361,53 @@
             const { series, labels, height } = this.opts;
             if (!series?.length) return null;
 
-            const seriesArr = this._normSeries(series);
-            const catCount = Math.max(...seriesArr.map(s => s.data.length));
+            const seriesList = this._normSeries(series);
+            const catCount = Math.max(...seriesList.map(entry => entry.data.length));
             const catLabels = labels || Array.from({ length: catCount }, (_, i) => `${i + 1}`);
 
             // Two-step layout: provisional plotW → x-axis strategy → final layout with extraPad
             const provisional = this._layout(wrap, height);
             const xStrategy = this._xaxisStrategy(catLabels, provisional.plotW);
-            const L = this._layout(wrap, height, xStrategy.extraPad, xStrategy.startReach);
+            const layout = this._layout(wrap, height, xStrategy.extraPad, xStrategy.startReach);
 
-            const scale = computeScale(seriesArr, catCount);
-            const svg = this._createSvg(L, ariaLabel);
+            const scale = computeScale(seriesList, catCount);
+            const svg = this._createSvg(layout, ariaLabel);
 
-            if (this.opts.grid?.show) this._renderGrid(svg, scale, L);
-            if (this.opts.yaxis?.show) this._renderYAxis(svg, scale, L);
+            if (this.opts.grid?.show) this._renderGrid(svg, scale, layout);
+            if (this.opts.yaxis?.show) this._renderYAxis(svg, scale, layout);
 
-            return { seriesArr, catCount, catLabels, L, scale, svg, xStrategy };
+            return { seriesArr: seriesList, catCount, catLabels, L: layout, scale, svg, xStrategy };
         }
 
-        _renderGrid(svg, scale, L) {
-            scale.steps.forEach(v => {
-                const y = this._valToY(v, scale, L);
-                svg.appendChild(svgEl('line', {
-                    x1: L.padLeft, y1: y,
-                    x2: L.padLeft + L.plotW, y2: y,
+        _renderGrid(svg, scale, layout) {
+            scale.steps.forEach(value => {
+                const y = this._valToY(value, scale, layout);
+                svg.appendChild(buildSvgElement('line', {
+                    x1: layout.padLeft, y1: y,
+                    x2: layout.padLeft + layout.plotW, y2: y,
                     class: 'nds-chart-gridline',
                 }));
             });
         }
 
-        _renderYAxis(svg, scale, L) {
-            scale.steps.forEach(v => {
-                const txt = svgEl('text', {
-                    x: L.isRTL ? L.w - 8 - L.extraStart : L.padLeft - 8,
-                    y: this._valToY(v, scale, L) + 4,
+        _renderYAxis(svg, scale, layout) {
+            scale.steps.forEach(value => {
+                const textElement = buildSvgElement('text', {
+                    x: layout.isRTL ? layout.w - 8 - layout.extraStart : layout.padLeft - 8,
+                    y: this._valToY(value, scale, layout) + 4,
                     class: 'nds-chart-axis-label',
-                    'text-anchor': L.isRTL ? 'start' : 'end',
+                    'text-anchor': layout.isRTL ? 'start' : 'end',
                 });
-                txt.textContent = this._fmtVal(v);
-                svg.appendChild(txt);
+                textElement.textContent = this._fmtVal(value);
+                svg.appendChild(textElement);
             });
         }
 
         // edges: the first and last points sit on the plot's edges (a line chart), so their flat labels
         // run inward from the point instead of centring over it and spilling past the SVG.
-        _renderXLabels(svg, catLabels, xPositions, L, xStrategy, edges = false) {
+        _renderXLabels(svg, catLabels, xPositions, layout, xStrategy, edges = false) {
             const { step = 1, rotate = 0 } = xStrategy || {};
-            const baseY = L.padTop + L.plotH;
+            const baseY = layout.padTop + layout.plotH;
             const y = rotate ? baseY + 14 : baseY + 30;
             const last = catLabels.length - 1;
 
@@ -415,18 +415,18 @@
                 if (step > 1 && i % step !== 0) return;
 
                 const x = xPositions[i];
-                const attrs = { x, y, class: 'nds-chart-axis-label' };
+                const attributes = { x, y, class: 'nds-chart-axis-label' };
 
                 if (rotate === 0) {
-                    attrs['text-anchor'] = (edges && last > 0 && (i === 0 ? 'start' : i === last && 'end')) || 'middle';
+                    attributes['text-anchor'] = (edges && last > 0 && (i === 0 ? 'start' : i === last && 'end')) || 'middle';
                 } else {
-                    attrs['text-anchor'] = 'end';
-                    attrs.transform = `rotate(${L.isRTL ? rotate : -rotate} ${x} ${y})`;
+                    attributes['text-anchor'] = 'end';
+                    attributes.transform = `rotate(${layout.isRTL ? rotate : -rotate} ${x} ${y})`;
                 }
 
-                const txt = svgEl('text', attrs);
-                txt.textContent = label;
-                svg.appendChild(txt);
+                const textElement = buildSvgElement('text', attributes);
+                textElement.textContent = label;
+                svg.appendChild(textElement);
             });
         }
 
@@ -471,13 +471,13 @@
             const yTitle = this.opts.yaxis?.title;
             const xTitle = this.opts.xaxis?.title;
 
-            const body = htmlEl('div', 'nds-chart-body');
+            const body = buildHtmlElement('div', 'nds-chart-body');
             if (hasAxes && yTitle) {
-                body.appendChild(htmlEl('span', 'nds-chart-axis-title nds-chart-axis-title--y', yTitle));
+                body.appendChild(buildHtmlElement('span', 'nds-chart-axis-title nds-chart-axis-title--y', yTitle));
             }
 
-            const canvasWrap = htmlEl('div', 'nds-chart-canvas-wrap');
-            const canvas = htmlEl('div', 'nds-chart-canvas');
+            const canvasWrap = buildHtmlElement('div', 'nds-chart-canvas-wrap');
+            const canvas = buildHtmlElement('div', 'nds-chart-canvas');
 
             if (this.opts.legend?.show && this.opts.legend.position === 'top') {
                 canvasWrap.appendChild(this._buildLegend());
@@ -486,7 +486,7 @@
             canvasWrap.appendChild(canvas);
 
             if (hasAxes && xTitle) {
-                canvasWrap.appendChild(htmlEl('div', 'nds-chart-axis-title nds-chart-axis-title--x', xTitle));
+                canvasWrap.appendChild(buildHtmlElement('div', 'nds-chart-axis-title nds-chart-axis-title--x', xTitle));
             }
 
             if (this.opts.legend?.show && this.opts.legend.position === 'bottom') {
@@ -500,7 +500,7 @@
             else if (type === 'bar') this._renderBar(canvas);
             else if (type === 'line') this._renderLine(canvas);
 
-            this._tooltip = htmlEl('div', 'nds-chart-tooltip');
+            this._tooltip = buildHtmlElement('div', 'nds-chart-tooltip');
             this.el.appendChild(this._tooltip);
             this._lastW = this.el.clientWidth;
         }
@@ -510,7 +510,7 @@
         _renderPie(wrap) {
             const { series, labels, height, stroke, startAngle } = this.opts;
             const data = Array.isArray(series) ? series : [];
-            const total = data.reduce((s, v) => s + (typeof v === 'number' ? v : 0), 0);
+            const total = data.reduce((sum, value) => sum + (typeof value === 'number' ? value : 0), 0);
             if (!total) return;
 
             const size = height || 300;
@@ -519,7 +519,7 @@
             const isDonut = this.opts.type === 'donut';
             const innerR = isDonut ? outerR * (this.opts.donut?.size || 0.5) : 0;
 
-            const svg = svgEl('svg', {
+            const svg = buildSvgElement('svg', {
                 viewBox: `0 0 ${size} ${size}`,
                 class: 'nds-chart-svg',
                 role: 'img',
@@ -529,12 +529,12 @@
 
             let current = startAngle || 0;
 
-            data.forEach((val, i) => {
-                if (val <= 0) return;
-                const angle = (val / total) * 360;
+            data.forEach((value, i) => {
+                if (value <= 0) return;
+                const angle = (value / total) * 360;
                 const end = current + angle;
 
-                const slice = svgEl('path', {
+                const slice = buildSvgElement('path', {
                     d: this._arcPath(cx, cy, outerR, innerR, current, end),
                     fill: this._color(i),
                     class: 'nds-chart-slice',
@@ -546,24 +546,24 @@
                 }
 
                 const label = labels?.[i] || `Item ${i + 1}`;
-                const pct = ((val / total) * 100).toFixed(1) + '%';
+                const percent = ((value / total) * 100).toFixed(1) + '%';
                 this._bindTip(slice,
-                    `<strong>${NDS.escapeHtml(label)}</strong><br>${NDS.escapeHtml(formatNumber(val))} (${NDS.escapeHtml(pct)})`,
+                    `<strong>${NDS.escapeHtml(label)}</strong><br>${NDS.escapeHtml(formatNumber(value))} (${NDS.escapeHtml(percent)})`,
                     null, 'nds-chart-slice--active');
                 svg.appendChild(slice);
 
                 if (this.opts.dataLabels?.show && angle > 20) {
                     const labelR = isDonut ? (outerR + innerR) / 2 : outerR * 0.65;
-                    const pos = polarToCart(cx, cy, labelR, current + angle / 2);
-                    const txt = svgEl('text', {
-                        x: pos.x, y: pos.y,
+                    const position = toCartesian(cx, cy, labelR, current + angle / 2);
+                    const textElement = buildSvgElement('text', {
+                        x: position.x, y: position.y,
                         class: 'nds-chart-pie-label',
                         fill: 'var(--_chart-pie-label-' + (i % 6 + 1) + ')',
                         'text-anchor': 'middle',
                         'dominant-baseline': 'central',
                     });
-                    txt.textContent = pct;
-                    svg.appendChild(txt);
+                    textElement.textContent = percent;
+                    svg.appendChild(textElement);
                 }
 
                 current = end;
@@ -575,8 +575,8 @@
         _arcPath(cx, cy, outerR, innerR, startAngle, endAngle) {
             const sweep = Math.min(endAngle - startAngle, 359.999);
             const end = startAngle + sweep;
-            const outerStart = polarToCart(cx, cy, outerR, startAngle);
-            const outerEnd = polarToCart(cx, cy, outerR, end);
+            const outerStart = toCartesian(cx, cy, outerR, startAngle);
+            const outerEnd = toCartesian(cx, cy, outerR, end);
             const largeArc = sweep > 180 ? 1 : 0;
 
             if (innerR <= 0) {
@@ -588,8 +588,8 @@
                 ].join(' ');
             }
 
-            const innerStart = polarToCart(cx, cy, innerR, startAngle);
-            const innerEnd = polarToCart(cx, cy, innerR, end);
+            const innerStart = toCartesian(cx, cy, innerR, startAngle);
+            const innerEnd = toCartesian(cx, cy, innerR, end);
             return [
                 `M ${outerStart.x} ${outerStart.y}`,
                 `A ${outerR} ${outerR} 0 ${largeArc} 1 ${outerEnd.x} ${outerEnd.y}`,
@@ -605,68 +605,68 @@
             const { bar, dataLabels } = this.opts;
             const stacked = bar?.stacked || false;
 
-            const ctx = this._axisChart(wrap, strings.text('bar'), (seriesArr, catCount) => {
-                let maxVal = 0;
+            const context = this._axisChart(wrap, strings.text('bar'), (seriesEntries, catCount) => {
+                let maxValue = 0;
                 if (stacked) {
-                    for (let c = 0; c < catCount; c++) {
+                    for (let category = 0; category < catCount; category++) {
                         let sum = 0;
-                        seriesArr.forEach(s => { sum += (s.data[c] || 0); });
-                        if (sum > maxVal) maxVal = sum;
+                        seriesEntries.forEach(entry => { sum += (entry.data[category] || 0); });
+                        if (sum > maxValue) maxValue = sum;
                     }
                 } else {
-                    seriesArr.forEach(s => s.data.forEach(v => { if (v > maxVal) maxVal = v; }));
+                    seriesEntries.forEach(entry => entry.data.forEach(value => { if (value > maxValue) maxValue = value; }));
                 }
-                return niceScale(0, maxVal, 5);
+                return getNiceScale(0, maxValue, 5);
             });
-            if (!ctx) return;
+            if (!context) return;
 
-            const { seriesArr, catCount, catLabels, L, scale, svg, xStrategy } = ctx;
-            const groupW = L.plotW / catCount;
+            const { seriesArr: seriesList, catCount, catLabels, L: layout, scale, svg, xStrategy } = context;
+            const groupW = layout.plotW / catCount;
             const gapOffset = (groupW * (bar?.gap ?? 0.3)) / 2;
             const usableW = groupW - gapOffset * 2;
-            const barCount = stacked ? 1 : seriesArr.length;
+            const barCount = stacked ? 1 : seriesList.length;
             const barW = usableW / barCount;
             const radius = Math.min(bar?.borderRadius || 6, barW / 2);
 
-            for (let c = 0; c < catCount; c++) {
-                const ci = L.isRTL ? catCount - 1 - c : c;
-                const groupX = L.padLeft + ci * groupW + gapOffset;
-                let stackY = 0, stackTotal = 0, topIdx = -1;
+            for (let category = 0; category < catCount; category++) {
+                const ci = layout.isRTL ? catCount - 1 - category : category;
+                const groupX = layout.padLeft + ci * groupW + gapOffset;
+                let stackY = 0, stackTotal = 0, topIndex = -1;
 
                 if (stacked) {
-                    for (let si = seriesArr.length - 1; si >= 0; si--) {
-                        if ((seriesArr[si].data[c] || 0) > 0) { topIdx = si; break; }
+                    for (let si = seriesList.length - 1; si >= 0; si--) {
+                        if ((seriesList[si].data[category] || 0) > 0) { topIndex = si; break; }
                     }
-                    seriesArr.forEach(s => { stackTotal += (s.data[c] || 0); });
+                    seriesList.forEach(entry => { stackTotal += (entry.data[category] || 0); });
                 }
 
-                seriesArr.forEach((s, si) => {
-                    const val = s.data[c] || 0;
-                    const barH = (val / scale.max) * L.plotH;
+                seriesList.forEach((entry, si) => {
+                    const value = entry.data[category] || 0;
+                    const barH = (value / scale.max) * layout.plotH;
                     const x = groupX + (stacked ? 0 : si * barW);
                     const y = stacked
-                        ? L.padTop + L.plotH - stackY - barH
-                        : L.padTop + L.plotH - barH;
+                        ? layout.padTop + layout.plotH - stackY - barH
+                        : layout.padTop + layout.plotH - barH;
 
-                    const r = stacked ? (si === topIdx ? radius : 0) : radius;
-                    const w = stacked ? usableW : barW;
-                    const rect = this._roundedRect(x, y, w, barH, r);
+                    const cornerRadius = stacked ? (si === topIndex ? radius : 0) : radius;
+                    const rectWidth = stacked ? usableW : barW;
+                    const rect = this._roundedRect(x, y, rectWidth, barH, cornerRadius);
                     rect.setAttribute('fill', this._color(si));
                     rect.setAttribute('class', 'nds-chart-bar');
 
                     this._bindTip(rect,
-                        `<strong>${NDS.escapeHtml(s.name)}</strong><br>${NDS.escapeHtml(catLabels[c])}: ${NDS.escapeHtml(this._fmtVal(val))}`,
+                        `<strong>${NDS.escapeHtml(entry.name)}</strong><br>${NDS.escapeHtml(catLabels[category])}: ${NDS.escapeHtml(this._fmtVal(value))}`,
                         null, 'nds-chart-bar--active');
                     svg.appendChild(rect);
 
-                    if (dataLabels?.show && (!stacked || si === topIdx)) {
-                        const lbl = svgEl('text', {
-                            x: x + w / 2, y: y - 6,
+                    if (dataLabels?.show && (!stacked || si === topIndex)) {
+                        const labelElement = buildSvgElement('text', {
+                            x: x + rectWidth / 2, y: y - 6,
                             class: 'nds-chart-data-label',
                             'text-anchor': 'middle',
                         });
-                        lbl.textContent = this._fmtVal(stacked ? stackTotal : val);
-                        svg.appendChild(lbl);
+                        labelElement.textContent = this._fmtVal(stacked ? stackTotal : value);
+                        svg.appendChild(labelElement);
                     }
 
                     if (stacked) stackY += barH;
@@ -674,27 +674,27 @@
             }
 
             if (this.opts.xaxis?.show) {
-                const xPositions = catLabels.map((_, c) => {
-                    const ci = L.isRTL ? catCount - 1 - c : c;
-                    return L.padLeft + ci * groupW + groupW / 2;
+                const xPositions = catLabels.map((_, category) => {
+                    const ci = layout.isRTL ? catCount - 1 - category : category;
+                    return layout.padLeft + ci * groupW + groupW / 2;
                 });
-                this._renderXLabels(svg, catLabels, xPositions, L, xStrategy);
+                this._renderXLabels(svg, catLabels, xPositions, layout, xStrategy);
             }
 
             wrap.appendChild(svg);
         }
 
-        _roundedRect(x, y, w, h, r) {
-            if (h <= 0) return svgEl('path', { d: '' });
-            r = Math.min(r, h / 2, w / 2);
-            return svgEl('path', { d: [
-                `M ${x + r} ${y}`,
-                `L ${x + w - r} ${y}`,
-                `Q ${x + w} ${y} ${x + w} ${y + r}`,
-                `L ${x + w} ${y + h}`,
-                `L ${x} ${y + h}`,
-                `L ${x} ${y + r}`,
-                `Q ${x} ${y} ${x + r} ${y}`,
+        _roundedRect(x, y, width, height, radius) {
+            if (height <= 0) return buildSvgElement('path', { d: '' });
+            radius = Math.min(radius, height / 2, width / 2);
+            return buildSvgElement('path', { d: [
+                `M ${x + radius} ${y}`,
+                `L ${x + width - radius} ${y}`,
+                `Q ${x + width} ${y} ${x + width} ${y + radius}`,
+                `L ${x + width} ${y + height}`,
+                `L ${x} ${y + height}`,
+                `L ${x} ${y + radius}`,
+                `Q ${x} ${y} ${x + radius} ${y}`,
                 'Z',
             ].join(' ') });
         }
@@ -709,71 +709,71 @@
             const lineW = line?.width || 2;
             const showArea = line?.area || false;
 
-            const ctx = this._axisChart(wrap, strings.text('line'), (seriesArr) => {
-                let maxVal = 0, minVal = 0;
-                seriesArr.forEach(s => s.data.forEach(v => {
-                    if (v > maxVal) maxVal = v;
-                    if (v < minVal) minVal = v;
+            const context = this._axisChart(wrap, strings.text('line'), (seriesEntries) => {
+                let maxValue = 0, minValue = 0;
+                seriesEntries.forEach(entry => entry.data.forEach(value => {
+                    if (value > maxValue) maxValue = value;
+                    if (value < minValue) minValue = value;
                 }));
-                return niceScale(Math.min(0, minVal), maxVal, 5);
+                return getNiceScale(Math.min(0, minValue), maxValue, 5);
             });
-            if (!ctx) return;
+            if (!context) return;
 
-            const { seriesArr, catCount, catLabels, L, scale, svg, xStrategy } = ctx;
+            const { seriesArr: seriesList, catCount, catLabels, L: layout, scale, svg, xStrategy } = context;
 
             // Pre-compute x-positions (shared by points and x-labels)
-            const xPositions = catLabels.map((_, c) => {
-                const ratio = catCount === 1 ? 0.5 : c / (catCount - 1);
-                return L.isRTL
-                    ? L.padLeft + L.plotW - ratio * L.plotW
-                    : L.padLeft + ratio * L.plotW;
+            const xPositions = catLabels.map((_, category) => {
+                const ratio = catCount === 1 ? 0.5 : category / (catCount - 1);
+                return layout.isRTL
+                    ? layout.padLeft + layout.plotW - ratio * layout.plotW
+                    : layout.padLeft + ratio * layout.plotW;
             });
 
-            const computed = seriesArr.map((s, si) => {
-                const pts = s.data.map((v, idx) => ({
-                    x: xPositions[idx], y: this._valToY(v, scale, L), val: v, idx,
+            const computed = seriesList.map((entry, si) => {
+                const pts = entry.data.map((value, index) => ({
+                    x: xPositions[index], y: this._valToY(value, scale, layout), val: value, idx: index,
                 }));
-                return { s, pts, pathD: this._buildPath(pts, smooth), color: this._color(si) };
+                return { s: entry, pts, pathD: this._buildPath(pts, smooth), color: this._color(si) };
             });
 
             // Layer 1: Areas (gradient mask fades from peaks to baseline)
             if (showArea) {
                 const id = 'nds-af-' + uid++;
-                const baseline = L.padTop + L.plotH;
-                const topY = Math.min(...computed.flatMap(c => c.pts.map(p => p.y))) - L.plotH * 0.05;
+                const baseline = layout.padTop + layout.plotH;
+                const topY = Math.min(...computed.flatMap(computedSeries => computedSeries.pts.map(point => point.y))) - layout.plotH * 0.05;
 
-                const defs = svgEl('defs');
-                const grad = svgEl('linearGradient', {
+                const defs = buildSvgElement('defs');
+                const grad = buildSvgElement('linearGradient', {
                     id, gradientUnits: 'userSpaceOnUse',
                     x1: 0, y1: topY, x2: 0, y2: baseline,
                 });
-                grad.appendChild(svgEl('stop', { offset: '0%', class: 'nds-chart-area-top' }));
-                grad.appendChild(svgEl('stop', { offset: '50%', class: 'nds-chart-area-top' }));
-                grad.appendChild(svgEl('stop', { offset: '100%', class: 'nds-chart-area-bottom' }));
+                grad.appendChild(buildSvgElement('stop', { offset: '0%', class: 'nds-chart-area-top' }));
+                grad.appendChild(buildSvgElement('stop', { offset: '50%', class: 'nds-chart-area-top' }));
+                grad.appendChild(buildSvgElement('stop', { offset: '100%', class: 'nds-chart-area-bottom' }));
                 defs.appendChild(grad);
 
-                const mask = svgEl('mask', { id: id + '-m' });
-                mask.appendChild(svgEl('rect', {
-                    x: 0, y: topY, width: L.w, height: baseline - topY, fill: `url(#${id})`,
+                const mask = buildSvgElement('mask', { id: id + '-m' });
+                mask.appendChild(buildSvgElement('rect', {
+                    x: 0, y: topY, width: layout.w, height: baseline - topY, fill: `url(#${id})`,
                 }));
                 defs.appendChild(mask);
                 svg.insertBefore(defs, svg.firstChild);
 
-                const g = svgEl('g', { mask: `url(#${id}-m)` });
+                const group = buildSvgElement('g', { mask: `url(#${id}-m)` });
                 computed.forEach(({ pts, pathD, color }) => {
                     if (pts.length > 1) {
                         const areaD = pathD
                             + ` L ${pts[pts.length - 1].x} ${baseline}`
                             + ` L ${pts[0].x} ${baseline} Z`;
-                        g.appendChild(svgEl('path', { d: areaD, fill: color }));
+                        group.appendChild(buildSvgElement('path', { d: areaD, fill: color }));
                     }
                 });
-                svg.appendChild(g);
+                svg.appendChild(group);
             }
 
             // Layer 2: Lines
             computed.forEach(({ pathD, color }) => {
-                svg.appendChild(svgEl('path', {
+                svg.appendChild(buildSvgElement('path', {
                     d: pathD, stroke: color, 'stroke-width': lineW,
                     fill: 'none', class: 'nds-chart-line',
                 }));
@@ -783,18 +783,18 @@
             // index (e.g. 'last'). Only the inner dot at that index gets the --spotlight
             // class to inflate via CSS; hover --active dots elsewhere on the line do NOT
             // get a halo (transient hover ≠ persistent marker).
-            const spotlightOpt = line?.spotlight;
-            let spotlightHomeIdx = -1;
-            if (spotlightOpt !== undefined && spotlightOpt !== false && spotlightOpt !== null) {
-                const idx = spotlightOpt === 'last' ? catLabels.length - 1
-                    : spotlightOpt === 'first' ? 0
-                    : Number(spotlightOpt);
-                if (Number.isFinite(idx) && idx >= 0 && idx < catLabels.length) {
-                    spotlightHomeIdx = idx;
+            const spotlightOption = line?.spotlight;
+            let spotlightHomeIndex = -1;
+            if (spotlightOption !== undefined && spotlightOption !== false && spotlightOption !== null) {
+                const index = spotlightOption === 'last' ? catLabels.length - 1
+                    : spotlightOption === 'first' ? 0
+                    : Number(spotlightOption);
+                if (Number.isFinite(index) && index >= 0 && index < catLabels.length) {
+                    spotlightHomeIndex = index;
                     computed.forEach(({ pts, color }) => {
-                        const pt = pts.find(p => p.idx === idx);
+                        const pt = pts.find(point => point.idx === index);
                         if (!pt) return;
-                        svg.appendChild(svgEl('circle', {
+                        svg.appendChild(buildSvgElement('circle', {
                             cx: pt.x, cy: pt.y, r: dotR * 2.5,
                             fill: color, 'fill-opacity': 0.18,
                             class: 'nds-chart-spotlight-halo',
@@ -807,28 +807,28 @@
             // Layer 3: Dots (always rendered; CSS hides all but --active/--spotlight when
             // showDots is false). Single rendering path covers both visible and sparkline modes.
             const enableCrosshair = line?.crosshair !== false;
-            const dotsByIdx = catLabels.map(() => []);
+            const dotsByIndex = catLabels.map(() => []);
             this.el.classList.toggle('nds-chart--show-dots', showDots);
 
-            computed.forEach(({ s, pts, color }) => {
-                pts.forEach(p => {
-                    const dot = svgEl('circle', {
-                        cx: p.x, cy: p.y, r: dotR,
+            computed.forEach(({ s: entry, pts, color }) => {
+                pts.forEach(point => {
+                    const dot = buildSvgElement('circle', {
+                        cx: point.x, cy: point.y, r: dotR,
                         fill: 'var(--_chart-dot-fill)', stroke: color, 'stroke-width': 2,
                         class: 'nds-chart-dot',
                     });
                     svg.appendChild(dot);
-                    dotsByIdx[p.idx].push(dot);
+                    dotsByIndex[point.idx].push(dot);
 
                     // Per-dot tooltips only when crosshair is off (and only when dots are visible —
                     // hidden dots have no surface to hover, so the hit area would be misleading).
                     if (!enableCrosshair && showDots) {
-                        const hitArea = svgEl('circle', {
-                            cx: p.x, cy: p.y, r: dotR * 3,
+                        const hitArea = buildSvgElement('circle', {
+                            cx: point.x, cy: point.y, r: dotR * 3,
                             fill: 'transparent', class: 'nds-chart-dot-hit',
                         });
                         this._bindTip(hitArea,
-                            `<strong>${NDS.escapeHtml(s.name)}</strong><br>${NDS.escapeHtml(catLabels[p.idx])}: ${NDS.escapeHtml(this._fmtVal(p.val))}`,
+                            `<strong>${NDS.escapeHtml(entry.name)}</strong><br>${NDS.escapeHtml(catLabels[point.idx])}: ${NDS.escapeHtml(this._fmtVal(point.val))}`,
                             dot, 'nds-chart-dot--active');
                         svg.appendChild(hitArea);
                     }
@@ -837,9 +837,9 @@
 
             // Mark the spotlight home index (visible via --spotlight class). Stays put;
             // hover only toggles --active on the nearest dot, leaving the spotlight alone.
-            if (spotlightHomeIdx >= 0) {
-                (dotsByIdx[spotlightHomeIdx] || []).forEach(d =>
-                    d.classList.add('nds-chart-dot--spotlight'));
+            if (spotlightHomeIndex >= 0) {
+                (dotsByIndex[spotlightHomeIndex] || []).forEach(dot =>
+                    dot.classList.add('nds-chart-dot--spotlight'));
             }
 
             // Layer 4: Crosshair line + plot-area overlay (snaps to nearest x-index on hover)
@@ -850,37 +850,37 @@
                 // swipes scroll the page (a bare 'none' trapped page scroll on mobile).
                 svg.style.touchAction = 'pan-y';
 
-                const colors = computed.map(c => c.color);
-                const crosshair = svgEl('line', {
-                    x1: 0, y1: L.padTop, x2: 0, y2: L.padTop + L.plotH,
+                const colors = computed.map(computedSeries => computedSeries.color);
+                const crosshair = buildSvgElement('line', {
+                    x1: 0, y1: layout.padTop, x2: 0, y2: layout.padTop + layout.plotH,
                     class: 'nds-chart-crosshair',
                     style: 'display:none',
                 });
                 svg.appendChild(crosshair);
 
 
-                const overlay = svgEl('rect', {
-                    x: L.padLeft, y: L.padTop,
-                    width: L.plotW, height: L.plotH,
+                const overlay = buildSvgElement('rect', {
+                    x: layout.padLeft, y: layout.padTop,
+                    width: layout.plotW, height: layout.plotH,
                     fill: 'transparent',
                     class: 'nds-chart-overlay',
                 });
                 svg.appendChild(overlay);
 
-                let lastIdx = -1, tapStartIdx = -1;
+                let lastIndex = -1, tapStartIndex = -1;
                 const signal = this.renderAbortController.signal;
 
                 // Touch tooltips pin to the top of the chart and follow the crosshair X
                 // so the user's finger never covers them. Mouse keeps the cursor-follow
                 // behavior since that is not the same problem.
-                const positionTip = (e, crosshairX) => {
+                const setTipPosition = (e, crosshairX) => {
                     if (!this._tooltip) return;
                     const rect = this.el.getBoundingClientRect();
                     const tw = this._tooltip.offsetWidth;
                     if (e.pointerType && e.pointerType !== 'mouse') {
                         const gap = 8;
                         const svgRect = svg.getBoundingClientRect();
-                        const chartX = svgRect.left + (crosshairX / L.w) * svgRect.width - rect.left;
+                        const chartX = svgRect.left + (crosshairX / layout.w) * svgRect.width - rect.left;
                         // Place tooltip on the side with more room so it never covers the line
                         let x = chartX < rect.width / 2 ? chartX + gap : chartX - tw - gap;
                         x = Math.max(4, Math.min(x, rect.width - tw - 4));
@@ -894,60 +894,60 @@
                 };
 
                 const dismiss = () => {
-                    lastIdx = -1;
+                    lastIndex = -1;
                     crosshair.style.display = 'none';
-                    dotsByIdx.forEach(arr => arr.forEach(d => d.classList.remove('nds-chart-dot--active')));
+                    dotsByIndex.forEach(dots => dots.forEach(dot => dot.classList.remove('nds-chart-dot--active')));
                     this._hideTooltip();
                 };
 
                 // Build the tip as DOM so caller-supplied colors[] flow through
                 // marker.style.backgroundColor (a CSSOM setter) instead of an
                 // HTML style-attribute interpolation.
-                const fillTip = (idx) => {
+                const fillTip = (index) => {
                     this._tooltip.replaceChildren();
                     const title = document.createElement('strong');
-                    title.textContent = catLabels[idx] ?? '';
+                    title.textContent = catLabels[index] ?? '';
                     this._tooltip.appendChild(title);
-                    for (let si = 0; si < seriesArr.length; si++) {
-                        const s = seriesArr[si];
-                        const v = s.data[idx];
-                        if (v === undefined) continue;
+                    for (let si = 0; si < seriesList.length; si++) {
+                        const entry = seriesList[si];
+                        const value = entry.data[index];
+                        if (value === undefined) continue;
                         this._tooltip.appendChild(document.createElement('br'));
                         const marker = document.createElement('span');
                         marker.className = 'nds-chart-tip-marker';
                         marker.style.backgroundColor = colors[si];
                         this._tooltip.appendChild(marker);
-                        this._tooltip.appendChild(document.createTextNode(s.name + ': ' + this._fmtVal(v)));
+                        this._tooltip.appendChild(document.createTextNode(entry.name + ': ' + this._fmtVal(value)));
                     }
                     this._tooltip.classList.add('nds-chart-tooltip--visible');
                 };
 
                 // Snap the crosshair to the nearest x-index under the pointer.
-                const update = (e) => {
+                const setCrosshair = (e) => {
                     const rect = svg.getBoundingClientRect();
                     if (!rect.width) return;
-                    const mouseSvgX = ((e.clientX - rect.left) / rect.width) * L.w;
+                    const mouseSvgX = ((e.clientX - rect.left) / rect.width) * layout.w;
 
                     let nearest = 0, minDist = Infinity;
                     for (let i = 0; i < xPositions.length; i++) {
-                        const d = Math.abs(xPositions[i] - mouseSvgX);
-                        if (d < minDist) { minDist = d; nearest = i; }
+                        const distance = Math.abs(xPositions[i] - mouseSvgX);
+                        if (distance < minDist) { minDist = distance; nearest = i; }
                     }
 
-                    if (nearest === lastIdx) { positionTip(e, xPositions[lastIdx]); return; }
-                    lastIdx = nearest;
+                    if (nearest === lastIndex) { setTipPosition(e, xPositions[lastIndex]); return; }
+                    lastIndex = nearest;
                     crosshair.setAttribute('x1', xPositions[nearest]);
                     crosshair.setAttribute('x2', xPositions[nearest]);
                     crosshair.style.display = '';
 
-                    for (let i = 0; i < dotsByIdx.length; i++) {
+                    for (let i = 0; i < dotsByIndex.length; i++) {
                         const action = i === nearest ? 'add' : 'remove';
-                        dotsByIdx[i].forEach(d => d.classList[action]('nds-chart-dot--active'));
+                        dotsByIndex[i].forEach(dot => dot.classList[action]('nds-chart-dot--active'));
                     }
 
                     if (this.opts.tooltip?.show !== false && this._tooltip) {
                         fillTip(nearest);
-                        positionTip(e, xPositions[nearest]);
+                        setTipPosition(e, xPositions[nearest]);
                     }
                 };
 
@@ -958,13 +958,13 @@
                 overlay.addEventListener('pointerdown', (e) => {
                     if (e.pointerType !== 'mouse') {
                         e.preventDefault();
-                        tapStartIdx = lastIdx; // remember the pin (if any) before this touch, for toggle-on-tap
+                        tapStartIndex = lastIndex; // remember the pin (if any) before this touch, for toggle-on-tap
                         try { overlay.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ }
                     }
-                    update(e); // show on a press/click even without an x move
+                    setCrosshair(e); // show on a press/click even without an x move
                 }, { signal });
 
-                overlay.addEventListener('pointermove', update, { signal });
+                overlay.addEventListener('pointermove', setCrosshair, { signal });
 
                 // pointerleave fires on actual boundary crossing even when captured,
                 // so dismiss it only for mouse — touch is tap-to-pin (below).
@@ -979,12 +979,12 @@
                 // the gesture. Mouse is unaffected (hover-to-show / leave-to-hide).
                 overlay.addEventListener('pointercancel', dismiss, { signal });
                 overlay.addEventListener('pointerup', (e) => {
-                    if (e.pointerType !== 'mouse' && lastIdx === tapStartIdx) dismiss();
+                    if (e.pointerType !== 'mouse' && lastIndex === tapStartIndex) dismiss();
                 }, { signal });
             }
 
             if (this.opts.xaxis?.show) {
-                this._renderXLabels(svg, catLabels, xPositions, L, xStrategy, true);
+                this._renderXLabels(svg, catLabels, xPositions, layout, xStrategy, true);
             }
 
             wrap.appendChild(svg);
@@ -993,40 +993,40 @@
         _buildPath(pts, smooth) {
             if (!pts.length) return '';
             if (!smooth || pts.length < 2) {
-                return pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+                return pts.map((point, i) => `${i === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ');
             }
-            let d = `M ${pts[0].x} ${pts[0].y}`;
+            let path = `M ${pts[0].x} ${pts[0].y}`;
             for (let i = 0; i < pts.length - 1; i++) {
                 const p0 = pts[Math.max(i - 1, 0)];
                 const p1 = pts[i];
                 const p2 = pts[i + 1];
                 const p3 = pts[Math.min(i + 2, pts.length - 1)];
-                const t = 8;
-                const cp1x = p1.x + (p2.x - p0.x) / t;
-                const cp1y = p1.y + (p2.y - p0.y) / t;
-                const cp2x = p2.x - (p3.x - p1.x) / t;
-                const cp2y = p2.y - (p3.y - p1.y) / t;
-                d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+                const divisor = 8;
+                const cp1x = p1.x + (p2.x - p0.x) / divisor;
+                const cp1y = p1.y + (p2.y - p0.y) / divisor;
+                const cp2x = p2.x - (p3.x - p1.x) / divisor;
+                const cp2y = p2.y - (p3.y - p1.y) / divisor;
+                path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
             }
-            return d;
+            return path;
         }
 
         // ── Legend ────────────────────────────────────────────────
 
         _buildLegend() {
             const { series, labels, type } = this.opts;
-            const legend = htmlEl('div', 'nds-chart-legend');
+            const legend = buildHtmlElement('div', 'nds-chart-legend');
             const isPie = type === 'pie' || type === 'donut';
             const items = isPie
                 ? (labels || series.map((_, i) => `Item ${i + 1}`))
-                : series.map((s, i) => s.name || `Series ${i + 1}`);
+                : series.map((entry, i) => entry.name || `Series ${i + 1}`);
 
             items.forEach((name, i) => {
-                const item = htmlEl('div', 'nds-chart-legend-item');
-                const marker = htmlEl('span', 'nds-chart-legend-marker');
+                const item = buildHtmlElement('div', 'nds-chart-legend-item');
+                const marker = buildHtmlElement('span', 'nds-chart-legend-marker');
                 marker.style.backgroundColor = this._color(i);
                 item.appendChild(marker);
-                item.appendChild(htmlEl('span', 'nds-chart-legend-label', name));
+                item.appendChild(buildHtmlElement('span', 'nds-chart-legend-label', name));
                 legend.appendChild(item);
             });
 
@@ -1079,7 +1079,7 @@
         });
     }
 
-    function initCharts() {
+    function setupCharts() {
         setupDirObserver();
         // Every root, stamped or not: the instance backref is the truth. A re-render
         // that keeps the element but wipes its SVG (stamp and instance intact) gets
@@ -1089,7 +1089,7 @@
                 if (!el.firstElementChild && !el.ndsChart._deferCount) el.ndsChart.render();
                 return;
             }
-            const config = configFromData(el);
+            const config = readChartConfig(el);
 
             // Series, not type: every render path reads series (the legend maps it even
             // for pie), so claiming an element on data-chart-type alone builds an instance
@@ -1103,12 +1103,12 @@
     }
 
     // The chart a markup element declares in its data-chart-* attributes.
-    function configFromData(el) {
-        const d = el.dataset;
-        const config = tryParse(d.chartConfig) || {};
-        if (d.chartType) config.type = d.chartType;
-        if (d.chartSeries) config.series = tryParse(d.chartSeries) || config.series;
-        if (d.chartLabels) config.labels = tryParse(d.chartLabels) || config.labels;
+    function readChartConfig(el) {
+        const dataset = el.dataset;
+        const config = tryParse(dataset.chartConfig) || {};
+        if (dataset.chartType) config.type = dataset.chartType;
+        if (dataset.chartSeries) config.series = tryParse(dataset.chartSeries) || config.series;
+        if (dataset.chartLabels) config.labels = tryParse(dataset.chartLabels) || config.labels;
         return config;
     }
 
@@ -1117,7 +1117,7 @@
         if (!el) return null;
         // No options: the chart its markup declares, so destroy → create rebuilds it.
         if (!opts) {
-            opts = configFromData(el);
+            opts = readChartConfig(el);
             if (!opts.series) return null;
         }
         setupDirObserver();
@@ -1128,8 +1128,8 @@
     }
 
     NDS.Chart = {
-        init: initCharts,
-        reinit: initCharts,
+        init: setupCharts,
+        reinit: setupCharts,
         create: createChart,
         destroy: (el) => (typeof el === 'string' ? document.querySelector(el) : el)?.ndsChart?.destroy(),
     };

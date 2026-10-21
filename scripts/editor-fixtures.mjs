@@ -1088,7 +1088,7 @@ try {
 
     // E2E: the remove picker names a component by its well-formed nds- class
     // and IGNORES a malformed token — even on DOM that never went through
-    // sanitize (componentNameOf's own /^nds-[\w-]+$/ gate, independent of the
+    // sanitize (getComponentName's own /^nds-[\w-]+$/ gate, independent of the
     // NDS_CLASS boundary strip). No markup-bearing token reaches the label sink.
     const cnofOut = await page.evaluate(async () => {
         const root = document.getElementById('story').closest('.nds-editor');

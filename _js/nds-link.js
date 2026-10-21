@@ -25,9 +25,9 @@
     // Image/icon-only links (e.g. `<a><img></a>`, `<a><i class="hgi …"></i></a>`)
     // skip auto-tagging because the trailing badge clashes visually. Authors can
     // still force the badge by adding `nds-external` themselves.
-    function isIconOrImageOnly(a) {
-        if (a.textContent.trim()) return false;
-        var kids = a.children;
+    function isIconOrImageOnly(link) {
+        if (link.textContent.trim()) return false;
+        var kids = link.children;
         if (!kids.length) return false;
         for (var i = 0; i < kids.length; i++) {
             var tag = kids[i].tagName;
@@ -42,14 +42,14 @@
     // ponytail: tag allowlist, not computed display — getComputedStyle before
     // first paint forces a whole-document style pass.
     var BLOCK = { P: 1, DIV: 1, H1: 1, H2: 1, H3: 1, H4: 1, H5: 1, H6: 1, LI: 1, UL: 1, OL: 1, BLOCKQUOTE: 1, FIGURE: 1, FIGCAPTION: 1, SECTION: 1, ARTICLE: 1 };
-    function badgeHost(a) {
-        var host = a, n = a.lastChild;
-        while (n) {
-            if (n.nodeType === 1) {
-                if (BLOCK[n.tagName] !== 1) break;
-                host = n; n = n.lastChild;
-            } else if (n.data.trim()) break;
-            else n = n.previousSibling;
+    function findBadgeHost(link) {
+        var host = link, node = link.lastChild;
+        while (node) {
+            if (node.nodeType === 1) {
+                if (BLOCK[node.tagName] !== 1) break;
+                host = node; node = node.lastChild;
+            } else if (node.data.trim()) break;
+            else node = node.previousSibling;
         }
         return host;
     }
@@ -57,20 +57,20 @@
     // Tag an external link: add the .nds-external badge class + target="_blank".
     // Guards are layout-free (hostname/closest/classList), ordered hostname-first
     // so internal links short-circuit immediately.
-    function tagExternal(a) {
-        var hostname = a.hostname;
+    function markExternal(link) {
+        var hostname = link.hostname;
         if (!hostname || hostname === location.hostname) return;
-        if (a.closest('[data-no-external]')) return;
-        if (a.classList.contains('nds-btn') && a.classList.contains('nds-icon-only')) return;
+        if (link.closest('[data-no-external]')) return;
+        if (link.classList.contains('nds-btn') && link.classList.contains('nds-icon-only')) return;
         // Text-only links (most) skip the walk, so it is never even compiled there.
-        var host = a.lastElementChild ? badgeHost(a) : a;
-        if (!a.classList.contains('nds-external') && isIconOrImageOnly(host)) return;
-        a.classList.add('nds-external');
-        if (host !== a) {
-            a.classList.add('nds-external-block');
+        var host = link.lastElementChild ? findBadgeHost(link) : link;
+        if (!link.classList.contains('nds-external') && isIconOrImageOnly(host)) return;
+        link.classList.add('nds-external');
+        if (host !== link) {
+            link.classList.add('nds-external-block');
             host.classList.add('nds-external-badge');
         }
-        a.setAttribute('target', '_blank');
+        link.setAttribute('target', '_blank');
     }
 
     // Tag every external anchor in one straight pass. No getBoundingClientRect —
@@ -83,7 +83,7 @@
     // hash, mailto and tel links never reach the hostname parse.
     function init() {
         const anchors = document.querySelectorAll('a[href*="//"]');
-        for (let i = 0; i < anchors.length; i++) tagExternal(anchors[i]);
+        for (let i = 0; i < anchors.length; i++) markExternal(anchors[i]);
     }
 
     NDS.Link = { init };

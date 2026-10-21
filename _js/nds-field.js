@@ -56,11 +56,11 @@
         listening.add(type);
         const [name, phase] = type.split(':');
         document.addEventListener(name, (e) => {
-            const c = control(e.target);
-            if (handlers[type]) handlers[type](e, c);
-            for (const p of parts) {
-                if (p.on && p.on[type]) p.on[type](e, c);
-                if (!c && p.around && p.around[type]) p.around[type](e);
+            const field = control(e.target);
+            if (handlers[type]) handlers[type](e, field);
+            for (const part of parts) {
+                if (part.on && part.on[type]) part.on[type](e, field);
+                if (!field && part.around && part.around[type]) part.around[type](e);
             }
         }, phase === 'capture');
     }
@@ -99,9 +99,9 @@
     }
 
     // A readonly input that stays interactive: its part opens a menu from it (Custom Select).
-    const interactive = (input) => input.readOnly && parts.some((p) => p.readonlyActive && p.readonlyActive(input));
+    const isInteractive = (input) => input.readOnly && parts.some((part) => part.readonlyActive && part.readonlyActive(input));
     // A readonly input takes no active or focus state, unless it stays interactive.
-    const isActive = (input) => !input.readOnly || interactive(input);
+    const isActive = (input) => !input.readOnly || isInteractive(input);
 
     // ── Sync ───────────────────────────────────────────────────────────
     // The container's states from its input: disabled, readonly, required.
@@ -109,7 +109,7 @@
         const container = fc.closest('.nds-form-container');
         if (!container) return;
         input.disabled ? NDS.state.add(container, 'disabled') : NDS.state.remove(container, 'disabled');
-        if (interactive(input)) return;
+        if (isInteractive(input)) return;
         input.readOnly ? NDS.state.add(container, 'readonly') : NDS.state.remove(container, 'readonly');
         // Radios and checkboxes answer as a group; a component that owns the value keeps the container's mark.
         // Ownership is asked only when the mark would change: never while typing.
@@ -130,38 +130,38 @@
         const fc = input.closest('.nds-form-control');
         if (!fc) return;
         sync(input, fc);
-        for (const p of parts) if (p.refresh) p.refresh(input, fc, opts);
+        for (const part of parts) if (part.refresh) part.refresh(input, fc, opts);
     }
 
     // ── The base's own handlers ────────────────────────────────────────
     // A mouse press marks the field active; mouseout stands in for mouseleave: an input has no children.
-    handlers.mousedown = (e, c) => {
-        if (c && c.container && isActive(c.input)) NDS.state.add(c.container, 'active');
+    handlers.mousedown = (e, field) => {
+        if (field && field.container && isActive(field.input)) NDS.state.add(field.container, 'active');
     };
-    handlers.mouseup = handlers.mouseout = (e, c) => {
-        if (c && c.container && isActive(c.input)) NDS.state.remove(c.container, 'active');
+    handlers.mouseup = handlers.mouseout = (e, field) => {
+        if (field && field.container && isActive(field.input)) NDS.state.remove(field.container, 'active');
     };
-    handlers.focusin = (e, c) => {
-        if (c && c.container && isActive(c.input)) NDS.state.add(c.container, 'focus');
+    handlers.focusin = (e, field) => {
+        if (field && field.container && isActive(field.input)) NDS.state.add(field.container, 'focus');
     };
-    handlers.focusout = (e, c) => {
-        if (c && c.container && isActive(c.input)) {
-            NDS.state.remove(c.container, 'focus');
-            NDS.state.remove(c.container, 'typing');
+    handlers.focusout = (e, field) => {
+        if (field && field.container && isActive(field.input)) {
+            NDS.state.remove(field.container, 'focus');
+            NDS.state.remove(field.container, 'typing');
         }
-        if (c && isActive(c.input)) sync(c.input, c.control);
+        if (field && isActive(field.input)) sync(field.input, field.control);
     };
-    handlers.keydown = handlers.paste = (e, c) => {
-        if (c && c.container && (e.type === 'paste' || isActive(c.input))) NDS.state.add(c.container, 'typing');
+    handlers.keydown = handlers.paste = (e, field) => {
+        if (field && field.container && (e.type === 'paste' || isActive(field.input))) NDS.state.add(field.container, 'typing');
     };
     // The browser ignores readOnly on a checkbox or a radio, and the readonly CSS blocks only the pointer:
     // cancel the click that Space or an arrow key sends, so the value stays.
     handlers['click:capture'] = (e) => {
-        const t = e.target;
-        if (t.readOnly && (t.type === 'checkbox' || t.type === 'radio')) e.preventDefault();
+        const target = e.target;
+        if (target.readOnly && (target.type === 'checkbox' || target.type === 'radio')) e.preventDefault();
     };
-    handlers.input = handlers.change = (e, c) => {
-        if (c) sync(c.input, c.control);
+    handlers.input = handlers.change = (e, field) => {
+        if (field) sync(field.input, field.control);
     };
     // The browser restores the values after the reset event: re-sync then, unless it was cancelled.
     handlers.reset = (e) => {
@@ -194,7 +194,7 @@
             const roots = new Set();
             controls.forEach((fc) => {
                 let root = fc;
-                for (let n = fc; n; n = n.parentElement) if (n.matches('.nds-form, .nds-form-group, .nds-form-container')) root = n;
+                for (let node = fc; node; node = node.parentElement) if (node.matches('.nds-form, .nds-form-group, .nds-form-container')) root = node;
                 roots.add(root);
             });
             roots.forEach((root) => {
@@ -207,12 +207,12 @@
     // ── First paint ────────────────────────────────────────────────────
     // Elements the init tail (autofocus, the reveal) has already handled.
     const tail = new WeakSet();
-    const selfAndInner = (el, sel) => {
-        const inner = Array.from(el.querySelectorAll(sel));
-        return el.matches && el.matches(sel) ? [el].concat(inner) : inner;
+    const getSelfAndInner = (el, selector) => {
+        const inner = Array.from(el.querySelectorAll(selector));
+        return el.matches && el.matches(selector) ? [el].concat(inner) : inner;
     };
 
-    function initInput(input, fc) {
+    function setupInput(input, fc) {
         if (input._ndsInitialized) return;
         input._ndsInitialized = true;
         const container = fc.closest('.nds-form-container');
@@ -230,16 +230,16 @@
     function create(el) {
         if (!el) return;
         start();
-        selfAndInner(el, '.nds-form-control').forEach((fc) => {
+        getSelfAndInner(el, '.nds-form-control').forEach((fc) => {
             if (fc.closest('code')) return;
             // A slider's inputs sit in its track, one level down.
             fc.querySelectorAll(':scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input').forEach((input) => {
-                initInput(input, fc);
-                for (const p of parts) if (p.init) p.init(input, fc);
+                setupInput(input, fc);
+                for (const part of parts) if (part.init) part.init(input, fc);
             });
         });
-        selfAndInner(el, '.nds-form-group').forEach((g) => NDS.state.apply(g, 'disabled', 'readonly', 'loading'));
-        for (const p of parts) if (p.create) p.create(el);
+        getSelfAndInner(el, '.nds-form-group').forEach((group) => NDS.state.apply(group, 'disabled', 'readonly', 'loading'));
+        for (const part of parts) if (part.create) part.create(el);
         // Restore autofocus, once per element: a re-sweep would pull focus from the field the user is in.
         // preventScroll: a plain focus() forces a layout in the middle of the init burst.
         const autofocus = el.querySelector('input[autofocus], textarea[autofocus], select[autofocus]');
@@ -251,10 +251,10 @@
         }
         // Reveal the [hidden] FOUC-guard wrappers now their controls carry state, on a wrapper's first
         // sweep only, so one the page or a component hid later stays hidden.
-        selfAndInner(el, '.nds-form-group, .nds-form-container, .nds-form-action').forEach((w) => {
-            if (tail.has(w)) return;
-            tail.add(w);
-            w.removeAttribute('hidden');
+        getSelfAndInner(el, '.nds-form-group, .nds-form-container, .nds-form-action').forEach((wrapper) => {
+            if (tail.has(wrapper)) return;
+            tail.add(wrapper);
+            wrapper.removeAttribute('hidden');
         });
     }
 

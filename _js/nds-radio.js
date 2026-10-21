@@ -21,9 +21,9 @@
         select_option: 'Please select an option',
     });
 
-    const groupOf = (el) => el.closest('.nds-form-group') || el;
+    const getGroup = (el) => el.closest('.nds-form-group') || el;
     const check = (group) => {
-        const picked = Array.from(group.querySelectorAll('input[type="radio"]')).some((r) => r.checked);
+        const picked = Array.from(group.querySelectorAll('input[type="radio"]')).some((radio) => radio.checked);
         const valid = !NDS.validation.isRequired(group) || picked;
         return { valid, message: valid ? '' : strings.text('select_option'), empty: !picked, selected: picked };
     };
@@ -48,10 +48,10 @@
 
     NDS.field.addType('radio', {
         refresh: (input) => { if (input.type === 'radio' && input.checked) repaint(input); },
-        on: { change: (e, c) => { if (c) repaint(c.input); } },
+        on: { change: (e, context) => { if (context) repaint(context.input); } },
     });
 
     NDS.Radio = {
-        validate: (el, opts) => NDS.Form.validateField(groupOf(el), opts, check),
+        validate: (el, opts) => NDS.Form.validateField(getGroup(el), opts, check),
     };
 })();

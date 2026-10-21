@@ -70,7 +70,7 @@
 
     // The site's own address picks the card: iu.edu.sa → edu, vision.sa → sa. Anything
     // else (localhost, a .com.sa, a preview host) is gov.
-    function domainOfHost() {
+    function getHostDomain() {
         const labels = location.hostname.split('.');
         if (labels.length < 2 || labels.at(-1) !== 'sa') return 'gov';
         const second = labels.at(-2);
@@ -83,7 +83,7 @@
     // wrote itself has no marker, so it stays.
     function pickDomain() {
         // 'edu.sa', '.edu.sa' and 'edu' all name the edu card; '.sa' and 'sa' the sa one.
-        let domain = (panel.getAttribute('data-digital-stamp-domain') || domainOfHost()).replace(/^\./, '');
+        let domain = (panel.getAttribute('data-digital-stamp-domain') || getHostDomain()).replace(/^\./, '');
         if (domain !== 'sa') domain = domain.replace(/\.sa$/, '');
         if (!domains.includes(domain)) {
             console.warn('NDS DigitalStamp: data-digital-stamp-domain "' + domain + '" is not one of ' + domains.join(', ') + '; showing gov');
@@ -148,12 +148,12 @@
     }
 
     function init() {
-        const t = document.querySelector('.nds-digital-stamp-tab');
-        const p = document.getElementById('nds-digital-stamp');
+        const nextTab = document.querySelector('.nds-digital-stamp-tab');
+        const nextPanel = document.getElementById('nds-digital-stamp');
         // Re-wire only when the tab or panel was replaced.
-        if (!t || !p || (t === tab && p === panel)) return;
-        tab = t;
-        panel = p;
+        if (!nextTab || !nextPanel || (nextTab === tab && nextPanel === panel)) return;
+        tab = nextTab;
+        panel = nextPanel;
         cancelClose?.();
         cancelClose = null;
 

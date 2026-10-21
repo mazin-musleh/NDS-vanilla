@@ -55,12 +55,12 @@
     function watch(grid) {
         if (offs.has(grid)) return;
         const first = grid.firstElementChild;
-        offs.set(grid, first ? NDS.onElementResize(first, () => (held(grid) ? undefined : mark(grid))) : () => {});
+        offs.set(grid, first ? NDS.onElementResize(first, () => (isHeld(grid) ? undefined : mark(grid))) : () => {});
         if (releasing) return;
         releasing = true;
         NDS.onDOMRemove(SEL, (grids) => grids.forEach(unwatch));
         // A re-observed first item delivers again, so the grid re-marks in the observer without forcing layout.
-        NDS.onChildrenChange(SEL, (grids) => grids.forEach((g) => { if (offs.has(g)) { unwatch(g); watch(g); } }));
+        NDS.onChildrenChange(SEL, (grids) => grids.forEach((gridEl) => { if (offs.has(gridEl)) { unwatch(gridEl); watch(gridEl); } }));
     }
 
     // Before the reveal, off-screen sections are content-visibility:auto, and Chrome
@@ -68,14 +68,14 @@
     // "ResizeObserver loop" error. Those grids mark once data-nds-loaded drops cv, still off-screen.
     const root = document.documentElement;
     const waiting = new Set();
-    function held(grid) {
+    function isHeld(grid) {
         if (root.hasAttribute('data-nds-loaded')) return false;
         const sec = grid.closest('.nds-content-section');
         if (!sec || sec.getBoundingClientRect().top < innerHeight || getComputedStyle(sec).contentVisibility !== 'auto') return false;
         if (!waiting.size) {
             const off = NDS.onAttrChange('html', ['data-nds-loaded'], () => {
                 off();
-                waiting.forEach((g) => { if (g.isConnected) { unwatch(g); watch(g); } });
+                waiting.forEach((gridEl) => { if (gridEl.isConnected) { unwatch(gridEl); watch(gridEl); } });
                 waiting.clear();
             });
         }
@@ -83,7 +83,7 @@
         return true;
     }
 
-    function gridsIn(container) {
+    function findGrids(container) {
         return container && container.matches?.(SEL)
             ? [container]
             : (container || document).querySelectorAll(SEL);
@@ -91,23 +91,23 @@
 
     // Explicit re-scan (marks now, so the read may force layout) and the
     // registration path for grids added after load.
-    function update(container) {
-        const grids = gridsIn(container);
-        for (let g = 0; g < grids.length; g++) { watch(grids[g]); const write = mark(grids[g]); if (write) write(); }
+    function syncGrids(container) {
+        const grids = findGrids(container);
+        for (let i = 0; i < grids.length; i++) { watch(grids[i]); const write = mark(grids[i]); if (write) write(); }
     }
 
     // Observe only — no reads at init: the observer's first delivery marks.
-    function init() { const grids = gridsIn(); for (let g = 0; g < grids.length; g++) watch(grids[g]); }
+    function init() { const grids = findGrids(); for (let i = 0; i < grids.length; i++) watch(grids[i]); }
 
     // Stops watching and takes back the marks it wrote.
     function destroy(container) {
-        const grids = gridsIn(container);
-        for (let g = 0; g < grids.length; g++) {
-            unwatch(grids[g]);
-            waiting.delete(grids[g]);
-            for (const item of grids[g].children) item.classList.remove(CLS);
+        const grids = findGrids(container);
+        for (let i = 0; i < grids.length; i++) {
+            unwatch(grids[i]);
+            waiting.delete(grids[i]);
+            for (const item of grids[i].children) item.classList.remove(CLS);
         }
     }
 
-    NDS.Grid = { init, refresh: update, destroy };
+    NDS.Grid = { init, refresh: syncGrids, destroy };
 })();

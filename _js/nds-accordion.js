@@ -39,13 +39,13 @@
     // so a nested .nds-accordion is legal — and its buttons/collapses match the
     // same selectors. An unguarded walk claims them: the outer controller wires
     // and index-pairs nodes the nested controller already drives.
-    const ownParts = (container, selector) => NDS.ownParts(container, selector, '.nds-accordion');
+    const findOwnParts = (container, selector) => NDS.ownParts(container, selector, '.nds-accordion');
 
     class NdsAccordion {
         constructor(accordionContainer) {
             this.accordionContainer = accordionContainer;
-            this.buttons = ownParts(accordionContainer, '.nds-accordion-btn');
-            this.collapses = ownParts(accordionContainer, '.nds-accordion-collapse');
+            this.buttons = findOwnParts(accordionContainer, '.nds-accordion-btn');
+            this.collapses = findOwnParts(accordionContainer, '.nds-accordion-collapse');
             this.isAnimating = false; // Simple flag to prevent clicks during animation
             
             if (this.buttons.length === 0) {
@@ -119,8 +119,8 @@
         // unbound buttons are wired and only they are state-synced: re-syncing
         // the whole set would collapse panels the user has already opened.
         refresh() {
-            this.buttons = ownParts(this.accordionContainer, '.nds-accordion-btn');
-            this.collapses = ownParts(this.accordionContainer, '.nds-accordion-collapse');
+            this.buttons = findOwnParts(this.accordionContainer, '.nds-accordion-btn');
+            this.collapses = findOwnParts(this.accordionContainer, '.nds-accordion-collapse');
             this.buttons.forEach((button, index) => {
                 if (button._ndsAcc === this) return;
                 this._syncItem(button, this.collapses[index]);
@@ -347,7 +347,7 @@
     }
 
     // Auto-initialize accordions on page load
-    function initializeAccordions() {
+    function setupAccordions() {
         const accordionContainers = document.querySelectorAll('.nds-accordion');
         
         accordionContainers.forEach(container => {
@@ -402,8 +402,8 @@
 
     // Assigned at module eval so the loader's lazy stub resolves.
     NDS.Accordion = {
-        init: initializeAccordions,
-        reinit: initializeAccordions,
+        init: setupAccordions,
+        reinit: setupAccordions,
         // Reuse a live controller rather than building a second one on the same
         // root: both would bind a click listener to every button, so one click
         // toggles twice — open then straight back closed. Registering here also

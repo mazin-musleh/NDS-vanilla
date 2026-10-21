@@ -73,12 +73,12 @@
     // Null prototype: a chip named "toString"/"constructor" must resolve to nothing,
     // not to an inherited Object method — those return truthy and would pass always.
     var RULES = Object.assign(Object.create(null), {
-        length:  function (v, ctx) { return v.length >= ctx.minLength; },
-        upper:   function (v) { return /[A-Z]/.test(v); },
-        lower:   function (v) { return /[a-z]/.test(v); },
-        digit:   function (v) { return /[0-9]/.test(v); },
-        special: function (v) { return /[^A-Za-z0-9]/.test(v); },
-        match:   function (v, ctx) { return ctx.matchValue !== null && v === ctx.matchValue; }
+        length:  function (value, context) { return value.length >= context.minLength; },
+        upper:   function (value) { return /[A-Z]/.test(value); },
+        lower:   function (value) { return /[a-z]/.test(value); },
+        digit:   function (value) { return /[0-9]/.test(value); },
+        special: function (value) { return /[^A-Za-z0-9]/.test(value); },
+        match:   function (value, context) { return context.matchValue !== null && value === context.matchValue; }
     });
 
     // A chip's test: data-rule-pattern (compiled once, cached on the chip) wins,
@@ -89,7 +89,7 @@
             if (chip._ndsRuleTest === undefined) {
                 try {
                     var re = new RegExp(pattern);
-                    chip._ndsRuleTest = function (v) { return re.test(v); };
+                    chip._ndsRuleTest = function (value) { return re.test(value); };
                 } catch (e) {
                     console.warn('NDS Password: invalid data-rule-pattern', chip);
                     chip._ndsRuleTest = null;
@@ -191,7 +191,7 @@
             // null when this container has no match source — the match rule reads it
             // to tell "no source wired" apart from "source is empty".
             var matchValue = this.matchSource ? this.matchSource.value : null;
-            var ctx = { minLength: this.minLength, matchValue: matchValue };
+            var context = { minLength: this.minLength, matchValue: matchValue };
 
             this.ruleChips.forEach(function (chip) {
                 var test = resolveTest(chip);
@@ -200,7 +200,7 @@
                 // without this guard a rule that tolerates "" (match against an
                 // empty source, or any consumer pattern using *) would count
                 // toward strength while its chip painted neutral.
-                var pass = !!value && test(value, ctx);
+                var pass = !!value && test(value, context);
                 active += 1;
                 results[chip.getAttribute('data-rule')] = pass;
                 // No paint until the user has typed something — a rule chip
@@ -218,14 +218,14 @@
             // A red chip already names the cause, so the block is blank (' ': Forms shows no
             // message). Only a mismatch with no match chip needs words.
             // Nothing fires on an empty field: required owns that message.
-            var msg = '';
-            if (value && !allPass) msg = mismatched && !('match' in results) ? strings.text('mismatch') : ' ';
-            this.input.setCustomValidity(msg);
+            var message = '';
+            if (value && !allPass) message = mismatched && !('match' in results) ? strings.text('mismatch') : ' ';
+            this.input.setCustomValidity(message);
 
             // Announce the error, else progress. Empty field says nothing — otherwise
             // every page load would announce "0 of 6 rules met".
             if (this.statusEl) {
-                this._announce(value ? (msg.trim() || (active ? strings.text('met', { n: passing, total: active }) : '')) : '');
+                this._announce(value ? (message.trim() || (active ? strings.text('met', { n: passing, total: active }) : '')) : '');
             }
 
             // No raw value in the detail — a listener that needs it reads the input.
@@ -253,7 +253,7 @@
         }
     }
 
-    function initializePasswords() {
+    function setupPasswords() {
         document.querySelectorAll('.nds-form-container.nds-password').forEach(function (el) {
             if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-password-initialized')) return;
@@ -262,12 +262,12 @@
     }
 
     NDS.Password = {
-        init: initializePasswords,
-        reinit: initializePasswords,
+        init: setupPasswords,
+        reinit: setupPasswords,
         create: function (element) {
             if (element.ndsPassword) return element.ndsPassword;
-            var inst = new NdsPassword(element);
-            return inst.valid ? inst : null;
+            var instance = new NdsPassword(element);
+            return instance.valid ? instance : null;
         },
         destroy: function (element) { if (element.ndsPassword) element.ndsPassword.destroy(); },
         check: function (element) { return element.ndsPassword ? element.ndsPassword.check() : null; },

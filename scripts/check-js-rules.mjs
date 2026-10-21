@@ -68,7 +68,7 @@ function stringEnd(src, i) {
 const FULL_TAG = [
     { file: 'nds-voice-input.js', fn: 'getLanguage' }, // SpeechRecognition.lang wants ar-SA, not ar
     { file: 'nds-date.js', fn: 'format' }, // Intl locales read the region
-    { file: 'nds-accessibility.js', fn: 'noLetterSpacing' }, // the script subtag decides cursive
+    { file: 'nds-accessibility.js', fn: 'isLetterSpacingBlocked' }, // the script subtag decides cursive
 ];
 
 // Blanks comments to spaces (newlines kept, so line numbers hold) and returns the code plus its strings.
@@ -1315,6 +1315,11 @@ const NAME_CASES = [
     [`(function(){ class NdsA { constructor() { this._ac = new AbortController(); } } })();`, ['P1']],
     [`/* NDS.A — public surface\n * Methods:\n *   el.ndsA.open()   open it\n */\n(function(){ class NdsA { constructor() { this.abortController = new AbortController(); this.box = 1; this._menu = 2; } open() {} close() {} } })();`, ['P12.11', 'P12.11']], // box, close
     [`(function(){ const SEL = '.x'; const CONFIG = { a: 1 }; const FROZEN = Object.freeze({}); const delayMs = 200; })();`, ['P12.8?', 'P12.8?']],
+    [`/* NDS.T — public surface
+ * Methods:
+ *   NDS.T.updateDate()   render
+ */
+(function(){ function updateDate() {} const site = {}; NDS.T = (function () { return { updateDate, site }; })(); })();`, ['P10.4', 'P10.4']], // the function and its public key; `site` is a value
 ];
 
 const args = process.argv.slice(2);

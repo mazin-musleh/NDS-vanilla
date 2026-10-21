@@ -63,7 +63,7 @@
     // hidden tab panel intersects when its tab opens.
     // Every NDS.init.refresh re-runs this; a block already watched keeps its one subscription.
     const watched = new WeakSet();
-    function initializeCodeProcessing() {
+    function setupCodeProcessing() {
         document.querySelectorAll('.nds-code code').forEach(function(codeElement) {
             if (watched.has(codeElement)) return;
             watched.add(codeElement);
@@ -79,7 +79,7 @@
                 destroy() { off(); if (offSize) offSize(); watched.delete(codeElement); },
             };
         });
-        sizeActionButtons();
+        syncActionButtons();
     }
 
     // A block that scrolls takes a tab stop so the keyboard can scroll it (Chrome
@@ -98,7 +98,7 @@
     // square. Stamped here rather than required in markup, so every block that
     // already ships gets it. A button carrying a visible label is left alone —
     // nds-icon-only would hide that label (and nds-copy's "Copied" swap with it).
-    function sizeActionButtons() {
+    function syncActionButtons() {
         document.querySelectorAll('.nds-code-action .nds-btn').forEach(function(button) {
             if (!button.querySelector('.nds-label')) {
                 button.classList.add('nds-icon-only', 'nds-md');
@@ -126,12 +126,12 @@
 
         let html = '';
         for (let i = 0; i < lines.length; i++) {
-            const row = prose && lineIsTableRow(lines[i]) ? ' nds-code-table-row' : '';
+            const row = prose && isTableRow(lines[i]) ? ' nds-code-table-row' : '';
             html += '<span class="nds-code-line' + row + '">' + renderTokens(lines[i]) + '</span>\n';
         }
         codeElement.innerHTML = html.trim();
-        codeElement.querySelectorAll('[data-code-swatch]').forEach(s => { s.style.background = s.dataset.codeSwatch; });
-        labelLanguage(codeElement, lang);
+        codeElement.querySelectorAll('[data-code-swatch]').forEach(swatchEl => { swatchEl.style.background = swatchEl.dataset.codeSwatch; });
+        setLanguageLabel(codeElement, lang);
         codeElement.dataset.ndsCodeHighlighted = 'true';
     }
 
@@ -150,7 +150,7 @@
     // labels correctly. Absolutely positioned in the block's top corner, so the
     // late-loading label costs no layout. A block with no lang class is named
     // from the sniffed language.
-    function labelLanguage(codeElement, detected) {
+    function setLanguageLabel(codeElement, detected) {
         const wrapper = codeElement.closest('.nds-code');
         if (!wrapper) return;
 
@@ -211,7 +211,7 @@
     // LANGUAGE DETECTION
     // ==============================================
 
-    function languageFromClass(className) {
+    function readLanguage(className) {
         if (/\blang(?:uage)?-html\b/.test(className)) return 'html';
         if (/\blang(?:uage)?-css\b/.test(className)) return 'css';
         if (/\blang(?:uage)?-(?:javascript|js)\b/.test(className)) return 'javascript';
@@ -224,7 +224,7 @@
     // plain rather than being guessed at; only a block with NO lang class at all
     // falls through to content sniffing. Returns null for "plain, don't lex".
     function detectLanguage(codeElement, source) {
-        const byClass = languageFromClass(codeElement.className);
+        const byClass = readLanguage(codeElement.className);
         if (byClass) return byClass;
         if (/\blang(?:uage)?-[\w-]+/.test(codeElement.className)) return null;
         const text = source != null ? source : codeElement.textContent;
@@ -232,14 +232,14 @@
     }
 
     function sniffLanguage(source) {
-        const s = source.trim();
-        if (s === '' || s[0] === '<') return 'html';
+        const trimmed = source.trim();
+        if (trimmed === '' || trimmed[0] === '<') return 'html';
         // JS first — an object/array literal would otherwise read as a CSS block.
-        if (/\b(?:function|const|let|var|import|export)\b|=>|console\.|document\.|window\./.test(s)) {
+        if (/\b(?:function|const|let|var|import|export)\b|=>|console\.|document\.|window\./.test(trimmed)) {
             return 'javascript';
         }
         // CSS — a `selector { … : … }` rule or a bare `prop: value;` declaration.
-        if (/[.#:\[\]\w-]+\s*\{[\s\S]*:/.test(s) || /^[\w-]+\s*:\s*[^;{}]+;/.test(s)) return 'css';
+        if (/[.#:\[\]\w-]+\s*\{[\s\S]*:/.test(trimmed) || /^[\w-]+\s*:\s*[^;{}]+;/.test(trimmed)) return 'css';
         return 'html';
     }
 
@@ -259,14 +259,14 @@
     function renderTokens(tokens) {
         let html = '';
         for (let i = 0; i < tokens.length; i++) {
-            const t = tokens[i];
-            const esc = NDS.escapeHtml(t.value);
-            if (t.type === 'value') {
-                const ws = t.value.match(/^\s*/)[0];
-                const sw = swatch(t.value);
-                if (sw) { html += ws + sw + '<span class="nds-syntax-value">' + esc.slice(ws.length) + '</span>'; continue; }
+            const token = tokens[i];
+            const escaped = NDS.escapeHtml(token.value);
+            if (token.type === 'value') {
+                const ws = token.value.match(/^\s*/)[0];
+                const sw = getSwatch(token.value);
+                if (sw) { html += ws + sw + '<span class="nds-syntax-value">' + escaped.slice(ws.length) + '</span>'; continue; }
             }
-            html += t.type ? '<span class="nds-syntax-' + t.type + '">' + esc + '</span>' : esc;
+            html += token.type ? '<span class="nds-syntax-' + token.type + '">' + escaped + '</span>' : escaped;
         }
         return html;
     }
@@ -277,15 +277,15 @@
     const COLOR_START = /^(#|rgb|hsl|hwb|lab|lch|oklab|oklch|color\(|color-mix\(|var\(--[\w-]+\)$)/;
     const NOT_A_PAINT = /^(inherit|initial|unset|revert|currentcolor|transparent)$/i;
     let rootStyle;
-    function swatch(value) {
-        const v = value.trim();
-        if (!COLOR_START.test(v)) return '';
-        const name = v.match(/^var\((--[\w-]+)\)$/);
+    function getSwatch(value) {
+        const trimmed = value.trim();
+        if (!COLOR_START.test(trimmed)) return '';
+        const name = trimmed.match(/^var\((--[\w-]+)\)$/);
         rootStyle = rootStyle || getComputedStyle(document.documentElement);
-        const paint = name ? rootStyle.getPropertyValue(name[1]).trim() : v;
+        const paint = name ? rootStyle.getPropertyValue(name[1]).trim() : trimmed;
         if (!paint || NOT_A_PAINT.test(paint) || !CSS.supports('color', paint)) return '';
         // The color goes on through CSSOM after the write: a style attribute in markup dies under a strict CSP.
-        return '<span class="nds-code-swatch" data-code-swatch="' + NDS.escapeHtml(v) + '" aria-hidden="true"></span>';
+        return '<span class="nds-code-swatch" data-code-swatch="' + NDS.escapeHtml(trimmed) + '" aria-hidden="true"></span>';
     }
 
     // Split a flat token stream into per-line token arrays. Any token that spans a
@@ -294,25 +294,25 @@
     function splitTokensIntoLines(tokens) {
         const lines = [[]];
         for (let i = 0; i < tokens.length; i++) {
-            const t = tokens[i];
-            if (t.value.indexOf('\n') === -1) {
-                if (t.value !== '') lines[lines.length - 1].push(t);
+            const token = tokens[i];
+            if (token.value.indexOf('\n') === -1) {
+                if (token.value !== '') lines[lines.length - 1].push(token);
                 continue;
             }
-            const parts = t.value.split('\n');
-            for (let p = 0; p < parts.length; p++) {
-                if (p > 0) lines.push([]);
-                if (parts[p] !== '') lines[lines.length - 1].push({ type: t.type, value: parts[p] });
+            const parts = token.value.split('\n');
+            for (let j = 0; j < parts.length; j++) {
+                if (j > 0) lines.push([]);
+                if (parts[j] !== '') lines[lines.length - 1].push({ type: token.type, value: parts[j] });
             }
         }
         // Drop trailing blank lines (indentation before the closing </code>).
-        while (lines.length > 0 && lineIsBlank(lines[lines.length - 1])) lines.pop();
+        while (lines.length > 0 && isBlankLine(lines[lines.length - 1])) lines.pop();
         return lines;
     }
 
     // A markdown table row (or its `|---|---|` divider): first non-blank token
     // text starts with a pipe.
-    function lineIsTableRow(lineTokens) {
+    function isTableRow(lineTokens) {
         for (let i = 0; i < lineTokens.length; i++) {
             const text = lineTokens[i].value.trim();
             if (text !== '') return text[0] === '|';
@@ -320,7 +320,7 @@
         return false;
     }
 
-    function lineIsBlank(lineTokens) {
+    function isBlankLine(lineTokens) {
         for (let i = 0; i < lineTokens.length; i++) {
             if (lineTokens[i].value.trim() !== '') return false;
         }
@@ -336,10 +336,10 @@
 
     function lexHtml(source) {
         const tokens = [];
-        const len = source.length;
+        const sourceLength = source.length;
         let i = 0;
 
-        while (i < len) {
+        while (i < sourceLength) {
             const open = source.indexOf('<', i);
             if (open === -1) {
                 tokens.push({ type: null, value: source.slice(i) });
@@ -350,7 +350,7 @@
             // HTML comment — consume through `-->` (which may itself contain `>`).
             if (source.startsWith('<!--', open)) {
                 const close = source.indexOf('-->', open + 4);
-                const end = close === -1 ? len : close + 3;
+                const end = close === -1 ? sourceLength : close + 3;
                 tokens.push({ type: 'comment', value: source.slice(open, end) });
                 i = end;
                 continue;
@@ -371,11 +371,11 @@
             const sub = name && embeddedLanguages[name[1].toLowerCase()];
             if (sub && tagText.charAt(tagText.length - 2) !== '/') {
                 const rel = source.slice(i).search(new RegExp('</' + name[1] + '\\s*>', 'i'));
-                const bodyEnd = rel === -1 ? len : i + rel;
+                const bodyEnd = rel === -1 ? sourceLength : i + rel;
                 const body = source.slice(i, bodyEnd);
                 if (body) {
                     const subTokens = sub === 'css' ? lexCss(body) : lexJs(body);
-                    for (let k = 0; k < subTokens.length; k++) tokens.push(subTokens[k]);
+                    for (let index = 0; index < subTokens.length; index++) tokens.push(subTokens[index]);
                 }
                 i = bodyEnd;
             }
@@ -409,8 +409,8 @@
             // Quoted attribute value.
             if (ch === '"' || ch === "'") {
                 flush();
-                const q = tag.indexOf(ch, i + 1);
-                const end = q === -1 ? tag.length : q + 1;
+                const quoteEnd = tag.indexOf(ch, i + 1);
+                const end = quoteEnd === -1 ? tag.length : quoteEnd + 1;
                 tokens.push({ type: 'value', value: tag.slice(i, end) });
                 i = end;
                 continue;
@@ -420,13 +420,13 @@
             // `=`, whitespace, `/`, `>` or end (covers both valued and boolean attrs).
             // `i` is always past the tag name here, so the prev char always exists.
             if (/[a-zA-Z]/.test(ch) && /\s/.test(tag.charAt(i - 1))) {
-                const attr = /^[a-zA-Z][a-zA-Z0-9-]*/.exec(tag.slice(i));
-                if (attr) {
-                    const after = tag.charAt(i + attr[0].length);
+                const attribute = /^[a-zA-Z][a-zA-Z0-9-]*/.exec(tag.slice(i));
+                if (attribute) {
+                    const after = tag.charAt(i + attribute[0].length);
                     if (after === '' || after === '=' || /[\s/>]/.test(after)) {
                         flush();
-                        tokens.push({ type: 'attr', value: attr[0] });
-                        i += attr[0].length;
+                        tokens.push({ type: 'attr', value: attribute[0] });
+                        i += attribute[0].length;
                         continue;
                     }
                 }
@@ -451,19 +451,19 @@
 
     function lexCss(source) {
         const tokens = [];
-        const n = source.length;
+        const sourceLength = source.length;
         let i = 0;
         // Block kinds we're nested in: 'decl' = declaration block, 'rules' = a
         // group at-rule body. Top level (empty stack) holds rules.
         const blockStack = [];
 
-        while (i < n) {
+        while (i < sourceLength) {
             const ch = source.charAt(i);
 
             // Comment anywhere (may span lines; split-into-lines breaks it safely).
             if (ch === '/' && source.charAt(i + 1) === '*') {
                 const end = source.indexOf('*/', i + 2);
-                const stop = end === -1 ? n : end + 2;
+                const stop = end === -1 ? sourceLength : end + 2;
                 tokens.push({ type: 'comment', value: source.slice(i, stop) });
                 i = stop;
                 continue;
@@ -479,23 +479,23 @@
 
             if (blockStack[blockStack.length - 1] === 'decl') {
                 const j = scanCss(source, i, ':;{}');
-                const d = source.charAt(j);
-                if (d === ':') {
-                    emitCssRun(tokens, source, i, j, 'property');
+                const stopChar = source.charAt(j);
+                if (stopChar === ':') {
+                    pushCssRun(tokens, source, i, j, 'property');
                     tokens.push({ type: null, value: ':' });
-                    const k = scanCss(source, j + 1, ';}'); // value up to ';' or block end
-                    emitCssRun(tokens, source, j + 1, k, 'value');
-                    i = k;
+                    const valueEnd = scanCss(source, j + 1, ';}'); // value up to ';' or block end
+                    pushCssRun(tokens, source, j + 1, valueEnd, 'value');
+                    i = valueEnd;
                     if (source.charAt(i) === ';') { tokens.push({ type: null, value: ';' }); i++; }
-                } else if (d === '{') {
+                } else if (stopChar === '{') {
                     // Nested rule (CSS nesting) — the run before '{' is its selector.
-                    emitCssRun(tokens, source, i, j, 'selector');
+                    pushCssRun(tokens, source, i, j, 'selector');
                     tokens.push({ type: null, value: '{' });
                     blockStack.push(CSS_GROUP_AT_RULE.test(source.slice(i, j).trim()) ? 'rules' : 'decl');
                     i = j + 1;
                 } else {
                     // ';' (stray), '}' (handled next loop), comment-open, or end.
-                    emitCssRun(tokens, source, i, j, null);
+                    pushCssRun(tokens, source, i, j, null);
                     i = j;
                     if (source.charAt(i) === ';') { tokens.push({ type: null, value: ';' }); i++; }
                 }
@@ -508,14 +508,14 @@
             // A bare `name: value;` outside any block (a doc snippet) is a declaration, not a selector.
             const colon = delim === ';' && !source.slice(i, j).trim().startsWith('@') ? source.indexOf(':', i) : -1;
             if (colon > -1 && colon < j) {
-                emitCssRun(tokens, source, i, colon, 'property');
+                pushCssRun(tokens, source, i, colon, 'property');
                 tokens.push({ type: null, value: ':' });
-                emitCssRun(tokens, source, colon + 1, j, 'value');
+                pushCssRun(tokens, source, colon + 1, j, 'value');
                 tokens.push({ type: null, value: ';' });
                 i = j + 1;
                 continue;
             }
-            emitCssRun(tokens, source, i, j, delim === '' ? null : 'selector');
+            pushCssRun(tokens, source, i, j, delim === '' ? null : 'selector');
             if (delim === '{') {
                 tokens.push({ type: null, value: '{' });
                 blockStack.push(CSS_GROUP_AT_RULE.test(source.slice(i, j).trim()) ? 'rules' : 'decl');
@@ -533,11 +533,11 @@
 
     // Index of the next char in `stops`, the next comment-open, or end of source.
     function scanCss(source, from, stops) {
-        const n = source.length;
+        const sourceLength = source.length;
         let j = from;
-        while (j < n) {
-            const c = source.charAt(j);
-            if (stops.indexOf(c) !== -1 || (c === '/' && source.charAt(j + 1) === '*')) break;
+        while (j < sourceLength) {
+            const char = source.charAt(j);
+            if (stops.indexOf(char) !== -1 || (char === '/' && source.charAt(j + 1) === '*')) break;
             j++;
         }
         return j;
@@ -547,62 +547,62 @@
     // tokens so colored spans hug their text (and newlines stay in plain runs).
     // A `selector` run is sub-tokenized for readability (classes vs attributes vs
     // pseudo-classes get distinct colors); at-rule preludes (`@…`) are left whole.
-    function emitCssRun(tokens, source, from, to, type) {
-        let a = from, b = to;
-        while (a < b && isWhitespace(source.charAt(a))) a++;
-        while (b > a && isWhitespace(source.charAt(b - 1))) b--;
-        if (a > from) tokens.push({ type: null, value: source.slice(from, a) });
-        if (b > a) {
-            const text = source.slice(a, b);
+    function pushCssRun(tokens, source, from, to, type) {
+        let runStart = from, runEnd = to;
+        while (runStart < runEnd && isWhitespace(source.charAt(runStart))) runStart++;
+        while (runEnd > runStart && isWhitespace(source.charAt(runEnd - 1))) runEnd--;
+        if (runStart > from) tokens.push({ type: null, value: source.slice(from, runStart) });
+        if (runEnd > runStart) {
+            const text = source.slice(runStart, runEnd);
             if (type === 'selector' && text.charAt(0) !== '@') {
                 pushSelectorTokens(tokens, text);
             } else {
                 tokens.push({ type: type, value: text });
             }
         }
-        if (to > b) tokens.push({ type: null, value: source.slice(b, to) });
+        if (to > runEnd) tokens.push({ type: null, value: source.slice(runEnd, to) });
     }
 
     // Split a selector into readable sub-tokens: attribute selectors -> 'attr',
     // pseudo-class/element -> 'keyword', class/id/tag names -> 'selector',
     // combinators/commas/parens/`*` -> plain. Values round-trip to the input.
     function pushSelectorTokens(tokens, text) {
-        const n = text.length;
+        const textLength = text.length;
         let i = 0;
-        while (i < n) {
+        while (i < textLength) {
             const ch = text.charAt(i);
             if (ch === '[') {                                   // attribute selector
                 const close = text.indexOf(']', i + 1);
-                const end = close === -1 ? n : close + 1;
+                const end = close === -1 ? textLength : close + 1;
                 tokens.push({ type: 'attr', value: text.slice(i, end) });
                 i = end;
             } else if (ch === ':') {                            // pseudo-class / element
                 let j = i + 1;
                 if (text.charAt(j) === ':') j++;
-                const m = /^[a-zA-Z-]+/.exec(text.slice(j));
-                const end = m ? j + m[0].length : j;
+                const match = /^[a-zA-Z-]+/.exec(text.slice(j));
+                const end = match ? j + match[0].length : j;
                 tokens.push({ type: 'keyword', value: text.slice(i, end) });
                 i = end;
             } else if (ch === '.' || ch === '#') {              // class / id
-                const m = /^[\w-]+/.exec(text.slice(i + 1));
-                const end = m ? i + 1 + m[0].length : i + 1;
+                const match = /^[\w-]+/.exec(text.slice(i + 1));
+                const end = match ? i + 1 + match[0].length : i + 1;
                 tokens.push({ type: 'selector', value: text.slice(i, end) });
                 i = end;
             } else if (/[a-zA-Z]/.test(ch)) {                   // tag / element name
-                const m = /^[\w-]+/.exec(text.slice(i));
-                tokens.push({ type: 'selector', value: m[0] });
-                i += m[0].length;
+                const match = /^[\w-]+/.exec(text.slice(i));
+                tokens.push({ type: 'selector', value: match[0] });
+                i += match[0].length;
             } else {                                            // combinators, commas, *, ( ), whitespace
                 let j = i + 1;
-                while (j < n && '[:.#'.indexOf(text.charAt(j)) === -1 && !/[a-zA-Z]/.test(text.charAt(j))) j++;
+                while (j < textLength && '[:.#'.indexOf(text.charAt(j)) === -1 && !/[a-zA-Z]/.test(text.charAt(j))) j++;
                 tokens.push({ type: null, value: text.slice(i, j) });
                 i = j;
             }
         }
     }
 
-    function isWhitespace(c) {
-        return c === ' ' || c === '\t' || c === '\n' || c === '\r' || c === '\f';
+    function isWhitespace(char) {
+        return char === ' ' || char === '\t' || char === '\n' || char === '\r' || char === '\f';
     }
 
     // ==============================================
@@ -615,17 +615,17 @@
     function lexByRegex(source, re, groupTypes) {
         const tokens = [];
         let last = 0;
-        let m;
+        let match;
         re.lastIndex = 0;
-        while ((m = re.exec(source)) !== null) {
-            if (m.index > last) tokens.push({ type: null, value: source.slice(last, m.index) });
+        while ((match = re.exec(source)) !== null) {
+            if (match.index > last) tokens.push({ type: null, value: source.slice(last, match.index) });
             let type = null;
-            for (let g = 1; g < groupTypes.length; g++) {
-                if (m[g] !== undefined) { type = groupTypes[g]; break; }
+            for (let group = 1; group < groupTypes.length; group++) {
+                if (match[group] !== undefined) { type = groupTypes[group]; break; }
             }
-            tokens.push({ type: type, value: m[0] });
+            tokens.push({ type: type, value: match[0] });
             last = re.lastIndex;
-            if (m.index === re.lastIndex) re.lastIndex++; // zero-length guard
+            if (match.index === re.lastIndex) re.lastIndex++; // zero-length guard
         }
         if (last < source.length) tokens.push({ type: null, value: source.slice(last) });
         return tokens;
@@ -654,7 +654,7 @@
     // and a throw here would end the bundle's script. There the guards drop and a
     // `.catch`-style member colors as the token — a blemish, not a crash.
     let JS_TOKEN_RE;
-    const jsTokenRe = () => JS_TOKEN_RE ||= (() => {
+    const getJsTokenPattern = () => JS_TOKEN_RE ||= (() => {
         try { return new RegExp(JS_TOKEN_SRC, 'g'); }
         catch { return new RegExp(JS_TOKEN_SRC.replace(/\(\?<!\\\.\)/g, ''), 'g'); }
     })();
@@ -662,7 +662,7 @@
     const jsGroupTypes = [null, 'comment', 'comment', 'template', 'string', 'number', 'keyword', 'literal', 'builtin'];
 
     function lexJs(source) {
-        return lexByRegex(source, jsTokenRe(), jsGroupTypes);
+        return lexByRegex(source, getJsTokenPattern(), jsGroupTypes);
     }
 
     // ==============================================
@@ -701,16 +701,16 @@
     // from its own lexer, mirroring <style>/<script> bodies in the HTML lexer. An
     // info string we don't lex (```bash) leaves the body a flat code run.
     function pushFenceTokens(tokens, value) {
-        const m = /^(```+[^\n]*\n)([\s\S]*)(\n```+[ \t]*)$/.exec(value);
-        if (!m) {
+        const match = /^(```+[^\n]*\n)([\s\S]*)(\n```+[ \t]*)$/.exec(value);
+        if (!match) {
             tokens.push({ type: 'string', value: value });
             return;
         }
-        const lang = languageFromClass('lang-' + m[1].replace(/`/g, '').trim());
-        const body = lang ? lexByLanguage(lang, m[2]) : [{ type: 'string', value: m[2] }];
-        tokens.push({ type: 'string', value: m[1] });
+        const lang = readLanguage('lang-' + match[1].replace(/`/g, '').trim());
+        const body = lang ? lexByLanguage(lang, match[2]) : [{ type: 'string', value: match[2] }];
+        tokens.push({ type: 'string', value: match[1] });
         for (let i = 0; i < body.length; i++) tokens.push(body[i]);
-        tokens.push({ type: 'string', value: m[3] });
+        tokens.push({ type: 'string', value: match[3] });
     }
 
     // ==============================================
@@ -739,7 +739,7 @@
     // ==============================================
 
     NDS.Code = {
-        init: initializeCodeProcessing,
+        init: setupCodeProcessing,
         highlight: reprocessCodeElement,
         detectLanguage: detectLanguage
     };

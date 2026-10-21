@@ -41,57 +41,57 @@
         const fmts = new Map();
         const regs = new Map();
         const warned = new Set();
-        const warnOnce = (msg) => { if (!warned.has(msg)) { warned.add(msg); console.warn('[NDS.Date] ' + msg); } };
+        const warnOnce = (message) => { if (!warned.has(message)) { warned.add(message); console.warn('[NDS.Date] ' + message); } };
         // An Intl.DateTimeFormat costs ICU init; format() on a built one is cheap.
-        const dtf = (locale, opts) => {
+        const getDateFormatter = (locale, opts) => {
             const key = locale + JSON.stringify(opts);
-            let f = fmts.get(key);
-            if (!f) fmts.set(key, f = new Intl.DateTimeFormat(locale, opts));
-            return f;
+            let formatter = fmts.get(key);
+            if (!formatter) fmts.set(key, formatter = new Intl.DateTimeFormat(locale, opts));
+            return formatter;
         };
-        const calOf = (c) => (c === 'hijri' ? 'islamic-umalqura' : c || 'gregory');
-        const partsOf = (f, t) => {
-            const p = {};
-            for (const { type, value } of f.formatToParts(t)) p[type] = +value;
-            return { y: p.year, m: p.month, d: p.day };
+        const toIntlCalendar = (calendar) => (calendar === 'hijri' ? 'islamic-umalqura' : calendar || 'gregory');
+        const getDayParts = (formatter, time) => {
+            const parts = {};
+            for (const { type, value } of formatter.formatToParts(time)) parts[type] = +value;
+            return { y: parts.year, m: parts.month, d: parts.day };
         };
-        const local = (t) => { const g = new Date(t); return new Date(g.getUTCFullYear(), g.getUTCMonth(), g.getUTCDate()); };
-        const ymdIn = (cal) => {
-            const f = dtf('en', { calendar: cal, numberingSystem: 'latn', timeZone: 'UTC', year: 'numeric', month: 'numeric', day: 'numeric' });
+        const toLocalDay = (time) => { const instant = new Date(time); return new Date(instant.getUTCFullYear(), instant.getUTCMonth(), instant.getUTCDate()); };
+        const getDayFormatter = (calendar) => {
+            const formatter = getDateFormatter('en', { calendar: calendar, numberingSystem: 'latn', timeZone: 'UTC', year: 'numeric', month: 'numeric', day: 'numeric' });
             // An unknown calendar silently resolves to gregory: say so.
-            if (f.resolvedOptions().calendar !== cal) warnOnce(`calendar "${cal}" is not supported here`);
-            return f;
+            if (formatter.resolvedOptions().calendar !== calendar) warnOnce(`calendar "${calendar}" is not supported here`);
+            return formatter;
         };
 
         // Local day → {y, m, d} in cal. Read at UTC noon, so no offset moves the day.
-        function toCal(date, cal) {
-            if (cal === 'gregory') return { y: date.getFullYear(), m: date.getMonth() + 1, d: date.getDate() };
-            return partsOf(ymdIn(cal), Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 12));
+        function toCalendarParts(date, calendar) {
+            if (calendar === 'gregory') return { y: date.getFullYear(), m: date.getMonth() + 1, d: date.getDate() };
+            return getDayParts(getDayFormatter(calendar), Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 12));
         }
 
         // {y, m, d} in cal → local day, or null when that day does not exist.
         // Non-gregory: estimate by the mean month, read the guess back in cal, step by the miss.
-        function fromCal(y, m, d, cal) {
-            if (cal === 'gregory') {
-                const t = new Date(y, m - 1, d);
-                return t.getFullYear() === y && t.getMonth() === m - 1 && t.getDate() === d ? t : null;
+        function fromCalendarParts(y, month, day, calendar) {
+            if (calendar === 'gregory') {
+                const date = new Date(y, month - 1, day);
+                return date.getFullYear() === y && date.getMonth() === month - 1 && date.getDate() === day ? date : null;
             }
-            if (!(m >= 1 && m <= 12 && d >= 1 && d <= 31)) return null;
-            const f = ymdIn(cal);
-            let t = Date.UTC(2000, 0, 1, 12);
+            if (!(month >= 1 && month <= 12 && day >= 1 && day <= 31)) return null;
+            const formatter = getDayFormatter(calendar);
+            let time = Date.UTC(2000, 0, 1, 12);
             for (let i = 0; i < 8; i++) {
-                const p = partsOf(f, t);
-                const miss = Math.round(((y - p.y) * 12 + m - p.m) * 29.53) + d - p.d;
-                if (!miss) return p.y === y && p.m === m && p.d === d ? local(t) : null;
-                t += miss * 864e5;
+                const parts = getDayParts(formatter, time);
+                const miss = Math.round(((y - parts.y) * 12 + month - parts.m) * 29.53) + day - parts.d;
+                if (!miss) return parts.y === y && parts.m === month && parts.d === day ? toLocalDay(time) : null;
+                time += miss * 864e5;
             }
             return null; // a day past the month's end never lands
         }
 
-        function zone() {
+        function readTimeZone() {
             const tz = document.documentElement.dataset.timezone;
             if (!tz) return undefined;
-            try { dtf('en', { timeZone: tz }); return tz; }
+            try { getDateFormatter('en', { timeZone: tz }); return tz; }
             catch { warnOnce(`data-timezone "${tz}" is not a timezone; using the visitor's`); return undefined; }
         }
 
@@ -101,63 +101,63 @@
         const names = NDS.i18n.strings('date', {
             hijri_months: ['Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani', 'Jumada al-Ula', 'Jumada al-Akhirah', 'Rajab', 'Shaban', 'Ramadan', 'Shawwal', 'Dhu al-Qadah', 'Dhu al-Hijjah'],
         });
-        const intlNames = (lang, opts, at) => {
-            const f = new Intl.DateTimeFormat(NDS.i18n._lang(lang), { timeZone: 'UTC', ...opts });
-            return Array.from({ length: opts.month ? 12 : 7 }, (_, i) => f.format(at(i)));
+        const getIntlNames = (lang, opts, at) => {
+            const formatter = new Intl.DateTimeFormat(NDS.i18n._lang(lang), { timeZone: 'UTC', ...opts });
+            return Array.from({ length: opts.month ? 12 : 7 }, (_, i) => formatter.format(at(i)));
         };
-        const monthNames = (calendar, lang) => (calendar === 'hijri'
+        const getMonthNames = (calendar, lang) => (calendar === 'hijri'
             ? names.text('hijri_months', null, lang)
-            : intlNames(lang, { month: 'long' }, i => Date.UTC(2000, i, 15)));
+            : getIntlNames(lang, { month: 'long' }, i => Date.UTC(2000, i, 15)));
         // Sunday first: 2 Jan 2000 was a Sunday.
-        const weekdayNames = (lang) => intlNames(lang, { weekday: 'short' }, i => Date.UTC(2000, 0, 2 + i));
+        const getWeekdayNames = (lang) => getIntlNames(lang, { weekday: 'short' }, i => Date.UTC(2000, 0, 2 + i));
 
         const formatFor = (el) => el?.closest?.('[data-date-format]:not([data-date-format=""])')?.dataset.dateFormat || 'DD/MM/YYYY';
-        const calendarFor = (el, fallback = 'gregory') => el?.closest?.('[data-calendar]:not([data-calendar=""])')?.dataset.calendar || fallback;
-        const siteFormat = () => formatFor(document.documentElement);
+        const resolveCalendar = (el, fallback = 'gregory') => el?.closest?.('[data-calendar]:not([data-calendar=""])')?.dataset.calendar || fallback;
+        const getSiteFormat = () => formatFor(document.documentElement);
 
         const api = {
             // Live: a script that sets the attributes after load still applies.
-            get site() { return { timeZone: zone(), format: siteFormat() }; },
+            get site() { return { timeZone: readTimeZone(), format: getSiteFormat() }; },
 
             formatFor,
-            calendarFor,
-            monthNames,
-            weekdayNames,
+            calendarFor: resolveCalendar,
+            monthNames: getMonthNames,
+            weekdayNames: getWeekdayNames,
 
             // Today in the site's timezone (the visitor's when unset), as a local day.
             today() {
-                const tz = zone();
-                if (!tz) { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
-                const p = partsOf(dtf('en', { timeZone: tz, numberingSystem: 'latn', year: 'numeric', month: 'numeric', day: 'numeric' }), new Date());
-                return new Date(p.y, p.m - 1, p.d);
+                const tz = readTimeZone();
+                if (!tz) { const now = new Date(); return new Date(now.getFullYear(), now.getMonth(), now.getDate()); }
+                const parts = getDayParts(getDateFormatter('en', { timeZone: tz, numberingSystem: 'latn', year: 'numeric', month: 'numeric', day: 'numeric' }), new Date());
+                return new Date(parts.y, parts.m - 1, parts.d);
             },
 
             // The caller names the format: 03/04/2026 is ambiguous, so nothing is guessed.
             parse(text, opts = {}) {
-                const format = opts.format || siteFormat();
+                const format = opts.format || getSiteFormat();
                 let re = regs.get(format);
                 if (!re) {
                     const order = [];
-                    const src = format.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(TOKENS, (t) => {
-                        order.push(t);
+                    const src = format.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(TOKENS, (token) => {
+                        order.push(token);
                         // A month name is print-only: the format never matches.
-                        if (t === 'MMMM') return '(?!)';
-                        return t === 'YYYY' ? '(\\d{4})' : t.length === 2 ? '(\\d{2})' : '(\\d{1,2})';
+                        if (token === 'MMMM') return '(?!)';
+                        return token === 'YYYY' ? '(\\d{4})' : token.length === 2 ? '(\\d{2})' : '(\\d{1,2})';
                     });
                     regs.set(format, re = { rx: new RegExp('^' + src + '$'), order });
                 }
                 // Arabic digits to ASCII, and the bidi marks Intl writes in Arabic out.
-                const s = NDS.latinDigits(text).replace(/[\u200e\u200f\u061c]/g, '').trim();
-                const match = s.match(re.rx);
+                const normalized = NDS.latinDigits(text).replace(/[\u200e\u200f\u061c]/g, '').trim();
+                const match = normalized.match(re.rx);
                 if (!match) return null;
-                let y = null, m = 1, d = 1;
-                re.order.forEach((t, i) => {
-                    const v = +match[i + 1];
-                    if (t[0] === 'Y') y = t === 'YY' ? 2000 + v : v; // ponytail: YY reads 20xx; add a year window if 19xx/21xx dates need it
-                    else if (t[0] === 'M') m = v;
-                    else d = v;
+                let y = null, month = 1, day = 1;
+                re.order.forEach((token, i) => {
+                    const value = +match[i + 1];
+                    if (token[0] === 'Y') y = token === 'YY' ? 2000 + value : value; // ponytail: YY reads 20xx; add a year window if 19xx/21xx dates need it
+                    else if (token[0] === 'M') month = value;
+                    else day = value;
                 });
-                return y === null ? null : fromCal(y, m, d, calOf(opts.calendar));
+                return y === null ? null : fromCalendarParts(y, month, day, toIntlCalendar(opts.calendar));
             },
 
             // { format } fills the tokens (ASCII digits, or `numerals`). Without it, Intl options
@@ -165,23 +165,23 @@
             format(date, opts = {}) {
                 if (!(date instanceof Date) || isNaN(date)) return '';
                 const { format, calendar, locale, numerals, ...intl } = opts;
-                const cal = calOf(calendar);
+                const intlCalendar = toIntlCalendar(calendar);
                 if (format || !Object.keys(intl).length) {
-                    const { y, m, d } = toCal(date, cal);
-                    const out = (format || siteFormat()).replace(TOKENS, (t) => {
-                        if (t === 'YYYY') return String(y);
-                        if (t === 'YY') return String(y).slice(-2);
-                        if (t === 'MMMM') return monthNames(calendar === 'hijri' ? 'hijri' : 'gregory', locale)[m - 1];
-                        return String(t[0] === 'M' ? m : d).padStart(t.length, '0');
+                    const { y, m: month, d: day } = toCalendarParts(date, intlCalendar);
+                    const out = (format || getSiteFormat()).replace(TOKENS, (token) => {
+                        if (token === 'YYYY') return String(y);
+                        if (token === 'YY') return String(y).slice(-2);
+                        if (token === 'MMMM') return getMonthNames(calendar === 'hijri' ? 'hijri' : 'gregory', locale)[month - 1];
+                        return String(token[0] === 'M' ? month : day).padStart(token.length, '0');
                     });
                     if (!numerals || numerals === 'latn') return out;
                     // The numbering system's zero, then offset: its digits are contiguous.
                     const zero = (0).toLocaleString('en-u-nu-' + numerals).charCodeAt(0);
-                    return out.replace(/\d/g, (c) => String.fromCharCode(zero + +c));
+                    return out.replace(/\d/g, (digit) => String.fromCharCode(zero + +digit));
                 }
-                const o = { ...intl, calendar: cal, numberingSystem: numerals || 'latn' };
-                try { return dtf(locale || document.documentElement.lang || 'en', o).format(date); }
-                catch { return dtf('en', o).format(date); }
+                const intlOptions = { ...intl, calendar: intlCalendar, numberingSystem: numerals || 'latn' };
+                try { return getDateFormatter(locale || document.documentElement.lang || 'en', intlOptions).format(date); }
+                catch { return getDateFormatter('en', intlOptions).format(date); }
             },
 
             convert(text, from, to) {
@@ -199,31 +199,31 @@
 
     // The day a datetime names, as a local date. With a zone it is an instant: its day in the
     // site's timezone, else in the visitor's.
-    function dayOf(value) {
-        const v = value.trim();
-        const m = DATETIME.exec(v);
-        if (!m) return null;
-        if (!m[4]) {
-            const d = new Date(+m[1], m[2] - 1, +m[3]);
-            return d.getDate() === +m[3] ? d : null;   // 2026-02-31 is no date
+    function readDay(value) {
+        const text = value.trim();
+        const match = DATETIME.exec(text);
+        if (!match) return null;
+        if (!match[4]) {
+            const date = new Date(+match[1], match[2] - 1, +match[3]);
+            return date.getDate() === +match[3] ? date : null;   // 2026-02-31 is no date
         }
-        const t = new Date(v);
-        if (isNaN(t)) return null;
+        const instant = new Date(text);
+        if (isNaN(instant)) return null;
         const tz = NDS.Date.site.timeZone;   // validated: a mistyped zone falls back, never throws
-        if (!tz) return new Date(t.getFullYear(), t.getMonth(), t.getDate());
-        const p = {};
+        if (!tz) return new Date(instant.getFullYear(), instant.getMonth(), instant.getDate());
+        const parts = {};
         new Intl.DateTimeFormat('en', { timeZone: tz, year: 'numeric', month: 'numeric', day: 'numeric' })
-            .formatToParts(t).forEach(x => { p[x.type] = +x.value; });
-        return new Date(p.year, p.month - 1, p.day);
+            .formatToParts(instant).forEach(x => { parts[x.type] = +x.value; });
+        return new Date(parts.year, parts.month - 1, parts.day);
     }
 
     function fill(root = document) {
-        const els = root.matches?.(SEL) ? [root] : [];
-        els.push(...(root.querySelectorAll?.(SEL) || []));
-        for (const el of els) {
+        const elements = root.matches?.(SEL) ? [root] : [];
+        elements.push(...(root.querySelectorAll?.(SEL) || []));
+        for (const el of elements) {
             const hijri = el.dataset.dateTo === 'hijri';
             // A Gregorian <time> is written only in a format of its own: else it already reads right.
-            const date = (hijri || el.dataset.dateFormat) && dayOf(el.getAttribute('datetime'));
+            const date = (hijri || el.dataset.dateFormat) && readDay(el.getAttribute('datetime'));
             if (!date) continue;
             el.textContent = NDS.Date.format(date, { calendar: hijri ? 'hijri' : 'gregory', format: NDS.Date.formatFor(el) });
             if (hijri && el.hasAttribute('data-date-era')) {

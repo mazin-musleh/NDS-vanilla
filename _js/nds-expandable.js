@@ -289,7 +289,7 @@
     }
 
     // Synchronous: the loader schedules init, and NDS.init.ready promises el.ndsExpandable after it.
-    function initializeExpandableContent() {
+    function setupExpandableContent() {
         document.querySelectorAll('.nds-expandable').forEach(container => {
             // Skip elements rendered inside <code> tags (markup text, not live components)
             if (container.closest('code')) return;
@@ -299,7 +299,7 @@
     }
 
     // Recheck height for all initialized expandable elements
-    function recheckAllHeights() {
+    function syncAllHeights() {
         // Keyed on the instance, not the sweep's stamp, so create()-built
         // containers are rechecked too.
         const expandableContainers = document.querySelectorAll('.nds-expandable');
@@ -312,13 +312,13 @@
 
     // Assigned at module eval so the loader's lazy stub resolves.
     NDS.Expandable = {
-        init: initializeExpandableContent,
-        reinit: initializeExpandableContent,
-        refresh: recheckAllHeights,
+        init: setupExpandableContent,
+        reinit: setupExpandableContent,
+        refresh: syncAllHeights,
         create: (container) => {
             if (container.ndsExpandable) return container.ndsExpandable;
-            const inst = new NdsExpandable(container);
-            return inst.valid ? inst : null;
+            const instance = new NdsExpandable(container);
+            return instance.valid ? instance : null;
         },
         destroy: (container) => container?.ndsExpandable?.destroy(),
     };

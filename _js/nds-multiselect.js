@@ -104,13 +104,13 @@
             ).trim();
             // Declarative population — JSON attributes win over any
             // hand-written rows in the menu.
-            const optionsAttr = this.root.getAttribute('data-multiselect-options');
-            if (optionsAttr) {
+            const optionsJson = this.root.getAttribute('data-multiselect-options');
+            if (optionsJson) {
                 try {
-                    const selectedAttr = this.root.getAttribute('data-multiselect-selected');
-                    this._buildOptions(JSON.parse(optionsAttr), selectedAttr ? JSON.parse(selectedAttr) : []);
-                } catch (err) {
-                    console.warn('NDS Multiselect: invalid JSON in data-multiselect-options/-selected', this.root, err);
+                    const selectedJson = this.root.getAttribute('data-multiselect-selected');
+                    this._buildOptions(JSON.parse(optionsJson), selectedJson ? JSON.parse(selectedJson) : []);
+                } catch (error) {
+                    console.warn('NDS Multiselect: invalid JSON in data-multiselect-options/-selected', this.root, error);
                 }
             }
             this._collectCheckboxes();
@@ -136,8 +136,8 @@
         _collectCheckboxes() {
             this.checkboxes = Array.from(this.menu.querySelectorAll('input[type="checkbox"]'));
             if (this.name) {
-                this.checkboxes.forEach(cb => {
-                    if (!cb.name) cb.name = this.name + '[]';
+                this.checkboxes.forEach(checkbox => {
+                    if (!checkbox.name) checkbox.name = this.name + '[]';
                 });
             }
         }
@@ -147,10 +147,10 @@
         // all-object values → one fieldset per key with the key as legend.
         _normalizeOptions(raw) {
             if (Array.isArray(raw)) {
-                return [{ legend: null, options: raw.map(v => [String(v), String(v)]) }];
+                return [{ legend: null, options: raw.map(value => [String(value), String(value)]) }];
             }
             const entries = Object.entries(raw);
-            const grouped = entries.length && entries.every(([, v]) => v && typeof v === 'object');
+            const grouped = entries.length && entries.every(([, value]) => value && typeof value === 'object');
             if (grouped) {
                 return entries.map(([legend, opts]) => ({ legend, options: Object.entries(opts) }));
             }
@@ -249,7 +249,7 @@
                 // Apply mode: closing without Apply discards staged toggles.
                 // No-op after Apply — it re-syncs `applied` before the close.
                 if (this.applyMode) {
-                    this.checkboxes.forEach(cb => { cb.checked = this.applied.includes(cb.value); });
+                    this.checkboxes.forEach(checkbox => { checkbox.checked = this.applied.includes(checkbox.value); });
                 }
             }, { signal });
 
@@ -258,8 +258,8 @@
                 this.trigger.addEventListener('mousedown', () => {
                     NDS.state.add(this.root, 'active');
                 }, { signal });
-                ['mouseup', 'mouseleave'].forEach(evt => {
-                    this.trigger.addEventListener(evt, () => {
+                ['mouseup', 'mouseleave'].forEach(eventName => {
+                    this.trigger.addEventListener(eventName, () => {
                         NDS.state.remove(this.root, 'active');
                     }, { signal });
                 });
@@ -307,8 +307,8 @@
                 if (!isDelegatedSurface(e.target)) return;
                 NDS.state.add(this.root, 'active');
             }, { signal });
-            ['mouseup', 'mouseleave'].forEach(evt => {
-                this.root.addEventListener(evt, () => {
+            ['mouseup', 'mouseleave'].forEach(eventName => {
+                this.root.addEventListener(eventName, () => {
                     NDS.state.remove(this.root, 'active');
                 }, { signal });
             });
@@ -342,7 +342,7 @@
             const form = this.applyMode && this.root.closest('form');
             if (form) {
                 form.addEventListener('submit', () => {
-                    this.checkboxes.forEach(cb => { cb.checked = this.applied.includes(cb.value); });
+                    this.checkboxes.forEach(checkbox => { checkbox.checked = this.applied.includes(checkbox.value); });
                     if (this.isOpen()) this.dropmenu.ndsDropmenu?.close();
                 }, { signal, capture: true });
             }
@@ -375,7 +375,7 @@
         }
 
         getSelected() {
-            return this.checkboxes.filter(cb => cb.checked).map(cb => cb.value);
+            return this.checkboxes.filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
         }
 
         // Commit the current checked set: chips, a11y summary, change event.
@@ -384,7 +384,7 @@
         apply() {
             this.applied = this.getSelected();
             this.renderChips();
-            const labels = this.applied.map(v => this.labelFor(v));
+            const labels = this.applied.map(value => this.labelFor(value));
             NDS.announce(labels.length ? strings.text('applied', { value: labels.join(', ') }) : strings.text('cleared'));
             this.emitChange();
         }
@@ -393,12 +393,12 @@
             // Apply mode with the panel open: clear the STAGED set only —
             // Apply commits it, closing without Apply restores `applied`.
             if (this.applyMode && this.isOpen()) {
-                this.checkboxes.forEach(cb => { cb.checked = false; });
+                this.checkboxes.forEach(checkbox => { checkbox.checked = false; });
                 return;
             }
             const before = this.getSelected();
-            this.checkboxes.forEach(cb => {
-                if (cb.checked) cb.checked = false;
+            this.checkboxes.forEach(checkbox => {
+                if (checkbox.checked) checkbox.checked = false;
             });
             this.applied = [];
             this.renderChips();
@@ -409,26 +409,26 @@
         }
 
         removeValue(value) {
-            const cb = this.checkboxes.find(c => c.value === value);
-            if (!cb || !cb.checked) return;
+            const checkbox = this.checkboxes.find(item => item.value === value);
+            if (!checkbox || !checkbox.checked) return;
             NDS.keepChipFocus(() => this.chipsEl.children, () => {
-                cb.checked = false;
-                this.applied = this.applied.filter(v => v !== value);
+                checkbox.checked = false;
+                this.applied = this.applied.filter(item => item !== value);
                 this.renderChips();
             }, this.trigger);
             NDS.announce(strings.text('removed', { value: this.labelFor(value) }));
             this.emitChange();
         }
 
-        announceToggle(cb) {
-            NDS.announce(strings.text(cb.checked ? 'added' : 'removed', { value: this.labelFor(cb.value) }));
+        announceToggle(checkbox) {
+            NDS.announce(strings.text(checkbox.checked ? 'added' : 'removed', { value: this.labelFor(checkbox.value) }));
         }
 
         labelFor(value) {
-            const cb = this.checkboxes.find(c => c.value === value);
-            if (!cb) return value;
-            if (cb.dataset.label) return cb.dataset.label;
-            const row = cb.closest('.nds-form-container') || cb.parentElement;
+            const checkbox = this.checkboxes.find(item => item.value === value);
+            if (!checkbox) return value;
+            if (checkbox.dataset.label) return checkbox.dataset.label;
+            const row = checkbox.closest('.nds-form-container') || checkbox.parentElement;
             const label = row && row.querySelector('.nds-form-header .nds-label, .nds-label');
             return label ? label.textContent.trim() : value;
         }
@@ -442,7 +442,7 @@
             NDS.state[selected.length ? 'add' : 'remove'](this.root, 'filled');
 
             if (this.trigger && this.triggerLabelOriginal) {
-                const labels = selected.map(v => this.labelFor(v));
+                const labels = selected.map(value => this.labelFor(value));
                 if (labels.length) NDS.aria.label(this.trigger, this.triggerLabelOriginal + ': ' + labels.join(', '));
                 else strings.set(this.trigger, 'aria-label', 'none', { label: this.triggerLabelOriginal });
             }
@@ -468,14 +468,14 @@
                 detail: {
                     name: this.name,
                     values: values,
-                    labels: values.map(v => this.labelFor(v))
+                    labels: values.map(value => this.labelFor(value))
                 },
                 bubbles: true
             }));
         }
     }
 
-    function initializeMultiselects() {
+    function setupMultiselects() {
         document.querySelectorAll('.nds-multiselect').forEach(el => {
             if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-multiselect-initialized')) return;
@@ -485,23 +485,23 @@
 
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
     // The option checkboxes are the source of truth, scoped to the nested menu.
-    const fieldCheck = (ms) => {
+    const checkField = (ms) => {
         const menu = ms.querySelector('.nds-dropmenu-menu');
         return NDS.validation.checkedCount(ms, menu ? menu.querySelectorAll('input[type="checkbox"]') : []);
     };
     NDS.validation.addRule('.nds-multiselect[data-required], .nds-multiselect.nds-required, .nds-multiselect[data-min-checked], .nds-multiselect[data-max-checked]',
-        (ms) => Object.assign(fieldCheck(ms), { focus: ms.querySelector('.nds-dropmenu-trigger') }),
+        (ms) => Object.assign(checkField(ms), { focus: ms.querySelector('.nds-dropmenu-trigger') }),
         // Its commit event, not the boxes' change: a chip removal or a reset unchecks with no change event.
         { on: ['nds:multiselect:change'] });
 
     NDS.Multiselect = {
-        init: initializeMultiselects,
-        reinit: initializeMultiselects,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-multiselect') || el, opts, fieldCheck),
+        init: setupMultiselects,
+        reinit: setupMultiselects,
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-multiselect') || el, opts, checkField),
         create: (element) => {
             if (element.ndsMultiselect) return element.ndsMultiselect;
-            const inst = new NdsMultiselect(element);
-            return inst.valid ? inst : null;
+            const instance = new NdsMultiselect(element);
+            return instance.valid ? instance : null;
         },
         destroy: (element) => element.ndsMultiselect?.destroy()
     };

@@ -52,12 +52,12 @@
     // label — reading .textContent would return "Label Description" glued
     // together and leak into the trigger). Falls back to .nds-option-text's
     // own text for the plain-label shape every existing consumer uses.
-    function optionLabel(option) {
+    function getOptionLabel(option) {
         if (!option) return '';
-        var t = option.querySelector('.nds-option-text');
-        if (!t) return '';
-        var label = t.querySelector('.nds-label');
-        return label ? label.textContent : t.textContent;
+        var textEl = option.querySelector('.nds-option-text');
+        if (!textEl) return '';
+        var label = textEl.querySelector('.nds-label');
+        return label ? label.textContent : textEl.textContent;
     }
 
     // select-input on the page, so a pre-filled label paints without waiting
@@ -72,7 +72,7 @@
         var options = formControl.querySelectorAll('.nds-select-option');
         for (var i = 0; i < options.length; i++) {
             if (options[i].dataset.value === current) {
-                var label = optionLabel(options[i]);
+                var label = getOptionLabel(options[i]);
                 selectInput.value = label || current;
                 return;
             }
@@ -107,7 +107,7 @@
         dropdown.removeAttribute('hidden');
         var optionsContainer = dropdown.querySelector('.nds-select-options');
         if (optionsContainer) optionsContainer.classList.add('nds-dropmenu-scroll');
-        options.forEach(function (o) { o.classList.add('nds-dropmenu-item'); });
+        options.forEach(function (option) { option.classList.add('nds-dropmenu-item'); });
 
         // Menu width is set via the dropmenu's own `--dropmenu-min-width` CSS
         // custom property (see _form.scss) — not an inline style here, which
@@ -116,8 +116,8 @@
         // Mark the initially-selected option (display text is in markup).
         var current = (hiddenInput ? hiddenInput.value : '') || selectInput.value;
         if (current) {
-            options.forEach(function (o) {
-                if (o.dataset.value === current) NDS.state.add(o, 'selected');
+            options.forEach(function (option) {
+                if (option.dataset.value === current) NDS.state.add(option, 'selected');
             });
         }
 
@@ -126,7 +126,7 @@
         var controller = new AbortController(), signal = controller.signal;
         formControl.addEventListener('nds:dropmenu:opened', function () {
             NDS.state.add(formContainer, 'open');
-            (Array.prototype.find.call(options, function (o) { return NDS.state.has(o, 'selected'); }) || options[0]).focus();
+            (Array.prototype.find.call(options, function (option) { return NDS.state.has(option, 'selected'); }) || options[0]).focus();
         }, { signal: signal });
         formControl.addEventListener('nds:dropmenu:closed', function () {
             NDS.state.remove(formContainer, 'open');
@@ -151,7 +151,7 @@
                 selectInput.classList.remove('nds-dropmenu-trigger');
                 if (ownRole) selectInput.removeAttribute('role');
                 if (optionsContainer) optionsContainer.classList.remove('nds-dropmenu-scroll');
-                options.forEach(function (o) { o.classList.remove('nds-dropmenu-item'); });
+                options.forEach(function (option) { option.classList.remove('nds-dropmenu-item'); });
                 NDS.state.remove(formContainer, 'open');
                 delete formControl.ndsCustomSelect;
             }
@@ -163,10 +163,10 @@
 
     // First focus of a select → build its dropmenu, then let the dropmenu's
     // native click/keyboard handle the open the user is about to perform.
-    function onFocusIn(e) {
-        var t = e.target;
-        if (!t || !t.closest) return;
-        var selectInput = t.closest('.nds-select-input');
+    function handleFocusIn(e) {
+        var target = e.target;
+        if (!target || !target.closest) return;
+        var selectInput = target.closest('.nds-select-input');
         if (!selectInput || selectInput.closest('code')) return;
         build(selectInput);
     }
@@ -178,18 +178,18 @@
     var initial = new WeakMap();
 
     // quiet: a form reset, which fires no input, change or select event.
-    function apply(formControl, option, quiet) {
+    function setOption(formControl, option, quiet) {
         var selectInput = formControl.querySelector('.nds-select-input');
         if (!selectInput) return false;
 
         var hiddenInput = formControl.querySelector('.nds-select-value');
         if (hiddenInput && !initial.has(hiddenInput)) initial.set(hiddenInput, hiddenInput.value);
         var value = option ? (option.dataset.value || '') : '';
-        var text = option ? (optionLabel(option) || value) : '';
+        var text = option ? (getOptionLabel(option) || value) : '';
 
-        formControl.querySelectorAll('.nds-select-option').forEach(function (o) {
-            if (option && o.dataset.value === value) NDS.state.add(o, 'selected');
-            else NDS.state.remove(o, 'selected');
+        formControl.querySelectorAll('.nds-select-option').forEach(function (item) {
+            if (option && item.dataset.value === value) NDS.state.add(item, 'selected');
+            else NDS.state.remove(item, 'selected');
         });
 
         if (quiet) {
@@ -212,7 +212,7 @@
     // Resolve the owning form-control from what consumers hold: the select
     // input, the form-control, or any container holding one (create()'s
     // tolerance).
-    function formControlOf(el) {
+    function findFormControl(el) {
         if (!el || !el.closest) return null;
         if (el.classList.contains('nds-select-input')) return el.closest('.nds-form-control');
         var input = el.querySelector && el.querySelector('.nds-select-input');
@@ -221,14 +221,14 @@
 
     // Delegated option pick → run the shared write sequence. The dropmenu's
     // own item-click handler auto-closes the menu and restores focus.
-    function onOptionClick(e) {
-        var t = e.target;
-        if (!t || !t.closest) return;
-        var option = t.closest('.nds-select-option');
+    function handleOptionClick(e) {
+        var target = e.target;
+        if (!target || !target.closest) return;
+        var option = target.closest('.nds-select-option');
         if (!option) return;
         var formControl = option.closest('.nds-form-control');
         if (!formControl) return;
-        apply(formControl, option);
+        setOption(formControl, option);
     }
 
     function init() {
@@ -237,12 +237,12 @@
         // listeners install once. Cosmetic only: the submit value is already in
         // the hidden input from markup — this just paints the derived label.
         document.querySelectorAll('.nds-select-input').forEach(restoreDisplay);
-        wireDocument();
+        addDocumentListeners();
     }
 
     // Back to the value the field had before its first pick. Never picked, it still re-labels:
     // the reset emptied the label restoreDisplay wrote.
-    function onReset(e) {
+    function handleReset(e) {
         var form = e.target;
         setTimeout(function () {
             if (e.defaultPrevented || !form.querySelectorAll) return;
@@ -250,25 +250,25 @@
                 var formControl = hidden.closest('.nds-form-control');
                 var value = initial.has(hidden) ? initial.get(hidden) : hidden.value, match = null;
                 if (!formControl) return;
-                formControl.querySelectorAll('.nds-select-option').forEach(function (o) { if (o.dataset.value === value) match = o; });
-                apply(formControl, match, true);
+                formControl.querySelectorAll('.nds-select-option').forEach(function (option) { if (option.dataset.value === value) match = option; });
+                setOption(formControl, match, true);
             });
         });
     }
 
     // A page with no select at load never runs init(), so create() wires these too.
-    function wireDocument() {
+    function addDocumentListeners() {
         if (documentWired) return;
         documentWired = true;
-        document.addEventListener('focusin', onFocusIn);
-        document.addEventListener('click', onOptionClick);
-        document.addEventListener('reset', onReset);
+        document.addEventListener('focusin', handleFocusIn);
+        document.addEventListener('click', handleOptionClick);
+        document.addEventListener('reset', handleReset);
     }
 
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
     var strings = NDS.i18n.strings('custom-select', { select_option: 'Please select an option' });
     // The readonly display input is barred from constraint validation: required reads the carrier.
-    function fieldCheck(container) {
+    function checkField(container) {
         var carrier = container.querySelector('.nds-select-value');
         var valid = !NDS.validation.isRequired(container) || !!(carrier && carrier.value.trim());
         return { valid: valid, message: valid ? '' : strings.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
@@ -279,13 +279,13 @@
     // Keyed on the carrier: a native <select> shares the .nds-select shell and stays with the native pass.
     // Re-checked on the carrier's change: a pick writes it and dispatches input and change.
     NDS.validation.addRule('.nds-select[data-required], .nds-select.nds-required', function (cs) {
-        return cs.querySelector('.nds-select-value') ? Object.assign(fieldCheck(cs), { focus: cs.querySelector('.nds-select-input') }) : null;
-    }, { owns: function (c) { return !!c.querySelector('.nds-select-value'); }, on: ['change'] });
+        return cs.querySelector('.nds-select-value') ? Object.assign(checkField(cs), { focus: cs.querySelector('.nds-select-input') }) : null;
+    }, { owns: function (container) { return !!container.querySelector('.nds-select-value'); }, on: ['change'] });
 
     NDS.CustomSelect = {
         init: init,
         reinit: init,
-        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-select') || el, opts, fieldCheck); },
+        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-select') || el, opts, checkField); },
         // Programmatic build for a select input (or its form-control).
         create: function (el) {
             if (!el) return;
@@ -293,12 +293,12 @@
                 ? el
                 : (el.querySelector && el.querySelector('.nds-select-input'));
             if (!input) return;
-            wireDocument();
+            addDocumentListeners();
             build(input);
         },
         // Undo create(): pass the input, its form-control, or a container holding one.
         destroy: function (el) {
-            var formControl = formControlOf(el);
+            var formControl = findFormControl(el);
             if (formControl && formControl.ndsCustomSelect) formControl.ndsCustomSelect.destroy();
         },
         // Programmatic pick: the same write sequence as a user click (display
@@ -306,21 +306,21 @@
         // nds:custom-select:change). Returns false when no option carries the value —
         // display and value are never desynced. Works before the dropmenu is built.
         setValue: function (el, value) {
-            var formControl = formControlOf(el);
+            var formControl = findFormControl(el);
             if (!formControl) return false;
             var options = formControl.querySelectorAll('.nds-select-option');
             for (var i = 0; i < options.length; i++) {
                 if (options[i].dataset.value === String(value)) {
-                    return apply(formControl, options[i]);
+                    return setOption(formControl, options[i]);
                 }
             }
             return false;
         },
         // Back to placeholder: both inputs emptied, markers off, same events.
         clear: function (el) {
-            var formControl = formControlOf(el);
+            var formControl = findFormControl(el);
             if (!formControl) return false;
-            return apply(formControl, null);
+            return setOption(formControl, null);
         },
     };
 })();

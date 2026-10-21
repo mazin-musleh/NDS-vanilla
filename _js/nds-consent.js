@@ -35,18 +35,18 @@
     const trackers = { performance: ['_ga', '_gid', '_gat'], targeting: ['_gcl', '_fbp', '_fbc'] };
 
     function get() {
-        const v = NDS.cookie.get(KEY);
-        return !v ? null : (v === 'accepted' || v === 'declined') ? v : 'custom';
+        const value = NDS.cookie.get(KEY);
+        return !value ? null : (value === 'accepted' || value === 'declined') ? value : 'custom';
     }
 
     function allowed(category) {
         if (category === 'necessary') return true;
-        const v = NDS.cookie.get(KEY);
-        return v === 'accepted' || (!!v && v !== 'declined' && v.split(',').includes(category));
+        const value = NDS.cookie.get(KEY);
+        return value === 'accepted' || (!!value && value !== 'declined' && value.split(',').includes(category));
     }
 
     // Read on every call: an id registered after the bundle must still be disabled.
-    function trackingIds() {
+    function getTrackingIds() {
         const ids = [].concat(window.GA_TRACKING_ID || []);
         document.querySelectorAll('[data-ga-tracking-id]').forEach(el => {
             if (el.dataset.gaTrackingId && !ids.includes(el.dataset.gaTrackingId)) ids.push(el.dataset.gaTrackingId);
@@ -54,34 +54,34 @@
         return ids;
     }
 
-    function apply() {
+    function syncConsent() {
         const perf = allowed('performance');
         // The flag is in-memory only, so it is set again on every load.
-        trackingIds().forEach(id => { window['ga-disable-' + id] = !perf; });
-        const names = document.cookie.split(';').map(c => c.split('=')[0].trim());
-        Object.keys(trackers).forEach(c => {
-            if (!allowed(c)) names.filter(n => trackers[c].some(p => n.startsWith(p))).forEach(NDS.cookie.delete);
+        getTrackingIds().forEach(id => { window['ga-disable-' + id] = !perf; });
+        const names = document.cookie.split(';').map(cookie => cookie.split('=')[0].trim());
+        Object.keys(trackers).forEach(category => {
+            if (!allowed(category)) names.filter(cookieName => trackers[category].some(prefix => cookieName.startsWith(prefix))).forEach(NDS.cookie.delete);
         });
         if (typeof gtag === 'function') {
             const update = {};
-            Object.keys(gtagSignals).forEach(c => gtagSignals[c].forEach(k => { update[k] = allowed(c) ? 'granted' : 'denied'; }));
+            Object.keys(gtagSignals).forEach(category => gtagSignals[category].forEach(signal => { update[signal] = allowed(category) ? 'granted' : 'denied'; }));
             gtag('consent', 'update', update);
         }
     }
 
     function save(choice) {
-        const list = Array.isArray(choice) ? choice.filter(c => c !== 'necessary') : [];
+        const list = Array.isArray(choice) ? choice.filter(category => category !== 'necessary') : [];
         NDS.cookie.set(KEY, choice === true ? 'accepted' : list.length ? list.join(',') : 'declined', 365);
-        apply();
+        syncConsent();
         const categories = { necessary: true };
-        Object.keys(gtagSignals).concat(list).forEach(c => { categories[c] = allowed(c); });
+        Object.keys(gtagSignals).concat(list).forEach(category => { categories[category] = allowed(category); });
         // The hook for anything NDS does not know (Clarity, a vendor pixel): the listener owns its SDK.
         document.dispatchEvent(new CustomEvent('nds:cookies:consent', {
             detail: { consent: get(), categories },
         }));
     }
 
-    apply();
+    syncConsent();
 
     NDS.consent = { get, allowed, save };
 })();

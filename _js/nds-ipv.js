@@ -114,7 +114,7 @@
         // neither the ~50 overlay nodes nor a mousemove handler.
         ensureOverlay() {
             if (this.el.overlay) return;
-            createOverlayMarkup();
+            buildOverlayMarkup();
 
             this.el = {
                 overlay: document.getElementById('nds-ipv-popup-overlay'),
@@ -133,8 +133,8 @@
         }
 
         // ── Utilities ────────────────────────────────────────────────────
-        clamp(val, min, max) {
-            return Math.min(Math.max(val, min), max);
+        clamp(value, min, max) {
+            return Math.min(Math.max(value, min), max);
         }
 
         getContainerRect() {
@@ -446,8 +446,8 @@
         // the gallery with no reinit.
         collectThumbnails(thumb) {
             const all = Array.from(document.querySelectorAll('.nds-ipv-thumbnail'))
-                .filter(t => !t.closest('code'));
-            return thumb ? all.filter(t => t.dataset.ipvGallery === thumb.dataset.ipvGallery) : all;
+                .filter(thumbnail => !thumbnail.closest('code'));
+            return thumb ? all.filter(thumbnail => thumbnail.dataset.ipvGallery === thumb.dataset.ipvGallery) : all;
         }
 
         // Make each thumbnail keyboard-operable without changing authored markup.
@@ -497,8 +497,8 @@
             };
 
             const { signal } = this.abortController;
-            Object.entries(actions).forEach(([sel, fn]) => {
-                const btn = this.el.overlay.querySelector(sel);
+            Object.entries(actions).forEach(([selector, fn]) => {
+                const btn = this.el.overlay.querySelector(selector);
                 if (btn) {
                     btn.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -532,10 +532,10 @@
 
     // Inject the overlay markup once. Its English sits beside data-i18n markers, which core
     // translates when the overlay joins the page.
-    function createOverlayMarkup() {
+    function buildOverlayMarkup() {
         if (document.getElementById('nds-ipv-popup-overlay')) return;
 
-        const overlayHTML = `
+        const overlayHtml = `
             <div class="nds-ipv-popup-overlay" id="nds-ipv-popup-overlay" data-theme="dark" role="dialog" aria-modal="true" aria-label="Image viewer" data-i18n-aria-label="ipv.viewerLabel">
                 <div class="nds-ipv-popup-container">
                     <div class="nds-ipv-popup-controls">
@@ -582,21 +582,21 @@
             </div>
         `;
 
-        document.body.insertAdjacentHTML('beforeend', overlayHTML);
+        document.body.insertAdjacentHTML('beforeend', overlayHtml);
     }
 
     // Initialization (called by nds-loader.js). The overlay builds lazily in
     // the instance's first open, so the singleton guard is the instance itself.
     // A repeat call gives thumbnails added since then keyboard access.
-    function initializeIPV() {
+    function setupIpv() {
         if (viewer) viewer.enhanceThumbnails();
         else viewer = new NdsIpv();
     }
 
     NDS.Ipv = {
-        init: initializeIPV,
-        reinit: initializeIPV,
-        open: (thumb) => { if (!viewer) initializeIPV(); viewer.open(thumb); },
+        init: setupIpv,
+        reinit: setupIpv,
+        open: (thumb) => { if (!viewer) setupIpv(); viewer.open(thumb); },
         close: () => viewer?.close(),
         next: () => viewer?.showNext(),
         prev: () => viewer?.showPrev(),

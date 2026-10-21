@@ -76,18 +76,18 @@
         return DATA[key] !== undefined ? DATA[key] : fallback;
     }
     // Reject any explicit scheme except http(s) — config lands in src/href attributes.
-    function safeUrl(v) {
-        return /^[a-z][a-z0-9+.-]*:/i.test(v) ? /^https?:/i.test(v) : true;
+    function isSafeUrl(url) {
+        return /^[a-z][a-z0-9+.-]*:/i.test(url) ? /^https?:/i.test(url) : true;
     }
     // Bare filename → this pack's folder; absolute URL / rooted path → verbatim.
-    function assetUrl(v) {
-        if (!v || !safeUrl(v)) return '';
-        return (/^https?:/i.test(v) || v.charAt(0) === '/' || v.charAt(0) === '.') ? v : BASE + v;
+    function resolveAssetUrl(url) {
+        if (!url || !isSafeUrl(url)) return '';
+        return (/^https?:/i.test(url) || url.charAt(0) === '/' || url.charAt(0) === '.') ? url : BASE + url;
     }
 
     // No CTA by default — a downstream site can opt in via data-cta-url.
     var ctaUrl = pick('ctaUrl', '');
-    if (!safeUrl(ctaUrl)) {
+    if (!isSafeUrl(ctaUrl)) {
         console.warn('NDS NationalDay96: data-cta-url rejected (https or path-relative only)');
         ctaUrl = '';
     }
@@ -204,35 +204,35 @@
     // LTR the English one. NDS.isRTL when core is already here (switcher path);
     // its own definition otherwise — this runs in <head>, before the bundles.
     // Read live: the direction can flip in place (the docs' language toggle).
-    function lang() {
+    function getLanguage() {
         var rtl = window.NDS && 'isRTL' in NDS ? NDS.isRTL : document.documentElement.dir === 'rtl';
         return rtl ? 'ar' : 'en';
     }
-    function t(v) {
-        if (v && typeof v === 'object') return v[lang()] || v.en || v.ar || '';
-        return v || '';
+    function translate(value) {
+        if (value && typeof value === 'object') return value[getLanguage()] || value.en || value.ar || '';
+        return value || '';
     }
     // Content is externally configurable (data-*) → escape everything interpolated.
-    function esc(s) {
-        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    function escapeHtml(text) {
+        return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;')
             .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
     // Standard hero-slide markup (the shape _includes/hero-main.html emits), with the
     // event photo as the background — no slide-specific classes or inline styling.
     function buildSlide() {
-        var imgUrl = assetUrl(HERO.image);
+        var imgUrl = resolveAssetUrl(HERO.image);
         var img = imgUrl
             ? '<div class="nds-hero-image-wrapper" style="--overlay:0;">' +   // photo carries its own wash; the default 0.7 would black it out
-                '<picture><img src="' + esc(imgUrl) + '" class="nds-hero-image" alt="" fetchpriority="high"></picture>' +
+                '<picture><img src="' + escapeHtml(imgUrl) + '" class="nds-hero-image" alt="" fetchpriority="high"></picture>' +
               '</div>'
             : '';
-        var desc = t(HERO.description) ? '<p class="nds-section-description">' + esc(t(HERO.description)) + '</p>' : '';
-        var iconUrl = HERO.cta ? assetUrl(HERO.cta.icon) : '';
+        var desc = translate(HERO.description) ? '<p class="nds-section-description">' + escapeHtml(translate(HERO.description)) + '</p>' : '';
+        var iconUrl = HERO.cta ? resolveAssetUrl(HERO.cta.icon) : '';
         var cta = HERO.cta
-            ? '<a class="nds-btn nds-primary nds-oncolor nds-lg" href="' + esc(HERO.cta.url) + '" target="_blank">' +
-                (iconUrl ? '<img src="' + esc(iconUrl) + '" class="nds-icon" width="24" height="24" alt="">' : '') +
-                '<span class="nds-label">' + esc(t(HERO.cta.label)) + '</span>' +
+            ? '<a class="nds-btn nds-primary nds-oncolor nds-lg" href="' + escapeHtml(HERO.cta.url) + '" target="_blank">' +
+                (iconUrl ? '<img src="' + escapeHtml(iconUrl) + '" class="nds-icon" width="24" height="24" alt="">' : '') +
+                '<span class="nds-label">' + escapeHtml(translate(HERO.cta.label)) + '</span>' +
               '</a>'
             : '';
 
@@ -241,7 +241,7 @@
         slide.innerHTML =
             img +
             '<div class="nds-section-body">' +
-              '<h2 class="nds-section-title">' + esc(t(HERO.title)) + '</h2>' +
+              '<h2 class="nds-section-title">' + escapeHtml(translate(HERO.title)) + '</h2>' +
               desc + cta +
             '</div>';
         return slide;
@@ -260,11 +260,11 @@
         if (document.getElementById(LINK_ID)) return;
         if (document.querySelector('[data-nds-event-style]')) return;
         if (CSS_TEXT) {
-            var s = document.createElement('style');
-            s.setAttribute('data-nds-event-style', THEME);
-            if (NONCE) s.setAttribute('nonce', NONCE);
-            s.textContent = CSS_TEXT;
-            document.head.appendChild(s);
+            var style = document.createElement('style');
+            style.setAttribute('data-nds-event-style', THEME);
+            if (NONCE) style.setAttribute('nonce', NONCE);
+            style.textContent = CSS_TEXT;
+            document.head.appendChild(style);
             return;
         }
         if (document.readyState === 'loading') {
@@ -273,20 +273,20 @@
             document.write('<link id="' + LINK_ID + '" rel="stylesheet" href="' + CSS_HREF + '">');
             if (document.getElementById(LINK_ID)) return;
         }
-        var l = document.createElement('link');
-        l.rel = 'stylesheet'; l.id = LINK_ID; l.href = CSS_HREF;
-        l.blocking = 'render';
-        document.head.appendChild(l);
+        var link = document.createElement('link');
+        link.rel = 'stylesheet'; link.id = LINK_ID; link.href = CSS_HREF;
+        link.blocking = 'render';
+        document.head.appendChild(link);
     }
     function removeStyles() {
-        var l = document.getElementById(LINK_ID);
-        if (l) l.remove();
-        var s = document.querySelector('[data-nds-event-style="' + THEME + '"]');
-        if (s) s.remove();
+        var link = document.getElementById(LINK_ID);
+        if (link) link.remove();
+        var style = document.querySelector('[data-nds-event-style="' + THEME + '"]');
+        if (style) style.remove();
     }
 
     // ── Marker token on <html data-theme> (attribute-only, no storage) ──────
-    function tokens() {
+    function readTokens() {
         return (document.documentElement.getAttribute('data-theme') || '').split(/\s+/).filter(Boolean);
     }
     function writeTokens(toks) {
@@ -294,26 +294,26 @@
         else document.documentElement.removeAttribute('data-theme');
     }
     function addToken() {
-        var toks = tokens();
+        var toks = readTokens();
         if (toks.indexOf(THEME) === -1) { toks.push(THEME); writeTokens(toks); }
     }
     function removeToken() {
-        writeTokens(tokens().filter(function (x) { return x !== THEME; }));
+        writeTokens(readTokens().filter(function (x) { return x !== THEME; }));
     }
 
     // ── Hero slide ──────────────────────────────────────────────────────────
     // _ndsSwiper: runtimes before 2.0.
-    function instOf(swiper) { return swiper && (swiper.ndsSwiper || swiper._ndsSwiper); }
+    function getSwiperInstance(swiper) { return swiper && (swiper.ndsSwiper || swiper._ndsSwiper); }
 
     function reinit(swiper) {
-        var old = instOf(swiper);
+        var old = getSwiperInstance(swiper);
         if (old) old.destroy();
         if (!(window.NDS && NDS.Swiper)) return;
-        var inst = NDS.Swiper.create(swiper);
+        var instance = NDS.Swiper.create(swiper);
         // A fresh instance detects its index from the re-used DOM's scroll position,
         // so it won't auto-land on the new first slide — move to it once layout settles.
-        if (inst && typeof inst.goTo === 'function') {
-            requestAnimationFrame(function () { inst.goTo(0); });
+        if (instance && typeof instance.goTo === 'function') {
+            requestAnimationFrame(function () { instance.goTo(0); });
         }
     }
 
@@ -377,49 +377,49 @@
     var siteSlides = [], siteTotal = '', navHadCenter = false, pageHadMd = false, siteLoop = false;
     var deckAbort = null, typeTimer = 0, holdTimer = 0, current = -1, paused = false, wordDone = false;
 
-    function fullTitle(s) { return t(LEAD) + ' ' + t(s.word); }
+    function getFullTitle(spec) { return translate(LEAD) + ' ' + translate(spec.word); }
 
-    function buildDeckSlide(s, i) {
-        var h = i ? 'h2' : 'h1';   // the pack's first slide stands in for the site's h1
+    function buildDeckSlide(spec, i) {
+        var tag = i ? 'h2' : 'h1';   // the pack's first slide stands in for the site's h1
         var slide = document.createElement('div');
         slide.className = 'nds-swiper-slide nds-content-wrapper ' + DECK_SLIDE;
         if (i) slide.hidden = true;
         slide.innerHTML =
             '<div class="nds-section-body">' +
-              '<' + h + ' class="nds-section-title" aria-label="' + esc(fullTitle(s)) + '">' +
-                '<span aria-hidden="true">' + esc(t(LEAD)) + '</span> ' +
-                '<span class="nds-nd96-typed" aria-hidden="true" data-word="' + esc(t(s.word)) + '"></span>' +
-              '</' + h + '>' +
-              '<p class="nds-section-description">' + esc(t(s.body)) + '</p>' +
-              '<p class="nds-section-description nds-nd96-short">' + esc(t(s.short)) + '</p>' +
+              '<' + tag + ' class="nds-section-title" aria-label="' + escapeHtml(getFullTitle(spec)) + '">' +
+                '<span aria-hidden="true">' + escapeHtml(translate(LEAD)) + '</span> ' +
+                '<span class="nds-nd96-typed" aria-hidden="true" data-word="' + escapeHtml(translate(spec.word)) + '"></span>' +
+              '</' + tag + '>' +
+              '<p class="nds-section-description">' + escapeHtml(translate(spec.body)) + '</p>' +
+              '<p class="nds-section-description nds-nd96-short">' + escapeHtml(translate(spec.short)) + '</p>' +
             '</div>';
         return slide;
     }
 
-    function buildCard(s, i) {
+    function buildCard(spec, i) {
         var card = document.createElement('button');
         card.type = 'button';
         card.className = 'nds-swiper-card';
-        card.setAttribute('aria-label', fullTitle(s));
+        card.setAttribute('aria-label', getFullTitle(spec));
         // No first-paint stamps: the mode's CSS places the cards by DOM order
         // until the swiper inits, and the pack ships that CSS too.
-        card.innerHTML = '<img src="' + esc(assetUrl(s.card)) + '" width="491" height="491" alt=""' +
+        card.innerHTML = '<img src="' + escapeHtml(resolveAssetUrl(spec.card)) + '" width="491" height="491" alt=""' +
             (i ? ' loading="lazy" decoding="async"' : ' fetchpriority="high"') + '>';
         return card;
     }
 
-    function deckSection() { return document.querySelector('.nds-hero-section.' + DECK_CLASS); }
-    function deckSlides(section) { return section.querySelectorAll('.nds-swiper-slide.' + DECK_SLIDE + ':not(.nds-swiper-clone)'); }
+    function findDeckSection() { return document.querySelector('.nds-hero-section.' + DECK_CLASS); }
+    function findDeckSlides(section) { return section.querySelectorAll('.nds-swiper-slide.' + DECK_SLIDE + ':not(.nds-swiper-clone)'); }
 
     // The looping track shows a clone at the wrap for a frame: keep each clone a
     // copy of its twin, with the word whole.
     function syncClones(section) {
-        var slides = deckSlides(section);
-        Array.prototype.forEach.call(section.querySelectorAll('.nds-swiper-clone[data-swiper-clone]'), function (c) {
-            var twin = slides[c.getAttribute('data-swiper-clone')];
+        var slides = findDeckSlides(section);
+        Array.prototype.forEach.call(section.querySelectorAll('.nds-swiper-clone[data-swiper-clone]'), function (clone) {
+            var twin = slides[clone.getAttribute('data-swiper-clone')];
             if (!twin) return;
-            c.innerHTML = twin.innerHTML;
-            var span = c.querySelector('.nds-nd96-typed');
+            clone.innerHTML = twin.innerHTML;
+            var span = clone.querySelector('.nds-nd96-typed');
             if (span) span.textContent = span.getAttribute('data-word');
         });
     }
@@ -450,9 +450,9 @@
 
         var deck = document.createElement('div');
         deck.className = 'nds-swiper-deck';
-        SLIDES.forEach(function (s, i) {
-            wrapper.appendChild(buildDeckSlide(s, i));
-            deck.appendChild(buildCard(s, i));
+        SLIDES.forEach(function (spec, i) {
+            wrapper.appendChild(buildDeckSlide(spec, i));
+            deck.appendChild(buildCard(spec, i));
         });
         wrapper.parentNode.insertBefore(deck, wrapper.nextSibling);
         swiper.classList.add('nds-deck');
@@ -495,21 +495,21 @@
 
     // Language flipped in place: refill every slide and card, then retype the open word.
     function retext() {
-        var section = deckSection();
+        var section = findDeckSection();
         if (!section) return;
-        var slides = deckSlides(section), cards = section.querySelectorAll('.nds-swiper-card');
-        SLIDES.forEach(function (s, i) {
+        var slides = findDeckSlides(section), cards = section.querySelectorAll('.nds-swiper-card');
+        SLIDES.forEach(function (spec, i) {
             var slide = slides[i];
             if (!slide) return;
-            var h = slide.querySelector('.nds-section-title');
-            h.setAttribute('aria-label', fullTitle(s));
-            h.firstElementChild.textContent = t(LEAD);
+            var title = slide.querySelector('.nds-section-title');
+            title.setAttribute('aria-label', getFullTitle(spec));
+            title.firstElementChild.textContent = translate(LEAD);
             var span = slide.querySelector('.nds-nd96-typed');
-            span.setAttribute('data-word', t(s.word));
-            span.textContent = t(s.word);
-            slide.querySelector('.nds-section-description').textContent = t(s.body);
-            slide.querySelector('.nds-nd96-short').textContent = t(s.short);
-            if (cards[i]) cards[i].setAttribute('aria-label', fullTitle(s));
+            span.setAttribute('data-word', translate(spec.word));
+            span.textContent = translate(spec.word);
+            slide.querySelector('.nds-section-description').textContent = translate(spec.body);
+            slide.querySelector('.nds-nd96-short').textContent = translate(spec.short);
+            if (cards[i]) cards[i].setAttribute('aria-label', getFullTitle(spec));
         });
         syncClones(section);
         if (current >= 0) typeWord(slides[current]);
@@ -517,7 +517,7 @@
 
     function setActive(i) {
         if (i === current) return;
-        var section = deckSection();
+        var section = findDeckSection();
         if (!section) return;
         var first = current < 0;
         if (!first) {
@@ -533,7 +533,7 @@
         if (!first && section.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             try { section.animate([{ opacity: 1 }, { opacity: 0 }], { duration: SETTLE_MS, easing: 'ease', pseudoElement: '::before' }); } catch (e) { /* no pseudo-element animation: the colour just snaps */ }
         }
-        typeWord(deckSlides(section)[i]);
+        typeWord(findDeckSlides(section)[i]);
     }
 
     function stopTimers() {
@@ -552,22 +552,22 @@
         if (!span) return;
         var word = span.getAttribute('data-word');
         var chars = word.match(/\P{M}\p{M}*/gu) || [];
-        var n = 0;
-        function done() {
+        var count = 0;
+        function finishTyping() {
             wordDone = true;
-            var section = deckSection();
+            var section = findDeckSection();
             if (section) syncClones(section);
             scheduleAdvance();
         }
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             span.textContent = word;
-            typeTimer = setTimeout(done, chars.length * TYPE_MS);   // same beat, no letters
+            typeTimer = setTimeout(finishTyping, chars.length * TYPE_MS);   // same beat, no letters
             return;
         }
         span.textContent = '';
         typeTimer = setInterval(function () {
-            span.textContent = chars.slice(0, ++n).join('');
-            if (n >= chars.length) { clearInterval(typeTimer); typeTimer = 0; done(); }
+            span.textContent = chars.slice(0, ++count).join('');
+            if (count >= chars.length) { clearInterval(typeTimer); typeTimer = 0; finishTyping(); }
         }, TYPE_MS);
     }
 
@@ -590,8 +590,8 @@
 
     function advance() {
         var swiper = document.querySelector(SWIPER_SEL);
-        var inst = instOf(swiper);
-        if (inst) inst.goTo((current + 1) % SLIDES.length);   // by index: wraps with or without loop (the text switch is instant)
+        var instance = getSwiperInstance(swiper);
+        if (instance) instance.goTo((current + 1) % SLIDES.length);   // by index: wraps with or without loop (the text switch is instant)
     }
 
     function pause() { paused = true; clearTimeout(holdTimer); holdTimer = 0; }
@@ -605,7 +605,7 @@
     function removeDeck() {
         stopTimers();
         if (deckAbort) { deckAbort.abort(); deckAbort = null; }
-        var section = deckSection();
+        var section = findDeckSection();
         if (!section) return;
         var swiper = section.querySelector('.nds-swiper.nds-hero');
         var wrapper = swiper.querySelector('.nds-swiper-wrapper');
@@ -615,8 +615,8 @@
 
         var deck = swiper.querySelector('.nds-swiper-deck');
         if (deck) deck.remove();
-        Array.prototype.forEach.call(section.querySelectorAll('.nds-swiper-slide.' + DECK_SLIDE), function (s) { s.remove(); });
-        siteSlides.forEach(function (s) { wrapper.appendChild(s); });
+        Array.prototype.forEach.call(section.querySelectorAll('.nds-swiper-slide.' + DECK_SLIDE), function (slide) { slide.remove(); });
+        siteSlides.forEach(function (slide) { wrapper.appendChild(slide); });
         siteSlides = [];
         swiper.classList.remove('nds-deck');
         if (!siteLoop) swiper.removeAttribute('data-swiper-loop');
@@ -636,16 +636,16 @@
     // fan still wrap by index), the stacked-layout drag, and an instant text
     // switch.
     function adoptDeck(swiper) {
-        var inst = instOf(swiper);
-        if (!inst || inst._nd96Adopted) return;
-        inst._nd96Adopted = true;
+        var instance = getSwiperInstance(swiper);
+        if (!instance || instance._nd96Adopted) return;
+        instance._nd96Adopted = true;
         var cards = Array.prototype.slice.call(swiper.querySelectorAll('.nds-swiper-card'));
-        var n = cards.length;
-        if (!n) return;
+        var count = cards.length;
+        if (!count) return;
 
         function place(active) {
-            cards.forEach(function (card, k) {
-                var rel = (k - active + n) % n, srel = rel > n / 2 ? rel - n : rel;
+            cards.forEach(function (card, index) {
+                var rel = (index - active + count) % count, srel = rel > count / 2 ? rel - count : rel;
                 card.style.setProperty('--rel', rel);
                 card.style.setProperty('--srel', srel);
                 var status = rel === 0 ? 'active' : Math.abs(srel) === 1 ? 'near' : '';
@@ -656,62 +656,62 @@
         }
         // 1.12 loops with clones (a full-list index maps to a real one); 1.11 and
         // earlier have no loop, so the index is the position.
-        function real() { return inst._realIndex !== undefined ? inst._realIndex : inst.currentIndex; }
-        function realOf(full) {
-            var r = inst._real;
-            return r ? (((full - inst._head) % r) + r) % r : Math.max(0, Math.min(full, n - 1));
+        function getRealIndex() { return instance._realIndex !== undefined ? instance._realIndex : instance.currentIndex; }
+        function toRealIndex(full) {
+            var realCount = instance._real;
+            return realCount ? (((full - instance._head) % realCount) + realCount) % realCount : Math.max(0, Math.min(full, count - 1));
         }
 
         // Every index change the runtime settles on, plus the target the moment a
         // move starts: _goToFull carries every move in 1.12, goTo before that.
-        var update = inst.updateState;
-        inst.updateState = function () {
+        var update = instance.updateState;
+        instance.updateState = function () {
             var before = this.lastIndex;
             update.call(this);
-            if (this.lastIndex !== before) place(real());
+            if (this.lastIndex !== before) place(getRealIndex());
         };
-        if (inst._goToFull) {
-            var go = inst._goToFull;
-            inst._goToFull = function (index, instant) { place(realOf(index)); return go.call(this, index, instant); };
+        if (instance._goToFull) {
+            var go = instance._goToFull;
+            instance._goToFull = function (index, instant) { place(toRealIndex(index)); return go.call(this, index, instant); };
         } else {
-            var goTo = inst.goTo;
-            inst.goTo = function (index) { place(((index % n) + n) % n); return goTo.call(this, index); };
+            var goTo = instance.goTo;
+            instance.goTo = function (index) { place(((index % count) + count) % count); return goTo.call(this, index); };
         }
 
         // Clone twins, so syncClones can copy the right text into each clone.
-        var slides = Array.prototype.slice.call(inst.wrapper.children);
-        var reals = slides.filter(function (s) { return !s.classList.contains('nds-swiper-clone'); });
+        var slides = Array.prototype.slice.call(instance.wrapper.children);
+        var reals = slides.filter(function (slide) { return !slide.classList.contains('nds-swiper-clone'); });
         var first = slides.indexOf(reals[0]);
-        slides.forEach(function (s, i) {
-            if (!s.classList.contains('nds-swiper-clone') || s.hasAttribute('data-swiper-clone')) return;
-            s.setAttribute('data-swiper-clone', i < first ? reals.length - (first - i) : i - first - reals.length);
+        slides.forEach(function (slide, i) {
+            if (!slide.classList.contains('nds-swiper-clone') || slide.hasAttribute('data-swiper-clone')) return;
+            slide.setAttribute('data-swiper-clone', i < first ? reals.length - (first - i) : i - first - reals.length);
         });
 
         // The text switches in place: strip the forced smooth from the runtime's scrolls.
-        var wrapper = inst.wrapper, scrollTo = wrapper.scrollTo;
-        wrapper.scrollTo = function (o) {
-            if (o && typeof o === 'object' && o.behavior === 'smooth') o = { left: o.left, top: o.top };
-            return scrollTo.call(this, o);
+        var wrapper = instance.wrapper, scrollTo = wrapper.scrollTo;
+        wrapper.scrollTo = function (options) {
+            if (options && typeof options === 'object' && options.behavior === 'smooth') options = { left: options.left, top: options.top };
+            return scrollTo.call(this, options);
         };
 
         // Stacked layout: the cards follow the finger, release pages or opens a card.
         var deck = swiper.querySelector('.nds-swiper-deck');
         if (deck && !deck._nd96Drag) {
             deck._nd96Drag = true;
-            var mq = window.matchMedia((window.NDS && NDS.breakpoints && NDS.breakpoints.desktop) || '(min-width: 960px)');
+            var mediaQuery = window.matchMedia((window.NDS && NDS.breakpoints && NDS.breakpoints.desktop) || '(min-width: 960px)');
             var sig = deckAbort ? deckAbort.signal : undefined;
             var x0 = null, dx = 0, pressed = -1;
             deck.addEventListener('pointerdown', function (e) {
                 if (e.pointerType === 'mouse' && e.button !== 0) return;
                 x0 = e.clientX; dx = 0;
                 pressed = cards.indexOf(e.target.closest('.nds-swiper-card'));
-                try { deck.setPointerCapture(e.pointerId); } catch (err) { /* synthetic pointer */ }
+                try { deck.setPointerCapture(e.pointerId); } catch (error) { /* synthetic pointer */ }
             }, { signal: sig });
             deck.addEventListener('pointermove', function (e) {
                 // The fan layout has the arrows; only the stacked layout drags, and
                 // .nds-stacked asks for that layout above the breakpoint too. Read
                 // live so toggling the class needs no reinit.
-                if (x0 === null || (mq.matches && !swiper.classList.contains('nds-stacked'))) return;
+                if (x0 === null || (mediaQuery.matches && !swiper.classList.contains('nds-stacked'))) return;
                 dx = e.clientX - x0;
                 if (Math.abs(dx) > 4) { deck.classList.add('nds-dragging'); deck.style.setProperty('--drag', dx + 'px'); }
             }, { signal: sig });
@@ -720,22 +720,22 @@
                 x0 = null;
                 deck.classList.remove('nds-dragging');
                 deck.style.removeProperty('--drag');
-                var live = instOf(swiper);
+                var live = getSwiperInstance(swiper);
                 if (!live) return;
                 // By index, so the ends wrap on a runtime without loop too.
-                if (Math.abs(dx) >= 40) { var fwd = (window.NDS && NDS.isRTL) ? dx > 0 : dx < 0; live.goTo((real() + (fwd ? 1 : n - 1)) % n); return; }
+                if (Math.abs(dx) >= 40) { var fwd = (window.NDS && NDS.isRTL) ? dx > 0 : dx < 0; live.goTo((getRealIndex() + (fwd ? 1 : count - 1)) % count); return; }
                 if (e.type === 'pointerup' && pressed >= 0) live.goTo(pressed);
             };
             deck.addEventListener('pointerup', release, { signal: sig });
             deck.addEventListener('pointercancel', release, { signal: sig });
             cards.forEach(function (card, i) {
                 card.addEventListener('keydown', function (e) {
-                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); var live = instOf(swiper); if (live) live.goTo(i); }
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); var live = getSwiperInstance(swiper); if (live) live.goTo(i); }
                 }, { signal: sig });
             });
         }
 
-        place(real());
+        place(getRealIndex());
     }
 
     function injectHero() { if (TYPE === 1) injectSlide(); else injectDeck(); }
@@ -747,7 +747,7 @@
     // ours. Only footers without the strip get one built.
     function injectLogo() {
         var footer = document.querySelector('.nds-footer');
-        var logoUrl = assetUrl(HERO.logo);
+        var logoUrl = resolveAssetUrl(HERO.logo);
         if (!footer || !logoUrl || footer.querySelector('.' + LOGO_CLASS)) return;   // idempotent
 
         var strip = footer.querySelector('.nds-footer-logos');
@@ -763,7 +763,7 @@
         img.width = 101;    // 106:42 artwork at the strip's 40px height — reserved so it can't shift the row
         img.height = 40;
         img.loading = 'lazy';
-        img.alt = t(HERO.logoAlt);
+        img.alt = translate(HERO.logoAlt);
         strip.appendChild(img);
     }
 
@@ -796,7 +796,7 @@
         scheduleSlide();
         scheduleLogo();
     }
-    function teardown() {
+    function cleanupPack() {
         cancelPending();
         removeHero();
         removeLogo();
@@ -805,7 +805,7 @@
     }
 
     window.__NDS_THEME_HOOKS = window.__NDS_THEME_HOOKS || {};
-    window.__NDS_THEME_HOOKS[THEME] = { inject: inject, teardown: teardown };
+    window.__NDS_THEME_HOOKS[THEME] = { inject: inject, teardown: cleanupPack };
 
     // undefined → no switcher orchestration on this page (downstream one-tag): self-activate.
     // === THEME → the switcher activated us (first-load fetch race resolved): activate.

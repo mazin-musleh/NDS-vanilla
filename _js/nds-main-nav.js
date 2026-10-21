@@ -66,7 +66,7 @@
     // framework consumer may not have rendered the chrome yet. Capturing null there left
     // the whole nav inert for the session with no warning — CSS painted it, nothing worked.
     // Fields are reassigned in place so the ~25 `dom.collapse` reads elsewhere keep working.
-    function captureDOM() {
+    function captureDom() {
         const nav = document.querySelector('.nds-main-nav');
         dom.nav = nav;
         dom.collapse = nav?.querySelector('#nds-nav-collapse') || null;
@@ -77,7 +77,7 @@
         dom.minimal = nav?.querySelector('.nds-nav-minimal') || null;
         return !!dom.collapse;
     }
-    captureDOM();
+    captureDom();
 
     // State helpers — delegated to NDS.state (nds-core.js)
     const { add: addState, remove: removeState, has: hasState } = NDS.state;
@@ -97,7 +97,7 @@
     // CSS scroll-behavior, which is unset on the nav and on the document — so it is a
     // real instant scroll here. Check the stylesheet before copying this onto a
     // surface that sets scroll-behavior: smooth, where 'auto' still animates.
-    const behavior = () => NDS.prefersReducedMotion ? 'auto' : 'smooth';
+    const getScrollBehavior = () => NDS.prefersReducedMotion ? 'auto' : 'smooth';
 
     // Mode class at eval, ahead of the loader's reveal stamp, so it rides the
     // reveal's own recalc: written from init it lands a frame later (the loader
@@ -153,7 +153,7 @@
     // ==============================================
     // UTILITY HELPERS
     // ==============================================
-    const afterDelay = (duration, callback) => {
+    const runAfterDelay = (duration, callback) => {
         duration === 0 ? callback() : setTimeout(callback, duration);
     };
 
@@ -174,15 +174,15 @@
     // derive from state.isMinimal, which changes at runtime.
     const getDropdownAnimTarget = (dd) => {
         const menu = dd.querySelector('.nds-nav-menu');
-        const c = {
+        const parts = {
             menu,
             content: menu?.querySelector('.nds-nav-menu-content'),
             isInMinimal: dd.closest('.nds-nav-minimal'),
             isInPrimary: dd.closest('.nds-nav-primary'),
         };
-        const needsHeight = state.isMinimal && c.isInPrimary;
-        const animTarget = c.isInMinimal ? (c.content || c.menu) : (needsHeight ? c.menu : (c.content || c.menu));
-        return { ...c, needsHeight, animTarget };
+        const needsHeight = state.isMinimal && parts.isInPrimary;
+        const animTarget = parts.isInMinimal ? (parts.content || parts.menu) : (needsHeight ? parts.menu : (parts.content || parts.menu));
+        return { ...parts, needsHeight, animTarget };
     };
 
     // Nav backdrop ownership — prevents flicker during navbar↔dropdown transitions
@@ -194,12 +194,12 @@
         navBackdropOwner = owner;
         // `replace` swaps ownership atomically — no tear-down/re-init flicker
         // between sibling flyouts.
-        NDS.Backdrop.show({ zIndex: 999, onClick: () => withFocusBack(owner, onClick), replace: replacing });
+        NDS.Backdrop.show({ zIndex: 999, onClick: () => closeWithFocusBack(owner, onClick), replace: replacing });
     };
 
     // Escape from inside a menu or the drawer hands focus back to its button, not <body>.
     // An outside click moved focus off the nav first, so it keeps where it landed.
-    const withFocusBack = (owner, close) => {
+    const closeWithFocusBack = (owner, close) => {
         const from = document.activeElement;
         const btn = !dom.nav?.contains(from) ? null
             : owner === 'navbar' ? dom.toggler?.querySelector('button[aria-controls="nds-nav-collapse"]')
@@ -348,7 +348,7 @@
             dom.nav.classList.toggle('nds-minimal', should);
             if (dom.minimal) dom.minimal.toggleAttribute('hidden', wantsHidden);
             primaryMaxHeightCached = null;
-            managePABPlacement();
+            managePabPlacement();
             return true;
         }
         return false;
@@ -360,7 +360,7 @@
         // Pure markup check — no layout reads, no style recalcs.
         // The mainnav SCSS doesn't conditionally hide individual .nds-nav-item
         // via media queries; PABs are MOVED between containers by
-        // managePABPlacement (not CSS-hidden), and only the .nds-label inside
+        // managePabPlacement (not CSS-hidden), and only the .nds-label inside
         // .nds-nav-link is hidden in icon-only mode (the item itself stays).
         // So "are there items the toggler would expose" reduces to
         // "is the parent not [hidden] and does it have at least one
@@ -388,7 +388,7 @@
     // PAB (Persistent Action Buttons) MANAGEMENT
     // ==============================================
     // A pinned item leaves a marker in its place (NDS.markHome), so a framework holding it still finds its spot.
-    function managePABPlacement() {
+    function managePabPlacement() {
         const pabs = dom.nav ? dom.nav.querySelectorAll('.nds-nav-item.nds-pinned') : [];
         if (!pabs.length || !dom.minimal) return;
 
@@ -396,8 +396,8 @@
             pabs.forEach(item => NDS.markHome(item));
             // Calls to action first, then the rest, each in written order.
             const all = Array.from(pabs);
-            const cta = all.filter(p => p.classList.contains('nds-nav-cta'));
-            const rest = all.filter(p => !p.classList.contains('nds-nav-cta'));
+            const cta = all.filter(item => item.classList.contains('nds-nav-cta'));
+            const rest = all.filter(item => !item.classList.contains('nds-nav-cta'));
             dom.minimal.prepend(...cta, ...rest);
         } else {
             pabs.forEach(item => NDS.sendHome(item));
@@ -405,7 +405,7 @@
     }
 
     // True when a dropdown or the drawer is open.
-    const anyOpen = () => openDropdowns.size > 0 || hasState(dom.collapse, 'open');
+    const isAnyOpen = () => openDropdowns.size > 0 || hasState(dom.collapse, 'open');
 
     // Flags the CSS reads in place of :has(): something is open (the nav drops its
     // overflow clip), and an action's menu is open (the drawer squares off).
@@ -415,7 +415,7 @@
         dom.collapseContent?.toggleAttribute('data-nav-actions-open', openIn(dom.secondary));
     }
     // The drawer or a menu (its li): opened as it starts to open, closed once it has closed.
-    const emit = (el, name) => el.dispatchEvent(new CustomEvent(`nds:main-nav:${name}`, { bubbles: true }));
+    const dispatchNavEvent = (el, name) => el.dispatchEvent(new CustomEvent(`nds:main-nav:${name}`, { bubbles: true }));
 
     // ==============================================
     // ANIMATION SYSTEM
@@ -442,34 +442,34 @@
                 onComplete?.();
             };
 
-            const closed = () => { syncOpenFlags(); emit(element, 'closed'); };
+            const finishClose = () => { syncOpenFlags(); dispatchNavEvent(element, 'closed'); };
             if (duration === 0) {
                 // Reduced motion: skip intermediate states, go straight to final state
                 if (open) {
                     addState(element, 'open', 'opened');
                     removeState(element, 'closing', 'opening');
                     syncOpenFlags();
-                    emit(element, 'opened');
+                    dispatchNavEvent(element, 'opened');
                     onStart?.();
                 } else {
                     removeState(element, 'open', 'opened', 'opening', 'closing');
                     onStart?.();
-                    closed();
+                    finishClose();
                 }
                 finish();
             } else if (open) {
                 addState(element, 'open', 'opening');
                 removeState(element, 'closing', 'opened');
                 syncOpenFlags();
-                emit(element, 'opened');
+                dispatchNavEvent(element, 'opened');
                 onStart?.();
                 NDS.afterPaint(() => removeState(element, 'opening'));
-                afterDelay(duration, () => { addState(element, 'opened'); finish(); });
+                runAfterDelay(duration, () => { addState(element, 'opened'); finish(); });
             } else {
                 addState(element, 'closing');
                 removeState(element, 'opened');
                 onStart?.();
-                afterDelay(duration, () => { removeState(element, 'open', 'opening', 'closing'); closed(); finish(); });
+                runAfterDelay(duration, () => { removeState(element, 'open', 'opening', 'closing'); finishClose(); finish(); });
             }
             return true;
         },
@@ -495,7 +495,7 @@
     // pixels from the inner viewport edge (i.e. the edge of the visible content
     // area, not the scrollbar area).
     const FIT_SHIFT_PAD = 16;
-    function applyFitShift(dd) {
+    function setFitShift(dd) {
         const menu = dd.querySelector('.nds-nav-menu.nds-fit');
         if (!menu) return;
         // Clear any leftover inline transform BEFORE the minimal-mode bail. Minimal
@@ -504,7 +504,7 @@
         menu.style.removeProperty('transform');
         if (state.isMinimal) return;
         requestAnimationFrame(() => {
-            const r = menu.getBoundingClientRect();
+            const rect = menu.getBoundingClientRect();
 
             // Use the inner viewport (excludes the vertical scrollbar) for bounds.
             // window.innerWidth includes the scrollbar; landing the menu's edge at
@@ -517,8 +517,8 @@
             const right = NDS.isRTL ? innerW : innerW - sb;
 
             let shift = 0;
-            if (r.left < left + FIT_SHIFT_PAD) shift = (left + FIT_SHIFT_PAD) - r.left;
-            else if (r.right > right - FIT_SHIFT_PAD) shift = (right - FIT_SHIFT_PAD) - r.right;
+            if (rect.left < left + FIT_SHIFT_PAD) shift = (left + FIT_SHIFT_PAD) - rect.left;
+            else if (rect.right > right - FIT_SHIFT_PAD) shift = (right - FIT_SHIFT_PAD) - rect.right;
             if (shift) menu.style.transform = `translateX(calc(-50% + ${shift}px))`;
         });
     }
@@ -560,7 +560,7 @@
             const collapseHandlesBackdrop = !isInMinimal && hasState(dom.collapse, 'open');
             if (open && !collapseHandlesBackdrop) {
                 showNavBackdrop('dropdown', () => {
-                    openDropdowns.forEach(d => dropdown.toggle(d, false));
+                    openDropdowns.forEach(dropdownItem => dropdown.toggle(dropdownItem, false));
                 });
             }
 
@@ -573,11 +573,11 @@
                         // Drop intrinsic [hidden] before the open transition so
                         // display:none doesn't kill the animation.
                         menu?.removeAttribute('hidden');
-                        applyFitShift(el);
+                        setFitShift(el);
                     }
                 },
                 onComplete: () => {
-                    if (!isInMinimal) recheckDrawerOverflow();
+                    if (!isInMinimal) syncDrawerOverflow();
                     overflow.schedule('low', 100);
 
                     if (!open) {
@@ -624,20 +624,20 @@
                 animate.run(dom.collapse, true, {
                     getMenu: () => state.isMinimal ? (collapseContent || dom.collapse) : null,
                     onStart: () => { if (state.isMinimal) overflow.schedule('high', 10); },
-                    onComplete: () => { recheckDrawerOverflow(); overflow.schedule('low', 100); }
+                    onComplete: () => { syncDrawerOverflow(); overflow.schedule('low', 100); }
                 });
             } else {
                 removeState(dom.toggler, 'open');
                 NDS.aria.expanded(toggleButton, false);
                 const closeDelay = NDS.prefersReducedMotion ? 0 : dropdown.closeAll();
 
-                afterDelay(closeDelay, () => {
+                runAfterDelay(closeDelay, () => {
                     animate.run(dom.collapse, false, {
                         getMenu: () => state.isMinimal ? (collapseContent || dom.collapse) : null,
                         // Defer hideNavBackdrop until the drawer finishes closing —
                         // Backdrop.hide()'s synchronous scrollLock.unlock() reflow would
                         // otherwise land in the toggle click frame and inflate INP.
-                        onComplete: () => { hideNavBackdrop('navbar'); recheckDrawerOverflow(); overflow.schedule('low', 100); }
+                        onComplete: () => { hideNavBackdrop('navbar'); syncDrawerOverflow(); overflow.schedule('low', 100); }
                     });
                 });
             }
@@ -648,9 +648,9 @@
     // LAYOUT UPDATES (open-only)
     // ==============================================
     // The drawer's links may overflow once it settles: re-check then (minimal only).
-    function recheckDrawerOverflow() {
+    function syncDrawerOverflow() {
         if (!state.isMinimal || !hasState(dom.collapse, 'open') || hasState(dom.collapse, 'closing')) return;
-        afterDelay(state.getDuration(dom.collapseContent || dom.collapse) + 50, () => overflow.schedule());
+        runAfterDelay(state.getDuration(dom.collapseContent || dom.collapse) + 50, () => overflow.schedule());
     }
 
     // ==============================================
@@ -665,8 +665,8 @@
 
             if (hasState(dom.collapse, 'open')) {
                 showNavBackdrop('dropdown', () => {
-                    openDropdowns.forEach(d => {
-                        if (d.closest('.nds-nav-minimal')) dropdown.toggle(d, false);
+                    openDropdowns.forEach(dropdownItem => {
+                        if (dropdownItem.closest('.nds-nav-minimal')) dropdown.toggle(dropdownItem, false);
                     });
                 });
 
@@ -698,7 +698,7 @@
 
         if (isOpen) {
             dropdown.toggle(dd, false);
-            if (isInPrimary && hasState(dom.collapse, 'open')) afterDelay(duration, recheckDrawerOverflow);
+            if (isInPrimary && hasState(dom.collapse, 'open')) runAfterDelay(duration, syncDrawerOverflow);
             return;
         }
 
@@ -707,7 +707,7 @@
         const open = () => {
             if (animate._activeCount === 0) state.isAnimating = false;
             dropdown.toggle(dd, true);
-            if (isInPrimary && hasState(dom.collapse, 'open')) afterDelay(duration * 0.1, recheckDrawerOverflow);
+            if (isInPrimary && hasState(dom.collapse, 'open')) runAfterDelay(duration * 0.1, syncDrawerOverflow);
         };
 
         scheduleDropdownOpen(isInMinimal, closeDelay, open);
@@ -720,7 +720,7 @@
         const isOpen = hasState(dom.collapse, 'open');
 
         if (!isOpen) {
-            const minimalDropdowns = [...openDropdowns].filter(d => d.closest('.nds-nav-minimal'));
+            const minimalDropdowns = [...openDropdowns].filter(dropdownItem => dropdownItem.closest('.nds-nav-minimal'));
             if (minimalDropdowns.length) {
                 const collapseContent = dom.collapseContent;
                 const duration = state.getDuration(collapseContent || dom.collapse);
@@ -729,7 +729,7 @@
                     if (hasState(dom.collapse, 'open')) toggleNavbar();
                 });
 
-                minimalDropdowns.forEach(d => dropdown.toggle(d, false));
+                minimalDropdowns.forEach(dropdownItem => dropdown.toggle(dropdownItem, false));
                 scheduleToggleAction(duration, () => navbar.toggle(true));
                 return;
             }
@@ -774,7 +774,7 @@
                 const needsRecalc = (dd.closest('.nds-nav-primary') || dd.closest('.nds-nav-actions')) &&
                     hasState(dom.collapse, 'open');
                 dropdown.toggle(dd, false);
-                if (needsRecalc) afterDelay(state.getDuration(menu), recheckDrawerOverflow);
+                if (needsRecalc) runAfterDelay(state.getDuration(menu), syncDrawerOverflow);
             }
         });
     }
@@ -782,7 +782,7 @@
     // ==============================================
     // INTERACTIONS SETUP (binders run on init; handlers fire on interaction)
     // ==============================================
-    function bindShowMore(signal) {
+    function addShowMoreListeners(signal) {
         const clickTarget = dom.collapseContent || dom.primary;
         clickTarget.addEventListener('click', (e) => {
             const showMore = e.target.closest('.nds-nav-item.nds-show-more');
@@ -797,10 +797,10 @@
                 openDropdowns.forEach(dd => {
                     if (dd.closest('.nds-nav-actions')) dropdown.toggle(dd, false);
                 });
-                dom.primary.scrollTo({ top: atEnd ? 0 : dom.primary.scrollTop + amount, behavior: behavior() });
+                dom.primary.scrollTo({ top: atEnd ? 0 : dom.primary.scrollTop + amount, behavior: getScrollBehavior() });
             } else {
                 const dir = NDS.isRTL ? -1 : 1;
-                dom.primary.scrollTo({ left: atEnd ? 0 : dom.primary.scrollLeft + amount * dir, behavior: behavior() });
+                dom.primary.scrollTo({ left: atEnd ? 0 : dom.primary.scrollLeft + amount * dir, behavior: getScrollBehavior() });
             }
             // Fallback for browsers without `scrollend` (the listener below
             // covers modern browsers). The smooth-scroll duration is
@@ -812,7 +812,7 @@
         }, { signal });
     }
 
-    function bindScrollTracking(signal) {
+    function addScrollTrackingListeners(signal) {
         const onScroll = NDS.rafThrottle(() => {
             if (state.isMinimal && !hasState(dom.collapse, 'open')) return;
             overflow.checkEnd();
@@ -837,11 +837,11 @@
         interactionsAbortController = new AbortController();
         const { signal } = interactionsAbortController;
 
-        bindShowMore(signal);
-        bindScrollTracking(signal);
+        addShowMoreListeners(signal);
+        addScrollTrackingListeners(signal);
         // Inline, so it outranks any stylesheet — it must honour reduced motion here
         // or every scrollTo below silently animates through its 'auto' branch.
-        dom.primary.style.scrollBehavior = behavior();
+        dom.primary.style.scrollBehavior = getScrollBehavior();
         // Not in minimal mode, only while the bar overflows, never from inside a dropdown menu.
         NDS.dragScroll(dom.primary, {
             canScroll: (e) => !state.isMinimal && hasState(dom.primary, 'has-more') && !e.target.closest('.nds-nav-menu'),
@@ -857,7 +857,7 @@
 
         // A mode flip with something open: close the menus and the drawer, and drop
         // a stale backdrop.
-        if (modeChanged && anyOpen()) {
+        if (modeChanged && isAnyOpen()) {
             dropdown.closeAll();
 
             if (hasState(dom.collapse, 'open')) {
@@ -875,7 +875,7 @@
         }
 
         if (hasState(dom.collapse, 'open') && !hasState(dom.collapse, 'closing')) {
-            recheckDrawerOverflow();
+            syncDrawerOverflow();
         }
 
         // Pure markup check (no layout reads) — re-run on composition changes
@@ -900,10 +900,10 @@
     let eventsAbortController = null;
     let offResize = null;
     const offElementResizes = [];
-    const offDOMWatches = [];
+    const offDomWatches = [];
     let initDone = false;
 
-    function bindGlobalEvents(signal) {
+    function addGlobalListeners(signal) {
         window.addEventListener('orientationchange', () => {
             primaryMaxHeightCached = null;
             setTimeout(scheduleUpdate, 150);
@@ -929,11 +929,11 @@
             if (!anchor || anchor.closest('.nds-has-menu')) return;
 
             const href = anchor.getAttribute('href');
-            const hashIdx = href.indexOf('#');
-            if (hashIdx === -1) return;
+            const hashIndex = href.indexOf('#');
+            if (hashIndex === -1) return;
 
-            const path = href.substring(0, hashIdx);
-            const hash = href.substring(hashIdx + 1);
+            const path = href.substring(0, hashIndex);
+            const hash = href.substring(hashIndex + 1);
             if (!hash) return;
 
             const isSamePage = !path || path === location.pathname || path === location.pathname.replace(/\/$/, '');
@@ -953,7 +953,7 @@
             const delay = wasNavOpen || openCount ? NDS.transitionSpeed() + 100 : 0;
 
             setTimeout(() => {
-                target.scrollIntoView({ behavior: behavior(), block: 'start' });
+                target.scrollIntoView({ behavior: getScrollBehavior(), block: 'start' });
                 history.replaceState(history.state, '', `#${hash}`);   // a router keeps its state
             }, delay);
         }, { signal });
@@ -963,12 +963,12 @@
         }, { signal });
     }
 
-    function bindMutationAndResizeObservers() {
+    function addMutationAndResizeListeners() {
         // Captured, unlike before: reinit() re-runs this, and an uncaptured pooled
         // subscriber would stack one closure per re-run for the page lifetime.
-        offDOMWatches.splice(0).forEach(off => off());
+        offDomWatches.splice(0).forEach(off => off());
         const navChanged = NDS.debounce(() => { state._navChanged = true; scheduleUpdate(); }, 100);
-        offDOMWatches.push(
+        offDomWatches.push(
             NDS.onDOMAdd('.nds-nav-item, .nds-has-menu', navChanged),
             NDS.onDOMRemove('.nds-nav-item, .nds-has-menu', navChanged),
         );
@@ -994,7 +994,7 @@
         // Pre-JSA-15 this also observed dom.nav (for updateNavMaxWidth's
         // navW input). With that gone, NDS.onResize fully covers window-level
         // size changes — observing just primary is enough.
-        const navResizeHandler = (entry) => {
+        const handleNavResize = (entry) => {
             const { width, height } = entry.contentRect;
             const last = entry.target._lastSize;
             if (last && Math.abs(width - last.w) <= 5 && Math.abs(height - last.h) <= 5) return;
@@ -1003,7 +1003,7 @@
         };
 
         if (dom.primary) {
-            offElementResizes.push(NDS.onElementResize(dom.primary, navResizeHandler));
+            offElementResizes.push(NDS.onElementResize(dom.primary, handleNavResize));
         }
     }
 
@@ -1018,8 +1018,8 @@
 
         offElementResizes.splice(0).forEach(off => off());
 
-        bindGlobalEvents(signal);
-        bindMutationAndResizeObservers();
+        addGlobalListeners(signal);
+        addMutationAndResizeListeners();
     }
 
     // ==============================================
@@ -1050,7 +1050,7 @@
         if (!live) return;
         if (initDone && dom.nav === live && live.isConnected
             && dom.collapse?.isConnected && !dom.collapse.hasAttribute('hidden')) return;
-        if (!captureDOM()) return;
+        if (!captureDom()) return;
         initDone = false;
         init();
     }
@@ -1061,7 +1061,7 @@
         if (initDone || !dom.collapse) return;
         initDone = true;
 
-        // syncMode calls managePABPlacement when the state transitions;
+        // syncMode calls managePabPlacement when the state transitions;
         // only run the explicit pass when it didn't, otherwise PAB placement
         // walks every .nds-pinned twice and re-prepends nodes already in place.
         const modeSynced = syncMode();
@@ -1083,7 +1083,7 @@
         // both document-click listeners detach atomically on teardown. It
         // fast-bails when nothing is open, so it's cheap on the common click.
         document.addEventListener('click', (e) => handleDocumentClick(e), { signal: eventsAbortController.signal });
-        if (!modeSynced) managePABPlacement();
+        if (!modeSynced) managePabPlacement();
         // Read the nav composition now that PABs (if any) have been placed.
         // scheduleUpdate's only call site for this fires on width/mode/nav
         // changes — none of which trigger on first load — so without this,
@@ -1092,7 +1092,7 @@
         // CSS-visible with nothing to expose, and .nds-nav-actions unstamped.
         checkNavComposition();
 
-        if (hasState(dom.collapse, 'open')) recheckDrawerOverflow();
+        if (hasState(dom.collapse, 'open')) syncDrawerOverflow();
         setupInteractions();
 
         // Initial overflow check on the next paint. The ResizeObserver
@@ -1127,19 +1127,19 @@
         interactionsAbortController = null;
         if (offResize) { offResize(); offResize = null; }
         offElementResizes.splice(0).forEach(off => off());
-        offDOMWatches.splice(0).forEach(off => off());
+        offDomWatches.splice(0).forEach(off => off());
         openDropdowns.clear();
         hideNavBackdrop(navBackdropOwner);
     }
 
-    const drawerOpen = () => hasState(dom.collapse, 'open');
+    const isDrawerOpen = () => hasState(dom.collapse, 'open');
 
     NDS.MainNav = {
         init,
         reinit,
         destroy,
-        open: () => { if (!drawerOpen()) toggleNavbar(); },
-        close: () => { if (drawerOpen()) toggleNavbar(); },
+        open: () => { if (!isDrawerOpen()) toggleNavbar(); },
+        close: () => { if (isDrawerOpen()) toggleNavbar(); },
         toggle: () => toggleNavbar(),
         openMenu: (trigger) => {
             const dd = trigger?.closest('.nds-has-menu');

@@ -70,7 +70,7 @@
     });
 
     const isStatic = () => modal.hasAttribute('data-modal-static');
-    const onEscape = (e) => {
+    const handleEscape = (e) => {
       // A dialog above it (a modal panel inside) answers instead.
       if (e.key !== 'Escape' || e.defaultPrevented || NDS.dialog.top() !== modal) return;
       // The native close skips the fade.
@@ -79,11 +79,11 @@
     };
     // Focus on <body> (a click on plain text) never reaches the dialog's own listener.
     document.addEventListener('keydown', (e) => {
-      if (!modal.contains(e.target)) onEscape(e);
+      if (!modal.contains(e.target)) handleEscape(e);
     }, { signal });
     // On the dialog, not document: a menu inside that handles Escape stops it first.
     modal.addEventListener('keydown', (e) => {
-      onEscape(e);
+      handleEscape(e);
       // Enter on the box itself (focused when there is no close control) presses the primary action.
       if (e.key === 'Enter' && e.target === modal) {
         const primary = modal.querySelector('.nds-card-actions .nds-btn.nds-primary');

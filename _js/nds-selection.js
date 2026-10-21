@@ -48,30 +48,30 @@
     const counts = new WeakMap();
 
     // An item's own box is its FIRST input.nds-checkbox-input, so a checklist inside a card never selects the card.
-    const boxOf = (item) => item.querySelector('input.nds-checkbox-input');
-    const isSelected = (item) => NDS.state.has(item, 'selected') || !!boxOf(item)?.checked;
+    const getBox = (item) => item.querySelector('input.nds-checkbox-input');
+    const isSelected = (item) => NDS.state.has(item, 'selected') || !!getBox(item)?.checked;
 
     // A sub row's nested table stays its own list (NDS.ownItems).
-    function itemsOf(list) {
+    function getItems(list) {
         const paged = list.querySelectorAll('.nds-page-item');
         return NDS.ownItems(list, paged.length ? paged : list.children);
     }
 
     // The list a select-all box drives, or null for an item box.
-    function listOfAll(box) {
+    function getTargetList(box) {
         const id = box.getAttribute('data-selection-target');
         return id ? document.getElementById(id) : null;
     }
 
     // What the filter shows, and with `page` only the page Pagination shows (the select-all box's scope).
-    const scopeOf = (items, page) => items.filter(i => !i.hasAttribute('data-filtered') && !(page && i.hidden));
+    const getScope = (items, page) => items.filter(i => !i.hasAttribute('data-filtered') && !(page && i.hidden));
 
-    const allBoxesOf = (list) => list.id
+    const getAllBoxes = (list) => list.id
         ? document.querySelectorAll(`input.nds-checkbox-input[data-selection-target="${list.id}"]`)
         : [];
 
     // Every list something on the page counts or selects.
-    function lists() {
+    function getLists() {
         const set = new Set();
         document.querySelectorAll('[data-selection-target]').forEach(el => {
             const list = document.getElementById(el.getAttribute('data-selection-target'));
@@ -82,22 +82,22 @@
 
     function mirror(items) {
         items.forEach(item => {
-            const box = boxOf(item);
+            const box = getBox(item);
             if (box) NDS.state[box.checked ? 'add' : 'remove'](item, 'selected');
         });
     }
 
     // Select-all boxes, counters, then the event.
     function sync(list, fire) {
-        const items = itemsOf(list);
+        const items = getItems(list);
         const selected = items.filter(isSelected);
         const count = selected.length;
 
-        const alls = allBoxesOf(list);
+        const alls = getAllBoxes(list);
         if (alls.length) {
             watchPages();
-            const shown = scopeOf(items, true).map(boxOf).filter(Boolean);
-            const on = shown.filter(b => b.checked).length;
+            const shown = getScope(items, true).map(getBox).filter(Boolean);
+            const on = shown.filter(box => box.checked).length;
             alls.forEach(box => {
                 box.checked = on > 0 && on === shown.length;
                 NDS.Checkbox.setIndeterminate(box, on > 0 && on < shown.length);
@@ -105,7 +105,7 @@
         }
 
         if (list.id) {
-            const rest = scopeOf(items, false).some(i => !isSelected(i));
+            const rest = getScope(items, false).some(i => !isSelected(i));
             document.querySelectorAll(`[data-selection-target="${list.id}"]:not(input.nds-checkbox-input)`).forEach(wrap => {
                 wrap.querySelectorAll('[data-selection-count]').forEach(el => { el.textContent = NDS.formatNumber(count); });
                 wrap.querySelectorAll('[data-selection-total]').forEach(el => { el.textContent = NDS.formatNumber(items.length); });
@@ -133,19 +133,19 @@
     function recount(list) {
         list = NDS.resolveEl(list);
         if (!list) return;
-        mirror(itemsOf(list));
+        mirror(getItems(list));
         sync(list, false);
     }
 
     function recountAll() {
-        lists().forEach(recount);
+        getLists().forEach(recount);
     }
 
     function selectAll(list, on = true, scope) {
         list = NDS.resolveEl(list);
         if (!list) return;
-        const shown = scopeOf(itemsOf(list), scope === 'page');
-        shown.forEach(item => { const box = boxOf(item); if (box) box.checked = on; });
+        const shown = getScope(getItems(list), scope === 'page');
+        shown.forEach(item => { const box = getBox(item); if (box) box.checked = on; });
         mirror(shown);
         sync(list, true);
     }
@@ -154,36 +154,36 @@
     function clear(list) {
         list = NDS.resolveEl(list);
         if (!list) return;
-        itemsOf(list).forEach(item => {
-            const box = boxOf(item);
+        getItems(list).forEach(item => {
+            const box = getBox(item);
             if (box) box.checked = false;
             NDS.state.remove(item, 'selected');
         });
         sync(list, true);
     }
 
-    function selected(list) {
+    function getSelected(list) {
         list = NDS.resolveEl(list);
-        return list ? itemsOf(list).filter(isSelected) : [];
+        return list ? getItems(list).filter(isSelected) : [];
     }
 
-    function onChange(e) {
+    function handleChange(e) {
         const box = e.target;
         if (!(box instanceof Element) || !box.matches('input.nds-checkbox-input')) return;
-        const allList = listOfAll(box);
+        const allList = getTargetList(box);
         if (allList) { selectAll(allList, box.checked, 'page'); return; }
 
         // The innermost list wins: a sub row's nested table never moves its outer table.
         let list = null;
-        for (const l of lists()) if (l.contains(box) && (!list || list.contains(l))) list = l;
+        for (const candidate of getLists()) if (candidate.contains(box) && (!list || list.contains(candidate))) list = candidate;
         if (!list) return;
-        const item = itemsOf(list).find(i => i.contains(box));
-        if (!item || boxOf(item) !== box) return;
+        const item = getItems(list).find(i => i.contains(box));
+        if (!item || getBox(item) !== box) return;
         NDS.state[box.checked ? 'add' : 'remove'](item, 'selected');
         sync(list, true);
     }
 
-    function onClick(e) {
+    function handleClick(e) {
         const btn = e.target instanceof Element && e.target.closest('[data-selection-all], [data-selection-clear]');
         const wrap = btn?.closest('[data-selection-target]');
         const list = wrap && NDS.resolveEl(wrap.getAttribute('data-selection-target'));
@@ -192,7 +192,7 @@
         else clear(list);
         // The clicked button just hid itself: hand focus to the one that took its place, else the select-all box.
         if (btn.hidden) {
-            (wrap.querySelector('[data-selection-all]:not([hidden]), [data-selection-clear]:not([hidden])') || allBoxesOf(list)[0])?.focus();
+            (wrap.querySelector('[data-selection-all]:not([hidden]), [data-selection-clear]:not([hidden])') || getAllBoxes(list)[0])?.focus();
         }
     }
 
@@ -203,15 +203,15 @@
         pagesOff = NDS.onAttrChange('.nds-page-item', ['hidden'], resyncFor);
     }
 
-    function resyncFor(els) {
-        lists().forEach(list => { if (els.some(el => list.contains(el))) sync(list, false); });
+    function resyncFor(elements) {
+        getLists().forEach(list => { if (elements.some(el => list.contains(el))) sync(list, false); });
     }
 
     function init() {
         if (controller) return;
         controller = new AbortController();
-        document.addEventListener('change', onChange, { signal: controller.signal });
-        document.addEventListener('click', onClick, { signal: controller.signal });
+        document.addEventListener('change', handleChange, { signal: controller.signal });
+        document.addEventListener('click', handleClick, { signal: controller.signal });
 
         // Items added or removed fire no change event — ride the shared DOM bus
         // (every selectable item carries an input.nds-checkbox-input).
@@ -243,6 +243,6 @@
     // load, the listener was never wired.
     NDS.Selection = {
         init, reinit: recountAll, refresh: (list) => { if (list) return recount(list); init(); recountAll(); },
-        selectAll, clear, selected, isSelected, destroy
+        selectAll, clear, selected: getSelected, isSelected, destroy
     };
 })();

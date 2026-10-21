@@ -52,12 +52,12 @@
 
     // The value a screen reader hears; set at once, the fill waits for scroll.
     function syncAria(el) {
-        const num = parseFloat(el.dataset.num);
+        const current = parseFloat(el.dataset.num);
         const max = parseFloat(el.dataset.max);
-        const outOf = !isNaN(num) && !isNaN(max) && max > 0;
+        const outOf = !isNaN(current) && !isNaN(max) && max > 0;
         const top = outOf ? max : 100;
         const now = NDS.status.get(el) === 'success' ? top
-            : Math.max(0, outOf ? Math.min(num, max) : Math.min(parseFloat(el.dataset.value), 100));
+            : Math.max(0, outOf ? Math.min(current, max) : Math.min(parseFloat(el.dataset.value), 100));
         if (isNaN(now)) return;
         if (!el.hasAttribute('role')) el.setAttribute('role', 'progressbar');
         el.setAttribute('aria-valuemin', 0);
@@ -68,22 +68,22 @@
     function syncFromData(el) {
         if (el.closest('code')) return;
         syncAria(el);
-        const num = parseFloat(el.dataset.num);
+        const current = parseFloat(el.dataset.num);
         const max = parseFloat(el.dataset.max);
         const value = parseFloat(el.dataset.value);
 
         // Out-of mode: data-num + data-max (circle only)
-        if (!isNaN(num) && !isNaN(max) && max > 0) {
-            el.style.setProperty('--progress-num', num);
+        if (!isNaN(current) && !isNaN(max) && max > 0) {
+            el.style.setProperty('--progress-num', current);
             el.style.setProperty('--progress-max', max);
-            el.style.setProperty('--progress-value', Math.min((num / max) * 100, 100));
+            el.style.setProperty('--progress-value', Math.min((current / max) * 100, 100));
 
             const numberEl = el.querySelector('.nds-progress-out-of .nds-progress-number');
             const ofEl = el.querySelector('.nds-progress-out-of .nds-progress-of');
-            if (numberEl) numberEl.textContent = num;
+            if (numberEl) numberEl.textContent = current;
             if (ofEl) ofEl.textContent = '/' + max;
             const stepsEl = el.querySelector('.nds-progress-steps');
-            if (stepsEl) stepsEl.textContent = `${num} / ${max}`;
+            if (stepsEl) stepsEl.textContent = `${current} / ${max}`;
         }
         // Percentage mode: data-value
         else if (!isNaN(value)) {
@@ -95,12 +95,12 @@
     // A page with no indicator at load never runs init(), so the public writers wire this too.
     function watch() {
         if (offAttrChange) return;
-        offAttrChange = NDS.onAttrChange(SEL, attributes, els => els.forEach(syncFromData));
+        offAttrChange = NDS.onAttrChange(SEL, attributes, elements => elements.forEach(syncFromData));
     }
 
     // Public API
     function setValue(el, value) { watch(); el.dataset.value = value; }
-    function setOutOf(el, num, max) { watch(); el.dataset.num = num; el.dataset.max = max; }
+    function setOutOf(el, current, max) { watch(); el.dataset.num = current; el.dataset.max = max; }
 
     function init() {
         const reduced = NDS.prefersReducedMotion;

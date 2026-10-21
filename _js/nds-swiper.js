@@ -98,8 +98,8 @@
                 e.key !== 'Home' && e.key !== 'End') return;
             // A field in a slide owns its caret keys.
             if (e.defaultPrevented || e.target.matches?.('input, textarea, select') || e.target.isContentEditable) return;
-            const inst = ownerOf(document.activeElement);
-            if (inst) inst._handleKeydown(e);
+            const instance = findOwner(document.activeElement);
+            if (instance) instance._handleKeydown(e);
         });
     }
 
@@ -107,7 +107,7 @@
     // slide, and :hover matches every ancestor too, so taking the first Set hit
     // (= document order) would always hand the event to the outer deck. Same
     // ownership question the constructor answers.
-    function ownerOf(active) {
+    function findOwner(active) {
         for (let el = active && active.closest('.nds-swiper'); el;
              el = el.parentElement && el.parentElement.closest('.nds-swiper')) {
             if (activeSwipers.has(el.ndsSwiper)) return el.ndsSwiper;
@@ -116,8 +116,8 @@
         // but only when nothing else holds focus: a field elsewhere owns its arrows.
         if (active && active !== document.body && active !== document.documentElement) return null;
         let best = null;
-        for (const s of activeSwipers) {
-            if (s.container.matches(':hover') && (!best || best.container.contains(s.container))) best = s;
+        for (const swiper of activeSwipers) {
+            if (swiper.container.matches(':hover') && (!best || best.container.contains(swiper.container))) best = swiper;
         }
         return best;
     }
@@ -135,7 +135,7 @@
     function ensureSharedResize() {
         if (resizeAttached) return;
         resizeAttached = true;
-        const trigger = () => resizeSwipers.forEach(inst => inst._handleResize());
+        const trigger = () => resizeSwipers.forEach(instance => instance._handleResize());
         mqDesktop.addEventListener('change', trigger);
         mqTablet.addEventListener('change', trigger);
     }
@@ -154,14 +154,14 @@
             // hands us the nested swiper's controls. Slides are direct wrapper
             // children by contract (flex row; setupLoop inserts clones as siblings),
             // so :scope > is exact there; the rest are ownership-checked.
-            const own = (sel) => NDS.ownParts(container, sel, '.nds-swiper')[0] || null;
+            const findOwnPart = (selector) => NDS.ownParts(container, selector, '.nds-swiper')[0] || null;
             this.slides = this.wrapper
                 ? Array.from(this.wrapper.querySelectorAll(':scope > .nds-swiper-slide'))
                 : [];
-            this.pagination = own('.nds-swiper-pagination');
-            this.navigation = own('.nds-swiper-navigation');
-            this.prevBtn = own('.nds-prev');
-            this.nextBtn = own('.nds-next');
+            this.pagination = findOwnPart('.nds-swiper-pagination');
+            this.navigation = findOwnPart('.nds-swiper-navigation');
+            this.prevBtn = findOwnPart('.nds-prev');
+            this.nextBtn = findOwnPart('.nds-next');
 
             this.isHero = container.classList.contains('nds-hero');
             this._spotlight = container.classList.contains('nds-spotlight');
@@ -178,12 +178,12 @@
             // Static knobs — read once, reused on every breakpoint change.
             // Computed, not inline: a strict-CSP page sets them in a class.
             const cs = getComputedStyle(container);
-            const knob = prop => parseInt(cs.getPropertyValue(prop)) || 0;
-            this._slidesMax = knob('--max-slides') || 1;
-            this._slidesMid = knob('--mid-slides') || 1;
-            this._slidesMin = knob('--min-slides') || 1;
+            const readKnob = prop => parseInt(cs.getPropertyValue(prop)) || 0;
+            this._slidesMax = readKnob('--max-slides') || 1;
+            this._slidesMid = readKnob('--mid-slides') || 1;
+            this._slidesMin = readKnob('--min-slides') || 1;
             if (this._spotlight) this._slidesMax = this._slidesMid = this._slidesMin = 1;
-            this._peek = knob('--peek');
+            this._peek = readKnob('--peek');
 
             // Loop needs more slides than the largest page, or a page would show a
             // slide twice. Decided once, against the largest tier.
@@ -226,8 +226,8 @@
         // row. _goToFull needs it for a target index, not the current one, hence the
         // parameter.
         _realOf(index) {
-            const n = this._real;
-            return (((index - this._head) % n) + n) % n;
+            const realCount = this._real;
+            return (((index - this._head) % realCount) + realCount) % realCount;
         }
 
         get _realIndex() { return this._realOf(this.currentIndex); }
@@ -241,8 +241,8 @@
 
         // Where page p starts, in real slides. The last page end-aligns so it stays
         // inside the deck; a loop has no end, so its pages run on into the clones.
-        _pageStart(p) {
-            const start = p * this.slidesPerView;
+        _pageStart(page) {
+            const start = page * this.slidesPerView;
             return this._loop ? start : Math.min(start, this._real - this.slidesPerView);
         }
 
@@ -278,14 +278,14 @@
             this.setupResize();
 
             // Gate observers — only register when they have work to do.
-            const lazySlides = this.slides.filter(s =>
-                s.querySelector('img[data-src], img[data-srcset]')
+            const lazySlides = this.slides.filter(slide =>
+                slide.querySelector('img[data-src], img[data-srcset]')
             );
             if (lazySlides.length) this.setupLazyLoading(lazySlides);
             // setupVisibilityObserver only does meaningful work for heroes that have
             // [hidden] slides to reveal on visibility (the WebKit RTL fix). Non-hero
             // peek/state was set synchronously above — no late update needed.
-            if (this.isHero && this.slides.some(s => s.hasAttribute('hidden'))) {
+            if (this.isHero && this.slides.some(slide => slide.hasAttribute('hidden'))) {
                 this.setupVisibilityObserver();
             }
 
@@ -313,7 +313,7 @@
                 requestAnimationFrame(() => {
                     // One reveal, two scroll contexts — a later addition to it must
                     // reach both directions, not just the RTL default.
-                    const reveal = () => this.slides.forEach(s => s.removeAttribute('hidden'));
+                    const reveal = () => this.slides.forEach(slide => slide.removeAttribute('hidden'));
                     if (NDS.isRTL) {
                         // WebKit RTL: keep scroll-behavior: auto through the entire
                         // update so Safari/WebKit doesn't jump scroll on reflow.
@@ -517,9 +517,9 @@
                 // last page (a loop has no end, so that alignment would shift at the
                 // settle jump): a target past the start or on the last page first
                 // shifts one real cycle the other way, silently.
-                const n = this._real;
-                if (index < 0) { if (this._shiftCycle(1)) { this.currentIndex += n; index += n; } }
-                else if (index >= this.maxIndex) { if (this._shiftCycle(-1)) { this.currentIndex -= n; index -= n; } }
+                const realCount = this._real;
+                if (index < 0) { if (this._shiftCycle(1)) { this.currentIndex += realCount; index += realCount; } }
+                else if (index >= this.maxIndex) { if (this._shiftCycle(-1)) { this.currentIndex -= realCount; index -= realCount; } }
             }
             const clampedIndex = Math.max(0, Math.min(index, this.maxIndex));
             const targetSlide = this.slides[clampedIndex];
@@ -557,30 +557,30 @@
             // and _recenter has no room to work in — it only shifts once the row is a
             // whole cycle out. A row shorter than the budget repeats its own cycle to
             // reach it; the wrap math is cycle-relative, so the clone index just wraps.
-            const n = this._real;
+            const realCount = this._real;
             const count = Math.max(2 * Math.max(this._slidesMax, this._slidesMid, this._slidesMin) + 1, 6);
             const clone = (i) => {
-                const c = this.slides[i].cloneNode(true);
-                c.classList.add('nds-swiper-clone');
-                c.setAttribute('data-swiper-clone', i);   // its real twin, for consumers that sync content
-                c.setAttribute('aria-hidden', 'true');
+                const clone = this.slides[i].cloneNode(true);
+                clone.classList.add('nds-swiper-clone');
+                clone.setAttribute('data-swiper-clone', i);   // its real twin, for consumers that sync content
+                clone.setAttribute('aria-hidden', 'true');
                 // aria-hidden keeps the duplicate out of the a11y tree, but inert also
                 // killed clicks — and a row showing more than one slide rests with
                 // clones on screen, so those were dead. Drop them from the tab order
                 // instead: pointer works, Tab still lands on the real twin only.
-                c.querySelectorAll(NDS.focusableSel).forEach(el => el.setAttribute('tabindex', '-1'));
+                clone.querySelectorAll(NDS.focusableSel).forEach(el => el.setAttribute('tabindex', '-1'));
                 // A duplicated id would steal anchors and label-for from the real slide.
-                c.removeAttribute('id');
-                c.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
-                return c;
+                clone.removeAttribute('id');
+                clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+                return clone;
             };
             const head = [], tail = [];
             for (let j = 0; j < count; j++) {
-                head.push(clone((((j - count) % n) + n) % n));
-                tail.push(clone(j % n));
+                head.push(clone((((j - count) % realCount) + realCount) % realCount));
+                tail.push(clone(j % realCount));
             }
             this.slides[0].before(...head);
-            this.slides[n - 1].after(...tail);
+            this.slides[realCount - 1].after(...tail);
             this._head = count;
             this.slides = [...head, ...this.slides, ...tail];
             this.currentIndex = count;
@@ -621,8 +621,8 @@
             if (e.pointerType === 'mouse') return;
             this._aim = null;
             if (this._loopPending || !this._measuredStep) return;
-            const pos = this._pos();
-            const dir = pos < this._head ? 1 : pos >= this._head + this._real ? -1 : 0;
+            const position = this._pos();
+            const dir = position < this._head ? 1 : position >= this._head + this._real ? -1 : 0;
             if (!dir) return;
 
             // The row is nearly always mid-snap here (measured ~0.1 of a slide short),
@@ -630,20 +630,20 @@
             // nearest slot is the flicker. So hold snap off until the finger leaves:
             // during a drag it does nothing anyway, and the touch has already cancelled
             // the animation the cut would have landed on.
-            const w = this.wrapper, snap = w.style.scrollSnapType;
-            w.style.scrollSnapType = 'none';
-            const restore = () => { w.style.scrollSnapType = snap; };
+            const wrapper = this.wrapper, snap = wrapper.style.scrollSnapType;
+            wrapper.style.scrollSnapType = 'none';
+            const restore = () => { wrapper.style.scrollSnapType = snap; };
             if (!this._shiftCycle(dir)) return restore();
             const { signal } = this.abortController;
-            w.addEventListener('pointerup', restore, { once: true, signal });
-            w.addEventListener('pointercancel', restore, { once: true, signal });
+            wrapper.addEventListener('pointerup', restore, { once: true, signal });
+            wrapper.addEventListener('pointercancel', restore, { once: true, signal });
         }
 
         _loopSettle() {
             this.detectCurrentSlide();
-            const n = this._real, c = this._head, i = this.currentIndex;
-            if (i >= c && i < c + n) return;
-            this._jumpTo(c + this._realIndex);
+            const realCount = this._real, headCount = this._head, i = this.currentIndex;
+            if (i >= headCount && i < headCount + realCount) return;
+            this._jumpTo(headCount + this._realIndex);
             this.detectCurrentSlide();
             this.updateState();
         }
@@ -657,10 +657,10 @@
         // clamped shift is a short one, which does show. Skipping costs nothing — the
         // settle re-anchors at the next rest.
         _shiftCycle(dir) {
-            const n = this._real;
-            const landing = this._pos() + dir * n;
+            const realCount = this._real;
+            const landing = this._pos() + dir * realCount;
             if (landing < 0 || landing > this.maxIndex) return false;
-            const cycle = Math.abs(this.slides[this._head + n].offsetLeft - this.slides[this._head].offsetLeft);
+            const cycle = Math.abs(this.slides[this._head + realCount].offsetLeft - this.slides[this._head].offsetLeft);
             this._instant(() => { this.wrapper.scrollLeft += NDS.isRTL ? -dir * cycle : dir * cycle; });
             return true;
         }
@@ -677,8 +677,8 @@
         // the slide where it really is: content can grow it past its planned width.
         _offsetOf(el) {
             if (!this._spotlight) return Math.abs(el.offsetLeft - this.slides[0].offsetLeft);
-            const r = el.getBoundingClientRect(), w = this.wrapper.getBoundingClientRect();
-            return Math.abs(this.wrapper.scrollLeft + (r.left + r.right - w.left - w.right) / 2);
+            const rect = el.getBoundingClientRect(), wrapperRect = this.wrapper.getBoundingClientRect();
+            return Math.abs(this.wrapper.scrollLeft + (rect.left + rect.right - wrapperRect.left - wrapperRect.right) / 2);
         }
 
         // ==============================================
@@ -687,20 +687,20 @@
 
         setupScrollSync() {
             const { signal } = this.abortController;
-            const w = this.wrapper;
-            w.addEventListener('scroll', NDS.rafThrottle(() => {
+            const wrapper = this.wrapper;
+            wrapper.addEventListener('scroll', NDS.rafThrottle(() => {
                 this.detectCurrentSlide();
                 this.updateState();
             }), { passive: true, signal });
 
             // The shadow clip cuts cards short of the screen edge; CSS lifts it while the row moves.
             if (this.isHero || this._spotlight || !this.container.closest('.nds-max-width')) return;
-            const rest = () => w.removeAttribute('data-swiper-moving');
-            w.addEventListener('scroll', () => {
-                if (!w.hasAttribute('data-swiper-moving')) w.setAttribute('data-swiper-moving', '');
+            const clearMoving = () => wrapper.removeAttribute('data-swiper-moving');
+            wrapper.addEventListener('scroll', () => {
+                if (!wrapper.hasAttribute('data-swiper-moving')) wrapper.setAttribute('data-swiper-moving', '');
             }, { passive: true, signal });
-            if ('onscrollend' in w) w.addEventListener('scrollend', rest, { signal });
-            else w.addEventListener('scroll', NDS.debounce(rest, 150), { passive: true, signal });
+            if ('onscrollend' in wrapper) wrapper.addEventListener('scrollend', clearMoving, { signal });
+            else wrapper.addEventListener('scroll', NDS.debounce(clearMoving, 150), { passive: true, signal });
         }
 
         detectCurrentSlide() {
@@ -718,13 +718,13 @@
         // middle instead: content can make one slide wider, and then no step fits.
         _pos() {
             if (this._spotlight) {
-                const w = this.wrapper.getBoundingClientRect(), mid = w.left + w.right;
-                let pos = 0, best = Infinity;
-                this.slides.forEach((s, j) => {
-                    const r = s.getBoundingClientRect(), d = Math.abs(r.left + r.right - mid);
-                    if (d < best) { best = d; pos = j; }
+                const wrapperRect = this.wrapper.getBoundingClientRect(), mid = wrapperRect.left + wrapperRect.right;
+                let position = 0, best = Infinity;
+                this.slides.forEach((slide, j) => {
+                    const rect = slide.getBoundingClientRect(), distance = Math.abs(rect.left + rect.right - mid);
+                    if (distance < best) { best = distance; position = j; }
                 });
-                return pos;
+                return position;
             }
             const step = this._measuredStep || (this.slides[0].offsetWidth + this.getGap()) || 1;
             return (NDS.isRTL ? -this.wrapper.scrollLeft : this.wrapper.scrollLeft) / step;
@@ -856,7 +856,7 @@
                     if (img.dataset.srcset) { img.srcset = fixSrcsetSpaces(img.dataset.srcset); delete img.dataset.srcset; }
                 });
             };
-            const loadReal = (r) => this.slides.forEach((s, j) => { if (this._realOf(j) === r) load(s, true); });
+            const loadReal = (realIndex) => this.slides.forEach((slide, j) => { if (this._realOf(j) === realIndex) load(slide, true); });
             // Ahead loads wait until every image on screen has finished (or failed): low
             // priority alone still starts them at once, sharing a slow link with the view.
             // ponytail: a request that never settles holds them; they then load on arrival.
@@ -865,16 +865,16 @@
             let queued = [];
             const flush = () => {
                 if (busy.size) return;
-                const q = queued;
+                const pending = queued;
                 queued = [];
-                q.forEach(fn => fn());
+                pending.forEach(fn => fn());
             };
             const track = (img) => {
                 if (img.complete) return;
                 busy.add(img);
-                const done = () => { busy.delete(img); flush(); };
-                img.addEventListener('load', done, { once: true, signal });
-                img.addEventListener('error', done, { once: true, signal });
+                const handleSettled = () => { busy.delete(img); flush(); };
+                img.addEventListener('load', handleSettled, { once: true, signal });
+                img.addEventListener('error', handleSettled, { once: true, signal });
             };
             // The row clips its sides, so rootMargin never reaches the slide beside the view:
             // it would load only as it slides in. A slide that shows also loads a page either
@@ -888,10 +888,10 @@
                     load(slide, false);
                     slide.querySelectorAll('img').forEach(track);
                     queued.push(() => {
-                        const n = this._real, r = this._realOf(j);
-                        for (let k = r - this.slidesPerView; k <= r + this.slidesPerView; k++) {
-                            if (this._loop) loadReal((k % n + n) % n);
-                            else if (k >= 0 && k < n) loadReal(k);
+                        const realCount = this._real, realIndex = this._realOf(j);
+                        for (let offset = realIndex - this.slidesPerView; offset <= realIndex + this.slidesPerView; offset++) {
+                            if (this._loop) loadReal((offset % realCount + realCount) % realCount);
+                            else if (offset >= 0 && offset < realCount) loadReal(offset);
                         }
                     });
                     // After the batch, so every slide on screen is tracked first.
@@ -904,8 +904,8 @@
 
         // A nested swiper that lazy-loads its own slides keeps its images; one that
         // doesn't (a single slide, a loop clone's dead copy) leaves them to us.
-        _lazyIn(slide, sel) {
-            return Array.from(slide.querySelectorAll(sel)).filter(el => {
+        _lazyIn(slide, selector) {
+            return Array.from(slide.querySelectorAll(selector)).filter(el => {
                 const owner = el.closest('.nds-swiper');
                 return !owner || owner === this.container || !owner.ndsSwiper?._offLazyLoad;
             });
@@ -939,15 +939,15 @@
             // Runs on every scroll frame; the marks change only when the open slide does.
             if (open === this._open) return;
             this._open = open;
-            const n = this._real;
-            this.slides.forEach((s, j) => {
+            const realCount = this._real;
+            this.slides.forEach((slide, j) => {
                 // Side of the nearest twin of the open slide, so every twin has the
                 // same neighbours. Without a loop the row does not wrap.
-                let d = this._loop ? (((this._realOf(j) - open) % n) + n) % n : j - open;
-                if (this._loop && d > n / 2) d -= n;
-                if (d === 0) NDS.status.set(s, 'active');
-                else if (d > 0) NDS.status.set(s, 'after');
-                else NDS.status.clear(s);
+                let distance = this._loop ? (((this._realOf(j) - open) % realCount) + realCount) % realCount : j - open;
+                if (this._loop && distance > realCount / 2) distance -= realCount;
+                if (distance === 0) NDS.status.set(slide, 'active');
+                else if (distance > 0) NDS.status.set(slide, 'after');
+                else NDS.status.clear(slide);
             });
         }
 
@@ -989,7 +989,7 @@
             // Drop the clones and land on the real twin of the current slide.
             if (this._head) {
                 const real = this._realIndex;
-                this.slides = this.slides.filter(s => !s.classList.contains('nds-swiper-clone') || (s.remove(), false));
+                this.slides = this.slides.filter(slide => !slide.classList.contains('nds-swiper-clone') || (slide.remove(), false));
                 this._head = 0;
                 this._jumpTo(real);
             }
@@ -1000,8 +1000,8 @@
             this.container.removeAttribute('data-swiper-preset');
             this.container.removeAttribute('data-swiper-single');
             NDS.state.clear(this.container); // at-start/at-end are a documented consumer hook
-            ['--total', '--slides'].forEach(p => this.container.style.removeProperty(p));
-            if (this._spotlight) this.slides.forEach(s => NDS.status.clear(s));
+            ['--total', '--slides'].forEach(property => this.container.style.removeProperty(property));
+            if (this._spotlight) this.slides.forEach(slide => NDS.status.clear(slide));
             this.wrapper.style.removeProperty('overflow');
             this.wrapper.removeAttribute('data-swiper-moving');
             if (this.pagination) { this.pagination.style.removeProperty('display'); this.pagination.innerHTML = ''; }
@@ -1024,7 +1024,7 @@
     // GLOBAL API
     // ==============================================
 
-    function initializeComponents() {
+    function setupSwipers() {
         const swipers = document.querySelectorAll('.nds-swiper');
         swipers.forEach(swiper => {
             // A loop clone's nested swiper is a dead copy — reinit must not wire it.
@@ -1038,8 +1038,8 @@
     }
 
     NDS.Swiper = {
-        init: initializeComponents,
-        reinit: initializeComponents,
+        init: setupSwipers,
+        reinit: setupSwipers,
         create: (element) => {
             if (element.ndsSwiper) return element.ndsSwiper;
             const instance = new NdsSwiper(element);

@@ -41,12 +41,12 @@
   let isActive = false;
   let locked = false; // the lock is taken a beat after show(); a hide() before it has none to give back
 
-  const top = () => stack[stack.length - 1];
+  const getTopConfig = () => stack[stack.length - 1];
 
   /**
    * Initialize backdrop element (created once)
    */
-  function initBackdrop() {
+  function setupBackdrop() {
     if (backdropElement) return;
 
     backdropElement = document.createElement('div');
@@ -59,9 +59,9 @@
    * Handle backdrop click
    */
   function handleClick(e) {
-    const cfg = top();
-    if (e.target === backdropElement && cfg?.onClick) {
-      cfg.onClick();
+    const topConfig = getTopConfig();
+    if (e.target === backdropElement && topConfig?.onClick) {
+      topConfig.onClick();
     }
   }
 
@@ -69,28 +69,28 @@
    * Handle ESC key
    */
   function handleEscape(e) {
-    const cfg = top();
+    const topConfig = getTopConfig();
     // defaultPrevented: a Modal above handled it.
-    if (e.key === 'Escape' && !e.defaultPrevented && cfg?.onClick) {
-      cfg.onClick();
+    if (e.key === 'Escape' && !e.defaultPrevented && topConfig?.onClick) {
+      topConfig.onClick();
     }
   }
 
   // Rebind listeners and zIndex to the current top-of-stack config. Called on
   // every push and after every non-terminal pop so the backdrop always speaks
   // for its actual current owner.
-  let topAbortController = null; // the current owner's listeners; replaced on every applyTop()
-  function applyTop() {
-    const cfg = top();
-    if (!cfg) return;
+  let topAbortController = null; // the current owner's listeners; replaced on every syncTop()
+  function syncTop() {
+    const topConfig = getTopConfig();
+    if (!topConfig) return;
     topAbortController?.abort();
     topAbortController = new AbortController();
     const { signal } = topAbortController;
-    backdropElement.style.zIndex = cfg.zIndex;
-    if (cfg.clickToClose) {
+    backdropElement.style.zIndex = topConfig.zIndex;
+    if (topConfig.clickToClose) {
       backdropElement.addEventListener('click', handleClick, { signal });
     }
-    if (cfg.escapeClose) {
+    if (topConfig.escapeClose) {
       document.addEventListener('keydown', handleEscape, { signal });
     }
   }
@@ -99,7 +99,7 @@
    * Show backdrop with config
    */
   function show(config = {}) {
-    initBackdrop();
+    setupBackdrop();
 
     // Set config defaults
     const newConfig = {
@@ -118,7 +118,7 @@
     // sibling flyouts without a tear-down/re-init flicker.
     if (config.replace && wasActive) stack.pop();
     stack.push(newConfig);
-    applyTop();
+    syncTop();
 
     if (wasActive) return;
 
@@ -155,7 +155,7 @@
     // If a prior owner is still on the stack, hand control back to it —
     // don't tear down.
     if (stack.length > 0) {
-      applyTop();
+      syncTop();
       return;
     }
 

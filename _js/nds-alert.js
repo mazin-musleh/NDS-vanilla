@@ -122,7 +122,7 @@
             if (closable || duration > 0) {
                 // Add progress class and SVG if toast has auto-dismiss
                 const progressClass = (display === 'toast' && duration > 0) ? ' nds-progress' : '';
-                const progressSVG = (display === 'toast' && duration > 0) ? `
+                const progressSvg = (display === 'toast' && duration > 0) ? `
                     <div class="nds-progress-circle">
                         <svg width="100%" height="100%" viewBox="0 0 24 24">
                             <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
@@ -134,7 +134,7 @@
                 html += `
                     <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close${progressClass}">
                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                        ${progressSVG}
+                        ${progressSvg}
                     </button>
                 `;
             }
@@ -168,10 +168,10 @@
                         el.textContent = action.label || '';
                     } else {
                         el = document.createElement('button');
-                        const lbl = document.createElement('span');
-                        lbl.className = 'nds-label';
-                        lbl.textContent = action.label || '';
-                        el.appendChild(lbl);
+                        const label = document.createElement('span');
+                        label.className = 'nds-label';
+                        label.textContent = action.label || '';
+                        el.appendChild(label);
                     }
                     el.className = classes;
                     if (action.copy || action.copyTarget) {
@@ -189,7 +189,7 @@
                 alert.querySelector('.nds-alert-content').appendChild(actionsWrap);
                 // Late-created copy actions need the delegated .nds-copy binding even on
                 // pages that had no copy button at loader scan time (bind is idempotent).
-                if (actions.some(a => a.copy || a.copyTarget)) NDS.Copy.init();
+                if (actions.some(actionItem => actionItem.copy || actionItem.copyTarget)) NDS.Copy.init();
             }
 
             // Close button handler
@@ -297,17 +297,17 @@
             // it takes whichever sits lower and clamps a scrolled-away one at 0.
             if (position.startsWith('top') && !placeholder._ndsAlertAC
                 && document.querySelector('.nds-main-nav, .nds-topbar')) {
-                const update = () => placeholder.style.setProperty('--_toast-top', NDS.stickyHeaderBottom() + 'px');
-                update();
-                const ac = placeholder._ndsAlertAC = new AbortController();
+                const syncTop = () => placeholder.style.setProperty('--_toast-top', NDS.stickyHeaderBottom() + 'px');
+                syncTop();
+                const controller = placeholder._ndsAlertAC = new AbortController();
                 window.addEventListener('scroll', NDS.rafThrottle(() => {
                     if (!placeholder.isConnected) {
-                        ac.abort();
+                        controller.abort();
                         placeholder._ndsAlertAC = null;
                         return;
                     }
-                    if (window.scrollY < 200) update();
-                }), { passive: true, signal: ac.signal });
+                    if (window.scrollY < 200) syncTop();
+                }), { passive: true, signal: controller.signal });
             }
 
             return placeholder;
@@ -346,7 +346,7 @@
         dismissAll(container) {
             const el = NDS.resolveEl(container);
             if (el) {
-                el.querySelectorAll('.nds-alert').forEach(a => this.dismiss(a));
+                el.querySelectorAll('.nds-alert').forEach(alertElement => this.dismiss(alertElement));
             }
         },
 

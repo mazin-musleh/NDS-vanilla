@@ -122,9 +122,9 @@
             return button.getAttribute('data-copy') || '';
         }
 
-        const targetSel = button.getAttribute('data-copy-target');
-        if (targetSel) {
-            const target = document.querySelector(targetSel);
+        const targetSelector = button.getAttribute('data-copy-target');
+        if (targetSelector) {
+            const target = document.querySelector(targetSelector);
             if (target) return target.textContent.trim();
         }
 
@@ -152,27 +152,27 @@
     }
 
     const controllers = new Map();
-    function bind(selector, options) {
-        const sel = selector || '.nds-copy';
+    function addClickListener(selector, options) {
+        const clickSelector = selector || '.nds-copy';
         const opts = options || {};
 
-        if (controllers.has(sel)) controllers.get(sel).abort();
+        if (controllers.has(clickSelector)) controllers.get(clickSelector).abort();
         const abortController = new AbortController();
-        controllers.set(sel, abortController);
+        controllers.set(clickSelector, abortController);
 
         document.addEventListener('click', (e) => {
-            const btn = e.target.closest(sel);
+            const btn = e.target.closest(clickSelector);
             if (btn) copyFrom(btn, opts);
         }, { signal: abortController.signal });
     }
 
     function init() {
-        bind('.nds-copy');
+        addClickListener('.nds-copy');
     }
 
     NDS.Copy = {
         init,
-        bind,
+        bind: addClickListener,
         writeText,
         flash,
         copyFrom

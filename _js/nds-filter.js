@@ -163,8 +163,8 @@
             // nested sub-component's menu (e.g. a multiselect used as a control).
             this._targetRoots.forEach(root => {
                 if (!root.matches || !root.matches('.nds-dropmenu')) return;
-                root.querySelectorAll('.nds-dropmenu-menu').forEach(m => {
-                    if (m.closest('.nds-dropmenu') === root) m.classList.add('nds-filter-menu');
+                root.querySelectorAll('.nds-dropmenu-menu').forEach(menu => {
+                    if (menu.closest('.nds-dropmenu') === root) menu.classList.add('nds-filter-menu');
                 });
             });
 
@@ -195,7 +195,7 @@
             // this filter's data-filter-target) rather than re-scanning the whole
             // document — a root IS the linked element, so .matches() on the small
             // root set replaces a document-wide attribute query per surface.
-            this.submissionForm = this._targetRoots.find(r => r.matches('form[data-filter-submit]')) || null;
+            this.submissionForm = this._targetRoots.find(targetRoot => targetRoot.matches('form[data-filter-submit]')) || null;
 
             this.isFormMode = !!this.submissionForm;
             this.isAjaxMode = this.isFormMode && this.submissionForm.hasAttribute('data-ajax');
@@ -205,11 +205,11 @@
 
             // Resolve applied-chips container: inside filter first, then a linked root.
             this.appliedContainer = filterContainer.querySelector('.nds-filter-applied')
-                || this._targetRoots.find(r => r.matches('.nds-filter-applied'))
+                || this._targetRoots.find(targetRoot => targetRoot.matches('.nds-filter-applied'))
                 || null;
 
             // Resolve external auto-fill linked by data-filter-target.
-            this.autoFillElement = this._targetRoots.find(r => r.matches('.nds-auto-fill')) || null;
+            this.autoFillElement = this._targetRoots.find(targetRoot => targetRoot.matches('.nds-auto-fill')) || null;
 
             // Resolve search-query slot — a root carrying [data-filter-query] or one
             // holding it as a descendant. When present, the search keyword is routed
@@ -608,8 +608,8 @@
             if (!this.targetContainer || !this.targetId) return eventDetail;
 
             const parser = new DOMParser();
-            const doc = parser.parseFromString(data, 'text/html');
-            const targetInResponse = doc.getElementById(this.targetId);
+            const parsedDocument = parser.parseFromString(data, 'text/html');
+            const targetInResponse = parsedDocument.getElementById(this.targetId);
 
             if (targetInResponse) {
                 const newContainer = targetInResponse.cloneNode(true);
@@ -789,9 +789,9 @@
         // so the equality match against input.value succeeds. Safe because the
         // value is only compared, never rendered as HTML (stored criteria come
         // from input.value itself).
-        sanitizeFilterValue(str) {
-            if (!str) return '';
-            return str.replace(/<[^>]*>/g, '').substring(0, 100);
+        sanitizeFilterValue(text) {
+            if (!text) return '';
+            return text.replace(/<[^>]*>/g, '').substring(0, 100);
         }
 
         applyUrlParams() {
@@ -848,9 +848,9 @@
         _checkInputsForValues(filterData, rawValue) {
             const values = filterData.type === 'radio'
                 ? [this.sanitizeFilterValue(rawValue).trim()]
-                : rawValue.split(',').map(v => this.sanitizeFilterValue(v).trim());
+                : rawValue.split(',').map(item => this.sanitizeFilterValue(item).trim());
             filterData.inputs.forEach(input => {
-                if (values.some(v => v.toLowerCase() === input.value.toLowerCase())) {
+                if (values.some(entry => entry.toLowerCase() === input.value.toLowerCase())) {
                     input.checked = true;
                 }
             });
@@ -1112,7 +1112,7 @@
                 || this.filterContainer.querySelector('.nds-auto-fill');
 
             // A removed chip takes focus with it: the chip now in its place gets it, else the Filter button.
-            const focusAt = [...chipsContainer.children].findIndex(c => c.contains(document.activeElement));
+            const focusAt = [...chipsContainer.children].findIndex(chip => chip.contains(document.activeElement));
             chipsContainer.innerHTML = '';
             this._refocusChips(chipsContainer, focusAt);
 
@@ -1120,7 +1120,7 @@
             // into that slot (via updateFilterCount) instead of rendering as a chip here.
             const searchInChips = !!(this.criteria.search && !this.searchQuerySlot);
             const hasFilters = searchInChips ||
-                Object.values(this.criteria.filters).some(arr => arr.length > 0);
+                Object.values(this.criteria.filters).some(values => values.length > 0);
 
             if (!hasFilters) {
                 appliedContainer.setAttribute('hidden', '');
@@ -1185,14 +1185,14 @@
         // the slot reports the unfiltered total beside a filtered grid.
         _hasActiveCriteria() {
             return !!(this.criteria.search && this.criteria.search.trim() !== '')
-                || Object.values(this.criteria.filters).some(arr => arr.length > 0);
+                || Object.values(this.criteria.filters).some(values => values.length > 0);
         }
 
         updateFilterCount() {
             // Query slot — quoted keyword; empty when no search
             if (this.searchQuerySlot) {
-                const q = this.criteria.search || '';
-                this.searchQuerySlot.textContent = q ? '\u201C' + q + '\u201D' : '';
+                const query = this.criteria.search || '';
+                this.searchQuerySlot.textContent = query ? '\u201C' + query + '\u201D' : '';
             }
 
             // Count slot — a linked root carrying [data-filter-count] or holding it.
@@ -1203,9 +1203,9 @@
             //   1. Server-provided: data-total-count on the target container
             //      (for SSR pages or JSON-AJAX developers)
             //   2. DOM enumeration: visible (non-`[data-filtered]`) items
-            const totalAttr = this.targetContainer.getAttribute('data-total-count');
-            if (totalAttr !== null && totalAttr !== '') {
-                countSlot.textContent = NDS.formatNumber(parseInt(totalAttr, 10) || 0);
+            const totalAttribute = this.targetContainer.getAttribute('data-total-count');
+            if (totalAttribute !== null && totalAttribute !== '') {
+                countSlot.textContent = NDS.formatNumber(parseInt(totalAttribute, 10) || 0);
                 this._announceCount(countSlot);
                 return;
             }
@@ -1694,7 +1694,7 @@
                 const off = NDS.onDOMAdd('input[type="checkbox"], input[type="radio"], .nds-switch-input', (nodes) => {
                     // Ignore nodes that already have listeners bound — they are
                     // being moved, not genuinely inserted.
-                    const fresh = nodes.filter(n => element.contains(n) && !n._ndsFilterBound);
+                    const fresh = nodes.filter(node => element.contains(node) && !node._ndsFilterBound);
                     if (fresh.length > 0) {
                         this.setupManualFilter(element, filterName);
                         this.reapplyUrlParamsForFilter(filterName);
@@ -1806,12 +1806,12 @@
             root._ndsFilterAC = new AbortController();
             this._filterElementACs.add(root);
 
-            const onInput = () => {
+            const handleInput = () => {
                 this.updateRangeCriteria(filterName);
                 this.updateApplyButtonLabel();
             };
-            if (minInput) minInput.addEventListener('input', onInput, { signal: root._ndsFilterAC.signal });
-            maxInput.addEventListener('input', onInput, { signal: root._ndsFilterAC.signal });
+            if (minInput) minInput.addEventListener('input', handleInput, { signal: root._ndsFilterAC.signal });
+            maxInput.addEventListener('input', handleInput, { signal: root._ndsFilterAC.signal });
 
             // Filter builds the slider, so it kicks off Slider for it (the loader
             // only auto-inits Slider when a static .nds-slider exists at load).
@@ -1861,7 +1861,7 @@
             const container = document.createElement('div');
             container.className = 'nds-slider-container nds-form-container nds-stacked' + (single ? '' : ' nds-slider-range');
 
-            const fmt = { currency, unit };
+            const numberFormat = { currency, unit };
             const control = document.createElement('div');
             control.className = 'nds-form-control';
             const track = document.createElement('div');
@@ -1871,13 +1871,13 @@
                 // One thumb resting at max — the filter is off until dragged down.
                 track.appendChild(this._buildRangeInput(null, min, max, step, max, 'max_value'));
                 control.appendChild(track);
-                control.appendChild(this._buildRangeOutput(null, fmt, max));
+                control.appendChild(this._buildRangeOutput(null, numberFormat, max));
             } else {
-                control.appendChild(this._buildRangeOutput('min', fmt, min));
+                control.appendChild(this._buildRangeOutput('min', numberFormat, min));
                 track.appendChild(this._buildRangeInput('min', min, max, step, min, 'min'));
                 track.appendChild(this._buildRangeInput('max', min, max, step, max, 'max'));
                 control.appendChild(track);
-                control.appendChild(this._buildRangeOutput('max', fmt, max));
+                control.appendChild(this._buildRangeOutput('max', numberFormat, max));
             }
             container.appendChild(control);
             fieldset.appendChild(container);
@@ -1886,12 +1886,12 @@
             return fieldset;
         }
 
-        _buildRangeOutput(which, fmt, value) {
+        _buildRangeOutput(which, numberFormat, value) {
             const out = document.createElement('output');
-            const formatted = fmt.currency || fmt.unit;
+            const formatted = numberFormat.currency || numberFormat.unit;
             out.className = `nds-slider-value${which ? ' nds-slider-value-' + which : ''}${formatted ? ' nds-number-format' : ''}`;
-            if (fmt.currency) out.setAttribute('data-currency', fmt.currency);
-            if (fmt.unit) out.setAttribute('data-unit', fmt.unit);
+            if (numberFormat.currency) out.setAttribute('data-currency', numberFormat.currency);
+            if (numberFormat.unit) out.setAttribute('data-unit', numberFormat.unit);
             out.textContent = String(value);
             return out;
         }
@@ -1924,7 +1924,7 @@
                 hi = parseFloat(fd.maxInput.value);
                 if (isNaN(lo)) lo = fd.min;
                 if (isNaN(hi)) hi = fd.max;
-                if (lo > hi) { const t = lo; lo = hi; hi = t; }
+                if (lo > hi) { const previousLow = lo; lo = hi; hi = previousLow; }
             }
             this.criteria.filters[filterName] = (lo <= fd.min && hi >= fd.max) ? [] : [lo + '-' + hi];
         }
@@ -1949,9 +1949,9 @@
 
         // Decode "lo-hi"; '-' is the delimiter, so each bound may carry its own
         // leading '-' (negative ranges). null if not a numeric pair.
-        _parseEncodedRange(str) {
-            const m = /^(-?\d*\.?\d+)-(-?\d*\.?\d+)$/.exec(str || '');
-            return m ? [parseFloat(m[1]), parseFloat(m[2])] : null;
+        _parseEncodedRange(text) {
+            const match = /^(-?\d*\.?\d+)-(-?\d*\.?\d+)$/.exec(text || '');
+            return match ? [parseFloat(match[1]), parseFloat(match[2])] : null;
         }
 
         _applyRangeFromUrl(filterName, raw) {
@@ -1962,7 +1962,7 @@
             let [lo, hi] = pair;
             lo = Math.min(Math.max(lo, fd.min), fd.max);
             hi = Math.min(Math.max(hi, fd.min), fd.max);
-            if (lo > hi) { const t = lo; lo = hi; hi = t; }
+            if (lo > hi) { const previousLow = lo; lo = hi; hi = previousLow; }
             this._setRangeValues(filterName, lo, hi);
         }
 
@@ -1972,9 +1972,9 @@
             const [lo, hi] = pair;
             const itemValues = item._ndsFilterValues?.[filterName];
             if (!itemValues || !itemValues.length) return false;
-            const v = parseFloat(itemValues[0]);
-            if (isNaN(v)) return false;
-            return v >= lo && v <= hi;
+            const value = parseFloat(itemValues[0]);
+            if (isNaN(value)) return false;
+            return value >= lo && value <= hi;
         }
 
         // Build the chip label as nds-number-format nodes so a range chip renders
@@ -2054,7 +2054,7 @@
                 this.filterLabels[filterName] = labelMap;
             }
 
-            return Array.from(values).sort((a, b) => a.localeCompare(b, 'ar'));
+            return Array.from(values).sort((left, right) => left.localeCompare(right, 'ar'));
         }
 
         generateFilterInputs(container, filterName, inputType, explicitValues = null) {
@@ -2108,7 +2108,7 @@
                 fieldset.setAttribute('data-no-auto-close', '');
             }
 
-            const ctx = {
+            const inputContext = {
                 inputType,
                 groupName: `filter-${filterName}-${NDS.uniqueId()}`,
                 filterName,
@@ -2121,7 +2121,7 @@
             };
 
             values.forEach((value, index) => {
-                fieldset.appendChild(this._buildFilterInput(value, index, ctx));
+                fieldset.appendChild(this._buildFilterInput(value, index, inputContext));
             });
 
             if (collapsible) {
@@ -2241,9 +2241,9 @@
             if (multiple) {
                 const fieldset = document.createElement('fieldset');
                 fieldset.className = container.className;
-                Array.from(container.attributes).forEach(attr => {
-                    if (attr.name !== 'class' && attr.name !== 'id') {
-                        fieldset.setAttribute(attr.name, attr.value);
+                Array.from(container.attributes).forEach(attribute => {
+                    if (attribute.name !== 'class' && attribute.name !== 'id') {
+                        fieldset.setAttribute(attribute.name, attribute.value);
                     }
                 });
                 if (container.id) fieldset.id = container.id;
@@ -2290,8 +2290,8 @@
         // Build one .nds-form-container holding a single checkbox / radio /
         // switch input for `value`. `index` drives the id and "All"-option
         // detection; `ctx` carries the shared per-group settings.
-        _buildFilterInput(value, index, ctx) {
-            const { inputType, groupName, filterName, variant, includeAllOption, allLabel, labelMap, searchable } = ctx;
+        _buildFilterInput(value, index, inputContext) {
+            const { inputType, groupName, filterName, variant, includeAllOption, allLabel, labelMap, searchable } = inputContext;
             const id = `${groupName}-${index}`;
             const isAllOption = includeAllOption && index === 0;
 
@@ -2585,9 +2585,9 @@
             for (const item of this.items) {
                 const filterValues = {};
 
-                const filterEls = item.querySelectorAll('[data-filter]');
-                for (let i = 0; i < filterEls.length; i++) {
-                    const el = filterEls[i];
+                const filterElements = item.querySelectorAll('[data-filter]');
+                for (let i = 0; i < filterElements.length; i++) {
+                    const el = filterElements[i];
                     const name = el.getAttribute('data-filter');
                     if (!filterValues[name]) filterValues[name] = [];
                     filterValues[name].push(this.getFilterValue(el).toLowerCase());
@@ -2627,7 +2627,7 @@
             // same expression — at least one selected value matches one of the
             // item's values. Radio's "single selection" constraint is enforced
             // at the input layer, not here.
-            return selectedValues.some(val => itemValues.includes(val.toLowerCase()));
+            return selectedValues.some(value => itemValues.includes(value.toLowerCase()));
         }
 
         // ==============================================
@@ -2822,7 +2822,7 @@
             this._targetRoots = this.resolveTargetRoots();
             // Re-stamp: a container or surface rendered (or re-rendered) after
             // createInstance is otherwise held by the skeleton gate under a live instance.
-            this._targetRoots.forEach(s => s.setAttribute('data-nds-filter-initialized', 'true'));
+            this._targetRoots.forEach(root => root.setAttribute('data-nds-filter-initialized', 'true'));
             this.targetContainer?.setAttribute('data-nds-filter-initialized', 'true');
 
             // A replaced search box leaves the cached ref (and its listeners) on a
@@ -2888,7 +2888,7 @@
             const filterData = this.filterInputs[filterName];
             if (!filterData) return;
 
-            const valuesLower = values.map(v => v.toLowerCase());
+            const valuesLower = values.map(value => value.toLowerCase());
             filterData.inputs.forEach(input => {
                 input.checked = valuesLower.includes(input.value.toLowerCase());
             });
@@ -2942,7 +2942,7 @@
             if (this.filterContainer.ndsFilter === this) {
                 // _targetRoots covers every stamped surface (incl. the
                 // representative); the target container is stamped separately.
-                this._targetRoots.forEach(r => r.removeAttribute('data-nds-filter-initialized'));
+                this._targetRoots.forEach(root => root.removeAttribute('data-nds-filter-initialized'));
                 this.targetContainer?.removeAttribute('data-nds-filter-initialized');
                 delete this.filterContainer.ndsFilter;
             }
@@ -2968,7 +2968,7 @@
     // (data-nds-filter-initialized) would keep the new region hidden forever.
     // A detached representative means that filter is gone — destroy it (which
     // releases its pooled NDS.onDOMAdd/listener subscriptions) and free the id.
-    function liveInstance(id) {
+    function getLiveInstance(id) {
         const instance = instancesByTarget.get(id);
         if (!instance) return null;
         if (instance.filterContainer?.isConnected) return instance;
@@ -2994,7 +2994,7 @@
         // _targetRoots, not the passed-in surfaces: it is the authoritative set in
         // both paths — the loader's grouped surfaces, or the document scan a manual
         // create() falls back to — so neither leaves a linked surface unstamped.
-        instance._targetRoots.forEach(s => s.setAttribute('data-nds-filter-initialized', 'true'));
+        instance._targetRoots.forEach(root => root.setAttribute('data-nds-filter-initialized', 'true'));
         instance.targetContainer?.setAttribute('data-nds-filter-initialized', 'true');
         if (instance.targetId) {
             instancesByTarget.set(instance.targetId, instance);
@@ -3006,7 +3006,7 @@
         return instance;
     }
 
-    function initializeFilters(scope) {
+    function setupFilters(scope) {
         // One filter per unique data-filter-target. Group every linked surface
         // (search box, dropmenu, applied-chips, auto-fill, sort toolbar) by target,
         // then build once per target. The representative is the .nds-filter surface
@@ -3022,7 +3022,7 @@
         const addCandidate = el => {
             if (el.closest('code')) return;
             const id = el.getAttribute('data-filter-target');
-            if (!id || liveInstance(id)) return;
+            if (!id || getLiveInstance(id)) return;
             if (!groups.has(id)) groups.set(id, []);
             groups.get(id).push(el);
         };
@@ -3041,8 +3041,8 @@
     // ==============================================
 
     NDS.Filter = {
-        init: initializeFilters,
-        reinit: initializeFilters,
+        init: setupFilters,
+        reinit: setupFilters,
         // Idempotent, and registers exactly like the loader path — matching
         // NDS.Sort.create / NDS.DatePicker.create. Constructing bare skipped the
         // init stamp (the crit hold then kept the target hidden), the backref,
@@ -3052,7 +3052,7 @@
             if (!container) return null;
             if (container.ndsFilter) return container.ndsFilter;
             const id = container.getAttribute('data-filter-target');
-            const live = id && liveInstance(id);
+            const live = id && getLiveInstance(id);
             if (live) return live;
             return createInstance(container);
         },
@@ -3067,10 +3067,10 @@
             // element's target linkage so any surface element works.
             if (container.ndsFilter) return container.ndsFilter;
             const id = container.getAttribute('data-filter-target');
-            return id ? liveInstance(id) : null;
+            return id ? getLiveInstance(id) : null;
         },
 
-        getByTarget: (targetId) => liveInstance(targetId),
+        getByTarget: (targetId) => getLiveInstance(targetId),
 
         /**
          * Re-resolve items and regenerate auto-scanned filters for every instance
@@ -3099,7 +3099,7 @@
             // Idempotent: createInstance skips a target already in the registry.
             // Scoped to root — a new surface can only appear inside "the container
             // whose contents changed" (see this method's JSDoc above).
-            initializeFilters(root);
+            setupFilters(root);
 
             const scope = root && root !== document ? root : null;
             instancesByTarget.forEach(instance => {
@@ -3111,7 +3111,7 @@
                 if (instance.isFormMode) return;
                 // Reap an instance whose surfaces left the DOM (route change with
                 // no NDS.init.destroy()) instead of refreshing a detached filter.
-                if (!liveInstance(instance.targetId)) return;
+                if (!getLiveInstance(instance.targetId)) return;
                 const target = instance.targetId
                     ? document.getElementById(instance.targetId)
                     : instance.targetContainer;
@@ -3147,12 +3147,12 @@
             // element without one (an ancestor wrapper) still gets the bubble.
             const id = container.getAttribute('data-filter-target');
             if (id) {
-                const onReady = (e) => {
+                const handleReady = (e) => {
                     if (e.detail?.targetId !== id) return;
-                    document.removeEventListener('nds:filter:ready', onReady);
+                    document.removeEventListener('nds:filter:ready', handleReady);
                     callback(e.detail);
                 };
-                document.addEventListener('nds:filter:ready', onReady);
+                document.addEventListener('nds:filter:ready', handleReady);
                 return;
             }
             container.addEventListener('nds:filter:ready', (e) => {

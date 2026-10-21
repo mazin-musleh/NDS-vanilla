@@ -56,10 +56,10 @@
     return el.hasAttribute(PLACEHOLDER_ATTR);
   }
 
-  function realChildCount(container) {
-    let n = 0;
-    for (const c of container.children) if (!isPlaceholder(c)) n++;
-    return n;
+  function countRealChildren(container) {
+    let count = 0;
+    for (const child of container.children) if (!isPlaceholder(child)) count++;
+    return count;
   }
 
   // "Empty" means: no content rows. For a table, thead/tfoot/caption don't
@@ -67,13 +67,13 @@
   function isEmpty(container) {
     if (container.tagName === 'TABLE') {
       const bodies = [];
-      for (const c of container.children) {
-        if (c.tagName === 'TBODY' && !isPlaceholder(c)) bodies.push(c);
+      for (const child of container.children) {
+        if (child.tagName === 'TBODY' && !isPlaceholder(child)) bodies.push(child);
       }
       if (bodies.length === 0) return true;
-      return bodies.every(tb => realChildCount(tb) === 0);
+      return bodies.every(tb => countRealChildren(tb) === 0);
     }
-    return realChildCount(container) === 0;
+    return countRealChildren(container) === 0;
   }
 
   function findPlaceholder(container) {
@@ -82,11 +82,11 @@
         ':scope > [' + PLACEHOLDER_ATTR + '], :scope > tbody > [' + PLACEHOLDER_ATTR + ']'
       );
     }
-    for (const c of container.children) if (isPlaceholder(c)) return c;
+    for (const child of container.children) if (isPlaceholder(child)) return child;
     return null;
   }
 
-  function colspanFor(table) {
+  function getColspan(table) {
     const headRow = table.querySelector(':scope > thead > tr');
     if (headRow && headRow.children.length) return headRow.children.length;
     const firstRow = table.querySelector('tr');
@@ -104,11 +104,11 @@
   }
 
   function buildListItem(message, iconClass) {
-    const li = document.createElement('li');
-    li.className = 'nds-empty-placeholder';
-    li.setAttribute(PLACEHOLDER_ATTR, '');
-    buildInner(message, iconClass).forEach(n => li.appendChild(n));
-    return li;
+    const item = document.createElement('li');
+    item.className = 'nds-empty-placeholder';
+    item.setAttribute(PLACEHOLDER_ATTR, '');
+    buildInner(message, iconClass).forEach(node => item.appendChild(node));
+    return item;
   }
 
   function buildRow(colspan, message, iconClass) {
@@ -116,7 +116,7 @@
     tr.setAttribute(PLACEHOLDER_ATTR, '');
     const td = document.createElement('td');
     td.colSpan = colspan;
-    buildInner(message, iconClass).forEach(n => td.appendChild(n));
+    buildInner(message, iconClass).forEach(node => td.appendChild(node));
     tr.appendChild(td);
     return tr;
   }
@@ -125,7 +125,7 @@
     const div = document.createElement('div');
     div.className = 'nds-empty-placeholder';
     div.setAttribute(PLACEHOLDER_ATTR, '');
-    buildInner(message, iconClass).forEach(n => div.appendChild(n));
+    buildInner(message, iconClass).forEach(node => div.appendChild(node));
     return div;
   }
 
@@ -146,18 +146,18 @@
       return;
     }
     if (tag === 'TBODY') {
-      container.appendChild(buildRow(colspanFor(container.closest('table') || container), message, iconClass));
+      container.appendChild(buildRow(getColspan(container.closest('table') || container), message, iconClass));
       return;
     }
     if (tag === 'TABLE') {
       const existingTbody = container.querySelector(':scope > tbody:not([' + PLACEHOLDER_ATTR + '])');
       if (existingTbody) {
-        existingTbody.appendChild(buildRow(colspanFor(container), message, iconClass));
+        existingTbody.appendChild(buildRow(getColspan(container), message, iconClass));
         return;
       }
       const tbody = document.createElement('tbody');
       tbody.setAttribute(PLACEHOLDER_ATTR, '');
-      tbody.appendChild(buildRow(colspanFor(container), message, iconClass));
+      tbody.appendChild(buildRow(getColspan(container), message, iconClass));
       container.appendChild(tbody);
       return;
     }
@@ -175,20 +175,20 @@
     if (existing) {
       // A table's column count can change after the row went in.
       const td = existing.querySelector('td');
-      if (td) td.colSpan = colspanFor(container.closest('table') || container);
+      if (td) td.colSpan = getColspan(container.closest('table') || container);
       return;
     }
     inject(container);
   }
 
-  function refreshMessage(container) {
+  function syncMessage(container) {
     const ph = findPlaceholder(container);
     if (!ph) return;
     const span = ph.querySelector('.nds-empty-message');
     if (span) span.textContent = getMessage(container);
   }
 
-  function refreshIcon(container) {
+  function syncIcon(container) {
     const ph = findPlaceholder(container);
     if (!ph) return;
     const icon = ph.querySelector('i');
@@ -215,7 +215,7 @@
         hits.forEach(tb => evaluate(tb.parentElement));
       });
       NDS.onAttrChange('.nds-empty', ['data-empty-message', 'data-empty-icon'], hits => {
-        hits.forEach(c => { refreshMessage(c); refreshIcon(c); });
+        hits.forEach(container => { syncMessage(container); syncIcon(container); });
       });
     },
     refresh: evaluate,

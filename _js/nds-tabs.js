@@ -56,15 +56,15 @@
     // The two lists would then interleave differently (all outer tabs sit in the
     // tablist; nested panels sit INSIDE an outer panel), desynchronizing the
     // tabs[i] ↔ panels[i] pairing every method here depends on.
-    const ownParts = (container, selector) => NDS.ownParts(container, selector, '.nds-tabs');
+    const getOwnParts = (container, selector) => NDS.ownParts(container, selector, '.nds-tabs');
 
     class NdsTabs {
         constructor(tabsContainer) {
             this.tabsContainer = tabsContainer;
             this.scrollMore = tabsContainer.querySelector('.nds-scroll-more');
             this.tabList = tabsContainer.querySelector('.nds-tab-list');
-            this.tabs = ownParts(tabsContainer, '.nds-tab:not(.nds-show-more)');
-            this.panels = ownParts(tabsContainer, '.nds-tab-panel');
+            this.tabs = getOwnParts(tabsContainer, '.nds-tab:not(.nds-show-more)');
+            this.panels = getOwnParts(tabsContainer, '.nds-tab-panel');
 
             if (!this.tabList || this.tabs.length === 0 || this.panels.length === 0) {
                 console.warn('NDS Tabs: Invalid tab structure found');
@@ -164,7 +164,7 @@
 
             const currentIndex = this.tabs.indexOf(currentTab);
             const lastIndex = this.tabs.length - 1;
-            const isRTL = NDS.isRTL;
+            const isRtl = NDS.isRTL;
             const prev = () => currentIndex > 0 ? currentIndex - 1 : lastIndex;
             const next = () => currentIndex < lastIndex ? currentIndex + 1 : 0;
             let targetIndex = currentIndex;
@@ -172,12 +172,12 @@
             switch (e.key) {
                 case 'ArrowLeft':
                     if (this.isVertical) return;
-                    targetIndex = isRTL ? next() : prev();
+                    targetIndex = isRtl ? next() : prev();
                     break;
 
                 case 'ArrowRight':
                     if (this.isVertical) return;
-                    targetIndex = isRTL ? prev() : next();
+                    targetIndex = isRtl ? prev() : next();
                     break;
 
                 case 'ArrowUp':
@@ -292,7 +292,7 @@
     // INITIALIZATION
     // ==============================================
 
-    function initializeTabs() {
+    function setupTabs() {
         document.querySelectorAll('.nds-tabs').forEach(container => {
             if (container.closest('code')) return;
             if (container.hasAttribute('data-nds-tabs-initialized')) return;
@@ -302,8 +302,8 @@
     }
 
     NDS.Tabs = {
-        init: initializeTabs,
-        reinit: initializeTabs,
+        init: setupTabs,
+        reinit: setupTabs,
         // The constructor publishes el.ndsTabs only on success → null on a bail.
         create: (container) => {
             if (!container.ndsTabs) new NdsTabs(container);

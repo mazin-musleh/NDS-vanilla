@@ -28,16 +28,16 @@
   let inerted = new Set(); // what this core made inert
   const skip = new Set(['SCRIPT', 'TEMPLATE', 'STYLE', 'LINK', 'NOSCRIPT']);
 
-  const top = () => open[open.length - 1];
-  const mark = () => open.forEach((d, i) => d.toggleAttribute('data-nds-under', i < open.length - 1));
+  const getTop = () => open[open.length - 1];
+  const mark = () => open.forEach((dialog, i) => dialog.toggleAttribute('data-nds-under', i < open.length - 1));
 
   // Every sibling on the way up from the top dialog goes inert; what no longer needs it comes back.
   // Skips what something else made inert.
   function syncInert() {
     const want = new Set();
-    for (let n = top(); n && n !== document.body && n.parentElement; n = n.parentElement) {
-      for (const sib of n.parentElement.children) {
-        if (sib !== n && !skip.has(sib.tagName) && (!sib.inert || inerted.has(sib))) want.add(sib);
+    for (let node = getTop(); node && node !== document.body && node.parentElement; node = node.parentElement) {
+      for (const sib of node.parentElement.children) {
+        if (sib !== node && !skip.has(sib.tagName) && (!sib.inert || inerted.has(sib))) want.add(sib);
       }
     }
     inerted.forEach((el) => { if (!want.has(el)) el.inert = false; });
@@ -47,28 +47,28 @@
 
   // ponytail: Main Navigation, Side Menu and the image viewer still dim through NDS.Backdrop; a dialog
   // above hides that layer. Goes when they move (plans/top-layer.md steps 5–6).
-  const backdropUnder = (on) => document.querySelector('.nds-backdrop')?.toggleAttribute('data-nds-under', on);
+  const setBackdropUnder = (on) => document.querySelector('.nds-backdrop')?.toggleAttribute('data-nds-under', on);
 
   // A menu inside is a popover of its own: closing the dialog leaves it open in the top layer.
   // Without popover there is none, and Safari 16 throws on the selector.
   // No popover: the menus are plain fixed boxes, so close them through their instance.
   const hideMenus = (dlg) => POPOVER
-    ? dlg.querySelectorAll(':popover-open').forEach((p) => p.hidePopover())
-    : dlg.querySelectorAll('.nds-dropmenu').forEach((d) => d.ndsDropmenu?.isOpen && d.ndsDropmenu.close());
+    ? dlg.querySelectorAll(':popover-open').forEach((popover) => popover.hidePopover())
+    : dlg.querySelectorAll('.nds-dropmenu').forEach((dropmenu) => dropmenu.ndsDropmenu?.isOpen && dropmenu.ndsDropmenu.close());
 
   // The fallback's dim layer is the dialog itself, outside its box; the popover's lets the click through.
-  const outside = (dlg, e) => {
+  const isOutside = (dlg, e) => {
     if (e.target !== dlg) return !dlg.contains(e.target);
-    const r = dlg.getBoundingClientRect();
-    return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+    const rect = dlg.getBoundingClientRect();
+    return e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom;
   };
-  const away = (dlg, e) => top() === dlg && outside(dlg, e);
+  const isAway = (dlg, e) => getTop() === dlg && isOutside(dlg, e);
 
   function show(dlg, signal) {
     if (!open.includes(dlg)) {
       if (!open.length) {
         NDS.scrollLock.lock();
-        backdropUnder(true);
+        setBackdropUnder(true);
       }
       open.push(dlg);
       mark();
@@ -77,7 +77,7 @@
     // An Escape a control inside stopped short of the component's own handler.
     dlg.addEventListener('cancel', (e) => e.preventDefault(), { signal });
     // Until the page is inert, nothing behind may take a click.
-    document.addEventListener('click', (e) => { if (away(dlg, e)) { e.preventDefault(); e.stopPropagation(); } }, { capture: true, signal });
+    document.addEventListener('click', (e) => { if (isAway(dlg, e)) { e.preventDefault(); e.stopPropagation(); } }, { capture: true, signal });
     // Re-opened during its fade, it is still open.
     if (dlg.open) return;
     if (!POPOVER) { dlg.showModal(); return; }
@@ -103,23 +103,23 @@
     mark();
     if (POPOVER) syncInert();
     if (!open.length) {
-      backdropUnder(false);
+      setBackdropUnder(false);
       NDS.scrollLock.unlock();
     }
   }
 
   // Down and up both outside: a text selection dragged out of the box is not a dismiss.
-  function onOutside(dlg, fn, signal) {
+  function addOutsideListeners(dlg, fn, signal) {
     let down = false;
-    document.addEventListener('pointerdown', (e) => { down = away(dlg, e); }, { capture: true, signal });
-    document.addEventListener('click', (e) => { if (down && away(dlg, e)) fn(); }, { capture: true, signal });
+    document.addEventListener('pointerdown', (e) => { down = isAway(dlg, e); }, { capture: true, signal });
+    document.addEventListener('click', (e) => { if (down && isAway(dlg, e)) fn(); }, { capture: true, signal });
   }
 
   NDS.dialog = {
     show,
     close,
-    top,
+    top: getTop,
     hideMenus,
-    onOutside
+    onOutside: addOutsideListeners
   };
 })();

@@ -53,7 +53,7 @@ prep res req resp calc dim dims lbl txt ctrl ctrls mgr util utils coll tpl tmpl 
 const LOCAL_OK = new Set(['el', 'e', 'i', 'j', 'x', 'y', 'fn', 'opts', 'btn']);
 
 // The hook names and entry 10's public verbs stand alone.
-const EXACT_OK = new Set(['whenReady', 'getInstance', 'init', 'reinit', 'refresh', 'destroy', 'create', 'constructor', 'open', 'close', 'toggle',
+const EXACT_OK = new Set(['whenReady', 'getInstance', 'initialize', 'init', 'reinit', 'refresh', 'destroy', 'create', 'constructor', 'open', 'close', 'toggle',
     'show', 'hide', 'enable', 'disable', 'next', 'prev', 'goTo', 'clear', 'validate', 'mount', 'cleanup', 'setup']);
 
 // camelCase words, an acronym run kept as one word: toCSVFile → to CSV File.
@@ -113,7 +113,7 @@ function scanFile(file, source) {
 
     const fnName = (node, id, { pub = false } = {}) => {
         const n = id.name;
-        if (n.startsWith('#') || EXACT_OK.has(n)) return;
+        if (n.startsWith('#') || EXACT_OK.has(n) || /^[A-Z]/.test(n)) return; // PascalCase: a constructor, rule 7's
         const tag = pub ? ' (on the banner: section 3 decides)' : '';
         const ws = words(n);
         const first = ws[0]?.toLowerCase();
@@ -277,12 +277,16 @@ function scanFile(file, source) {
                 if (typeof node.value === 'string' && /^nds_/.test(node.value)) push('P12.3', node, `\`'${node.value}'\`: a key prefix is \`nds-\`, not \`nds_\``);
                 break;
             case 'ObjectExpression':
-                // The namespace object: NDS.X = { … } (an inner object literal is data, its keys are not names).
-                if (parent?.type === 'AssignmentExpression' && rootName(parent.left) === 'NDS') {
+                // A namespace object (an inner object literal is data, its keys are not names). A key whose
+                // value names a function of this file is a method too: `{ updateDate }`.
+                if (namespaces.has(node)) {
                     for (const q of node.properties) {
                         if (q.type !== 'Property' || q.key.type !== 'Identifier') continue;
                         if (q.key.name.startsWith('_')) defines.add(q.key.name);
-                        if (isFn(q.value) || q.method) fnName(q, q.key, { pub: !q.key.name.startsWith('_') });
+                        if (q.kind !== 'init') continue; // a getter is a value (`get site()`)
+                        if (/^[A-Z]/.test(q.key.name)) continue; // a class on a namespace (DatePicker.Calendar): entry 10 rule 1
+                        if (isFn(q.value) || q.method || (q.value.type === 'Identifier' && fnBindings.has(q.value.name)))
+                            fnName(q, q.key, { pub: !q.key.name.startsWith('_') });
                     }
                 }
                 break;
@@ -303,6 +307,31 @@ function scanFile(file, source) {
             if (Array.isArray(v)) v.forEach((c) => walk(c, next, node));
             else if (v && typeof v.type === 'string') walk(v, next, node);
         }
+    }
+    // Before the walk: every function binding, and the namespace objects in their three shapes:
+    // NDS.X = { … }; NDS.X = (function () { … return { … }; })(); const api = { … }; NDS.X = api.
+    const fnBindings = new Set(), namespaces = new Set(), nsNames = new Set(), nsFns = new Set(), inits = [];
+    (function scan(n) {
+        if (!n || typeof n.type !== 'string') return;
+        if (n.type === 'FunctionDeclaration' && n.id) fnBindings.add(n.id.name);
+        if (n.type === 'VariableDeclarator' && n.id.type === 'Identifier') {
+            if (isFn(n.init)) fnBindings.add(n.id.name);
+            if (n.init?.type === 'ObjectExpression') inits.push(n);
+        }
+        if (n.type === 'AssignmentExpression' && rootName(n.left) === 'NDS') {
+            const r = n.right;
+            if (r.type === 'ObjectExpression') namespaces.add(r);
+            else if (r.type === 'Identifier') nsNames.add(r.name);
+            else if (r.type === 'CallExpression' && isFn(r.callee)) nsFns.add(r.callee);
+        }
+        for (const k in n) { if (k === 'loc') continue; const v = n[k]; if (Array.isArray(v)) v.forEach(scan); else if (v && typeof v.type === 'string') scan(v); }
+    })(ast);
+    for (const d of inits) if (nsNames.has(d.id.name)) namespaces.add(d.init);
+    for (const f of nsFns) for (const st of f.body.body || []) {
+        if (st.type !== 'ReturnStatement') continue;
+        if (st.argument?.type === 'ObjectExpression') namespaces.add(st.argument);
+        // const api = { … }; return api;
+        if (st.argument?.type === 'Identifier') for (const d of inits) if (d.id.name === st.argument.name && d.start > f.start && d.end < f.end) namespaces.add(d.init);
     }
     for (const s of ast.body) walk(s, { module: true, cls: null, fnDepth: 0 }, ast);
     return { name, out, defines, expandos, uses };

@@ -47,8 +47,8 @@
                 .map(link => {
                     const id = link.getAttribute('href').slice(1);
                     const target = id ? document.getElementById(id) : null;
-                    const li = link.closest('li');
-                    return target && li ? { link, li, target } : null;
+                    const item = link.closest('li');
+                    return target && item ? { link, li: item, target } : null;
                 })
                 .filter(Boolean);
 
@@ -70,21 +70,21 @@
         // chooses which heading levels to include; missing IDs are slugified
         // from the heading's text so anchors resolve.
         populate() {
-            const sourceSel = this.toc.dataset.tocSource;
-            if (!sourceSel) return;
+            const sourceSelector = this.toc.dataset.tocSource;
+            if (!sourceSelector) return;
 
-            const source = document.querySelector(sourceSel);
+            const source = document.querySelector(sourceSelector);
             const list = this.toc.querySelector('.nds-drawer-list');
             if (!source || !list) return;
 
             const levels = (this.toc.dataset.tocLevels || 'h2,h3,h4')
-                .split(',').map(s => s.trim()).filter(Boolean);
+                .split(',').map(level => level.trim()).filter(Boolean);
             const headings = Array.from(source.querySelectorAll(levels.join(',')));
             if (!headings.length) return;
 
             list.replaceChildren();
             // Smallest level, not the first heading's: a shallower heading later would go negative and drop the rest.
-            const minLevel = Math.min(...headings.map(h => parseInt(h.tagName[1], 10)));
+            const minLevel = Math.min(...headings.map(heading => parseInt(heading.tagName[1], 10)));
             // Stack indexed by depth — stack[0] is the root <ul>, stack[1] is
             // the <ul> nested in the most recent top-level <li>, and so on.
             const stack = [list];
@@ -94,7 +94,7 @@
                     // Two headings with one text need two ids, or both links go to the first.
                     const base = this.slugify(heading.textContent);
                     let id = base;
-                    for (let n = 2; document.getElementById(id); n++) id = base + '-' + n;
+                    for (let suffix = 2; document.getElementById(id); suffix++) id = base + '-' + suffix;
                     heading.id = id;
                 }
 
@@ -103,10 +103,10 @@
 
                 if (!stack[depth]) {
                     const parentUl = stack[depth - 1];
-                    const parentLi = parentUl && parentUl.lastElementChild;
-                    if (!parentLi) continue; // orphan heading — skip
+                    const parentItem = parentUl && parentUl.lastElementChild;
+                    if (!parentItem) continue; // orphan heading — skip
                     const ul = document.createElement('ul');
-                    parentLi.appendChild(ul);
+                    parentItem.appendChild(ul);
                     stack[depth] = ul;
                 }
 
@@ -115,16 +115,16 @@
         }
 
         buildItem(heading) {
-            const li = document.createElement('li');
-            const a = document.createElement('a');
-            a.href = `#${heading.id}`;
-            a.className = 'nds-btn nds-subtle nds-indicator';
+            const item = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = `#${heading.id}`;
+            link.className = 'nds-btn nds-subtle nds-indicator';
             const label = document.createElement('span');
             label.className = 'nds-label nds-truncate';
             label.textContent = heading.textContent.trim();
-            a.appendChild(label);
-            li.appendChild(a);
-            return li;
+            link.appendChild(label);
+            item.appendChild(link);
+            return item;
         }
 
         // Keep Arabic/Latin letters and digits, collapse everything else to '-'.
@@ -153,9 +153,9 @@
             // Capture sees element scrolls too: the headings may scroll in a panel or a modal, not the page.
             const onScroll = NDS.rafThrottle(this.update);
             document.addEventListener('scroll', (e) => {
-                const t = e.target;
-                if (t === document) this.box = null;
-                else if (t.contains(this.entries[0].target)) this.box = t;
+                const target = e.target;
+                if (target === document) this.box = null;
+                else if (target.contains(this.entries[0].target)) this.box = target;
                 else return;
                 onScroll();
             }, { capture: true, passive: true, signal });
@@ -185,8 +185,8 @@
         // before the first scroll event there is no event target to learn it from.
         findBox() {
             for (let el = this.entries[0].target.parentElement; el && el !== document.body; el = el.parentElement) {
-                const o = getComputedStyle(el).overflowY;
-                if ((o === 'auto' || o === 'scroll') && el.scrollHeight > el.clientHeight) return el;
+                const overflow = getComputedStyle(el).overflowY;
+                if ((overflow === 'auto' || overflow === 'scroll') && el.scrollHeight > el.clientHeight) return el;
             }
             return null;
         }
@@ -257,7 +257,7 @@
         }
     }
 
-    function initializeComponents() {
+    function setupComponents() {
         document.querySelectorAll('.nds-toc').forEach(toc => {
             if (toc.closest('code')) return;
             // The instance, not the stamp: an empty TOC is stamped to release its skeleton,
@@ -270,14 +270,14 @@
     }
 
     NDS.Toc = {
-        init: initializeComponents,
-        reinit: initializeComponents,
+        init: setupComponents,
+        reinit: setupComponents,
         create: (el) => {
             if (el.ndsToc) return el.ndsToc;
-            const inst = new NdsToc(el);
-            if (!inst.valid) return null;
-            el.ndsToc = inst;
-            return inst;
+            const instance = new NdsToc(el);
+            if (!instance.valid) return null;
+            el.ndsToc = instance;
+            return instance;
         },
         destroy: (el) => el?.ndsToc?.destroy()
     };

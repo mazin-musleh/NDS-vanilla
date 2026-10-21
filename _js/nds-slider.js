@@ -42,7 +42,7 @@
     var SENTINEL = 'data-nds-slider-initialized';
     var STEP_KEYS = /^(Arrow(Up|Down|Left|Right)|Home|End|Page(Up|Down))$/;
 
-    function pct(input) {
+    function getPercent(input) {
         var min = parseFloat(input.min);
         var max = parseFloat(input.max);
         if (isNaN(min)) min = 0;
@@ -83,21 +83,21 @@
         clone.style.cssText = 'position:absolute;visibility:hidden;width:auto;min-width:0;pointer-events:none;';
         output.parentNode.appendChild(clone);
         formatOutput(clone);
-        var w = clone.getBoundingClientRect().width;
+        var width = clone.getBoundingClientRect().width;
         output.parentNode.removeChild(clone);
-        if (w > 0) output.style.width = w + 'px';
+        if (width > 0) output.style.width = width + 'px';
     }
 
-    function paintSingle(container) {
+    function syncSingle(container) {
         var input = container.querySelector('.nds-slider');
         var track = container.querySelector('.nds-slider-track');
         if (!input || !track) return;
         // Single fills 0→value: set only the end stop; start defaults to 0%.
-        track.style.setProperty('--slider-fill-end', pct(input) + '%');
+        track.style.setProperty('--slider-fill-end', getPercent(input) + '%');
         writeValue(container.querySelector('.nds-slider-value'), input.value);
     }
 
-    function paintRange(container) {
+    function syncRange(container) {
         var minInput = container.querySelector('.nds-slider-min');
         var maxInput = container.querySelector('.nds-slider-max');
         if (!minInput || !maxInput) return;
@@ -110,18 +110,18 @@
 
         var track = container.querySelector('.nds-slider-track');
         if (track) {
-            track.style.setProperty('--slider-fill-start', pct(minInput) + '%');
-            track.style.setProperty('--slider-fill-end',   pct(maxInput) + '%');
+            track.style.setProperty('--slider-fill-start', getPercent(minInput) + '%');
+            track.style.setProperty('--slider-fill-end',   getPercent(maxInput) + '%');
         }
         writeValue(container.querySelector('.nds-slider-value-min'), minInput.value);
         writeValue(container.querySelector('.nds-slider-value-max'), maxInput.value);
     }
 
-    function paint(container) {
+    function syncSlider(container) {
         if (container.classList.contains('nds-slider-range')) {
-            paintRange(container);
+            syncRange(container);
         } else {
-            paintSingle(container);
+            syncSingle(container);
         }
     }
 
@@ -136,79 +136,79 @@
 
     // Reserve the widest-value width in inline mode (keeps the bar from jittering),
     // or clear it under .nds-stacked (full-width bar — no reservation needed).
-    function applyReservation(container) {
+    function syncReservation(container) {
         if (container.classList.contains('nds-stacked')) {
-            container.querySelectorAll('.nds-slider-value').forEach(function (o) { o.style.width = ''; });
+            container.querySelectorAll('.nds-slider-value').forEach(function (output) { output.style.width = ''; });
         } else {
             reserveAll(container);
         }
     }
 
-    function initOne(container) {
+    function setupContainer(container) {
         if (container.getAttribute(SENTINEL) === 'true') return;
         container.setAttribute(SENTINEL, 'true');
-        paint(container);
+        syncSlider(container);
         // Cold-init: the pooled observer's initial callback applies the reservation
         // off the sync path and re-runs it on font-load / resize. .nds-stacked
-        // toggles are handled by the onAttrChange watcher in bindOnce.
+        // toggles are handled by the onAttrChange watcher in addDocumentListeners.
         if (container._sliderOffResize) container._sliderOffResize();
-        container._sliderOffResize = NDS.onElementResize(container, function () { applyReservation(container); });
+        container._sliderOffResize = NDS.onElementResize(container, function () { syncReservation(container); });
     }
 
     var bound = false;
-    function bindOnce() {
+    function addDocumentListeners() {
         if (bound) return;
         bound = true;
         document.addEventListener('input', function (e) {
-            var t = e.target;
-            if (!t || !t.matches || !t.matches('.nds-slider')) return;
-            var c = t.closest('.nds-slider-container');
-            if (c) paint(c);
+            var target = e.target;
+            if (!target || !target.matches || !target.matches('.nds-slider')) return;
+            var container = target.closest('.nds-slider-container');
+            if (container) syncSlider(container);
         });
         // A form reset moves the thumb back without an input event.
         document.addEventListener('reset', function (e) {
             var form = e.target;
             setTimeout(function () {
-                if (!e.defaultPrevented && form.querySelectorAll) form.querySelectorAll('.nds-slider-container').forEach(paint);
+                if (!e.defaultPrevented && form.querySelectorAll) form.querySelectorAll('.nds-slider-container').forEach(syncSlider);
             });
         });
         // Browsers ignore readonly on a range input, so the keys would still move it.
         document.addEventListener('keydown', function (e) {
-            var t = e.target;
-            if (t && t.readOnly && t.matches && t.matches('.nds-slider') && STEP_KEYS.test(e.key)) e.preventDefault();
+            var target = e.target;
+            if (target && target.readOnly && target.matches && target.matches('.nds-slider') && STEP_KEYS.test(e.key)) e.preventDefault();
         });
         // Toggling .nds-stacked (a class change) neither re-runs init nor fires a
         // resize — re-apply the reservation when a container's class changes.
         // onAttrChange hands the callback a nodes array.
-        NDS.onAttrChange('.nds-slider-container', ['class'], function (els) { els.forEach(applyReservation); });
+        NDS.onAttrChange('.nds-slider-container', ['class'], function (containers) { containers.forEach(syncReservation); });
         // onDOMAdd hands the callback a nodes array, not one element.
-        NDS.onDOMAdd('.nds-slider-container', function (nodes) { nodes.forEach(initOne); });
+        NDS.onDOMAdd('.nds-slider-container', function (nodes) { nodes.forEach(setupContainer); });
     }
 
     NDS.Slider = {
         init: function () {
-            bindOnce();
-            document.querySelectorAll('.nds-slider-container').forEach(initOne);
+            addDocumentListeners();
+            document.querySelectorAll('.nds-slider-container').forEach(setupContainer);
         },
         reinit: function (el) {
-            bindOnce();
+            addDocumentListeners();
             var list = el ? [el] : document.querySelectorAll('.nds-slider-container');
-            list.forEach(function (c) {
-                c.removeAttribute(SENTINEL);
-                initOne(c);
+            list.forEach(function (container) {
+                container.removeAttribute(SENTINEL);
+                setupContainer(container);
             });
         },
         destroy: function (el) {
             var list = el ? [el] : document.querySelectorAll('[' + SENTINEL + ']');
-            list.forEach(function (c) {
-                c.removeAttribute(SENTINEL);
-                if (c._sliderOffResize) { c._sliderOffResize(); delete c._sliderOffResize; }
+            list.forEach(function (container) {
+                container.removeAttribute(SENTINEL);
+                if (container._sliderOffResize) { container._sliderOffResize(); delete container._sliderOffResize; }
             });
             // ponytail: delegated input listener stays bound for the page lifetime —
             // reinit re-uses it. Upgrade to AbortController if a future variant
             // needs per-instance teardown (e.g. native vertical orientation).
         },
         // A page with no slider at load never runs init(), so create() binds the delegates too.
-        create: function (el) { bindOnce(); initOne(el); return el; }
+        create: function (el) { addDocumentListeners(); setupContainer(el); return el; }
     };
 })();

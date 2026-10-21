@@ -89,11 +89,11 @@
         return key !== null && key !== undefined && key !== '';
     }
 
-    function unwrapNumber(str) {
+    function unwrapNumber(text) {
         // Strip thousands separators/whitespace, then read leading number; handles "9,375 SAR"
-        const cleaned = String(str).replace(/[,\s]/g, '');
-        const m = cleaned.match(/^-?[\d.]+/);
-        return m ? parseFloat(m[0]) : NaN;
+        const cleaned = String(text).replace(/[,\s]/g, '');
+        const match = cleaned.match(/^-?[\d.]+/);
+        return match ? parseFloat(match[0]) : NaN;
     }
 
     const ISO = /^\d{4}-\d{2}-\d{2}T/;   // ISO 8601 with a time
@@ -101,56 +101,56 @@
     const DATE_LIKE = /\d\s*[\/:]\s*\d/;
 
     // A day in `format` and `calendar` (default: the site's) or YYYY-MM-DD, as local midnight; NaN otherwise.
-    function day(s, format, calendar) {
-        const d = NDS.Date.parse(s, { format, calendar }) || NDS.Date.parse(s, { format: 'YYYY-MM-DD' });
-        return d ? d.getTime() : NaN;
+    function parseDay(text, format, calendar) {
+        const date = NDS.Date.parse(text, { format, calendar }) || NDS.Date.parse(text, { format: 'YYYY-MM-DD' });
+        return date ? date.getTime() : NaN;
     }
 
     // new Date() last: ISO with a time, and a column create() forces to 'date'.
-    function dateTime(str, format, calendar) {
-        const s = String(str).trim();
-        const t = day(s, format, calendar);
-        return isNaN(t) ? new Date(s).getTime() : t;
+    function parseDateTime(text, format, calendar) {
+        const trimmed = String(text).trim();
+        const time = parseDay(trimmed, format, calendar);
+        return isNaN(time) ? new Date(trimmed).getTime() : time;
     }
 
-    function isDateString(str, format, calendar) {
-        const s = String(str).trim();
+    function isDateString(text, format, calendar) {
+        const trimmed = String(text).trim();
         // Not Date.parse alone: it also takes "1995" and "Item 2"
-        return ISO.test(s) ? !isNaN(new Date(s).getTime()) : !isNaN(day(s, format, calendar));
+        return ISO.test(trimmed) ? !isNaN(new Date(trimmed).getTime()) : !isNaN(parseDay(trimmed, format, calendar));
     }
 
     function detectType(sampleValues, dateFormat, calendar) {
-        const values = (sampleValues || []).filter(v => v !== null && v !== undefined && v !== '');
+        const values = (sampleValues || []).filter(value => value !== null && value !== undefined && value !== '');
         if (!values.length) return 'string';
 
         // Date check wins over number: "2026-03-15" has a leading digit sequence
         // that unwrapNumber would greedily accept (parseFloat stops at the dash),
         // so every same-year row would collapse to the same numeric value.
-        let dates = 0, nums = 0;
+        let dates = 0, numbers = 0;
         for (let i = 0; i < values.length; i++) {
             if (isDateString(values[i], dateFormat, calendar)) dates++;
-            else if (!DATE_LIKE.test(values[i]) && !isNaN(unwrapNumber(values[i]))) nums++;
+            else if (!DATE_LIKE.test(values[i]) && !isNaN(unwrapNumber(values[i]))) numbers++;
         }
         if (dates === values.length) return 'date';
-        if (nums === values.length) return 'number';
+        if (numbers === values.length) return 'number';
         return 'string';
     }
 
     function parseValue(raw, type, dateFormat, calendar) {
         if (type === 'number') {
-            const n = unwrapNumber(raw);
-            return isNaN(n) ? 0 : n;
+            const number = unwrapNumber(raw);
+            return isNaN(number) ? 0 : number;
         }
         if (type === 'date') {
-            const t = dateTime(raw, dateFormat, calendar);
-            return isNaN(t) ? 0 : t;
+            const time = parseDateTime(raw, dateFormat, calendar);
+            return isNaN(time) ? 0 : time;
         }
         return String(raw == null ? '' : raw);
     }
 
-    function compare(a, b, type, order, dateFormat, calendar) {
-        const av = parseValue(a, type, dateFormat, calendar);
-        const bv = parseValue(b, type, dateFormat, calendar);
+    function compare(left, right, type, order, dateFormat, calendar) {
+        const av = parseValue(left, type, dateFormat, calendar);
+        const bv = parseValue(right, type, dateFormat, calendar);
         let cmp;
         if (type === 'string') {
             cmp = av.localeCompare(bv, undefined, { numeric: true, sensitivity: 'base' });
@@ -168,9 +168,9 @@
             this.opts = Object.assign({
                 mode: 'direct',
                 a11y: 'pressed',
-                a11yTarget: (t) => t.closest('th'),
+                a11yTarget: (trigger) => trigger.closest('th'),
                 accessor: (item, key) => item.getAttribute('data-sort-' + key),
-                keyFrom: (t) => t.getAttribute('data-sort') || '',
+                keyFrom: (trigger) => trigger.getAttribute('data-sort') || '',
             }, options || {});
 
             this.abortController = new AbortController();
@@ -329,8 +329,8 @@
                 const dateFormat = NDS.Date.formatFor(this.root);
                 const calendar = NDS.Date.calendarFor(this.root);
                 const type = (this.opts.types && this.opts.types[key]) || detectType(sample, dateFormat, calendar);
-                ordered = [...items].sort((a, b) =>
-                    compare(accessor(a, key), accessor(b, key), type, this.state.order, dateFormat, calendar)
+                ordered = [...items].sort((left, right) =>
+                    compare(accessor(left, key), accessor(right, key), type, this.state.order, dateFormat, calendar)
                 );
             } else {
                 // Drop snapshot entries the container no longer holds. appendChild
@@ -372,11 +372,11 @@
             const triggers = this._resolveTriggers();
             const a11y = this.opts.a11y;
             // Cleared in a pass of its own: two triggers can share one host.
-            triggers.forEach(t => NDS.state.remove(this._stateHost(t), 'sorted-asc', 'sorted-desc'));
+            triggers.forEach(trigger => NDS.state.remove(this._stateHost(trigger), 'sorted-asc', 'sorted-desc'));
 
             triggers.forEach(trigger => {
                 const key = this.opts.keyFrom(trigger);
-                const orderAttr = trigger.hasAttribute('data-sort-order') ? this._triggerOrder(trigger) : null;
+                const orderAttribute = trigger.hasAttribute('data-sort-order') ? this._triggerOrder(trigger) : null;
 
                 let isActive;
                 if (this.opts.mode === 'cycle') {
@@ -384,7 +384,7 @@
                 } else {
                     isActive = this.state.key !== null
                             && key === this.state.key
-                            && (!orderAttr || orderAttr === this.state.order);
+                            && (!orderAttribute || orderAttribute === this.state.order);
                 }
 
                 if (isActive && this.state.order) NDS.state.add(this._stateHost(trigger), 'sorted-' + this.state.order);
@@ -424,11 +424,11 @@
             const { key: activeKey, order: activeOrder } = this.state;
             const isDirect = this.opts.mode === 'direct';
 
-            const activeBtn = triggers.find(t => {
-                const k = this.opts.keyFrom(t);
-                if (!isKeySet(activeKey)) return !isKeySet(k);
-                if (!isDirect) return k === activeKey;
-                return k === activeKey && (!t.hasAttribute('data-sort-order') || this._triggerOrder(t) === activeOrder);
+            const activeBtn = triggers.find(trigger => {
+                const triggerKey = this.opts.keyFrom(trigger);
+                if (!isKeySet(activeKey)) return !isKeySet(triggerKey);
+                if (!isDirect) return triggerKey === activeKey;
+                return triggerKey === activeKey && (!trigger.hasAttribute('data-sort-order') || this._triggerOrder(trigger) === activeOrder);
             });
 
             const sourceIcon = activeBtn?.querySelector('i.nds-icon, i.hgi, i');
@@ -445,7 +445,7 @@
         // Whether one of the triggers sorts by `key`. Another use of the same param
         // (a server's own sort select, a second sort on the page) is not this sort's.
         _ownsKey(key) {
-            return !!key && this._resolveTriggers().some(t => this.opts.keyFrom(t) === key);
+            return !!key && this._resolveTriggers().some(trigger => this.opts.keyFrom(trigger) === key);
         }
 
         _urlKey() {
@@ -489,24 +489,24 @@
 
     // One list per distinct target id. ponytail: triggers are bound at create — one added later
     // needs NDS.init.destroy + refresh; bind by delegation if that becomes common.
-    function markupLists() {
+    function getMarkupLists() {
         const lists = new Set();
-        document.querySelectorAll('[data-sort-target]').forEach(t => {
-            if (t.closest('code')) return;
-            const list = document.getElementById(t.getAttribute('data-sort-target'));
+        document.querySelectorAll('[data-sort-target]').forEach(trigger => {
+            if (trigger.closest('code')) return;
+            const list = document.getElementById(trigger.getAttribute('data-sort-target'));
             if (list) lists.add(list);
         });
         return lists;
     }
 
     function init() {
-        markupLists().forEach(list => {
+        getMarkupLists().forEach(list => {
             if (list.ndsSort) return;
-            const sel = `[data-sort-target="${CSS.escape(list.id)}"]`;
+            const selector = `[data-sort-target="${CSS.escape(list.id)}"]`;
             NDS.Sort.create(list, {
                 items: () => list.children,
-                triggers: () => document.querySelectorAll(sel),
-                mode: document.querySelector(`${sel}[data-sort-mode="cycle"]`) ? 'cycle' : 'direct',
+                triggers: () => document.querySelectorAll(selector),
+                mode: document.querySelector(`${selector}[data-sort-mode="cycle"]`) ? 'cycle' : 'direct',
             })._markup = true;
         });
     }
@@ -514,7 +514,7 @@
     // Owner hook for NDS.init.refresh: rows added to a wired list join the active sort.
     function refresh(root = document) {
         init();
-        markupLists().forEach(list => {
+        getMarkupLists().forEach(list => {
             if (list.ndsSort?._markup && (root === document || root.contains(list) || list.contains(root))) list.ndsSort.refresh();
         });
     }

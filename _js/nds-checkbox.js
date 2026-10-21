@@ -17,7 +17,7 @@
 (() => {
     'use strict';
 
-    const groupOf = (el) => el.closest('.nds-form-group') || el;
+    const getGroup = (el) => el.closest('.nds-form-group') || el;
     const check = (group) => NDS.validation.checkedCount(group, group.querySelectorAll('input[type="checkbox"]'));
 
     // A group answers when it holds a checkbox and opts in.
@@ -43,12 +43,12 @@
 
     NDS.field.addType('checkbox', {
         on: {
-            change: (e, c) => { if (c && c.input.type === 'checkbox' && !c.input.indeterminate) setIndeterminate(c.input, false); },
+            change: (e, context) => { if (context && context.input.type === 'checkbox' && !context.input.indeterminate) setIndeterminate(context.input, false); },
         },
     });
 
     NDS.Checkbox = {
-        validate: (el, opts) => NDS.Form.validateField(groupOf(el), opts, check),
+        validate: (el, opts) => NDS.Form.validateField(getGroup(el), opts, check),
         setIndeterminate,
     };
 })();

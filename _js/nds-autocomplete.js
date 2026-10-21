@@ -187,7 +187,7 @@
 
         setupAria() {
             // destroy() removes only what the author did not write.
-            this._authoredAria = ariaAttributes.filter((a) => this.input.hasAttribute(a));
+            this._authoredAria = ariaAttributes.filter((attribute) => this.input.hasAttribute(attribute));
             this.input.setAttribute('role', 'combobox');
             NDS.aria.expanded(this.input, false);
             this.input.setAttribute('aria-autocomplete', 'list');
@@ -375,11 +375,11 @@
             if (this.customFilter) {
                 this.results = this.customFilter(this.cache, query) || [];
             } else {
-                var q = query.toLowerCase();
+                var lowerQuery = query.toLowerCase();
                 var field = this.nameField;
                 this.results = this.cache.filter(function (item) {
                     var value = item && item[field];
-                    return value != null && String(value).toLowerCase().indexOf(q) !== -1;
+                    return value != null && String(value).toLowerCase().indexOf(lowerQuery) !== -1;
                 });
             }
             this.renderResults(this.results, query);
@@ -390,7 +390,7 @@
         // data-results-path if set.
         _extractResults(data) {
             var list = this.resultsPath
-                ? this.resultsPath.split('.').reduce(function (obj, key) { return obj && obj[key]; }, data)
+                ? this.resultsPath.split('.').reduce(function (current, key) { return current && current[key]; }, data)
                 : Array.isArray(data) ? data : (data && (data.results || data.data));
             // One null row would throw in the renderer and drop the whole set.
             return Array.isArray(list) ? list.filter(Boolean) : [];
@@ -674,8 +674,8 @@
 
             // Restore the markup the focusin builder matches, so the field can build again.
             this.input.setAttribute('autocomplete', 'on');
-            ariaAttributes.filter((a) => !this._authoredAria?.includes(a))
-                .forEach((a) => this.input.removeAttribute(a));
+            ariaAttributes.filter((attribute) => !this._authoredAria?.includes(attribute))
+                .forEach((attribute) => this.input.removeAttribute(attribute));
             this.container.removeAttribute('data-nds-autocomplete-initialized');
             if (this.container.ndsAutocomplete === this) delete this.container.ndsAutocomplete;
         }
@@ -694,14 +694,14 @@
     // dynamically-added containers are covered for free. The instance itself
     // stays per-element — it holds results / activeIndex / in-flight abort,
     // runtime state that (unlike the custom-select's value) isn't in the DOM.
-    function initializeAutocompletes() {
+    function setupAutocompletes() {
         if (delegationWired) return;
         delegationWired = true;
         document.addEventListener('focusin', function (e) {
-            var t = e.target;
-            if (!t || !t.closest) return;
+            var target = e.target;
+            if (!target || !target.closest) return;
             // The constructor skips an incomplete field itself.
-            var container = t.closest('.nds-form-container[data-url]');
+            var container = target.closest('.nds-form-container[data-url]');
             if (container && !container.ndsAutocomplete && !container.closest('code')) new NdsAutocomplete(container);
         });
     }
@@ -713,7 +713,7 @@
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
     // data-strict: typed text must match a picked suggestion. The carrier holds the last pick and exists
     // only on a built field; no carrier, so its text is the prefilled pick. Empty text is required's business.
-    const fieldCheck = (container) => {
+    const checkField = (container) => {
         const carrier = container.querySelector('.nds-autocomplete-value');
         const input = container.ndsAutocomplete?.input;
         const text = input ? input.value.trim() : '';
@@ -722,13 +722,13 @@
     };
     // Taginput in assist mode shares the container and owns its own rejection at add time.
     NDS.validation.addRule('.nds-form-container[data-strict]',
-        (ac) => (ac.classList.contains('nds-taginput') ? null : Object.assign(fieldCheck(ac), { focus: ac.ndsAutocomplete?.input || null })),
+        (container) => (container.classList.contains('nds-taginput') ? null : Object.assign(checkField(container), { focus: container.ndsAutocomplete?.input || null })),
         { on: ['input'] });
 
     NDS.Autocomplete = {
-        init: initializeAutocompletes,
-        reinit: initializeAutocompletes,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-form-container') || el, opts, fieldCheck),
+        init: setupAutocompletes,
+        reinit: setupAutocompletes,
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-form-container') || el, opts, checkField),
         destroy: (element) => element?.ndsAutocomplete?.destroy(),
         // Programmatic construction. Pass { filter, renderItem } to override
         // the default substring match and dropdown-row renderer.
@@ -736,8 +736,8 @@
             if (!element) return null;
             if (element.ndsAutocomplete) return element.ndsAutocomplete;
             // The constructor sets the backref only once the field is complete.
-            var inst = new NdsAutocomplete(element, options);
-            return element.ndsAutocomplete === inst ? inst : null;
+            var instance = new NdsAutocomplete(element, options);
+            return element.ndsAutocomplete === instance ? instance : null;
         }
     };
 

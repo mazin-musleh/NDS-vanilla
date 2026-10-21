@@ -34,14 +34,14 @@
     addEventListener('beforeprint', () => {
         document.querySelectorAll('[data-theme~="dark"]').forEach(el => {
             if (el.closest('[data-nds-print-self]')) return;
-            const t = el.getAttribute('data-theme');
-            printThemes.push([el, t]);
-            const light = t.split(/\s+/).filter(x => x && x !== 'dark').join(' ');
+            const theme = el.getAttribute('data-theme');
+            printThemes.push([el, theme]);
+            const light = theme.split(/\s+/).filter(x => x && x !== 'dark').join(' ');
             if (light) el.setAttribute('data-theme', light); else el.removeAttribute('data-theme');
         });
     });
     addEventListener('afterprint', () => {
-        printThemes.forEach(([el, t]) => el.setAttribute('data-theme', t));
+        printThemes.forEach(([el, theme]) => el.setAttribute('data-theme', theme));
         printThemes = [];
     });
 
@@ -77,7 +77,7 @@
         return true;
     }
 
-    function onPrintClick(e) {
+    function handlePrintClick(e) {
         const btn = e.target.closest?.('[data-print-target]');
         if (btn && print(btn.getAttribute('data-print-target'))) e.preventDefault();
     }
@@ -86,7 +86,7 @@
     function init() {
         if (initDone) return;
         initDone = true;
-        document.addEventListener('click', onPrintClick);
+        document.addEventListener('click', handlePrintClick);
     }
 
     NDS.Print = { init, print };

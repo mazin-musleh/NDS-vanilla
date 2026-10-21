@@ -69,7 +69,7 @@
     };
 
     // ── data-theme token plumbing ───────────────────────────────────────────
-    function curTokens() {
+    function getCurrentTokens() {
         return (root.getAttribute('data-theme') || '').split(/\s+/).filter(Boolean);
     }
     // Write the token list back AND persist the whole string (single source of truth).
@@ -77,21 +77,21 @@
         if (toks.length) root.setAttribute('data-theme', toks.join(' '));
         else root.removeAttribute('data-theme');
         try {
-            const v = root.getAttribute('data-theme');
-            if (v) localStorage.setItem(STORAGE_KEY, v); else localStorage.removeItem(STORAGE_KEY);
+            const value = root.getAttribute('data-theme');
+            if (value) localStorage.setItem(STORAGE_KEY, value); else localStorage.removeItem(STORAGE_KEY);
         } catch (e) { /* storage blocked — selection still applies */ }
     }
 
     // ── Dark/light modes axis ────────────────────────────────────────────────
     function getTheme() {
-        return curTokens().indexOf('dark') !== -1 ? 'dark' : 'light';
+        return getCurrentTokens().indexOf('dark') !== -1 ? 'dark' : 'light';
     }
-    function applyTheme(theme) {
+    function setThemeMode(theme) {
         // Preserve the theme token; light is the default → no token.
-        const kept = curTokens().filter(t => modes.indexOf(t) === -1);
+        const kept = getCurrentTokens().filter(token => modes.indexOf(token) === -1);
         if (theme === 'dark') kept.push('dark');
         writeTheme(kept);
-        updateToggles(theme);
+        setToggles(theme);
         syncThemeColor();
     }
     // A <meta name="theme-color"> takes the color at the top of the page, so the phone's
@@ -101,7 +101,7 @@
         const meta = document.querySelector('meta[name="theme-color"]:not([media])');
         if (!meta) return;
         const top = document.querySelector('.nds-topbar, .nds-main-nav');
-        const clear = (c) => !c || c === 'rgba(0, 0, 0, 0)' || c === 'transparent';
+        const clear = (color) => !color || color === 'rgba(0, 0, 0, 0)' || color === 'transparent';
         let bg = top && getComputedStyle(top).backgroundColor;
         if (clear(bg)) bg = getComputedStyle(document.body).backgroundColor;
         if (!clear(bg)) meta.setAttribute('content', bg);
@@ -115,15 +115,15 @@
         // Origin point from the trigger element's center, or screen center.
         let x = innerWidth / 2, y = innerHeight / 2;
         if (el) {
-            const r = el.getBoundingClientRect();
-            x = r.left + r.width / 2;
-            y = r.top + r.height / 2;
+            const rect = el.getBoundingClientRect();
+            x = rect.left + rect.width / 2;
+            y = rect.top + rect.height / 2;
         }
         const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
 
-        const t = document.startViewTransition(apply);
+        const transition = document.startViewTransition(apply);
         // A skipped transition (hidden tab, a second click) rejects ready; apply still ran.
-        t.ready.then(() => {
+        transition.ready.then(() => {
             root.animate(
                 { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
                 { duration: 500, easing: 'ease-in-out', pseudoElement: '::view-transition-new(root)' }
@@ -131,18 +131,18 @@
         }, () => {});
     }
     function setTheme(theme, el) {
-        reveal(() => applyTheme(theme), el);
+        reveal(() => setThemeMode(theme), el);
     }
     function toggle(el) {
         setTheme(getTheme() === 'dark' ? 'light' : 'dark', el);
     }
-    function updateToggles(theme) {
-        const els = document.querySelectorAll(TOGGLE_SEL);
+    function setToggles(theme) {
+        const elements = document.querySelectorAll(TOGGLE_SEL);
         const isDark = theme === 'dark';
-        for (let i = 0; i < els.length; i++) {
-            const el = els[i];
-            const cb = el.querySelector('.nds-switch-input');
-            if (cb) cb.checked = isDark;
+        for (let i = 0; i < elements.length; i++) {
+            const el = elements[i];
+            const checkbox = el.querySelector('.nds-switch-input');
+            if (checkbox) checkbox.checked = isDark;
             NDS.aria.pressed(el, isDark);
             const icon = el.querySelector('.nds-icon');
             if (icon) {
@@ -154,24 +154,24 @@
 
     // ── Theme SWITCHER axis (predefined token / inline custom / stylesheet) ──
     // Every switcher value is a member of the theme-token group: swap one, preserve mode.
-    function themeNames() {
+    function getThemeNames() {
         return Array.from(document.querySelectorAll(SWITCH_SEL))
             .map(el => el.getAttribute('data-theme-value')).filter(Boolean);
     }
-    function item(value) {
+    function findItem(value) {
         return value ? document.querySelector('[data-theme-value="' + value + '"]') : null;
     }
     // Swap the theme token, preserving every other token (mode, …). Predefined themes
     // match [data-theme~="<value>"]; a stylesheet theme's token is an inert marker that
     // just records (+ persists) which sheet is active for reconcileSwitcher to re-inject.
     function setThemeToken(name) {
-        const names = themeNames();
-        const toks = curTokens().filter(t => names.indexOf(t) === -1);
+        const names = getThemeNames();
+        const toks = getCurrentTokens().filter(token => names.indexOf(token) === -1);
         if (name) toks.push(name);
         writeTheme(toks);
     }
     function clearInline() {
-        for (const k in seedProperties) root.style.removeProperty(seedProperties[k]);
+        for (const key in seedProperties) root.style.removeProperty(seedProperties[key]);
         root.removeAttribute('data-palette');
     }
     // An event pack loaded by its own <script> tag inlines its CSS as a
@@ -179,22 +179,22 @@
     // no href for us to swap. Drop the ones we are switching AWAY from, or their
     // theme survives the switch; `keep` is the theme being applied, if any.
     function dropInlineEventStyles(keep) {
-        document.querySelectorAll('[data-nds-event-style]').forEach(s => {
-            if (s.getAttribute('data-nds-event-style') !== keep) s.remove();
+        document.querySelectorAll('[data-nds-event-style]').forEach(style => {
+            if (style.getAttribute('data-nds-event-style') !== keep) style.remove();
         });
     }
     // The LINK_ID slot is shared with head.html's site-wide `brand:` link.
     function ensureStylesheet(href) {
-        let l = document.getElementById(LINK_ID);
-        if (l) { if (l.getAttribute('href') !== href) l.setAttribute('href', href); return; }
-        l = document.createElement('link');
-        l.rel = 'stylesheet'; l.id = LINK_ID; l.href = href;
-        document.head.appendChild(l);
+        let link = document.getElementById(LINK_ID);
+        if (link) { if (link.getAttribute('href') !== href) link.setAttribute('href', href); return; }
+        link = document.createElement('link');
+        link.rel = 'stylesheet'; link.id = LINK_ID; link.href = href;
+        document.head.appendChild(link);
     }
     function removeStylesheet() {
         dropInlineEventStyles();
-        const l = document.getElementById(LINK_ID);
-        if (l) l.remove();
+        const link = document.getElementById(LINK_ID);
+        if (link) link.remove();
     }
     // Load a stylesheet theme's script once. NDS's own are self-contained event
     // PACKS: they register inject/teardown on window.__NDS_THEME_HOOKS[value], where
@@ -203,31 +203,31 @@
     // On load it self-activates when window.__NDS_THEME_ACTIVE matches (first-
     // activation race-guard) OR is undefined (standalone one-tag use on a page this
     // switcher never orchestrated — downstream sites drop the single script tag).
-    function ensureThemeJS(value, src) {
+    function ensureThemeJs(value, src) {
         if (!src) return;
         const id = 'nds-theme-js-' + value;
         if (document.getElementById(id)) return;
-        const s = document.createElement('script');
-        s.id = id; s.src = src; s.defer = true;
-        document.head.appendChild(s);
+        const script = document.createElement('script');
+        script.id = id; script.src = src; script.defer = true;
+        document.head.appendChild(script);
     }
     function runHook(value, name) {
-        const h = (window.__NDS_THEME_HOOKS || {})[value];
-        if (h && typeof h[name] === 'function') { try { h[name](); } catch (e) { /* theme hook failed */ } }
+        const hook = (window.__NDS_THEME_HOOKS || {})[value];
+        if (hook && typeof hook[name] === 'function') { try { hook[name](); } catch (e) { /* theme hook failed */ } }
     }
-    function savePalette(obj) {
-        try { obj ? localStorage.setItem(PALETTE_KEY, JSON.stringify(obj)) : localStorage.removeItem(PALETTE_KEY); }
+    function savePalette(palette) {
+        try { palette ? localStorage.setItem(PALETTE_KEY, JSON.stringify(palette)) : localStorage.removeItem(PALETTE_KEY); }
         catch (e) { /* storage blocked */ }
     }
     function syncSwitcher(active) {
         currentValue = active;
-        const els = document.querySelectorAll(SWITCH_SEL);
-        for (let i = 0; i < els.length; i++) {
-            const on = (els[i].getAttribute('data-theme-value') || '') === active;
-            els[i].setAttribute('aria-current', on ? 'true' : 'false');
+        const elements = document.querySelectorAll(SWITCH_SEL);
+        for (let i = 0; i < elements.length; i++) {
+            const on = (elements[i].getAttribute('data-theme-value') || '') === active;
+            elements[i].setAttribute('aria-current', on ? 'true' : 'false');
             // A switcher item rendered as a switch (not a button) reflects on/off state.
-            const cb = els[i].querySelector('.nds-switch-input');
-            if (cb) cb.checked = on;
+            const checkbox = elements[i].querySelector('.nds-switch-input');
+            if (checkbox) checkbox.checked = on;
         }
     }
 
@@ -237,7 +237,7 @@
     // from the clicked item, exactly like the dark toggle. (Predefined/custom recolour
     // synchronously inside the transition; a stylesheet theme's CSS loads async, so it
     // pops in after the ripple — the reveal still plays.)
-    function applySelection(el) {
+    function setSelection(el) {
         reveal(() => {
             // Re-clicking the already-active theme toggles back to the DGA default.
             // syncSwitcher stamps aria-current="true" on the active item, so this is
@@ -258,16 +258,16 @@
                 window.__NDS_THEME_ACTIVE = value;
                 dropInlineEventStyles(value);               // the theme we are leaving may have injected its own CSS
                 if (css) ensureStylesheet(css);             // each asset the option declares, independently
-                if (pack) ensureThemeJS(value, pack);
+                if (pack) ensureThemeJs(value, pack);
                 runHook(value, 'inject');                   // re-activation; first activation self-injects on load
                 sheet = value;
             } else if (!off && el.getAttribute('data-seed-primary')) {
                 removeStylesheet(); setThemeToken('');      // custom rides [data-palette], not a token
                 clearInline();
                 const seeds = {};
-                for (const k in seedProperties) {
-                    const v = el.getAttribute('data-seed-' + k);
-                    if (v) { root.style.setProperty(seedProperties[k], v); seeds[seedProperties[k]] = v; }
+                for (const key in seedProperties) {
+                    const seedValue = el.getAttribute('data-seed-' + key);
+                    if (seedValue) { root.style.setProperty(seedProperties[key], seedValue); seeds[seedProperties[key]] = seedValue; }
                 }
                 root.setAttribute('data-palette', '');
                 savePalette({ value: value, seeds: seeds });
@@ -294,29 +294,29 @@
     // palette, and sync aria. A click landing in the pre-init gap no-ops, recovers next click.
     function reconcileSwitcher() {
         let palette = null;
-        try { const s = localStorage.getItem(PALETTE_KEY); if (s) palette = JSON.parse(s); } catch (e) { /* ignore */ }
+        try { const stored = localStorage.getItem(PALETTE_KEY); if (stored) palette = JSON.parse(stored); } catch (e) { /* ignore */ }
 
         if (palette && palette.seeds) {
             // Custom inline seeds (not flash-free — re-applied here). Iterate the
             // known seedProperties, not the stored keys, so a tampered store can't set
             // arbitrary custom properties on :root.
-            for (const k in seedProperties) {
-                const v = palette.seeds[seedProperties[k]];
-                if (v) root.style.setProperty(seedProperties[k], v);
+            for (const key in seedProperties) {
+                const value = palette.seeds[seedProperties[key]];
+                if (value) root.style.setProperty(seedProperties[key], value);
             }
             root.setAttribute('data-palette', '');
             syncSwitcher(palette.value || '');
             return;
         }
 
-        const active = curTokens().filter(t => themeNames().indexOf(t) !== -1)[0] || '';
-        const el = item(active);
+        const active = getCurrentTokens().filter(token => getThemeNames().indexOf(token) !== -1)[0] || '';
+        const el = findItem(active);
         const pack = el && el.getAttribute('data-theme-js');
         const css = el && el.getAttribute('data-theme-css');
         if (pack || css) {                                   // active token is a stylesheet theme → load what it declares
             sheet = active; window.__NDS_THEME_ACTIVE = active;
             if (css) ensureStylesheet(css);
-            if (pack) ensureThemeJS(active, pack);
+            if (pack) ensureThemeJs(active, pack);
             runHook(active, 'inject');
         }
         syncSwitcher(active);
@@ -328,7 +328,7 @@
     // listeners once. First paint is owned by the pre-paint FOUC script.
     let wired = false, reconciled = false;
     function init() {
-        updateToggles(getTheme());
+        setToggles(getTheme());
         if (reconciled) syncSwitcher(currentValue);
         else if (document.querySelector(SWITCH_SEL)) {
             reconciled = true;
@@ -343,7 +343,7 @@
                 const want = params.get('theme');
                 const option = Array.from(document.querySelectorAll(SWITCH_SEL))
                     .find(el => (el.getAttribute('data-theme-value') || '') === want);
-                if (option && option.getAttribute('aria-current') !== 'true') applySelection(option);
+                if (option && option.getAttribute('aria-current') !== 'true') setSelection(option);
             }
         }
         syncThemeColor();
@@ -356,12 +356,12 @@
         document.addEventListener('click', (e) => {
             const el = e.target.closest(SWITCH_SEL);
             if (!el || el.querySelector('.nds-switch-input')) return;
-            applySelection(el);
+            setSelection(el);
         });
         document.addEventListener('change', (e) => {
             if (!e.target.matches('.nds-switch-input')) return;
             const el = e.target.closest(SWITCH_SEL);
-            if (el) applySelection(el);   // applySelection toggles on the item's current state
+            if (el) setSelection(el);   // setSelection toggles on the item's current state
         });
 
         // Mode toggle — button click delegation

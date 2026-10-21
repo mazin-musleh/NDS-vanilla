@@ -139,9 +139,9 @@
 
     const genericAdapter = {
         getRows(source, scope) {
-            const sel = source.dataset.exportRows;
-            const rows = (sel
-                ? Array.from(source.querySelectorAll(sel))
+            const selector = source.dataset.exportRows;
+            const rows = (selector
+                ? Array.from(source.querySelectorAll(selector))
                 : Array.from(source.children))
                 .filter(row => !isRowFiltered(row));
             if (scope === 'selected') return rows.filter(isSelected);
@@ -226,51 +226,51 @@
     // crafted export can exfiltrate data via =HYPERLINK / =WEBSERVICE / etc.
     // Prefix risky values with a leading apostrophe — the standard guard. Excel
     // hides the apostrophe and treats the rest as text; CSV parsers see it.
-    function spreadsheetSafe(value) {
-        const s = value == null ? '' : String(value);
-        if (!s) return s;
+    function sanitizeSpreadsheetValue(value) {
+        const text = value == null ? '' : String(value);
+        if (!text) return text;
         // A plain negative number is no formula: keep it a number so the column still sums.
-        if (/^-(\d+\.?\d*|\.\d+)$/.test(s)) return s;
-        const c = s.charCodeAt(0);
+        if (/^-(\d+\.?\d*|\.\d+)$/.test(text)) return text;
+        const code = text.charCodeAt(0);
         // = + - @ \t \r
-        if (c === 0x3D || c === 0x2B || c === 0x2D || c === 0x40 || c === 0x09 || c === 0x0D) {
-            return "'" + s;
+        if (code === 0x3D || code === 0x2B || code === 0x2D || code === 0x40 || code === 0x09 || code === 0x0D) {
+            return "'" + text;
         }
-        return s;
+        return text;
     }
 
-    function csvField(value) {
-        const s = spreadsheetSafe(value);
-        return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    function buildCsvField(value) {
+        const text = sanitizeSpreadsheetValue(value);
+        return /[",\r\n]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
     }
 
-    function toCSV(data) {
+    function toCsv(data) {
         const { columns, rows } = data;
-        const header = columns.map(c => csvField(c.label)).join(',');
-        const body = rows.map(r => columns.map(c => csvField(r[c.key])).join(','));
+        const header = columns.map(column => buildCsvField(column.label)).join(',');
+        const body = rows.map(row => columns.map(column => buildCsvField(row[column.key])).join(','));
         return BOM + [header].concat(body).join('\r\n');
     }
 
     function buildHeadBody(data) {
         const { columns, rows } = data;
-        const esc = NDS.escapeHtml;
+        const escapeHtml = NDS.escapeHtml;
         const thead = '<thead><tr>'
-            + columns.map(c => '<th>' + esc(c.label) + '</th>').join('')
+            + columns.map(column => '<th>' + escapeHtml(column.label) + '</th>').join('')
             + '</tr></thead>';
         const tbody = '<tbody>'
-            + rows.map(r => '<tr>'
-                + columns.map(c => '<td>' + esc(spreadsheetSafe(r[c.key])) + '</td>').join('')
+            + rows.map(row => '<tr>'
+                + columns.map(column => '<td>' + escapeHtml(sanitizeSpreadsheetValue(row[column.key])) + '</td>').join('')
                 + '</tr>').join('')
             + '</tbody>';
         return thead + tbody;
     }
 
-    function toXLSHtml(data, opts) {
+    function toXlsHtml(data, opts) {
         opts = opts || {};
         const dir = opts.dir || (NDS.isRTL ? 'rtl' : 'ltr');
         const lang = NDS.lang || 'en';
-        const esc = NDS.escapeHtml;
-        return BOM + '<!doctype html><html lang="' + esc(lang) + '" dir="' + esc(dir) + '">'
+        const escapeHtml = NDS.escapeHtml;
+        return BOM + '<!doctype html><html lang="' + escapeHtml(lang) + '" dir="' + escapeHtml(dir) + '">'
             + '<head><meta charset="utf-8"><meta name="ProgId" content="Excel.Sheet"></head>'
             + '<body><table>' + buildHeadBody(data) + '</table></body></html>';
     }
@@ -288,22 +288,22 @@
         const prevTheme = root.getAttribute('data-theme');
         const needsFlip = !!prevTheme && prevTheme.split(/\s+/).indexOf('dark') !== -1;
         if (needsFlip) {
-            const light = prevTheme.split(/\s+/).filter(t => t !== 'dark' && t !== 'light').join(' ');
+            const light = prevTheme.split(/\s+/).filter(token => token !== 'dark' && token !== 'light').join(' ');
             if (light) root.setAttribute('data-theme', light); else root.removeAttribute('data-theme');
         }
         const cs = getComputedStyle(root);
         // Only a real colour reaches the print <style>: a saved palette seed flows into these tokens.
-        const v = (name, fallback) => {
+        const getToken = (name, fallback) => {
             const x = cs.getPropertyValue(name).trim();
             return x && CSS.supports('color', x) ? x : fallback;
         };
         const tokens = {
-            border:    v('--table-cell-border',           '#ddd'),
-            headBg:    v('--table-background-header',     '#f3f3f3'),
-            headText:  v('--table-text-head',             '#333'),
-            cellBg:    v('--table-background-cell',       '#fff'),
-            cellText:  v('--table-text-body',             '#222'),
-            rowBg:     v('--table-background-row',        '#fafafa'),
+            border:    getToken('--table-cell-border',           '#ddd'),
+            headBg:    getToken('--table-background-header',     '#f3f3f3'),
+            headText:  getToken('--table-text-head',             '#333'),
+            cellBg:    getToken('--table-background-cell',       '#fff'),
+            cellText:  getToken('--table-text-body',             '#222'),
+            rowBg:     getToken('--table-background-row',        '#fafafa'),
         };
         if (needsFlip) root.setAttribute('data-theme', prevTheme);
         return tokens;
@@ -317,29 +317,29 @@
         const dir = opts.dir || (NDS.isRTL ? 'rtl' : 'ltr');
         const lang = NDS.lang || 'en';
         const title = opts.title || 'nds-export';
-        const esc = NDS.escapeHtml;
-        const t = readTableTokens();
+        const escapeHtml = NDS.escapeHtml;
+        const tableTokens = readTableTokens();
 
         // print-color-adjust forces the browser to honor backgrounds in print
         // output (default behavior is to strip them for ink saving).
         const html = '<!doctype html>'
-            + '<html lang="' + esc(lang) + '" dir="' + esc(dir) + '">'
-            + '<head><meta charset="utf-8"><title>' + esc(title) + '</title>'
+            + '<html lang="' + escapeHtml(lang) + '" dir="' + escapeHtml(dir) + '">'
+            + '<head><meta charset="utf-8"><title>' + escapeHtml(title) + '</title>'
             + '<style>'
             + '@page { size: A4; margin: 16mm; }'
-            + 'html { font-family: "IBM Plex Sans Arabic", system-ui, sans-serif; color: ' + t.cellText + '; }'
+            + 'html { font-family: "IBM Plex Sans Arabic", system-ui, sans-serif; color: ' + tableTokens.cellText + '; }'
             + 'body { margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }'
             + 'h1 { font-size: 14pt; margin: 0 0 12px; }'
-            + 'table { width: 100%; border-collapse: collapse; font-size: 10.5pt; border: 1px solid ' + t.border + '; }'
-            + 'th, td { padding: 8px 12px; text-align: start; vertical-align: middle; border-bottom: 1px solid ' + t.border + '; }'
+            + 'table { width: 100%; border-collapse: collapse; font-size: 10.5pt; border: 1px solid ' + tableTokens.border + '; }'
+            + 'th, td { padding: 8px 12px; text-align: start; vertical-align: middle; border-bottom: 1px solid ' + tableTokens.border + '; }'
             + 'thead { display: table-header-group; }'
-            + 'thead th { background: ' + t.headBg + '; color: ' + t.headText + '; font-weight: 600; border-bottom: 1px solid ' + t.border + '; }'
-            + 'tbody td { background: ' + t.cellBg + '; }'
-            + 'tbody tr:nth-child(even) td { background: ' + t.rowBg + '; }'
+            + 'thead th { background: ' + tableTokens.headBg + '; color: ' + tableTokens.headText + '; font-weight: 600; border-bottom: 1px solid ' + tableTokens.border + '; }'
+            + 'tbody td { background: ' + tableTokens.cellBg + '; }'
+            + 'tbody tr:nth-child(even) td { background: ' + tableTokens.rowBg + '; }'
             + 'tbody tr:last-child td { border-bottom: 0; }'
             + 'tr { page-break-inside: avoid; }'
             + '</style></head>'
-            + '<body><h1>' + esc(title) + '</h1>'
+            + '<body><h1>' + escapeHtml(title) + '</h1>'
             + '<table>' + buildHeadBody(data) + '</table>'
             + '</body></html>';
 
@@ -349,10 +349,10 @@
         iframe.style.cssText = 'position:fixed;left:-9999px;top:0;width:0;height:0;border:0;';
         document.body.appendChild(iframe);
 
-        const doc = iframe.contentDocument;
-        doc.open();
-        doc.write(html);
-        doc.close();
+        const frameDocument = iframe.contentDocument;
+        frameDocument.open();
+        frameDocument.write(html);
+        frameDocument.close();
 
         const win = iframe.contentWindow;
         // Track focus so we can restore it to the triggering button after the
@@ -382,8 +382,8 @@
             try {
                 win.focus();
                 win.print();
-            } catch (err) {
-                console.warn('[NDS.Export] print failed', err);
+            } catch (error) {
+                console.warn('[NDS.Export] print failed', error);
                 cleanup();
             }
         }, 0);
@@ -391,12 +391,12 @@
 
     function downloadBlob(blob, filename, rowCount) {
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
         // Safari needs the URL alive until after the click navigates; revoking on the
         // next tick is safe across engines.
         setTimeout(() => URL.revokeObjectURL(url), 0);
@@ -411,31 +411,31 @@
     // chars so a runaway data-export-name doesn't trip filesystem limits.
     function sanitizeFilename(name) {
         if (!name) return 'nds-export';
-        const s = String(name).replace(/[\\/:*?"<>|\x00-\x1f]/g, '_').replace(/^\.+/, '');
-        return s.slice(0, 64) || 'nds-export';
+        const text = String(name).replace(/[\\/:*?"<>|\x00-\x1f]/g, '_').replace(/^\.+/, '');
+        return text.slice(0, 64) || 'nds-export';
     }
 
     // The site's day (<html data-timezone>), not toISOString's UTC day.
-    const today = () => NDS.Date.format(NDS.Date.today(), { format: 'YYYY-MM-DD' });
+    const getToday = () => NDS.Date.format(NDS.Date.today(), { format: 'YYYY-MM-DD' });
 
-    function defaultFilename(source, ext) {
+    function buildDefaultFilename(source, ext) {
         const raw = source && source.dataset && source.dataset.exportName;
         const name = sanitizeFilename(raw);
-        return name + '-' + today() + '.' + ext;
+        return name + '-' + getToday() + '.' + ext;
     }
 
     function download(data, format, opts) {
         opts = opts || {};
         const ext = format === 'pdf' ? 'pdf' : format === 'xls' ? 'xls' : 'csv';
-        const rawName = opts.filename || ('nds-export-' + today() + '.' + ext);
+        const rawName = opts.filename || ('nds-export-' + getToday() + '.' + ext);
         // sanitize the stem (before extension) — keep the trailing extension as-is.
         const stem = rawName.replace(/\.[a-z]+$/i, '');
         const filename = sanitizeFilename(stem) + (rawName.match(/\.[a-z]+$/i)?.[0] || '.' + ext);
         const title = opts.title || filename.replace(/\.[a-z]+$/i, '');
         if (format === 'csv') {
-            downloadBlob(new Blob([toCSV(data)], { type: 'text/csv;charset=utf-8' }), filename, data.rows.length);
+            downloadBlob(new Blob([toCsv(data)], { type: 'text/csv;charset=utf-8' }), filename, data.rows.length);
         } else if (format === 'xls') {
-            downloadBlob(new Blob([toXLSHtml(data, opts)], { type: 'application/vnd.ms-excel;charset=utf-8' }), filename, data.rows.length);
+            downloadBlob(new Blob([toXlsHtml(data, opts)], { type: 'application/vnd.ms-excel;charset=utf-8' }), filename, data.rows.length);
         } else if (format === 'pdf') {
             openPrint(data, Object.assign({}, opts, { title }));
         } else {
@@ -449,7 +449,7 @@
         opts = opts || {};
         const data = collect(el, scope || 'auto');
         const ext = format === 'pdf' ? 'pdf' : format === 'xls' ? 'xls' : 'csv';
-        const filename = opts.filename || defaultFilename(el, ext);
+        const filename = opts.filename || buildDefaultFilename(el, ext);
         const title = opts.title || filename.replace(/\.[a-z]+$/i, '');
         const go = el.dispatchEvent(new CustomEvent('nds:export:start', {
             bubbles: true, cancelable: true, detail: { format, scope: scope || 'auto', data, filename },
@@ -473,14 +473,14 @@
     const validFormats = { csv: 1, xls: 1, pdf: 1 };
     let initDone = false;
 
-    function onExportClick(e) {
+    function handleExportClick(e) {
         const btn = e.target.closest && e.target.closest('[data-export]');
         if (!btn) return;
         const format = btn.dataset.export;
         if (!validFormats[format]) return;
-        const sel = btn.dataset.exportTarget;
-        const target = sel
-            ? document.querySelector(sel)
+        const selector = btn.dataset.exportTarget;
+        const target = selector
+            ? document.querySelector(selector)
             : btn.closest('table, .nds-table, [data-export-rows]');
         if (!target) {
             console.warn('[NDS.Export] no source resolved for', btn);
@@ -493,7 +493,7 @@
     function init() {
         if (initDone) return;
         initDone = true;
-        document.addEventListener('click', onExportClick);
+        document.addEventListener('click', handleExportClick);
         // Loads Selection's bundle now: isSelected is read synchronously per row, and a stub would answer with a Promise.
         NDS.Selection.init();
     }
@@ -507,8 +507,8 @@
         xls: (source, scope, opts) => exportFrom(source, 'xls', scope, opts),
         pdf: (source, scope, opts) => exportFrom(source, 'pdf', scope, opts),
         collect,
-        toCsv: toCSV,
-        toXlsHtml: toXLSHtml,
+        toCsv: toCsv,
+        toXlsHtml: toXlsHtml,
         openPrint,
         download
     };

@@ -63,17 +63,17 @@
     }
 
     // Horizontal: scrollLeft can be negative in RTL; normalize.
-    const scrollPos = (content, axis) => axis === 'vertical' ? content.scrollTop : Math.abs(content.scrollLeft);
+    const getScrollPosition = (content, axis) => axis === 'vertical' ? content.scrollTop : Math.abs(content.scrollLeft);
     // Read max-scroll fresh each time — cached values go stale when the
     // content or viewport resizes between ResizeObserver ticks (e.g. sticky
     // nav collapse as hero leaves the viewport on sidemenu pages).
-    const maxScrollOf = (content, axis) => axis === 'vertical'
+    const getMaxScroll = (content, axis) => axis === 'vertical'
         ? content.scrollHeight - content.clientHeight
         : content.scrollWidth - content.clientWidth;
 
-    function applyEdges(wrapper, pos, maxScroll) {
-        const atStart = pos <= config.scrollThreshold;
-        const atEnd = maxScroll - pos <= config.scrollThreshold;
+    function syncEdges(wrapper, position, maxScroll) {
+        const atStart = position <= config.scrollThreshold;
+        const atEnd = maxScroll - position <= config.scrollThreshold;
         if (atStart) addState(wrapper, config.overflow.atStart); else removeState(wrapper, config.overflow.atStart);
         if (atEnd)   addState(wrapper, config.overflow.atEnd);   else removeState(wrapper, config.overflow.atEnd);
     }
@@ -99,12 +99,12 @@
             scrollStop(content, false);
             removeState(wrapper, config.overflow.hasMore, config.overflow.atStart, config.overflow.atEnd);
         }, { clears: true }) : undefined;
-        const pos = scrollPos(content, axis), maxScroll = maxScrollOf(content, axis);
+        const position = getScrollPosition(content, axis), maxScroll = getMaxScroll(content, axis);
         return () => {
             wrapper.setAttribute('data-axis', axis);
             scrollStop(content, true);
             addState(wrapper, config.overflow.hasMore);
-            applyEdges(wrapper, pos, maxScroll);
+            syncEdges(wrapper, position, maxScroll);
         };
     }
 
@@ -117,7 +117,7 @@
         const content = wrapper._content || wrapper.querySelector(config.selectors.content);
         const axis = wrapper.getAttribute('data-axis');
         if (!content || !axis) return;
-        applyEdges(wrapper, scrollPos(content, axis), maxScrollOf(content, axis));
+        syncEdges(wrapper, getScrollPosition(content, axis), getMaxScroll(content, axis));
     }
 
     function scrollStep(wrapper) {
@@ -129,8 +129,8 @@
         const atEnd = hasState(wrapper, config.overflow.atEnd);
 
         const isVertical = axis === 'vertical';
-        const posKey = isVertical ? 'top' : 'left';
-        const pos = isVertical ? content.scrollTop : content.scrollLeft;
+        const positionKey = isVertical ? 'top' : 'left';
+        const position = isVertical ? content.scrollTop : content.scrollLeft;
         const size = isVertical ? content.clientHeight : content.clientWidth;
         const sign = !isVertical && NDS.isRTL ? -1 : 1;
 
@@ -156,23 +156,23 @@
         if (atEnd) {
             target = 0;
         } else {
-            target = pos + step * sign;
+            target = position + step * sign;
             target = sign === 1
                 ? Math.min(target, maxScroll)
                 : Math.max(target, -maxScroll);
         }
 
-        content.scrollTo({ [posKey]: target, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
+        content.scrollTo({ [positionKey]: target, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
     }
 
-    function initElement(wrapper) {
+    function setupElement(wrapper) {
         if (wrapper.hasAttribute('data-nds-scroll-more-initialized')) return;
         const content = wrapper.querySelector(config.selectors.content);
         if (!content) return;
 
         wrapper._content = content;
         // The content can hold a nested scroll-more, whose button comes first in document order.
-        const btn = [...wrapper.querySelectorAll(config.selectors.btn)].find(b => b.closest(config.selectors.wrapper) === wrapper);
+        const btn = [...wrapper.querySelectorAll(config.selectors.btn)].find(candidate => candidate.closest(config.selectors.wrapper) === wrapper);
 
         // Auto-inject a separator between the content and the show-more button
         // so authors opting in via .nds-divided don't have to. Always inject —
@@ -209,10 +209,10 @@
         wrapper.setAttribute('data-nds-scroll-more-initialized', 'true');
     }
 
-    function initAll() {
+    function setupAll() {
         document.querySelectorAll(config.selectors.wrapper).forEach(wrapper => {
             if (wrapper.closest('code')) return;
-            initElement(wrapper);
+            setupElement(wrapper);
         });
     }
 
@@ -237,9 +237,9 @@
     }
 
     NDS.ScrollMore = {
-        init: initAll,
-        reinit: initAll,
-        create: initElement,
+        init: setupAll,
+        reinit: setupAll,
+        create: setupElement,
         refresh: checkOverflow,
         destroy
     };

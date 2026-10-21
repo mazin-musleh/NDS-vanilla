@@ -113,12 +113,12 @@
     const HAS_SCHEME = /^[a-z][\w+.-]*:/i;
     const URL_SCHEMES = /^(?:https?|mailto|tel):/i;
     const SRC_SCHEMES = /^(?:https?:|data:image\/)/i;
-    const cleanUrl = (u) => u.replace(/^[\u0000-\u0020]+|[\u0000-\u0020]+$/g, '').replace(/[\t\n\r]/g, '');
+    const cleanUrl = (url) => url.replace(/^[\u0000-\u0020]+|[\u0000-\u0020]+$/g, '').replace(/[\t\n\r]/g, '');
     // Local fork of the NDS.safeUrl name — answers a boolean and keeps a
     // relative URL exactly as authored, where core returns an absolutized
     // href; the doc-example canon above depends on that. Do not swap.
-    const safeUrl = (u) => URL_SCHEMES.test(u) || !HAS_SCHEME.test(u);
-    const safeSrc = (u) => SRC_SCHEMES.test(u) || !HAS_SCHEME.test(u);
+    const isSafeUrl = (url) => URL_SCHEMES.test(url) || !HAS_SCHEME.test(url);
+    const isSafeSrc = (url) => SRC_SCHEMES.test(url) || !HAS_SCHEME.test(url);
 
     // NDS component regions — the editor is NDS-specific, so pasted/typed NDS
     // component markup (buttons, tags, tables, cards, alerts…) is kept, not
@@ -147,7 +147,7 @@
     const convertedTags = new Set(['TABLE', 'CAPTION', 'THEAD', 'TBODY', 'TFOOT', 'TR', 'TH', 'TD', ...allowedTags]);
 
     function hasNdsClass(el) {
-        for (const c of el.classList) if (NDS_CLASS.test(c)) return true;
+        for (const className of el.classList) if (NDS_CLASS.test(className)) return true;
         return false;
     }
 
@@ -166,8 +166,8 @@
     // carrying any OTHER nds class is a component wearing link duty (a
     // converted button/tag/chip/avatar…), which canon styling must not touch.
     const linkStampClasses = new Set(['nds-link', 'nds-primary', 'nds-external']);
-    function isComponentAnchor(a) {
-        for (const c of a.classList) if (!linkStampClasses.has(c) && NDS_CLASS.test(c)) return true;
+    function isComponentAnchor(anchor) {
+        for (const className of anchor.classList) if (!linkStampClasses.has(className) && NDS_CLASS.test(className)) return true;
         return false;
     }
 
@@ -183,29 +183,29 @@
     // img + caption paragraph instead of leaking bare caption text.
     const CONTAINER_SEL = 'div, section, article, aside, header, footer, main, center, figure, figcaption';
 
-    function unwrapEl(el) {
+    function unwrapElement(el) {
         while (el.firstChild) el.parentNode.insertBefore(el.firstChild, el);
         el.remove();
     }
 
-    function renameEl(el, tag) {
+    function renameElement(el, tag) {
         const next = el.ownerDocument.createElement(tag);
         while (el.firstChild) next.appendChild(el.firstChild);
         el.replaceWith(next);
         return next;
     }
 
-    // renameEl + attribute carry-over minus `drop` — for tag swaps that keep
+    // renameElement + attribute carry-over minus `drop` — for tag swaps that keep
     // component identity (the button ⇄ anchor link conversion).
     function convertTag(el, tag, drop) {
-        const next = renameEl(el, tag);
+        const next = renameElement(el, tag);
         for (const { name, value } of el.attributes) {
             if (!drop.includes(name)) next.setAttribute(name, value);
         }
         return next;
     }
 
-    const inNdsMarkup = (el) => !!el.closest('[class*="nds-"]');
+    const isInNdsMarkup = (el) => !!el.closest('[class*="nds-"]');
 
     // Word lists arrive as flat MsoListParagraph <p>s: the bullet/number glyph
     // sits in an mso-list:Ignore marker span, the depth in "mso-list:lN levelN".
@@ -213,15 +213,15 @@
     // The raw style attribute is regex-read: browsers drop unknown mso-*
     // properties from el.style, so CSSStyleDeclaration can't see them.
     function rebuildWordLists(root) {
-        const doc = root.ownerDocument;
-        const listInfo = (node) => {
+        const ownerDocument = root.ownerDocument;
+        const readListInfo = (node) => {
             if (!node || node.nodeType !== Node.ELEMENT_NODE || node.tagName !== 'P') return null;
-            const m = /mso-list:\s*l\d+\s+level(\d+)/i.exec(node.getAttribute('style') || '');
-            if (m) return { level: parseInt(m[1], 10) };
+            const match = /mso-list:\s*l\d+\s+level(\d+)/i.exec(node.getAttribute('style') || '');
+            if (match) return { level: parseInt(match[1], 10) };
             return /\bMsoListParagraph/.test(node.getAttribute('class') || '') ? { level: 1 } : null;
         };
-        const extractMarker = (p) => {
-            for (const span of Array.from(p.querySelectorAll('span'))) {
+        const extractMarker = (paragraph) => {
+            for (const span of Array.from(paragraph.querySelectorAll('span'))) {
                 if (/mso-list:\s*ignore/i.test(span.getAttribute('style') || '')) {
                     const text = span.textContent.replace(/ /g, ' ').trim();
                     span.remove();
@@ -232,12 +232,12 @@
         };
 
         for (const start of Array.from(root.querySelectorAll('p'))) {
-            if (!start.isConnected || !listInfo(start)) continue;
+            if (!start.isConnected || !readListInfo(start)) continue;
             // Consecutive sibling run of list paragraphs = one list.
             const run = [];
             let node = start;
             while (node) {
-                const info = listInfo(node);
+                const info = readListInfo(node);
                 if (!info) break;
                 run.push({ p: node, level: info.level });
                 let next = node.nextSibling;
@@ -246,22 +246,22 @@
             }
 
             const stack = []; // open lists, outermost→deepest
-            for (const { p, level } of run) {
-                const marker = extractMarker(p);
+            for (const { p: paragraph, level } of run) {
+                const marker = extractMarker(paragraph);
                 const ordered = /^[0-9٠-٩]/.test(marker) || /^[a-z][.)]/i.test(marker);
                 while (stack.length && stack[stack.length - 1].level > level) stack.pop();
                 let top = stack[stack.length - 1];
                 if (!top || top.level < level) {
-                    const list = doc.createElement(ordered ? 'ol' : 'ul');
-                    if (!top) p.parentNode.insertBefore(list, p);
+                    const list = ownerDocument.createElement(ordered ? 'ol' : 'ul');
+                    if (!top) paragraph.parentNode.insertBefore(list, paragraph);
                     else (top.list.lastElementChild || top.list).appendChild(list);
                     top = { list, level };
                     stack.push(top);
                 }
-                const li = doc.createElement('li');
-                while (p.firstChild) li.appendChild(p.firstChild);
-                top.list.appendChild(li);
-                p.remove();
+                const listItem = ownerDocument.createElement('li');
+                while (paragraph.firstChild) listItem.appendChild(paragraph.firstChild);
+                top.list.appendChild(listItem);
+                paragraph.remove();
             }
         }
     }
@@ -269,8 +269,8 @@
     function interpretMarkup(root) {
         // Google Docs wraps the whole clipboard in a fake-bold <b> — unwrap it
         // before the generic pass reads <b> as real bold (everything-bold bug).
-        for (const b of Array.from(root.querySelectorAll('b'))) {
-            if (b.style.fontWeight === 'normal' || /^docs-internal-guid/.test(b.id)) unwrapEl(b);
+        for (const bold of Array.from(root.querySelectorAll('b'))) {
+            if (bold.style.fontWeight === 'normal' || /^docs-internal-guid/.test(bold.id)) unwrapElement(bold);
         }
 
         // Word list paragraphs → real nested ul/ol (marker spans removed
@@ -282,7 +282,7 @@
         // silently drop the formatting. Wrap the element's children, then let
         // enforcement strip the carrier element/attribute as usual.
         for (const el of Array.from(root.querySelectorAll('[style]'))) {
-            if (inNdsMarkup(el)) continue;
+            if (isInNdsMarkup(el)) continue;
             const st = el.style;
             const deco = `${st.textDecoration} ${st.textDecorationLine}`;
             const wraps = [];
@@ -292,18 +292,18 @@
             if (deco.includes('line-through')) wraps.push('s');
             let host = el;
             for (const tag of wraps) {
-                const w = el.ownerDocument.createElement(tag);
-                while (host.firstChild) w.appendChild(host.firstChild);
-                host.appendChild(w);
-                host = w;
+                const wrapper = el.ownerDocument.createElement(tag);
+                while (host.firstChild) wrapper.appendChild(host.firstChild);
+                host.appendChild(wrapper);
+                host = wrapper;
             }
         }
 
         // Canonical inline vocabulary: b→strong, i→em, strike→s.
-        // NDS-classed <i> is the icon element — skipped via inNdsMarkup.
+        // NDS-classed <i> is the icon element — skipped via isInNdsMarkup.
         for (const el of Array.from(root.querySelectorAll('b, i, strike'))) {
-            if (inNdsMarkup(el)) continue;
-            renameEl(el, { B: 'strong', I: 'em', STRIKE: 's' }[el.tagName]);
+            if (isInNdsMarkup(el)) continue;
+            renameElement(el, { B: 'strong', I: 'em', STRIKE: 's' }[el.tagName]);
         }
 
         // Block containers are the paragraph unit in Word/web content —
@@ -312,32 +312,32 @@
         // is stripped; mixed ones unwrap generically and their block children
         // stand on their own.
         for (const el of Array.from(root.querySelectorAll(CONTAINER_SEL)).reverse()) {
-            if (inNdsMarkup(el)) continue;
+            if (isInNdsMarkup(el)) continue;
             let phrasingOnly = true;
             for (const child of el.children) {
                 if (!phrasingTags.has(child.tagName)) { phrasingOnly = false; break; }
             }
-            if (phrasingOnly && (el.children.length || el.textContent.trim())) renameEl(el, 'p');
+            if (phrasingOnly && (el.children.length || el.textContent.trim())) renameElement(el, 'p');
         }
 
         // Google Docs wraps every li/cell's text in a <p> — unwrap to match
         // NDS canon (bare text in li/td). Consecutive paragraphs keep a <br>
         // boundary. Runs BEFORE table stamping so freshly-converted tables
         // are covered; authored NDS markup is skipped as usual.
-        for (const p of Array.from(root.querySelectorAll('li > p, td > p, th > p'))) {
-            if (inNdsMarkup(p)) continue;
-            if (p.nextElementSibling && p.nextElementSibling.tagName === 'P') {
-                p.parentNode.insertBefore(p.ownerDocument.createElement('br'), p.nextSibling);
+        for (const paragraph of Array.from(root.querySelectorAll('li > p, td > p, th > p'))) {
+            if (isInNdsMarkup(paragraph)) continue;
+            if (paragraph.nextElementSibling && paragraph.nextElementSibling.tagName === 'P') {
+                paragraph.parentNode.insertBefore(paragraph.ownerDocument.createElement('br'), paragraph.nextSibling);
             }
-            unwrapEl(p);
+            unwrapElement(paragraph);
         }
 
         // Plain tables become NDS tables — the flagship convert. The class
         // makes them an NDS region, so their structure survives enforcement.
         // Returned so Pass A can hold them to convertedTags.
         const converted = new Set();
-        for (const t of root.querySelectorAll('table')) {
-            if (!hasNdsClass(t)) { t.classList.add('nds-table'); converted.add(t); }
+        for (const table of root.querySelectorAll('table')) {
+            if (!hasNdsClass(table)) { table.classList.add('nds-table'); converted.add(table); }
         }
         return converted;
     }
@@ -347,7 +347,7 @@
     // Walk up probing the Set — scanning every trusted root and calling
     // contains() per element is O(n × trusted) on the per-keystroke path.
     function isInTrusted(el, trusted) {
-        for (let n = el; n; n = n.parentElement) if (trusted.has(n)) return true;
+        for (let node = el; node; node = node.parentElement) if (trusted.has(node)) return true;
         return false;
     }
 
@@ -360,7 +360,7 @@
             if (dropTags.has(child.tagName.toUpperCase())) { child.remove(); continue; }
             // Recurse first so nested disallowed tags resolve in one pass.
             sanitizeNode(child, allowed, trusted);
-            if (!allowed.has(child.tagName)) unwrapEl(child);
+            if (!allowed.has(child.tagName)) unwrapElement(child);
         }
     }
 
@@ -380,8 +380,8 @@
             const alt = isImg ? el.getAttribute('alt') : null;
             // Numeric width/height survive — the popover writes them, and
             // pasted content keeps its ratios (aspect + CLS).
-            const dims = isImg
-                ? ['width', 'height'].map(n => [n, el.getAttribute(n)]).filter(([, v]) => /^\d+$/.test(v || ''))
+            const dimensions = isImg
+                ? ['width', 'height'].map(dimension => [dimension, el.getAttribute(dimension)]).filter(([, size]) => /^\d+$/.test(size || ''))
                 : [];
             // Legacy Word markup carries align="center" as an attribute.
             const align = blockTags.has(el.tagName)
@@ -390,25 +390,25 @@
             // content) survives on blocks — the browser owns the flip.
             const dir = blockTags.has(el.tagName)
                 ? (el.getAttribute('dir') || '').toLowerCase() : '';
-            for (const attr of Array.from(el.attributes)) el.removeAttribute(attr.name);
+            for (const attribute of Array.from(el.attributes)) el.removeAttribute(attribute.name);
             if (alignValues.has(align)) el.style.textAlign = align;
             if (dir === 'ltr' || dir === 'rtl') el.setAttribute('dir', dir);
             if (isAnchor) {
-                if (href && safeUrl(href)) {
+                if (href && isSafeUrl(href)) {
                     el.setAttribute('href', href);
                     if (external) el.setAttribute('target', '_blank');
                     el.setAttribute('rel', 'noopener noreferrer');
                     // Author badge opt-out (NDS.Link honors it) survives.
                     if (noExt) el.setAttribute('data-no-external', '');
                 } else {
-                    unwrapEl(el);
+                    unwrapElement(el);
                 }
             }
             if (isImg) {
-                if (src && safeSrc(src)) {
+                if (src && isSafeSrc(src)) {
                     el.setAttribute('src', src);
                     if (alt != null) el.setAttribute('alt', alt);
-                    for (const [n, v] of dims) el.setAttribute(n, v);
+                    for (const [dimension, size] of dimensions) el.setAttribute(dimension, size);
                 } else {
                     el.remove();
                 }
@@ -420,15 +420,15 @@
     // unwrapped — which also hoists a block-level NDS region out of the <p>.
     // Inline NDS regions (a tag span, a button) may stay inside their <p>.
     function flattenBadPWrappers(root, trusted) {
-        for (const p of Array.from(root.querySelectorAll('p'))) {
-            if (!p.parentNode || (trusted && isInTrusted(p, trusted))) continue;
+        for (const paragraph of Array.from(root.querySelectorAll('p'))) {
+            if (!paragraph.parentNode || (trusted && isInTrusted(paragraph, trusted))) continue;
             let bad = false;
-            for (const child of p.children) {
+            for (const child of paragraph.children) {
                 const inlineOk = inlineTags.has(child.tagName) || child.tagName === 'IMG'
                     || (trusted && trusted.has(child) && inlineRegionTags.has(child.tagName));
                 if (!inlineOk) { bad = true; break; }
             }
-            if (bad) unwrapEl(p);
+            if (bad) unwrapElement(paragraph);
         }
     }
 
@@ -440,7 +440,7 @@
     // Returns false when the element itself was removed.
     function scrubRegionElement(el) {
         const tag = el.tagName;
-        const classes = (el.getAttribute('class') || '').split(/\s+/).filter(c => NDS_CLASS.test(c));
+        const classes = (el.getAttribute('class') || '').split(/\s+/).filter(className => NDS_CLASS.test(className));
         const href = tag === 'A' ? cleanUrl(el.getAttribute('href') || '') : null;
         const external = tag === 'A' && el.getAttribute('target') === '_blank';
         const src = tag === 'IMG' ? cleanUrl(el.getAttribute('src') || '') : null;
@@ -450,22 +450,22 @@
             if (prop.startsWith('--')) knobs.push([prop, el.style.getPropertyValue(prop)]);
         }
         const kept = [];
-        for (const attr of Array.from(el.attributes)) {
-            const n = attr.name;
+        for (const attribute of Array.from(el.attributes)) {
+            const attributeName = attribute.name;
             // data-no-external rides with any region element — NDS.Link's
             // closest() honors it on containers, not just anchors.
-            if (/^aria-/i.test(n) || n === 'role' || n === 'data-status' || n === 'data-state' || n === 'data-no-external'
-                || (tag === 'IMG' && (n === 'alt' || ((n === 'width' || n === 'height') && /^\d+$/.test(attr.value))))
-                || ((tag === 'TD' || tag === 'TH') && (n === 'colspan' || n === 'rowspan' || n === 'scope'))
-                || (tag === 'TH' && n === 'data-align' && columnAlign.has(attr.value))) {
-                kept.push([n, attr.value]);
+            if (/^aria-/i.test(attributeName) || attributeName === 'role' || attributeName === 'data-status' || attributeName === 'data-state' || attributeName === 'data-no-external'
+                || (tag === 'IMG' && (attributeName === 'alt' || ((attributeName === 'width' || attributeName === 'height') && /^\d+$/.test(attribute.value))))
+                || ((tag === 'TD' || tag === 'TH') && (attributeName === 'colspan' || attributeName === 'rowspan' || attributeName === 'scope'))
+                || (tag === 'TH' && attributeName === 'data-align' && columnAlign.has(attribute.value))) {
+                kept.push([attributeName, attribute.value]);
             }
-            el.removeAttribute(n);
+            el.removeAttribute(attributeName);
         }
-        for (const [n, v] of kept) el.setAttribute(n, v);
-        for (const [p, v] of knobs) el.style.setProperty(p, v);
+        for (const [attributeName, attributeValue] of kept) el.setAttribute(attributeName, attributeValue);
+        for (const [property, propertyValue] of knobs) el.style.setProperty(property, propertyValue);
         if (classes.length) el.setAttribute('class', classes.join(' '));
-        if (tag === 'A' && href && safeUrl(href)) {
+        if (tag === 'A' && href && isSafeUrl(href)) {
             el.setAttribute('href', href);
             if (external) el.setAttribute('target', '_blank');
             el.setAttribute('rel', 'noopener noreferrer');
@@ -473,7 +473,7 @@
         // A pasted default-type (submit) button would submit the host form.
         if (tag === 'BUTTON') el.setAttribute('type', 'button');
         if (tag === 'IMG') {
-            if (src && safeSrc(src)) el.setAttribute('src', src);
+            if (src && isSafeSrc(src)) el.setAttribute('src', src);
             else { el.remove(); return false; }
         }
         return true;
@@ -486,7 +486,7 @@
             if (!scrubRegionElement(el)) continue;
             // A span left with no attributes carries nothing — unwrap (GDocs
             // formatting spans inside converted tables end up here).
-            if (el.tagName === 'SPAN' && !el.attributes.length) unwrapEl(el);
+            if (el.tagName === 'SPAN' && !el.attributes.length) unwrapElement(el);
         }
         return true;
     }
@@ -494,8 +494,8 @@
     function sanitizeHtml(dirty) {
         // Parse bare into <body>: wrapping in a root element lets a stray </div>
         // close it early and strand the tail outside what we serialize back.
-        const doc = new DOMParser().parseFromString(dirty, 'text/html');
-        const root = doc.body;
+        const parsedDocument = new DOMParser().parseFromString(dirty, 'text/html');
+        const root = parsedDocument.body;
 
         const converted = interpretMarkup(root);
 
@@ -521,16 +521,16 @@
         // the parser but Chrome's editing-mode insertHTML fosters it OUT of
         // the table as junk paragraphs — strip it at the source.
         for (const el of root.querySelectorAll('table, thead, tbody, tfoot, tr')) {
-            for (const n of Array.from(el.childNodes)) {
-                if (n.nodeType === Node.TEXT_NODE && !n.textContent.trim()) n.remove();
+            for (const node of Array.from(el.childNodes)) {
+                if (node.nodeType === Node.TEXT_NODE && !node.textContent.trim()) node.remove();
             }
         }
         // Same story for whitespace between top-level blocks; spacing that
         // separates inline runs is kept.
-        for (const n of Array.from(root.childNodes)) {
-            if (n.nodeType !== Node.TEXT_NODE || n.textContent.trim()) continue;
-            const blocky = (sib) => !sib || (sib.nodeType === Node.ELEMENT_NODE && !inlineTags.has(sib.tagName));
-            if (blocky(n.previousSibling) && blocky(n.nextSibling)) n.remove();
+        for (const node of Array.from(root.childNodes)) {
+            if (node.nodeType !== Node.TEXT_NODE || node.textContent.trim()) continue;
+            const isBlock = (sib) => !sib || (sib.nodeType === Node.ELEMENT_NODE && !inlineTags.has(sib.tagName));
+            if (isBlock(node.previousSibling) && isBlock(node.nextSibling)) node.remove();
         }
         // Dead-empty paragraphs (no children, no text — editing-split debris)
         // carry nothing. Intentional blank lines (<p><br></p>) are kept —
@@ -547,8 +547,8 @@
         // bloating the source-view and stored form value.
         for (const el of root.querySelectorAll('p, h1, h2, h3, h4, li')) {
             if (trusted.size && isInTrusted(el, trusted)) continue;
-            for (const n of el.childNodes) {
-                if (n.nodeType === Node.TEXT_NODE) n.textContent = n.textContent.replace(/\s+/g, ' ');
+            for (const node of el.childNodes) {
+                if (node.nodeType === Node.TEXT_NODE) node.textContent = node.textContent.replace(/\s+/g, ' ');
             }
             const first = el.firstChild;
             if (first?.nodeType === Node.TEXT_NODE) first.textContent = first.textContent.replace(/^ /, '');
@@ -560,23 +560,23 @@
 
     // ---------- Pretty printer (source view / form value) ----------
 
-    function prettyPrintHtml(html) {
-        const doc = new DOMParser().parseFromString(`<div id="r">${html}</div>`, 'text/html');
-        return formatNode(doc.getElementById('r'), 0).replace(/\n+$/, '');
+    function formatHtml(html) {
+        const parsedDocument = new DOMParser().parseFromString(`<div id="r">${html}</div>`, 'text/html');
+        return formatNode(parsedDocument.getElementById('r'), 0).replace(/\n+$/, '');
     }
 
     function openTag(el) {
-        let s = el.tagName.toLowerCase();
-        for (const attr of el.attributes) s += ` ${attr.name}="${escapeHtml(attr.value)}"`;
-        return s;
+        let text = el.tagName.toLowerCase();
+        for (const attribute of el.attributes) text += ` ${attribute.name}="${escapeHtml(attribute.value)}"`;
+        return text;
     }
 
     // Structural container = only element children, at least one non-inline —
     // renders indented multi-line; text-bearing elements render on one line.
     function isContainer(el) {
         if (!el.firstElementChild) return false;
-        for (const n of el.childNodes) {
-            if (n.nodeType === Node.TEXT_NODE && n.textContent.trim()) return false;
+        for (const node of el.childNodes) {
+            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) return false;
         }
         for (const child of el.children) {
             if (!inlineTags.has(child.tagName)) return true;
@@ -585,33 +585,33 @@
     }
 
     // formatNode's indentation: whitespace-only text carrying a newline.
-    const isIndentNode = (n) => n.nodeType === Node.TEXT_NODE && n.textContent.includes('\n') && !n.textContent.trim();
+    const isIndentNode = (node) => node.nodeType === Node.TEXT_NODE && node.textContent.includes('\n') && !node.textContent.trim();
     // Child index counted without indentation nodes, and its inverse.
-    function realIndexOf(parent, idx) {
-        let k = 0;
-        for (let i = 0; i < idx && i < parent.childNodes.length; i++) if (!isIndentNode(parent.childNodes[i])) k++;
-        return k;
+    function getRealIndex(parent, index) {
+        let count = 0;
+        for (let i = 0; i < index && i < parent.childNodes.length; i++) if (!isIndentNode(parent.childNodes[i])) count++;
+        return count;
     }
-    function realChildAt(parent, k) {
-        for (const c of parent.childNodes) {
-            if (isIndentNode(c)) continue;
-            if (k-- === 0) return c;
+    function findRealChild(parent, remaining) {
+        for (const child of parent.childNodes) {
+            if (isIndentNode(child)) continue;
+            if (remaining-- === 0) return child;
         }
         return null;
     }
 
     // A cell's column header: the last thead row carries the column's
     // data-align. Positional, like nds-table.js — a colspan shifts it.
-    function columnHead(cell) {
+    function findColumnHead(cell) {
         const rows = cell.closest('table')?.tHead?.rows;
         return rows?.length ? rows[rows.length - 1].cells[cell.cellIndex] || null : null;
     }
     // A header's logical data-align as the toolbar's physical value.
-    function physicalAlign(th) {
-        const a = th.getAttribute('data-align');
-        if (a === 'center') return 'center';
-        if (a !== 'start' && a !== 'end') return '';
-        return (a === 'start') !== (getComputedStyle(th).direction === 'rtl') ? 'left' : 'right';
+    function getPhysicalAlign(th) {
+        const align = th.getAttribute('data-align');
+        if (align === 'center') return 'center';
+        if (align !== 'start' && align !== 'end') return '';
+        return (align === 'start') !== (getComputedStyle(th).direction === 'rtl') ? 'left' : 'right';
     }
 
     const voidTags = new Set(['BR', 'HR', 'IMG', 'WBR']);
@@ -626,8 +626,8 @@
             if (child.nodeType === Node.TEXT_NODE) {
                 // textContent is DECODED — re-escape or a literal "<" in root
                 // text corrupts the value's round-trip.
-                const t = child.textContent.replace(/\s+/g, ' ').trim();
-                if (t) out += pad + escapeHtml(t) + '\n';
+                const text = child.textContent.replace(/\s+/g, ' ').trim();
+                if (text) out += pad + escapeHtml(text) + '\n';
                 continue;
             }
             if (child.nodeType !== Node.ELEMENT_NODE) continue;
@@ -748,37 +748,37 @@
         remove_prompt: 'Remove the component:',
     });
     // Escaped: the pack is site-editable, and these land in innerHTML.
-    const html = (k) => NDS.escapeHtml(strings.text(k));
+    const html = (key) => NDS.escapeHtml(strings.text(key));
 
 
     let uid = 0; // minted label ids for adopted fields whose textarea has no id
 
     // Every command button doubles as a declarative NDS tooltip (the button's
     // own content is the trigger; nds-tooltip.js generates the balloon).
-    function cmdButtonHtml(cmd, extraClass = '') {
-        const c = toolbarCommands[cmd];
-        const label = html(cmd);
-        const icon = c.icon;
+    function buildCommandButton(command, extraClass = '') {
+        const definition = toolbarCommands[command];
+        const label = html(command);
+        const icon = definition.icon;
         // inlineIcon: paint from the mask-based UI-icon sheet (.nds-icon) rather
         // than the HGI font — for glyphs not (yet) in the font, e.g. pilcrow.
-        const iconHtml = c.inlineIcon
+        const iconHtml = definition.inlineIcon
             ? `<i class="nds-icon nds-${icon}" aria-hidden="true"></i>`
             : `<i class="hgi hgi-stroke hgi-${icon}" aria-hidden="true"></i>`;
-        return `<button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip${extraClass}" data-cmd="${cmd}"${c.toggle ? ' aria-pressed="false"' : ''} aria-label="${label}" data-tooltip-message="${label}" data-tooltip-hover="500">${iconHtml}</button>`;
+        return `<button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip${extraClass}" data-cmd="${command}"${definition.toggle ? ' aria-pressed="false"' : ''} aria-label="${label}" data-tooltip-message="${label}" data-tooltip-hover="500">${iconHtml}</button>`;
     }
 
-    function textFieldHtml(id, labelStr, type, dataAttr, placeholder, extraClass = '') {
-        return `<div class="nds-form-container nds-input${extraClass}"><div class="nds-form-header"><label for="${id}"><span class="nds-label">${labelStr}</span></label></div>`
-            + `<div class="nds-form-control"><input type="${type}" id="${id}" class="nds-input"${placeholder ? ` placeholder="${placeholder}"` : ''} autocomplete="off" ${dataAttr} /></div>`
+    function buildTextField(id, labelText, type, dataAttribute, placeholder, extraClass = '') {
+        return `<div class="nds-form-container nds-input${extraClass}"><div class="nds-form-header"><label for="${id}"><span class="nds-label">${labelText}</span></label></div>`
+            + `<div class="nds-form-control"><input type="${type}" id="${id}" class="nds-input"${placeholder ? ` placeholder="${placeholder}"` : ''} autocomplete="off" ${dataAttribute} /></div>`
             + '<div class="nds-form-footer" data-feedback-target hidden></div></div>';
     }
 
-    function linkDropmenuHtml(idBase) {
-        return `<div class="nds-dropmenu" data-editor-link-dropmenu>${cmdButtonHtml('link', ' nds-dropmenu-trigger')}`
+    function buildLinkDropmenu(idBase) {
+        return `<div class="nds-dropmenu" data-editor-link-dropmenu>${buildCommandButton('link', ' nds-dropmenu-trigger')}`
             + '<div class="nds-dropmenu-menu nds-editor-link-menu" hidden><div class="nds-dropmenu-scroll">'
             + '<div class="nds-dropmenu-group nds-form-group">'
-            + textFieldHtml(`${idBase}-link-text`, html('text'), 'text', 'data-editor-link-text')
-            + textFieldHtml(`${idBase}-link-url`, html('url'), 'url', 'data-editor-link-url', 'https://')
+            + buildTextField(`${idBase}-link-text`, html('text'), 'text', 'data-editor-link-text')
+            + buildTextField(`${idBase}-link-url`, html('url'), 'url', 'data-editor-link-url', 'https://')
             + `<div class="nds-form-container nds-checkbox"><div class="nds-form-header"><label for="${idBase}-link-external"><span class="nds-label">${html('external')}</span></label></div>`
             + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-external" class="nds-checkbox-input" data-editor-link-external /></div></div>`
             + `<div class="nds-form-container nds-checkbox"><div class="nds-form-header"><label for="${idBase}-link-noexternal"><span class="nds-label">${html('no_badge')}</span></label></div>`
@@ -795,11 +795,11 @@
 
     // Image popover: direct URL or a local file — the chosen file lands in
     // the URL field as a data:image URL, so Insert is the one commit path.
-    function imageDropmenuHtml(idBase) {
-        return `<div class="nds-dropmenu" data-editor-image-dropmenu>${cmdButtonHtml('image', ' nds-dropmenu-trigger')}`
+    function buildImageDropmenu(idBase) {
+        return `<div class="nds-dropmenu" data-editor-image-dropmenu>${buildCommandButton('image', ' nds-dropmenu-trigger')}`
             + '<div class="nds-dropmenu-menu nds-editor-image-menu" hidden><div class="nds-dropmenu-scroll">'
             + '<div class="nds-dropmenu-group nds-form-group nds-editor-image-form">'
-            + textFieldHtml(`${idBase}-image-url`, html('from_link'), 'url', 'data-editor-image-url', 'https://')
+            + buildTextField(`${idBase}-image-url`, html('from_link'), 'url', 'data-editor-image-url', 'https://')
             + `<div class="nds-divider" data-editor-image-or>${html('or')}</div>`
             // Canonical single-file nds-upload (no dropzone) — NDS.Upload owns
             // picking, extension enforcement, and the file chip; the editor
@@ -812,10 +812,10 @@
             + '<div class="nds-file-list"></div>'
             + '</div>'
             + `<div class="nds-divider">${html('attrs')}</div>`
-            + textFieldHtml(`${idBase}-image-alt`, html('alt'), 'text', 'data-editor-image-alt', '', ' nds-md')
+            + buildTextField(`${idBase}-image-alt`, html('alt'), 'text', 'data-editor-image-alt', '', ' nds-md')
             + '<div class="nds-form-group nds-row">'
-            + textFieldHtml(`${idBase}-image-width`, html('width'), 'text', 'inputmode="numeric" data-editor-image-width', 'auto', ' nds-md')
-            + textFieldHtml(`${idBase}-image-height`, html('height'), 'text', 'inputmode="numeric" data-editor-image-height', 'auto', ' nds-md')
+            + buildTextField(`${idBase}-image-width`, html('width'), 'text', 'inputmode="numeric" data-editor-image-width', 'auto', ' nds-md')
+            + buildTextField(`${idBase}-image-height`, html('height'), 'text', 'inputmode="numeric" data-editor-image-height', 'auto', ' nds-md')
             + '</div>'
             + '</div></div>'
             + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action">'
@@ -830,14 +830,14 @@
 
     // The component name a shell shows in the remove picker — its first
     // nds class that isn't a generic atom.
-    const componentNameOf = (el) =>
-        Array.from(el.classList).find(c => /^nds-[\w-]+$/.test(c) && !ndsAtomClasses.has(c)) || 'NDS';
+    const getComponentName = (el) =>
+        Array.from(el.classList).find(className => /^nds-[\w-]+$/.test(className) && !ndsAtomClasses.has(className)) || 'NDS';
 
     // Destructive with confirmation — the trigger opens a confirm popover
     // whose rows are filled per caret position (one destructive row per
     // removable level: nested components, then the shell).
     function removeDropmenuHtml() {
-        return `<div class="nds-dropmenu" data-editor-remove-dropmenu>${cmdButtonHtml('remove', ' nds-dropmenu-trigger nds-destructive')}`
+        return `<div class="nds-dropmenu" data-editor-remove-dropmenu>${buildCommandButton('remove', ' nds-dropmenu-trigger nds-destructive')}`
             + '<div class="nds-dropmenu-menu nds-editor-remove-menu" hidden><div class="nds-dropmenu-scroll">'
             + `<div class="nds-dropmenu-group"><span class="nds-label">${html('remove_prompt')}</span></div>`
             + '<div data-editor-remove-levels></div>'
@@ -852,23 +852,23 @@
         for (const group of spec.split('|')) {
             let cluster = '';
             const flush = () => { if (cluster) { start += `<div class="nds-btn-group">${cluster}</div>`; cluster = ''; } };
-            for (const cmd of group.trim().split(/\s+/).filter(Boolean)) {
-                if (cmd === 'source') {
+            for (const command of group.trim().split(/\s+/).filter(Boolean)) {
+                if (command === 'source') {
                     const label = html('source');
                     end = `<button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip" data-source-toggle aria-pressed="false" aria-label="${label}" data-tooltip-message="${label}" data-tooltip-hover="500"><i class="hgi hgi-stroke hgi-source-code" aria-hidden="true"></i></button>`;
-                } else if (cmd === 'link') {
+                } else if (command === 'link') {
                     flush(); // the dropmenu wrapper sits outside any button group
-                    start += linkDropmenuHtml(idBase);
-                } else if (cmd === 'image') {
+                    start += buildLinkDropmenu(idBase);
+                } else if (command === 'image') {
                     flush();
-                    start += imageDropmenuHtml(idBase);
-                } else if (cmd === 'remove') {
+                    start += buildImageDropmenu(idBase);
+                } else if (command === 'remove') {
                     flush();
                     start += removeDropmenuHtml();
-                } else if (toolbarCommands[cmd]) {
-                    cluster += cmdButtonHtml(cmd);
+                } else if (toolbarCommands[command]) {
+                    cluster += buildCommandButton(command);
                 } else {
-                    console.warn(`NDS Editor: unknown toolbar command "${cmd}"`);
+                    console.warn(`NDS Editor: unknown toolbar command "${command}"`);
                 }
             }
             flush();
@@ -974,12 +974,12 @@
         _bindToolbar(signal) {
             if (!this.toolbar) return;
             this.toolbar.addEventListener('mousedown', (e) => {
-                const cmdBtn = e.target.closest('[data-cmd]');
-                if (!cmdBtn) return;
+                const commandButton = e.target.closest('[data-cmd]');
+                if (!commandButton) return;
                 e.preventDefault();
-                if (cmdBtn.dataset.cmd === 'link') this._prepLinkMenu();
-                else if (cmdBtn.dataset.cmd === 'image') this._prepImageMenu();
-                else if (cmdBtn.dataset.cmd === 'remove') this._prepRemoveMenu();
+                if (commandButton.dataset.cmd === 'link') this._prepLinkMenu();
+                else if (commandButton.dataset.cmd === 'image') this._prepImageMenu();
+                else if (commandButton.dataset.cmd === 'remove') this._prepRemoveMenu();
             }, { signal });
 
             // Keyboard activation opens the popovers without a mousedown —
@@ -1031,11 +1031,11 @@
                     if (atom && !atom.textContent.trim()) target = atom;
                 }
                 if (!target) return;
-                const r = document.createRange();
-                r.selectNode(target);
-                const sel = window.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(r);
+                const range = document.createRange();
+                range.selectNode(target);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
             }, { signal });
 
             // Click-to-escape: clicks on the editor's empty space below the
@@ -1158,7 +1158,7 @@
                     catch { url = String(e.detail.response || '').trim(); }
                     const urlInput = imageMenu.querySelector('[data-editor-image-url]');
                     url = cleanUrl(url);
-                    if (urlInput && url && safeSrc(url)) urlInput.value = url;
+                    if (urlInput && url && isSafeSrc(url)) urlInput.value = url;
                 }, { signal });
                 // Removing the chip invalidates an embedded data: URL.
                 uploadHost.addEventListener('nds:upload:removed', () => {
@@ -1281,23 +1281,23 @@
             if (e.target.closest('[data-source-toggle]')) { this._toggleSourceView(); return; }
             const btn = e.target.closest('[data-cmd]');
             if (!btn || this.root.classList.contains('is-source')) return;
-            const cmd = btn.dataset.cmd;
-            if (cmd === 'link' || cmd === 'image' || cmd === 'remove') return; // dropmenu-backed — handled via mousedown prep + menu clicks
+            const command = btn.dataset.cmd;
+            if (command === 'link' || command === 'image' || command === 'remove') return; // dropmenu-backed — handled via mousedown prep + menu clicks
             this.editable.focus();
-            this._applyCommand(cmd);
+            this._applyCommand(command);
             this._syncSource();
             this._updateToolbarState();
         }
 
-        _applyCommand(cmd) {
+        _applyCommand(command) {
             // Atoms are one line, label/icon only — a heading, a list or
             // inline formatting never lands inside one. Checked here, the one
             // choke point both the toolbar click and the Ctrl+B/I/U keyboard
             // shortcuts route through.
-            if (atomLockedCommands.has(cmd) && this._linkableAtom()) return;
+            if (atomLockedCommands.has(command) && this._linkableAtom()) return;
             // ponytail: execCommand for writes — deprecated but universally
             // supported, with browser-handled RTL/bidi. Replace per-command only if a UA misbehaves.
-            switch (cmd) {
+            switch (command) {
                 case 'bold':      document.execCommand('bold');          break;
                 case 'italic':    document.execCommand('italic');        break;
                 case 'underline': document.execCommand('underline');     break;
@@ -1311,7 +1311,7 @@
                 case 'h2':
                 case 'h3':
                 case 'h4': {
-                    const targetTag = commandBlocks[cmd];
+                    const targetTag = commandBlocks[command];
                     const block = this._getBlockContext();
                     document.execCommand('formatBlock', false, (block && block.tagName === targetTag) ? 'P' : targetTag);
                     break;
@@ -1323,7 +1323,7 @@
                 case 'dir-ltr':       this._applyDirection('ltr');     break;
                 case 'dir-rtl':       this._applyDirection('rtl');     break;
                 default:
-                    console.warn(`NDS Editor: unknown command "${cmd}"`);
+                    console.warn(`NDS Editor: unknown command "${command}"`);
             }
         }
 
@@ -1374,48 +1374,48 @@
         // occurrence index disambiguates repeats, and structure-heavy
         // selections degrade to no carry. Never chase the exact version.
         _computeSourceSelection() {
-            const sel = window.getSelection();
-            if (!sel.rangeCount || !this.editable.contains(sel.anchorNode)) return null;
-            const norm = (s) => s.replace(/\s+/g, ' ').trim();
+            const selection = window.getSelection();
+            if (!selection.rangeCount || !this.editable.contains(selection.anchorNode)) return null;
+            const normalizeText = (text) => text.replace(/\s+/g, ' ').trim();
 
-            let needle = norm(sel.toString());
+            let needle = normalizeText(selection.toString());
             if (!needle) {
                 // Collapsed caret — use the word around it.
-                const node = sel.anchorNode;
+                const node = selection.anchorNode;
                 if (node.nodeType !== Node.TEXT_NODE) return null;
                 const text = node.textContent;
-                const at = sel.anchorOffset;
+                const at = selection.anchorOffset;
                 const before = /\S*$/.exec(text.slice(0, at))[0];
                 const after = /^\S*/.exec(text.slice(at))[0];
-                needle = norm(before + after);
+                needle = normalizeText(before + after);
                 if (!needle) return null;
             }
 
             // How many times does the needle occur BEFORE the selection? The
             // same occurrence index locates it in the source string.
-            const range = sel.getRangeAt(0);
+            const range = selection.getRangeAt(0);
             const pre = document.createRange();
             pre.selectNodeContents(this.editable);
             pre.setEnd(range.startContainer, range.startOffset);
-            const preText = norm(pre.toString());
+            const preText = normalizeText(pre.toString());
             let occ = 0;
             for (let i = preText.indexOf(needle); i !== -1; i = preText.indexOf(needle, i + 1)) occ++;
 
             const value = this.source.value;
-            let idx = -1, from = 0;
-            for (let k = 0; k <= occ; k++) {
-                idx = value.indexOf(needle, from);
-                if (idx === -1) break;
-                from = idx + 1;
+            let index = -1, from = 0;
+            for (let step = 0; step <= occ; step++) {
+                index = value.indexOf(needle, from);
+                if (index === -1) break;
+                from = index + 1;
             }
-            if (idx === -1) idx = value.indexOf(needle); // fallback: first occurrence
-            if (idx === -1 && needle.length > 24) {
+            if (index === -1) index = value.indexOf(needle); // fallback: first occurrence
+            if (index === -1 && needle.length > 24) {
                 // Selection spans structure the printer reshaped — retry with its head.
                 needle = needle.slice(0, 24);
-                idx = value.indexOf(needle);
+                index = value.indexOf(needle);
             }
-            if (idx === -1) return null;
-            return { start: idx, end: idx + needle.length };
+            if (index === -1) return null;
+            return { start: index, end: index + needle.length };
         }
 
         // Tab indents in source view (line-wise over a selection, Shift+Tab
@@ -1461,16 +1461,16 @@
             if ((e.key === 'Backspace' || e.key === 'Delete') && this._guardRegionDelete(e)) return;
             if (e.key === 'Enter' && this._guardRegionEnter(e)) return;
             if ((e.ctrlKey || e.metaKey) && !e.altKey) {
-                const k = e.key.toLowerCase();
-                if (k === 'z' || k === 'y') {
+                const key = e.key.toLowerCase();
+                if (key === 'z' || key === 'y') {
                     e.preventDefault();
-                    this._historyStep(k === 'y' || e.shiftKey ? 1 : -1);
+                    this._historyStep(key === 'y' || e.shiftKey ? 1 : -1);
                     return;
                 }
-                const cmd = { b: 'bold', i: 'italic', u: 'underline' }[e.key.toLowerCase()];
-                if (cmd) {
+                const command = { b: 'bold', i: 'italic', u: 'underline' }[e.key.toLowerCase()];
+                if (command) {
                     e.preventDefault();
-                    this._applyCommand(cmd);
+                    this._applyCommand(command);
                     this._syncSource();
                     this._updateToolbarState();
                 }
@@ -1496,9 +1496,9 @@
         // Clipboard first: a removal with no clipboard write is data loss, so
         // bail to native if the write surface is missing.
         _onCut(e) {
-            const sel = window.getSelection();
-            if (!sel.rangeCount) return;
-            const range = sel.getRangeAt(0);
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            const range = selection.getRangeAt(0);
             if (this._selectionClipsShell(range)) { e.preventDefault(); return; }
             const whole = this._wholeRegionSelection(range);
             if (!whole || !e.clipboardData) return;
@@ -1519,8 +1519,8 @@
             // blocked delete — where the surviving content IS the feedback — a
             // paste that silently does nothing reads as a broken editor, so say
             // why.
-            const sel = window.getSelection();
-            if (sel.rangeCount && this._selectionClipsShell(sel.getRangeAt(0))) {
+            const selection = window.getSelection();
+            if (selection.rangeCount && this._selectionClipsShell(selection.getRangeAt(0))) {
                 this._notice(strings.text('paste_clips_shell'));
                 return;
             }
@@ -1545,7 +1545,7 @@
                 // mode; the default politely points at the image dialog.
                 // Mixed text+image clipboards (Word) keep the text flavor; the
                 // files are unplaceable there and stay dropped.
-                const files = Array.from(e.clipboardData.files).filter(f => f.type.startsWith('image/'));
+                const files = Array.from(e.clipboardData.files).filter(file => file.type.startsWith('image/'));
                 if (!files.length) return;
                 if (!this._imageEmbedAllowed()) {
                     this._notice(strings.text('paste_blocked'));
@@ -1556,8 +1556,8 @@
                 // honor allowedTypes/allowedMimeTypes too, not just size.
                 const host = this._imageUploadHost();
                 let firstError = '';
-                const valid = files.filter(f => {
-                    const errors = host?.ndsUpload?.validateFile?.(f) || [];
+                const valid = files.filter(file => {
+                    const errors = host?.ndsUpload?.validateFile?.(file) || [];
                     if (errors.length) { firstError ||= errors[0]; return false; }
                     return true;
                 });
@@ -1591,14 +1591,14 @@
                 // ponytail: bypasses execCommand, so this paste makes no native
                 // undo entry — the editor history covers it (_syncSource snapshots).
                 const probe = new DOMParser().parseFromString(insert, 'text/html').body;
-                const inlineOnly = [...probe.children].every(c => inlineTags.has(c.tagName));
+                const inlineOnly = [...probe.children].every(child => inlineTags.has(child.tagName));
                 this.editable.innerHTML = inlineOnly ? `<p>${insert}</p>` : insert;
-                const r = document.createRange();
-                r.selectNodeContents(this.editable);
-                r.collapse(false);
-                const sel = window.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(r);
+                const range = document.createRange();
+                range.selectNodeContents(this.editable);
+                range.collapse(false);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
                 this._refreshLinks();
                 this._syncColumnAlign();
                 this._syncSource();
@@ -1616,14 +1616,14 @@
         _onDrop(e) {
             if (!e.dataTransfer || e.dataTransfer.types.includes(DRAG_TYPE)) return;
             e.preventDefault();
-            const pos = document.caretPositionFromPoint?.(e.clientX, e.clientY);
-            const range = pos ? document.createRange() : document.caretRangeFromPoint?.(e.clientX, e.clientY);
-            if (pos) range.setStart(pos.offsetNode, pos.offset);
+            const position = document.caretPositionFromPoint?.(e.clientX, e.clientY);
+            const range = position ? document.createRange() : document.caretRangeFromPoint?.(e.clientX, e.clientY);
+            if (position) range.setStart(position.offsetNode, position.offset);
             this.editable.focus({ preventScroll: true });
             if (range && this.editable.contains(range.startContainer)) {
-                const sel = window.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(range);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
             }
             this._onPaste({ preventDefault() {}, clipboardData: e.dataTransfer });
         }
@@ -1639,18 +1639,18 @@
         // Undo is unaffected: every undo path already routes through the
         // editor's own history (_onKeydown's Ctrl+Z, beforeinput's historyUndo).
         _insertPasted(html) {
-            const sel = window.getSelection();
-            if (!sel.rangeCount) return false;
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return false;
             const probe = new DOMParser().parseFromString(html, 'text/html').body;
             if (!probe.querySelector('[class*="nds-"]')
                 && document.execCommand('insertHTML', false, html)) return true;
 
-            const range = sel.getRangeAt(0);
+            const range = selection.getRangeAt(0);
             // Never mutate outside the editing host — a stray selection would
             // otherwise delete page content and climb past the editable below.
             if (!this.editable.contains(range.startContainer)) return false;
             range.deleteContents();
-            const blocky = Array.from(probe.children).some(c => !isInlineNode(c));
+            const blocky = Array.from(probe.children).some(child => !isInlineNode(child));
             const frag = document.createDocumentFragment();
             while (probe.firstChild) frag.appendChild(probe.firstChild);
             const lastNode = frag.lastChild;
@@ -1663,7 +1663,7 @@
             for (let el = start.nodeType === Node.ELEMENT_NODE ? start : start.parentElement;
                 el && el !== this.editable; el = el.parentElement) top = el;
 
-            const carries = (n) => n.textContent.trim() || n.querySelector('img, [class*="nds-"]');
+            const hasContent = (node) => node.textContent.trim() || node.querySelector('img, [class*="nds-"]');
             let landing = null; // block the caret should end up inside
             if (!blocky || !top) {
                 range.insertNode(frag);
@@ -1678,39 +1678,39 @@
                 tail.setEnd(top, top.childNodes.length);
                 const tailContent = tail.extractContents();
                 top.after(frag);
-                if (carries(tailContent)) {
+                if (hasContent(tailContent)) {
                     const tailBlock = document.createElement(top.tagName.toLowerCase());
                     tailBlock.appendChild(tailContent);
                     lastNode.after(tailBlock);
                     // The payload's trailing blank paragraph only exists to give
                     // the caret somewhere to land; the tail block is that, so
                     // keeping it would just leave an empty line mid-document.
-                    if (lastNode.tagName === 'P' && !carries(lastNode)) lastNode.remove();
+                    if (lastNode.tagName === 'P' && !hasContent(lastNode)) lastNode.remove();
                     landing = tailBlock;
                 }
-                if (!carries(top)) top.remove();
+                if (!hasContent(top)) top.remove();
             }
             // A structural insert can leave the payload's own inline tail loose
             // at the root; the hydrate path's wrapper is the same fix.
             this._normalizeLooseBlocks();
             // Caret inside the block that continues the text, not stranded
             // between two blocks.
-            const r = document.createRange();
-            if (landing) r.setStart(landing, 0);
-            else if (lastNode.nodeType === Node.ELEMENT_NODE && !carries(lastNode)) r.selectNodeContents(lastNode);
-            else r.setStartAfter(lastNode);
-            r.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(r);
+            const caretRange = document.createRange();
+            if (landing) caretRange.setStart(landing, 0);
+            else if (lastNode.nodeType === Node.ELEMENT_NODE && !hasContent(lastNode)) caretRange.selectNodeContents(lastNode);
+            else caretRange.setStartAfter(lastNode);
+            caretRange.collapse(true);
+            selection.removeAllRanges();
+            selection.addRange(caretRange);
             return true;
         }
 
         // ---------- Selection helpers ----------
 
         _saveSelection() {
-            const sel = window.getSelection();
-            if (sel.rangeCount && this.editable.contains(sel.anchorNode)) {
-                this._savedRange = sel.getRangeAt(0).cloneRange();
+            const selection = window.getSelection();
+            if (selection.rangeCount && this.editable.contains(selection.anchorNode)) {
+                this._savedRange = selection.getRangeAt(0).cloneRange();
                 return;
             }
             // No caret in the text yet: a popover inserts at the end, never nowhere.
@@ -1724,18 +1724,18 @@
             const range = this._savedRange;
             this._savedRange = null;
             if (!range) return null;
-            const sel = window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(range);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
             return range;
         }
 
         // Nearest selection ancestor satisfying `match`, bounded by the
         // editable — closest() would escape it.
         _selAncestor(match) {
-            const sel = window.getSelection();
-            if (!sel.rangeCount) return null;
-            let node = sel.anchorNode;
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return null;
+            let node = selection.anchorNode;
             if (node && node.nodeType === Node.TEXT_NODE) node = node.parentElement;
             while (node && node !== this.editable) {
                 if (match(node)) return node;
@@ -1750,7 +1750,7 @@
         // syncs, so the tagging round-trips into the form value.
         _refreshLinks() { NDS.Link.init(); }
 
-        _getAncestorTag(tagName) { return this._selAncestor(n => n.tagName === tagName); }
+        _getAncestorTag(tagName) { return this._selAncestor(node => node.tagName === tagName); }
 
         // The linkable ATOM at the caret: ANY <button>, or the OUTERMOST
         // nds-classed inline element (tag, chip, featured-icon, label…) —
@@ -1761,14 +1761,14 @@
             const picked = this._selectedNode();
             if (picked && isAtomTag(picked)) return picked;
             let atom = null;
-            this._selAncestor(n => {
-                if (isAtomTag(n)) atom = n;
+            this._selAncestor(node => {
+                if (isAtomTag(node)) atom = node;
                 return false; // keep climbing — outermost match wins
             });
             return atom;
         }
 
-        _getBlockContext() { return this._selAncestor(n => blockTags.has(n.tagName)); }
+        _getBlockContext() { return this._selAncestor(node => blockTags.has(node.tagName)); }
 
         // ---------- Component-shell delete guard ----------
 
@@ -1789,11 +1789,11 @@
         // No text between the caret and the element's edge in the delete
         // direction (works for the shell root or any inner part).
         _atRegionEdge(range, region, back) {
-            const r = document.createRange();
-            r.selectNodeContents(region);
-            if (back) r.setEnd(range.startContainer, range.startOffset);
-            else r.setStart(range.startContainer, range.startOffset);
-            return !r.toString().trim().length;
+            const edgeRange = document.createRange();
+            edgeRange.selectNodeContents(region);
+            if (back) edgeRange.setEnd(range.startContainer, range.startOffset);
+            else edgeRange.setStart(range.startContainer, range.startOffset);
+            return !edgeRange.toString().trim().length;
         }
 
         // First and last text nodes with a NON-EMPTY portion inside the range.
@@ -1812,18 +1812,18 @@
             const scope = this.editable.contains(inner) ? inner : this.editable;
             const walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT);
             let first = null, last = null;
-            for (let n = walker.nextNode(); n; n = walker.nextNode()) {
-                if (!range.intersectsNode(n)) continue;
+            for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+                if (!range.intersectsNode(node)) continue;
                 const nr = document.createRange();
-                nr.selectNodeContents(n);
+                nr.selectNodeContents(node);
                 if (nr.compareBoundaryPoints(Range.START_TO_START, range) < 0) nr.setStart(range.startContainer, range.startOffset);
                 if (nr.compareBoundaryPoints(Range.END_TO_END, range) > 0) nr.setEnd(range.endContainer, range.endOffset);
                 // trim: a double-click word selection drags its trailing
                 // whitespace along — inter-part whitespace is inert, not a
                 // boundary crossing.
                 if (!nr.toString().trim().length) continue;
-                if (!first) first = n;
-                last = n;
+                if (!first) first = node;
+                last = node;
             }
             return { first, last };
         }
@@ -1836,10 +1836,10 @@
             const { first, last } = this._rangeTextEndpoints(range);
             if (!first) return false; // no real text selected — native is safe
             const containsWhole = (el) => {
-                const r = document.createRange();
-                r.selectNode(el);
-                return range.compareBoundaryPoints(Range.START_TO_START, r) <= 0
-                    && range.compareBoundaryPoints(Range.END_TO_END, r) >= 0;
+                const elementRange = document.createRange();
+                elementRange.selectNode(el);
+                return range.compareBoundaryPoints(Range.START_TO_START, elementRange) <= 0
+                    && range.compareBoundaryPoints(Range.END_TO_END, elementRange) >= 0;
             };
             const sr = this._regionRootOf(first);
             const er = this._regionRootOf(last);
@@ -1877,7 +1877,7 @@
             let sib = node.nodeType === Node.ELEMENT_NODE
                 ? (back ? node.childNodes[off - 1] : node.childNodes[off]) || null
                 : null;
-            let cur = node;
+            let current = node;
             while (true) {
                 while (sib) {
                     if (sib.nodeType === Node.ELEMENT_NODE) {
@@ -1888,9 +1888,9 @@
                     }
                     sib = back ? sib.previousSibling : sib.nextSibling;
                 }
-                if (!cur || cur === this.editable) return null;
-                sib = back ? cur.previousSibling : cur.nextSibling;
-                cur = cur.parentElement;
+                if (!current || current === this.editable) return null;
+                sib = back ? current.previousSibling : current.nextSibling;
+                current = current.parentElement;
             }
         }
 
@@ -1901,41 +1901,41 @@
         // history, not the native stack.
         _removeRegion(region) {
             const parent = region.parentNode;
-            const idx = Array.prototype.indexOf.call(parent.childNodes, region);
+            const index = Array.prototype.indexOf.call(parent.childNodes, region);
             region.remove();
-            const sel = window.getSelection();
-            const r = document.createRange();
+            const selection = window.getSelection();
+            const range = document.createRange();
             if (!this.editable.firstElementChild && !this.editable.textContent.trim()) {
                 this.editable.innerHTML = '<p><br></p>';
-                r.selectNodeContents(this.editable.firstElementChild);
+                range.selectNodeContents(this.editable.firstElementChild);
             } else {
-                r.setStart(parent, Math.min(idx, parent.childNodes.length));
+                range.setStart(parent, Math.min(index, parent.childNodes.length));
             }
-            r.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(r);
+            range.collapse(true);
+            selection.removeAllRanges();
+            selection.addRange(range);
         }
 
         // ---------- Editor history ----------
 
         _resolvePath(path) {
-            let n = this.editable;
-            for (const i of path) n = realChildAt(n, i) || n;
-            return n;
+            let node = this.editable;
+            for (const i of path) node = findRealChild(node, i) || node;
+            return node;
         }
 
         // Caret as a child-index path. Indices skip the pretty-printer's
         // indentation nodes: the restore re-parses the formatted value, which
         // has them, while the live DOM that recorded the path does not.
         _caretSnapshot() {
-            const sel = window.getSelection();
-            if (!sel.rangeCount || !this.editable.contains(sel.anchorNode)) return null;
-            const { startContainer, startOffset } = sel.getRangeAt(0);
+            const selection = window.getSelection();
+            if (!selection.rangeCount || !this.editable.contains(selection.anchorNode)) return null;
+            const { startContainer, startOffset } = selection.getRangeAt(0);
             const path = [];
-            for (let n = startContainer; n && n !== this.editable; n = n.parentNode) {
-                path.unshift(realIndexOf(n.parentNode, Array.prototype.indexOf.call(n.parentNode.childNodes, n)));
+            for (let node = startContainer; node && node !== this.editable; node = node.parentNode) {
+                path.unshift(getRealIndex(node.parentNode, Array.prototype.indexOf.call(node.parentNode.childNodes, node)));
             }
-            const offset = startContainer.nodeType === Node.TEXT_NODE ? startOffset : realIndexOf(startContainer, startOffset);
+            const offset = startContainer.nodeType === Node.TEXT_NODE ? startOffset : getRealIndex(startContainer, startOffset);
             return { path, offset };
         }
 
@@ -1944,17 +1944,17 @@
         // ponytail: 50-entry cap — full-value snapshots, not deltas.
         _pushHistory(coalesce) {
             if (this._histSuspend) return;
-            const v = this.source.value;
-            const h = this._history;
-            if (h[this._histIdx]?.v === v) return;
-            h.length = this._histIdx + 1; // any new edit drops the redo tail
+            const value = this.source.value;
+            const history = this._history;
+            if (history[this._histIdx]?.v === value) return;
+            history.length = this._histIdx + 1; // any new edit drops the redo tail
             const now = Date.now();
             if (coalesce && this._histLast && now - this._histLast < 800 && this._histIdx > 0) {
-                h[this._histIdx] = { v, caret: this._caretSnapshot() };
+                history[this._histIdx] = { v: value, caret: this._caretSnapshot() };
             } else {
-                h.push({ v, caret: this._caretSnapshot() });
+                history.push({ v: value, caret: this._caretSnapshot() });
                 this._histIdx++;
-                if (h.length > 50) { h.shift(); this._histIdx--; }
+                if (history.length > 50) { history.shift(); this._histIdx--; }
             }
             this._histLast = coalesce ? now : 0;
         }
@@ -1962,10 +1962,10 @@
         // Undo/redo: restore a snapshot through the same hydrate path the
         // editor always uses, then put the caret back where it was recorded.
         _historyStep(dir) {
-            const idx = this._histIdx + dir;
-            if (idx < 0 || idx >= this._history.length) return;
-            this._histIdx = idx;
-            const snap = this._history[idx];
+            const index = this._histIdx + dir;
+            if (index < 0 || index >= this._history.length) return;
+            this._histIdx = index;
+            const snap = this._history[index];
             this._histSuspend = true;
             this.editable.innerHTML = snap.v ? sanitizeHtml(snap.v) : '<p><br></p>';
             this._normalizeLooseBlocks();
@@ -1973,23 +1973,23 @@
             this._syncColumnAlign();
             this._syncSource();
             this._histSuspend = false;
-            const sel = window.getSelection();
-            const r = document.createRange();
+            const selection = window.getSelection();
+            const range = document.createRange();
             try {
                 const node = this._resolvePath(snap.caret?.path || []);
                 const off = snap.caret?.offset || 0;
-                if (node.nodeType === Node.TEXT_NODE) r.setStart(node, Math.min(off, node.textContent.length));
+                if (node.nodeType === Node.TEXT_NODE) range.setStart(node, Math.min(off, node.textContent.length));
                 else {
-                    const child = realChildAt(node, off);
-                    r.setStart(node, child ? Array.prototype.indexOf.call(node.childNodes, child) : node.childNodes.length);
+                    const child = findRealChild(node, off);
+                    range.setStart(node, child ? Array.prototype.indexOf.call(node.childNodes, child) : node.childNodes.length);
                 }
             } catch {
-                r.selectNodeContents(this.editable);
-                r.collapse(false);
+                range.selectNodeContents(this.editable);
+                range.collapse(false);
             }
-            r.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(r);
+            range.collapse(true);
+            selection.removeAllRanges();
+            selection.addRange(range);
             this._updateToolbarState();
         }
 
@@ -2000,21 +2000,21 @@
         // icon-only elements never list — amputating parts is what the shell
         // guards exist to prevent.
         _removeLevels(node) {
-            const els = [];
+            const elements = [];
             let el = node && (node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement);
             if (!el || !this.editable.contains(el)) return [];
             for (; el && el !== this.editable; el = el.parentElement) {
-                if (hasNdsClass(el)) els.push(el);
+                if (hasNdsClass(el)) elements.push(el);
             }
             const levels = [];
-            els.forEach((e, i) => {
-                const isShell = i === els.length - 1;
+            elements.forEach((e, i) => {
+                const isShell = i === elements.length - 1;
                 if (isShell) { levels.push(e); return; }
-                if (componentNameOf(e) === 'NDS') return; // icon-only
-                const outer = els.slice(i + 1);
-                const isPart = Array.from(e.classList).some(c =>
-                    c.startsWith('nds-') && outer.some(o => Array.from(o.classList).some(oc =>
-                        oc.startsWith('nds-') && c.startsWith(oc + '-'))));
+                if (getComponentName(e) === 'NDS') return; // icon-only
+                const outer = elements.slice(i + 1);
+                const isPart = Array.from(e.classList).some(className =>
+                    className.startsWith('nds-') && outer.some(outerElement => Array.from(outerElement.classList).some(oc =>
+                        oc.startsWith('nds-') && className.startsWith(oc + '-'))));
                 if (!isPart) levels.push(e);
             });
             return levels;
@@ -2033,7 +2033,7 @@
             if (!list) return;
             const chain = this._removeChain;
             list.innerHTML = chain.map((el, i) => ({ el, i })).reverse().map(({ el, i }, depth) =>
-                `<button type="button" class="nds-btn nds-subtle nds-destructive nds-dropmenu-item" data-editor-remove-level="${i}"><span class="nds-label">${depth ? '– ' : ''}${escapeHtml(componentNameOf(el))}</span></button>`
+                `<button type="button" class="nds-btn nds-subtle nds-destructive nds-dropmenu-item" data-editor-remove-level="${i}"><span class="nds-label">${depth ? '– ' : ''}${escapeHtml(getComponentName(el))}</span></button>`
             ).join('');
             // Indent knob via CSSOM, never a style attribute — a strict style-src blocks the attribute form.
             list.querySelectorAll('[data-editor-remove-level]').forEach((btn, depth) => btn.style.setProperty('--_remove-depth', depth));
@@ -2061,8 +2061,8 @@
         _componentCaretNode() {
             const picked = this._selectedNode();
             if (picked && hasNdsClass(picked)) return picked;
-            const sel = window.getSelection();
-            return (sel.rangeCount && this.editable.contains(sel.anchorNode)) ? sel.anchorNode : null;
+            const selection = window.getSelection();
+            return (selection.rangeCount && this.editable.contains(selection.anchorNode)) ? selection.anchorNode : null;
         }
 
         // The remove command is caret-gated — live only when the caret sits
@@ -2080,9 +2080,9 @@
         // to a line break inside the part; a shell-clipping selection blocks
         // entirely. Outside shells, native Enter (new paragraph) stands.
         _guardRegionEnter(e) {
-            const sel = window.getSelection();
-            if (!sel.rangeCount) return false;
-            const range = sel.getRangeAt(0);
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return false;
+            const range = selection.getRangeAt(0);
             if (!range.collapsed && this._selectionClipsShell(range)) {
                 e.preventDefault();
                 return true;
@@ -2099,11 +2099,11 @@
             const atom = this._linkableAtom();
             if (atom) {
                 e.preventDefault();
-                const r = document.createRange();
-                r.setStartAfter(atom);
-                r.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(r);
+                const range = document.createRange();
+                range.setStartAfter(atom);
+                range.collapse(true);
+                selection.removeAllRanges();
+                selection.addRange(range);
                 return true;
             }
             // A SECOND Enter, right where the escape above left the caret (or
@@ -2129,11 +2129,11 @@
                     if (!newBlock.hasChildNodes()) newBlock.innerHTML = '<br>';
                     if (!block.hasChildNodes()) block.innerHTML = '<br>';
                     block.parentNode.insertBefore(newBlock, block.nextSibling);
-                    const r = document.createRange();
-                    r.selectNodeContents(newBlock);
-                    r.collapse(true);
-                    sel.removeAllRanges();
-                    sel.addRange(r);
+                    const caretRange = document.createRange();
+                    caretRange.selectNodeContents(newBlock);
+                    caretRange.collapse(true);
+                    selection.removeAllRanges();
+                    selection.addRange(caretRange);
                     this._syncSource();
                     this._updateToolbarState();
                     return true;
@@ -2162,10 +2162,10 @@
                 ? (start.childNodes[range.startOffset] || start) : start;
             const region = this._regionRootOf(node);
             if (!region) return null;
-            const r = document.createRange();
-            r.selectNode(region);
-            return range.compareBoundaryPoints(Range.START_TO_START, r) === 0
-                && range.compareBoundaryPoints(Range.END_TO_END, r) === 0 ? region : null;
+            const regionRange = document.createRange();
+            regionRange.selectNode(region);
+            return range.compareBoundaryPoints(Range.START_TO_START, regionRange) === 0
+                && range.compareBoundaryPoints(Range.END_TO_END, regionRange) === 0 ? region : null;
         }
 
         // Atomic-shell deletes: a Backspace/Delete that would cross a shell
@@ -2175,9 +2175,9 @@
         // component (Chrome empties the shell and merges the following block
         // into it). Text editing inside the shell stays free and native.
         _guardRegionDelete(e) {
-            const sel = window.getSelection();
-            if (!sel.rangeCount) return false;
-            const range = sel.getRangeAt(0);
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return false;
+            const range = selection.getRangeAt(0);
             if (!range.collapsed) {
                 // Selection deletes are legit fully inside one part (text
                 // edit) or fully outside shells (contained shells go whole);
@@ -2212,9 +2212,9 @@
         // direction commands write to. Falls back to the caret's own block
         // when the selection spans none (a collapsed caret inside a <p>).
         _blocksInSelection() {
-            const sel = window.getSelection();
-            if (!sel.rangeCount) return [];
-            const range = sel.getRangeAt(0);
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return [];
+            const range = selection.getRangeAt(0);
             const blocks = [];
             for (const el of this.editable.querySelectorAll('p, h1, h2, h3, h4, li')) {
                 if (range.intersectsNode(el)) blocks.push(el);
@@ -2232,20 +2232,20 @@
         // avoided (they write physical left/right unpredictably); this is a
         // direct DOM write.
         _applyAlignment(value) {
-            const cells = [...this.editable.querySelectorAll('td, th')].filter(c => this._rangeTouches(c));
+            const cells = [...this.editable.querySelectorAll('td, th')].filter(cell => this._rangeTouches(cell));
             if (cells.length) this._alignColumns(cells, value);
-            const blocks = this._blocksInSelection().filter(b => !b.closest('td, th'));
-            const clear = blocks.length && blocks.every(b => b.style.textAlign === value);
-            for (const b of blocks) {
-                if (clear) b.style.removeProperty('text-align');
-                else b.style.textAlign = value;
-                if (!b.getAttribute('style')) b.removeAttribute('style');
+            const blocks = this._blocksInSelection().filter(block => !block.closest('td, th'));
+            const clear = blocks.length && blocks.every(block => block.style.textAlign === value);
+            for (const block of blocks) {
+                if (clear) block.style.removeProperty('text-align');
+                else block.style.textAlign = value;
+                if (!block.getAttribute('style')) block.removeAttribute('style');
             }
         }
 
         _rangeTouches(el) {
-            const sel = window.getSelection();
-            return !!sel.rangeCount && sel.getRangeAt(0).intersectsNode(el);
+            const selection = window.getSelection();
+            return !!selection.rangeCount && selection.getRangeAt(0).intersectsNode(el);
         }
 
         // A cell aligns its whole column the table way (tables.md): data-align
@@ -2254,14 +2254,14 @@
         // maps one to the other. ponytail: justify has no column form — no-op.
         _alignColumns(cells, value) {
             if (value === 'justify') return;
-            const heads = [...new Set(cells.map(c => columnHead(c)).filter(Boolean))];
+            const heads = [...new Set(cells.map(cell => findColumnHead(cell)).filter(Boolean))];
             if (!heads.length) return;
-            const logical = (th) => value === 'center' ? 'center'
+            const toLogicalAlign = (th) => value === 'center' ? 'center'
                 : (value === 'left') !== (getComputedStyle(th).direction === 'rtl') ? 'start' : 'end';
-            const clear = heads.every(th => th.getAttribute('data-align') === logical(th));
+            const clear = heads.every(th => th.getAttribute('data-align') === toLogicalAlign(th));
             for (const th of heads) {
                 if (clear) th.removeAttribute('data-align');
-                else th.setAttribute('data-align', logical(th));
+                else th.setAttribute('data-align', toLogicalAlign(th));
             }
             this._syncColumnAlign();
         }
@@ -2275,8 +2275,8 @@
                     for (const tr of body.rows) {
                         for (const td of tr.cells) {
                             // Same lookup the toolbar reads, so the painted and pressed alignment agree.
-                            const a = columnHead(td)?.getAttribute('data-align');
-                            if (columnAlign.has(a)) td.style.textAlign = a;
+                            const align = findColumnHead(td)?.getAttribute('data-align');
+                            if (columnAlign.has(align)) td.style.textAlign = align;
                             else td.style.removeProperty('text-align');
                             if (!td.getAttribute('style')) td.removeAttribute('style');
                         }
@@ -2293,10 +2293,10 @@
         // execCommand path writes `dir`.
         _applyDirection(value) {
             const blocks = this._blocksInSelection();
-            const clear = blocks.length && blocks.every(b => b.getAttribute('dir') === value);
-            for (const b of blocks) {
-                if (clear) b.removeAttribute('dir');
-                else b.setAttribute('dir', value);
+            const clear = blocks.length && blocks.every(block => block.getAttribute('dir') === value);
+            for (const block of blocks) {
+                if (clear) block.removeAttribute('dir');
+                else block.setAttribute('dir', value);
             }
         }
 
@@ -2338,9 +2338,9 @@
             const externalInput = menu.querySelector('[data-editor-link-external]');
             const unlinkBtn = menu.querySelector('[data-editor-link-unlink]');
             const { existing, target, asComponent, asOpaque } = this._linkTarget();
-            const sel = window.getSelection();
-            const selected = (sel.rangeCount && !sel.isCollapsed && this.editable.contains(sel.anchorNode))
-                ? sel.toString().replace(/\s+/g, ' ').trim() : '';
+            const selection = window.getSelection();
+            const selected = (selection.rangeCount && !selection.isCollapsed && this.editable.contains(selection.anchorNode))
+                ? selection.toString().replace(/\s+/g, ' ').trim() : '';
             // Text shows the existing link's label, else the selection —
             // editable either way (typing it replaces the linked text). A
             // component reads its .nds-label (raw textContent carries the
@@ -2384,7 +2384,7 @@
             const external = !!menu?.querySelector('[data-editor-link-external]')?.checked;
             const noExternal = !!menu?.querySelector('[data-editor-link-noexternal]')?.checked;
             const colored = !!menu?.querySelector('[data-editor-link-colored]')?.checked;
-            if (!url || url === 'https://' || !safeUrl(url)) {
+            if (!url || url === 'https://' || !isSafeUrl(url)) {
                 this._fieldError(menu?.querySelector('[data-editor-link-url]'), strings.text('invalid_url'));
                 return;
             }
@@ -2404,26 +2404,26 @@
             // dropmenu-item click (see nds-dropmenu.js's 100ms setTimeout)
             // can flip isOpen on this reused popover between two genuine uses.
             if (!this._restoreSelection()) return;
-            const sel = window.getSelection();
+            const selection = window.getSelection();
             const { existing, atom, img, asComponent, asOpaque } = this._linkTarget();
             // Canon stamp: nds-link + nds-primary per the colored checkbox —
             // but never on a component (its classes ARE its identity) or an
             // image wrapper (text styling has nothing to color). target/rel
             // per the external checkbox (rel pairs every _blank against
             // tabnabbing; sanitize enforces the same).
-            const applyCanon = (a) => {
-                if (!a) return;
+            const setCanon = (anchor) => {
+                if (!anchor) return;
                 if (!asComponent && !asOpaque) {
-                    a.classList.add('nds-link');
-                    a.classList.toggle('nds-primary', colored);
+                    anchor.classList.add('nds-link');
+                    anchor.classList.toggle('nds-primary', colored);
                 }
-                if (external) a.setAttribute('target', '_blank');
-                else { a.removeAttribute('target'); a.classList.remove('nds-external'); }
-                a.setAttribute('rel', 'noopener noreferrer');
+                if (external) anchor.setAttribute('target', '_blank');
+                else { anchor.removeAttribute('target'); anchor.classList.remove('nds-external'); }
+                anchor.setAttribute('rel', 'noopener noreferrer');
                 // Badge opt-out: NDS.Link skips [data-no-external] on its
                 // tagging pass (stamped before _refreshLinks re-tags).
-                if (noExternal) { a.setAttribute('data-no-external', ''); a.classList.remove('nds-external'); }
-                else a.removeAttribute('data-no-external');
+                if (noExternal) { anchor.setAttribute('data-no-external', ''); anchor.classList.remove('nds-external'); }
+                else anchor.removeAttribute('data-no-external');
             };
             // Renaming retargets the .nds-label when the anchor wraps one
             // (converted buttons); a plain anchor replaces the linked text
@@ -2437,16 +2437,16 @@
             if (existing) {
                 existing.setAttribute('href', url);
                 setText(existing);
-                applyCanon(existing);
+                setCanon(existing);
             } else if (atom) {
                 // Whole-atom conversion: <button>/<span class="nds-tag…">… →
                 // <a> with the same classes/attrs; type/disabled are
                 // anchor-alien (sanitize re-stamps type if it ever pastes
                 // back as a button).
-                const a = convertTag(atom, 'a', ['type', 'disabled']);
-                a.setAttribute('href', url);
-                setText(a);
-                applyCanon(a);
+                const anchor = convertTag(atom, 'a', ['type', 'disabled']);
+                anchor.setAttribute('href', url);
+                setText(anchor);
+                setCanon(anchor);
             } else if (img) {
                 // Link the component, not its img: climb textless nds-classed
                 // shells (avatar…) and convert the outermost; a bare image
@@ -2456,27 +2456,27 @@
                     && hasNdsClass(shell.parentElement) && !shell.parentElement.textContent.trim()) {
                     shell = shell.parentElement;
                 }
-                let a;
+                let anchor;
                 if (shell === img) {
-                    a = document.createElement('a');
-                    img.replaceWith(a);
-                    a.appendChild(img);
+                    anchor = document.createElement('a');
+                    img.replaceWith(anchor);
+                    anchor.appendChild(img);
                 } else {
-                    a = convertTag(shell, 'a', ['type', 'disabled']);
+                    anchor = convertTag(shell, 'a', ['type', 'disabled']);
                 }
-                a.setAttribute('href', url);
-                applyCanon(a);
+                anchor.setAttribute('href', url);
+                setCanon(anchor);
                 // Re-select the image (the click-select shape) so follow-up
                 // popover opens still see it.
-                const r = document.createRange();
-                r.selectNode(img);
-                sel.removeAllRanges();
-                sel.addRange(r);
-            } else if (sel.rangeCount && !sel.isCollapsed
-                && (!text || text === sel.toString().replace(/\s+/g, ' ').trim())) {
+                const range = document.createRange();
+                range.selectNode(img);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            } else if (selection.rangeCount && !selection.isCollapsed
+                && (!text || text === selection.toString().replace(/\s+/g, ' ').trim())) {
                 // Unchanged text: createLink keeps inline formatting inside the selection.
                 document.execCommand('createLink', false, url);
-                applyCanon(this._getAncestorTag('A'));
+                setCanon(this._getAncestorTag('A'));
             } else {
                 // Typed/changed text (or no selection): the anchor replaces the
                 // selection whole — built complete so no post-insert lookup is needed.
@@ -2511,11 +2511,11 @@
             // anchor — a collapsed caret inside the link no-ops. Select the
             // whole anchor first.
             if (existing) {
-                const sel = window.getSelection();
-                const r = document.createRange();
-                r.selectNodeContents(existing);
-                sel.removeAllRanges();
-                sel.addRange(r);
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(existing);
+                selection.removeAllRanges();
+                selection.addRange(range);
             }
             document.execCommand('unlink');
             this._syncSource();
@@ -2568,9 +2568,9 @@
         setImageUpload(config = {}) {
             const host = this._imageUploadHost();
             if (host) {
-                for (const [k, v] of Object.entries(config)) {
-                    if (v == null || v === false) delete host.dataset[k];
-                    else host.dataset[k] = String(v);
+                for (const [key, value] of Object.entries(config)) {
+                    if (value == null || value === false) delete host.dataset[key];
+                    else host.dataset[key] = String(value);
                 }
                 // Effective-URL check, not just this call's keys — a later
                 // setImageUpload({ autoUpload: true }) must not re-arm a POST
@@ -2586,8 +2586,8 @@
         _readUploadAttrs() {
             const config = {};
             for (const { name, value } of this.root.attributes) {
-                const m = /^data-editor-upload-(.+)$/.exec(name);
-                if (m) config[m[1] === 'url' ? 'uploadUrl' : m[1].replace(/-(\w)/g, (_, c) => c.toUpperCase())] = value;
+                const match = /^data-editor-upload-(.+)$/.exec(name);
+                if (match) config[match[1] === 'url' ? 'uploadUrl' : match[1].replace(/-(\w)/g, (_, letter) => letter.toUpperCase())] = value;
             }
             if (Object.keys(config).length) this.setImageUpload(config);
         }
@@ -2613,19 +2613,19 @@
         // The "element is selected" shape the click-select handler (and
         // browsers, for images) produce: a one-node range over the element.
         _selectedNode() {
-            const sel = window.getSelection();
-            if (!sel.rangeCount) return null;
-            const r = sel.getRangeAt(0);
-            if (r.collapsed || r.startContainer !== r.endContainer
-                || r.startContainer.nodeType !== Node.ELEMENT_NODE
-                || r.endOffset - r.startOffset !== 1) return null;
-            const n = r.startContainer.childNodes[r.startOffset];
-            return (n && n.nodeType === Node.ELEMENT_NODE && this.editable.contains(n)) ? n : null;
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return null;
+            const range = selection.getRangeAt(0);
+            if (range.collapsed || range.startContainer !== range.endContainer
+                || range.startContainer.nodeType !== Node.ELEMENT_NODE
+                || range.endOffset - range.startOffset !== 1) return null;
+            const node = range.startContainer.childNodes[range.startOffset];
+            return (node && node.nodeType === Node.ELEMENT_NODE && this.editable.contains(node)) ? node : null;
         }
 
         _selectedImage() {
-            const n = this._selectedNode();
-            return n?.tagName === 'IMG' ? n : null;
+            const node = this._selectedNode();
+            return node?.tagName === 'IMG' ? node : null;
         }
 
         _prepImageMenu() {
@@ -2665,13 +2665,13 @@
             const height = parseInt(menu?.querySelector('[data-editor-image-height]')?.value, 10) || 0;
             // 'https://' alone is the untouched placeholder, not a URL; data:
             // srcs are embed-mode only.
-            if (!url || url === 'https://' || !safeSrc(url)
+            if (!url || url === 'https://' || !isSafeSrc(url)
                 || (url.startsWith('data:') && !this._imageEmbedAllowed())) {
                 // A picked file that gave no URL is the problem, not the link field.
                 const file = this._imageUploadHost()?.ndsUpload?.getAllFiles?.()[0];
-                const msg = !file || file.status === 'complete' ? 'invalid_image_url'
+                const message = !file || file.status === 'complete' ? 'invalid_image_url'
                     : file.status === 'error' ? 'upload_failed' : 'upload_pending';
-                this._fieldError(menu?.querySelector('[data-editor-image-url]'), strings.text(msg));
+                this._fieldError(menu?.querySelector('[data-editor-image-url]'), strings.text(message));
                 return;
             }
             dropmenu?.ndsDropmenu?.close?.();
@@ -2715,14 +2715,14 @@
         // caret-escape clicks don't dirty the field.
         _placeCaretAtEnd() {
             const last = this.editable.lastElementChild;
-            const sel = window.getSelection();
+            const selection = window.getSelection();
             this.editable.focus();
-            const r = document.createRange();
+            const range = document.createRange();
             if (last && last.tagName === 'P' && !last.textContent.trim()) {
-                r.selectNodeContents(last);
-                r.collapse(false);
-                sel.removeAllRanges();
-                sel.addRange(r);
+                range.selectNodeContents(last);
+                range.collapse(false);
+                selection.removeAllRanges();
+                selection.addRange(range);
                 return;
             }
             // Build the fresh line structurally instead of collapsing to the
@@ -2731,13 +2731,13 @@
             // splitting there corrupts it the same way Enter would (guarded
             // for Enter by _guardRegionEnter; this click path has no caret to
             // guard, so it never even reaches the atom check).
-            const p = document.createElement('p');
-            p.innerHTML = '<br>';
-            this.editable.appendChild(p);
-            r.selectNodeContents(p);
-            r.collapse(false);
-            sel.removeAllRanges();
-            sel.addRange(r);
+            const paragraph = document.createElement('p');
+            paragraph.innerHTML = '<br>';
+            this.editable.appendChild(paragraph);
+            range.selectNodeContents(paragraph);
+            range.collapse(false);
+            selection.removeAllRanges();
+            selection.addRange(range);
             this._syncSource();
         }
 
@@ -2747,15 +2747,15 @@
             if (this._rafId) return;
             this._rafId = requestAnimationFrame(() => {
                 this._rafId = 0;
-                const sel = window.getSelection();
+                const selection = window.getSelection();
                 // The remove gate must react to the selection LEAVING the
                 // editable too — a stale enabled state would let the picker
                 // target whatever the outside selection sits in. Same for the
                 // selected-component marker.
                 this._syncRemoveState();
                 this._syncSelectedMark();
-                if (!sel.rangeCount) return;
-                if (!this.editable.contains(sel.anchorNode)) return;
+                if (!selection.rangeCount) return;
+                if (!this.editable.contains(selection.anchorNode)) return;
                 this._updateToolbarState();
             });
         }
@@ -2790,8 +2790,8 @@
             const block = this._getBlockContext();
             const blockTag = block ? block.tagName : null;
             const inList = (block && block.tagName === 'LI') ? block.closest('ul,ol')?.tagName : null;
-            const cell = this._selAncestor(n => n.tagName === 'TD' || n.tagName === 'TH');
-            const cellHead = cell && columnHead(cell);
+            const cell = this._selAncestor(node => node.tagName === 'TD' || node.tagName === 'TH');
+            const cellHead = cell && findColumnHead(cell);
             // Heading/list/formatting buttons grey out inside an atom — same
             // reason _applyCommand refuses them there. A separate pass since
             // it covers 'clear' too, which (like undo/redo) carries no
@@ -2806,22 +2806,22 @@
                 // Only toggle commands carry aria-pressed in markup; action
                 // buttons (undo/redo/clear) are momentary and stay untouched.
                 if (!btn.hasAttribute('aria-pressed')) continue;
-                const cmd = btn.dataset.cmd;
+                const command = btn.dataset.cmd;
                 let pressed = false;
-                if (cmd === 'bold')           pressed = this._safeQueryState('bold');
-                else if (cmd === 'italic')    pressed = this._safeQueryState('italic');
-                else if (cmd === 'underline') pressed = this._safeQueryState('underline');
-                else if (cmd === 'strike')    pressed = this._safeQueryState('strikeThrough');
-                else if (cmd === 'link')      pressed = !!this._getAncestorTag('A');
-                else if (cmd === 'image')     pressed = !!this._selectedImage();
-                else if (commandBlocks[cmd]) pressed = blockTag === commandBlocks[cmd];
-                else if (cmd === 'ul')        pressed = inList === 'UL';
-                else if (cmd === 'ol')        pressed = inList === 'OL';
-                else if (cmd.startsWith('align-')) {
-                    pressed = cell ? !!cellHead && physicalAlign(cellHead) === cmd.slice(6)
-                        : block?.style.textAlign === cmd.slice(6);
+                if (command === 'bold')           pressed = this._safeQueryState('bold');
+                else if (command === 'italic')    pressed = this._safeQueryState('italic');
+                else if (command === 'underline') pressed = this._safeQueryState('underline');
+                else if (command === 'strike')    pressed = this._safeQueryState('strikeThrough');
+                else if (command === 'link')      pressed = !!this._getAncestorTag('A');
+                else if (command === 'image')     pressed = !!this._selectedImage();
+                else if (commandBlocks[command]) pressed = blockTag === commandBlocks[command];
+                else if (command === 'ul')        pressed = inList === 'UL';
+                else if (command === 'ol')        pressed = inList === 'OL';
+                else if (command.startsWith('align-')) {
+                    pressed = cell ? !!cellHead && getPhysicalAlign(cellHead) === command.slice(6)
+                        : block?.style.textAlign === command.slice(6);
                 }
-                else if (cmd.startsWith('dir-')) pressed = block?.getAttribute('dir') === cmd.slice(4);
+                else if (command.startsWith('dir-')) pressed = block?.getAttribute('dir') === command.slice(4);
                 btn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
             }
         }
@@ -2841,15 +2841,15 @@
             let group = null;
             const flush = () => {
                 if (!group) return;
-                const p = document.createElement('p');
-                this.editable.insertBefore(p, group[0]);
-                for (const n of group) p.appendChild(n);
+                const paragraph = document.createElement('p');
+                this.editable.insertBefore(paragraph, group[0]);
+                for (const node of group) paragraph.appendChild(node);
                 group = null;
             };
-            for (const n of Array.from(this.editable.childNodes)) {
-                const isText = n.nodeType === Node.TEXT_NODE && n.textContent.trim();
-                const isInline = n.nodeType === Node.ELEMENT_NODE && isInlineNode(n);
-                if (isText || isInline) (group ||= []).push(n);
+            for (const node of Array.from(this.editable.childNodes)) {
+                const isText = node.nodeType === Node.TEXT_NODE && node.textContent.trim();
+                const isInline = node.nodeType === Node.ELEMENT_NODE && isInlineNode(node);
+                if (isText || isInline) (group ||= []).push(node);
                 else flush();
             }
             flush();
@@ -2861,9 +2861,9 @@
         _ensureTrailingParagraph() {
             const last = this.editable.lastElementChild;
             if (!last || FLOW_EXIT_TAGS.test(last.tagName)) return;
-            const p = document.createElement('p');
-            p.innerHTML = '<br>';
-            this.editable.appendChild(p);
+            const paragraph = document.createElement('p');
+            paragraph.innerHTML = '<br>';
+            this.editable.appendChild(paragraph);
         }
 
         _syncSource(coalesce = false) {
@@ -2873,7 +2873,7 @@
             const next = empty
                 ? ''
                 // ponytail: full sanitize+rebuild per input keeps the value canonical; debounce if profiling ever flags it.
-                : prettyPrintHtml(sanitizeHtml(this.editable.innerHTML))
+                : formatHtml(sanitizeHtml(this.editable.innerHTML))
                     // The trailing caret-escape paragraph is an editing
                     // affordance, not content — it stays out of the value.
                     .replace(/\n?<p><br><\/p>$/, '');
@@ -2886,7 +2886,7 @@
 
     // ---------- Init sweep + export ----------
 
-    function initializeEditors() {
+    function setupEditors() {
         document.querySelectorAll('.nds-editor').forEach(el => {
             if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-editor-initialized')) return;
@@ -2895,14 +2895,14 @@
     }
 
     NDS.Editor = {
-        init: initializeEditors,
-        reinit: initializeEditors,
+        init: setupEditors,
+        reinit: setupEditors,
         // Construction fails (missing required elements) → null, never a
         // dud instance whose every method throws.
         create: (element) => {
             if (element.ndsEditor) return element.ndsEditor;
-            const inst = new NdsEditor(element);
-            return inst.valid ? inst : null;
+            const instance = new NdsEditor(element);
+            return instance.valid ? instance : null;
         },
         destroy: (element) => element.ndsEditor?.destroy(),
         _sanitize: sanitizeHtml // dev/test hook — the full interpret+enforce pipeline, consumed by scripts/editor-fixtures.mjs

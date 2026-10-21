@@ -93,7 +93,7 @@
             // Server-rendered restore: hidden inputs seed the tag list.
             this.tags = Array.from(
                 this.formControl.querySelectorAll(':scope > input[type="hidden"]')
-            ).map(h => h.value).filter(Boolean);
+            ).map(hiddenInput => hiddenInput.value).filter(Boolean);
             // The page's own tags: what a form reset goes back to.
             this._initialTags = [...this.tags];
             this.bindEvents();
@@ -119,13 +119,13 @@
             // highlighted suggestion owns Enter (the pick lands through
             // nds:autocomplete:select below), and the mousedown-blur that
             // precedes a suggestion click must not commit the typed fragment.
-            const acMenuOpen = () => this.root.hasAttribute('data-url')
+            const isAutocompleteMenuOpen = () => this.root.hasAttribute('data-url')
                 && NDS.state.has(this.formControl, 'open');
 
             this.input.addEventListener('keydown', (e) => {
                 if (e.isComposing) return;
                 if (e.key === 'Enter') {
-                    if (acMenuOpen() && this.input.getAttribute('aria-activedescendant')) return;
+                    if (isAutocompleteMenuOpen() && this.input.getAttribute('aria-activedescendant')) return;
                     // Empty Enter falls through — the form's normal submit.
                     if (this.input.value.trim() === '') return;
                     e.preventDefault();
@@ -154,10 +154,10 @@
                 // notification (committed whole via nds:autocomplete:select
                 // below) — never split a picked value on its own commas.
                 if (!e.isTrusted && this.root.hasAttribute('data-url')) return;
-                const v = this.input.value;
-                if (!/[,،\n]/.test(v)) return;
+                const value = this.input.value;
+                if (!/[,،\n]/.test(value)) return;
                 if (this.strict) { this._strictReject(); return; }
-                const parts = v.split(/[,،\n]/);
+                const parts = value.split(/[,،\n]/);
                 const pending = parts.pop();
                 parts.forEach(part => this.addTag(part));
                 this.input.value = pending.replace(/^\s+/, '');
@@ -167,7 +167,7 @@
             // Skipped while a suggestion menu is open — the text stays pending.
             // Strict fields never blur-commit (typed text is not a valid tag).
             this.input.addEventListener('blur', () => {
-                if (acMenuOpen() || this.strict) return;
+                if (isAutocompleteMenuOpen() || this.strict) return;
                 if (this.input.value.trim() !== '') {
                     this.addTag(this.input.value);
                     this.input.value = '';
@@ -209,9 +209,9 @@
         // Strict-mode rejection of typed commits — same feedback shape as the
         // duplicate/max rejections in addTag (incl. the macrotask deferral).
         _strictReject() {
-            const msg = strings.text('strict');
-            setTimeout(() => NDS.Form.setStatus(this.root, 'error', { message: msg }), 0);
-            NDS.announce(msg);
+            const message = strings.text('strict');
+            setTimeout(() => NDS.Form.setStatus(this.root, 'error', { message: message }), 0);
+            NDS.announce(message);
         }
 
         addTag(value) {
@@ -226,12 +226,12 @@
             // run between the two listeners) — the status must land once the
             // whole event dispatch has finished.
             if (this.tags.length >= this.maxTags) {
-                const msg = strings.text('max', { n: this.maxTags });
-                setTimeout(() => NDS.Form.setStatus(this.root, 'error', { message: msg }), 0);
-                NDS.announce(msg);
+                const message = strings.text('max', { n: this.maxTags });
+                setTimeout(() => NDS.Form.setStatus(this.root, 'error', { message: message }), 0);
+                NDS.announce(message);
                 return;
             }
-            if (this.tags.some(t => t.toLowerCase() === value.toLowerCase())) {
+            if (this.tags.some(tag => tag.toLowerCase() === value.toLowerCase())) {
                 // Same macrotask deferral as the max rejection above.
                 setTimeout(() => NDS.Form.setStatus(this.root, 'error', { message: strings.text('duplicate') }), 0);
                 NDS.announce(strings.text('duplicate'));
@@ -244,10 +244,10 @@
         }
 
         removeTag(value) {
-            const idx = this.tags.indexOf(value);
-            if (idx === -1) return;
+            const index = this.tags.indexOf(value);
+            if (index === -1) return;
             NDS.keepChipFocus(() => this.formControl.querySelectorAll('.nds-chip'), () => {
-                this.tags.splice(idx, 1);
+                this.tags.splice(index, 1);
                 this.renderChips();
             }, this.input);
             NDS.announce(strings.text('removed', { value }));
@@ -265,7 +265,7 @@
         // Chips render as direct flex items before the input — no wrapper, so
         // their wrap point is a pure function of field width.
         renderChips() {
-            this.formControl.querySelectorAll('.nds-chip').forEach(c => c.remove());
+            this.formControl.querySelectorAll('.nds-chip').forEach(chip => chip.remove());
             this.tags.forEach(value => {
                 this.formControl.insertBefore(this.buildChip(value), this.input);
             });
@@ -280,7 +280,7 @@
         // Rebuild the hidden carriers to mirror this.tags (also consumes any
         // server-rendered seeds, so restore and runtime share one shape).
         _syncHiddenInputs() {
-            this.formControl.querySelectorAll(':scope > input[type="hidden"]').forEach(h => h.remove());
+            this.formControl.querySelectorAll(':scope > input[type="hidden"]').forEach(hiddenInput => hiddenInput.remove());
             if (!this.name) return;
             this.tags.forEach(value => {
                 const hidden = document.createElement('input');
@@ -314,7 +314,7 @@
         }
     }
 
-    function initializeTagInputs() {
+    function setupTagInputs() {
         document.querySelectorAll('.nds-taginput').forEach(el => {
             if (el.closest('code')) return;
             if (el.hasAttribute('data-nds-taginput-initialized')) return;
@@ -325,7 +325,7 @@
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
     // The instance's tags (carriers exist only with a name); before init, the server-rendered carriers.
     // data-max-tags blocks a submit too: tags written in the markup or set by a script skip the add-time check.
-    const fieldCheck = (ti) => {
+    const checkField = (ti) => {
         const count = ti.ndsTaginput ? ti.ndsTaginput.tags.length : ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
         const max = parseInt(ti.getAttribute('data-max-tags'), 10);
         const over = max > 0 && count > max;
@@ -333,20 +333,20 @@
         return { valid, message: valid ? '' : strings.text(over ? 'max' : 'tag_required', { n: max }), empty: count === 0, count };
     };
     NDS.validation.addRule('.nds-taginput[data-required], .nds-taginput.nds-required, .nds-taginput[data-max-tags]',
-        (ti) => Object.assign(fieldCheck(ti), { focus: ti.querySelector('.nds-form-control > input:not([type="hidden"])') }),
+        (ti) => Object.assign(checkField(ti), { focus: ti.querySelector('.nds-form-control > input:not([type="hidden"])') }),
         // The typing field is empty at submit even with tags: the native pass leaves the field to this rule.
-        { owns: (c) => c.classList.contains('nds-taginput'), on: ['nds:taginput:change'] });
+        { owns: (control) => control.classList.contains('nds-taginput'), on: ['nds:taginput:change'] });
 
     NDS.Taginput = {
-        init: initializeTagInputs,
-        reinit: initializeTagInputs,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-taginput') || el, opts, fieldCheck),
+        init: setupTagInputs,
+        reinit: setupTagInputs,
+        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-taginput') || el, opts, checkField),
         // Construction fails (missing required elements, or the root is already
         // initialized) → null, never a dud instance whose every method throws.
         create: (element) => {
             if (element.ndsTaginput) return element.ndsTaginput;
-            const inst = new NdsTaginput(element);
-            return inst.valid ? inst : null;
+            const instance = new NdsTaginput(element);
+            return instance.valid ? instance : null;
         },
         destroy: (element) => element.ndsTaginput?.destroy()
     };

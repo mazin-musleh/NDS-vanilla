@@ -58,7 +58,7 @@
     let globalsWired = false;
 
     // Page-wide and shared by every stepper, so create(el) wires them too.
-    function wireGlobals() {
+    function addGlobalListeners() {
         if (globalsWired) return;
         globalsWired = true;
 
@@ -84,8 +84,8 @@
         });
 
         // The instance's own writes match its fields, so they change nothing here.
-        NDS.onAttrChange('.nds-stepper', ['data-current', 'data-total'], els => {
-            els.forEach(el => {
+        NDS.onAttrChange('.nds-stepper', ['data-current', 'data-total'], elements => {
+            elements.forEach(el => {
                 const stepper = el.ndsStepper;
                 if (!stepper) return;
 
@@ -161,10 +161,10 @@
                 NDS.state.remove(this.element, 'completed');
             }
 
-            const pct = Math.min(100, (this.currentStep / this.totalSteps) * 100);
+            const percent = Math.min(100, (this.currentStep / this.totalSteps) * 100);
             // Only the radial ring draws it, so a stepper with no ring carries no inline style.
-            if (this.ring) this.ring.style.setProperty('--progress-value', pct);
-            if (this.progressNumber) this.progressNumber.textContent = Math.round(pct);
+            if (this.ring) this.ring.style.setProperty('--progress-value', percent);
+            if (this.progressNumber) this.progressNumber.textContent = Math.round(percent);
             if (this.progressText) this.progressText.textContent = `${Math.min(this.currentStep, this.totalSteps)} / ${this.totalSteps}`;
         }
 
@@ -239,7 +239,7 @@
     // A page with no stepper at load never runs init(), so this wires the globals too.
     function create(el) {
         if (el.ndsStepper) return el.ndsStepper;
-        wireGlobals();
+        addGlobalListeners();
         const stepper = new NdsStepper(el);
         el.setAttribute('data-nds-stepper-initialized', 'true');
         el.ndsStepper = stepper;
@@ -247,7 +247,7 @@
     }
 
     function init() {
-        wireGlobals();
+        addGlobalListeners();
         document.querySelectorAll('.nds-stepper:not([data-nds-stepper-initialized])').forEach(el => {
             if (!el.closest('code')) create(el);
         });
@@ -255,7 +255,7 @@
 
     NDS.Stepper = {
         init,
-        // init is idempotent (the sweep skips started steppers, wireGlobals runs once).
+        // init is idempotent (the sweep skips started steppers, addGlobalListeners runs once).
         reinit:      init,
         create,
         destroy: (target) => getInstance(target)?.destroy(),

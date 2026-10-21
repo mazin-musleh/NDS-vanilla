@@ -70,17 +70,17 @@
     const order = (el) => parseInt(el.dataset.fabOrder, 10) || 0;
     // Measured px, trimmed to 2dp: a hundredth of a pixel is far under a device
     // pixel, and it keeps an inspected --_fab-ride readable vs a 16-digit float.
-    const px = (n) => Math.round(n * 100) / 100 + 'px';
+    const toPixels = (value) => Math.round(value * 100) / 100 + 'px';
     // A JS-made dock always stamps its position (below), but an authored bare
     // <div class="nds-fab-dock"> may omit it — treat that as 'right' so both
     // resolve to the same edge.
-    const dockPos = (el) => el.dataset.fabDockPos || DEFAULT_POS;
+    const getDockPosition = (el) => el.dataset.fabDockPos || DEFAULT_POS;
 
     // Map a side to one of the PHYSICAL docks. Physical left/right/bottom pass
     // through unchanged; logical start/end resolve by direction (so `end` lands
     // in the left dock on an RTL page, the right dock on LTR). That's what lets
     // a FAB move between edges while the docks themselves stay static.
-    function sideToEdge(side) {
+    function toEdge(side) {
         if (side === 'left' || side === 'right' || side === 'bottom') return side;
         if (side === 'start') return NDS.isRTL ? 'right' : 'left';
         return NDS.isRTL ? 'left' : 'right';   // 'end' (default), a top sheet, or unknown
@@ -89,9 +89,9 @@
     // Resolve a FAB's target dock. Any explicit position resolves directly;
     // only 'auto' (or absent) follows the toggled panel's side, falling back to
     // the reading-end edge when there's no panel.
-    function resolvePos(fab, override) {
-        const p = override || fab.dataset.fabPos || 'auto';
-        if (p !== 'auto') return sideToEdge(p);
+    function resolvePosition(fab, override) {
+        const side = override || fab.dataset.fabPos || 'auto';
+        if (side !== 'auto') return toEdge(side);
         // The toggle is the FAB itself, or — on a group — one of its buttons, so
         // `auto` has to descend to find it. ridePanel climbs the same boundary
         // from the other side (btn.closest('.nds-fab')); both must agree or a
@@ -100,13 +100,13 @@
         const panel = btn ? document.getElementById(btn.dataset.panelToggle) : null;
         // A panel built on first press (accessibility) is absent at dock time and takes
         // its side from the toggle, so read the same value there.
-        return sideToEdge((panel || btn)?.getAttribute('data-panel-side') || 'end');
+        return toEdge((panel || btn)?.getAttribute('data-panel-side') || 'end');
     }
 
     // Find the static slot at `pos`, creating it lazily if absent.
-    function dock(pos) {
-        const want = pos || DEFAULT_POS;
-        let el = [...document.querySelectorAll('.nds-fab-dock')].find(d => dockPos(d) === want);
+    function getDock(position) {
+        const want = position || DEFAULT_POS;
+        let el = [...document.querySelectorAll('.nds-fab-dock')].find(candidate => getDockPosition(candidate) === want);
         if (!el) {
             el = document.createElement('div');
             el.className = 'nds-fab-dock';
@@ -126,13 +126,13 @@
         // and a framework holding it still finds its spot. A re-register (a direction flip
         // re-routes every FAB) keeps the first mark: markHome() skips a node already moved.
         NDS.markHome(fab);
-        const d = dock(resolvePos(fab, override));
-        d.appendChild(fab);
-        [...d.children].sort((a, b) => order(a) - order(b)).forEach(c => d.appendChild(c));
+        const slot = getDock(resolvePosition(fab, override));
+        slot.appendChild(fab);
+        [...slot.children].sort((left, right) => order(left) - order(right)).forEach(child => slot.appendChild(child));
         fab.removeAttribute('hidden');   // reveal now that it's docked (it ships `hidden` to avoid a pre-route flash)
         fab.setAttribute(INIT_ATTR, 'true');
         setupRuntime();
-        return d;
+        return slot;
     }
 
     // Ride the panel: a thumb sits ON the edge its panel slides from, so an open
@@ -159,7 +159,7 @@
         // only lands after the transition — too late to travel together.
         const riding = NDS.state.has(panel, 'open') && !NDS.state.has(panel, 'closing');
         const sheet = side === 'bottom';
-        const edge = sideToEdge(side);
+        const edge = toEdge(side);
 
         // Size is settled the moment `open` lands: the panel animates on transform,
         // which never reflows it — and a pure translate leaves the rect's own
@@ -175,14 +175,14 @@
         document.querySelectorAll('[data-panel-toggle="' + panel.id + '"]').forEach(btn => {
             const fab = btn.closest('.nds-fab');
             if (!fab || !fab.classList.contains('nds-fab-thumb')) return;
-            if (resolvePos(fab) !== edge) return;   // not the same edge — nothing to ride
+            if (resolvePosition(fab) !== edge) return;   // not the same edge — nothing to ride
 
             if (!riding) { fab.removeAttribute('data-fab-riding'); return; }
             if (ride === undefined) {
                 const rect = panel.getBoundingClientRect();
                 ride = sheet
-                    ? 'translateY(-' + px(rect.height) + ')'
-                    : 'translateX(' + (edge === 'left' ? '' : '-') + px(rect.width) + ')';
+                    ? 'translateY(-' + toPixels(rect.height) + ')'
+                    : 'translateX(' + (edge === 'left' ? '' : '-') + toPixels(rect.width) + ')';
             }
             fab.style.setProperty('--_fab-ride', ride);
             fab.setAttribute('data-fab-riding', '');
@@ -191,7 +191,7 @@
 
     // One-time page-level setup, wired on the first routed FAB. The subscriptions are
     // shared by every FAB on the page, so they are released only when the last one goes
-    // (teardownRuntime) — never on an individual destroy().
+    // (cleanupRuntime) — never on an individual destroy().
     let runtimeSet = false;
     let runtimeOffs = [];
     let runtimeSentinel = null;
@@ -213,20 +213,20 @@
         // reaching into the bottom band the docks occupy (a tall stacked hero on
         // a phone). Either alone keeps the docks out.
         let bottomNear = false, heroUnder = false;
-        const apply = () => document.documentElement.toggleAttribute('data-fab-tucked', bottomNear || heroUnder);
+        const syncTucked = () => document.documentElement.toggleAttribute('data-fab-tucked', bottomNear || heroUnder);
         runtimeOffs.push(NDS.onIntersect(sentinel, (entry) => {
             // Skip on a short page (sentinel always in view) so the FAB isn't
             // hidden permanently — only tuck when there's room to scroll.
             const scrollable = document.documentElement.scrollHeight - window.innerHeight > 4;
             bottomNear = entry.isIntersecting && scrollable;
-            apply();
+            syncTucked();
         }, { rootMargin: '0px 0px 120px 0px' }));
         // Root shrunk to the viewport's bottom 15%: the hero counts only while it
         // actually sits under the docks, not merely while it is on screen.
         const hero = document.querySelector('.nds-hero-section');
         if (hero) runtimeOffs.push(NDS.onIntersect(hero, (entry) => {
             heroUnder = entry.isIntersecting;
-            apply();
+            syncTucked();
         }, { rootMargin: '-85% 0px 0px 0px' }));
 
         // One pooled observer for every panel on the page.
@@ -246,7 +246,7 @@
 
     // Released only when the page holds no routed FAB. setupRuntime() can wire it again
     // from scratch, so a FAB added after a full teardown still tucks and rides.
-    function teardownRuntime() {
+    function cleanupRuntime() {
         runtimeOffs.forEach(off => off());
         runtimeOffs = [];
         runtimeSentinel?.remove();
@@ -281,10 +281,10 @@
             fab.style.removeProperty('--_fab-ride');
 
             // Drop the empty slots we created; an authored dock stays, it is the app's.
-            document.querySelectorAll('.nds-fab-dock').forEach(d => {
-                if (d._ndsFabCreated && !d.children.length) d.remove();
+            document.querySelectorAll('.nds-fab-dock').forEach(slot => {
+                if (slot._ndsFabCreated && !slot.children.length) slot.remove();
             });
-            if (!document.querySelector('.nds-fab[' + INIT_ATTR + ']')) teardownRuntime();
+            if (!document.querySelector('.nds-fab[' + INIT_ATTR + ']')) cleanupRuntime();
             return 1;
         }
 
@@ -321,7 +321,7 @@
         reinit: init,
         register,
         destroy,
-        dock,
-        resolvePos,
+        dock: getDock,
+        resolvePos: resolvePosition,
     };
 })();

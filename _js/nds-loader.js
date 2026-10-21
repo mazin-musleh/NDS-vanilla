@@ -129,7 +129,7 @@
             selector: '.nds-stepper',
         },
         {
-            // Delegated: crit + presetSwipers reserve the final row, so init releases into reserved space.
+            // Delegated: crit + syncSwiperPresets reserve the final row, so init releases into reserved space.
             name: 'Swiper',
             selector: '.nds-swiper',
         },
@@ -337,7 +337,7 @@
             refresh: (root) => NDS.Sort?.refresh?.(root),
         },
         {
-            // Delegated: crit shows the first page (presplitPaged) and _pagination.scss reserves the nav row.
+            // Delegated: crit shows the first page (splitPaged) and _pagination.scss reserves the nav row.
             name: 'Pagination',
             selector: '.nds-pagination',
             init: () => { NDS.Pagination?.init?.(); NDS.Pagination?.initAuto?.(); },
@@ -453,20 +453,20 @@
     const yieldChannel = new MessageChannel();
     const yieldQueue = [];
     yieldChannel.port1.onmessage = () => {
-        const cb = yieldQueue.shift();
-        if (cb) cb();
+        const callback = yieldQueue.shift();
+        if (callback) callback();
     };
     const yieldToBrowser = (typeof scheduler !== 'undefined' && scheduler.yield)
-        ? (cb) => scheduler.yield().then(cb)
-        : (cb) => { yieldQueue.push(cb); yieldChannel.port2.postMessage(null); };
+        ? (callback) => scheduler.yield().then(callback)
+        : (callback) => { yieldQueue.push(callback); yieldChannel.port2.postMessage(null); };
 
     // ponytail: rIC fallback for Safari fires almost at once, not at true idle; the 5ms slot
     // still caps each task. The slot starts when the callback FIRES — timed from scheduling,
     // setTimeout's 4ms clamp left ≤1ms and drain re-queued forever.
     const scheduleIdle = window.requestIdleCallback ||
-        ((cb) => setTimeout(() => {
+        ((callback) => setTimeout(() => {
             const start = performance.now();
-            cb({
+            callback({
                 didTimeout: false,
                 timeRemaining: () => Math.max(0, 5 - (performance.now() - start))
             });
@@ -475,15 +475,15 @@
     // Captured at eval: currentScript is main's own tag here and null in any callback.
     // Siblings reuse main's origin (passes a CSP host allowlist) and its ?ver= cache-bust.
     const mainScript = document.currentScript ||
-        [...document.scripts].find((s) => /nds-main(\.min)?\.js/.test(s.src));
+        [...document.scripts].find((script) => /nds-main(\.min)?\.js/.test(script.src));
     // NDS_ASSETS_PATH names the assets/ folder, as core reads it for the language files.
     const assetPath = (() => {
-        const u = mainScript && mainScript.src ? new URL(mainScript.src, location.href) : null;
-        const ver = u ? u.search : '';
+        const scriptUrl = mainScript && mainScript.src ? new URL(mainScript.src, location.href) : null;
+        const ver = scriptUrl ? scriptUrl.search : '';
         if (window.NDS_ASSETS_PATH) return { dir: window.NDS_ASSETS_PATH + 'js/', ver };
-        return { dir: u ? u.href.slice(0, u.href.lastIndexOf('/') + 1) : '', ver };
+        return { dir: scriptUrl ? scriptUrl.href.slice(0, scriptUrl.href.lastIndexOf('/') + 1) : '', ver };
     })();
-    const bundleUrl = (file) => assetPath.dir + file + assetPath.ver;
+    const getBundleUrl = (file) => assetPath.dir + file + assetPath.ver;
 
     // Build-generated: { delegated: { file, ns:[...], css?:[...] }, ... }.
     const bundleMap = window.__NDS_BUNDLES || {};
@@ -497,14 +497,14 @@
     let ttPolicy;
     if (window.trustedTypes && trustedTypes.createPolicy) {
         try {
-            ttPolicy = trustedTypes.createPolicy('nds', { createScriptURL: (u) => u });
+            ttPolicy = trustedTypes.createPolicy('nds', { createScriptURL: (url) => url });
         } catch (e) { /* policy name not allowed — fall back to plain string */ }
     }
 
     // The CSS folder, not the JS one, which a consumer's bundler may move. Marker first
     // (the preload never gets a `.sheet`); two queries, because a comma list resolves by
     // document order and the earlier preload would win.
-    function mainCssLink() {
+    function findMainCssLink() {
         return document.querySelector('link[data-nds-defer="main"]')
             || document.querySelector('link[href*="nds-main.min.css"]');
     }
@@ -513,27 +513,27 @@
     // Dedupe by pathname over stylesheet links: a self-hosted sheet won't match our ?ver,
     // and document.styleSheets misses one still downloading.
     function addSheet(name) {
-        const main = mainCssLink();
+        const main = findMainCssLink();
         let url, path;
         try {
             if (main) {
                 // Swap the file name, keep folder and query: the main sheet may be fingerprinted.
-                const u = new URL(main.href);
-                u.pathname = u.pathname.replace(/[^/]*$/, name);
-                url = u.href;
+                const parsedUrl = new URL(main.href);
+                parsedUrl.pathname = parsedUrl.pathname.replace(/[^/]*$/, name);
+                url = parsedUrl.href;
             } else {
                 url = assetPath.dir.replace(/\/js\/?$/, '/css/') + name + assetPath.ver;
             }
             path = new URL(url, location.href).pathname;
         } catch (e) { return null; }
         const dup = [...document.querySelectorAll('link[rel="stylesheet"]')]
-            .some((l) => { try { return new URL(l.href, location.href).pathname === path; } catch (e) { return false; } });
+            .some((existing) => { try { return new URL(existing.href, location.href).pathname === path; } catch (e) { return false; } });
         if (dup) return null;
-        const l = document.createElement('link');
-        l.rel = 'stylesheet';
-        l.href = url;
-        document.head.appendChild(l);
-        return l;
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = url;
+        document.head.appendChild(link);
+        return link;
     }
 
     // Idempotent; resolves on load OR error so callers never hang. A failed fetch is
@@ -546,29 +546,29 @@
         if (bundleMap[name]) for (const sheet of bundleMap[name].css || []) addSheet(sheet);
         if (!file || !assetPath.dir) return (bundlePromises[name] = Promise.resolve());
         // Self-hosted under a no-injection CSP: their own <script> tag, our init.
-        if ([...document.scripts].some((s) => s.src && s.src.includes(file))) {
+        if ([...document.scripts].some((script) => script.src && script.src.includes(file))) {
             return (bundlePromises[name] = Promise.resolve());
         }
         // Inlined or concatenated into the consumer's build: every namespace already real.
         const bundleNs = bundleMap[name].ns || [];
-        if (bundleNs.length && bundleNs.every((n) => NDS[n] && !NDS[n].__ndsStub)) {
+        if (bundleNs.length && bundleNs.every((namespace) => NDS[namespace] && !NDS[namespace].__ndsStub)) {
             return (bundlePromises[name] = Promise.resolve());
         }
         bundlePromises[name] = new Promise((resolve) => {
-            const url = bundleUrl(file);
-            const s = document.createElement('script');
-            s.src = ttPolicy ? ttPolicy.createScriptURL(url) : url;
-            s.fetchPriority = 'low';
-            if (mainScript && mainScript.nonce) s.nonce = mainScript.nonce;
-            s.onload = () => { failedBundles.delete(name); resolve(); };
-            s.onerror = () => {
+            const url = getBundleUrl(file);
+            const script = document.createElement('script');
+            script.src = ttPolicy ? ttPolicy.createScriptURL(url) : url;
+            script.fetchPriority = 'low';
+            if (mainScript && mainScript.nonce) script.nonce = mainScript.nonce;
+            script.onload = () => { failedBundles.delete(name); resolve(); };
+            script.onerror = () => {
                 console.warn(`[NDS] bundle '${name}' failed to load (${url})`);
                 failedBundles.add(name);
-                s.remove();
+                script.remove();
                 delete bundlePromises[name];
                 resolve();
             };
-            (document.body || document.head).appendChild(s);
+            (document.body || document.head).appendChild(script);
         });
         return bundlePromises[name];
     }
@@ -601,35 +601,35 @@
     // ?per-page= (data-per-page-param on a per-page picker), before anything reads the size:
     // the picker starts on it and the split below uses it, so nothing jumps. A CSSOM write,
     // which a strict CSP allows. Pagination reads _ndsPerPageDefault to drop the param.
-    function applyPerPageParams(root) {
+    function setPerPageParams(root) {
         const params = new URLSearchParams(location.search);
         root.querySelectorAll('[data-per-page-param]').forEach(picker => {
             if ('_ndsPerPageDefault' in picker) return;
             picker._ndsPerPageDefault = picker.getAttribute('data-select-value');
-            const v = params.get(picker.getAttribute('data-per-page-param') || 'per-page');
+            const size = params.get(picker.getAttribute('data-per-page-param') || 'per-page');
             // Only a size the menu offers: the address must not set 99999.
-            if (!v || !picker.querySelector(`.nds-dropmenu-item[data-value="${CSS.escape(v)}"]`)) return;
-            picker.setAttribute('data-select-value', v);
+            if (!size || !picker.querySelector(`.nds-dropmenu-item[data-value="${CSS.escape(size)}"]`)) return;
+            picker.setAttribute('data-select-value', size);
             const ref = picker.getAttribute('data-per-page-target');
             const content = ref && NDS.resolveEl(ref);
-            if (content && !content.hasAttribute('data-paged-initialized')) content.style.setProperty('--per-page', v);
+            if (content && !content.hasAttribute('data-paged-initialized')) content.style.setProperty('--per-page', size);
         });
     }
 
     // Hide items past each container's --per-page (else crit's 6) at init, not at
     // the reveal: main CSS can land first, and the skeleton jumped from 6 to --per-page.
     // A class value (strict CSP, media query) costs one recalc: every read runs before any write.
-    function presplitPaged() {
-        const sizes = Array.from(document.querySelectorAll('.nds-paged-content:not([data-paged-initialized], [data-paged-split])'), c =>
-            [c, c.style.getPropertyValue('--per-page') || getComputedStyle(c).getPropertyValue('--per-page')]);
-        sizes.forEach(([c, raw]) => {
+    function splitPaged() {
+        const sizes = Array.from(document.querySelectorAll('.nds-paged-content:not([data-paged-initialized], [data-paged-split])'), container =>
+            [container, container.style.getPropertyValue('--per-page') || getComputedStyle(container).getPropertyValue('--per-page')]);
+        sizes.forEach(([container, raw]) => {
             // A negative value would index items[-1] and throw before the reveal.
-            const v = parseInt(raw, 10);
-            const n = v > 0 ? v : 6;
+            const parsed = parseInt(raw, 10);
+            const perPage = parsed > 0 ? parsed : 6;
             // Pagination's own item set: a tbody counts its own rows only (sub-rows ride their parent).
-            const items = NDS.ownItems(c, c.querySelectorAll('.nds-page-item'));
-            for (let i = n; i < items.length; i++) items[i].hidden = true;
-            c.setAttribute('data-paged-split', '');
+            const items = NDS.ownItems(container, container.querySelectorAll('.nds-page-item'));
+            for (let i = perPage; i < items.length; i++) items[i].hidden = true;
+            container.setAttribute('data-paged-split', '');
         });
     }
 
@@ -637,7 +637,7 @@
     let resolveReady;
     const ready = new Promise((resolve) => { resolveReady = resolve; });
 
-    function initializeNDS() {
+    function setupNds() {
         if (config.disableAll === true) {
             if (config.enableLogging) {
                 console.warn('[NDS] Initialization disabled (config.disableAll = true)');
@@ -649,8 +649,8 @@
         // Markers translate once the pack settles; here, so auto-init off holds them too.
         NDS.i18n.start();
         const startTime = performance.now();
-        applyPerPageParams(document);
-        presplitPaged();
+        setPerPageParams(document);
+        splitPaged();
 
         let criticalComponents, deferredComponents, injectedGroups;
 
@@ -673,60 +673,60 @@
         // means "styled + inited". window.load is the backstop so the reveal can't hang.
         function stampWhenStyled() {
             const root = document.documentElement;
-            const main = mainCssLink();
+            const main = findMainCssLink();
             // Size each swiper's skeleton row to what nds-swiper.js will pick (same knobs,
             // same breakpoints), so init moves nothing. The stamp releases crit's guards.
-            const presetSwipers = () => {
+            const syncSwiperPresets = () => {
                 const tier = matchMedia(NDS.breakpoints.desktop).matches ? 'max'
                     : matchMedia(NDS.breakpoints.tablet).matches ? 'mid' : 'min';
                 const tracks = [];
                 const swipers = [...document.querySelectorAll('.nds-swiper:not([data-nds-swiper-initialized], [data-swiper-preset])')];
                 // Every read before the first write: one style recalc, not one per swiper.
-                const knobs = swipers.map(s => {
-                    const cs = getComputedStyle(s);
-                    const knob = prop => parseInt(cs.getPropertyValue(prop)) || 0;
-                    return [knob(`--${tier}-slides`), knob('--peek')];
+                const knobs = swipers.map(swiper => {
+                    const cs = getComputedStyle(swiper);
+                    const readKnob = prop => parseInt(cs.getPropertyValue(prop)) || 0;
+                    return [readKnob(`--${tier}-slides`), readKnob('--peek')];
                 });
-                swipers.forEach((s, i) => {
-                    const per = s.classList.contains('nds-spotlight') ? 1 : knobs[i][0] || 1;
+                swipers.forEach((swiper, i) => {
+                    const per = swiper.classList.contains('nds-spotlight') ? 1 : knobs[i][0] || 1;
                     const peek = knobs[i][1];
                     // Own slides only: a swiper nested in a slide must not add pages.
-                    const w = s.querySelector('.nds-swiper-wrapper');
-                    const pages = Math.ceil((w ? w.querySelectorAll(':scope > .nds-swiper-slide').length : 0) / per);
-                    s.style.setProperty('--slides', per);
-                    s.toggleAttribute('data-swiper-peek', peek > 0 && pages > 1);
+                    const wrapper = swiper.querySelector('.nds-swiper-wrapper');
+                    const pages = Math.ceil((wrapper ? wrapper.querySelectorAll(':scope > .nds-swiper-slide').length : 0) / per);
+                    swiper.style.setProperty('--slides', per);
+                    swiper.toggleAttribute('data-swiper-peek', peek > 0 && pages > 1);
                     // One page: init keeps the nav hidden, so its reserve goes now.
-                    s.toggleAttribute('data-swiper-single', pages <= 1);
-                    s.setAttribute('data-swiper-preset', '');
-                    if (pages > 1 && NDS.isRTL) tracks.push(w);
+                    swiper.toggleAttribute('data-swiper-single', pages <= 1);
+                    swiper.setAttribute('data-swiper-preset', '');
+                    if (pages > 1 && NDS.isRTL) tracks.push(wrapper);
                 });
                 return tracks;
             };
             // Idempotent: three listeners race to get here.
-            const done = () => {
+            const reveal = () => {
                 if (root.hasAttribute('data-nds-loaded')) return;
-                const tracks = presetSwipers();
+                const tracks = syncSwiperPresets();
                 root.setAttribute('data-nds-loaded', '');
                 // WebKit RTL lands a newly overflowing track at its END; the first write
                 // rides the reveal's own recalc. Same double write as nds-swiper.js.
-                tracks.forEach(w => {
-                    if (!w) return;
-                    w.style.scrollBehavior = 'auto';
-                    w.scrollLeft = 0;
-                    void w.offsetHeight;
-                    w.scrollLeft = 0;
-                    void w.offsetHeight;
-                    w.style.scrollBehavior = '';
+                tracks.forEach(track => {
+                    if (!track) return;
+                    track.style.scrollBehavior = 'auto';
+                    track.scrollLeft = 0;
+                    void track.offsetHeight;
+                    track.scrollLeft = 0;
+                    void track.offsetHeight;
+                    track.style.scrollBehavior = '';
                 });
                 if (!main) return;
                 addSheet('nds-icons.min.css'); // no-op once requested; covers a main CSS error
                 loadHgiSheet();
             };
             // A load event that already fired must not strand the reveal on window.load.
-            if (!main || main.sheet) { done(); return; }
-            main.addEventListener('load', done, { once: true });
-            main.addEventListener('error', done, { once: true });
-            window.addEventListener('load', done, { once: true });
+            if (!main || main.sheet) { reveal(); return; }
+            main.addEventListener('load', reveal, { once: true });
+            main.addEventListener('error', reveal, { once: true });
+            window.addEventListener('load', reveal, { once: true });
         }
 
         // Icon tokens sit on :root, so a late write restyles the whole tree. Requested as
@@ -749,7 +749,7 @@
 
         // Critical pass: time-sliced, yields once the per-batch budget is spent.
         let criticalIndex = 0;
-        function initCriticalBatch() {
+        function setupCriticalBatch() {
             const batchStart = performance.now();
             while (
                 criticalIndex < criticalComponents.length &&
@@ -758,25 +758,25 @@
                 runInit(criticalComponents[criticalIndex++]);
             }
             if (criticalIndex < criticalComponents.length) {
-                yieldToBrowser(initCriticalBatch);
+                yieldToBrowser(setupCriticalBatch);
             } else {
                 // Each list counts down once; the last one resolves NDS.init.ready.
                 let pending = 1 + Object.keys(injectedGroups).length;
-                const listDone = () => {
+                const finishList = () => {
                     if (--pending) return;
                     logAllDone();
                     resolveReady();
                 };
 
                 // Main's deferred list never waits on a bundle fetch or the reveal.
-                if (deferredComponents.length) drainList(deferredComponents, listDone);
-                else listDone();
+                if (deferredComponents.length) drainList(deferredComponents, finishList);
+                else finishList();
 
                 // Each bundle's group inits on its own arrival, once the string pack has settled
                 // (core caps it at 3 s): these components write their text at init.
                 for (const name in injectedGroups) {
                     const group = injectedGroups[name];
-                    Promise.all([loadBundle(name), NDS.i18n.settled]).then(() => drainList(group, listDone));
+                    Promise.all([loadBundle(name), NDS.i18n.settled]).then(() => drainList(group, finishList));
                 }
 
                 stampWhenStyled();
@@ -812,28 +812,28 @@
         criticalComponents = [];
         deferredComponents = [];
         injectedGroups = {};
-        for (const c of components) {
-            const present = !c.selector || document.querySelector(c.selector);
+        for (const component of components) {
+            const present = !component.selector || document.querySelector(component.selector);
             if (!present) continue;
-            if (c.critical) {
-                criticalComponents.push(c);
+            if (component.critical) {
+                criticalComponents.push(component);
                 continue;
             }
-            const bundle = nsToBundle[c.name];
+            const bundle = nsToBundle[component.name];
             // Armed even when eager: a press while that bundle is in flight must not reach a half-wired page.
-            if (c.lazy) armLazy(c, bundle);
-            if (bundle && c.lazy && !c.eager?.()) continue;      // armed only — nothing loads yet
-            if (bundle) (injectedGroups[bundle] ||= []).push(c);
-            else deferredComponents.push(c);                     // code already in main
+            if (component.lazy) armLazy(component, bundle);
+            if (bundle && component.lazy && !component.eager?.()) continue;      // armed only — nothing loads yet
+            if (bundle) (injectedGroups[bundle] ||= []).push(component);
+            else deferredComponents.push(component);                     // code already in main
         }
 
         // Start downloads now so they overlap the critical pass.
         for (const name in injectedGroups) loadBundle(name);
-        loadIconTokens(mainCssLink());
+        loadIconTokens(findMainCssLink());
 
         if (config.enableLogging) {
             const names = Object.keys(injectedGroups);
-            const injected = names.reduce((n, name) => n + injectedGroups[name].length, 0);
+            const injected = names.reduce((count, name) => count + injectedGroups[name].length, 0);
             const total = criticalComponents.length + deferredComponents.length + injected;
             const detail = names.map((name) => `${name}:${injectedGroups[name].length}`);
             console.log(
@@ -843,7 +843,7 @@
             );
         }
 
-        initCriticalBatch();
+        setupCriticalBatch();
         scheduleDebugAudits();
     }
 
@@ -875,16 +875,16 @@
 
     // Does el hold a field whose rule has not started? Only flagged entries count, so a
     // Tooltip or Copy inside a field never blocks it; a lazy component is never flagged.
-    function pending(el) {
+    function hasPending(el) {
         const root = el || document;
-        return components.some((c) => {
-            if (!c.rule || c.lazy) return false;
-            const found = [...(root.matches?.(c.selector) ? [root] : []), ...root.querySelectorAll(c.selector)];
+        return components.some((component) => {
+            if (!component.rule || component.lazy) return false;
+            const found = [...(root.matches?.(component.selector) ? [root] : []), ...root.querySelectorAll(component.selector)];
             if (!found.length) return false;
-            const ns = NDS[c.name];
-            if (!ns || failedBundles.has(nsToBundle[c.name])) return false;   // nothing is coming
+            const ns = NDS[component.name];
+            if (!ns || failedBundles.has(nsToBundle[component.name])) return false;   // nothing is coming
             if (ns.__ndsStub) return true;                                     // its bundle is on the way
-            return c.rule === true && found.some((f) => !f['nds' + c.name]);
+            return component.rule === true && found.some((field) => !field['nds' + component.name]);
         });
     }
 
@@ -900,7 +900,7 @@
     // skip their refresh. Registry order holds: Selection recounts before Filter.
     // ponytail: scanners re-scan the whole document, the same cost as reinit(); give
     // them a scope argument only if a large page measures slow.
-    function refreshContainer(container) {
+    function syncContainer(container) {
         const root = container || document;
         // Words first: a component that reads its label at init reads the page language.
         if (root !== document) NDS.i18n.translate(root);
@@ -966,10 +966,10 @@
                 // Count only a destroy that released a stamp (not one already released above,
                 // never initialized, or stamped for paint alone), or that says so: an instance
                 // marked by its backref alone returns true.
-                const stamps = () => el.getAttributeNames().filter((n) => n.startsWith('data-nds-') && n.endsWith('-initialized')).length;
-                const before = stamps();
+                const getStampCount = () => el.getAttributeNames().filter((attributeName) => attributeName.startsWith('data-nds-') && attributeName.endsWith('-initialized')).length;
+                const before = getStampCount();
                 try {
-                    if (ns.destroy(el) === true || stamps() < before) destroyed++;
+                    if (ns.destroy(el) === true || getStampCount() < before) destroyed++;
                 } catch (error) {
                     console.warn(`[NDS:destroy] ${component.name} failed:`, error);
                 }
@@ -981,41 +981,41 @@
 
     // A lazy component's press listener, once per page, whichever pass sees it first.
     const armedLazy = new Set();
-    function armLazy(c, bundle) {
-        if (armedLazy.has(c)) return;
-        armedLazy.add(c);
-        c.lazy(bundle);
+    function armLazy(component, bundle) {
+        if (armedLazy.has(component)) return;
+        armedLazy.add(component);
+        component.lazy(bundle);
     }
 
     // Markup built after detection: load only the bundles its own content needs, then
     // refresh. Loading every bundle would drag in audit, which must never auto-inject.
     function mountContainer(container) {
         const root = container || document;
-        applyPerPageParams(root);
+        setPerPageParams(root);
         const needed = new Set();
-        for (const c of components) {
-            if (!c.selector) continue;
-            const here = root.matches?.(c.selector) || root.querySelector?.(c.selector);
-            const bundle = here && nsToBundle[c.name];
+        for (const component of components) {
+            if (!component.selector) continue;
+            const here = root.matches?.(component.selector) || root.querySelector?.(component.selector);
+            const bundle = here && nsToBundle[component.name];
             // A lazy component stays lazy in a mounted view: armed, loaded on its first press.
-            if (bundle && c.lazy) { armLazy(c, bundle); if (!c.eager?.()) continue; }
+            if (bundle && component.lazy) { armLazy(component, bundle); if (!component.eager?.()) continue; }
             if (bundle) needed.add(bundle);
         }
         // The pack too, as the injected groups wait for it: the view's components start in the page language.
-        return Promise.all([...needed].map(loadBundle).concat(NDS.i18n.settled)).then(() => refreshContainer(root));
+        return Promise.all([...needed].map(loadBundle).concat(NDS.i18n.settled)).then(() => syncContainer(root));
     }
 
     NDS.init = {
-        initialize: initializeNDS,
+        initialize: setupNds,
         components: components,
         config: config,
         // Works regardless of enableLogging, which only controls the automatic sweep.
         audit: () => NDS.audit.run(),
-        refresh: refreshContainer,
+        refresh: syncContainer,
         mount: mountContainer,
         destroy: destroyContainer,
-        owns: (el) => components.some((c) => c.owns && el.matches(c.selector)),
-        pending,
+        owns: (el) => components.some((component) => component.owns && el.matches(component.selector)),
+        pending: hasPending,
         ready,
     };
 
@@ -1024,9 +1024,9 @@
     // only the rare sync-in-<head> case waits.
     if (config.autoInitialize) {
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeNDS);
+            document.addEventListener('DOMContentLoaded', setupNds);
         } else {
-            setTimeout(initializeNDS, 0);
+            setTimeout(setupNds, 0);
         }
     }
 })();

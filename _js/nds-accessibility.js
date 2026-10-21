@@ -32,7 +32,7 @@
  *   - This file is a BUNDLE, not a <script> tag: nds-loader.js registers it `lazy`, so
  *     nothing here is downloaded until the FAB is pressed — or, for a visitor whose
  *     saved prefs must apply at load, at init time via the entry's eager(). The loader
- *     stamps `loading` on the pressed trigger to cover that fetch and armedThen() below
+ *     stamps `loading` on the pressed trigger to cover that fetch and runArmed() below
  *     clears it, so the two read as one spinner. data-armed is stamped by init() itself
  *     once a panel exists, not written by anything external. A visitor who never presses
  *     the FAB downloads none of this.
@@ -183,21 +183,21 @@
     // language's script, so every language written in one is covered (ar, fa, ur, pa-Arab…).
     // On such a page the tile goes, a bundle's preset skips it and a saved value does not apply.
     const joinedScripts = new Set(['Arab', 'Syrc', 'Mong', 'Nkoo', 'Adlm', 'Mand']);
-    const noLetterSpacing = () => {
+    const isLetterSpacingBlocked = () => {
         try { return joinedScripts.has(new Intl.Locale(document.documentElement.lang || 'en').maximize().script); }
         catch { return false; }   // not a language tag
     };
 
     // Normalize a bundle entry. line-height + word-spacing + the font primitives still
     // apply where letter spacing does not.
-    function bundleRecipe(name) {
+    function getBundleRecipe(name) {
         const entry = modeBundles[name];
         if (!entry) return { primitives: [], settings: null };
         if (Array.isArray(entry)) return { primitives: entry, settings: null };
         let settings = entry.settings || null;
-        if (settings && noLetterSpacing() && 'letter-spacing' in settings) {
+        if (settings && isLetterSpacingBlocked() && 'letter-spacing' in settings) {
             const stripped = {};
-            for (const k in settings) if (k !== 'letter-spacing') stripped[k] = settings[k];
+            for (const key in settings) if (key !== 'letter-spacing') stripped[key] = settings[key];
             settings = stripped;
         }
         return { primitives: entry.primitives || [], settings };
@@ -213,7 +213,7 @@
         'reduce-motion': matchMedia('(prefers-reduced-motion: reduce)'),
         'high-contrast': matchMedia('(prefers-contrast: more)'),
     };
-    function isSuppliedByOS(name) {
+    function isSuppliedByOs(name) {
         return !!(osMediaQueries[name] && osMediaQueries[name].matches);
     }
 
@@ -227,7 +227,7 @@
         { key: 'word-spacing',   cssVar: '--user-word-spacing',   token: 'has-word-spacing',   def: '0' },
     ];
 
-    let state = defaultState();
+    let state = getDefaultState();
     let panel = null;
     let toggleBtn = null;
     let openerEl = null;       // element that opened the panel — focus returns here
@@ -240,9 +240,9 @@
     let resetDoneTimer = null;      // post-reset visible-flash
     let resetCountdownTimer = null; // mid-arming SR announcement
     let initDone = false;
-    let arming = false;       // cold build in flight — see armedThen()
+    let arming = false;       // cold build in flight — see runArmed()
 
-    function defaultState() {
+    function getDefaultState() {
         return {
             modes:    [],                      // user-toggled primitives
             bundles:  [],                      // active accordion bundles
@@ -272,32 +272,32 @@
     function load() {
         try {
             const raw = localStorage.getItem(STORAGE_KEY);
-            if (!raw) return defaultState();
+            if (!raw) return getDefaultState();
             const parsed = JSON.parse(raw);
             // Route the localStorage payload through safeMerge so a planted
             // __proto__ key can't replace the rehydrated state's prototype.
-            const result = NDS.i18n.safeMerge(defaultState(), parsed);
-            result.settings = NDS.i18n.safeMerge(defaultState().settings, parsed.settings || {});
+            const result = NDS.i18n.safeMerge(getDefaultState(), parsed);
+            result.settings = NDS.i18n.safeMerge(getDefaultState().settings, parsed.settings || {});
             if (!Array.isArray(result.modes))    result.modes = [];
             if (!Array.isArray(result.bundles))  result.bundles = [];
             if (!Array.isArray(result.excluded)) result.excluded = [];
             return result;
         } catch {
-            return defaultState();
+            return getDefaultState();
         }
     }
 
     // (state.modes ∪ each active bundle's primitives ∪ OS-supplied) − state.excluded
-    function effectiveTokens() {
+    function getEffectiveTokens() {
         const tokens = new Set(state.modes);
-        for (const k in osMediaQueries) if (osMediaQueries[k].matches) tokens.add(k);
+        for (const queryName in osMediaQueries) if (osMediaQueries[queryName].matches) tokens.add(queryName);
         for (let i = 0; i < state.bundles.length; i++) {
-            const b = state.bundles[i];
-            const { primitives } = bundleRecipe(b);
+            const bundle = state.bundles[i];
+            const { primitives } = getBundleRecipe(bundle);
             if (primitives.length > 0) {
-                primitives.forEach(p => tokens.add(p));
+                primitives.forEach(primitive => tokens.add(primitive));
             } else {
-                tokens.add(b);                 // marker-only bundle (motor-impaired)
+                tokens.add(bundle);                 // marker-only bundle (motor-impaired)
             }
         }
         for (let i = 0; i < state.excluded.length; i++) tokens.delete(state.excluded[i]);
@@ -306,7 +306,7 @@
 
     function isSuppliedByBundle(primitive) {
         for (let i = 0; i < state.bundles.length; i++) {
-            const { primitives } = bundleRecipe(state.bundles[i]);
+            const { primitives } = getBundleRecipe(state.bundles[i]);
             if (primitives.indexOf(primitive) !== -1) return true;
         }
         return false;
@@ -316,12 +316,12 @@
     // next visit boots cold and the panel stays inert in its template. Mask
     // geometry alone doesn't count: it only matters while its mode is on.
     // String() both sides: cycled settings come back as strings ('0' vs 0).
-    function isDefaultState(s) {
-        if (s.modes.length || s.bundles.length || s.excluded.length) return false;
-        const def = defaultState().settings;
-        for (const k in def) {
-            if (k === 'mask-band' || k === 'mask-y') continue;
-            if (String(s.settings[k]) !== String(def[k])) return false;
+    function isDefaultState(candidate) {
+        if (candidate.modes.length || candidate.bundles.length || candidate.excluded.length) return false;
+        const def = getDefaultState().settings;
+        for (const key in def) {
+            if (key === 'mask-band' || key === 'mask-y') continue;
+            if (String(candidate.settings[key]) !== String(def[key])) return false;
         }
         return true;
     }
@@ -335,23 +335,23 @@
 
     // Persist + push to DOM. Every state mutator ends with commit() so
     // save/apply stays atomic.
-    function commit() { save(); apply(); }
+    function commit() { save(); syncRoot(); }
 
     // Single source of truth for the visible state — runs after every mutation.
-    function apply() {
-        const s = state.settings;
-        const tokens = effectiveTokens();
-        const step = parseInt(s['font-step'], 10) || 0;
+    function syncRoot() {
+        const settings = state.settings;
+        const tokens = getEffectiveTokens();
+        const step = parseInt(settings['font-step'], 10) || 0;
         if (step >= 1 && step <= 3) tokens.add('font-step-' + step);
-        if (s['text-align'] && s['text-align'] !== 'default') {
-            tokens.add('text-align-' + s['text-align']);
+        if (settings['text-align'] && settings['text-align'] !== 'default') {
+            tokens.add('text-align-' + settings['text-align']);
         }
 
         // Continuous scalars → inline var when non-default + presence token.
         scalarProperties.forEach(({ key, cssVar, def, token }) => {
-            const v = s[key];
-            if (v && v !== def && !(key === 'letter-spacing' && noLetterSpacing())) {
-                root.style.setProperty(cssVar, v);
+            const value = settings[key];
+            if (value && value !== def && !(key === 'letter-spacing' && isLetterSpacingBlocked())) {
+                root.style.setProperty(cssVar, value);
                 tokens.add(token);
             } else {
                 root.style.removeProperty(cssVar);
@@ -364,15 +364,15 @@
             root.setAttribute('data-a11y', Array.from(tokens).join(' '));
         }
 
-        if (panel) syncUI();
+        if (panel) syncUi();
 
-        applyReadingMask(tokens.has('reading-mask'));
-        applyMotionPause(tokens.has('reduce-motion'));
+        setReadingMask(tokens.has('reading-mask'));
+        setMotionPause(tokens.has('reduce-motion'));
     }
 
     // WCAG 2.2.2 Pause, Stop, Hide. One-shot pause on activation; we don't
     // auto-resume on toggle-off (motion-sensitive users own resume).
-    function applyMotionPause(active) {
+    function setMotionPause(active) {
         if (!active) return;
         const media = document.querySelectorAll('video[autoplay], audio[autoplay]');
         for (let i = 0; i < media.length; i++) {
@@ -383,7 +383,7 @@
     // Reading mask — telescope-style: fixed at saved Y, only moves on
     // grab-handle drag or arrow-key nudge. Layout: [size−] [grab] [size+]
     // [close] horizontally. Persists mask-y on drag-end, mask-band on size click.
-    function applyReadingMask(active) {
+    function setReadingMask(active) {
         if (active && !maskAbortController) {
             if (!maskTopEl) {
                 maskTopEl = document.createElement('div');
@@ -505,11 +505,11 @@
                 if (!btn) return;
                 const action = btn.dataset.action;
                 if (action === 'size-up' || action === 'size-down') {
-                    const cur = state.settings['mask-band'] || 60;
+                    const current = state.settings['mask-band'] || 60;
                     const next = action === 'size-up'
-                        ? Math.min(MASK_BAND_MAX, cur + MASK_BAND_STEP)
-                        : Math.max(MASK_BAND_MIN, cur - MASK_BAND_STEP);
-                    if (next === cur) return;
+                        ? Math.min(MASK_BAND_MAX, current + MASK_BAND_STEP)
+                        : Math.max(MASK_BAND_MIN, current - MASK_BAND_STEP);
+                    if (next === current) return;
                     state.settings['mask-band'] = next;
                     save();
                     render();
@@ -592,14 +592,14 @@
     }
 
     // Bundle switch ON ⇔ in state.bundles. Primitive tile ON ⇔ in
-    // effectiveTokens (so bundle-supplied primitives also light up).
+    // getEffectiveTokens (so bundle-supplied primitives also light up).
     function isModeActive(name, tokens) {
         if (modeBundles[name]) return state.bundles.includes(name);
-        return (tokens || effectiveTokens()).has(name);
+        return (tokens || getEffectiveTokens()).has(name);
     }
 
-    function syncUI() {
-        const tokens = effectiveTokens();
+    function syncUi() {
+        const tokens = getEffectiveTokens();
         // Tile buttons reflect active state via aria-pressed + data-state~="selected"
         // in lockstep — ARIA for SR, data-state for the NDS button SCSS.
         const setPressed = (el, on) => {
@@ -623,20 +623,20 @@
         // level), so render (cycle.length - 1) bars and light up `idx` of them.
         panel.querySelectorAll('button[data-a11y-setting]').forEach(btn => {
             const key = btn.dataset.a11ySetting;
-            const cycle = (btn.dataset.a11yCycle || '').split(',').map(s => s.trim());
-            const cur = String(state.settings[key]);
-            const idx = Math.max(0, cycle.indexOf(cur));
-            setPressed(btn, idx > 0);
-            const valEl = btn.querySelector('[data-a11y-value]');
-            if (valEl) valEl.textContent = formatSettingValue(key, cur);
+            const cycle = (btn.dataset.a11yCycle || '').split(',').map(text => text.trim());
+            const current = String(state.settings[key]);
+            const index = Math.max(0, cycle.indexOf(current));
+            setPressed(btn, index > 0);
+            const valueEl = btn.querySelector('[data-a11y-value]');
+            if (valueEl) valueEl.textContent = formatSettingValue(key, current);
             const bars = btn.querySelectorAll('[data-a11y-bars] .nds-accessibility-tile-bar');
-            bars.forEach((bar, i) => (i < idx ? addState : removeState)(bar, 'active'));
+            bars.forEach((bar, i) => (i < index ? addState : removeState)(bar, 'active'));
         });
         // Live "(n)" counter next to each accordion title. Empty when 0
         // so the title stays clean by default.
-        const countActive = (collapseId, sel) => {
+        const countActive = (collapseId, selector) => {
             const root = panel.querySelector(collapseId);
-            return root ? root.querySelectorAll(sel).length : 0;
+            return root ? root.querySelectorAll(selector).length : 0;
         };
         const counts = {
             modes:    countActive('#a11y-modes-collapse',    'input[data-a11y-mode]:checked'),
@@ -644,20 +644,20 @@
             visual:   countActive('#a11y-visual-collapse',   'button[aria-pressed="true"]'),
         };
         panel.querySelectorAll('[data-a11y-count]').forEach(el => {
-            const n = counts[el.dataset.a11yCount] || 0;
-            el.textContent = n > 0 ? String(n) : '';
+            const count = counts[el.dataset.a11yCount] || 0;
+            el.textContent = count > 0 ? String(count) : '';
         });
         // SR sibling — visible badge is aria-hidden so SR users would
         // otherwise miss the count entirely.
         panel.querySelectorAll('[data-a11y-count-sr]').forEach(el => {
-            const n = counts[el.dataset.a11yCountSr] || 0;
-            el.textContent = n > 0 ? `, ${n} ${words.text('active')}` : '';
+            const count = counts[el.dataset.a11yCountSr] || 0;
+            el.textContent = count > 0 ? `, ${count} ${words.text('active')}` : '';
         });
     }
 
     // Render (cycle.length - 1) bars in [data-a11y-bars]. Idempotent.
-    function populateSettingBars(btn) {
-        const cycle = (btn.dataset.a11yCycle || '').split(',').map(s => s.trim());
+    function renderSettingBars(btn) {
+        const cycle = (btn.dataset.a11yCycle || '').split(',').map(text => text.trim());
         const barsEl = btn.querySelector('[data-a11y-bars]');
         if (!barsEl || barsEl.children.length) return;
         const levels = Math.max(0, cycle.length - 1);
@@ -670,32 +670,32 @@
         barsEl.appendChild(frag);
     }
 
-    function formatSettingValue(key, val) {
+    function formatSettingValue(key, value) {
         if (key === 'font-step') {
-            const n = parseInt(val, 10) || 0;
-            return n === 0 ? words.text('default') : '+' + n;
+            const count = parseInt(value, 10) || 0;
+            return count === 0 ? words.text('default') : '+' + count;
         }
         if (key === 'text-align') {
-            return words.has(val) ? words.text(val) : words.text('default');
+            return words.has(value) ? words.text(value) : words.text('default');
         }
         if (key === 'line-height') {
-            return val === 'normal' ? words.text('default') : val + '×';
+            return value === 'normal' ? words.text('default') : value + '×';
         }
         if (key === 'letter-spacing' || key === 'word-spacing') {
-            return spacingTier[val] ? words.text(spacingTier[val]) : val;
+            return spacingTier[value] ? words.text(spacingTier[value]) : value;
         }
-        return val;
+        return value;
     }
 
     // Live-region announcer (WCAG 4.1.3) — delegates the clear-then-set
     // re-utterance to NDS.announce, scoped to the panel's own status region.
     // Passing null when the panel is absent keeps "no panel → no announce".
-    function announce(msg) {
-        NDS.announce(msg, panel ? panel.querySelector('[data-a11y-status]') : null);
+    function announce(message) {
+        NDS.announce(message, panel ? panel.querySelector('[data-a11y-status]') : null);
     }
 
     // Resolve a localized label by reading the visible <span class="nds-label">.
-    function labelFor(name) {
+    function getLabel(name) {
         if (!panel) return name;
         const el = panel.querySelector(
             '[data-a11y-mode="' + name + '"], [data-a11y-visual="' + name + '"]'
@@ -705,7 +705,7 @@
         return lab ? lab.textContent.trim() : name;
     }
 
-    function settingLabelFor(key) {
+    function getSettingLabel(key) {
         if (!panel) return key;
         const btn = panel.querySelector('[data-a11y-setting="' + key + '"]');
         if (!btn) return key;
@@ -722,10 +722,10 @@
         state.bundles.splice(i, 1);
         const snapshot = state.settingsSnapshots[name];
         if (!snapshot) return;
-        const { settings: bundleSettings } = bundleRecipe(name);
-        for (const k in snapshot) {
-            if (bundleSettings && state.settings[k] !== bundleSettings[k]) continue;
-            state.settings[k] = snapshot[k];
+        const { settings: bundleSettings } = getBundleRecipe(name);
+        for (const key in snapshot) {
+            if (bundleSettings && state.settings[key] !== bundleSettings[key]) continue;
+            state.settings[key] = snapshot[key];
         }
         delete state.settingsSnapshots[name];
     }
@@ -735,16 +735,16 @@
     // apply the bundle defaults, but ONLY where the user is still at default.
     function activateBundle(name) {
         state.bundles.push(name);
-        const { primitives, settings } = bundleRecipe(name);
+        const { primitives, settings } = getBundleRecipe(name);
         if (primitives.length && state.excluded.length) {
-            state.excluded = state.excluded.filter(p => !primitives.includes(p));
+            state.excluded = state.excluded.filter(primitive => !primitives.includes(primitive));
         }
         if (!settings) return;
-        const defaults = defaultState().settings;
+        const defaults = getDefaultState().settings;
         const snapshot = {};
-        for (const k in settings) {
-            snapshot[k] = state.settings[k];
-            if (state.settings[k] === defaults[k]) state.settings[k] = settings[k];
+        for (const key in settings) {
+            snapshot[key] = state.settings[key];
+            if (state.settings[key] === defaults[key]) state.settings[key] = settings[key];
         }
         state.settingsSnapshots[name] = snapshot;
     }
@@ -760,15 +760,15 @@
             // ON ≡ (in modes OR supplied) AND NOT excluded.
             const inModes   = state.modes.indexOf(name)   !== -1;
             const excluded  = state.excluded.indexOf(name) !== -1;
-            const supplied  = isSuppliedByBundle(name) || isSuppliedByOS(name);
+            const supplied  = isSuppliedByBundle(name) || isSuppliedByOs(name);
             const effective = (inModes || supplied) && !excluded;
 
             if (effective) {
-                if (inModes) state.modes = state.modes.filter(m => m !== name);
+                if (inModes) state.modes = state.modes.filter(mode => mode !== name);
                 if (supplied && !excluded) state.excluded.push(name);
             } else {
                 if (excluded) {
-                    state.excluded = state.excluded.filter(p => p !== name);
+                    state.excluded = state.excluded.filter(token => token !== name);
                     if (!supplied && !inModes) state.modes.push(name);
                 } else if (!inModes) {
                     state.modes.push(name);
@@ -779,24 +779,24 @@
 
         const isOn = modeBundles[name]
             ? state.bundles.includes(name)
-            : effectiveTokens().has(name);
-        announce(labelFor(name) + ' ' + (isOn ? words.text('on') : words.text('off')));
+            : getEffectiveTokens().has(name);
+        announce(getLabel(name) + ' ' + (isOn ? words.text('on') : words.text('off')));
     }
 
     function setVisualFilter(filter) {
         // Visual filters are mutex AND can be supplied via state.modes,
         // bundle primitives, or OS — toggle has to manage all three so
         // bundle-/OS-supplied filters can't stack with the user's pick.
-        const tokens = effectiveTokens();
+        const tokens = getEffectiveTokens();
         const wasActive = tokens.has(filter);
-        const suppliedElsewhere = n => isSuppliedByBundle(n) || isSuppliedByOS(n);
+        const isSuppliedElsewhere = primitive => isSuppliedByBundle(primitive) || isSuppliedByOs(primitive);
 
         if (wasActive) {
             // Turn off — strip from modes, exclude if supplied elsewhere.
             if (state.modes.includes(filter)) {
-                state.modes = state.modes.filter(m => m !== filter);
+                state.modes = state.modes.filter(mode => mode !== filter);
             }
-            if (suppliedElsewhere(filter) && !state.excluded.includes(filter)) {
+            if (isSuppliedElsewhere(filter) && !state.excluded.includes(filter)) {
                 state.excluded.push(filter);
             }
         } else {
@@ -805,32 +805,32 @@
                 if (other === filter) return;
                 const i = state.modes.indexOf(other);
                 if (i >= 0) state.modes.splice(i, 1);
-                if (suppliedElsewhere(other) && !state.excluded.includes(other)) {
+                if (isSuppliedElsewhere(other) && !state.excluded.includes(other)) {
                     state.excluded.push(other);
                 }
             });
             const ei = state.excluded.indexOf(filter);
             if (ei >= 0) state.excluded.splice(ei, 1);
-            if (!suppliedElsewhere(filter) && !state.modes.includes(filter)) {
+            if (!isSuppliedElsewhere(filter) && !state.modes.includes(filter)) {
                 state.modes.push(filter);
             }
         }
         commit();
 
-        announce(labelFor(filter) + ' ' + (wasActive ? words.text('off') : words.text('on')));
+        announce(getLabel(filter) + ' ' + (wasActive ? words.text('off') : words.text('on')));
     }
 
-    function cycleSetting(key, cycleArr) {
-        const cur = String(state.settings[key]);
-        const idx = cycleArr.indexOf(cur);
-        const next = cycleArr[(idx + 1) % cycleArr.length];
+    function cycleSetting(key, cycle) {
+        const current = String(state.settings[key]);
+        const index = cycle.indexOf(current);
+        const next = cycle[(index + 1) % cycle.length];
         state.settings[key] = next;
         commit();
-        announce(settingLabelFor(key) + ' ' + words.text('set') + ' ' + formatSettingValue(key, next));
+        announce(getSettingLabel(key) + ' ' + words.text('set') + ' ' + formatSettingValue(key, next));
     }
 
     function reset() {
-        state = defaultState();
+        state = getDefaultState();
         commit();
         announce(words.text('reset_announce'));
         flashResetDone();
@@ -842,10 +842,10 @@
         if (!panel) return;
         const btn = panel.querySelector('[data-accessibility-action="reset"]');
         if (!btn) return;
-        const lbl = btn.querySelector('.nds-label');
-        if (!lbl) return;
+        const label = btn.querySelector('.nds-label');
+        if (!label) return;
         if (resetDoneTimer) clearTimeout(resetDoneTimer);
-        if (!btn.dataset.flashOriginal) btn.dataset.flashOriginal = lbl.textContent;
+        if (!btn.dataset.flashOriginal) btn.dataset.flashOriginal = label.textContent;
         // Insert icon as direct button child before the label. The
         // .nds-btn[data-status="success"] rule in _buttons.scss auto-swaps
         // any child .nds-icon to a checkmark via the shared --nds-icon var.
@@ -855,14 +855,14 @@
             icon.className = 'nds-icon';
             icon.dataset.flashIcon = '';
             NDS.aria.hidden(icon, true);
-            btn.insertBefore(icon, lbl);
+            btn.insertBefore(icon, label);
         }
-        lbl.textContent = words.text('reset_done');
+        label.textContent = words.text('reset_done');
         NDS.status.set(btn, 'success');
         resetDoneTimer = setTimeout(() => {
             resetDoneTimer = null;
             if (btn.dataset.flashOriginal) {
-                lbl.textContent = btn.dataset.flashOriginal;
+                label.textContent = btn.dataset.flashOriginal;
                 delete btn.dataset.flashOriginal;
             }
             const icon = btn.querySelector(':scope > [data-flash-icon]');
@@ -879,9 +879,9 @@
         if (resetDoneTimer) {
             clearTimeout(resetDoneTimer);
             resetDoneTimer = null;
-            const lbl = btn.querySelector('.nds-label');
-            if (lbl && btn.dataset.flashOriginal) {
-                lbl.textContent = btn.dataset.flashOriginal;
+            const flashLabel = btn.querySelector('.nds-label');
+            if (flashLabel && btn.dataset.flashOriginal) {
+                flashLabel.textContent = btn.dataset.flashOriginal;
                 delete btn.dataset.flashOriginal;
             }
             const icon = btn.querySelector(':scope > [data-flash-icon]');
@@ -896,10 +896,10 @@
             reset();
             return;
         }
-        const lbl = btn.querySelector('.nds-label');
-        if (!lbl) { reset(); return; }
-        btn.dataset.originalLabel = lbl.textContent;
-        lbl.textContent = words.text('confirm_reset');
+        const label = btn.querySelector('.nds-label');
+        if (!label) { reset(); return; }
+        btn.dataset.originalLabel = label.textContent;
+        label.textContent = words.text('confirm_reset');
         addState(btn, 'arming');
         btn.style.setProperty('--progress-duration', RESET_CONFIRM_MS + 'ms');
         btn.classList.add('nds-progress');
@@ -925,11 +925,11 @@
     }
 
     function restoreResetLabel(btn) {
-        const lbl = btn.querySelector('.nds-label');
-        if (lbl && btn.dataset.originalLabel) {
-            lbl.textContent = btn.dataset.originalLabel;
+        const label = btn.querySelector('.nds-label');
+        if (label && btn.dataset.originalLabel) {
+            label.textContent = btn.dataset.originalLabel;
             delete btn.dataset.originalLabel;
-            NDS.i18n.translate(lbl);   // a label saved before the pack landed comes back in the page language
+            NDS.i18n.translate(label);   // a label saved before the pack landed comes back in the page language
         }
         removeState(btn, 'arming');
         btn.classList.remove('nds-progress');
@@ -952,7 +952,7 @@
     // ANY call with a Promise — always truthy — which would read as "open" and
     // wrongly trigger close() on a panel Panel.js never actually opened.
     // ----------------------------------------------
-    const panelIsOpen = () => !!(panel && !NDS.Panel.__ndsStub && NDS.Panel.isOpen(panel));
+    const isPanelOpen = () => !!(panel && !NDS.Panel.__ndsStub && NDS.Panel.isOpen(panel));
 
     // The boot gate only arms on a saved-prefs load or a FAB click, so a consumer
     // wiring their own trigger — the documented pattern — would otherwise call into
@@ -977,7 +977,7 @@
     // cold build are noise, not a queue — the trigger is already spinning.
     // (The FAB's pointer-events go dead under .nds-loading, but keyboard
     // activation and a consumer's own open()/toggle() call do not.)
-    function armedThen(proceed, triggerEl) {
+    function runArmed(proceed, triggerEl) {
         if (arming) return;
         if (initDone) { if (ensureArmed()) proceed(); return; }
         arming = true;
@@ -992,7 +992,7 @@
     }
 
     function open(triggerEl) {
-        armedThen(() => {
+        runArmed(() => {
             openerEl = document.activeElement;
             NDS.Panel.open(panel);
         }, triggerEl);
@@ -1003,7 +1003,7 @@
     }
 
     function toggle(triggerEl) {
-        armedThen(() => {
+        runArmed(() => {
             openerEl = document.activeElement;
             NDS.Panel.toggle(panel);
         }, triggerEl);
@@ -1015,7 +1015,7 @@
     function destroy() {
         // Route through close() first so Panel's open-state cleanup runs before
         // the AbortController aborts the state-mirroring listeners.
-        if (panelIsOpen()) close();
+        if (isPanelOpen()) close();
         if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
         if (resetDoneTimer) { clearTimeout(resetDoneTimer); resetDoneTimer = null; }
         if (resetCountdownTimer) { clearTimeout(resetCountdownTimer); resetCountdownTimer = null; }
@@ -1034,10 +1034,10 @@
         { sel: 'button[data-a11y-visual]',  event: 'click',  fn: el => setVisualFilter(el.dataset.a11yVisual) },
         { sel: 'button[data-a11y-setting]', event: 'click',
           fn: el => {
-              const cycle = (el.dataset.a11yCycle || '').split(',').map(s => s.trim());
+              const cycle = (el.dataset.a11yCycle || '').split(',').map(text => text.trim());
               cycleSetting(el.dataset.a11ySetting, cycle);
           },
-          each: populateSettingBars,
+          each: renderSettingBars,
         },
         { sel: '[data-accessibility-action]', event: 'click',
           fn: el => {
@@ -1048,7 +1048,7 @@
 
     // The panel's words are data-i18n markers, which core translates.
     function dropExcludedTiles() {
-        if (panel && noLetterSpacing()) panel.querySelectorAll('[data-a11y-exclude-token="letter-spacing"]').forEach(el => el.remove());
+        if (panel && isLetterSpacingBlocked()) panel.querySelectorAll('[data-a11y-exclude-token="letter-spacing"]').forEach(el => el.remove());
     }
 
     // Panel markup — moved out of every page's HTML (was a <template> in
@@ -1057,7 +1057,7 @@
     // FAB's own data-panel-side (fallback 'end') so the FAB is the one place
     // to reposition both itself (data-fab-pos="auto") and the panel it builds — no
     // JS edit needed for the common case.
-    function panelMarkup(side) {
+    function buildPanelMarkup(side) {
         return `<dialog id="nds-accessibility-panel"
        class="nds-panel nds-accessibility-panel"
        data-panel-side="${NDS.escapeHtml(side)}"
@@ -1386,7 +1386,7 @@
 </dialog>`;
     }
 
-    // Default: nothing ships in the page's HTML for this — panelMarkup() below
+    // Default: nothing ships in the page's HTML for this — buildPanelMarkup() below
     // supplies the <template> content instead. Still honors a page-authored
     // <template class="nds-panel-template"> or a bare panel already in the
     // document (pre-1.13 markup, or a consumer's own customized copy).
@@ -1399,13 +1399,13 @@
         // it ever sitting in the page's HTML. data-panel-side still comes from
         // toggleBtn when it has one — a real trigger without it just gets the
         // 'end' default, same as the built-in FAB markup ships.
-        if (!document.getElementById(id) && ![...document.querySelectorAll('template')].some(t => t.content.getElementById(id))) {
-            const tpl = document.createElement('template');
-            tpl.innerHTML = panelMarkup((toggleBtn && toggleBtn.dataset.panelSide) || 'end');
-            document.body.appendChild(tpl);
+        if (!document.getElementById(id) && ![...document.querySelectorAll('template')].some(item => item.content.getElementById(id))) {
+            const template = document.createElement('template');
+            template.innerHTML = buildPanelMarkup((toggleBtn && toggleBtn.dataset.panelSide) || 'end');
+            document.body.appendChild(template);
         }
         const injected = NDS.fromTemplate(id);
-        if (injected) wireInjected(injected);
+        if (injected) syncInjectedTheme(injected);
         // Accordion/Panel/Fab live in an injected bundle (delegated, low-priority,
         // never gated on the reveal) that may still be a lazy stub the instant
         // fromTemplate's refresh runs — nds-loader.js skips a stub on purpose,
@@ -1421,7 +1421,7 @@
     // fromTemplate's NDS.init.refresh already armed Panel/Theme/Accordion/ScrollMore
     // (their inits are run-once / per-element guarded). What's left is the mode
     // mirror a Theme init that ran BEFORE the panel existed can't know about.
-    function wireInjected(panelEl) {
+    function syncInjectedTheme(panelEl) {
         const themeBtn = panelEl.querySelector('[data-theme-toggle]');
         if (themeBtn) {
             const isDark = (root.getAttribute('data-theme') || '').split(/\s+/).includes('dark');
@@ -1435,7 +1435,7 @@
     }
 
     // triggerEl: the element that caused this arm (a click on it, if any) —
-    // used as toggleBtn so panelMarkup() reads ITS data-panel-side and i18n
+    // used as toggleBtn so buildPanelMarkup() reads ITS data-panel-side and i18n
     // localizes the element the user actually sees, rather than an arbitrary
     // document-order first-match. Falls back to a plain query when arming
     // with no trigger (the saved-prefs path).
@@ -1447,7 +1447,7 @@
         panel = resolvePanel();
         if (!toggleBtn || !panel) return;
         // Not in the markup: before the first press the panel does not exist, so the id would point nowhere.
-        document.querySelectorAll('[data-accessibility-toggle]').forEach(b => b.setAttribute('aria-controls', panel.id));
+        document.querySelectorAll('[data-accessibility-toggle]').forEach(toggle => toggle.setAttribute('aria-controls', panel.id));
 
         // Stamped here, not just in the boot gate, so the marker is true whichever
         // path armed the component.
@@ -1472,22 +1472,22 @@
         }, { signal });
 
         // Re-apply when an OS preference flips mid-session.
-        for (const k in osMediaQueries) {
-            osMediaQueries[k].addEventListener('change', () => apply(), { signal });
+        for (const key in osMediaQueries) {
+            osMediaQueries[key].addEventListener('change', () => syncRoot(), { signal });
         }
 
         // Close on width change. Panel re-measures the header offset itself.
         let prevW = window.innerWidth;
         const offResize = NDS.onResize(() => {
-            const w = window.innerWidth;
-            if (w === prevW) return;
-            prevW = w;
-            if (panelIsOpen()) close();
+            const width = window.innerWidth;
+            if (width === prevW) return;
+            prevW = width;
+            if (isPanelOpen()) close();
         });
         signal.addEventListener('abort', offResize);
 
-        wire.forEach(({ sel, event, fn, each }) => {
-            panel.querySelectorAll(sel).forEach(el => {
+        wire.forEach(({ sel: selector, event, fn, each }) => {
+            panel.querySelectorAll(selector).forEach(el => {
                 if (each) each(el);
                 el.addEventListener(event, () => fn(el), { signal });
             });
@@ -1496,9 +1496,9 @@
         dropExcludedTiles();
         // A press can build the panel before the pack lands: once it is in, write the script's
         // own words (values, counts) again.
-        words.load().then(syncUI);
+        words.load().then(syncUi);
 
-        syncUI();
+        syncUi();
     }
 
     NDS.Accessibility = {

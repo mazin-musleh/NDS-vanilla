@@ -183,26 +183,26 @@
     // ==============================================
     var numberRangeCheck = {
         validateNumberRange: function(input) {
-            var val = parseInt(input.value);
-            if (input.value === '' || isNaN(val)) return null;
+            var value = parseInt(input.value);
+            if (input.value === '' || isNaN(value)) return null;
             var min = input.hasAttribute('min') ? parseInt(input.min) : -Infinity;
             var max = input.hasAttribute('max') ? parseInt(input.max) : Infinity;
-            if (val < min) return { clamped: min, message: validator.getNumberRangeMessage('min', min) };
-            if (val > max) return { clamped: max, message: validator.getNumberRangeMessage('max', max) };
+            if (value < min) return { clamped: min, message: validator.getNumberRangeMessage('min', min) };
+            if (value > max) return { clamped: max, message: validator.getNumberRangeMessage('max', max) };
             return null;
         },
     };
 
     // Where a field's message goes: its data-feedback-target selector, else the first marked
     // target it owns, else the field itself.
-    function feedbackTargetOf(container) {
+    function getFeedbackTarget(container) {
         var selector = container.getAttribute('data-feedback-target');
         if (selector) return container.querySelector(selector) || container;
         // Own the marked target — skip footers of NESTED form-containers (the editor's popover
         // fields sit in the toolbar BEFORE the field's own footer; same rationale as ownField).
         var marked = container.querySelectorAll('[data-feedback-target]');
-        for (var t = 0; t < marked.length; t++) {
-            if (marked[t].closest('.nds-form-container, .nds-form-group, .nds-feedback') === container) return marked[t];
+        for (var i = 0; i < marked.length; i++) {
+            if (marked[i].closest('.nds-form-container, .nds-form-group, .nds-feedback') === container) return marked[i];
         }
         return container;
     }
@@ -214,7 +214,7 @@
     // our earlier tokens, keep the consumer's, append `id` when given.
     function describeBy(input, id) {
         var ids = (input.getAttribute('aria-describedby') || '').split(/\s+/)
-            .filter(function (t) { return t && t.indexOf('nds-fb-') !== 0; });
+            .filter(function (token) { return token && token.indexOf('nds-fb-') !== 0; });
         if (id) ids.push(id);
         if (ids.length) input.setAttribute('aria-describedby', ids.join(' '));
         else input.removeAttribute('aria-describedby');
@@ -239,9 +239,9 @@
                 if (status) {
                     NDS.status.set(container, status);
                     if (message) {
-                        var msgElement = container.querySelector('.nds-feedback-message');
-                        if (msgElement) {
-                            msgElement.textContent = message;
+                        var messageElement = container.querySelector('.nds-feedback-message');
+                        if (messageElement) {
+                            messageElement.textContent = message;
                         }
                     }
                 }
@@ -260,7 +260,7 @@
                 if (message) {
                     container.setAttribute('data-message', message);
 
-                    var target = feedbackTargetOf(container);
+                    var target = getFeedbackTarget(container);
 
                     // No slot: right after the field's control row, not the container's end,
                     // so a row the field carries below it (a search box's suggestions) stays below.
@@ -360,40 +360,40 @@
     // ==============================================
 
     // Saudi national ID / iqama: 10 digits, first 1 or 2, Luhn check digit.
-    function isNationalId(v) {
-        if (!/^[12]\d{9}$/.test(v)) return false;
+    function isNationalId(value) {
+        if (!/^[12]\d{9}$/.test(value)) return false;
         var sum = 0;
         for (var i = 0; i < 10; i++) {
-            var d = +v[i];
-            if (i % 2 === 0) { d *= 2; if (d > 9) d -= 9; }
-            sum += d;
+            var digit = +value[i];
+            if (i % 2 === 0) { digit *= 2; if (digit > 9) digit -= 9; }
+            sum += digit;
         }
         return sum % 10 === 0;
     }
 
     // IBAN: country + check digits, then mod-97 of the rearranged, letters-to-numbers string === 1.
-    function isIban(v) {
-        if (!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(v)) return false;
-        var s = (v.slice(4) + v.slice(0, 4)).replace(/[A-Z]/g, function (c) { return c.charCodeAt(0) - 55; });
+    function isIban(value) {
+        if (!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(value)) return false;
+        var digits = (value.slice(4) + value.slice(0, 4)).replace(/[A-Z]/g, function (char) { return char.charCodeAt(0) - 55; });
         var rem = 0;
-        for (var i = 0; i < s.length; i++) rem = (rem * 10 + +s[i]) % 97;
+        for (var i = 0; i < digits.length; i++) rem = (rem * 10 + +digits[i]) % 97;
         return rem === 1;
     }
 
     // .nds-national-id / .nds-iban: normalize the typed value and stamp the checksum result,
     // so checkValidity() (blur and submit) fails the field with a localized message. Empty = valid.
     function stampIdentifier(input) {
-        var original = input.value, clean, ok, msg;
+        var original = input.value, clean, ok, message;
         if (input.classList.contains('nds-national-id')) {
             clean = NDS.latinDigits(original).replace(/\D/g, '');
             ok = isNationalId(clean);
-            msg = strings.text('invalid_national_id');
+            message = strings.text('invalid_national_id');
         } else if (input.classList.contains('nds-iban')) {
             clean = NDS.latinDigits(original).toUpperCase().replace(/[^A-Z0-9]/g, '');
             // Banking apps copy a Saudi IBAN without its SA: a value starting with a digit gets it back.
             if (/^\d/.test(clean)) clean = 'SA' + clean;
             ok = isIban(clean);
-            msg = strings.text('invalid_iban');
+            message = strings.text('invalid_iban');
         } else {
             return;
         }
@@ -402,7 +402,7 @@
             NDS.setValue(input, clean, { change: false });
             try { input.setSelectionRange(caret, caret); } catch (_) {}
         }
-        input.setCustomValidity(clean && !ok ? msg : '');
+        input.setCustomValidity(clean && !ok ? message : '');
     }
 
     var validator = {
@@ -417,7 +417,7 @@
             var result = NDS.validation.check(el, check);
             if (!result) return null;
             var shown = {};
-            Object.keys(result).forEach(function(k) { if (k !== 'empty' && k !== 'focus') shown[k] = result[k]; });
+            Object.keys(result).forEach(function(key) { if (key !== 'empty' && key !== 'focus') shown[key] = result[key]; });
             if (options.showMessage) {
                 if (!shown.valid) statusManager.set({ element: el, status: 'error', message: shown.message });
                 else statusManager.clear(el);
@@ -430,7 +430,7 @@
         validateForm: function(formElement, options) {
             options = options || { showMessages: true, focusFirst: true };
             var form = formElement.closest('.nds-form') || formElement;
-            var acc = NDS.validation.run(form, { extra: numberRange });
+            var acc = NDS.validation.run(form, { extra: getRangeMessage });
             // A field still waiting for its component: load what it waits for, so the next submit can pass.
             if (acc.pending) NDS.init.mount(form);
 
@@ -459,7 +459,7 @@
     // follows the fix. One document listener per event name, added the first time a rule asks,
     // a rule from a later bundle included.
     var recheckOn = null;
-    function wireRechecks() {
+    function addRecheckListeners() {
         if (recheckOn) return;
         recheckOn = {};
         NDS.validation.onRule(function(rule) {
@@ -467,12 +467,12 @@
                 if (recheckOn[type]) return;
                 recheckOn[type] = true;
                 document.addEventListener(type, function(e) {
-                    var t = e.target;
-                    if (!t || !t.closest) return;
+                    var target = e.target;
+                    if (!target || !target.closest) return;
                     var seen = [];
-                    NDS.validation.rules.forEach(function(r) {
-                        if (r.on.indexOf(type) === -1) return;
-                        var el = t.closest(r.selector);
+                    NDS.validation.rules.forEach(function(recheckRule) {
+                        if (recheckRule.on.indexOf(type) === -1) return;
+                        var el = target.closest(recheckRule.selector);
                         if (!el || seen.indexOf(el) !== -1) return;
                         seen.push(el);
                         // The status sits on the field that holds el: a picker shows its message there.
@@ -485,7 +485,7 @@
     }
 
     // A number stepper's text input carries min/max that checkValidity ignores on type="text".
-    function numberRange(container, input) {
+    function getRangeMessage(container, input) {
         if (!container.querySelector('.nds-number-increment, .nds-number-decrement')) return null;
         var rangeError = numberRangeCheck.validateNumberRange(input);
         return rangeError ? rangeError.message : null;
@@ -528,13 +528,13 @@
     NDS.field.addType('digits', {
         init: function(input) { stampIdentifier(input); },
         on: {
-            beforeinput: function(e, c) {
-                if (!c || c.input.getAttribute('inputmode') !== 'numeric' || !e.data) return;
+            beforeinput: function(e, context) {
+                if (!context || context.input.getAttribute('inputmode') !== 'numeric' || !e.data) return;
                 var latin = NDS.latinDigits(e.data);
                 if (latin === e.data && !/\D/.test(latin)) return;
                 e.preventDefault();
                 if (/\D/.test(latin)) return;
-                var input = c.input;
+                var input = context.input;
                 // A script insert skips maxlength, so trim to it here.
                 if (input.maxLength >= 0) latin = latin.slice(0, Math.max(0, input.maxLength - input.value.length + (input.selectionEnd - input.selectionStart)));
                 if (!latin) return;
@@ -542,9 +542,9 @@
                 try { input.setRangeText(latin, input.selectionStart, input.selectionEnd, 'end'); } catch (_) { return; }
                 input.dispatchEvent(new InputEvent('input', { inputType: e.inputType, data: latin, bubbles: true }));
             },
-            input: function(e, c) {
-                if (!c || e._ndsArabicStripped) return;
-                var input = c.input;
+            input: function(e, context) {
+                if (!context || e._ndsArabicStripped) return;
+                var input = context.input;
                 // Digits only (a paste may bring spaces, dashes or +), no leading zero: the country code
                 // is already prepended. The browser enforces any maxlength.
                 if (input.classList.contains('nds-phone')) {
@@ -590,8 +590,8 @@
             return true;
         }
         if (container && NDS.status.get(container) !== 'error') {
-            var msg = validator.getNumberRangeMessage(isIncrement ? 'max' : 'min', isIncrement ? max : min);
-            statusManager.set({ element: container, status: 'error', message: msg });
+            var message = validator.getNumberRangeMessage(isIncrement ? 'max' : 'min', isIncrement ? max : min);
+            statusManager.set({ element: container, status: 'error', message: message });
         }
         return false;
     }
@@ -603,27 +603,27 @@
         hold = null;
     }
     // Simple class selectors first: every click off a field's own input passes through these parts.
-    var stepButton = function(t) {
-        var btn = t && t.closest && t.closest('.nds-number-increment, .nds-number-decrement');
+    var findStepButton = function(target) {
+        var btn = target && target.closest && target.closest('.nds-number-increment, .nds-number-decrement');
         return btn && btn.closest('.nds-form-control') ? btn : null;
     };
     NDS.field.addType('number', {
         around: {
-            click: function(e) { var btn = stepButton(e.target); if (btn) stepValue(btn); },
+            click: function(e) { var btn = findStepButton(e.target); if (btn) stepValue(btn); },
             pointerdown: function(e) {
-                var btn = stepButton(e.target);
+                var btn = findStepButton(e.target);
                 if (!btn || e.button !== 0) return;
                 stopHold();
-                var h = hold = { btn: btn, tiers: [], repeat: null };
+                var activeHold = hold = { btn: btn, tiers: [], repeat: null };
                 // Step at one tier's pace, replacing the pace before; a later tier takes over at its time.
                 var repeat = function(multiplier, speed) {
-                    clearInterval(h.repeat);
-                    h.repeat = setInterval(function() { stepValue(btn, multiplier); }, speed);
+                    clearInterval(activeHold.repeat);
+                    activeHold.repeat = setInterval(function() { stepValue(btn, multiplier); }, speed);
                 };
-                h.start = setTimeout(function() {
+                activeHold.start = setTimeout(function() {
                     repeat(STEP_TIERS[0][1], STEP_TIERS[0][2]);
                     STEP_TIERS.slice(1).forEach(function(tier) {
-                        h.tiers.push(setTimeout(function() { repeat(tier[1], tier[2]); }, tier[0]));
+                        activeHold.tiers.push(setTimeout(function() { repeat(tier[1], tier[2]); }, tier[0]));
                     });
                 }, 400);
             }
@@ -632,15 +632,15 @@
             pointerup: stopHold,
             // pointerleave does not bubble: a pointerout to outside the held button stands in for it.
             pointerout: function(e) { if (hold && e.target.closest && e.target.closest('.nds-btn') === hold.btn && !hold.btn.contains(e.relatedTarget)) stopHold(); },
-            focusout: function(e, c) {
-                if (!c || !c.control.querySelector('.nds-number-increment, .nds-number-decrement')) return;
-                var input = c.input;
-                var val = parseInt(input.value);
-                if (isNaN(val)) { if (input.value || input.validity.badInput) NDS.setValue(input, ''); return; }
+            focusout: function(e, context) {
+                if (!context || !context.control.querySelector('.nds-number-increment, .nds-number-decrement')) return;
+                var input = context.input;
+                var value = parseInt(input.value);
+                if (isNaN(value)) { if (input.value || input.validity.badInput) NDS.setValue(input, ''); return; }
                 var rangeError = numberRangeCheck.validateNumberRange(input);
                 if (rangeError) {
                     NDS.setValue(input, rangeError.clamped);
-                    statusManager.set({ element: c.container, status: 'error', message: rangeError.message });
+                    statusManager.set({ element: context.container, status: 'error', message: rangeError.message });
                 }
             }
         }
@@ -657,7 +657,7 @@
     }
     var hideShown = function(e) {
         if ((e.type === 'reset' && e.defaultPrevented) || !e.target.querySelectorAll) return;
-        e.target.querySelectorAll('.nds-toggle-password.show').forEach(function(t) { showPassword(t, false); });
+        e.target.querySelectorAll('.nds-toggle-password.show').forEach(function(passwordToggle) { showPassword(passwordToggle, false); });
     };
     NDS.field.addType('password', {
         // Remember the original type: the toggle swaps it.
@@ -672,14 +672,14 @@
         },
         on: {
             // Capture: runs before the field's own input listeners, so Password never counts a stripped letter.
-            'input:capture': function(e, c) {
-                if (!c || (c.input.type !== 'password' && c.input.dataset.type !== 'password')) return;
-                var input = c.input;
+            'input:capture': function(e, context) {
+                if (!context || (context.input.type !== 'password' && context.input.dataset.type !== 'password')) return;
+                var input = context.input;
                 var cleaned = input.value.replace(/[؀-ۿ]/g, '');
                 if (cleaned === input.value) return;
                 NDS.setValue(input, cleaned, { change: false });
                 e._ndsArabicStripped = true;
-                if (c.container) statusManager.set({ element: c.container, status: 'error', message: strings.text('no_arabic') });
+                if (context.container) statusManager.set({ element: context.container, status: 'error', message: strings.text('no_arabic') });
             },
             submit: hideShown,
             reset: hideShown
@@ -687,21 +687,21 @@
     });
 
     // Native select: the container's `open` state follows the menu, which the browser draws.
-    var nativeSelect = function(c) { return c && c.input.tagName === 'SELECT' ? (c.container || c.control) : null; };
+    var getNativeSelect = function(context) { return context && context.input.tagName === 'SELECT' ? (context.container || context.control) : null; };
     NDS.field.addType('select', {
         on: {
-            mousedown: function(e, c) {
-                var container = nativeSelect(c);
+            mousedown: function(e, context) {
+                var container = getNativeSelect(context);
                 if (container) NDS.state.has(container, 'open') ? NDS.state.remove(container, 'open') : NDS.state.add(container, 'open');
             },
-            keydown: function(e, c) {
-                var container = nativeSelect(c);
+            keydown: function(e, context) {
+                var container = getNativeSelect(context);
                 if (!container) return;
                 if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key) && !NDS.state.has(container, 'open')) NDS.state.add(container, 'open');
                 else if (e.key === 'Escape' || e.key === 'Tab') NDS.state.remove(container, 'open');
             },
-            focusout: function(e, c) { var container = nativeSelect(c); if (container) NDS.state.remove(container, 'open'); },
-            change: function(e, c) { var container = nativeSelect(c); if (container) NDS.state.remove(container, 'open'); }
+            focusout: function(e, context) { var container = getNativeSelect(context); if (container) NDS.state.remove(container, 'open'); },
+            change: function(e, context) { var container = getNativeSelect(context); if (container) NDS.state.remove(container, 'open'); }
         }
     });
 
@@ -740,27 +740,27 @@
             if (opts.validate) validateInput(input, fc);
         },
         on: {
-            focusout: function(e, c) {
-                if (!c || !isActive(c.input)) return;
-                syncClear(c.input, c.control);
-                if (c.container && NDS.status.get(c.container) === 'error') validateInput(c.input, c.control);
+            focusout: function(e, context) {
+                if (!context || !isActive(context.input)) return;
+                syncClear(context.input, context.control);
+                if (context.container && NDS.status.get(context.container) === 'error') validateInput(context.input, context.control);
             },
-            input: function(e, c) {
+            input: function(e, context) {
                 // A stripped letter keeps its message up.
-                if (!c || e._ndsArabicStripped) return;
-                syncClear(c.input, c.control);
-                if (c.container && NDS.status.get(c.container) !== '') statusManager.clear(c.container);
+                if (!context || e._ndsArabicStripped) return;
+                syncClear(context.input, context.control);
+                if (context.container && NDS.status.get(context.container) !== '') statusManager.clear(context.container);
                 // A group without its own rule drops its message on input too.
-                var group = c.control.closest('.nds-form-group');
+                var group = context.control.closest('.nds-form-group');
                 if (group && NDS.status.get(group) !== ''
                     && !group.hasAttribute('data-min-checked') && !group.hasAttribute('data-max-checked') && !group.hasAttribute('data-required')) {
                     statusManager.clear(group);
                 }
             },
-            change: function(e, c) {
-                if (!c) return;
-                syncClear(c.input, c.control);
-                if (c.container && NDS.status.get(c.container) === 'error') validateInput(c.input, c.control);
+            change: function(e, context) {
+                if (!context) return;
+                syncClear(context.input, context.control);
+                if (context.container && NDS.status.get(context.container) === 'error') validateInput(context.input, context.control);
             },
             reset: function(e) {
                 var form = e.target;
@@ -819,7 +819,7 @@
 
     // The submit listener stays on each <form>: a document one would change which of the page's own
     // submit listeners still run when the form is invalid.
-    function initForm(formElement) {
+    function setupForm(formElement) {
         var form = formElement.closest('.nds-form') || formElement;
         // .nds-form is also a layout marker on non-form elements (wizard step divs): only a real
         // <form> gets novalidate and a submit listener.
@@ -840,7 +840,7 @@
             }
             var waits = [];
             form.dispatchEvent(new CustomEvent('nds:form:valid', {
-                detail: { waitUntil: function(p) { waits.push(p); } },
+                detail: { waitUntil: function(promise) { waits.push(promise); } },
                 bubbles: true
             }));
             if (waits.length) setPending(form, e.submitter, Promise.allSettled(waits));
@@ -850,14 +850,14 @@
 
     var windowWired = false;
     // The el itself counts: a sweep can start on a form, a group or a field.
-    var selfAndInner = function(el, sel) {
-        var inner = Array.from(el.querySelectorAll(sel));
-        return el.matches && el.matches(sel) ? [el].concat(inner) : inner;
+    var getSelfAndInner = function(el, selector) {
+        var inner = Array.from(el.querySelectorAll(selector));
+        return el.matches && el.matches(selector) ? [el].concat(inner) : inner;
     };
     NDS.field.addType('forms', {
         create: function(el) {
-            selfAndInner(el, '.nds-form').forEach(initForm);
-            wireRechecks();
+            getSelfAndInner(el, '.nds-form').forEach(setupForm);
+            addRecheckListeners();
             if (windowWired) return;
             windowWired = true;
             // A POST that loads a page in this tab is pending until the page goes. On window, after every
@@ -865,12 +865,12 @@
             window.addEventListener('submit', function(e) {
                 var form = e.target, sub = e.submitter;
                 if (!form._ndsFormInitialized || form._ndsPendingEnd || e.defaultPrevented || form.hasAttribute('data-no-pending')) return;
-                var attr = function(n) { return (sub && sub.getAttribute('form' + n)) || form.getAttribute(n) || ''; };
-                if (attr('method').toLowerCase() === 'post' && /^(_self)?$/i.test(attr('target'))) setPending(form, sub);
+                var readFormAttribute = function(attributeName) { return (sub && sub.getAttribute('form' + attributeName)) || form.getAttribute(attributeName) || ''; };
+                if (readFormAttribute('method').toLowerCase() === 'post' && /^(_self)?$/i.test(readFormAttribute('target'))) setPending(form, sub);
             });
             // Back on a page from the browser's cache: nothing it sent is pending.
             window.addEventListener('pageshow', function(e) {
-                if (e.persisted) document.querySelectorAll('form').forEach(function(f) { if (f._ndsPendingEnd) f._ndsPendingEnd(); });
+                if (e.persisted) document.querySelectorAll('form').forEach(function(form) { if (form._ndsPendingEnd) form._ndsPendingEnd(); });
             });
         },
         on: {

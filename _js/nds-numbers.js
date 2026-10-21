@@ -31,34 +31,34 @@
     // prefix · sign · digits (commas allowed) · suffix
     const NUMBER = /^(.*?)([-+]?)((?:\d[\d,]*)?\.?\d+)(.*)$/s;
     const COUNTER = '[data-counter]';
-    const attr = (el, name) => el.getAttribute('data-counter-' + name);
+    const getCounterAttribute = (el, name) => el.getAttribute('data-counter-' + name);
 
     // text node → [text we wrote, the text it came from]: a re-run reads the source, never
     // our own output, which other locales group with "." ("3.240.000").
     const written = new WeakMap();
 
-    function source(node) {
-        const w = written.get(node);
-        return w && w[0] === node.textContent ? w[1] : node.textContent;
+    function getSourceText(node) {
+        const record = written.get(node);
+        return record && record[0] === node.textContent ? record[1] : node.textContent;
     }
 
     function write(node, text) {
-        written.set(node, [text, source(node)]);
+        written.set(node, [text, getSourceText(node)]);
         node.textContent = text;
     }
 
     // The written decimals are kept: both min and max, so 1250.50 keeps its zero.
-    const places = (n) => ({ minimumFractionDigits: n.decimals, maximumFractionDigits: n.decimals });
+    const toFractionOptions = (parsed) => ({ minimumFractionDigits: parsed.decimals, maximumFractionDigits: parsed.decimals });
 
     function parse(text) {
-        const m = text.trim().match(NUMBER);
-        if (!m) return null;
-        const digits = m[3].replace(/,/g, '');
-        return { prefix: m[1] + m[2], value: parseFloat(digits), decimals: (digits.split('.')[1] || '').length, suffix: m[4] };
+        const match = text.trim().match(NUMBER);
+        if (!match) return null;
+        const digits = match[3].replace(/,/g, '');
+        return { prefix: match[1] + match[2], value: parseFloat(digits), decimals: (digits.split('.')[1] || '').length, suffix: match[4] };
     }
 
     // The text node holding the number; icons and other children stay.
-    function numberNode(el) {
+    function findNumberNode(el) {
         for (const node of el.childNodes) {
             if (node.nodeType === Node.TEXT_NODE && /\d/.test(node.textContent)) return node;
         }
@@ -67,9 +67,9 @@
 
     function format(el) {
         if (!el || el.closest('code') || el.matches(COUNTER)) return;
-        const node = numberNode(el);
-        const n = node && parse(source(node));
-        if (n) write(node, n.prefix + NDS.formatNumber(n.value, places(n)) + n.suffix);
+        const node = findNumberNode(el);
+        const parsed = node && parse(getSourceText(node));
+        if (parsed) write(node, parsed.prefix + NDS.formatNumber(parsed.value, toFractionOptions(parsed)) + parsed.suffix);
     }
 
     function formatNumbers() {
@@ -77,32 +77,32 @@
     }
 
     function count(el, reduced) {
-        const node = numberNode(el);
-        const n = parse(el.getAttribute('data-counter') || (node ? source(node) : '')) || { prefix: '', value: 0, decimals: 0, suffix: '' };
-        const opts = places(n);
-        const start = parseFloat(attr(el, 'start')) || 0;
-        const ms = parseInt(attr(el, 'duration'), 10);
+        const node = findNumberNode(el);
+        const parsed = parse(el.getAttribute('data-counter') || (node ? getSourceText(node) : '')) || { prefix: '', value: 0, decimals: 0, suffix: '' };
+        const opts = toFractionOptions(parsed);
+        const start = parseFloat(getCounterAttribute(el, 'start')) || 0;
+        const ms = parseInt(getCounterAttribute(el, 'duration'), 10);
         const duration = reduced ? 0 : (isNaN(ms) ? 1000 : ms);
 
         const show = (value) => {
-            const text = n.prefix + NDS.formatNumber(value, opts) + n.suffix;
-            const target = numberNode(el);
+            const text = parsed.prefix + NDS.formatNumber(value, opts) + parsed.suffix;
+            const target = findNumberNode(el);
             if (!target) el.appendChild(document.createTextNode(text));
             else if (target.textContent !== text) write(target, text);
         };
-        const done = () => {
-            show(n.value);
+        const finish = () => {
+            show(parsed.value);
             el.setAttribute('data-animated', 'true');
             delete el._ndsCounting;
         };
 
         el._ndsCounting = true;
-        if (!duration) return done();
+        if (!duration) return finish();
         const t0 = performance.now();
         const tick = (now) => {
-            const p = (now - t0) / duration;
-            if (p >= 1) return done();
-            show(start + (n.value - start) * p);
+            const progress = (now - t0) / duration;
+            if (progress >= 1) return finish();
+            show(start + (parsed.value - start) * progress);
             requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
