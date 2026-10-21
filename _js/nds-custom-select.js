@@ -179,6 +179,7 @@
 
     // quiet: a form reset, which fires no input, change or select event.
     function setOption(formControl, option, quiet) {
+        addDocumentListeners();
         var selectInput = formControl.querySelector('.nds-select-input');
         if (!selectInput) return false;
 
@@ -252,7 +253,7 @@
         });
     }
 
-    // A page with no select at load never runs init(), so create() wires these too.
+    // A page with no select at load never runs init(), so create() and setValue()/clear() wire these too.
     function addDocumentListeners() {
         if (documentWired) return;
         documentWired = true;
