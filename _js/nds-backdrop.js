@@ -21,25 +21,19 @@
  *   - preventScroll, escapeClose and clickToClose all default to true.
  *   - onClick is what ESC and an outside click call: no handler means no dismiss.
  */
-/**
- * NDS Backdrop API
- * Provides a single shared backdrop/overlay for all components
- * Simple singleton pattern - one backdrop element in DOM
- */
-
 (function () {
   'use strict';
 
   // Single shared backdrop element
   let backdropElement = null;
-  // Ownership stack — nested consumers (panel → modal) push their config; when
+  // Ownership stack — nested consumers (a nav flyout → another) push their config; when
   // the top consumer hides, the prior owner's config (zIndex, onClick,
   // listeners) is restored so the backdrop returns to serving the layer
   // beneath. A counter alone would keep the backdrop up but leave it stuck on
   // the last-in config, orphaning the underlying owner's dismiss handler.
-  let stack = [];
-  let isActive = false;
+  let stack = []; // non-empty = the overlay is up
   let locked = false; // the lock is taken a beat after show(); a hide() before it has none to give back
+  let showTimer = null; // a hide() cancels it, so a quick show → hide → show cannot lock twice
 
   const getTopConfig = () => stack[stack.length - 1];
 
@@ -112,7 +106,7 @@
       clickToClose: config.clickToClose !== false
     };
 
-    const wasActive = isActive;
+    const wasActive = stack.length > 0;
     // replace: swap the current top-of-stack owner in place (atomic hand-off),
     // instead of stacking on top. Used by mainnav to switch owners between
     // sibling flyouts without a tear-down/re-init flicker.
@@ -123,14 +117,10 @@
     if (wasActive) return;
 
     // First time showing - set up everything
-    // Mark active synchronously so hide() can always clean up body state
-    isActive = true;
-
     // Show backdrop — delay active state and scroll lock after component transition
     backdropElement.style.display = 'block';
     const speed = NDS.transitionSpeed();
-    setTimeout(() => {
-      if (!isActive) return;
+    showTimer = setTimeout(() => {
       NDS.state.set(backdropElement, 'active');
       if (newConfig.preventScroll) {
         NDS.scrollLock.lock();
@@ -148,7 +138,7 @@
    * Hide backdrop
    */
   function hide() {
-    if (!isActive || !backdropElement) return;
+    if (!stack.length || !backdropElement) return;
 
     const popped = stack.pop();
 
@@ -162,8 +152,7 @@
     // Last owner leaving — full teardown
     topAbortController?.abort();
     topAbortController = null;
-
-    isActive = false;
+    clearTimeout(showTimer);
 
     // Remove active state — CSS handles opacity/blur removal
     NDS.state.clear(backdropElement);
@@ -177,7 +166,7 @@
     // Clean up display after component transition
     const speed = NDS.transitionSpeed();
     setTimeout(() => {
-      if (isActive) return;
+      if (stack.length) return;
       backdropElement.style.display = '';
       if (popped?.onHide) popped.onHide();
     }, speed);
@@ -187,11 +176,11 @@
    * Check if backdrop is active
    */
   function getIsActive() {
-    return isActive;
+    return stack.length > 0;
   }
 
   // Public API. Backdrop is not loader-registered — it is consumed on demand
-  // by modal / mainnav / sidemenu / ipv via show()/hide(), and lazily builds
+  // by mainnav / sidemenu / ipv via show()/hide(), and lazily builds
   // its DOM on the first show(). No init() entry point.
   NDS.Backdrop = {
     show,

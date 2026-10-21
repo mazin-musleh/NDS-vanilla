@@ -1,6 +1,6 @@
 /**
  * NDS Backdrop Component - Reusable overlay system
- * Used by modals, side menus, and navigation components
+ * Used by the main nav, side menus and the image viewer (modals and panels dim with ::backdrop)
  */
 
 @use '../mixins' as *;

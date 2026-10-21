@@ -52,7 +52,7 @@
  *
  * Opening plain B while plain A is open closes A first and defers B's open
  * until A's close transition finishes — mirroring the mainnav dropdown swap
- * (nds-main-nav.js closeAll/_scheduleDropdownOpen), minus the duration
+ * (nds-main-nav.js closeAll/scheduleDropdownOpen), minus the duration
  * arithmetic: the incoming open chains off the outgoing panel's
  * onTransitionEnd cleanup instead.
  */
@@ -309,11 +309,8 @@
     }
 
     function toggle(ref) {
-        let panel = NDS.resolveElement(ref);
-        if (!panel && typeof ref === 'string') panel = NDS.fromTemplate(ref.replace(/^#/, ''));
-        if (!panel) return;
-        if (hasState(panel, 'open') && !hasState(panel, 'closing')) close(panel);
-        else open(panel);
+        if (isOpen(ref)) close(ref);
+        else open(ref);
     }
 
     // ==============================================

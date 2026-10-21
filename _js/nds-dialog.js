@@ -46,7 +46,8 @@
   }
 
   // ponytail: Main Navigation, Side Menu and the image viewer still dim through NDS.Backdrop; a dialog
-  // above hides that layer. Goes when they move (plans/top-layer.md steps 5–6).
+  // above hides that layer. Goes when they move to the top layer (plans/top-layer.md: the Main
+  // Navigation step was reverted and deferred past v2.0).
   const setBackdropUnder = (on) => document.querySelector('.nds-backdrop')?.toggleAttribute('data-nds-under', on);
 
   // A menu inside is a popover of its own: closing the dialog leaves it open in the top layer.
