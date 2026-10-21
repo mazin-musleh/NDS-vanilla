@@ -17,7 +17,7 @@
  *   --self-test   run the built-in cases, and PERSONA's `js` blocks through the naming rules
  *   --names [file …]   only the naming rules (PERSONA entries 1, 10, 12; scripts/lib/js-names.mjs), over the
  *                 whole of _js/ with the event packs; the rule id is P<entry>.<rule>, then a count per rule.
- *                 Kept out of the default run until the renames land (plans/js-naming-rules.md step 6).
+ *                 A run of its own (its scope is all of _js/, the default's is the audit's); the audit and the release run both.
  */
 // ponytail: a char scanner, not a parser. A `/` after `)` reads as division, so a regex literal
 // right after a closing paren can mis-strip one line; an acorn walk is the upgrade if that bites.

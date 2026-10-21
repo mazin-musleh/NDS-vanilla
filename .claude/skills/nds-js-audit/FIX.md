@@ -65,7 +65,7 @@ Run `ruby _plugins/js_processor.rb` automatically at the end of each file fix �
 
 After every file's fixes land, confirm the following on that file before emitting the per-file summary:
 
-- Phase 3 re-runs clean: every targeted finding is gone and no new findings appeared.
+- Phase 3 re-runs clean, `--names` included: every targeted finding is gone, no new findings appeared, and every name the fix added or renamed passes.
 - Structural invariants hold: every new `NDS.on*` call stores its unsubscribe handle where teardown can reach it, and the loader registration still works.
 - Identifier sanity: any fix that INJECTS new setup code (`new AbortController()`, new declarations, observer scaffolding) must use identifiers that exist in the enclosing scope. A typo (`selectElement._ac` vs `selectInput._ac`) throws at runtime BEFORE the listener attachments that follow — earlier code still ran, but half the component's interactions silently stop responding. After inserting such a block, verify every identifier against the function's parameter list and enclosing `const`/`let`/`var` declarations.
 - Rebundle: run `ruby _plugins/js_processor.rb` automatically. Surface its output (bundle sizes or errors) in the per-file summary. If rebundle fails, stop the batch — do not proceed to the next file.
