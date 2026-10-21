@@ -25,6 +25,16 @@ const server = spawn(process.execPath, ['.claude/skills/nds-perf/gz-serve.mjs', 
 await new Promise((r) => setTimeout(r, 1200));
 
 const browser = await launch();
+// The argument is a built site's folder, not a URL: say so instead of failing on a missing button.
+{
+    const probe = await browser.newPage();
+    const status = (await probe.goto(URL).catch(() => null))?.status();
+    await probe.close();
+    if (status !== 200) {
+        console.error(`FAIL  ${URL} answered ${status ?? 'nothing'}: is '${DIR}' a built site folder (default _site)?`);
+        await browser.close(); server.kill(); process.exit(1);
+    }
+}
 // Each check runs in its own browser context (browser.newPage() makes one):
 // localStorage is shared across pages of one context, so the saved-prefs check
 // would otherwise leave every later "cold" page warm — and pass for the wrong reason.

@@ -113,6 +113,7 @@ async function probe() {
 async function run(variant, page) {
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
     const p = await ctx.newPage();
+    p.setDefaultTimeout(60000);   // form.html readies and probes past STEP_MS
     const errs = [];
     p.on('pageerror', (e) => errs.push(e.message));
     await p.route('**/nds-cookies.min.js*', (r) => r.fulfill({ body: '', contentType: 'text/javascript' }));
