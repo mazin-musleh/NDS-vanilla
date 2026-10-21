@@ -6,12 +6,10 @@ AGENTS.md and PERSONA entries 9–11. Every owner decision taken (section 4). Fa
 **Resume here.** Changes #1, #2, #4 to #10 are done (#3 dropped); see the "Landed" notes under section 3's
 Mechanical checks. `doc-check.mjs` on form.md, checkbox.md, radio.md, switch.md: no findings, sheets clean in both
 themes (2026-10-21). Doc pass done 2026-10-21 (grid, core/init, form, and the checkbox, radio and switch banner
-paths), except `NDS.field.addType`: it waits for section 8, which may change it.
+paths); `NDS.field.addType` (`part.around`) on its banner. The plan is done.
 
-> **OPEN — a click in a field is slower than before the split. Form is not done until it is solved (section 8).**
-> Owner, 2026-10-21: deep-dive it and fix it, even if the fix changes the architecture (P1, P3 included).
-> First click in a field +1.6 to +3.1 ms at x6.6 after a first trim (it was +4.2 to +5.7); section 5's target
-> stays "no slower".
+> **Note — the click (section 8).** After `part.around` (−2.3 ms) a first click in a field sits about 0.7 ms at
+> x6.6 from the "no slower" bar, below this machine's noise. Owner, 2026-10-21: kept as a note, not a blocker.
 
 - Final speed, 2026-10-21, against `448fa728`, x6.6, median of 9 (`check-form-speed`): Form's init −1.8 ms
   (registration) and −1.5 ms (form.md); create ×20/50/100 −0.4/−1.5/−2.0 ms; a keystroke even. The click: section 8.
@@ -585,7 +583,7 @@ changed the design:
 - The loader has its own layer; the hook list covers every event Form uses; P2 lists the whole init tail;
   Time Picker boxes are a rule; the change order puts the state mechanism before the Form split.
 
-## 8. Open: the click cost
+## 8. The click cost (a note)
 
 **Measured 2026-10-21** against `448fa728`, phone, x6.6, median of 9, three clicks on the first text field of
 form.md per load (every listener on window and document, stamped before NDS and after it):
@@ -610,21 +608,28 @@ split, a click on a text field ran only the listeners on that field.
 click is the costly one: each handler runs for the first time and each selector string is parsed once. The
 trim (no `closest()` on the field's own input) cut most of the gap, so selector work is the main cost.
 
-**Leads to test, cheapest first:**
-- Measure the parts one at a time (remove each from the dispatch) to find which events and parts own the rest.
-- `control()` once per target instead of once per event: one press resolves the same input ten times.
-- Fewer document listeners: `pointerout` / `mouseout` run on every pointer move over the page (number hold and
-  switch only). Bind them on `pointerdown` and drop them on release.
-- Dispatch by target: a part names what it acts on (a selector or "the field's input"), and the dispatch resolves
-  it once per event, so a part never runs for a target it cannot own.
-- A hybrid (architecture change, against P1): keep `focusin` / `pointerdown` delegated and attach a field's other
-  listeners to that field on its first touch, so later events skip the document fan-out. Init stays free.
-- One NDS-wide dispatcher per event name in core, shared with the other components' document listeners
-  (Dropmenu, Tooltip …), resolving the target once for all of them.
+**Deep dive, 2026-10-21.** `check-form-speed` took the tmp harness: `CLICKS=3` (first and warm apart, each event's
+share), `PROFILE=1` (page frames only), `DROP=<parts>` (today's side without those parts), `JS_FLAGS`, `CLICK_ONLY=1`.
+HEAD `ca49cea3` against itself, median of 9, phone, x6.6:
 
-**Before the deep dive:** the harness lives in `tmp/form-speed/` (`click-only.mjs`: three clicks with each event's
-share; `click-prof.mjs`: a CPU profile per side), and tmp is disposable. Fold both into `check-form-speed`
-(`CLICKS=3`, `PROFILE=1`), and judge a lead by the first click and the warm click separately.
+| | first click | warm click |
+|---|---|---|
+| without the parts a field click passes (number, switch, password, clear, autofill, select, status) | −4.6 ms (14.7 → 10.1) | −0.55 |
+| the same, `JS_FLAGS=--no-lazy` | −0.2 (12.3 → 12.1) | −0.4 |
+| `part.around` (below) | −2.3 (12.9 → 10.6) | −0.15 |
+
+- **The cost is V8 compiling the parts' handlers on their first call.** Compiled at load, the parts cost nothing
+  measurable. The gap sat on `pointerdown`, `pointerup` and `click`: number, password, clear, autofill and switch
+  handlers that return on `!c` for a field's own input, but compile first.
+- **Not the dispatch.** The warm click shows `control()` and the fan-out cost nothing; resolving once per target
+  would save nothing.
+- **Taken: `part.around`.** A part's handlers for targets that are no field's own input (a button, a track, a
+  chip) run only when `control()` found none, so a click in a field never calls, and never compiles, them. Number
+  (click, pointerdown), password, clear, autofill and switch (mousedown, mouseup, click, keydown) moved.
+  `check-form-interact`: 216 steps, all the same; an autofill chip still fills its target.
+- **Left:** number's `pointerup` / `pointerout` still run on every release (~0.7 ms of the first click). Binding
+  them at hold start would remove them; not worth the code at that size. The one NDS-wide dispatcher and the
+  hybrid are not needed: the dispatch was never the cost.
 
 ## Order
 

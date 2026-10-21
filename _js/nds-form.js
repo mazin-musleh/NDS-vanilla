@@ -602,17 +602,16 @@
         hold.tiers.forEach(clearTimeout);
         hold = null;
     }
-    // Simple class selectors first: every click on the page passes through these parts. A click on the
-    // field's own input (c) holds no button, so each click part returns before its lookups.
+    // Simple class selectors first: every click off a field's own input passes through these parts.
     var stepButton = function(t) {
         var btn = t && t.closest && t.closest('.nds-number-increment, .nds-number-decrement');
         return btn && btn.closest('.nds-form-control') ? btn : null;
     };
     NDS.field.addType('number', {
-        on: {
-            click: function(e, c) { var btn = !c && stepButton(e.target); if (btn) stepValue(btn); },
-            pointerdown: function(e, c) {
-                var btn = !c && stepButton(e.target);
+        around: {
+            click: function(e) { var btn = stepButton(e.target); if (btn) stepValue(btn); },
+            pointerdown: function(e) {
+                var btn = stepButton(e.target);
                 if (!btn || e.button !== 0) return;
                 stopHold();
                 var h = hold = { btn: btn, tiers: [], repeat: null };
@@ -627,7 +626,9 @@
                         h.tiers.push(setTimeout(function() { repeat(tier[1], tier[2]); }, tier[0]));
                     });
                 }, 400);
-            },
+            }
+        },
+        on: {
             pointerup: stopHold,
             // pointerleave does not bubble: a pointerout to outside the held button stands in for it.
             pointerout: function(e) { if (hold && e.target.closest && e.target.closest('.nds-btn') === hold.btn && !hold.btn.contains(e.relatedTarget)) stopHold(); },
@@ -661,13 +662,15 @@
     NDS.field.addType('password', {
         // Remember the original type: the toggle swaps it.
         init: function(input) { if (input.type === 'password') input.dataset.type = 'password'; },
-        on: {
-            click: function(e, c) {
-                var toggle = !c && e.target.closest && e.target.closest('.nds-toggle-password');
+        around: {
+            click: function(e) {
+                var toggle = e.target.closest && e.target.closest('.nds-toggle-password');
                 if (!toggle || !toggle.closest('.nds-form-control .nds-form-action')) return;
                 e.preventDefault();
                 showPassword(toggle, !toggle.classList.contains('show'));
-            },
+            }
+        },
+        on: {
             // Capture: runs before the field's own input listeners, so Password never counts a stripped letter.
             'input:capture': function(e, c) {
                 if (!c || (c.input.type !== 'password' && c.input.dataset.type !== 'password')) return;
@@ -704,9 +707,9 @@
 
     // Clear button: empties the field and hands focus back to it, since the button hides itself.
     NDS.field.addType('clear', {
-        on: {
-            click: function(e, c) {
-                var btn = !c && e.target.closest && e.target.closest('.nds-clear');
+        around: {
+            click: function(e) {
+                var btn = e.target.closest && e.target.closest('.nds-clear');
                 if (!btn || !btn.closest('.nds-form-control .nds-form-action')) return;
                 e.preventDefault();
                 var fc = btn.closest('.nds-form-control');
@@ -775,9 +778,9 @@
     // Auto-fill: a chip fills its target field; data-autofill-apply also submits the search
     // (it sends Enter to the target).
     NDS.field.addType('autofill', {
-        on: {
-            click: function(e, c) {
-                var item = !c && e.target.closest && e.target.closest('.nds-item');
+        around: {
+            click: function(e) {
+                var item = e.target.closest && e.target.closest('.nds-item');
                 if (!item || !item.closest('.nds-auto-fill[data-target]')) return;
                 e.preventDefault();
                 e.stopPropagation();

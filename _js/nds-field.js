@@ -3,7 +3,9 @@
  * Methods:
  *   NDS.field.addType(name, part)     a part of the field another component owns: part.on maps an event
  *                                     name to fn(e, c), c the field the target is the input of (control(),
- *                                     looked up once per event) or null; 'input:capture' for the capture phase; part.init(input,
+ *                                     looked up once per event) or null; 'input:capture' for the capture phase;
+ *                                     part.around the same as fn(e), for a target that is no field's own input
+ *                                     (a button, a track, a chip): a click in a field never runs it; part.init(input,
  *                                     control) runs for each input in the first-paint pass, part.create(el)
  *                                     after it, part.refresh(input, control, opts) after a value is set from
  *                                     code; part.readonlyActive(input) says a readonly input stays interactive
@@ -23,7 +25,8 @@
  *   - A base: it writes states and attributes and shows no message; Form shows the messages.
  *   - One document listener per event name, whatever the page holds. The base runs its own sync first,
  *     then each part in the order it registered.
- *   - A part's handler gets every event of its name: it checks the target itself.
+ *   - A part's handler gets every event of its name: it checks the target itself. A handler a field's own
+ *     input never needs goes in part.around: the first click in a field would otherwise compile it.
  */
 (() => {
     'use strict';
@@ -55,13 +58,16 @@
         document.addEventListener(name, (e) => {
             const c = control(e.target);
             if (handlers[type]) handlers[type](e, c);
-            for (const p of parts) if (p.on && p.on[type]) p.on[type](e, c);
+            for (const p of parts) {
+                if (p.on && p.on[type]) p.on[type](e, c);
+                if (!c && p.around && p.around[type]) p.around[type](e);
+            }
         }, phase === 'capture');
     }
 
     function addType(name, part) {
         parts.push(Object.assign({ name }, part));
-        Object.keys(part.on || {}).forEach(listen);
+        Object.keys(Object.assign({}, part.on, part.around)).forEach(listen);
     }
 
     // ── Resolving a field ──────────────────────────────────────────────
