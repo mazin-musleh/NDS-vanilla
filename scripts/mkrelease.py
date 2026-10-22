@@ -352,12 +352,14 @@ def verify(out, version, rules=None):
     refs = {p for p in refs if '<' not in p and '*' not in p}
 
     # _source/ is populated from the tag, not shipped, so its refs resolve
-    # against the repo tree (same prefix-strip as the anchors above).
-    dead_src = sorted({p for p in refs if p.startswith('_source/')
-                       and not os.path.exists(
-                           os.path.join(ROOT, p[len('_source/'):].rstrip('/')))})
+    # against the repo tree (same prefix-strip as the anchors above), and only
+    # what the index's Sources line copies reaches the consumer.
+    copied = re.findall(r'`([^`]+)`', re.search(r'^- \*\*Sources:\*\*.*into `_source/`:(.*)$', index, re.M).group(1))
+    dead_src = sorted({p for p in refs if p.startswith('_source/') and p != '_source/'
+                       and (not os.path.exists(os.path.join(ROOT, p[len('_source/'):].rstrip('/')))
+                            or not any((p[len('_source/'):].rstrip('/') + '/').startswith(c + '/') for c in copied))})
     if dead_src:
-        sys.exit(f'References point at _source/ paths missing from the repo tree: {dead_src}')
+        sys.exit(f'References point at _source/ paths missing from the repo tree or the index Sources line: {dead_src}')
 
     dead = sorted({p for p in refs if not p.startswith('_source/')
                    and root + p not in names

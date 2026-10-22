@@ -48,6 +48,7 @@ const SCOPE = [
     ['nds-dialog.js', 'dialog'],
     ['nds-validation.js', 'validation'],
     ['nds-field.js', 'field'],
+    ['nds-typing.js', 'typing'],
     ['nds-checkbox.js', 'Checkbox'],
     ['nds-radio.js', 'Radio'],
     ['nds-switch.js', 'Switch'],

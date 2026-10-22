@@ -159,6 +159,10 @@ CASES = [
      lambda t: t.replace('`_source/_sass/tokens/_semantic.scss`', '`_source/_sass/tokens/_gone.scss`'),
      VERSION, 'missing from the repo tree', INDEX),
 
+    # The consumer copies only what the Sources line names into _source/.
+    ('NDS-INDEX.md points at a _source/ path its Sources line does not copy',
+     lambda t: t.replace(' and `_data/migrations.yml`', ''), VERSION, 'Sources line', INDEX),
+
     # A path, class or API in the rules goes stale on the next release.
     ('a release fact creeps into the rules prose',
      lambda t: t + 'Read `_source/layout/section.md` and use `nds-grid`.', VERSION, 'release facts'),

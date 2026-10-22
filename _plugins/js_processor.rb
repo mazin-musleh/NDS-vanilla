@@ -712,6 +712,15 @@ if __FILE__ == $0
   else
     processor.process_files
   end
-  # The word packs ship beside the bundles: their English lives in _js/, their banner carries the version.
-  system('node', 'scripts/check-i18n.mjs', '--build') unless ARGV[0] == 'watch'
+  unless ARGV[0] == 'watch'
+    # The word packs ship beside the bundles: their English lives in _js/, their banner carries the version.
+    system('node', 'scripts/check-i18n.mjs', '--build')
+    # mkrelease's JS gates, run here so a slip fails the change that makes it, not the release.
+    failed = [%w[check-banners.mjs --all], %w[check-js-rules.mjs], %w[check-js-rules.mjs --names]].reject do |script, *args|
+      out = IO.popen(['node', "scripts/#{script}", *args], err: [:child, :out], &:read)
+      next true if $?.success?
+      puts "[js_processor] #{script} #{args.join(' ')} failed:", out.lines.reject { |l| l.start_with?('verify') || l =~ /\sok$/ }
+    end
+    exit 1 unless failed.empty?
+  end
 end

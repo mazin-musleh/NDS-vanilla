@@ -9,7 +9,7 @@ RTL (Arabic) by default, with LTR (English) support. Font: IBM Plex Sans Arabic.
 
 ```bash
 bundle exec jekyll serve      # Dev server (port 4002, auto-displays network IP)
-ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minifies → assets/js/*.min.js)
+ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minifies → assets/js/*.min.js), then fails on the release's JS gates (banners, JS rules, naming)
 ruby _plugins/js_processor.rb check-audit   # the pre-commit hook: is the staged nds-audit.min.js built from the staged files it embeds?
 python scripts/optimize-assets.py <path>        # shrink SVG/PNG/JPG — dry-run report; add --apply to write
 node scripts/svg-render-diff.mjs <path>         # REQUIRED after an SVG --apply: proves the render is unchanged
@@ -242,6 +242,10 @@ Verify a whitespace change by rendered text, not by eyeballing: build before/aft
 - **A change to an observable value is breaking** (event detail, return value, a `data-*` the script writes), even when every page here still works. It ships in a major with a Migration line, or takes an additive path. Before changing one, `git log -S` the code and read why it is that way.
 
 `nds-js-audit` checks the first three as JSA-23 (the first two in full-tree runs too) and gates the fourth in its shared rule conventions.
+
+## Writing JS
+
+**Every `_js/` change follows `.claude/skills/nds-js-audit/PERSONA.md`, not only a new component.** Read entries 10 (method names) and 12 (every name) before you name a function, method or local. `js_processor.rb` fails on a naming finding: it catches a slip, it is not where the rule is learned.
 
 ## Shared Logic
 

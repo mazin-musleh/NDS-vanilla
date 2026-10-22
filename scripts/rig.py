@@ -114,6 +114,14 @@ def pack(src, path, root):
                 z.write(p, root + '/' + os.path.relpath(p, src).replace(os.sep, '/'))
 
 
+def ignore(dest):
+    # get-started's Step 1 gitignores .nds/; the unreleased prompt skips that step.
+    # A file path: check-ignore on a bare folder can match a blank line.
+    if subprocess.run(['git', 'check-ignore', '-q', '.nds/NDS-INDEX.md'], cwd=dest).returncode:
+        with open(os.path.join(dest, '.gitignore'), 'a', encoding='utf-8', newline='\n') as f:
+            f.write('\n.nds/\n')
+
+
 def stage(dest, release):
     try:
         baseline = git(dest, 'log', '-1', '--format=%s', 'baseline').removesuffix(' baseline')
@@ -168,6 +176,7 @@ def stage(dest, release):
     else:
         shutil.copy2('_includes/NDS-IQ-draft.md', os.path.join(dest, 'NDS-IQ.md'))
         what = 'NDS-IQ.md is the draft'
+    ignore(dest)
     # Put the dev site back: mkrelease's cleaner and compressor rewrote _site for the zip.
     run('bundle exec jekyll build')
     print(f'staged {dest}: {n} files stamped {release}, {what}')
