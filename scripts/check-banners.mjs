@@ -131,8 +131,9 @@ const DOC_ELSEWHERE = {
 };
 // A part stamps its own name, not its component's.
 const STAMP_PARTS = new Set(['columns', 'auto-pagination']);
-// Classless: nds:session:* names what ends (Session Timeout), nds:template:ready is core's NDS.fromTemplate.
-const EVENT_SCOPES = new Set(['session', 'template']);
+// Classless: nds:session:* names what ends (Session Timeout), nds:template:ready is core's NDS.fromTemplate;
+// nds:phone:change is Form's .nds-phone field, which has no page of its own.
+const EVENT_SCOPES = new Set(['session', 'template', 'phone']);
 
 const SECTIONS = ['Rides', 'Methods', 'Events', 'Hooks', 'Gotchas'];
 // Optional, after Rides: the markup the script needs to work, baked into the audit's required-part rule.

@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "22/10/2026 - 10:46 AM"
+last_edit: "22/10/2026 - 03:57 PM"
 lang: en
 direction: ltr
 ---
@@ -140,9 +140,9 @@ Pick another component when:
 </div>
 </script>
 <script type="text/html" id="field-phone" data-canon>
-<div class="nds-form-container" data-format="00 000 0000">
+<div class="nds-form-container" data-country-code="+966" data-format="00 000 0000">
   <div class="nds-form-header">
-    <label for="mobile">
+    <label for="phone">
       <span class="nds-label">Mobile number</span>
     </label>
   </div>
@@ -150,7 +150,7 @@ Pick another component when:
     <div class="nds-form-action nds-prefix">
       <span class="nds-btn nds-subtle"><span class="nds-label">+966</span></span>
     </div>
-    <input type="tel" id="mobile" name="mobile" class="nds-input nds-phone" placeholder="5X XXX XXXX" autocomplete="tel-national" inputmode="numeric">
+    <input type="tel" id="phone" name="phone" class="nds-input nds-phone" placeholder="5X XXX XXXX" autocomplete="tel-national" inputmode="numeric">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -162,7 +162,7 @@ Pick another component when:
 <script type="text/html" id="field-phone-country" data-canon>
 <div class="nds-form-container">
   <div class="nds-form-header">
-    <label for="phone">
+    <label for="phone-country">
       <span class="nds-label">Phone</span>
     </label>
   </div>
@@ -173,28 +173,28 @@ Pick another component when:
       </button>
       <div class="nds-dropmenu-menu" hidden>
         <div class="nds-dropmenu-scroll">
-          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966" data-format="00 000 0000">
+          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-country-code="+966" data-trigger-label="+966" data-format="00 000 0000">
             <span class="nds-label">Saudi Arabia (+966)</span>
           </button>
-          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-trigger-label="+971">
+          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-country-code="+971" data-trigger-label="+971">
             <span class="nds-label">United Arab Emirates (+971)</span>
           </button>
-          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+973" data-trigger-label="+973">
+          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+973" data-country-code="+973" data-trigger-label="+973">
             <span class="nds-label">Bahrain (+973)</span>
           </button>
-          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+974" data-trigger-label="+974">
+          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+974" data-country-code="+974" data-trigger-label="+974">
             <span class="nds-label">Qatar (+974)</span>
           </button>
-          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+965" data-trigger-label="+965">
+          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+965" data-country-code="+965" data-trigger-label="+965">
             <span class="nds-label">Kuwait (+965)</span>
           </button>
-          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+968" data-trigger-label="+968">
+          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+968" data-country-code="+968" data-trigger-label="+968">
             <span class="nds-label">Oman (+968)</span>
           </button>
         </div>
       </div>
     </div>
-    <input type="tel" id="phone" name="phone" class="nds-input nds-phone" placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric">
+    <input type="tel" id="phone-country" name="phone" class="nds-input nds-phone" placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -311,8 +311,8 @@ Each Structure is one field type. Options stack: a field can be MD, Lighter and 
 | Structure | Password | canon `#field-password` | — | A password the user already has, on a sign-in form. For a new password, use [Password](../components/password) |
 | Structure | Search | canon `#field-search` | — | A search box with a voice button. See [Voice Input](../components/voice-input) |
 | Structure | Number (id: number) (demo: + affix-solid) (demo: + affix-md) | canon `#field-number` | — | A whole number with minus and plus buttons, between `min` and `max` |
-| Structure | Phone (id: phone) (demo: + affix-solid) | canon `#field-phone` | — | A Saudi mobile number after a fixed `+966`, shown in groups by `data-format` |
-| Structure | Phone with country (id: phone-country) | canon `#field-phone-country` | — | A phone number after a country-code picker. The picker is a [Dropmenu](../components/dropmenu) with `data-select-name`. Each country item may carry its own `data-format` |
+| Structure | Phone (id: phone) (demo: + affix-solid) | canon `#field-phone` | — | A Saudi mobile number after a fixed `+966`, set by `data-country-code` and shown in groups by `data-format` |
+| Structure | Phone with country (id: phone-country) | canon `#field-phone-country` | — | A phone number after a country-code picker. The picker is a [Dropmenu](../components/dropmenu) with `data-select-name`. Each country item carries its `data-country-code`, and may carry its own `data-format` |
 | Structure | National ID (id: national-id) (demo: + required) | canon `#field-national-id` | — | A Saudi national ID or iqama number. `.nds-national-id` keeps digits only, and checks the 10 digits and the check digit |
 | Structure | IBAN (id: iban) (demo: + required) | canon `#field-iban` | — | A bank account IBAN. `.nds-iban` shows it in groups of four, writes capitals, adds a missing `SA`, and checks the country, the length and the check digits |
 | Structure | Textarea (id: textarea) | canon `#field-textarea` | — | Several lines of text, such as a message |
@@ -459,11 +459,13 @@ The minus and plus buttons change the value by `step`, 1 by default. Hold a butt
 ### Phone Number
 {: .nds-block-title}
 
-`.nds-phone` on a `type="tel"` input removes every character that is not a digit, and any leading zero, as the user types or pastes. The value then joins the country code with no edit. Limit the length with `maxlength`. A country picker is a [Dropmenu](../components/dropmenu) that writes its code to a hidden input named by `data-select-name`, so the code and the number submit as two fields.
+`.nds-phone` on a `type="tel"` input keeps only the digits as the user types or pastes, at most 15, or `maxlength`. A field without a country code sends the number as the user typed it, with its leading zero (`0551234567`).
+
+A field that shows a country code carries it in `data-country-code`: on the field's `.nds-form-container` next to a fixed `+966`, or on each country item of a picker. Write it on every phone field that shows a code. The field then shows the local number, and a submit and `new FormData(form)` send the whole number in E.164 form: the country code, then the digits, with no spaces (`+966551234567`). Code that reads `input.value` gets the shown number, so read the form's data, or keep the `value` of `nds:phone:change`, instead. A pasted full number, such as `+966 55 123 4567` or `00966551234567`, loses the code. With a picker, a full number from another listed country picks that country. A pasted number with the code but no `+`, such as `966551234567`, loses the code when it is longer than the field holds (`data-format` or `maxlength`). The leading zero is a trunk prefix, so the field removes it. Numbers in Italy, San Marino and Vatican City (`+39`, `+378`, `+379`) keep it. A country picker is a [Dropmenu](../components/dropmenu) that writes its code to a hidden input named by `data-select-name`, so the code also submits as its own field.
 
 `data-format` on the field's `.nds-form-container` shows the number in groups. Each `0` is one digit, and any other character goes between them: `00 000 0000` shows `55 123 4567`. The field then takes no more digits than the format holds, and removes a `maxlength` shorter than the format. With a country picker, the field reads `data-format` from the picked country item instead, and a country without one shows the number as typed.
 
-Write a format only for numbers whose length you know. Phone numbers differ in length between countries, and even inside one. The format refuses every digit past its end. A submit and `new FormData(form)` send the digits only, while `input.value` keeps the spaces.
+Write a format only for numbers whose length you know. Phone numbers differ in length between countries, and even inside one. The format refuses every digit past its end. `input.value` keeps the spaces, and a submit sends the number without them.
 
 ### National ID and IBAN
 {: .nds-block-title}
@@ -590,7 +592,7 @@ The eye button switches the field between hidden and plain text, and its label b
 | `nds-clear` | a button in `.nds-form-action` | Empties the field. Write it with `hidden`: the script shows it while the field has a value |
 | `nds-toggle-password` | a button in `.nds-form-action` | Switches a password field between hidden and plain text. The script adds `show` to it while the text is plain |
 | `nds-number-decrement`, `nds-number-increment` | a button in `.nds-form-action` | Steps the value down or up. Also turns on the range check and the blur clamp |
-| `nds-phone` | a `type="tel"` input | Removes non-digits and any leading zero as the user types. With `data-format`, shows the number in groups. See Phone Number |
+| `nds-phone` | a `type="tel"` input | Keeps the digits as the user types. With `data-country-code`, submits the whole number (`+966551234567`); without it, the number as typed. With `data-format`, shows the number in groups. See Phone Number |
 | `nds-national-id` | a text input | Keeps digits only, and fails the field when the value is not a Saudi national ID or iqama number. See National ID and IBAN |
 | `nds-iban` | a text input | Shows the IBAN in groups of four, writes capitals, adds a missing `SA`, and fails the field when the value is not an IBAN. See National ID and IBAN |
 | `nds-form-group` | the `<fieldset>` around a set of checkboxes, radios or switches | See [Checkbox](../components/checkbox), [Radio](../components/radio) and [Switch](../components/switch) |
@@ -617,6 +619,7 @@ The eye button switches the field between hidden and plain text, and its label b
 | `data-error-message` | `.nds-form-group`, or the container of a field that keeps its value in a hidden input (custom select, multiselect, tag input, upload) | The message when nothing is picked. A count limit, a half-filled code and a file still uploading keep their own messages. `NDS.init.audit()` flags it on a group that may be left empty |
 | `data-format` | the `.nds-form-container` of a `.nds-phone` field | The groups the number shows in: `0` is one digit, and any other character goes between digits (`00 000 0000`). See Phone Number |
 | `data-format` | a `.nds-dropmenu-item` in a phone field's country picker | The groups for that country, read while it is picked. A country without one shows the number as typed |
+| `data-country-code` | the `.nds-form-container` of a `.nds-phone` field, or a `.nds-dropmenu-item` in its country picker | The code the submit puts before the number (`+966`). The field also drops it from a pasted full number. See Phone Number |
 | `inputmode="numeric"` | the `<input>` | The script blocks a typed character that is not a digit. Arabic digits go in as `0` to `9` |
 | `min`, `max`, `step` | the input of a number field | The range and the step of the minus and plus buttons |
 | `autofocus` | the `<input>`, `<textarea>` or `<select>` | The script focuses the field again at start, without a scroll |
@@ -694,6 +697,7 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 | `nds:form:validate` | the form, and it bubbles | `{ valid, invalidFields, errors }`, after every `validate()`. Each error is `{ field, input, message }` |
 | `nds:form:valid` | the form, and it bubbles | `{ waitUntil(promise) }`, when a submit passes. `waitUntil()` keeps the form from a second submit until the promise ends, and the submit button shows the spinner |
 | `nds:form:invalid` | the form, and it bubbles | `{ invalidFields, errors }`, when a submit is blocked |
+| `nds:phone:change` | a `.nds-phone` input, and it bubbles | `{ value, countryCode, nationalNumber }`, when the number the field submits changes: `value` is that number (`+966551234567`), `countryCode` and `nationalNumber` are `null` without `data-country-code`. Keep `value` in your app's state in place of `input.value`. See Phone Number |
 | `nds:switch:change` | `.nds-switch-toggle`, and it bubbles | `{ checked, value, input }`. See [Switch](../components/switch) |
 | `nds:checkbox:indeterminate` | the checkbox, and it bubbles | `{ indeterminate }`. See [Checkbox](../components/checkbox) |
 {: .nds-table .nds-responsive}

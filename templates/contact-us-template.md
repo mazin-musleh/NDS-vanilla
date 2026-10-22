@@ -87,90 +87,90 @@ sidemenu_mode: false
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <!-- GCC — home region first -->
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966" data-format="00 000 0000">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-country-code="+966" data-trigger-label="+966" data-format="00 000 0000">
                                             <span class="nds-label">Saudi Arabia (+966)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-trigger-label="+971">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-country-code="+971" data-trigger-label="+971">
                                             <span class="nds-label">United Arab Emirates (+971)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+973" data-trigger-label="+973">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+973" data-country-code="+973" data-trigger-label="+973">
                                             <span class="nds-label">Bahrain (+973)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+974" data-trigger-label="+974">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+974" data-country-code="+974" data-trigger-label="+974">
                                             <span class="nds-label">Qatar (+974)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+965" data-trigger-label="+965">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+965" data-country-code="+965" data-trigger-label="+965">
                                             <span class="nds-label">Kuwait (+965)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+968" data-trigger-label="+968">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+968" data-country-code="+968" data-trigger-label="+968">
                                             <span class="nds-label">Oman (+968)</span>
                                         </button>
                                         <!-- Wider Arab world (alphabetical) -->
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+213" data-trigger-label="+213">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+213" data-country-code="+213" data-trigger-label="+213">
                                             <span class="nds-label">Algeria (+213)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+20" data-trigger-label="+20">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+20" data-country-code="+20" data-trigger-label="+20">
                                             <span class="nds-label">Egypt (+20)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+964" data-trigger-label="+964">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+964" data-country-code="+964" data-trigger-label="+964">
                                             <span class="nds-label">Iraq (+964)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+962" data-trigger-label="+962">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+962" data-country-code="+962" data-trigger-label="+962">
                                             <span class="nds-label">Jordan (+962)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+961" data-trigger-label="+961">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+961" data-country-code="+961" data-trigger-label="+961">
                                             <span class="nds-label">Lebanon (+961)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+218" data-trigger-label="+218">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+218" data-country-code="+218" data-trigger-label="+218">
                                             <span class="nds-label">Libya (+218)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+212" data-trigger-label="+212">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+212" data-country-code="+212" data-trigger-label="+212">
                                             <span class="nds-label">Morocco (+212)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+970" data-trigger-label="+970">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+970" data-country-code="+970" data-trigger-label="+970">
                                             <span class="nds-label">Palestine (+970)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+249" data-trigger-label="+249">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+249" data-country-code="+249" data-trigger-label="+249">
                                             <span class="nds-label">Sudan (+249)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+963" data-trigger-label="+963">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+963" data-country-code="+963" data-trigger-label="+963">
                                             <span class="nds-label">Syria (+963)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+216" data-trigger-label="+216">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+216" data-country-code="+216" data-trigger-label="+216">
                                             <span class="nds-label">Tunisia (+216)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+967" data-trigger-label="+967">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+967" data-country-code="+967" data-trigger-label="+967">
                                             <span class="nds-label">Yemen (+967)</span>
                                         </button>
                                         <!-- Major expat communities + global -->
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+880" data-trigger-label="+880">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+880" data-country-code="+880" data-trigger-label="+880">
                                             <span class="nds-label">Bangladesh (+880)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+91" data-trigger-label="+91">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+91" data-country-code="+91" data-trigger-label="+91">
                                             <span class="nds-label">India (+91)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+62" data-trigger-label="+62">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+62" data-country-code="+62" data-trigger-label="+62">
                                             <span class="nds-label">Indonesia (+62)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+977" data-trigger-label="+977">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+977" data-country-code="+977" data-trigger-label="+977">
                                             <span class="nds-label">Nepal (+977)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+92" data-trigger-label="+92">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+92" data-country-code="+92" data-trigger-label="+92">
                                             <span class="nds-label">Pakistan (+92)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+63" data-trigger-label="+63">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+63" data-country-code="+63" data-trigger-label="+63">
                                             <span class="nds-label">Philippines (+63)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+94" data-trigger-label="+94">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+94" data-country-code="+94" data-trigger-label="+94">
                                             <span class="nds-label">Sri Lanka (+94)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+90" data-trigger-label="+90">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+90" data-country-code="+90" data-trigger-label="+90">
                                             <span class="nds-label">Turkey (+90)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+44" data-trigger-label="+44">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+44" data-country-code="+44" data-trigger-label="+44">
                                             <span class="nds-label">United Kingdom (+44)</span>
                                         </button>
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+1" data-trigger-label="+1">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+1" data-country-code="+1" data-trigger-label="+1">
                                             <span class="nds-label">United States (+1)</span>
                                         </button>
                                     </div>

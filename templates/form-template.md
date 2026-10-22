@@ -69,7 +69,7 @@ sidemenu_mode: false
                             </div>
                         </div>
 
-                        <div class="nds-form-container" data-required data-format="00 000 0000">
+                        <div class="nds-form-container" data-required data-country-code="+966" data-format="00 000 0000">
                             <div class="nds-form-header">
                                 <label for="ft-mobile"><span class="nds-label">Mobile Number</span></label>
                             </div>

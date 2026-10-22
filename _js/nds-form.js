@@ -33,12 +33,15 @@
  *                               validate() run
  *   nds:form:valid              detail {waitUntil(promise)} — from the form, on a passing submit
  *   nds:form:invalid            detail {invalidFields, errors} — from the form, on a blocked submit
+ *   nds:phone:change            detail {value, countryCode, nationalNumber} — from a .nds-phone input,
+ *                               when the number it submits changes (typing, a paste, a country pick, a reset)
  * Hooks:
  *   data-required · data-min-checked · data-max-checked · data-error-message
  *   data-ajax · data-no-pending · data-message · data-feedback-target · data-loading-slot
  *   data-target · data-autofill-apply (auto-fill containers)
  *   data-format on a .nds-phone field's container, or on each item of its country picker: the
  *   groups it shows (0 a digit: "00 000 0000"); an item without one shows the number as typed
+ *   data-country-code in the same places ("+966"): the code a phone submits before its number
  * Gotchas:
  *   - Feedback needs no slot markup: setStatus creates the message element in the field's
  *     container. A bare data-feedback-target element anywhere inside the container overrides
@@ -62,6 +65,11 @@
  *   - .nds-iban shows groups of four, and a .nds-phone with a data-format its groups: input.value
  *     holds the spaces; a submit and new FormData(form) send the value without them. Inserts go
  *     through Forms there, and a maxlength shorter than the format is removed: the format sets the most.
+ *   - A .nds-phone with data-country-code drops its leading 0 (not +39/+378/+379) and a pasted
+ *     "+966…" (another country its picker lists picks that country), and submits E.164
+ *     ("+966551234567"); without one it keeps the number as typed, 0 included, up to 15 digits. The code joins in the formdata event only: input.value keeps the
+ *     local number, so code reading it (jQuery serialize(), framework state) gets no code: it
+ *     listens for nds:phone:change instead.
  *   - data-error-message on a field is the pattern's message only; on a group, the message
  *     when nothing is picked. Every other failure keeps its own message.
  *   - A blank setCustomValidity(' ') blocks the submit and outlines the field with no message:
@@ -404,15 +412,82 @@
     function getGroupFormat(input) {
         if (input.classList.contains('nds-iban')) return IBAN_FORMAT;
         if (!input.classList.contains('nds-phone')) return null;
-        var control = input.closest('.nds-form-control');
-        var picker = control && control.querySelector('.nds-dropmenu[data-select-name]');
-        // The picked item, or the one data-select-value names before Dropmenu has picked it.
-        var source = picker
-            ? [].find.call(picker.querySelectorAll('.nds-dropmenu-item'), function(item) { return NDS.state.has(item, 'selected'); })
-                || [].find.call(picker.querySelectorAll('.nds-dropmenu-item'), function(item) { return item.getAttribute('data-value') === picker.getAttribute('data-select-value'); })
-            : input.closest('.nds-form-container');
+        var source = getPhoneSource(input);
         return (source && source.getAttribute('data-format')) || null;
     }
+
+    // Where a phone's data-format and data-country-code live: the picked country with a picker (or the item
+    // data-select-value names before Dropmenu has picked it), else the field.
+    function getPhoneSource(input) {
+        var picker = getCountryPicker(input);
+        if (!picker) return input.closest('.nds-form-container');
+        var items = picker.querySelectorAll('.nds-dropmenu-item');
+        return [].find.call(items, function(item) { return NDS.state.has(item, 'selected'); })
+            || [].find.call(items, function(item) { return item.getAttribute('data-value') === picker.getAttribute('data-select-value'); });
+    }
+
+    function getCountryPicker(input) {
+        var control = input.closest('.nds-form-control');
+        return control && control.querySelector('.nds-dropmenu[data-select-name]');
+    }
+
+    // The data-country-code an element carries ("+966"). Null: none.
+    function readCountryCode(el) {
+        var digits = el && NDS.toLatinDigits(el.getAttribute('data-country-code') || '').replace(/\D/g, '');
+        return digits ? '+' + digits : null;
+    }
+
+    function getCountryCode(input) {
+        return readCountryCode(getPhoneSource(input));
+    }
+
+    // A full number ("+971 50…", "00971 50…"): the code it starts with, the field's own or a country its picker
+    // lists (the longest that fits), its source, and where the national number starts. Null: no code the field takes.
+    function readFullNumber(input, text) {
+        var lead = text.match(/^\s*(?:\+|00)\s*/);
+        if (!lead) return null;
+        var picker = getCountryPicker(input);
+        var sources = picker ? picker.querySelectorAll('.nds-dropmenu-item') : [input.closest('.nds-form-container')];
+        var best = null;
+        [].forEach.call(sources, function(source) {
+            var code = readCountryCode(source);
+            if (code && text.startsWith(code.slice(1), lead[0].length) && (!best || code.length > best.code.length)) best = { code: code, source: source };
+        });
+        if (best) {
+            var end = lead[0].length + best.code.length - 1;
+            best.from = end + text.slice(end).match(/^[\s-]*/)[0].length;
+        }
+        return best;
+    }
+
+    // A full number from another listed country picks that country. Its nds:dropmenu:select must not
+    // re-stamp the field with the value this stamp is replacing.
+    var pickingCountry = false;
+    function pickCountry(input, item) {
+        var picker = getCountryPicker(input);
+        if (!picker || !picker.ndsDropmenu) return;
+        pickingCountry = true;
+        try { picker.ndsDropmenu.setSelection(item); } finally { pickingCountry = false; }
+    }
+
+    // The number a phone submits: its country code, then its digits ("+966551234567"). Without a code, the digits
+    // alone and a null nationalNumber: a 0 typed there may or may not be a trunk prefix.
+    function getPhoneNumber(input) {
+        var digits = input.value.replace(/\D/g, ''), code = digits && getCountryCode(input);
+        return { value: code ? code + digits : digits, countryCode: code || null, nationalNumber: code ? digits : null };
+    }
+
+    // nds:phone:change when the submitted number changes; the first stamp (setup) only records it.
+    var phoneNumbers = new WeakMap();
+    function reportPhone(input) {
+        var number = getPhoneNumber(input), first = !phoneNumbers.has(input);
+        if (phoneNumbers.get(input) === number.value) return;
+        phoneNumbers.set(input, number.value);
+        if (!first) input.dispatchEvent(new CustomEvent('nds:phone:change', { bubbles: true, detail: number }));
+    }
+
+    // Countries whose numbers keep their leading 0 after the code (Italy: +39 06 …); elsewhere it is a trunk prefix.
+    var KEEP_ZERO = ['+39', '+378', '+379'];
 
     // .nds-phone / .nds-national-id / .nds-iban: the value in its shape, then the checksum result, so
     // checkValidity() (blur and submit) fails the field with a localized message. Empty = valid. opts:
@@ -438,11 +513,26 @@
                 if (caret > lead) caret += 2;
             }
         } else {
-            // Digits only (a paste may bring spaces, dashes or +); a phone drops any leading zero, as the
-            // country code is already prepended.
+            // Digits only (a paste may bring spaces, dashes or +). A phone with a country code drops the code of
+            // a full number ("+966 55…", "00966 55…"), picking its country when a picker lists it, and its leading
+            // zero, the trunk prefix.
+            var code = phone && getCountryCode(input), from = 0;
+            var full = code && readFullNumber(input, text);
+            if (full) {
+                from = full.from;
+                if (full.code !== code && !opts.dry) pickCountry(input, full.source);
+                code = full.code;
+            }
+            // A whole value with the code but no + ("966551234567"): too long for the field, so the code goes.
+            var shape = code && getGroupFormat(input), room = shape ? shape.replace(/[^0A*]/g, '').length : input.maxLength;
+            var typed = text.slice(from).replace(/\D/g, '');
+            if (code && !full && opts.country && room > 0 && typed.length > room && typed.startsWith(code.slice(1))) {
+                for (var seen = 0; seen < code.length - 1; from++) if (/\d/.test(text[from])) seen++;
+            }
+            var dropZero = code && KEEP_ZERO.indexOf(code) < 0;
             var digits = '', before = 0;
-            for (var i = 0; i < text.length; i++) {
-                if (!/\d/.test(text[i]) || (phone && !digits && text[i] === '0')) continue;
+            for (var i = from; i < text.length; i++) {
+                if (!/\d/.test(text[i]) || (dropZero && !digits && text[i] === '0')) continue;
                 digits += text[i];
                 if (i < caret) before = digits.length;
             }
@@ -454,6 +544,8 @@
         if (format && input.maxLength >= 0 && input.maxLength < format.length) input.removeAttribute('maxlength');
         // With no format, a maxlength holds: a script write would skip it.
         var most = input.maxLength >= 0 ? input.maxLength : Infinity;
+        // A phone holds at most 15 digits, its country code included (E.164).
+        if (phone && most === Infinity) most = 15 - (code ? code.length - 1 : 0);
         var shown = format ? NDS.typing.group(text, caret, format) : { value: text.slice(0, most), caret: Math.min(caret, most) };
         if (opts.dry) return shown;
         if (shown.value !== input.value) {
@@ -461,7 +553,7 @@
             else NDS.setValue(input, shown.value, { change: false });
         }
         if (focused) try { input.setSelectionRange(shown.caret, shown.caret); } catch (_) {}
-        if (phone) return;
+        if (phone) { reportPhone(input); return; }
         var clean = shown.value.replace(/\s/g, '');
         var ok = iban ? isIban(clean) : isNationalId(clean);
         input.setCustomValidity(clean && !ok ? strings.text(iban ? 'invalid_iban' : 'invalid_national_id') : '');
@@ -628,12 +720,13 @@
             input: function(e, context) {
                 if (context && !strippedEvents.has(e)) stampIdentifier(context.input, { country: /^insertFrom(Paste|Drop)$/.test(e.inputType) });
             },
-            // Submit and new FormData(form) send the value without its groups ("SA03 8000 …" → "SA038000…").
+            // Submit and new FormData(form) send the value without its groups ("SA03 8000 …" → "SA038000…"),
+            // and a phone the whole number, its country code first (E.164: "+966551234567").
             // ponytail: a name two fields share keeps what the browser wrote.
             'formdata:capture': function(e) {
                 [].forEach.call(e.target.elements || [], function(el) {
                     if (!el.name || !el.matches('.nds-phone, .nds-iban') || e.formData.getAll(el.name).length !== 1) return;
-                    e.formData.set(el.name, el.value.replace(/[^A-Za-z0-9]/g, ''));
+                    e.formData.set(el.name, el.classList.contains('nds-phone') ? getPhoneNumber(el).value : el.value.replace(/[^A-Za-z0-9]/g, ''));
                 });
             }
         }
@@ -643,6 +736,7 @@
     });
     // A new country: the number takes its format.
     document.addEventListener('nds:dropmenu:select', function(e) {
+        if (pickingCountry) return;
         var control = e.target.closest('.nds-form-control');
         var input = control && control.querySelector('input.nds-phone');
         if (input) stampIdentifier(input);

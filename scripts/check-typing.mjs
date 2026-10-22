@@ -6,6 +6,8 @@
 //              as deleted and once as its digits alone (not for a field in noDigits); the field must
 //              come back to the value
 //   INITIAL    the value a field holds once built, from the value its markup ships (initial)
+//   SUBMIT     what new FormData(form) sends for a field showing a value (submit)
+//   EVENTS     keys typed into an empty field: the nds:phone:change count and the last detail (events)
 //   FUZZ       generated: random typing, pastes and Backspace on each field in limits ([most digits,
 //              each other character as often as it may appear]); the field must stay inside them. FUZZ=<runs per
 //              field, default 60>, SEED=<n> repeats a run
@@ -228,8 +230,25 @@ const PATTERNS = {
         fields: {
             // maxlength as old markup wrote it: the groups must still fit.
             iban: formField('<input type="text" class="nds-input nds-iban" maxlength="34">'),
-            phone: formField('<input type="tel" class="nds-input nds-phone" inputmode="numeric" maxlength="9">', ' data-format="00 000 0000"'),
-            plain: formField('<input type="tel" class="nds-input nds-phone" inputmode="numeric" maxlength="9">'),
+            phone: formField('<input type="tel" class="nds-input nds-phone" inputmode="numeric" maxlength="9">', ' data-country-code="+966" data-format="00 000 0000"'),
+            // No country code: the number as typed, its 0 kept, up to maxlength (free: up to 15).
+            plain: formField('<input type="tel" class="nds-input nds-phone" inputmode="numeric" maxlength="10">'),
+            free: formField('<input type="tel" class="nds-input nds-phone" inputmode="numeric">'),
+            // A picker on Saudi Arabia that also lists the UAE: a pasted UAE number picks it.
+            world: formField(`<div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+966">
+  <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger"><span class="nds-label">+966</span></button>
+  <div class="nds-dropmenu-menu" hidden><div class="nds-dropmenu-scroll">
+    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-country-code="+966" data-trigger-label="+966" data-format="00 000 0000"><span class="nds-label">SA</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-country-code="+971" data-trigger-label="+971"><span class="nds-label">AE</span></button>
+  </div></div></div><input type="tel" class="nds-input nds-phone" inputmode="numeric">`),
+            // A fixed code in the prefix, and a picker on Italy, whose numbers keep their 0.
+            saudi: formField('<div class="nds-form-action nds-prefix"><span class="nds-btn nds-subtle"><span class="nds-label">+966</span></span></div><input type="tel" class="nds-input nds-phone" inputmode="numeric">', ' data-country-code="+966" data-format="00 000 0000"'),
+            italy: formField(`<div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+39">
+  <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger"><span class="nds-label">+39</span></button>
+  <div class="nds-dropmenu-menu" hidden><div class="nds-dropmenu-scroll">
+    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-country-code="+966" data-trigger-label="+966" data-format="00 000 0000"><span class="nds-label">SA</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+39" data-country-code="+39" data-trigger-label="+39"><span class="nds-label">IT</span></button>
+  </div></div></div><input type="tel" class="nds-input nds-phone" inputmode="numeric">`),
         },
         cases: [
             ['iban', '', 'sa0380000000608010167519', 'SA03 8000 0000 6080 1016 7519|'],
@@ -248,9 +267,27 @@ const PATTERNS = {
             ['phone', '55 |123', '9', '55 9|12 3'],
             ['phone', '55 |123', '{Backspace}', '5|1 23'],
             ['phone', '55 1|23', '{Backspace}', '55 |23'],
-            ['plain', '', '0551234567', '551234567|'],
-            ['plain', '', '{Paste:055 123 4567}', '551234567'],
+            ['plain', '', '0551234567', '0551234567|'],
+            ['plain', '', '05512345678', '0551234567|'],
+            ['plain', '', '{Paste:055 123 4567}', '0551234567'],
+            ['free', '', '{Paste:+966 55 123 4567}', '966551234567'],
+            ['free', '', '12345678901234567890', '123456789012345|'],
+            ['saudi', '', '{Paste:+966 55 123 4567}', '55 123 4567'],
+            ['saudi', '', '{Paste:00966551234567}', '55 123 4567'],
+            ['saudi', '', '{Paste:+966 055 123 4567}', '55 123 4567'],
+            ['saudi', '', '0551234567', '55 123 4567|'],
+            ['saudi', '', '{Paste:966551234567}', '55 123 4567'],
+            ['saudi', '', '{Paste:9660551234567}', '55 123 4567'],
+            ['world', '', '{Paste:+971 50 123 4567}', '501234567'],
+            ['italy', '', '0612345678', '0612345678|'],
+            ['italy', '', '{Paste:+39 06 1234 5678}', '0612345678'],
         ],
+        // What new FormData(form) sends for a field showing a value: E.164 when the field shows a code.
+        submit: [['saudi', '55 123 4567', '+966551234567'], ['italy', '0612345678', '+390612345678'], ['saudi', '', ''],
+            ['plain', '0551234567', '0551234567'], ['iban', 'SA03 8000 0000 6080 1016 7519', 'SA0380000000608010167519']],
+        // Keys typed into an empty field: how many nds:phone:change it fires, and the last one's detail.
+        events: [['saudi', '0551234567', 9, { value: '+966551234567', countryCode: '+966', nationalNumber: '551234567' }],
+            ['plain', '0551234567', 10, { value: '0551234567', countryCode: null, nationalNumber: null }]],
         roundTrip: { iban: ['SA03 8000 0000 6080 1016 7519'], phone: ['55 123 4567'] },
         limits: { phone: [9, '  '] },
     },
@@ -391,6 +428,40 @@ for (const name of patterns) {
     for (const [field, want] of Object.entries(PATTERNS[name].initial || {})) {
         const value = await pages[0].evaluate((id) => document.getElementById(id).value, `${name}-${field}`);
         if (value !== want) failures.push(`${name}/${field} initial: "${value}", want "${want}"`);
+    }
+}
+// SUBMIT: the field put in a form for one new FormData(form), then back where it was.
+for (const name of patterns) {
+    for (const [field, shown, want] of PATTERNS[name].submit || []) {
+        const sent = await pages[0].evaluate(([id, shown]) => {
+            const input = document.getElementById(id), box = input.closest('.nds-form-container'), form = document.createElement('form');
+            box.before(form);
+            form.append(box);
+            input.name = 'probe';
+            input.value = shown;
+            const sent = new FormData(form).get('probe');
+            form.replaceWith(box);
+            input.removeAttribute('name');
+            input.value = '';
+            return sent;
+        }, [`${name}-${field}`, shown]);
+        if (sent !== want) failures.push(`${name}/${field} submit: "${shown}" sends "${sent}", want "${want}"`);
+    }
+}
+// EVENTS: keys typed with a listener on the input, then the field emptied again.
+for (const name of patterns) {
+    for (const [field, keys, count, want] of PATTERNS[name].events || []) {
+        const id = `${name}-${field}`;
+        await pages[0].evaluate((id) => {
+            window.__phone = [];
+            document.getElementById(id).addEventListener('nds:phone:change', (e) => window.__phone.push(e.detail));
+        }, id);
+        await pages[0].focus('#' + id);
+        await pages[0].keyboard.type(keys);
+        const got = await pages[0].evaluate((id) => { const input = document.getElementById(id); input.select(); return window.__phone; }, id);
+        await pages[0].keyboard.press('Backspace');
+        const last = JSON.stringify(got.at(-1)), wanted = JSON.stringify(want);
+        if (got.length !== count || last !== wanted) failures.push(`${name}/${field} events: "${keys}" fired ${got.length}, last ${last}; want ${count}, last ${wanted}`);
     }
 }
 await Promise.all(pages.map(async (page, p) => {
