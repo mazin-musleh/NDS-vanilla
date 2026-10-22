@@ -76,7 +76,7 @@
  *     for a component that shows the cause itself (password's red chips). It beats native messages.
  *   - A readonly checkbox, radio or switch cannot change: Forms cancels the click that Space
  *     or an arrow key sends, since the browser ignores readOnly on those inputs.
- *   - refresh() dispatches nothing, so it cannot re-enter your own input handler. Setting
+ *   - refresh() dispatches nothing on the field but a phone's nds:phone:change (a full number may pick its country), so it cannot re-enter your own input handler. Setting
  *     input.value from JS notifies nothing on its own: call refresh() or dispatch input/change.
  *   - Forms owns the submit listener on every real <form class="nds-form">. data-ajax makes it
  *     preventDefault() after validation — the request is yours to send from nds:form:valid.
@@ -416,14 +416,15 @@
         return (source && source.getAttribute('data-format')) || null;
     }
 
-    // Where a phone's data-format and data-country-code live: the picked country with a picker (or the item
-    // data-select-value names before Dropmenu has picked it), else the field.
+    // Where a phone's data-format and data-country-code live: the picked country with a picker, else the field.
+    // Before Dropmenu is built, the item it will pick first: data-select-value beats a selected item, as there.
     function getPhoneSource(input) {
         var picker = getCountryPicker(input);
         if (!picker) return input.closest('.nds-form-container');
         var items = picker.querySelectorAll('.nds-dropmenu-item');
-        return [].find.call(items, function(item) { return NDS.state.has(item, 'selected'); })
-            || [].find.call(items, function(item) { return item.getAttribute('data-value') === picker.getAttribute('data-select-value'); });
+        var picked = [].find.call(items, function(item) { return NDS.state.has(item, 'selected'); });
+        var named = [].find.call(items, function(item) { return item.getAttribute('data-value') === picker.getAttribute('data-select-value'); });
+        return picker.ndsDropmenu ? picked || named : named || picked;
     }
 
     function getCountryPicker(input) {
@@ -461,13 +462,15 @@
     }
 
     // A full number from another listed country picks that country. Its nds:dropmenu:select must not
-    // re-stamp the field with the value this stamp is replacing.
+    // re-stamp the field with the value this stamp is replacing. Forms runs before Dropmenu at load: the
+    // picker is built here, or the code this stamp strips would submit with the default country's.
     var pickingCountry = false;
     function pickCountry(input, item) {
         var picker = getCountryPicker(input);
-        if (!picker || !picker.ndsDropmenu) return;
+        var dropmenu = picker && NDS.Dropmenu.create(picker);
+        if (!dropmenu) return;
         pickingCountry = true;
-        try { picker.ndsDropmenu.setSelection(item); } finally { pickingCountry = false; }
+        try { dropmenu.setSelection(item); } finally { pickingCountry = false; }
     }
 
     // The number a phone submits: its country code, then its digits ("+966551234567"). Without a code, the digits
@@ -704,7 +707,7 @@
                     stampIdentifier(field, { text: back ? value.slice(0, at - 1) + value.slice(start) : value.slice(0, at) + value.slice(at + 2), caret: back ? at - 1 : at });
                     return;
                 }
-                if (context.input.getAttribute('inputmode') !== 'numeric' || !e.data) return;
+                if (context.input.readOnly || context.input.getAttribute('inputmode') !== 'numeric' || !e.data) return;
                 var latin = NDS.toLatinDigits(e.data);
                 if (latin === e.data && !/\D/.test(latin)) return;
                 e.preventDefault();

@@ -1,6 +1,6 @@
 /* NDS.Password — public surface
  * Rides: nds-forms (setCustomValidity gates submit; soft. .nds-toggle-password is
- *        wired by Forms — see initPasswordToggle. This component only owns rules + match.)
+ *        wired by Forms — see its password part. This component only owns rules + match.)
  * Requires:
  *   .nds-password needs [data-rule], [data-password-match] — no rule is checked
  * Methods:

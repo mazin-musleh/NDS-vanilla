@@ -37,7 +37,7 @@
         const units = pieces.filter((_, index) => index % 2);
         const digitUnits = units.filter((unit) => !unit.words);
         const mask = {
-            pieces, units, digitUnits,
+            pieces, digitUnits,
             separators: pieces.filter((_, index) => !(index % 2)).join(''),
             maxDigits: digitUnits.reduce((sum, unit) => sum + unit.size, 0),
             open: digitUnits.some((unit) => unit.open),
@@ -282,7 +282,9 @@
             if (e.inputType !== 'insertText' || e.isComposing || input.selectionEnd !== input.value.length) return;
             const before = input.value.slice(0, -e.data.length);
             const { value } = type(getMask(), before, before.length, before.length, e.data);
-            if (value !== input.value) { input.value = value; shaped = true; }
+            // The prototype setter, as NDS.setValue writes: React's own would record the value, and the
+            // input event in flight would then reach its onChange as no change.
+            if (value !== input.value) { Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'value').set.call(input, value); shaped = true; }
         }, { signal });
         input.addEventListener('beforeinput', (e) => {
             // Chrome sends beforeinput on a readonly field too.
@@ -312,7 +314,7 @@
     // else is written as it is once a later slot is filled, so the value never ends on a separator. A
     // character the next slot does not take is dropped, and so is everything past the last slot. The
     // caret stays after the same characters, and past a separator a later one follows. Returns { value, caret }.
-    const SLOTS = { 0: /\d/, A: /[A-Za-z]/, '*': /[A-Za-z\d]/ };
+    const SLOTS = Object.freeze({ 0: /\d/, A: /[A-Za-z]/, '*': /[A-Za-z\d]/ });
     function group(text, caret, format) {
         text = latin(text);
         const slots = [...format].filter((char) => SLOTS[char]);

@@ -20,11 +20,12 @@
     const getGroup = (el) => el.closest('.nds-form-group') || el;
     const check = (group) => NDS.validation.checkCount(group, group.querySelectorAll('input[type="checkbox"]'));
 
-    // A group answers when it holds a checkbox and opts in.
+    // A group answers when it holds a checkbox and opts in. Focus goes to an enabled box: validation
+    // passes a field whose focus is disabled, so one disabled option would pass the whole group.
     NDS.validation.addRule(
         '.nds-form-group[data-min-checked], .nds-form-group[data-max-checked], .nds-form-group[data-required], .nds-form-group.nds-required',
         (group) => {
-            const box = group.querySelector('input[type="checkbox"]');
+            const box = group.querySelector('input[type="checkbox"]:not(:disabled)') || group.querySelector('input[type="checkbox"]');
             return box ? Object.assign(check(group), { focus: box }) : null;
         },
         { on: ['change'] }

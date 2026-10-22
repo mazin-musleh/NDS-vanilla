@@ -2,8 +2,8 @@
  * Rides: (none — a base: Form and the field components plug their parts into it)
  * Methods:
  *   NDS.field.addType(name, part)     a part of the field another component owns: part.on maps an event
- *                                     name to fn(e, c), c the field the target is the input of (findControl(),
- *                                     looked up once per event) or null; 'input:capture' for the capture phase;
+ *                                     name to fn(e, c), c the field the target is the input of ({input,
+ *                                     control, container}, looked up once per event) or null; 'input:capture' for the capture phase;
  *                                     part.around the same as fn(e), for a target that is no field's own input
  *                                     (a button, a track, a chip): a click in a field never runs it; part.setupInput(input,
  *                                     control) runs for each input in the first-paint pass, part.create(el)
@@ -15,7 +15,6 @@
  *                                     any other element every field inside it; then every part's refresh
  *   NDS.field.onReset(form, fn, opts) fn(form) once the browser has put the values back, unless the reset
  *                                     was cancelled; form a <form>, document (every form) or null
- *   NDS.field.findControl(target)     {input, control, container} when target is a field's own input
  *   NDS.field.isActive(input)         it takes the active and focus states: not readonly, or interactive
  *   NDS.field.findOwnControl(container) · NDS.field.findOwnInput(container)   a container's own, never a nested one's
  * Events:
@@ -141,14 +140,15 @@
     handlers.mousedown = (e, field) => {
         if (field && field.container && isActive(field.input)) NDS.state.add(field.container, 'active');
     };
+    // Leaving a state never asks isActive: a field turned readonly while active would keep it.
     handlers.mouseup = handlers.mouseout = (e, field) => {
-        if (field && field.container && isActive(field.input)) NDS.state.remove(field.container, 'active');
+        if (field && field.container) NDS.state.remove(field.container, 'active');
     };
     handlers.focusin = (e, field) => {
         if (field && field.container && isActive(field.input)) NDS.state.add(field.container, 'focus');
     };
     handlers.focusout = (e, field) => {
-        if (field && field.container && isActive(field.input)) {
+        if (field && field.container) {
             NDS.state.remove(field.container, 'focus');
             NDS.state.remove(field.container, 'typing');
         }
@@ -268,5 +268,5 @@
         });
     }
 
-    NDS.field = { addType, create, refresh, onReset, findControl, isActive, findOwnControl, findOwnInput };
+    NDS.field = { addType, create, refresh, onReset, isActive, findOwnControl, findOwnInput };
 })();

@@ -14,7 +14,6 @@
  *                                     passed: the rule fields that passed}; opts.extra(container, input) → a
  *                                     message the native pass adds
  *   NDS.validation.getMessage(input)  the native message for an invalid input
- *   NDS.validation.isVisible(el, form)   no [hidden] and no display:none up to form
  *   NDS.validation.rules              the registered rules, to read: {selector, fn, on, owns}
  *   NDS.validation.onRule(fn)         fn(rule) for every rule, now and as later bundles register theirs
  *   NDS.validation.isOwned(container) a rule owns the container's value: no native check, no required stamp
@@ -188,5 +187,5 @@
         return validationResult;
     }
 
-    NDS.validation = { addRule, onRule, isOwned, check, checkAll, getMessage, isVisible, isRequired, checkCount, rules };
+    NDS.validation = { addRule, onRule, isOwned, check, checkAll, getMessage, isRequired, checkCount, rules };
 })();

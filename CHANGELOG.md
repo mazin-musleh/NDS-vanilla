@@ -251,6 +251,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Forms** — A submit lists errors in page order, so the first field from the top takes focus. Before, the order followed the order the checks ran in.
 - **Forms** — A disabled field never fails a submit, as in native validation. Before, a disabled checkbox or radio group with `data-required` or `data-min-checked` blocked the form. A field that shows an error is checked again as the user edits it, for a Rating, an OTP, a Tag Input, a File Upload and the pickers too, not only checkbox, radio and Multiselect groups.
 - **Forms** — `NDS.Form.setStatus(el, '')` fires `nds:form:status` once; it fired twice. A number field with a blank `min` or `max` steps without a limit on that side; it wrote `NaN`. A paste into a read-only field no longer sets the `typing` state.
+- **Forms** — A field that becomes read-only while it has focus loses its focus look when the user leaves it. Before, `data-state="focus"` stayed.
 - **Grid** — `hidden` and `.nds-hidden` hide an `.nds-grid`: its own `display: grid !important` kept it showing.
 - **Hero** — a relative path in it loads from the page, not from the stylesheet's folder.
 - **Image Popup Viewer** — the image counter reads `1 / 5` in Arabic; it read `5 / 1`. A thumbnail added after page load opens the viewer, and `NDS.Ipv.reinit()` gives it keyboard access. In Arabic, Left moves to the next image and Right to the previous. Focus stays in the viewer when Next or Previous disables at the end, or H hides the controls.
