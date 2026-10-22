@@ -43,7 +43,7 @@ A group earns its place by its seams: every file needs a confirmed seam to at le
 
 ## @forms
 
-Files: nds-validation.js, nds-field.js, nds-form.js, nds-checkbox.js, nds-radio.js, nds-switch.js, nds-otp.js, nds-password.js
+Files: nds-validation.js, nds-field.js, nds-typing.js, nds-form.js, nds-checkbox.js, nds-radio.js, nds-switch.js, nds-otp.js, nds-password.js
 
 Seams:
 - form, switch, radio, checkbox → field: register parts with `NDS.field.addType(name, part)`; field runs each part's `on` / `around` / `setupInput` / `create` / `refresh`. Form's `NDS.field.create(document.body)` in `init` is the first-paint pass.
@@ -51,7 +51,10 @@ Seams:
 - checkbox, radio, otp → validation + form: `NDS.validation.addRule(selector, fn, {on, owns})`; `validate` routes to `NDS.Form.validateField` (otp: `checkField`); checkbox uses `checkCount`, radio `isRequired`; otp and form share `NDS.Form.clearStatus`. Validation's native pass skips owned containers, and field skips the required stamp when `NDS.validation.isOwned(container)`.
 - password → form: form's password part strips Arabic letters on `input:capture` (`NDS.setValue(…, {change:false})`, `strippedEvents` WeakSet) before NdsPassword's `check()` runs; password uses `NDS.field.onReset(form, fn, {signal})` and `NDS.status` on its rule chips.
 - switch, radio, otp → field refresh: `toggle()` / `repaint` call `NDS.setValue` then `NDS.field.refresh(input, {validate:true})`; otp resyncs its hidden value through `NDS.field.onReset`.
-- order: main lists validation, field, form, then checkbox / radio / switch / otp, which call `NDS.validation`, `NDS.field` and `NDS.Form` at eval time. Password rides delegated and needs only `NDS.field`.
+- form → typing: `stampIdentifier` lays a phone (`data-format` of `getPhoneSource`) or an IBAN (`IBAN_FORMAT`) out with `NDS.typing.group(text, caret, format)`; the digits part's `beforeinput` runs a `dry` stamp first and lets the browser insert when the shape holds, else `preventDefault` + `NDS.setValue(…, {change:false})`. The `formdata:capture` part strips the groups and puts `data-country-code` first (`getPhoneNumber`), and `reportPhone` fires `nds:phone:change`.
+- typing → form: `addTypingListeners` writes through `NDS.setValue(input, value, {change:false})` with no `inputType`, so its own `input` handler skips the write while form's field states still hear it; it sets `inputmode="decimal"`, never `numeric`, because form's digits part blocks every non-digit under `numeric`. Its callers sit in other groups: date-picker (@dates) and time-picker (@menus) through `compile` + `addTypingListeners`.
+- form → dropmenu (in @menus): a phone's country picker is the `.nds-dropmenu[data-select-name]` in its control; form reads the picked item by `NDS.state.has(item, 'selected')` (else `data-select-value`), re-stamps on `nds:dropmenu:select`, and a pasted full number of another listed country calls `ndsDropmenu.setSelection(item)` with `pickingCountry` set, so that select event does not re-stamp the old value.
+- order: main lists validation, field, typing, form, then checkbox / radio / switch / otp, which call `NDS.validation`, `NDS.field` and `NDS.Form` at eval time. Password rides delegated and needs only `NDS.field`.
 
 ## @menus
 
