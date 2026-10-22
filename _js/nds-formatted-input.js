@@ -1,14 +1,21 @@
 /* NDS.FormattedInput — public surface (the .nds-phone, .nds-national-id and .nds-iban fields)
  * Rides: nds-field (its part) · nds-typing (group) · nds-dropmenu (a phone's country picker)
  * Methods:
- *   NDS.FormattedInput.isNationalId(str) / .isIban(str)   the checksum rules behind .nds-national-id / .nds-iban
+ *   NDS.FormattedInput.isNationalId(str, country) / .isIban(str)   the checks behind .nds-national-id / .nds-iban;
+ *                                     country defaults to SA, and one with no rule passes
+ *   NDS.FormattedInput.addIdRule(country, { check(value), digits, length })   a national ID rule for a
+ *                                     country ("AE"): check gets the clean value; digits, digits only (else
+ *                                     capitals and digits); length, the most characters. Replaces one set before
  * Events:
  *   nds:phone:change            detail {value, countryCode, nationalNumber} — from a .nds-phone input,
  *                               when the number it submits changes (typing, a paste, a country pick, a reset)
  * Hooks:
  *   data-format on a .nds-phone field's container, or on each item of its country picker: the
  *   groups it shows (0 a digit: "00 000 0000"); an item without one shows the number as typed
- *   data-country-code in the same places ("+966"): the code a phone submits before its number
+ *   a hidden input in a .nds-phone field's .nds-prefix: its value is the code the phone submits before its
+ *   number ("+966"); a country picker's is the one Dropmenu writes, from the picked item's data-value
+ *   data-country on any element, <html> for the site ("AE"): the country a national ID and an IBAN
+ *   inside it follow; the nearest wins, SA without one; "any" takes an ID of any country, unchecked
  * Gotchas:
  *   - Layers: NDS.typing shapes the text; Date Picker and Time Picker add a picker menu; this file is a
  *     formatted field with no picker. A type part of the form field: no init() and no loader entry.
@@ -18,11 +25,13 @@
  *   - .nds-iban shows groups of four, and a .nds-phone with a data-format its groups: input.value
  *     holds the spaces; a submit and new FormData(form) send the value without them. Inserts go
  *     through this file there, and a maxlength shorter than the format is removed: the format sets the most.
- *   - A .nds-phone with data-country-code drops its leading 0 (not +39/+378/+379) and a pasted
+ *   - A .nds-phone with a code drops its leading 0 (not +39/+378/+379) and a pasted
  *     "+966…" (another country its picker lists picks that country), and submits E.164
  *     ("+966551234567"); without one it keeps the number as typed, 0 included, up to 15 digits. The code joins in the formdata event only: input.value keeps the
  *     local number, so code reading it (jQuery serialize(), framework state) gets no code: it
  *     listens for nds:phone:change instead.
+ *   - A national ID of a country with no rule keeps capitals and digits and checks nothing; SA's rule ships.
+ *     An IBAN starting with a digit gets the country's letters, SA's by default.
  *   - NDS.Form.refresh() re-stamps the field: a phone sends nds:phone:change when its number changed
  *     (a full number may pick its country).
  */
@@ -37,7 +46,7 @@
     });
 
     // Saudi national ID / iqama: 10 digits, first 1 or 2, Luhn check digit.
-    function isNationalId(value) {
+    function isSaudiId(value) {
         if (!/^[12]\d{9}$/.test(value)) return false;
         var sum = 0;
         for (var i = 0; i < 10; i++) {
@@ -46,6 +55,42 @@
             sum += digit;
         }
         return sum % 10 === 0;
+    }
+
+    // National ID rules by country: check(value) on the clean value; digits, digits only (else capitals
+    // and digits); length, the most characters. A country without one keeps capitals and digits, unchecked.
+    var idRules = new Map([['SA', { check: isSaudiId, digits: true, length: 10 }]]);
+
+    function addIdRule(country, rule) {
+        country = String(country).toUpperCase();
+        if (!/^[A-Z]{2}$/.test(country) || !rule || typeof rule.check !== 'function') {
+            console.warn('NDS FormattedInput: addIdRule needs a two-letter country and a check function');
+            return;
+        }
+        idRules.set(country, rule);
+        // A field already stamped takes the new rule.
+        document.querySelectorAll('.nds-national-id').forEach(function(input) {
+            if (getCountry(input) === country) stampIdentifier(input, { quiet: true });
+        });
+    }
+
+    function isNationalId(value, country) {
+        var rule = idRules.get(String(country || 'SA').toUpperCase());
+        return rule ? !!rule.check(value) : true;
+    }
+
+    // The country a field's ID and IBAN follow: the nearest data-country (<html> sets the site's), else SA.
+    // ANY: an ID of any country, a passport too, unchecked.
+    var warnedCountries = new Set();
+    function getCountry(input) {
+        var el = input.closest('[data-country]:not([data-country=""])');
+        var written = el ? el.getAttribute('data-country') : 'SA', country = written.trim().toUpperCase();
+        if (/^[A-Z]{2}$/.test(country) || country === 'ANY') return country;
+        if (!warnedCountries.has(written)) {
+            warnedCountries.add(written);
+            console.warn('NDS FormattedInput: data-country "' + written + '" is not a two-letter country code; using SA');
+        }
+        return 'SA';
     }
 
     // IBAN: country + check digits, then mod-97 of the rearranged, letters-to-numbers string === 1.
@@ -69,15 +114,20 @@
         return (source && source.getAttribute('data-format')) || null;
     }
 
-    // Where a phone's data-format and data-country-code live: the picked country with a picker, else the field.
-    // Before Dropmenu is built, the item it will pick first: data-select-value beats a selected item, as there.
+    // Where a phone's data-format lives: the picked country item with a picker, else the field's container.
     function getPhoneSource(input) {
         var picker = getCountryPicker(input);
-        if (!picker) return input.closest('.nds-form-container');
-        var items = picker.querySelectorAll('.nds-dropmenu-item');
-        var picked = [].find.call(items, function(item) { return NDS.state.has(item, 'selected'); });
-        var named = [].find.call(items, function(item) { return item.getAttribute('data-value') === picker.getAttribute('data-select-value'); });
-        return picker.ndsDropmenu ? picked || named : named || picked;
+        return picker ? getPickedItem(picker) : input.closest('.nds-form-container');
+    }
+
+    // The picked country item: the one whose data-value Dropmenu holds in its hidden input. Before Dropmenu
+    // builds that input, the item it will pick first: data-select-value beats a selected item, as there.
+    function getPickedItem(picker) {
+        var hidden = picker.querySelector('input[type="hidden"]');
+        var value = hidden ? hidden.value : picker.getAttribute('data-select-value');
+        return [].find.call(picker.querySelectorAll('.nds-dropmenu-item'), function(item) {
+            return value ? item.getAttribute('data-value') === value : NDS.state.has(item, 'selected');
+        });
     }
 
     function getCountryPicker(input) {
@@ -85,14 +135,19 @@
         return control && control.querySelector('.nds-dropmenu[data-select-name]');
     }
 
-    // The data-country-code an element carries ("+966"). Null: none.
-    function readCountryCode(el) {
-        var digits = el && NDS.toLatinDigits(el.getAttribute('data-country-code') || '').replace(/\D/g, '');
+    // A dialing code from a value ("+966", "00966", Arabic digits) → "+966". Null: none.
+    function readDialCode(value) {
+        var digits = NDS.toLatinDigits(value || '').replace(/\D/g, '');
         return digits ? '+' + digits : null;
     }
 
+    // A phone's code: the hidden input in its prefix, the fixed code or the picker's pick.
     function getCountryCode(input) {
-        return readCountryCode(getPhoneSource(input));
+        var picker = getCountryPicker(input);
+        if (picker) { var item = getPickedItem(picker); return item ? readDialCode(item.getAttribute('data-value')) : null; }
+        var control = input.closest('.nds-form-control');
+        var hidden = control && control.querySelector('.nds-prefix input[type="hidden"]');
+        return hidden ? readDialCode(hidden.value) : null;
     }
 
     // A full number ("+971 50…", "00971 50…"): the code it starts with, the field's own or a country its picker
@@ -101,10 +156,10 @@
         var lead = text.match(/^\s*(?:\+|00)\s*/);
         if (!lead) return null;
         var picker = getCountryPicker(input);
-        var sources = picker ? picker.querySelectorAll('.nds-dropmenu-item') : [input.closest('.nds-form-container')];
+        var sources = picker ? picker.querySelectorAll('.nds-dropmenu-item') : [null];
         var best = null;
         [].forEach.call(sources, function(source) {
-            var code = readCountryCode(source);
+            var code = source ? readDialCode(source.getAttribute('data-value')) : getCountryCode(input);
             if (code && text.startsWith(code.slice(1), lead[0].length) && (!best || code.length > best.code.length)) best = { code: code, source: source };
         });
         if (best) {
@@ -148,7 +203,7 @@
     // .nds-phone / .nds-national-id / .nds-iban: the value in its shape, then the checksum result, so
     // checkValidity() (blur and submit) fails the field with a localized message. Empty = valid. opts:
     // text and caret, an edit to write in place of the value; quiet, write it without an input event;
-    // country, a whole value that may lack an IBAN's SA (a paste, a first key, the page's own value).
+    // country, a whole value that may lack an IBAN's country (a paste, a first key, the page's own value).
     function stampIdentifier(input, opts) {
         var iban = input.classList.contains('nds-iban'), phone = input.classList.contains('nds-phone');
         var nationalId = input.classList.contains('nds-national-id');
@@ -159,17 +214,19 @@
             text = input.value;
             caret = focused ? input.selectionStart : text.length;
         }
+        var country = !phone && getCountry(input), rule = nationalId && idRules.get(country);
         text = NDS.toLatinDigits(text);
         if (iban) {
             text = text.toUpperCase();
-            // Banking apps copy a Saudi IBAN without its SA: a value starting with a digit gets it back.
+            // Banking apps copy an IBAN without its country (a Saudi one without SA): a value starting with a digit gets it back.
             var lead = text.search(/[A-Z0-9]/);
-            if (opts.country && lead >= 0 && /\d/.test(text[lead])) {
-                text = text.slice(0, lead) + 'SA' + text.slice(lead);
+            if (opts.country && country !== 'ANY' && lead >= 0 && /\d/.test(text[lead])) {
+                text = text.slice(0, lead) + country + text.slice(lead);
                 if (caret > lead) caret += 2;
             }
         } else {
-            // Digits only (a paste may bring spaces, dashes or +). A phone with a country code drops the code of
+            // Digits only, or capitals and digits for an ID its rule lets have letters (a paste may bring spaces,
+            // dashes or +). A phone with a country code drops the code of
             // a full number ("+966 55…", "00966 55…"), picking its country when a picker lists it, and its leading
             // zero, the trunk prefix.
             var code = phone && getCountryCode(input), from = 0;
@@ -186,9 +243,11 @@
                 for (var seen = 0; seen < code.length - 1; from++) if (/\d/.test(text[from])) seen++;
             }
             var dropZero = code && KEEP_ZERO.indexOf(code) < 0;
+            var keep = phone || (rule && rule.digits) ? /\d/ : /[A-Z\d]/;
+            if (!phone) text = text.toUpperCase();
             var digits = '', before = 0;
             for (var i = from; i < text.length; i++) {
-                if (!/\d/.test(text[i]) || (dropZero && !digits && text[i] === '0')) continue;
+                if (!keep.test(text[i]) || (dropZero && !digits && text[i] === '0')) continue;
                 digits += text[i];
                 if (i < caret) before = digits.length;
             }
@@ -202,6 +261,7 @@
         var most = input.maxLength >= 0 ? input.maxLength : Infinity;
         // A phone holds at most 15 digits, its country code included (E.164).
         if (phone && most === Infinity) most = 15 - (code ? code.length - 1 : 0);
+        if (rule && rule.length < most) most = rule.length;
         var shown = format ? NDS.typing.group(text, caret, format) : { value: text.slice(0, most), caret: Math.min(caret, most) };
         if (opts.dry) return shown;
         if (shown.value !== input.value) {
@@ -211,7 +271,7 @@
         if (focused) try { input.setSelectionRange(shown.caret, shown.caret); } catch (_) {}
         if (phone) { reportPhone(input); return; }
         var clean = shown.value.replace(/\s/g, '');
-        var ok = iban ? isIban(clean) : isNationalId(clean);
+        var ok = iban ? isIban(clean) : !rule || !!rule.check(clean);
         input.setCustomValidity(clean && !ok ? strings.text(iban ? 'invalid_iban' : 'invalid_national_id') : '');
     }
 
@@ -274,6 +334,7 @@
     });
 
     NDS.FormattedInput = {
+        addIdRule: addIdRule,
         isNationalId: isNationalId,
         isIban: isIban
     };

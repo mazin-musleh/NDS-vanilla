@@ -662,6 +662,15 @@
   js: _js/nds-upload.js
   scss: _sass/components/_upload.scss
 
+- title: "Formatted Input"
+  description: "Phone number, national ID and IBAN fields that keep the value in its shape"
+  use_when: "A phone number (fixed code or a country picker, E.164 submit), a national ID (Saudi by default, another country's, or any ID such as a passport), or a bank IBAN: digit groups as the user types, checksum validation, clean submit values."
+  category: "Forms"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/formatted-input.html"
+  js: _js/nds-formatted-input.js
+  scss: _sass/components/_form.scss
+
 - title: "Multiselect"
   description: "Multi-option select over a native checkbox group: removable chips, JSON-populated options, staged or instant commit"
   use_when: "Pick several options from a list: multi-select dropdown, checkbox dropdown, grouped option lists, selections shown as removable chips. Submits natively as a checkbox array. For free typed values use Tag Input; for one choice use Custom Select."
@@ -745,7 +754,7 @@
 
 - title: "Text Inputs"
   description: "Single-line fields with labels, icons, and validation"
-  use_when: "Single-line form fields with labels, icons, helper text, and validation states: text, email, search box, phone number, National ID, and IBAN fields. The base for most form work."
+  use_when: "Single-line form fields with labels, icons, helper text, and validation states: text, email and search box fields. The base for most form work. For a phone number, a National ID or an IBAN, use Formatted Input."
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/form.html"

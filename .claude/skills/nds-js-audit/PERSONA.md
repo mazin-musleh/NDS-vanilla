@@ -370,7 +370,7 @@ The class is in every consumer page, so it is the costliest name to change and t
 
 - `.nds-btn` is the Button component (an abbreviation on every page).
 - Numbers keeps its registry name over its class (`.nds-number-format`).
-- A type part (Checkbox, Radio, Switch) has no `init()` and no loader entry: it registers with `NDS.field` at load (entry 11). It is still a component, with one name across its class, file, doc page and namespace. Formatted Input is the one part named for the fields it serves (`.nds-phone`, `.nds-national-id`, `.nds-iban`), not one class: its docs stay on `components/form.md` (`PART_CLASSES` in `check-banners.mjs`).
+- A type part (Checkbox, Radio, Switch) has no `init()` and no loader entry: it registers with `NDS.field` at load (entry 11). It is still a component, with one name across its class, file, doc page and namespace. Formatted Input is the one part named for the fields it serves (`.nds-phone`, `.nds-national-id`, `.nds-iban`), not one class (`PART_CLASSES` in `check-banners.mjs`); its doc page is `components/formatted-input.md`.
 - A part's property is named for the part (`el.ndsTableControls`, `el.ndsColumnToggle`, `el.ndsCounter`).
 - `foundations/themes.md` documents theming, not the Theme switch.
 

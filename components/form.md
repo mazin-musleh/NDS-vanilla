@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "22/10/2026 - 09:13 PM"
+last_edit: "22/10/2026 - 10:14 PM"
 lang: en
 direction: ltr
 ---
@@ -18,10 +18,11 @@ direction: ltr
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A text field is a `.nds-form-container` with three parts: a header with the label, a control box with the input, and an action slot for buttons such as Clear. The same container holds an email, password, search, number, phone, textarea or native select field. This page also covers what every NDS field shares: the required mark, the disabled and readonly states, the messages under the field, and submit validation.
+A text field is a `.nds-form-container` with three parts: a header with the label, a control box with the input, and an action slot for buttons such as Clear. The same container holds an email, password, search, number, textarea or native select field. This page also covers what every NDS field shares: the required mark, the disabled and readonly states, the messages under the field, and submit validation.
 
 Pick another component when:
 
+- the user types a phone number, a national ID or an IBAN: [Formatted Input](../components/formatted-input)
 - the user picks one option from a list: [Custom Select](../components/custom-select)
 - the user picks a date or a time: [Date Picker](../components/date-picker), [Time Picker](../components/time-picker)
 - the user types and picks from suggestions: [Autocomplete](../components/autocomplete)
@@ -139,104 +140,6 @@ Pick another component when:
   </div>
 </div>
 </script>
-<script type="text/html" id="field-phone" data-canon>
-<div class="nds-form-container" data-country-code="+966" data-format="00 000 0000">
-  <div class="nds-form-header">
-    <label for="phone">
-      <span class="nds-label">Mobile number</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <div class="nds-form-action nds-prefix">
-      <span class="nds-btn nds-subtle"><span class="nds-label">+966</span></span>
-    </div>
-    <input type="tel" id="phone" name="phone" class="nds-input nds-phone" placeholder="5X XXX XXXX" autocomplete="tel-national" inputmode="numeric">
-    <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
-        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-      </button>
-    </div>
-  </div>
-</div>
-</script>
-<script type="text/html" id="field-phone-country" data-canon>
-<div class="nds-form-container">
-  <div class="nds-form-header">
-    <label for="phone-country">
-      <span class="nds-label">Phone</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+966">
-      <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger">
-        <span class="nds-label">+966</span>
-      </button>
-      <div class="nds-dropmenu-menu" hidden>
-        <div class="nds-dropmenu-scroll">
-          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-country-code="+966" data-trigger-label="+966" data-format="00 000 0000">
-            <span class="nds-label">Saudi Arabia (+966)</span>
-          </button>
-          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-country-code="+971" data-trigger-label="+971">
-            <span class="nds-label">United Arab Emirates (+971)</span>
-          </button>
-          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+973" data-country-code="+973" data-trigger-label="+973">
-            <span class="nds-label">Bahrain (+973)</span>
-          </button>
-          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+974" data-country-code="+974" data-trigger-label="+974">
-            <span class="nds-label">Qatar (+974)</span>
-          </button>
-          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+965" data-country-code="+965" data-trigger-label="+965">
-            <span class="nds-label">Kuwait (+965)</span>
-          </button>
-          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+968" data-country-code="+968" data-trigger-label="+968">
-            <span class="nds-label">Oman (+968)</span>
-          </button>
-        </div>
-      </div>
-    </div>
-    <input type="tel" id="phone-country" name="phone" class="nds-input nds-phone" placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric">
-    <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
-        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-      </button>
-    </div>
-  </div>
-</div>
-</script>
-<script type="text/html" id="field-national-id" data-canon>
-<div class="nds-form-container">
-  <div class="nds-form-header">
-    <label for="national-id">
-      <span class="nds-label">National ID or Iqama number</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <input type="text" id="national-id" name="national-id" class="nds-input nds-national-id" placeholder="1XXXXXXXXX" inputmode="numeric" maxlength="10" autocomplete="off">
-    <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
-        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-      </button>
-    </div>
-  </div>
-</div>
-</script>
-<script type="text/html" id="field-iban" data-canon>
-<div class="nds-form-container">
-  <div class="nds-form-header">
-    <label for="iban">
-      <span class="nds-label">IBAN</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <input type="text" id="iban" name="iban" class="nds-input nds-iban" placeholder="SA00 0000 0000 0000 0000 0000" autocomplete="off" spellcheck="false">
-    <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
-        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-      </button>
-    </div>
-  </div>
-</div>
-</script>
 <script type="text/html" id="field-textarea" data-canon>
 <div class="nds-form-container nds-textarea">
   <div class="nds-form-header">
@@ -302,7 +205,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Each Structure is one field type. Options stack: a field can be MD, Lighter and Required at once. Prefix goes first in `.nds-form-control`, and Suffix goes right after the input. They fit a plain text, email, password or search field. Number and Phone carry their own affixes, and a textarea or a select takes none. Number starts with Solid and MD affixes, so write `nds-secondary nds-md` on its buttons. Phone starts with Solid, so write `nds-secondary` on its `+966`.
+Each Structure is one field type. Options stack: a field can be MD, Lighter and Required at once. Prefix goes first in `.nds-form-control`, and Suffix goes right after the input. They fit a plain text, email, password or search field. Number carries its own affixes, and a textarea or a select takes none. Number starts with Solid and MD affixes, so write `nds-secondary nds-md` on its buttons.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -311,10 +214,6 @@ Each Structure is one field type. Options stack: a field can be MD, Lighter and 
 | Structure | Password | canon `#field-password` | — | A password the user already has, on a sign-in form. For a new password, use [Password](../components/password) |
 | Structure | Search | canon `#field-search` | — | A search box with a voice button. See [Voice Input](../components/voice-input) |
 | Structure | Number (id: number) (demo: + affix-solid) (demo: + affix-md) | canon `#field-number` | — | A whole number with minus and plus buttons, between `min` and `max` |
-| Structure | Phone (id: phone) (demo: + affix-solid) | canon `#field-phone` | — | A Saudi mobile number after a fixed `+966`, set by `data-country-code` and shown in groups by `data-format` |
-| Structure | Phone with country (id: phone-country) | canon `#field-phone-country` | — | A phone number after a country-code picker. The picker is a [Dropmenu](../components/dropmenu) with `data-select-name`. Each country item carries its `data-country-code`, and may carry its own `data-format` |
-| Structure | National ID (id: national-id) (demo: + required) | canon `#field-national-id` | — | A Saudi national ID or iqama number. `.nds-national-id` keeps digits only, and checks the 10 digits and the check digit |
-| Structure | IBAN (id: iban) (demo: + required) | canon `#field-iban` | — | A bank account IBAN. `.nds-iban` shows it in groups of four, writes capitals, adds a missing `SA`, and checks the country, the length and the check digits |
 | Structure | Textarea (id: textarea) | canon `#field-textarea` | — | Several lines of text, such as a message |
 | Structure | Select (id: select) (hint: The browser's own list) | canon `#field-select` | — | A native `<select>`, for the phone's own picker. For a choice in a form, use [Custom Select](../components/custom-select) |
 | Size | LG (default) | — | — | 40px high. It needs no class |
@@ -322,9 +221,9 @@ Each Structure is one field type. Options stack: a field can be MD, Lighter and 
 | Style | Outline (default) | — | — | A border on the page background |
 | Style | Lighter (hint: Light fill and no border) | `.nds-lighter` | `.nds-form-container` | A light fill and no border, for a field on a white card |
 | Style | Darker (hint: Darker fill and no border) | `.nds-darker` | `.nds-form-container` | A darker fill and no border, for a field on a gray surface |
-| Affix (any) | Prefix (not: textarea, select, number, phone, phone-country) | canon `#field-prefix` | `.nds-form-control` (start) | Fixed text before the value, such as a currency or `https://` |
-| Affix (any) | Suffix (not: textarea, select, number, phone, phone-country) | canon `#field-suffix` | `input` (after) | Fixed text after the value, such as a unit or a domain |
-| Affix style | Subtle (default) | `.nds-subtle` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The prefix and suffix on the field's own background: text, the number buttons and the country picker |
+| Affix (any) | Prefix (not: textarea, select, number) | canon `#field-prefix` | `.nds-form-control` (start) | Fixed text before the value, such as a currency or `https://` |
+| Affix (any) | Suffix (not: textarea, select, number) | canon `#field-suffix` | `input` (after) | Fixed text after the value, such as a unit or a domain |
+| Affix style | Subtle (default) | `.nds-subtle` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The prefix and suffix on the field's own background: text and the number buttons |
 | Affix style | Solid (id: affix-solid) (hint: Light fill behind the prefix or suffix) | `.nds-secondary` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The prefix and suffix on a light fill, set apart from the value |
 | Affix size | LG (default) | — | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The affix button's default padding. It needs no class |
 | Affix size | MD (id: affix-md) | `.nds-md` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | Smaller prefix and suffix buttons, with smaller text |
@@ -456,22 +355,6 @@ async function checkUsername(name) {
 
 The minus and plus buttons change the value by `step`, 1 by default. Hold a button to repeat the step, and hold it about two seconds to step ten at a time. A button at `min` or `max` shows a message instead of a change. A value typed outside the range is set to the nearest limit when the field loses focus. Without `min` and `max`, the value has no limit. A blank `min` or `max` counts as missing.
 
-### Phone Number
-{: .nds-block-title}
-
-`.nds-phone` on a `type="tel"` input keeps only the digits as the user types or pastes, at most 15, or `maxlength`. A field without a country code sends the number as the user typed it, with its leading zero (`0551234567`).
-
-A field that shows a country code carries it in `data-country-code`: on the field's `.nds-form-container` next to a fixed `+966`, or on each country item of a picker. Write it on every phone field that shows a code. The field then shows the local number, and a submit and `new FormData(form)` send the whole number in E.164 form: the country code, then the digits, with no spaces (`+966551234567`). Code that reads `input.value` gets the shown number, so read the form's data, or keep the `value` of `nds:phone:change`, instead. A pasted full number, such as `+966 55 123 4567` or `00966551234567`, loses the code. With a picker, a full number from another listed country picks that country. A pasted number with the code but no `+`, such as `966551234567`, loses the code when it is longer than the field holds (`data-format` or `maxlength`). The leading zero is a trunk prefix, so the field removes it. Numbers in Italy, San Marino and Vatican City (`+39`, `+378`, `+379`) keep it. A country picker is a [Dropmenu](../components/dropmenu) that writes its code to a hidden input named by `data-select-name`, so the code also submits as its own field.
-
-`data-format` on the field's `.nds-form-container` shows the number in groups. Each `0` is one digit, and any other character goes between them: `00 000 0000` shows `55 123 4567`. The field then takes no more digits than the format holds, and removes a `maxlength` shorter than the format. With a country picker, the field reads `data-format` from the picked country item instead, and a country without one shows the number as typed.
-
-Write a format only for numbers whose length you know. Phone numbers differ in length between countries, and even inside one. The format refuses every digit past its end. `input.value` keeps the spaces, and a submit sends the number without them.
-
-### National ID and IBAN
-{: .nds-block-title}
-
-`.nds-national-id` keeps only digits as the user types or pastes, and turns Arabic-Indic digits into Latin ones. The field fails when the value is not a Saudi national ID or iqama number: 10 digits, the first 1 or 2, and a correct check digit. `.nds-iban` shows the IBAN in groups of four, as the user types or pastes, and writes the letters as capitals. It holds 34 letters and digits at most, the longest IBAN, and removes a shorter `maxlength`. A value that starts with a digit, as some banking apps copy a Saudi IBAN, gets `SA` in front. A submit and `new FormData(form)` send the IBAN without its spaces. The field fails when the value is not an IBAN: two letters for the country, two check digits, then 11 to 30 letters or digits, with a correct check sum. Both checks run at blur and at submit, and an empty field passes unless it is required. The same rules are `NDS.FormattedInput.isNationalId(value)` and `NDS.FormattedInput.isIban(value)`, for a check in your own code.
-
 ### Password
 {: .nds-block-title}
 
@@ -507,7 +390,7 @@ The eye button switches the field between hidden and plain text, and its label b
             <i class="hgi hgi-stroke hgi-text-align-left"></i>
             <span class="nds-label">Left-to-Right Values</span>
           </span>
-          <p class="nds-item-desc">An e-mail, phone or URL field, and a <code class="nds-inline-code lang-html">nds-phone</code> field, reads left to right on every page, so a phone number keeps its digit groups in order on an Arabic page. The value stays on the page side, as in the other fields.</p>
+          <p class="nds-item-desc">An e-mail, phone or URL field, and a <a href="../components/formatted-input"><code class="nds-inline-code lang-html">nds-phone</code></a> field, reads left to right on every page, so a phone number keeps its digit groups in order on an Arabic page. The value stays on the page side, as in the other fields.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -592,9 +475,6 @@ The eye button switches the field between hidden and plain text, and its label b
 | `nds-clear` | a button in `.nds-form-action` | Empties the field. Write it with `hidden`: the script shows it while the field has a value |
 | `nds-toggle-password` | a button in `.nds-form-action` | Switches a password field between hidden and plain text. The script adds `show` to it while the text is plain |
 | `nds-number-decrement`, `nds-number-increment` | a button in `.nds-form-action` | Steps the value down or up. Also turns on the range check and the blur clamp |
-| `nds-phone` | a `type="tel"` input | Keeps the digits as the user types. With `data-country-code`, submits the whole number (`+966551234567`); without it, the number as typed. With `data-format`, shows the number in groups. See Phone Number |
-| `nds-national-id` | a text input | Keeps digits only, and fails the field when the value is not a Saudi national ID or iqama number. See National ID and IBAN |
-| `nds-iban` | a text input | Shows the IBAN in groups of four, writes capitals, adds a missing `SA`, and fails the field when the value is not an IBAN. See National ID and IBAN |
 | `nds-form-group` | the `<fieldset>` around a set of checkboxes, radios or switches | See [Checkbox](../components/checkbox), [Radio](../components/radio) and [Switch](../components/switch) |
 {: .nds-table .nds-responsive}
 
@@ -617,9 +497,6 @@ The eye button switches the field between hidden and plain text, and its label b
 | `data-permanent` | `.nds-feedback` in the feedback target | A message hides it instead of removing it. It comes back when the message clears |
 | `data-error-message` | an `<input>` with a `pattern` | The message when the value does not match the pattern. `NDS.init.audit()` flags it on a field with no `pattern` |
 | `data-error-message` | `.nds-form-group`, or the container of a field that keeps its value in a hidden input (custom select, multiselect, tag input, upload) | The message when nothing is picked. A count limit, a half-filled code and a file still uploading keep their own messages. `NDS.init.audit()` flags it on a group that may be left empty |
-| `data-format` | the `.nds-form-container` of a `.nds-phone` field | The groups the number shows in: `0` is one digit, and any other character goes between digits (`00 000 0000`). See Phone Number |
-| `data-format` | a `.nds-dropmenu-item` in a phone field's country picker | The groups for that country, read while it is picked. A country without one shows the number as typed |
-| `data-country-code` | the `.nds-form-container` of a `.nds-phone` field, or a `.nds-dropmenu-item` in its country picker | The code the submit puts before the number (`+966`). The field also drops it from a pasted full number. See Phone Number |
 | `inputmode="numeric"` | the `<input>` | The script blocks a typed character that is not a digit. Arabic digits go in as `0` to `9` |
 | `min`, `max`, `step` | the input of a number field | The range and the step of the minus and plus buttons |
 | `autofocus` | the `<input>`, `<textarea>` or `<select>` | The script focuses the field again at start, without a scroll |
@@ -642,9 +519,7 @@ The checks are the browser's own: write these standard attributes on the input. 
 | `maxlength` | Input is too long (maximum N characters). The browser stops the user at the limit, so this message rarely shows |
 | `pattern` | Please match the requested format. The value must match the whole expression: `pattern="[0-9]{10}"` takes exactly ten digits. The message does not name the format, so add `data-error-message` |
 | `min`, `max` | Value must be at least N, or Value must be no more than N |
-| `.nds-national-id` | Invalid national ID number |
-| `.nds-iban` | Invalid IBAN |
-| any other failure | Invalid input. A component that checks its own field, such as Date Picker, shows its own message |
+| any other failure | Invalid input. A component that checks its own field, such as Date Picker or [Formatted Input](../components/formatted-input), shows its own message |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties
@@ -678,10 +553,9 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 | `NDS.Form.clearStatus(el)` | Removes the field's message and status. A permanent message comes back |
 | `NDS.Form.getStatus(el)` | Returns `{ status, message, isValid }`. `isValid` is `false` only for `error` |
 | `NDS.Form.setState(el, name, add)` | Adds or removes (`add: false`) a state on the field. `'required'` sets `data-required` and the inputs' `required` |
-| `NDS.Form.refresh(el)` | Updates the field after a script sets its value or `checked`: an input updates its field, any other element every field inside it. It fires no event, except `nds:phone:change` when a phone number's submitted value changes |
+| `NDS.Form.refresh(el)` | Updates the field after a script sets its value or `checked`: an input updates its field, any other element every field inside it. It fires no event, except a phone field's `nds:phone:change`: see [Formatted Input](../components/formatted-input) |
 | `NDS.Form.validate(el, options)` | Checks every visible field in the form that holds `el`, and returns `{ valid, invalidFields, errors }`, in page order. `options` is `{ showMessages, focusFirst }`, both `true` by default. Pass both: an object with one key turns the other off |
 | `NDS.Form.validateField(el, check, options)` | Checks one field by its component's rule and returns its result, or `null` when no rule answers for `el`. Each component's `validate(el)` calls it: `NDS.Checkbox.validate(group)`, `NDS.Radio.validate(group)`, `NDS.Otp.validate(group)`, `NDS.Multiselect.validate(el)`, `NDS.Taginput.validate(el)` and the others. A field that shows a message is checked again on each change |
-| `NDS.FormattedInput.isNationalId(value)`, `isIban(value)` | Return `true` when the string passes the `.nds-national-id` or `.nds-iban` check. They take the clean value: digits only, or capitals with no spaces. Remove an IBAN field's spaces first: `input.value.replace(/\s/g, '')` |
 {: .nds-table .nds-responsive}
 
 | Option | Default | Effect |
@@ -697,7 +571,6 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 | `nds:form:validate` | the form, and it bubbles | `{ valid, invalidFields, errors }`, after every `validate()`. Each error is `{ field, input, message }` |
 | `nds:form:valid` | the form, and it bubbles | `{ waitUntil(promise) }`, when a submit passes. `waitUntil()` keeps the form from a second submit until the promise ends, and the submit button shows the spinner |
 | `nds:form:invalid` | the form, and it bubbles | `{ invalidFields, errors }`, when a submit is blocked |
-| `nds:phone:change` | a `.nds-phone` input, and it bubbles | `{ value, countryCode, nationalNumber }`, when the number the field submits changes: `value` is that number (`+966551234567`), `countryCode` and `nationalNumber` are `null` without `data-country-code`. Keep `value` in your app's state in place of `input.value`. See Phone Number |
 | `nds:switch:change` | `.nds-switch-toggle`, and it bubbles | `{ checked, value, input }`. See [Switch](../components/switch) |
 | `nds:checkbox:indeterminate` | the checkbox, and it bubbles | `{ indeterminate }`. See [Checkbox](../components/checkbox) |
 {: .nds-table .nds-responsive}

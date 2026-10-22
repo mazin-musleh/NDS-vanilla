@@ -69,13 +69,14 @@ sidemenu_mode: false
                             </div>
                         </div>
 
-                        <div class="nds-form-container" data-required data-country-code="+966" data-format="00 000 0000">
+                        <div class="nds-form-container" data-required data-format="00 000 0000">
                             <div class="nds-form-header">
                                 <label for="ft-mobile"><span class="nds-label">Mobile Number</span></label>
                             </div>
                             <div class="nds-form-control">
                                 <div class="nds-form-action nds-prefix">
                                     <span class="nds-btn nds-secondary"><span class="nds-label">+966</span></span>
+                                    <input type="hidden" name="mobile-country-code" value="+966">
                                 </div>
                                 <input type="tel" id="ft-mobile" name="mobile" class="nds-input nds-phone"
                                     placeholder="5X XXX XXXX" autocomplete="tel-national"

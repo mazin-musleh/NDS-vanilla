@@ -26,9 +26,9 @@ const pick = (trigger, option) => async (root, page) => { await root.locator(tri
 const CASES = [
   { name: 'text', doc: 'form', id: 'field-text', change: type('input', 'changed') },
   { name: 'required, failed check', doc: 'form', id: 'field-email', required: true, change: async (root, page) => { await root.locator('input').fill(''); await page.evaluate(() => document.getElementById('reset-form').requestSubmit()); } },
-  { name: 'phone', doc: 'form', id: 'field-phone', change: type('input', '0551234567') },
-  { name: 'national ID, invalid', doc: 'form', id: 'field-national-id', change: type('input', '1234567890') },
-  { name: 'IBAN, invalid', doc: 'form', id: 'field-iban', change: type('input', 'SA0380000000608010167518') },
+  { name: 'phone', doc: 'formatted-input', id: 'field-phone', change: type('input.nds-phone', '0551234567') },
+  { name: 'national ID, invalid', doc: 'formatted-input', id: 'field-national-id', change: type('input', '1234567890') },
+  { name: 'IBAN, invalid', doc: 'formatted-input', id: 'field-iban', change: type('input', 'SA0380000000608010167518') },
   { name: 'textarea', doc: 'form', id: 'field-textarea', change: type('textarea', 'changed') },
   { name: 'select', doc: 'form', id: 'field-select', change: async (root) => { const s = root.locator('select'); await s.selectOption({ index: (await s.locator('option').count()) - 1 }); } },
   { name: 'Slider', doc: 'slider', id: 'slider-single', change: keys('input[type="range"]', 'ArrowRight', 3) },

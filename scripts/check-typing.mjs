@@ -230,7 +230,7 @@ const PATTERNS = {
         fields: {
             // maxlength as old markup wrote it: the groups must still fit.
             iban: formField('<input type="text" class="nds-input nds-iban" maxlength="34">'),
-            phone: formField('<input type="tel" class="nds-input nds-phone" inputmode="numeric" maxlength="9">', ' data-country-code="+966" data-format="00 000 0000"'),
+            phone: formField('<div class="nds-form-action nds-prefix"><input type="hidden" value="+966"></div><input type="tel" class="nds-input nds-phone" inputmode="numeric" maxlength="9">', ' data-format="00 000 0000"'),
             // No country code: the number as typed, its 0 kept, up to maxlength (free: up to 15).
             plain: formField('<input type="tel" class="nds-input nds-phone" inputmode="numeric" maxlength="10">'),
             free: formField('<input type="tel" class="nds-input nds-phone" inputmode="numeric">'),
@@ -238,16 +238,16 @@ const PATTERNS = {
             world: formField(`<div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+966">
   <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger"><span class="nds-label">+966</span></button>
   <div class="nds-dropmenu-menu" hidden><div class="nds-dropmenu-scroll">
-    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-country-code="+966" data-trigger-label="+966" data-format="00 000 0000"><span class="nds-label">SA</span></button>
-    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-country-code="+971" data-trigger-label="+971"><span class="nds-label">AE</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966" data-format="00 000 0000"><span class="nds-label">SA</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-trigger-label="+971"><span class="nds-label">AE</span></button>
   </div></div></div><input type="tel" class="nds-input nds-phone" inputmode="numeric">`),
             // A fixed code in the prefix, and a picker on Italy, whose numbers keep their 0.
-            saudi: formField('<div class="nds-form-action nds-prefix"><span class="nds-btn nds-subtle"><span class="nds-label">+966</span></span></div><input type="tel" class="nds-input nds-phone" inputmode="numeric">', ' data-country-code="+966" data-format="00 000 0000"'),
+            saudi: formField('<div class="nds-form-action nds-prefix"><span class="nds-btn nds-subtle"><span class="nds-label">+966</span></span><input type="hidden" name="country-code" value="+966"></div><input type="tel" class="nds-input nds-phone" inputmode="numeric">', ' data-format="00 000 0000"'),
             italy: formField(`<div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+39">
   <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger"><span class="nds-label">+39</span></button>
   <div class="nds-dropmenu-menu" hidden><div class="nds-dropmenu-scroll">
-    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-country-code="+966" data-trigger-label="+966" data-format="00 000 0000"><span class="nds-label">SA</span></button>
-    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+39" data-country-code="+39" data-trigger-label="+39"><span class="nds-label">IT</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966" data-format="00 000 0000"><span class="nds-label">SA</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+39" data-trigger-label="+39"><span class="nds-label">IT</span></button>
   </div></div></div><input type="tel" class="nds-input nds-phone" inputmode="numeric">`),
         },
         cases: [
@@ -364,7 +364,7 @@ async function openPage() {
         for (const { id, html } of fields) {
             const box = document.createElement('div');
             box.innerHTML = html;
-            box.querySelector('input').id = id;
+            box.querySelector('input:not([type="hidden"])').id = id;
             host.append(box);
         }
         (document.querySelector('main') || document.body).prepend(host);

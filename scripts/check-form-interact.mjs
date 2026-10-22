@@ -13,7 +13,7 @@ import { join } from 'node:path';
 const ROOT = join(import.meta.dirname, '..');
 const BASE = process.env.BASE || 'HEAD';
 const SITE = (process.env.SITE || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
-const PAGES = ['form', 'password', 'checkbox', 'radio', 'switch', 'otp', 'taginput', 'custom-select', 'multiselect', 'date-picker', 'time-picker']
+const PAGES = ['form', 'formatted-input', 'password', 'checkbox', 'radio', 'switch', 'otp', 'taginput', 'custom-select', 'multiselect', 'date-picker', 'time-picker']
     .filter((p) => !process.env.ONLY || p === process.env.ONLY);
 
 const git = (...a) => execFileSync('git', a, { cwd: ROOT, encoding: 'buffer', maxBuffer: 64 << 20 });
