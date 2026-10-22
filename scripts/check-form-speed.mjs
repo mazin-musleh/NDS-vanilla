@@ -6,6 +6,7 @@
 //   PROFILE=1      also a CPU profile of each click, on a page of its own: busy time and the top functions by self time
 //   DROP=a,b       today's side runs without those NDS.field parts (number, switch …): what each one costs
 //   CLICK_ONLY=1   skip the init and create() rows
+//   TYPE=date,time,phone,iban   also each shaped field, mounted and typed: handler time per key
 //   JS_FLAGS=…     V8 flags for both sides (--no-lazy: compile every function at load, so a first click shows no compile time)
 // Needs the dev server on :4002 (SITE=<base url> for another). Chromium only (CDP). The past commit's bundles are served in place of today's.
 import { launch, cdp } from './lib/browser.mjs';
@@ -23,6 +24,16 @@ const CLICKS = Math.max(1, +(process.env.CLICKS || 1));
 const PROFILE = !!process.env.PROFILE;
 const DROP = (process.env.DROP || '').split(',').filter(Boolean);
 const CLICK_ONLY = !!process.env.CLICK_ONLY;
+// Shaped fields for TYPE: the markup and the keys typed into it.
+const shaped = (cls, input, attrs = '') => `<div class="nds-form-container${cls}"${attrs}><div class="nds-form-control">${input}</div></div>`;
+const SHAPED = {
+    date: [shaped(' nds-date-picker', '<input type="text" class="nds-input nds-date-input">', ' data-format="DD/MM/YYYY"'), '28051983'],
+    time: [shaped(' nds-time-picker', '<input type="text" class="nds-input nds-time-input">', ' data-format="HH:mm"'), '1430'],
+    phone: [shaped('', '<input type="tel" class="nds-input nds-phone" inputmode="numeric" maxlength="9">', ' data-format="00 000 0000"'), '551234567'],
+    iban: [shaped('', '<input type="text" class="nds-input nds-iban" maxlength="34">'), 'SA0380000000608010167519'],
+};
+const TYPE = (process.env.TYPE || '').split(',').filter(Boolean);
+if (TYPE.some((t) => !SHAPED[t])) { console.error(`TYPE takes ${Object.keys(SHAPED).join(', ')}`); process.exit(1); }
 const EVENTS = ['pointermove', 'pointerover', 'pointerout', 'mouseover', 'mouseout', 'pointerdown', 'mousedown', 'focusout', 'focusin',
     'pointerup', 'mouseup', 'click', 'keydown', 'beforeinput', 'input', 'keyup'];
 
@@ -189,6 +200,25 @@ for (let run = 0; run < RUNS; run++) {
         });
         await page.keyboard.press('a'); await page.waitForTimeout(300);
         add('keystroke in a field', variant, sum(await take()));
+        // 4. TYPE: each shaped field mounted fresh, its value typed: handler time per key.
+        for (const name of TYPE) {
+            const [html, keys] = SHAPED[name];
+            await page.evaluate((html) => {
+                document.getElementById('speed-shaped')?.remove();
+                const host = Object.assign(document.createElement('div'), { id: 'speed-shaped', innerHTML: html });
+                document.querySelector('.nds-content-section').prepend(host);
+                NDS.init.mount(host);
+                host.scrollIntoView({ block: 'center' });
+            }, html);
+            await page.waitForFunction(() => {
+                const c = document.querySelector('#speed-shaped .nds-form-container'), i = c.querySelector('input');
+                return !c.matches('.nds-date-picker, .nds-time-picker') || [c, i].some((e) => e.ndsDatePicker || e.ndsTimePicker);
+            }, null, { timeout: 10000 }).catch(() => { throw new Error(`TYPE ${name}: no picker instance in 10 s (${variant})`); });
+            await page.click('#speed-shaped input'); await page.waitForTimeout(300);
+            await take();
+            await page.keyboard.type(keys); await page.waitForTimeout(300);
+            add(`type ${name} · per key`, variant, sum(await take()) / keys.length);
+        }
         await ctx.close();
         if (PROFILE) await profileClicks(variant);
     }

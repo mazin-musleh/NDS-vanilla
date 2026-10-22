@@ -455,6 +455,7 @@
         // With no format, a maxlength holds: a script write would skip it.
         var most = input.maxLength >= 0 ? input.maxLength : Infinity;
         var shown = format ? NDS.typing.group(text, caret, format) : { value: text.slice(0, most), caret: Math.min(caret, most) };
+        if (opts.dry) return shown;
         if (shown.value !== input.value) {
             if (opts.quiet) input.value = shown.value;
             else NDS.setValue(input, shown.value, { change: false });
@@ -592,11 +593,15 @@
                 // An identifier takes every insert here: the browser's maxlength would count a group's spaces,
                 // and a numeric field would block a paste with one.
                 if (own && data && /^insert/.test(e.inputType)) {
-                    e.preventDefault();
-                    stampIdentifier(field, {
+                    var edit = {
                         text: value.slice(0, start) + data + value.slice(field.selectionEnd), caret: start + data.length,
                         country: !value || /^insertFrom(Paste|Drop)$/.test(e.inputType),
-                    });
+                    };
+                    // Already in shape: the browser inserts it, faster than a script write.
+                    var shown = stampIdentifier(field, Object.assign({ dry: true }, edit));
+                    if (shown.value === edit.text && shown.caret === edit.caret) return;
+                    e.preventDefault();
+                    stampIdentifier(field, edit);
                     return;
                 }
                 // A delete that meets a group's space takes the character past it too, as the space comes back.
