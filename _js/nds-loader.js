@@ -105,8 +105,11 @@
         },
         {
             // Deferred: chips ship at data-status="neutral"; init's check() recomputes from the current value.
+            // Its rules gate submit, so a submit waits for its bundle; not its instance: a field with no chips
+            // and no match never builds one.
             name: 'Password',
             selector: '.nds-form-container.nds-password',
+            rule: 'loaded',
         },
         {
             name: 'Tabs',

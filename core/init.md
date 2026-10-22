@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "22/10/2026 - 05:26 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -120,7 +120,7 @@ Only components inside `el` are reached. A filter toolbar can sit beside the gri
 ### Fields Still Loading
 {: .nds-block-title}
 
-Some fields get their rule from their own component, such as Rating, Upload, Time Picker and Autocomplete. Until that component starts, the field has no rule, and `NDS.init.isPending(el)` is true. A form check then fails a required pending field with "Still loading. Try again in a moment", and calls `mount()` on the form so the next check can pass. A bundle that failed to load does not count: its field is checked as if it had no rule, so the form is never blocked for good.
+Some fields get their rule from their own component, such as Rating, Upload, Time Picker, Autocomplete and Password. Until that component starts, the field has no rule, and `NDS.init.isPending(el)` is true. A form check then fails a required pending field with "Still loading. Try again in a moment", and calls `mount()` on the form so the next check can pass. A bundle that failed to load does not count: its field is checked as if it had no rule, so the form is never blocked for good.
 
 </div>
   </div>
