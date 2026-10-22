@@ -6,7 +6,7 @@
  *                                     { size, first, valid, open } for digits (no first: a fixed run, as a
  *                                     year), or { words(), keys, label(name) } for a word (AM/PM)
  *   NDS.typing.type(mask, value, caret, end, keys)  keys typed over [caret, end] → { value, caret }
- *   NDS.typing.bind(input, options)   shaped typing and paste on the input: options { getMask(), read(text)
+ *   NDS.typing.addTypingListeners(input, options)  shaped typing and paste on the input: options { getMask(), read(text)
  *                                     (the text in the field's format, or null), adopt() (commit what the
  *                                     read just found; true when it did), signal, decimal }
  *   NDS.typing.group(text, caret, format)  text in a slot format ("00 000 0000": 0 a digit, A a letter,
@@ -33,12 +33,12 @@
     function compile(format, tokens, getUnit) {
         const id = tokens.source + '\n' + format;
         if (masks.has(id)) return masks.get(id);
-        const pieces = format.split(tokens).map((piece, p) => (p % 2 ? Object.assign({ token: piece }, getUnit(piece)) : piece));
-        const units = pieces.filter((_, p) => p % 2);
+        const pieces = format.split(tokens).map((piece, index) => (index % 2 ? Object.assign({ token: piece }, getUnit(piece)) : piece));
+        const units = pieces.filter((_, index) => index % 2);
         const digitUnits = units.filter((unit) => !unit.words);
         const mask = {
             pieces, units, digitUnits,
-            separators: pieces.filter((_, p) => !(p % 2)).join(''),
+            separators: pieces.filter((_, index) => !(index % 2)).join(''),
             maxDigits: digitUnits.reduce((sum, unit) => sum + unit.size, 0),
             open: digitUnits.some((unit) => unit.open),
             word: units.find((unit) => unit.words),
@@ -63,8 +63,8 @@
             else if (isDigit(latinText[index - 1])) closed.add(digits.length - 1);
         }
         let out = '', i = 0;
-        for (const [p, piece] of mask.pieces.entries()) {
-            if (!(p % 2)) { out += piece; continue; }
+        for (const [index, piece] of mask.pieces.entries()) {
+            if (!(index % 2)) { out += piece; continue; }
             if (piece.words) {
                 const key = getLastKey(piece, latinText);
                 if (!key) break;
@@ -95,8 +95,8 @@
     function splitUnits(mask, value) {
         const units = [];
         let at = 0;
-        for (const [p, piece] of mask.pieces.entries()) {
-            if (!(p % 2)) {
+        for (const [index, piece] of mask.pieces.entries()) {
+            if (!(index % 2)) {
                 if (value.substr(at, piece.length) !== piece) return null;
                 at += piece.length;
                 continue;
@@ -122,8 +122,8 @@
         const digits = latin(text).replace(/\D/g, '');
         if (mask.open || digits.length !== mask.maxDigits) return null;
         let i = 0, fits = true;
-        const filled = mask.pieces.map((piece, p) => {
-            if (!(p % 2)) return piece;
+        const filled = mask.pieces.map((piece, index) => {
+            if (!(index % 2)) return piece;
             if (piece.words) {
                 const word = piece.words().find((candidate) => text.includes(candidate));
                 if (!word) fits = false;
@@ -252,7 +252,7 @@
     // wrote, so Backspace can remove an added separator. A paste that reads as a value (read(text) → the
     // text in the field's format, or null) is that value, which adopt(text) may commit (true); anything
     // else goes in as if typed, under the same limits.
-    function bind(input, { getMask, read, adopt, signal, decimal }) {
+    function addTypingListeners(input, { getMask, read, adopt, signal, decimal }) {
         let shaped = false;
         // decimal, not numeric: its keypad has a separator key, and forms blocks non-digits under numeric.
         if (decimal && !input.hasAttribute('inputmode')) {
@@ -332,5 +332,5 @@
         return { value, caret: at };
     }
 
-    NDS.typing = { compile, type, bind, group };
+    NDS.typing = { compile, type, addTypingListeners, group };
 })();

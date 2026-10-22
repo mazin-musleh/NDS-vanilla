@@ -363,7 +363,7 @@
             // Typing is shaped to the format (NDS.typing); a paste in any common form is that time,
             // committed when in bounds. The seconds, not the display: hh:mm without A drops the PM.
             let pasted = null;
-            NDS.typing.bind(this.elements.input, {
+            NDS.typing.addTypingListeners(this.elements.input, {
                 getMask: () => getTimeMask(this._format),
                 read: (text) => {
                     pasted = parseAny(text, this._format);

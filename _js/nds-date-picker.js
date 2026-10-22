@@ -161,7 +161,7 @@
     function readLoose(text, format, into) {
         text = NDS.toLatinDigits(text).replace(/[\u200e\u200f\u061c]/g, '').trim()
             .replace(/\s*(هـ|ه|AH)$/i, '').replace(/[T\s]\d{1,2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:?\d{2})?$/, '');
-        var tokens = format.split(DATE_TOKENS).filter(function (piece, p) { return p % 2; });
+        var tokens = format.split(DATE_TOKENS).filter(function (piece, index) { return index % 2; });
         var kinds = tokens.map(function (token) { return token[0]; });
         var groups, orders;
         if (/^\d+$/.test(text)) {
@@ -183,8 +183,8 @@
         // NDS.Date writes a year as a number, so 0500 would come back as 500.
         if (!year || (year === 'YYYY' && +yearDigits < 1000)) return null;
         var calendar = year === 'YYYY' && +yearDigits <= 1500 ? 'hijri' : 'gregory';
-        for (var o = 0; o < orders.length; o++) {
-            var date = NDS.Date.parse(groups.join('/'), { format: orders[o].join('/').replace('Y', year), calendar: calendar });
+        for (var orderIndex = 0; orderIndex < orders.length; orderIndex++) {
+            var date = NDS.Date.parse(groups.join('/'), { format: orders[orderIndex].join('/').replace('Y', year), calendar: calendar });
             if (date) return NDS.Date.format(date, { format: format, calendar: into || calendar });
         }
         return null;
@@ -360,7 +360,7 @@
             // The old value's error goes too; Forms clears the message.
             NDS.field.onReset(this.elements.input.form, function () { self._readTyped(); self._validateInput(true); self._syncValueInputs(); }, { signal: signal });
             // Typing is shaped to the format (NDS.typing); a paste in any common form is that date.
-            if (!/MMMM/.test(this.state.format)) NDS.typing.bind(this.elements.input, {
+            if (!/MMMM/.test(this.state.format)) NDS.typing.addTypingListeners(this.elements.input, {
                 getMask: function () { return getDateMask(self.isRangeMode() ? self.state.format + ' - ' + self.state.format : self.state.format); },
                 read: function (text) { return self._readDates(text); },
                 signal: signal,
