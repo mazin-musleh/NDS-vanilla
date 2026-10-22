@@ -135,10 +135,8 @@ AGENTS.md, source code) — they are maintainer-side documents the consumer
 agent never sees. ONE exception: where the rules file routes you to a read
 under NDS_ROOT, simulate it:
 - NDS_ROOT/_source/<path>  is  {SRC}\<path>. The zip's _source/ is a straight
-  copy of these folders, so strip the prefix: _js, _sass, foundations,
-  components, utilities, layout, ui-shell, core, guides, templates, examples,
-  _data/content, _data/catalog.yml (2.0 on; before it, the catalog is
-  _data/content/components.yml, examples.yml, templates.yml). For a
+  copy of what the Sources line in NDS-INDEX.md names (no index: what the
+  rules file names), so strip the prefix. For a
   _source/_js/<f>.js read, read only its top banner comment.
 - NDS_ROOT/_site/<path>  is  {SITE}\<path>, when it exists. If it does not,
   report the read as unavailable and continue — never substitute the _source

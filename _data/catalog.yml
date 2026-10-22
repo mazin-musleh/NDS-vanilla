@@ -446,8 +446,9 @@
   description: "Semantic status icons for success, error, and info"
   use_when: "A status shown as a coloured icon, alone or before a short message: error, success, warning, info, neutral, or help, inside a field, a row, an alert, or an outcome page. For a decorative icon in a shaped box use Featured Icons; for a whole outcome page use Status Section."
   category: "Feedback"
-  tags: ["CSS"]
+  tags: ["CSS", "JS"]
   url: "/components/feedback.html"
+  js: _js/nds-feedback.js
   scss: _sass/components/_feedback.scss
 
 - title: "Loading"

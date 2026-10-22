@@ -221,11 +221,11 @@ def verify(out, version, rules=None):
 
     # The JS rules and the naming rules: a finding is decided, so it fails; a verify line is left to read.
     for flag in ('', ' --names'):
-        rules = subprocess.run('node scripts/check-js-rules.mjs' + flag, cwd=ROOT,
-                               shell=True, capture_output=True, text=True)
-        if rules.returncode:
+        js = subprocess.run('node scripts/check-js-rules.mjs' + flag, cwd=ROOT,
+                            shell=True, capture_output=True, text=True)
+        if js.returncode:
             sys.exit(f'check-js-rules.mjs{flag} failed:\n' + '\n'.join(
-                l for l in rules.stdout.splitlines() if l.startswith('finding')) + rules.stderr)
+                l for l in js.stdout.splitlines() if l.startswith('finding')) + js.stderr)
 
     # The shared [data-state] invalidation set only grows silently: one new
     # `[data-state] … td` rule taxes every state write on every container.
@@ -310,7 +310,7 @@ def verify(out, version, rules=None):
         m = re.search(r'<script type="text/html" id="' + cid + r'"[^>]*>(.*?)</script>', a11y_doc, re.S)
         return _markup(m.group(1)) if m else ''
     built = re.search(r'return `(<dialog.*?</dialog>)`', _read('_js/nds-accessibility.js'), re.S).group(1)
-    if _canon('a11y-panel') != _markup('<template class="nds-panel-template">' + built.replace('${side}', 'end') + '</template>'):
+    if _canon('a11y-panel') != _markup('<template class="nds-panel-template">' + re.sub(r'\$\{[^}]*\bside\b[^}]*\}', 'end', built) + '</template>'):
         sys.exit('Custom Panel in ui-shell/accessibility.md has drifted from buildPanelMarkup() in '
                  '_js/nds-accessibility.js. Copy it from there.')
     if _canon('a11y-fab') != _markup(_read('_includes/accessibility-panel.html')):
@@ -350,6 +350,8 @@ def verify(out, version, rules=None):
     # section whose entire job is naming paths.
     refs += re.findall(r'`((?:_site|_source)/[^`]*)`', block + readme + index)
     refs = {p for p in refs if '<' not in p and '*' not in p}
+    # The index's Images line names runtime files by their NDS_ASSETS path.
+    refs |= {'_site/assets/' + p for p in re.findall(r'`(img/[^`]+)`', index)}
 
     # _source/ is populated from the tag, not shipped, so its refs resolve
     # against the repo tree (same prefix-strip as the anchors above), and only

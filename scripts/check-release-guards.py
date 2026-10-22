@@ -32,16 +32,15 @@ VERSION = '1.7.0'   # names the stub zip's root folder and CHANGELOG section
 # working tree, which is real and unmutated during this run.
 
 
-def collect_refs(block):
+def collect_refs(block, index):
     """Mirror verify()'s own reference scan, so the stub zip satisfies it."""
     guides = ''
     for name in ('get-started', 'integration-quality'):
         with open(os.path.join(ROOT, 'guides', f'{name}.md'), encoding='utf8') as f:
             guides += f.read()
     refs = re.findall(r'NDS_ROOT/([^\s`)\]]+)', block + guides)
-    with open(os.path.join(ROOT, 'NDS-INDEX.md'), encoding='utf8') as f:
-        index = f.read()
     refs += re.findall(r'`((?:_site|_source)/[^`]*)`', block + index + 'see `_site/index.html`')
+    refs += ['_site/assets/' + p for p in re.findall(r'`(img/[^`]+)`', index)]
     return {p for p in refs if '<' not in p and '*' not in p
             and not p.startswith('_source/')}
 
@@ -52,10 +51,11 @@ def collect_refs(block):
 GATE_CSS = '/* colors */ html{background-color:#fff}html :where(.nds-topbar){height:40px}'
 
 
-def build_stub_zip(version, refs_from, gate_doc=None):
+def build_stub_zip(version, refs_from, gate_doc=None, index_from=None):
     """A zip carrying every name verify() reads.
 
-    Paths come from `refs_from` (the PRE-mutation rules file), so a case that
+    Paths come from `refs_from` and `index_from` (the PRE-mutation rules file
+    and index), so a case that
     renames a zip-side reference finds it missing — the dead-reference case
     exactly. Each name is written once: a duplicate entry wins on read and
     would blank a file the guards depend on.
@@ -88,7 +88,10 @@ def build_stub_zip(version, refs_from, gate_doc=None):
             put(pkg + 'NDS-INDEX.md', f.read())
         for name in ('get-started', 'integration-quality'):
             put(f'{pkg}_site/guides/{name}.html', guide_html)
-        for p in sorted(collect_refs(refs_from)):
+        if index_from is None:
+            with open(INDEX, encoding='utf8') as f:
+                index_from = f.read()
+        for p in sorted(collect_refs(refs_from, index_from)):
             put(pkg + p.rstrip('/') + ('/' if p.endswith('/') else ''))
 
     path = os.path.join(ROOT, 'dist', 'guard-check.zip')
@@ -106,6 +109,8 @@ def run(mutate=None, version=VERSION, target=IQ):
     Returns its exit message, or None when it passed."""
     with open(IQ, encoding='utf8') as f:
         rules = f.read()
+    with open(INDEX, encoding='utf8') as f:
+        index = f.read()
     with open(target, encoding='utf8', newline='') as f:
         original = f.read()
     try:
@@ -113,7 +118,7 @@ def run(mutate=None, version=VERSION, target=IQ):
             with open(target, 'w', encoding='utf8', newline='') as f:
                 f.write(mutate(original))
         try:
-            mkrelease.verify(build_stub_zip(version, refs_from=rules), version, IQ)
+            mkrelease.verify(build_stub_zip(version, refs_from=rules, index_from=index), version, IQ)
             return None
         except SystemExit as e:
             return str(e)
@@ -162,6 +167,10 @@ CASES = [
     # The consumer copies only what the Sources line names into _source/.
     ('NDS-INDEX.md points at a _source/ path its Sources line does not copy',
      lambda t: t.replace(' and `_data/migrations.yml`', ''), VERSION, 'Sources line', INDEX),
+
+    # The Images line names runtime files by their NDS_ASSETS path; the zip must carry them.
+    ('NDS-INDEX.md names an img/ file the runtime does not ship',
+     lambda t: t.replace('`img/placeholder.svg`', '`img/gone.svg`'), VERSION, 'missing from the zip', INDEX),
 
     # A path, class or API in the rules goes stale on the next release.
     ('a release fact creeps into the rules prose',

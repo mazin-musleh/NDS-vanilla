@@ -1,4 +1,4 @@
-/* NDS.Backdrop — public surface
+/* NDS.Backdrop — public surface (internal: the dim layer of Main Nav, Side Menu and the Image Popup Viewer; a page uses Modal, Panel or Drawer)
  * Rides: (none — base component)
  * Methods:
  *   NDS.Backdrop.show(config)   raise the shared overlay and become its owner. config
