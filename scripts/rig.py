@@ -115,7 +115,10 @@ def pack(src, path, root):
 
 
 def stage(dest, release):
-    baseline = git(dest, 'log', '-1', '--format=%s', 'baseline').removesuffix(' baseline')  # fails here on a non-rig
+    try:
+        baseline = git(dest, 'log', '-1', '--format=%s', 'baseline').removesuffix(' baseline')
+    except subprocess.CalledProcessError:  # a real project, not a rig: no baseline tag
+        baseline = ''
     nds = os.path.join(dest, '.nds')
     assert not os.path.exists(nds) or not any(f for _, _, f in os.walk(nds)), 'rig already has .nds files: reset it first'
     # A rig on an older release upgrades to this one: build it aside, then zip it into next-release/.

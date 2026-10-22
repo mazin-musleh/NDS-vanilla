@@ -190,6 +190,16 @@ python scripts/rig.py reset 5 --save
 
 `--save` commits the run, without `.nds/`, to the next `runN-<date>` branch. The reset goes back to `main` at the `baseline` tag, deletes any branch the agent made (its commits are in the run branch when you save), and removes `.nds/` and `NDS-IQ.md` when a run left them. An unreleased run stages again before the next run.
 
+## A real project
+
+`stage` also takes a real project's path, to start its NDS work on the next release before it ships. Skip `new` and never `reset` it: the agent's work there is kept.
+
+1. Commit first, as for an unreleased run.
+2. `python scripts/rig.py stage <path> 2.0.0-rc.1`. Stamp a release candidate, never the bare number: a project stamped `2.0.0` reads as current once the real 2.0.0 ships, and its update check misses the fixes made since.
+3. Start the agent with the unreleased-run prompt above, and review its report and plan the same way. Its findings never name the project.
+
+To stage a newer build, delete the project's `.nds/` by hand and stage the next candidate (`rc.2`). The agent's update check then offers the upgrade.
+
 ## Gotchas
 
 - **Leftover servers.** The agent often leaves a static server on `.nds/_site` (`python -m http.server`, a node server; ports seen: 4000, 4001, 4010, 8099). It locks `.nds/`, and the reset reports the path as still locked. Find it with `Get-NetTCPConnection -State Listen` and stop it by PID. Never stop a process by name, and leave the app's own server alone.
