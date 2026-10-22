@@ -29,6 +29,10 @@ const dateField = (format, extra = '') => `<div class="nds-form-container nds-da
 const timeField = (format) => `<div class="nds-form-container nds-time-picker" data-format="${format}">
   <div class="nds-form-control"><input type="text" class="nds-input nds-time-input" placeholder="${format}"></div></div>`;
 
+// A Form field: phone and IBAN shape through Forms, with no instance to wait for.
+const formField = (input, extra = '') => `<div class="nds-form-container"${extra}>
+  <div class="nds-form-control">${input}</div></div>`;
+
 const PATTERNS = {
     date: {
         instance: 'ndsDatePicker',
@@ -219,6 +223,37 @@ const PATTERNS = {
         noDigits: ['open'],
         limits: { h24: [4, ':'], h12: [4, ': AMP'], secs: [6, '::'], open: [4, ':'] },
     },
+    group: {
+        instance: null,
+        fields: {
+            // maxlength as old markup wrote it: the groups must still fit.
+            iban: formField('<input type="text" class="nds-input nds-iban" maxlength="34">'),
+            phone: formField('<input type="tel" class="nds-input nds-phone" inputmode="numeric" maxlength="9">', ' data-format="00 000 0000"'),
+            plain: formField('<input type="tel" class="nds-input nds-phone" inputmode="numeric" maxlength="9">'),
+        },
+        cases: [
+            ['iban', '', 'sa0380000000608010167519', 'SA03 8000 0000 6080 1016 7519|'],
+            ['iban', '', '0380000000608010167519', 'SA03 8000 0000 6080 1016 7519|'],
+            ['iban', '', '{Paste:SA03 8000 0000 6080 1016 7519}', 'SA03 8000 0000 6080 1016 7519|'],
+            ['iban', '', '{Paste:sa03-8000-0000-6080-1016-7519}', 'SA03 8000 0000 6080 1016 7519|'],
+            ['iban', 'SA03 80|00', '1', 'SA03 801|0 0'],
+            ['iban', '[SA]03 8000', '{Backspace}', '|0380 00'],
+            ['iban', 'SA03 |8000', '{Backspace}', 'SA0|8 000'],
+            ['iban', 'SA03| 8000', '{Delete}', 'SA03 |000'],
+            ['iban', '', '1234567890123456789012345678901234567890', 'SA12 3456 7890 1234 5678 9012 3456 7890 12|'],
+            ['phone', '', '0551234567', '55 123 4567|'],
+            ['phone', '', '٠٥٥١٢٣٤٥٦٧', '55 123 4567|'],
+            ['phone', '', '5512345678', '55 123 4567|'],
+            ['phone', '', '{Paste:055-123-4567}', '55 123 4567|'],
+            ['phone', '55 |123', '9', '55 9|12 3'],
+            ['phone', '55 |123', '{Backspace}', '5|1 23'],
+            ['phone', '55 1|23', '{Backspace}', '55 |23'],
+            ['plain', '', '0551234567', '551234567|'],
+            ['plain', '', '{Paste:055 123 4567}', '551234567'],
+        ],
+        roundTrip: { iban: ['SA03 8000 0000 6080 1016 7519'], phone: ['55 123 4567'] },
+        limits: { phone: [9, '  '] },
+    },
 };
 
 // '28/[05]/1983' → { value, start, end }; '28/|05' → caret only.
@@ -300,7 +335,7 @@ async function openPage() {
     }, fields);
     await step('fields built', () => page.waitForFunction((fields) => fields.every(({ id, instance }) => {
         const input = document.getElementById(id);
-        return input[instance] || input.closest('.nds-form-container')[instance];
+        return !instance || input[instance] || input.closest('.nds-form-container')[instance];
     }), fields));
     return page;
 }

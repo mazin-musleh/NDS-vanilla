@@ -37,6 +37,8 @@
  *   data-required · data-min-checked · data-max-checked · data-error-message
  *   data-ajax · data-no-pending · data-message · data-feedback-target · data-loading-slot
  *   data-target · data-autofill-apply (auto-fill containers)
+ *   data-format on a .nds-phone field's container, or on each item of its country picker: the
+ *   groups it shows (0 a digit: "00 000 0000"); an item without one shows the number as typed
  * Gotchas:
  *   - Feedback needs no slot markup: setStatus creates the message element in the field's
  *     container. A bare data-feedback-target element anywhere inside the container overrides
@@ -57,6 +59,9 @@
  *   - .nds-national-id and .nds-iban stamp setCustomValidity on input (and at init), so the
  *     checksum fails the field through checkValidity like any native rule. A pattern on the same
  *     input is redundant.
+ *   - .nds-iban shows groups of four, and a .nds-phone with a data-format its groups: input.value
+ *     holds the spaces; a submit and new FormData(form) send the value without them. Inserts go
+ *     through Forms there, and a maxlength shorter than the format is removed: the format sets the most.
  *   - data-error-message on a field is the pattern's message only; on a group, the message
  *     when nothing is picked. Every other failure keeps its own message.
  *   - A blank setCustomValidity(' ') blocks the submit and outlines the field with no message:
@@ -391,29 +396,74 @@
         return rem === 1;
     }
 
-    // .nds-national-id / .nds-iban: normalize the typed value and stamp the checksum result,
-    // so checkValidity() (blur and submit) fails the field with a localized message. Empty = valid.
-    function stampIdentifier(input) {
-        var original = input.value, clean, ok, message;
-        if (input.classList.contains('nds-national-id')) {
-            clean = NDS.toLatinDigits(original).replace(/\D/g, '');
-            ok = isNationalId(clean);
-            message = strings.text('invalid_national_id');
-        } else if (input.classList.contains('nds-iban')) {
-            clean = NDS.toLatinDigits(original).toUpperCase().replace(/[^A-Z0-9]/g, '');
+    // Groups of four, up to the longest IBAN (34).
+    var IBAN_FORMAT = '**** **** **** **** **** **** **** **** **';
+
+    // The slot format a field shows (NDS.typing.group): an IBAN's groups of four, or a phone's data-format,
+    // read from the picked country when the field has a country picker. Null: the value as typed.
+    function getGroupFormat(input) {
+        if (input.classList.contains('nds-iban')) return IBAN_FORMAT;
+        if (!input.classList.contains('nds-phone')) return null;
+        var control = input.closest('.nds-form-control');
+        var picker = control && control.querySelector('.nds-dropmenu[data-select-name]');
+        // The picked item, or the one data-select-value names before Dropmenu has picked it.
+        var source = picker
+            ? [].find.call(picker.querySelectorAll('.nds-dropmenu-item'), function(item) { return NDS.state.has(item, 'selected'); })
+                || [].find.call(picker.querySelectorAll('.nds-dropmenu-item'), function(item) { return item.getAttribute('data-value') === picker.getAttribute('data-select-value'); })
+            : input.closest('.nds-form-container');
+        return (source && source.getAttribute('data-format')) || null;
+    }
+
+    // .nds-phone / .nds-national-id / .nds-iban: the value in its shape, then the checksum result, so
+    // checkValidity() (blur and submit) fails the field with a localized message. Empty = valid. opts:
+    // text and caret, an edit to write in place of the value; quiet, write it without an input event;
+    // country, a whole value that may lack an IBAN's SA (a paste, a first key, the page's own value).
+    function stampIdentifier(input, opts) {
+        var iban = input.classList.contains('nds-iban'), phone = input.classList.contains('nds-phone');
+        var nationalId = input.classList.contains('nds-national-id');
+        if (!iban && !phone && !nationalId) return;
+        opts = opts || {};
+        var focused = document.activeElement === input, text = opts.text, caret = opts.caret;
+        if (text === undefined) {
+            text = input.value;
+            caret = focused ? input.selectionStart : text.length;
+        }
+        text = NDS.toLatinDigits(text);
+        if (iban) {
+            text = text.toUpperCase();
             // Banking apps copy a Saudi IBAN without its SA: a value starting with a digit gets it back.
-            if (/^\d/.test(clean)) clean = 'SA' + clean;
-            ok = isIban(clean);
-            message = strings.text('invalid_iban');
+            var lead = text.search(/[A-Z0-9]/);
+            if (opts.country && lead >= 0 && /\d/.test(text[lead])) {
+                text = text.slice(0, lead) + 'SA' + text.slice(lead);
+                if (caret > lead) caret += 2;
+            }
         } else {
-            return;
+            // Digits only (a paste may bring spaces, dashes or +); a phone drops any leading zero, as the
+            // country code is already prepended.
+            var digits = '', before = 0;
+            for (var i = 0; i < text.length; i++) {
+                if (!/\d/.test(text[i]) || (phone && !digits && text[i] === '0')) continue;
+                digits += text[i];
+                if (i < caret) before = digits.length;
+            }
+            text = digits;
+            caret = before;
         }
-        if (clean !== original) {
-            var caret = Math.max(0, input.selectionStart - (original.length - clean.length));
-            NDS.setValue(input, clean, { change: false });
-            try { input.setSelectionRange(caret, caret); } catch (_) {}
+        var format = getGroupFormat(input);
+        // The format sets the most characters: Safari's maxlength would stop the groups before the browser asks.
+        if (format && input.maxLength >= 0 && input.maxLength < format.length) input.removeAttribute('maxlength');
+        // With no format, a maxlength holds: a script write would skip it.
+        var most = input.maxLength >= 0 ? input.maxLength : Infinity;
+        var shown = format ? NDS.typing.group(text, caret, format) : { value: text.slice(0, most), caret: Math.min(caret, most) };
+        if (shown.value !== input.value) {
+            if (opts.quiet) input.value = shown.value;
+            else NDS.setValue(input, shown.value, { change: false });
         }
-        input.setCustomValidity(clean && !ok ? message : '');
+        if (focused) try { input.setSelectionRange(shown.caret, shown.caret); } catch (_) {}
+        if (phone) return;
+        var clean = shown.value.replace(/\s/g, '');
+        var ok = iban ? isIban(clean) : isNationalId(clean);
+        input.setCustomValidity(clean && !ok ? strings.text(iban ? 'invalid_iban' : 'invalid_national_id') : '');
     }
 
     var validator = {
@@ -531,10 +581,33 @@
     // Digits: inputmode="numeric" takes Arabic digits as 0-9 and blocks the rest; .nds-phone keeps a
     // local number without its leading zero; .nds-national-id and .nds-iban stamp their checksum.
     NDS.field.addType('digits', {
-        setupInput: function(input) { stampIdentifier(input); },
+        setupInput: function(input) { stampIdentifier(input, { country: true }); },
+        refresh: function(input) { stampIdentifier(input, { quiet: true, country: true }); },
         on: {
             beforeinput: function(e, context) {
-                if (!context || context.input.getAttribute('inputmode') !== 'numeric' || !e.data) return;
+                if (!context) return;
+                var data = e.data || (e.dataTransfer && e.dataTransfer.getData('text/plain'));
+                var field = context.input, start = field.selectionStart, value = field.value;
+                var own = !e.isComposing && !field.readOnly && field.matches('.nds-phone, .nds-national-id, .nds-iban');
+                // An identifier takes every insert here: the browser's maxlength would count a group's spaces,
+                // and a numeric field would block a paste with one.
+                if (own && data && /^insert/.test(e.inputType)) {
+                    e.preventDefault();
+                    stampIdentifier(field, {
+                        text: value.slice(0, start) + data + value.slice(field.selectionEnd), caret: start + data.length,
+                        country: !value || /^insertFrom(Paste|Drop)$/.test(e.inputType),
+                    });
+                    return;
+                }
+                // A delete that meets a group's space takes the character past it too, as the space comes back.
+                var back = e.inputType === 'deleteContentBackward', at = back ? start - 1 : start;
+                if (own && getGroupFormat(field) && /^deleteContent(Backward|Forward)$/.test(e.inputType) && start === field.selectionEnd
+                    && /[^A-Za-z0-9]/.test(value[at] || '') && value[back ? at - 1 : at + 1]) {
+                    e.preventDefault();
+                    stampIdentifier(field, { text: back ? value.slice(0, at - 1) + value.slice(start) : value.slice(0, at) + value.slice(at + 2), caret: back ? at - 1 : at });
+                    return;
+                }
+                if (context.input.getAttribute('inputmode') !== 'numeric' || !e.data) return;
                 var latin = NDS.toLatinDigits(e.data);
                 if (latin === e.data && !/\D/.test(latin)) return;
                 e.preventDefault();
@@ -548,25 +621,27 @@
                 input.dispatchEvent(new InputEvent('input', { inputType: e.inputType, data: latin, bubbles: true }));
             },
             input: function(e, context) {
-                if (!context || strippedEvents.has(e)) return;
-                var input = context.input;
-                // Digits only (a paste may bring spaces, dashes or +), no leading zero: the country code
-                // is already prepended. The browser enforces any maxlength.
-                if (input.classList.contains('nds-phone')) {
-                    var caret = input.selectionStart;
-                    var original = input.value;
-                    var stripped = NDS.toLatinDigits(original).replace(/\D/g, '').replace(/^0+/, '');
-                    if (stripped !== original) {
-                        var diff = original.length - stripped.length;
-                        NDS.setValue(input, stripped, { change: false });
-                        try { input.setSelectionRange(Math.max(0, caret - diff), Math.max(0, caret - diff)); } catch (_) {}
-                    }
-                }
-                stampIdentifier(input);
+                if (context && !strippedEvents.has(e)) stampIdentifier(context.input, { country: /^insertFrom(Paste|Drop)$/.test(e.inputType) });
+            },
+            // Submit and new FormData(form) send the value without its groups ("SA03 8000 …" → "SA038000…").
+            // ponytail: a name two fields share keeps what the browser wrote.
+            'formdata:capture': function(e) {
+                [].forEach.call(e.target.elements || [], function(el) {
+                    if (!el.name || !el.matches('.nds-phone, .nds-iban') || e.formData.getAll(el.name).length !== 1) return;
+                    e.formData.set(el.name, el.value.replace(/[^A-Za-z0-9]/g, ''));
+                });
             }
         }
     });
-    NDS.field.onReset(document, function(form) { form.querySelectorAll('.nds-national-id, .nds-iban').forEach(stampIdentifier); });
+    NDS.field.onReset(document, function(form) {
+        form.querySelectorAll('.nds-phone, .nds-national-id, .nds-iban').forEach(function(input) { stampIdentifier(input, { country: true }); });
+    });
+    // A new country: the number takes its format.
+    document.addEventListener('nds:dropmenu:select', function(e) {
+        var control = e.target.closest('.nds-form-control');
+        var input = control && control.querySelector('input.nds-phone');
+        if (input) stampIdentifier(input);
+    });
 
     // Number stepper: the buttons step, a held button repeats and speeds up, and blur clamps to min/max.
     var STEP_TIERS = [[0, 1, 75], [1500, 10, 50]];   // [held for (ms), step multiplier, interval (ms)]

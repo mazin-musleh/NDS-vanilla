@@ -128,7 +128,8 @@ for (const [c, en] of Object.entries(english)) for (const [k, v] of Object.entri
 // 4. No hardcoded language text left in the scripts.
 // Arabic the components READ, not write: typed input accepted on every page.
 const INPUT_TOKENS = {
-    'nds-time-picker.js': ['const MERIDIEM =', 'const isPm =', 'const meridiemKeys ='],   // "2:30 م" parses on an English page too
+    'nds-time-picker.js': ['const MERIDIEM =', 'const isPm =', 'const meridiemKeys =', 'const getMeridiemWords ='],   // "2:30 م" parses on an English page too
+    'nds-date-picker.js': ['(هـ|ه|AH)', '(?:to|إلى)'],   // a pasted Hijri date's هـ, a range's إلى
 };
 const ARABIC_LETTER = /[ء-ي]/;   // letters only: Arabic-Indic digit ranges in regexes pass
 for (const f of jsFiles) {

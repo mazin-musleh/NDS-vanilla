@@ -69,7 +69,7 @@ sidemenu_mode: false
                             </div>
                         </div>
 
-                        <div class="nds-form-container" data-required>
+                        <div class="nds-form-container" data-required data-format="00 000 0000">
                             <div class="nds-form-header">
                                 <label for="ft-mobile"><span class="nds-label">Mobile Number</span></label>
                             </div>
@@ -78,8 +78,8 @@ sidemenu_mode: false
                                     <span class="nds-btn nds-secondary"><span class="nds-label">+966</span></span>
                                 </div>
                                 <input type="tel" id="ft-mobile" name="mobile" class="nds-input nds-phone"
-                                    placeholder="5XX XXX XXX" autocomplete="tel-national"
-                                    inputmode="numeric" maxlength="9" required>
+                                    placeholder="5X XXX XXXX" autocomplete="tel-national"
+                                    inputmode="numeric" required>
                                 <div class="nds-form-action">
                                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>

@@ -1,6 +1,7 @@
 /* NDS.TimePicker — public surface
  * Rides: nds-dropmenu (the panel's open/close, escape, outside-click, positioning)
  *      · nds-customselect (each unit inside the panel is a stock .nds-select)
+ *      · nds-typing (shaped typing and paste in the input)
  *      · nds-forms (invalid-value status message under the field; soft)
  * Methods:
  *   NDS.TimePicker.init() / .reinit()           attach a picker to every .nds-time-input
@@ -197,208 +198,19 @@
 
     // The one key typed for each meridiem, in both languages.
     const meridiemKeys = { a: 'am', A: 'am', 'ص': 'am', p: 'pm', P: 'pm', 'م': 'pm' };
-    const MERIDIEM_RUNS = new RegExp('\\d+|' + MERIDIEM, 'g');
-
-    // Typing at the end → the format's shape: digits fill the units, separators appear on
-    // their own, a meridiem key fills AM/PM. A single digit is padded when no unit can start
-    // with it ("9" → "09:") or when a separator follows it ("2:" → "02:"). Stops at the
-    // first unit not typed yet.
-    function formatTyped(text, format, hour12) {
-        const latinText = latin(text);
-        // Digit positions that a typed separator closes.
-        let digits = '';
-        const closed = new Set();
-        for (let index = 0; index < latinText.length; index++) {
-            if (/\d/.test(latinText[index])) digits += latinText[index];
-            else if (/\d/.test(latinText[index - 1])) closed.add(digits.length - 1);
-        }
-        // The last one: a typed "p" after a shown "AM" switches it.
-        const meridiem = meridiemKeys[[...latinText].reverse().find((char) => meridiemKeys[char])];
-        let out = '', i = 0;
-        for (const piece of format.split(FORMAT_TOKEN_REGEX)) {
-            if (!piece) continue;
-            if (piece === 'A' || piece === 'a') {
-                if (!meridiem) break;
-                out += piece === 'a' ? strings.text(meridiem).toLowerCase() : strings.text(meridiem);
-            } else if (tokenPatterns[piece]) {
-                if (i >= digits.length) break;
-                const maxFirst = /^[Hh]/.test(piece) ? (hour12 ? 1 : 2) : 5;
-                const ends = +digits[i] > maxFirst || closed.has(i);
-                // H and h keep a lone digit as it is ("9:30"); HH, hh, mm and ss pad it.
-                let unit = ends ? (piece.length === 2 ? '0' : '') + digits[i++] : digits.slice(i, i += 2);
-                // A second hour digit past the clock ("25", or "13"/"00" under 12h) is refused.
-                if (unit.length === 2 && maxFirst < 5 && (hour12 ? +unit < 1 || +unit > 12 : +unit > 23)) unit = unit[0];
-                out += unit;
-                if (!ends && unit.length < 2) break;
-            } else {
-                out += piece;
-            }
-        }
-        return out;
-    }
-
-    const escape = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Read when used: the language can change, and its pack lands late.
     const getMeridiemWords = () => [strings.text('am'), strings.text('pm'), 'AM', 'PM', 'am', 'pm', 'ص', 'م'];
 
-    // The whole format, each unit at its width (H and h take one digit or two), the meridiem in either language.
-    function isComplete(value, format) {
-        const source = format.split(FORMAT_TOKEN_REGEX).map((piece, p) => {
-            if (!(p % 2)) return escape(piece);
-            if (/[Aa]/.test(piece)) return '(?:' + getMeridiemWords().map(escape).join('|') + ')';
-            return piece.length === 1 ? '\\d{1,2}' : '\\d{2}';
-        }).join('');
-        return new RegExp('^' + source + '$').test(value);
-    }
-
-    // Digits that fill a fixed-width format exactly, in its shape, with the meridiem the text holds:
-    // "10:303" → "10:30:03". Null when they do not, when a unit is past the clock, or when an H or h
-    // unit leaves the width open.
-    function getFilled(text, format, hour12) {
-        const digits = latin(text).replace(/\D/g, '');
-        const meridiem = getMeridiemWords().find((word) => text.includes(word));
-        const pieces = format.split(FORMAT_TOKEN_REGEX);
-        const units = pieces.filter((piece, p) => p % 2 && !/[Aa]/.test(piece));
-        if (units.some((unit) => unit.length === 1) || digits.length !== units.length * 2) return null;
-        let i = 0, fits = true;
-        const filled = pieces.map((piece, p) => {
-            if (!(p % 2)) return piece;
-            if (/[Aa]/.test(piece)) { if (!meridiem) fits = false; return meridiem || ''; }
-            const unit = digits.slice(i, i += 2), hour = /h/i.test(piece);
-            if (+unit > (hour ? (hour12 ? 12 : 23) : 59) || (hour && hour12 && +unit < 1)) fits = false;
-            return unit;
-        }).join('');
-        return fits ? filled : null;
-    }
-
-    // The units of a value that holds every separator of the format in order, as
-    // [{ start, text, token }]; null when one is missing or something else is there.
-    function splitUnits(value, format) {
-        const pieces = format.split(FORMAT_TOKEN_REGEX), units = [];
-        let at = 0;
-        for (const [p, piece] of pieces.entries()) {
-            if (!(p % 2)) {
-                if (value.substr(at, piece.length) !== piece) return null;
-                at += piece.length;
-                continue;
-            }
-            const text = /[Aa]/.test(piece)
-                ? getMeridiemWords().find((word) => value.startsWith(word, at)) || ''
-                : value.slice(at).match(/^\d*/)[0];
-            units.push({ start: at, text, token: piece });
-            at += text.length;
+    // The format's units for NDS.typing: each takes two digits (H and h one or two), an hour's first
+    // past 2 (1 on a 12h clock) and a minute's past 5 ending it; A and a are the meridiem word.
+    const getTimeMask = (format) => NDS.typing.compile(format, FORMAT_TOKEN_REGEX, (token) => {
+        if (/[Aa]/.test(token)) {
+            return { words: getMeridiemWords, keys: meridiemKeys, label: (name) => (token === 'a' ? strings.text(name).toLowerCase() : strings.text(name)) };
         }
-        return at === value.length ? units : null;
-    }
-
-    // Typing inside a time an edit broke ("10:3" after deleting a "0") inserts the key at the
-    // caret, as a plain text box does, up to the digits and separators the format holds. With every
-    // separator in, a digit that makes its unit too long or past the clock is refused. Once the
-    // digits fill the format again, they take its shape (getFilled).
-    function getTypedIn(value, start, end, character, format, hour12) {
-        const separator = /\D/.test(character), rest = value.slice(0, start) + value.slice(end);
-        const count = (text) => text.split(character).length - 1;
-        const separators = format.split(FORMAT_TOKEN_REGEX).filter((piece, p) => !(p % 2)).join('');
-        const maxDigits = (format.match(/HH|H|hh|h|mm|ss/g) || []).length * 2;
-        if (separator ? count(rest) >= count(separators) : rest.replace(/\D/g, '').length >= maxDigits) return null;
-        const typed = value.slice(0, start) + character + value.slice(end);
-        const unit = !separator && (splitUnits(typed, format) || []).find((candidate) =>
-            candidate.start <= start && start < candidate.start + candidate.text.length);
-        if (unit) {
-            const hour = /h/i.test(unit.token), top = hour ? (hour12 ? 12 : 23) : 59;
-            if (unit.text.length > 2 || (unit.text.length === 2 && (+unit.text > top || (hour && hour12 && +unit.text < 1)))) return null;
-        }
-        const filled = getFilled(typed, format, hour12);
-        if (filled === null) return { value: typed, caret: start + 1 };
-        // The caret stays after the same digits, and after the separator when one was typed.
-        const digitsBefore = typed.slice(0, start + 1).replace(/\D/g, '').length;
-        let caret = 0;
-        for (let seen = 0; caret < filled.length && seen < digitsBefore; caret++) if (/\d/.test(filled[caret])) seen++;
-        if (separator && filled[caret] === character) caret++;
-        return { value: filled, caret };
-    }
-
-    // Typing inside a whole time types over it, as a native time field does: the digit
-    // replaces the one at the caret, the caret steps over separators, and a digit that
-    // makes an impossible unit is refused, as at the end. Returns { value, caret } or null.
-    function getTypedOver(value, position, end, character, format, hour12) {
-        // Arabic digits keep their places as 0-9, so the caret and the runs below line up.
-        character = latin(character);
-        value = latin(value);
-        if (!meridiemKeys[character] && !isComplete(value, format)) return getTypedIn(value, position, end, character, format, hour12);
-        const kinds = format.match(/HH|H|hh|h|mm|ss/g) || [];
-        let unitIndex = 0;
-        // Digit runs are the units, in the format's order; a meridiem word is the meridiem.
-        // Only the words: any other separator ("." in hh.mm) is stepped over, not a run.
-        const runs = [...value.matchAll(MERIDIEM_RUNS)].map((match) => {
-            const token = /\d/.test(match[0]) ? kinds[unitIndex++] || 'mm' : 'a';
-            return { start: match.index, end: match.index + match[0].length, text: match[0], token, kind: token[0].toLowerCase() };
-        });
-        const i = runs.findIndex((candidate) => candidate.end > position);
-        const isValidHour = (digits) => +digits >= (hour12 ? 1 : 0) && +digits <= (hour12 ? 12 : 23);
-        // A one-digit H or h hour grows when the two digits fit ("|9:30" + "1" → "19:30", "1|:30" + "2" → "12:30"),
-        // and a key at its start replaces it when they do not: two digits can go where one was.
-        const single = runs.findIndex((candidate) => candidate.token.length === 1 && candidate.kind === 'h'
-            && candidate.text.length === 1 && candidate.start <= position && position <= candidate.end);
-        if (single >= 0 && /^\d$/.test(character)) {
-            const unit = runs[single], after = runs[single + 1] ? runs[single + 1].start : value.length;
-            const insert = (caret) => ({ value: value.slice(0, position) + character + value.slice(position), caret });
-            if (position === unit.start && isValidHour(character + unit.text)) return insert(position + 1);
-            if (position === unit.start) {
-                return { value: value.slice(0, position) + character + value.slice(unit.end), caret: +character > (hour12 ? 1 : 2) ? after : position + 1 };
-            }
-            if (isValidHour(unit.text + character)) return insert(runs[single + 1] ? after + 1 : position + 1);
-        }
-        // Past the last unit: the same shaping as typing at the end.
-        if (i < 0) return { value: formatTyped(value + character, format, hour12), caret: null };
-        const run = runs[i];
-        const set = (text, caret) => ({ value: value.slice(0, run.start) + text + value.slice(run.end), caret });
-        if (meridiemKeys[character]) {
-            const meridiemRun = runs.find((candidate) => candidate.kind === 'a');
-            if (!meridiemRun) return null;
-            const label = strings.text(meridiemKeys[character]);
-            const text = format.split(FORMAT_TOKEN_REGEX).includes('a') ? label.toLowerCase() : label;
-            return { value: value.slice(0, meridiemRun.start) + text + value.slice(meridiemRun.end), caret: position };
-        }
-        // A typed separator steps over the one at the caret; any other key is refused.
-        if (!/^\d$/.test(character) || run.kind === 'a') return value[position] === character ? { value, caret: position + 1 } : null;
-
-        const hour = run.kind === 'h';
-        const isValid = (digits) => +digits >= (hour && hour12 ? 1 : 0) && +digits <= (hour ? (hour12 ? 12 : 23) : 59);
-        const next = runs[i + 1] ? runs[i + 1].start : value.length;
-        const offset = Math.max(0, position - run.start);
-        const text = run.text.slice(0, offset) + character + run.text.slice(offset + 1);
-        if (offset === 0 && run.text.length === 2 && !isValid(text)) {
-            // No second digit can follow ("9" → "09"), or the old one can't: take the lowest that can ("29" → "20").
-            if (+character > (hour ? (hour12 ? 1 : 2) : 5)) return set('0' + character, next);
-            return set(character + [...'0123456789'].find((digit) => isValid(character + digit)), run.start + 1);
-        }
-        if (!isValid(text)) return null;
-        return set(text, offset >= text.length - 1 ? next : run.start + offset + 1);
-    }
-
-    // Keys typed from the caret on, one by one as the user types them: at the end they are shaped
-    // (formatTyped, or getTypedIn on a broken value, whose tail reshaping would drop), inside the
-    // value they type over or go in (getTypedOver). A refused key is skipped. Returns { value, caret }.
-    function typeKeys(value, caret, end, keys, format, hour12) {
-        value = latin(value);
-        for (const [index, character] of [...keys].entries()) {
-            const key = latin(character);
-            let result;
-            if ((index ? caret : end) >= value.length) {
-                const head = value.slice(0, caret);
-                result = formatTyped(head, format, hour12).startsWith(head)
-                    ? { value: formatTyped(head + key, format, hour12) }
-                    : getTypedIn(head, head.length, head.length, key, format, hour12) || { value: head };
-                result.caret = null;
-            } else {
-                result = getTypedOver(value, caret, index ? caret : end, key, format, hour12);
-                if (!result) continue;
-            }
-            value = result.value;
-            caret = result.caret ?? value.length;
-        }
-        return { value, caret };
-    }
+        const hour = /h/i.test(token), hour12 = token[0] === 'h';
+        const low = hour12 ? 1 : 0, top = hour ? (hour12 ? 12 : 23) : 59;
+        return { size: 2, open: token.length === 1, first: hour ? (hour12 ? 1 : 2) : 5, valid: (text) => +text >= low && +text <= top };
+    });
 
     // Nearest still-enabled option to a value that just went out of bounds.
     function findNearestEnabled(options, current) {
@@ -544,63 +356,27 @@
             // input so the validity stamp lands before forms' document-level
             // change delegation reads it.
             this.elements.input.addEventListener('change', () => {
-                this._shaped = false;
                 if (this._committing) return;
                 this._readTyped();
             }, { signal });
 
-            // Typing at the end is shaped; typing inside the value types over it (getTypedOver).
-            // A delete keeps what the user wrote, so Backspace can remove an added separator.
-            const input = this.elements.input;
-            // decimal, not numeric: its keypad has a separator key, and forms blocks non-digits under numeric.
-            if (!/[Aa]/.test(this._format) && !input.hasAttribute('inputmode')) {
-                input.inputMode = 'decimal';
-                this._ownInputMode = true;
-            }
-            input.addEventListener('input', (e) => {
-                // A paste with no text to read in beforeinput: a time in any common form commits at once.
-                if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
-                    const seconds = parseAny(input.value, this._format);
-                    if (seconds !== null && this._isInBounds(seconds, seconds)) this._adopt(seconds);
-                    return;
-                }
-                if (e.inputType !== 'insertText' || e.isComposing || input.selectionEnd !== input.value.length) return;
-                const before = input.value.slice(0, -e.data.length);
-                const { value } = typeKeys(before, before.length, before.length, e.data, this._format, this._hour12);
-                if (value !== input.value) { input.value = value; this._shaped = true; }
-            }, { signal });
-            const write = ({ value, caret }) => {
-                if (value !== input.value) {
-                    this._shaped = true;
-                    // No inputType, so the shaping handler above skips it; Forms still hears it.
-                    NDS.setValue(input, value, { change: false });
-                }
-                input.setSelectionRange(caret, caret);
-            };
-            input.addEventListener('beforeinput', (e) => {
-                // Chrome sends beforeinput on a readonly field too.
-                if (e.isComposing || input.readOnly) return;
-                const { selectionStart: start, selectionEnd: end, value } = input;
-                if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
-                    const pasted = e.dataTransfer?.getData('text/plain') || e.data;
-                    if (!pasted) return;
-                    // A time in any common form, the whole field's or the pasted text's own (one dropped beside
-                    // another): that time, committed when in bounds. Anything else goes in as if typed.
-                    e.preventDefault();
-                    const seconds = parseAny(value.slice(0, start) + pasted + value.slice(end), this._format) ?? parseAny(pasted, this._format);
-                    if (seconds !== null && this._isInBounds(seconds, seconds)) this._adopt(seconds);
-                    else if (seconds !== null) { const text = formatDisplay(seconds, this._format); write({ value: text, caret: text.length }); }
-                    else write(typeKeys(value, start, end, pasted, this._format, this._hour12));
-                    return;
-                }
-                if (e.inputType !== 'insertText' || !e.data || end >= value.length) return;
-                e.preventDefault();
-                write(typeKeys(value, start, end, e.data, this._format, this._hour12));
-            }, { signal });
-            // WebKit sends no change on blur when a script wrote the last edit: send it here.
-            input.addEventListener('blur', () => {
-                if (this._shaped) input.dispatchEvent(new Event('change', { bubbles: true }));
-            }, { signal });
+            // Typing is shaped to the format (NDS.typing); a paste in any common form is that time,
+            // committed when in bounds. The seconds, not the display: hh:mm without A drops the PM.
+            let pasted = null;
+            NDS.typing.bind(this.elements.input, {
+                getMask: () => getTimeMask(this._format),
+                read: (text) => {
+                    pasted = parseAny(text, this._format);
+                    return pasted === null ? null : formatDisplay(pasted, this._format);
+                },
+                adopt: () => {
+                    if (!this._isInBounds(pasted, pasted)) return false;
+                    this._adopt(pasted);
+                    return true;
+                },
+                signal,
+                decimal: !/[Aa]/.test(this._format),
+            });
         }
 
         // Adopt NDS.Dropmenu for the panel's open/close/escape/outside-click.
@@ -991,7 +767,6 @@
                 this._offLangChange = null;
             }
             this._cleanup();
-            if (this._ownInputMode) this.elements.input.removeAttribute('inputmode');
             NDS.state.remove(this.elements.container, 'open');
             // Nothing is left to clear the picker's own error, so it would block submit for good.
             // Only that one: a status forms or the page set stays.
