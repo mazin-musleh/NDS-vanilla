@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "22/10/2026 - 05:23 PM"
+last_edit: "22/10/2026 - 09:13 PM"
 lang: en
 direction: ltr
 ---
@@ -470,7 +470,7 @@ Write a format only for numbers whose length you know. Phone numbers differ in l
 ### National ID and IBAN
 {: .nds-block-title}
 
-`.nds-national-id` keeps only digits as the user types or pastes, and turns Arabic-Indic digits into Latin ones. The field fails when the value is not a Saudi national ID or iqama number: 10 digits, the first 1 or 2, and a correct check digit. `.nds-iban` shows the IBAN in groups of four, as the user types or pastes, and writes the letters as capitals. It holds 34 letters and digits at most, the longest IBAN, and removes a shorter `maxlength`. A value that starts with a digit, as some banking apps copy a Saudi IBAN, gets `SA` in front. A submit and `new FormData(form)` send the IBAN without its spaces. The field fails when the value is not an IBAN: two letters for the country, two check digits, then 11 to 30 letters or digits, with a correct check sum. Both checks run at blur and at submit, and an empty field passes unless it is required. The same rules are `NDS.Form.isNationalId(value)` and `NDS.Form.isIban(value)`, for a check in your own code.
+`.nds-national-id` keeps only digits as the user types or pastes, and turns Arabic-Indic digits into Latin ones. The field fails when the value is not a Saudi national ID or iqama number: 10 digits, the first 1 or 2, and a correct check digit. `.nds-iban` shows the IBAN in groups of four, as the user types or pastes, and writes the letters as capitals. It holds 34 letters and digits at most, the longest IBAN, and removes a shorter `maxlength`. A value that starts with a digit, as some banking apps copy a Saudi IBAN, gets `SA` in front. A submit and `new FormData(form)` send the IBAN without its spaces. The field fails when the value is not an IBAN: two letters for the country, two check digits, then 11 to 30 letters or digits, with a correct check sum. Both checks run at blur and at submit, and an empty field passes unless it is required. The same rules are `NDS.FormattedInput.isNationalId(value)` and `NDS.FormattedInput.isIban(value)`, for a check in your own code.
 
 ### Password
 {: .nds-block-title}
@@ -681,7 +681,7 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 | `NDS.Form.refresh(el)` | Updates the field after a script sets its value or `checked`: an input updates its field, any other element every field inside it. It fires no event, except `nds:phone:change` when a phone number's submitted value changes |
 | `NDS.Form.validate(el, options)` | Checks every visible field in the form that holds `el`, and returns `{ valid, invalidFields, errors }`, in page order. `options` is `{ showMessages, focusFirst }`, both `true` by default. Pass both: an object with one key turns the other off |
 | `NDS.Form.validateField(el, check, options)` | Checks one field by its component's rule and returns its result, or `null` when no rule answers for `el`. Each component's `validate(el)` calls it: `NDS.Checkbox.validate(group)`, `NDS.Radio.validate(group)`, `NDS.Otp.validate(group)`, `NDS.Multiselect.validate(el)`, `NDS.Taginput.validate(el)` and the others. A field that shows a message is checked again on each change |
-| `NDS.Form.isNationalId(value)`, `isIban(value)` | Return `true` when the string passes the `.nds-national-id` or `.nds-iban` check. They take the clean value: digits only, or capitals with no spaces. Remove an IBAN field's spaces first: `input.value.replace(/\s/g, '')` |
+| `NDS.FormattedInput.isNationalId(value)`, `isIban(value)` | Return `true` when the string passes the `.nds-national-id` or `.nds-iban` check. They take the clean value: digits only, or capitals with no spaces. Remove an IBAN field's spaces first: `input.value.replace(/\s/g, '')` |
 {: .nds-table .nds-responsive}
 
 | Option | Default | Effect |

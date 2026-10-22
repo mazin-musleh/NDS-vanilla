@@ -1351,18 +1351,6 @@
  },
  {
   "section": "form",
-  "key": "invalid_national_id",
-  "en": "Invalid national ID number",
-  "ar": "رقم الهوية غير صحيح"
- },
- {
-  "section": "form",
-  "key": "invalid_iban",
-  "en": "Invalid IBAN",
-  "ar": "رقم الآيبان غير صحيح"
- },
- {
-  "section": "form",
   "key": "no_arabic",
   "en": "Arabic characters are not allowed",
   "ar": "الأحرف العربية غير مسموح بها"
@@ -1420,6 +1408,18 @@
   "key": "clear",
   "en": "Clear",
   "ar": "مسح"
+ },
+ {
+  "section": "formatted-input",
+  "key": "invalid_national_id",
+  "en": "Invalid national ID number",
+  "ar": "رقم الهوية غير صحيح"
+ },
+ {
+  "section": "formatted-input",
+  "key": "invalid_iban",
+  "en": "Invalid IBAN",
+  "ar": "رقم الآيبان غير صحيح"
  },
  {
   "section": "ipv",

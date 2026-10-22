@@ -64,6 +64,7 @@ const SCOPE = [
     ['nds-feedback.js', 'Feedback'],
     ['nds-filter.js', 'Filter'],
     ['nds-form.js', 'Form'],
+    ['nds-formatted-input.js', 'FormattedInput'],
     ['nds-ipv.js', 'Ipv'],
     ['nds-link.js', 'Link'],
     ['nds-loader.js', 'init'],
@@ -132,7 +133,7 @@ const DOC_ELSEWHERE = {
 // A part stamps its own name, not its component's.
 const STAMP_PARTS = new Set(['columns', 'auto-pagination']);
 // Classless: nds:session:* names what ends (Session Timeout), nds:template:ready is core's NDS.fromTemplate;
-// nds:phone:change is Form's .nds-phone field, which has no page of its own.
+// nds:phone:change is the .nds-phone field (nds-formatted-input.js), which has no page of its own.
 const EVENT_SCOPES = new Set(['session', 'template', 'phone']);
 
 const SECTIONS = ['Rides', 'Methods', 'Events', 'Hooks', 'Gotchas'];
@@ -405,6 +406,8 @@ function verifyFile(file, ns, source) {
 
 // Names that break the case rule until their plans/shared-logic.md step lands (section 3).
 const CASE_PENDING = {};
+// A type part named for the fields it serves, not one class (entry 9): each class must appear in its file.
+const PART_CLASSES = { 'formatted-input': ['nds-phone', 'nds-national-id', 'nds-iban'] };
 
 const sassText = () => {
     const out = [];
@@ -447,7 +450,8 @@ function checkNames() {
         const x = kebab(ns);
         // Written as a class, not any string: a storage key may read 'nds-consent'.
         const builds = file !== 'nds-core.js' && new RegExp(`(?:className\\s*[=:+]+\\s*|classList\\.(?:add|toggle)\\(\\s*|class=)['"\`]?[^'"\`]*?\\bnds-${x}(?![\\w-])`).test(readFileSync(join(REPO, '_js', file), 'utf8'));
-        const component = registered.includes(ns) || new RegExp(`\\.nds-${x}(?![\\w-])`).test(sass) || builds;
+        const part = PART_CLASSES[x]?.every((name) => new RegExp(`\\.${name}(?![\\w-])`).test(readFileSync(join(REPO, '_js', file), 'utf8')));
+        const component = registered.includes(ns) || new RegExp(`\\.nds-${x}(?![\\w-])`).test(sass) || builds || !!part;
         const ok = /^[A-Z]/.test(ns) === component;
         if (CASE_PENDING[ns]) {
             if (ok) issues.push(`NDS.${ns}: passes the case rule now, so drop it from CASE_PENDING`);

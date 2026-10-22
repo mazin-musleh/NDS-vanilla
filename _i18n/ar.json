@@ -290,8 +290,6 @@
     "form": {
         "min_value": "الحد الأدنى {n}",
         "max_value": "الحد الأقصى {n}",
-        "invalid_national_id": "رقم الهوية غير صحيح",
-        "invalid_iban": "رقم الآيبان غير صحيح",
         "no_arabic": "الأحرف العربية غير مسموح بها",
         "loading": "جارٍ التحميل",
         "show_password": "إظهار كلمة المرور",
@@ -302,6 +300,10 @@
         "increase_value": "زيادة القيمة",
         "decrease_value": "تقليل القيمة",
         "suggestions": "اقتراحات:"
+    },
+    "formatted-input": {
+        "invalid_national_id": "رقم الهوية غير صحيح",
+        "invalid_iban": "رقم الآيبان غير صحيح"
     },
     "ipv": {
         "viewerLabel": "عارض الصور",
