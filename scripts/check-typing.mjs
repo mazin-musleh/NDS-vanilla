@@ -8,6 +8,7 @@
 //   INITIAL    the value a field holds once built, from the value its markup ships (initial)
 //   SUBMIT     what new FormData(form) sends for a field showing a value (submit)
 //   EVENTS     keys typed into an empty field: the nds:phone:change count and the last detail (events)
+//   MESSAGES   keys typed into an empty field and the field left: the message it shows (messages)
 //   FUZZ       generated: random typing, pastes and Backspace on each field in limits ([most digits,
 //              each other character as often as it may appear]); the field must stay inside them. FUZZ=<runs per
 //              field, default 60>, SEED=<n> repeats a run
@@ -118,16 +119,18 @@ const PATTERNS = {
             ['dmy', '', '{Paste:hello}', ''],
             ['dmy', '', '{Paste:28/05}', '28/05/|'],
             ['dmy', '28/05/1983|', '{Paste:55-58-1983}', '28/05/1983|'],
-            // A set data-calendar keeps its calendar: a date in the other one is converted, never switching the field.
-            ['gregory', '', '{Paste:15/09/1447}', '04/03/2026'],
-            ['gregory', '', '{Paste:1447-09-15}', '04/03/2026'],
+            // A set data-calendar keeps its calendar: a date in the other one is converted when the user leaves
+            // the field, typed or pasted, never switching the field.
+            ['gregory', '', '{Paste:15/09/1447}', '15/09/1447|'],
+            ['gregory', '', '{Paste:15/09/1447}{Blur}', '04/03/2026'],
+            ['gregory', '', '{Paste:1447-09-15}{Blur}', '04/03/2026'],
             ['gregory', '', '15091447{Blur}', '04/03/2026'],
             ['gregory', '', '{Paste:04/03/2026}', '04/03/2026'],
-            ['hijri', '', '{Paste:04/03/2026}', '15/09/1447'],
-            ['hijri', '', '{Paste:2026-03-04T09:00}', '15/09/1447'],
+            ['hijri', '', '{Paste:04/03/2026}{Blur}', '15/09/1447'],
+            ['hijri', '', '{Paste:2026-03-04T09:00}{Blur}', '15/09/1447'],
             ['hijri', '', '{Paste:15/09/1447 هـ}', '15/09/1447'],
             ['hijri', '', '04032026{Blur}', '15/09/1447'],
-            ['dmy', '', '{Paste:15/09/1447}', '04/03/2026'],
+            ['dmy', '', '{Paste:15/09/1447}{Blur}', '04/03/2026'],
             // Both Arabic digit sets: Arabic-Indic (U+0660) and Persian / Urdu (U+06F0).
             ['dmy', '', '۲۸۰۵۱۹۸۳', '28/05/1983|'],
             ['dmy', '28/|05/1983', '۰۷', '28/07/|1983'],
@@ -150,7 +153,7 @@ const PATTERNS = {
             ['dmy', '', '{Paste:1983-05-28T10:30:00Z}', '28/05/1983'],
             ['dmy', '', '{Paste:05/28/1983}', '28/05/1983'],
             ['dmy', '', '{Paste:05/06/2026}', '05/06/2026'],
-            ['dmy', '', '{Paste:15/09/1447 هـ}', '04/03/2026'],
+            ['dmy', '', '{Paste:15/09/1447 هـ}{Blur}', '04/03/2026'],
             ['dmy', '', '{Paste:31/02/2026}', '31/02/2026'],
             ['dmy', '', '{Paste:28/05/83}', '28/05/83'],
             ['dmy', '', '{Paste:28/05/1983 extra}', '28/05/1983|'],
@@ -176,6 +179,11 @@ const PATTERNS = {
         noDigits: ['short'],   // 1911 is 19/11 or 1/9/11: an open-width format needs its separators
         // A value the page ships takes the field's format and calendar (data-calendar, else Gregorian) when it builds.
         initial: { served: '04/03/2026', servedHijri: '15/09/1447', servedIso: '04/03/2026' },
+        // Keys, then the field left: the message it shows ('' none). A converted date names the one the user wrote.
+        messages: [['gregory', '{Paste:15/09/1447}{Blur}', 'Converted from the Hijri date 15/09/1447'],
+            ['hijri', '04032026{Blur}', 'Converted from the Gregorian date 04/03/2026'],
+            ['range', '{Paste:1/9/1447 - 15/9/1447}{Blur}', 'Converted from the Hijri date 01/09/1447 - 15/09/1447'],
+            ['gregory', '{Paste:04/03/2026}{Blur}', ''], ['dmy', '{Paste:1983-05-28}{Blur}', '']],
         limits: {
             dmy: [8, '//'], iso: [8, '--'], month: [6, '/'], year: [4, ''], short: [8, '//'], mshort: [6, '/'],
             dots: [6, '..'], range: [16, '//// - ////'],
@@ -479,6 +487,19 @@ for (const name of patterns) {
         await pages[0].keyboard.press('Backspace');
         const last = JSON.stringify(got.at(-1)), wanted = JSON.stringify(want);
         if (got.length !== count || last !== wanted) failures.push(`${name}/${field} events: "${keys}" fired ${got.length}, last ${last}; want ${count}, last ${wanted}`);
+    }
+}
+// MESSAGES: the keys run as a case, then the field's message read and cleared.
+for (const name of patterns) {
+    for (const [field, keys, want] of PATTERNS[name].messages || []) {
+        const id = `${name}-${field}`;
+        await run(pages[0], { pattern: name, field, from: '', keys, want: '' });
+        const message = await pages[0].evaluate((id) => {
+            const box = document.getElementById(id).closest('.nds-form-container'), { message } = NDS.Form.getStatus(box);
+            NDS.Form.clearStatus(box);
+            return message;
+        }, id);
+        if (message !== want) failures.push(`${name}/${field} message: ${JSON.stringify(keys)} shows "${message}", want "${want}"`);
     }
 }
 await Promise.all(pages.map(async (page, p) => {

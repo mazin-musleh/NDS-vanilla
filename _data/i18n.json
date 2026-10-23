@@ -721,6 +721,18 @@
  },
  {
   "section": "date-picker",
+  "key": "converted_hijri",
+  "en": "Converted from the Hijri date {date}",
+  "ar": "حُوِّل من التاريخ الهجري {date}"
+ },
+ {
+  "section": "date-picker",
+  "key": "converted_gregory",
+  "en": "Converted from the Gregorian date {date}",
+  "ar": "حُوِّل من التاريخ الميلادي {date}"
+ },
+ {
+  "section": "date-picker",
   "key": "open_calendar",
   "en": "Open calendar",
   "ar": "فتح التقويم"

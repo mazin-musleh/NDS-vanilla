@@ -764,11 +764,36 @@ fieldset {
 
 // Addresses and numbers read left to right in every language: "50 123 4567" showed as "4567 123 50" on
 // an Arabic page. Aligned to the page's side, as the other fields are.
-.nds-input:is([type="email"], [type="tel"], [type="url"]), .nds-phone {
+.nds-input:is([type="email"], [type="tel"], [type="url"]), .nds-phone, .nds-iban {
     direction: ltr;
     text-align: right;
 
     @include ltr {
         text-align: left;
     }
+}
+
+// A phone's row reads left to right too, its country code first, as the number is written: "+966 55 123 4567".
+// ponytail: :has(), as no sibling reaches the row; without it (Firefox < 121) the row keeps the page's direction.
+.nds-form-control:has(> .nds-phone) {
+    direction: ltr;
+
+    // The country menu keeps the page's direction.
+    .nds-dropmenu-menu {
+        direction: rtl;
+
+        @include ltr {
+            direction: ltr;
+        }
+    }
+}
+
+.nds-prefix ~ .nds-phone {
+    text-align: left;
+}
+
+// A prefix or suffix label takes the direction of its own first letter: "+966" alone on an Arabic page
+// showed as "966+", and "ر.س" stays right to left.
+.nds-form-action .nds-label {
+    unicode-bidi: plaintext;
 }

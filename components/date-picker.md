@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "22/10/2026 - 02:10 AM"
+last_edit: "23/10/2026 - 05:42 AM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -121,7 +121,7 @@ The class `nds-date-range` on `.nds-date-picker` makes the user pick two days. T
 ### Hijri Calendar
 {: .nds-block-title}
 
-`data-calendar="hijri"` on `.nds-date-picker` shows Hijri months and years, and the field holds the Hijri date. The nearest `data-calendar` wins, so on `<html>` it makes every picker on the site Hijri, and `data-calendar="gregory"` on one picker keeps it Gregorian. Without `data-calendar`, the field is Gregorian. The date never picks the calendar: a date in the other calendar is converted to the field's calendar, whether the user types or pastes it or the page ships it in the field's `value`. In a Gregorian field, `15/09/1447` becomes `04/03/2026`. A shipped value written another common way, such as `2026-03-04`, takes the field's format too. Hijri dates follow Umm al-Qura, the official calendar of Saudi Arabia, through [Date](../core/date). A Hijri day that does not exist, such as day 30 of a 29-day month, is an invalid date.
+`data-calendar="hijri"` on `.nds-date-picker` shows Hijri months and years, and the field holds the Hijri date. The nearest `data-calendar` wins, so on `<html>` it makes every picker on the site Hijri, and `data-calendar="gregory"` on one picker keeps it Gregorian. Without `data-calendar`, the field is Gregorian. The date never picks the calendar: a date in the other calendar is converted to the field's calendar, whether the user types or pastes it or the page ships it in the field's `value`. In a Gregorian field, `15/09/1447` becomes `04/03/2026`. A date the user writes converts when they leave the field, and a message under the field names the date they wrote, such as "Converted from the Hijri date 15/09/1447". Any edit to the field clears it. A shipped value written another common way, such as `2026-03-04`, takes the field's format too. Hijri dates follow Umm al-Qura, the official calendar of Saudi Arabia, through [Date](../core/date). A Hijri day that does not exist, such as day 30 of a 29-day month, is an invalid date.
 
 ### Date Format
 {: .nds-block-title}

@@ -158,6 +158,8 @@
         "before_min": "أبكر تاريخ مسموح به {date}",
         "after_max": "آخر تاريخ مسموح به {date}",
         "range_order": "تاريخ البداية يجب أن يسبق تاريخ النهاية",
+        "converted_hijri": "حُوِّل من التاريخ الهجري {date}",
+        "converted_gregory": "حُوِّل من التاريخ الميلادي {date}",
         "open_calendar": "فتح التقويم"
     },
     "digital-stamp": {

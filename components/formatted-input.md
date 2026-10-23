@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "22/10/2026 - 11:14 PM"
+last_edit: "23/10/2026 - 05:49 AM"
 ---
 
 <section id="formatted-input-overview" class="nds-content-section nds-doc-overview">
@@ -176,6 +176,8 @@ Each Structure is one kind of value. The size, style, states and messages of a t
 {: .nds-block-title #phone-number}
 
 `.nds-phone` on a `type="tel"` input keeps only the digits. A number holds at most 15 digits, the country code included, or the input's `maxlength`. A field without a country code sends the number as the user typed it, with its leading zero (`0551234567`).
+
+A phone field reads left to right on every page, its country code first, as a number is written: `+966 55 123 4567` on an Arabic page too. An IBAN reads left to right as well.
 
 ### Country Code
 {: .nds-block-title #country-code}

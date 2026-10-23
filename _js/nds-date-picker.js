@@ -21,7 +21,8 @@
  *                                in range mode) · .nds-date-range
  *   data-calendar="hijri":       on the container or any ancestor (<html> too): Hijri months
  *                                (none: Gregorian). The value never picks the calendar: a date in
- *                                the other one, typed, pasted or shipped, is converted to it
+ *                                the other one, typed, pasted or shipped, is converted to it; one
+ *                                the user wrote on change, with a neutral message naming it
  *   .nds-date-value:             a hidden input in the container the picker fills with the day;
  *                                its own data-date-format / data-calendar, else the picker's.
  *                                Range: the first takes the start, the second the end;
@@ -97,6 +98,8 @@
         before_min: 'Earliest allowed date is {date}',
         after_max: 'Latest allowed date is {date}',
         range_order: 'Start date must come before end date',
+        converted_hijri: 'Converted from the Hijri date {date}',
+        converted_gregory: 'Converted from the Gregorian date {date}',
     });
 
     // Hijri <-> a local-midnight Date, through NDS.Date (Umm al-Qura).
@@ -352,17 +355,23 @@
             // stamp lands before forms' document-level change delegation
             // reads validity.
             this.elements.input.addEventListener('change', function () {
-                self._readTyped();
+                // A date converted from the other calendar says so: the user sees why the field changed.
+                var typed = self.elements.input.value;
+                if (self._readTyped()) {
+                    var key = self.state.calendarType === 'hijri' ? 'converted_gregory' : 'converted_hijri';
+                    NDS.Form.setStatus(self.elements.container, 'neutral', { message: strings.text(key, { date: typed.trim() }, self.getLanguage()) });
+                }
                 self._validateInput();
                 self._syncValueInputs();
             }, { signal: signal });
             // A form reset restores the field after this event, and a hidden input keeps what JS wrote.
             // The old value's error goes too; Forms clears the message.
             NDS.field.onReset(this.elements.input.form, function () { self._readTyped(); self._validateInput(true); self._syncValueInputs(); }, { signal: signal });
-            // Typing is shaped to the format (NDS.typing); a paste in any common form is that date.
+            // Typing is shaped to the format (NDS.typing); a paste in any common form is that date, kept in
+            // its own calendar until the change converts it, as a typed one is.
             if (!/MMMM/.test(this.state.format)) NDS.typing.addTypingListeners(this.elements.input, {
                 getMask: function () { return getDateMask(self.isRangeMode() ? self.state.format + ' - ' + self.state.format : self.state.format); },
-                read: function (text) { return self._readDates(text); },
+                read: function (text) { return self._readDates(text, true); },
                 signal: signal,
                 decimal: true,
             });
@@ -370,9 +379,10 @@
 
         // Text as the field's date (or range) in its format, through readLoose; null when it is none.
         // A date the user types or pastes in the other calendar is converted into the field's (the
-        // value the page shipped, else the nearest data-calendar, else Gregorian), never switching it.
-        _readDates: function (text) {
-            var format = this.state.format, into = this.state.calendarType === 'hijri' ? 'hijri' : 'gregory';
+        // value the page shipped, else the nearest data-calendar, else Gregorian), never switching it;
+        // with keepCalendar, it stays in its own.
+        _readDates: function (text, keepCalendar) {
+            var format = this.state.format, into = keepCalendar ? null : this.state.calendarType === 'hijri' ? 'hijri' : 'gregory';
             var dates = this.isRangeMode() ? text.split(/\s+[-–—]\s+|\s+(?:to|إلى)\s+/) : [text];
             if (!text.trim() || dates.length > 2) return null;
             dates = dates.map(function (date) { return readLoose(date, format, into); });
@@ -380,10 +390,13 @@
         },
 
         // A typed date written another common way takes the field's format, as the time picker reads
-        // a time. Text it cannot read stays, for the invalid message.
+        // a time. Text it cannot read stays, for the invalid message. True when a date came from the other calendar.
         _readTyped: function () {
             var input = this.elements.input, value = this._readDates(input.value);
-            if (value !== null && value !== input.value) NDS.setValue(input, value, { change: false });
+            if (value === null || value === input.value) return false;
+            var converted = value !== this._readDates(input.value, true);
+            NDS.setValue(input, value, { change: false });
+            return converted;
         },
 
         // Adopt NDS.Dropmenu for the calendar's open/close/escape/outside-click
