@@ -4,8 +4,7 @@
 //
 // --only checks just the pages whose path holds one of the texts: after a fix, re-check that
 // page alone (write `nds/cart`, not `/nds/cart`: Git Bash turns a leading slash into a Windows
-// path). --jobs sets how many shots run at once (default: half the cores, 2 to 8). A reference
-// shot is kept between runs.
+// path). --jobs sets how many shots run at once (default: half the cores, 2 to 8).
 //
 // Needs Node 18+ and Chrome or Edge (or CHROME_PATH). Installs nothing: it drives the browser
 // over its own debugging pipe, headless, with a throwaway profile.
@@ -22,7 +21,8 @@
 //         { "name": "default", "cookies": [{ "name": "session", "value": "…" }] },
 //         { "name": "empty", "path": "/cart?account=empty" },
 //         { "name": "failed", "fail": "/api/cart" },           every request whose URL holds it fails
-//         { "name": "open menu", "run": "document.querySelector('.nds-btn').click()" }
+//         { "name": "open menu", "run": "document.querySelector('.nds-btn').click()" },
+//         { "name": "rows", "run": "return document.querySelectorAll('tr').length" }   a return value is printed
 //       ]
 //     }]
 //   }
@@ -31,11 +31,11 @@
 // shows it under the reference. The reference takes the state's lang and direction, so an Arabic
 // page compares with a right-to-left reference in Arabic. Prints the audit findings, console errors (a CSP one names its
 // source), failed loads, sideways scroll and a wrong window.innerWidth; exits 1 when there is
-// any. Inspect every sheet: the script cannot judge the look.
+// any. Prints each state's sheet and only what went wrong. Inspect every sheet: the script cannot
+// judge the look.
 import { spawn } from 'node:child_process';
-import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { cpus, tmpdir } from 'node:os';
 import { dirname, extname, join, normalize, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -55,8 +55,6 @@ const SITE = resolve(process.env.NDS_SITE || join(HERE, '_site'));
 if (PAGES.some((p) => p.reference) && !existsSync(SITE)) {
     console.error(`No built site at ${SITE}: run this copy from the template folder, or set NDS_SITE.`); process.exit(2);
 }
-const CACHE = join(tmpdir(), 'nds-verify-cache');
-mkdirSync(CACHE, { recursive: true });
 const BASE = config.base.replace(/\/$/, '');
 const WIDTHS = config.widths || [1280, 390];
 const THEMES = config.themes || ['light', 'dark'];
@@ -160,8 +158,8 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
     // A script that throws (a state's run, the audit) is an error of the shot, never a silent undefined.
     const evaluate = async (expression) => {
         const { result, exceptionDetails } = await s('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true });
-        if (exceptionDetails) errors.push(`script failed: ${exceptionDetails.exception?.description || exceptionDetails.text}`);
-        return result?.value;
+        if (!exceptionDetails) return result?.value;
+        errors.push(`script failed: ${exceptionDetails.exception?.description || exceptionDetails.text}`);
     };
     // The reveal, the fonts and every stylesheet, so the icons and the audit read the real page.
     await evaluate(`(async () => {
@@ -176,7 +174,7 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
     // Never captureBeyondViewport: it shifts an RTL page sideways. The viewport stretches to the page
     // instead, before the state's script: one that grows right after a menu opens can close it.
     // ponytail: a vh-sized box grows with it; scroll-and-stitch if that ever misleads.
-    let height = viewHeight;
+    let height = viewHeight, ran;
     const stretch = async () => {
         const { cssContentSize } = await s('Page.getLayoutMetrics');
         const h = Math.min(Math.ceil(cssContentSize.height), 8000);
@@ -189,7 +187,7 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
     };
     await stretch();
     if (run) {
-        await evaluate(`(async () => { ${run} })()`);
+        ran = await evaluate(`(async () => { ${run} })()`);
         await sleep(400);
         // A first open can build its part on the click (a Filter menu, ~0.5 s): wait out the spinner.
         await evaluate(`(async () => { for (let i = 0; i < 30 && document.querySelector('[data-state~="loading"]'); i++) await new Promise((r) => setTimeout(r, 100)); })()`);
@@ -213,7 +211,7 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
     handlers.delete(sessionId);
     await send('Target.closeTarget', { targetId });
     await send('Target.disposeBrowserContext', { browserContextId }).catch(() => {});
-    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, ...locale,
+    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, ...locale, ran,
         errors: [...errors.filter((e) => !/\[NDS\.[aA]udit\]|Content Security Policy/.test(String(e))), ...csp], findings };
 }
 
@@ -231,21 +229,12 @@ const pool = async (jobs) => {
     }));
     return out;
 };
-// A reference shot is taken once per page, width and theme, and kept until that page's file changes.
-// ponytail: keyed on the page file only; a changed asset under the same _site needs the cache cleared.
+// A reference shot is taken once per run for each page, width, theme, lang and dir: states share it.
 const refShot = new Map();
 const reference = (ref, w, t, { lang, dir }) => {
     const key = `${ref}|${w}|${t}|${lang}|${dir}`;
-    if (!refShot.has(key)) refShot.set(key, (async () => {
-        const file = join(SITE, normalize(ref));
-        const stamp = existsSync(file) ? statSync(file).mtimeMs : 0;
-        const cached = join(CACHE, createHash('sha1').update(`${SITE}|${key}|${stamp}`).digest('hex') + '.png');
-        if (existsSync(cached)) return { png: readFileSync(cached), status: 200, lang, dir };
-        const q = new URLSearchParams({ 'nds-lang': lang, 'nds-dir': dir });
-        const r = await shoot(`${LOCAL}/${ref.replace(/^\/+/, '')}?${q}`, { width: w, theme: t });
-        if (r.status && r.status < 400 && r.revealed && r.dir === dir) writeFileSync(cached, r.png);
-        return r;
-    })());
+    const q = new URLSearchParams({ 'nds-lang': lang, 'nds-dir': dir });
+    if (!refShot.has(key)) refShot.set(key, shoot(`${LOCAL}/${ref.replace(/^\/+/, '')}?${q}`, { width: w, theme: t }));
     return refShot.get(key);
 };
 try {
@@ -258,7 +247,7 @@ try {
     const refs = await pool(withRef.flatMap(({ pg, shots: [first] }) =>
         cols.map(({ w, t }) => () => reference(pg.reference, w, t, { lang: first.lang || '', dir: first.dir === 'rtl' ? 'rtl' : 'ltr' }))));
     withRef.forEach((s, i) => { s.refs = refs.slice(i * cols.length, (i + 1) * cols.length); });
-    const sheets = [];
+    const sheets = [], told = new Set();
     for (const pg of PAGES) {
         const dir = join(OUT, slug(pg.path));
         mkdirSync(dir, { recursive: true });
@@ -273,16 +262,19 @@ try {
                     const file = `reference-${lang || 'nolang'}-${refDir || 'ltr'}-${w}-${t}.png`;
                     writeFileSync(join(dir, file), r.png);
                     cells.push(file);
+                    // States share a reference shot: name its problem once.
+                    if (told.has(r)) return;
+                    told.add(r);
                     if (r.status >= 400 || !r.status) problems.push(`${at}: reference ${pg.reference} did not load (${r.status})`);
                     else if (r.revealed === false) problems.push(`${at} ${w}px ${t}: the reference never revealed (no data-nds-loaded): its assets did not load, so the sheet shows a blank reference. Point NDS_SITE at a release's _site.`);
                     else if (r.dir !== shots[i].dir) problems.push(`${at} ${w}px ${t}: the reference is ${r.dir}, the page ${shots[i].dir}: the reference could not take the page's direction`);
                 });
                 ref = { name: `reference: ${pg.reference}${lang ? ` (${lang}, ${refDir})` : ` (${refDir})`}`, cells };
             }
-            const cells = [], seen = new Map();
-            const note = (kind, text, shot) => {
+            const cells = [], seen = new Map(), returned = new Map();
+            const note = (kind, text, shot, map = seen) => {
                 const key = `${kind}: ${String(text).replace(/nonce-[\w+/=-]+/g, 'nonce-…').slice(0, 300)}`;
-                (seen.get(key) || seen.set(key, new Set()).get(key)).add(shot);
+                (map.get(key) || map.set(key, new Set()).get(key)).add(shot);
             };
             for (const [i, { w, t }] of cols.entries()) {
                 const r = shots[i];
@@ -290,22 +282,19 @@ try {
                 writeFileSync(join(dir, file), r.png);
                 cells.push(file);
                 const shot = `${w}px ${t}`;
-                report.push(`${at} ${shot}: HTTP ${r.status}, innerWidth ${r.innerWidth}, ` +
-                    (r.findings === null ? 'audit unavailable (no NDS.init.audit)' : `audit ${r.findings.length}`) +
-                    `, errors ${r.errors.length}${r.revealed ? '' : ', NOT REVEALED'}`);
                 if (r.innerWidth !== w) problems.push(`${at} ${shot}: innerWidth ${r.innerWidth}, not ${w}: the shot is not that width`);
                 if (!r.status || r.status >= 400) problems.push(`${at} ${shot}: HTTP ${r.status}`);
                 if (!r.revealed) problems.push(`${at} ${shot}: the page never revealed (no data-nds-loaded)`);
                 if (r.overflow > 1) note('layout', `the page is ${r.overflow}px wider than the viewport (sideways scroll)`, shot);
+                if (r.findings === null) note('audit', 'unavailable (no NDS.init.audit)', shot);
                 (r.findings || []).forEach((f) => note('audit', f, shot));
                 r.errors.forEach((e) => note('error', e, shot));
+                if (r.ran !== undefined) note('run returned', JSON.stringify(r.ran), shot, returned);
             }
-            // Each distinct finding once per state, with the shots it showed in.
-            for (const [key, hits] of seen) {
-                const where = hits.size === cols.length ? 'every shot' : [...hits].join(', ');
-                report.push(`    ${key} (${where})`);
-                problems.push(`${at} ${key.slice(0, 160)} (${where})`);
-            }
+            // Each distinct line once per state, with the shots it showed in.
+            const where = (hits) => hits.size === cols.length ? 'every shot' : [...hits].join(', ');
+            for (const [key, hits] of returned) report.push(`${at} ${key} (${where(hits)})`);
+            for (const [key, hits] of seen) problems.push(`${at} ${key.slice(0, 160)} (${where(hits)})`);
             rows.push({ name: st.name, cells, ref });
         }
         // One sheet per state, the reference row above it (a sheet of every state shrinks too far
@@ -327,7 +316,7 @@ try {
                 const sheet = await shoot(`${LOCAL}/__out/${slug(pg.path)}/${name}.html`, { width: sheetWidth, theme: 'light' });
                 writeFileSync(join(dir, `${name}.png`), sheet.png);
             });
-            report.push(`${pg.path} [${r.name}]: ${join(dir, `${name}.png`)}`);
+            report.push(`${pg.path} [${r.name}] sheet: ${join(dir, `${name}.png`)}`);
         }
     }
     await pool(sheets);
@@ -341,5 +330,6 @@ try {
 writeFileSync(join(OUT, 'report.txt'), report.join('\n') + '\n\nProblems:\n' + (problems.join('\n') || 'none') + '\n');
 console.log(report.join('\n'));
 console.log(`\n${problems.length ? `${problems.length} problem(s):\n${problems.join('\n')}` : 'No problems found by script.'}`);
-console.log(`\nOutput: ${OUT}\nNow open every sheet-*.png and compare the state with the reference row above it.`);
+console.log(`\nOutput: ${OUT}\nNow open every sheet-*.png and compare the state with the reference row above it.\n` +
+    `A sheet shrinks each shot: for detail, open the state's own <state>-<width>-<theme>.png beside its reference-…-<width>-<theme>.png, never another browser.`);
 process.exit(problems.length ? 1 : 0);
