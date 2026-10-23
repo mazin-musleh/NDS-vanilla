@@ -18,6 +18,13 @@
 .nds-date-picker {
     position: relative;
 
+    // A range's text has a fixed length ("DD/MM/YYYY - DD/MM/YYYY"): the field asks for it, so a
+    // menu or a narrow column grows to show it whole instead of cutting it. Never more than a
+    // phone leaves beside a menu's padding and the calendar button (6.5rem), or it spills out.
+    &.nds-date-range .nds-date-input {
+        min-inline-size: min(23ch, calc(100vw - 2 * var(--nds-viewport-padding) - 6.5rem));
+    }
+
     // Month/year mode (data-format has no D token) — the day grid is replaced
     // with a month/year picker grid, and the header controls that overlap the
     // grid semantics are hidden.

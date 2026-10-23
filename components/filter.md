@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 03:54 PM"
+last_edit: "23/10/2026 - 11:07 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -64,6 +64,21 @@ Pick another component when:
       <div class="nds-dropmenu-scroll">
         <div id="flt-sector" data-filter="sector" data-filter-type="checkbox" data-filter-legend="Sector"></div>
         <div data-filter="fee" data-filter-type="slider" data-filter-legend="Fee" data-filter-min="0" data-filter-max="3000" data-filter-step="100" data-filter-currency="SAR"></div>
+        <fieldset class="nds-form-group nds-dropmenu-group" data-filter="updated">
+          <legend class="nds-label">Updated</legend>
+          <div class="nds-form-container nds-date-picker nds-date-range">
+            <div class="nds-form-control">
+              <div class="nds-form-action">
+                <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
+                  <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
+                </button>
+              </div>
+              <input type="text" id="flt-updated" class="nds-input nds-date-input" placeholder="DD/MM/YYYY - DD/MM/YYYY" aria-label="Updated">
+            </div>
+            <input type="hidden" class="nds-date-value" data-date-format="YYYY-MM-DD" data-calendar="gregory">
+            <input type="hidden" class="nds-date-value" data-date-format="YYYY-MM-DD" data-calendar="gregory">
+          </div>
+        </fieldset>
       </div>
       <div class="nds-dropmenu-footer">
         <hr class="nds-divider">
@@ -88,6 +103,7 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Commercial registration</span>
+        <span class="nds-card-subtitle">Updated <time datetime="2026-10-02" data-filter="updated" data-filter-value="2026-10-02">2 Oct 2026</time></span>
       </div>
       <div class="nds-card-value">
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="200">200</span>
@@ -101,6 +117,7 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Building permit</span>
+        <span class="nds-card-subtitle">Updated <time datetime="2026-10-06" data-filter="updated" data-filter-value="2026-10-06">6 Oct 2026</time></span>
       </div>
       <div class="nds-card-value">
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="1500">1500</span>
@@ -114,6 +131,7 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Vehicle registration renewal</span>
+        <span class="nds-card-subtitle">Updated <time datetime="2026-10-09" data-filter="updated" data-filter-value="2026-10-09">9 Oct 2026</time></span>
       </div>
       <div class="nds-card-value">
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="100">100</span>
@@ -127,6 +145,7 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Driver's license renewal</span>
+        <span class="nds-card-subtitle">Updated <time datetime="2026-10-13" data-filter="updated" data-filter-value="2026-10-13">13 Oct 2026</time></span>
       </div>
       <div class="nds-card-value">
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="400">400</span>
@@ -140,6 +159,7 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Municipal license</span>
+        <span class="nds-card-subtitle">Updated <time datetime="2026-10-15" data-filter="updated" data-filter-value="2026-10-15">15 Oct 2026</time></span>
       </div>
       <div class="nds-card-value">
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="800">800</span>
@@ -153,6 +173,7 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Housing support request</span>
+        <span class="nds-card-subtitle">Updated <time datetime="2026-10-18" data-filter="updated" data-filter-value="2026-10-18">18 Oct 2026</time></span>
       </div>
       <div class="nds-card-value">
         <span data-filter="fee" data-filter-value="0">Free</span>
@@ -166,6 +187,7 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Trade name reservation</span>
+        <span class="nds-card-subtitle">Updated <time datetime="2026-10-21" data-filter="updated" data-filter-value="2026-10-21">21 Oct 2026</time></span>
       </div>
       <div class="nds-card-value">
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="200">200</span>
@@ -179,6 +201,7 @@ Pick another component when:
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Truck operating card</span>
+        <span class="nds-card-subtitle">Updated <time datetime="2026-10-27" data-filter="updated" data-filter-value="2026-10-27">27 Oct 2026</time></span>
       </div>
       <div class="nds-card-value">
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="2500">2500</span>
@@ -266,6 +289,23 @@ Pick another component when:
   </div>
 </fieldset>
 </script>
+<script type="text/html" id="filter-part-updated" data-canon>
+<fieldset class="nds-form-group nds-dropmenu-group" data-filter="updated">
+  <legend class="nds-label">Updated</legend>
+  <div class="nds-form-container nds-date-picker nds-date-range">
+    <div class="nds-form-control">
+      <div class="nds-form-action">
+        <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
+          <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
+        </button>
+      </div>
+      <input type="text" id="flt-updated" class="nds-input nds-date-input" placeholder="DD/MM/YYYY - DD/MM/YYYY" aria-label="Updated">
+    </div>
+    <input type="hidden" class="nds-date-value" data-date-format="YYYY-MM-DD" data-calendar="gregory">
+    <input type="hidden" class="nds-date-value" data-date-format="YYYY-MM-DD" data-calendar="gregory">
+  </div>
+</fieldset>
+</script>
 <script type="text/html" id="filter-part-applied" data-canon>
 <div class="nds-filter-applied" data-filter-target="flt-items" hidden>
   <span class="nds-label" data-i18n="filter.applied_filters">Applied Filters:</span>
@@ -305,7 +345,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Every card carries two marks: `sector` and `fee`. A group in the menu filters by one of them, and a mark with no group is ignored, so the cards stay the same for every choice. `#flt-sector` is the Sector group built by the script: the Sector type, Fixed list and Collapsible rows need Auto. Each Group options choice is two rows, one per group: write both. Group and part rows go into `.nds-dropmenu-scroll` or `.nds-toolbar`.
+Every card carries three marks: `sector`, `fee` and `updated`. A group in the menu filters by one of them, and a mark with no group is ignored, so the cards stay the same for every choice. `#flt-sector` is the Sector group built by the script: the Sector type, Fixed list and Collapsible rows need Auto. Each Group options choice puts back the Sector and Fee groups, one row each: write both. The Date group is a Date Picker you write in either choice. Group and part rows go into `.nds-dropmenu-scroll` or `.nds-toolbar`.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -313,6 +353,7 @@ Every card carries two marks: `sector` and `fee`. A group in the menu filters by
 | Group options | Auto (default) (hint: The script builds the groups) | canon `#filter-part-fee` | `.nds-dropmenu-scroll` | |
 | Group options | Manual (hint: You write the groups in the HTML) | canon `#filter-part-sector-manual` | `.nds-dropmenu-scroll` | Groups you write, with no `data-filter-type`: a `<fieldset>` of checkboxes for Sector, and a range [Slider](../components/slider) for Fee. For options that need their own markup |
 | Group options | Manual (hint: You write the groups in the HTML) | canon `#filter-part-fee-manual` | `.nds-dropmenu-scroll` | |
+| Date group | Date group (default) (hint: An Updated date range in the menu) | canon `#filter-part-updated` | `.nds-dropmenu-scroll` | A [Date Picker](../components/date-picker) in a group filters by the cards' `updated` days: a range, a day, a month or a year. Give the picker the two `.nds-date-value` inputs shown. See Date Range |
 | Sector type | Checkbox (default) | — | `#flt-sector` | Any number of values. A card matches when it has one of them |
 | Sector type | Radio | `[data-filter-type="radio"]` | `#flt-sector` | One value. The script adds All as the first option |
 | Sector type | Switch | `[data-filter-type="switch"]` | `#flt-sector` | Matches like Checkbox, drawn as switches. For on/off features |
@@ -354,6 +395,13 @@ A mark's text is its value. `data-filter-value` on the mark sets a value apart f
 {: .nds-block-title}
 
 `data-filter-type="slider"` builds a [Slider](../components/slider) over the number in each item's `data-filter-value`. With `data-filter-min` and `data-filter-max` it has two thumbs. With `data-filter-max` alone it has one thumb, "up to", from 0. The applied range shows as one chip, and removing it puts both thumbs back at the ends. In the URL a range reads `fee=200-1500`. The chip groups thousands only when the slider's output does: with `data-filter-currency` or `data-filter-unit`, or when your own output has `.nds-number-format`.
+
+### Date Range
+{: .nds-block-title}
+
+A group that holds a [Date Picker](../components/date-picker) filters by date. In range mode (`nds-date-range`) the user picks a first and a last day. A single picker picks one day, or a whole month or year when its format has no day (`MM/YYYY`, `YYYY`), Hijri months and years too. Give the picker two `.nds-date-value` inputs (one for a single day) with `data-date-format="YYYY-MM-DD"` and `data-calendar="gregory"`: the script reads the days there, so the field may show Hijri. Each item's mark carries its day in `data-filter-value` as a Gregorian `YYYY-MM-DD`, or as a date and time; any other format never matches, and the console says so. The applied range shows as one chip in the field's format, and removing it clears the field. In the URL it reads `updated=2026-10-06..2026-10-18`.
+
+The date group can also sit outside the menu, in the toolbar beside the search box: give its `<fieldset>` the filter's `data-filter-target`, and leave out `nds-dropmenu-group`. There no Apply button reaches it, so a date applies as soon as the user saves it in the calendar or types it, as a search applies on Enter. In a filter form (server mode), or in a panel with its own Apply button, it waits for the submit or the Apply like the other groups, and the request carries it as `updated=2026-10-06..2026-10-18`.
 
 ### Manual Options
 {: .nds-block-title}

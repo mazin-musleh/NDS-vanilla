@@ -817,7 +817,7 @@
 
 - title: "Filter"
   description: "Applied filters with search, URL sync, and remote data"
-  use_when: "Narrow a list down: faceted filters, checkbox and range filters, applied-filter chips, URL-synced filtering, remote filtering. Pairs with Tables and Pagination on data screens."
+  use_when: "Narrow a list down: faceted filters, checkbox, range and date filters (a date range, a day, a month or a year, Hijri too), applied-filter chips, URL-synced filtering, remote filtering. Pairs with Tables and Pagination on data screens."
   category: "Data"
   tags: ["JS", "CSS", "API"]
   url: "/components/filter.html"

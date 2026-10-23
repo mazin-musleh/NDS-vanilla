@@ -76,7 +76,8 @@
     // substitute "…" inside inline-flex flow, so a 160px cap clips glyphs
     // mid-character instead of ellipsizing. Let the chip grow to its natural
     // width; the wrapping .nds-chips container handles line breaks.
-    &:has(> .nds-number-format) {
+    // A date range (two <time>s) is short and loses its meaning cut, so it shows whole too.
+    &:has(> .nds-number-format, > time) {
       max-width: none;
     }
   }

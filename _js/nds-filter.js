@@ -104,7 +104,11 @@
  *     span.nds-label and div.nds-form-control > the input. Hand-written options must match
  *     that shape — read the generator, do not guess it. A hand-written range is a
  *     [data-filter] group holding a .nds-slider-container (canon in components/slider.md);
- *     put data-filter-currency / data-filter-unit on the group for the chip.
+ *     put data-filter-currency / data-filter-unit on the group for the chip. A [data-filter]
+ *     group holding a .nds-date-picker filters by date: it reads YYYY-MM-DD days from the
+ *     picker's .nds-date-value inputs (data-date-format="YYYY-MM-DD" data-calendar="gregory"),
+ *     matches each item's day, and encodes "from..to" for the chip, URL and request. In a
+ *     surface with no Apply button, outside a form mode filter, a committed date applies at once.
  *   - Resetting is markup, not JS: a [data-filter-action="reset"] button inside the surface
  *     clears every input and re-emits nds:filter:change. Hand-clearing fields + NDS.Form.refresh
  *     repaints only — it dispatches nothing.
@@ -1337,10 +1341,13 @@
             this._targetRoots.forEach(dropmenu => {
                 if (!dropmenu.matches?.('.nds-dropmenu') || this._draftMenus.has(dropmenu)) return;
                 this._draftMenus.add(dropmenu);
-                dropmenu.addEventListener('nds:dropmenu:opened', () => {
+                // Its own open and close only: a menu inside it (a Date Picker's calendar) bubbles the same events.
+                dropmenu.addEventListener('nds:dropmenu:opened', (e) => {
+                    if (e.target !== dropmenu) return;
                     this._appliedFilters = structuredClone(this.criteria.filters);
                 }, { signal });
-                dropmenu.addEventListener('nds:dropmenu:closed', () => {
+                dropmenu.addEventListener('nds:dropmenu:closed', (e) => {
+                    if (e.target !== dropmenu) return;
                     const applied = this._appliedFilters;
                     this._appliedFilters = null;
                     if (applied && JSON.stringify(applied) !== JSON.stringify(this.criteria.filters)) this._restoreFilterInputs(applied);
@@ -1383,6 +1390,10 @@
 
             if (filterName === 'search') {
                 this._setupSearchFilter(element);
+                return;
+            }
+            if (element.querySelector('.nds-date-picker')) {
+                this._setupDateFilter(element, filterName);
                 return;
             }
             // A group holding a slider you wrote is a range filter too, with no data-filter-type.
@@ -1933,6 +1944,13 @@
         _syncRangeCriteria(filterName) {
             const filterInput = this.filterInputs[filterName];
             if (!filterInput || filterInput.type !== 'range') return;
+            if (filterInput.date) {
+                const [from = '', last = ''] = filterInput.outs.map(out => out.value);
+                // A single picker spans its pick: one day, or a whole month or year when it picks those.
+                const to = filterInput.single ? this._periodEnd(from, filterInput.controlContainer) : last;
+                this.criteria.filters[filterName] = from || to ? [from + '..' + to] : [];
+                return;
+            }
             let low, high;
             if (filterInput.single) {
                 // "Up to": lo pinned to the floor, hi = the single thumb.
@@ -1955,6 +1973,16 @@
         _setRangeValues(filterName, low, high) {
             const filterInput = this.filterInputs[filterName];
             if (!filterInput || filterInput.type !== 'range') return;
+            if (filterInput.date) {
+                // The picker takes YYYY-MM-DD and shows it in its own format and calendar. The criteria take
+                // the days as given: the picker's bundle may land after this, and a URL carries both ends.
+                // A write from the URL, a chip or a reset: its caller commits, the user did not pick.
+                this._writingDates = true;
+                NDS.setValue(filterInput.input, low ? (high && !filterInput.single ? `${low} - ${high}` : low) : '');
+                this._writingDates = false;
+                this.criteria.filters[filterName] = low || high ? [low + '..' + (high || (filterInput.single ? low : ''))] : [];
+                return;
+            }
             if (filterInput.single) {
                 filterInput.maxInput.value = high;          // single: only the cutoff thumb (lo is pinned)
             } else {
@@ -1977,6 +2005,11 @@
         _setRangeFromUrl(filterName, raw) {
             const filterInput = this.filterInputs[filterName];
             if (!filterInput || filterInput.type !== 'range') return;
+            if (filterInput.date) {
+                const days = this._parseDateRange(this._sanitizeFilterValue(raw));
+                if (days) this._setRangeValues(filterName, ...days);
+                return;
+            }
             const pair = this._parseEncodedRange(this._sanitizeFilterValue(raw));
             if (!pair) return;
             let [low, high] = pair;
@@ -1987,6 +2020,21 @@
         }
 
         _matchesRange(item, filterName, encoded) {
+            if (this.filterInputs[filterName].date) {
+                const days = this._parseDateRange(encoded);
+                if (!days) return true;
+                // A day or a full ISO date-time: its first ten characters compare as a day.
+                const value = String(itemCaches.get(item)?.values[filterName]?.[0] || '');
+                const day = value.slice(0, 10);
+                if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
+                    if (value && !this._warnedDates?.has(filterName)) {
+                        (this._warnedDates ||= new Set()).add(filterName);
+                        console.warn(`NDS Filter: date filter "${filterName}" reads each item's day as YYYY-MM-DD (Gregorian) in data-filter-value; "${value}" never matches.`);
+                    }
+                    return false;
+                }
+                return (!days[0] || day >= days[0]) && (!days[1] || day <= days[1]);
+            }
             const pair = this._parseEncodedRange(encoded);
             if (!pair) return true;
             const [low, high] = pair;
@@ -2002,6 +2050,7 @@
         // on [data-currency]) + thousand separators (NDS.Numbers) — not a string.
         _buildRangeChipLabel(filterName, encoded) {
             const filterInput = this.filterInputs[filterName];
+            if (filterInput?.date) return this._buildDateChipLabel(filterInput, encoded);
             // Same decoder the URL and matching paths use, so a negative floor
             // ("-20-15") splits at the delimiter rather than the leading sign.
             const pair = this._parseEncodedRange(encoded);
@@ -2036,11 +2085,104 @@
             return span;
         }
 
+        // The full span of a slider, no days for a date filter.
+        _clearRange(filterName) {
+            const filterInput = this.filterInputs[filterName];
+            if (filterInput.date) this._setRangeValues(filterName, '', '');
+            else this._setRangeValues(filterName, filterInput.min, filterInput.max);
+        }
+
+        // ==============================================
+        // DATE FILTER (a group holding a Date Picker)
+        // ==============================================
+        // A range picker (nds-date-range) gives from and to, a single one a day. Criteria holds one
+        // "from..to" of YYYY-MM-DD days, either end open, so the range machinery (chip, URL, reset,
+        // request) carries it. The picker writes the days into its .nds-date-value inputs, in
+        // Gregorian whatever calendar it shows. Each item's [data-filter="name"] value is its day.
+
+        _setupDateFilter(element, filterName) {
+            const picker = element.querySelector('.nds-date-picker');
+            const outs = [...picker.querySelectorAll('.nds-date-value')];
+            if (!outs.length || outs.some(out => out.getAttribute('data-date-format') !== 'YYYY-MM-DD' || out.getAttribute('data-calendar') !== 'gregory')) {
+                console.warn(`NDS Filter: date filter "${filterName}" reads the days from .nds-date-value inputs: give its Date Picker one (two in a range) with data-date-format="YYYY-MM-DD" data-calendar="gregory".`);
+                return;
+            }
+            if (!this.criteria.filters[filterName]) this.criteria.filters[filterName] = [];
+            this.filterInputs[filterName] = {
+                type: 'range',
+                date: true,
+                single: !picker.classList.contains('nds-date-range'),
+                element,
+                controlContainer: picker,
+                input: picker.querySelector('.nds-date-input'),
+                outs
+            };
+
+            filterAbortControllers.get(element)?.abort();
+            const elementController = new AbortController();
+            filterAbortControllers.set(element, elementController);
+            this._filterElementAbortControllers.add(element);
+            // With no Apply in its surface and no form to submit it (a field beside the search box), a date
+            // the user commits (Save, or typed) applies, as a search does on Enter. In a menu, a panel
+            // with Apply or a form, it waits like the other groups. A range writes both its values in
+            // one go: one commit for the pair.
+            const surface = this._targetRoots.find(root => root.contains(element));
+            const applies = !this.isFormMode && !surface?.querySelector('[data-filter-action="apply"]');
+            let queued = false;
+            // The picker fires change on each value it writes.
+            outs.forEach(out => out.addEventListener('change', () => {
+                const before = String(this.criteria.filters[filterName]);
+                this._syncRangeCriteria(filterName);
+                this._syncApplyButtonLabel();
+                if (!applies || this._writingDates || queued || String(this.criteria.filters[filterName]) === before) return;
+                queued = true;
+                queueMicrotask(() => { queued = false; this._commitCriteriaChange(); });
+            }, { signal: elementController.signal }));
+        }
+
+        // Each day as a <time>, in the field's own format and calendar ("06/10/2026 - 15/10/2026").
+        // A single picker shows its one pick ("10/2026" for a month).
+        _buildDateChipLabel(filterInput, encoded) {
+            const days = (this._parseDateRange(encoded) || []).slice(0, filterInput.single ? 1 : 2);
+            const shown = filterInput.input.value.split(' - ');
+            const fragment = document.createDocumentFragment();
+            days.filter(Boolean).forEach((day, i, list) => {
+                if (i) fragment.append(' – ');
+                const time = document.createElement('time');
+                time.dateTime = day;
+                time.textContent = (list.length === shown.length ? shown[i] : '') || day;
+                fragment.append(time);
+            });
+            return fragment;
+        }
+
+        // The last day a single pick covers, as YYYY-MM-DD: the day itself, or the end of the month or
+        // year it starts in the field's calendar (a Hijri month ends on another Gregorian day).
+        _periodEnd(day, picker) {
+            const mode = picker.getAttribute('data-picker-mode');
+            if (!day || (mode !== 'month' && mode !== 'year')) return day;
+            const calendar = NDS.Date.getCalendar(picker);
+            const unit = (date) => NDS.Date.format(date, { format: mode === 'month' ? 'MM/YYYY' : 'YYYY', calendar });
+            const [year, month, date] = day.split('-').map(Number);
+            const end = new Date(year, month - 1, date);
+            const start = unit(end);
+            // ponytail: walks a day at a time (31 or 366 steps, once per pick); fine for a click.
+            do end.setDate(end.getDate() + 1); while (unit(end) === start);
+            end.setDate(end.getDate() - 1);
+            return NDS.Date.format(end, { format: 'YYYY-MM-DD', calendar: 'gregory' });
+        }
+
+        // Decode "from..to" (YYYY-MM-DD, either end may be empty); null if not that shape.
+        _parseDateRange(text) {
+            const match = /^(\d{4}-\d{2}-\d{2})?\.\.(\d{4}-\d{2}-\d{2})?$/.exec(text || '');
+            return match && (match[1] || match[2]) ? [match[1] || '', match[2] || ''] : null;
+        }
+
         // Chip-remove / clear handler for a range filter: restore the full span.
         resetRangeFilter(filterName) {
             const filterInput = this.filterInputs[filterName];
             if (!filterInput || filterInput.type !== 'range') return;
-            this._setRangeValues(filterName, filterInput.min, filterInput.max);
+            this._clearRange(filterName);
             this._syncApplyButtonLabel();
             this._commitCriteriaChange();
         }
@@ -2670,7 +2812,7 @@
             for (const [filterName, filterData] of Object.entries(this.filterInputs)) {
                 if (filterData.type === 'range') {
                     // Restore the full span (_syncRangeCriteria clears the criteria).
-                    this._setRangeValues(filterName, filterData.min, filterData.max);
+                    this._clearRange(filterName);
                     continue;
                 }
                 filterData.inputs.forEach(input => {
@@ -2906,7 +3048,7 @@
             if (filterData.type === 'range') {
                 // One "lo-hi" string; none restores the full span.
                 if (values.length) this._setRangeFromUrl(filterName, values[0]);
-                else this._setRangeValues(filterName, filterData.min, filterData.max);
+                else this._clearRange(filterName);
             } else {
                 const valuesLower = values.map(value => value.toLowerCase());
                 filterData.inputs.forEach(input => {

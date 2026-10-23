@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 05:42 AM"
+last_edit: "23/10/2026 - 11:07 PM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -134,6 +134,8 @@ A format with no day token shows a grid of months, and a format with only year t
 {: .nds-block-title}
 
 The field sends the date as the user sees it, such as `15/09/1447`. To send the server one fixed format, put a hidden input with the class `nds-date-value` in `.nds-date-picker`, and give it the field name. The script writes the date there each time the field changes, in the input's own `data-date-format` and `data-calendar`. Without them, the input takes the picker's format and calendar, so it holds the same text as the field. Text that is not a valid date leaves it empty. Each one holds the date, so two can send it in two formats. In a range, the first holds the start and the second the end.
+
+To filter a list by date, put the picker in a [Filter](../components/filter) group: it reads these values, and its chip and link keep the range.
 
 <script type="text/html" id="date-picker-value" data-canon data-preview="none">
 <input type="hidden" class="nds-date-value" name="visit_date" data-date-format="YYYY-MM-DD" data-calendar="gregory">
