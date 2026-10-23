@@ -29,6 +29,7 @@ sidemenu_mode: false
                      STEP 1 — Identity Verification
                      ============================================================ -->
                 <div class="nds-flex nds-col" data-form-step="1">
+                    <h2 class="nds-section-title">Identity Verification</h2>
                     <div class="nds-grid" style="--min-col: 1; --max-col: 2; --gap: var(--spacing-4xl);">
 
                         <div class="nds-form-container nds-national-id" data-required>
@@ -38,7 +39,7 @@ sidemenu_mode: false
                             <div class="nds-form-control">
                                 <input type="text" id="ft-national-id" name="nationalId" class="nds-input"
                                     placeholder="10-digit ID number" inputmode="numeric" maxlength="10"
-                                    autocomplete="off" required>
+                                    autocomplete="off">
                                 <div class="nds-form-action">
                                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -65,7 +66,7 @@ sidemenu_mode: false
                                 </div>
                                 <input type="text" id="ft-dob" name="dob" class="nds-input nds-date-input"
                                     placeholder="DD/MM/YYYY" autocomplete="bday"
-                                    data-year-before="100" data-year-after="0" data-max-date="today" required>
+                                    data-year-before="100" data-year-after="0" data-max-date="today">
                             </div>
                         </div>
 
@@ -80,7 +81,7 @@ sidemenu_mode: false
                                 </div>
                                 <input type="tel" id="ft-mobile" name="mobile" class="nds-input"
                                     placeholder="5X XXX XXXX" autocomplete="tel-national"
-                                    inputmode="numeric" required>
+                                    inputmode="numeric">
                                 <div class="nds-form-action">
                                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -96,7 +97,7 @@ sidemenu_mode: false
                             <div class="nds-form-control">
                                 <input type="text" id="ft-otp" name="otp" class="nds-input"
                                     placeholder="6-digit code" inputmode="numeric" pattern="[0-9]{6}"
-                                    autocomplete="one-time-code" required>
+                                    autocomplete="one-time-code">
                                 <div class="nds-form-action">
                                     <button type="button" class="nds-btn nds-subtle nds-cooldown"
                                         id="ft-otp-resend"
@@ -128,6 +129,7 @@ sidemenu_mode: false
                      STEP 2 — Personal Information
                      ============================================================ -->
                 <div class="nds-flex nds-col" data-form-step="2" hidden>
+                    <h2 class="nds-section-title">Personal Information</h2>
                     <div class="nds-grid" style="--min-col: 1; --max-col: 2;">
 
                         <div class="nds-form-container" data-required>
@@ -136,7 +138,7 @@ sidemenu_mode: false
                             </div>
                             <div class="nds-form-control">
                                 <input type="text" id="ft-first-name" name="firstName" class="nds-input"
-                                    placeholder="As written on your ID" autocomplete="given-name" required>
+                                    placeholder="As written on your ID" autocomplete="given-name">
                                 <div class="nds-form-action">
                                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -151,7 +153,7 @@ sidemenu_mode: false
                             </div>
                             <div class="nds-form-control">
                                 <input type="text" id="ft-father-name" name="fatherName" class="nds-input"
-                                    placeholder="As written on your ID" required>
+                                    placeholder="As written on your ID">
                                 <div class="nds-form-action">
                                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -181,7 +183,7 @@ sidemenu_mode: false
                             </div>
                             <div class="nds-form-control">
                                 <input type="text" id="ft-family-name" name="familyName" class="nds-input"
-                                    placeholder="As written on your ID" autocomplete="family-name" required>
+                                    placeholder="As written on your ID" autocomplete="family-name">
                                 <div class="nds-form-action">
                                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -197,7 +199,7 @@ sidemenu_mode: false
                             <div class="nds-form-control">
                                 <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
                                 <input type="email" id="ft-email" name="email" class="nds-input"
-                                    placeholder="name@example.com" autocomplete="email" required>
+                                    placeholder="name@example.com" autocomplete="email">
                                 <div class="nds-form-action">
                                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -215,7 +217,7 @@ sidemenu_mode: false
                             <div class="nds-form-control">
                                 <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                                 <input type="text" id="ft-city" name="city" autocomplete="on"
-                                    placeholder="Type to search Saudi cities" required>
+                                    placeholder="Type to search Saudi cities">
                                 <div class="nds-form-action">
                                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -230,7 +232,7 @@ sidemenu_mode: false
                             </div>
                             <div class="nds-form-control">
                                 <input type="text" id="ft-district" name="district" class="nds-input"
-                                    placeholder="Neighborhood or district" autocomplete="address-level3" required>
+                                    placeholder="Neighborhood or district" autocomplete="address-level3">
                             </div>
                         </div>
 
@@ -299,7 +301,7 @@ sidemenu_mode: false
                             </label>
                         </div>
                         <div class="nds-form-control">
-                            <input type="checkbox" id="ft-confirm" name="confirm" value="confirmed" class="nds-checkbox-input" required>
+                            <input type="checkbox" id="ft-confirm" name="confirm" value="confirmed" class="nds-checkbox-input">
                         </div>
                     </div>
 
@@ -356,6 +358,9 @@ sidemenu_mode: false
             </form>
         </div>
 
+        <!-- A page with no side info (a console): drop this aside, nds-has-sideinfo and nds-sideinfo-section.
+             Put the stepper first in the section body, above the note, with nds-block and without
+             nds-vertical, so the steps sit in a row. -->
         <aside class="nds-sideinfo nds-sticky nds-sticky-md nds-top" aria-label="Application progress" style="--nds-sideinfo-top-offset: var(--spacing-6xl);">
             <!-- Vertical on desktops, radial on phones and tablets, so the 4-step
                  flow stays compact on small screens. -->

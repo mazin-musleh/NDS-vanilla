@@ -176,10 +176,11 @@
     addRule({ id: 'alert-as-page', group: 'page', docs: 'layout/status-section.html', check(context) {
         const isShown = el => el.checkVisibility ? el.checkVisibility() : el.getClientRects().length > 0;
         const sections = context.find('main .nds-content-section').filter(isShown);
-        const alert = sections.flatMap(section => [...section.querySelectorAll('.nds-alert')]).find(isShown);
+        // A tab panel's alert is canon: the other tabs still show (layout/status-section.md).
+        const alert = sections.flatMap(section => [...section.querySelectorAll('.nds-alert')]).find(el => isShown(el) && !el.closest('.nds-tab-panel'));
         if (!alert) return;
         const content = 'p, li, dt, dd, td, img, figure, canvas, input, select, textarea, .nds-card, .nds-btn';
-        const chrome = '.nds-alert, .nds-tabs, .nds-breadcrumb, .nds-pagination, nav, [role="tablist"]';
+        const chrome = '.nds-alert, .nds-tab-list-container, .nds-breadcrumb, .nds-pagination, nav, [role="tablist"]';
         if (sections.some(section => [...section.querySelectorAll(content)].some(el => !el.closest(chrome) && isShown(el)))) return;
         context.report(alert, 'the only content this view shows is an alert: a view that cannot show its content (sign in first, no permission, not found, a failed load) is a Status Section.',
             'Replace the alert with a Status Section that carries the same title, text and action.');

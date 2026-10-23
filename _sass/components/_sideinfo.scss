@@ -34,42 +34,28 @@
         position: static;
         top: var(--_sideinfo-sticky-top);
         height: fit-content;
+        // The aside is a bare track — width, order and sticky, nothing visual. The cards inside it carry the surface.
+        display: flex;
+        flex-direction: column;
+        gap: var(--nds-sideinfo-gap, var(--spacing-4xl));
 
-        // The aside is a bare track — width, order and sticky, nothing visual.
-        // The surface belongs to whichever element carries .nds-card: the direct
-        // child now, or the aside itself in the older pairing.
-        @mixin _sideinfo-card {
-            &.nds-card,
-            > .nds-card { @content; }
-        }
-
-        @include _sideinfo-card {
+        > .nds-card {
             --_card-padding-base: var(--spacing-4xl);
             --card-bg: var(--background-menu);
             --card-width: 100%;
         }
 
-        // Cards in the column stack with a gap. The older pairing keeps the card's own layout.
-        &:not(.nds-card) {
-            display: flex;
-            flex-direction: column;
-            gap: var(--nds-sideinfo-gap, var(--spacing-4xl));
-        }
-
         // The aside sizes to its children, so a table of contents gets its own default with no :has().
         // --nds-sideinfo-width overrides both defaults.
-        &:not(.nds-card) > * { width: var(--nds-sideinfo-width, 400px); }
-        &:not(.nds-card) > .nds-toc { width: var(--nds-sideinfo-width, 300px); }
-        // The older pairing: the aside is the card, so it carries the width itself.
-        &.nds-card { width: var(--nds-sideinfo-width, 400px); }
+        > * { width: var(--nds-sideinfo-width, 400px); }
+        > .nds-toc { width: var(--nds-sideinfo-width, 300px); }
 
         // Full width below desktop, whatever width the column has above it.
         @include tablet(max) {
             top: unset;
             width: 100%;
 
-            &.nds-card,
-            &:not(.nds-card) > :is(*, .nds-toc) { width: 100%; }
+            > :is(*, .nds-toc) { width: 100%; }
         }
 
         &.nds-sticky {
@@ -95,7 +81,7 @@
             margin-inline: calc(50% - 50vw);
             z-index: 999;
 
-            @include _sideinfo-card {
+            > .nds-card {
                 --card-width: 100vw;
                 --card-padding-block: var(--spacing-xl);
                 --card-padding-inline: var(--nds-viewport-padding);

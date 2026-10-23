@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "23/10/2026 - 03:54 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -353,7 +353,7 @@ A mark's text is its value. `data-filter-value` on the mark sets a value apart f
 ### Range Slider
 {: .nds-block-title}
 
-`data-filter-type="slider"` builds a [Slider](../components/slider) over the number in each item's `data-filter-value`. With `data-filter-min` and `data-filter-max` it has two thumbs. With `data-filter-max` alone it has one thumb, "up to", from 0. The applied range shows as one chip, and removing it puts both thumbs back at the ends. In the URL a range reads `fee=200-1500`.
+`data-filter-type="slider"` builds a [Slider](../components/slider) over the number in each item's `data-filter-value`. With `data-filter-min` and `data-filter-max` it has two thumbs. With `data-filter-max` alone it has one thumb, "up to", from 0. The applied range shows as one chip, and removing it puts both thumbs back at the ends. In the URL a range reads `fee=200-1500`. The chip groups thousands only when the slider's output does: with `data-filter-currency` or `data-filter-unit`, or when your own output has `.nds-number-format`.
 
 ### Manual Options
 {: .nds-block-title}
@@ -711,7 +711,7 @@ Sort is not a filter value and is never sent with the form. Decide by what the s
 | `NDS.Filter.getByTarget(id)` | The filter of an item container `id` |
 | `NDS.Filter.whenReady(element, callback)` | Runs `callback` with the filter, now or once it starts |
 | `NDS.Filter.refresh(container)` | Runs `refresh()` on each filter whose item container is `container`, is inside it, or holds it. Starts the filters of new surfaces in it first. Skips form-mode filters. `NDS.init.refresh(container)` calls it for you |
-| `setFilterValues(name, values)` | Picks these values in the group, and applies them. An empty array clears the group |
+| `setFilterValues(name, values)` | Picks these values in the group, and applies them. An empty array clears the group. On a slider group, pass one `lo-hi` string, for example `['200-1500']` |
 | `setSearchValue(text)` | Sets the search term, and applies it |
 | `removeFilterValue(name, value)` | Removes one value, and applies the rest |
 | `removeSearchFilter()` | Clears the search term, and applies |

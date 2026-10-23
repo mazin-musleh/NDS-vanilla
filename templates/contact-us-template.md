@@ -27,7 +27,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-form-control">
                             <input type="text" id="contact-first-name" name="firstName" class="nds-input"
-                                placeholder="Type your first name" autocomplete="given-name" required>
+                                placeholder="Type your first name" autocomplete="given-name">
                             <div class="nds-form-action">
                                 <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -45,7 +45,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-form-control">
                             <input type="text" id="contact-last-name" name="lastName" class="nds-input"
-                                placeholder="Type your last name" autocomplete="family-name" required>
+                                placeholder="Type your last name" autocomplete="family-name">
                             <div class="nds-form-action">
                                 <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -63,7 +63,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-form-control">
                             <input type="email" id="contact-email" name="email" class="nds-input"
-                                placeholder="name@example.gov.sa" autocomplete="email" required>
+                                placeholder="name@example.gov.sa" autocomplete="email">
                             <div class="nds-form-action">
                                 <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -177,7 +177,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <input type="tel" id="contact-phone" name="phone" class="nds-input"
-                                placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric" required>
+                                placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric">
                             <div class="nds-form-action">
                                 <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
                                     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -316,150 +316,152 @@ sidemenu_mode: false
             </form>
         </div>
 
-        <aside class="nds-sideinfo nds-card nds-stroke nds-shadow" aria-label="Contact information">
-            <div class="nds-sideinfo-group">
-                <span class="nds-sideinfo-title">Contact Amer</span>
-                <dl class="nds-definition-list">
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
-                            <span class="nds-label">Phone</span>
-                        </dt>
-                        <dd class="nds-item-action">
-                            <a href="tel:9200343222" class="nds-primary">
-                                <span class="nds-label">9200343222</span>
-                            </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
-                                data-copy="9200343222" aria-label="Copy phone number">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                            </button>
-                        </dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="hgi hgi-stroke hgi-message-01"></i>
-                            <span class="nds-label">SMS</span>
-                        </dt>
-                        <dd class="nds-item-action">
-                            <a href="sms:199099" class="nds-primary">
-                                <span class="nds-label">199099</span>
-                            </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
-                                data-copy="199099" aria-label="Copy SMS number">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                            </button>
-                        </dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
-                            <span class="nds-label">Email</span>
-                        </dt>
-                        <dd class="nds-item-action">
-                            <a href="mailto:help@company.sa" class="nds-primary">
-                                <span class="nds-label">help@company.sa</span>
-                            </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
-                                data-copy="help@company.sa" aria-label="Copy email">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                            </button>
-                        </dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="hgi hgi-stroke hgi-printer"></i>
-                            <span class="nds-label">FAX</span>
-                        </dt>
-                        <dd class="nds-item-action">
-                            <a href="tel:+966114346654" class="nds-primary">
-                                <span class="nds-label">00966-11-434-6654</span>
-                            </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
-                                data-copy="00966-11-434-6654" aria-label="Copy fax number">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                            </button>
-                        </dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="nds-icon nds-hgi-location-01" aria-hidden="true"></i>
-                            <span class="nds-label">Location</span>
-                        </dt>
-                        <dd>
-                            <a href="https://maps.google.com/?q=Riyadh" target="_blank" class="nds-primary">
-                                <span class="nds-label">Riyadh</span>
-                            </a>
-                        </dd>
-                    </div>
-                </dl>
-            </div>
-
-            <div class="nds-sideinfo-group">
-                <span class="nds-sideinfo-title">Follow us</span>
-                <div class="nds-social-links">
-                    <a href="https://x.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on X">
-                        <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
-                    </a>
-                    <a href="https://linkedin.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on LinkedIn">
-                        <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
-                    </a>
-                    <a href="https://instagram.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on Instagram">
-                        <i class="hgi hgi-stroke hgi-instagram"></i>
-                    </a>
+        <aside class="nds-sideinfo" aria-label="Contact information">
+            <div class="nds-card nds-stroke nds-shadow">
+                <div class="nds-sideinfo-group">
+                    <span class="nds-sideinfo-title">Contact Amer</span>
+                    <dl class="nds-definition-list">
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
+                                <span class="nds-label">Phone</span>
+                            </dt>
+                            <dd class="nds-item-action">
+                                <a href="tel:9200343222" class="nds-primary">
+                                    <span class="nds-label">9200343222</span>
+                                </a>
+                                <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
+                                    data-copy="9200343222" aria-label="Copy phone number">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                </button>
+                            </dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="hgi hgi-stroke hgi-message-01"></i>
+                                <span class="nds-label">SMS</span>
+                            </dt>
+                            <dd class="nds-item-action">
+                                <a href="sms:199099" class="nds-primary">
+                                    <span class="nds-label">199099</span>
+                                </a>
+                                <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
+                                    data-copy="199099" aria-label="Copy SMS number">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                </button>
+                            </dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
+                                <span class="nds-label">Email</span>
+                            </dt>
+                            <dd class="nds-item-action">
+                                <a href="mailto:help@company.sa" class="nds-primary">
+                                    <span class="nds-label">help@company.sa</span>
+                                </a>
+                                <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
+                                    data-copy="help@company.sa" aria-label="Copy email">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                </button>
+                            </dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="hgi hgi-stroke hgi-printer"></i>
+                                <span class="nds-label">FAX</span>
+                            </dt>
+                            <dd class="nds-item-action">
+                                <a href="tel:+966114346654" class="nds-primary">
+                                    <span class="nds-label">00966-11-434-6654</span>
+                                </a>
+                                <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
+                                    data-copy="00966-11-434-6654" aria-label="Copy fax number">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                </button>
+                            </dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="nds-icon nds-hgi-location-01" aria-hidden="true"></i>
+                                <span class="nds-label">Location</span>
+                            </dt>
+                            <dd>
+                                <a href="https://maps.google.com/?q=Riyadh" target="_blank" class="nds-primary">
+                                    <span class="nds-label">Riyadh</span>
+                                </a>
+                            </dd>
+                        </div>
+                    </dl>
                 </div>
-            </div>
 
-            <div class="nds-divider"></div>
+                <div class="nds-sideinfo-group">
+                    <span class="nds-sideinfo-title">Follow us</span>
+                    <div class="nds-social-links">
+                        <a href="https://x.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on X">
+                            <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://linkedin.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on LinkedIn">
+                            <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://instagram.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on Instagram">
+                            <i class="hgi hgi-stroke hgi-instagram"></i>
+                        </a>
+                    </div>
+                </div>
 
-            <div class="nds-sideinfo-group">
-                <span class="nds-sideinfo-title">Emergency contacts</span>
-                <dl class="nds-definition-list nds-table-view">
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="hgi hgi-stroke hgi-fire-security"></i>
-                            <span class="nds-label">Civil defence</span>
-                        </dt>
-                        <dd class="nds-item-action">
-                            <a href="tel:998" class="nds-primary">
-                                <span class="nds-label">998</span>
-                            </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
-                                data-copy="998" aria-label="Copy civil defence number">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                            </button>
-                        </dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="hgi hgi-stroke hgi-police-badge"></i>
-                            <span class="nds-label">Police</span>
-                        </dt>
-                        <dd class="nds-item-action">
-                            <a href="tel:999" class="nds-primary">
-                                <span class="nds-label">999</span>
-                            </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
-                                data-copy="999" aria-label="Copy police number">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                            </button>
-                        </dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="hgi hgi-stroke hgi-ambulance"></i>
-                            <span class="nds-label">Ambulance</span>
-                        </dt>
-                        <dd class="nds-item-action">
-                            <a href="tel:997" class="nds-primary">
-                                <span class="nds-label">997</span>
-                            </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
-                                data-copy="997" aria-label="Copy ambulance number">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                            </button>
-                        </dd>
-                    </div>
-                </dl>
+                <div class="nds-divider"></div>
+
+                <div class="nds-sideinfo-group">
+                    <span class="nds-sideinfo-title">Emergency contacts</span>
+                    <dl class="nds-definition-list nds-table-view">
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="hgi hgi-stroke hgi-fire-security"></i>
+                                <span class="nds-label">Civil defence</span>
+                            </dt>
+                            <dd class="nds-item-action">
+                                <a href="tel:998" class="nds-primary">
+                                    <span class="nds-label">998</span>
+                                </a>
+                                <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
+                                    data-copy="998" aria-label="Copy civil defence number">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                </button>
+                            </dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="hgi hgi-stroke hgi-police-badge"></i>
+                                <span class="nds-label">Police</span>
+                            </dt>
+                            <dd class="nds-item-action">
+                                <a href="tel:999" class="nds-primary">
+                                    <span class="nds-label">999</span>
+                                </a>
+                                <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
+                                    data-copy="999" aria-label="Copy police number">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                </button>
+                            </dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="hgi hgi-stroke hgi-ambulance"></i>
+                                <span class="nds-label">Ambulance</span>
+                            </dt>
+                            <dd class="nds-item-action">
+                                <a href="tel:997" class="nds-primary">
+                                    <span class="nds-label">997</span>
+                                </a>
+                                <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
+                                    data-copy="997" aria-label="Copy ambulance number">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                </button>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
             </div>
         </aside>
     </div>

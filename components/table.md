@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "23/10/2026 - 03:54 PM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -189,7 +189,7 @@ Pick another component when:
               <span class="nds-label" data-i18n="filter.reset">Reset</span>
             </button>
             <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply">
-              <span class="nds-label" data-i18n="filter.filter">Filter</span>
+              <span class="nds-label" data-i18n="filter.apply">Apply</span>
             </button>
           </div>
         </div>

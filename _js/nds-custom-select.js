@@ -19,7 +19,8 @@
  * Gotchas:
  *   - Read .nds-select-value for the value; the visible input is display-only and its label
  *     is derived from the picked option.
- *   - A select builds on its FIRST FOCUS, not at init — setValue()/clear() work before that.
+ *   - A select builds on its FIRST FOCUS, not at init — setValue()/clear() work before that. A script that
+ *     opens it with click() focuses it, or calls create(el), first.
  */
 // NDS Custom Select — styled dropdown over a .nds-select-input
 //

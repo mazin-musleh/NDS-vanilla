@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.10.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 08:11 PM"
+last_edit: "23/10/2026 - 03:54 PM"
 ---
 
 <section id="status-overview" class="nds-content-section nds-doc-overview">
@@ -151,6 +151,7 @@ Pick another component when:
     <div class="nds-section-body nds-prose" markdown="1">
 
 - Put a whole-page status section in the [page layout](../layout/page-layout).
+- On a page with tabs, a status section replaces the whole tabs section only when no tab can show its content, such as before sign-in. When one tab fails, put an [Alert](../components/alert) or [Empty](../components/empty) in its panel, so the user can still open the other tabs. A section never goes inside a tab panel.
 - On its own page, the title is the page heading: use `h1`. In a longer page, follow the page's heading order.
 - Write the outcome in the title and what happens next in the description. Keep both short.
 - Pick the status by meaning, not by color: `success` for work that completed, `error` for work that failed, `critical` for a failure the user must act on now, `warning` for work that needs attention, `info` for a plain notice.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "23/10/2026 - 03:54 PM"
 ---
 
 <section id="head-overview" class="nds-content-section nds-doc-overview">
@@ -73,9 +73,9 @@ Copy the head as one block. The JS Library tab holds the main script: put it jus
     :where(.nds-hero-section :is(.nds-section-body,.nds-section-wrapper,.nds-breadcrumb-nav)){visibility:hidden}
   </style>
   <!-- Hero photo only: preload the first slide, with its <source> breakpoints -->
-  <link rel="preload" as="image" href="assets/img/hero-sm.webp" media="(max-width: 768px)" fetchpriority="high">
-  <link rel="preload" as="image" href="assets/img/hero-md.webp" media="(min-width: 769px) and (max-width: 1646px)" fetchpriority="high">
-  <link rel="preload" as="image" href="assets/img/hero.webp" media="(min-width: 1647px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/riyadhcenter_IQ_sm.webp" media="(max-width: 768px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/riyadhcenter_IQ_md.webp" media="(min-width: 769px) and (max-width: 1646px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/riyadhcenter_IQ.webp" media="(min-width: 1647px)" fetchpriority="high">
   <link rel="preload" href="assets/css/nds.critical.min.css?ver={{ site.asset_ver }}" as="style" fetchpriority="high" data-nds-defer>
   <link rel="preload" href="assets/css/nds-main.min.css?ver={{ site.asset_ver }}" as="style" fetchpriority="low" data-nds-defer="main">
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" fetchpriority="low">
@@ -131,7 +131,7 @@ Copy the head as one block. The JS Library tab holds the main script: put it jus
 |---|---|---|
 | `<title>` | The page title. Per page | Yes |
 | `<style>` (the gate) | The shell's first-paint colors, its reserved heights, and the rules that hide the content. Edit the fallback colors in its Colors group to match a brand | Yes, unless you load the critical CSS as a blocking stylesheet |
-| Hero image preloads | The first hero slide, one link per `<source>` in its `<picture>`, with the same media queries. Per page | Only on a page whose hero has a photo |
+| Hero image preloads | The first hero slide, one link per `<source>` in its `<picture>`, with the same file and media query. Per page | Only on a page whose hero has a photo |
 | Critical CSS preload | `nds.critical.min.css`. `data-nds-defer` marks it for the inline script | Yes |
 | Main CSS preload | `nds-main.min.css`. `data-nds-defer="main"` marks it as the sheet the page waits for | Yes |
 | Favicon | A placeholder icon. Replace the file with your own | Yes |

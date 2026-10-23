@@ -316,7 +316,7 @@ hideFeedback: true
                                     </button>
                                     <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
                                         data-filter-action="apply">
-                                        <span class="nds-label" data-i18n="filter.filter">Filter</span>
+                                        <span class="nds-label" data-i18n="filter.apply">Apply</span>
                                     </button>
                                 </div>
                             </div>
@@ -540,7 +540,7 @@ hideFeedback: true
                                 </button>
                                 <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
                                     data-filter-action="apply">
-                                    <span class="nds-label" data-i18n="filter.filter">Filter</span>
+                                    <span class="nds-label" data-i18n="filter.apply">Apply</span>
                                 </button>
                             </div>
                         </div>

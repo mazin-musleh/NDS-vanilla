@@ -68,8 +68,8 @@
     --nds-icon-size: 20px;
     width: calc(var(--nds-icon-size)*2);
     height: calc(var(--nds-icon-size)*2);
-    // Light status tint behind the outline icon (set per status by the global
-    // block at EOF); --alert-icon-bg is the public override knob.
+    // Light status tint behind the outline icon (set per status by the status
+    // block after this rule); --alert-icon-bg is the public override knob.
     background-color: var(--alert-icon-bg, var(--background-neutral-light));
   }
 
@@ -171,7 +171,7 @@
   // cards, .nds-inline re-sets it explicitly below.
   // Alert overrides --card-bg to lighter *-25 shades (card uses *-light).
   // --card-border stays in card's &.nds-color block; inherited automatically.
-  // --alert-stripe / --alert-icon-bg cascade from the global block at EOF.
+  // --alert-stripe / --alert-icon-bg come from the status block after this rule.
   // ==============================================
 
   &:not(.nds-color, .nds-inline) {
@@ -287,18 +287,15 @@
 }
 
 // ==============================================
-// INHERITED STATUS — alert-private tokens cascade from any ancestor
-// with [data-status]. Mirrors the featured-icon / feedback-icon
-// pattern. --alert-stripe / --alert-icon-bg are only consumed by
-// .nds-alert, so setting them broadly is safe. The .nds-color /
-// .nds-inline variants override where needed.
+// STATUS COLORS — on the alert only, which carries its own status.
+// :where() keeps (0,1,0), so a consumer rule on the alert still wins by order.
 // ==============================================
 
-:is(.nds-green, [data-status="success"])                         { --alert-stripe: var(--background-success);   --alert-icon-bg: var(--featuredicons-background-success-light); }
-:is(.nds-blue,  [data-status="info"])                            { --alert-stripe: var(--background-info);      --alert-icon-bg: var(--featuredicons-background-info-light); }
-:is(.nds-yellow,[data-status="warning"])                         { --alert-stripe: var(--background-warning);   --alert-icon-bg: var(--featuredicons-background-warning-light); }
-:is(.nds-red,   [data-status="error"], [data-status="critical"]) { --alert-stripe: var(--background-error);     --alert-icon-bg: var(--featuredicons-background-error-light); }
-:is(.nds-neutral,.nds-gray,[data-status="neutral"])              { --alert-stripe: var(--border-neutral-light); --alert-icon-bg: var(--featuredicons-background-neutral-light); }
+.nds-alert:where(.nds-green, [data-status="success"])                         { --alert-stripe: var(--background-success);   --alert-icon-bg: var(--featuredicons-background-success-light); }
+.nds-alert:where(.nds-blue,  [data-status="info"])                            { --alert-stripe: var(--background-info);      --alert-icon-bg: var(--featuredicons-background-info-light); }
+.nds-alert:where(.nds-yellow,[data-status="warning"])                         { --alert-stripe: var(--background-warning);   --alert-icon-bg: var(--featuredicons-background-warning-light); }
+.nds-alert:where(.nds-red,   [data-status="error"], [data-status="critical"]) { --alert-stripe: var(--background-error);     --alert-icon-bg: var(--featuredicons-background-error-light); }
+.nds-alert:where(.nds-neutral,.nds-gray,[data-status="neutral"])              { --alert-stripe: var(--border-neutral-light); --alert-icon-bg: var(--featuredicons-background-neutral-light); }
 
 // ==============================================
 // TOAST PLACEHOLDER CONTAINERS

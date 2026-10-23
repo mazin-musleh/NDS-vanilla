@@ -1447,7 +1447,9 @@
         let desiredPage = 1;
         if (options.keepPage) {
             const list = paginationNav.querySelector('.nds-pagination-list');
+            // No list: init saw too few items to page, so ?page= is still unread; the write below consumes it.
             if (list) desiredPage = getCurrentPage(list);
+            else desiredPage = readPageParam(paginationNav) || 1;
         }
 
         const page = rebuildAutoNav(paginationNav, contentContainer, visibleItems, perPage, desiredPage);

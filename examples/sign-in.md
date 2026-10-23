@@ -91,7 +91,7 @@ breadcrumb: [["Examples", "/examples"]]
                 <div class="nds-form-control">
                   <i class="nds-icon nds-hgi-identity-card" aria-hidden="true"></i>
                   <input type="text" id="national-id" name="national-id" class="nds-input" inputmode="numeric"
-                    maxlength="10" placeholder="10 digits" autocomplete="username" required>
+                    maxlength="10" placeholder="10 digits" autocomplete="username">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -110,7 +110,7 @@ breadcrumb: [["Examples", "/examples"]]
                 <div class="nds-form-control">
                   <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
                   <input type="password" id="signin-password" name="password" class="nds-input" placeholder="Enter your password"
-                    autocomplete="current-password" required>
+                    autocomplete="current-password">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -139,7 +139,7 @@ breadcrumb: [["Examples", "/examples"]]
                 <div class="nds-flex" style="--gap: var(--spacing-sm);">
                   <div class="nds-form-control" style="flex: 1;">
                     <input type="text" id="captcha-value" name="captcha" class="nds-input" inputmode="numeric" pattern="[0-9]{5}"
-                      maxlength="5" placeholder="5 digits" autocomplete="off" required
+                      maxlength="5" placeholder="5 digits" autocomplete="off"
                       data-error-message="Enter the 5 digits you see">
                   </div>
                   <div class="nds-btn-group">
@@ -366,7 +366,7 @@ breadcrumb: [["Examples", "/examples"]]
                 <div class="nds-form-control">
                   <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
                   <input type="password" id="current-password" name="current-password" class="nds-input"
-                    autocomplete="current-password" required>
+                    autocomplete="current-password">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -388,7 +388,7 @@ breadcrumb: [["Examples", "/examples"]]
                 <div class="nds-form-control">
                   <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
                   <input type="password" id="new-password" name="new-password" class="nds-input" autocomplete="new-password"
-                    minlength="10" required aria-describedby="new-password-rules">
+                    minlength="10" aria-describedby="new-password-rules">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -445,7 +445,7 @@ breadcrumb: [["Examples", "/examples"]]
                 <div class="nds-form-control">
                   <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
                   <input type="password" id="retype-password" name="retype-password" class="nds-input"
-                    autocomplete="new-password" required aria-describedby="retype-password-rules">
+                    autocomplete="new-password" aria-describedby="retype-password-rules">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -509,7 +509,7 @@ breadcrumb: [["Examples", "/examples"]]
                 <div class="nds-form-control">
                   <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
                   <input type="tel" id="mobile-number" name="mobile-number" class="nds-input" inputmode="numeric"
-                    pattern="05[0-9]{8}" maxlength="10" placeholder="05XXXXXXXX" value="0501234419" autocomplete="tel" required
+                    pattern="05[0-9]{8}" maxlength="10" placeholder="05XXXXXXXX" value="0501234419" autocomplete="tel"
                     data-error-message="Enter a 10-digit number that starts with 05">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input">

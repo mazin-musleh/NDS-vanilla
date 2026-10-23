@@ -2,7 +2,7 @@
 layout: page
 title: Migration
 since: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "23/10/2026 - 03:54 PM"
 lang: en
 direction: ltr
 hero_title: Migration
@@ -92,7 +92,7 @@ sidemenu_mode: false
                                         </button>
                                         <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
                                             data-filter-action="apply">
-                                            <span class="nds-label" data-i18n="filter.filter">Filter</span>
+                                            <span class="nds-label" data-i18n="filter.apply">Apply</span>
                                         </button>
                                     </div>
                                 </div>

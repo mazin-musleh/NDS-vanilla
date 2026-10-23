@@ -48,7 +48,7 @@ breadcrumb: [["Examples", "/examples"]]
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <input type="text" id="full-name" class="nds-input" placeholder="Your full name" autocomplete="name" required>
+                  <input type="text" id="full-name" class="nds-input" placeholder="Your full name" autocomplete="name">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -66,7 +66,7 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
                 <div class="nds-form-control">
                   <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
-                  <input type="email" id="email-address" class="nds-input" placeholder="name@example.gov.sa" autocomplete="email" required>
+                  <input type="email" id="email-address" class="nds-input" placeholder="name@example.gov.sa" autocomplete="email">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -84,7 +84,7 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
                 <div class="nds-form-control">
                   <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
-                  <input type="password" id="password" class="nds-input" placeholder="Create a password" autocomplete="new-password" minlength="8" required aria-describedby="password-rules">
+                  <input type="password" id="password" class="nds-input" placeholder="Create a password" autocomplete="new-password" minlength="8" aria-describedby="password-rules">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -116,7 +116,7 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
                 <div class="nds-form-control">
                   <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
-                  <input type="password" id="confirm-password" class="nds-input" placeholder="Re-enter your password" autocomplete="new-password" required aria-describedby="confirm-password-rules">
+                  <input type="password" id="confirm-password" class="nds-input" placeholder="Re-enter your password" autocomplete="new-password" aria-describedby="confirm-password-rules">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -147,7 +147,7 @@ breadcrumb: [["Examples", "/examples"]]
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <input type="checkbox" id="accept-terms" name="accept-terms" value="accepted" class="nds-checkbox-input" required>
+                  <input type="checkbox" id="accept-terms" name="accept-terms" value="accepted" class="nds-checkbox-input">
                 </div>
               </div>
             </div>

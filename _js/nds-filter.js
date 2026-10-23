@@ -16,7 +16,7 @@
  *                                      not: the server owns their result set. Prefer
  *                                      NDS.init.refresh(root),
  *                                      which calls this and every other affected component
- *   instance.setFilterValues(name, values) / .setSearchValue(text)   pick, and apply
+ *   instance.setFilterValues(name, values) / .setSearchValue(text)   pick, and apply (a slider: one 'lo-hi')
  *   instance.removeFilterValue(name, value) / .removeSearchFilter() / .resetRangeFilter(name)
  *   instance.renderFilter(name, values, type)     build a group's options from values
  *   instance.getCriteria()             a copy: {search, filters: {name: [values]}}
@@ -830,12 +830,7 @@
                 if (key === searchParamName || (sorted && (key === 'sort' || key === 'order'))) continue;
 
                 if (this.filterInputs[key]) {
-                    if (this.filterInputs[key].type === 'range') {
-                        this._setRangeFromUrl(key, value);
-                    } else {
-                        this._checkInputsForValues(this.filterInputs[key], value);
-                        this._syncFilterCriteria(key);
-                    }
+                    this._setFilterFromUrl(key, value);
                     hasParams = true;
                 }
             }
@@ -867,6 +862,19 @@
             });
         }
 
+        // One group's controls and criteria from a URL-style value: a slider reads "lo-hi", the rest a
+        // comma list. Without `raw` it reads the group's own param, if any.
+        _setFilterFromUrl(filterName, raw = new URLSearchParams(window.location.search).get(filterName)) {
+            const filterData = this.filterInputs[filterName];
+            if (!raw || !filterData) return;
+            if (filterData.type === 'range') {
+                this._setRangeFromUrl(filterName, raw);
+            } else {
+                this._checkInputsForValues(filterData, raw);
+                this._syncFilterCriteria(filterName);
+            }
+        }
+
         // Settle filter UI after a criteria change sourced from URL params.
         // In form mode we update UI only — calling syncFilters() would run
         // syncUrlParams() and rewrite the URL we just read from.
@@ -891,10 +899,9 @@
             // Re-scan the element for current inputs (handles async/dynamic content)
             const filterData = this.filterInputs[filterName];
             if (!filterData) return;
-            this._setupManualFilter(filterData.element, filterName);
+            if (filterData.type !== 'range') this._setupManualFilter(filterData.element, filterName);
 
-            this._checkInputsForValues(this.filterInputs[filterName], value);
-            this._syncFilterCriteria(filterName);
+            this._setFilterFromUrl(filterName, value);
             this._settleAfterCriteriaChange();
         }
 
@@ -1275,6 +1282,10 @@
         removeFilterValue(filterName, value) {
             const filterData = this.filterInputs[filterName];
             if (!filterData) return;
+            if (filterData.type === 'range') {
+                this.resetRangeFilter(filterName);
+                return;
+            }
 
             filterData.inputs.forEach(input => {
                 if (input.value.toLowerCase() === value.toLowerCase()) {
@@ -1343,12 +1354,7 @@
             for (const [name, values] of Object.entries(applied)) {
                 const filterInput = this.filterInputs[name];
                 if (!filterInput || !values.length) continue;
-                if (filterInput.type === 'range') {
-                    this._setRangeFromUrl(name, values[0]);
-                } else {
-                    this._checkInputsForValues(filterInput, values.join(','));
-                    this._syncFilterCriteria(name);
-                }
+                this._setFilterFromUrl(name, values.join(','));
             }
             this._syncApplyButtonLabel();
         }
@@ -1772,6 +1778,9 @@
                     this._syncApplyButtonLabel();
                 }, { signal: elementController.signal });
             });
+
+            // Registered and still empty, the group's URL key is the next syncUrlParams' to delete.
+            this._setFilterFromUrl(filterName);
         }
 
         // ==============================================
@@ -2016,10 +2025,12 @@
 
         _buildRangeValueNode(value, filterInput) {
             const span = document.createElement('span');
-            span.className = 'nds-number-format';
-            if (filterInput && filterInput.currency) span.setAttribute('data-currency', filterInput.currency);
-            if (filterInput && filterInput.unit) span.setAttribute('data-unit', filterInput.unit);
             span.textContent = value;
+            // Opt-in like the slider's own output: a currency or unit, or the output you wrote carrying the class.
+            if (!filterInput || !(filterInput.currency || filterInput.unit || filterInput.controlContainer.querySelector('.nds-slider-value.nds-number-format'))) return span;
+            span.className = 'nds-number-format';
+            if (filterInput.currency) span.setAttribute('data-currency', filterInput.currency);
+            if (filterInput.unit) span.setAttribute('data-unit', filterInput.unit);
             // Soft dependency — range chips render unformatted if NDS.Numbers isn't bundled.
             if (NDS.Numbers && NDS.Numbers.format) NDS.Numbers.format(span);
             return span;
@@ -2892,13 +2903,19 @@
             const filterData = this.filterInputs[filterName];
             if (!filterData) return;
 
-            const valuesLower = values.map(value => value.toLowerCase());
-            filterData.inputs.forEach(input => {
-                input.checked = valuesLower.includes(input.value.toLowerCase());
-            });
-            // setFilterValues(name, []) is the per-filter clear — a radio group
-            // lands back on "All" rather than empty, same as the chip and clear paths.
-            this._syncAllRadio(filterData);
+            if (filterData.type === 'range') {
+                // One "lo-hi" string; none restores the full span.
+                if (values.length) this._setRangeFromUrl(filterName, values[0]);
+                else this._setRangeValues(filterName, filterData.min, filterData.max);
+            } else {
+                const valuesLower = values.map(value => value.toLowerCase());
+                filterData.inputs.forEach(input => {
+                    input.checked = valuesLower.includes(input.value.toLowerCase());
+                });
+                // setFilterValues(name, []) is the per-filter clear — a radio group
+                // lands back on "All" rather than empty, same as the chip and clear paths.
+                this._syncAllRadio(filterData);
+            }
 
             this._syncFilterCriteria(filterName);
             this._syncApplyButtonLabel();
@@ -2917,9 +2934,10 @@
             // Generate inputs with explicit values
             const actualElement = this._buildFilterInputs(container, filterName, type, values) || container;
 
-            // Re-setup the filter listeners
+            // Re-setup the filter listeners; a URL value it took has to reach the items and chips too.
             this._setupManualFilter(actualElement, filterName);
             this._flushAccordionInit();
+            if (new URLSearchParams(window.location.search).has(filterName)) this._settleAfterCriteriaChange();
         }
 
         destroy() {

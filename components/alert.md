@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 11:47 AM"
+last_edit: "23/10/2026 - 03:54 PM"
 ---
 
 <section id="alert-overview" class="nds-content-section nds-doc-overview">
@@ -314,7 +314,7 @@ An alert is a card, so the card color properties (`--card-bg`, `--card-border` a
 | `title` | `''` | Title text. Leave it empty for no title |
 | `description` | `''` | Description text |
 | `display` | `'default'` | `'default'`, `'inline'` or `'toast'` |
-| `target` | `null` | Element or selector to insert into. A toast needs none |
+| `target` | `null` | Element or selector to insert into. A toast needs none. The alert has no outer margin: in a container with no gap, add `nds-block` to the element `create()` returns |
 | `prepend` | `false` | Insert at the start of `target`, not at the end |
 | `closable` | `true` | Show the close button. A toast with a `duration` always has one |
 | `shadow` | `true` for a toast, else `false` | Add `.nds-shadow` |

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "23/10/2026 - 03:54 PM"
 ---
 
 <section id="topbar-overview" class="nds-content-section nds-doc-overview">
@@ -159,7 +159,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
 | `#nds-digital-stamp` | The stamp panel, right after the bar. It ships `hidden` | Yes, with the tab |
 | `.nds-digital-stamp-notices` | Two `.nds-digital-stamp-card` notices: the site's address, then HTTPS | Yes, with the tab |
 | `.nds-digital-stamp-card` | `.nds-digital-stamp-icon`, then `.nds-digital-stamp-content` with a `.nds-digital-stamp-heading` and a `.nds-digital-stamp-description`. The heading holds two spans: the words, then the domain or `HTTPS` in `.nds-digital-stamp-highlight` | Yes, with the tab |
-| `.nds-digital-stamp-register` | The DGA logo, `.nds-digital-stamp-register-text` and the registration number, a link `a.nds-digital-stamp-registration` | Yes, with the tab |
+| `.nds-digital-stamp-register` | The DGA logo, `.nds-digital-stamp-register-text` and the registration number, a link `a.nds-digital-stamp-registration`. Its number and `href="#"` are samples: write your DGA registration number and link | Yes, with the tab |
 {: .nds-table .nds-responsive}
 
 </div>

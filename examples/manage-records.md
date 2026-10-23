@@ -142,7 +142,7 @@ hideFeedback: true
                                     </button>
                                     <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
                                         data-filter-action="apply">
-                                        <span class="nds-label" data-i18n="filter.filter">Filter</span>
+                                        <span class="nds-label" data-i18n="filter.apply">Apply</span>
                                     </button>
                                 </div>
                             </div>
@@ -839,7 +839,7 @@ hideFeedback: true
                     </div>
                     <div class="nds-form-control">
                         <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                        <input type="text" id="record-requester" class="nds-input" autocomplete="on" placeholder="Type a name..." required>
+                        <input type="text" id="record-requester" class="nds-input" autocomplete="on" placeholder="Type a name...">
                         <div class="nds-form-action">
                             <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input">
                                 <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -891,7 +891,7 @@ hideFeedback: true
                                 <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
                             </button>
                         </div>
-                        <input type="text" id="record-date" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" data-year-before="5" data-year-after="1" required>
+                        <input type="text" id="record-date" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" data-year-before="5" data-year-after="1">
                     </div>
                 </div>
 
@@ -902,7 +902,7 @@ hideFeedback: true
                         </label>
                     </div>
                     <div class="nds-form-control">
-                        <input type="number" id="record-amount" class="nds-input" placeholder="0" min="0" step="10" required>
+                        <input type="number" id="record-amount" class="nds-input" placeholder="0" min="0" step="10">
                     </div>
                 </div>
 

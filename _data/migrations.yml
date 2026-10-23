@@ -37,6 +37,7 @@
 - { kind: class, name: nds-card-checkbox, scope: .nds-card, status: removed, since: "2.0.0", fix: "Put the checkbox in .nds-card-corner, written first in .nds-card-text." }
 - { kind: class, name: nds-card-price, status: renamed, use: nds-card-value, since: "2.0.0", fix: "Use nds-card-value." }
 - { kind: class, name: nds-card-status, scope: .nds-card, status: removed, since: "2.0.0", fix: "Put the status tag in .nds-card-corner, written first in .nds-card-text. With a checkbox, both go in one corner, the checkbox last." }
+- { kind: class, name: nds-card, scope: "&.nds-sideinfo", status: removed, since: "2.0.0", fix: "Move nds-card, with nds-stroke and nds-shadow, to a div inside the aside: the aside is the column, and the card sits in it." }
 - { kind: class, name: nds-cardView, scope: "&.nds-content-layout", status: renamed, use: nds-card-view, since: "2.0.0", fix: "Use nds-card-view." }
 - { kind: class, name: nds-cardView, scope: "&.nds-stepper", status: removed, since: "2.0.0", fix: "Remove it and put nds-card on every step, on every step's content, or on the stepper. The card border takes the step state color." }
 - { kind: class, name: nds-check, status: renamed, use: nds-checkbox-input, since: "2.0.0", fix: "Use nds-checkbox-input." }
