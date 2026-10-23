@@ -82,7 +82,7 @@ breadcrumb: [["Examples", "/examples"]]
               </div>
 
               <!-- National ID -->
-              <div class="nds-form-container" data-required>
+              <div class="nds-form-container nds-national-id" data-required>
                 <div class="nds-form-header">
                   <label for="national-id">
                     <span class="nds-label">National ID</span>
@@ -90,7 +90,7 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
                 <div class="nds-form-control">
                   <i class="nds-icon nds-hgi-identity-card" aria-hidden="true"></i>
-                  <input type="text" id="national-id" name="national-id" class="nds-input nds-national-id" inputmode="numeric"
+                  <input type="text" id="national-id" name="national-id" class="nds-input" inputmode="numeric"
                     maxlength="10" placeholder="10 digits" autocomplete="username" required>
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input">

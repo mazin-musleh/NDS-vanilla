@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 05:49 AM"
+last_edit: "23/10/2026 - 05:57 AM"
 ---
 
 <section id="formatted-input-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "23/10/2026 - 05:49 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A formatted input is a text field that keeps its value in one shape as the user types or pastes. `.nds-phone` takes a phone number, `.nds-national-id` a national ID (a Saudi ID or iqama number, unless the page sets another country), and `.nds-iban` a bank account IBAN. The class goes on the input of a [text field](../components/form): the label, the messages and submit validation work as on every field.
+A formatted input is a text field that keeps its value in one shape as the user types or pastes. `.nds-phone` takes a phone number, `.nds-national-id` a national ID (a Saudi ID or iqama number, unless the page sets another country), and `.nds-iban` a bank account IBAN. The class goes on the `.nds-form-container` of a [text field](../components/form): the label, the messages and submit validation work as on every field.
 
 Pick another component when:
 
@@ -37,7 +37,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="field-phone" data-canon data-variants="formatted-input-variants-table" data-harness="form" data-demo-width="320px">
-<div class="nds-form-container" data-format="00 000 0000">
+<div class="nds-form-container nds-phone" data-format="00 000 0000">
   <div class="nds-form-header">
     <label for="phone">
       <span class="nds-label">Mobile number</span>
@@ -48,7 +48,7 @@ Pick another component when:
       <span class="nds-btn nds-subtle"><span class="nds-label">+966</span></span>
       <input type="hidden" name="country-code" value="+966">
     </div>
-    <input type="tel" id="phone" name="phone" class="nds-input nds-phone" placeholder="5X XXX XXXX" autocomplete="tel-national" inputmode="numeric">
+    <input type="tel" id="phone" name="phone" class="nds-input" placeholder="5X XXX XXXX" autocomplete="tel-national" inputmode="numeric">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -58,7 +58,7 @@ Pick another component when:
 </div>
 </script>
 <script type="text/html" id="field-phone-country" data-canon>
-<div class="nds-form-container">
+<div class="nds-form-container nds-phone">
   <div class="nds-form-header">
     <label for="phone-country">
       <span class="nds-label">Phone</span>
@@ -92,7 +92,7 @@ Pick another component when:
         </div>
       </div>
     </div>
-    <input type="tel" id="phone-country" name="phone" class="nds-input nds-phone" placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric">
+    <input type="tel" id="phone-country" name="phone" class="nds-input" placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -102,14 +102,14 @@ Pick another component when:
 </div>
 </script>
 <script type="text/html" id="field-national-id" data-canon>
-<div class="nds-form-container">
+<div class="nds-form-container nds-national-id">
   <div class="nds-form-header">
     <label for="national-id">
       <span class="nds-label">National ID or Iqama number</span>
     </label>
   </div>
   <div class="nds-form-control">
-    <input type="text" id="national-id" name="national-id" class="nds-input nds-national-id" placeholder="1XXXXXXXXX" inputmode="numeric" maxlength="10" autocomplete="off">
+    <input type="text" id="national-id" name="national-id" class="nds-input" placeholder="1XXXXXXXXX" inputmode="numeric" maxlength="10" autocomplete="off">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -119,14 +119,14 @@ Pick another component when:
 </div>
 </script>
 <script type="text/html" id="field-iban" data-canon>
-<div class="nds-form-container">
+<div class="nds-form-container nds-iban">
   <div class="nds-form-header">
     <label for="iban">
       <span class="nds-label">IBAN</span>
     </label>
   </div>
   <div class="nds-form-control">
-    <input type="text" id="iban" name="iban" class="nds-input nds-iban" placeholder="SA00 0000 0000 0000 0000 0000" autocomplete="off" spellcheck="false">
+    <input type="text" id="iban" name="iban" class="nds-input" placeholder="SA00 0000 0000 0000 0000 0000" autocomplete="off" spellcheck="false">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -175,7 +175,7 @@ Each Structure is one kind of value. The size, style, states and messages of a t
 ### Phone Number
 {: .nds-block-title #phone-number}
 
-`.nds-phone` on a `type="tel"` input keeps only the digits. A number holds at most 15 digits, the country code included, or the input's `maxlength`. A field without a country code sends the number as the user typed it, with its leading zero (`0551234567`).
+A `.nds-phone` field, its input `type="tel"`, keeps only the digits. A number holds at most 15 digits, the country code included, or the input's `maxlength`. A field without a country code sends the number as the user typed it, with its leading zero (`0551234567`).
 
 A phone field reads left to right on every page, its country code first, as a number is written: `+966 55 123 4567` on an Arabic page too. An IBAN reads left to right as well.
 
@@ -222,7 +222,7 @@ A form that asks for the ID type first (national ID, iqama, passport) keeps one 
 var idType = document.getElementById('id-type');
 idType.addEventListener('change', function () {
   var field = document.getElementById('id-field');
-  var input = field.querySelector('.nds-national-id');
+  var input = field.querySelector('.nds-input');
   var passport = idType.value === 'passport';
   field.setAttribute('data-country', passport ? 'any' : 'SA');
   input.inputMode = passport ? 'text' : 'numeric';   // a passport number has letters
@@ -329,9 +329,9 @@ idType.addEventListener('change', function () {
 
 | Class | Element | Effect |
 |---|---|---|
-| `nds-phone` | a `type="tel"` input | Keeps the digits. With a code, submits the whole number (`+966551234567`); without one, the number as typed. With `data-format`, shows the number in groups |
-| `nds-national-id` | a text input | Follows the ID rule of its country, Saudi Arabia by default: keeps digits only, and fails the field when the value is not a Saudi national ID or iqama number |
-| `nds-iban` | a text input | Shows the IBAN in groups of four, writes capitals, adds missing country letters, and fails the field when the value is not an IBAN |
+| `nds-phone` | `.nds-form-container`, its input `type="tel"` | Keeps the digits. With a code, submits the whole number (`+966551234567`); without one, the number as typed. With `data-format`, shows the number in groups |
+| `nds-national-id` | `.nds-form-container` | Follows the ID rule of its country, Saudi Arabia by default: keeps digits only, and fails the field when the value is not a Saudi national ID or iqama number |
+| `nds-iban` | `.nds-form-container` | Shows the IBAN in groups of four, writes capitals, adds missing country letters, and fails the field when the value is not an IBAN |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes
@@ -346,7 +346,7 @@ idType.addEventListener('change', function () {
 | `data-value` | a `.nds-dropmenu-item` in the country picker | The code for that country (`+971`). Dropmenu writes the picked one to the picker's hidden input |
 | `data-format` | a `.nds-dropmenu-item` in the country picker | The groups for that country, read while it is picked. A country without one shows the number as typed |
 | `data-country` | `<html>`, or any element around a `.nds-national-id` or `.nds-iban` field | The two-letter country the fields inside it follow (`AE`). The nearest one wins. Without one, `SA`. `any` takes an ID of any country, a passport too, with no check |
-| `maxlength` | a `.nds-phone` or `.nds-national-id` input | The most digits, for a field with no `data-format`. A field with a `data-format`, and an IBAN field, remove a `maxlength` shorter than their groups |
+| `maxlength` | the input of a `.nds-phone` or `.nds-national-id` field | The most digits, for a field with no `data-format`. A field with a `data-format`, and an IBAN field, remove a `maxlength` shorter than their groups |
 {: .nds-table .nds-responsive}
 
 ### Validation Messages
@@ -371,7 +371,7 @@ The script shows the message in Arabic or English to match the page. The other c
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:phone:change` | a `.nds-phone` input, and it bubbles | `{ value, countryCode, nationalNumber }`, when the number the field submits changes: by typing, a paste, a country pick, a reset or `NDS.Form.refresh()`. `value` is that number (`+966551234567`). `countryCode` and `nationalNumber` are `null` for a phone without a code. A field fires none at page load |
+| `nds:phone:change` | the input of a `.nds-phone` field, and it bubbles | `{ value, countryCode, nationalNumber }`, when the number the field submits changes: by typing, a paste, a country pick, a reset or `NDS.Form.refresh()`. `value` is that number (`+966551234567`). `countryCode` and `nationalNumber` are `null` for a phone without a code. A field fires none at page load |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="formatted-input-js" data-canon data-lang="js">

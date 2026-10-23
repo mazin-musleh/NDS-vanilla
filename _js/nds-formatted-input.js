@@ -1,4 +1,5 @@
-/* NDS.FormattedInput — public surface (the .nds-phone, .nds-national-id and .nds-iban fields)
+/* NDS.FormattedInput — public surface (the .nds-phone, .nds-national-id and .nds-iban fields: each class on
+ * the .nds-form-container; the field's input is the one its .nds-form-control holds)
  * Rides: nds-field (its part) · nds-typing (group) · nds-dropmenu (a phone's country picker)
  * Methods:
  *   NDS.FormattedInput.isNationalId(str, country) / .isIban(str)   the checks behind .nds-national-id / .nds-iban;
@@ -7,7 +8,7 @@
  *                                     country ("AE"): check gets the clean value; digits, digits only (else
  *                                     capitals and digits); length, the most characters. Replaces one set before
  * Events:
- *   nds:phone:change            detail {value, countryCode, nationalNumber} — from a .nds-phone input,
+ *   nds:phone:change            detail {value, countryCode, nationalNumber} — from a .nds-phone field's input,
  *                               when the number it submits changes (typing, a paste, a country pick, a reset)
  * Hooks:
  *   data-format on a .nds-phone field's container, or on each item of its country picker: the
@@ -69,8 +70,8 @@
         }
         idRules.set(country, rule);
         // A field already stamped takes the new rule.
-        document.querySelectorAll('.nds-national-id').forEach(function(input) {
-            if (getCountry(input) === country) stampIdentifier(input, { quiet: true });
+        document.querySelectorAll('.nds-national-id .nds-form-control > input').forEach(function(input) {
+            if (getKind(input) === 'national-id' && getCountry(input) === country) stampIdentifier(input, { quiet: true });
         });
     }
 
@@ -102,14 +103,24 @@
         return rem === 1;
     }
 
+    // The field an input is the text box of: 'phone', 'iban' or 'national-id', from its container's class. Null: none.
+    var KINDS = ['phone', 'iban', 'national-id'];
+    function getKind(input) {
+        var control = input.parentElement;
+        if (input.type === 'hidden' || !control || !control.classList.contains('nds-form-control')) return null;
+        var container = control.closest('.nds-form-container');
+        return (container && KINDS.find(function(kind) { return container.classList.contains('nds-' + kind); })) || null;
+    }
+
     // Groups of four, up to the longest IBAN (34).
     var IBAN_FORMAT = '**** **** **** **** **** **** **** **** **';
 
     // The slot format a field shows (NDS.typing.group): an IBAN's groups of four, or a phone's data-format,
     // read from the picked country when the field has a country picker. Null: the value as typed.
     function getGroupFormat(input) {
-        if (input.classList.contains('nds-iban')) return IBAN_FORMAT;
-        if (!input.classList.contains('nds-phone')) return null;
+        var kind = getKind(input);
+        if (kind === 'iban') return IBAN_FORMAT;
+        if (kind !== 'phone') return null;
         var source = getPhoneSetup(input).source;
         return (source && source.getAttribute('data-format')) || null;
     }
@@ -251,9 +262,9 @@
     // text and caret, an edit to write in place of the value; quiet, write it without an input event;
     // country, a whole value that may lack an IBAN's country (a paste, a first key, the page's own value).
     function stampIdentifier(input, opts) {
-        var iban = input.classList.contains('nds-iban'), phone = input.classList.contains('nds-phone');
-        var nationalId = input.classList.contains('nds-national-id');
-        if (!iban && !phone && !nationalId) return;
+        var kind = getKind(input);
+        if (!kind) return;
+        var iban = kind === 'iban', phone = kind === 'phone', nationalId = kind === 'national-id';
         opts = opts || {};
         var focused = document.activeElement === input, text = opts.text, caret = opts.caret;
         if (text === undefined) {
@@ -297,7 +308,7 @@
             beforeinput: function(e, context) {
                 if (!context) return;
                 var field = context.input;
-                if (e.isComposing || field.readOnly || !field.matches('.nds-phone, .nds-national-id, .nds-iban')) return;
+                if (e.isComposing || field.readOnly || !getKind(field)) return;
                 var data = e.data || (e.dataTransfer && e.dataTransfer.getData('text/plain'));
                 var start = field.selectionStart, value = field.value;
                 // An identifier takes every insert here: the browser's maxlength would count a group's spaces,
@@ -335,8 +346,9 @@
             // ponytail: a name two fields share keeps what the browser wrote.
             'formdata:capture': function(e) {
                 [].forEach.call(e.target.elements || [], function(el) {
-                    if (!el.name || !el.matches('.nds-phone, .nds-iban') || e.formData.getAll(el.name).length !== 1) return;
-                    e.formData.set(el.name, el.classList.contains('nds-phone') ? getPhoneNumber(el).value : el.value.replace(/[^A-Za-z0-9]/g, ''));
+                    var kind = el.name && getKind(el);
+                    if ((kind !== 'phone' && kind !== 'iban') || e.formData.getAll(el.name).length !== 1) return;
+                    e.formData.set(el.name, kind === 'phone' ? getPhoneNumber(el).value : el.value.replace(/[^A-Za-z0-9]/g, ''));
                 });
             }
         }
@@ -345,8 +357,8 @@
     document.addEventListener('nds:dropmenu:select', function(e) {
         if (pickingCountry) return;
         var control = e.target.closest('.nds-form-control');
-        var input = control && control.querySelector('input.nds-phone');
-        if (input) stampIdentifier(input);
+        var input = control && control.querySelector(':scope > input:not([type="hidden"])');
+        if (input && getKind(input) === 'phone') stampIdentifier(input);
     });
 
     NDS.FormattedInput = {

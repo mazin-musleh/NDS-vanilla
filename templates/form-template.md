@@ -31,12 +31,12 @@ sidemenu_mode: false
                 <div class="nds-flex nds-col" data-form-step="1">
                     <div class="nds-grid" style="--min-col: 1; --max-col: 2; --gap: var(--spacing-4xl);">
 
-                        <div class="nds-form-container" data-required>
+                        <div class="nds-form-container nds-national-id" data-required>
                             <div class="nds-form-header">
                                 <label for="ft-national-id"><span class="nds-label">National ID</span></label>
                             </div>
                             <div class="nds-form-control">
-                                <input type="text" id="ft-national-id" name="nationalId" class="nds-input nds-national-id"
+                                <input type="text" id="ft-national-id" name="nationalId" class="nds-input"
                                     placeholder="10-digit ID number" inputmode="numeric" maxlength="10"
                                     autocomplete="off" required>
                                 <div class="nds-form-action">
@@ -69,7 +69,7 @@ sidemenu_mode: false
                             </div>
                         </div>
 
-                        <div class="nds-form-container" data-required data-format="00 000 0000">
+                        <div class="nds-form-container nds-phone" data-required data-format="00 000 0000">
                             <div class="nds-form-header">
                                 <label for="ft-mobile"><span class="nds-label">Mobile Number</span></label>
                             </div>
@@ -78,7 +78,7 @@ sidemenu_mode: false
                                     <span class="nds-btn nds-secondary"><span class="nds-label">+966</span></span>
                                     <input type="hidden" name="mobile-country-code" value="+966">
                                 </div>
-                                <input type="tel" id="ft-mobile" name="mobile" class="nds-input nds-phone"
+                                <input type="tel" id="ft-mobile" name="mobile" class="nds-input"
                                     placeholder="5X XXX XXXX" autocomplete="tel-national"
                                     inputmode="numeric" required>
                                 <div class="nds-form-action">

@@ -73,7 +73,7 @@ sidemenu_mode: false
                     </div>
 
                     <!-- Phone with country code prefix -->
-                    <div class="nds-form-container nds-darker" data-required>
+                    <div class="nds-form-container nds-darker nds-phone" data-required>
                         <div class="nds-form-header">
                             <label for="contact-phone">
                                 <span class="nds-label">Phone</span>
@@ -176,7 +176,7 @@ sidemenu_mode: false
                                     </div>
                                 </div>
                             </div>
-                            <input type="tel" id="contact-phone" name="phone" class="nds-input nds-phone"
+                            <input type="tel" id="contact-phone" name="phone" class="nds-input"
                                 placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric" required>
                             <div class="nds-form-action">
                                 <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>

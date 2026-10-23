@@ -29,8 +29,8 @@ const shaped = (cls, input, attrs = '') => `<div class="nds-form-container${cls}
 const SHAPED = {
     date: [shaped(' nds-date-picker', '<input type="text" class="nds-input nds-date-input">', ' data-format="DD/MM/YYYY"'), '28051983'],
     time: [shaped(' nds-time-picker', '<input type="text" class="nds-input nds-time-input">', ' data-format="HH:mm"'), '1430'],
-    phone: [shaped('', '<input type="tel" class="nds-input nds-phone" inputmode="numeric" maxlength="9">', ' data-format="00 000 0000"'), '551234567'],
-    iban: [shaped('', '<input type="text" class="nds-input nds-iban" maxlength="34">'), 'SA0380000000608010167519'],
+    phone: [shaped(' nds-phone', '<input type="tel" class="nds-input" inputmode="numeric" maxlength="9">', ' data-format="00 000 0000"'), '551234567'],
+    iban: [shaped(' nds-iban', '<input type="text" class="nds-input" maxlength="34">'), 'SA0380000000608010167519'],
 };
 const TYPE = (process.env.TYPE || '').split(',').filter(Boolean);
 if (TYPE.some((t) => !SHAPED[t])) { console.error(`TYPE takes ${Object.keys(SHAPED).join(', ')}`); process.exit(1); }

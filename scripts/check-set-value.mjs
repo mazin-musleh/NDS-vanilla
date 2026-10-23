@@ -265,14 +265,14 @@ for (const v of REACT) {
     const page = await open('components/form.html');
     // The doc demos live in canon blocks, so the fields are built here from the canon markup.
     await page.evaluate(() => {
-        const field = (input, pre = '', post = '') => '<div class="nds-form-container"><div class="nds-form-control">'
+        const field = (input, pre = '', post = '', kind = '') => '<div class="nds-form-container' + kind + '"><div class="nds-form-control">'
             + pre + input + post + '</div></div>';
         const step = (dir, side) => '<div class="nds-form-action nds-' + side + '"><button class="nds-btn nds-subtle nds-number-'
             + dir + ' nds-icon-only" type="button" aria-label="' + dir + '"><i class="nds-icon nds-hgi-plus-sign"></i></button></div>';
         const box = document.createElement('div');
         box.id = 'sv-fixtures';
-        box.innerHTML = field('<input type="tel" id="sv-phone" class="nds-input nds-phone">')
-            + field('<input type="text" id="sv-iban" class="nds-input nds-iban" maxlength="34">')
+        box.innerHTML = field('<input type="tel" id="sv-phone" class="nds-input">', '', '', ' nds-phone')
+            + field('<input type="text" id="sv-iban" class="nds-input" maxlength="34">', '', '', ' nds-iban')
             + field('<input type="text" id="sv-num" class="nds-input nds-center" inputmode="numeric" value="1" min="1" max="20" step="1">',
                 step('decrement', 'prefix'), step('increment', 'suffix'));
         document.querySelector('.nds-section-body').prepend(box);
@@ -294,13 +294,13 @@ for (const v of REACT) {
     await page.locator('#sv-phone').focus();
     await page.keyboard.insertText('0501');
     let r = await bound('#sv-phone');
-    ok('Phone: a pasted number reaches the binding stripped', same(r) && r.shown === '501', JSON.stringify(r));
+    ok('Phone: a pasted number reaches the binding stripped', same(r) && r.shown === '0501', JSON.stringify(r));
 
     await bind('#sv-iban');
     await page.locator('#sv-iban').focus();
     await page.keyboard.insertText('sa03 80');
     r = await bound('#sv-iban');
-    ok('IBAN: a pasted value reaches the binding cleaned', same(r) && r.shown === 'SA0380', JSON.stringify(r));
+    ok('IBAN: a pasted value reaches the binding in groups', same(r) && r.shown === 'SA03 80', JSON.stringify(r));
 
     await bind('#sv-num');
     await page.locator('#sv-num').fill('70');
@@ -360,7 +360,7 @@ for (const ver of VUE) {
                 + '<div class="nds-form-container nds-time-picker" id="v-tp"><div class="nds-form-control">'
                 + '<div class="nds-form-action"><button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle nds-icon-only" aria-label="t"><i class="nds-icon nds-hgi-clock-01"></i></button></div>'
                 + '<input type="text" class="nds-input nds-time-input"><input type="hidden" class="nds-time-value" v-model="time"></div></div>'
-                + '<div class="nds-form-container"><div class="nds-form-control"><input type="tel" id="v-phone" class="nds-input nds-phone" v-model="phone"></div></div>'
+                + '<div class="nds-form-container nds-phone"><div class="nds-form-control"><input type="tel" id="v-phone" class="nds-input" v-model="phone"></div></div>'
                 + '<div class="nds-form-container"><div class="nds-form-control"><input type="text" id="v-text" class="nds-input" v-model="text"></div></div>'
                 + '<input type="checkbox" id="v-agree" v-model="agree">'
                 + '<div class="nds-form-container" id="v-sw-box"><div class="nds-form-control"><div class="nds-switch-toggle">'
@@ -401,7 +401,7 @@ for (const ver of VUE) {
     await page.keyboard.insertText('0501');
     await page.waitForTimeout(50);
     const ph = await page.evaluate(() => ({ shown: document.getElementById('v-phone').value, model: window.__vue.phone }));
-    ok(`${V}: a pasted phone number reaches v-model stripped`, ph.shown === '501' && ph.model === '501', JSON.stringify(ph));
+    ok(`${V}: a pasted phone number reaches v-model stripped`, ph.shown === '0501' && ph.model === '0501', JSON.stringify(ph));
     await page.close();
 }
 
@@ -469,7 +469,7 @@ for (const ver of VUE) {
                 + '<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="SA"><span class="nds-label">Saudi Arabia</span></button>'
                 + '<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="AE"><span class="nds-label">UAE</span></button>'
                 + '</div></div></div>'
-                + '<div class="nds-form-container"><div class="nds-form-control"><input type="text" id="v2-iban" class="nds-input nds-iban" v-model="iban"></div></div>'
+                + '<div class="nds-form-container nds-iban"><div class="nds-form-control"><input type="text" id="v2-iban" class="nds-input" v-model="iban"></div></div>'
                 + '<div class="nds-form-container"><div class="nds-form-control">' + step('decrement', 'prefix')
                 + '<input type="text" id="v2-qty" class="nds-input nds-center" inputmode="numeric" min="1" max="20" step="1" v-model="qty">'
                 + step('increment', 'suffix') + '</div></div>'
@@ -499,7 +499,7 @@ for (const ver of VUE) {
     await page.locator('#v2-iban').scrollIntoViewIfNeeded();
     await page.locator('#v2-iban').focus();
     await page.keyboard.insertText('sa03 80');
-    ok(`${V}: a pasted IBAN reaches v-model cleaned`, (await vm('iban')) === 'SA0380', await vm('iban'));
+    ok(`${V}: a pasted IBAN reaches v-model in groups`, (await vm('iban')) === 'SA03 80', await vm('iban'));
 
     await page.locator('#v2-qty').fill('70');
     await page.locator('#v2-qty').blur();
@@ -577,7 +577,7 @@ const FIELDS = (p, bind) => {
         + `<input type="text" class="nds-input nds-date-input" ${bind('date')}></div></div>`
         + `<div class="nds-form-container nds-time-picker" id="${p}-tp"><div class="nds-form-control">` + act('time-picker-toggle', 'nds-hgi-clock-01')
         + `<input type="text" class="nds-input nds-time-input"><input type="hidden" class="nds-time-value" ${bind('time')}></div></div>`
-        + `<div class="nds-form-container"><div class="nds-form-control"><input type="tel" id="${p}-phone" class="nds-input nds-phone" ${bind('phone')}></div></div>`
+        + `<div class="nds-form-container nds-phone"><div class="nds-form-control"><input type="tel" id="${p}-phone" class="nds-input" ${bind('phone')}></div></div>`
         + `<div class="nds-form-container"><div class="nds-form-control"><input type="text" id="${p}-text" class="nds-input" ${bind('text')}></div></div>`
         + `<input type="checkbox" id="${p}-agree" ${bind('agree', true)}>`
         + `<div class="nds-form-container" id="${p}-sw-box"><div class="nds-form-control"><div class="nds-switch-toggle">`
@@ -609,7 +609,7 @@ function checkModel(name, m) {
     ok(`${name}: NDS.setValue reaches the model on a text field`, m.text === 'hello');
     ok(`${name}: NDS.setValue reaches the model on a checkbox`, m.agree === true);
     ok(`${name}: a Switch track click reaches the model, flipped once`, m.sw === true);
-    ok(`${name}: a pasted phone number reaches the model stripped`, m.phone === '501');
+    ok(`${name}: a pasted phone number reaches the model stripped`, m.phone === '0501');
 }
 const KEYS = ['region', 'date', 'time', 'phone', 'text', 'agree', 'sw'];
 

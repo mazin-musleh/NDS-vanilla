@@ -764,7 +764,7 @@ fieldset {
 
 // Addresses and numbers read left to right in every language: "50 123 4567" showed as "4567 123 50" on
 // an Arabic page. Aligned to the page's side, as the other fields are.
-.nds-input:is([type="email"], [type="tel"], [type="url"]), .nds-phone, .nds-iban {
+.nds-input:is([type="email"], [type="tel"], [type="url"]), :is(.nds-phone, .nds-iban) .nds-input {
     direction: ltr;
     text-align: right;
 
@@ -774,8 +774,7 @@ fieldset {
 }
 
 // A phone's row reads left to right too, its country code first, as the number is written: "+966 55 123 4567".
-// ponytail: :has(), as no sibling reaches the row; without it (Firefox < 121) the row keeps the page's direction.
-.nds-form-control:has(> .nds-phone) {
+.nds-phone .nds-form-control {
     direction: ltr;
 
     // The country menu keeps the page's direction.
@@ -788,7 +787,7 @@ fieldset {
     }
 }
 
-.nds-prefix ~ .nds-phone {
+.nds-phone .nds-prefix ~ .nds-input {
     text-align: left;
 }
 
