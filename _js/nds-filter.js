@@ -1864,9 +1864,9 @@
             const isInDropmenu = placeholder.closest('.nds-dropmenu-menu') !== null;
 
             const fieldset = document.createElement('fieldset');
-            fieldset.className = 'nds-form-group nds-filter-range';
-            if (currency) fieldset.setAttribute('data-filter-currency', currency);
-            if (unit) fieldset.setAttribute('data-filter-unit', unit);
+            // The group keeps its id and data-filter, as a checkbox group does: a lookup or a re-init still finds it.
+            for (const attribute of placeholder.attributes) fieldset.setAttribute(attribute.name, attribute.value);
+            fieldset.classList.add('nds-form-group', 'nds-filter-range');
             if (isInDropmenu) {
                 fieldset.classList.add('nds-dropmenu-group');
                 fieldset.setAttribute('data-no-auto-close', '');

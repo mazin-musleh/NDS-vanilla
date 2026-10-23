@@ -16,7 +16,8 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    // Fixed, so tiles line up in a list: a long Hijri month truncates instead.
+    // Fixed, so tiles line up in a list: a long Hijri month truncates instead. The inline
+    // padding leaves room for the longest Gregorian month in Arabic, أغسطس.
     width: var(--_date-tile-width);
     padding: var(--_date-tile-padding);
     border-radius: var(--radius-md);
@@ -32,7 +33,7 @@
         --_date-tile-day-LH: var(--typo-text-xl-LH);
         --_date-tile-text-FS: var(--typo-text-xs-FS);
         --_date-tile-text-LH: var(--typo-text-xs-LH);
-        --_date-tile-padding: var(--spacing-xs) var(--spacing-md);
+        --_date-tile-padding: var(--spacing-xs) var(--spacing-sm);
     }
 
     &.nds-sm {
@@ -45,7 +46,7 @@
         --_date-tile-day-LH: var(--typo-display-xs-LH);
         --_date-tile-text-FS: var(--typo-text-sm-FS);
         --_date-tile-text-LH: var(--typo-text-sm-LH);
-        --_date-tile-padding: var(--spacing-sm) var(--spacing-lg);
+        --_date-tile-padding: var(--spacing-sm) var(--spacing-md);
     }
 }
 

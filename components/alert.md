@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 03:54 PM"
+last_edit: "23/10/2026 - 04:42 PM"
 ---
 
 <section id="alert-overview" class="nds-content-section nds-doc-overview">
@@ -29,7 +29,7 @@ Write the HTML for an alert that is in the page when it loads. Call `NDS.Alert.c
 Pick another component when:
 
 - the user must make a decision before they continue: [Modal](../components/modal). An alert never blocks the page.
-- the page or view cannot show its content: the user must sign in, has no permission, the item is not found, or the load failed with nothing else to show: [Status Section](../layout/status-section)
+- the page or view cannot show its content: the user must sign in, has no permission, the item is not found, or the load failed with nothing else to show: [Status Section](../layout/status-section). Inside a tab panel, use an alert: the other tabs still work
 
 </div>
   </div>
@@ -302,7 +302,7 @@ An alert is a card, so the card color properties (`--card-bg`, `--card-border` a
 
 | Method | Effect |
 |---|---|
-| `NDS.Alert.create(options)` | Builds an alert, inserts it and returns the element |
+| `NDS.Alert.create(options)` | Builds an alert, inserts it and returns the element. Before the alert's bundle loads, the call loads it and returns a promise of the element: `await` the call when you use what it returns |
 | `NDS.Alert.dismiss(elOrSelector)` | Removes one alert. A toast fades out first |
 | `NDS.Alert.dismissAll(container)` | Removes every alert inside a container, given as an element or a selector |
 | `NDS.Alert.init()` | Wires the close button on alerts added to the page after load |

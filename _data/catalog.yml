@@ -417,7 +417,7 @@
 
 - title: "Alert"
   description: "Contextual messages for status, warnings, and notifications, in the page or as a toast"
-  use_when: "An inline status message sitting in the page: success, error, warning, or info banner, form-level feedback, a dismissible notice. Also a toast or snackbar that floats over the page after an action such as save or delete, made with NDS.Alert.create(). For a blocking message over the page use Modal. For a page or view the user cannot use (sign in first, no permission, not found, or a load that failed with nothing else to show) use Status Section, never an alert in its place."
+  use_when: "An inline status message sitting in the page: success, error, warning, or info banner, form-level feedback, a dismissible notice. Also a toast or snackbar that floats over the page after an action such as save or delete, made with NDS.Alert.create(). For a blocking message over the page use Modal. For a page or view the user cannot use (sign in first, no permission, not found, or a load that failed with nothing else to show) use Status Section, never an alert in its place. Inside a tab panel, use an alert: the other tabs still work."
   category: "Feedback"
   tags: ["JS", "CSS", "API"]
   url: "/components/alert.html"

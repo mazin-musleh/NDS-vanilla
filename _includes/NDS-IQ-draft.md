@@ -131,6 +131,10 @@ When a plan is required, create `NDS-PLAN.md` at the project root, starting with
 - **No-plan work** covers one named page: state its source paths and open questions first; the final report carries the verification evidence and any unmet check. If the dev waived a required plan, note once that cross-session memory is lost.
 - **`NDS-REPORT.md`** holds NDS findings only: a missing API or event, a canon/rule/doc contradiction, a reproducible bug, a rule gap. Give the NDS version, instruction version, component, and a generic repro; never project markup, routes, or data.
 
+## Helper agents
+
+Do all NDS work yourself: never hand a page, a row or a check to a helper agent unless the dev asks for one. Each helper reads these rules and the docs again, and browser checks run side by side slow each other down.
+
 ## Build
 
 **Build entry gate.** Reopen the page's plan row. Before markup, record the work mode, the chosen archetype, template, example, or custom case, the doc sources, and the page's parts list (§Composition cascade) (no-plan work states them). Resolve every open source or path question first.

@@ -1439,7 +1439,9 @@
         // Get only visible (non-filtered) items
         const visibleItems = getPagedItems(contentContainer);
 
-        const perPage = perPageSizes.get(contentContainer) || readPerPage(contentContainer);
+        // Read fresh: a --per-page set inline before refresh() must split the pages again.
+        const perPage = readPerPage(contentContainer);
+        perPageSizes.set(contentContainer, perPage);
 
         // Resolve the desired page BEFORE the nav is rebuilt: keepPage reads the
         // live active page off the current list (rebuildAutoNav clamps it into

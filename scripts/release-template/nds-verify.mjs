@@ -21,6 +21,8 @@
 //         { "name": "default", "cookies": [{ "name": "session", "value": "…" }] },
 //         { "name": "empty", "path": "/cart?account=empty" },
 //         { "name": "failed", "fail": "/api/cart" },           every request whose URL holds it fails
+//         { "name": "none", "respond": { "/api/cart": [] } },  answers with this JSON; a number answers
+//                                                              with that status: { "/api/cart/9": 404 }
 //         { "name": "open menu", "run": "document.querySelector('.nds-btn').click()" },
 //         { "name": "rows", "run": "return document.querySelectorAll('tr').length" }   a return value is printed
 //       ]
@@ -126,7 +128,18 @@ const send = (method, params = {}, sessionId) => new Promise((resolve, reject) =
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // One fresh tab in its own context per shot: no cookie or storage leaks into a shot running beside it.
-async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
+async function shoot(url, { width, theme, cookies = [], fail, respond = {}, run, audit }) {
+    // A request the state fails or answers is expected: its console line is no error.
+    const faked = [fail, ...Object.keys(respond)].filter(Boolean);
+    const answer = (requestUrl) => {
+        if (fail && requestUrl.includes(fail)) return { errorReason: 'Failed' };
+        const key = Object.keys(respond).find((k) => requestUrl.includes(k));
+        if (key === undefined) return { errorReason: 'Failed' };
+        const v = respond[key];
+        return typeof v === 'number' ? { responseCode: v, body: '' } : { responseCode: 200,
+            responseHeaders: [{ name: 'content-type', value: 'application/json' }],
+            body: Buffer.from(JSON.stringify(v)).toString('base64') };
+    };
     const { browserContextId } = await send('Target.createBrowserContext');
     const { targetId } = await send('Target.createTarget', { url: 'about:blank', browserContextId });
     const { sessionId } = await send('Target.attachToTarget', { targetId, flatten: true });
@@ -138,8 +151,11 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
         if (method === 'Page.loadEventFired') loaded();
         else if (method === 'Runtime.exceptionThrown') errors.push(p.exceptionDetails.exception?.description || p.exceptionDetails.text);
         else if (method === 'Runtime.consoleAPICalled' && p.type === 'error') errors.push(p.args.map((a) => a.value ?? a.description).join(' '));
-        else if (method === 'Log.entryAdded' && p.entry.level === 'error' && !(fail && p.entry.url?.includes(fail))) errors.push(p.entry.text + (p.entry.url ? ` (${p.entry.url})` : ''));
-        else if (method === 'Fetch.requestPaused') s('Fetch.failRequest', { requestId: p.requestId, errorReason: 'Failed' }).catch(() => {}); // the request may have ended first
+        else if (method === 'Log.entryAdded' && p.entry.level === 'error' && !faked.some((f) => p.entry.url?.includes(f))) errors.push(p.entry.text + (p.entry.url ? ` (${p.entry.url})` : ''));
+        else if (method === 'Fetch.requestPaused') {
+            const a = answer(p.request.url);
+            s(a.errorReason ? 'Fetch.failRequest' : 'Fetch.fulfillRequest', { requestId: p.requestId, ...a }).catch(() => {}); // the request may have ended first
+        }
     });
     await Promise.all(['Page.enable', 'Runtime.enable', 'Log.enable', 'Network.enable'].map((m) => s(m)));
     const viewHeight = width < 768 ? 844 : 900;
@@ -150,7 +166,7 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
         document.addEventListener('securitypolicyviolation', (e) => (window.__ndsCsp = window.__ndsCsp || []).push(
             \`CSP \${e.effectiveDirective} blocked \${e.blockedURI || 'inline'} (from \${e.sourceFile || 'the page'}:\${e.lineNumber})\`));` });
     for (const c of cookies) await s('Network.setCookie', { url, ...c });
-    if (fail) await s('Fetch.enable', { patterns: [{ urlPattern: `*${fail}*` }] });
+    if (faked.length) await s('Fetch.enable', { patterns: faked.map((f) => ({ urlPattern: `*${f}*` })) });
 
     const nav = await s('Page.navigate', { url });
     if (nav.errorText) errors.push(`load failed: ${nav.errorText}`);
@@ -186,6 +202,15 @@ async function shoot(url, { width, theme, cookies = [], fail, run, audit }) {
         await sleep(300);
     };
     await stretch();
+    // What started in that wait can shrink the page (a list splits into pages): measure once more from
+    // the first height, or the shot ends in blank space. Not after the state's script: a resize can close a menu.
+    if (height > viewHeight) {
+        await s('Emulation.setDeviceMetricsOverride', { width, height: viewHeight, deviceScaleFactor: 1, mobile: width < 768 });
+        const { cssContentSize } = await s('Page.getLayoutMetrics');
+        height = Math.max(viewHeight, Math.min(Math.ceil(cssContentSize.height), 8000));
+        await s('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 768 });
+        await sleep(300);
+    }
     if (run) {
         ran = await evaluate(`(async () => { ${run} })()`);
         await sleep(400);
