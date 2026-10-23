@@ -957,6 +957,11 @@
         @include skeleton-bar;
     }
 
+    // A date tile beside the text keeps its own width: the full-width bar would leave the text no room.
+    .nds-stepper-content > .nds-date-tile {
+        @include skeleton-date-tile;
+    }
+
     // The text parts set their colour deeper than the bar's `> * { color: transparent }`
     // (on-color current and completed steps, radial on-color), so they read through the fill.
     :is(.nds-stepper-title, .nds-stepper-description, .nds-stepper-next) {

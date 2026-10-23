@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "19/10/2026 - 05:26 PM"
+last_edit: "23/10/2026 - 04:34 PM"
 ---
 
 <section id="drawer-overview" class="nds-content-section nds-doc-overview">
@@ -285,6 +285,7 @@ The current page's `<li>` carries `data-state="active"`. To open a submenu at lo
 | Lined | Lined (hint: A line along each submenu shows its depth) | `.nds-lined` | `.nds-drawer:has(.nds-menu-btn)` | A vertical line along each submenu, which shows the depth of a long tree |
 | Card | Card | `.nds-card` | `.nds-drawer` | A card background and rounded corners, so the drawer sits in a grid of cards |
 | Stroke | Stroke | `.nds-stroke` | `.nds-drawer.nds-card` | A border around the card |
+| Loading | Loading (hint: Skeleton placeholders while the data loads) | `.nds-loading` | `.nds-drawer` | Gray bars in place of the titles and descriptions, and fills in place of the icons, tags and date tiles, while the data loads. Remove the class when the data is in |
 | Always open | Always open (hint: Several submenus stay open at once) | `[data-state~="always-open"]` | `.nds-drawer:has(.nds-menu-btn)` | Several submenus stay open at once. Without it, opening a submenu closes the open one next to it |
 | Search | None (default) | — | — | No search box |
 | Search | Darker (hint: A search box with a darker fill) | `[data-search]` | `.nds-drawer` | A search box that filters the items as the user types, with a darker fill and no border. For a long menu. `data-search="20"` adds it only at 20 items or more |
@@ -433,6 +434,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
 | `nds-divided` | a submenu `<ul>` | A line between the items of that submenu |
 | `nds-empty` | `.nds-drawer-list` | Shows a placeholder while the list holds no items. Set the text and the icon with `data-empty-message` and `data-empty-icon`. See [Empty](../components/empty) |
 | `nds-truncate` | `.nds-label` | Cuts the label to the number of lines in `--drawer-truncate`, with an ellipsis |
+| `nds-loading` | `.nds-drawer` | Shows gray placeholders in place of the content while the data loads. Remove it when the data is in |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes

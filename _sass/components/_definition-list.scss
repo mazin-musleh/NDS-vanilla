@@ -283,6 +283,15 @@
     :is(.nds-icon, i) {
         visibility: hidden;
     }
+
+    // The value's own bar is the skeleton: the tile adds no second fill over it.
+    .nds-date-tile {
+        background: none;
+
+        > * {
+            visibility: hidden;
+        }
+    }
 }
 
 // Loading shows the skeleton above, not the spinner.

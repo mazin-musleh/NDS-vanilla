@@ -546,6 +546,16 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
   }
 }
 
+// A date tile as one skeleton block: it keeps its fixed width, its three lines go.
+@mixin skeleton-date-tile {
+  @include skeleton-fill;
+  width: var(--_date-tile-width);
+
+  >* {
+    visibility: hidden;
+  }
+}
+
 // On the element that carries .nds-loading, for a component that draws its own
 // skeleton: the skeleton is the feedback, so the spinner and the child dim go.
 // Clicks stay blocked by the base rule.

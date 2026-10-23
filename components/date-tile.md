@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 09:54 PM"
+last_edit: "23/10/2026 - 04:34 PM"
 ---
 
 <section id="date-tile-overview" class="nds-content-section nds-doc-overview">
@@ -171,7 +171,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-The Drawer row, Card header and Timeline structures show the tile beside the text of each host. In a drawer row and a card header, the tile takes the place of a featured icon. Size and Status go on the `.nds-date-tile` element. In a drawer row, `data-status` can go on the `li` instead. It then colors the tile and any featured icon in that row.
+The Drawer row, Card header and Timeline structures show the tile beside the text of each host. In a drawer row and a card header, the tile takes the place of a featured icon. Size and Status go on the `.nds-date-tile` element. In a drawer row, `data-status` can go on the `li` instead. It then colors the tile and any featured icon in that row. Loading goes on the host, not the tile: a drawer, a card or a timeline turns its tiles into skeleton blocks.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -190,6 +190,9 @@ The Drawer row, Card header and Timeline structures show the tile beside the tex
 | Status | Error | `[data-status="error"]` | `.nds-date-tile` | A date that was missed or cancelled |
 | Status | Neutral | `[data-status="neutral"]` | `.nds-date-tile` | A date in the past |
 | Weekday | No weekday | `remove` | `.nds-date-tile-weekday` | Only the day number and the month, for a list where the weekday adds nothing, such as dates months apart |
+| Loading | Loading (hint: Skeleton placeholders while the data loads) | `.nds-loading` | `.nds-drawer` | The tiles and the text of the rows show as skeleton blocks while the data loads. Remove the class when the data is in |
+| Loading | Loading (hint: Skeleton placeholders while the data loads) | `.nds-loading` | `.nds-card` | The tile and the other parts of the card show as skeleton blocks while the data loads. Remove the class when the data is in |
+| Loading | Loading (hint: Skeleton placeholders while the data loads) | `.nds-loading` | `.nds-stepper` | Every step shows as a skeleton while its data loads, and the tile goes with it. Remove the class when the data is in |
 {: #date-tile-variants-table .nds-table .nds-responsive}
 
 </div>

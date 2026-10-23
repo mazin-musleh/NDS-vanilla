@@ -449,3 +449,55 @@
         }
     }
 }
+
+// ==============================================
+// LOADING SKELETON
+// ==============================================
+// A loading drawer bars its titles, descriptions and tags, and fills its icons and date
+// tiles. The spinner and the dim go: the skeleton is the feedback.
+.nds-drawer.nds-loading {
+    @include skeleton-pulse;
+    @include loading-skeleton-host;
+
+    .nds-drawer-list .nds-btn {
+        // The active row's fill, line and the submenu caret are not placeholders.
+        --btn-bg-selected: transparent;
+        --btn-bg-active: transparent;
+
+        &::before,
+        &::after {
+            opacity: 0;
+        }
+
+        :is(.nds-label, .nds-description) {
+            flex: 0 1 auto;
+            @include skeleton-bar;
+        }
+
+        > .nds-icon {
+            visibility: hidden;
+        }
+    }
+
+    .nds-tag {
+        border-color: transparent;
+        border-radius: var(--nds-skeleton-radius);
+        @include skeleton-fill;
+
+        > * {
+            visibility: hidden;
+        }
+    }
+
+    :is(.nds-featured-icon, .nds-avatar) {
+        @include skeleton-fill;
+
+        :is(i, .nds-icon, img) {
+            visibility: hidden;
+        }
+    }
+
+    .nds-date-tile {
+        @include skeleton-date-tile;
+    }
+}
