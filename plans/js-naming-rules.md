@@ -52,8 +52,6 @@ the rules of section 2, a cross-file table so one meaning gets one name: `setupE
 check skipped the words of a `_` field (now checked); the rule files cite members (RULES-JSA/JSD/JSP/JSS).
 
 **The plan is done.** Open from step 4:
-- The nds-iq-eval scenarios S14 and S25 and the `fixtures/mini-root/_source` snapshot name old API (`updateRecords`,
-  `populate`, `menuOf`): load the `nds-iq-eval` skill before touching them.
 - The v2 method renames listed in CHANGELOG's Migrating entry (`validateForm` → `validate`, `slideTo` → `goTo` …)
   have no rows in `_data/migrations.yml`, so the Migration page misses them; step 4's rows are there.
 - A/B checks run HEAD's bundles against today's: a renamed name they call needs both spellings
