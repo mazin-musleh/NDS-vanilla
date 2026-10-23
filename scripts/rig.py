@@ -5,6 +5,7 @@ Run from the NDS repo root. The guide is .claude/skills/nds-iq-eval/RIGS.md.
   python scripts/rig.py new <rig> [dest]       copy a baseline, git init, tag it, npm install or a Django venv + seed
   python scripts/rig.py stage <rig> <release>  unpack a mkrelease --preview zip to .nds/, add _source/, stamp <release>, copy the draft to NDS-IQ.md
   python scripts/rig.py reset <rig> [--save]   commit the run to a runN-date branch, back to the baseline tag
+  python scripts/rig.py cost <rig>             minutes and tokens per plan row, from the newest session transcript (before reset)
 
 <rig> is a rig number (1 sawaed, 2 shop-licenses, 3 nakheel-clinics, 4 hiraf-store, 5 library-portal, 6 citydesk, 7 grants-desk), which lives at ../nds-test-app-<N>,
 or a baseline name (new) or a path (stage, reset). Baselines live in .claude/skills/nds-iq-eval/rigs/.
@@ -215,9 +216,62 @@ def reset(dest, save):
     print('reset to baseline' + (f'; still locked: {", ".join(left)}' if left else ''))
 
 
+def cost(dest):
+    # The agent never sees its own token count, so the review splits the newest session transcript
+    # (helpers included) by each plan row's Started and Finished, which the rules make it write.
+    import glob, json
+    home = os.path.expanduser('~/.claude/projects/' + re.sub(r'[:\\/]', '-', os.path.abspath(dest)))
+    sessions = sorted(glob.glob(os.path.join(home, '*.jsonl')), key=os.path.getmtime)
+    if not sessions:
+        sys.exit(f'no session transcript in {home}')
+    sid = sessions[-1][:-6]
+    windows, head = {}, None
+    for line in open(os.path.join(dest, 'NDS-PLAN.md'), encoding='utf-8'):
+        cells = [c.strip() for c in line.strip().strip('|').split('|')]
+        if not line.startswith('|'):
+            continue
+        if 'started' in [c.lower() for c in cells]:
+            head = [c.lower() for c in cells]
+            continue
+        try:
+            s, e = (datetime.datetime.strptime(cells[head.index(k)], '%Y-%m-%d %H:%M') for k in ('started', 'finished'))
+        except (TypeError, ValueError, IndexError):
+            continue  # the header rule, or a row with no times
+        windows.setdefault((s, e + datetime.timedelta(seconds=59)), []).append(cells[0])
+    spans = sorted(windows)
+    def bucket(t):
+        for span in spans:
+            if span[0] <= t <= span[1]:
+                return ', '.join(windows[span])
+        return 'before the first row' if not spans or t < spans[0][0] else 'after the last row' if t > spans[-1][1] else 'between rows'
+    totals, seen = {}, set()
+    files = [sid + '.jsonl'] + glob.glob(os.path.join(sid, 'subagents', '*.jsonl'))
+    for f in files:
+        for line in open(f, encoding='utf-8'):
+            m = json.loads(line)
+            msg, t = m.get('message') or {}, m.get('timestamp')
+            u = msg.get('usage')
+            if not (u and t) or (f, msg.get('id')) in seen:
+                continue
+            seen.add((f, msg.get('id')))
+            t = datetime.datetime.fromisoformat(t.replace('Z', '+00:00')).astimezone().replace(tzinfo=None)
+            b = totals.setdefault(bucket(t), [t, t, 0, 0, 0])
+            b[0], b[1] = min(b[0], t), max(b[1], t)
+            b[2] += u.get('output_tokens', 0)
+            b[3] += u.get('cache_creation_input_tokens', 0)
+            b[4] += u.get('cache_read_input_tokens', 0)
+    print(f'{os.path.basename(sid)}: {len(files) - 1} helper agent(s)\n')
+    print(f'{"row":<44} {"min":>4} {"output":>8} {"cache write":>12} {"cache read":>12}')
+    for name, (a, z, o, w, r) in sorted(totals.items(), key=lambda kv: kv[1][0]):
+        minutes = '' if name == 'between rows' else (z - a).seconds // 60  # gaps are not one stretch
+        print(f'{name[:44]:<44} {minutes:>4} {o:>8,} {w:>12,} {r:>12,}')
+    o, w, r = (sum(v[i] for v in totals.values()) for i in (2, 3, 4))
+    print(f'{"total":<44} {"":>4} {o:>8,} {w:>12,} {r:>12,}')
+
+
 if __name__ == '__main__':
     a = sys.argv[1:]
-    if not a or a[0] not in ('new', 'stage', 'reset'):
+    if not a or a[0] not in ('new', 'stage', 'reset', 'cost'):
         sys.exit(__doc__)
     if a[0] == 'new':
         new(a[1], a[2] if len(a) > 2 else where(a[1]) if a[1] in NUMS else os.path.join('..', f'nds-rig-{a[1]}'))  # a baseline name
@@ -225,5 +279,7 @@ if __name__ == '__main__':
         sys.exit(f'no rig at {where(a[1])}: python scripts/rig.py new {a[1]}')
     elif a[0] == 'stage':
         stage(where(a[1]), a[2])
+    elif a[0] == 'cost':
+        cost(where(a[1]))
     else:
         reset(where(a[1]), '--save' in a)
