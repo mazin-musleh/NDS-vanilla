@@ -19,6 +19,7 @@
 //       "reference": "examples/console-demo.html",  a built page under this folder's _site/
 //       "states": [                                 optional; default: one "default" state
 //         { "name": "default", "cookies": [{ "name": "session", "value": "…" }] },
+//         { "name": "arabic", "storage": { "app-lang": "ar" } },  set in localStorage before the page loads
 //         { "name": "empty", "path": "/cart?account=empty" },
 //         { "name": "failed", "fail": "/api/cart" },           every request whose URL holds it fails
 //         { "name": "none", "respond": { "/api/cart": [] } },  answers with this JSON; a number answers
@@ -128,7 +129,7 @@ const send = (method, params = {}, sessionId) => new Promise((resolve, reject) =
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // One fresh tab in its own context per shot: no cookie or storage leaks into a shot running beside it.
-async function shoot(url, { width, theme, cookies = [], fail, respond = {}, run, audit }) {
+async function shoot(url, { width, theme, cookies = [], storage = {}, fail, respond = {}, run, audit }) {
     // A request the state fails or answers is expected: its console line is no error.
     const faked = [fail, ...Object.keys(respond)].filter(Boolean);
     const answer = (requestUrl) => {
@@ -163,7 +164,8 @@ async function shoot(url, { width, theme, cookies = [], fail, respond = {}, run,
     // Reduced motion: counters land on their number and sliders hold still, so a shot shows the final state.
     await s('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: theme }, { name: 'prefers-reduced-motion', value: 'reduce' }] });
     await s('Page.addScriptToEvaluateOnNewDocument', { source:
-        `try { ${theme === 'dark' ? "localStorage.setItem('nds-theme', 'dark')" : "localStorage.removeItem('nds-theme')"} } catch (e) {}
+        `try { ${theme === 'dark' ? "localStorage.setItem('nds-theme', 'dark')" : "localStorage.removeItem('nds-theme')"}
+            for (const [k, v] of Object.entries(${JSON.stringify(storage)})) localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v)); } catch (e) {}
         document.addEventListener('securitypolicyviolation', (e) => (window.__ndsCsp = window.__ndsCsp || []).push(
             \`CSP \${e.effectiveDirective} blocked \${e.blockedURI || 'inline'} (from \${e.sourceFile || 'the page'}:\${e.lineNumber})\`));` });
     for (const c of cookies) await s('Network.setCookie', { url, ...c });

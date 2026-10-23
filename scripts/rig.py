@@ -235,8 +235,8 @@ def cost(dest):
             continue
         try:
             s, e = (datetime.datetime.strptime(cells[head.index(k)], '%Y-%m-%d %H:%M') for k in ('started', 'finished'))
-        except (TypeError, ValueError, IndexError):
-            continue  # the header rule, or a row with no times
+        except (AttributeError, TypeError, ValueError, IndexError):
+            continue  # a table before the pages table, the header rule, or a row with no times
         windows.setdefault((s, e + datetime.timedelta(seconds=59)), []).append(cells[0])
     spans = sorted(windows)
     def bucket(t):
