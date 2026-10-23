@@ -30,7 +30,7 @@
 }
 
 // Wide: the stat and the chart share the row, half each.
-@container (min-width: 480px) {
+@container (min-width: 400px) {
   .nds-card-metric:not(.nds-full) {
     > :is(.nds-card-metric-info, .nds-card-metric-chart) { flex: 1 1 0; min-width: 0; }
   }
