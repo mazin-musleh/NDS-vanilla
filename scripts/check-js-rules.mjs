@@ -25,7 +25,7 @@
 
 import { readFileSync, readdirSync } from 'node:fs';
 import { basename, join } from 'node:path';
-import { REPO, PAGE_DIRS, loaderNames, pascal } from './lib/nds-source.mjs';
+import { REPO, PAGE_DIRS, loaderNames } from './lib/nds-source.mjs';
 import { checkNames } from './lib/js-names.mjs';
 
 // The audit's `js` scope (SKILL.md): core owns state/status, the loader and docs are out of scope.
@@ -360,11 +360,11 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     };
 
     // JSD-12 a guard on a sibling namespace no comment in its scope explains.
-    const own = pascal(name.replace(/^nds-|\.js$/g, ''));
+    const own = new Set([...code.matchAll(/\bNDS\.([A-Z]\w*)\s*=(?!=)/g)].map((m) => m[1])); // the namespaces this file defines
     const guarded = new Set();
     for (const m of code.matchAll(/\bNDS\.([A-Z]\w*)\s*(?:\?\.|&&|\|\||\))|typeof\s+NDS\.([A-Z]\w*)/g)) {
         const sib = m[1] || m[2];
-        if (sib === own) continue;
+        if (own.has(sib)) continue;
         const ctx = code.slice(Math.max(0, m.index - 12), m.index);
         if (m[0].endsWith(')') && !/(?:\bif\s*\(\s*|!\s*|&&\s*|\|\|\s*)$/.test(ctx)) continue; // a call's argument, not a test
         if (inMain(sib)) { hit('JSD-12', m.index, `NDS.${sib} guard: main always loads it, so remove it (PERSONA entry 11)`); continue; }
@@ -441,9 +441,9 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     };
     // JSD-08 a guard on what the loader guarantees: NDS itself, a core utility, NDS.init, or the
     // file's own namespace, inside a function (module top level runs before the loader and passes).
-    const coreGuard = new RegExp(`typeof\\s+(?:window\\.)?NDS\\b(?:\\.(${[...CORE_UTILS, 'init', own].join('|')})\\b)?`
+    const coreGuard = new RegExp(`typeof\\s+(?:window\\.)?NDS\\b(?:\\.(${[...CORE_UTILS, 'init', ...own].join('|')})\\b)?`
         + `|(?<![\\w.])(?:window\\.)?NDS\\s*(?:\\?\\.|&&)`
-        + `|\\bNDS\\.(${[...CORE_UTILS, 'init', own].join('|')})\\s*(\\?\\.|&&|\\))`, 'g');
+        + `|\\bNDS\\.(${[...CORE_UTILS, 'init', ...own].join('|')})\\s*(\\?\\.|&&|\\))`, 'g');
     for (const m of code.matchAll(coreGuard)) {
         if (topLevel(m.index)) continue;
         const ns = m[1] || m[2];
@@ -1295,19 +1295,16 @@ const NAME_CASES = [
     [`(function(){ let initDone = false; })();`, []],
     [`(function(){ function bindEvents() {} })();`, ['P10.4']],
     [`(function(){ function initPanel() {} function init() {} })();`, ['P10.4']], // the bare hook passes
+    [`(function(){ function applyFilter() {} function applySort() {} NDS.T = { applySort }; })();`, ['P10.4']], // only the internal one
     [`(function(){ function addItemListeners() {} function handleClick(e) {} })();`, []],
-    [`(function(){ function pageBounds() {} })();`, ['P10.0?']],
     [`(function(){ function toCSV() {} })();`, ['P10.3']],
     [`(function(){ function renderXLabels() {} })();`, []], // an axis letter is no acronym
-    [`(function(){ function run(a) { const idx = a; } })();`, ['P10.8', 'P10.8']],
     [`(function(){ function run(el, opts) { for (let i = 0; i < 1; i++) {} } })();`, []],
-    [`(function(){ function fmtVal() {} })();`, ['P10.0?', 'P10.8']],
     [`(function(){ class NDSTables {} })();`, ['P12.7']],
     [`(function(){ class NdsTable {} class NdsDatePickerCalendar {} })();`, []],
     [`(function(){ const CooldownButton = { init() {} }; const NdsX = class {}; })();`, ['P12.8']], // PascalCase is for classes
-    [`(function(){ const SELECTOR = A + ', ' + B; const HAS = 'x' in window; const DEFAULT = \`<i>\${x}</i>\`; const SELF = document.currentScript; })();`, ['P12.8?']], // only the member read is unknown
     [`(function(){ function run(el) { el._ndsFoo = 1; } })();`, ['P12.14']],
-    [`(function(){ function run(row) { row._x = 1; } })();`, ['P12.14?']],
+    [`(function(){ function run(row) { row._x = 1; } })();`, []], // may be a same-file instance: review reads it
     [`(function(){ function run(el) { el.ndsDone = true; el.dataset.ndsSeen = 'true'; } })();`, ['P12.14']],
     [`(function(){ window.ndsFlag = true; window.__NDS_LOADED_X = true; window.NDS = {}; })();`, ['P12.1']],
     [`(function(){ const self = this; self.items = 1; })();`, []], // a local alias, not the global
@@ -1319,18 +1316,13 @@ const NAME_CASES = [
     [`(function(){ const map = new WeakMap(); function run(el) { map.set(el, new AbortController()); } })();`, ['P12.15']],
     [`(function(){ const filterAbortControllers = new WeakMap(); function run(el) { filterAbortControllers.set(el, new AbortController()); } })();`, []],
     [`(function(){ class NdsA { #x = 1; } })();`, ['P12.16']],
-    [`(function(){ class NdsA { constructor() { this._ac = new AbortController(); } } })();`, ['P1', 'P10.8']],
-    [`(function(){ class NdsA { constructor() { this._listBtn = null; } } })();`, ['P10.8']], // `_` lifts the banner rule, not the words
+    [`(function(){ class NdsA { constructor() { this._ac = new AbortController(); } } })();`, ['P1']],
     [`/* NDS.A — public surface\n * Methods:\n *   el.ndsA.open()   open it\n */\n(function(){ class NdsA { constructor() { this.abortController = new AbortController(); this.box = 1; this._menu = 2; } open() {} close() {} } })();`, ['P12.11', 'P12.11']], // box, close
-    [`(function(){ const LIST = a.map(f).join(','); const I18N_KEY = 'x'; })();`, []], // join gives a string; snake case splits at _
-    [`(function(){ const SELECTOR = '.x'; const CONFIG = { a: 1 }; const FROZEN = Object.freeze({}); const delayMs = 200; })();`, ['P12.8?', 'P12.8?']],
-    [`(function(){ const SEL = '.x'; })();`, ['P10.8']], // module names take whole words
-    [`(function(){ function getValue() { const qux = 1; return qux; } })();`, ['P10.8?']], // an unknown short word is read
     [`/* NDS.T — public surface
  * Methods:
  *   NDS.T.updateDate()   render
  */
-(function(){ function updateDate() {} const site = {}; NDS.T = (function () { return { updateDate, site }; })(); })();`, ['P10.4', 'P10.4']], // the function and its public key; `site` is a value
+(function(){ function updateDate() {} const site = {}; NDS.T = (function () { return { updateDate, site }; })(); })();`, []], // a public verb is read in review; `site` is a value
     [`(function(){ function onReset() {} NDS.T = { onReset }; })();`, []], // exported under its own name: a public onX subscribes
     [`(function(){ function onClick() {} NDS.T = { handleClick: onClick }; })();`, ['P10.4']], // the local name is no public one
     [`(function(){ function onClick() {} })();`, ['P10.4']], // a listener: handleX

@@ -1,11 +1,9 @@
 // PERSONA entries 1, 10 and 12, the naming half: an acorn walk, since the rules hang on scope
 // (module, function, class member) that check-js-rules.mjs's char scanner cannot see.
-// checkNames(files, read) → [{ rule, file, line, what, verify? }]; the rule id is P<entry>.<rule>.
+// checkNames(files, read) → [{ rule, file, line, what }]; the rule id is P<entry>.<rule>.
 //
-// Left to the reader: entry 12 rules 5 and 6 (whether a hook sits on the component's own element,
-// whether a token names a state) and rule 15's "named for what it holds" beyond the AbortController suffix.
-// ponytail: VERBS is a hand list, so a new verb reads as `verify` until it is added; a noun added
-// by mistake hides a finding, so add only words that are verbs in every reading.
+// Shape only, no word lists: a rule a regex or the AST cannot decide is read in review, never guessed
+// from a list (verb first, whole words, a public verb, a constant's case, entry 12 rules 5, 6 and 15).
 
 import { parse } from 'acorn';
 import { readFileSync } from 'node:fs';
@@ -23,75 +21,11 @@ const BANNED = {
 const BANNED_PREFIX = { init: 'setupX', refresh: 'syncX (refresh() is the loader hook)' };
 const BANNED_SUFFIX = { Handler: 'handleX', Exists: 'isX / hasX' };
 
-// Verbs in every reading. Not here on purpose (noun first, so `verify`): page, item, row, menu,
-// list, label, link, step, part, own, safe, real, scope, group, position, offset, max, total.
-const VERBS = new Set(`get set is has sync handle build render remove show resolve ensure read dispatch parse format
-toggle open stamp clear hide scroll write add schedule reset check validate detect lex load restore close save destroy
-cancel sanitize activate deactivate drop focus blur run find warn stop to from go fetch fill push finish copy collect
-share commit move announce dismiss normalize start mark guard track shift pick insert arm confirm reveal mirror adopt
-count skip report print walk extract collapse expand process flush scan fire clamp convert dedent filter listen unlisten
-wrap unwrap rebuild place download query rollback release settle resync capture reconcile resize enable disable recount
-reserve trigger persist cycle animate pause resume say hit look highlight try change reprocess sniff split resend pack
-translate compose subscribe unsubscribe swap delete lock unlock unguard pad tick append prepend cache cleanup setup
-reposition serialize call unapply flatten limit undo choose fit visit wait leave clean rename interpret strip scrub
-reload hydrate compute embed prevent align unlink evaluate infer export order register unregister ride make reapply audit control
-refocus classify submit harvest associate enter exit describe repeat watch unwatch enhance queue mount unmount manage
-distribute relabel park match matches contains repaint measure remeasure store renew extend recompute invalidate compare
-fix calculate clone recenter jump repair switch complete relocalize slugify hover unstamp retry abort upload fail play
-stash retext prewarm advance select navigate inject accept allow off next prev log observe unobserve notify sort merge
-assign detach keep encode decode escape unescape trim join replace truncate estimate determine prepare begin end send
-request receive post emit bump nudge snap zoom pan drag swipe press round sum localize debounce throttle defer preload
-prefetch conceal mask unmask trace refresh init create destroy reinit dismiss coerce cast test lookup scroll install
-uninstall flash drain trap flip attach bind wire paint apply update populate generate initialize teardown unwire recheck unsub`.split(/\s+/));
-// Kept apart from VERBS so a banned word never reads as known.
-for (const w of [...Object.keys(BANNED), ...Object.keys(BANNED_PREFIX)]) VERBS.delete(w);
-
-// Entry 10 rule 8: abbreviations. LOCAL_OK is the locals' and parameters' short list.
-const ABBREV = new Set(`fmt val vals norm sel sels msg msgs dtf cal ymd cmd pct pos idx len num nums str obj arr cb cbs
-tmp cfg conf ctx evt ev err errs ac li lis el els elem elems btn btns opt opts doc docs cur curr mq esc inst attr attrs
-prep res req resp calc dim dims lbl txt ctrl ctrls mgr util utils coll tpl tmpl fn dest ns
-fc cs sw dm acc anim fd dd toks cls ch re dlg win op ops ext lo hi sec secs sib pts fns tz mer frag si inp sig st
-rad ci dist lat lng ta ver mo tpls mi sr sg oc tb ph ei ico rs arg args mag strs dec grad pt temp cond ws perf vs ro io
-bool qs tx ty greg dn cr fmts regs ind lim acts mcs vv deco cmds lh occ cac nr er rm rec le sep tt dup pab pabs sb ri
-pag av bv cmp seq bg ds uf osc srel fwd desc col cols tw bp desk def dev prop props ti mr2 h12 alls`.split(/\s+/));
-const LOCAL_OK = new Set(['el', 'e', 'i', 'j', 'x', 'y', 'fn', 'opts', 'btn']);
-// A short word that is a word: English, a platform name (an HTML tag or attribute, a CSS unit, an SVG or canvas
-// argument), or a standard acronym. Any other 2–4 letter word is a verify line: read it, then add it here or to ABBREV.
-const SHORT_OK = new Set(`is get set has add end top on off to in at by of up go no or as and for not any all new old own
-per raw run was now it ok can had out few two why use say try way may yes key id ids uid url api css js svg dom rtl
-html json aria csv xls iban otp ipv ajax xhr mime a11y i18n toc fab cta ui bom gtag hgi nds iso md sm lg pm px ms vh
-vw deg rem fr cx cy dx dy x0 y0 t0 t1 t2 p0 p1 p2 p3 cp1x cp1y cp2x cp2y th tr td ul div span img pre nav sub subs ths
-src href alt rel dir lang role ref refs var vars name page text item list root node menu row rows date open sync data
-init type max file form icon next find link last year rect min tag tags box step done unit left read from real prev
-rule size code day days mode host base cell self path pad auto lazy bar bars tab tabs call card mask time line slot
-body hour deck dark wrap chip live site hits edge band gap char stop head atom load axis lex view grid logo side main
-area dot dots city map tail spec hero drop pick hide warn seed pair keys safe zoom fits drag only skip fix fill copy
-hold tier save move kind hit tip push fire pack seen want arm back star bad same walk kept navs nice sum make held
-swap zone with down room fit runs flip info snap rest lock jump keep full test best each here what home scan wall
-tick week once void kids twin none undo demo like exit blob dock ride near low knob peek more hash pass half wait
-over hook fail tone grab wire dead look lost verb need note deep plot font axes arc defs into pool bus miss zero era edit
-away wins lay clip px flag bold flow stem ends diff mine idle when log park sign fade app mid busy sort meta play gain
-lead warm loop also both even just last less most much must next once part show cat sum word mark pie tap
-intl os lab outs offs high`.split(/\s+/));
-
-// The hook names and entry 10's public verbs stand alone.
-const EXACT_OK = new Set(['whenReady', 'getInstance', 'initialize', 'init', 'reinit', 'refresh', 'destroy', 'create', 'constructor', 'open', 'close', 'toggle',
-    'show', 'hide', 'enable', 'disable', 'next', 'prev', 'goTo', 'clear', 'validate', 'mount', 'cleanup', 'setup']);
-
 // camelCase words, an acronym run kept as one word: toCSVFile → to CSV File.
 const words = (name) => name.replace(/^_+/, '').match(/[A-Z]+(?![a-z])|[A-Z]?[a-z0-9]+|[A-Z]/g) || [];
 // Two or more capitals as one word; X / Y alone are axis names (renderXLabels).
 const acronym = (name) => !/^[A-Z0-9_$]+$/.test(name) && words(name).some((w) => w.length > 1 && /^[A-Z]+$/.test(w));
-const kindOf = (n) => ({ ObjectExpression: 'an object', ArrayExpression: 'an array', NewExpression: `a new ${n.callee?.name}` })[n.type] || 'a computed value';
-const constCase = (n) => /^[A-Z][A-Z0-9_]*$/.test(n);
 const isFn = (n) => n && /^(FunctionExpression|ArrowFunctionExpression)$/.test(n.type);
-const isPrimitive = (n) => n && ((n.type === 'Literal' && !(n.value instanceof RegExp)) ||
-    (n.type === 'TemplateLiteral' && !n.expressions.length) || (n.type === 'UnaryExpression' && n.argument.type === 'Literal'));
-// A computed value that is a primitive whatever its parts: `a + b`, a template, `typeof x`, `k in o`, `list.join(',')`.
-const yieldsPrimitive = (n) => n && (isPrimitive(n) || /^(BinaryExpression|UnaryExpression|TemplateLiteral)$/.test(n.type) ||
-    (n.type === 'CallExpression' && /^(join|toLowerCase|toUpperCase|trim|toFixed)$/.test(propName(n.callee))) ||
-    (n.type === 'ConditionalExpression' && yieldsPrimitive(n.consequent) && yieldsPrimitive(n.alternate)) ||
-    (n.type === 'LogicalExpression' && yieldsPrimitive(n.left) && yieldsPrimitive(n.right)));
 const rootName = (n) => { while (n && n.type === 'MemberExpression') n = n.object; return n?.type === 'Identifier' ? n.name : n?.type === 'ThisExpression' ? 'this' : ''; };
 const propName = (m) => (m?.type !== 'MemberExpression' ? null : !m.computed && m.property.type === 'Identifier' ? m.property.name : m.computed && m.property.type === 'Literal' ? String(m.property.value) : null);
 
@@ -136,21 +70,15 @@ function scanFile(file, source) {
 
     const fnName = (node, id, { pub = false } = {}) => {
         const n = id.name;
-        if (n.startsWith('#') || EXACT_OK.has(n) || /^[A-Z]/.test(n)) return; // PascalCase: a constructor, rule 7's
-        const tag = pub ? ' (on the banner: section 3 decides)' : '';
+        if (n.startsWith('#') || /^[A-Z]/.test(n)) return; // PascalCase: a constructor, rule 7's
+        if (acronym(n)) push('P10.3', node, `\`${n}\` writes an acronym in capitals: one word (toCsv)${pub ? ' (on the banner)' : ''}`);
+        if (pub) return; // a public verb is read in review: it may take the markup's word (data-…-action="apply")
         const ws = words(n);
         const first = ws[0]?.toLowerCase();
         const last = ws.at(-1);
-        if (acronym(n)) push('P10.3', node, `\`${n}\` writes an acronym in capitals: one word (toCsv)${tag}`);
-        const short = ws.map((w) => w.toLowerCase()).filter((w) => ABBREV.has(w));
-        if (short.length) push('P10.8', node, `\`${n}\` shortens ${short.map((w) => `\`${w}\``).join(', ')}: whole words${tag}`);
-        if (pub && first === 'on') return; // a public onX subscribes (NDS.onResize: entry 6); the ban is for listener functions
-        if (pub && first === 'init') return; // a public initX runs init() for one part (entry 10 carve-out)
-        if (BANNED[first]) return push('P10.4', node, `\`${n}\`: \`${first}\` → ${BANNED[first]}${tag}`);
-        if (BANNED_PREFIX[first] && ws.length > 1) return push('P10.4', node, `\`${n}\`: \`${first}X\` → ${BANNED_PREFIX[first]}${tag}`);
-        if (ws.length > 1 && BANNED_SUFFIX[last]) return push('P10.4', node, `\`${n}\`: \`…${last}\` → ${BANNED_SUFFIX[last]}${tag}`);
-        if (first === 'create' && ws.length > 1) return push('P10.4', node, `\`${n}\`${tag}`, 'createX that returns DOM → buildX; an instance keeps create');
-        if (!VERBS.has(first)) push('P10.0', node, `\`${n}\` starts with \`${first}\`${tag}`, 'not a known verb: verb first, or add the verb to VERBS');
+        if (BANNED[first]) return push('P10.4', node, `\`${n}\`: \`${first}\` → ${BANNED[first]}`);
+        if (BANNED_PREFIX[first] && ws.length > 1) return push('P10.4', node, `\`${n}\`: \`${first}X\` → ${BANNED_PREFIX[first]}`);
+        if (ws.length > 1 && BANNED_SUFFIX[last]) push('P10.4', node, `\`${n}\`: \`…${last}\` → ${BANNED_SUFFIX[last]}`);
     };
 
     // Rule 11, once per class and name: a method or a `this.x` field, written or read.
@@ -161,24 +89,11 @@ function scanFile(file, source) {
         if (!method) fieldWords(ctx, p, node); // fnName judges a method's words
     });
     const fieldWords = (ctx, p, node) => once(`words ${ctx.cls.start} ${p}`, () => {
-        const short = words(p).map((w) => w.toLowerCase()).filter((w) => ABBREV.has(w));
-        if (short.length) push('P10.8', node, `field \`this.${p}\` shortens ${short.map((w) => `\`${w}\``).join(', ')}: whole words`);
         if (acronym(p)) push('P10.3', node, `field \`this.${p}\` writes an acronym in capitals`);
     });
 
     const local = (id, node) => {
-        const n = id.name;
-        if (n === '_' ) return;
-        const lower = n.replace(/^_+/, '');
-        const ws = (constCase(n) ? n.split('_').filter(Boolean) : words(n)).map((w) => w.toLowerCase());
-        if (n.length === 1 ? !LOCAL_OK.has(n) : (ABBREV.has(lower.toLowerCase()) && !LOCAL_OK.has(lower)) ||
-            (ws.length > 1 && ws.some((w) => ABBREV.has(w) && !LOCAL_OK.has(w))))
-            push('P10.8', node, `local \`${n}\`: whole words (short list: ${[...LOCAL_OK].join(' ')})`);
-        else {
-            const unknown = ws.filter((w) => w.length >= 2 && w.length <= 4 && !LOCAL_OK.has(w) && !SHORT_OK.has(w) && !ABBREV.has(w));
-            if (unknown.length) push('P10.8', node, `local \`${n}\`: is ${unknown.map((w) => `\`${w}\``).join(', ')} a word?`, 'a word → SHORT_OK; a shortening → ABBREV and rename');
-        }
-        if (acronym(n)) push('P10.3', node, `local \`${n}\` writes an acronym in capitals`);
+        if (acronym(id.name)) push('P10.3', node, `local \`${id.name}\` writes an acronym in capitals`);
     };
 
     // ctx: { module (declarations here are module scope), cls (enclosing class node), fnDepth }
@@ -204,11 +119,7 @@ function scanFile(file, source) {
                         if (/^_[A-Za-z]/.test(id.name)) push('P12.13', id, `\`${id.name}\` is a binding: no \`_\` on a name nothing outside can reach`);
                         if (isFn(d.init)) fnName(d, id, { pub: exported.has(id.name) });
                         else if (ctx.module && d.id.type === 'Identifier') {
-                            if (node.kind === 'const' && constCase(id.name) && d.init && !yieldsPrimitive(d.init) && !/^Object\.freeze/.test(source.slice(d.init.start, d.init.start + 13)) && !(d.init.type === 'NewExpression' && /^RegExp$/.test(d.init.callee.name)) && d.init.type !== 'Literal')
-                                push('P12.8', id, `\`${id.name}\` is upper case but holds ${kindOf(d.init)}`, 'upper case only for a primitive or frozen value never reassigned');
-                            if (node.kind === 'const' && !constCase(id.name) && isPrimitive(d.init))
-                                push('P12.8', id, `\`${id.name}\` holds a primitive constant`, 'upper snake case, unless it is a setting read per call');
-                            local(id, d); // module names take whole words too (entry 12 rule 8)
+                            local(id, d);
                             if (/^[A-Z][a-z]/.test(id.name) && d.init && d.init.type !== 'ClassExpression')
                                 push('P12.8', id, `\`${id.name}\` is PascalCase but is not a class: camelCase`);
                             if (d.init?.type === 'Literal' && typeof d.init.value === 'string') topStrings.set(id.name, d.init.value);
@@ -250,10 +161,9 @@ function scanFile(file, source) {
                         push('P12.1', node, `\`${root}.${p}\`: an internal global is \`__NDS_{NAME}\``);
                     if (p && p.startsWith('_')) {
                         (objIsThis || root === 'NDS' ? defines : expandos).add(p);
-                        // `_nds…` is an element expando by name; any other `_x` may sit on a same-file instance.
-                        if (!objIsThis && root !== 'NDS' && root !== 'window')
-                            once(`14 ${p} ${node.loc.start.line}`, () => push('P12.14', node, `\`${source.slice(l.start, l.end)}\`: private data on an element goes in a module WeakMap`,
-                                p.startsWith('_nds') ? undefined : 'an element or a foreign object → WeakMap; an instance of a class in this file keeps it'));
+                        // `_nds…` is an element expando by name; any other `_x` may sit on a same-file instance, so review reads it.
+                        if (!objIsThis && root !== 'NDS' && root !== 'window' && p.startsWith('_nds'))
+                            once(`14 ${p} ${node.loc.start.line}`, () => push('P12.14', node, `\`${source.slice(l.start, l.end)}\`: private data on an element goes in a module WeakMap`));
                     }
                     if (p && /^nds[A-Z]/.test(p) && !objIsThis && root !== 'window' && propName(l.object) !== 'dataset' && typeof node.right.value === 'boolean')
                         push('P12.14', node, `\`${source.slice(l.start, l.end)} = ${node.right.raw}\`: a guard on the element → a module WeakSet`);
@@ -404,9 +314,9 @@ export function checkNames(files, read = (f) => readFileSync(f, 'utf8'), report 
             const others = (owners.get(name) || []).filter((f) => f !== s.name);
             if (s.defines.has(name) || seen.has(name) || !others.length || name.startsWith('__')) continue; // __NDS_*: rule 1's globals
             seen.add(name);
-            const shared = !s.expandos.has(name) || others.some((f) => expandoFiles.get(name)?.has(f));
-            out.push({ rule: 'P12.12', file: s.name, line: node.loc.start.line, what: `\`${name}\` is also used in ${others.join(', ')}: a public name, or a base or core (entry 11)`,
-                ...(shared ? {} : { verify: 'written here on another object: a member of that file → public name; its own expando → a name of its own' }) });
+            // Written here on another object and only declared there: only the types can tell, so review reads it.
+            if (s.expandos.has(name) && !others.some((f) => expandoFiles.get(name)?.has(f))) continue;
+            out.push({ rule: 'P12.12', file: s.name, line: node.loc.start.line, what: `\`${name}\` is also used in ${others.join(', ')}: a public name, or a base or core (entry 11)` });
         }
     }
     return out;

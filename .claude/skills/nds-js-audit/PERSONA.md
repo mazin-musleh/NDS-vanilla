@@ -320,7 +320,7 @@ Run (or mirror) `node scripts/check-banners.mjs --verify <file>`: missing banner
 
 `nds:{component}:{action}`, every segment lowercase kebab: `^nds:[a-z]+(-[a-z]+)*:[a-z]+(-[a-z]+)*$`.
 
-- **Component** — the component's class root without `nds-`: `nds-digital-stamp` → `digital-stamp`, `nds-taginput` → `taginput`, `nds-user-feedback` → `user-feedback`. An event a shared module fires for another component takes that component's name (`nds:checkbox:indeterminate`, whichever file fires it).
+- **Component** — the component's name (entry 9): `digital-stamp`, `taginput`, `user-feedback`. An event a shared module fires for another component takes that component's name (`nds:checkbox:indeterminate`, whichever file fires it). A shipped event keeps its name when the class or file changes.
 - **Action** — the tense says when it fires. The first that fits:
   1. `change` for a new value — the DOM's word (`nds:tabs:change`, `nds:otp:change`).
   2. A past participle only when the component's state change is already done, from the entry-3 verb that caused it: `open()` → `opened`/`closed`, `showSubmenu()` → `shown`/`hidden`, `expand()` → `expanded`/`collapsed`, `create()` → `created` (the message is in place).
@@ -330,11 +330,6 @@ Run (or mirror) `node scripts/check-banners.mjs --verify <file>`: missing banner
 **Why (and rejected alternatives)**
 
 One grammar lets a consumer guess an event from the component and what happened, and grep every event a component fires with one prefix. Kebab matches the class names, so the component segment reads the same in CSS, markup and listeners. Tense carries meaning: past says the state is already there, present says the step is now or still cancelable. Rejected: camelCase (`nds:formValid`, `nds:upload:beforeUpload`), which the 2.0.0 sweep removed like the camelCase classes; a `before-`/`after-` prefix, which repeats what the tense says; one tense for everything, which loses whether the state has already changed.
-
-**Carve-outs (NOT divergence)**
-
-- `nds:session:*` names what ends, not the Session Timeout component, which has no class root of its own (its dialogs are `.nds-modal`).
-- `nds:cookies:consent` is fired by the consent store, a base (`NDS.consent` from 2.0.0), for the Cookies component, by the rule above.
 
 **Audit behavior**
 
@@ -346,37 +341,31 @@ Flag any dispatched `nds:` literal (a `new CustomEvent(` name or a string passed
 
 **Canonical**
 
-A component has one singular kebab name `x`, taken from its root class `.nds-x`, and every surface uses it:
+A component's names are declared once and never worked out from each other again. The banner's first line declares the namespace (`NDS.X — public surface`), and its Events and Hooks declare the rest (entry 7). The check confirms the code matches the banner. It never checks one name against another.
 
-| Surface | Form | Example (`.nds-user-feedback`) |
+A new component takes its names from one singular kebab word `x`, so they read alike:
+
+| Surface | Form | Example (`user-feedback`) |
 |---|---|---|
 | JS file | `_js/nds-x.js` | `nds-user-feedback.js` |
-| SCSS partial | `_sass/components/_x.scss` | `_user-feedback.scss` |
-| Doc page | `<shelf>/x.md` | `components/user-feedback.md` |
+| Root class | `.nds-x` | `.nds-user-feedback` |
 | Init stamp | `data-nds-x-initialized` | `data-nds-user-feedback-initialized` |
 | Events | `nds:x:{action}` (entry 8) | `nds:user-feedback:submit` |
-| Namespace | `NDS.X`: `x` split at its hyphens, each part capitalized | `NDS.UserFeedback` |
+| Namespace | `NDS.X`: each hyphen part capitalized | `NDS.UserFeedback` |
 | Instance | `el.ndsX`, for a component with one instance per element | `el.ndsUserFeedback` |
 
-A component with one instance per page (Main Nav, Digital Stamp, Backdrop, Image Popup Viewer) keeps it private and exposes namespace methods (`NDS.Ipv.open(img)`), never a `window` global. A component without one of these surfaces skips it. A part of a component stamps and names its own part (`data-nds-columns-initialized`, `data-paged-initialized`). An acronym is one word: `.nds-otp` → `NDS.Otp`, `el.ndsIpv`.
-
-**The case tells the layer** (entry 11). A component, which has a root class or a loader entry, is PascalCase, named from its class; one with a loader entry and no root class takes its registry name (`NDS.Sort`, `NDS.Print`). Every other namespace is lowercase: a core module, a helper set, a base, the loader's API (`NDS.state`, `NDS.aria`, `NDS.dialog`, `NDS.init`). A function on `NDS` is camelCase per entry 10 (`NDS.buildChip`, `NDS.debounce`), whatever it builds.
+- **The class weighs most, but it is not a hard rule.** A namespace follows its class (`.nds-dropmenu` → `NDS.Dropmenu`, `.nds-taginput` → `NDS.Taginput`), even where another spelling reads better. A reason may beat the match, said once in review; none does today. Once the instance exists, it is `el.nds` + the namespace, because the loader builds that name (`nds-loader.js`).
+- **A shipped name keeps its spelling.** Renaming a class, file or doc page renames nothing else. A rename is its own decision; an observable one ships in a major with a Migration line (AGENTS.md, Framework Hosts).
+- **The case tells the layer** (entry 11): a component is PascalCase; a core module, a helper set, a base and the loader's API are lowercase (`NDS.state`, `NDS.dialog`, `NDS.init`). A function on `NDS` is camelCase per entry 10 (`NDS.buildChip`).
+- A component with one instance per page (Main Nav, Digital Stamp, Backdrop, Image Popup Viewer) keeps it private and exposes namespace methods (`NDS.Ipv.open(img)`), never a `window` global. A part stamps and names its own part (`data-nds-columns-initialized`, `el.ndsTableControls`). An acronym is one word (`NDS.Otp`, `el.ndsIpv`).
 
 **Why (and rejected alternatives)**
 
-The class is in every consumer page, so it is the costliest name to change and the one the others follow. With one name, a reader or an agent who knows the class can work out the file, the events and the namespace without the docs. Rejected: the namespace from the JS file alone (`8c139004`, then `999997de`), which let the file, class and events drift apart (`nds-tables.js`, `.nds-table`, `NDS.Tables`); acronyms in capitals (`NDS.OTP`, `toCSV`), which need a list of what counts as an acronym; a hyphen in the namespace, which a JS property cannot hold. The case says which layer a name belongs to before anyone opens the file, and a script can check it. Rejected for the case: "PascalCase for one with its own UI or lifecycle" (`96425c4e`), which nobody could check, so `State`, `Status` and `Init` kept PascalCase under it; a doc page as the test, since the `core/` shelf documents modules.
-
-**Carve-outs (NOT divergence)**
-
-- `.nds-btn` is the Button component (an abbreviation on every page).
-- Numbers keeps its registry name over its class (`.nds-number-format`).
-- A type part (Checkbox, Radio, Switch) has no `init()` and no loader entry: it registers with `NDS.field` at load (entry 11). It is still a component, with one name across its class, file, doc page and namespace. Formatted Input is the one part named for the fields it serves (`.nds-phone`, `.nds-national-id`, `.nds-iban`), not one class (`PART_CLASSES` in `check-banners.mjs`); its doc page is `components/formatted-input.md`.
-- A part's property is named for the part (`el.ndsTableControls`, `el.ndsColumnToggle`, `el.ndsCounter`).
-- `foundations/themes.md` documents theming, not the Theme switch.
+One pattern lets a reader guess a new component's names. Declaring them once stops a rename spreading. Rejected: every name derived from the root class (until 2026-10-23). One rename became several (`selectChange` → `nds:customselect:change` → `nds:custom-select:change`), a class with no hyphen gave `NDS.Taginput`, and the checks needed five exception tables for the names that did not fit (`plans/naming-rules-review.md`). Rejected: the class ignored, which brought back names already moved toward their classes (`NDS.SideMenu`, `NDS.SideInfo`, `NDS.ImagePopupViewer` before `8c139004`); the namespace from the JS file alone (`8c139004`, `999997de`); a script that decides the case from classes and loader entries, which turned `NDS.date` into `NDS.Date` 13 days after it shipped; acronyms in capitals (`NDS.OTP`), which need a list of what counts as one.
 
 **Audit behavior**
 
-For each loader-registered component: the JS file suffix, the registry `name` turned back into kebab case, the SCSS partial and doc page when they exist, the event segment and the init stamp must all be the same name → MEDIUM on any mismatch. `scripts/check-banners.mjs --all` checks the file, namespace, SCSS class prefix and doc page, and that every stamp and banner event names a real component, and fails the release. Flag a namespace whose case breaks the rule above → MEDIUM.
+`scripts/check-banners.mjs --all` fails the release when a loader entry has no file in `SCOPE` or a catalog `js` path is missing; entry 7 covers the banner against the code. Read in review: a new name that breaks the pattern above, or a case that breaks the layer → LOW. A shipped name is never flagged for not matching another.
 
 ---
 
@@ -448,10 +437,11 @@ A name a reader or an agent can guess from another component, or from the DOM an
 - `initX()` on a namespace runs `init()` for one part only (`Numbers.initCounters`, `Pagination.initAuto`): `init` already means "wire every element", and no other verb says "the same, for this part".
 - A public callback key keeps `onX`: an option a caller passes (`onClick`, `onRemove`, `onChange`) and a part key `NDS.field.addType` reads. React passes a `handleX` function as an `onX` prop; the `handleX` row names the function only.
 - Single-letter axis names (`X`, `Y` in `renderXLabels`) are not acronyms.
+- A public method may keep the word its markup and button already use (`apply()` beside `data-multiselect-action="apply"`): the internal table binds internal names only.
 
 **Audit behavior**
 
-Flag a public method whose verb is a synonym the table replaces (`recheck…`, `recount`, `checkOverflow`, `setDisabled`, `previous`, `switchTo`, `slideTo`, `initialize…`, `setup…`), a name that repeats its namespace, or two public names that call the same code → LOW, as a migration target for the next major. `check-js-rules.mjs --names` (rule ids `P10.<rule>`), for every function: a verb the internal table replaces → finding; a first word it does not know → verify; an acronym in capitals → finding; a short word outside rule 8's list → finding; a public `onX` / `initX` key on a local function of another name → finding (rule 9). Each is LOW; an internal rename needs no Migration line.
+Read in review: a public method whose verb is a synonym the table replaces (`recheck…`, `setDisabled`, `previous`, `switchTo`, `initialize…`), a name that repeats its namespace, two public names that call the same code, a verb that is not first, a shortened word → LOW, as a migration target for the next major. `check-js-rules.mjs --names` (rule ids `P10.<rule>`) checks shapes only, with no word list: an internal function whose first word the internal table replaces → finding; an acronym in capitals, on any name → finding; a public `onX` / `initX` key on a local function of another name → finding (rule 9). An internal rename needs no Migration line.
 
 ---
 
@@ -503,7 +493,7 @@ Use counts never decide. A meaning these four leave open is a new decision here,
 
 | Kind | Rule |
 |---|---|
-| Component: file, namespace, instance, init stamp, doc page | entry 9 |
+| Component: file, class, namespace, instance, init stamp | entry 9 |
 | Public methods, and every function's verb | entry 10 |
 | `_` members, module-scope names, per-element data | this entry, rules 11–16 |
 | Events | entry 8 |
@@ -555,7 +545,7 @@ Rule 11 makes the banner the one contract. Rejected: "a plain name is public", w
 
 **Audit behavior**
 
-`check-js-rules.mjs --names` (rule ids `P12.<rule>`): a member missing from its banner without `_` → finding; a `_` name read or written outside the file that declares it → finding; a binding with `_` → finding; a property written on an element other than `nds{Name}` → finding; a `#` member → finding; a `window.` write other than `__NDS_*` or `NDS` → finding; a storage or cookie key literal that does not start with `nds-` → finding; a class not named `Nds[A-Z]…` → finding; an event `detail` key that is not camelCase → finding; an upper-case constant holding a non-primitive, or a camelCase one holding a primitive literal → verify; rules 5 and 6 (whether a hook sits on the component's own element, whether a token names a state) are read, not checked. Each is LOW, a migration target. A storage key, hook, token or `detail` key is observable, so its rename ships in a major with a Migration line (AGENTS.md, Framework Hosts).
+`check-js-rules.mjs --names` (rule ids `P12.<rule>`): a member missing from its banner without `_` → finding; a `_` name read or written outside the file that declares it → finding; a binding with `_` → finding; a property written on an element other than `nds{Name}` → finding; a `#` member → finding; a `window.` write other than `__NDS_*` or `NDS` → finding; a storage or cookie key literal that does not start with `nds-` → finding; a class not named `Nds[A-Z]…` → finding; an event `detail` key that is not camelCase → finding. Read, not checked: rule 8's case for a constant, rules 5 and 6 (whether a hook sits on the component's own element, whether a token names a state), and a `_x` written on an object that may be a same-file instance. Each is LOW, a migration target. A storage key, hook, token or `detail` key is observable, so its rename ships in a major with a Migration line (AGENTS.md, Framework Hosts).
 
 ---
 

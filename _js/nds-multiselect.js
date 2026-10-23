@@ -8,7 +8,7 @@
  *   NDS.Multiselect.destroy(el)          tear one field down
  *   instance.renderOptions(options, selected) rebuild the option set at runtime
  *   instance.getSelected()               the picked values
- *   instance.commit() / .reset()         commit the menu's picks / clear them
+ *   instance.apply() / .reset()          apply the menu's picks / clear them
  *   instance.removeValue(value)          unpick one value
  * Events (bubble from .nds-multiselect):
  *   nds:multiselect:change   detail {name, values, labels} — on every commit
@@ -327,7 +327,7 @@
             // No data-no-auto-close on Apply — the dropmenu closes it and
             // hands focus back to the trigger.
             if (this._applyButton) {
-                this._applyButton.addEventListener('click', () => this.commit(), { signal });
+                this._applyButton.addEventListener('click', () => this.apply(), { signal });
             }
 
             // A form reset ticks the boxes back without a change event.
@@ -383,7 +383,7 @@
         // Commit the current checked set: chips, a11y summary, change event.
         // In apply mode this is the Apply button's handler; callable directly
         // in either mode.
-        commit() {
+        apply() {
             this._applied = this.getSelected();
             this._renderChips();
             const labels = this._applied.map(value => this._getLabel(value));

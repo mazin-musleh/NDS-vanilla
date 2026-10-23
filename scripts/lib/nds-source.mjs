@@ -14,7 +14,3 @@ export const PAGE_DIRS = [...DOC_SHELVES, 'examples', 'templates'];
 let names;
 export const loaderNames = () => names ||= [...readFileSync(join(REPO, '_js', 'nds-loader.js'), 'utf8')
     .matchAll(/^\s*name:\s*'([^']+)'/gm)].map((m) => m[1]);
-
-// One name per component (PERSONA entry 9): MainNav ↔ main-nav, Taginput ↔ taginput, date ↔ date.
-export const kebab = (ns) => ns.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
-export const pascal = (k) => k.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join('');

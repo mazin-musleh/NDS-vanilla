@@ -3,8 +3,8 @@
  * NDS public-surface banner checker (PERSONA entry 7, JSD-20).
  *
  *   node scripts/check-banners.mjs --verify <file>    check one file's banner
- *   node scripts/check-banners.mjs --all              check every in-scope file, one name per component
- *                                                     (entry 9), and every NDS.X.method / nds:x:y caller
+ *   node scripts/check-banners.mjs --all              check every in-scope file, the loader and catalog
+ *                                                     links, and every NDS.X.method / nds:x:y caller
  *   node scripts/check-banners.mjs --generate <file>  print a banner skeleton to stdout
  *
  * Never writes files. Exit 0 = clean, 1 = findings, 2 = usage error.
@@ -17,7 +17,7 @@
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { basename, join, resolve as resolvePath } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { REPO, DOC_SHELVES, PAGE_DIRS, loaderNames, kebab } from './lib/nds-source.mjs';
+import { REPO, PAGE_DIRS, loaderNames } from './lib/nds-source.mjs';
 
 // The single source of truth for which files carry a banner: every component, plus core, loader,
 // accessibility, theme and the shared internals (backdrop, dialog, date). ns = the NDS.<Name> namespace Methods verify against; null =
@@ -122,19 +122,6 @@ const isPrefix = (name) => name.endsWith(':');
 
 // The event grammar, PERSONA entry 8.
 const EVENT_NAME = /^nds:[a-z]+(-[a-z]+)*:[a-z]+(-[a-z]+)*$/;
-
-// One name per component (PERSONA entry 9): carve-outs, each a surface the component documents elsewhere.
-const DOC_ELSEWHERE = {
-    'theme': 'foundations/themes.md',
-    'digital-stamp': 'ui-shell/topbar.md',
-    'city-weather': 'ui-shell/topbar.md',
-    'time-date': 'ui-shell/topbar.md',
-};
-// A part stamps its own name, not its component's.
-const STAMP_PARTS = new Set(['columns', 'auto-pagination']);
-// Classless: nds:session:* names what ends (Session Timeout), nds:template:ready is core's NDS.fromTemplate;
-// nds:phone:change is the .nds-phone field (nds-formatted-input.js), which has no page of its own.
-const EVENT_SCOPES = new Set(['session', 'template', 'phone']);
 
 const SECTIONS = ['Rides', 'Methods', 'Events', 'Hooks', 'Gotchas'];
 // Optional, after Rides: the markup the script needs to work, baked into the audit's required-part rule.
@@ -402,86 +389,25 @@ function verifyFile(file, ns, source) {
     return issues;
 }
 
-// ── one name per component ──────────────────────────────────────────────────
+// ── loader and catalog links ─────────────────────────────────────────────────
 
-// Names that break the case rule until their plans/shared-logic.md step lands (section 3).
-const CASE_PENDING = {};
-// A type part named for the fields it serves, not one class (entry 9): each class must appear in its file.
-const PART_CLASSES = { 'formatted-input': ['nds-phone', 'nds-national-id', 'nds-iban'] };
-
-const sassText = () => {
-    const out = [];
-    const read = (dir) => readdirSync(dir, { withFileTypes: true }).forEach((d) => {
-        const p = join(dir, d.name);
-        if (d.isDirectory()) read(p); else if (d.name.endsWith('.scss')) out.push(readFileSync(p, 'utf8'));
-    });
-    read(join(REPO, '_sass'));
-    return out.join('\n');
-};
-
+// Names are declared once, in the banner (PERSONA entry 9): nothing here derives one name from another.
 function checkNames() {
     const issues = [];
-    const registered = loaderNames();
-    const stems = new Set(SCOPE.map(([f]) => f.replace(/^nds-|\.js$/g, '')));
-    const partials = new Set(readdirSync(join(REPO, '_sass', 'components')).map((f) => f.replace(/^_|\.scss$/g, '')));
-
-    for (const ns of registered) {
-        const x = kebab(ns);
-        const file = `nds-${x}.js`;
-        const entry = SCOPE.find(([f]) => f === file);
-        if (!entry) { issues.push(`NDS.${ns}: no _js/${file}`); continue; }
-        if (entry[1] !== ns) issues.push(`NDS.${ns}: _js/${file} is in SCOPE as NDS.${entry[1]}`);
-        const scss = join(REPO, '_sass', 'components', `_${x}.scss`);
-        if (existsSync(scss) && !new RegExp(`\\.nds-${x}(?![\\w])`).test(readFileSync(scss, 'utf8'))) {
-            issues.push(`NDS.${ns}: _${x}.scss has no .nds-${x} class`);
-        }
-        const doc = DOC_ELSEWHERE[x];
-        if (doc ? !existsSync(join(REPO, doc)) : !DOC_SHELVES.some((s) => existsSync(join(REPO, s, `${x}.md`)))) {
-            issues.push(`NDS.${ns}: no doc page ${doc || `<shelf>/${x}.md`}`);
-        }
+    // The loader names a component through its namespace, so some file must define it.
+    for (const ns of loaderNames()) {
+        if (!SCOPE.some(([, n]) => n === ns)) issues.push(`NDS.${ns}: a loader entry, but no file in SCOPE defines it`);
     }
-
-    // The case tells the layer (entry 9): a component, which has a root class or a loader entry, is
-    // PascalCase; everything else is lowercase. Core's own PascalCase objects are checked too.
-    const sass = sassText();
-    const core = readFileSync(join(REPO, '_js', 'nds-core.js'), 'utf8');
-    const namespaces = [...SCOPE.filter(([, ns]) => ns), ...[...core.matchAll(/\bNDS\.([A-Z]\w*)\s*=(?!=)/g)].map((m) => ['nds-core.js', m[1]])];
-    for (const [file, ns] of namespaces) {
-        const x = kebab(ns);
-        // Written as a class, not any string: a storage key may read 'nds-consent'.
-        const builds = file !== 'nds-core.js' && new RegExp(`(?:className\\s*[=:+]+\\s*|classList\\.(?:add|toggle)\\(\\s*|class=)['"\`]?[^'"\`]*?\\bnds-${x}(?![\\w-])`).test(readFileSync(join(REPO, '_js', file), 'utf8'));
-        const part = PART_CLASSES[x]?.every((name) => new RegExp(`\\.${name}(?![\\w-])`).test(readFileSync(join(REPO, '_js', file), 'utf8')));
-        const component = registered.includes(ns) || new RegExp(`\\.nds-${x}(?![\\w-])`).test(sass) || builds || !!part;
-        const ok = /^[A-Z]/.test(ns) === component;
-        if (CASE_PENDING[ns]) {
-            if (ok) issues.push(`NDS.${ns}: passes the case rule now, so drop it from CASE_PENDING`);
-            continue;
-        }
-        if (!ok) issues.push(`NDS.${ns}: ${component ? 'a component, so PascalCase' : 'no root class and no loader entry, so lowercase'} (PERSONA entry 9)`);
-    }
-    for (const name of Object.keys(CASE_PENDING)) {
-        if (!namespaces.some(([, ns]) => ns === name)) issues.push(`NDS.${name}: gone, so drop it from CASE_PENDING`);
-    }
-
-    // Every catalog js: names a file that exists.
+    // Every catalog js: names a file that exists, and every loader component has a catalog page.
+    const catalogJs = new Set();
     for (const m of readFileSync(join(REPO, '_data', 'catalog.yml'), 'utf8').matchAll(/^\s+js:\s*["']?([^"'\s#]+)/gm)) {
         if (!existsSync(join(REPO, m[1]))) issues.push(`catalog.yml: js ${m[1]} does not exist`);
+        catalogJs.add(basename(m[1]));
     }
-
-    // A file may fire or stamp for another component, never for a name no component has.
-    const known = new Set([...registered.map(kebab), ...stems, ...partials]);
-    for (const [file] of SCOPE) {
-        const source = readFileSync(join(REPO, '_js', file), 'utf8');
-        for (const m of source.matchAll(/data-nds-([a-z-]+)-initialized/g)) {
-            if (!known.has(m[1]) && !STAMP_PARTS.has(m[1])) issues.push(`${file}: stamp data-nds-${m[1]}-initialized names no component`);
-        }
-        const events = parseBanner(source)?.sections.find((s) => s.label === 'Events');
-        for (const name of events ? bannerEventNames(events.text) : []) {
-            const x = name.split(':')[1];
-            if (name.startsWith('nds:') && x && !known.has(x) && !EVENT_SCOPES.has(x)) issues.push(`${file}: event ${name} names no component`);
-        }
+    for (const [file, ns] of SCOPE) {
+        if (loaderNames().includes(ns) && !catalogJs.has(file)) issues.push(`NDS.${ns}: no catalog.yml entry names _js/${file}`);
     }
-    return [...new Set(issues)];
+    return issues;
 }
 
 // ── callers: nothing calls a name no component defines ─────────────────────
@@ -626,7 +552,7 @@ if (!isMain) {
     const callers = checkCallers();
     for (const issue of callers) console.log(`callers                      ${issue}`);
     console.log(`\n${SCOPE.length} files in scope, ${SCOPE.length - bad} ok, ${bad} with findings`);
-    console.log(names.length ? `one name per component: ${names.length} findings` : 'one name per component: ok');
+    console.log(names.length ? `loader and catalog links: ${names.length} findings` : 'loader and catalog links: ok');
     console.log(callers.length ? `callers: ${callers.length} dead names` : 'callers: ok');
     process.exit(bad || names.length || callers.length ? 1 : 0);
 } else if (mode === '--verify' && arg) {

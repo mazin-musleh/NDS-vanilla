@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "23/10/2026 - 03:30 AM"
 ---
 
 <section id="multiselect-overview" class="nds-content-section nds-doc-overview">
@@ -404,7 +404,7 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
 | `NDS.Multiselect.validate(el, options)` | Checks the field and returns `{ valid, message, checked, min, max }`. Pass `{ showMessage: false }` to check without a message |
 | `el.ndsMultiselect` | The instance of a field that has started |
 | `instance.getSelected()` | Returns the values of the checked options, in menu order |
-| `instance.commit()` | Commits the checked options: the chips change and the change event fires. The Apply button calls it |
+| `instance.apply()` | Applies the checked options: the chips change and the change event fires. The Apply button calls it |
 | `instance.reset()` | Unchecks every option and commits. With an Apply button and the menu open, it unchecks them in the menu only |
 | `instance.removeValue(value)` | Unchecks one option and commits |
 | `instance.renderOptions(options, selected)` | Replaces the options. It takes the shapes that `data-multiselect-options` takes, and an array of values to check. It fires no change event |
