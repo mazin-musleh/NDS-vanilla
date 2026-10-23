@@ -286,6 +286,12 @@
             // input event in flight would then reach its onChange as no change.
             if (value !== input.value) { Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'value').set.call(input, value); shaped = true; }
         }, { signal });
+        // A composed word (a phone keyboard) is shaped once it commits, as if typed at the end.
+        input.addEventListener('compositionend', (e) => {
+            if (!e.data || input.readOnly || input.selectionEnd !== input.value.length) return;
+            const before = input.value.slice(0, -e.data.length);
+            write(type(getMask(), before, before.length, before.length, e.data));
+        }, { signal });
         input.addEventListener('beforeinput', (e) => {
             // Chrome sends beforeinput on a readonly field too.
             if (e.isComposing || input.readOnly) return;

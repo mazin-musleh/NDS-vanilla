@@ -244,6 +244,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Forms** — A narrow field keeps its parts inside its border. A prefix or suffix cuts its label with "…", and the input keeps room for two characters. Two buttons in one prefix or suffix join with no gap. The text of a Custom Select no longer runs under its arrow.
 - **Forms** — An `.nds-info` alone in a label gets the info style.
 - **Forms** — Arabic-Indic digits pasted or autofilled into a phone number or OTP become Latin digits; they were dropped.
+- **Forms** — A phone number typed on a keyboard that composes words, as many Android keyboards do, shows what was typed. Before, `055` became `5055`.
 - **Forms** — A disabled checkbox, radio or switch group's options look like a single disabled option; the group faded to 50% on top of each option's disabled color. The group's title takes the disabled text color.
 - **Forms** — A control added after load no longer moves focus back to the `autofocus` field or shows a wrapper the page hid. A radio `name` or switch `id` with a quote no longer throws.
 - **Forms** — A binding (`v-model`, `ngModel`, React state) holds what the field shows after NDS rewrites it: a pasted phone number without its leading 0, a number pulled into range on blur, a password without the Arabic letters NDS removes. A dropmenu picker's hidden field fires `input` with its `change`, and User Feedback's reset fires both on each box it unticks.

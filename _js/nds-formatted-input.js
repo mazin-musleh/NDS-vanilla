@@ -322,8 +322,13 @@
                     stampIdentifier(field, { text: back ? value.slice(0, at - 1) + value.slice(start) : value.slice(0, at) + value.slice(at + 2), caret: back ? at - 1 : at });
                 }
             },
+            // A keyboard composing a word owns its text until it commits (Android): a rewrite then doubles it.
             input: function(e, context) {
-                if (context) stampIdentifier(context.input, { country: /^insertFrom(Paste|Drop)$/.test(e.inputType) });
+                if (context && !e.isComposing) stampIdentifier(context.input, { country: /^insertFrom(Paste|Drop)$/.test(e.inputType) });
+            },
+            // A word composed into an empty field takes the country, as one typed does.
+            compositionend: function(e, context) {
+                if (context) stampIdentifier(context.input, { country: e.data === context.input.value });
             },
             // Submit and new FormData(form) send the value without its groups ("SA03 8000 …" → "SA038000…"),
             // and a phone the whole number, its country code first (E.164: "+966551234567").

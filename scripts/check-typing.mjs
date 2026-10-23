@@ -16,12 +16,13 @@
 // Keys are typed as text, and `{Name}` presses a key: '{Backspace}05'. `{Paste:text}` pastes text as the browser
 // does (beforeinput, insert, input as insertFromPaste; never the clipboard: it is the machine's, and the
 // parallel pages would share it). `{Blur}` leaves the field, and `{Insert:text}` sends text as one insert,
-// as a phone keyboard or dictation does. A new pattern is one more
+// as a phone keyboard or dictation does. `{Compose:a|ab}` composes a word step by step and commits it, as
+// an Android keyboard does (WebKit, with no IME to drive, sends the word as one insert). A new pattern is one more
 // PATTERNS entry: the field markup, its instance property, cases and round-trip values.
 //
 //   node scripts/check-typing.mjs [pattern …]     ENGINE=webkit · PAGES=<parallel pages, default 4>
 // Needs the dev server on :4002 (SITE=<base url> for another).
-import { launch, log, step } from './lib/browser.mjs';
+import { launch, log, step, cdp, ENGINE } from './lib/browser.mjs';
 
 const SITE = (process.env.SITE || 'http://localhost:4002/NDS-vanilla/').replace(/\/?$/, '/');
 const PAGES = +process.env.PAGES || 4;
@@ -136,6 +137,7 @@ const PATTERNS = {
             ['dmy', '', '{Paste:٢٨-۰۵-١٩٨٣}', '28/05/1983'],
             ['dmy', '', '01010500{Blur}', '01/01/0500'],
             ['dmy', '|28/05/1983', '{Insert:15/07/2000}', '15/07/2000|'],
+            ['dmy', '', '{Compose:2|28|280|2805}', '28/05/|'],
             ['dmy', '|28/05/198', '1', '|28/05/198'],
             ['iso', '|1983-05-2', '8', '|1983-05-2'],
             // Paste, and a typed date read when the field is left: written another common way → the format.
@@ -193,6 +195,7 @@ const PATTERNS = {
             ['h24', '', '٠٩٣٠', '09:30|'],
             ['h24', '', '۱۴۳۰', '14:30|'],
             ['h12', '', '0230p', '02:30 PM|'],
+            ['h12', '', '{Compose:0230|0230p}', '02:30 PM|'],
             ['h12', '', '13', '1|'],
             ['secs', '', '143005', '14:30:05|'],
             ['h24', '|14:30', '0', '0|4:30'],
@@ -256,6 +259,11 @@ const PATTERNS = {
             ['iban', '', '{Paste:SA03 8000 0000 6080 1016 7519}', 'SA03 8000 0000 6080 1016 7519|'],
             ['iban', '', '{Paste:sa03-8000-0000-6080-1016-7519}', 'SA03 8000 0000 6080 1016 7519|'],
             ['iban', 'SA03 80|00', '1', 'SA03 801|0 0'],
+            // A composed word is shaped once it commits: rewritten mid-word, Android doubled it ("SSAS A0…").
+            ['iban', '', '{Compose:s|sa|sa0|sa03}', 'SA03|'],
+            ['iban', 'SA03|', '{Compose:8|80|800|8000}', 'SA03 8000|'],
+            ['iban', '', '{Compose:8|80|800|8000}', 'SA80 00|'],
+            ['phone', '', '{Compose:0|05|055}', '55|'],
             ['iban', '[SA]03 8000', '{Backspace}', '|0380 00'],
             ['iban', 'SA03 |8000', '{Backspace}', 'SA0|8 000'],
             ['iban', 'SA03| 8000', '{Delete}', 'SA03 |000'],
@@ -399,6 +407,15 @@ async function run(page, job) {
         if (!part) continue;
         if (part.startsWith('{Paste:')) await paste(page, id, part.slice(7, -1));
         else if (part.startsWith('{Insert:')) await page.keyboard.insertText(part.slice(8, -1));
+        else if (part.startsWith('{Compose:')) {
+            const words = part.slice(9, -1).split('|');
+            if (ENGINE === 'chromium') {
+                const session = await cdp(page);
+                for (const text of words) await session.send('Input.imeSetComposition', { text, selectionStart: text.length, selectionEnd: text.length });
+                await session.send('Input.insertText', { text: words.at(-1) });
+                await session.detach();
+            } else await page.keyboard.insertText(words.at(-1));
+        }
         else if (part === '{Blur}') await page.evaluate((id) => document.getElementById(id).blur(), id);
         else if (/^\{\w+\}$/.test(part)) await page.keyboard.press(part.slice(1, -1));
         else await page.keyboard.type(part);

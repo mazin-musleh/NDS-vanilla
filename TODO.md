@@ -13,7 +13,7 @@ Cleaned 2026-10-19: finished items and their release notes left (all in `CHANGEL
 - **JS naming rules: done 2026-10-21** (`plans/js-naming-rules.md`); the naming checks fail the release.
 - **Shaped typing: Date Picker, Time Picker, phone and IBAN (built 2026-10-22).** One engine, `NDS.typing` (`_js/nds-typing.js`, main bundle): a date or time types over its units, and a phone (`data-format`) or IBAN (groups of four) inserts and regroups. A submit and `new FormData(form)` send an IBAN without spaces, and a phone with `data-country-code` as E.164 (`+966551234567`, also in `nds:phone:change`). Guarded by `node scripts/check-typing.mjs` (patterns date, time, group: cases, delete-and-retype sweep, seeded fuzz, submit values, phone events; `ENGINE=webkit`). Open:
   [ ] Calendar conversion at the last input (owner, 2026-10-22): convert a date in the other calendar when the user finishes, not mid-edit (today a paste converts at once). Confirm the exact trigger with the owner first.
-  [ ] More testing: a real Ctrl+V in Chrome and Safari (the checker sends the browser's paste events, not the clipboard), phone keyboards (Android sends several characters at once), and an RTL page, for all four fields.
+  [ ] Owner call: on an RTL page a phone's country code reads `966+` in the prefix (the doc canon as written; the country menu's labels not checked). Fix in CSS (the prefix label read left to right) or leave it.
   [ ] At release, CHANGELOG: the `[Unreleased]` National ID and IBAN line says `.nds-iban` cleans the value; it now shows groups of four. Add phone `data-format`, on the field or on each country item.
 
 ### Parked features (owner calls; after v2.0.0 unless noted)
