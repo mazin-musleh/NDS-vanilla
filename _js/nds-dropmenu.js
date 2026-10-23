@@ -39,9 +39,11 @@
  *   - data-position-vertical is written by the component (a CSS hook), never set it yourself.
  *   - The open menu sits in the browser's top layer (popover="manual", stamped at init):
  *     nothing clips it and it stays in place in the DOM, so closest(), bubbling and the
- *     wrapper's knobs and theme reach it. Page scroll carries it, over the sticky nav; it
- *     closes when its trigger leaves view. Without popover support (Safari < 17,
- *     Firefox < 125) it is fixed and follows every scroll, so a scroll box cannot cut it.
+ *     wrapper's knobs and theme reach it. Page scroll carries it. With CSS anchors (Chrome 125,
+ *     Safari 26) it is anchored to its trigger, so the browser follows a scroll box too, and a
+ *     trigger in a fixed or sticky box (a panel) gets a fixed menu; without them JS follows.
+ *     It rides over the sticky nav and closes when its trigger leaves view. Without popover
+ *     (Safari < 17, Firefox < 125) it is fixed and follows every scroll.
  */
 
 /**
@@ -860,15 +862,24 @@
             NDS.aria.hidden(this._menu, false);
 
             this.syncPosition();
-
-            // Absolute in the top layer: page scroll carries the menu with no JS. Only a
-            // scroll box around the trigger moves one without the other. rAF-throttled.
-            // Without popover the menu is fixed, so page scroll moves it too.
-            const reposition = NDS.throttleToFrame(() => this._trackPosition());
-            const fixed = !this._menu.showPopover;
-            const handleScroll = (e) => { if (e.target === document ? fixed : e.target.contains?.(this.trigger)) reposition(); };
             const { signal } = this.documentAbortController;   // close() aborts it with the other document listeners
-            document.addEventListener('scroll', handleScroll, { capture: true, passive: true, signal });
+
+            // Anchored, the browser keeps the menu on its trigger through every scroll, with no script.
+            // Otherwise it is absolute in the top layer: page scroll carries it, and JS follows a
+            // scroll box around the trigger, rAF-throttled. Without popover it is fixed and follows every scroll.
+            if (!this._anchored) {
+                const reposition = NDS.throttleToFrame(() => this._trackPosition());
+                const fixed = !this._menu.showPopover;
+                // A trigger in a fixed or sticky box (a panel, a bar) stays put while the page scrolls under it.
+                const pinned = NDS.isPinned(this.trigger);
+                // The box may move a frame later (a panel tracks the sticky header): place once more when scroll settles.
+                const settle = NDS.debounce(reposition, 100);
+                const handleScroll = (e) => {
+                    if (e.target === document ? fixed || pinned : e.target.contains?.(this.trigger)) { reposition(); if (pinned) settle(); }
+                };
+                document.addEventListener('scroll', handleScroll, { capture: true, passive: true, signal });
+                signal.addEventListener('abort', settle.cancel);
+            }
             // Close when the trigger leaves view (its scroll box hid it). A page scroll carries the
             // menu over the sticky nav, as the top layer paints it: closing there threw away a Filter's ticks.
             const leave = () => { if (this.isOpen) this.close(); };
@@ -958,6 +969,8 @@
             // Only what open() wrote: an authored style and the no-popover position stay.
             ['top', 'left', 'width', 'max-height', 'overflow-y', '--dropmenu-width', '--dropmenu-min-width', '--dropmenu-max-width']
                 .forEach(property => this._menu.style.removeProperty(property));
+            if (this._anchored) NDS.unplace(this._menu, this.trigger);
+            this._anchored = undefined;
             const scroll = this._findOwnItem('.nds-dropmenu-scroll');
             if (scroll) scroll.style.maxHeight = '';
             NDS.aria.hidden(this._menu, true);
@@ -1079,7 +1092,12 @@
             // scrolled off-screen).
             this._flipUp = flipUp;
 
-            NDS.place(this._menu, top, leftPx);
+            this._place(top, leftPx);
+        }
+
+        // Anchored to the trigger where the browser can; after one miss, plain coords until close.
+        _place(top, left) {
+            this._anchored = NDS.place(this._menu, top, left, this._anchored === false ? null : this.trigger);
         }
 
         // The nearest scroll box around the menu inside an open <dialog>, or null.
@@ -1155,7 +1173,7 @@
             // Same horizontal rule as the opening placement, including its
             // viewport clamp — users can't scroll sideways to recover
             // off-screen content.
-            NDS.place(this._menu, top, this._getLeft(tRect, mRect.width, undefined, this._edge));
+            this._place(top, this._getLeft(tRect, mRect.width, undefined, this._edge));
         }
 
         // ==============================================

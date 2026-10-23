@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "22/10/2026 - 05:26 PM"
+last_edit: "23/10/2026 - 09:47 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -171,6 +171,8 @@ NDS adds classes to some elements, such as `nds-dropmenu` on a picker's field an
 An NDS field fires the native `input` and `change` events each time it writes a value, so a two-way binding that listens for them sees the user's pick. Vue's `v-model`, Angular's `ngModel` and Svelte's `bind:value` are examples. Bind the input that holds the value: for Custom Select that is `.nds-select-value`, because its visible field holds the option's text. Tag Input, Multiselect and Rating have no single value field, so read their value from their event.
 
 A controlled React field sees each value that NDS writes, a checkbox and a switch too: its `onChange` runs, so keep the value in state there. Write your own values with `NDS.setValue(el, value)` for the same result.
+
+React runs no `onChange` for a hidden input, such as Custom Select's `.nds-select-value` or a Date Picker's `.nds-date-value`: listen for its `change` event with `addEventListener`, through a ref. Do not give it a `value` or `defaultValue` prop either. React writes the prop again on a later render, over the value that NDS wrote. To start it with a value, write the value once after mount with `NDS.setValue`.
 
 React 19 resets a `<form>` after its form action succeeds. The NDS fields in it go back to their starting values with it, as on any form reset.
 

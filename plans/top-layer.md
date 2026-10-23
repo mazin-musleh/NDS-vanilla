@@ -163,7 +163,7 @@ Two public components with their own uses and options; the markup and API do not
 
 - Safari 17 and Firefox 125 or newer. Older browsers get a menu that can clip; nothing breaks.
 - Close animations: `overlay` is Chrome only, so WebKit drops the element at once. Keep the JS `closing` state, as today.
-- Position: Dropmenu keeps its own JS placement (flip, clamp, cursor anchor, max-height) for every menu, written as `position: absolute` coordinates in the top layer (`NDS.place`). CSS anchor positioning (`position-area`, Safari 26 and later) only placed the demo's menus; it cannot clamp a list's height, so it is not the production path.
+- Position: Dropmenu keeps its own JS placement (flip, clamp, cursor anchor, max-height) for every menu. Where CSS anchors work (Chrome 125, Safari 26), it writes that place against the trigger (`anchor()`; the menu is `position: fixed` when the trigger sits in a fixed or sticky box, else absolute, so page scroll still carries it on the compositor), so the browser keeps the menu on it through every scroll: 0 px drift at 6x CPU in a fixed panel, where JS following drifted 24 px (rig 8, 2026-10-23). Elsewhere the menu is `position: absolute` coordinates in the top layer (`NDS.place`). `position-area` alone cannot clamp a list's height, so JS still decides the place.
 - `.nds-card` overrides the dialog's `position`, `margin` and closed `display`: a reset ships with the dialog.
 - A `<form method="dialog">` inside a card needs `nds-form`, or the card loses its layout.
 

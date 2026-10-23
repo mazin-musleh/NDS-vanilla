@@ -25,7 +25,7 @@
  *   DOM
  *     NDS.markHome(el) / .sendHome(el) / .getHome(el)   move a node the app owns; its old spot answers for it
  *     NDS.setTopLayer(el, on)             show or hide a [popover] in the top layer, in place
- *     NDS.resolveElement(idOrElOrSel) · NDS.fromTemplate(id) · NDS.flipPosition(trigger, menu) · NDS.place(el, t, l)
+ *     NDS.resolveElement(idOrElOrSel) · NDS.fromTemplate(id) · NDS.flipPosition(trigger, menu) · NDS.place(el, t, l[, anchor]) · NDS.unplace(el, anchor) · NDS.isPinned(el)
  *     NDS.getStickyHeaderBottom() · NDS.getViewportPadding(el) · NDS.getVisibleBox() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
  *     NDS.dragScroll(el, { canScroll, signal })   wheel + mouse-drag sideways scroll; a drag swallows its click
  *     NDS.trapFocus(getEl) · NDS.focusableSel
@@ -1668,18 +1668,52 @@
     // wrapper where popover is missing, the viewport for a fixed element.
     // The transform back-out handles in-flight slide animations on the
     // element itself (e.g. dropmenu's opening translateY).
-    // Usage: NDS.place(menu, top, leftPx);
-    NDS.place = (el, top, left) => {
-        el.style.top = top + 'px';
-        el.style.left = left + 'px';
+    // With an anchor and CSS anchor positioning (Chrome 125, Safari 26), the coords are written
+    // against the anchor, so the browser keeps el on it through every scroll with no script.
+    // An anchor in a fixed or sticky box (a panel) gets a fixed el: page scroll moves neither.
+    // Checked once: an anchor el cannot use (one in a later top-layer box) gets plain coords.
+    // Returns true when anchored; NDS.unplace(el, anchor) removes what an anchored place wrote.
+    // Usage: NDS.place(menu, top, leftPx[, trigger]);
+    const ANCHORS = typeof CSS !== 'undefined' && CSS.supports('anchor-name: --a');
+    const anchorNames = new WeakMap();
+    let anchorCount = 0;
+    const offset = (el, top, left) => {
         const rect = el.getBoundingClientRect();
         const { m41: translateX, m42: translateY } = new DOMMatrixReadOnly(getComputedStyle(el).transform);
-        const dx = (rect.left - translateX) - left;
-        const dy = (rect.top  - translateY) - top;
+        return [(rect.left - translateX) - left, (rect.top - translateY) - top];
+    };
+    NDS.place = (el, top, left, anchor) => {
+        if (anchor && ANCHORS) {
+            if (!anchorNames.has(anchor)) anchorNames.set(anchor, '--nds-anchor-' + ++anchorCount);
+            const name = anchorNames.get(anchor), at = anchor.getBoundingClientRect();
+            anchor.style.setProperty('anchor-name', name);
+            el.style.setProperty('position-anchor', name);
+            el.style.position = NDS.isPinned(anchor) ? 'fixed' : '';
+            el.style.top = `calc(anchor(top) + ${top - at.top}px)`;
+            el.style.left = `calc(anchor(left) + ${left - at.left}px)`;
+            const [dx, dy] = offset(el, top, left);
+            if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return true;
+            NDS.unplace(el, anchor);
+        }
+        el.style.top = top + 'px';
+        el.style.left = left + 'px';
+        const [dx, dy] = offset(el, top, left);
         if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
             el.style.top  = (top  - dy) + 'px';
             el.style.left = (left - dx) + 'px';
         }
+        return false;
+    };
+    NDS.unplace = (el, anchor) => {
+        anchor?.style.removeProperty('anchor-name');
+        ['position-anchor', 'position', 'top', 'left'].forEach((property) => el.style.removeProperty(property));
+    };
+
+    // Inside a fixed or sticky box: it stays put while the page scrolls under it.
+    // Usage: if (NDS.isPinned(trigger)) follow it on page scroll;
+    NDS.isPinned = (el) => {
+        for (let box = el.parentElement; box; box = box.parentElement) if (/fixed|sticky/.test(getComputedStyle(box).position)) return true;
+        return false;
     };
 
     // Cached lookup for `.nds-main-nav` — flipPosition fires on every popup

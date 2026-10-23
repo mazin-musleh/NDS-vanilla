@@ -1002,10 +1002,12 @@
                 const p2 = points[i + 1];
                 const p3 = points[Math.min(i + 2, points.length - 1)];
                 const divisor = 8;
+                // Held between the two points, so the curve never swings past them (below zero beside a peak).
+                const low = Math.min(p1.y, p2.y), high = Math.max(p1.y, p2.y);
                 const cp1x = p1.x + (p2.x - p0.x) / divisor;
-                const cp1y = p1.y + (p2.y - p0.y) / divisor;
+                const cp1y = Math.min(high, Math.max(low, p1.y + (p2.y - p0.y) / divisor));
                 const cp2x = p2.x - (p3.x - p1.x) / divisor;
-                const cp2y = p2.y - (p3.y - p1.y) / divisor;
+                const cp2y = Math.min(high, Math.max(low, p2.y - (p3.y - p1.y) / divisor));
                 path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
             }
             return path;

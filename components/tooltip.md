@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "23/10/2026 - 10:22 PM"
 ---
 
 <section id="tooltip-overview" class="nds-content-section nds-doc-overview">
@@ -162,7 +162,7 @@ With no `data-tooltip-message`, the root's `title` is the message. Until the scr
             <i class="hgi hgi-stroke hgi-keyboard"></i>
             <span class="nds-label">Dismissal</span>
           </span>
-          <p class="nds-item-desc">A click outside, a page scroll, or Escape closes the balloon, wherever focus is, so a balloon opened by hover closes too. Escape on the trigger also returns focus to it. Only one tooltip is open at a time.</p>
+          <p class="nds-item-desc">A click outside or Escape closes the balloon, wherever focus is, so a balloon opened by hover closes too. While the page scrolls, the balloon stays on its trigger and closes when the trigger leaves view. A browser without CSS anchor positioning closes it on a page scroll instead. Escape on the trigger also returns focus to it. Only one tooltip is open at a time.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

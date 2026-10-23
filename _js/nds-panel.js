@@ -155,13 +155,13 @@
                 close(panel);
             }, { signal });
 
-            // Guards the opener explicitly: the DOM spec says a listener added
-            // mid-dispatch isn't called for that same event, but relying on it
-            // would make the opening click close the panel if that ever shifted.
+            // A click that opened the panel from its own handler (a framework's onClick, a script's
+            // listener) has not reached the document yet, and would close it: older clicks are not outside.
             // A modal panel needs none: NDS.dialog stops every outside click and onOutside() above closes it.
+            const openedAt = performance.now();
             if (!modalPanels.has(panel)) document.addEventListener('click', (e) => {
                 // A Modal closes before its click reaches here, so its parts are named too.
-                if (!isTop(panel) || panel.contains(e.target)
+                if (e.timeStamp <= openedAt || !isTop(panel) || panel.contains(e.target)
                     || e.target.closest('.nds-modal, .nds-backdrop, [data-modal-target]')) return;
                 if (panel.id && e.target.closest('[data-panel-toggle="' + panel.id + '"]')) return;
                 close(panel);
@@ -223,6 +223,9 @@
         // A panel added after load without NDS.init.mount: its close controls are wired here.
         createPanel(panel);
         if (!panel.hasAttribute(INIT_ATTRIBUTE)) return;
+        // Opened by code, not a toggle: focus goes back where it was on close, as a Modal's does.
+        const from = document.activeElement;
+        if (focus && !openers.has(panel) && from && from !== document.body && !panel.contains(from)) openers.set(panel, from);
         // On the panel, not a local: a swap opens it later from close()'s cleanup.
         if (focus) noFocusPanels.delete(panel); else noFocusPanels.add(panel);
 

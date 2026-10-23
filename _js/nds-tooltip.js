@@ -37,7 +37,8 @@
 /**
  * NDS Tooltip Component
  * Viewport-aware tooltip in the top layer. Click the trigger to toggle;
- * click outside, scroll, or Escape to dismiss.
+ * click outside or Escape to dismiss. Where CSS anchors work it stays on its trigger through
+ * a scroll and closes when the trigger leaves view; elsewhere a scroll dismisses it.
  *
  * Markup modes:
  *   - Explicit: author writes out `.nds-tooltip-trigger` + `.nds-tooltip-balloon`.
@@ -361,9 +362,13 @@
             // A hover tooltip has no focus on its trigger; Escape still dismisses it (WCAG 1.4.13).
             document.addEventListener('keydown', (e) => { if (e.key === 'Escape') this.close(); }, { signal });
 
-            // Close on scroll: a scroll box around the trigger would leave it detached.
-            // NDS.onOutsideScroll ignores scrolls inside the balloon itself.
-            this._offScroll = NDS.onOutsideScroll(this.balloon, () => this.close());
+            // Anchored, the balloon rides with its trigger through any scroll and closes once the trigger
+            // leaves view (the first report is the state at open). Otherwise a scroll would leave it
+            // detached, so a scroll closes it; NDS.onOutsideScroll ignores scrolls inside the balloon.
+            let shown = false;
+            this._offScroll = this._anchored
+                ? NDS.onIntersect(this._trigger, (e) => { if (e.isIntersecting) shown = true; else if (shown) this.close(); })
+                : NDS.onOutsideScroll(this.balloon, () => this.close());
 
             this._dispatchEvent('nds:tooltip:opened');
         }
@@ -381,6 +386,8 @@
             this.openAbortController?.abort();
             this.openAbortController = null;
             if (this._offScroll) { this._offScroll(); this._offScroll = null; }
+            if (this._anchored) NDS.unplace(this.balloon, this._trigger);
+            this._anchored = false;
 
             NDS.setTopLayer(this.balloon, false);
 
@@ -422,7 +429,7 @@
             let left = placement.triggerRect.left + (placement.triggerRect.width / 2) - (bW / 2);
             left = Math.max(placement.box.left + edge, Math.min(left, placement.box.right - bW - edge));
 
-            NDS.place(this.balloon, top, left);
+            this._anchored = NDS.place(this.balloon, top, left, this._trigger);
 
             // Arrow points at the trigger center, clamped inside balloon edges
             const triggerCenterX = placement.triggerRect.left + placement.triggerRect.width / 2;
