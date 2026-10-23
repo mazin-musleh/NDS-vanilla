@@ -68,7 +68,8 @@ one record, the old clears and deletes kept where they were. Decisions made in r
 - The guard checks now read a WeakSet: JSP-06a's guard and JSD-18's stamp accept `set.add(el)` for any module
   `WeakSet` (two self-test cases); the old `_nds…` forms are gone from both regexes.
 - `check-bundle-once.mjs` flakes about 1 run in 6, on HEAD's bundles too: ONCE sometimes settles at 51 listeners
-  (document click 7, change 3) and TWICE at 48. Three readings instead of two did not help; the cause is open.
+  (document click 7, change 3) and TWICE at 48. Cause: the cookie notice wired Panel on one page and not the other;
+  `767cbf3b` keeps it off (0 fails in 44 runs; with it back on, 5 in 12).
 
 **The two `--names` P10.8 gaps are closed** (step 6): a 2–4 letter word is in `LOCAL_OK`, `SHORT_OK` (a word, a
 platform name, a standard acronym) or `ABBREV` (a finding); any other is a verify line to file in one of them.
