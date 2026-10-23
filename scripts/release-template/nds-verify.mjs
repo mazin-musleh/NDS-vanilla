@@ -160,7 +160,8 @@ async function shoot(url, { width, theme, cookies = [], fail, respond = {}, run,
     await Promise.all(['Page.enable', 'Runtime.enable', 'Log.enable', 'Network.enable'].map((m) => s(m)));
     const viewHeight = width < 768 ? 844 : 900;
     await s('Emulation.setDeviceMetricsOverride', { width, height: viewHeight, deviceScaleFactor: 1, mobile: width < 768 });
-    await s('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: theme }] });
+    // Reduced motion: counters land on their number and sliders hold still, so a shot shows the final state.
+    await s('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: theme }, { name: 'prefers-reduced-motion', value: 'reduce' }] });
     await s('Page.addScriptToEvaluateOnNewDocument', { source:
         `try { ${theme === 'dark' ? "localStorage.setItem('nds-theme', 'dark')" : "localStorage.removeItem('nds-theme')"} } catch (e) {}
         document.addEventListener('securitypolicyviolation', (e) => (window.__ndsCsp = window.__ndsCsp || []).push(
