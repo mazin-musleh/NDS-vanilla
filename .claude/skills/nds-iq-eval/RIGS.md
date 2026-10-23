@@ -6,7 +6,7 @@ A field rig is a real legacy app that a fresh agent session ports to NDS, or a b
 
 ## Baselines
 
-The baselines live in `rigs/`, at their clean state. Rig N runs on port 300N, so all of them can run at once; `rig.py` prints the start command and the link. Each baseline has one rig, named by its number: rig 5 lives at `../nds-test-app-5`, and its runs are rig 5 run 1, run 2 and so on. Rigs 5 to 7 are the starters, legacy apps to port. Rigs 1 to 4 are designed to test NDS IQ on purpose: each covers a work mode or stack the starters miss. Field rigs are not the behavior-mode rigs R1 to R7 in `SKILL.md`: write "rig N" for a field rig, "RN" for a behavior rig.
+The baselines live in `rigs/`, at their clean state. Rig N runs on port 300N, so all of them can run at once; `rig.py` prints the start command and the link. Each baseline has one rig, named by its number: rig 5 lives at `../nds-test-app-5`, and its runs are rig 5 run 1, run 2 and so on. Rigs 5 to 7 are the starters, legacy apps to port. Rigs 1 to 4 and 8 are designed to test NDS IQ on purpose: each covers a work mode or stack the starters miss. Field rigs are not the behavior-mode rigs R1 to R7 in `SKILL.md`: write "rig N" for a field rig, "RN" for a behavior rig.
 
 | Rig | Baseline | App | Run | URL |
 |---|---|---|---|---|
@@ -17,6 +17,7 @@ The baselines live in `rigs/`, at their clean state. Rig N runs on port 300N, so
 | 5 | `library-portal` | Arabic RTL public library: Express and JSON APIs, Bootstrap RTL, jQuery, DataTables, Select2, Summernote, an SSO stub, a hash-router account area | `npm start` | `http://localhost:3005` |
 | 6 | `citydesk` | English LTR municipal help desk: Express and JSON APIs, Bootstrap, jQuery, DataTables, Select2, TinyMCE, a staff back office | `npm start` | `http://localhost:3006` |
 | 7 | `grants-desk` | English staff console: a React single-page app on Vite, no backend | `npm run dev` | `http://localhost:3007` |
+| 8 | `ops-desk` | English live dispatch dashboard on one page: React 19 in StrictMode, Zustand, TanStack Query, a simulated live feed, react-select, react-datepicker, recharts, TanStack Table, react-hot-toast | `npm run dev` | `http://localhost:3008` |
 
 ## What each rig tests
 
@@ -136,6 +137,25 @@ Two more slips, not planted, that the agent may name: `/clinics`' filters are th
 - Cart, checkout, gift box, tracking, the editable admin table, the settings save bar and the roles grid are built from NDS parts, each gap a finding, with no MUI left on a ported page.
 
 **Known in the app:** a Next quirk. `notFound()` answers 404, but its body renders only after hydration (the server sends Next's error shell). The app keeps `style-src-attr 'unsafe-inline'` for `next/image` and the MUI slider; a port that drops MUI may tighten it.
+
+### Rig 8: one React page full of state
+
+**Tests:** NDS inside heavy React state, not page count. One dashboard page where a store owns every value, a live feed re-renders every 3 seconds, and React 19 StrictMode mounts, unmounts and mounts again. The agent keeps the store, the queries and the feed, and replaces only the UI libraries and the hand-written CSS.
+
+**Dev answers:** porting strategy: the agent's recommendation; the digital stamp: "No"; pacing: `whole plan`.
+
+**What a pass looks like:**
+- StrictMode stays on. No component starts twice, no listener or chart leaks, and no toast shows twice. `NDS.init.mount` and `destroy` sit in effects or React 19 ref callbacks with cleanup, so a second run is harmless.
+- A feed update never closes an open menu, dropdown or date picker, and never drops the table's row selection, sort or page.
+- The store owns each value, and NDS shows it: selects, multiselects, the date range, tabs and filters follow the store both ways, and a change made in NDS lands in the store through NDS events, never by reading the DOM later.
+- One owner for the filter state: the store and the URL it already syncs, or NDS Filter's own URL state, chosen and named in the plan, never both.
+- Row selection and bulk actions run from the store and survive sorting, paging and feed updates.
+- The detail drawer opens from the store's selected ticket and `?ticket=`. Closing it by state (the store clears the id) leaves no scroll lock on the page and returns focus to the row.
+- The live chart updates in place through the chart's own API: never a new chart per update.
+- The optimistic status change and its rollback both show on the status tag, and Undo puts it back.
+- The new ticket form keeps its React 19 form Action and `useActionState`: one submit, validation once, the 422 error on the title field through the field's NDS status. The subtype list follows the category.
+- The crew board mounts late (`React.lazy`): its components start when it mounts, not at page load.
+- Counts that tick (KPIs, the shift countdown) update their text, never restart a counter animation.
 
 ## Set up a rig
 

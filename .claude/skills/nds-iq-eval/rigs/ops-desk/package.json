@@ -1,0 +1,27 @@
+{
+  "name": "ops-desk",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Live maintenance dispatch dashboard for a city municipality",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.104.5",
+    "@tanstack/react-table": "^9.3.1",
+    "react": "^19.3.1",
+    "react-datepicker": "^9.1.0",
+    "react-dom": "^19.3.1",
+    "react-hot-toast": "^2.6.1",
+    "react-select": "^5.10.2",
+    "recharts": "^3.10.1",
+    "zustand": "^5.0.16"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.2",
+    "vite": "^8.3.5"
+  }
+}
