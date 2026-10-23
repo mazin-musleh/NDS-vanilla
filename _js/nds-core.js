@@ -1514,12 +1514,14 @@
                 if (isLocalFile) return NDS.cache.get(name);
                 const prefix = name + '=';
                 const hit = document.cookie.split(';').map(pair => pair.trim()).find(pair => pair.startsWith(prefix));
-                return hit ? hit.slice(prefix.length) : null;
+                if (!hit) return null;
+                // A server encodes its cookies (Express res.cookie): give back the text it stored.
+                try { return decodeURIComponent(hit.slice(prefix.length)); } catch { return hit.slice(prefix.length); }
             },
             set(name, value, days) {
                 if (isLocalFile) return NDS.cache.set(name, value, days * 1440);
                 const expires = new Date(Date.now() + days * 864e5).toUTCString();
-                document.cookie = `${name}=${value};expires=${expires};path=/;SameSite=Lax`;
+                document.cookie = `${name}=${encodeURIComponent(value)};expires=${expires};path=/;SameSite=Lax`;
             },
             delete(name) {
                 if (isLocalFile) return NDS.cache.clear(name);
