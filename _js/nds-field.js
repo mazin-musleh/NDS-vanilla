@@ -20,8 +20,8 @@
  * Events:
  *   (none)
  * Hooks:
- *   data-state~="disabled|readonly" on a .nds-form-container or .nds-form-group: the effect reaches every
- *   input, action button and chip in it
+ *   data-state~="disabled|readonly" on a .nds-form-container or .nds-form-group: disabled reaches every
+ *   input, action button and chip in it; readonly every input
  * Gotchas:
  *   - A base: it writes states and attributes and shows no message; Form shows the messages.
  *   - One document listener per event name, whatever the page holds. The base runs its own sync first,
@@ -215,7 +215,7 @@
 
     // ── First paint ────────────────────────────────────────────────────
     // Elements the init tail (autofocus, the reveal) has already handled.
-    const tail = new WeakSet();
+    const handledElements = new WeakSet();
     const initializedInputs = new WeakSet();
     const getSelfAndInner = (el, selector) => {
         const inner = Array.from(el.querySelectorAll(selector));
@@ -228,7 +228,7 @@
         const container = formControl.closest('.nds-form-container');
         // A required container marks its input; one whose value a component owns never stamps required,
         // which would false-fail checkValidity, but still announces it.
-        if (container && (container.hasAttribute('data-required') || container.classList.contains('nds-required'))) {
+        if (container && NDS.validation.isRequired(container)) {
             if (!NDS.validation.isOwned(container) && !input.hasAttribute('required')) input.setAttribute('required', '');
             input.setAttribute('aria-required', 'true');
         }
@@ -253,8 +253,8 @@
         // Restore autofocus, once per element: a re-sweep would pull focus from the field the user is in.
         // preventScroll: a plain focus() forces a layout in the middle of the init burst.
         const autofocus = el.querySelector('input[autofocus], textarea[autofocus], select[autofocus]');
-        if (autofocus && !tail.has(autofocus)) {
-            tail.add(autofocus);
+        if (autofocus && !handledElements.has(autofocus)) {
+            handledElements.add(autofocus);
             autofocus.focus({ preventScroll: true });
             const container = autofocus.closest('.nds-form-container');
             if (container) NDS.state.add(container, 'focus');
@@ -262,8 +262,8 @@
         // Reveal the [hidden] FOUC-guard wrappers now their controls carry state, on a wrapper's first
         // sweep only, so one the page or a component hid later stays hidden.
         getSelfAndInner(el, '.nds-form-group, .nds-form-container, .nds-form-action').forEach((wrapper) => {
-            if (tail.has(wrapper)) return;
-            tail.add(wrapper);
+            if (handledElements.has(wrapper)) return;
+            handledElements.add(wrapper);
             wrapper.removeAttribute('hidden');
         });
     }

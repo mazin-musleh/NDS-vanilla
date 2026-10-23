@@ -41,12 +41,12 @@
     // block instead, so it stays on the text line.
     // ponytail: tag allowlist, not computed display — getComputedStyle before
     // first paint forces a whole-document style pass.
-    var BLOCK = { P: 1, DIV: 1, H1: 1, H2: 1, H3: 1, H4: 1, H5: 1, H6: 1, LI: 1, UL: 1, OL: 1, BLOCKQUOTE: 1, FIGURE: 1, FIGCAPTION: 1, SECTION: 1, ARTICLE: 1 };
+    var blockTags = { P: 1, DIV: 1, H1: 1, H2: 1, H3: 1, H4: 1, H5: 1, H6: 1, LI: 1, UL: 1, OL: 1, BLOCKQUOTE: 1, FIGURE: 1, FIGCAPTION: 1, SECTION: 1, ARTICLE: 1 };
     function findBadgeHost(link) {
         var host = link, node = link.lastChild;
         while (node) {
             if (node.nodeType === 1) {
-                if (BLOCK[node.tagName] !== 1) break;
+                if (blockTags[node.tagName] !== 1) break;
                 host = node; node = node.lastChild;
             } else if (node.data.trim()) break;
             else node = node.previousSibling;

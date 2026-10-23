@@ -21,12 +21,13 @@
  *   - Arabic digits are read as Latin ones. A mask's units take digits only; group() takes letters too.
  *   - type() types over a whole value, as a date field does; group() inserts and moves the rest along,
  *     as a plain text box does.
+ *   - A field it shaped gets a bubbling change on blur: WebKit sends none when a script wrote the last edit.
  */
 (() => {
     'use strict';
 
-    const latin = NDS.toLatinDigits;
-    const countDigits = (text) => latin(text).replace(/\D/g, '').length;
+    const toLatinDigits = NDS.toLatinDigits;
+    const countDigits = (text) => toLatinDigits(text).replace(/\D/g, '').length;
     const isDigit = (char) => /\d/.test(char);
     const masks = new Map();   // tokens.source + format → mask
 
@@ -56,7 +57,7 @@
     // word key fills its word. A lone digit is padded when no second can follow it ("4" → "04/") or a
     // typed separator closes it ("4/" → "04/"). Stops at the first unit not typed yet.
     function formatTyped(mask, text) {
-        const latinText = latin(text), closed = new Set();
+        const latinText = toLatinDigits(text), closed = new Set();
         let digits = '';
         for (let index = 0; index < latinText.length; index++) {
             if (isDigit(latinText[index])) digits += latinText[index];
@@ -119,7 +120,7 @@
     // "28/051983" → "28/05/1983". Null when they do not, when a unit would not exist, or when an
     // open unit leaves the width open.
     function getFilled(mask, text) {
-        const digits = latin(text).replace(/\D/g, '');
+        const digits = toLatinDigits(text).replace(/\D/g, '');
         if (mask.open || digits.length !== mask.maxDigits) return null;
         let i = 0, fits = true;
         const filled = mask.pieces.map((piece, index) => {
@@ -180,8 +181,8 @@
     // impossible unit is refused. Returns { value, caret } or null.
     function getTypedOver(mask, value, position, end, character) {
         // Arabic digits keep their places as 0-9, so the caret and the runs below line up.
-        character = latin(character);
-        value = latin(value);
+        character = toLatinDigits(character);
+        value = toLatinDigits(value);
         const key = mask.word && mask.word.keys[character];
         if (!key && !isComplete(mask, value)) return getTypedIn(mask, value, position, end, character);
         const runs = getRuns(mask, value);
@@ -228,9 +229,9 @@
     // (formatTyped, or getTypedIn on a broken value, whose tail reshaping would drop), inside the
     // value they type over or go in (getTypedOver). A refused key is skipped. Returns { value, caret }.
     function type(mask, value, caret, end, keys) {
-        value = latin(value);
+        value = toLatinDigits(value);
         for (const [index, character] of [...keys].entries()) {
-            const key = latin(character);
+            const key = toLatinDigits(character);
             let result;
             if ((index ? caret : end) >= value.length) {
                 const head = value.slice(0, caret);
@@ -322,7 +323,7 @@
     // caret stays after the same characters, and past a separator a later one follows. Returns { value, caret }.
     const SLOTS = Object.freeze({ 0: /\d/, A: /[A-Za-z]/, '*': /[A-Za-z\d]/ });
     function group(text, caret, format) {
-        text = latin(text);
+        text = toLatinDigits(text);
         const slots = [...format].filter((char) => SLOTS[char]);
         const kept = [];
         let before = 0;

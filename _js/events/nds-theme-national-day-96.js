@@ -1,5 +1,5 @@
 // National Day 96 event theme PACK — self-contained entry point, modelled on the
-// Hajj pack. KEEPS THE DGA PALETTE and the STANDARD HERO SLIDE: it injects its
+// Hajj pack. KEEPS THE DGA PALETTE and the STANDARD hero SLIDE: it injects its
 // stylesheet (section bars, corner vector, footer bar) + marker token + a hero
 // slide that is the normal slide markup with the event photo as its background +
 // the event mark in the footer's own logo strip. No component-specific structure
@@ -94,7 +94,7 @@
 
     // ── Event content (defaults; overridden by the data-* attributes above) ──
     // Strings can be a plain value or a { ar, en } map (picked by <html lang>).
-    var HERO = {
+    var hero = {
         title: { ar: pick('titleAr', 'اليوم الوطني السعودي 96'), en: pick('titleEn', 'Saudi National Day 96') },
         description: {
             ar: pick('descriptionAr', 'نحتفي بمرور 96 عامًا من العز والفخر لوطننا'),
@@ -113,8 +113,8 @@
     // ── Type 2 content — the official campaign set (hrsd.gov.sa, 2026-09-06).
     //    Fixed by design: the words, bodies, cards and colours are the campaign's. ──
     var TYPE = pick('type', '2') === '1' ? 1 : 2;
-    var LEAD = { ar: 'عِزّنا', en: 'Our pride in our' };
-    var SLIDES = [
+    var lead = { ar: 'عِزّنا', en: 'Our pride in our' };
+    var slideSpecs = [
         {
             theme: 'vision',
             card: 'card_vision.webp',
@@ -221,18 +221,18 @@
     // Standard hero-slide markup (the shape _includes/hero-main.html emits), with the
     // event photo as the background — no slide-specific classes or inline styling.
     function buildSlide() {
-        var imgUrl = resolveAssetUrl(HERO.image);
+        var imgUrl = resolveAssetUrl(hero.image);
         var img = imgUrl
             ? '<div class="nds-hero-image-wrapper" style="--overlay:0;">' +   // photo carries its own wash; the default 0.7 would black it out
                 '<picture><img src="' + escapeHtml(imgUrl) + '" class="nds-hero-image" alt="" fetchpriority="high"></picture>' +
               '</div>'
             : '';
-        var description = translate(HERO.description) ? '<p class="nds-section-description">' + escapeHtml(translate(HERO.description)) + '</p>' : '';
-        var iconUrl = HERO.cta ? resolveAssetUrl(HERO.cta.icon) : '';
-        var cta = HERO.cta
-            ? '<a class="nds-btn nds-primary nds-oncolor nds-lg" href="' + escapeHtml(HERO.cta.url) + '" target="_blank">' +
+        var description = translate(hero.description) ? '<p class="nds-section-description">' + escapeHtml(translate(hero.description)) + '</p>' : '';
+        var iconUrl = hero.cta ? resolveAssetUrl(hero.cta.icon) : '';
+        var cta = hero.cta
+            ? '<a class="nds-btn nds-primary nds-oncolor nds-lg" href="' + escapeHtml(hero.cta.url) + '" target="_blank">' +
                 (iconUrl ? '<img src="' + escapeHtml(iconUrl) + '" class="nds-icon" width="24" height="24" alt="">' : '') +
-                '<span class="nds-label">' + escapeHtml(translate(HERO.cta.label)) + '</span>' +
+                '<span class="nds-label">' + escapeHtml(translate(hero.cta.label)) + '</span>' +
               '</a>'
             : '';
 
@@ -241,7 +241,7 @@
         slide.innerHTML =
             img +
             '<div class="nds-section-body">' +
-              '<h2 class="nds-section-title">' + escapeHtml(translate(HERO.title)) + '</h2>' +
+              '<h2 class="nds-section-title">' + escapeHtml(translate(hero.title)) + '</h2>' +
               description + cta +
             '</div>';
         return slide;
@@ -378,7 +378,7 @@
     var adoptedSwipers = new WeakSet(), draggedDecks = new WeakSet();
     var deckAbort = null, typeTimer = 0, holdTimer = 0, current = -1, paused = false, wordDone = false;
 
-    function getFullTitle(spec) { return translate(LEAD) + ' ' + translate(spec.word); }
+    function getFullTitle(spec) { return translate(lead) + ' ' + translate(spec.word); }
 
     function buildDeckSlide(spec, i) {
         var tag = i ? 'h2' : 'h1';   // the pack's first slide stands in for the site's h1
@@ -388,7 +388,7 @@
         slide.innerHTML =
             '<div class="nds-section-body">' +
               '<' + tag + ' class="nds-section-title" aria-label="' + escapeHtml(getFullTitle(spec)) + '">' +
-                '<span aria-hidden="true">' + escapeHtml(translate(LEAD)) + '</span> ' +
+                '<span aria-hidden="true">' + escapeHtml(translate(lead)) + '</span> ' +
                 '<span class="nds-nd96-typed" aria-hidden="true" data-word="' + escapeHtml(translate(spec.word)) + '"></span>' +
               '</' + tag + '>' +
               '<p class="nds-section-description">' + escapeHtml(translate(spec.body)) + '</p>' +
@@ -451,7 +451,7 @@
 
         var deck = document.createElement('div');
         deck.className = 'nds-swiper-deck';
-        SLIDES.forEach(function (spec, i) {
+        slideSpecs.forEach(function (spec, i) {
             wrapper.appendChild(buildDeckSlide(spec, i));
             deck.appendChild(buildCard(spec, i));
         });
@@ -459,7 +459,7 @@
         swiper.classList.add('nds-deck');
         siteLoop = swiper.hasAttribute('data-swiper-loop');
         swiper.setAttribute('data-swiper-loop', '');   // the deck wraps, so the track does too
-        swiper.style.setProperty('--total', String(SLIDES.length));
+        swiper.style.setProperty('--total', String(slideSpecs.length));
         var nav = swiper.querySelector('.nds-swiper-navigation'), page = swiper.querySelector('.nds-swiper-pagination');
         navHadCenter = !!(nav && nav.classList.contains('nds-center'));
         pageHadMd = !!(page && page.classList.contains('nds-md'));
@@ -499,12 +499,12 @@
         var section = findDeckSection();
         if (!section) return;
         var slides = findDeckSlides(section), cards = section.querySelectorAll('.nds-swiper-card');
-        SLIDES.forEach(function (spec, i) {
+        slideSpecs.forEach(function (spec, i) {
             var slide = slides[i];
             if (!slide) return;
             var title = slide.querySelector('.nds-section-title');
             title.setAttribute('aria-label', getFullTitle(spec));
-            title.firstElementChild.textContent = translate(LEAD);
+            title.firstElementChild.textContent = translate(lead);
             var span = slide.querySelector('.nds-nd96-typed');
             span.setAttribute('data-word', translate(spec.word));
             span.textContent = translate(spec.word);
@@ -527,10 +527,10 @@
             var computedStyle = getComputedStyle(section);
             section.style.setProperty('--_nd96-prev-from', computedStyle.getPropertyValue('--_nd96-from'));
             section.style.setProperty('--_nd96-prev-to', computedStyle.getPropertyValue('--_nd96-to'));
-            section.classList.remove('nds-nd96-' + SLIDES[current].theme);
+            section.classList.remove('nds-nd96-' + slideSpecs[current].theme);
         }
         current = i;
-        section.classList.add('nds-nd96-' + SLIDES[i].theme);
+        section.classList.add('nds-nd96-' + slideSpecs[i].theme);
         if (!first && section.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             try { section.animate([{ opacity: 1 }, { opacity: 0 }], { duration: SETTLE_MS, easing: 'ease', pseudoElement: '::before' }); } catch (e) { /* no pseudo-element animation: the colour just snaps */ }
         }
@@ -592,7 +592,7 @@
     function advance() {
         var swiper = document.querySelector(SWIPER_SELECTOR);
         var instance = getSwiperInstance(swiper);
-        if (instance) instance.goTo((current + 1) % SLIDES.length);   // by index: wraps with or without loop (the text switch is instant)
+        if (instance) instance.goTo((current + 1) % slideSpecs.length);   // by index: wraps with or without loop (the text switch is instant)
     }
 
     function pause() { paused = true; clearTimeout(holdTimer); holdTimer = 0; }
@@ -610,7 +610,7 @@
         if (!section) return;
         var swiper = section.querySelector('.nds-swiper.nds-hero');
         var wrapper = swiper.querySelector('.nds-swiper-wrapper');
-        if (current >= 0) section.classList.remove('nds-nd96-' + SLIDES[current].theme);
+        if (current >= 0) section.classList.remove('nds-nd96-' + slideSpecs[current].theme);
         section.classList.remove(DECK_CLASS);
         current = -1; paused = false;
 
@@ -755,7 +755,7 @@
     // ours. Only footers without the strip get one built.
     function injectLogo() {
         var footer = document.querySelector('.nds-footer');
-        var logoUrl = resolveAssetUrl(HERO.logo);
+        var logoUrl = resolveAssetUrl(hero.logo);
         if (!footer || !logoUrl || footer.querySelector('.' + LOGO_CLASS)) return;   // idempotent
 
         var strip = footer.querySelector('.nds-footer-logos');
@@ -771,7 +771,7 @@
         img.width = 101;    // 106:42 artwork at the strip's 40px height — reserved so it can't shift the row
         img.height = 40;
         img.loading = 'lazy';
-        img.alt = translate(HERO.logoAlt);
+        img.alt = translate(hero.logoAlt);
         strip.appendChild(img);
     }
 

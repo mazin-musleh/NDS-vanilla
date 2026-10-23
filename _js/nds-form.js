@@ -15,7 +15,7 @@
  *                                          (a field carries 'error', 'help' or
  *                                          nothing; anything else renders neutral)
  *   NDS.Form.clearStatus(el)              clear it
- *   NDS.Form.getStatus(el)                read {status, message}
+ *   NDS.Form.getStatus(el)                read {status, message, isValid}
  *   NDS.Form.setState(el, name, add)      add/remove a field state ('required' also
  *                                          flips the inputs' required property)
  *   NDS.Form.refresh(el)                  re-sync after setting value/checked from JS: an input its
@@ -58,7 +58,7 @@
  *     when nothing is picked. Every other failure keeps its own message.
  *   - A blank setCustomValidity(' ') blocks the submit and outlines the field with no message:
  *     for a component that shows the cause itself (password's red chips). It beats native messages.
- *   - A readonly checkbox, radio or switch cannot change: Forms cancels the click that Space
+ *   - A readonly checkbox, radio or switch cannot change: NDS.field cancels the click that Space
  *     or an arrow key sends, since the browser ignores readOnly on those inputs.
  *   - refresh() dispatches nothing on the field but a phone's nds:phone:change (nds-formatted-input.js), so it cannot re-enter your own input handler. Setting
  *     input.value from JS notifies nothing on its own: call refresh() or dispatch input/change.
@@ -102,7 +102,8 @@
     // Where a status lives: the nearest of these.
     var STATUS_HOST = '.nds-form-container, .nds-form-group, .nds-feedback';
     var loadingRefs = new WeakMap();
-    var strippedEvents = new WeakSet();
+    // An event whose part already showed the field's message: the status part leaves it up.
+    var messagedEvents = new WeakSet();
     var pendingEnds = new WeakMap();
     var initializedForms = new WeakSet();
 
@@ -205,16 +206,13 @@
         var selector = container.getAttribute('data-feedback-target');
         if (selector) return container.querySelector(selector) || container;
         // Own the marked target — skip footers of NESTED form-containers (the editor's popover
-        // fields sit in the toolbar BEFORE the field's own footer; same rationale as ownField).
+        // fields sit in the toolbar BEFORE the field's own footer; same rationale as NDS.field.findOwnInput).
         var marked = container.querySelectorAll('[data-feedback-target]');
         for (var i = 0; i < marked.length; i++) {
             if (marked[i].closest(STATUS_HOST) === container) return marked[i];
         }
         return container;
     }
-
-    // A container's own field, never a nested container's (NDS.field).
-    var ownField = NDS.field.findOwnInput;
 
     // Keep the field's aria-describedby pointing at its CURRENT message only: strip
     // our earlier tokens, keep the consumer's, append `id` when given.
@@ -294,7 +292,7 @@
                 }
 
                 // Accessibility
-                var input = ownField(container);
+                var input = NDS.field.findOwnInput(container);
                 if (input) {
                     input.setAttribute('aria-invalid', status === 'error' ? 'true' : 'false');
                     // Name the reason, not just the state: point the field at its message.
@@ -333,7 +331,7 @@
 
             NDS.Feedback.dismissAll(container, { own: true });
 
-            var input = ownField(container);
+            var input = NDS.field.findOwnInput(container);
             if (input) {
                 input.removeAttribute('aria-invalid');
                 describeBy(input, null);
@@ -415,6 +413,20 @@
     // follows the fix. One document listener per event name, added the first time a rule asks,
     // a rule from a later bundle included.
     var recheckOn = null;
+    function syncShownMessages(e) {
+        var target = e.target;
+        if (!target || !target.closest) return;
+        var seen = [];
+        NDS.validation.rules.forEach(function(recheckRule) {
+            if (recheckRule.on.indexOf(e.type) === -1) return;
+            var el = target.closest(recheckRule.selector);
+            if (!el || seen.indexOf(el) !== -1) return;
+            seen.push(el);
+            // The status sits on the field that holds el: a picker shows its message there.
+            var holder = el.closest('.nds-form-container, .nds-form-group') || el;
+            if (NDS.status.get(holder) !== '') validator.validateField(el);
+        });
+    }
     function addRecheckListeners() {
         if (recheckOn) return;
         recheckOn = {};
@@ -422,20 +434,7 @@
             rule.on.forEach(function(type) {
                 if (recheckOn[type]) return;
                 recheckOn[type] = true;
-                document.addEventListener(type, function(e) {
-                    var target = e.target;
-                    if (!target || !target.closest) return;
-                    var seen = [];
-                    NDS.validation.rules.forEach(function(recheckRule) {
-                        if (recheckRule.on.indexOf(type) === -1) return;
-                        var el = target.closest(recheckRule.selector);
-                        if (!el || seen.indexOf(el) !== -1) return;
-                        seen.push(el);
-                        // The status sits on the field that holds el: a picker shows its message there.
-                        var holder = el.closest('.nds-form-container, .nds-form-group') || el;
-                        if (NDS.status.get(holder) !== '') validator.validateField(el);
-                    });
-                });
+                document.addEventListener(type, syncShownMessages);
             });
         });
     }
@@ -501,7 +500,7 @@
     });
 
     // Number stepper: the buttons step, a held button repeats and speeds up, and blur clamps to min/max.
-    var STEP_TIERS = [[0, 1, 75], [1500, 10, 50]];   // [held for (ms), step multiplier, interval (ms)]
+    var stepTiers = [[0, 1, 75], [1500, 10, 50]];   // [held for (ms), step multiplier, interval (ms)]
     var hold = null;
     function stepValue(btn, multiplier) {
         var formControl = btn.closest('.nds-form-control');
@@ -550,8 +549,8 @@
                     activeHold.repeat = setInterval(function() { stepValue(btn, multiplier); }, speed);
                 };
                 activeHold.start = setTimeout(function() {
-                    repeat(STEP_TIERS[0][1], STEP_TIERS[0][2]);
-                    STEP_TIERS.slice(1).forEach(function(tier) {
+                    repeat(stepTiers[0][1], stepTiers[0][2]);
+                    stepTiers.slice(1).forEach(function(tier) {
                         activeHold.tiers.push(setTimeout(function() { repeat(tier[1], tier[2]); }, tier[0]));
                     });
                 }, 400);
@@ -570,6 +569,7 @@
                 if (rangeError) {
                     NDS.setValue(input, rangeError.clamped);
                     statusManager.set({ element: context.container, status: 'error', message: rangeError.message });
+                    messagedEvents.add(e);
                 }
             }
         }
@@ -607,7 +607,7 @@
                 var cleaned = input.value.replace(/[؀-ۿ]/g, '');
                 if (cleaned === input.value) return;
                 NDS.setValue(input, cleaned, { change: false });
-                strippedEvents.add(e);
+                messagedEvents.add(e);
                 if (context.container) statusManager.set({ element: context.container, status: 'error', message: strings.text('no_arabic') });
             },
             submit: hideShown,
@@ -670,13 +670,14 @@
         },
         on: {
             focusout: function(e, context) {
-                if (!context || !isActive(context.input)) return;
+                // The stepper's clamp message stays up.
+                if (!context || messagedEvents.has(e) || !isActive(context.input)) return;
                 syncClear(context.input, context.control);
                 if (context.container && NDS.status.get(context.container) === 'error') validateInput(context.input, context.control);
             },
             input: function(e, context) {
                 // A stripped letter keeps its message up.
-                if (!context || strippedEvents.has(e)) return;
+                if (!context || messagedEvents.has(e)) return;
                 syncClear(context.input, context.control);
                 if (context.container && NDS.status.get(context.container) !== '') statusManager.clear(context.container);
                 // A group without its own rule drops its message on input too.
@@ -787,10 +788,10 @@
             // A POST that loads a page in this tab is pending until the page goes. On window, after every
             // other listener: a script that cancelled the submit sends it itself. A GET twice does no harm.
             window.addEventListener('submit', function(e) {
-                var form = e.target, sub = e.submitter;
+                var form = e.target, submitter = e.submitter;
                 if (!initializedForms.has(form) || pendingEnds.has(form) || e.defaultPrevented || form.hasAttribute('data-no-pending')) return;
-                var readFormAttribute = function(attributeName) { return (sub && sub.getAttribute('form' + attributeName)) || form.getAttribute(attributeName) || ''; };
-                if (readFormAttribute('method').toLowerCase() === 'post' && /^(_self)?$/i.test(readFormAttribute('target'))) setPending(form, sub);
+                var readFormAttribute = function(attributeName) { return (submitter && submitter.getAttribute('form' + attributeName)) || form.getAttribute(attributeName) || ''; };
+                if (readFormAttribute('method').toLowerCase() === 'post' && /^(_self)?$/i.test(readFormAttribute('target'))) setPending(form, submitter);
             });
             // Back on a page from the browser's cache: nothing it sent is pending.
             window.addEventListener('pageshow', function(e) {
@@ -826,7 +827,11 @@
             add = add !== false;
             if (stateName === 'required') {
                 if (add) container.setAttribute('data-required', '');
-                else container.removeAttribute('data-required');
+                else {
+                    // .nds-required is the same mark: both go.
+                    container.removeAttribute('data-required');
+                    container.classList.remove('nds-required');
+                }
                 // Propagate to inputs, skip radios (always in groups, validated at group level). A field whose
                 // value a component owns never stamps required.
                 if (!NDS.validation.isOwned(container)) container.querySelectorAll('input, textarea, select').forEach(function(input) {

@@ -98,18 +98,18 @@
     function isIban(value) {
         if (!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(value)) return false;
         var digits = (value.slice(4) + value.slice(0, 4)).replace(/[A-Z]/g, function (char) { return char.charCodeAt(0) - 55; });
-        var rem = 0;
-        for (var i = 0; i < digits.length; i++) rem = (rem * 10 + +digits[i]) % 97;
-        return rem === 1;
+        var remainder = 0;
+        for (var i = 0; i < digits.length; i++) remainder = (remainder * 10 + +digits[i]) % 97;
+        return remainder === 1;
     }
 
     // The field an input is the text box of: 'phone', 'iban' or 'national-id', from its container's class. Null: none.
-    var KINDS = ['phone', 'iban', 'national-id'];
+    var kinds = ['phone', 'iban', 'national-id'];
     function getKind(input) {
         var control = input.parentElement;
         if (input.type === 'hidden' || !control || !control.classList.contains('nds-form-control')) return null;
         var container = control.closest('.nds-form-container');
-        return (container && KINDS.find(function(kind) { return container.classList.contains('nds-' + kind); })) || null;
+        return (container && kinds.find(function(kind) { return container.classList.contains('nds-' + kind); })) || null;
     }
 
     // Groups of four, up to the longest IBAN (34).
@@ -207,10 +207,10 @@
     }
 
     // Countries whose numbers keep their leading 0 after the code (Italy: +39 06 …); elsewhere it is a trunk prefix.
-    var KEEP_ZERO = ['+39', '+378', '+379'];
+    var keepZero = ['+39', '+378', '+379'];
 
     // The characters keep matches, from index from, and where the caret lands among them; dropZero drops a leading 0.
-    function keepChars(text, caret, from, keep, dropZero) {
+    function keepCharacters(text, caret, from, keep, dropZero) {
         var kept = '', before = 0;
         for (var i = from; i < text.length; i++) {
             if (!keep.test(text[i]) || (dropZero && !kept && text[i] === '0')) continue;
@@ -253,7 +253,7 @@
         if (code && !full && opts.country && room > 0 && typed.length > room && typed.startsWith(code.slice(1))) {
             for (var seen = 0; seen < code.length - 1; from++) if (/\d/.test(text[from])) seen++;
         }
-        var kept = keepChars(text, caret, from, /\d/, code && KEEP_ZERO.indexOf(code) < 0);
+        var kept = keepCharacters(text, caret, from, /\d/, code && keepZero.indexOf(code) < 0);
         return { text: kept.text, caret: kept.caret, code: code, groupFormat: format };
     }
 
@@ -277,7 +277,7 @@
         if (phone) formatted = formatPhone(input, text, caret, opts);
         else if (iban) formatted = formatIban(text, caret, opts.country && country);
         // An ID keeps digits only, or capitals and digits when its rule lets it have letters.
-        else formatted = keepChars(text.toUpperCase(), caret, 0, rule && rule.digits ? /\d/ : /[A-Z\d]/);
+        else formatted = keepCharacters(text.toUpperCase(), caret, 0, rule && rule.digits ? /\d/ : /[A-Z\d]/);
         var format = iban ? IBAN_FORMAT : formatted.groupFormat || null;
         // The format sets the most characters: Safari's maxlength would stop the groups before the browser asks.
         if (format && input.maxLength >= 0 && input.maxLength < format.length) input.removeAttribute('maxlength');

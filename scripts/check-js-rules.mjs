@@ -1303,6 +1303,7 @@ const NAME_CASES = [
     [`(function(){ class NDSTables {} })();`, ['P12.7']],
     [`(function(){ class NdsTable {} class NdsDatePickerCalendar {} })();`, []],
     [`(function(){ const CooldownButton = { init() {} }; const NdsX = class {}; })();`, ['P12.8']], // PascalCase is for classes
+    [`(function(){ const KINDS = ['a']; const MAP = new Map(); const RULE = /x/; const NEW_RULE = new RegExp('y'); const SIZES = Object.freeze([1]); const SELECTOR = '.x'; })();`, ['P12.8', 'P12.8']], // upper snake: a primitive, a RegExp or a frozen value
     [`(function(){ function run(el) { el._ndsFoo = 1; } })();`, ['P12.14']],
     [`(function(){ function run(row) { row._x = 1; } })();`, []], // may be a same-file instance: review reads it
     [`(function(){ function run(el) { el.ndsDone = true; el.dataset.ndsSeen = 'true'; } })();`, ['P12.14']],

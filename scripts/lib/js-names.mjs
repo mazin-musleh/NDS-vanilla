@@ -122,6 +122,8 @@ function scanFile(file, source) {
                             local(id, d);
                             if (/^[A-Z][a-z]/.test(id.name) && d.init && d.init.type !== 'ClassExpression')
                                 push('P12.8', id, `\`${id.name}\` is PascalCase but is not a class: camelCase`);
+                            if (/^[A-Z][A-Z0-9_]*$/.test(id.name) && /^(ArrayExpression|ObjectExpression|NewExpression)$/.test(d.init?.type) && d.init.callee?.name !== 'RegExp')
+                                push('P12.8', id, `\`${id.name}\` is upper snake but holds a value that can change: camelCase, or Object.freeze it`);
                             if (d.init?.type === 'Literal' && typeof d.init.value === 'string') topStrings.set(id.name, d.init.value);
                             if (d.init?.type === 'NewExpression' && /^Weak(Map|Set)$/.test(d.init.callee.name)) weakMaps.add(id.name);
                         } else if (!ctx.module && ctx.fnDepth) local(id, d);

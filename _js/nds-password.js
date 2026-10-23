@@ -15,7 +15,8 @@
  *   instance.getStrength()            → last computed {strength, allPass, rules:{name:bool}}
  *                                     (no recompute, no event — check() forces one)
  * Events (bubble from the .nds-form-container):
- *   nds:password:change   detail {strength, allPass, rules} — every input event. The
+ *   nds:password:change   detail {strength, allPass, rules} — on every check: first paint,
+ *                         input, a match-source edit, a reset and check(). The
  *                         raw value is deliberately absent; a listener that needs it
  *                         reads the container's input.
  * Hooks:
@@ -81,23 +82,25 @@
         match:   function (value, context) { return context.matchValue !== null && value === context.matchValue; }
     });
 
-    var ruleTests = new WeakMap();   // chip → its compiled data-rule-pattern test (null = invalid regex)
+    var ruleTests = new WeakMap();   // chip → {pattern, test} for its data-rule-pattern (test null = invalid regex)
 
-    // A chip's test: data-rule-pattern (compiled once, cached per chip) wins,
+    // A chip's test: data-rule-pattern (compiled once per pattern, so a new pattern applies) wins,
     // else the RULES entry (built-in or addRule-registered). null = inert chip.
     function resolveTest(chip) {
         var pattern = chip.getAttribute('data-rule-pattern');
         if (pattern) {
-            if (!ruleTests.has(chip)) {
+            var cached = ruleTests.get(chip);
+            if (!cached || cached.pattern !== pattern) {
+                cached = { pattern: pattern, test: null };
                 try {
                     var regularExpression = new RegExp(pattern);
-                    ruleTests.set(chip, function (value) { return regularExpression.test(value); });
+                    cached.test = function (value) { return regularExpression.test(value); };
                 } catch (e) {
                     console.warn('NDS Password: invalid data-rule-pattern', chip);
-                    ruleTests.set(chip, null);
                 }
+                ruleTests.set(chip, cached);
             }
-            return ruleTests.get(chip);
+            return cached.test;
         }
         return RULES[chip.getAttribute('data-rule')] || null;
     }

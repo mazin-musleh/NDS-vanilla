@@ -238,6 +238,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Forms** — a required field with a picker in its prefix (a phone number with a country code) is checked again.
 - **Forms** — A read-only checkbox, radio or switch holds its value against Space and the arrow keys. A disabled one, and a disabled field's buttons in dark mode, take the disabled colours. `data-state="loading"` written in the HTML shows the spinner from the start, in its own slot.
 - **Forms** — A required `data-strict` Autocomplete submitted empty shows its "required" message: the strict check cleared it, leaving the form blocked with no message.
+- **Forms** — `NDS.Form.setState(el, 'required', false)` clears a field or group marked with the `nds-required` class. It removed only `data-required`, so the field stayed required.
+- **Switch** — A press on a read-only switch no longer shows the pressed look. The switch never changed, but it looked as if it would.
 - **Forms** — An icon-only button in a field's action slot is square: it takes its width from the slot's height.
 - **Forms** — A field's message sits right after its input row, so a search box's suggestions stay below it.
 - **Forms** — Arabic digits typed into a numeric field, such as a phone or a page jump, go in as 0-9; they were blocked. A field's `loading`, `disabled` and `readonly` states work however they are written: `NDS.state`, the attribute, or the `nds-loading` class.

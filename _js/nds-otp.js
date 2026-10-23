@@ -1,5 +1,6 @@
 /* NDS.Otp — public surface
- * Rides: nds-forms (clears the field status as the user types; soft)
+ * Rides: nds-validation (its rule) · nds-field (a reset resyncs the carrier) · nds-form (validate shows
+ *   the outcome; the status clears as the user types)
  * Requires:
  *   .nds-otp-group needs .nds-otp-container input — the group is not wired
  * Methods:
@@ -67,10 +68,13 @@
         return inputs.length > 0 && inputs.every(function (i) { return i.value.length === 1; });
     }
 
-    function focusAndComplete(group, inputs) {
+    // After a spread: the box past the last digit, or the last box and complete once all are filled.
+    function focusAfterSpread(group, inputs, last) {
         if (isAllFilled(group)) {
             inputs[inputs.length - 1].focus();
             dispatch(group, 'nds:otp:complete');
+        } else if (inputs[last + 1]) {
+            inputs[last + 1].focus();
         }
     }
 
@@ -116,14 +120,7 @@
 
         if (digits.length > 1) {
             input.value = '';
-            var last = distributeDigits(group, digits, index);
-
-            if (!isAllFilled(group)) {
-                var next = inputs[last + 1];
-                if (next) next.focus();
-            } else {
-                focusAndComplete(group, inputs);
-            }
+            focusAfterSpread(group, inputs, distributeDigits(group, digits, index));
         } else {
             input.value = digits;
 
@@ -153,14 +150,7 @@
         var digits = NDS.toLatinDigits(data).replace(/\D/g, '');
         if (!digits.length) return;
 
-        var last = distributeDigits(group, digits, inputs.indexOf(input));
-
-        if (!isAllFilled(group)) {
-            var next = inputs[last + 1];
-            if (next) next.focus();
-        } else {
-            focusAndComplete(group, inputs);
-        }
+        focusAfterSpread(group, inputs, distributeDigits(group, digits, inputs.indexOf(input)));
 
         dispatch(group, 'nds:otp:change', { filled: isAllFilled(group) });
     }
@@ -317,14 +307,15 @@
 
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
     function checkField(group) {
-        var inputs = Array.from(group.querySelectorAll('.nds-otp-container input'));
-        var filled = inputs.length > 0 && inputs.every(function (i) { return i.value.length === 1; });
+        var inputs = getOtpInputs(group);
+        var filled = isAllFilled(group);
         return { valid: filled, message: filled ? '' : strings.text('otp_incomplete', { n: inputs.length }),
             empty: inputs.every(function (i) { return !i.value; }), filled: filled };
     }
     NDS.validation.addRule('.nds-form-group.nds-otp-group[data-min-checked], .nds-form-group.nds-otp-group[data-max-checked], .nds-form-group.nds-otp-group[data-required], .nds-form-group.nds-otp-group.nds-required',
-        function (group) { return Object.assign(checkField(group), { focus: group.querySelector('.nds-otp-container input') }); },
-        { on: ['input'] });
+        function (group) { return Object.assign(checkField(group), { focus: getOtpInputs(group)[0] }); },
+        // The group's rule answers for its boxes: the native pass leaves their container alone.
+        { on: ['input'], owns: function (container) { return container.classList.contains('nds-otp-container'); } });
 
     NDS.Otp = {
         init: init,

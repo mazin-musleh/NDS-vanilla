@@ -1,5 +1,5 @@
 /* NDS.Radio — public surface
- * Rides: nds-validation (its rule) · nds-field (its part) · nds-form (validate shows the outcome)
+ * Rides: nds-validation (its rule; data-error-message when none is picked) · nds-field (its part) · nds-form (validate shows the outcome)
  * Methods:
  *   NDS.Radio.validate(el, opts)   the radio group el sits in → {valid, message, selected};
  *                                  opts {showMessage} (default on)
@@ -7,7 +7,6 @@
  *   (none)
  * Hooks:
  *   data-required   on the .nds-form-group: one radio must be picked
- *   data-error-message   the message when none is picked
  * Gotchas:
  *   - A type part of the form field: no init() and no loader entry.
  *   - A group showing an error is checked again on each change, so the message follows the fix.

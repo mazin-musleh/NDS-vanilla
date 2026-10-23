@@ -76,7 +76,7 @@
 
     // ── Event content (defaults; overridden by the data-* attributes above) ──
     // Strings can be a plain value or a { ar, en } map (picked by <html lang>).
-    var HERO = {
+    var hero = {
         title: { ar: pick('titleAr', 'يوم بدينا'), en: pick('titleEn', 'Our Story') },
         description: {
             ar: pick('descriptionAr', 'تأسيس نعتز به، ومستقبل نصنعه'),
@@ -104,17 +104,17 @@
     }
 
     function buildSlide() {
-        var imgUrl = resolveAssetUrl(HERO.image);
+        var imgUrl = resolveAssetUrl(hero.image);
         var img = imgUrl
             ? '<picture><img src="' + escapeHtml(imgUrl) + '" class="nds-hero-image" alt="" fetchpriority="high"></picture>'
             : '';
-        var description = getText(HERO.description) ? '<p class="nds-section-description">' + escapeHtml(getText(HERO.description)) + '</p>' : '';
-        var iconUrl = HERO.cta ? resolveAssetUrl(HERO.cta.icon) : '';
-        var cta = HERO.cta
+        var description = getText(hero.description) ? '<p class="nds-section-description">' + escapeHtml(getText(hero.description)) + '</p>' : '';
+        var iconUrl = hero.cta ? resolveAssetUrl(hero.cta.icon) : '';
+        var cta = hero.cta
             ? '<div class="nds-section-action">' +
-                '<a class="nds-btn nds-primary nds-oncolor" href="' + escapeHtml(HERO.cta.url) + '" target="_blank">' +
+                '<a class="nds-btn nds-primary nds-oncolor" href="' + escapeHtml(hero.cta.url) + '" target="_blank">' +
                   (iconUrl ? '<img src="' + escapeHtml(iconUrl) + '" class="nds-icon" width="24" height="24" alt="">' : '') +
-                  '<span class="nds-label">' + escapeHtml(getText(HERO.cta.label)) + '</span>' +
+                  '<span class="nds-label">' + escapeHtml(getText(hero.cta.label)) + '</span>' +
                 '</a>' +
               '</div>'
             : '';
@@ -125,7 +125,7 @@
             '<div class="nds-hero-image-wrapper" style="--overlay:0;">' + img + '</div>' +
             '<div class="nds-section-body nds-full-width">' +
               '<div class="nds-block nds-content-wrapper"><div>' +
-                '<h2 class="nds-section-title">' + escapeHtml(getText(HERO.title)) + '</h2>' +
+                '<h2 class="nds-section-title">' + escapeHtml(getText(hero.title)) + '</h2>' +
                 description + cta +
               '</div></div>' +
             '</div>';

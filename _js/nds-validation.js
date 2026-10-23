@@ -20,14 +20,14 @@
  * Events:
  *   (none)
  * Hooks:
- *   data-error-message   on a field: replaces the message of an empty required field
+ *   data-error-message   on a field: the pattern's message; on a field a rule checks: the message when empty
  * Gotchas:
  *   - A base: it returns results and places no message. Form shows them, sets aria-invalid and moves focus.
  *   - Rules hold functions and selectors, never elements, so the registry outlives no view.
  *   - A field answers once: to the native pass, or to the first rule that answers for it.
  *   - checkAll() reports in page order, so the first error is the first failing field from the top.
  *   - A disabled field never fails, as in native constraint validation.
- *   - A required field whose rule has not started (NDS.init.isPending) fails with "still loading":
+ *   - A required or filled field whose rule has not started (NDS.init.isPending) fails with "still loading":
  *     checkAll() then reports pending: true, and the caller loads what it waits for.
  */
 (() => {
@@ -150,10 +150,9 @@
         // and a container a rule owns is left to that rule.
         form.querySelectorAll('.nds-form-container').forEach((container) => {
             if (!isVisible(container, form)) return;
-            if (container.classList.contains('nds-otp-container') || container.closest('.nds-form-group')) return;
-            if (isOwned(container)) return;
+            if (container.closest('.nds-form-group') || isOwned(container)) return;
             const input = findOwnField(container);
-            if (!input || input.disabled) return;
+            if (!input || isDisabled(container, input)) return;
             const errorText = !input.checkValidity() ? getMessage(input) : opts.extra && opts.extra(container, input);
             if (errorText != null && errorText !== false) fail(container, input, errorText);
         });
@@ -172,17 +171,20 @@
             });
         }
 
-        // A required field whose rule has not started gets no verdict from its markup. The innermost
-        // pending field answers; Form's field classes are the structure every component sits in.
+        // A required or filled field whose rule has not started gets no verdict from its markup: an
+        // optional password's chips still check what was typed. The innermost pending field answers;
+        // Form's field classes are the structure every component sits in.
+        const isFilled = (field) => { const input = findOwnField(field); return !!input && input.type !== 'checkbox' && input.type !== 'radio' && input.value !== ''; };
         const waiting = [...form.querySelectorAll('.nds-form-container, .nds-form-group')].filter((field) =>
-            !answered.has(field) && isVisible(field, form) && !isDisabled(field) && (isRequired(field) || field.querySelector('[required]')) && NDS.init.isPending(field));
+            !answered.has(field) && isVisible(field, form) && !isDisabled(field)
+            && (isRequired(field) || field.querySelector('[required]') || isFilled(field)) && NDS.init.isPending(field));
         waiting.filter((field) => !waiting.some((other) => other !== field && field.contains(other))).forEach((field) => {
             fail(field, field.querySelector(NDS.focusableSel), strings.text('still_loading'));
             validationResult.pending = true;
         });
         // Page order, whatever order the rules registered in.
-        const order = (left, right) => (left.compareDocumentPosition(right) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
-        validationResult.errors.sort((left, right) => order(left.field, right.field));
+        const comparePageOrder = (left, right) => (left.compareDocumentPosition(right) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
+        validationResult.errors.sort((left, right) => comparePageOrder(left.field, right.field));
         validationResult.invalidFields = validationResult.errors.map((e) => e.field);
         return validationResult;
     }
