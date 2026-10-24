@@ -1268,19 +1268,19 @@
  {
   "section": "filter",
   "key": "no_results",
-  "en": "No Result",
+  "en": "No results",
   "ar": "لا توجد نتائج"
  },
  {
   "section": "filter",
   "key": "no_results_description",
-  "en": "No result for current filter criteria",
+  "en": "No item matches the current filters.",
   "ar": "لا توجد نتائج لمعايير التصفية الحالية"
  },
  {
   "section": "filter",
   "key": "clear",
-  "en": "Clear Filter",
+  "en": "Clear filters",
   "ar": "مسح التصفية"
  },
  {

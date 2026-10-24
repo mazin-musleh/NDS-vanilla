@@ -242,7 +242,7 @@ Claim "cannot see the page" only after the headless attempt fails, and report th
 - the mobile target width, the equal `window.innerWidth`, and the inspected mobile screenshot;
 - each state from the parts list, its setup, and its inspected screenshots at both widths;
 - the icon, dark-mode, and strict-CSP results that apply;
-- every unmet item.
+- every unmet item, with what blocks it. A check you can run is never unmet: run it.
 
 An unmet item keeps the row `In Progress`; no-plan work reports the page unverified. With every agent-owned check passed, a row may move to `Awaiting Verification` (no-plan: report that it awaits the dev). Only dev confirmation makes a page `Built and Verified`.
 

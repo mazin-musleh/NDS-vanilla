@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 11:07 PM"
+last_edit: "24/10/2026 - 06:24 AM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -599,7 +599,7 @@ Sort is not a filter value and is never sent with the form. Decide by what the s
             <i class="hgi hgi-stroke hgi-search-01"></i>
             <span class="nds-label">No Results Alert</span>
           </span>
-          <p class="nds-item-desc">When no item matches, a warning alert with a Clear Filter button shows in the item container. It closes when items match again.</p>
+          <p class="nds-item-desc">When no item matches, a warning alert with a Clear filters button shows in the item container. It closes when items match again.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -672,6 +672,7 @@ Sort is not a filter value and is never sent with the form. Decide by what the s
 - Put `data-filter-items` only on a container that has a filter. The container stays hidden until a filter starts on it.
 - On a paged list, show the count with the [Pagination](../components/pagination) records counter in place of `data-filter-count`: it counts the matching items and adds the range shown.
 - Give each filter on a page its own group names: the names are the URL keys, and two filters with one name share it.
+- To keep a URL key that links already use, write it as the group name, or as the search field's `name` for the search term.
 - Add `data-filter-ignore` to a text field inside a surface that is not the filter's search, so the script does not take it as one.
 
 </div>
@@ -708,6 +709,7 @@ Sort is not a filter value and is never sent with the form. Decide by what the s
 | `data-search` | `.nds-filter` | A search box at the top of the menu narrows the options. A number shows it only from that many options. See [Dropmenu](../components/dropmenu) |
 | `data-filter` | an element in a surface | A group. The value is the group's name and its URL key |
 | `data-filter="search"` | a text field in a surface, or its wrapper | The search field. In the menu, Apply runs it. A `.nds-search-input` outside the menu needs no attribute |
+| `name` | the search field | The search term's URL key. With no `name`, the key is `search`. `name="q"` keeps a `q` key that links already use |
 | `data-filter-type` | a group | `checkbox`, `radio`, `switch` or `slider`: the script builds the options. Without it, the script uses the inputs you write in the group, or the options of `renderFilter()` |
 | `data-filter-legend` | a group | The group's heading |
 | `data-filter-values` | a group with `checkbox`, `radio` or `switch` | The options as JSON: an array of values, or an object of value-label pairs. The script reads no items for this group |

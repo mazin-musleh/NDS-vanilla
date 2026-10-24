@@ -148,9 +148,9 @@
     const strings = NDS.i18n.getStrings('filter', {
         update_failed: 'Could not update results',
         update_failed_description: 'Something went wrong applying the filter. The results shown are unchanged.',
-        no_results: 'No Result',
-        no_results_description: 'No result for current filter criteria',
-        clear: 'Clear Filter',
+        no_results: 'No results',
+        no_results_description: 'No item matches the current filters.',
+        clear: 'Clear filters',
         all: 'All',
         apply: 'Apply',
         min: 'Minimum',
