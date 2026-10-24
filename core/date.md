@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 08:03 PM"
+last_edit: "24/10/2026 - 09:17 PM"
 ---
 
 <section id="date-overview" class="nds-content-section nds-doc-overview">
@@ -263,6 +263,7 @@ The script reads the date from `datetime`, never from the text, and writes the t
 | `M` | The month, 1 or 2 digits |
 | `DD` | The day, 2 digits |
 | `D` | The day, 1 or 2 digits |
+| `dddd` | The weekday's name, such as `Tuesday`, in `locale` or the page language. Only for `format`, as `MMMM` |
 {: .nds-table .nds-responsive}
 
 Any other character is literal. A format with no day, such as `MM/YYYY`, parses as the first day of the month. A format with no month parses as the first month. `parse` returns `null` for a format with no year.
@@ -276,6 +277,7 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 | `calendar` | `'gregory'` | The calendar of the text: `'gregory'` or `'hijri'`, the two calendars of Saudi Arabia. `'hijri'` is Umm al-Qura (`'islamic-umalqura'`) |
 | `locale` | the `lang` of `<html>` | The language of the text. Only for the `format` method: the text the browser writes, with other options and no `format`, and the name `MMMM` writes |
 | `numerals` | `'latn'` | The digits. `'arab'` writes Arabic digits. Only for the `format` method |
+| `era` | `false` | `true` ends a Hijri date in the era word, such as `AH` in English and `هـ` in Arabic. A Gregorian date takes none. Only for the `format` method, with `format` |
 | any other option | — | Only for the `format` method: passed to `Intl.DateTimeFormat`, such as `weekday`, `day`, `month`, `year` and `timeZone` |
 {: .nds-table .nds-responsive}
 
@@ -286,6 +288,7 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 |---|---|
 | `NDS.Date.parse(text, options)` | Returns the date in `text` as a `Date` at local midnight, or `null` when `text` does not match the format or names a day that does not exist. Reads `format` and `calendar` |
 | `NDS.Date.format(date, options)` | Returns the date as text. With `format`, it fills the tokens. With other options and no `format`, the browser writes the text. With neither, it uses the site's format. An invalid date returns `''` |
+| `NDS.Date.getDayLabel(date, options)` | Returns the day in words, as a screen reader should hear it: the weekday, the day, the month's name, the year and, for a Hijri date, the era. `"Tuesday 8 Jumada al-Ula 1448 AH"`. Reads `calendar` and `locale`. The Date Picker and the [Calendar](../components/calendar) name their days with it |
 | `NDS.Date.convert(text, from, to)` | Parses `text` with the options in `from` and formats it with the options in `to`. Returns `null` when `text` does not parse |
 | `NDS.Date.getToday()` | Returns today, in the site's timezone, as a `Date` at local midnight |
 | `NDS.Date.readDay(datetime)` | Returns the day a `datetime` value names, as a `Date` at local midnight, or `null`. The value is `YYYY-MM-DD`, with or without a time. A time with a zone counts in the site's timezone. The [Calendar](../components/calendar) reads each event's day with it |

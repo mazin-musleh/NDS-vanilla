@@ -2,6 +2,10 @@
  * Rides: (none — base component)
  * Methods:
  *   NDS.Date.parse(text, opts) · .format(date, opts) · .convert(text, from, to) · .getToday() · .site
+ *                                    format tokens: YYYY YY MMMM MMM MM M DD D, dddd (the weekday);
+ *                                    { era: true } ends a Hijri date in the pack's era word (AH)
+ *   NDS.Date.getDayLabel(date, { calendar, locale })   the day in words, as a screen reader
+ *                                    should hear it: "Tuesday 8 Jumada al-Ula 1448 AH"
  *   NDS.Date.toParts(date, calendar) · .fromParts({ year, month, day }, calendar)
  *                                    a day as numbers in a calendar (month 1-based), and back (null: no such day)
  *   NDS.Date.getMonthLength({ year, month }, calendar)   days in that month
@@ -45,8 +49,15 @@
     // A date is a calendar day: a Date at local midnight, never shifted by a timezone.
     // The site's timezone (<html data-timezone>) enters only through getToday().
     // ponytail: built for Saudi Arabia's two calendars, gregory and hijri; any other calendar when a site asks.
+    // Hijri names come from the pack: Android's ICU renders Umm al-Qura month
+    // symbols from the Gregorian set (month 1 → "January").
+    const strings = NDS.i18n.getStrings('date', {
+        hijri_months: ['Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani', 'Jumada al-Ula', 'Jumada al-Akhirah', 'Rajab', 'Shaban', 'Ramadan', 'Shawwal', 'Dhu al-Qadah', 'Dhu al-Hijjah'],
+        hijri_era: 'AH',
+    });
+
     NDS.Date = (() => {
-        const TOKENS = /YYYY|YY|MMMM|MMM|MM|M|DD|D/g;
+        const TOKENS = /dddd|YYYY|YY|MMMM|MMM|MM|M|DD|D/g;
         const formatters = new Map();
         const parsers = new Map();
         const warned = new Set();
@@ -112,17 +123,12 @@
         }
 
         // The nearest data-date-format wins, like a dark area; <html> holds the site's.
-        // Hijri names come from the pack: Android's ICU renders Umm al-Qura month
-        // symbols from the Gregorian set (month 1 → "January").
-        const names = NDS.i18n.getStrings('date', {
-            hijri_months: ['Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani', 'Jumada al-Ula', 'Jumada al-Akhirah', 'Rajab', 'Shaban', 'Ramadan', 'Shawwal', 'Dhu al-Qadah', 'Dhu al-Hijjah'],
-        });
         const getIntlNames = (lang, opts, at) => {
             const formatter = getDateFormatter(NDS.i18n.resolveLang(lang), { timeZone: 'UTC', ...opts });
             return Array.from({ length: opts.month ? 12 : 7 }, (_, i) => formatter.format(at(i)));
         };
         const getMonthNames = (calendar, lang) => (calendar === 'hijri'
-            ? names.text('hijri_months', null, lang)
+            ? strings.text('hijri_months', null, lang)
             : getIntlNames(lang, { month: 'long' }, i => Date.UTC(2000, i, 15)));
         // From weekStart (0 = Sunday): 2 Jan 2000 was a Sunday.
         const getWeekdayNames = (lang, weekStart = 0) => getIntlNames(lang, { weekday: 'short' }, i => Date.UTC(2000, 0, 2 + weekStart + i));
@@ -184,8 +190,8 @@
                     const order = [];
                     const src = format.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(TOKENS, (token) => {
                         order.push(token);
-                        // A month name is print-only: the format never matches.
-                        if (token === 'MMMM' || token === 'MMM') return '(?!)';
+                        // A name is print-only: the format never matches.
+                        if (token === 'MMMM' || token === 'MMM' || token === 'dddd') return '(?!)';
                         return token === 'YYYY' ? '(\\d{4})' : token.length === 2 ? '(\\d{2})' : '(\\d{1,2})';
                     });
                     parsers.set(format, parser = { rx: new RegExp('^' + src + '$'), order });
@@ -208,11 +214,12 @@
             // print the day in the page language; neither → the site format.
             format(date, opts = {}) {
                 if (!(date instanceof Date) || isNaN(date)) return '';
-                const { format, calendar, locale, numerals, ...intl } = opts;
+                const { format, calendar, locale, numerals, era, ...intl } = opts;
                 const intlCalendar = toIntlCalendar(calendar);
                 if (format || !Object.keys(intl).length) {
                     const { year, month, day } = toCalendarParts(date, intlCalendar);
-                    const out = (format || getSiteFormat()).replace(TOKENS, (token) => {
+                    let out = (format || getSiteFormat()).replace(TOKENS, (token) => {
+                        if (token === 'dddd') return getIntlNames(locale, { weekday: 'long' }, i => Date.UTC(2000, 0, 2 + i))[date.getDay()];
                         if (token === 'YYYY') return String(year);
                         if (token === 'YY') return String(year).slice(-2);
                         if (token === 'MMMM') return getMonthNames(calendar === 'hijri' ? 'hijri' : 'gregory', locale)[month - 1];
@@ -220,6 +227,8 @@
                         if (token === 'MMM') return (calendar === 'hijri' ? getMonthNames('hijri', locale) : getIntlNames(locale, { month: 'short' }, i => Date.UTC(2000, i, 15)))[month - 1];
                         return String(token[0] === 'M' ? month : day).padStart(token.length, '0');
                     });
+                    // `era`: a Hijri date ends in the pack's era word (AH); a Gregorian one takes none.
+                    if (era && calendar === 'hijri') out += ' ' + strings.text('hijri_era', null, locale);
                     if (!numerals || numerals === 'latn') return out;
                     // The numbering system's zero, then offset: its digits are contiguous.
                     const zero = (0).toLocaleString('en-u-nu-' + numerals).charCodeAt(0);
@@ -228,6 +237,11 @@
                 const intlOptions = { ...intl, calendar: intlCalendar, numberingSystem: numerals || 'latn' };
                 try { return getDateFormatter(locale || document.documentElement.lang || 'en', intlOptions).format(date); }
                 catch { return getDateFormatter('en', intlOptions).format(date); }
+            },
+
+            // Pack month names, never Intl's: Android's Umm al-Qura names are Gregorian ones.
+            getDayLabel(date, { calendar, locale } = {}) {
+                return api.format(date, { calendar, locale, format: 'dddd D MMMM YYYY', era: true });
             },
 
             convert(text, from, to) {
@@ -253,7 +267,6 @@
 
     // ── <time> text ──────────────────────────────────────────────────
     const SELECTOR = 'time[datetime][data-date-to], time[datetime][data-date-format]';
-    const strings = NDS.i18n.getStrings('date', { hijri_era: 'AH' });
     function fill(root = document) {
         const elements = root.matches?.(SELECTOR) ? [root] : [];
         elements.push(...(root.querySelectorAll?.(SELECTOR) || []));

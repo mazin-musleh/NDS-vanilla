@@ -19,12 +19,14 @@
  * Hooks:
  *   data-week                any day of the shown week, YYYY-MM-DD (none: this week); the
  *                            script writes the week's first day back
- *   data-view                grid | rows (none: grid). A calendar under 640px wide shows rows
+ *   data-view                grid | rows (none: grid). A calendar under 860px wide shows rows
  *   data-day                 the picked day, YYYY-MM-DD (none: the whole week)
  *   data-week-param          keep the week in the address: ?week=YYYY-MM-DD (a value names another
  *                            key). Read once at load, before data-week; the opening week drops it
  *   data-calendar-action     on a button: prev | next | today
  *   data-calendar-view       on a button: grid | rows. The current one is pressed
+ *   data-calendar-second     hijri | gregory: the title and each day button also show the dates
+ *                            in that calendar
  *   .nds-calendar-title      the script writes the week's dates into it
  *   .nds-calendar-days       the script writes a button per day into it
  *   .nds-calendar-events     a list: each <li> is an event, on the day of its first time[datetime]
@@ -40,6 +42,8 @@
  *     empty message.
  *   - The address changes with replaceState: no Back-button step per week, as Pagination.
  *   - A press on a day or a week button says the day or week and its event count (NDS.announce).
+ *   - The days are one Tab stop (the picked day, else today, else the first); the arrow keys move
+ *     between them, Home and End to the ends.
  *   - Loading: nds-loading (or data-state="loading") on the list's drawer, while a server loads the
  *     week. The old events stay for the Drawer's skeleton, the empty message waits, and so does the
  *     announcement.
@@ -58,10 +62,8 @@
     const addDays = (date, days) => new Date(date.getFullYear(), date.getMonth(), date.getDate() + days);
     // A Date or a datetime value → a local day, or null.
     const toDay = (value) => (value instanceof Date ? (isNaN(value) ? null : addDays(value, 0)) : value ? NDS.Date.readDay(String(value)) : null);
+    const getLang = (el) => el.closest('[lang]')?.lang || 'en';
     const isSameDay = (a, b) => (a && b ? +a === +b : a === b);
-    // "Monday 8 Jumada al-Ula 1448": NDS.Date's month names, as Intl's Hijri names differ by browser.
-    const getDayLabel = (date, calendar, lang) => NDS.Date.format(date, { locale: lang, weekday: 'long' })
-        + ' ' + NDS.Date.format(date, { calendar, locale: lang, format: 'D MMMM YYYY' });
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
     const strings = NDS.i18n.getStrings('calendar', {
@@ -106,7 +108,11 @@
             this._loading = !!el.querySelector('.nds-drawer:is(.nds-loading, [data-state~="loading"])');
             this._readEvents();
             el.addEventListener('click', (e) => this._handleClick(e), { signal: this.abortController.signal });
+            el.addEventListener('keydown', (e) => this._handleDayKey(e), { signal: this.abortController.signal });
             this._readState(true);
+            // Hijri month names come from the page's pack: write the dates again once it lands.
+            const lang = getLang(el);
+            if (!strings.ready(lang)) strings.load(lang).then(() => { if (!this.abortController.signal.aborted) this._sync(); });
         }
 
         _buildDayButtons() {
@@ -117,13 +123,15 @@
                 btn.type = 'button';
                 btn.className = 'nds-btn nds-subtle nds-indicator nds-calendar-day';
                 // The initial stands in for the name in a narrow calendar: Arabic short names are whole words.
-                const [name, initial, number] = ['name', 'initial', 'number'].map((part) => {
+                const [name, initial, number, second] = ['name', 'initial', 'number', 'second'].map((part) => {
                     const span = document.createElement('span');
                     span.className = 'nds-calendar-day-' + part;
                     return span;
                 });
+                // The description names the second date in full; the bare number would read as noise.
                 NDS.aria.hidden(initial, true);
-                btn.append(name, initial, number);
+                NDS.aria.hidden(second, true);
+                btn.append(name, initial, number, second);
                 return btn;
             });
             box.replaceChildren(...buttons);
@@ -199,7 +207,9 @@
         _sync() {
             const el = this._element;
             const calendar = NDS.Date.getCalendar(el);
-            const lang = el.closest('[lang]')?.lang || 'en';
+            const second = el.getAttribute('data-calendar-second');
+            const secondCalendar = second && second !== calendar ? second : null;
+            const lang = getLang(el);
             // Written only when it differs: each write reaches the hooks' observer.
             const state = { week: getIso(this._week), view: this._view, day: this._day && getIso(this._day) };
             for (const key in state) {
@@ -208,22 +218,37 @@
             }
 
             const title = el.querySelector('.nds-calendar-title');
-            if (title) title.textContent = this._getTitle(calendar, lang);
+            if (title) {
+                title.textContent = this._getTitle(calendar, lang);
+                if (secondCalendar) {
+                    const sub = document.createElement('span');
+                    sub.className = 'nds-calendar-title-second';
+                    sub.textContent = this._getTitle(secondCalendar, lang);
+                    title.append(sub);
+                }
+            }
 
             const names = NDS.Date.getWeekdayNames(lang, NDS.Date.getWeekStart(el));
             const today = NDS.Date.getToday();
             this._dayButtons.forEach((btn, i) => {
                 const date = addDays(this._week, i);
                 const picked = isSameDay(date, this._day);
-                const [name, initial, number] = btn.children;
+                const [name, initial, number, second] = btn.children;
                 name.textContent = names[i];
                 initial.textContent = NDS.Date.format(date, { locale: lang, weekday: 'narrow' });
                 number.textContent = NDS.Date.toParts(date, calendar).day;
-                btn.setAttribute('aria-description', getDayLabel(date, calendar, lang));
+                second.hidden = !secondCalendar;
+                second.textContent = secondCalendar ? NDS.Date.toParts(date, secondCalendar).day : '';
+                btn.setAttribute('aria-description', NDS.Date.getDayLabel(date, { calendar, locale: lang })
+                    + (secondCalendar ? ', ' + NDS.Date.format(date, { calendar: secondCalendar, locale: lang, format: 'D MMMM YYYY', era: true }) : ''));
                 NDS.aria.pressed(btn, picked);
                 NDS.state[picked ? 'add' : 'remove'](btn, 'selected');
                 NDS.aria.current(btn, isSameDay(date, today) ? 'date' : null);
             });
+            // One Tab stop for the days, as the Date Picker's grid: the picked day, else today, else the first.
+            const stop = this._dayButtons.find((btn) => NDS.state.has(btn, 'selected'))
+                || this._dayButtons.find((btn) => btn.hasAttribute('aria-current')) || this._dayButtons[0];
+            this._dayButtons.forEach((btn) => { btn.tabIndex = btn === stop ? 0 : -1; });
 
             el.querySelectorAll('[data-calendar-view]').forEach((btn) => {
                 const current = btn.dataset.calendarView === this._view;
@@ -257,7 +282,23 @@
             const end = NDS.Date.toParts(last, calendar);
             const startFormat = start.year !== end.year ? 'D MMM YYYY' : start.month !== end.month ? 'D MMM' : 'D';
             return NDS.Date.format(this._week, { calendar, locale: lang, format: startFormat })
-                + ' – ' + NDS.Date.format(last, { calendar, locale: lang, format: 'D MMM YYYY' });
+                + ' – ' + NDS.Date.format(last, { calendar, locale: lang, format: 'D MMM YYYY', era: true });
+        }
+
+        // Arrows move along the days (in reading order, so Left is the next day in RTL), Home and End to the ends.
+        _handleDayKey(e) {
+            const index = this._dayButtons.indexOf(e.target);
+            if (index < 0) return;
+            const step = { ArrowLeft: -1, ArrowRight: 1 }[e.key];
+            const last = this._dayButtons.length - 1;
+            let target;
+            if (step) target = (index + (getComputedStyle(e.target).direction === 'rtl' ? -step : step) + last + 1) % (last + 1);
+            else if (e.key === 'Home') target = 0;
+            else if (e.key === 'End') target = last;
+            else return;
+            e.preventDefault();
+            this._dayButtons.forEach((btn, i) => { btn.tabIndex = i === target ? 0 : -1; });
+            this._dayButtons[target].focus();
         }
 
         _handleClick(e) {
@@ -288,10 +329,10 @@
             if (!this._announcePending || this._loading) return;
             this._announcePending = false;
             const el = this._element;
-            const lang = el.closest('[lang]')?.lang || 'en';
+            const lang = getLang(el);
             const calendar = NDS.Date.getCalendar(el);
             const count = this._events.filter(({ item }) => item.hasAttribute('data-calendar-day') && !item.hasAttribute('data-filtered')).length;
-            const label = this._day ? getDayLabel(this._day, calendar, lang) : this._getTitle(calendar, lang);
+            const label = this._day ? NDS.Date.getDayLabel(this._day, { calendar, locale: lang }) : this._getTitle(calendar, lang);
             NDS.announce(label + ': ' + (count ? strings.text('events', { n: count }, lang) : strings.text('no_events', null, lang)));
         }
 

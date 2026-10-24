@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 08:12 PM"
+last_edit: "24/10/2026 - 09:17 PM"
 ---
 
 <section id="calendar-overview" class="nds-content-section nds-doc-overview">
@@ -44,22 +44,22 @@ Pick another component when:
     </div>
     <div class="nds-toolbar-end">
       <div class="nds-btn-group">
-        <button type="button" class="nds-btn nds-secondary-outline nds-icon-only" data-calendar-action="prev" aria-label="Previous week" data-i18n-aria-label="calendar.previous_week">
+        <button type="button" class="nds-btn nds-md nds-secondary-outline nds-icon-only" data-calendar-action="prev" aria-label="Previous week" data-i18n-aria-label="calendar.previous_week">
           <i class="nds-icon nds-hgi-arrow-prev-02" aria-hidden="true"></i>
         </button>
-        <button type="button" class="nds-btn nds-secondary-outline" data-calendar-action="today">
+        <button type="button" class="nds-btn nds-md nds-secondary-outline" data-calendar-action="today">
           <span class="nds-label" data-i18n="calendar.today">Today</span>
         </button>
-        <button type="button" class="nds-btn nds-secondary-outline nds-icon-only" data-calendar-action="next" aria-label="Next week" data-i18n-aria-label="calendar.next_week">
+        <button type="button" class="nds-btn nds-md nds-secondary-outline nds-icon-only" data-calendar-action="next" aria-label="Next week" data-i18n-aria-label="calendar.next_week">
           <i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>
         </button>
       </div>
       <div class="nds-btn-group nds-calendar-views">
-        <button type="button" class="nds-btn nds-secondary-outline" data-calendar-view="grid">
+        <button type="button" class="nds-btn nds-md nds-secondary-outline" data-calendar-view="grid">
           <i class="hgi hgi-stroke hgi-grid-view" aria-hidden="true"></i>
           <span class="nds-label" data-i18n="calendar.grid">Grid</span>
         </button>
-        <button type="button" class="nds-btn nds-secondary-outline" data-calendar-view="rows">
+        <button type="button" class="nds-btn nds-md nds-secondary-outline" data-calendar-view="rows">
           <i class="hgi hgi-stroke hgi-list-view" aria-hidden="true"></i>
           <span class="nds-label" data-i18n="calendar.rows">Rows</span>
         </button>
@@ -211,7 +211,7 @@ Pick another component when:
     </div>
     <div class="nds-toolbar-end">
       <div class="nds-dropmenu nds-filter" data-filter-target="calendar-sessions">
-        <button class="nds-btn nds-secondary-outline nds-menu-btn nds-filter-btn nds-dropmenu-trigger" type="button">
+        <button class="nds-btn nds-md nds-secondary-outline nds-menu-btn nds-filter-btn nds-dropmenu-trigger" type="button">
           <i class="nds-icon nds-hgi-filter" aria-hidden="true"></i>
           <span class="nds-label" data-hidden="sm sr" data-i18n="filter.filter">Filter</span>
         </button>
@@ -233,22 +233,22 @@ Pick another component when:
         </div>
       </div>
       <div class="nds-btn-group">
-        <button type="button" class="nds-btn nds-secondary-outline nds-icon-only" data-calendar-action="prev" aria-label="Previous week" data-i18n-aria-label="calendar.previous_week">
+        <button type="button" class="nds-btn nds-md nds-secondary-outline nds-icon-only" data-calendar-action="prev" aria-label="Previous week" data-i18n-aria-label="calendar.previous_week">
           <i class="nds-icon nds-hgi-arrow-prev-02" aria-hidden="true"></i>
         </button>
-        <button type="button" class="nds-btn nds-secondary-outline" data-calendar-action="today">
+        <button type="button" class="nds-btn nds-md nds-secondary-outline" data-calendar-action="today">
           <span class="nds-label" data-i18n="calendar.today">Today</span>
         </button>
-        <button type="button" class="nds-btn nds-secondary-outline nds-icon-only" data-calendar-action="next" aria-label="Next week" data-i18n-aria-label="calendar.next_week">
+        <button type="button" class="nds-btn nds-md nds-secondary-outline nds-icon-only" data-calendar-action="next" aria-label="Next week" data-i18n-aria-label="calendar.next_week">
           <i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>
         </button>
       </div>
       <div class="nds-btn-group nds-calendar-views">
-        <button type="button" class="nds-btn nds-secondary-outline" data-calendar-view="grid">
+        <button type="button" class="nds-btn nds-md nds-secondary-outline" data-calendar-view="grid">
           <i class="hgi hgi-stroke hgi-grid-view" aria-hidden="true"></i>
           <span class="nds-label" data-i18n="calendar.grid">Grid</span>
         </button>
-        <button type="button" class="nds-btn nds-secondary-outline" data-calendar-view="rows">
+        <button type="button" class="nds-btn nds-md nds-secondary-outline" data-calendar-view="rows">
           <i class="hgi hgi-stroke hgi-list-view" aria-hidden="true"></i>
           <span class="nds-label" data-i18n="calendar.rows">Rows</span>
         </button>
@@ -439,6 +439,8 @@ Every option goes on `.nds-calendar`, except Loading, which goes on the events' 
 | View switch | No view switch | `remove` | `.nds-calendar-views` | Delete the `.nds-calendar-views` group. The calendar then keeps the view in `data-view`, and Grid without it |
 | Calendar | Gregorian (default) | — | — | Gregorian dates in the week's title and on the day buttons |
 | Calendar | Hijri | `[data-calendar="hijri"]` | `.nds-calendar` | Hijri dates in the week's title, on the day buttons and in what a screen reader hears. Write the date tiles' text in Hijri too, and keep `datetime` in Gregorian |
+| Second date | Hijri | `[data-calendar-second="hijri"]` | `.nds-calendar:not([data-calendar="hijri"])` | The week's Hijri dates under the title, and each day's Hijri day under its Gregorian one. A screen reader hears both dates |
+| Second date | Gregorian | `[data-calendar-second="gregory"]` | `.nds-calendar[data-calendar="hijri"]` | The week's Gregorian dates under the title, and each day's Gregorian day. Use it with the Hijri calendar |
 | Week start | Sunday (default) | — | — | The week starts on Sunday |
 | Week start | Saturday | `[data-week-start="sat"]` | `.nds-calendar` | The week starts on Saturday |
 | Week start | Monday | `[data-week-start="mon"]` | `.nds-calendar` | The week starts on Monday |
@@ -472,10 +474,14 @@ Grid shows a column for each day, and each day stacks its events. Rows shows the
 
 A press on a day button shows that day's events only, and a second press shows the week again. In Grid, the day's events take the whole width. When the week or the day has no events, `.nds-calendar-empty` shows in place of the list.
 
+The day buttons are one Tab stop, as the Date Picker's days: the picked day, else today, else the first. The arrow keys move between them, Home and End to the first and the last. A picked day that is also today keeps a ring inside its fill, so today stays in view.
+
 ### Week Start and Hijri
 {: .nds-block-title}
 
 `data-week-start` sets the first day of the week, and `data-calendar="hijri"` shows Hijri dates. The nearest one wins, on the calendar or on any element around it, such as `<html>`. The [Date Picker](../components/date-picker) reads the same two attributes. On a Hijri calendar, an event's `datetime` stays in Gregorian, and you write its date tile in Hijri. See [Date](../core/date).
+
+`data-calendar-second` adds the dates in the other calendar, in smaller text: the week under the title, and the day number on each day button. Use `hijri` on a Gregorian calendar, or `gregory` on a Hijri one. A screen reader hears both dates in full. A Hijri date ends in the era word (AH, هـ), as in the top bar's date.
 
 ### Week in the Address
 {: .nds-block-title}
@@ -617,6 +623,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 | `data-day` | `.nds-calendar` | The picked day, as `YYYY-MM-DD`: only its events show. The script writes it when the user presses a day, and removes it when the user presses it again or moves to another week |
 | `data-week-param` | `.nds-calendar` | Keeps the week in the address. The name is `week` by default. A value sets another name |
 | `data-calendar` | `.nds-calendar`, or any element around it | `hijri` shows Hijri dates. The nearest one wins. The default is Gregorian |
+| `data-calendar-second` | `.nds-calendar` | `hijri` or `gregory`: the title and each day button also show the dates in that calendar. A screen reader hears that date in full too |
 | `data-week-start` | `.nds-calendar`, or any element around it | `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`: the first day of the week. The nearest one wins. The default is Sunday |
 | `data-calendar-action` | a button in the calendar | `prev`, `next` or `today` |
 | `data-calendar-view` | a button in the calendar | `grid` or `rows`. The script sets `aria-pressed` and `data-state="selected"` on the current one |

@@ -1586,8 +1586,8 @@
             // Check selection states
             this.applySelectionStates(btn, date);
             // The grid shows the month, today and the pick by place and colour; the name says them.
-            NDS.aria.label(btn, NDS.Date.format(date, {
-                dateStyle: 'full', locale: this.getLanguage(),
+            NDS.aria.label(btn, NDS.Date.getDayLabel(date, {
+                locale: this.getLanguage(),
                 calendar: this.state.calendarType === 'hijri' ? 'hijri' : 'gregory',
             }));
             NDS.aria.pressed(btn, ['selected', 'range-start', 'range-end'].some(function (state) { return NDS.state.has(btn, state); }));

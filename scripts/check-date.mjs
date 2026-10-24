@@ -60,7 +60,12 @@ for (const timezoneId of ['Asia/Tokyo', 'America/Los_Angeles']) {
         eq('week start nearest', D.getWeekStart(week.querySelector('span')), 1);
         eq('week start none', D.getWeekStart(week), 0);
         eq('week start bad', D.getWeekStart(week.lastChild), 0);
-        eq('convert', D.convert('11/10/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', format: 'YYYY-MM-DD' }), '1448-04-30');
+        eq('dddd token', D.format(new Date(2026, 9, 20), { locale: 'en', format: 'dddd D MMMM YYYY' }), 'Tuesday 20 October 2026');
+        eq('era on hijri', D.format(new Date(2026, 9, 11), { calendar: 'hijri', locale: 'en', format: 'D MMMM YYYY', era: true }), '30 Rabi al-Thani 1448 AH');
+        eq('era skips gregory', D.format(new Date(2026, 9, 11), { locale: 'en', format: 'D/M/YYYY', era: true }), '11/10/2026');
+        eq('day label hijri', D.getDayLabel(new Date(2026, 9, 11), { calendar: 'hijri', locale: 'en' }), 'Sunday 30 Rabi al-Thani 1448 AH');
+        eq('dddd never parses', D.parse('Tuesday 20/10/2026', { format: 'dddd DD/MM/YYYY' }), null);
+        eq('convert',D.convert('11/10/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', format: 'YYYY-MM-DD' }), '1448-04-30');
         eq('site format default', D.format(new Date(2026, 3, 3)), '03/04/2026');
         document.documentElement.dataset.dateFormat = 'YYYY/MM/DD';
         eq('site format attribute', D.format(new Date(2026, 3, 3)), '2026/04/03');
