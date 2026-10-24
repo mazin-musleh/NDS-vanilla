@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "24/10/2026 - 12:18 PM"
 ---
 
 <section id="date-overview" class="nds-content-section nds-doc-overview">
@@ -256,6 +256,7 @@ The script reads the date from `datetime`, never from the text, and writes the t
 | `YYYY` | The year, 4 digits |
 | `YY` | The year, 2 digits. `parse` reads it as 2000 to 2099 |
 | `MMMM` | The month's name, in `locale` or the page language. Only for `format`: `parse` returns `null` for a format with it. Keep it out of a `data-date-format` on `<html>` or a section, which Sort and Date Picker read back. On a `<time>`, the script only writes it |
+| `MMM` | The month's short name, such as `Oct`, as `MMMM` with the same limits. A Hijri month, and a language with no short names such as Arabic, shows the full name |
 | `MM` | The month, 2 digits |
 | `M` | The month, 1 or 2 digits |
 | `DD` | The day, 2 digits |

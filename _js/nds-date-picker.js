@@ -43,7 +43,7 @@
  *   - Hijri is Umm al-Qura, converted exactly by NDS.Date.
  *   - Typing at the end is shaped to the format: digits only, separators added ("28051983" →
  *     "28/05/1983"); typing inside a whole date types over it, and inside one an edit broke
- *     inserts until the digits fill the format. Not with a MMMM format.
+ *     inserts until the digits fill the format. Not with a month-name format (MMM, MMMM).
  *   - A pasted date, or a typed one on change, written another common way takes the format
  *     ("1983-05-28" → "28/05/1983"); year last reads day first unless the format is month first.
  *     Sets inputmode="decimal" unless the input has one.
@@ -143,7 +143,7 @@
     }
 
     // Split keeps the tokens; longest first, so YYYY is not read as two YY.
-    var DATE_TOKENS = /(YYYY|YY|MMMM|MM|M|DD|D)/;
+    var DATE_TOKENS = /(YYYY|YY|MMMM|MMM|MM|M|DD|D)/;
     var isValidUnit = function (text, day) { return +text >= 1 && +text <= (day ? 31 : 12); };
 
     // The format's units for NDS.typing: a year is a fixed run; a day or month takes two digits (D and M
@@ -369,7 +369,7 @@
             NDS.field.onReset(this.elements.input.form, function () { self._readTyped(); self._validateInput(true); self._syncValueInputs(); }, { signal: signal });
             // Typing is shaped to the format (NDS.typing); a paste in any common form is that date, kept in
             // its own calendar until the change converts it, as a typed one is.
-            if (!/MMMM/.test(this.state.format)) NDS.typing.addTypingListeners(this.elements.input, {
+            if (!/MMM/.test(this.state.format)) NDS.typing.addTypingListeners(this.elements.input, {
                 getMask: function () { return getDateMask(self.isRangeMode() ? self.state.format + ' - ' + self.state.format : self.state.format); },
                 read: function (text) { return self._readDates(text, true); },
                 signal: signal,

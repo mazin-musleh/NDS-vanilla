@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 06:24 AM"
+last_edit: "24/10/2026 - 12:17 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -535,6 +535,16 @@ document.addEventListener('nds:filter:request', function (e) {
   NDS.request('/api/services', { method: 'POST', body: new FormData(form), json: true })
     .then(function (res) { renderServices(res.data.records); })
     .catch(function () { e.detail.rollback(); });
+});
+</script>
+
+The filter reads the address at load and shows its filters in the search box, the chips and the menu, but it sends no request. When your script loads the first items from your own API, send that first request with the same filters: `NDS.Filter.whenReady()` gives you the filter, and `getCriteria()` its filters. With the [Pagination](../components/pagination) URL sync (`data-page-param`), read the page from the address too, so a shared link opens the same page.
+
+<script type="text/html" id="filter-first-load-js" data-canon data-lang="js" data-preview="none">
+// First load: the filters and the page that the address already holds.
+NDS.Filter.whenReady(form, function (filter) {
+  var page = Number(new URLSearchParams(location.search).get('page')) || 1;
+  loadServices(filter.getCriteria(), page);
 });
 </script>
 

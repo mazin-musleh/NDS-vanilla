@@ -37,7 +37,7 @@
     // The site's timezone (<html data-timezone>) enters only through getToday().
     // ponytail: built for Saudi Arabia's two calendars, gregory and hijri; any other calendar when a site asks.
     NDS.Date = (() => {
-        const TOKENS = /YYYY|YY|MMMM|MM|M|DD|D/g;
+        const TOKENS = /YYYY|YY|MMMM|MMM|MM|M|DD|D/g;
         const formatters = new Map();
         const parsers = new Map();
         const warned = new Set();
@@ -141,7 +141,7 @@
                     const src = format.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(TOKENS, (token) => {
                         order.push(token);
                         // A month name is print-only: the format never matches.
-                        if (token === 'MMMM') return '(?!)';
+                        if (token === 'MMMM' || token === 'MMM') return '(?!)';
                         return token === 'YYYY' ? '(\\d{4})' : token.length === 2 ? '(\\d{2})' : '(\\d{1,2})';
                     });
                     parsers.set(format, parser = { rx: new RegExp('^' + src + '$'), order });
@@ -172,6 +172,8 @@
                         if (token === 'YYYY') return String(y);
                         if (token === 'YY') return String(y).slice(-2);
                         if (token === 'MMMM') return getMonthNames(calendar === 'hijri' ? 'hijri' : 'gregory', locale)[month - 1];
+                        // A Hijri month has no standard short name: MMM writes the full one.
+                        if (token === 'MMM') return (calendar === 'hijri' ? getMonthNames('hijri', locale) : getIntlNames(locale, { month: 'short' }, i => Date.UTC(2000, i, 15)))[month - 1];
                         return String(token[0] === 'M' ? month : day).padStart(token.length, '0');
                     });
                     if (!numerals || numerals === 'latn') return out;
