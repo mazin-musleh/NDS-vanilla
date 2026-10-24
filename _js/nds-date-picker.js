@@ -103,22 +103,20 @@
     });
 
     // Hijri <-> a local-midnight Date, through NDS.Date (Umm al-Qura).
-    var hijriOptions = { calendar: 'hijri', format: 'D/M/YYYY' };
     function toHijri(date) {
-        var parts = NDS.Date.format(date, { calendar: 'hijri', format: 'D M YYYY' }).split(' ');
-        return { day: +parts[0], month: +parts[1], year: +parts[2] };
+        return NDS.Date.toParts(date, 'hijri');
     }
     // Stamped. Day 30 of a 29-day month clamps to the 29th.
     function fromHijri(year, month, day) {
-        var date = NDS.Date.parse(day + '/' + month + '/' + year, hijriOptions);
+        var date = NDS.Date.fromParts({ year: year, month: month, day: day }, 'hijri');
         if (!date && day > 29) {
             day = 29;
-            date = NDS.Date.parse(day + '/' + month + '/' + year, hijriOptions);
+            date = NDS.Date.fromParts({ year: year, month: month, day: day }, 'hijri');
         }
         return stampHijri(date, year, month, day);
     }
     function getHijriMonthLength(year, month) {
-        return NDS.Date.parse('30/' + month + '/' + year, hijriOptions) ? 30 : 29;
+        return NDS.Date.getMonthLength({ year: year, month: month }, 'hijri');
     }
 
     // Today moved by n days, months or years, counted in the field's calendar. A day past the

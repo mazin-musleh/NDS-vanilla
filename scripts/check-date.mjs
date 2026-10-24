@@ -43,6 +43,13 @@ for (const timezoneId of ['Asia/Tokyo', 'America/Los_Angeles']) {
         // Umm al-Qura 1448/4 has 30 days and 1448/3 has 29.
         eq('hijri 30/04/1448', iso(D.parse('30/04/1448', { calendar: 'hijri', format: 'DD/MM/YYYY' })), '2026-10-11');
         eq('hijri 30/03/1448', D.parse('30/03/1448', { calendar: 'hijri', format: 'DD/MM/YYYY' }), null);
+        eq('toParts hijri', JSON.stringify(D.toParts(new Date(2026, 9, 11), 'hijri')), '{"year":1448,"month":4,"day":30}');
+        eq('toParts gregory', JSON.stringify(D.toParts(new Date(2026, 9, 11))), '{"year":2026,"month":10,"day":11}');
+        eq('fromParts hijri', iso(D.fromParts({ year: 1448, month: 4, day: 30 }, 'hijri')), '2026-10-11');
+        eq('fromParts no such day', D.fromParts({ year: 1448, month: 3, day: 30 }, 'hijri'), null);
+        eq('month length hijri 30', D.getMonthLength({ year: 1448, month: 4 }, 'hijri'), 30);
+        eq('month length hijri 29', D.getMonthLength({ year: 1448, month: 3 }, 'hijri'), 29);
+        eq('month length gregory', D.getMonthLength({ year: 2028, month: 2 }), 29);
         eq('convert', D.convert('11/10/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', format: 'YYYY-MM-DD' }), '1448-04-30');
         eq('site format default', D.format(new Date(2026, 3, 3)), '03/04/2026');
         document.documentElement.dataset.dateFormat = 'YYYY/MM/DD';

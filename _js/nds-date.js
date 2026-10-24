@@ -2,6 +2,9 @@
  * Rides: (none — base component)
  * Methods:
  *   NDS.Date.parse(text, opts) · .format(date, opts) · .convert(text, from, to) · .getToday() · .site
+ *   NDS.Date.toParts(date, calendar) · .fromParts({ year, month, day }, calendar)
+ *                                    a day as numbers in a calendar (month 1-based), and back (null: no such day)
+ *   NDS.Date.getMonthLength({ year, month }, calendar)   days in that month
  *   NDS.Date.formatFor(el)           the nearest data-date-format (<html> is the site's)
  *   NDS.Date.getCalendar(el, fb)     the nearest data-calendar: hijri | gregory (else fb, gregory)
  *   NDS.Date.getMonthNames(calendar, lang) · .getWeekdayNames(lang)   names in a language, Sunday first
@@ -189,6 +192,20 @@
             convert(text, from, to) {
                 const date = api.parse(text, from);
                 return date && api.format(date, to);
+            },
+
+            // A day as { year, month, day } in a calendar, month 1-based in both, and back.
+            toParts(date, calendar) {
+                const { y, m: month, d: day } = toCalendarParts(date, toIntlCalendar(calendar));
+                return { year: y, month, day };
+            },
+            fromParts({ year, month, day }, calendar) {
+                return fromCalendarParts(year, month, day, toIntlCalendar(calendar));
+            },
+            getMonthLength({ year, month }, calendar) {
+                const intlCalendar = toIntlCalendar(calendar);
+                if (intlCalendar === 'gregory') return new Date(year, month, 0).getDate();
+                return fromCalendarParts(year, month, 30, intlCalendar) ? 30 : 29;
             }
         };
         return api;

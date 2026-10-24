@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 12:26 PM"
+last_edit: "24/10/2026 - 05:31 PM"
 ---
 
 <section id="date-overview" class="nds-content-section nds-doc-overview">
@@ -287,6 +287,9 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 | `NDS.Date.format(date, options)` | Returns the date as text. With `format`, it fills the tokens. With other options and no `format`, the browser writes the text. With neither, it uses the site's format. An invalid date returns `''` |
 | `NDS.Date.convert(text, from, to)` | Parses `text` with the options in `from` and formats it with the options in `to`. Returns `null` when `text` does not parse |
 | `NDS.Date.getToday()` | Returns today, in the site's timezone, as a `Date` at local midnight |
+| `NDS.Date.toParts(date, calendar)` | Returns the day as numbers, `{ year, month, day }`, in `calendar` (default `'gregory'`). The month counts from 1 in both calendars |
+| `NDS.Date.fromParts(parts, calendar)` | Returns the day that `{ year, month, day }` names in `calendar`, as a `Date` at local midnight, or `null` when that day does not exist |
+| `NDS.Date.getMonthLength(parts, calendar)` | Returns the number of days in the month that `{ year, month }` names in `calendar`. A Hijri month has 29 or 30 |
 | `NDS.Date.formatFor(element)` | Returns the nearest `data-date-format` around `element`, the element's own included, or `DD/MM/YYYY` when there is none. Pass it as `format` for content in that part of the page |
 | `NDS.Date.getCalendar(element, fallback)` | Returns the nearest `data-calendar` around `element`, the element's own included, or `fallback` (default `'gregory'`) when there is none. Pass it as `calendar` |
 | `NDS.Date.site` | Returns `{ timeZone, format }` from `<html>`. `timeZone` is `undefined` when the attribute is missing or invalid |
@@ -297,10 +300,9 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 
 <script type="text/html" id="date-api-js" data-canon data-lang="js">
 // Today's Hijri date as numbers, in the site's timezone.
-const [day, month, year] = NDS.Date
-  .format(NDS.Date.getToday(), { calendar: 'hijri', format: 'D M YYYY' })
-  .split(' ')
-  .map(Number);
+const { year, month, day } = NDS.Date.toParts(NDS.Date.getToday(), 'hijri');
+// The days in that Hijri month: 29 or 30.
+const days = NDS.Date.getMonthLength({ year, month }, 'hijri');
 </script>
 
 The full API is in the banner of `_js/nds-date.js`.
