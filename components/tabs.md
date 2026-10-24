@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 03:54 PM"
+last_edit: "24/10/2026 - 09:11 AM"
 ---
 
 <section id="tabs-overview" class="nds-content-section nds-doc-overview">
@@ -324,6 +324,7 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
 - Give the tab list an `aria-label`, and pair each tab and panel with `aria-controls` and `aria-labelledby`.
 - Build a long panel from `nds-block` parts with `nds-block-title` headings, so it reads in sections.
 - When one panel cannot show its content (not found, a failed load), put an [Alert](../components/alert) or [Empty](../components/empty) in it, never a [Status Section](../layout/status-section). The other tabs stay open to the user.
+- When the tabs sit in a box with its own padding, such as a [Panel](../components/panel), a [Modal](../components/modal) or a card, add `nds-flush-inline` to each panel. The content then lines up with the rest of the box, not inset again.
 - When a panel holds content with its own edge, such as a grid of cards, add a flush helper to each panel. `nds-flush-inline` lines the content up with the tab row, `nds-flush-block` removes the space above and below, and `nds-flush` removes both. See [Helper Classes](../utilities/helpers).
 
 </div>
