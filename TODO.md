@@ -16,7 +16,6 @@ Cleaned 2026-10-19: finished items and their release notes left (all in `CHANGEL
 
 ### Parked features (owner calls; after v2.0.0 unless noted)
 
-- **Number field: the −/+ buttons opt-in (owner, 2026-10-22; later).** The doc's Number structure always carries the stepper buttons, and the range check and blur clamp key on them (`getRangeMessage`, the number part's `focusout` in `_js/nds-form.js`), so a number field without buttons loses `min`/`max`. Plan: Number is a plain numeric box, the check keys on `min`/`max` on the input, and the buttons become a builder option. A text box that already carries `min`/`max` then gets the check: a Changed line.
 - **Full calendar (proposed 2026-10-08).** Clickable mockup (month + list views, Modal/Drawer toggle in Tweaks): https://claude.ai/artifact/2HiySbAbMJNVcAxjAmfpNh. A page-size calendar of events: month view at minimum, perhaps week and agenda views. Reuse `NDS.Date` for both calendars. Decide the scope first: which views, events from markup or JSON, and whether a click on a day or event opens a Modal or a Drawer. Asked for in rig 1 runs 1 and 2.
 - **Chat component (2026-10-16), later.** Found in the Student Portal mockup (https://seu-exam-support.netlify.app/) with Date Tile and Meta, which shipped. Think it through first: the real uses, how it fits with other components, and what it replaces. The portal's support panel (`dialog#support-panel` in `examples/student-portal.md`) is where it would land.
 - **File Upload image preview for a photo picker.** The old catalog card promised one; it never existed.

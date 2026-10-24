@@ -22,6 +22,7 @@
  * The section action holds Reset and Options; Options shows a chip row per group, inline or in a panel. A chip that does not apply
  * stays in place, disabled, and its tooltip says why.
  * Rows sharing Group + Option are one choice.
+ * A URL hash naming an option's `(id: x)`, with no element of that id, turns the option on.
  * Each preview card has Dark mode and Grid lines toggles in its corner. On a builder card, Dark puts
  * data-theme="dark" on the markup's outer element (code and preview) and on the card; elsewhere, on the card only.
  */
@@ -629,6 +630,25 @@
             toggle.setAttribute('aria-expanded', String(!box.hidden));
         });
     });
+
+    // A URL hash that no element owns but an option's `(id: x)` names (form#number-input) turns
+    // that option on and scrolls its builder into view.
+    function pickFromHash() {
+        var id = location.hash.slice(1);
+        if (!id || document.getElementById(id)) return;
+        document.querySelectorAll('[data-builder-for]').forEach(function (bar) {
+            var sheet = document.getElementById(bar.getAttribute('data-builder-for')).nextElementSibling;
+            var btn = Array.prototype.filter.call(sheet.querySelectorAll('[data-builder-option]'), function (it) {
+                return (it.getAttribute('data-builder-option').match(/\(id:\s*([\w-]+)\)/) || [])[1] === id;
+            })[0];
+            if (!btn) return;
+            builders[bar.getAttribute('data-builder-for')]();
+            if (btn.getAttribute('aria-pressed') !== 'true') btn.click();
+            window.scrollTo({ top: bar.getBoundingClientRect().top + window.scrollY - NDS.getStickyHeaderBottom() - 16 });
+        });
+    }
+    pickFromHash();
+    window.addEventListener('hashchange', pickFromHash);
 
     // data-preview="js": a component with no init (Sort) starts from its JS tab's call, the page's own canon.
     document.querySelectorAll('script[data-canon][data-preview="js"]').forEach(function (script) {

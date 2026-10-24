@@ -439,9 +439,12 @@
         });
     }
 
-    // A number stepper's text input carries min/max that checkValidity ignores on type="text".
+    // A number field is a text input with min/max, which checkValidity ignores on type="text".
+    function hasRange(input) {
+        return input.type === 'text' && (input.min !== '' || input.max !== '');
+    }
     function getRangeMessage(container, input) {
-        if (!container.querySelector('.nds-number-increment, .nds-number-decrement')) return null;
+        if (!hasRange(input)) return null;
         var rangeError = numberRangeCheck.validateNumberRange(input);
         return rangeError ? rangeError.message : null;
     }
@@ -561,7 +564,7 @@
             // pointerleave does not bubble: a pointerout to outside the held button stands in for it.
             pointerout: function(e) { if (hold && e.target.closest && e.target.closest('.nds-btn') === hold.btn && !hold.btn.contains(e.relatedTarget)) stopHold(); },
             focusout: function(e, context) {
-                if (!context || !context.control.querySelector('.nds-number-increment, .nds-number-decrement')) return;
+                if (!context || !hasRange(context.input)) return;
                 var input = context.input;
                 var value = parseInt(input.value);
                 if (isNaN(value)) { if (input.value || input.validity.badInput) NDS.setValue(input, ''); return; }

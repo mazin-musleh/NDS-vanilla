@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "22/10/2026 - 10:14 PM"
+last_edit: "24/10/2026 - 05:38 AM"
 lang: en
 direction: ltr
 ---
@@ -126,18 +126,22 @@ Pick another component when:
     </label>
   </div>
   <div class="nds-form-control">
-    <div class="nds-form-action nds-prefix">
-      <button class="nds-btn nds-subtle nds-number-decrement nds-icon-only" type="button" aria-label="Decrease value" data-i18n-aria-label="form.decrease_value">
-        <i class="nds-icon nds-hgi-minus-sign" aria-hidden="true"></i>
-      </button>
-    </div>
-    <input type="text" id="quantity" name="quantity" class="nds-input nds-center" inputmode="numeric" value="1" min="1" max="20" step="1">
-    <div class="nds-form-action nds-suffix">
-      <button class="nds-btn nds-subtle nds-number-increment nds-icon-only" type="button" aria-label="Increase value" data-i18n-aria-label="form.increase_value">
-        <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
-      </button>
-    </div>
+    <input type="text" id="quantity" name="quantity" class="nds-input" inputmode="numeric" value="1" min="1" max="20" step="1">
   </div>
+</div>
+</script>
+<script type="text/html" id="field-number-decrement" data-canon>
+<div class="nds-form-action nds-prefix">
+  <button class="nds-btn nds-subtle nds-number-decrement nds-icon-only" type="button" aria-label="Decrease value" data-i18n-aria-label="form.decrease_value">
+    <i class="nds-icon nds-hgi-minus-sign" aria-hidden="true"></i>
+  </button>
+</div>
+</script>
+<script type="text/html" id="field-number-increment" data-canon>
+<div class="nds-form-action nds-suffix">
+  <button class="nds-btn nds-subtle nds-number-increment nds-icon-only" type="button" aria-label="Increase value" data-i18n-aria-label="form.increase_value">
+    <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
+  </button>
 </div>
 </script>
 <script type="text/html" id="field-textarea" data-canon>
@@ -205,7 +209,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Each Structure is one field type. Options stack: a field can be MD, Lighter and Required at once. Prefix goes first in `.nds-form-control`, and Suffix goes right after the input. They fit a plain text, email, password or search field. Number carries its own affixes, and a textarea or a select takes none. Number starts with Solid and MD affixes, so write `nds-secondary nds-md` on its buttons.
+Each Structure is one field type. Options stack: a field can be MD, Lighter and Required at once. Prefix goes first in `.nds-form-control`, and Suffix goes right after the input. They fit a plain text, email, password or search field. Number takes none: its Buttons option fills both sides. A textarea or a select takes none either. Number starts with Buttons and Solid MD affixes, so write `nds-secondary nds-md` on its buttons.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -213,7 +217,7 @@ Each Structure is one field type. Options stack: a field can be MD, Lighter and 
 | Structure | Email | canon `#field-email` | — | An email address. `type="email"` checks the format at submit |
 | Structure | Password | canon `#field-password` | — | A password the user already has, on a sign-in form. For a new password, use [Password](../components/password) |
 | Structure | Search | canon `#field-search` | — | A search box with a voice button. See [Voice Input](../components/voice-input) |
-| Structure | Number (id: number) (demo: + affix-solid) (demo: + affix-md) | canon `#field-number` | — | A whole number with minus and plus buttons, between `min` and `max` |
+| Structure | Number (id: number-input) (demo: + number-buttons) (demo: + affix-solid) (demo: + affix-md) | canon `#field-number` | — | A whole number between `min` and `max`. Add Buttons for minus and plus buttons |
 | Structure | Textarea (id: textarea) | canon `#field-textarea` | — | Several lines of text, such as a message |
 | Structure | Select (id: select) (hint: The browser's own list) | canon `#field-select` | — | A native `<select>`, for the phone's own picker. For a choice in a form, use [Custom Select](../components/custom-select) |
 | Size | LG (default) | — | — | 40px high. It needs no class |
@@ -221,8 +225,11 @@ Each Structure is one field type. Options stack: a field can be MD, Lighter and 
 | Style | Outline (default) | — | — | A border on the page background |
 | Style | Lighter (hint: Light fill and no border) | `.nds-lighter` | `.nds-form-container` | A light fill and no border, for a field on a white card |
 | Style | Darker (hint: Darker fill and no border) | `.nds-darker` | `.nds-form-container` | A darker fill and no border, for a field on a gray surface |
-| Affix (any) | Prefix (not: textarea, select, number) | canon `#field-prefix` | `.nds-form-control` (start) | Fixed text before the value, such as a currency or `https://` |
-| Affix (any) | Suffix (not: textarea, select, number) | canon `#field-suffix` | `input` (after) | Fixed text after the value, such as a unit or a domain |
+| Buttons | Buttons (id: number-buttons) (hint: Minus and plus buttons) | canon `#field-number-decrement` | `.nds-form-control:has(> [min])` (start) | Minus and plus buttons that step the value. Only on Number. Write all three changes |
+| Buttons | Buttons (id: number-buttons) (hint: Minus and plus buttons) | canon `#field-number-increment` | `input[min]` (after) | The plus button goes right after the input |
+| Buttons | Buttons (id: number-buttons) (hint: Minus and plus buttons) | `.nds-center` | `input[min]` | The value sits in the middle, between the buttons |
+| Affix (any) | Prefix (not: textarea, select, number-input) | canon `#field-prefix` | `.nds-form-control` (start) | Fixed text before the value, such as a currency or `https://` |
+| Affix (any) | Suffix (not: textarea, select, number-input) | canon `#field-suffix` | `input` (after) | Fixed text after the value, such as a unit or a domain |
 | Affix style | Subtle (default) | `.nds-subtle` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The prefix and suffix on the field's own background: text and the number buttons |
 | Affix style | Solid (id: affix-solid) (hint: Light fill behind the prefix or suffix) | `.nds-secondary` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The prefix and suffix on a light fill, set apart from the value |
 | Affix size | LG (default) | — | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The affix button's default padding. It needs no class |
@@ -332,7 +339,7 @@ A `.nds-feedback` with `data-permanent` stays under the field as a hint. A valid
 ### Loading
 {: .nds-block-title}
 
-`data-state="loading"` on a field shows a spinner button and hides the other action buttons, a suffix included. Use it while a script checks the value, such as a username lookup. The forms script adds the spinner to the field's last action slot: on Number, that is the suffix. A prefix never changes. When loading ends, the buttons come back, and Clear shows only if the field still has a value.
+`data-state="loading"` on a field shows a spinner button and hides the other action buttons, a suffix included. Use it while a script checks the value, such as a username lookup. The forms script adds the spinner to the field's last action slot: on Number with Buttons, that is the suffix. A prefix never changes. When loading ends, the buttons come back, and Clear shows only if the field still has a value.
 
 <script type="text/html" id="forms-loading-js" data-canon data-lang="js" data-preview="none">
 var field = document.getElementById('username-field');
@@ -351,9 +358,11 @@ async function checkUsername(name) {
 </script>
 
 ### Number Stepper
-{: .nds-block-title #number-input}
+{: .nds-block-title #number-stepper}
 
-The minus and plus buttons change the value by `step`, 1 by default. Hold a button to repeat the step, and hold it about two seconds to step ten at a time. A button at `min` or `max` shows a message instead of a change. A value typed outside the range is set to the nearest limit when the field loses focus. Without `min` and `max`, the value has no limit. A blank `min` or `max` counts as missing.
+A text field with `min` or `max` on its input takes a whole number in that range. A value typed outside the range is set to the nearest limit when the field loses focus, and the form does not send one. Without `min` and `max`, the value has no limit. A blank `min` or `max` counts as missing.
+
+The Buttons option adds minus and plus buttons that change the value by `step`, 1 by default. Hold a button to repeat the step, and hold it about two seconds to step ten at a time. A button at `min` or `max` shows a message instead of a change.
 
 ### Password
 {: .nds-block-title}
@@ -474,7 +483,7 @@ The eye button switches the field between hidden and plain text, and its label b
 | `nds-required` | `.nds-form-container` or `.nds-form-group` | The same as `data-required` |
 | `nds-clear` | a button in `.nds-form-action` | Empties the field. Write it with `hidden`: the script shows it while the field has a value |
 | `nds-toggle-password` | a button in `.nds-form-action` | Switches a password field between hidden and plain text. The script adds `show` to it while the text is plain |
-| `nds-number-decrement`, `nds-number-increment` | a button in `.nds-form-action` | Steps the value down or up. Also turns on the range check and the blur clamp |
+| `nds-number-decrement`, `nds-number-increment` | a button in `.nds-form-action` | Steps the value down or up by `step` |
 | `nds-form-group` | the `<fieldset>` around a set of checkboxes, radios or switches | See [Checkbox](../components/checkbox), [Radio](../components/radio) and [Switch](../components/switch) |
 {: .nds-table .nds-responsive}
 
@@ -498,7 +507,8 @@ The eye button switches the field between hidden and plain text, and its label b
 | `data-error-message` | an `<input>` with a `pattern` | The message when the value does not match the pattern. `NDS.init.audit()` flags it on a field with no `pattern` |
 | `data-error-message` | `.nds-form-group`, or the container of a field that keeps its value in a hidden input (custom select, multiselect, tag input, upload) | The message when nothing is picked. A count limit, a half-filled code and a file still uploading keep their own messages. `NDS.init.audit()` flags it on a group that may be left empty |
 | `inputmode="numeric"` | the `<input>` | The script blocks a typed character that is not a digit. Arabic digits go in as `0` to `9` |
-| `min`, `max`, `step` | the input of a number field | The range and the step of the minus and plus buttons |
+| `min`, `max` | a text `<input>` | The range of a whole number. The script sets a value outside it to the nearest limit on blur, and blocks the submit |
+| `step` | the input of a number field | The step of the minus and plus buttons |
 | `autofocus` | the `<input>`, `<textarea>` or `<select>` | The script focuses the field again at start, without a scroll |
 | `data-loading-slot` | a button in `.nds-form-action` | The button that shows the spinner while the field loads. Without one, the script adds one |
 | `data-target` | `.nds-auto-fill` | The `id` or `name` of the input that a suggestion chip fills. A click on an `.nds-item` writes its text in the input. See [Filter](../components/filter) |
