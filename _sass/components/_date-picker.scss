@@ -29,8 +29,8 @@
     // with a month/year picker grid, and the header controls that overlap the
     // grid semantics are hidden.
     &:is([data-picker-mode="month"], [data-picker-mode="year"]) {
-        .nds-calendar-weekdays { display: none; }
-        .nds-calendar-dates {
+        .nds-date-picker-weekdays { display: none; }
+        .nds-date-picker-dates {
             grid-template-columns: repeat(3, 1fr);
             gap: var(--spacing-md);
             .nds-date-cell {
@@ -48,8 +48,8 @@
     // Year grid: 4×3. The whole header is hidden — grid shows years directly
     // (across the data-year-before / data-year-after range), no anchor needed.
     &[data-picker-mode="year"] {
-        .nds-calendar-header { display: none; }
-        .nds-calendar-dates { grid-template-columns: repeat(4, 1fr); }
+        .nds-date-picker-header { display: none; }
+        .nds-date-picker-dates { grid-template-columns: repeat(4, 1fr); }
     }
 }
 
@@ -79,14 +79,14 @@
     // ==============================================
     // CALENDAR HEADER STYLES
     // ==============================================
-    .nds-calendar-header {
+    .nds-date-picker-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: var(--spacing-md);
         border-bottom: 1px solid var(--divider-color);
     }
-    .nds-calendar-title {
+    .nds-date-picker-title {
         flex: 1;
         display: flex;
         justify-content: space-between;
@@ -96,7 +96,7 @@
         display: flex;
         min-width: 0;
     }
-    .nds-calendar-month-switch {
+    .nds-date-picker-month-switch {
         display: flex;
         flex-shrink: 0;
     }
@@ -115,10 +115,10 @@
     // ==============================================
     // CALENDAR BODY STYLES
     // ==============================================
-    .nds-calendar-body {
+    .nds-date-picker-body {
         padding: var(--spacing-md);
     }
-    .nds-calendar-weekdays {
+    .nds-date-picker-weekdays {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         gap: var(--spacing-xs);
@@ -135,7 +135,7 @@
             }
         }
     }
-    .nds-calendar-dates {
+    .nds-date-picker-dates {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         row-gap: var(--spacing-xs);
@@ -234,13 +234,13 @@
     // ==============================================
     // CALENDAR FOOTER STYLES
     // ==============================================
-    .nds-calendar-footer {
+    .nds-date-picker-footer {
         display: flex;
         justify-content: space-between;
         padding: var(--spacing-md);
         border-top: 1px solid var(--divider-color);
         gap: var(--spacing-2xl);
-        :is(.nds-calendar-action-start, .nds-calendar-action-end) {
+        :is(.nds-date-picker-action-start, .nds-date-picker-action-end) {
             display: flex;
             gap: var(--spacing-md);
         }

@@ -266,7 +266,7 @@
             closeBtn: '.close-btn',
             clearBtn: '.clear-btn',
             saveBtn: '.save-btn',
-            datesContainer: '.nds-calendar-dates'
+            datesContainer: '.nds-date-picker-dates'
         }
     };
 
@@ -443,8 +443,8 @@
 
             var lang = this.getLanguage();
             var calendarHtml =
-                '<div class="nds-calendar-header">' +
-                    '<div class="nds-calendar-title">' +
+                '<div class="nds-date-picker-header">' +
+                    '<div class="nds-date-picker-title">' +
                         '<div class="nds-month-year-selectors">' +
                             '<div class="nds-dropmenu nds-month-dropmenu">' +
                                 '<button class="nds-dropmenu-trigger nds-btn nds-subtle nds-menu-btn" aria-label="' + NDS.escapeHtml(strings.text('select_month', null, lang)) + '">' +
@@ -463,7 +463,7 @@
                                 '</div>' +
                             '</div>' +
                         '</div>' +
-                        '<div class="nds-calendar-month-switch">' +
+                        '<div class="nds-date-picker-month-switch">' +
                             '<button class="nds-btn nds-subtle nds-icon-only prev-month" type="button" aria-label="' + NDS.escapeHtml(strings.text('prev_month', null, lang)) + '">' +
                                 '<i class="nds-icon nds-hgi-arrow-prev-02" aria-hidden="true"></i>' +
                             '</button>' +
@@ -473,12 +473,12 @@
                         '</div>' +
                     '</div>' +
                 '</div>' +
-                '<div class="nds-calendar-body">' +
-                    '<div class="nds-calendar-weekdays"></div>' +
-                    '<div class="nds-calendar-dates"></div>' +
+                '<div class="nds-date-picker-body">' +
+                    '<div class="nds-date-picker-weekdays"></div>' +
+                    '<div class="nds-date-picker-dates"></div>' +
                 '</div>' +
-                '<div class="nds-calendar-footer">' +
-                    '<div class="nds-calendar-action-start">' +
+                '<div class="nds-date-picker-footer">' +
+                    '<div class="nds-date-picker-action-start">' +
                         '<button class="nds-btn nds-secondary-outline today-btn" type="button">' +
                             '<span class="nds-label"></span>' +
                         '</button>' +
@@ -488,7 +488,7 @@
                             '<span class="nds-label"></span>' +
                         '</button>' +
                     '</div>' +
-                    '<div class="nds-calendar-action-end">' +
+                    '<div class="nds-date-picker-action-end">' +
                         '<button class="nds-btn nds-subtle close-btn" type="button">' +
                             '<span class="nds-label"></span>' +
                         '</button>' +
@@ -1237,7 +1237,7 @@
 
         // Render methods
         renderWeekdays: function () {
-            var weekdaysContainer = this.elements.dropdown.querySelector('.nds-calendar-weekdays');
+            var weekdaysContainer = this.elements.dropdown.querySelector('.nds-date-picker-weekdays');
             if (!weekdaysContainer) return;
 
             weekdaysContainer.innerHTML = '';
