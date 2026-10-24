@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 10:02 PM"
+last_edit: "24/10/2026 - 10:12 PM"
 ---
 
 <section id="calendar-overview" class="nds-content-section nds-doc-overview">
@@ -199,7 +199,7 @@ Pick another component when:
   </div>
   <div class="nds-empty-placeholder nds-calendar-empty">
     <i class="nds-icon nds-hgi-desert" aria-hidden="true"></i>
-    <span class="nds-empty-message" data-i18n="calendar.no_events">No events</span>
+    <span class="nds-empty-message" data-i18n="empty.message">No content to show</span>
   </div>
 </div>
 </script>
@@ -415,7 +415,7 @@ Pick another component when:
   </div>
   <div class="nds-empty-placeholder nds-calendar-empty">
     <i class="nds-icon nds-hgi-desert" aria-hidden="true"></i>
-    <span class="nds-empty-message" data-i18n="calendar.no_events">No events</span>
+    <span class="nds-empty-message" data-i18n="empty.message">No content to show</span>
   </div>
 </div>
 </script>
@@ -568,7 +568,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
             <i class="hgi hgi-stroke hgi-volume-high"></i>
             <span class="nds-label">Announced Changes</span>
           </span>
-          <p class="nds-item-desc">After a press on a day or a week button, a screen reader hears the day or the week and its number of events, such as "Thursday 22 October 2026: 3 events".</p>
+          <p class="nds-item-desc">After a press on a day or a week button, a screen reader hears the day or the week and its number of events, such as "Thursday 22 October 2026: 3 events". An empty week says the text of the empty message.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -582,7 +582,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
             <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
             <span class="nds-label">Narrow Calendars</span>
           </span>
-          <p class="nds-item-desc">The calendar's own width sets its layout, not the screen's: under 860px it shows Rows, and under 480px the day buttons show one letter.</p>
+          <p class="nds-item-desc">The calendar's own width sets its layout, not the screen's: under 860px it shows Rows, and under 480px the day buttons show one letter and a smaller day number.</p>
         </div>
       </div>
     </div>
@@ -628,7 +628,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 | `nds-calendar-day` | `button` | Written by the script, one per day |
 | `nds-calendar-title-second`, `nds-calendar-day-second` | `span` | Written by the script with `data-calendar-second`: the week under the title, and the day number on each day button |
 | `nds-calendar-events` | `ul.nds-drawer-list` | The events, one `<li>` each |
-| `nds-calendar-empty` | `div` | Shows while the week or the picked day has no events. The canon gives it the `nds-empty-placeholder` look of [Empty](../components/empty) |
+| `nds-calendar-empty` | `div` | Shows while the week or the picked day has no events. The canon gives it the `nds-empty-placeholder` look and the message of [Empty](../components/empty). A screen reader hears its text for an empty week or day, so write words that fit your events, such as "No sessions this week" |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes

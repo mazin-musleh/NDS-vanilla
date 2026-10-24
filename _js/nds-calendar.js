@@ -68,7 +68,6 @@
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
     const strings = NDS.i18n.getStrings('calendar', {
         events: { one: '1 event', other: '{n} events' },
-        no_events: 'No events',
     });
 
     let globalsWired = false;
@@ -331,7 +330,9 @@
             const calendar = NDS.Date.getCalendar(el);
             const count = this._events.filter(({ item }) => item.hasAttribute('data-calendar-day') && !item.hasAttribute('data-filtered')).length;
             const label = this._day ? NDS.Date.getDayLabel(this._day, { calendar, locale: lang }) : this._getTitle(calendar, lang);
-            NDS.announce(label + ': ' + (count ? strings.text('events', { n: count }, lang) : strings.text('no_events', null, lang)));
+            // An empty week says the page's own message, so the words fit what the calendar holds.
+            const empty = el.querySelector('.nds-calendar-empty')?.textContent.trim();
+            NDS.announce(label + ': ' + (count || !empty ? strings.text('events', { n: count }, lang) : empty));
         }
 
         _dispatchChange() {

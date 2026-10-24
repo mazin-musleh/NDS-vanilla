@@ -28,9 +28,7 @@
     }
 
     &.nds-sm {
-        --_meta-FS: var(--typo-text-xs-FS);
-        --_meta-LH: var(--typo-text-xs-LH);
-        --_meta-icon-size: var(--typo-text-sm-FS);
+        @include meta-sm;
     }
 
     &.nds-lg {

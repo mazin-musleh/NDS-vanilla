@@ -124,6 +124,11 @@
     .nds-calendar-day-initial {
         display: block;
     }
+    // A short value in a narrow box steps down with it.
+    .nds-calendar-day-number {
+        font-size: var(--typo-text-md-FS);
+        line-height: var(--typo-text-md-LH);
+    }
 }
 
 // Under the grid's width only rows show, so the switch would offer nothing.
@@ -179,6 +184,27 @@
             // The column names the day on screen; a screen reader still reads the tile.
             > .nds-btn > .nds-date-tile {
                 @include label-hidden;
+            }
+
+            // A day column is narrow: the padding steps down, the title takes the SM size,
+            // and a default-size meta its SM step.
+            // The tag still floats; a title line that wraps under it keeps a gap.
+            > .nds-btn {
+                padding: var(--spacing-sm);
+            }
+
+            .nds-drawer-item-head .nds-tag {
+                margin-block-end: var(--spacing-xs);
+            }
+
+            .nds-drawer-item-head > .nds-label {
+                font-size: var(--typo-text-sm-FS);
+                line-height: var(--typo-text-sm-LH);
+                font-weight: var(--font-weight-medium);
+            }
+
+            .nds-meta:not(.nds-sm, .nds-md, .nds-lg) {
+                @include meta-sm;
             }
         }
 

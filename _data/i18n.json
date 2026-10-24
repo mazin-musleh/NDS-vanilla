@@ -427,12 +427,6 @@
  },
  {
   "section": "calendar",
-  "key": "no_events",
-  "en": "No events",
-  "ar": "لا توجد فعاليات"
- },
- {
-  "section": "calendar",
   "key": "previous_week",
   "en": "Previous week",
   "ar": "الأسبوع السابق"

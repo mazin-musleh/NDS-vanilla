@@ -409,6 +409,13 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_date-tile-padding: var(--spacing-xs) var(--spacing-sm);
 }
 
+// Meta SM step: the .nds-sm class and a parent's container rule share it.
+@mixin meta-sm {
+    --_meta-FS: var(--typo-text-xs-FS);
+    --_meta-LH: var(--typo-text-xs-LH);
+    --_meta-icon-size: var(--typo-text-sm-FS);
+}
+
 // Meta LG step: the .nds-lg class and the top bar's widgets share it.
 @mixin meta-lg {
     --_meta-FS: var(--typo-text-md-FS);
