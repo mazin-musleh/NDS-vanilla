@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 05:38 AM"
+last_edit: "24/10/2026 - 08:54 AM"
 lang: en
 direction: ltr
 ---
@@ -455,6 +455,7 @@ The eye button switches the field between hidden and plain text, and its label b
 - Set `data-error-message` on an input with a `pattern`, to say what format it asks for. It shows only when the value does not match the pattern; every other check has its own message.
 - Put a unit, a currency or a short code in a prefix or suffix. The slot also takes a button or a [Dropmenu](../components/dropmenu), such as an amount with a currency picker.
 - Use MD only where space is short, such as a table filter. Keep one size in one form.
+- In a row of fields, put help text in a Hint under the field or a Help tooltip beside the label. An Info line under one label pushes that field's input below its neighbor's. Use Info in a row only when every field in the row has it. A message under the input, such as an error, moves no input. The audit's `form-row-align` check finds a row whose inputs do not line up.
 - Put a form's Submit and Back buttons in `.nds-form-actions`, after the fields. The singular `.nds-form-action` is the button slot inside one field.
 - Set `input.value` from a script, then call `NDS.Form.refresh(input)`. Setting the value alone does not update the Clear button or the field's state.
 - To clear a form, call `form.reset()` or use a reset button. Each NDS field goes back to the value the page shipped with, and its message clears.

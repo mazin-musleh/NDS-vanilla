@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 03:54 PM"
+last_edit: "24/10/2026 - 08:54 AM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -225,6 +225,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `toolbar-search-row` | structure | warn | A search box whose line holds more than one other item. The applied-filters and suggestion lines do not count: they take a line of their own |
 | `toolbar-applied` | structure | warn | Applied filters (`.nds-filter-applied`) outside a toolbar, above the search or filter they show, or in the same row as them |
 | `toolbar-sizes` | structure | warn | Items on one toolbar line with different heights, such as a 32px `nds-md` button beside a 40px one. It skips hidden items |
+| `form-row-align` | structure | warn | Fields side by side whose inputs do not start level, because something above one input pushes it down, such as an Info line under its label or a label on two lines. A message under an input does not count. It skips checkboxes, radios, switches and uploads |
 | `i18n-pack` | i18n | error | The language file of the page did not load |
 | `filter-unclaimed` | structure | error | `data-filter-items` that no filter claimed, so it stays in its skeleton |
 | `filter-no-target` | structure | error | A `.nds-filter` with no `data-filter-target` |

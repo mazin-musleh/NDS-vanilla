@@ -295,6 +295,26 @@
         });
     } });
 
+    // Fields side by side start their inputs level. Only what sits above an input moves it; a message under it does not.
+    // An upload has no input box to line up, only a button or a drop zone.
+    addRule({ id: 'form-row-align', group: 'structure', docs: 'components/form.html', check(context) {
+        const rows = new Set(context.find('.nds-form-container:not(.nds-checkbox, .nds-radio, .nds-switch, .nds-upload)').map(field => field.parentElement));
+        rows.forEach(parent => {
+            const inputTops = new Map(); // a field's top → the tops of the inputs of the fields that start there
+            [...parent.children].forEach(field => {
+                const control = field.matches('.nds-form-container:not(.nds-checkbox, .nds-radio, .nds-switch, .nds-upload)') ? field.querySelector(':scope > .nds-form-control') : null;
+                if (!control?.getClientRects().length) return;
+                const top = Math.round(field.getBoundingClientRect().top);
+                inputTops.set(top, [...(inputTops.get(top) || []), control.getBoundingClientRect().top]);
+            });
+            inputTops.forEach(tops => {
+                if (tops.length > 1 && Math.max(...tops) - Math.min(...tops) > 2) context.report(parent,
+                    `Fields side by side start their inputs ${Math.round(Math.max(...tops) - Math.min(...tops))}px apart: something above one input, such as an Info line under its label or a label on two lines, pushes it down.`,
+                    'Put help text in a Hint under the field or a Help tooltip beside the label, or give every field in the row an Info line. Keep the labels short enough for one line.');
+            });
+        });
+    } });
+
     // ── i18n ─────────────────────────────────────────────────────────
 
     addRule({ id: 'i18n-pack', group: 'i18n', severity: 'error', docs: 'core/i18n.html', check(context) {
