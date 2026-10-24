@@ -9,12 +9,12 @@ lang: en
 direction: ltr
 content_class: nds-stripe
 sidemenu_mode: false
-last_edit: "24/10/2026 - 11:38 AM"
+last_edit: "24/10/2026 - 11:27 PM"
 ---
 
 <!-- Layout rules: pick a list's look by how much each item holds.
      - Places to go, an icon and a name each: link cards as navigation tiles, the whole card one link (Course categories). A whole-card link is only for this.
-     - Items with several details to compare, such as an image, tags, a rating and a price: full cards with action buttons (Featured courses).
+     - Items with several details to compare, such as an image, tags, a rating and a price: full cards with action buttons, in a Swiper when there are more than fit in one row (Featured courses).
      - A short list the user opens one item at a time, newest first: Drawer rows with a Date Tile and a Meta line (Latest announcements). A plain list of page links is a Drawer too, with an arrow on each row.
      - An icon, a title and one line, read at a glance: a Definition List in a grid (Why train with us).
      - Records the user sorts, filters or pages: a Table, as in the Manage Records example. A full catalog with search and filters: the Services List example. -->
@@ -105,156 +105,270 @@ last_edit: "24/10/2026 - 11:38 AM"
     </div>
 </section>
 
-<!-- Featured courses: full cards with an image, a status corner, tags, a rating, a price and actions -->
+<!-- Featured courses: a Swiper of full cards with an image, a status corner, tags, a rating, a price and actions -->
 <section id="courses" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Featured courses</h2>
             <p class="nds-section-description">The courses with the most seats booked this term.</p>
         </div>
-        <div class="nds-section-body">
-            <div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
-                <div class="nds-card nds-stroke">
-                    <div class="nds-card-header">
-                        <div class="nds-card-image">
-                            <img src="{{ 'docs-assets/img/card_img.webp' | relative_url }}" alt="Trainees at a data workshop" width="650" height="371" loading="lazy">
-                        </div>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <div class="nds-card-corner">
-                                <span class="nds-tag nds-xs nds-inverted" data-status="warning">
-                                    <span class="nds-label">5 seats left</span>
-                                </span>
+    </div>
+    <div class="nds-section-body nds-max-width">
+        <div class="nds-swiper" style="--max-slides: 3; --mid-slides: 2; --min-slides: 1; --peek: 40px">
+            <div class="nds-swiper-wrapper">
+                <div class="nds-swiper-slide">
+                    <div class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-image">
+                                <img src="{{ 'assets/img/placeholder.svg' | relative_url }}" alt="A trainee reading a data dashboard" width="1600" height="900" loading="lazy">
                             </div>
-                            <span class="nds-card-title">Data analysis for decision makers</span>
-                            <span class="nds-card-subtitle">5 days · Online</span>
-                            <p class="nds-card-description">Read dashboards, test a claim with data, and present the result to leaders.</p>
                         </div>
-                        <div class="nds-card-value">
-                            <span class="nds-number-format" data-currency="SAR">2400</span>
-                        </div>
-                        <div class="nds-card-meta">
-                            <div class="nds-card-tags">
-                                <span class="nds-tag nds-blue nds-sm">
-                                    <span class="nds-label">Data</span>
-                                </span>
-                                <span class="nds-tag nds-gray nds-sm">
-                                    <span class="nds-label">Intermediate</span>
-                                </span>
-                            </div>
-                            <div class="nds-card-rating">
-                                <div class="nds-rating nds-sm" data-rating="4.7">
-                                    <span class="nds-rating-star"></span>
-                                    <span class="nds-rating-star"></span>
-                                    <span class="nds-rating-star"></span>
-                                    <span class="nds-rating-star"></span>
-                                    <span class="nds-rating-star"></span>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <div class="nds-card-corner">
+                                    <span class="nds-tag nds-xs nds-inverted" data-status="warning">
+                                        <span class="nds-label">5 seats left</span>
+                                    </span>
                                 </div>
-                                <span class="nds-card-rating-text">(86 reviews)</span>
+                                <span class="nds-card-title">Data analysis for decision makers</span>
+                                <span class="nds-card-subtitle">5 days · Online</span>
+                                <p class="nds-card-description">Read dashboards, test a claim with data, and present the result to leaders.</p>
+                            </div>
+                            <div class="nds-card-value">
+                                <span class="nds-number-format" data-currency="SAR">2400</span>
+                            </div>
+                            <div class="nds-card-meta">
+                                <div class="nds-card-tags">
+                                    <span class="nds-tag nds-blue nds-sm">
+                                        <span class="nds-label">Data</span>
+                                    </span>
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label">Intermediate</span>
+                                    </span>
+                                </div>
+                                <div class="nds-card-rating">
+                                    <div class="nds-rating nds-sm" data-rating="4.7">
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                    </div>
+                                    <span class="nds-card-rating-text">(86 reviews)</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="#" class="nds-btn nds-primary nds-lg">
-                            <span class="nds-label">Enroll</span>
-                        </a>
-                        <a href="#" class="nds-btn nds-secondary-outline nds-lg">
-                            <span class="nds-label">Details</span>
-                        </a>
+                        <div class="nds-card-actions">
+                            <a href="#" class="nds-btn nds-primary nds-lg">
+                                <span class="nds-label">Enroll</span>
+                            </a>
+                            <a href="#" class="nds-btn nds-secondary-outline nds-lg">
+                                <span class="nds-label">Details</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="nds-card nds-stroke">
-                    <div class="nds-card-header">
-                        <div class="nds-card-image">
-                            <img src="{{ 'assets/img/riyadhcenter.webp' | relative_url }}" alt="The Riyadh training center" width="1280" height="720" loading="lazy">
-                        </div>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">Project management basics</span>
-                            <span class="nds-card-subtitle">3 days · Jeddah center</span>
-                            <p class="nds-card-description">Plan a project, track its risks, and report progress in a weekly update.</p>
-                        </div>
-                        <div class="nds-card-value">
-                            <span class="nds-number-format" data-currency="SAR">1500</span>
-                            <s class="nds-number-format" data-currency="SAR">1800</s>
-                        </div>
-                        <div class="nds-card-meta">
-                            <div class="nds-card-tags">
-                                <span class="nds-tag nds-blue nds-sm">
-                                    <span class="nds-label">Management</span>
-                                </span>
-                                <span class="nds-tag nds-gray nds-sm">
-                                    <span class="nds-label">Beginner</span>
-                                </span>
+                <div class="nds-swiper-slide">
+                    <div class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-image">
+                                <img src="{{ 'assets/img/placeholder.svg' | relative_url }}" alt="A project plan on a whiteboard" width="1600" height="900" loading="lazy">
                             </div>
-                            <div class="nds-card-rating">
-                                <div class="nds-rating nds-sm" data-rating="4.4">
-                                    <span class="nds-rating-star"></span>
-                                    <span class="nds-rating-star"></span>
-                                    <span class="nds-rating-star"></span>
-                                    <span class="nds-rating-star"></span>
-                                    <span class="nds-rating-star"></span>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Project management basics</span>
+                                <span class="nds-card-subtitle">3 days · Jeddah center</span>
+                                <p class="nds-card-description">Plan a project, track its risks, and report progress in a weekly update.</p>
+                            </div>
+                            <div class="nds-card-value">
+                                <span class="nds-number-format" data-currency="SAR">1500</span>
+                                <s class="nds-number-format" data-currency="SAR">1800</s>
+                            </div>
+                            <div class="nds-card-meta">
+                                <div class="nds-card-tags">
+                                    <span class="nds-tag nds-blue nds-sm">
+                                        <span class="nds-label">Management</span>
+                                    </span>
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label">Beginner</span>
+                                    </span>
                                 </div>
-                                <span class="nds-card-rating-text">(132 reviews)</span>
+                                <div class="nds-card-rating">
+                                    <div class="nds-rating nds-sm" data-rating="4.4">
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                    </div>
+                                    <span class="nds-card-rating-text">(132 reviews)</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="#" class="nds-btn nds-primary nds-lg">
-                            <span class="nds-label">Enroll</span>
-                        </a>
-                        <a href="#" class="nds-btn nds-secondary-outline nds-lg">
-                            <span class="nds-label">Details</span>
-                        </a>
+                        <div class="nds-card-actions">
+                            <a href="#" class="nds-btn nds-primary nds-lg">
+                                <span class="nds-label">Enroll</span>
+                            </a>
+                            <a href="#" class="nds-btn nds-secondary-outline nds-lg">
+                                <span class="nds-label">Details</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="nds-card nds-stroke">
-                    <div class="nds-card-header">
-                        <div class="nds-card-image">
-                            <img src="{{ 'docs-assets/img/home_hero_bg_md.webp' | relative_url }}" alt="The Riyadh skyline at dusk" width="1646" height="550" loading="lazy">
-                        </div>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">Accessible digital services</span>
-                            <span class="nds-card-subtitle">2 days · Online</span>
-                            <p class="nds-card-description">Check a service against WCAG, and fix the problems users meet most often.</p>
-                        </div>
-                        <div class="nds-card-value">
-                            <span class="nds-number-format" data-currency="SAR">900</span>
-                        </div>
-                        <div class="nds-card-meta">
-                            <div class="nds-card-tags">
-                                <span class="nds-tag nds-blue nds-sm">
-                                    <span class="nds-label">Digital</span>
-                                </span>
-                                <span class="nds-tag nds-gray nds-sm">
-                                    <span class="nds-label">All levels</span>
-                                </span>
+                <div class="nds-swiper-slide">
+                    <div class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-image">
+                                <img src="{{ 'assets/img/placeholder.svg' | relative_url }}" alt="A user testing a website with a screen reader" width="1600" height="900" loading="lazy">
                             </div>
-                            <div class="nds-card-rating">
-                                <div class="nds-rating nds-sm" data-rating="4.9">
-                                    <span class="nds-rating-star"></span>
-                                    <span class="nds-rating-star"></span>
-                                    <span class="nds-rating-star"></span>
-                                    <span class="nds-rating-star"></span>
-                                    <span class="nds-rating-star"></span>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Accessible digital services</span>
+                                <span class="nds-card-subtitle">2 days · Online</span>
+                                <p class="nds-card-description">Check a service against WCAG, and fix the problems users meet most often.</p>
+                            </div>
+                            <div class="nds-card-value">
+                                <span class="nds-number-format" data-currency="SAR">900</span>
+                            </div>
+                            <div class="nds-card-meta">
+                                <div class="nds-card-tags">
+                                    <span class="nds-tag nds-blue nds-sm">
+                                        <span class="nds-label">Digital</span>
+                                    </span>
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label">All levels</span>
+                                    </span>
                                 </div>
-                                <span class="nds-card-rating-text">(41 reviews)</span>
+                                <div class="nds-card-rating">
+                                    <div class="nds-rating nds-sm" data-rating="4.9">
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                    </div>
+                                    <span class="nds-card-rating-text">(41 reviews)</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="#" class="nds-btn nds-primary nds-lg">
-                            <span class="nds-label">Enroll</span>
-                        </a>
-                        <a href="#" class="nds-btn nds-secondary-outline nds-lg">
-                            <span class="nds-label">Details</span>
-                        </a>
+                        <div class="nds-card-actions">
+                            <a href="#" class="nds-btn nds-primary nds-lg">
+                                <span class="nds-label">Enroll</span>
+                            </a>
+                            <a href="#" class="nds-btn nds-secondary-outline nds-lg">
+                                <span class="nds-label">Details</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
+                <div class="nds-swiper-slide">
+                    <div class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-image">
+                                <img src="{{ 'assets/img/placeholder.svg' | relative_url }}" alt="A trainee writing a service form" width="1600" height="900" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Writing for government services</span>
+                                <span class="nds-card-subtitle">2 days · Riyadh center</span>
+                                <p class="nds-card-description">Write clear forms, letters and alerts that users understand the first time.</p>
+                            </div>
+                            <div class="nds-card-value">
+                                <span class="nds-number-format" data-currency="SAR">750</span>
+                            </div>
+                            <div class="nds-card-meta">
+                                <div class="nds-card-tags">
+                                    <span class="nds-tag nds-blue nds-sm">
+                                        <span class="nds-label">Communication</span>
+                                    </span>
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label">All levels</span>
+                                    </span>
+                                </div>
+                                <div class="nds-card-rating">
+                                    <div class="nds-rating nds-sm" data-rating="4.6">
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                    </div>
+                                    <span class="nds-card-rating-text">(58 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nds-card-actions">
+                            <a href="#" class="nds-btn nds-primary nds-lg">
+                                <span class="nds-label">Enroll</span>
+                            </a>
+                            <a href="#" class="nds-btn nds-secondary-outline nds-lg">
+                                <span class="nds-label">Details</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nds-swiper-slide">
+                    <div class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-image">
+                                <img src="{{ 'assets/img/placeholder.svg' | relative_url }}" alt="A manager reviewing a budget sheet" width="1600" height="900" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <div class="nds-card-corner">
+                                    <span class="nds-tag nds-xs nds-inverted" data-status="info">
+                                        <span class="nds-label">New</span>
+                                    </span>
+                                </div>
+                                <span class="nds-card-title">Budget planning for managers</span>
+                                <span class="nds-card-subtitle">4 days · Online</span>
+                                <p class="nds-card-description">Build a yearly budget, track spending, and explain the gaps to your team.</p>
+                            </div>
+                            <div class="nds-card-value">
+                                <span class="nds-number-format" data-currency="SAR">1900</span>
+                            </div>
+                            <div class="nds-card-meta">
+                                <div class="nds-card-tags">
+                                    <span class="nds-tag nds-blue nds-sm">
+                                        <span class="nds-label">Finance</span>
+                                    </span>
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label">Intermediate</span>
+                                    </span>
+                                </div>
+                                <div class="nds-card-rating">
+                                    <div class="nds-rating nds-sm" data-rating="4.5">
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                        <span class="nds-rating-star"></span>
+                                    </div>
+                                    <span class="nds-card-rating-text">(23 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nds-card-actions">
+                            <a href="#" class="nds-btn nds-primary nds-lg">
+                                <span class="nds-label">Enroll</span>
+                            </a>
+                            <a href="#" class="nds-btn nds-secondary-outline nds-lg">
+                                <span class="nds-label">Details</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nds-swiper-navigation" hidden>
+                <div class="nds-swiper-buttons">
+                    <button type="button" class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" aria-label="Previous slide" data-i18n-aria-label="swiper.previous_slide"></button>
+                    <button type="button" class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" aria-label="Next slide" data-i18n-aria-label="swiper.next_slide"></button>
+                </div>
+                <div class="nds-swiper-pagination"></div>
             </div>
         </div>
     </div>
