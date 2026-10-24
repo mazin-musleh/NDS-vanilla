@@ -16,6 +16,7 @@
 :where(.nds-card) {
   --card-bg: initial;
   --card-bg-hover: initial;
+  --card-bg-active: initial;
   --card-border: initial;
   --card-border-hover: initial;
   --card-border-active: initial;
@@ -40,6 +41,8 @@
   --_card-bg: var(--card-bg, var(--_card-bg-base));
   --_card-bg-hover-base: var(--background-card-hovered);
   --_card-bg-hover: var(--card-bg-hover, var(--_card-bg-hover-base));
+  // Pressed: the hover fill one step deeper, so every color variant gets one with no token of its own.
+  --_card-bg-active: var(--card-bg-active, color-mix(in srgb, var(--_card-bg-hover) 94%, var(--text-default)));
   --_card-border-base: var(--border-neutral-primary);
   --_card-border: var(--card-border, var(--_card-border-base));
   --_card-border-hover-base: var(--border-primary);
@@ -94,6 +97,7 @@
   border: 1px solid transparent;
   border-radius: var(--_card-radius);
   padding: var(--_card-padding-block) var(--_card-padding-inline);
+
   min-width: var(--_card-width-min);
   width: var(--_card-width);
   max-width: var(--_card-width-max);
@@ -783,6 +787,7 @@
 
   &:active {
     transform: translateY(0);
+    background-color: var(--_card-bg-active);
   }
 
   // Shadow variant interactive states

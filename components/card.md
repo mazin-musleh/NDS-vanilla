@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:24 PM"
+last_edit: "24/10/2026 - 11:38 AM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -98,19 +98,16 @@ Pick another component when:
 </div>
 </script>
 <script type="text/html" id="card-link" data-canon>
-<a href="#" class="nds-card nds-stroke">
+<a href="#" class="nds-card nds-stroke nds-center">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
-      <span class="nds-featured-icon nds-circle nds-lg">
-        <i class="hgi hgi-stroke hgi-stars"></i>
+      <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+        <i class="hgi hgi-stroke hgi-library" aria-hidden="true"></i>
       </span>
     </div>
   </div>
   <div class="nds-card-content">
-    <div class="nds-card-text">
-      <span class="nds-card-title">Card Title</span>
-      <p class="nds-card-description">The whole card is one link.</p>
-    </div>
+    <span class="nds-card-title">Learning platform</span>
   </div>
 </a>
 </script>
@@ -310,21 +307,21 @@ Pick another component when:
 | Structure | Image header (id: image) | canon `#card-image` | — | A photo above the text. Set the focal point with `--img-pos-x` and `--img-pos-y` |
 | Structure | Avatar header | canon `#card-avatar` | — | A person or an account |
 | Structure | No header | canon `#card-no-header` | — | Text only |
-| Structure | Link card (hint: The whole card is one link) | canon `#card-link` | — | The whole card is one `<a>` (or `<button>`). Hover and press feedback come from the element. Do not put links or buttons inside it |
+| Structure | Link card (hint: A navigation tile: the whole card is one link) (id: link) | canon `#card-link` | — | A navigation tile: the whole card is one `<a>` (or `<button>`) that opens one page, with an icon, a title and at most one line. A card that carries an action, a price or tags keeps action buttons instead. Hover and press feedback come from the element. Do not put links or buttons inside it |
 | Structure | Statistic (hint: One headline number) (id: statistic) | canon `#card-statistic` | — | One headline number with a label, in a centered card. The number is `.nds-card-number`, which works in any card. With `data-counter`, it counts up from 0 when it scrolls into view. See [Numbers](../utilities/numbers#counter-animation) |
 | Structure | Progress (hint: A progress ring beside a short title. Turns on Row, Reverse and Middle) (id: progress) (demo: + row) (demo: + reverse) (demo: + middle) | canon `#card-progress` | — | A [progress ring](../components/progress) beside a short title, as on a life journey page. Write Row, Reverse and Middle too: the ring closes the row, and the title sits level with its middle |
 | Structure | Header title (hint: The title beside a small icon, over a list) (id: header-title) (demo: + text-md) (demo: + breakout) | canon `#card-header-title` | — | A panel card: the title sits in the header beside the icon, and the content holds a list, a table or a chart. Wrap the title in `.nds-card-text`, as in the content. A one-line title centers on the icon. A taller text starts level with the icon's top |
 | Layout | Stacked (default) | — | — | Header above content |
 | Layout | Row (hint: Header beside the content) (id: row) (not: header-title) | `.nds-horizontal` | `.nds-card` | Header beside content. The card stacks again when it is narrower than 324px |
-| Layout | Center (not: statistic, header-title) | `.nds-center` | `.nds-card` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing. It does not move the card: its container places it |
+| Layout | Center (not: statistic, header-title, link) | `.nds-center` | `.nds-card` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing. It does not move the card: its container places it |
 | Meta | None (default) | — | — | No tags or rating |
-| Meta | Tags | canon `#card-tags` | `.nds-card-content` | Tags alone go straight in the content |
-| Meta | Rating | canon `#card-rating` | `.nds-card-content` | A star rating with a count |
-| Meta | Tags + Rating | canon `#card-meta` | `.nds-card-content` | Both together: `.nds-card-meta` groups the two meta rows. Use it only when both are present |
+| Meta | Tags | canon `#card-tags` | `.nds-card-content:not(a.nds-card > *)` | Tags alone go straight in the content |
+| Meta | Rating | canon `#card-rating` | `.nds-card-content:not(a.nds-card > *)` | A star rating with a count |
+| Meta | Tags + Rating | canon `#card-meta` | `.nds-card-content:not(a.nds-card > *)` | Both together: `.nds-card-meta` groups the two meta rows. Use it only when both are present |
 | Value | None (default) | — | — | No price line |
-| Value | Price | canon `#card-value-price` | `.nds-card-text:not(.nds-card-header > *)` (after) | A price. `data-currency` shows the currency icon. See [Numbers](../utilities/numbers) |
-| Value | Sale price | canon `#card-value-sale` | `.nds-card-text:not(.nds-card-header > *)` (after) | A price with the original crossed out in `<s>` |
-| Value | Unit price | canon `#card-value-unit` | `.nds-card-text:not(.nds-card-header > *)` (after) | A price with a plain-text unit after it |
+| Value | Price | canon `#card-value-price` | `.nds-card-text:not(.nds-card-header > *):not(a.nds-card *)` (after) | A price. `data-currency` shows the currency icon. See [Numbers](../utilities/numbers) |
+| Value | Sale price | canon `#card-value-sale` | `.nds-card-text:not(.nds-card-header > *):not(a.nds-card *)` (after) | A price with the original crossed out in `<s>` |
+| Value | Unit price | canon `#card-value-unit` | `.nds-card-text:not(.nds-card-header > *):not(a.nds-card *)` (after) | A price with a plain-text unit after it |
 | Corner | None (default) | — | — | Nothing in the top end corner |
 | Corner | Action (hint: A small button in the top end corner) (not: image) | canon `#card-corner` | `.nds-card-text:not(a.nds-card *)` (start) | A small button, such as View all, in `.nds-card-corner`. Write the corner first in the card text. Below a header, it shows in the card's top end corner. In a row card, a Header title card or a card with no header, it floats at the end of the title's first line, and the title wraps around it. Not on a link card, which holds no links or buttons |
 | Corner | Status (hint: A status tag in the top end corner) | canon `#card-corner-status` | `.nds-card-text:not(a.nds-card *)` (start) | A status tag in `.nds-card-corner`, placed the same way as Action. `data-status` sets its color |
@@ -431,7 +428,8 @@ Pick another component when:
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Make a whole card clickable by using `<a>` or `<button>` as the card root. Do not wrap a card in a separate link, and do not put links or buttons inside a clickable card.
+- Make a whole card clickable only for a navigation tile: `<a>` or `<button>` as the card root, with an icon, a title and at most one line. A card that carries an action, a price or tags keeps action buttons. Do not wrap a card in a separate link, and do not put links or buttons inside a clickable card.
+- For a list of page links, use a [Drawer](../components/drawer), not cards: its arrows show that each row is a link.
 - Use a stroke card in flat, content-heavy layouts, and a shadow card where the card floats over other content.
 - Put `nds-center` on the card root only. On an inner part, it centers nothing.
 - Add `nds-middle` when a row card's header is taller than its text, such as a progress ring beside one title. Without it, the text sits at the top.
@@ -482,6 +480,7 @@ Set these on `.nds-card`, except the image properties, which go on `.nds-card-im
 |---|---|---|
 | `--card-bg` | `var(--background-card)` | Background |
 | `--card-bg-hover` | `var(--background-card-hovered)` | Background of a hovered link or button card |
+| `--card-bg-active` | the hover fill, a step darker | Background of a pressed link or button card |
 | `--card-border` | `var(--border-neutral-primary)` | Border color of a stroke card |
 | `--card-border-hover` | `var(--border-primary)` | Border color on hover |
 | `--card-border-active` | `var(--border-neutral-primary)` | Border color on press |

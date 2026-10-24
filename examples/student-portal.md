@@ -817,7 +817,7 @@ hideFeedback: true
         </div>
         <div class="nds-section-body">
             <div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 2;">
-                <button type="button" class="nds-card nds-stroke" data-modal-target="fees-modal">
+                <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle">
@@ -831,8 +831,13 @@ hideFeedback: true
                             <p class="nds-card-description">See what you owe and what you paid.</p>
                         </div>
                     </div>
-                </button>
-                <button type="button" class="nds-card nds-stroke" data-modal-target="plan-modal">
+                    <div class="nds-card-actions nds-end">
+                        <button type="button" class="nds-btn nds-secondary nds-icon-only" data-modal-target="fees-modal" aria-label="Open Fees and payments">
+                            <i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle">
@@ -846,8 +851,13 @@ hideFeedback: true
                             <p class="nds-card-description">The credit hours you have left, by group.</p>
                         </div>
                     </div>
-                </button>
-                <button type="button" class="nds-card nds-stroke" data-modal-target="letter-modal">
+                    <div class="nds-card-actions nds-end">
+                        <button type="button" class="nds-btn nds-secondary nds-icon-only" data-modal-target="plan-modal" aria-label="Open Study plan">
+                            <i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle">
@@ -861,8 +871,13 @@ hideFeedback: true
                             <p class="nds-card-description">Get an official letter for your employer or a bank.</p>
                         </div>
                     </div>
-                </button>
-                <a href="#" class="nds-card nds-stroke">
+                    <div class="nds-card-actions nds-end">
+                        <button type="button" class="nds-btn nds-secondary nds-icon-only" data-modal-target="letter-modal" aria-label="Open Request a letter">
+                            <i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle">
@@ -876,7 +891,12 @@ hideFeedback: true
                             <p class="nds-card-description">Download your grades for every term as a PDF.</p>
                         </div>
                     </div>
-                </a>
+                    <div class="nds-card-actions nds-end">
+                        <a href="#" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Transcript">
+                            <i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -336,7 +336,7 @@
 
 - title: "Drawer"
   description: "Collapsible navigation lists with accordion groups"
-  use_when: "A vertical list container for sidebar navigation, submenus, quick links, and inline notifications, in compact or expanded layouts. Also a tree view of nested items, such as folders or categories: add `.nds-lined` to show depth and `data-state=\"always-open\"` to keep branches open. For a surface that slides in over the page use Panels; for the main collapsible sidebar use Side Menu."
+  use_when: "A vertical list container for sidebar navigation, submenus, quick links (an arrow on each row shows it is a link), and inline notifications, in compact or expanded layouts. Also a tree view of nested items, such as folders or categories: add `.nds-lined` to show depth and `data-state=\"always-open\"` to keep branches open. Also a short list the user opens one item at a time, such as their latest requests, with a Date Tile and a Meta line. For a surface that slides in over the page use Panels; for the main collapsible sidebar use Side Menu."
   category: "Navigation"
   tags: ["JS", "CSS", "API"]
   url: "/components/drawer.html"
@@ -487,7 +487,7 @@
 
 - title: "Cards"
   description: "Versatile content containers for articles, profiles, and actions"
-  use_when: "A boxed content container: article teasers, profile cards, service tiles, dashboard panels, grid items. The default building block for any card grid or listing."
+  use_when: "A boxed content container: article teasers, profile cards, service tiles, dashboard panels, grid items. Pick it for items that carry several details, such as an image, tags, a rating, a price or actions. A link card (the whole card one link) is only a navigation tile, such as a system's icon and name; a card that carries an action, a price or tags keeps action buttons. For a list of page links, use a Drawer: its arrows show each row is a link. For an icon, a title and one line per item, a Definition List is lighter."
   category: "Content"
   tags: ["CSS"]
   url: "/components/card.html"
@@ -520,7 +520,7 @@
 
 - title: "Definition List"
   description: "Structured key-value pairs in grid or list layouts"
-  use_when: "Key-value pairs in a grid or list: detail views, summary panels, specification tables, review-your-answers screens, profile field lists."
+  use_when: "Key-value pairs in a grid or list: detail views, summary panels, specification tables, review-your-answers screens, profile field lists. Also a light list of items with an icon, a title and one line each, such as features or benefits (the Feature list structure): lighter than cards. A list of page links is a Drawer."
   category: "Content"
   tags: ["CSS"]
   url: "/components/definition-list.html"
@@ -851,7 +851,7 @@
 
 - title: "Tables"
   description: "Data grids with sorting, pagination, and expandable rows"
-  use_when: "Any tabular data: data grid, data table, sortable table, expandable sub-rows, column visibility, records list. The starting point for replacing DataTables, jTable, ag-Grid, or a similar plugin. Pair it with Filter, Pagination, Sort, Selection, and Export; the Manage Records example shows all of them working together."
+  use_when: "Any tabular data: data grid, data table, sortable table, expandable sub-rows, column visibility, records list. The starting point for replacing DataTables, jTable, ag-Grid, or a similar plugin. Pair it with Filter, Pagination, Sort, Selection, and Export; the Manage Records example shows all of them working together. Pick it when the user compares, sorts, filters or pages the records; a short list the user opens one item at a time fits Drawer rows."
   category: "Data"
   tags: ["JS", "CSS", "API"]
   url: "/components/table.html"
@@ -1109,9 +1109,18 @@
 
 # ── Examples — composed pages ─────────────────────────────────────────────
 
+- title: "Training Academy"
+  description: "A training center's home page with four lists, each showing its items a different way."
+  use_when: "Pick how a list section shows its items, by how much each item holds. Places to go, an icon and a name each: link cards as navigation tiles, the only use of a whole-card link. Items with several details to compare, such as an image, tags, a rating and a price: full cards with action buttons. A short list the user opens one item at a time, newest first: Drawer rows with a Date Tile and a Meta line; a plain list of page links is a Drawer with an arrow on each row. An icon, a title and one line: a Definition List in a grid. Use for any home or landing page made of list sections: categories, featured products, courses or services, announcements or news, features. For a full catalog with search and filters, see Services List; for records the user sorts or pages, see Manage Records. Full chrome with a sub hero, striped sections (nds-stripe on .nds-content), and no side menu. The page's opening comment gives these rules."
+  icon: '<i class="hgi hgi-stroke hgi-school"></i>'
+  category: "Content"
+  tags: ["Definition List", "Drawer", "Date Tile", "Cards", "Rating"]
+  url: "/examples/training-academy.html"
+  new: true
+
 - title: "Student Portal"
   description: "A student's home page with grades, today's classes, requests, exams and services."
-  use_when: "A personal home page that a signed-in user opens first. Use for a student, employee, patient, citizen or member portal, a my-account page, or any user dashboard. Each section maps to any portal: a profile with a status Alert and a Definition List; key numbers as metric tiles, a trend chart and a progress ring; today's schedule as a Timeline beside the person's requests in a Table; upcoming and past dated items in a Content Switcher, with a countdown, beside key dates in Scroll More; quick actions that open modals; a swiper of links to other systems; a service catalog where a closed service is a disabled card; a FAB that opens a help panel. Full chrome with a sub hero, striped sections (nds-stripe on .nds-content), and no side menu. The page's opening comment gives its layout rules."
+  use_when: "A personal home page that a signed-in user opens first. Use for a student, employee, patient, citizen or member portal, a my-account page, or any user dashboard. Each section maps to any portal: a profile with a status Alert and a Definition List; key numbers as metric tiles, a trend chart and a progress ring; today's schedule as a Timeline beside the person's requests in a Table; upcoming and past dated items in a Content Switcher, with a countdown, beside key dates in Scroll More; quick actions as cards whose arrow button opens a modal; a swiper of link cards to other systems, as navigation tiles; a service catalog where a closed service is a disabled card; a FAB that opens a help panel. Full chrome with a sub hero, striped sections (nds-stripe on .nds-content), and no side menu. The page's opening comment gives its layout rules."
   icon: '<i class="hgi hgi-stroke hgi-mortarboard-01"></i>'
   category: "Dashboard"
   tags: ["Drawer", "Date Tile", "Meta", "Countdown", "Content Switcher"]
@@ -1120,7 +1129,7 @@
 
 - title: "Services List"
   description: "Filterable government services catalog with search and category filters."
-  use_when: "A browsable catalog of items shown as cards, with keyword search, category filters, and pagination. Use for any service directory, product listing, document library, resource index, or list-all-X page. The plain content-page shape: full chrome, sub hero, no side columns."
+  use_when: "A browsable catalog of items shown as cards, with keyword search, category filters, and pagination. Use for any service directory, product listing, document library, resource index, or list-all-X page. The plain content-page shape: full chrome, sub hero, no side columns. For a list section inside another page, with no search, see Training Academy."
   icon: '<i class="hgi hgi-stroke hgi-grid-view"></i>'
   category: "Service"
   tags: ["Filter", "Search", "Pagination"]

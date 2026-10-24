@@ -64,6 +64,9 @@
 - label: "Examples"
   has_sub: true
   children:
+    - label: "Training Academy"
+      url: "/examples/training-academy"
+      href: "/examples/training-academy.html"
     - label: "Student Portal"
       url: "/examples/student-portal"
       href: "/examples/student-portal.html"
