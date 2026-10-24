@@ -33,6 +33,7 @@ const SCOPE = [
     ['nds-autocomplete.js', 'Autocomplete'],
     ['nds-backdrop.js', 'Backdrop'],
     ['nds-breadcrumb.js', 'Breadcrumb'],
+    ['nds-calendar.js', 'Calendar'],
     ['nds-chart.js', 'Chart'],
     ['nds-city-weather.js', 'CityWeather'],
     ['nds-code.js', 'Code'],

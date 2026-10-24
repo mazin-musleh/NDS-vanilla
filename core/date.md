@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 05:39 PM"
+last_edit: "24/10/2026 - 08:03 PM"
 ---
 
 <section id="date-overview" class="nds-content-section nds-doc-overview">
@@ -288,6 +288,7 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 | `NDS.Date.format(date, options)` | Returns the date as text. With `format`, it fills the tokens. With other options and no `format`, the browser writes the text. With neither, it uses the site's format. An invalid date returns `''` |
 | `NDS.Date.convert(text, from, to)` | Parses `text` with the options in `from` and formats it with the options in `to`. Returns `null` when `text` does not parse |
 | `NDS.Date.getToday()` | Returns today, in the site's timezone, as a `Date` at local midnight |
+| `NDS.Date.readDay(datetime)` | Returns the day a `datetime` value names, as a `Date` at local midnight, or `null`. The value is `YYYY-MM-DD`, with or without a time. A time with a zone counts in the site's timezone. The [Calendar](../components/calendar) reads each event's day with it |
 | `NDS.Date.toParts(date, calendar)` | Returns the day as numbers, `{ year, month, day }`, in `calendar` (default `'gregory'`). The month counts from 1 in both calendars |
 | `NDS.Date.fromParts(parts, calendar)` | Returns the day that `{ year, month, day }` names in `calendar`, as a `Date` at local midnight, or `null` when that day does not exist |
 | `NDS.Date.getMonthLength(parts, calendar)` | Returns the number of days in the month that `{ year, month }` names in `calendar`. A Hijri month has 29 or 30 |

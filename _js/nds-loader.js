@@ -389,6 +389,12 @@
             critical: true,
         },
         {
+            // Critical: the grid places each event by the column the script stamps (CLS if late).
+            name: 'Calendar',
+            selector: '.nds-calendar',
+            critical: true,
+        },
+        {
             // Deferred: the authored placeholders paint first; the values fill in after the reveal.
             name: 'Countdown',
             selector: '.nds-countdown',

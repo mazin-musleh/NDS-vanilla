@@ -420,6 +420,54 @@
   "ar": "مسار التنقل"
  },
  {
+  "section": "calendar",
+  "key": "events",
+  "en": "one: 1 event · other: {n} events",
+  "ar": "one: فعالية واحدة · two: فعاليتان · few: {n} فعاليات · many: {n} فعالية · other: {n} فعالية"
+ },
+ {
+  "section": "calendar",
+  "key": "no_events",
+  "en": "No events",
+  "ar": "لا توجد فعاليات"
+ },
+ {
+  "section": "calendar",
+  "key": "previous_week",
+  "en": "Previous week",
+  "ar": "الأسبوع السابق"
+ },
+ {
+  "section": "calendar",
+  "key": "today",
+  "en": "Today",
+  "ar": "اليوم"
+ },
+ {
+  "section": "calendar",
+  "key": "next_week",
+  "en": "Next week",
+  "ar": "الأسبوع التالي"
+ },
+ {
+  "section": "calendar",
+  "key": "grid",
+  "en": "Grid",
+  "ar": "شبكة"
+ },
+ {
+  "section": "calendar",
+  "key": "rows",
+  "en": "Rows",
+  "ar": "صفوف"
+ },
+ {
+  "section": "calendar",
+  "key": "days_of_the_week",
+  "en": "Days of the week",
+  "ar": "أيام الأسبوع"
+ },
+ {
   "section": "chart",
   "key": "chart",
   "en": "Chart",
@@ -1315,12 +1363,6 @@
  },
  {
   "section": "filter",
-  "key": "search",
-  "en": "Search",
-  "ar": "بحث"
- },
- {
-  "section": "filter",
   "key": "filter",
   "en": "Filter",
   "ar": "تصفية"
@@ -1336,6 +1378,12 @@
   "key": "applied_filters",
   "en": "Applied Filters:",
   "ar": "التصفيات المطبقة:"
+ },
+ {
+  "section": "filter",
+  "key": "search",
+  "en": "Search",
+  "ar": "بحث"
  },
  {
   "section": "footer",

@@ -1,0 +1,185 @@
+@use 'sass:list';
+@use '../mixins' as *;
+
+// One week of events: the same list draws as 7 columns (grid) or as an agenda (rows).
+// The script stamps each event's column; until it runs the list reads as rows.
+// The root is the ruler: a calendar under 860px shows rows, on any screen; 7 columns any narrower
+// break a title into a word per line.
+
+.nds-calendar {
+    --_calendar-gap: var(--calendar-gap, var(--spacing-md));
+    container: nds-calendar / inline-size;
+    // A size container takes no width from its content: in a centering parent it would shrink to nothing.
+    inline-size: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    // The calendar's own gap spaces its toolbar.
+    --toolbar-margin-block: 0;
+}
+
+.nds-calendar-title {
+    margin: 0;
+    font-size: var(--typo-text-lg-FS);
+    line-height: var(--typo-text-lg-LH);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-default);
+}
+
+.nds-calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: var(--_calendar-gap);
+}
+
+.nds-calendar-day {
+    --btn-height: auto;
+    --btn-width: 100%;
+    flex-direction: column;
+    gap: var(--spacing-xxs);
+    min-width: 0;
+    padding: var(--spacing-md) 0;
+}
+
+.nds-calendar-day-name,
+.nds-calendar-day-initial {
+    font-size: var(--typo-text-sm-FS);
+    line-height: var(--typo-text-sm-LH);
+    font-weight: var(--font-weight-regular);
+}
+
+.nds-calendar-day-initial {
+    display: none;
+}
+
+.nds-calendar-day-number {
+    font-size: var(--typo-text-lg-FS);
+    line-height: var(--typo-text-lg-LH);
+    font-weight: var(--font-weight-semibold);
+}
+
+// Picked: the main nav's current item, a primary fill.
+// .nds-btn: as strong as dark mode's subtle colors, and later.
+.nds-btn.nds-calendar-day[data-state~="selected"] {
+    --btn-bg: var(--button-background-primary-default);
+    --btn-bg-hover: var(--button-background-primary-hovered);
+    --btn-bg-active: var(--button-background-primary-pressed);
+    --btn-bg-selected: var(--button-background-primary-default);
+    --btn-color: var(--text-oncolor-primary);
+    --btn-indicator-color: var(--button-indicator-primary);
+    --btn-indicator-active: var(--button-indicator-primary);
+    --btn-indicator-selected: var(--button-indicator-primary);
+}
+
+// Today: a brand border, as the Date Picker rings today's cell; the button keeps it in every state.
+.nds-calendar-day[aria-current="date"] {
+    --btn-border: var(--border-primary);
+}
+
+// An event outside the week, or off the picked day.
+.nds-calendar[data-nds-calendar-initialized] .nds-calendar-events > li:not([data-calendar-day]) {
+    display: none;
+}
+
+.nds-calendar .nds-calendar-empty {
+    display: none;
+}
+
+.nds-calendar[data-state~="empty"] .nds-calendar-empty {
+    display: flex;
+}
+
+// A phone's 7 columns cannot hold Arabic short names, which are whole words: the initial stands in.
+@container nds-calendar (width < 480px) {
+    .nds-calendar-day-name {
+        @include label-hidden;
+    }
+    .nds-calendar-day-initial {
+        display: block;
+    }
+}
+
+// Under the grid's width only rows show, so the switch would offer nothing.
+@container nds-calendar (width < 860px) {
+    .nds-calendar-views {
+        display: none;
+    }
+}
+
+@container nds-calendar (width >= 860px) {
+    .nds-calendar[data-view="grid"] {
+        .nds-calendar-days {
+            padding-block-end: var(--spacing-md);
+            border-block-end: 1px solid var(--divider-color);
+        }
+
+        .nds-calendar-events {
+            // A line between days, behind the events, so a day with none still shows its column.
+            $lines: ();
+            @for $k from 1 through 6 {
+                $x: calc((100% - 6 * var(--_calendar-gap)) / 7 * #{$k} + var(--_calendar-gap) * #{$k - 0.5});
+                $lines: list.append($lines, linear-gradient(var(--divider-color), var(--divider-color)) $x 0 / 1px 100% no-repeat, comma);
+            }
+            background: $lines;
+            min-height: 160px;
+            // Up through the calendar's gap, so the day lines meet the line under the day names.
+            margin-block-start: calc(-1 * var(--spacing-xl));
+            padding-block-start: var(--spacing-xl);
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            // 1px rows: the script spans each event over its height plus the gap, and dense puts it
+            // in the first free rows of its column, so a day stacks its events with no shared rows.
+            grid-auto-rows: 1px;
+            grid-auto-flow: dense;
+            // Start, not stretch: a stretched event would grow to its span and be measured again.
+            align-items: start;
+            column-gap: var(--_calendar-gap);
+        }
+
+        .nds-calendar-events > li {
+            grid-row-end: span var(--_calendar-rows, 1);
+            padding: 0;
+            // A card's surface and border, as on a stroke card: meta text needs the card's background for contrast.
+            border: 1px solid var(--border-neutral-primary);
+            border-radius: var(--radius-md);
+            background-color: var(--background-card);
+
+            // A divided drawer drops its last row's divider; here it is the card's bottom edge.
+            &:last-child {
+                border-block-end: 1px solid var(--border-neutral-primary);
+            }
+
+            // The column names the day on screen; a screen reader still reads the tile.
+            > .nds-btn > .nds-date-tile {
+                @include label-hidden;
+            }
+        }
+
+        // Seven fixed columns, one per day of the week.
+        @for $column from 0 through 6 {
+            .nds-calendar-events > li[data-calendar-day="#{$column}"] {
+                grid-column: #{$column + 1};
+            }
+        }
+    }
+
+    // A picked day's events take the whole width, so the day lines would only show between them.
+    .nds-calendar[data-view="grid"][data-day] .nds-calendar-events {
+        background: none;
+        min-height: 0;
+
+        > li[data-calendar-day] {
+            grid-column: 1 / -1;
+        }
+    }
+}
+
+// A server loading the week: the old events stay, for the Drawer's skeleton to draw. After the hide rule, same weight.
+.nds-calendar .nds-drawer.nds-loading .nds-calendar-events > li {
+    display: flex;
+}
+
+// After the grid rule, which has the same weight: an empty week shows the message, not empty columns.
+.nds-calendar[data-state~="empty"] .nds-calendar-events {
+    display: none;
+}

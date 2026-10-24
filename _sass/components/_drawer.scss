@@ -99,6 +99,8 @@
 .nds-drawer-list li {
     display: flex;
     flex-direction: column;
+    // A rounded row (a Calendar grid card) keeps its button's hover fill inside its corners. The focus ring is inset.
+    overflow: clip;
 
     // Button/link styling within drawer
     >.nds-btn {
@@ -499,5 +501,10 @@
 
     .nds-date-tile {
         @include skeleton-date-tile;
+    }
+
+    // One bar per fact; its icon goes with the text color.
+    .nds-meta-item {
+        @include skeleton-bar;
     }
 }

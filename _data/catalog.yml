@@ -485,6 +485,15 @@
   url: "/components/avatar.html"
   scss: _sass/components/_avatar.scss
 
+- title: "Calendar"
+  description: "One week of events, as seven day columns or as a list of rows"
+  use_when: "Show dated events one week at a time: a class timetable, a training or event schedule, appointments, shifts, an academic week. Grid shows a column per day; Rows shows a list the user filters by tapping a day. Gregorian or Hijri, with any first day of the week. For picking a date use Date Picker; for a dated list with no week to move through use Drawer rows with a Date Tile; for steps in order use Timeline."
+  category: "Content"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/calendar.html"
+  js: _js/nds-calendar.js
+  scss: _sass/components/_calendar.scss
+
 - title: "Cards"
   description: "Versatile content containers for articles, profiles, and actions"
   use_when: "A boxed content container: article teasers, profile cards, service tiles, dashboard panels, grid items. Pick it for items that carry several details, such as an image, tags, a rating, a price or actions. A link card (the whole card one link) is only a navigation tile, such as a system's icon and name; a card that carries an action, a price or tags keeps action buttons. For a list of page links, use a Drawer: its arrows show each row is a link. For an icon, a title and one line per item, a Definition List is lighter."

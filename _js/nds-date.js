@@ -11,6 +11,8 @@
  *                                    from weekStart (0 = Sunday, the default)
  *   NDS.Date.getWeekStart(el)        the nearest data-week-start, as 0 (Sunday) to 6 (Saturday)
  *   NDS.Date.getStartOfWeek(date, weekStart)   the first day of date's week
+ *   NDS.Date.readDay(datetime)       a datetime value (YYYY-MM-DD, with or without a time) → its day, or null;
+ *                                    with a zone, the day in the site's timezone
  *   NDS.Date.fill(root)              write every such <time> in root, and root itself
  *   NDS.Date.init()                  fill the page (the loader calls it)
  * Events:
@@ -280,4 +282,5 @@
 
     NDS.Date.init = init;
     NDS.Date.fill = fill;
+    NDS.Date.readDay = readDay;
 })();
