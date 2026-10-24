@@ -350,13 +350,6 @@
         }
 
         init() {
-            // Trailing-edge debounce for the loading-class cleanup at the end of
-            // syncFilters(). One wrapper per instance so rapid filter passes
-            // share the same 500ms timer.
-            this._clearLoadingDebounced = NDS.debounce(() => {
-                if (this._targetContainer) this._targetContainer.classList.remove('nds-loading');
-            }, 500);
-
             this._setupFilterElements();
             this._setupActionButtons();
             this._setupChipStyle();
@@ -2610,8 +2603,7 @@
                 return;
             }
 
-            if (this._targetContainer) this._targetContainer.classList.add('nds-loading');
-
+            // No skeleton: the pass below is synchronous, so nothing loads.
             this._ensureCacheBuilt();
 
             let visibleCount = 0;
@@ -2635,8 +2627,6 @@
             this._syncPagination(this._getPageOptions());
             this._syncNoResultsAlert(visibleCount);
             this._commitAppliedUi();
-
-            this._clearLoadingDebounced();
         }
 
         _syncNoResultsAlert(visibleCount) {
