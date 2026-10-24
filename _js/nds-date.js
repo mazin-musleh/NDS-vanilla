@@ -62,7 +62,7 @@
         const getDayParts = (formatter, time) => {
             const parts = {};
             for (const { type, value } of formatter.formatToParts(time)) parts[type] = +value;
-            return { y: parts.year, m: parts.month, d: parts.day };
+            return { year: parts.year, month: parts.month, day: parts.day };
         };
         const toLocalDay = (time) => { const instant = new Date(time); return new Date(instant.getUTCFullYear(), instant.getUTCMonth(), instant.getUTCDate()); };
         const getDayFormatter = (calendar) => {
@@ -72,30 +72,37 @@
             return formatter;
         };
 
-        // Local day → {y, m, d} in cal. Read at UTC noon, so no offset moves the day.
+        // Local day → { year, month, day } in cal. Read at UTC noon, so no offset moves the day.
         function toCalendarParts(date, calendar) {
-            if (calendar === 'gregory') return { y: date.getFullYear(), m: date.getMonth() + 1, d: date.getDate() };
+            if (calendar === 'gregory') return { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() };
             return getDayParts(getDayFormatter(calendar), Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 12));
         }
 
-        // {y, m, d} in cal → local day, or null when that day does not exist.
+        // { year, month, day } in cal → local day, or null when that day does not exist.
         // Non-gregory: estimate by the mean month, read the guess back in cal, step by the miss.
-        function fromCalendarParts(y, month, day, calendar) {
+        function fromCalendarParts({ year, month, day }, calendar) {
             if (calendar === 'gregory') {
-                const date = new Date(y, month - 1, day);
-                return date.getFullYear() === y && date.getMonth() === month - 1 && date.getDate() === day ? date : null;
+                const date = new Date(year, month - 1, day);
+                return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day ? date : null;
             }
             if (!(month >= 1 && month <= 12 && day >= 1 && day <= 31)) return null;
             const formatter = getDayFormatter(calendar);
             let time = Date.UTC(2000, 0, 1, 12);
             for (let i = 0; i < 8; i++) {
-                const parts = getDayParts(formatter, time);
-                const miss = Math.round(((y - parts.y) * 12 + month - parts.m) * 29.53) + day - parts.d;
-                if (!miss) return parts.y === y && parts.m === month && parts.d === day ? toLocalDay(time) : null;
+                const guess = getDayParts(formatter, time);
+                const miss = Math.round(((year - guess.year) * 12 + month - guess.month) * 29.53) + day - guess.day;
+                if (!miss) return guess.year === year && guess.month === month && guess.day === day ? toLocalDay(time) : null;
                 time += miss * 864e5;
             }
             return null; // a day past the month's end never lands
         }
+
+        // An instant's day in a timezone, as a local day.
+        const getZoneDay = (instant, timeZone) => {
+            const parts = getDayParts(getDateFormatter('en', { timeZone: timeZone, numberingSystem: 'latn', year: 'numeric', month: 'numeric', day: 'numeric' }), instant);
+            return new Date(parts.year, parts.month - 1, parts.day);
+        };
+        const DATETIME = /^(\d{4})-(\d{2})-(\d{2})(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(Z|[+-]\d{2}:?\d{2})?)?$/;
 
         function readTimeZone() {
             const timeZone = document.documentElement.dataset.timezone;
@@ -111,7 +118,7 @@
             hijri_months: ['Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani', 'Jumada al-Ula', 'Jumada al-Akhirah', 'Rajab', 'Shaban', 'Ramadan', 'Shawwal', 'Dhu al-Qadah', 'Dhu al-Hijjah'],
         });
         const getIntlNames = (lang, opts, at) => {
-            const formatter = new Intl.DateTimeFormat(NDS.i18n.resolveLang(lang), { timeZone: 'UTC', ...opts });
+            const formatter = getDateFormatter(NDS.i18n.resolveLang(lang), { timeZone: 'UTC', ...opts });
             return Array.from({ length: opts.month ? 12 : 7 }, (_, i) => formatter.format(at(i)));
         };
         const getMonthNames = (calendar, lang) => (calendar === 'hijri'
@@ -149,8 +156,24 @@
             getToday() {
                 const timeZone = readTimeZone();
                 if (!timeZone) { const now = new Date(); return new Date(now.getFullYear(), now.getMonth(), now.getDate()); }
-                const parts = getDayParts(getDateFormatter('en', { timeZone: timeZone, numberingSystem: 'latn', year: 'numeric', month: 'numeric', day: 'numeric' }), new Date());
-                return new Date(parts.y, parts.m - 1, parts.d);
+                return getZoneDay(new Date(), timeZone);
+            },
+
+            // The day a datetime names, as a local date. With a zone it is an instant: its day in the
+            // site's timezone, else in the visitor's.
+            readDay(value) {
+                const text = value.trim();
+                const match = DATETIME.exec(text);
+                if (!match) return null;
+                if (!match[4]) {
+                    const date = new Date(+match[1], match[2] - 1, +match[3]);
+                    return date.getDate() === +match[3] ? date : null;   // 2026-02-31 is no date
+                }
+                const instant = new Date(text);
+                if (isNaN(instant)) return null;
+                const timeZone = readTimeZone();   // validated: a mistyped zone falls back, never throws
+                if (!timeZone) return new Date(instant.getFullYear(), instant.getMonth(), instant.getDate());
+                return getZoneDay(instant, timeZone);
             },
 
             // The caller names the format: 03/04/2026 is ambiguous, so nothing is guessed.
@@ -171,14 +194,14 @@
                 const normalized = NDS.toLatinDigits(text).replace(/[\u200e\u200f\u061c]/g, '').trim();
                 const match = normalized.match(parser.rx);
                 if (!match) return null;
-                let y = null, month = 1, day = 1;
+                const parts = { year: null, month: 1, day: 1 };
                 parser.order.forEach((token, i) => {
                     const value = +match[i + 1];
-                    if (token[0] === 'Y') y = token === 'YY' ? 2000 + value : value; // ponytail: YY reads 20xx; add a year window if 19xx/21xx dates need it
-                    else if (token[0] === 'M') month = value;
-                    else day = value;
+                    if (token[0] === 'Y') parts.year = token === 'YY' ? 2000 + value : value; // ponytail: YY reads 20xx; add a year window if 19xx/21xx dates need it
+                    else if (token[0] === 'M') parts.month = value;
+                    else parts.day = value;
                 });
-                return y === null ? null : fromCalendarParts(y, month, day, toIntlCalendar(opts.calendar));
+                return parts.year === null ? null : fromCalendarParts(parts, toIntlCalendar(opts.calendar));
             },
 
             // { format } fills the tokens (ASCII digits, or `numerals`). Without it, Intl options
@@ -188,10 +211,10 @@
                 const { format, calendar, locale, numerals, ...intl } = opts;
                 const intlCalendar = toIntlCalendar(calendar);
                 if (format || !Object.keys(intl).length) {
-                    const { y, m: month, d: day } = toCalendarParts(date, intlCalendar);
+                    const { year, month, day } = toCalendarParts(date, intlCalendar);
                     const out = (format || getSiteFormat()).replace(TOKENS, (token) => {
-                        if (token === 'YYYY') return String(y);
-                        if (token === 'YY') return String(y).slice(-2);
+                        if (token === 'YYYY') return String(year);
+                        if (token === 'YY') return String(year).slice(-2);
                         if (token === 'MMMM') return getMonthNames(calendar === 'hijri' ? 'hijri' : 'gregory', locale)[month - 1];
                         // A Hijri month has no standard short name: MMM writes the full one.
                         if (token === 'MMM') return (calendar === 'hijri' ? getMonthNames('hijri', locale) : getIntlNames(locale, { month: 'short' }, i => Date.UTC(2000, i, 15)))[month - 1];
@@ -214,16 +237,15 @@
 
             // A day as { year, month, day } in a calendar, month 1-based in both, and back.
             toParts(date, calendar) {
-                const { y, m: month, d: day } = toCalendarParts(date, toIntlCalendar(calendar));
-                return { year: y, month, day };
+                return toCalendarParts(date, toIntlCalendar(calendar));
             },
-            fromParts({ year, month, day }, calendar) {
-                return fromCalendarParts(year, month, day, toIntlCalendar(calendar));
+            fromParts(parts, calendar) {
+                return fromCalendarParts(parts, toIntlCalendar(calendar));
             },
             getMonthLength({ year, month }, calendar) {
                 const intlCalendar = toIntlCalendar(calendar);
                 if (intlCalendar === 'gregory') return new Date(year, month, 0).getDate();
-                return fromCalendarParts(year, month, 30, intlCalendar) ? 30 : 29;
+                return fromCalendarParts({ year, month, day: 30 }, intlCalendar) ? 30 : 29;
             }
         };
         return api;
@@ -232,35 +254,13 @@
     // ── <time> text ──────────────────────────────────────────────────
     const SELECTOR = 'time[datetime][data-date-to], time[datetime][data-date-format]';
     const strings = NDS.i18n.getStrings('date', { hijri_era: 'AH' });
-    const DATETIME = /^(\d{4})-(\d{2})-(\d{2})(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(Z|[+-]\d{2}:?\d{2})?)?$/;
-
-    // The day a datetime names, as a local date. With a zone it is an instant: its day in the
-    // site's timezone, else in the visitor's.
-    function readDay(value) {
-        const text = value.trim();
-        const match = DATETIME.exec(text);
-        if (!match) return null;
-        if (!match[4]) {
-            const date = new Date(+match[1], match[2] - 1, +match[3]);
-            return date.getDate() === +match[3] ? date : null;   // 2026-02-31 is no date
-        }
-        const instant = new Date(text);
-        if (isNaN(instant)) return null;
-        const timeZone = NDS.Date.site.timeZone;   // validated: a mistyped zone falls back, never throws
-        if (!timeZone) return new Date(instant.getFullYear(), instant.getMonth(), instant.getDate());
-        const parts = {};
-        new Intl.DateTimeFormat('en', { timeZone: timeZone, year: 'numeric', month: 'numeric', day: 'numeric' })
-            .formatToParts(instant).forEach(x => { parts[x.type] = +x.value; });
-        return new Date(parts.year, parts.month - 1, parts.day);
-    }
-
     function fill(root = document) {
         const elements = root.matches?.(SELECTOR) ? [root] : [];
         elements.push(...(root.querySelectorAll?.(SELECTOR) || []));
         for (const el of elements) {
             const hijri = el.dataset.dateTo === 'hijri';
             // A Gregorian <time> is written only in a format of its own: else it already reads right.
-            const date = (hijri || el.dataset.dateFormat) && readDay(el.getAttribute('datetime'));
+            const date = (hijri || el.dataset.dateFormat) && NDS.Date.readDay(el.getAttribute('datetime'));
             if (!date) continue;
             el.textContent = NDS.Date.format(date, { calendar: hijri ? 'hijri' : 'gregory', format: NDS.Date.formatFor(el) });
             if (hijri && el.hasAttribute('data-date-era')) {
@@ -282,5 +282,4 @@
 
     NDS.Date.init = init;
     NDS.Date.fill = fill;
-    NDS.Date.readDay = readDay;
 })();

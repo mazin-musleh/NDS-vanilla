@@ -83,6 +83,8 @@ for (const timezoneId of ['Asia/Tokyo', 'America/Los_Angeles']) {
         document.documentElement.dataset.timezone = 'Pacific/Kiritimati';
         const p = {}; for (const x of new Intl.DateTimeFormat('en', { timeZone: 'Pacific/Kiritimati', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(now)) p[x.type] = x.value;
         eq('today, site zone', iso(D.getToday()), `${p.year}-${p.month}-${p.day}`);
+        eq('readDay, site zone', iso(D.readDay('2026-10-20T23:30:00Z')), '2026-10-21');
+        eq('readDay, no such day', D.readDay('2026-02-31'), null);
         document.documentElement.dataset.timezone = 'Mars/Olympus';
         eq('bad zone falls back', D.site.timeZone, undefined);
         return { days, bad };

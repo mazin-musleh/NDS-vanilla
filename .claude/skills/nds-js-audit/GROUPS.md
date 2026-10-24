@@ -78,12 +78,14 @@ Seams:
 
 ## @dates
 
-Files: nds-date.js, nds-date-picker.js, nds-time-date.js
+Files: nds-date.js, nds-date-picker.js, nds-time-date.js, nds-calendar.js
 
 Seams:
-- date → date-picker: `NDS.Date.format` / `parse` / `getToday` / `getCalendar` / `formatFor` / `getMonthNames` / `getWeekdayNames`; `data-calendar` and `data-date-format` read through `formatFor` / `getCalendar`. Date is main ("right after core"), the picker extras: it reads `NDS.Date` synchronously.
-- date → time-date: `NDS.Date.format` / `getToday` / `getCalendar` / `getMonthNames`, and `NDS.Date.site.timeZone` (`<html data-timezone>`).
-- loader: the `Date` entry is `critical:true` with `refresh: root => NDS.Date.fill(root)`.
+- date → date-picker: `NDS.Date.format` / `parse` / `getToday` / `getCalendar` / `formatFor` / `getMonthNames` / `getWeekdayNames` / `getWeekStart` / `toParts` / `fromParts` / `getMonthLength`; the grid offset and weekday header follow `getWeekStart(container)`; `data-calendar` and `data-date-format` read through `formatFor` / `getCalendar`. Date is main ("right after core"), the picker extras: it reads `NDS.Date` synchronously.
+- date → time-date: `NDS.Date.format` / `getToday` / `getCalendar` / `getMonthNames` / `toParts`, and `NDS.Date.site.timeZone` (`<html data-timezone>`).
+- date → calendar: `NDS.Date.readDay` (each event's first `time[datetime]`), `getWeekStart` / `getStartOfWeek` (the week), `toParts` / `format` / `getWeekdayNames` / `getCalendar` / `getToday` (title, day buttons, spoken labels). Both are main, date listed first; the calendar's `data-week` / `data-day` round-trip through `format(…, {format:'YYYY-MM-DD'})` and `readDay`.
+- calendar → filter (in @lists): a Filter on the same list writes `data-filtered`; calendar's `onAttributeChange('.nds-calendar-events > li', ['data-filtered'])` re-runs `_syncEmpty`, and the empty state and the announced count skip filtered events. Filter is delegated, so the first sync counts every event.
+- loader: the `Date` entry is `critical:true` with `refresh: root => NDS.Date.fill(root)`; `Calendar` is `critical:true` (it stamps the grid columns before the reveal).
 
 ## @lists
 
