@@ -55,7 +55,7 @@ Every option goes on the number, `.nds-number-format`. Counter makes it count up
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Currency | None (default) | — | — | A number with no currency |
-| Currency | SAR | `[data-currency="SAR"]` | `.nds-number-format:not([data-unit])` | Saudi riyals. Draws the Riyal sign as an icon |
+| Currency | SAR (id: sar) | `[data-currency="SAR"]` | `.nds-number-format:not([data-unit])` | Saudi riyals. Draws the Riyal sign as an icon |
 | Currency | USD | `[data-currency="USD"]` | `.nds-number-format:not([data-unit])` | US dollars ($) |
 | Currency | EUR | `[data-currency="EUR"]` | `.nds-number-format:not([data-unit])` | Euros (€) |
 | Currency | GBP | `[data-currency="GBP"]` | `.nds-number-format:not([data-unit])` | Pounds sterling (£) |
@@ -65,7 +65,7 @@ Every option goes on the number, `.nds-number-format`. Counter makes it count up
 | Currency | KRW | `[data-currency="KRW"]` | `.nds-number-format:not([data-unit])` | Korean won (₩) |
 | Currency | TRY | `[data-currency="TRY"]` | `.nds-number-format:not([data-unit])` | Turkish lira (₺) |
 | Unit | Unit (hint: Any text after the number) | `[data-unit="km"]` | `.nds-number-format:not([data-currency])` | A unit such as km, kg, MB or years. Not with a currency |
-| Counter (any) | Counter (hint: Counts up when it scrolls into view) | `[data-counter]` | `.nds-number-format` | A headline figure that counts up once, to the number in its text. Combines with a currency or a unit. Use it for a few key figures, never for a value that keeps changing |
+| Counter (any) | Counter (id: counter) (hint: Counts up when it scrolls into view) | `[data-counter]` | `.nds-number-format` | A headline figure that counts up once, to the number in its text. Combines with a currency or a unit. Use it for a few key figures, never for a value that keeps changing |
 | Counter (any) | Start From (hint: Counts from 40,000, not from 0) | `[data-counter-start="40000"]` | `[data-counter]` | For a large number: the count shows only its last part |
 | Counter (any) | 2000 ms (hint: Slower than the 1000 ms default) | `[data-counter-duration="2000"]` | `[data-counter]` | A slower count, for a large number. Without it, a count takes one second |
 {: #numbers-variants-table .nds-table .nds-responsive}

@@ -722,7 +722,7 @@
   use_when: "A single-choice dropdown rendered by the browser itself — only when the dev explicitly wants the native control (the OS picker on mobile). In-form choice fields default to Custom Select, whatever the option count: a native select beside styled NDS fields breaks the form's look. If the dev suggests a plain select to keep things simple, offer Custom Select first; use native only if the dev still wants it. For type-ahead search use Autocomplete; for several choices use Multiselect."
   category: "Forms"
   tags: ["JS", "CSS"]
-  url: "/components/form.html"
+  url: "/components/form.html#select"
   js: _js/nds-form.js
   scss: _sass/components/_form.scss
 
@@ -767,7 +767,7 @@
   use_when: "A resizable multi-line text field for comments, messages, and descriptions."
   category: "Forms"
   tags: ["JS", "CSS"]
-  url: "/components/form.html"
+  url: "/components/form.html#textarea"
   js: _js/nds-form.js
   scss: _sass/components/_form.scss
 
@@ -882,7 +882,7 @@
   use_when: "Numbers that count up to their value when scrolled into view: animated statistics, KPI counters, impact figures."
   category: "Utilities"
   tags: ["JS"]
-  url: "/utilities/numbers.html#counter-animation"
+  url: "/utilities/numbers.html#counter"
   js: _js/nds-numbers.js
 
 - title: "Currency"
@@ -890,7 +890,7 @@
   use_when: "Append a currency symbol automatically from a data attribute. Covers SAR and international symbols on prices, fees, and totals."
   category: "Utilities"
   tags: ["JS", "CSS"]
-  url: "/utilities/numbers.html#currency-format"
+  url: "/utilities/numbers.html#sar"
   js: _js/nds-numbers.js
 
 - title: "Expandable Content"
