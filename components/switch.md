@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "24/10/2026 - 07:56 AM"
 ---
 
 <section id="switch-overview" class="nds-content-section nds-doc-overview">
@@ -131,6 +131,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
 | Validation (any) | At least 2 (hint: Press Validate with one switch on) | `[data-min-checked="2"]` | `.nds-switch-group` | At least 2 switches must be on. Group only. Say the rule in the legend |
 | Validation (any) | At most 2 (hint: Turn on all three switches, then press Validate) | `[data-max-checked="2"]` | `.nds-switch-group` | No more than 2 switches may be on. Group only. Say the rule in the legend |
 | Disabled | Disabled | `[disabled]` | `.nds-switch-input` | The user cannot change the setting now |
+| Label first | Label first (hint: The label before the switch. Single only) | `.nds-reverse` | `.nds-switch:not(.nds-switch-group > *)` | The label before the switch. At the end of a line, such as a section action, the switch stays in place when the label changes. Single only: a switch in a group ignores it |
 | Stacked | Stacked (hint: The label above the switch. Single only) | `.nds-stacked` | `.nds-switch:not(.nds-switch-group > *)` | The label above the switch, not beside it. For a narrow column, such as a page header action. Single only: a switch in a group ignores it |
 | Layout | Row | `.nds-horizontal` | `.nds-switch-group` | Group only. The switches sit side by side and wrap |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
@@ -198,6 +199,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
 - Apply the change as soon as the switch moves. Do not add a Save button for a switch.
 - Use `nds-sm` in dense forms and tables, and `nds-lg` on touch-first screens.
 - Use `nds-neutral` when the setting is not a brand action.
+- Use `nds-reverse` for a switch at the end of a line, such as a section action, so the switch stays in place when its label changes.
 - For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
 - If the change fails, turn the switch back and show feedback on the field.
 

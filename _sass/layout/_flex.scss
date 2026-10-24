@@ -41,7 +41,7 @@
 }
 
 // Reverse directions — flip the flex utility's child order. Scoped to .nds-flex / .nds-row:
-// a component that takes .nds-reverse defines its own meaning (card, card actions, stepper, sideinfo).
+// a component that takes .nds-reverse defines its own meaning (card, card actions, stepper, sideinfo, switch).
 :is(.nds-flex, .nds-row).nds-reverse:not(.nds-col) {
   flex-direction: row-reverse !important;
 }

@@ -19,6 +19,11 @@
 
     gap: var(--spacing-lg);
 
+    // The label first: at a line's end the switch keeps its place when the label changes. Single switch only.
+    &.nds-reverse:not(.nds-switch-group > *) {
+        flex-direction: row;
+    }
+
     // The label above the switch, for a narrow column. Single switch only: a group keeps its rows.
     &.nds-stacked:not(.nds-switch-group > *) {
         flex-direction: column;
