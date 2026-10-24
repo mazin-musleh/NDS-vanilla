@@ -338,7 +338,7 @@
             const inset = this._options.type === 'bar' ? plotW / Math.max(1, catLabels.length) / 2 : 0;
             const startReach = rotate ? Math.ceil(String(catLabels[0] ?? '').length * charW * Math.cos(radians) + fontSize - inset) : 0;
 
-            return { step, rotate, extraPad, startReach };
+            return { step, rotate, extraPad, startReach, charW };
         }
 
         _getValueY(value, scale, layout) {
@@ -406,10 +406,12 @@
         // edges: the first and last points sit on the plot's edges (a line chart), so their flat labels
         // run inward from the point instead of centring over it and spilling past the SVG.
         _renderXLabels(svg, catLabels, xPositions, layout, xStrategy, edges = false) {
-            const { step = 1, rotate = 0 } = xStrategy || {};
+            const { step = 1, rotate = 0, charW = 0 } = xStrategy || {};
             const baseY = layout.padTop + layout.plotH;
             const y = rotate ? baseY + 14 : baseY + 30;
             const last = catLabels.length - 1;
+            const dir = layout.isRTL ? -1 : 1;
+            let lastEnd = null; // where the last flat label drawn ends, along the reading direction
 
             catLabels.forEach((label, i) => {
                 if (step > 1 && i % step !== 0) return;
@@ -418,7 +420,13 @@
                 const attributes = { x, y, class: 'nds-chart-axis-label' };
 
                 if (rotate === 0) {
-                    attributes['text-anchor'] = (edges && last > 0 && (i === 0 ? 'start' : i === last && 'end')) || 'middle';
+                    const anchor = (edges && last > 0 && (i === 0 ? 'start' : i === last && 'end')) || 'middle';
+                    // An edge label runs inward, toward its neighbour: skip a label that would touch the last one drawn.
+                    const labelW = String(label).length * charW;
+                    const start = anchor === 'start' ? x : anchor === 'end' ? x - dir * labelW : x - dir * labelW / 2;
+                    if (lastEnd !== null && dir * (start - lastEnd) < 4) return;
+                    lastEnd = start + dir * labelW;
+                    attributes['text-anchor'] = anchor;
                 } else {
                     attributes['text-anchor'] = 'end';
                     attributes.transform = `rotate(${layout.isRTL ? rotate : -rotate} ${x} ${y})`;

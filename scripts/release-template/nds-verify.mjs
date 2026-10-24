@@ -192,17 +192,24 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
     await sleep(400);
     // Never captureBeyondViewport: it shifts an RTL page sideways. The viewport stretches to the page
     // instead, before the state's script: one that grows right after a menu opens can close it.
-    // ponytail: a vh-sized box grows with it; scroll-and-stitch if that ever misleads.
+    // ponytail: a vh-sized box grows with it (an open dialog is shot at the screen's height instead);
+    // scroll-and-stitch if another one ever misleads.
     let height = viewHeight, ran;
+    // Grows until two readings agree: data that lands after load (a framework's fetch) grows the page late.
     const stretch = async () => {
-        const { cssContentSize } = await s('Page.getLayoutMetrics');
-        const h = Math.min(Math.ceil(cssContentSize.height), 8000);
-        if (h <= height) return;
-        height = h;
-        await s('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 768 });
-        // The whole page is in view now: what waited to be seen starts. Let it finish.
-        await evaluate(`new Promise((r) => (window.requestIdleCallback || setTimeout)(r, { timeout: 3000 }))`);
-        await sleep(300);
+        for (let i = 0, last = -1; i < 15; i++) {
+            const { cssContentSize } = await s('Page.getLayoutMetrics');
+            const h = Math.min(Math.ceil(cssContentSize.height), 8000);
+            if (h === last) return;
+            last = h;
+            if (h > height) {
+                height = h;
+                await s('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 768 });
+                // The whole page is in view now: what waited to be seen starts. Let it finish.
+                await evaluate(`new Promise((r) => (window.requestIdleCallback || setTimeout)(r, { timeout: 3000 }))`);
+            }
+            await sleep(300);
+        }
     };
     await stretch();
     // What started in that wait can shrink the page (a list splits into pages): measure once more from
@@ -213,6 +220,7 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
         height = Math.max(viewHeight, Math.min(Math.ceil(cssContentSize.height), 8000));
         await s('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 768 });
         await sleep(300);
+        await stretch();
     }
     if (run) {
         ran = await evaluate(`(async () => { ${run} })()`);
@@ -221,8 +229,14 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
         await evaluate(`(async () => { for (let i = 0; i < 30 && document.querySelector('[data-state~="loading"]'); i++) await new Promise((r) => setTimeout(r, 100)); })()`);
         await stretch();
     }
+    // An open Modal or Panel is fixed to the viewport: a stretched one fills the whole page. Shoot the screen.
+    if (height > viewHeight && await evaluate(`!!document.querySelector('dialog[open]')`)) {
+        height = viewHeight;
+        await s('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 768 });
+        await sleep(300);
+    }
 
-    const status = await evaluate(`performance.getEntriesByType('navigation')[0]?.responseStatus || 0`);
+    const status =await evaluate(`performance.getEntriesByType('navigation')[0]?.responseStatus || 0`);
     const revealed = await evaluate(`document.documentElement.hasAttribute('data-nds-loaded')`);
     const locale = await evaluate(`({ lang: document.documentElement.lang, dir: getComputedStyle(document.documentElement).direction })`);
     const innerWidth = await evaluate('innerWidth');
