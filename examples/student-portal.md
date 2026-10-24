@@ -436,11 +436,6 @@ hideFeedback: true
             <div class="nds-grid" style="--max-track: 2fr 1fr; --mid-track: 1fr;">
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-sm">
-                                <i class="hgi hgi-stroke hgi-task-done-02" aria-hidden="true"></i>
-                            </span>
-                        </div>
                         <div class="nds-card-text nds-md">
                             <div class="nds-card-corner">
                                 <a href="#" class="nds-btn nds-subtle nds-sm">
@@ -646,11 +641,6 @@ hideFeedback: true
                 </div>
                 <div class="nds-card nds-stroke">
                     <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-sm">
-                                <i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i>
-                            </span>
-                        </div>
                         <div class="nds-card-text nds-md">
                             <div class="nds-card-corner">
                                 <a href="#" class="nds-btn nds-subtle nds-sm">

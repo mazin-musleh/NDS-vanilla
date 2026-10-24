@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 11:38 AM"
+last_edit: "24/10/2026 - 12:34 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -152,11 +152,6 @@ Pick another component when:
 <script type="text/html" id="card-header-title" data-canon>
 <div class="nds-card nds-stroke">
   <div class="nds-card-header">
-    <div class="nds-card-featured-icon">
-      <span class="nds-featured-icon nds-circle nds-sm">
-        <i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>
-      </span>
-    </div>
     <div class="nds-card-text">
       <span class="nds-card-title">My requests</span>
       <p class="nds-card-description">Three requests, one needs your action.</p>
@@ -310,7 +305,7 @@ Pick another component when:
 | Structure | Link card (hint: A navigation tile: the whole card is one link) (id: link) | canon `#card-link` | — | A navigation tile: the whole card is one `<a>` (or `<button>`) that opens one page, with an icon, a title and at most one line. A card that carries an action, a price or tags keeps action buttons instead. Hover and press feedback come from the element. Do not put links or buttons inside it |
 | Structure | Statistic (hint: One headline number) (id: statistic) | canon `#card-statistic` | — | One headline number with a label, in a centered card. The number is `.nds-card-number`, which works in any card. With `data-counter`, it counts up from 0 when it scrolls into view. See [Numbers](../utilities/numbers#counter-animation) |
 | Structure | Progress (hint: A progress ring beside a short title. Turns on Row, Reverse and Middle) (id: progress) (demo: + row) (demo: + reverse) (demo: + middle) | canon `#card-progress` | — | A [progress ring](../components/progress) beside a short title, as on a life journey page. Write Row, Reverse and Middle too: the ring closes the row, and the title sits level with its middle |
-| Structure | Header title (hint: The title beside a small icon, over a list) (id: header-title) (demo: + text-md) (demo: + breakout) | canon `#card-header-title` | — | A panel card: the title sits in the header beside the icon, and the content holds a list, a table or a chart. Wrap the title in `.nds-card-text`, as in the content. A one-line title centers on the icon. A taller text starts level with the icon's top |
+| Structure | Header title (hint: The title in the header, over a list) (id: header-title) (demo: + text-md) (demo: + breakout) | canon `#card-header-title` | — | A panel card: the title sits in the header, beside an icon when the content has none of its own, and the content holds a list, a table or a chart. Wrap the title in `.nds-card-text`, as in the content. A one-line title centers on the icon. A taller text starts level with the icon's top |
 | Layout | Stacked (default) | — | — | Header above content |
 | Layout | Row (hint: Header beside the content) (id: row) (not: header-title) | `.nds-horizontal` | `.nds-card` | Header beside content. The card stacks again when it is narrower than 324px |
 | Layout | Center (not: statistic, header-title, link) | `.nds-center` | `.nds-card` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing. It does not move the card: its container places it |
@@ -448,6 +443,7 @@ Pick another component when:
 - A card the user selects holds no buttons in its corner. Picking it and opening it are two different actions.
 - Over an image, give the status tag `.nds-inverted`.
 - Use the Header title structure for a panel card that holds a list, a table or a chart. For a card in a set of tiles, keep the title in the content.
+- Leave out the header icon when the content shows icons of its own, such as Drawer rows with icons or Date Tiles. A header icon beside them reads as one more row. Keep the title alone in the header.
 - Add `nds-breakout` only to a drawer or a definition list. Another part breaks out too, but its content then touches the card border.
 - Give a disabled card `inert` too. Without it, the card only fades its links and buttons, and the keyboard can still reach them.
 
