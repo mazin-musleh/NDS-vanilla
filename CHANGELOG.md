@@ -393,6 +393,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **[Drawer](https://mazin-musleh.github.io/NDS-vanilla/components/drawer.html)** — A tag in a rich row's title carries no size class: the drawer sizes it.
 - **[Expandable Content](https://mazin-musleh.github.io/NDS-vanilla/utilities/expandable.html)** — `NDS.Expandable.refresh()` is for a changed `--max-height` only: a hidden box measures itself again when it shows.
 - **[Get Started](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html)** — A Browser Support section states the floor. Every component works in browsers from 2022 (Chrome 98, Safari 15.4, Firefox 98). Older browsers lose Modal, Panel and Filter's Apply button, and below Chrome 85, Safari 14 and Firefox 79 no NDS JavaScript runs.
+- **[Modal](https://mazin-musleh.github.io/NDS-vanilla/components/modal.html)** — A Header title structure puts the title and description in the header, beside the icon, for a modal that holds a form, a list or longer text. A confirm or a status keeps them in the content.
 - **[Tabs](https://mazin-musleh.github.io/NDS-vanilla/components/tabs.html)** — Tabs in a box with its own padding, such as a Panel, a Modal or a card, take `nds-flush-inline` on each panel, so the content lines up with the rest of the box.
 
 ### Migrating from v1.12.0

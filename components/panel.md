@@ -6,7 +6,7 @@ hero_description: A panel is a surface that slides in from an edge of the screen
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 11:28 PM"
+last_edit: "24/10/2026 - 10:21 AM"
 lang: en
 direction: ltr
 ---
@@ -269,7 +269,7 @@ A lazy panel keeps its markup in a `<template class="nds-panel-template">`, so i
 - Give every button `type="button"`. In a form, a button without it submits the form.
 - Prefer the start and end sides, so the panel follows the reading direction. Use left or right only when the panel must stay on one edge in every language.
 - Use a bottom sheet for actions on a phone, and a side panel for settings or filters on a large screen.
-- Keep the title in `nds-panel-text`, with an optional `nds-panel-description` below it.
+- Keep the title in `nds-panel-text` in the header, with an optional `nds-panel-description` below it. A [Modal](../components/modal) with a form or a list puts its title in the header the same way.
 - Do not look up a lazy panel when the page loads: it is not in the page yet. Listen on `document` for `nds:template:ready`, which fires on the panel after it joins the page and its components start.
 
 </div>

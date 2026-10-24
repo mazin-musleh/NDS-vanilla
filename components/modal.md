@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "24/10/2026 - 10:21 AM"
 ---
 
 <section id="modal-overview" class="nds-content-section nds-doc-overview">
@@ -60,6 +60,39 @@ Pick another component when:
   <div class="nds-card-actions">
     <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
       <span class="nds-label">Withdraw</span>
+    </button>
+    <button type="button" class="nds-btn nds-secondary-outline nds-lg" data-modal-close>
+      <span class="nds-label">Cancel</span>
+    </button>
+  </div>
+</dialog>
+</script>
+<script type="text/html" id="modal-header-title" data-canon>
+<button type="button" class="nds-btn nds-primary nds-lg" data-modal-target="conditions-modal">
+  <span class="nds-label">Open Modal</span>
+</button>
+<dialog id="conditions-modal" class="nds-modal nds-card nds-stroke" aria-labelledby="conditions-modal-title">
+  <div class="nds-card-header">
+    <div class="nds-card-featured-icon">
+      <span class="nds-featured-icon nds-circle nds-sm">
+        <i class="nds-icon nds-hgi-file-01" aria-hidden="true"></i>
+      </span>
+    </div>
+    <div class="nds-card-text">
+      <span class="nds-card-title" id="conditions-modal-title">Service conditions</span>
+      <p class="nds-card-description">Read them before you submit the request.</p>
+    </div>
+    <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
+      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="nds-card-content">
+    <p>The service reviews a request within five working days. It may ask you for more documents during the review.</p>
+    <p>A request that stays incomplete for 30 days closes. You can submit it again at any time.</p>
+  </div>
+  <div class="nds-card-actions">
+    <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
+      <span class="nds-label">I agree</span>
     </button>
     <button type="button" class="nds-btn nds-secondary-outline nds-lg" data-modal-close>
       <span class="nds-label">Cancel</span>
@@ -150,6 +183,7 @@ Every option goes on the `nds-modal` element. On a lazy modal, write it on the `
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Dialog (default) | — | — | A question or a short task, with a close button and two actions |
+| Structure | Header title (hint: The title beside the icon, over a form, a list or longer text) | canon `#modal-header-title` | — | A modal whose content is more than its message, such as a form, a list or terms to read. The title and description sit in the header beside the icon, as in a [Card](../components/card)'s header title, and the content holds the rest. A one-line title centers on the icon |
 | Structure | Status (demo: + size-sm) | canon `#modal-status` | — | The result of an action, centered, with a large icon and one action. It has no close button |
 | Structure | Lazy modal | canon `#modal-lazy` | — | The modal sits in a `<template>` and joins the page on the first click. For a large modal that most users never open |
 | Size | MD (default) | — | — | 600px wide. For a message with a short form |
@@ -292,6 +326,8 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
 - Do not use a modal for a success message the user does not have to act on. Use an [Alert](../components/alert) or a toast, which the Alert page also covers.
 - Do not open a modal from a modal. Change the flow so one modal holds the decision.
 - Write a title that names the action, and keep the content to one message or one task.
+- Put the title and description in the header, beside the icon, when the modal holds a form, a list, a table or longer text. Keep them in the content when they are the whole message, such as a confirm or a status.
+- With the title in the header, the icon is optional. Leave it out when the title is long, so the title gets the full width of the header.
 - Give the modal a clear primary action and a way out, such as Confirm and Cancel.
 - Give every modal an `id`, and give its trigger that `id` in `data-modal-target`.
 - Make the modal a `<dialog>`. A closed dialog stays hidden, also before the script loads. `NDS.init.audit()` flags a `div.nds-modal`.
