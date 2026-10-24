@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 12:18 PM"
+last_edit: "24/10/2026 - 12:26 PM"
 ---
 
 <section id="date-overview" class="nds-content-section nds-doc-overview">
@@ -123,6 +123,7 @@ Format goes on the `<time>` that shows the date: in Both Calendars, the Hijri on
 | Structure | Both Calendars | canon `#date-to` | — | The Gregorian date with the Hijri date under it, such as an issue or expiry date. Write the date twice, and add `data-date-to="hijri"` to the second one |
 | Format | None (default) | — | — | The nearest `data-date-format` around the `<time>`, else the site's |
 | Format | Month Name | `[data-date-format="D MMMM YYYY"]` | `time:not(.nds-definition-list time:not([data-date-to]))` | The day, the month's name and the year, in the page language |
+| Format | Short Month | `[data-date-format="D MMM YYYY"]` | `time:not([data-date-to])` | The day, the month's short name and the year, such as 24 Oct 2026, for a narrow column. Gregorian only: a Hijri month has no short name. On an Arabic page, the month's full name shows |
 | Format | ISO | `[data-date-format="YYYY-MM-DD"]` | `time:not(.nds-definition-list time:not([data-date-to]))` | Year, month and day, as a server reads them |
 | Era | Era Marker (hint: «هـ» or AH after the Hijri date) | `[data-date-era]` | `time[data-date-to]` | Adds «هـ» on an Arabic page, or AH on an English one, after the Hijri date. Leave it out where a label already says the date is Hijri |
 {: #date-variants-table .nds-table .nds-responsive}
