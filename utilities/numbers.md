@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "11/10/2026 - 01:11 PM"
+last_edit: "24/10/2026 - 06:32 AM"
 ---
 
 <section id="numbers-overview" class="nds-content-section nds-doc-overview">
@@ -35,7 +35,7 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="numbers-number" data-canon data-variants="numbers-variants-table">
+<script type="text/html" id="numbers-number" data-canon data-variants="numbers-variants-table" data-demo-size="32px" data-harness="counter">
 <span class="nds-number-format">3240000</span>
 </script>
 
@@ -66,7 +66,7 @@ Every option goes on the number, `.nds-number-format`. Counter makes it count up
 | Currency | TRY | `[data-currency="TRY"]` | `.nds-number-format:not([data-unit])` | Turkish lira (₺) |
 | Unit | Unit (hint: Any text after the number) | `[data-unit="km"]` | `.nds-number-format:not([data-currency])` | A unit such as km, kg, MB or years. Not with a currency |
 | Counter (any) | Counter (id: counter) (hint: Counts up when it scrolls into view) | `[data-counter]` | `.nds-number-format` | A headline figure that counts up once, to the number in its text. Combines with a currency or a unit. Use it for a few key figures, never for a value that keeps changing |
-| Counter (any) | Start From (hint: Counts from 40,000, not from 0) | `[data-counter-start="40000"]` | `[data-counter]` | For a large number: the count shows only its last part |
+| Counter (any) | Start From (hint: Counts from 3,000,000, not from 0) | `[data-counter-start="3000000"]` | `[data-counter]` | For a large number: the count shows only its last part |
 | Counter (any) | 2000 ms (hint: Slower than the 1000 ms default) | `[data-counter-duration="2000"]` | `[data-counter]` | A slower count, for a large number. Without it, a count takes one second |
 {: #numbers-variants-table .nds-table .nds-responsive}
 

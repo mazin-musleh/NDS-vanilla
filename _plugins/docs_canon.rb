@@ -321,6 +321,11 @@ module DocsCanon
       ctl = ->(act, cls, label) { %(<button type="button" class="nds-btn #{cls} nds-md" data-stepper-control="#{act}" data-stepper-target="#{src[/\sid="([^"]+)"/, 1]}"><span class="nds-label">#{label}</span></button>) }
       return %(#{slot}\n#{src}\n</div><div class="nds-form-actions" data-demo-steps>#{ctl['previous', 'nds-secondary-outline', 'Back']}#{ctl['next', 'nds-primary', 'Next']}</div>)
     end
+    # data-harness="counter": Replay under the preview counts again, for a reader who scrolled past the first count.
+    # nds-docs.js shows it while the preview holds a counter.
+    if kind == 'counter'
+      return %(#{slot}\n#{src}\n</div><div class="nds-form-actions" data-demo-replay#{' hidden' unless src.include?('data-counter')}><button type="button" class="nds-btn nds-secondary-outline nds-md"><span class="nds-label">Replay</span></button></div>)
+    end
     return %(#{slot}\n#{src}\n</div>) unless kind == 'form'
 
     %(<form class="nds-form" data-ajax>#{slot}\n#{src}\n</div><div class="nds-form-actions" data-demo-actions#{' hidden' unless src.match?(RULE_RE)}><button type="submit" class="nds-btn nds-primary nds-md"><span class="nds-label">Validate</span></button><button type="reset" class="nds-btn nds-subtle nds-md"><span class="nds-label">Reset</span></button></div></form>)

@@ -19,6 +19,7 @@
  * data-preview="js" runs the JS tab after each render, for a component with no init (Sort).
  * data-preview="page": the canon is a whole <body>, or a part of one (the top bar), previewed as a page of its own in a frame.
  * data-harness="form" renders the preview inside a form with Validate and Reset buttons, outside the code.
+ * data-harness="counter" adds Replay under the preview while it holds a counter.
  * The section action holds Reset and Options; Options shows a chip row per group, inline or in a panel. A chip that does not apply
  * stays in place, disabled, and its tooltip says why.
  * Rows sharing Group + Option are one choice.
@@ -469,6 +470,8 @@
             // A static stepper has no step to move, so Back and Next hide.
             var steps = preview.querySelector('[data-demo-steps]');
             if (steps) steps.hidden = !!slot.querySelector('.nds-stepper.nds-static');
+            var replay = preview.querySelector('[data-demo-replay]');
+            if (replay) replay.hidden = !slot.querySelector('[data-counter]');
             dropAlert(slot.closest('form'));
             preview.ndsOut = out;
             if (script.getAttribute('data-preview') === 'js') preview.ndsJs = js;
@@ -552,6 +555,16 @@
         var slot = e.target.querySelector && e.target.querySelector('[data-demo-slot]');
         if (slot) slot.querySelectorAll('[data-status]').forEach(function (el) { NDS.Form.clearStatus(el); });
         if (slot) dropAlert(e.target);
+    });
+
+    // A counter harness's Replay renders the preview again, so its counter counts again.
+    document.addEventListener('click', function (e) {
+        var card = e.target.closest && e.target.closest('[data-demo-replay]') && e.target.closest('[data-preview-of]');
+        if (!card) return;
+        var slot = card.querySelector('[data-demo-slot]');
+        NDS.init.destroy(slot);
+        slot.innerHTML = card.ndsOut != null ? card.ndsOut : dedent(document.getElementById(card.getAttribute('data-preview-of')).textContent);
+        NDS.init.mount(slot);
     });
 
     // A chip's tooltip shows only when it has text for the chip's state: a hint while on, a reason while off.
@@ -793,6 +806,9 @@
             runButton(iframe.contentDocument, card.ndsRunJs, iframe.contentWindow);
             var bar = iframe.contentDocument.querySelector('[data-demo-run]');
             if (bar) addRunListeners(card, bar, iframe.contentWindow);
+            // Replay re-renders the screen's slot in place, so its counter counts again.
+            var replay = iframe.contentDocument.querySelector('[data-demo-replay] button');
+            if (replay) replay.addEventListener('click', function () { renderFrame(card); });
             iframe.style.visibility = '';
         };
         // The body lays the demo out as the card does, over the whole screen: a longer demo scrolls in it.
