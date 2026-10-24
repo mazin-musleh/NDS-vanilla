@@ -203,7 +203,8 @@ def reset(dest, save):
     for b in git(dest, 'branch', '--format=%(refname:short)').split():
         if b != 'main' and not re.match(r'run\d+-', b):
             git(dest, 'branch', '-q', '-D', b)
-    git(dest, 'clean', '-fdq', '-e', 'node_modules', '-e', '.nds', '-e', 'next-release')  # a lock fails clean: the loop below reports it
+    # -x: ignored output goes too (a run's dist/ held its NDS build, which the next run found). A lock fails clean: the loop below reports it.
+    git(dest, 'clean', '-fdxq', '-e', 'node_modules', '-e', '.venv', '-e', '.nds', '-e', 'next-release')
     left = []
     for p in ('.nds', 'next-release', 'NDS-IQ.md'):
         p = os.path.join(dest, p)

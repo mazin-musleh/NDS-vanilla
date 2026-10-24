@@ -295,6 +295,19 @@
         });
     } });
 
+    // A --min-width wider than the room a desktop gives the table hides its actions column on every
+    // desktop. Only the authored knob counts: long content may widen a table, and that is the data's call.
+    addRule({ id: 'table-min-width', group: 'structure', docs: 'components/table.html', check(context) {
+        if (!window.matchMedia(NDS.breakpoints.desktop).matches) return;
+        context.find('.nds-table-wrapper > table').forEach(table => {
+            const floor = parseFloat(getComputedStyle(table).minWidth);
+            const room = table.parentElement.clientWidth;
+            if (!(floor > room + 1) || !table.querySelector(':scope > thead th.nds-actions-column')?.getClientRects().length) return;
+            context.report(table, `--min-width holds the table at ${Math.round(floor)}px in a ${room}px box, so a desktop user scrolls sideways to reach a row's actions.`,
+                'Set --min-width no wider than the room the page gives the table, or remove it: the table still scrolls when its content needs more.');
+        });
+    } });
+
     // Fields side by side start their inputs level. Only what sits above an input moves it; a message under it does not.
     // An upload has no input box to line up, only a button or a drop zone.
     addRule({ id: 'form-row-align', group: 'structure', docs: 'components/form.html', check(context) {
