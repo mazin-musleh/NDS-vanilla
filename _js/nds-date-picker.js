@@ -46,6 +46,7 @@
  *   - Typing at the end is shaped to the format: digits only, separators added ("28051983" →
  *     "28/05/1983"); typing inside a whole date types over it, and inside one an edit broke
  *     inserts until the digits fill the format. Not with a month-name format (MMM, MMMM).
+ *   - A month-name format (MMM, MMMM) cannot be read back: a picked date shows as invalid.
  *   - A pasted date, or a typed one on change, written another common way takes the format
  *     ("1983-05-28" → "28/05/1983"); year last reads day first unless the format is month first.
  *     Sets inputmode="decimal" unless the input has one.
@@ -704,10 +705,7 @@
             if (parts.length > 2) return getMessage('invalid', { format: format });
             var dates = [];
             for (var i = 0; i < parts.length; i++) {
-                var parsed = null;
-                // hijri.parseDate throws (rather than returning null) on
-                // impossible component values — same outcome: invalid.
-                try { parsed = calendar.parseDate(parts[i].trim(), format); } catch (e) {}
+                var parsed = calendar.parseDate(parts[i].trim(), format);
                 if (!parsed) return getMessage('invalid', { format: format });
                 if (this.state.minDate && parsed < this.state.minDate) {
                     return getMessage('before_min', { date: calendar.formatDate(this.state.minDate, format) });
@@ -786,7 +784,6 @@
             this.state.isInitialized = true;
             this._readBounds();
             this.parseInitialValue();
-            this.setupCalendarUI();
             this.bindCalendarEvents();
             this.setupLanguageObserver();
             this.render();
@@ -804,9 +801,7 @@
 
         // Main render method
         render: function () {
-            this.updateDropdowns();
-            this.renderWeekdays();
-            this.renderButtonLabels();
+            this.setupCalendarUI();
             this.renderCalendarDates();
             this.updateNavArrows();
         },
@@ -844,9 +839,7 @@
             // Clear pending selection state first — if the user closed the
             // picker without Save, this drops the un-committed pick so the
             // reopen reflects the committed input value exactly.
-            this.state.selectedDate = null;
-            this.state.rangeStart = null;
-            this.state.rangeEnd = null;
+            this.resetState();
 
             var inputValue = this.elements.input.value.trim();
             if (!inputValue) return;
@@ -934,7 +927,7 @@
             // require rebinding — events bubble from the focused day button.
             // Day mode only: month/year grids are 3/4-column, so the 7-column
             // arrow geometry (±7 rows, %7 Home/End) doesn't apply — and the
-            // off-grid navigateMonth fallback would silently shift the month
+            // off-grid month step would silently shift the month
             // that Save synthesizes from. Their few cells stay plain tab-order
             // buttons.
             if (this.elements.datesContainer && this.state.mode === 'day') {
@@ -974,7 +967,9 @@
             // month then focus index (42 + target). Moving "off the bottom" by
             // N = move into next month then focus index (target - 42).
             var direction = target < 0 ? -1 : 1;
-            this.navigateMonth(direction);
+            // At the year range's edge the month stays: so does the focus.
+            if (!this._stepMonth(direction)) return;
+            this._refreshView();
             var newCells = Array.from(this.elements.datesContainer.querySelectorAll('.nds-date-cell'));
             var newIndex = direction === -1
                 ? newCells.length + target  // target is negative
@@ -1016,7 +1011,7 @@
                 case 'Home':
                 case 'End': {
                     e.preventDefault();
-                    // First / last day of the focused cell's week row (the grid starts on Sunday).
+                    // First / last day of the focused cell's week row.
                     // Through focusDayCell, so the Tab stop moves with the focus.
                     var cells = this.elements.datesContainer.querySelectorAll('.nds-date-cell');
                     var index = Array.prototype.indexOf.call(cells, btn);
@@ -1690,9 +1685,7 @@
         // dispatches change, and closes the picker. Immediate (not deferred to
         // Save) because the user's click IS the confirmation for erasing.
         clearSelection: function () {
-            this.state.selectedDate = null;
-            this.state.rangeStart = null;
-            this.state.rangeEnd = null;
+            this.resetState();
             delete this.elements.input.dataset.convertedDate;
             NDS.setValue(this.elements.input, '');
             this.renderCalendarDates();
@@ -1756,9 +1749,8 @@
             var text = this.elements.input.value.trim();
             var range = this.isRangeMode(), parts = text.split(' - ');
             outs.forEach(function (out, i) {
-                var date = null;
                 var part = range ? parts[i] : text;
-                try { date = part && calendarConfig[type].parseDate(part.trim(), format); } catch (e) {}
+                var date = part && calendarConfig[type].parseDate(part.trim(), format);
                 var formatted = date ? NDS.Date.format(date, {
                     format: out.getAttribute('data-date-format') || format,
                     calendar: out.getAttribute('data-calendar') || (type === 'hijri' ? 'hijri' : 'gregory')

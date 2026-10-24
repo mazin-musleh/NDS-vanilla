@@ -168,14 +168,17 @@
         _readState(first) {
             const el = this._element;
             const day = toDay(el.dataset.day);
+            const week = toDay(el.dataset.week);
             const weekStart = NDS.Date.getWeekStart(el);
             let fromUrl = null;
             if (first) {
                 // The week the page opens on without ?week=: writing it back drops the key.
-                this._openingWeek = NDS.Date.getStartOfWeek(toDay(el.dataset.week) || NDS.Date.getToday(), weekStart);
+                this._openingWeek = NDS.Date.getStartOfWeek(week || NDS.Date.getToday(), weekStart);
                 fromUrl = toDay(new URLSearchParams(location.search).get(this._getParamName()));
             }
-            const anchor = day || fromUrl || toDay(el.dataset.week) || NDS.Date.getToday();
+            // A host that writes a new week moves there, and a picked day outside it drops.
+            const isNewWeek = !first && week && !isSameDay(NDS.Date.getStartOfWeek(week, weekStart), this._week);
+            const anchor = (isNewWeek ? week : day) || fromUrl || week || NDS.Date.getToday();
             const view = VIEWS.includes(el.dataset.view) ? el.dataset.view : 'grid';
             this._setState(NDS.Date.getStartOfWeek(anchor, weekStart), view, day, first);
         }
@@ -233,7 +236,8 @@
                 }
             }
 
-            const names = NDS.Date.getWeekdayNames(lang, NDS.Date.getWeekStart(el));
+            // From the week itself: a data-week-start changed since it was read cannot misname a day.
+            const names = NDS.Date.getWeekdayNames(lang, this._week.getDay());
             const today = NDS.Date.getToday();
             this._dayButtons.forEach((btn, i) => {
                 const date = addDays(this._week, i);

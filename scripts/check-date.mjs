@@ -66,6 +66,13 @@ for (const timezoneId of ['Asia/Tokyo', 'America/Los_Angeles']) {
         eq('day label hijri', D.getDayLabel(new Date(2026, 9, 11), { calendar: 'hijri', locale: 'en' }), 'Sunday 30 Rabi al-Thani 1448 AH');
         eq('dddd never parses', D.parse('Tuesday 20/10/2026', { format: 'dddd DD/MM/YYYY' }), null);
         eq('convert',D.convert('11/10/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', format: 'YYYY-MM-DD' }), '1448-04-30');
+        eq('readDay', iso(D.readDay('2026-10-24')), '2026-10-24');
+        eq('readDay 31 Feb', D.readDay('2026-02-31'), null);
+        eq('readDay month 13', D.readDay('2026-13-05'), null);
+        eq('readDay month 0', D.readDay('2026-00-10'), null);
+        eq('readDay year 25', D.readDay('0025-03-04') && D.readDay('0025-03-04').getFullYear(), null);
+        eq('1.x gregorian name falls back', D.format(new Date(2026, 9, 11), { calendar: 'gregorian', format: 'DD/MM/YYYY' }), '11/10/2026');
+        eq('1.x gregorian name, Intl path', D.format(new Date(2026, 9, 11), { calendar: 'gregorian', locale: 'en', year: 'numeric' }), '2026');
         eq('site format default', D.format(new Date(2026, 3, 3)), '03/04/2026');
         document.documentElement.dataset.dateFormat = 'YYYY/MM/DD';
         eq('site format attribute', D.format(new Date(2026, 3, 3)), '2026/04/03');

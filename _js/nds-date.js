@@ -69,7 +69,17 @@
             if (!formatter) formatters.set(key, formatter = new Intl.DateTimeFormat(locale, opts));
             return formatter;
         };
-        const toIntlCalendar = (calendar) => (calendar === 'hijri' ? 'islamic-umalqura' : calendar || 'gregory');
+        // A malformed name (1.x's `gregorian`) makes Intl throw, not fall back: warn and use gregory.
+        const calendars = new Map();
+        const toIntlCalendar = (calendar) => {
+            if (calendar === 'hijri') return 'islamic-umalqura';
+            if (!calendar || calendar === 'gregory') return 'gregory';
+            if (!calendars.has(calendar)) {
+                try { getDateFormatter('en', { calendar: calendar }); calendars.set(calendar, calendar); }
+                catch { warnOnce(`calendar "${calendar}" is not supported here`); calendars.set(calendar, 'gregory'); }
+            }
+            return calendars.get(calendar);
+        };
         const getDayParts = (formatter, time) => {
             const parts = {};
             for (const { type, value } of formatter.formatToParts(time)) parts[type] = +value;
@@ -122,7 +132,6 @@
             catch { warnOnce(`data-timezone "${timeZone}" is not a timezone; using the visitor's`); return undefined; }
         }
 
-        // The nearest data-date-format wins, like a dark area; <html> holds the site's.
         const getIntlNames = (lang, opts, at) => {
             const formatter = getDateFormatter(NDS.i18n.resolveLang(lang), { timeZone: 'UTC', ...opts });
             return Array.from({ length: opts.month ? 12 : 7 }, (_, i) => formatter.format(at(i)));
@@ -143,6 +152,7 @@
         };
         const getStartOfWeek = (date, weekStart = 0) => new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() - weekStart + 7) % 7);
 
+        // The nearest data-date-format wins, like a dark area; <html> holds the site's.
         const formatFor = (el) => el?.closest?.('[data-date-format]:not([data-date-format=""])')?.dataset.dateFormat || 'DD/MM/YYYY';
         const resolveCalendar = (el, fallback = 'gregory') => el?.closest?.('[data-calendar]:not([data-calendar=""])')?.dataset.calendar || fallback;
         const getSiteFormat = () => formatFor(document.documentElement);
@@ -171,10 +181,8 @@
                 const text = value.trim();
                 const match = DATETIME.exec(text);
                 if (!match) return null;
-                if (!match[4]) {
-                    const date = new Date(+match[1], match[2] - 1, +match[3]);
-                    return date.getDate() === +match[3] ? date : null;   // 2026-02-31 is no date
-                }
+                // 2026-02-31 and 2026-13-05 are no date.
+                if (!match[4]) return fromCalendarParts({ year: +match[1], month: +match[2], day: +match[3] }, 'gregory');
                 const instant = new Date(text);
                 if (isNaN(instant)) return null;
                 const timeZone = readTimeZone();   // validated: a mistyped zone falls back, never throws

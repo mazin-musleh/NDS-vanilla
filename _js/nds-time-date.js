@@ -15,7 +15,6 @@
  *   - The clock stops while the tab is hidden and catches up when it returns.
  *   - The date renders again at the site's midnight, so a tab left open changes day on time.
  */
-// Time & Date - Simplified with Core Functions
 (() => {
     'use strict';
 
@@ -24,13 +23,11 @@
     // data-hidden bands of _utilities.scss from matchMedia — no layout read, so
     // the check is free in the init drain and in an idle slot. `sr` keeps the
     // text for screen readers. A breakpoint crossing re-runs via NDS.onResize.
-    const bandAlias = { sm: 'mobile', md: 'tablet', lg: 'desktop' };
     function isRendered(el) {
         const tokens = (el.dataset.hidden || '').split(/\s+/);
         if (tokens.includes('sr')) return true;
         const isBreakpoint = (query) => window.matchMedia(NDS.breakpoints[query]).matches;
-        const band = isBreakpoint('mobile') ? 'sm' : isBreakpoint('tablet-max') ? 'md' : isBreakpoint('desktop-max') ? 'lg' : 'xl';
-        return !tokens.includes(band) && !tokens.includes(bandAlias[band]);
+        return !tokens.includes(isBreakpoint('mobile') ? 'sm' : isBreakpoint('tablet-max') ? 'md' : 'lg');
     }
     // Built imperatively: the text flows through textContent, never the HTML parser.
     function renderDate(parent, content) {
@@ -169,9 +166,8 @@
         }
 
         if (clockEl) {
-            // Skip the tick loop while the tab is hidden — no point burning
-            // per-second DOM mutations no one can see. On resume, startClock()
-            // ticks immediately so the time isn't a second stale.
+            // Skip the minute timer while the tab is hidden. On resume, startClock()
+            // renders at once, so the time is never up to a minute stale.
             if (!document.hidden) startClock();
             if (!clockInitDone) {
                 clockInitDone = true;
@@ -196,7 +192,4 @@
         syncDate,
         syncClock
     };
-
-    // Note: Initialization now handled by nds-loader.js unified system
-
 })();

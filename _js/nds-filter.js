@@ -725,13 +725,20 @@
          * must not either — a failed Clear that still emptied the chips would claim
          * no filters while filtered results are displayed.
          *
-         * Restores from the snapshotted URL because _readUrlParams() is the same
+         * Restores this filter's keys from the snapshotted URL because _readUrlParams() is the same
          * path that rebuilds this state on page load, so every control type it
          * already handles (checkbox, radio, range) is covered for free. Clear first:
          * _readUrlParams only sets what the params contain, it never unsets.
          */
         _rollbackApplied(appliedUrl) {
-            NDS.writeUrlParams(appliedUrl || '');
+            // This filter's keys only: a week, page or sort changed while the request ran stays.
+            const applied = new URLSearchParams(appliedUrl || '');
+            const params = new URLSearchParams(window.location.search);
+            for (const key of this._getUrlKeys()) {
+                params.delete(key);
+                applied.getAll(key).forEach((value) => params.append(key, value));
+            }
+            NDS.writeUrlParams(params);
 
             this._mirrorSearchInputs('');
             this.criteria.search = '';
@@ -907,15 +914,7 @@
             const params = new URLSearchParams(window.location.search);
             const searchParamName = this._getSearchInputName();
 
-            // Managed param keys: this filter's own search + filter names.
-            // Sort/order are owned by NDS.Sort and preserved untouched here.
-            // Other filters' params (distinct names) are also left untouched.
-            const managedKeys = new Set([searchParamName]);
-            for (const key of Object.keys(this.filterInputs)) {
-                managedKeys.add(key);
-            }
-
-            for (const key of managedKeys) {
+            for (const key of this._getUrlKeys()) {
                 params.delete(key);
             }
 
@@ -930,6 +929,12 @@
             }
 
             NDS.writeUrlParams(params);
+        }
+
+        // This filter's own search + filter names. Sort/order are owned by NDS.Sort,
+        // and other filters' params (distinct names) are left untouched too.
+        _getUrlKeys() {
+            return new Set([this._getSearchInputName(), ...Object.keys(this.filterInputs)]);
         }
 
         _setupActionButtons() {

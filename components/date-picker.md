@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 05:39 PM"
+last_edit: "24/10/2026 - 11:49 PM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -112,7 +112,7 @@ A pick shows in the calendar, but the field does not change until the user press
 ### Typing
 {: .nds-block-title}
 
-The user can type the date, in Latin or Arabic digits. The digits fill the format as they are typed, and the separators appear on their own: `28051983` becomes `28/05/1983`. A day or a month digit that no second digit can follow gets a zero, so `4` becomes `04/`, and a typed separator ends a part, so `4/` becomes `04/` too. A digit that makes the day or the month impossible is ignored: after `3`, a `2` is not added. Typing in the middle of a full date replaces the digit after the cursor, and the cursor steps over the separators. After the user deletes part of a date, a key goes in at the cursor, and the date takes its format again when its digits are complete: `28/051983` becomes `28/05/1983`. The field never takes more digits or separators than the format holds, or a day or month that cannot be. In a range, ` - ` appears after the start date. A format with a month name, `MMMM`, gets no help while the user types. On a phone, the field opens a keypad with digits, unless the input has its own `inputmode`.
+The user can type the date, in Latin or Arabic digits. The digits fill the format as they are typed, and the separators appear on their own: `28051983` becomes `28/05/1983`. A day or a month digit that no second digit can follow gets a zero, so `4` becomes `04/`, and a typed separator ends a part, so `4/` becomes `04/` too. A digit that makes the day or the month impossible is ignored: after `3`, a `2` is not added. Typing in the middle of a full date replaces the digit after the cursor, and the cursor steps over the separators. After the user deletes part of a date, a key goes in at the cursor, and the date takes its format again when its digits are complete: `28/051983` becomes `28/05/1983`. The field never takes more digits or separators than the format holds, or a day or month that cannot be. In a range, ` - ` appears after the start date. Keep month names (`MMM`, `MMMM`) out of the format: the picker cannot read them back, so a picked date shows as invalid. On a phone, the field opens a keypad with digits, unless the input has its own `inputmode`.
 
 A pasted date, or a typed one when the user leaves the field, takes the field's format when it is written another common way: `/`, `.`, `-` or spaces between the parts, digits only such as `28051983`, the year first such as `1983-05-28`, Arabic digits, or a time or `هـ` after it. In a `DD/MM/YYYY` field, `1983-05-28T10:30:00Z` becomes `28/05/1983`. A date with the year last reads day first, unless the field puts the month first, and the other order only when that day does not exist: `05/28/1983` becomes `28/05/1983`. A year up to 1500 reads as Hijri, and a date in the other calendar becomes the field's: in a Gregorian field, `15/09/1447` becomes `04/03/2026`. In a range, each date takes the format, and `to` between them works too. A two-digit year fits only a `YY` field. A paste that is not a date goes in as if the user typed it, under the same limits. Typed text that is not a date stays as written, and the field shows the invalid message.
 
