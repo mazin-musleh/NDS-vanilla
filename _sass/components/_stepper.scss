@@ -962,6 +962,11 @@
     .nds-stepper-content > * {
         --nds-skeleton-width: 100%;
         @include skeleton-bar;
+
+        // A button or tag paints its own fill over the bar.
+        > * {
+            visibility: hidden;
+        }
     }
 
     // A date tile beside the text keeps its own width: the full-width bar would leave the text no room.

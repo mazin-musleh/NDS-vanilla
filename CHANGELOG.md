@@ -325,7 +325,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Sort** — After `destroy()` the element has no `ndsSort` property (it was `null`). The sorted state stays on the triggers and rows.
 - **Status Section** — a button with an icon no longer shows the icon above its label, and two buttons in the action no longer stack.
 - **Stepper** — `nds-reverse` and `nds-center` follow the layout of each screen size, so a responsive stepper no longer jumps. The radial counter reads `1 / 3` in Arabic; it read `3 / 1`.
-- **Stepper** — On-color step text stays hidden under the loading skeleton.
+- **Stepper** — On-color step text stays hidden under the loading skeleton. A button or tag in a step hides under it too; its fill showed over the bar.
 - **Stepper** — `create(el)` on a page with no stepper at load wires the control buttons and the `data-current` hook. A `data-current` write in the same tick as a move is kept.
 - **Swiper** — `--max-slides`, `--mid-slides`, `--min-slides` and `--peek` set in a class work as they do inline, so a strict-CSP page gets its slide count.
 - **Swiper** — A looping row no longer jumps back on fast arrow clicks, runs out of clones during a run of swipes, or stops mid-move, and `goTo()` clamps on a loop. A loop clone on screen answers a click while its controls stay out of the tab order. Card borders and shadows stay inside the row, passing cards are no longer cut, and inside `nds-max-width` the next card stays hidden with `--peek: 0px`. Arrow keys stay with a focused field while the mouse rests on a swiper.
