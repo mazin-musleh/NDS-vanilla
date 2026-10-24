@@ -50,6 +50,16 @@ for (const timezoneId of ['Asia/Tokyo', 'America/Los_Angeles']) {
         eq('month length hijri 30', D.getMonthLength({ year: 1448, month: 4 }, 'hijri'), 30);
         eq('month length hijri 29', D.getMonthLength({ year: 1448, month: 3 }, 'hijri'), 29);
         eq('month length gregory', D.getMonthLength({ year: 2028, month: 2 }), 29);
+        eq('weekdays from sat', D.getWeekdayNames('en', 6).join(' '), 'Sat Sun Mon Tue Wed Thu Fri');
+        eq('start of week sun', iso(D.getStartOfWeek(new Date(2026, 9, 24))), '2026-10-18');
+        eq('start of week sat, on a sat', iso(D.getStartOfWeek(new Date(2026, 9, 24), 6)), '2026-10-24');
+        eq('start of week mon', iso(D.getStartOfWeek(new Date(2026, 9, 24), 1)), '2026-10-19');
+        const week = document.createElement('div');
+        week.innerHTML = '<p data-week-start="Mon"><span></span></p><p data-week-start="noon"></p>';
+        document.body.append(week);
+        eq('week start nearest', D.getWeekStart(week.querySelector('span')), 1);
+        eq('week start none', D.getWeekStart(week), 0);
+        eq('week start bad', D.getWeekStart(week.lastChild), 0);
         eq('convert', D.convert('11/10/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', format: 'YYYY-MM-DD' }), '1448-04-30');
         eq('site format default', D.format(new Date(2026, 3, 3)), '03/04/2026');
         document.documentElement.dataset.dateFormat = 'YYYY/MM/DD';

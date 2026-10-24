@@ -7,14 +7,18 @@
  *   NDS.Date.getMonthLength({ year, month }, calendar)   days in that month
  *   NDS.Date.formatFor(el)           the nearest data-date-format (<html> is the site's)
  *   NDS.Date.getCalendar(el, fb)     the nearest data-calendar: hijri | gregory (else fb, gregory)
- *   NDS.Date.getMonthNames(calendar, lang) · .getWeekdayNames(lang)   names in a language, Sunday first
+ *   NDS.Date.getMonthNames(calendar, lang) · .getWeekdayNames(lang, weekStart)   names in a language,
+ *                                    from weekStart (0 = Sunday, the default)
+ *   NDS.Date.getWeekStart(el)        the nearest data-week-start, as 0 (Sunday) to 6 (Saturday)
+ *   NDS.Date.getStartOfWeek(date, weekStart)   the first day of date's week
  *   NDS.Date.fill(root)              write every such <time> in root, and root itself
  *   NDS.Date.init()                  fill the page (the loader calls it)
  * Events:
  *   (none)
  * Hooks:
- *   on <html>:             data-timezone · data-date-format · data-calendar (the site's)
- *   on any element:        data-date-format · data-calendar (the dates inside it; nearest wins)
+ *   on <html>:             data-timezone · data-date-format · data-calendar · data-week-start (the site's)
+ *   on any element:        data-date-format · data-calendar · data-week-start (sun … sat; the dates
+ *                          inside it; nearest wins)
  *   on a <time datetime>:  data-date-to="hijri": show the date in Hijri, in the nearest
  *                          data-date-format (the element's own included)
  *                          data-date-format on the <time> itself, without data-date-to:
@@ -111,8 +115,18 @@
         const getMonthNames = (calendar, lang) => (calendar === 'hijri'
             ? names.text('hijri_months', null, lang)
             : getIntlNames(lang, { month: 'long' }, i => Date.UTC(2000, i, 15)));
-        // Sunday first: 2 Jan 2000 was a Sunday.
-        const getWeekdayNames = (lang) => getIntlNames(lang, { weekday: 'short' }, i => Date.UTC(2000, 0, 2 + i));
+        // From weekStart (0 = Sunday): 2 Jan 2000 was a Sunday.
+        const getWeekdayNames = (lang, weekStart = 0) => getIntlNames(lang, { weekday: 'short' }, i => Date.UTC(2000, 0, 2 + weekStart + i));
+        const WEEKDAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+        // ponytail: Sunday unless set; Intl.Locale's getWeekInfo() could follow the language once Firefox has it.
+        const getWeekStart = (el) => {
+            const value = el?.closest?.('[data-week-start]:not([data-week-start=""])')?.dataset.weekStart;
+            if (!value) return 0;
+            const index = WEEKDAYS.indexOf(value.toLowerCase());
+            if (index < 0) warnOnce(`data-week-start "${value}" is not one of ${WEEKDAYS.join(' ')}; using sun`);
+            return Math.max(index, 0);
+        };
+        const getStartOfWeek = (date, weekStart = 0) => new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() - weekStart + 7) % 7);
 
         const formatFor = (el) => el?.closest?.('[data-date-format]:not([data-date-format=""])')?.dataset.dateFormat || 'DD/MM/YYYY';
         const resolveCalendar = (el, fallback = 'gregory') => el?.closest?.('[data-calendar]:not([data-calendar=""])')?.dataset.calendar || fallback;
@@ -126,6 +140,8 @@
             getCalendar: resolveCalendar,
             getMonthNames,
             getWeekdayNames,
+            getWeekStart,
+            getStartOfWeek,
 
             // Today in the site's timezone (the visitor's when unset), as a local day.
             getToday() {

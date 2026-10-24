@@ -70,7 +70,7 @@ The page writes events as a plain list. With no JS it reads as rows, which serve
 ## Steps (one commit each, each with its doc lines and its `[Unreleased]` line)
 
 1. **Move the helpers into `NDS.Date`**, and the picker calls them. No behaviour change. Checks: `node scripts/check-date.mjs`, `check-typing.mjs`, `check-filter-dates.mjs`, both engines. **Done 2026-10-24:** `toParts`, `fromParts`, `getMonthLength` (the picker's `D M YYYY` string round-trip is gone, and so is the clock's). All three checks pass, `check-date` in both engines, and a Hijri picker shows the right day count over 24 months.
-2. **Week start** in `NDS.Date` and the picker. Docs: `core/date.md`, `components/date-picker.md` (a Data Attributes row, and a builder option if it fits).
+2. **Week start** in `NDS.Date` and the picker. Docs: `core/date.md`, `components/date-picker.md` (a Data Attributes row, and a builder option if it fits). **Done 2026-10-24:** `getWeekStart(el)`, `getStartOfWeek(date, weekStart)`, `getWeekdayNames(lang, weekStart)`. The picker offsets its 42 cells; Home/End were already index-based. The builder has a Week start group (Sunday, Saturday, Monday).
 3. **Picker class rename** `.nds-calendar-*` → `.nds-date-picker-*`. Checks: `ruby _plugins/js_processor.rb`, `python scripts/check-css.py`, the picker checks from step 1.
 4. **Calendar, Phase 1:** `_sass/components/_calendar.scss`, `_js/nds-calendar.js` (banner, PERSONA canon), the `@use` in `nds-main.min.scss`, a loader entry, tested in `playground.md` in both layouts, RTL and LTR, Hijri, a Saturday and a Monday week start, light and dark.
 5. **Calendar, Phase 2:** `components/calendar.md` through `/nds-doc`, `_data/sidemenu/sidemenu.yml`, `_data/catalog.yml`.

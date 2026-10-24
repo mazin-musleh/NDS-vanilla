@@ -23,6 +23,8 @@
  *                                (none: Gregorian). The value never picks the calendar: a date in
  *                                the other one, typed, pasted or shipped, is converted to it; one
  *                                the user wrote on change, with a neutral message naming it
+ *   data-week-start:             sun … sat, on the container or any ancestor: the grid's first
+ *                                column (none: Sunday)
  *   .nds-date-value:             a hidden input in the container the picker fills with the day;
  *                                its own data-date-format / data-calendar, else the picker's.
  *                                Range: the first takes the start, the second the end;
@@ -1240,7 +1242,7 @@
 
             weekdaysContainer.innerHTML = '';
 
-            var weekdayNames = NDS.Date.getWeekdayNames(this.getLanguage());
+            var weekdayNames = NDS.Date.getWeekdayNames(this.getLanguage(), NDS.Date.getWeekStart(this.elements.container));
 
             weekdayNames.forEach(function (name) {
                 var weekdayElement = document.createElement('div');
@@ -1499,12 +1501,13 @@
             this.elements.nextBtn.disabled = atEnd;
         },
 
-        // 42 days from the month's first day; a Hijri cell reads its own day.
+        // 42 days from the week start on or before the month's first day; a Hijri cell reads its own day.
         generateCalendarDates: function (calendarData) {
             this._renderToday = NDS.Date.getToday();
             var first = calendarData.firstDay;
             var isHijri = this.state.calendarType === 'hijri';
-            for (var i = -calendarData.startOffset; i < 42 - calendarData.startOffset; i++) {
+            var startOffset = (calendarData.startOffset - NDS.Date.getWeekStart(this.elements.container) + 7) % 7;
+            for (var i = -startOffset; i < 42 - startOffset; i++) {
                 var date = new Date(first.getFullYear(), first.getMonth(), first.getDate() + i);
                 if (isHijri) {
                     var hijriDate = toHijri(date);

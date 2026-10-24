@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 11:07 PM"
+last_edit: "24/10/2026 - 05:39 PM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -71,6 +71,9 @@ A Picker choice changes two elements: write `data-format` on `.nds-date-picker` 
 | Selection | Range | `.nds-date-range` | `.nds-date-picker:not([data-format="MM/YYYY"]):not([data-format="YYYY"])` | The user picks a start day and an end day. Not with the Month or Year picker. See Date Range |
 | Calendar | Gregorian (default) | — | — | The calendar shows Gregorian months |
 | Calendar | Hijri | `[data-calendar="hijri"]` | `.nds-date-picker` | The calendar shows Hijri months, and the field holds a Hijri date. See Hijri Calendar |
+| Week start | Sunday (default) | — | — | The first column of the day grid is Sunday |
+| Week start | Saturday | `[data-week-start="sat"]` | `.nds-date-picker:not([data-format="MM/YYYY"]):not([data-format="YYYY"])` | The first column is Saturday. Not with the Month or Year picker. See Week Start |
+| Week start | Monday | `[data-week-start="mon"]` | `.nds-date-picker:not([data-format="MM/YYYY"]):not([data-format="YYYY"])` | The first column is Monday. Not with the Month or Year picker. See Week Start |
 | Picker | Day (default) | — | — | The calendar shows a grid of days. The field holds `DD/MM/YYYY` |
 | Picker | Month (hint: A grid of months, for a card expiry) | `[data-format="MM/YYYY"]` | `.nds-date-picker:not(.nds-date-range)` | The calendar shows a grid of months, for a month such as a card expiry. Not with Range. See Date Format |
 | Picker | Month (hint: A grid of months, for a card expiry) | `[placeholder="MM/YYYY"]` | `.nds-date-input:not(.nds-date-range *)` | |
@@ -122,6 +125,11 @@ The class `nds-date-range` on `.nds-date-picker` makes the user pick two days. T
 {: .nds-block-title}
 
 `data-calendar="hijri"` on `.nds-date-picker` shows Hijri months and years, and the field holds the Hijri date. The nearest `data-calendar` wins, so on `<html>` it makes every picker on the site Hijri, and `data-calendar="gregory"` on one picker keeps it Gregorian. Without `data-calendar`, the field is Gregorian. The date never picks the calendar: a date in the other calendar is converted to the field's calendar, whether the user types or pastes it or the page ships it in the field's `value`. In a Gregorian field, `15/09/1447` becomes `04/03/2026`. A date the user writes converts when they leave the field, and a message under the field names the date they wrote, such as "Converted from the Hijri date 15/09/1447". Any edit to the field clears it. A shipped value written another common way, such as `2026-03-04`, takes the field's format too. Hijri dates follow Umm al-Qura, the official calendar of Saudi Arabia, through [Date](../core/date). A Hijri day that does not exist, such as day 30 of a 29-day month, is an invalid date.
+
+### Week Start
+{: .nds-block-title}
+
+`data-week-start` on `.nds-date-picker` sets the first column of the day grid: `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`. The default is Sunday. The nearest one wins, so on `<html>` it sets every picker on the site. The weekday names and the arrow keys follow it. See [Date](../core/date).
 
 ### Date Format
 {: .nds-block-title}
@@ -260,6 +268,7 @@ The picker checks the field at each `change`, typed text included. A date that d
 |---|---|---|
 | `data-format` | `.nds-date-picker` | How the field writes and reads a date. The default is the nearest `data-date-format`, or `DD/MM/YYYY`. See Date Format |
 | `data-calendar` | `.nds-date-picker`, or any element around it | `hijri` or `gregory`. The nearest one sets the calendar. The default is Gregorian. See Hijri Calendar |
+| `data-week-start` | `.nds-date-picker`, or any element around it | `sun` to `sat`. The nearest one sets the first column of the day grid. The default is Sunday. See Week Start |
 | `data-date-format`, `data-calendar` | `.nds-date-value` | The format and calendar of the date the script writes in this hidden input. The defaults are the picker's. See Value for the Server |
 | `data-clearable` | `.nds-date-picker` | Adds a Clear button to the calendar. See Clear Button |
 | `data-required` | `.nds-date-picker` | The form needs a date. See Validation |

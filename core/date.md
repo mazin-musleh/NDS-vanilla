@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 05:31 PM"
+last_edit: "24/10/2026 - 05:39 PM"
 ---
 
 <section id="date-overview" class="nds-content-section nds-doc-overview">
@@ -20,7 +20,7 @@ last_edit: "24/10/2026 - 05:31 PM"
 
 NDS works with dates in two ways. In markup, a `<time>` with `data-date-to="hijri"` shows its date in Hijri, and one with its own `data-date-format` shows it in that format. You write no script. In JavaScript, `NDS.Date` reads, writes and converts dates. It is in the main bundle, so every page has it, with no init call.
 
-Three attributes on `<html>` set the site's dates: `data-timezone` sets its timezone, `data-date-format` its date format, and `data-calendar` its calendar.
+Four attributes on `<html>` set the site's dates: `data-timezone` sets its timezone, `data-date-format` its date format, `data-calendar` its calendar, and `data-week-start` the first day of its week.
 
 Pick another component when:
 
@@ -147,7 +147,7 @@ A date is a calendar day: a JavaScript `Date` at local midnight. `parse` returns
 ### Nearest Format
 {: #date-nearest-format}
 
-`data-date-format` and `data-calendar` on an element set the format and the calendar of the dates inside it. The nearest one wins over the one on `<html>`. Date Picker, Sort and `data-date-to` read them.
+`data-date-format`, `data-calendar` and `data-week-start` on an element set the format, the calendar and the week start of the dates inside it. The nearest one wins over the one on `<html>`. Date Picker, Sort and `data-date-to` read them.
 
 ### Markup Dates
 {: #date-markup-dates}
@@ -244,6 +244,7 @@ The script reads the date from `datetime`, never from the text, and writes the t
 | `data-date-format` | `<html>` | The site's date format, in the tokens below. `parse` and `format` use it when you name no format. The default is `DD/MM/YYYY` |
 | `data-date-format` | any element | The date format of the content inside it. The nearest one wins over the one on `<html>`. A Date Picker without its own `data-format`, and Sort when it reads a date from text, use it |
 | `data-calendar` | `<html>`, or any element | `hijri` or `gregory`, the calendar of the dates inside it. The nearest one wins. Date Picker, the top bar date and Sort read it. The default is Gregorian, and the top bar date follows the page language |
+| `data-week-start` | `<html>`, or any element | `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`: the first day of the week inside it. The nearest one wins. The Date Picker's grid starts on it. The default is Sunday, and any other value warns in the console and uses Sunday |
 | `data-date-to` | a `<time>` with `datetime` | `hijri`: the `<time>` shows its date in Hijri, in the nearest `data-date-format`, its own included. Any other value is left as written. See [Markup Dates](#date-markup-dates) |
 | `data-date-format` | a `<time>` with `datetime`, without `data-date-to` | Written on the `<time>` itself: the script writes the Gregorian date from `datetime` in this format. A `<time>` with neither attribute is left as written |
 | `data-date-era` | a `<time>` with `data-date-to="hijri"` | Written bare. Adds the era word after the Hijri date: «هـ» on an Arabic page, AH on an English one, from the `date` section of the [string pack](../core/i18n) |
@@ -294,7 +295,9 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 | `NDS.Date.getCalendar(element, fallback)` | Returns the nearest `data-calendar` around `element`, the element's own included, or `fallback` (default `'gregory'`) when there is none. Pass it as `calendar` |
 | `NDS.Date.site` | Returns `{ timeZone, format }` from `<html>`. `timeZone` is `undefined` when the attribute is missing or invalid |
 | `NDS.Date.getMonthNames(calendar, lang)` | Returns the 12 month names of `'gregory'` or `'hijri'`, in `lang` or the page's language. The Hijri names come from the `date` section of the [string pack](../core/i18n) |
-| `NDS.Date.getWeekdayNames(lang)` | Returns the 7 short weekday names, Sunday first, in `lang` or the page's language |
+| `NDS.Date.getWeekdayNames(lang, weekStart)` | Returns the 7 short weekday names in `lang` or the page's language, from `weekStart`: 0 is Sunday (the default) and 6 is Saturday |
+| `NDS.Date.getWeekStart(element)` | Returns the nearest `data-week-start` around `element`, the element's own included, as 0 (Sunday) to 6 (Saturday). Returns 0 when there is none. Pass it as `weekStart` |
+| `NDS.Date.getStartOfWeek(date, weekStart)` | Returns the first day of the week that holds `date`, as a `Date` at local midnight. `weekStart` is 0 (Sunday) by default |
 | `NDS.Date.fill(root)` | Writes the text of every `<time>` in `root`, and of `root` itself, that has `data-date-to` or its own `data-date-format`. The loader runs it at load, and `NDS.init.mount()` on markup added later |
 {: .nds-table .nds-responsive}
 
