@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 09:17 PM"
+last_edit: "24/10/2026 - 10:02 PM"
 ---
 
 <section id="calendar-overview" class="nds-content-section nds-doc-overview">
@@ -254,9 +254,11 @@ Pick another component when:
         </button>
       </div>
     </div>
-    <div class="nds-filter-applied" data-filter-target="calendar-sessions" hidden>
-      <span class="nds-label" data-i18n="filter.applied_filters">Applied Filters:</span>
-      <div class="nds-chips"></div>
+    <div class="nds-filter-applied" data-filter-target="calendar-sessions" data-chip-class="nds-primary" hidden>
+      <div class="nds-toolbar-end">
+        <span class="nds-label" data-i18n="filter.applied_filters">Applied Filters:</span>
+        <div class="nds-chips"></div>
+      </div>
     </div>
   </div>
   <div class="nds-calendar-days" role="group" aria-label="Days of the week" data-i18n-aria-label="calendar.days_of_the_week"></div>
@@ -428,7 +430,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Every option goes on `.nds-calendar`, except Loading, which goes on the events' `.nds-drawer`. The canon sets `data-week` so that the sample events show: leave it out to open on this week.
+Every option goes on `.nds-calendar`, except No view switch, which removes `.nds-calendar-views`. The canon sets `data-week` so that the sample events show: leave it out to open on this week.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -444,8 +446,7 @@ Every option goes on `.nds-calendar`, except Loading, which goes on the events' 
 | Week start | Sunday (default) | — | — | The week starts on Sunday |
 | Week start | Saturday | `[data-week-start="sat"]` | `.nds-calendar` | The week starts on Saturday |
 | Week start | Monday | `[data-week-start="mon"]` | `.nds-calendar` | The week starts on Monday |
-| Address | Week in the address | `[data-week-param]` | `.nds-calendar` | Keeps the week in the address as `?week=2026-10-25`, so a reload or a shared link opens the same week |
-| Loading | Loading (hint: Skeleton placeholders while a week loads) | `.nds-loading` | `.nds-drawer` | Shows the events as skeleton bars while a server loads a week. Remove the class when the events are in |
+| Loading | Loading (hint: A spinner while a week loads) | `.nds-loading` | `.nds-calendar` | Shows the [Loading](../components/loading) spinner over the calendar while a server loads a week. Remove the class when the events are in |
 {: #calendar-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -486,17 +487,17 @@ The day buttons are one Tab stop, as the Date Picker's days: the picked day, els
 ### Week in the Address
 {: .nds-block-title}
 
-`data-week-param` keeps the week in the address as `?week=2026-10-25`, the week's first day. The script reads it once at load, and it wins over `data-week`. When the user goes back to the week the calendar opened on, the script removes `?week=` from the address. The address changes with no new Back-button step, as in [Pagination](../components/pagination). To use a name other than `week`, give the attribute a value: `data-week-param="sessions-week"`.
+The calendar keeps the week in the address as `?week=2026-10-25`, the week's first day, as a [Filter](../components/filter) keeps its filters, so a reload or a shared link opens the same week. The script reads it once at load, and it wins over `data-week`. When the user goes back to the week the calendar opened on, the script removes `?week=` from the address. The address changes with no new Back-button step, as in [Pagination](../components/pagination). `data-week-param` sets another name: `data-week-param="exam-week"`. Give each calendar on a page its own name.
 
 ### Events from a Server
 {: .nds-block-title}
 
-The events are the `<li>` items in `.nds-calendar-events`, and nothing else. A server can write the events of many weeks at once, and the calendar shows one week. For a long schedule, load one week at a time: on `nds:calendar:change`, put `nds-loading` on the `.nds-drawer`, replace the items with the new week's events, then remove `nds-loading`. While the drawer loads, the old events show as skeleton bars, and the empty message waits. Events from JSON are the same: build an `<li>` for each event, as in the canon, in time order.
+The events are the `<li>` items in `.nds-calendar-events`, and nothing else. A server can write the events of many weeks at once, and the calendar shows one week. For a long schedule, load one week at a time: on `nds:calendar:change`, put `nds-loading` on the `.nds-calendar`, replace the items with the new week's events, then remove `nds-loading`. While it loads, the [Loading](../components/loading) spinner shows, and the empty message and the screen reader's count wait. The page opens on the week in `?week=`, so a server that writes one week reads `?week=` from the request: a shared link then opens with that week's events. Events from JSON are the same: build an `<li>` for each event, as in the canon, in time order.
 
 ### Filter
 {: .nds-block-title}
 
-The With Filter structure adds a [Filter](../components/filter) on the events list: `data-filter-items="li"` on the list, and a mark in each event, such as a tag with `data-filter="type"`. The Filter builds its options from the marks. The calendar shows only the events that match, and a day with no match shows the empty message. The row of applied filters removes a filter in one press. When a script replaces the events, call `NDS.init.refresh(list)` so that the Filter reads them too.
+The With Filter structure adds a [Filter](../components/filter) on the events list: `data-filter-items="li"` on the list, and a mark in each event, such as a tag with `data-filter="type"`. The Filter builds its options from the marks. The calendar shows only the events that match, and a day with no match shows the empty message. The row of applied filters sits at the bar's end, in a `.nds-toolbar-end`, and removes a filter in one press. When a script replaces the events, call `NDS.init.refresh(list)` so that the Filter reads them too.
 
 </div>
   </div>
@@ -514,6 +515,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 - Render `.nds-calendar-title` and `.nds-calendar-days` empty. The script writes their content.
 - The calendar keeps its state in `data-week`, `data-view` and `data-day`. Write them from your state at any time, and the calendar follows. Read them back on `nds:calendar:change`.
 - The script never moves the items you render. It writes `data-calendar-day` and a `--_calendar-rows` style on them, and `destroy()` removes both.
+- The calendar writes the week to the address with `replaceState`, as a [Filter](../components/filter) does. A router that owns the address keeps the other keys, and reads the week from `?week=` or `data-week`.
 
 </div>
   </div>
@@ -545,7 +547,21 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
             <i class="hgi hgi-stroke hgi-calendar-check-in-01"></i>
             <span class="nds-label">Today</span>
           </span>
-          <p class="nds-item-desc">Today's day button has a brand primary border, and <code class="nds-inline-code lang-html">aria-current="date"</code> for a screen reader.</p>
+          <p class="nds-item-desc">Today's day button has a brand primary border, and <code class="nds-inline-code lang-html">aria-current="date"</code> for a screen reader. When it is also the picked day, a ring inside its fill keeps it in view.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-link-01"></i>
+            <span class="nds-label">Week in the Address</span>
+          </span>
+          <p class="nds-item-desc">The week stays in the address as <code class="nds-inline-code lang-html">?week=</code>, so a reload or a shared link opens the same week.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Keyboard</span>
+          </span>
+          <p class="nds-item-desc">The day buttons are one Tab stop. The arrow keys move between the days, as in the Date Picker.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -587,6 +603,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 - Show an event that spans days on its first day, and write its last day in the row's text.
 - With a Filter, show the row of applied filters. Without it, a day with no match looks empty for no reason.
 - To show Grid, put the calendar in a container at least 860px wide.
+- Give each calendar on a page its own `data-week-param`. Two calendars with one name share the week in the address.
 
 </div>
   </div>
@@ -609,6 +626,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 | `nds-calendar-views` | `.nds-btn-group` | The Grid and Rows buttons. Hidden under 860px |
 | `nds-calendar-days` | `div` | The script writes a button per day in it. Give it `role="group"` and an `aria-label` |
 | `nds-calendar-day` | `button` | Written by the script, one per day |
+| `nds-calendar-title-second`, `nds-calendar-day-second` | `span` | Written by the script with `data-calendar-second`: the week under the title, and the day number on each day button |
 | `nds-calendar-events` | `ul.nds-drawer-list` | The events, one `<li>` each |
 | `nds-calendar-empty` | `div` | Shows while the week or the picked day has no events. The canon gives it the `nds-empty-placeholder` look of [Empty](../components/empty) |
 {: .nds-table .nds-responsive}
@@ -621,7 +639,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 | `data-week` | `.nds-calendar` | Any day of the week to show, as `YYYY-MM-DD`. Without it, this week. The script writes the week's first day back to it |
 | `data-view` | `.nds-calendar` | `grid` (the default) or `rows`. The script writes it when the user switches the view |
 | `data-day` | `.nds-calendar` | The picked day, as `YYYY-MM-DD`: only its events show. The script writes it when the user presses a day, and removes it when the user presses it again or moves to another week |
-| `data-week-param` | `.nds-calendar` | Keeps the week in the address. The name is `week` by default. A value sets another name |
+| `data-week-param` | `.nds-calendar` | The name of the week in the address, `week` by default. Two calendars on a page need two names |
 | `data-calendar` | `.nds-calendar`, or any element around it | `hijri` shows Hijri dates. The nearest one wins. The default is Gregorian |
 | `data-calendar-second` | `.nds-calendar` | `hijri` or `gregory`: the title and each day button also show the dates in that calendar. A screen reader hears that date in full too |
 | `data-week-start` | `.nds-calendar`, or any element around it | `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`: the first day of the week. The nearest one wins. The default is Sunday |
@@ -630,6 +648,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 | `datetime` | the first `<time>` in an event | The event's day, as `YYYY-MM-DD`, with or without a time. A time with a zone, such as `Z` or `+03:00`, counts in the site's timezone. Write it in Gregorian, on a Hijri calendar too |
 | `data-calendar-day` | an event `<li>` | The script sets it on an event of the shown week (or the picked day), as its column from `0` to `6`, and removes it from the others. An event without it is hidden. Do not write it |
 | `data-state="empty"` | `.nds-calendar` | The script sets it while no event shows, and removes it when one does. Events that a Filter hides do not count |
+| `data-state="loading"` | `.nds-calendar` | The same as the `nds-loading` class: the spinner shows, and the empty message and the screen reader's count wait |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties
@@ -673,15 +692,14 @@ NDS.init.ready.then(function () {
   calendar.addEventListener('nds:calendar:change', function (e) {
     if (e.detail.week === shownWeek) return; // the view or the day changed, not the week
     shownWeek = e.detail.week;
-    var drawer = calendar.querySelector('.nds-drawer');
-    drawer.classList.add('nds-loading');
+    calendar.classList.add('nds-loading');
     fetch('/sessions?week=' + e.detail.week)
       .then(function (response) {
         if (!response.ok) throw new Error(response.status);
         return response.text();
       })
       .then(function (html) { calendar.querySelector('.nds-calendar-events').innerHTML = html; })
-      .finally(function () { drawer.classList.remove('nds-loading'); });
+      .finally(function () { calendar.classList.remove('nds-loading'); });
   });
 });
 </script>
@@ -703,6 +721,7 @@ The full API is in the banner of `_js/nds-calendar.js`.
 - [Filter](../components/filter): the filter by event type in the With Filter structure.
 - [Date](../core/date): the Hijri dates and the first day of the week.
 - [Date Picker](../components/date-picker): a field to pick a date, with the same week start.
+- [Loading](../components/loading): the spinner while a server loads a week.
 
 </div>
   </div>

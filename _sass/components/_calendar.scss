@@ -67,11 +67,12 @@
     font-weight: var(--font-weight-semibold);
 }
 
-// The day in data-calendar-second: smaller, in the button's own color, so it reads in every state.
+// The day in data-calendar-second: smaller and quieter, as the title's second line.
 .nds-calendar-day-second {
     font-size: var(--typo-text-xs-FS);
     line-height: var(--typo-text-xs-LH);
     font-weight: var(--font-weight-regular);
+    color: var(--text-secondary-paragraph);
 }
 
 // Picked: the main nav's current item, a primary fill.
@@ -85,6 +86,11 @@
     --btn-indicator-color: var(--button-indicator-primary);
     --btn-indicator-active: var(--button-indicator-primary);
     --btn-indicator-selected: var(--button-indicator-primary);
+
+    // The gray fails on the fill: the button's own color.
+    .nds-calendar-day-second {
+        color: inherit;
+    }
 }
 
 // Today: a brand border, as the Date Picker rings today's cell; the button keeps it in every state.
@@ -193,11 +199,6 @@
             grid-column: 1 / -1;
         }
     }
-}
-
-// A server loading the week: the old events stay, for the Drawer's skeleton to draw. After the hide rule, same weight.
-.nds-calendar .nds-drawer.nds-loading .nds-calendar-events > li {
-    display: flex;
 }
 
 // After the grid rule, which has the same weight: an empty week shows the message, not empty columns.

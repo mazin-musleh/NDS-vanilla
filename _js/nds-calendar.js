@@ -21,8 +21,9 @@
  *                            script writes the week's first day back
  *   data-view                grid | rows (none: grid). A calendar under 860px wide shows rows
  *   data-day                 the picked day, YYYY-MM-DD (none: the whole week)
- *   data-week-param          keep the week in the address: ?week=YYYY-MM-DD (a value names another
- *                            key). Read once at load, before data-week; the opening week drops it
+ *   data-week-param          the week's key in the address (none: week). The week stays there as
+ *                            ?week=YYYY-MM-DD, as a Filter's filters do: read once at load, before
+ *                            data-week; the opening week drops it. Two calendars on a page take two keys
  *   data-calendar-action     on a button: prev | next | today
  *   data-calendar-view       on a button: grid | rows. The current one is pressed
  *   data-calendar-second     hijri | gregory: the title and each day button also show the dates
@@ -44,9 +45,8 @@
  *   - A press on a day or a week button says the day or week and its event count (NDS.announce).
  *   - The days are one Tab stop (the picked day, else today, else the first); the arrow keys move
  *     between them, Home and End to the ends.
- *   - Loading: nds-loading (or data-state="loading") on the list's drawer, while a server loads the
- *     week. The old events stay for the Drawer's skeleton, the empty message waits, and so does the
- *     announcement.
+ *   - Loading: nds-loading (or data-state="loading") on the .nds-calendar, while a server loads the
+ *     week: the Loading spinner. The empty message waits, and so does the announcement.
  *   - Moving to another week drops the picked day.
  *   - ponytail: one week. No month view, no hour axis, no multi-day bars (an event shows on its
  *     first day); add each when a site asks.
@@ -84,7 +84,7 @@
         NDS.onChildrenChange('.nds-calendar-events', (lists) => {
             lists.forEach((list) => list.closest(SELECTOR)?.ndsCalendar?.refresh());
         });
-        NDS.state.onToggle('loading', '.nds-calendar .nds-drawer', (drawer, on) => drawer.closest(SELECTOR)?.ndsCalendar?._setLoading(on), { className: 'nds-loading' });
+        NDS.state.onToggle('loading', SELECTOR, (el, on) => el.ndsCalendar?._setLoading(on), { className: 'nds-loading' });
         // A Filter on the list hides events: the empty message counts what is left.
         NDS.onAttributeChange('.nds-calendar-events > li', ['data-filtered'], (items) => {
             new Set(items.map((item) => item.closest(SELECTOR)?.ndsCalendar)).forEach((calendar) => calendar?._syncEmpty());
@@ -105,7 +105,7 @@
             // Debounced, so a server's new events land before the count is read.
             this._announce = NDS.debounce(() => this._sayChange(), 400);
             this._announcePending = false;
-            this._loading = !!el.querySelector('.nds-drawer:is(.nds-loading, [data-state~="loading"])');
+            this._loading = el.classList.contains('nds-loading') || NDS.state.has(el, 'loading');
             this._readEvents();
             el.addEventListener('click', (e) => this._handleClick(e), { signal: this.abortController.signal });
             el.addEventListener('keydown', (e) => this._handleDayKey(e), { signal: this.abortController.signal });
@@ -166,7 +166,7 @@
             if (first) {
                 // The week the page opens on without ?week=: writing it back drops the key.
                 this._openingWeek = NDS.Date.getStartOfWeek(toDay(el.dataset.week) || NDS.Date.getToday(), weekStart);
-                fromUrl = this._getParamName() && toDay(new URLSearchParams(location.search).get(this._getParamName()));
+                fromUrl = toDay(new URLSearchParams(location.search).get(this._getParamName()));
             }
             const anchor = day || fromUrl || toDay(el.dataset.week) || NDS.Date.getToday();
             const view = VIEWS.includes(el.dataset.view) ? el.dataset.view : 'grid';
@@ -189,15 +189,13 @@
             return changed;
         }
 
-        // data-week-param: '' or bare is the key `week`; no attribute, no address.
+        // Always on, as Filter: data-week-param only renames the key.
         _getParamName() {
-            const name = this._element.getAttribute('data-week-param');
-            return name === null ? null : name || 'week';
+            return this._element.getAttribute('data-week-param') || 'week';
         }
 
         _writeParam() {
             const name = this._getParamName();
-            if (!name) return;
             const params = new URLSearchParams(location.search);
             if (isSameDay(this._week, this._openingWeek)) params.delete(name);
             else params.set(name, getIso(this._week));
