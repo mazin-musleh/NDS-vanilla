@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 10:12 PM"
+last_edit: "24/10/2026 - 11:18 PM"
 ---
 
 <section id="calendar-overview" class="nds-content-section nds-doc-overview">
@@ -440,7 +440,7 @@ Every option goes on `.nds-calendar`, except No view switch, which removes `.nds
 | View | Rows | `[data-view="rows"]` | `.nds-calendar` | A list of the week's events, with a date tile on each. The full title, time and place show at every width |
 | View switch | No view switch | `remove` | `.nds-calendar-views` | Delete the `.nds-calendar-views` group. The calendar then keeps the view in `data-view`, and Grid without it |
 | Calendar | Gregorian (default) | — | — | Gregorian dates in the week's title and on the day buttons |
-| Calendar | Hijri | `[data-calendar="hijri"]` | `.nds-calendar` | Hijri dates in the week's title, on the day buttons and in what a screen reader hears. Write the date tiles' text in Hijri too, and keep `datetime` in Gregorian |
+| Calendar | Hijri | `[data-calendar="hijri"]` | `.nds-calendar` | Hijri dates in the week's title, on the day buttons, on each event's Date Tile and in what a screen reader hears. Keep `datetime` in Gregorian |
 | Second date | Hijri | `[data-calendar-second="hijri"]` | `.nds-calendar:not([data-calendar="hijri"])` | The week's Hijri dates under the title, and each day's Hijri day under its Gregorian one. A screen reader hears both dates |
 | Second date | Gregorian | `[data-calendar-second="gregory"]` | `.nds-calendar[data-calendar="hijri"]` | The week's Gregorian dates under the title, and each day's Gregorian day. Use it with the Hijri calendar |
 | Week start | Sunday (default) | — | — | The week starts on Sunday |
@@ -480,7 +480,9 @@ The day buttons are one Tab stop, as the Date Picker's days: the picked day, els
 ### Week Start and Hijri
 {: .nds-block-title}
 
-`data-week-start` sets the first day of the week, and `data-calendar="hijri"` shows Hijri dates. The nearest one wins, on the calendar or on any element around it, such as `<html>`. The [Date Picker](../components/date-picker) reads the same two attributes. On a Hijri calendar, an event's `datetime` stays in Gregorian, and you write its date tile in Hijri. See [Date](../core/date).
+`data-week-start` sets the first day of the week, and `data-calendar="hijri"` shows Hijri dates. The nearest one wins, on the calendar or on any element around it, such as `<html>`. The [Date Picker](../components/date-picker) reads the same two attributes. On a Hijri calendar, an event's `datetime` stays in Gregorian. See [Date](../core/date).
+
+The script writes each event's Date Tile from its `datetime`: the weekday, the day and the month, in the calendar's calendar and language. The text in your markup is the copy a page without the script shows. A long month name, such as Jumada al-Akhirah, is cut short with an ellipsis, as any text too long for its tile.
 
 `data-calendar-second` adds the dates in the other calendar, in smaller text: the week under the title, and the day number on each day button. Use `hijri` on a Gregorian calendar, or `gregory` on a Hijri one. A screen reader hears both dates in full. A Hijri date ends in the era word (AH, هـ), as in the top bar's date.
 
@@ -514,7 +516,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 - Render the events as `<li>` items of the list. When your view adds or removes items, the calendar reads them again by itself.
 - Render `.nds-calendar-title` and `.nds-calendar-days` empty. The script writes their content.
 - The calendar keeps its state in `data-week`, `data-view` and `data-day`. Write them from your state at any time, and the calendar follows. Read them back on `nds:calendar:change`.
-- The script never moves the items you render. It writes `data-calendar-day` and a `--_calendar-rows` style on them, and `destroy()` removes both.
+- The script never moves the items you render. It writes `data-calendar-day` and a `--_calendar-rows` style on them, and `destroy()` removes both. It also writes the text of each event's Date Tile, which stays after `destroy()`.
 - The calendar writes the week to the address with `replaceState`, as a [Filter](../components/filter) does. A router that owns the address keeps the other keys, and reads the week from `?week=` or `data-week`.
 
 </div>

@@ -34,6 +34,8 @@
  *   .nds-calendar-empty      shows while the week, or the picked day, has no events
  *   data-calendar · data-week-start   read through NDS.Date, the nearest wins
  *   written by the component: data-calendar-day on an event (its column, 0–6) ·
+ *                             the text of an event's Date Tile, when its first time[datetime] is
+ *                             one (weekday, day, month in the calendar and language) ·
  *                             data-state="empty" on the root
  * Gotchas:
  *   - Write the events in time order: a day stacks its events in the order written.
@@ -111,7 +113,11 @@
             this._readState(true);
             // Hijri month names come from the page's pack: write the dates again once it lands.
             const lang = getLang(el);
-            if (!strings.ready(lang)) strings.load(lang).then(() => { if (!this.abortController.signal.aborted) this._sync(); });
+            if (!strings.ready(lang)) strings.load(lang).then(() => {
+                if (this.abortController.signal.aborted) return;
+                this._tilesKey = null;
+                this._sync();
+            });
         }
 
         _buildDayButtons() {
@@ -141,10 +147,12 @@
             this._offResizes.forEach((off) => off());
             this._offResizes = [];
             this._events = [];
+            this._tilesKey = null;
             this._element.querySelectorAll('.nds-calendar-events > li:not([data-nds-empty-placeholder])').forEach((item) => {
-                const day = NDS.Date.readDay(item.querySelector('time[datetime]')?.getAttribute('datetime') || '');
+                const time = item.querySelector('time[datetime]');
+                const day = NDS.Date.readDay(time?.getAttribute('datetime') || '');
                 if (!day) console.warn('NDS Calendar: an event needs a time with a datetime such as 2026-10-20; it stays hidden', item);
-                this._events.push({ item, day });
+                this._events.push({ item, day, tile: time?.classList.contains('nds-date-tile') ? time : null });
                 this._offResizes.push(NDS.onElementResize(item, (entry) => this._getRowsWrite(entry)));
             });
         }
@@ -258,7 +266,29 @@
                 if (column >= 0 && column < 7 && (!this._day || isSameDay(day, this._day))) item.setAttribute('data-calendar-day', column);
                 else item.removeAttribute('data-calendar-day');
             }
+            this._fillTiles(calendar, lang);
             this._syncEmpty();
+        }
+
+        // Each event's Date Tile in the calendar's calendar and language, from its datetime: the
+        // markup's text is the no-script copy. Once per events, calendar and language.
+        _fillTiles(calendar, lang) {
+            const key = calendar + ' ' + lang;
+            if (this._tilesKey === key) return;
+            this._tilesKey = key;
+            const weekdays = NDS.Date.getWeekdayNames(lang);
+            for (const { tile, day } of this._events) {
+                if (!tile || !day) continue;
+                const text = {
+                    weekday: weekdays[day.getDay()],
+                    day: String(NDS.Date.toParts(day, calendar).day),
+                    month: NDS.Date.format(day, { calendar, locale: lang, format: 'MMM' }),
+                };
+                for (const part in text) {
+                    const span = tile.querySelector('.nds-date-tile-' + part);
+                    if (span && span.textContent !== text[part]) span.textContent = text[part];
+                }
+            }
         }
 
         _setLoading(on) {
