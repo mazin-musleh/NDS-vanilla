@@ -184,10 +184,10 @@ A run tests either the published rules and release, or the unreleased ones on ma
 4. **Start the agent:** open a new Claude Code session in the rig folder and paste:
 
    ```
-   NDS-IQ.md is at the project root, and the NDS template is extracted at `.nds/`. Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. This is the project's UI-layer rulebook. All NDS work runs by its rules. Set up NDS IQ in this project as its install section describes, then build the plan.
+   NDS-IQ.md is at the project root, and the NDS template is extracted at `.nds/`. Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. This is the project's UI-layer rulebook. All NDS work runs by its rules. Set up NDS IQ in this project as its install section describes, then build the plan. This is a preview of the next release, not yet published: skip the update check.
    ```
 
-   This is the get-started setup prompt without its download step: the download would replace the draft with the published file.
+   This is the get-started setup prompt without its download step: the download would replace the draft with the published file. Its last sentence stops the agent from comparing the draft with the older published rules and release.
 
 ### Either way
 

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 12:17 PM"
+last_edit: "24/10/2026 - 12:53 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -538,7 +538,7 @@ document.addEventListener('nds:filter:request', function (e) {
 });
 </script>
 
-The filter reads the address at load and shows its filters in the search box, the chips and the menu, but it sends no request. When your script loads the first items from your own API, send that first request with the same filters: `NDS.Filter.whenReady()` gives you the filter, and `getCriteria()` its filters. With the [Pagination](../components/pagination) URL sync (`data-page-param`), read the page from the address too, so a shared link opens the same page.
+The filter reads the address at load and shows its filters in the search box, the chips and the menu, but it sends no request. When your script loads the first items from your own API, send that first request with the same filters: `NDS.Filter.whenReady()` gives you the filter, and `getCriteria()` its filters. Turn on the [Pagination](../components/pagination) URL sync (`data-page-param`) so the page stays in the address too, and send the first request for that page: a shared link then opens the same page.
 
 <script type="text/html" id="filter-first-load-js" data-canon data-lang="js" data-preview="none">
 // First load: the filters and the page that the address already holds.
