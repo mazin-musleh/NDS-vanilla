@@ -332,6 +332,8 @@ tbody[data-filter-items]:not([data-nds-filter-initialized], .nds-paged-content) 
     --_wrapper-padding: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-max-width)) / 2));
     width: 100%;
     padding-inline: var(--_wrapper-padding);
+    // 100cqi = the content box: a .nds-max-width child's Swiper reads its pull-back from it.
+    container-type: inline-size;
 
     .nds-full-width {
         width: 100vw !important;

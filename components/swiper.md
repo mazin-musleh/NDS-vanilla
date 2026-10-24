@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "24/10/2026 - 11:53 PM"
 ---
 
 <section id="swiper-overview" class="nds-content-section nds-doc-overview">
@@ -419,7 +419,7 @@ Set these in the `style` of `.nds-swiper`. Set the bullet colors on the swiper o
 | `--min-slides` | `1` | Slides per view on a phone: narrower than 600px |
 | `--peek` | unset | Length of the next slide left showing, such as `40px`. `0px` is no peek |
 | `--gap` | `var(--spacing-xl)` | Space between slides |
-| `--padding` | `0px` | Space at each end of the row. Inside `.nds-max-width` it is the gap, so the row runs to the screen edge |
+| `--padding` | `0px` | Space at each end of the row. Inside `.nds-max-width` it is the page padding, so the row runs to the screen edge and its first slide lines up with the content above it |
 | `--total` | `1` | Number of slides. The script writes it |
 | `--swiper-bullet-default` | `var(--swiper-bullet-background-default)` | Bullet color |
 | `--swiper-bullet-default-hovered` | `var(--swiper-bullet-background-hovered)` | Bullet color on hover |

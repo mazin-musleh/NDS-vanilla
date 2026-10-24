@@ -41,7 +41,7 @@
  *                             looping; data-status on each spotlight slide: "active" on the
  *                             open one and every loop clone of it, "after" on those after it;
  *                             data-swiper-moving on the wrapper while it scrolls, inside
- *                             .nds-max-width (lifts the shadow clip)
+ *                             .nds-max-width (lifts the gutter mask)
  *   written by the loader pre-reveal: the same --slides and peek state, plus
  *                                     data-swiper-preset (skeleton row = final row) and
  *                                     data-swiper-single when the slides fit one page
@@ -698,7 +698,7 @@
                 this.syncState();
             }), { passive: true, signal });
 
-            // The shadow clip cuts cards short of the screen edge; CSS lifts it while the row moves.
+            // The gutter mask cuts cards short of the screen edge; CSS lifts it while the row moves.
             if (this._isHero || this._spotlight || !this._container.closest('.nds-max-width')) return;
             const clearMoving = () => wrapper.removeAttribute('data-swiper-moving');
             wrapper.addEventListener('scroll', () => {

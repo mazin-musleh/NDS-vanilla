@@ -15,6 +15,9 @@
 @property --mid-slides { syntax: '*'; inherits: false; }
 @property --min-slides { syntax: '*'; inherits: false; }
 @property --peek { syntax: '*'; inherits: false; }
+// Typed so the gutter mask's alpha can transition.
+@property --_swiper-fade-start { syntax: '<number>'; inherits: false; initial-value: 1; }
+@property --_swiper-fade-end { syntax: '<number>'; inherits: false; initial-value: 1; }
 
 .nds-swiper {
     // The author's knobs sit on the element (--max/mid/min-slides, --peek),
@@ -29,10 +32,10 @@
     // counted the pages, 0px once it finds a single page (nothing to peek at).
     // Unset --peek makes it invalid, so every reader falls back to "no peek".
     --_peek: var(--peek);
-    // Peek reserve = peek + the gap the gutter does not already give (a full gap
-    // with no gutter, none inside .nds-max-width). --peek: 0px must mean no peek
-    // as well: min(peek x 1000, ...) is the whole term for any positive peek, 0 for none.
-    --_peek-reserve: calc(var(--_peek) + min(var(--_peek) * 1000, var(--swiper-gap) - var(--swiper-padding)));
+    // Peek reserve = peek + gap − gutter (a full gap with no gutter; negative inside
+    // .nds-max-width where the gutter is wider). --peek: 0px must mean no peek as well:
+    // clamp(±peek x 1000, ...) is the whole term for any positive peek, 0 for none.
+    --_peek-reserve: calc(var(--_peek) + clamp(var(--_peek) * -1000, var(--swiper-gap) - var(--swiper-padding), var(--_peek) * 1000));
     --swiper-peek: var(--_peek-reserve, 0px);
 
     display: flex;
@@ -51,12 +54,12 @@
         --_peek: 0px;
     }
 
-    // Inside .nds-max-width the row runs to the breakout's edge, the viewport on
-    // any screen narrower than the content max width, with a gutter of one gap at
-    // each end. A neighbour then ends exactly at that edge, so nothing needs
-    // clipping. The same geometry at every width: the gutter is one gap.
+    // Inside .nds-max-width the row runs to the breakout's edge and the gutter is
+    // the breakout's pull-back (_skeleton.scss), so slide one lines up with the
+    // content above. 100cqi is the section's content box; the wrapper masks a
+    // neighbour that ends in a gutter wider than the gap.
     .nds-max-width & {
-        --swiper-padding: var(--padding, var(--swiper-gap));
+        --swiper-padding: var(--padding, min(var(--nds-viewport-padding), (var(--nds-content-max-width) + var(--nds-viewport-padding) - 100cqi) / 2));
     }
 
     // Pre-init guards live in critical CSS, released by the init stamp or the
@@ -115,23 +118,33 @@
     .nds-swiper:not(.nds-hero, .nds-spotlight) > &:has(> .nds-swiper-slide > .nds-card.nds-shadow) {
         --_bleed: var(--spacing-md);
     }
-    // Inside .nds-max-width the card past each screen edge reaches in with its shadow;
-    // clip one bleed in, which a card one gutter in never reaches.
-    // Not while the row moves: the clip would cut the passing cards short of the edge.
-    // Off is inset(0), not none: only inset to inset transitions.
-    .nds-max-width .nds-swiper:not(.nds-hero, .nds-spotlight) > &:has(> .nds-swiper-slide > .nds-card.nds-shadow) {
-        clip-path: inset(0);
-        transition: clip-path calc(var(--nds-transition-speed) * 1s) var(--nds-transition-effect);
+    // Inside .nds-max-width a neighbour ends in the gutter where the gutter is wider
+    // than the gap, and a shadow card reaches in past it: mask both, which the
+    // resting cards one gutter in never reach.
+    // Not while the row moves: the mask would cut the passing cards short of the edge.
+    // It fades rather than wipes: a 16px slice wiped in 0.2s read as an instant cut.
+    .nds-max-width .nds-swiper:not(.nds-hero, .nds-spotlight) > & {
+        --_clip: calc(max(0px, var(--swiper-padding) - var(--swiper-gap)) + var(--_b));
+        $mask: rgb(0 0 0 / var(--_swiper-fade-start, 1)) 0 var(--_clip), #000 var(--_clip) calc(100% - var(--_clip)), rgb(0 0 0 / var(--_swiper-fade-end, 1)) calc(100% - var(--_clip));
+        -webkit-mask-image: linear-gradient(to left, $mask);
+        mask-image: linear-gradient(to left, $mask);
+        @include ltr {
+            -webkit-mask-image: linear-gradient(to right, $mask);
+            mask-image: linear-gradient(to right, $mask);
+        }
+        transition: --_swiper-fade-start, --_swiper-fade-end;
+        transition-duration: calc(var(--nds-transition-speed) * 1s);
+        transition-timing-function: var(--nds-transition-effect);
         @include reduced-motion { transition: none; }
     }
-    .nds-max-width .nds-swiper:not(.nds-hero, .nds-spotlight, [data-swiper-peek]) > &:has(> .nds-swiper-slide > .nds-card.nds-shadow):not([data-swiper-moving]) {
-        clip-path: inset(0 var(--_b));
+    .nds-max-width .nds-swiper:not(.nds-hero, .nds-spotlight, [data-swiper-peek]) > &:not([data-swiper-moving]) {
+        --_swiper-fade-start: 0;
+        --_swiper-fade-end: 0;
     }
-    // A peek card runs to the end edge, so only the start side clips. On the last
+    // A peek card runs to the end edge, so only the start side masks. On the last
     // page of a row that stops, the peek sits at the start and nothing lies past the end.
-    .nds-max-width .nds-swiper[data-swiper-peek]:not(.nds-hero, .nds-spotlight, [data-state~="at-end"]) > &:has(> .nds-swiper-slide > .nds-card.nds-shadow):not([data-swiper-moving]) {
-        clip-path: inset(0 var(--_b) 0 0);
-        @include ltr { clip-path: inset(0 0 0 var(--_b)); }
+    .nds-max-width .nds-swiper[data-swiper-peek]:not(.nds-hero, .nds-spotlight, [data-state~="at-end"]) > &:not([data-swiper-moving]) {
+        --_swiper-fade-start: 0;
     }
 }
 
