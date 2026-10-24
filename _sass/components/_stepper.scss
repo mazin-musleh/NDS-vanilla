@@ -93,16 +93,9 @@
         // A step that also carries nds-card fills its column, not the card's own width cap
         --card-width: 100%;
 
-        &:not(:last-child) {
-            .nds-stepper-base::after {
-                display: block;
-            }
-        }
-
-        &:last-child {
-            .nds-stepper-base::after {
-                display: none;
-            }
+        // The last step has no line after it, in every layout.
+        &:last-child .nds-stepper-base::after {
+            display: none;
         }
     }
 
@@ -220,8 +213,8 @@
         color: inherit;
     }
 
-    // Data attribute support for custom text
-    &[data-step-text] {
+    // Custom text. :where() keeps the specificity of the plain circle, so a variant's ::before rule needs no twin.
+    &:where([data-step-text]) {
         font-size: 0;
         line-height: 1;
 
@@ -373,9 +366,8 @@
         }
 
         // Default content override for completed state
-        &::before,
-        &[data-step-text]::before {
-            content: "" !important;
+        &::before {
+            content: "";
             display: inline-block;
             width: calc(var(--stepper-size)/2);
             height: calc(var(--stepper-size)/2);
@@ -434,10 +426,9 @@
     .nds-stepper-circle {
         border: 0;
 
-        &::before,
-        &[data-step-text]::before {
-            content: '' !important;
-            font-size: 0 !important;
+        &::before {
+            content: '';
+            font-size: 0;
             width: 8px;
             height: 8px;
             border-radius: 50%;
@@ -452,13 +443,11 @@
             background-color: var(--stepper-button-completed-hovered);
         }
 
-        &::before,
-        &[data-step-text]::before {
+        &::before {
             background-color: var(--stepper-button-completed);
         }
 
-        &:hover::before,
-        &:hover[data-step-text]::before {
+        &:hover::before {
             background-color: var(--stepper-button-completed-hovered);
         }
     }
@@ -478,8 +467,7 @@
             border-color: var(--stepper-button-upcoming-hovered);
         }
 
-        &::before,
-        &[data-step-text]::before {
+        &::before {
             display: none;
         }
     }
@@ -501,6 +489,13 @@
             border-color: transparent;
             background-color: var(--featuredicon-bg, var(--background-primary-light));
             color: var(--featuredicon-color, var(--stepper-button-current));
+        }
+    }
+
+    // A dot keeps the dot look, as the current step: the light circle above hid its light dot.
+    &.nds-dot .nds-stepper-circle {
+        &, &:hover {
+            background-color: var(--stepper-button-current);
         }
     }
 }
@@ -551,10 +546,6 @@
             &:not(.nds-card) {
                 padding-bottom: 0;
             }
-
-            .nds-stepper-base::after {
-                display: none;
-            }
         }
 
         .nds-stepper-base {
@@ -579,7 +570,7 @@
     // .nds-end on an action: it sits at the end of the step's first row, beside the text.
     // A grid, not a float (the content is a flex column, which ignores floats). The column
     // is capped, so a row of buttons cannot crush the text. A wrapped action matches
-    // nothing here and stays stacked. Phones stack it.
+    // nothing here and stays stacked. Phones stack it (below the layout block).
     .nds-stepper-content:has(> .nds-stepper-action.nds-end) {
         display: grid;
         grid-template-columns: minmax(0, 1fr) fit-content(var(--stepper-action-width, 40%));
@@ -590,8 +581,6 @@
         > .nds-stepper-action.nds-end {
             grid-column: 2;
             align-self: start;
-
-            @include mobile { grid-column: 1 / -1; }
         }
     }
 
@@ -653,6 +642,13 @@
         .nds-stepper-content.nds-card {
             transform: translateY(calc(var(--_stepper-card-lift) * -1));
         }
+    }
+}
+
+// Outside the layout block: inside, its tablet and desktop copies held a phone query that never matches.
+@include mobile {
+    .nds-stepper#{stepper-is(vertical, sm)} .nds-stepper-content:has(> .nds-stepper-action.nds-end) > .nds-stepper-action.nds-end {
+        grid-column: 1 / -1;
     }
 }
 
@@ -866,14 +862,9 @@
                     background-color: var(--colors-alpha-white-80);
                 }
 
-                // Default content override for completed state
-                &::before,
-                &[data-step-text]::before {
-                    color: var(--text-oncolor-primary);
-                }
-
-                &:before {
-                    color: var(--stepper-button-completed) !important;
+                // The check, painted in currentColor, in the brand color on the white circle.
+                &::before {
+                    color: var(--stepper-button-completed);
                 }
             }
         }
@@ -883,8 +874,7 @@
         .nds-stepper-circle {
             background-color: var(--colors-alpha-white-10);
 
-            &::before,
-            &[data-step-text]::before {
+            &::before {
                 background-color: var(--colors-alpha-white-30);
             }
         }
@@ -892,8 +882,7 @@
         .nds-stepper-step[data-state~="completed"] .nds-stepper-circle {
             background-color: var(--background-surface-oncolor);
 
-            &::before,
-            &[data-step-text]::before {
+            &::before {
                 background-color: var(--background-surface-oncolor);
             }
         }
@@ -901,8 +890,7 @@
         .nds-stepper-step[data-state~="current"] .nds-stepper-circle {
             background-color: var(--background-surface-oncolor);
 
-            &::before,
-            &[data-step-text]::before {
+            &::before {
                 background-color: var(--background-primary);
             }
         }
@@ -911,6 +899,25 @@
             background-color: transparent;
             border-color: var(--colors-alpha-white-30);
         }
+    }
+}
+
+// Static on color: no step state, so every step takes the current step's on-color look.
+.nds-stepper.nds-oncolor.nds-static {
+    .nds-stepper-title { color: var(--text-oncolor-primary); }
+    .nds-stepper-description { color: var(--text-oncolor-secondary); }
+
+    .nds-stepper-step .nds-stepper-circle {
+        &, &:hover {
+            border-color: var(--background-surface-oncolor);
+            background-color: var(--colors-alpha-white-10);
+            color: var(--text-oncolor-primary);
+        }
+    }
+
+    &.nds-dot .nds-stepper-step .nds-stepper-circle {
+        &, &:hover { background-color: var(--background-surface-oncolor); }
+        &::before { background-color: var(--background-primary); }
     }
 }
 
