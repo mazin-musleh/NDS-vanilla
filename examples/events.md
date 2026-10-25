@@ -321,7 +321,7 @@ last_edit: "25/10/2026 - 01:58 PM"
                 </div>
                 <div class="nds-empty-placeholder nds-calendar-empty">
                     <i class="nds-icon nds-hgi-desert" aria-hidden="true"></i>
-                    <span class="nds-empty-message">No events this week</span>
+                    <span class="nds-empty-message" data-i18n="empty.message">No content to show</span>
                 </div>
             </div>
         </div>
