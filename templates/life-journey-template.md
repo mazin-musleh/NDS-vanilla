@@ -271,7 +271,9 @@ completed:
                         <li>Registration by the parent or the school principal.</li>
                     </ul>
                 </div>
-                <img class="nds-block" style="border-radius: var(--radius-md);" src="{{ '/assets/img/journy_students.webp' | relative_url }}" width="764" height="199" alt="" loading="lazy">
+                <div class="nds-block nds-image" style="--image-ratio: auto">
+                    <img src="{{ '/assets/img/journy_students.webp' | relative_url }}" width="764" height="199" alt="" loading="lazy">
+                </div>
             </div>
             <div data-journeys-slide hidden>
                 <div class="nds-block nds-prose">

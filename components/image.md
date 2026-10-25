@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 09:46 PM"
+last_edit: "25/10/2026 - 09:51 PM"
 ---
 
 <section id="image-overview" class="nds-content-section nds-doc-overview">
@@ -18,13 +18,12 @@ last_edit: "25/10/2026 - 09:46 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-An image is a box with one `img` inside. The box has a set shape, and the photo fills it: the parts that do not fit are cut off. A focal point picks the part of the photo that stays in view, and an overlay dims the photo with the overlay color.
+An image is a box with one `img` inside. The box has a set shape, and the photo fills it: the parts that do not fit are cut off. Or the box takes the photo's own shape, and nothing is cut. A focal point picks the part of the photo that stays in view, and an overlay dims the photo with the overlay color.
 
 Pick another component when:
 
 - the photo sits at the top of a card: the image header of a [Card](../components/card), with the same knobs
 - the photo shows a person: [Avatar](../components/avatar)
-- the photo is shown whole, at its own shape, in an article: a plain `img` in [Prose](../layout/prose)
 - the photo fills the top of a page: [Hero](../ui-shell/hero)
 
 </div>
@@ -82,11 +81,12 @@ Ratio, Focal point, Overlay and Radius set a custom property in the `style` attr
 | Ratio | 1:1 | `--image-ratio: 1` | `.nds-image` | Square tiles |
 | Ratio | 3:4 | `--image-ratio: 3 / 4` | `.nds-image` | Upright photos, such as a building or a full-length portrait |
 | Ratio | 3:1 | `--image-ratio: 3 / 1` | `.nds-image` | A thin strip, such as a banner across a page section |
+| Ratio | Original (limit: 1 crop) | `--image-ratio: auto` | `.nds-image` | The photo keeps its own shape and nothing is cut, so the focal point does nothing. Give the `img` a `width` and `height` |
 | Focal point | Center (default) | — | — | The middle of the photo stays in view |
-| Focal point | Left | `--image-pos-x: 0%` | `.nds-image` | The left side stays in view, in both text directions. For a photo wider than its shape |
-| Focal point | Right | `--image-pos-x: 100%` | `.nds-image` | The right side stays in view, in both text directions |
-| Focal point | Top | `--image-pos-y: 0%` | `.nds-image` | The top stays in view: a face, a skyline. For a photo taller than its shape |
-| Focal point | Bottom | `--image-pos-y: 100%` | `.nds-image` | The bottom stays in view |
+| Focal point | Left (limit: 1 crop) | `--image-pos-x: 0%` | `.nds-image` | The left side stays in view, in both text directions. For a photo wider than its shape |
+| Focal point | Right (limit: 1 crop) | `--image-pos-x: 100%` | `.nds-image` | The right side stays in view, in both text directions |
+| Focal point | Top (limit: 1 crop) | `--image-pos-y: 0%` | `.nds-image` | The top stays in view: a face, a skyline. For a photo taller than its shape |
+| Focal point | Bottom (limit: 1 crop) | `--image-pos-y: 100%` | `.nds-image` | The bottom stays in view |
 | Overlay | None (default) | — | — | The photo as it is |
 | Overlay | Light | `--image-overlay-opacity: 0.3` | `.nds-image` | A photo that steps back, such as a past event |
 | Overlay | Strong | `--image-overlay-opacity: 0.6` | `.nds-image` | A photo kept only as a texture |
@@ -132,7 +132,7 @@ Ratio, Focal point, Overlay and Radius set a custom property in the `style` attr
             <i class="hgi hgi-stroke hgi-aspect-ratio"></i>
             <span class="nds-label">Custom Ratio</span>
           </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-css">--image-ratio</code> takes any width / height, such as <code class="nds-inline-code lang-css">5 / 2</code>, not only the ratios in the builder.</p>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-css">--image-ratio</code> takes any width / height, such as <code class="nds-inline-code lang-css">5 / 2</code>, not only the ratios in the builder. <code class="nds-inline-code lang-css">auto</code> keeps the photo's own shape.</p>
         </div>
       </div>
     </div>
@@ -156,6 +156,8 @@ Ratio, Focal point, Overlay and Radius set a custom property in the `style` attr
 - Set the knobs in the `style` attribute or in your CSS, not with a new class.
 - For a gallery the user opens full screen, use the Viewer thumbnail structure. Leave `nds-image` off when the gallery needs your own look: `nds-ipv-thumbnail` adds no style.
 - Add `loading="lazy"` to an image far down the page. The box holds its ratio before the photo loads, so the page does not jump.
+- With `--image-ratio: auto`, give the `img` a `width` and `height`. The box then holds its space before the photo loads.
+- Inside [Prose](../layout/prose), a plain `img` already has rounded corners. Use Image there for a ratio or an overlay.
 
 </div>
   </div>
@@ -175,7 +177,7 @@ Set these on `.nds-image`, or on a parent to change every image inside it. A car
 
 | Property | Default | Controls |
 |---|---|---|
-| `--image-ratio` | `4 / 3` | The shape of the box, as width / height. A card's image header defaults to `2 / 1` |
+| `--image-ratio` | `4 / 3` | The shape of the box, as width / height. `auto` keeps the photo's own shape. A card's image header defaults to `2 / 1` |
 | `--image-pos-x` | `50%` | The part of the photo in view across. `0%` is the left edge in both text directions |
 | `--image-pos-y` | `50%` | The part of the photo in view down. `0%` is the top edge |
 | `--image-radius` | `var(--radius-md)` | The corner radius of the box |

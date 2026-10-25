@@ -337,12 +337,13 @@
             return !!id && not[1].split(/[\s,]+/).indexOf(id) >= 0;
         }
         // `(limit: 2 widgets)`: once that many chips sharing it are on, the others stay off.
+        // The chip's own group does not count: picking in it swaps the chip that is on.
         var limitOf = function (choice) { var match = choice.option.match(/\(limit:\s*([^)]+)\)/); return match && match[1]; };
         function isApplicable(choice) {
             if (choice.structure) return true;
             if (isExcluded(choice)) return false;
             var limit = limitOf(choice);
-            if (limit && active[choice.group] !== choice && order.filter(function (group) { return active[group] && limitOf(active[group]) === limit; }).length >= parseInt(limit, 10)) return false;
+            if (limit && active[choice.group] !== choice && order.filter(function (group) { return group !== choice.group && active[group] && limitOf(active[group]) === limit; }).length >= parseInt(limit, 10)) return false;
             // A `—` row with a target (a default that fits only some structures) is checked too.
             var operations = choice.ops.filter(function (row) { return row.op || (row.target && row.target !== '—'); });
             // Like the build, a descendant target never gates when the choice has a one-element target.

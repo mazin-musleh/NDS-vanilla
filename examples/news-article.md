@@ -30,7 +30,7 @@ sidemenu_mode: false
 <!-- Layout rules: one news article, in the order news sites use.
      - Flat hero: the headline, the byline as a Meta line under it (hero_meta: dates with <time datetime>, author,
        reading time), then the summary.
-     - The body is one nds-prose element, as the CMS writes it: the lead image in a figure with a caption and its credit,
+     - The body is one nds-prose element, as the CMS writes it: the lead image as an Image (16:9, as news sites crop it) in a figure with a caption and its credit,
        a dateline at the start of the first paragraph, headings from h2, a Quote next to the text it supports, and a gallery
        of Image Popup Viewer thumbnails for photos people look at closely.
      - After the body: Share as a row of buttons (the Inline structure), then the author as a Persona.
@@ -44,7 +44,9 @@ sidemenu_mode: false
         <div class="nds-info-content">
             <article class="nds-prose nds-block">
                 <figure>
-                    <img src="{{ 'assets/img/riyadhcenter.webp' | relative_url }}" alt="The King Abdullah Financial District in Riyadh at dusk" width="1280" height="720">
+                    <div class="nds-image" style="--image-ratio: 16 / 9">
+                        <img src="{{ 'assets/img/riyadhcenter.webp' | relative_url }}" alt="The King Abdullah Financial District in Riyadh at dusk" width="1280" height="720">
+                    </div>
                     <figcaption>The first center opened in the King Abdullah Financial District on 20 October. Photo: Media Center</figcaption>
                 </figure>
                 <p><strong>Riyadh, 22 October 2026</strong> — Twelve service centers opened across Riyadh this week. Each one serves visitors with no appointment, from 8 AM to 10 PM, seven days a week.</p>
