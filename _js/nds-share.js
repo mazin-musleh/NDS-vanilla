@@ -1,5 +1,5 @@
 /* NDS.Share — public surface
- * Rides: nds-copy (the copy-link action; soft — the other buttons work without it)
+ * Rides: nds-copy (the copy-link action)
  *      · nds-dropmenu (when the buttons sit in a menu; soft — an inline row works too)
  * Requires:
  *   .nds-share needs .nds-share-x, .nds-share-linkedin, .nds-share-whatsapp, .nds-share-copy, [data-share-href] — no button shares
@@ -52,8 +52,6 @@
     }
 
     async function copyLink(url, button) {
-        // Soft dependency — share's copy-link action no-ops if NDS.Copy isn't bundled.
-        if (!NDS.Copy) return;
         const ok = await NDS.Copy.writeText(url);
         if (!ok || !button) return;
         const wrapper = button.closest('.nds-share');

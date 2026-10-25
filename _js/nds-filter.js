@@ -39,7 +39,7 @@
  *                          preventDefault() to send the request yourself (via NDS.request), and call
  *                          detail.rollback() if it fails (chips, badge and URL are already
  *                          committed by then)
- *   nds:filter:success     detail {success, form, isJson, data?} — after a successful AJAX apply
+ *   nds:filter:success     detail {success, form, isJson, data?, html?} — after a successful AJAX apply
  *   nds:filter:error       detail {error, form} — cancelable; preventDefault() suppresses the toast
  *   nds:form:valid         detail {} — dispatched on nds-forms' behalf, so form-level
  *                          listeners work on a filter too
@@ -763,10 +763,9 @@
          */
         _showAjaxErrorToast() {
             const alertId = `nds-filter-ajax-error-${this.targetId}`;
-            // Soft dependency + id dedupe, both mirroring showNoResultsAlert: skip
-            // if NDS.Alert isn't bundled, and don't stack a duplicate id when a
-            // retry fails while the first toast is still up.
-            if (document.getElementById(alertId) || !NDS.Alert) return;
+            // Id dedupe, mirroring showNoResultsAlert: don't stack a duplicate id
+            // when a retry fails while the first toast is still up.
+            if (document.getElementById(alertId)) return;
 
             NDS.Alert.create({
                 display: 'toast',
@@ -1844,10 +1843,8 @@
 
             // Filter builds the slider, so it kicks off Slider for it (the loader
             // only auto-inits Slider when a static .nds-slider exists at load).
-            // init() is idempotent. Cross-bundle safe via the loader's lazy stub:
-            // same bundle = synchronous paint; separate bundle = the stub auto-loads
-            // Slider and paints async. Fire-and-forget — never a sync read of NDS.Slider.
-            if (NDS.Slider && NDS.Slider.init) NDS.Slider.init();
+            // init() is idempotent; Slider ships in Filter's bundle.
+            NDS.Slider.init();
         }
 
         // Replace the placeholder with a fieldset holding the canonical slider
@@ -1965,9 +1962,7 @@
             this.criteria.filters[filterName] = (low <= filterInput.min && high >= filterInput.max) ? [] : [low + '-' + high];
         }
 
-        // Write both thumbs and repaint the slider fill. NDS.Slider is a soft
-        // dependency — when absent the values still land on the inputs and the
-        // slider paints from them on its own init.
+        // Write both thumbs and repaint the slider fill.
         _setRangeValues(filterName, low, high) {
             const filterInput = this.filterInputs[filterName];
             if (!filterInput || filterInput.type !== 'range') return;
@@ -1987,9 +1982,7 @@
                 filterInput.minInput.value = low;
                 filterInput.maxInput.value = high;
             }
-            // Soft dependency on NDS.Slider — same cross-bundle contract declared where
-            // the slider is built; without it the thumbs keep their last paint.
-            if (NDS.Slider && NDS.Slider.reinit) NDS.Slider.reinit(filterInput.controlContainer);
+            NDS.Slider.reinit(filterInput.controlContainer);
             this._syncRangeCriteria(filterName);
         }
 
@@ -2078,8 +2071,7 @@
             span.className = 'nds-number-format';
             if (filterInput.currency) span.setAttribute('data-currency', filterInput.currency);
             if (filterInput.unit) span.setAttribute('data-unit', filterInput.unit);
-            // Soft dependency — range chips render unformatted if NDS.Numbers isn't bundled.
-            if (NDS.Numbers && NDS.Numbers.format) NDS.Numbers.format(span);
+            NDS.Numbers.format(span);
             return span;
         }
 
@@ -2649,8 +2641,7 @@
             // to render into means no alert, not a crash on _targetContainer.tagName.
             if (!this._targetContainer) return;
             const alertId = `nds-filter-no-results-${this.targetId}`;
-            // Soft dependency — filter skips no-results alert banner if NDS.Alert isn't bundled.
-            if (document.getElementById(alertId) || !NDS.Alert) return;
+            if (document.getElementById(alertId)) return;
 
             const self = this;
 
@@ -3083,6 +3074,8 @@
             // Sort is created by this filter, so it dies with it — its trigger
             // listeners live on surfaces that outlive the target container.
             if (this.sort) { this.sort.destroy(); this.sort = null; }
+            // The form outlives the filter: a stale box would submit its last criteria beside the next instance's.
+            this._hiddenInputsContainer?.remove();
             // Release pooled NDS.onDomAdd subscribers registered per filter
             // element by _setupManualFilter; without this, each filter instance
             // would leak one closure per filter element for the page lifetime.

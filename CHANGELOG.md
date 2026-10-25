@@ -189,6 +189,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Feedback** — Clearing a field's messages, such as after a passing submit, no longer removes the status icons inside the field: an Upload row keeps its check mark. Only a message, with its words or a role, is cleared.
 - **Accessibility** — Escape closes the reading mask only when no modal, panel or menu is open.
 - **Accessibility** — A mode's text-size preset applies even after the visitor cycled the text size tile back to its default.
+- **Accessibility** — `NDS.Accessibility.open()` on a page with no `data-accessibility-toggle` button opens a working panel and applies saved settings. It opened a panel whose tiles did nothing.
 - **Accordion** — The loading bar stays next to a leading icon.
 - **Accordion** — In a tab opened in the background, an accordion shows when the page loads. Before, it waited until the visitor opened the tab.
 - **Alert** — A toast's long title no longer runs under the close button. An alert created with the id of one already in the page replaces it, so a repeated toast no longer stacks copies with one id.
@@ -268,6 +269,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Filter** — A slider chip groups thousands only when its slider does, with a currency, a unit or `nds-number-format` on its output. A year read `2,000 - 2,010` on the chip and `2000` on the slider.
 - **Filter** — A slider group the script builds keeps its `id`, `data-filter` and other attributes, as a checkbox group does. `getElementById()` on it returned `null` after load, and `NDS.init.destroy()` then `NDS.init.mount()` lost the group.
 - **Filter** — A failed AJAX request puts back only the filter's own keys in the address. It put back the whole old address, so a Calendar week, a page or a sort chosen while the request ran was lost.
+- **Filter** — `NDS.Filter.destroy()` removes the hidden inputs it added to a form. A filter created again on the same form sent the old filters with the new ones.
 - **Filter and Pagination** — Items added after the page loads keep the filter values and the page in the URL. `NDS.init.mount()` dropped `?category=` for a group built from the new items, a `reapplyUrlParamsForFilter()` call dropped the value of the group reapplied next, and `?page=` went back to page 1.
 - **Filter, Multiselect and Tag Input** — A chip left on the page after `destroy()` no longer calls the destroyed instance when clicked.
 - **Filter and Tables** — `destroy()` removes the `data-delay` it wrote on a dropmenu, and a `data-delay` you wrote stays. A column menu's `destroy()` removes its Reset footer, so a second `create()` no longer shows two. A filter created again watches filter options added later.

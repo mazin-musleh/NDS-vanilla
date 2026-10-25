@@ -165,6 +165,8 @@
             if (this._offHeroResize) this._offHeroResize();
             if (this._offResize) this._offResize();
             if (this._offContentResize) this._offContentResize();
+            // A surviving backref hands the next create() a dead instance.
+            if (this._sideInfo.ndsSideinfo === this) delete this._sideInfo.ndsSideinfo;
         }
     }
 
@@ -195,13 +197,7 @@
             element.ndsSideinfo = instance;
             return instance;
         },
-        // Drops the expando too: a surviving backref hands the next reader a dead instance.
-        destroy: (element) => {
-            const instance = element?.ndsSideinfo;
-            if (!instance) return;
-            instance.destroy();
-            delete element.ndsSideinfo;
-        }
+        destroy: (element) => element?.ndsSideinfo?.destroy()
     };
 
 })();

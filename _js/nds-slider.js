@@ -1,6 +1,5 @@
 /* NDS.Slider — public surface
- * Rides: nds-numbers (locale, thousand separators and the currency mark on the value
- *        output; soft — the raw value shows without it)
+ * Rides: nds-numbers (locale, thousand separators and the currency mark on the value output)
  * Requires:
  *   .nds-slider-container:not(.nds-slider-range) needs .nds-slider-track — the fill never paints
  *   .nds-slider-container.nds-slider-range needs .nds-slider-min — the thumbs are not clamped and the fill never paints
@@ -52,10 +51,8 @@
         return ((parseFloat(input.value) - min) / (max - min)) * 100;
     }
 
-    // Soft dependency — Slider skips locale/currency formatting when NDS.Numbers
-    // (a deferred, optional sibling) isn't bundled; the output keeps the raw value.
     function formatOutput(el) {
-        if (el.classList.contains('nds-number-format') && NDS.Numbers && NDS.Numbers.format) NDS.Numbers.format(el);
+        if (el.classList.contains('nds-number-format')) NDS.Numbers.format(el);
     }
 
     // Re-format on every update: NDS.Numbers also paints the [data-currency]::after

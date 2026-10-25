@@ -1436,7 +1436,8 @@
 
         toggleBtn = triggerEl || document.querySelector('[data-accessibility-toggle]');
         panel = resolvePanel();
-        if (!toggleBtn || !panel) return;
+        // No trigger is fine (open() from code); no panel unlatches so the next arm retries.
+        if (!panel) { initDone = false; return; }
         // Not in the markup: before the first press the panel does not exist, so the id would point nowhere.
         document.querySelectorAll('[data-accessibility-toggle]').forEach(toggle => toggle.setAttribute('aria-controls', panel.id));
 

@@ -1346,10 +1346,10 @@
     // The pick lives in a hidden carrier; its own only, a picker nested in its menu holds its own.
     const checkField = (dropmenu) => {
         const carrier = findOwnFirstIn(dropmenu, 'input[data-nds-select-value]');
-        const valid = !!(carrier && carrier.value.trim());
+        const valid = !NDS.validation.isRequired(dropmenu) || !!(carrier && carrier.value.trim());
         return { valid, message: valid ? '' : strings.text('select_option'), empty: true, value: carrier ? carrier.value : '' };
     };
-    NDS.validation.addRule('.nds-dropmenu[data-select-name][data-required]',
+    NDS.validation.addRule('.nds-dropmenu[data-select-name][data-required], .nds-dropmenu[data-select-name].nds-required',
         (dropmenu) => Object.assign(checkField(dropmenu), { focus: findOwnFirstIn(dropmenu, '.nds-dropmenu-trigger') || dropmenu }),
         { on: ['nds:dropmenu:select'] });
 
