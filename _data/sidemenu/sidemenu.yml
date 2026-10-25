@@ -106,6 +106,9 @@
     - label: "Book an Appointment"
       url: "/examples/book-appointment"
       href: "/examples/book-appointment.html"
+    - label: "Open Data"
+      url: "/examples/open-data"
+      href: "/examples/open-data.html"
 
 - label: "Events"
   has_sub: true

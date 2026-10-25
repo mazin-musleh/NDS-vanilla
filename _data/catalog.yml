@@ -1236,6 +1236,15 @@
   url: "/examples/book-appointment.html"
   new: true
 
+- title: "Open Data"
+  description: "One dataset's page: the rows as a table or a chart, the columns, the API and the files, with the facts beside them."
+  use_when: "A page for one dataset, report or statistic people view, download or read from code: an open data portal, a statistics release, a dataset detail page. The facts (publisher, category, last update, licence) and the main download are the side info column (nds-has-sideinfo). The main column stacks section wrappers with nds-block: the data in a Content Switcher with two views of the same rows, a sortable compact Table with an Export group (CSV, Excel, PDF) in its Toolbar, and a bar Chart a page script draws from that table, so the views never disagree; a compact Table of the columns; a Code block with one tab per language and a sample answer for the API; a compact Table of the files with download links. A formatted number cell carries data-sort-value and data-export-value. For a list of datasets with search and filters, see the Services List."
+  icon: '<i class="hgi hgi-stroke hgi-database-01"></i>'
+  category: "Content"
+  tags: ["Table", "Chart", "Content Switcher", "Export", "Code"]
+  url: "/examples/open-data.html"
+  new: true
+
 # ── Events — seasonal theme packs ─────────────────────────────────────────
 
 - title: "National Day 96"
