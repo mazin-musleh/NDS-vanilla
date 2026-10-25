@@ -20,7 +20,8 @@
  *   instance.getFilesByStatus(status)            same shape, filtered
  *   instance.startUpload(id)                     upload one, or every 'ready' file with no id
  *   instance.retry(id) / .abort(id)              re-send an errored file / cancel a live one
- *   instance.setFileStatus(id, status, options)  drive a row yourself (options {progress, error})
+ *   instance.setFileStatus(id, status, options)  drive a row yourself (options {progress, error});
+ *                                                a move to 'complete' or 'error' fires success or error
  *   instance.setFileProgress(id, percent)        drive the progress ring yourself
  *   instance.validateFile(file)                  [] when it passes, [messages] when it fails —
  *                                                checks without staging anything
@@ -365,10 +366,17 @@
         setFileStatus(fileId, status, options = {}) {
             const file = this._files.find(entry => entry.id === fileId);
             if (!file) return false;
+            const changed = file.status !== status;
             file.status = status;
             if (options.progress !== undefined) file.progress = options.progress;
             if (options.error) file.error = options.error;
             this._syncFileItem(fileId);
+            // An upload your code sends ends as the built-in one does: the field's check reruns on these events, after the row.
+            if (changed && status === 'complete') {
+                this._dispatchEvent('nds:upload:success', { fileData: this._toPublic(file), response: file.response });
+            } else if (changed && status === 'error') {
+                this._dispatchEvent('nds:upload:error', { fileData: this._toPublic(file), error: file.error });
+            }
             return true;
         }
 
