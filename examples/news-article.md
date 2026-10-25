@@ -2,6 +2,7 @@
 layout: page
 # layout + layout_class name the page shape: the Front Matter table in layout/page-layout.md maps each key to its markup. This file's body is only the inner content.
 layout_class: nds-has-sideinfo
+content_class: nds-stripe
 title: News Article
 hero_style: "nds-flat"
 hero_title: Twelve new service centers open in Riyadh
@@ -34,8 +35,8 @@ sidemenu_mode: false
        a dateline at the start of the first paragraph, headings from h2, a Quote next to the text it supports, and a gallery
        of Image Popup Viewer thumbnails for photos people look at closely.
      - After the body: Share as a row of buttons (the Inline structure), then the author as a Persona.
-     - The side info column holds what news sites put beside an article: related news, most read, the press office,
-       a one-field email signup and the Media Center's accounts. Each is a group with a title. It is not sticky.
+     - The side info column holds what news sites put beside an article: related news and most read.
+       Each is a group with a title. It is not sticky.
      - More news is a Swiper of image cards in a breakout body, each with a Meta line and one link.
      - The NewsArticle JSON-LD block at the end gives search engines the headline, dates, author and image. -->
 
@@ -60,7 +61,7 @@ sidemenu_mode: false
                     <li>Checking and paying traffic fines</li>
                 </ul>
                 <p>Each center has a desk for older visitors and visitors with a disability, with a sign language interpreter on request.</p>
-                <figure class="nds-quote">
+                <figure class="nds-quote nds-sm">
                     <blockquote class="nds-quote-body">
                         <p class="nds-quote-text">Most people finish their services online. The centers are for everyone else, so that no one is left behind by a screen.</p>
                     </blockquote>
@@ -103,23 +104,25 @@ sidemenu_mode: false
                 </div>
             </article>
 
+            <hr class="nds-divider nds-4xl">
+
             <!-- Share after the article: the Inline structure, a row of buttons -->
             <div class="nds-block">
                 <h2 class="nds-block-title">Share this article</h2>
                 <div class="nds-share">
-                    <button class="nds-btn nds-secondary-outline nds-share-x" type="button" aria-label="Share on X" data-i18n-aria-label="share.share_on_x">
+                    <button class="nds-btn nds-secondary-outline nds-md nds-share-x" type="button" aria-label="Share on X" data-i18n-aria-label="share.share_on_x">
                         <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
                         <span class="nds-label">X</span>
                     </button>
-                    <button class="nds-btn nds-secondary-outline nds-share-linkedin" type="button" aria-label="Share on LinkedIn" data-i18n-aria-label="share.share_on_linkedin">
+                    <button class="nds-btn nds-secondary-outline nds-md nds-share-linkedin" type="button" aria-label="Share on LinkedIn" data-i18n-aria-label="share.share_on_linkedin">
                         <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
                         <span class="nds-label">LinkedIn</span>
                     </button>
-                    <button class="nds-btn nds-secondary-outline nds-share-whatsapp" type="button" aria-label="Share on WhatsApp" data-i18n-aria-label="share.share_on_whatsapp">
+                    <button class="nds-btn nds-secondary-outline nds-md nds-share-whatsapp" type="button" aria-label="Share on WhatsApp" data-i18n-aria-label="share.share_on_whatsapp">
                         <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
                         <span class="nds-label">WhatsApp</span>
                     </button>
-                    <button class="nds-btn nds-secondary-outline nds-share-copy" type="button" aria-label="Copy Link" data-i18n-aria-label="share.copy_link" data-copy-label>
+                    <button class="nds-btn nds-secondary-outline nds-md nds-share-copy" type="button" aria-label="Copy Link" data-i18n-aria-label="share.copy_link" data-copy-label>
                         <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
                         <span class="nds-label" data-i18n="share.copy_link">Copy Link</span>
                     </button>
@@ -140,15 +143,15 @@ sidemenu_mode: false
             </div>
         </div>
 
-        <!-- The Media Center around the article: related and most read news, the press office, email news, accounts.
-             Each block is a group with a title; a card is optional. Not sticky: the column is longer than a screen -->
+        <!-- The Media Center around the article: related and most read news.
+             Each block is a group with a title; a card is optional. Not sticky: it scrolls away with the page, as on news sites -->
         <aside class="nds-sideinfo" aria-label="More from the Media Center">
             <div class="nds-sideinfo-group">
                 <span class="nds-sideinfo-title">Related news</span>
                 <div class="nds-drawer nds-divided">
                     <ul class="nds-drawer-list">
                         <li>
-                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                            <a href="#" class="nds-btn nds-subtle">
                                 <span class="nds-drawer-item">
                                     <span class="nds-drawer-item-head">
                                         <span class="nds-label">Wait times at every center, live on the map</span>
@@ -161,7 +164,7 @@ sidemenu_mode: false
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                            <a href="#" class="nds-btn nds-subtle">
                                 <span class="nds-drawer-item">
                                     <span class="nds-drawer-item-head">
                                         <span class="nds-label">Sign language at 20 more services</span>
@@ -174,7 +177,7 @@ sidemenu_mode: false
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                            <a href="#" class="nds-btn nds-subtle">
                                 <span class="nds-drawer-item">
                                     <span class="nds-drawer-item-head">
                                         <span class="nds-label">Book a visit to a center online</span>
@@ -187,7 +190,7 @@ sidemenu_mode: false
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                            <a href="#" class="nds-btn nds-subtle">
                                 <span class="nds-drawer-item">
                                     <span class="nds-drawer-item-head">
                                         <span class="nds-label">2026 plan: 20 centers in three cities</span>
@@ -208,7 +211,7 @@ sidemenu_mode: false
                 <div class="nds-drawer nds-divided">
                     <ul class="nds-drawer-list">
                         <li>
-                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                            <a href="#" class="nds-btn nds-subtle">
                                 <span class="nds-drawer-item">
                                     <span class="nds-drawer-item-head">
                                         <span class="nds-label">Hajj permits open on the portal</span>
@@ -221,7 +224,7 @@ sidemenu_mode: false
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                            <a href="#" class="nds-btn nds-subtle">
                                 <span class="nds-drawer-item">
                                     <span class="nds-drawer-item-head">
                                         <span class="nds-label">Traffic fines can now be paid in parts</span>
@@ -234,7 +237,7 @@ sidemenu_mode: false
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                            <a href="#" class="nds-btn nds-subtle">
                                 <span class="nds-drawer-item">
                                     <span class="nds-drawer-item-head">
                                         <span class="nds-label">New rules for home businesses</span>
@@ -247,86 +250,6 @@ sidemenu_mode: false
                             </a>
                         </li>
                     </ul>
-                </div>
-            </div>
-            <!-- Press office: each contact with a Copy button, as on the Contact Us template -->
-            <div class="nds-sideinfo-group">
-                <span class="nds-sideinfo-title">Press office</span>
-                <dl class="nds-definition-list">
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
-                            <span class="nds-label">Phone</span>
-                        </dt>
-                        <dd class="nds-item-action">
-                            <a href="tel:+966112345678" class="nds-primary">
-                                <span class="nds-label nds-ltr">+966 11 234 5678</span>
-                            </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy" data-copy="+966112345678" aria-label="Copy phone number">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                            </button>
-                        </dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
-                            <span class="nds-label">Email</span>
-                        </dt>
-                        <dd class="nds-item-action">
-                            <a href="mailto:media@example.gov.sa" class="nds-primary">
-                                <span class="nds-label">media@example.gov.sa</span>
-                            </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy" data-copy="media@example.gov.sa" aria-label="Copy email">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                            </button>
-                        </dd>
-                    </div>
-                </dl>
-            </div>
-            <!-- Newsletter: a one-field form -->
-            <div class="nds-sideinfo-group">
-                <span class="nds-sideinfo-title">News by email</span>
-                <form id="news-subscribe" class="nds-form" data-ajax>
-                    <div class="nds-form-container" data-required>
-                        <div class="nds-form-header">
-                            <label for="news-email">
-                                <span class="nds-label">Email address</span>
-                                <span class="nds-info">One email a week, with the main news</span>
-                            </label>
-                        </div>
-                        <div class="nds-form-control">
-                            <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
-                            <input type="email" id="news-email" name="email" class="nds-input" placeholder="name@example.com" autocomplete="email">
-                            <div class="nds-form-action">
-                                <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear email" hidden>
-                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-form-actions">
-                        <button type="submit" class="nds-btn nds-primary">
-                            <span class="nds-label">Subscribe</span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <!-- Follow: the Media Center's accounts, as on the Contact Us template -->
-            <div class="nds-sideinfo-group">
-                <span class="nds-sideinfo-title">Follow the Media Center</span>
-                <div class="nds-social-links">
-                    <a href="https://x.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on X">
-                        <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
-                    </a>
-                    <a href="https://linkedin.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on LinkedIn">
-                        <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
-                    </a>
-                    <a href="https://instagram.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on Instagram">
-                        <i class="hgi hgi-stroke hgi-instagram"></i>
-                    </a>
-                    <a href="https://youtube.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on YouTube">
-                        <i class="hgi hgi-stroke hgi-youtube"></i>
-                    </a>
                 </div>
             </div>
         </aside>
@@ -450,21 +373,6 @@ sidemenu_mode: false
         </div>
     </div>
 </section>
-
-<script>
-  function initPage() {
-    // Subscribe: the form waits on the request, then says so
-    document.getElementById('news-subscribe').addEventListener('nds:form:valid', function (e) {
-      var form = e.target;
-      e.detail.waitUntil(new Promise(function (resolve) { setTimeout(resolve, 800); }).then(function () {
-        form.reset();
-        NDS.Alert.create({ variant: 'success', title: 'Subscribed', description: 'The first email arrives on Sunday.', display: 'toast', duration: 4000 });
-      }));
-    });
-  }
-  // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
-</script>
 
 <!-- Structured data for search engines (schema.org NewsArticle): the same headline, dates, author and image as the page -->
 <script type="application/ld+json">
