@@ -1200,6 +1200,15 @@
   tags: ["Charts", "Tables", "Stats"]
   url: "/examples/console-demo.html"
 
+- title: "Events Calendar"
+  description: "A ministry's events page: a featured event with a countdown, the events in a Calendar by week or month, and booking in one shared panel."
+  use_when: "A page of dated events that people browse by week or month and act on: public events, workshops, webinars, conferences, training sessions, open days. A featured event card with a Countdown, Tags and a Meta line; the Calendar (Grid, Rows and Month views) with a type and place Filter as the events list; a one-field subscribe form. How an event opens depends on the page: to book or act, every row opens ONE shared Panel that a small page script fills from the clicked row (a real site loads it by id); for an agenda only, each row links to the event's own page; for a few read-only details, one shared Modal. A full event still opens: its seats fact is Full in Meta's error status (a few seats left: warning), and the panel shows a warning Alert in place of the form, never a disabled Book button. Full chrome with a sub hero, striped sections (nds-stripe on .nds-content), and no side menu. The page's opening comment gives these rules."
+  icon: '<i class="hgi hgi-stroke hgi-calendar-03"></i>'
+  category: "Content"
+  tags: ["Calendar", "Panel", "Countdown", "Filter", "Meta"]
+  url: "/examples/events.html"
+  new: true
+
 # ── Events — seasonal theme packs ─────────────────────────────────────────
 
 - title: "National Day 96"

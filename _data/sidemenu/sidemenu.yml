@@ -94,6 +94,9 @@
     - label: "Console"
       url: "/examples/console-demo"
       href: "/examples/console-demo.html"
+    - label: "Events Calendar"
+      url: "/examples/events"
+      href: "/examples/events.html"
 
 - label: "Events"
   has_sub: true
