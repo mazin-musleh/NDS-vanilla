@@ -112,6 +112,9 @@
     - label: "News Article"
       url: "/examples/news-article"
       href: "/examples/news-article.html"
+    - label: "Account Settings"
+      url: "/examples/account-settings"
+      href: "/examples/account-settings.html"
 
 - label: "Events"
   has_sub: true
