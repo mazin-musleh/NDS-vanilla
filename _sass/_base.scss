@@ -40,6 +40,18 @@ mark {
 }
 
 /* ========================================
+   CAPTION
+   ======================================== */
+
+// Zero specificity: any class wins. A Quote's author line is a figcaption too, with its own look.
+:where(figcaption:not(.nds-quote-author)) {
+    font-size: var(--typo-text-sm-FS);
+    line-height: var(--typo-text-sm-LH);
+    color: var(--text-secondary-paragraph);
+    margin-block-start: var(--spacing-xs);
+}
+
+/* ========================================
    DIVIDERS
    ======================================== */
 

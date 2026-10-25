@@ -169,6 +169,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Performance** — On a busy phone, the Main Navigation's menu button and menus work as soon as the page shows, and a Modal or a modal Panel opens in about half the time. A card's loading pulse runs only on shown cards, a tab switch no longer measures every Expandable on the page, a Swiper image that waits for its source no longer pulses, a FAB dock that tucks near the page end no longer restyles the whole page, and the cookie panel is built while the page is idle before it opens by itself.
 - **Persona** — every element after the divider takes its own full row; a definition list after it needs no inline `flex`.
 - **Persona** — The name is `--text-display` (was `--text-default`). `--persona-name-color` sets another color.
+- **Captions** — A `figcaption` has small, secondary text everywhere, not only inside prose. A Quote's author line keeps its own look.
 - **Prose** — An image inside prose has rounded corners (`--radius-md`), as Image Popup Viewer thumbnails do. An image a component owns, such as an avatar in a Quote, keeps its own shape.
 - **Quote** — The title is `--text-display` (was `--text-default`). `--quote-title-color` sets another color.
 - **Scroll More** — `--scroll-max-width` defaults to `100%` (was `none`), so wide content scrolls; set `none` for the old behavior.

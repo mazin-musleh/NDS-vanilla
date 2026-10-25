@@ -132,13 +132,6 @@
         color: var(--text-secondary-paragraph);
     }
 
-    :where(figcaption:not(.nds-quote-author)) {
-        font-size: var(--typo-text-sm-FS);
-        line-height: var(--typo-text-sm-LH);
-        color: var(--text-secondary-paragraph);
-        margin-block-start: var(--spacing-xs);
-    }
-
     // The divider (which owns bare <hr>, _base.scss) gets editorial spacing
     // here via its own knob — context sets the dial, the component keeps the look
     :where(hr) {
