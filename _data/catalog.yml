@@ -1200,6 +1200,15 @@
   tags: ["Charts", "Tables", "Stats"]
   url: "/examples/console-demo.html"
 
+- title: "Job Apply"
+  description: "A job post with its application on the same page: the role, then one long form in groups, with each field picked by the kind of answer."
+  use_when: "A job, grant, program, scholarship or volunteer post that people read and apply to on the same page, or any long one-page application form. The facts are the side info column (nds-has-sideinfo), with a Countdown to the closing date whose end hides the way to apply (data-countdown-hide). The main column stacks the role in prose and the form with nds-block; the form is split into groups, each an nds-block with a block title over a grid of fields. Each field fits a kind of answer: Radio for one of a few visible options, Custom Select for one of a longer list, Multiselect for several from a fixed list, Tag Input for free values, a range Slider for a rough range, Date Picker for a day, Editor for formatted text (a short toolbar for a letter; the full set is for page content), Upload for a file sent with the form, one Checkbox for an agreement. After a passing submit, a Status Section replaces the content. For a flow in steps, see the Form Template; for a list of posts with filters, the Services List."
+  icon: '<i class="hgi hgi-stroke hgi-job-search"></i>'
+  category: "Form"
+  tags: ["Multiselect", "Tag Input", "Slider", "Editor", "Upload"]
+  url: "/examples/job-apply.html"
+  new: true
+
 - title: "Track My Request"
   description: "One request the user already sent: its history, what to do now, and the final answer, in four states."
   use_when: "A page for one request, application, case, ticket or order the user already sent: track a request, application status, case details, order tracking. The history is a Timeline (a vertical dot Stepper, newest on top); the summary is the side info column (nds-has-sideinfo) with a Print button that prints it alone. When the user must act, a warning Alert sits at the top of the main column with the action right under it (here a File Upload and Send), never a link to another page. With nothing to do, an info Alert says what happens next and when. A final answer is a Status Section with data-status (success or error), first on the page, above the history; then the User Feedback rating closes the page, after the last edit line (feedback_type: rating). The page runs NDS.SessionTimeout.init(), as every signed-in page does. A Demo only select in the hero previews the four states; the server renders one. For a flow the user is filling in, see the Form Template; for a life event's services, the Journey Page Template."
