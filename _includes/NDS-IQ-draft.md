@@ -155,10 +155,10 @@ Do all NDS work yourself: never hand a page, a row or a check to a helper agent 
 Match by `use_when` across the catalog's templates, examples, and components, never by title. Read every `use_when` line, unfiltered: a keyword search may confirm a match, never pick the candidates. Then:
 
 1. A matching template → copy it.
-2. No template → the closest example.
+2. No template → the closest example: its parts are a floor, its markup is not copied as is.
 3. No match → a custom scaffold inside red line #4, reusing canonical wiring patterns.
 
-Keep the matched source's structure and put the project's content into every part; never rebuild it. It is a floor, not a ceiling: add the sections the project needs, matched through the catalog. A family's `Built and Verified` archetype outranks the cascade for its siblings. Screens that share one app shell (one layout with the same navigation) keep that shell's page shape: a matched template supplies the content inside it, never a different page shape.
+Keep the matched source's structure and put the project's content into every part; never rebuild it. It is a floor, not a ceiling: add the sections the project needs, matched through the catalog. With an example or a custom scaffold, each part's markup comes from that component's own doc, never from the example. A family's `Built and Verified` archetype outranks the cascade for its siblings. Screens that share one app shell (one layout with the same navigation) keep that shell's page shape: a matched template supplies the content inside it, never a different page shape.
 
 At each page start, resolve its recorded questions, list every UI part, and match each against the component catalog: every field, control and state is a part, so a date field is matched like a table, and so is each state the page can reach (signed out, empty, loading, failed, not found, denied, success). Name each part by the job it does, never by the legacy class or element it replaces. Record the list under the page's plan row before the first line of markup, one line per part: `part → component`, where the component is a catalog entry's name, never a bare HTML tag such as `select`, followed by every line of that component's doc that limits its use (never, only, do not) (no-plan: in the final report).
 
