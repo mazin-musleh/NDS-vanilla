@@ -109,6 +109,9 @@
     - label: "Open Data"
       url: "/examples/open-data"
       href: "/examples/open-data.html"
+    - label: "News Article"
+      url: "/examples/news-article"
+      href: "/examples/news-article.html"
 
 - label: "Events"
   has_sub: true

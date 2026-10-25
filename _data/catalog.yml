@@ -1245,6 +1245,15 @@
   url: "/examples/open-data.html"
   new: true
 
+- title: "News Article"
+  description: "One news article as a CMS renders it: a cover image, prose with a quote and a photo gallery, the author, the article's facts beside it, and more news."
+  use_when: "A page for one article people read: news, a press release, an announcement, a blog post, a media center story. The headline and summary are the hero, with the category as a hero tag and the hero's Share. The facts (published and updated dates, category, reading time, press contact) are the side info column (nds-has-sideinfo), which also keeps the text lines short. The body is one nds-prose element, as a CMS writes it: the cover image in a figure with a caption, plain headings from h2, a Quote next to the text it supports, and a gallery of Image Popup Viewer thumbnails (one ratio, each with a title, the zoom badge). The author closes the article as a Persona. More news is a Swiper of image cards in a breakout body, each with a Meta line and one link. For a long page with a table of contents, see the Content Template."
+  icon: '<i class="hgi hgi-stroke hgi-news"></i>'
+  category: "Content"
+  tags: ["Prose", "Quote", "Image Popup Viewer", "Persona", "Swiper"]
+  url: "/examples/news-article.html"
+  new: true
+
 # ── Events — seasonal theme packs ─────────────────────────────────────────
 
 - title: "National Day 96"
