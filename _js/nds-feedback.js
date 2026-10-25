@@ -20,6 +20,8 @@
  *   - position is 'before' | 'after' | 'prepend' | 'append' (default 'append'); the first
  *     two insert as siblings of the target, the last two inside it.
  *   - role and aria-live are derived from status — error and warning announce assertively.
+ *   - A message has a .nds-feedback-message or a role; dismissAll() and a new message leave a bare
+ *     status icon (an upload row's) alone.
  */
 /**
  * NDS Feedback Component
@@ -63,6 +65,9 @@
 
     // A field owns the messages inside it, except those of a field nested in it.
     const FIELD = '.nds-form-container, .nds-form-group';
+    // A message has its words or a role (create() always sets one); a bare status icon in a component's
+    // own markup, such as an upload row's check mark, is not one and stays.
+    const isMessage = (feedback) => feedback.hasAttribute('role') || !!feedback.querySelector(':scope > .nds-feedback-message');
 
     // Private per-message state, set at different times, so one map each.
     const dismissCallbacks = new WeakMap();
@@ -228,7 +233,7 @@
             const owner = own && el.closest(FIELD);
 
             el.querySelectorAll('.nds-feedback').forEach(feedback => {
-                if (feedback.closest('code')) return;
+                if (feedback.closest('code') || !isMessage(feedback)) return;
                 if (own && feedback.parentElement.closest(FIELD) !== owner) return;
                 if (feedback.hasAttribute('data-permanent')) {
                     feedback.removeAttribute('hidden');
@@ -269,12 +274,12 @@
                 // A group's message leaves the messages of the fields inside it.
                 const owner = targetEl.closest(FIELD);
                 targetEl.querySelectorAll('.nds-feedback').forEach(existingFeedback => {
-                    if (!existingFeedback.closest('code') && existingFeedback.parentElement.closest(FIELD) === owner) makeWay(existingFeedback);
+                    if (!existingFeedback.closest('code') && isMessage(existingFeedback) && existingFeedback.parentElement.closest(FIELD) === owner) makeWay(existingFeedback);
                 });
             } else {
                 const parent = targetEl.parentNode;
                 parent?.querySelectorAll('.nds-feedback').forEach(existingFeedback => {
-                    if (!existingFeedback.closest('code') && existingFeedback.parentNode === parent) makeWay(existingFeedback);
+                    if (!existingFeedback.closest('code') && isMessage(existingFeedback) && existingFeedback.parentNode === parent) makeWay(existingFeedback);
                 });
             }
 

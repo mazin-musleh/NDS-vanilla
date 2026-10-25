@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "25/10/2026 - 05:18 PM"
 ---
 
 <section id="feedback-overview" class="nds-content-section nds-doc-overview">
@@ -232,7 +232,7 @@ There is no `init()`: nothing scans the page for feedback. The script only build
 |---|---|
 | `NDS.Feedback.create(options)` | Builds a message, puts it in place and returns the element. It replaces the message already in the same place, but not a message that belongs to a field inside it |
 | `NDS.Feedback.dismiss(elOrSelector)` | Removes one message, and shows again a permanent message it hid. Returns `true` when it existed |
-| `NDS.Feedback.dismissAll(container, options)` | Removes every message in a container except the permanent ones, which show again. With `{ own: true }`, it leaves the messages of fields nested in the container |
+| `NDS.Feedback.dismissAll(container, options)` | Removes every message in a container except the permanent ones, which show again. With `{ own: true }`, it leaves the messages of fields nested in the container. A message has a `.nds-feedback-message` or a `role`: a bare status icon, such as an Upload row's check mark, stays |
 {: .nds-table .nds-responsive}
 
 | Option | Default | Effect |

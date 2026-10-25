@@ -179,6 +179,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Top Bar** — The date, clock, city and weather widgets are [Meta](https://mazin-musleh.github.io/NDS-vanilla/components/meta.html) lines, at Meta's LG size: 16px at every width (the text shrank to 12–14px on tablets). `nds-md` or `nds-sm` on a widget picks a smaller one.
 
 ### Fixed
+- **Feedback** — Clearing a field's messages, such as after a passing submit, no longer removes the status icons inside the field: an Upload row keeps its check mark. Only a message, with its words or a role, is cleared.
 - **Accessibility** — Escape closes the reading mask only when no modal, panel or menu is open.
 - **Accessibility** — A mode's text-size preset applies even after the visitor cycled the text size tile back to its default.
 - **Accordion** — The loading bar stays next to a leading icon.
