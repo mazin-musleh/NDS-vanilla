@@ -126,6 +126,18 @@
         }
     }
 
+    // ── Footer: a total row ──
+    // The header's background frames the data rows; body text in semibold. A row label <th> keeps the body size.
+    > tfoot > tr > :is(th, td) {
+        background-color: var(--table-background-header);
+        color: var(--table-text-body);
+        font-size: inherit;
+        font-weight: var(--font-weight-semibold);
+        height: var(--_table-row-height);
+        // The last body row drops its line, and a striped row is close to this background.
+        border-top: 1px solid var(--table-cell-border);
+    }
+
     // ── Row states ──
 
     // Count VISIBLE parent rows only — a sub or hidden row still holds a DOM slot

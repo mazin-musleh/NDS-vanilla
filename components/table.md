@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 09:57 AM"
+last_edit: "25/10/2026 - 11:51 PM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "24/10/2026 - 09:57 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A table is a `<table class="nds-table">` with a `<thead>` and a `<tbody>`. Markup turns on the rest: sort buttons in the header, row checkboxes, a column menu, and detail rows under a row. Tables work with [Pagination](../components/pagination), [Filter](../components/filter), [Selection](../components/selection) and [Export](../components/export) on the same rows.
+A table is a `<table class="nds-table">` with a `<thead>`, a `<tbody>`, and an optional `<tfoot>` for a total. Markup turns on the rest: sort buttons in the header, row checkboxes, a column menu, and detail rows under a row. Tables work with [Pagination](../components/pagination), [Filter](../components/filter), [Selection](../components/selection) and [Export](../components/export) on the same rows.
 
 Pick another component when:
 
@@ -94,6 +94,14 @@ Pick another component when:
     </tr>
   </tbody>
 </table>
+</script>
+<script type="text/html" id="tbl-total" data-canon>
+<tfoot>
+  <tr>
+    <th scope="row" colspan="4">Total</th>
+    <td><span class="nds-number-format" data-currency="SAR">6150</span></td>
+  </tr>
+</tfoot>
 </script>
 <script type="text/html" id="tbl-records" data-canon>
 <div class="nds-toolbar">
@@ -517,6 +525,7 @@ Every option goes on the outer `<table>`, never on a table in a sub-row.
 | Center | Center (hint: Cell text is centered) | `.nds-center` | `#tbl-requests` | Centers the text in every cell. For short values, such as a score sheet |
 | Center | Center (hint: Cell text is centered) | `.nds-center` | `#tbl-rec-requests` | |
 | Sub-rows | Several open (hint: Detail rows stay open together) | `[data-state~="always-open"]` | `#tbl-rec-requests` | Opens more than one detail row at a time. Records only |
+| Total row | Total row (hint: A total under the rows) | canon `#tbl-total` | `#tbl-requests` | A `<tfoot>` row after the body, such as the sum of a column. The label may span the first columns with `colspan`. Shown on Standard. It works on any table |
 | Loading | Loading (hint: Skeleton bars in place of the rows) | `.nds-loading` | `#tbl-requests` | Shows skeleton bars in place of the cells while new rows load. `data-state="loading"` does the same |
 | Loading | Loading (hint: Skeleton bars in place of the rows) | `.nds-loading` | `#tbl-rec-requests` | |
 {: #table-variants-table .nds-table .nds-responsive}
@@ -562,7 +571,12 @@ A toggle whose row has no sub-row yet shows a spinner and fires `nds:table:sub-r
 ### Column Alignment
 {: .nds-block-title}
 
-`data-align` on a header cell aligns the header and every cell in its column: `start`, `center` or `end`. It also covers rows that arrive later from sort, filter or pages, and works on a header with a sort button. A `colspan` in the body shifts the columns, so the cells after it align with the wrong header.
+`data-align` on a header cell aligns the header and every cell in its column: `start`, `center` or `end`. It also covers rows that arrive later from sort, filter or pages, and the total row. It works on a header with a sort button. A `colspan` in the body shifts the columns, so the cells after it align with the wrong header.
+
+### Total Row
+{: .nds-block-title}
+
+A row in a `<tfoot>` after the `<tbody>` is a total. Write `<th scope="row">` for its label; it may span the first columns with `colspan`. Any other `colspan` in the row shifts the columns. The row has the header background and semibold text, and each cell lines up with its column. Sorting, filters and pages leave it at the end, and a hidden column hides its cell or narrows the label. [Export](../components/export) skips it, so a file holds only the data rows.
 
 ### Loading
 {: .nds-block-title}
@@ -667,6 +681,7 @@ Keep Selection only when the page has a bulk action that acts on the selected ro
 - Add sort buttons only to columns that users compare, such as dates, amounts and status.
 - Set `--min-width` no wider than the room the page gives the table. Below it the box scrolls, so a larger value hides the last columns, such as the actions, on every desktop. The audit's `table-min-width` check finds one.
 - Write `data-sort-value` on a cell whose text sorts wrong: a date that is not in the table's date format (one with a month name, or a Hijri date), an amount with a currency, a status that has an order. Write a date there as `YYYY-MM-DD`. A table whose dates use another order carries its own `data-date-format`: see [Date](../core/date).
+- Put a total in a `<tfoot>`, never as the last body row: sorting would move it, and Export would add it to the data.
 - Use selection only with a bulk action that acts on the selected rows.
 - Give each row checkbox an `aria-label` that names the row: "Select REQ-2026-118".
 - Give each icon-only button an `aria-label`, such as the sub-row toggle and the row menu.
@@ -767,7 +782,7 @@ Source: the `table` group in `_sass/tokens/_components.scss`.
 | `NDS.Table.createResponsive(table)` | Adds the scroll box to one table and returns its instance |
 | `NDS.Table.createColumnToggle(menu)` | Starts one column menu, and returns its instance, or the instance it already has. Returns `null` when the table or `[data-columns-list]` is missing |
 | `NDS.Table.destroy(el)` | Undoes whichever of the three that lives on `el`: sorting, the scroll box or the column menu |
-| `NDS.Table.setColumnHidden(table, index, hidden)` | Hides or shows the column at this index: it sets `hidden` on the header cell and on its cell in every row, and fires `nds:table:columns`. The checkbox and badge of the column menu follow it, but the menu does not save this change |
+| `NDS.Table.setColumnHidden(table, index, hidden)` | Hides or shows the column at this index: it sets `hidden` on the header cell and on its cell in every row, and fires `nds:table:columns`. In a total row, it may narrow the label's span instead. The checkbox and badge of the column menu follow it, but the menu does not save this change |
 | `NDS.Table.getRow(tr).sub` | The handle of a row's sub-row. `tr` is the row or its sub-row |
 | `.sub.setContent(html)` | Puts your markup or node in the sub-row. It builds the sub-row when there is none, and stops the spinner. It returns the handle |
 | `.sub.open()`, `.close()`, `.toggle()` | Opens, closes or flips the sub-row. `open()` with no sub-row fires `nds:table:sub-request`. Each returns the handle |
@@ -822,6 +837,7 @@ The full API is in the banner of `_js/nds-table.js`.
 - [Manage Records](../examples/manage-records): the Records structure in a full page, with sub-rows that hold a table.
 - [Admin Console Demo](../examples/console-demo): a compact sortable table with a column menu, a filter and pages.
 - [KPIs Template](../templates/kpis-template): small tables of figures with a minimum width.
+- [Open Data](../examples/open-data): a compact sortable table with an export group and a total row.
 - [Sort](../components/sort), [Selection](../components/selection), [Pagination](../components/pagination), [Filter](../components/filter) and [Export](../components/export): the components a records table uses.
 
 </div>

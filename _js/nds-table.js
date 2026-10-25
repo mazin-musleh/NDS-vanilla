@@ -361,6 +361,19 @@
     const getHeadCells = (table) => Array.from(table.querySelector(':scope > thead > tr')?.cells || []);
     const getBodyRows = (table) => table.querySelectorAll(':scope > tbody > tr:not(.nds-sub)');
 
+    // A footer row (a total) may span its first columns with one label, so its cells count from
+    // the end. A hidden column under the label shrinks the span; with none left the label hides.
+    function syncFooterColumns(table) {
+        const heads = getHeadCells(table);
+        table.querySelectorAll(':scope > tfoot > tr').forEach(tr => {
+            const span = heads.length - tr.cells.length + 1;
+            const shown = heads.slice(0, span).filter(th => !th.hidden).length;
+            if (span > 1) tr.cells[0].colSpan = Math.max(shown, 1);
+            tr.cells[0].hidden = !shown;
+            Array.from(tr.cells).slice(1).forEach((cell, i) => { cell.hidden = !!heads[span + i]?.hidden; });
+        });
+    }
+
     // Rows added after a hide (a fetch, a page, a framework render) take the hidden columns too.
     // Wired on the first hide, so a page that hides nothing never watches its tables.
     let watchingRows = false;
@@ -371,6 +384,7 @@
             new Set(parents.map(parent => parent.closest('table'))).forEach(table => {
                 const hidden = getHeadCells(table).flatMap((th, index) => th.hasAttribute('hidden') ? [index] : []);
                 if (hidden.length) getBodyRows(table).forEach(tr => hidden.forEach(index => tr.cells[index]?.setAttribute('hidden', '')));
+                if (hidden.length) syncFooterColumns(table);
             });
         });
     }
@@ -398,6 +412,7 @@
             const cell = tr.cells[index];
             if (cell) cell.toggleAttribute('hidden', hidden);
         });
+        syncFooterColumns(table);
         if (hidden) watchNewRows();
 
         table.dispatchEvent(new CustomEvent('nds:table:columns', {
@@ -615,6 +630,7 @@
         // Through getHeadCells so the nth-child index lands in the same column space
         // the hide/show writes use — a second thead row's cellIndex addresses a
         // different column than its position in a thead-wide list.
+        const columnCount = getHeadCells(table).length;
         const heads = getHeadCells(table).filter(th => th.hasAttribute('data-align'));
         if (!heads.length) return;
 
@@ -625,7 +641,8 @@
             if (!alignValues[align]) return;
             // Child combinators, not descendants: a sub-row's nested table has
             // its own columns, and a descendant rule would align those too.
-            rules.push(`[data-nds-align="${scope}"] > tbody > tr > td:nth-child(${th.cellIndex + 1}){text-align:${align}}`);
+            // A footer row (a total) counts from the end, past a label that spans the first columns.
+            rules.push(`[data-nds-align="${scope}"] > tbody > tr > td:nth-child(${th.cellIndex + 1}),[data-nds-align="${scope}"] > tfoot > tr > :is(td, th):nth-last-child(${columnCount - th.cellIndex}):not([colspan]){text-align:${align}}`);
         });
         if (!rules.length) return;
 
