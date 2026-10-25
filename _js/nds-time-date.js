@@ -30,9 +30,9 @@
         return !tokens.includes(isBreakpoint('mobile') ? 'sm' : isBreakpoint('tablet-max') ? 'md' : 'lg');
     }
     // Built imperatively: the text flows through textContent, never the HTML parser.
-    function renderDate(parent, content) {
+    function renderMetaItem(parent, iconClass, content) {
         const icon = document.createElement('i');
-        icon.className = 'nds-icon nds-hgi-calendar-03';
+        icon.className = 'nds-icon ' + iconClass;
         NDS.aria.hidden(icon, true);
         const item = document.createElement('span');
         item.className = 'nds-meta-item';
@@ -77,7 +77,7 @@
         const isArabic = NDS.isArabic;
         const today = NDS.Date.getToday();
         const type = NDS.Date.getCalendar(el, isArabic ? 'hijri' : 'gregory');
-        renderDate(el, type === 'hijri'
+        renderMetaItem(el, 'nds-hgi-calendar-03', type === 'hijri'
             ? formatHijriText(today)
             : NDS.Date.format(today, {
                 locale: isArabic ? 'ar-SA' : undefined, // undefined = the page's lang
@@ -98,14 +98,8 @@
         if (clockText?.isConnected) return true;
         const el = document.getElementById('nds-real-time-clock');
         if (!el) return false;
-        const icon = document.createElement('i');
-        icon.className = 'nds-icon nds-hgi-clock-01';
-        NDS.aria.hidden(icon, true);
         clockText = document.createTextNode('');
-        const item = document.createElement('span');
-        item.className = 'nds-meta-item';
-        item.append(icon, clockText);
-        el.replaceChildren(item);
+        renderMetaItem(el, 'nds-hgi-clock-01', clockText);
         return true;
     }
 
@@ -124,9 +118,10 @@
         }, msUntilNext);
     }
 
+    // The minute timer runs only while the tab is visible and the clock is shown.
     function startClock() {
         const el = document.getElementById('nds-real-time-clock');
-        if (!el || !isRendered(el)) return;
+        if (document.hidden || !el || !isRendered(el)) return stopClock();
         syncClock();
         if (!clockTimer) scheduleNextMinute();
     }
@@ -168,12 +163,10 @@
         if (clockEl) {
             // Skip the minute timer while the tab is hidden. On resume, startClock()
             // renders at once, so the time is never up to a minute stale.
-            if (!document.hidden) startClock();
+            startClock();
             if (!clockInitDone) {
                 clockInitDone = true;
-                document.addEventListener('visibilitychange', () => {
-                    document.hidden ? stopClock() : startClock();
-                });
+                document.addEventListener('visibilitychange', startClock);
             }
         }
 
@@ -181,8 +174,7 @@
             resizeInitDone = true;
             NDS.onResize(() => {
                 syncDate();
-                const el = document.getElementById('nds-real-time-clock');
-                if (el && isRendered(el) && !document.hidden) startClock(); else stopClock();
+                startClock();
             });
         }
     }

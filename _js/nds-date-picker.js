@@ -1,6 +1,6 @@
 /* NDS.DatePicker — public surface
- * Rides: nds-dropmenu (positioning, outside-click, top layer — the input drives open/close)
- *      · nds-forms (invalid-value status message under the field; soft)
+ * Rides: nds-dropmenu (positioning, outside-click, top layer — the toggle button, else the input, drives open/close)
+ *      · nds-forms (invalid-value status message under the field)
  *      · nds-typing (shaped typing and paste in the input)
  * Requires:
  *   .nds-date-input sits in .nds-form-control — the picker is not built
@@ -87,6 +87,18 @@
         return btn;
     }
 
+    // A month or year button, in a grid or a menu. With no onPick it is disabled.
+    function buildUnitButton(className, value, text, onPick, labelClass) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = className;
+        btn.setAttribute('data-value', value);
+        appendCellLabel(btn, text, labelClass);
+        if (!onPick) btn.disabled = true;
+        else btn.addEventListener('click', function (e) { e.preventDefault(); onPick(); });
+        return btn;
+    }
+
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
     var strings = NDS.i18n.getStrings('date-picker', {
         select_month: 'Select month',
@@ -127,11 +139,12 @@
     function shiftToday(amount, unit, hijri) {
         var today = NDS.Date.getToday();
         if (unit === 'd') return new Date(today.getFullYear(), today.getMonth(), today.getDate() + amount);
-        var parts = hijri ? toHijri(today) : { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
+        var calendar = hijri ? 'hijri' : 'gregory';
+        var parts = NDS.Date.toParts(today, calendar);
         var totalMonths = parts.year * 12 + parts.month - 1 + (unit === 'y' ? amount * 12 : amount);
         var year = Math.floor(totalMonths / 12), month = totalMonths - year * 12 + 1;
-        if (hijri) return fromHijri(year, month, Math.min(parts.day, getHijriMonthLength(year, month)));
-        return new Date(year, month - 1, Math.min(parts.day, new Date(year, month, 0).getDate()));
+        var day = Math.min(parts.day, NDS.Date.getMonthLength({ year: year, month: month }, calendar));
+        return hijri ? fromHijri(year, month, day) : new Date(year, month - 1, day);
     }
 
     // Detect picker UI mode from the format string. Token presence drives it:
@@ -249,34 +262,31 @@
         }
     };
 
-    // UI Configuration
-    var uiConfig = {
-        selectors: {
-            container: '.nds-form-container',
-            dropdown: '.nds-date-picker-menu',
-            toggleBtn: '.date-picker-toggle',
-            monthDropmenu: '.nds-month-dropmenu',
-            yearDropmenu: '.nds-year-dropmenu',
-            monthDropdownBtn: '.nds-month-dropmenu .nds-dropmenu-trigger',
-            yearDropdownBtn: '.nds-year-dropmenu .nds-dropmenu-trigger',
-            monthDropdownMenu: '.nds-month-dropmenu .nds-dropmenu-scroll',
-            yearDropdownMenu: '.nds-year-dropmenu .nds-dropmenu-scroll',
-            prevBtn: '.prev-month',
-            nextBtn: '.next-month',
-            todayBtn: '.today-btn',
-            closeBtn: '.close-btn',
-            clearBtn: '.clear-btn',
-            saveBtn: '.save-btn',
-            datesContainer: '.nds-date-picker-dates'
-        }
-    };
+    var SELECTORS = Object.freeze({
+        container: '.nds-form-container',
+        dropdown: '.nds-date-picker-menu',
+        toggleButton: '.date-picker-toggle',
+        monthDropmenu: '.nds-month-dropmenu',
+        yearDropmenu: '.nds-year-dropmenu',
+        monthDropdownButton: '.nds-month-dropmenu .nds-dropmenu-trigger',
+        yearDropdownButton: '.nds-year-dropmenu .nds-dropmenu-trigger',
+        monthDropdownMenu: '.nds-month-dropmenu .nds-dropmenu-scroll',
+        yearDropdownMenu: '.nds-year-dropmenu .nds-dropmenu-scroll',
+        prevButton: '.prev-month',
+        nextButton: '.next-month',
+        todayButton: '.today-btn',
+        closeButton: '.close-btn',
+        clearButton: '.clear-btn',
+        saveButton: '.save-btn',
+        datesContainer: '.nds-date-picker-dates'
+    });
 
     // Calendar Instance Class
     function NdsDatePickerCalendar(dateInput, formControl) {
         // Success signal — createInstance gates the init-guard expando on it,
         // so a bailed construction stays eligible for a later reinit() sweep.
         this.valid = false;
-        var container = formControl.closest(uiConfig.selectors.container);
+        var container = formControl.closest(SELECTORS.container);
         if (!container) {
             console.warn('NDS DatePicker: calendar container not found');
             return;
@@ -286,7 +296,7 @@
             input: dateInput,
             formControl: formControl,
             container: container,
-            toggleBtn: container.querySelector(uiConfig.selectors.toggleBtn)
+            toggleButton: container.querySelector(SELECTORS.toggleButton)
         };
 
         this.state = this.initializeState();
@@ -349,7 +359,7 @@
 
             // The button opens the calendar, so a click in the input only places the cursor.
             // Markup with no button keeps the input as the trigger.
-            (this.elements.toggleBtn || this.elements.input).addEventListener('click', ensureDropdownAndToggle, { signal: signal });
+            (this.elements.toggleButton || this.elements.input).addEventListener('click', ensureDropdownAndToggle, { signal: signal });
 
             // Fires for hand-typed edits AND picker commits (updateInput
             // dispatches 'change'). Attached on the input (target) so the
@@ -507,8 +517,8 @@
             var container = this.elements.container;
             var clearable = container.hasAttribute('data-clearable') || container.classList.contains('nds-date-range');
             if (!clearable) {
-                var clearBtn = dropdown.querySelector('.clear-btn');
-                if (clearBtn) clearBtn.remove();
+                var clearButton = dropdown.querySelector('.clear-btn');
+                if (clearButton) clearButton.remove();
             }
 
             // Insert dropdown after the input, inside the same parent (form-control)
@@ -519,7 +529,7 @@
         // returns {} when the container is gone, and destroy() calls this — a
         // throw there would skip the rest of teardown.
         removeDropdownDOM: function () {
-            var dropdown = this.elements.container?.querySelector(uiConfig.selectors.dropdown);
+            var dropdown = this.elements.container?.querySelector(SELECTORS.dropdown);
             if (dropdown) {
                 dropdown.remove();
             }
@@ -527,7 +537,7 @@
 
         // Cache DOM elements
         cacheElements: function (dateInput, formControl) {
-            var container = formControl.closest(uiConfig.selectors.container);
+            var container = formControl.closest(SELECTORS.container);
             if (!container) {
                 console.warn('NDS DatePicker: calendar container not found');
                 return {};
@@ -540,54 +550,32 @@
                 formControl: formControl
             };
 
-            // Required elements
-            var requiredSelectors = {
-                dropdown: uiConfig.selectors.dropdown,
-                datesContainer: uiConfig.selectors.datesContainer
-            };
+            var required = ['dropdown', 'datesContainer'];
+            var optional = ['monthDropmenu', 'yearDropmenu', 'monthDropdownButton', 'yearDropdownButton', 'monthDropdownMenu',
+                'yearDropdownMenu', 'prevButton', 'nextButton', 'todayButton', 'closeButton', 'saveButton'];
 
-            // Optional elements
-            var optionalSelectors = {
-                monthDropmenu: uiConfig.selectors.monthDropmenu,
-                yearDropmenu: uiConfig.selectors.yearDropmenu,
-                monthDropdownBtn: uiConfig.selectors.monthDropdownBtn,
-                yearDropdownBtn: uiConfig.selectors.yearDropdownBtn,
-                monthDropdownMenu: uiConfig.selectors.monthDropdownMenu,
-                yearDropdownMenu: uiConfig.selectors.yearDropdownMenu,
-                prevBtn: uiConfig.selectors.prevBtn,
-                nextBtn: uiConfig.selectors.nextBtn,
-                todayBtn: uiConfig.selectors.todayBtn,
-                closeBtn: uiConfig.selectors.closeBtn,
-                saveBtn: uiConfig.selectors.saveBtn
-            };
-
-            // Query required elements
-            for (var key in requiredSelectors) {
-                var element = container.querySelector(requiredSelectors[key]);
+            for (var i = 0; i < required.length; i++) {
+                var element = container.querySelector(SELECTORS[required[i]]);
                 if (!element) {
-                    console.error('NDS DatePicker: required calendar element not found:', key, requiredSelectors[key]);
+                    console.error('NDS DatePicker: required calendar element not found:', required[i], SELECTORS[required[i]]);
                     return {};
                 }
-                elements[key] = element;
+                elements[required[i]] = element;
             }
 
-            // Query optional elements
-            for (var key in optionalSelectors) {
-                var element = container.querySelector(optionalSelectors[key]);
-                if (element) {
-                    elements[key] = element;
-                } else {
-                    console.warn('NDS DatePicker: optional calendar element not found:', key, optionalSelectors[key]);
-                }
-            }
+            optional.forEach(function (key) {
+                var element = container.querySelector(SELECTORS[key]);
+                if (element) elements[key] = element;
+                else console.warn('NDS DatePicker: optional calendar element not found:', key, SELECTORS[key]);
+            });
 
             // Conditional elements, cached silently: .clear-btn is removed by
             // createDropdownDOM when the picker isn't clearable, and a field with
             // no toggle button opens from the input.
-            var clearEl = container.querySelector(uiConfig.selectors.clearBtn);
-            if (clearEl) elements.clearBtn = clearEl;
-            var toggleEl = container.querySelector(uiConfig.selectors.toggleBtn);
-            if (toggleEl) elements.toggleBtn = toggleEl;
+            var clearEl = container.querySelector(SELECTORS.clearButton);
+            if (clearEl) elements.clearButton = clearEl;
+            var toggleEl = container.querySelector(SELECTORS.toggleButton);
+            if (toggleEl) elements.toggleButton = toggleEl;
 
             return elements;
         },
@@ -628,9 +616,9 @@
             // carries the calendar's fields like a written date.
             var readBound = function (text) {
                 if (!text) return null;
-                var rel = /^today(?:([+-]\d+)([dmy])?)?$/.exec(text.trim());
-                if (!rel) return calendar.parseDate(text, format);
-                var day = shiftToday(+(rel[1] || 0), rel[2] || 'd', calendarType === 'hijri');
+                var match = /^today(?:([+-]\d+)([dmy])?)?$/.exec(text.trim());
+                if (!match) return calendar.parseDate(text, format);
+                var day = shiftToday(+(match[1] || 0), match[2] || 'd', calendarType === 'hijri');
                 return calendar.parseDate(calendar.formatDate(day, format), format);
             };
             this.state.minDate = readBound(this.elements.input.getAttribute('data-min-date'));
@@ -729,8 +717,7 @@
         // The input's data-lang, then its lang, then the page's: the language of the calendar text.
         getLanguage: function () {
             var input = this.elements && this.elements.input;
-            var raw = input && (input.getAttribute('data-lang') || input.lang);
-            return raw ? raw.split('-')[0].toLowerCase() : NDS.lang;
+            return NDS.i18n.resolveLang(input && (input.getAttribute('data-lang') || input.lang));
         },
 
         getCurrentCalendar: function () {
@@ -759,10 +746,38 @@
         },
 
         getDisplayDayNumber: function (date) {
-            if (this.state.calendarType === 'hijri' && hijriParts.get(date)?.day) {
-                return hijriParts.get(date).day;
-            }
-            return date.getDate();
+            return (this.state.calendarType === 'hijri' && hijriParts.get(date)?.day) || date.getDate();
+        },
+
+        // A date's year in the field's calendar: a Hijri date reads its stamp.
+        _getYear: function (date) {
+            return this.state.calendarType === 'hijri' ? hijriParts.get(date)?.year : date.getFullYear();
+        },
+
+        _getTodaysYear: function () {
+            return this.state.calendarType === 'hijri' ? this.getTodaysHijriDate().year : NDS.Date.getToday().getFullYear();
+        },
+
+        // Months count from 1 in Hijri and from 0 in a Date, as getCurrentMonth returns them.
+        _getFirstMonth: function () {
+            return this.state.calendarType === 'hijri' ? 1 : 0;
+        },
+
+        // Day `day` of a month in the field's calendar, the month counted as getCurrentMonth counts it.
+        _makeDay: function (year, month, day) {
+            return this.state.calendarType === 'hijri' ? fromHijri(year, month, day) : new Date(year, month, day);
+        },
+
+        // close() is not idempotent: only an open calendar closes.
+        _closeCalendar: function () {
+            if (this.dropmenuInstance && this.dropmenuInstance.isOpen) this.dropmenuInstance.close();
+        },
+
+        // The roving Tab stop: only the focused cell is tabbable.
+        _focusCell: function (cell) {
+            this.elements.datesContainer.querySelectorAll('.nds-date-cell').forEach(function (other) { other.tabIndex = -1; });
+            cell.tabIndex = 0;
+            cell.focus();
         },
 
         getMonthNames: function (lang) {
@@ -910,14 +925,14 @@
 
             var signal = this.panelAbortController.signal;
 
-            if (this.elements.prevBtn) {
-                this.elements.prevBtn.addEventListener('click', function () {
+            if (this.elements.prevButton) {
+                this.elements.prevButton.addEventListener('click', function () {
                     self.navigate(-1);
                 }, { signal: signal });
             }
 
-            if (this.elements.nextBtn) {
-                this.elements.nextBtn.addEventListener('click', function () {
+            if (this.elements.nextButton) {
+                this.elements.nextButton.addEventListener('click', function () {
                     self.navigate(1);
                 }, { signal: signal });
             }
@@ -942,22 +957,15 @@
         // month/year and focus the corresponding position after re-render.
         // `offset` is in cells (1 = next day, 7 = next week). Maintains the
         // roving tabindex: only the focused cell stays tabbable.
-        focusDayCell: function (currentBtn, offset) {
+        focusDayCell: function (cell, offset) {
             var cells = Array.from(this.elements.datesContainer.querySelectorAll('.nds-date-cell'));
-            var index = cells.indexOf(currentBtn);
+            var index = cells.indexOf(cell);
             if (index === -1) return;
 
             var target = index + offset;
-            var moveFocus = function (newBtn) {
-                if (!newBtn) return;
-                currentBtn.tabIndex = -1;
-                newBtn.tabIndex = 0;
-                newBtn.focus();
-            };
-
             // Within the rendered 42-cell grid — focus directly.
             if (target >= 0 && target < cells.length) {
-                moveFocus(cells[target]);
+                this._focusCell(cells[target]);
                 return;
             }
 
@@ -975,13 +983,8 @@
                 ? newCells.length + target  // target is negative
                 : target - newCells.length;
             newIndex = Math.max(0, Math.min(newCells.length - 1, newIndex));
-            // Clear the auto-set tabindex=0 on the re-rendered grid's anchor
-            // so we don't end up with two tabbable cells.
-            newCells.forEach(function (cell) { cell.tabIndex = -1; });
-            if (newCells[newIndex]) {
-                newCells[newIndex].tabIndex = 0;
-                newCells[newIndex].focus();
-            }
+            // _focusCell also clears the re-rendered grid's own tab stop.
+            if (newCells[newIndex]) this._focusCell(newCells[newIndex]);
         },
 
         // WAI-ARIA Date Picker Dialog grid keys.
@@ -1053,11 +1056,7 @@
             var firstDay = this.elements.datesContainer.querySelector(
                 '.nds-date-cell:not([data-state~="other-month"])'
             );
-            if (!firstDay) return;
-            this.elements.datesContainer
-                .querySelectorAll('.nds-date-cell').forEach(function (cell) { cell.tabIndex = -1; });
-            firstDay.tabIndex = 0;
-            firstDay.focus();
+            if (firstDay) this._focusCell(firstDay);
         },
 
         // Advance currentDate by one month WITHOUT rendering; returns false
@@ -1065,25 +1064,14 @@
         // (Shift+PageUp/Down) step N times and render once.
         _stepMonth: function (direction) {
             var range = this.getYearRange();
-            if (this.state.calendarType === 'hijri') {
-                var hijri = this.getCurrentHijriDate();
-                var newMonth = hijri.month + direction;
-                var newYear = hijri.year;
-                if (newMonth < 1) { newMonth = 12; newYear--; }
-                else if (newMonth > 12) { newMonth = 1; newYear++; }
-                if (newYear < range.start || newYear > range.end) return false;
-
-                this.state.currentDate = fromHijri(newYear, newMonth, 1);
-            } else {
-                var month = this.state.currentDate.getMonth() + direction;
-                var year = this.state.currentDate.getFullYear();
-                if (month < 0) { month = 11; year--; }
-                else if (month > 11) { month = 0; year++; }
-                if (year < range.start || year > range.end) return false;
-                // Atomic set with day 1 (matches the Hijri branch) — sequential
-                // setMonth on a day-29..31 date would roll past the target month.
-                this.state.currentDate.setFullYear(year, month, 1);
-            }
+            var first = this._getFirstMonth();
+            var month = this.getCurrentMonth() + direction;
+            var year = this.getCurrentYear();
+            if (month < first) { month = first + 11; year--; }
+            else if (month > first + 11) { month = first; year++; }
+            if (year < range.start || year > range.end) return false;
+            // Day 1: a day-29..31 date would roll past the target month.
+            this.state.currentDate = this._makeDay(year, month, 1);
             return true;
         },
 
@@ -1143,39 +1131,13 @@
         // Bind action events (today/clear/save buttons)
         bindActionEvents: function () {
             var self = this;
-
             var signal = this.panelAbortController.signal;
-
-            if (this.elements.todayBtn) {
-                this.elements.todayBtn.addEventListener('click', function () {
-                    self.selectToday();
-                }, { signal: signal });
-            }
-
-            if (this.elements.closeBtn) {
-                // Close = discard pending state and close the dropmenu. State
-                // resets on next open via parseInitialValue, so nothing to do
-                // here beyond closing — matches click-outside-to-cancel.
-                this.elements.closeBtn.addEventListener('click', function () {
-                    if (self.dropmenuInstance && self.dropmenuInstance.isOpen) {
-                        self.dropmenuInstance.close();
-                    }
-                }, { signal: signal });
-            }
-
-            if (this.elements.clearBtn) {
-                // Clear = wipe committed value + pending state, then close.
-                // Opt-in via data-clearable on the container (auto-on for range).
-                this.elements.clearBtn.addEventListener('click', function () {
-                    self.clearSelection();
-                }, { signal: signal });
-            }
-
-            if (this.elements.saveBtn) {
-                this.elements.saveBtn.addEventListener('click', function () {
-                    self.saveAndClose();
-                }, { signal: signal });
-            }
+            // Close drops the pending pick (the next open re-reads the input), as an outside click does.
+            // Clear wipes the value too; opt-in through data-clearable (always on for a range).
+            var actions = { todayButton: 'selectToday', closeButton: '_closeCalendar', clearButton: 'clearSelection', saveButton: 'saveAndClose' };
+            Object.keys(actions).forEach(function (key) {
+                if (self.elements[key]) self.elements[key].addEventListener('click', function () { self[actions[key]](); }, { signal: signal });
+            });
         },
 
         // Save and close calendar
@@ -1185,15 +1147,7 @@
             // day forced to 1 (and month to 1 in year mode) so the stored value
             // matches what NDS.Date.parse produces on the way back in.
             if (this.state.mode !== 'day' && !this.isRangeMode() && !this.state.selectedDate) {
-                var date;
-                if (this.state.calendarType === 'hijri') {
-                    var hijriDate = this.getCurrentHijriDate();
-                    date = fromHijri(hijriDate.year, this.state.mode === 'year' ? 1 : hijriDate.month, 1);
-                } else {
-                    date = new Date(this.state.currentDate);
-                    if (this.state.mode === 'year') date.setMonth(0);
-                    date.setDate(1);
-                }
+                var date = this._makeDay(this.getCurrentYear(), this.state.mode === 'year' ? this._getFirstMonth() : this.getCurrentMonth(), 1);
                 // Same clamp _selectUnit applies — the synthesized day=1 can
                 // land before minDate when the bound sits mid-month.
                 this.state.selectedDate = this._clampToRange(date);
@@ -1206,9 +1160,7 @@
             // Commit pending state to the input on every save (day / month /
             // year / range): selectDate and selectToday only change pending state.
             this.updateInput();
-            if (this.dropmenuInstance && this.dropmenuInstance.isOpen) {
-                this.dropmenuInstance.close();
-            }
+            this._closeCalendar();
         },
 
         // Update dropdown labels
@@ -1217,16 +1169,16 @@
 
             var lang = this.getLanguage();
 
-            if (this.elements.monthDropdownBtn) {
+            if (this.elements.monthDropdownButton) {
                 var monthNames = this.getMonthNames(lang);
                 var currentMonth = this.getCurrentMonth();
                 // For Hijri: convert 1-based month to 0-based array index
                 var monthIndex = this.state.calendarType === 'hijri' ? currentMonth - 1 : currentMonth;
-                this.elements.monthDropdownBtn.querySelector('.nds-label').textContent = monthNames[monthIndex];
+                this.elements.monthDropdownButton.querySelector('.nds-label').textContent = monthNames[monthIndex];
             }
 
-            if (this.elements.yearDropdownBtn) {
-                this.elements.yearDropdownBtn.querySelector('.nds-label').textContent = this.getCurrentYear();
+            if (this.elements.yearDropdownButton) {
+                this.elements.yearDropdownButton.querySelector('.nds-label').textContent = this.getCurrentYear();
             }
         },
 
@@ -1249,7 +1201,7 @@
 
         renderButtonLabels: function () {
             var lang = this.getLanguage();
-            var map = { todayBtn: 'today', closeBtn: 'close', clearBtn: 'clear', saveBtn: 'save' };
+            var map = { todayButton: 'today', closeButton: 'close', clearButton: 'clear', saveButton: 'save' };
             for (var key in map) {
                 if (this.elements[key]) {
                     var el = this.elements[key].querySelector('.nds-label');
@@ -1288,13 +1240,8 @@
             if (prevIndex > -1) {
                 var buttons = grid.querySelectorAll('button');
                 var target = (sameMode && buttons[prevIndex]) || grid.querySelector('[tabindex="0"]') || buttons[0];
-                if (target) {
-                    if (target.classList.contains('nds-date-cell')) {
-                        grid.querySelectorAll('.nds-date-cell').forEach(function (cell) { cell.tabIndex = -1; });
-                        target.tabIndex = 0;
-                    }
-                    target.focus();
-                }
+                if (target && target.classList.contains('nds-date-cell')) this._focusCell(target);
+                else if (target) target.focus();
             }
 
             this._reposition();
@@ -1340,37 +1287,22 @@
             // Selected month = state.selectedDate's month IF its year matches
             // the currently viewed year (grid is one year at a time).
             var selectedMonth = -1;
-            if (this.state.selectedDate) {
-                var selectedYear = isHijri ? hijriParts.get(this.state.selectedDate)?.year : this.state.selectedDate.getFullYear();
-                if (selectedYear === currentYear) {
-                    selectedMonth = isHijri
-                        ? hijriParts.get(this.state.selectedDate)?.month
-                        : this.state.selectedDate.getMonth();
-                }
+            if (this.state.selectedDate && this._getYear(this.state.selectedDate) === currentYear) {
+                selectedMonth = isHijri
+                    ? hijriParts.get(this.state.selectedDate)?.month
+                    : this.state.selectedDate.getMonth();
             }
 
+            var first = this._getFirstMonth();
             monthNames.forEach(function (name, i) {
-                // Hijri months are 1-based; Gregorian months are 0-based.
-                var monthValue = isHijri ? i + 1 : i;
-                var btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'nds-btn nds-subtle nds-date-cell';
-                btn.setAttribute('data-value', monthValue);
-                appendCellLabel(btn, name, 'nds-truncate');
+                var monthValue = i + first;
+                var btn = buildUnitButton('nds-btn nds-subtle nds-date-cell', monthValue, name,
+                    self.isMonthAllowedForYear(currentYear, monthValue) && function () { self._selectUnit('month', monthValue); }, 'nds-truncate');
 
                 if (monthValue === selectedMonth) {
                     NDS.state.add(btn, 'selected');
                 } else if (monthValue === todaysMonth && currentYear === todaysYear) {
                     NDS.state.add(btn, 'today');
-                }
-
-                if (!self.isMonthAllowedForYear(currentYear, monthValue)) {
-                    btn.disabled = true;
-                } else {
-                    btn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        self._selectUnit('month', monthValue);
-                    });
                 }
 
                 self.elements.datesContainer.appendChild(btn);
@@ -1381,36 +1313,18 @@
         // / data-year-after range the year dropmenu uses (single source of truth).
         renderYearGrid: function () {
             var self = this;
-            var isHijri = this.state.calendarType === 'hijri';
             var range = this.getYearRange();
-            var startYear = range.start;
-            var endYear = range.end;
-            var currentYear = this.getCurrentYear();
-            var selectedYear = -1;
-            if (this.state.selectedDate) {
-                selectedYear = isHijri ? hijriParts.get(this.state.selectedDate)?.year : this.state.selectedDate.getFullYear();
-            }
-            var todaysYear = isHijri ? this.getTodaysHijriDate().year : NDS.Date.getToday().getFullYear();
+            var selectedYear = this.state.selectedDate ? this._getYear(this.state.selectedDate) : -1;
+            var todaysYear = this._getTodaysYear();
 
-            for (var year = startYear; year <= endYear; year++) {
-                var btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'nds-btn nds-subtle nds-date-cell';
-                btn.setAttribute('data-value', year);
-                appendCellLabel(btn, year);
+            for (var year = range.start; year <= range.end; year++) {
+                var btn = buildUnitButton('nds-btn nds-subtle nds-date-cell', year, year, this._selectUnit.bind(this, 'year', year));
 
                 if (year === selectedYear) {
                     NDS.state.add(btn, 'selected');
                 } else if (year === todaysYear) {
                     NDS.state.add(btn, 'today');
                 }
-
-                (function (y) {
-                    btn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        self._selectUnit('year', y);
-                    });
-                })(year);
 
                 self.elements.datesContainer.appendChild(btn);
             }
@@ -1420,25 +1334,10 @@
         // unit (with lower units forced to 1) and mirrors it into
         // state.selectedDate so saveAndClose commits without synthesizing.
         _selectUnit: function (unit, value) {
-            var isHijri = this.state.calendarType === 'hijri';
-            if (isHijri) {
-                var year = unit === 'year' ? value : this.getCurrentYear();
-                var month = unit === 'month' ? value : (unit === 'year' ? 1 : this.getCurrentMonth());
-                var date = fromHijri(year, month, 1);
-                this.state.currentDate = date;
-                this.state.selectedDate = copyDateWithHijri(date);
-            } else {
-                // Day forced to 1 FIRST — setMonth on a day-29..31 date rolls
-                // into the following month before setDate could run.
-                this.state.currentDate.setDate(1);
-                if (unit === 'year') {
-                    this.state.currentDate.setFullYear(value);
-                    this.state.currentDate.setMonth(0);
-                } else {
-                    this.state.currentDate.setMonth(value);
-                }
-                this.state.selectedDate = new Date(this.state.currentDate);
-            }
+            var year = unit === 'year' ? value : this.getCurrentYear();
+            var month = unit === 'month' ? value : (unit === 'year' ? this._getFirstMonth() : this.getCurrentMonth());
+            this.state.currentDate = this._makeDay(year, month, 1);
+            this.state.selectedDate = copyDateWithHijri(this.state.currentDate);
             // Clamp when the synthesized day=1 falls outside [min, max] — the
             // month/year cell was allowed (some day in it is in range), so
             // snap the committed date to the nearest bound.
@@ -1455,17 +1354,10 @@
 
         navigateYear: function (direction) {
             var range = this.getYearRange();
-            if (this.state.calendarType === 'hijri') {
-                var hijri = this.getCurrentHijriDate();
-                var newYear = hijri.year + direction;
-                if (newYear < range.start || newYear > range.end) return;
-                this.state.currentDate = fromHijri(newYear, hijri.month, 1);
-            } else {
-                var newYearG = this.state.currentDate.getFullYear() + direction;
-                if (newYearG < range.start || newYearG > range.end) return;
-                // Day 1 in the same call — 29 February would roll into March in a non-leap year.
-                this.state.currentDate.setFullYear(newYearG, this.state.currentDate.getMonth(), 1);
-            }
+            var year = this.getCurrentYear() + direction;
+            if (year < range.start || year > range.end) return;
+            // Day 1: 29 February would roll into March in a non-leap year.
+            this.state.currentDate = this._makeDay(year, this.getCurrentMonth(), 1);
             this._refreshView();
         },
 
@@ -1474,10 +1366,10 @@
         // after every navigation and at the end of render(); silent when arrows
         // aren't present (year mode hides them).
         updateNavArrows: function () {
-            if (this.elements.todayBtn) {
-                this.elements.todayBtn.disabled = !this.isDateAllowed(NDS.Date.getToday());
+            if (this.elements.todayButton) {
+                this.elements.todayButton.disabled = !this.isDateAllowed(NDS.Date.getToday());
             }
-            if (!this.elements.prevBtn || !this.elements.nextBtn) return;
+            if (!this.elements.prevButton || !this.elements.nextButton) return;
             var range = this.getYearRange();
             var currentYear = this.getCurrentYear();
             var atStart, atEnd;
@@ -1485,15 +1377,13 @@
                 atStart = currentYear <= range.start;
                 atEnd = currentYear >= range.end;
             } else {
-                var isHijri = this.state.calendarType === 'hijri';
                 var currentMonth = this.getCurrentMonth();
-                var firstMonth = isHijri ? 1 : 0;
-                var lastMonth = isHijri ? 12 : 11;
+                var firstMonth = this._getFirstMonth();
                 atStart = currentYear <= range.start && currentMonth <= firstMonth;
-                atEnd = currentYear >= range.end && currentMonth >= lastMonth;
+                atEnd = currentYear >= range.end && currentMonth >= firstMonth + 11;
             }
-            this.elements.prevBtn.disabled = atStart;
-            this.elements.nextBtn.disabled = atEnd;
+            this.elements.prevButton.disabled = atStart;
+            this.elements.nextButton.disabled = atEnd;
         },
 
         // 42 days from the week start on or before the month's first day; a Hijri cell reads its own day.
@@ -1501,14 +1391,14 @@
             this._renderToday = NDS.Date.getToday();
             var first = calendarData.firstDay;
             var isHijri = this.state.calendarType === 'hijri';
-            var startOffset = (calendarData.startOffset - NDS.Date.getWeekStart(this.elements.container) + 7) % 7;
-            for (var i = -startOffset; i < 42 - startOffset; i++) {
-                var date = new Date(first.getFullYear(), first.getMonth(), first.getDate() + i);
+            var start = NDS.Date.getStartOfWeek(first, NDS.Date.getWeekStart(this.elements.container));
+            for (var i = 0; i < 42; i++) {
+                var date = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
                 if (isHijri) {
                     var hijriDate = toHijri(date);
                     stampHijri(date, hijriDate.year, hijriDate.month, hijriDate.day);
                 }
-                this.createDateCell(date, i < 0 || i >= calendarData.daysInMonth ? 'other-month' : 'current-month');
+                this.createDateCell(date, date < first || date > calendarData.lastDay ? 'other-month' : 'current-month');
             }
 
             // Promote one cell to tabindex=0 so the user can Tab into the grid.
@@ -1675,7 +1565,7 @@
             if (!this.isRangeMode()) {
                 this.state.selectedDate = copyDateWithHijri(today);
             }
-            this.state.currentDate = isHijri ? fromHijri(hijriParts.get(today)?.year, hijriParts.get(today)?.month, 1) : new Date(today);
+            this.state.currentDate = isHijri ? fromHijri(hijriDate.year, hijriDate.month, 1) : new Date(today);
 
             this._refreshView();
             // Today only mutates state; Save commits (matches selectDate).
@@ -1689,9 +1579,7 @@
             delete this.elements.input.dataset.convertedDate;
             NDS.setValue(this.elements.input, '');
             this.renderCalendarDates();
-            if (this.dropmenuInstance && this.dropmenuInstance.isOpen) {
-                this.dropmenuInstance.close();
-            }
+            this._closeCalendar();
         },
 
         // Range selection logic
@@ -1779,48 +1667,24 @@
 
             this.elements.monthDropdownMenu.innerHTML = '';
 
-            var monthNames = this.getMonthNames(this.getLanguage());
             var self = this;
+            var isHijri = this.state.calendarType === 'hijri';
+            var currentYear = this.getCurrentYear();
+            var currentMonth = this.getCurrentMonth();
+            var first = this._getFirstMonth();
 
-            var isHijri = self.state.calendarType === 'hijri';
-            var currentYear = self.getCurrentYear();
-
-            monthNames.forEach(function (monthName, index) {
-                var btn = document.createElement('button');
-                btn.className = 'nds-btn nds-subtle nds-dropmenu-item nds-month-option';
-                btn.setAttribute('role', 'menuitem');
-                btn.setAttribute('data-value', index);
-                appendCellLabel(btn, monthName);
-
-                var isSelected = isHijri ?
-                    (index + 1) === self.getCurrentMonth() : // For Hijri: compare (0-based index + 1) with 1-based month
-                    index === self.getCurrentMonth();        // For Gregorian: compare 0-based with 0-based
-
-                if (isSelected) {
-                    NDS.state.add(btn, 'selected');
-                }
-
-                // Same allowed-day check the month grid uses — a month is only
-                // pickable if at least one of its days falls inside [min, max].
-                var monthCheckValue = isHijri ? index + 1 : index;
-                if (!self.isMonthAllowedForYear(currentYear, monthCheckValue)) {
-                    btn.disabled = true;
-                } else {
-                    btn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        var monthValue = parseInt(this.dataset.value);
-
-                        if (isHijri) {
-                            self.setHijriDatePart('month', monthValue + 1); // Convert 0-based dropdown index to 1-based Hijri month
-                        } else {
-                            // Day 1 — a day-29..31 date would roll past the target month.
-                            self.state.currentDate.setMonth(monthValue, 1);
-                        }
-
+            this.getMonthNames(this.getLanguage()).forEach(function (monthName, index) {
+                var month = index + first;
+                // Same allowed-day check the month grid uses: a month is pickable when a day of it is in [min, max].
+                var btn = buildUnitButton('nds-btn nds-subtle nds-dropmenu-item nds-month-option', index, monthName,
+                    self.isMonthAllowedForYear(currentYear, month) && function () {
+                        if (isHijri) self.setHijriDatePart('month', month);
+                        // Day 1: a day-29..31 date would roll past the target month.
+                        else self.state.currentDate.setMonth(month, 1);
                         self._refreshView();
                     });
-                }
-
+                btn.setAttribute('role', 'menuitem');
+                if (month === currentMonth) NDS.state.add(btn, 'selected');
                 self.elements.monthDropdownMenu.appendChild(btn);
             });
         },
@@ -1835,20 +1699,17 @@
             // Omitted or 0 caps the year list at the current year (no future).
             var yearRangeAfter = parseInt(this.elements.input.dataset.yearAfter, 10) || 0;
 
-            var isHijri = this.state.calendarType === 'hijri';
-            var todayYear = isHijri
-                ? this.getTodaysHijriDate().year
-                : NDS.Date.getToday().getFullYear();
+            var todayYear = this._getTodaysYear();
             var start = todayYear - yearRangeBefore;
             var end = todayYear + yearRangeAfter;
 
             if (this.state.minDate) {
-                var minY = isHijri ? hijriParts.get(this.state.minDate)?.year : this.state.minDate.getFullYear();
-                if (minY > start) start = minY;
+                var minYear = this._getYear(this.state.minDate);
+                if (minYear > start) start = minYear;
             }
             if (this.state.maxDate) {
-                var maxY = isHijri ? hijriParts.get(this.state.maxDate)?.year : this.state.maxDate.getFullYear();
-                if (maxY < end) end = maxY;
+                var maxYear = this._getYear(this.state.maxDate);
+                if (maxYear < end) end = maxYear;
             }
             return { start: start, end: end };
         },
@@ -1859,39 +1720,26 @@
             this.elements.yearDropdownMenu.innerHTML = '';
 
             var range = this.getYearRange();
-            var startYear = range.start;
-            var endYear = range.end;
             var currentYear = this.getCurrentYear();
-            var self = this;
 
-            for (var year = startYear; year <= endYear; year++) {
-                var btn = document.createElement('button');
-                btn.className = 'nds-btn nds-subtle nds-dropmenu-item nds-year-option';
+            for (var year = range.start; year <= range.end; year++) {
+                var btn = buildUnitButton('nds-btn nds-subtle nds-dropmenu-item nds-year-option', year, year, this._pickYear.bind(this, year));
                 btn.setAttribute('role', 'menuitem');
-                btn.setAttribute('data-value', year);
-                appendCellLabel(btn, year);
-
-                if (year === currentYear) {
-                    NDS.state.add(btn, 'selected');
-                }
-
-                btn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    var yearValue = parseInt(this.dataset.value);
-
-                    if (self.state.calendarType === 'hijri') {
-                        self.setHijriDatePart('year', yearValue);
-                    } else {
-                        // Day 1 first — Feb 29 would roll into March on non-leap years.
-                        self.state.currentDate.setDate(1);
-                        self.state.currentDate.setFullYear(yearValue);
-                    }
-
-                    self._refreshView();
-                });
-
-                self.elements.yearDropdownMenu.appendChild(btn);
+                if (year === currentYear) NDS.state.add(btn, 'selected');
+                this.elements.yearDropdownMenu.appendChild(btn);
             }
+        },
+
+        // The year menu's pick: the viewed month in that year.
+        _pickYear: function (year) {
+            if (this.state.calendarType === 'hijri') {
+                this.setHijriDatePart('year', year);
+            } else {
+                // Day 1 first — Feb 29 would roll into March on non-leap years.
+                this.state.currentDate.setDate(1);
+                this.state.currentDate.setFullYear(year);
+            }
+            this._refreshView();
         },
 
         // Helper methods for Hijri date manipulation
@@ -1965,7 +1813,7 @@
             // to fire its closed event (which runs cleanup() via the listener
             // wired in setupDropmenu).
             if (this.dropmenuInstance) {
-                if (this.dropmenuInstance.isOpen) this.dropmenuInstance.close();
+                this._closeCalendar();
                 this.dropmenuInstance.destroy();
                 this.dropmenuInstance = null;
             }

@@ -16,7 +16,7 @@
  *   NDS.Date.getWeekStart(el)        the nearest data-week-start, as 0 (Sunday) to 6 (Saturday)
  *   NDS.Date.getStartOfWeek(date, weekStart)   the first day of date's week
  *   NDS.Date.readDay(datetime)       a datetime value (YYYY-MM-DD, with or without a time) → its day, or null;
- *                                    with a zone, the day in the site's timezone
+ *                                    with a zone, the day in the site's timezone (else the visitor's)
  *   NDS.Date.fill(root)              write every such <time> in root, and root itself
  *   NDS.Date.init()                  fill the page (the loader calls it)
  * Events:
@@ -33,11 +33,11 @@
  *                          that holds the pack's date.hijri_era word (AH in English)
  *   written by the component: the <time>'s text
  * Gotchas:
- *   - Main bundle, right after core: Date Picker, Sort, Export, Countdown and the top bar
- *     read NDS.Date synchronously.
+ *   - Main bundle, right after core: Calendar, Date Picker, Filter, Sort, Export, Countdown
+ *     and the top bar read NDS.Date synchronously.
  *   - A <time> is read from datetime only, never its text: HTML holds a Gregorian date
  *     there. A value that is not a date (YYYY-MM-DD, with or without a time) is left as written.
- *   - A datetime with a time and a zone (Z, +03:00) counts in the site's timezone.
+ *   - A datetime with a time and a zone (Z, +03:00) counts in the site's timezone (else the visitor's).
  *   - Critical: the text changes length ("18/10/2026" → "07/05/1448 AH"), so fill() runs
  *     before the reveal. A month-name format is written again once the page's pack lands.
  *   - fill() is idempotent: it always works from datetime.
@@ -141,7 +141,7 @@
             : getIntlNames(lang, { month: 'long' }, i => Date.UTC(2000, i, 15)));
         // From weekStart (0 = Sunday): 2 Jan 2000 was a Sunday.
         const getWeekdayNames = (lang, weekStart = 0) => getIntlNames(lang, { weekday: 'short' }, i => Date.UTC(2000, 0, 2 + weekStart + i));
-        const WEEKDAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+        const WEEKDAYS = Object.freeze(['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']);
         // ponytail: Sunday unless set; Intl.Locale's getWeekInfo() could follow the language once Firefox has it.
         const getWeekStart = (el) => {
             const value = el?.closest?.('[data-week-start]:not([data-week-start=""])')?.dataset.weekStart;
@@ -154,7 +154,7 @@
 
         // The nearest data-date-format wins, like a dark area; <html> holds the site's.
         const formatFor = (el) => el?.closest?.('[data-date-format]:not([data-date-format=""])')?.dataset.dateFormat || 'DD/MM/YYYY';
-        const resolveCalendar = (el, fallback = 'gregory') => el?.closest?.('[data-calendar]:not([data-calendar=""])')?.dataset.calendar || fallback;
+        const getCalendar = (el, fallback = 'gregory') => el?.closest?.('[data-calendar]:not([data-calendar=""])')?.dataset.calendar || fallback;
         const getSiteFormat = () => formatFor(document.documentElement);
 
         const api = {
@@ -162,7 +162,7 @@
             get site() { return { timeZone: readTimeZone(), format: getSiteFormat() }; },
 
             formatFor,
-            getCalendar: resolveCalendar,
+            getCalendar,
             getMonthNames,
             getWeekdayNames,
             getWeekStart,
@@ -196,17 +196,17 @@
                 let parser = parsers.get(format);
                 if (!parser) {
                     const order = [];
-                    const src = format.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(TOKENS, (token) => {
+                    const pattern = format.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(TOKENS, (token) => {
                         order.push(token);
                         // A name is print-only: the format never matches.
                         if (token === 'MMMM' || token === 'MMM' || token === 'dddd') return '(?!)';
                         return token === 'YYYY' ? '(\\d{4})' : token.length === 2 ? '(\\d{2})' : '(\\d{1,2})';
                     });
-                    parsers.set(format, parser = { rx: new RegExp('^' + src + '$'), order });
+                    parsers.set(format, parser = { regex: new RegExp('^' + pattern + '$'), order });
                 }
                 // Arabic digits to ASCII, and the bidi marks Intl writes in Arabic out.
                 const normalized = NDS.toLatinDigits(text).replace(/[\u200e\u200f\u061c]/g, '').trim();
-                const match = normalized.match(parser.rx);
+                const match = normalized.match(parser.regex);
                 if (!match) return null;
                 const parts = { year: null, month: 1, day: 1 };
                 parser.order.forEach((token, i) => {
@@ -230,7 +230,7 @@
                         if (token === 'dddd') return getIntlNames(locale, { weekday: 'long' }, i => Date.UTC(2000, 0, 2 + i))[date.getDay()];
                         if (token === 'YYYY') return String(year);
                         if (token === 'YY') return String(year).slice(-2);
-                        if (token === 'MMMM') return getMonthNames(calendar === 'hijri' ? 'hijri' : 'gregory', locale)[month - 1];
+                        if (token === 'MMMM') return getMonthNames(calendar, locale)[month - 1];
                         // A Hijri month has no standard short name: MMM writes the full one.
                         if (token === 'MMM') return (calendar === 'hijri' ? getMonthNames('hijri', locale) : getIntlNames(locale, { month: 'short' }, i => Date.UTC(2000, i, 15)))[month - 1];
                         return String(token[0] === 'M' ? month : day).padStart(token.length, '0');

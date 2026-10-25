@@ -66,6 +66,8 @@
     const toDay = (value) => (value instanceof Date ? (isNaN(value) ? null : addDays(value, 0)) : value ? NDS.Date.readDay(String(value)) : null);
     const getLang = (el) => el.closest('[lang]')?.lang || 'en';
     const isSameDay = (a, b) => (a && b ? +a === +b : a === b);
+    // In the week or the picked day, and not hidden by a Filter.
+    const isShown = ({ item }) => item.hasAttribute('data-calendar-day') && !item.hasAttribute('data-filtered');
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
     const strings = NDS.i18n.getStrings('calendar', {
@@ -302,7 +304,7 @@
         }
 
         _syncEmpty() {
-            const shown = this._loading || this._events.some(({ item }) => item.hasAttribute('data-calendar-day') && !item.hasAttribute('data-filtered'));
+            const shown = this._loading || this._events.some(isShown);
             NDS.state[shown ? 'remove' : 'add'](this._element, 'empty');
         }
 
@@ -362,7 +364,7 @@
             const el = this._element;
             const lang = getLang(el);
             const calendar = NDS.Date.getCalendar(el);
-            const count = this._events.filter(({ item }) => item.hasAttribute('data-calendar-day') && !item.hasAttribute('data-filtered')).length;
+            const count = this._events.filter(isShown).length;
             const label = this._day ? NDS.Date.getDayLabel(this._day, { calendar, locale: lang }) : this._getTitle(calendar, lang);
             // An empty week says the page's own message, so the words fit what the calendar holds.
             const empty = el.querySelector('.nds-calendar-empty')?.textContent.trim();
@@ -391,7 +393,7 @@
         }
 
         setDay(date) {
-            const day = date == null ? null : toDay(date);
+            const day = toDay(date);
             if (date != null && !day) return false;
             const week = day ? NDS.Date.getStartOfWeek(day, NDS.Date.getWeekStart(this._element)) : this._week;
             return this._setState(week, this._view, day);
