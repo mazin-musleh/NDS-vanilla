@@ -5,6 +5,18 @@ layout_class: nds-has-sideinfo
 title: Open Data
 hero_title: Population by Region
 hero_description: The population and land area of the 13 regions, from the 2022 census. View it as a table or a chart, download it, or read it from the API.
+# Who publishes the dataset and when it last changed, under the title
+hero_meta:
+  - icon: "hgi-building-02"
+    label: "National Statistics Center"
+  - icon: "hgi-calendar-03"
+    label: "Updated 31 May 2023"
+    datetime: "2023-05-31"
+# The dataset's keywords
+hero_tags:
+  - label: "Census"
+  - label: "Population"
+  - label: "Regions"
 breadcrumb:
 - ["Examples", "/examples"]
 lang: en
@@ -12,18 +24,29 @@ direction: ltr
 sidemenu_mode: false
 ---
 
-<!-- Layout rules: one dataset page.
-     - The dataset's facts are the side info column (nds-has-sideinfo), with the main download. The hero's Share shares the page.
-     - The main column stacks its parts with nds-block, each a section wrapper with a heading: the data, its columns, the API, the files.
+<!-- Layout rules: one dataset page, in the order open data portals use.
+     - The hero: the dataset title, a Meta line with the publisher and the last update (hero_meta), the summary, and the keywords as tags (hero_tags). The hero's Share shares the page.
+     - The main column stacks its parts with nds-block, each a section wrapper with a heading: about the dataset, the data, the data dictionary, the files, the API, how to cite.
      - The data has two views of the same rows, Table and Chart, in a Content Switcher. The chart reads the table, so the two never disagree.
+       The total is a <tfoot> row, so sorting leaves it at the end.
      - Export saves the table as it is shown: a cell with a formatted number gives the raw number in data-export-value.
-     - The columns and the files are records with the same fields: compact Tables.
-     - The API sample is a Code block with one tab per language, and a sample answer.
-     - The figures on this page are sample data. -->
+       The Files list is the one place to download the published files.
+     - The side info column holds the dataset's facts, related datasets and a way to report a problem. Each is a group with a title and no card. It is not sticky.
+     - The figures are the 2022 census results; the publisher, the API and the files are samples. -->
 
 <section id="od-dataset" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <div class="nds-info-content">
+            <div class="nds-section-wrapper nds-block">
+                <div class="nds-section-head">
+                    <h2 class="nds-section-title">About this dataset</h2>
+                </div>
+                <div class="nds-section-body nds-prose">
+                    <p>The number of people in each of the 13 regions of Saudi Arabia on census day, 10 May 2022, with the land area of each region. The census counted citizens and residents by their place of usual residence, from government records and a field count.</p>
+                    <p>The share of each region is rounded to one decimal, so the shares add up to 100.1, not 100.</p>
+                </div>
+            </div>
+
             <div class="nds-section-wrapper nds-block">
                 <div class="nds-section-head">
                     <h2 class="nds-section-title">The data</h2>
@@ -188,6 +211,14 @@ sidemenu_mode: false
                                         <td data-sort-value="9921" data-export-value="9921"><span class="nds-number-format">9921</span></td>
                                     </tr>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th scope="row">Saudi Arabia</th>
+                                            <td data-export-value="32175224"><span class="nds-number-format">32175224</span></td>
+                                            <td>100</td>
+                                            <td data-export-value="2153997"><span class="nds-number-format">2153997</span></td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                             <div class="nds-tab-panel" role="tabpanel" id="od-panel-chart" aria-labelledby="od-tab-chart" tabindex="-1" hidden>
@@ -201,7 +232,7 @@ sidemenu_mode: false
 
             <div class="nds-section-wrapper nds-block">
                 <div class="nds-section-head">
-                    <h2 class="nds-section-title">Columns</h2>
+                    <h2 class="nds-section-title">Data dictionary</h2>
                 </div>
                 <div class="nds-section-body">
                     <table class="nds-table nds-compact">
@@ -238,6 +269,56 @@ sidemenu_mode: false
                 </div>
             </div>
 
+            <div class="nds-section-wrapper nds-block">
+                <div class="nds-section-head">
+                    <h2 class="nds-section-title">Files</h2>
+                    <p class="nds-section-description">The CSV and the JSON hold the same 13 rows as the table. The PDF explains how the census counted.</p>
+                </div>
+                <div class="nds-section-body">
+                    <table class="nds-table nds-compact">
+                        <thead>
+                            <tr>
+                                <th>File</th>
+                                <th data-align="center">Format</th>
+                                <th data-align="end">Size</th>
+                                <th class="nds-actions-column">Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>population-by-region.csv</td>
+                                <td><span class="nds-tag nds-sm"><span class="nds-label">CSV</span></span></td>
+                                <td>1 KB</td>
+                                <td class="nds-actions-column">
+                                    <a href="#" class="nds-btn nds-subtle nds-sm nds-icon-only" aria-label="Download population-by-region.csv" download>
+                                        <i class="nds-icon nds-hgi-download-04" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>population-by-region.json</td>
+                                <td><span class="nds-tag nds-sm"><span class="nds-label">JSON</span></span></td>
+                                <td>2 KB</td>
+                                <td class="nds-actions-column">
+                                    <a href="#" class="nds-btn nds-subtle nds-sm nds-icon-only" aria-label="Download population-by-region.json" download>
+                                        <i class="nds-icon nds-hgi-download-04" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>census-2022-method.pdf</td>
+                                <td><span class="nds-tag nds-sm"><span class="nds-label">PDF</span></span></td>
+                                <td>840 KB</td>
+                                <td class="nds-actions-column">
+                                    <a href="#" class="nds-btn nds-subtle nds-sm nds-icon-only" aria-label="Download census-2022-method.pdf" download>
+                                        <i class="nds-icon nds-hgi-download-04" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="nds-section-wrapper nds-block">
                 <div class="nds-section-head">
                     <h2 class="nds-section-title">Use the API</h2>
@@ -306,78 +387,46 @@ console.log(rows[0].region, rows[0].population);</code>
 
             <div class="nds-section-wrapper nds-block">
                 <div class="nds-section-head">
-                    <h2 class="nds-section-title">Files</h2>
+                    <h2 class="nds-section-title">How to cite</h2>
+                    <p class="nds-section-description">Name the source when you use this data, as the licence asks.</p>
                 </div>
                 <div class="nds-section-body">
-                    <table class="nds-table nds-compact">
-                        <thead>
-                            <tr>
-                                <th>File</th>
-                                <th data-align="center">Format</th>
-                                <th data-align="end">Size</th>
-                                <th class="nds-actions-column">Download</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>population-by-region.csv</td>
-                                <td><span class="nds-tag nds-sm"><span class="nds-label">CSV</span></span></td>
-                                <td>1 KB</td>
-                                <td class="nds-actions-column">
-                                    <a href="#" class="nds-btn nds-subtle nds-sm nds-icon-only" aria-label="Download population-by-region.csv" download>
-                                        <i class="nds-icon nds-hgi-download-04" aria-hidden="true"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>population-by-region.json</td>
-                                <td><span class="nds-tag nds-sm"><span class="nds-label">JSON</span></span></td>
-                                <td>2 KB</td>
-                                <td class="nds-actions-column">
-                                    <a href="#" class="nds-btn nds-subtle nds-sm nds-icon-only" aria-label="Download population-by-region.json" download>
-                                        <i class="nds-icon nds-hgi-download-04" aria-hidden="true"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>census-2022-method.pdf</td>
-                                <td><span class="nds-tag nds-sm"><span class="nds-label">PDF</span></span></td>
-                                <td>840 KB</td>
-                                <td class="nds-actions-column">
-                                    <a href="#" class="nds-btn nds-subtle nds-sm nds-icon-only" aria-label="Download census-2022-method.pdf" download>
-                                        <i class="nds-icon nds-hgi-download-04" aria-hidden="true"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="nds-card nds-stroke nds-full">
+                        <div class="nds-card-content">
+                            <div class="nds-card-text nds-prose">
+                                <p id="od-cite">National Statistics Center (2023). Population by Region, 2022 census. Dataset POP-REG-2022. <a href="https://data.example.gov.sa/dataset/population-by-region">https://data.example.gov.sa/dataset/population-by-region</a></p>
+                            </div>
+                        </div>
+                        <div class="nds-card-actions">
+                            <button type="button" class="nds-btn nds-secondary-outline nds-sm nds-copy" data-copy-target="#od-cite">
+                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                <span class="nds-label">Copy citation</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <aside class="nds-sideinfo nds-sticky nds-top" aria-label="Dataset facts">
-            <div class="nds-card nds-stroke nds-shadow">
+        <!-- The dataset around the data: its facts, related datasets, a way to report a problem.
+             Each block is a group with a title; a card is optional. Not sticky: it scrolls away with the page -->
+        <aside class="nds-sideinfo" aria-label="About the dataset">
+            <div class="nds-sideinfo-group">
+                <span class="nds-sideinfo-title">Dataset facts</span>
                 <dl class="nds-definition-list">
                     <div class="nds-definition-item">
                         <dt>
-                            <i class="hgi hgi-stroke hgi-building-02" aria-hidden="true"></i>
-                            <span class="nds-label">Publisher</span>
+                            <i class="hgi hgi-stroke hgi-calendar-02" aria-hidden="true"></i>
+                            <span class="nds-label">Time covered</span>
                         </dt>
-                        <dd>National Statistics Center</dd>
+                        <dd>Census day, 10 May 2022</dd>
                     </div>
                     <div class="nds-definition-item">
                         <dt>
-                            <i class="hgi hgi-stroke hgi-folder-01" aria-hidden="true"></i>
-                            <span class="nds-label">Category</span>
+                            <i class="hgi hgi-stroke hgi-maps-location-01" aria-hidden="true"></i>
+                            <span class="nds-label">Area covered</span>
                         </dt>
-                        <dd>Population</dd>
-                    </div>
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i>
-                            <span class="nds-label">Last updated</span>
-                        </dt>
-                        <dd>31 May 2023</dd>
+                        <dd>Saudi Arabia, by its 13 regions</dd>
                     </div>
                     <div class="nds-definition-item">
                         <dt>
@@ -393,13 +442,89 @@ console.log(rows[0].region, rows[0].population);</code>
                         </dt>
                         <dd>Open Data Licence: free to use, also for profit, with the source named</dd>
                     </div>
+                    <div class="nds-definition-item">
+                        <dt>
+                            <i class="hgi hgi-stroke hgi-hashtag" aria-hidden="true"></i>
+                            <span class="nds-label">Dataset ID</span>
+                        </dt>
+                        <dd>POP-REG-2022</dd>
+                    </div>
+                    <div class="nds-definition-item">
+                        <dt>
+                            <i class="hgi hgi-stroke hgi-mail-01" aria-hidden="true"></i>
+                            <span class="nds-label">Contact</span>
+                        </dt>
+                        <dd><a href="mailto:opendata@example.gov.sa">opendata@example.gov.sa</a></dd>
+                    </div>
+                    <div class="nds-definition-item">
+                        <dt>
+                            <i class="hgi hgi-stroke hgi-view" aria-hidden="true"></i>
+                            <span class="nds-label">Views</span>
+                        </dt>
+                        <dd><span class="nds-number-format">48210</span></dd>
+                    </div>
+                    <div class="nds-definition-item">
+                        <dt>
+                            <i class="hgi hgi-stroke hgi-download-04" aria-hidden="true"></i>
+                            <span class="nds-label">Downloads</span>
+                        </dt>
+                        <dd><span class="nds-number-format">9364</span></dd>
+                    </div>
                 </dl>
-                <div class="nds-card-actions">
-                    <a href="#" class="nds-btn nds-primary nds-full" download>
-                        <i class="nds-icon nds-hgi-download-04" aria-hidden="true"></i>
-                        <span class="nds-label">Download CSV</span>
-                    </a>
+            </div>
+            <div class="nds-sideinfo-group">
+                <span class="nds-sideinfo-title">Related datasets</span>
+                <div class="nds-drawer nds-divided">
+                    <ul class="nds-drawer-list">
+                        <li>
+                            <a href="#" class="nds-btn nds-subtle">
+                                <span class="nds-drawer-item">
+                                    <span class="nds-drawer-item-head">
+                                        <span class="nds-label">Population by age and sex, 2022 census</span>
+                                    </span>
+                                    <span class="nds-meta">
+                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>CSV, JSON</span>
+                                    </span>
+                                </span>
+                                <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nds-btn nds-subtle">
+                                <span class="nds-drawer-item">
+                                    <span class="nds-drawer-item-head">
+                                        <span class="nds-label">Households by region, 2022 census</span>
+                                    </span>
+                                    <span class="nds-meta">
+                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>CSV, JSON</span>
+                                    </span>
+                                </span>
+                                <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nds-btn nds-subtle">
+                                <span class="nds-drawer-item">
+                                    <span class="nds-drawer-item-head">
+                                        <span class="nds-label">Population by region, 2010 census</span>
+                                    </span>
+                                    <span class="nds-meta">
+                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>CSV</span>
+                                    </span>
+                                </span>
+                                <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+            <div class="nds-sideinfo-group">
+                <span class="nds-sideinfo-title">Something wrong?</span>
+                <p>Tell the publisher about a wrong figure or a broken file.</p>
+                <a href="mailto:opendata@example.gov.sa?subject=POP-REG-2022" class="nds-btn nds-secondary-outline nds-md">
+                    <i class="hgi hgi-stroke hgi-flag-02" aria-hidden="true"></i>
+                    <span class="nds-label">Report a problem</span>
+                </a>
             </div>
         </aside>
     </div>
