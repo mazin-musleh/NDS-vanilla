@@ -410,6 +410,16 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_date-tile-padding: var(--spacing-xs) var(--spacing-sm);
 }
 
+// Quote MD step: the .nds-md class and the phone rule share it.
+@mixin quote-md {
+    --_quote-mark-size: var(--quote-mark-size, 40px);
+    --_quote-padding:   var(--quote-padding, var(--spacing-xl));
+    --_quote-title-FS:  var(--quote-title-FS, var(--typo-text-xl-FS));
+    --_quote-title-LH:  var(--quote-title-LH, var(--typo-text-xl-LH));
+    --_quote-text-FS:   var(--quote-text-FS, var(--typo-text-lg-FS));
+    --_quote-text-LH:   var(--quote-text-LH, var(--typo-text-lg-LH));
+}
+
 // Meta SM step: the .nds-sm class and a parent's container rule share it.
 @mixin meta-sm {
     --_meta-FS: var(--typo-text-xs-FS);

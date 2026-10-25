@@ -93,6 +93,19 @@
         .nds-persona-name { font-style: normal; }
     }
 
+    &.nds-md {
+        @include quote-md;
+    }
+
+    &.nds-sm {
+        --_quote-mark-size: var(--quote-mark-size, 32px);
+        --_quote-padding:   var(--quote-padding, var(--spacing-lg));
+        --_quote-title-FS:  var(--quote-title-FS, var(--typo-text-lg-FS));
+        --_quote-title-LH:  var(--quote-title-LH, var(--typo-text-lg-LH));
+        --_quote-text-FS:   var(--quote-text-FS, var(--typo-text-md-FS));
+        --_quote-text-LH:   var(--quote-text-LH, var(--typo-text-md-LH));
+    }
+
     &.nds-transparent {
         --_quote-bg: transparent;
         --_quote-border: transparent;
@@ -100,11 +113,18 @@
     }
 }
 
+// Phones: only the default steps down, one step to MD; a size the author wrote stays.
+// The screen is the ruler, not a container: the step changes the root's own padding.
 @include mobile {
-    .nds-quote {
-        --quote-mark-size: 28px;
-        --quote-padding: var(--spacing-xl);
-        --quote-text-FS: var(--typo-text-lg-FS);
-        --quote-text-LH: var(--typo-text-lg-LH);
+    .nds-quote:not(.nds-sm, .nds-md, .nds-lg) {
+        @include quote-md;
+    }
+
+    // Reflow before shrink: the marks move above and below the text, so the text takes the full width.
+    // Each mark keeps its bleed into the figure's padding; the body pads only the rest of it.
+    .nds-quote .nds-quote-body {
+        --_quote-mark-room: calc(var(--_quote-mark-size) - var(--_quote-padding) + var(--spacing-xs) + var(--spacing-sm));
+        padding-inline: 0;
+        padding-block: var(--_quote-mark-room);
     }
 }

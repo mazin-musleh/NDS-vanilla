@@ -170,6 +170,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Persona** — every element after the divider takes its own full row; a definition list after it needs no inline `flex`.
 - **Persona** — The name is `--text-display` (was `--text-default`). `--persona-name-color` sets another color.
 - **Block** — A divider right after a block sets the space between them with its own spacing: the block's 32px gap no longer adds to it.
+- **Quote** — MD and SM sizes (`nds-md`, `nds-sm`): 40px and 32px marks, with a smaller title, text and padding. On a phone, the marks move above and below the text so it takes the full width, and a quote with no size class steps down to MD; a size you wrote stays. A `--quote-*` value you set on a parent now holds on phones too.
 - **Captions** — A `figcaption` has small, secondary text everywhere, not only inside prose. A Quote's author line keeps its own look.
 - **Prose** — An image inside prose has rounded corners (`--radius-md`), as Image Popup Viewer thumbnails do. An image a component owns, such as an avatar in a Quote, keeps its own shape.
 - **Quote** — The title is `--text-display` (was `--text-default`). `--quote-title-color` sets another color.
