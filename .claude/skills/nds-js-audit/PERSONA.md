@@ -441,7 +441,7 @@ A name a reader or an agent can guess from another component, or from the DOM an
 
 **Audit behavior**
 
-Read in review: a public method whose verb is a synonym the table replaces (`recheck…`, `setDisabled`, `previous`, `switchTo`, `initialize…`), a name that repeats its namespace, two public names that call the same code, a verb that is not first, a shortened word → LOW, as a migration target for the next major. `check-js-rules.mjs --names` (rule ids `P10.<rule>`) checks shapes only, with no word list: an internal function whose first word the internal table replaces → finding; an acronym in capitals, on any name → finding; a public `onX` / `initX` key on a local function of another name → finding (rule 9). An internal rename needs no Migration line.
+Read in review: a public method whose verb is a synonym the table replaces (`recheck…`, `setDisabled`, `previous`, `switchTo`, `initialize…`), a name that repeats its namespace, two public names that call the same code, a verb that is not first, a shortened word → LOW, as a migration target for the next major. `check-js-rules.mjs --names` (rule ids `P10.<rule>`) checks shapes only, with no word list: an internal function whose first word the internal table replaces → finding; an acronym in capitals, on any name → finding; a public `onX` / `initX` key on a local function of another name → finding (rule 9); any other public key on a local function of another name → verify (a loader hook, a reserved word and a `_` key are skipped). An internal rename needs no Migration line.
 
 ---
 

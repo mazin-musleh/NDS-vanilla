@@ -20,6 +20,9 @@ const BANNED = {
 // Banned only with a suffix: the bare word is a loader hook.
 const BANNED_PREFIX = { init: 'setupX', refresh: 'syncX (refresh() is the loader hook)' };
 const BANNED_SUFFIX = { Handler: 'handleX', Exists: 'isX / hasX' };
+// Rule 9's read half skips these keys: a loader hook names its own setup function, a reserved word cannot be a local.
+const LOADER_HOOKS = new Set(['init', 'reinit', 'refresh', 'destroy', 'create', 'mount']);
+const RESERVED = new Set(['export', 'delete', 'default', 'import', 'new', 'in', 'do', 'if', 'for', 'switch', 'case', 'with']);
 
 // camelCase words, an acronym run kept as one word: toCSVFile → to CSV File.
 const words = (name) => name.replace(/^_+/, '').match(/[A-Z]+(?![a-z])|[A-Z]?[a-z0-9]+|[A-Z]/g) || [];
@@ -174,6 +177,15 @@ function scanFile(file, source) {
                     // NDS.X.y = function: a namespace member
                     if (p && root === 'NDS' && isFn(node.right)) fnName(node, { name: p }, { pub: banner?.has(p) && !p.startsWith('_') });
                 }
+                // NDS.X = (() => { … })(): the namespace's own module, so its top level is module scope.
+                const r = node.right;
+                if (ctx.module && rootName(l) === 'NDS' && r.type === 'CallExpression' && isFn(r.callee) && r.callee.body.type === 'BlockStatement') {
+                    kid(l);
+                    r.callee.params.forEach((p) => bound(p).forEach((id) => local(id, p)));
+                    r.callee.body.body.forEach((s) => kid(s, { ...ctx, module: true, fnDepth: ctx.fnDepth + 1 }));
+                    r.arguments.forEach((a) => kid(a));
+                    return;
+                }
                 if (l.type === 'MemberExpression' && propName(l) === 'cookie' && rootName(l) === 'document') {
                     const r = node.right;
                     const head = r.type === 'Literal' ? String(r.value) : r.type === 'TemplateLiteral' ? r.quasis[0].value.cooked : null;
@@ -235,10 +247,14 @@ function scanFile(file, source) {
                         if (isFn(q.value) || q.method || (q.value.type === 'Identifier' && fnBindings.has(q.value.name)))
                             fnName(q, q.key, { pub: !q.key.name.startsWith('_') });
                         // Rule 9: `onX` and `initX` pass only as public names, so a second local name is how a check gets dodged.
+                        // Any other second name is read: a loader hook keeps its local name, a reserved word cannot be one.
                         const ws = words(q.key.name);
-                        if (q.value.type === 'Identifier' && q.value.name !== q.key.name && fnBindings.has(q.value.name)
-                            && ws.length > 1 && ['on', 'init'].includes(ws[0].toLowerCase()))
-                            push('P10.9', q, `\`${q.key.name}: ${q.value.name}\`: one function, two names — declare it \`${q.key.name}\``);
+                        if (q.value.type === 'Identifier' && q.value.name !== q.key.name && fnBindings.has(q.value.name)) {
+                            if (ws.length > 1 && ['on', 'init'].includes(ws[0].toLowerCase()))
+                                push('P10.9', q, `\`${q.key.name}: ${q.value.name}\`: one function, two names — declare it \`${q.key.name}\``);
+                            else if (!LOADER_HOOKS.has(q.key.name) && !RESERVED.has(q.key.name) && !q.key.name.startsWith('_'))
+                                push('P10.9', q, `\`${q.key.name}: ${q.value.name}\`: one function, two names`, 'declare it under its public name, unless the local name is the true one and the key a documented alias');
+                        }
                     }
                 }
                 break;

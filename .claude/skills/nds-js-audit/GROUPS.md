@@ -89,6 +89,9 @@ Seams:
 - calendar ↔ filter, the address: both write `location.search` through `NDS.writeUrlParams`. Calendar's `_writeParam` owns `?week=` (`data-week-param`); Filter's `syncUrlParams` and `_rollbackApplied` touch only `_getUrlKeys()`, so a week moved during an AJAX request survives a failed one.
 - date ↔ calendar, the Date Tile: `NDS.Date.fill` sets the `textContent` of a `<time data-date-to|data-date-format>`; calendar's `_fillTiles` writes the `.nds-date-tile-*` spans inside an event's tile, so a tile's `<time>` carries neither attribute, or `fill` wipes the spans.
 - loader: the `Date` entry is `critical:true` with `refresh: root => NDS.Date.fill(root)`; `Calendar` is `critical:true` (it stamps the grid columns before the reveal).
+- date-picker, calendar → `NDS.Date` names, the language: each resolves its own. The picker's `getLanguage` reads `data-lang`, then the input's own `lang`, then the page (`NDS.i18n.resolveLang`, documented); calendar's `getLang` reads the nearest `[lang]`. They differ inside a `lang` wrapper.
+- time-date → date, the pack: `syncDate` waits on `strings.ready()` of section `time-date`, which also covers Date's Hijri month names (section `date`): core loads one file per language.
+- date-picker → filter (in @lists): `_syncValueInputs` writes each `.nds-date-value` through `NDS.Date.format` in that input's own `data-date-format` and `data-calendar`; Filter's date group reads `YYYY-MM-DD` Gregorian from it.
 
 ## @lists
 
