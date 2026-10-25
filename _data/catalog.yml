@@ -1129,7 +1129,7 @@
 
 - title: "Student Portal"
   description: "A student's home page with grades, today's classes, requests, exams and services."
-  use_when: "A personal home page that a signed-in user opens first. Use for a student, employee, patient, citizen or member portal, a my-account page, or any user dashboard. Each section maps to any portal: a profile with a status Alert and a Definition List; key numbers as metric tiles, a trend chart and a progress ring; today's schedule as a Timeline beside the person's requests in a Table; upcoming and past dated items in a Content Switcher, with a countdown, beside key dates in Scroll More; quick actions as cards whose arrow button opens a modal; a swiper of link cards to other systems, as navigation tiles; a service catalog where a closed service is a disabled card; a FAB that opens a help panel. Full chrome with a sub hero, striped sections (nds-stripe on .nds-content), and no side menu. The page's opening comment gives its layout rules."
+  use_when: "A personal home page that a signed-in user opens first. Use for a student, employee, patient, citizen or member portal, a my-account page, or any user dashboard. Each section maps to any portal: a profile with a status Alert and a Definition List; key numbers as metric tiles, a trend chart and a progress ring; today's schedule as a Timeline beside the person's requests in a Table; upcoming and past dated items in a Content Switcher, with a countdown, beside key dates in Scroll More; quick actions as cards whose arrow button opens a modal; a swiper of link cards to other systems, as navigation tiles; a service catalog where a closed service is a disabled card; a FAB that opens a help panel. The page runs NDS.SessionTimeout.init(), as every signed-in page does. Full chrome with a sub hero, striped sections (nds-stripe on .nds-content), and no side menu. The page's opening comment gives its layout rules."
   icon: '<i class="hgi hgi-stroke hgi-mortarboard-01"></i>'
   category: "Dashboard"
   tags: ["Drawer", "Date Tile", "Meta", "Countdown", "Content Switcher"]
@@ -1186,7 +1186,7 @@
 
 - title: "Manage Records"
   description: "Records screen with create, edit and delete, filters, expandable detail rows and CSV export."
-  use_when: "The data-heavy admin screen, and the closest fit for any data grid, data table, CRUD screen, admin list, records management, or back-office table request, including replacements for third-party table plugins. Carries a large table with keyword search, multi-field filters (checkbox, radio, slider), column sorting, pagination with a per-page picker, a show/hide column picker, row selection with a live count, per-row edit and delete actions, expandable sub-rows for detail, add and edit modals, an empty-state message, and CSV export. Runs fully in the browser, so no server is needed. Runs edge-to-edge beside a side menu through nds-full-width on body, like the Console."
+  use_when: "The data-heavy admin screen, and the closest fit for any data grid, data table, CRUD screen, admin list, records management, or back-office table request, including replacements for third-party table plugins. Carries a large table with keyword search, multi-field filters (checkbox, radio, slider), column sorting, pagination with a per-page picker, a show/hide column picker, row selection with a live count, per-row edit and delete actions, expandable sub-rows for detail, add and edit modals, an empty-state message, and CSV export. Runs fully in the browser, so no server is needed. Runs edge-to-edge beside a side menu through nds-full-width on body, like the Console. The page runs NDS.SessionTimeout.init(), as every signed-in page does."
   icon: '<i class="hgi hgi-stroke hgi-list-view"></i>'
   category: "Dashboard"
   tags: ["Tables", "Sub-Rows", "Modal", "Filter"]
@@ -1194,7 +1194,7 @@
 
 - title: "Console"
   description: "Admin console with charts, transactions, team directory, and notifications."
-  use_when: "The landing page of an admin area: KPI stat tiles, charts, a recent-activity table, a people directory, and alert notifications. Runs edge-to-edge beside a side menu through nds-full-width on body. Use for admin home, back-office overview, control panel, or internal tool landing screens."
+  use_when: "The landing page of an admin area: KPI stat tiles, charts, a recent-activity table, a people directory, and alert notifications. Runs edge-to-edge beside a side menu through nds-full-width on body. Use for admin home, back-office overview, control panel, or internal tool landing screens. The page runs NDS.SessionTimeout.init(), as every signed-in page does."
   icon: '<i class="hgi hgi-stroke hgi-dashboard-browsing"></i>'
   category: "Dashboard"
   tags: ["Charts", "Tables", "Stats"]

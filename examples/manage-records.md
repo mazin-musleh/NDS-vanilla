@@ -979,6 +979,10 @@ hideFeedback: true
 
 <script>
   function initPage() {
+    // Once on every signed-in page, from the shared layout, with your server's idle timeout.
+    // Without extend (or a nds:session:extend listener), Stay signed in does not renew the server session: see the Session Timeout page.
+    NDS.SessionTimeout.init({ timeout: 900, warn: 120 });
+
     var table = document.getElementById('requests-table');
     var tbody = document.getElementById('requests-table-body');
     var form = document.getElementById('record-form');

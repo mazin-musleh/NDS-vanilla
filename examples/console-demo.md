@@ -606,3 +606,13 @@ hideFeedback: true
         </div>
     </div>
 </section>
+
+<script>
+  function initPage() {
+    // Once on every signed-in page, from the shared layout, with your server's idle timeout.
+    // Without extend (or a nds:session:extend listener), Stay signed in does not renew the server session: see the Session Timeout page.
+    NDS.SessionTimeout.init({ timeout: 900, warn: 120 });
+  }
+  // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
+</script>
