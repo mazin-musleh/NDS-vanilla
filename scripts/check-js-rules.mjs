@@ -1335,6 +1335,7 @@ const NAME_CASES = [
     [`(function(){ NDS.T = (() => { const onAdd = () => {}; return { onAdd }; })(); })();`, []], // declared in the namespace's own factory
     [`(function(){ const pickCalendar = () => 1; function exportFrom() {} NDS.T = { getCalendar: pickCalendar, export: exportFrom }; })();`, ['P10.9?']], // a reserved word cannot be the local
     [`(function(){ NDS.T = (() => { const DAYS = ['sun']; const KEYS = Object.freeze(['a']); return {}; })(); })();`, ['P12.8']], // the factory's top level is module scope
+    [`/* NDS.A — public surface\n * Methods:\n *   el.ndsA.destroy()   tear it down\n */\n(function(){ function NdsA() {} NdsA.prototype = { destroy: function () { this.abortController = new AbortController(); this.state = 1; this._x = 2; }, bindThing: function () {}, _ok: function () {} }; })();`, ['P10.4', 'P12.11', 'P12.11']], // a prototype object is a class: bindThing, state
 ];
 
 const args = process.argv.slice(2);

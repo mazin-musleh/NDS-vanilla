@@ -186,6 +186,22 @@ function scanFile(file, source) {
                     r.arguments.forEach((a) => kid(a));
                     return;
                 }
+                // X.prototype = { … }: a class written as an object, so its members follow the class rules.
+                if (propName(l) === 'prototype' && r.type === 'ObjectExpression') {
+                    kid(l);
+                    const methods = new Set(r.properties.filter((q) => q.key?.type === 'Identifier').map((q) => q.key.name));
+                    const proto = { ...ctx, module: false, cls: r, methods };
+                    for (const q of r.properties) {
+                        if (q.type === 'Property' && q.key.type === 'Identifier') {
+                            const n = q.key.name;
+                            if (n.startsWith('_')) defines.add(n);
+                            else member(proto, n, q.key);
+                            if (isFn(q.value)) fnName(q, q.key, { pub: banner?.has(n) && !n.startsWith('_') });
+                        }
+                        kid(q.value || q, proto);
+                    }
+                    return;
+                }
                 if (l.type === 'MemberExpression' && propName(l) === 'cookie' && rootName(l) === 'document') {
                     const r = node.right;
                     const head = r.type === 'Literal' ? String(r.value) : r.type === 'TemplateLiteral' ? r.quasis[0].value.cooked : null;

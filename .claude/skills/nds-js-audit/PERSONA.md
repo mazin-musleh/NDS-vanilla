@@ -72,7 +72,7 @@ destroy() {
 
 **Carve-outs (NOT divergence)**
 
-- **Two-phase lifecycle** where `cleanup()` releases per-open-cycle handlers and `destroy()` releases instance-lifetime handlers + invokes `cleanup()` first. Exemplar: `_js/nds-date-picker.js`. The principle: per-cycle release uses `cleanup()`; instance release uses `destroy()`. They coexist.
+- **Two-phase lifecycle** where `cleanup()` releases per-open-cycle handlers and `destroy()` releases instance-lifetime handlers + invokes `cleanup()` first. Exemplar: `_js/nds-date-picker.js` (`_cleanup()`, private there). The principle: per-cycle release uses `cleanup()`; instance release uses `destroy()`. They coexist.
 
 **Audit behavior**
 
@@ -264,7 +264,7 @@ Flag any of these signal-less shapes:
 4. `cloneNode(true)` + `replaceWith` listener-nuking teardown. It destroys consumer-attached listeners along with the component's own, and the clone inherits the init-guard attribute while losing every expando — leaving an element that is stamped, instance-less, and permanently ineligible for re-init.
 5. Manual removal bookkeeping inside a `signal.addEventListener('abort', …)` callback where passing `{ signal }` to the original `addEventListener` would do it natively.
 
-**Two-controller split.** A subset of listeners with a genuinely shorter lifetime than the instance (one open, one drag) takes a second domain-named controller, never per-handler bookkeeping — both lifetimes stay atomic. Cite: `_js/nds-modal.js` `openAbortController`, re-armed on every open / aborted in `close()` and `destroy()`, alongside the init-lifetime `initAbortController`. `_js/nds-date-picker.js` `panelAbortController` is the same split: re-armed per open, aborted by `cleanup()`, beside the instance-lifetime `instanceAbortController`.
+**Two-controller split.** A subset of listeners with a genuinely shorter lifetime than the instance (one open, one drag) takes a second domain-named controller, never per-handler bookkeeping — both lifetimes stay atomic. Cite: `_js/nds-modal.js` `openAbortController`, re-armed on every open / aborted in `close()` and `destroy()`, alongside the init-lifetime `initAbortController`. `_js/nds-date-picker.js` `panelAbortController` is the same split: re-armed per open, aborted by `_cleanup()`, beside the instance-lifetime `instanceAbortController`.
 
 ---
 
