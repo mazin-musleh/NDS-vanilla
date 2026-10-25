@@ -813,8 +813,8 @@
     } });
 
     // ── names: what a screen reader announces ───────────────────────
-    // An element it never reaches (an aria-hidden loop clone, an inert background) needs no name.
-    const isUnread = (el) => !!el.closest('[aria-hidden="true"], [inert]') || /^(presentation|none)$/.test(el.getAttribute('role') || '');
+    // An element it never reaches (an aria-hidden loop clone, an inert background, a hidden spare) needs no name.
+    const isUnread = (el) => !!el.closest('[aria-hidden="true"], [inert], [hidden]') || /^(presentation|none)$/.test(el.getAttribute('role') || '');
     const getNameText = (el) => (el.getAttribute('aria-label') || el.textContent || '').trim();
     // aria-labelledby, aria-label and title, in the order a browser reads them.
     const getOwnName = (el) => (el.getAttribute('aria-labelledby') || '').split(/\s+/).filter(Boolean)
