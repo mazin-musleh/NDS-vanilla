@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "25/10/2026 - 06:08 PM"
 ---
 
 <section id="slider-overview" class="nds-content-section nds-doc-overview">
@@ -161,6 +161,13 @@ The `nds-loading` class shows the bar and the value as a skeleton, and hides the
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-touch-01"></i>
+            <span class="nds-label">Touch Target</span>
+          </span>
+          <p class="nds-item-desc">Each thumb takes a click or a touch in a 24px circle, the WCAG 2.5.8 minimum, while the dot you see stays 12px, or 16px with MD. The two thumbs of a range slider have one each.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-resize-field"></i>
             <span class="nds-label">Steady Bar</span>
           </span>
@@ -197,7 +204,7 @@ The `nds-loading` class shows the bar and the value as a skeleton, and hides the
 - Keep the `<output>` beside every input. The user reads the exact value there.
 - Set `step` to the unit the value snaps to, such as 500 for a budget. Without it, the value moves in steps of 1.
 - Give each input of a range slider an `aria-label`, such as "Lowest price" and "Highest price". The one label does not name the two thumbs.
-- Use MD on touch-first screens. The 12px thumb of SM is hard to grab with a finger.
+- Use MD on touch-first screens. Its 16px dot is easier to see under a finger. Both sizes take a touch in a 24px circle.
 - Use Stacked with Currency, so a wide value does not shorten the bar.
 - After you set `input.value` from a script, fire an `input` event on the input. The bar and the value then update.
 - After you change `min` or `max` from a script, call `NDS.Slider.reinit(container)`. The value width is measured again for the new bounds.

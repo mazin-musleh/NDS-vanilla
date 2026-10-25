@@ -12,16 +12,20 @@
 // and neither treats the other as forgivable inside :is(). Mixins do the
 // sharing instead.
 
+// The thumb takes the pointer in a --_hit-size circle; a transparent border pads it out
+// from the --_thumb-size dot you see, whose ring is an inset shadow.
 @mixin _thumb {
     appearance: none;
-    box-sizing: border-box;   // keep the border inside --_thumb-size (footprint + fill alignment unchanged)
-    width: var(--_thumb-size);
-    height: var(--_thumb-size);
+    box-sizing: border-box;
+    width: var(--_hit-size);
+    height: var(--_hit-size);
     border-radius: var(--radius-full);
-    background: var(--slider-thumb-bg);
-    border: 2px solid var(--slider-thumb-border);
+    background-color: var(--slider-thumb-bg);
+    background-clip: padding-box;
+    border: var(--_hit-pad) solid transparent;
+    box-shadow: inset 0 0 0 2px var(--slider-thumb-border);
     cursor: grab;
-    margin-top: calc((var(--_bar-size) - var(--_thumb-size)) / 2);
+    margin-top: calc((var(--_bar-size) - var(--_hit-size)) / 2);
     transition: transform 0.1s ease, background-color 0.1s ease;
 }
 
@@ -32,6 +36,9 @@
 .nds-slider-container {
     --_thumb-size: 12px;
     --_bar-size: 4px;
+    // WCAG 2.5.8: a 24px target around the smaller dot.
+    --_hit-size: max(var(--_thumb-size), 24px);
+    --_hit-pad: calc((var(--_hit-size) - var(--_thumb-size)) / 2);
     @include ltr { --_dir: 90deg; }
     &.nds-md { --_thumb-size: 16px; --_bar-size: 8px; }
 
@@ -80,10 +87,9 @@
     position: relative;
     flex: 1;
     min-width: 0;
-    height: var(--_thumb-size);
+    height: var(--_hit-size);
 
-    // Bar inset by half a thumb on each side so the gradient's 0↔100% map to the
-    // thumb-CENTER travel range. Single fills 0→value (start defaults to 0%);
+    // The bar spans the track; the gradient's 0↔100% map across it. Single fills 0→value (start defaults to 0%);
     // range fills start→end. Direction flips via --_dir (270deg = "to left" RTL
     // default; LTR sets 90deg = "to right").
     &::before {
@@ -107,8 +113,9 @@
 
 .nds-slider {
     position: absolute;
-    inset: 0;
-    width: 100%;
+    // Past the bar by the hit padding on each side, so the dot travels the bar exactly as a bare thumb would.
+    inset: 0 calc(-1 * var(--_hit-pad));
+    width: calc(100% + 2 * var(--_hit-pad));
     height: 100%;
     appearance: none;
     background: transparent;
@@ -139,21 +146,25 @@
         // to a unitless number and breaks both properties.
         &::-webkit-slider-thumb {
             outline: calc(var(--_thumb-size) / 8) solid var(--focus-outline);
-            outline-offset: calc(var(--_thumb-size) / -8);
-            box-shadow: inset 0 0 0 calc(var(--_thumb-size) / 8) var(--focus-inner);
+            outline-offset: calc(-1 * var(--_hit-pad) - var(--_thumb-size) / 8);
+            // The ring is an overlay: the dot's color under it, then the focus ring inside.
+            box-shadow: inset 0 0 0 2px var(--slider-thumb-border), inset 0 0 0 2px var(--slider-thumb-bg-hovered),
+                inset 0 0 0 calc(2px + var(--_thumb-size) / 8) var(--focus-inner);
             transform: scale(1.15);
         }
         &::-moz-range-thumb {
             outline: calc(var(--_thumb-size) / 8) solid var(--focus-outline);
-            outline-offset: calc(var(--_thumb-size) / -8);
-            box-shadow: inset 0 0 0 calc(var(--_thumb-size) / 8) var(--focus-inner);
+            outline-offset: calc(-1 * var(--_hit-pad) - var(--_thumb-size) / 8);
+            // The ring is an overlay: the dot's color under it, then the focus ring inside.
+            box-shadow: inset 0 0 0 2px var(--slider-thumb-border), inset 0 0 0 2px var(--slider-thumb-bg-hovered),
+                inset 0 0 0 calc(2px + var(--_thumb-size) / 8) var(--focus-inner);
             transform: scale(1.15);
         }
     }
 
     &:is(:hover, :focus-visible) {
-        &::-webkit-slider-thumb { background: var(--slider-thumb-bg-hovered); }
-        &::-moz-range-thumb     { background: var(--slider-thumb-bg-hovered); }
+        &::-webkit-slider-thumb { background-color: var(--slider-thumb-bg-hovered); }
+        &::-moz-range-thumb     { background-color: var(--slider-thumb-bg-hovered); }
     }
     &:active {
         &::-webkit-slider-thumb { cursor: grabbing; transform: scale(1.15); }

@@ -183,6 +183,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Top Bar** — The date, clock, city and weather widgets are [Meta](https://mazin-musleh.github.io/NDS-vanilla/components/meta.html) lines, at Meta's LG size: 16px at every width (the text shrank to 12–14px on tablets). `nds-md` or `nds-sm` on a widget picks a smaller one.
 
 ### Fixed
+- **Slider** — Each thumb takes a click or a touch in a 24px circle, the WCAG 2.5.8 minimum, while the dot stays 12px, or 16px with MD. A range slider's two thumbs were 12px targets on top of each other. Each slider row is 12px taller, 8px with MD. See the [Slider](https://mazin-musleh.github.io/NDS-vanilla/components/slider.html) page.
 - **Feedback** — Clearing a field's messages, such as after a passing submit, no longer removes the status icons inside the field: an Upload row keeps its check mark. Only a message, with its words or a role, is cleared.
 - **Accessibility** — Escape closes the reading mask only when no modal, panel or menu is open.
 - **Accessibility** — A mode's text-size preset applies even after the visitor cycled the text size tile back to its default.
