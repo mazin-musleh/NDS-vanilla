@@ -97,25 +97,21 @@
     height: var(--_switch-height);
     user-select: none;
 
-    // Ripple — centred halo that expands on hover.
+    // Ripple — a halo that grows on hover, as a shadow so it never counts as overflow (a Modal would scroll).
     &::before {
         content: '';
         position: absolute;
-        inset: 50% auto auto 50%;
-        width:  var(--_switch-width);
-        height: var(--_switch-height);
+        inset: 0;
         border-radius: var(--radius-full);
-        transform: translate(-50%, -50%);
         background-color: var(--controls-ripple-effect);
+        box-shadow: 0 0 0 0 var(--controls-ripple-effect);
         transition: var(--nds-transition);
         z-index: 1;
         pointer-events: none;
-
     }
 
     &:hover::before {
-        width:  calc(var(--_switch-width)  + var(--spacing-lg));
-        height: calc(var(--_switch-height) + var(--spacing-lg));
+        box-shadow: 0 0 0 calc(var(--spacing-lg) / 2) var(--controls-ripple-effect);
     }
 
     // ==============================================

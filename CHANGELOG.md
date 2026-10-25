@@ -196,6 +196,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Top Bar** — The date, clock, city and weather widgets are [Meta](https://mazin-musleh.github.io/NDS-vanilla/components/meta.html) lines, at Meta's LG size: 16px at every width (the text shrank to 12–14px on tablets). `nds-md` or `nds-sm` on a widget picks a smaller one.
 
 ### Fixed
+- **Checkbox, Radio, Switch** — A list of options at the end of a scrolling box, such as a Modal, no longer scrolls it, at rest or on hover. A checkbox or radio label takes the line height of its text, as a Switch does, so each option row is 24px tall, and the hover halo of all three no longer counts as overflow. A form group leaves 8px below it, so the last option's halo is never cut off.
 - **Slider** — Each thumb takes a click or a touch in a 24px circle, the WCAG 2.5.8 minimum, while the dot stays 12px, or 16px with MD. A range slider's two thumbs were 12px targets on top of each other. Each slider row is 12px taller, 8px with MD. See the [Slider](https://mazin-musleh.github.io/NDS-vanilla/components/slider.html) page.
 - **Feedback** — Clearing a field's messages, such as after a passing submit, no longer removes the status icons inside the field: an Upload row keeps its check mark. Only a message, with its words or a role, is cleared.
 - **Accessibility** — Escape closes the reading mask only when no modal, panel or menu is open.

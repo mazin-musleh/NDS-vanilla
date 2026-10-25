@@ -596,6 +596,8 @@ fieldset {
     flex-direction: column;
     row-gap: var(--spacing-xl);
     column-gap: var(--spacing-4xl);
+    // Room for the last option's hover halo, which a scroll box (a Modal) would clip.
+    margin-block-end: var(--spacing-sm);
 
     // A titled group indents its fields under the title, except in a menu: there the menu's own
     // padding sets them apart, and a date range needs the width.
@@ -694,26 +696,28 @@ fieldset {
     background-color: unset !important;
 }
 
-// Shared ripple (checkbox + radio)
+// Shared ripple (checkbox + radio). It grows as a shadow, not a size: a shadow never
+// counts as overflow, so a hovered option at the end of a Modal does not scroll it.
 :is(.nds-checkbox, .nds-radio) {
     &.nds-form-container .nds-form-control {
         &::before {
             content: "";
             position: absolute;
-            inset: 50% auto auto 50%;
-            width: var(--nds-input-size, 16px);
-            height: var(--nds-input-size, 16px);
+            // Over the field underline's ::before: its width, height and transform would win over inset.
+            inset: 0;
+            width: auto;
+            height: auto;
+            transform: none;
             border-radius: 50%;
-            transform: translate(-50%, -50%);
             background-color: var(--controls-ripple-effect);
-            transition: width var(--nds-transition), height var(--nds-transition);
+            box-shadow: 0 0 0 0 var(--controls-ripple-effect);
+            transition: box-shadow var(--nds-transition);
             z-index: 0;
             pointer-events: none;
         }
 
         &:has(input:not(:disabled):hover)::before {
-            width: calc(var(--nds-input-size, 16px) * 2);
-            height: calc(var(--nds-input-size, 16px) * 2);
+            box-shadow: 0 0 0 calc(var(--nds-input-size, 16px) / 2) var(--controls-ripple-effect);
         }
     }
 }
@@ -731,9 +735,18 @@ fieldset {
         gap: var(--spacing-xl);
     }
 
+    // The text's paired line height, as on a switch: a line box at the box size (16px) is shorter than the
+    // text, and a list at the end of a scroll box (a Modal) scrolls by a pixel or two.
+    --_choice-label-lh: max(var(--nds-input-size, 16px), var(--typo-text-md-LH));
+
     >.nds-form-header .nds-label {
         font-size: var(--typo-text-md-FS);
-        line-height: var(--nds-input-size, 16px);
+        line-height: var(--_choice-label-lh);
+    }
+
+    // The box centers on the label's first line. No visible label (a table's checkbox column): no offset.
+    >.nds-form-header:not(.nds-sr-only) + .nds-form-control {
+        margin-block-start: calc((var(--_choice-label-lh) - var(--nds-input-size, 16px)) / 2);
     }
 
     .nds-form-control.focused:focus-visible {
