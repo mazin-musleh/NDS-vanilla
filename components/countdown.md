@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "12/10/2026 - 12:00 AM"
+last_edit: "25/10/2026 - 02:17 PM"
 ---
 
 <section id="countdown-overview" class="nds-content-section nds-doc-overview">
@@ -150,7 +150,7 @@ Pick another component when:
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Structure | Banner (default) (hint: Text, countdown and a button in one card) | — | — | A full-width row card: an icon, a title and a line of text, the numbers with their words under them, and a button. All four parts sit on one line while they fit. In a card narrower than 720px, the countdown and the actions each take their own centered line. Every card option applies |
+| Structure | Banner (default) (hint: Text, countdown and a button in one card) | — | — | A full-width row card: an icon, a title and a line of text, the numbers with their words under them, and a button. All four parts sit on one line while the text keeps room to read. When it would not, the actions and then the countdown move to the next line, centered. Every card option applies |
 | Structure | Inline (id: inline) | canon `#countdown-inline` | — | The script writes the days with their word, then `hh:mm:ss`. The days hide under one day. Use it inside a sentence or a label |
 | Structure | Own units (hint: Your own words and units) (id: units) | canon `#countdown-units` | — | You write each unit and the words around it, in one sentence. At zero, an ended message replaces the whole sentence. The largest unit takes the time above it: hours alone show 2 days as 48 hours |
 | Structure | Cards (hint: One card per unit) (id: cards) | canon `#countdown-cards` | — | A row of statistic cards, one per unit, in equal columns, with 8px corners (`--radius-md`). Every card variant applies. A `--card-radius` on a card beats the corners |

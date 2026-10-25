@@ -118,28 +118,24 @@
 
 .nds-card.nds-center > .nds-countdown { justify-content: center; }
 
-// A row banner: the countdown and the button sit beside the text while the card is wide enough.
+// A row banner: the countdown and the button sit beside the text while it keeps its reading room
+// (the row card's content floor), and wrap when it would not. Off the text's line they share
+// the free space and center in it.
 .nds-card.nds-horizontal {
+  // 20rem, more than four units need: the countdown leaves the row while the text still reads well.
   > .nds-countdown {
-    flex: 0 0 auto;
+    flex: 1 1 20rem;
     align-self: center;
+    justify-content: center;
   }
 
   // The card's actions take the full width and sink to the bottom: in the row they size and center instead.
   > .nds-countdown ~ .nds-card-actions {
-    flex-basis: auto;
+    flex: 1 1 auto;
     width: auto;
     margin-top: 0;
     align-self: center;
-  }
-
-  // On their own lines, the countdown and the actions center in the space they get.
-  @container (width < 720px) {
-    > .nds-countdown,
-    > .nds-countdown ~ .nds-card-actions {
-      flex-basis: 100%;
-      justify-content: center;
-    }
+    justify-content: center;
   }
 }
 

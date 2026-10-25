@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 12:34 PM"
+last_edit: "25/10/2026 - 02:17 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -307,7 +307,7 @@ Pick another component when:
 | Structure | Progress (hint: A progress ring beside a short title. Turns on Row, Reverse and Middle) (id: progress) (demo: + row) (demo: + reverse) (demo: + middle) | canon `#card-progress` | — | A [progress ring](../components/progress) beside a short title, as on a life journey page. Write Row, Reverse and Middle too: the ring closes the row, and the title sits level with its middle |
 | Structure | Header title (hint: The title in the header, over a list) (id: header-title) (demo: + text-md) (demo: + breakout) | canon `#card-header-title` | — | A panel card: the title sits in the header, beside an icon when the content has none of its own, and the content holds a list, a table or a chart. Wrap the title in `.nds-card-text`, as in the content. A one-line title centers on the icon. A taller text starts level with the icon's top |
 | Layout | Stacked (default) | — | — | Header above content |
-| Layout | Row (hint: Header beside the content) (id: row) (not: header-title) | `.nds-horizontal` | `.nds-card` | Header beside content. The card stacks again when it is narrower than 324px |
+| Layout | Row (hint: Header beside the content) (id: row) (not: header-title) | `.nds-horizontal` | `.nds-card` | Header beside content. The header goes on top when it no longer fits beside 13rem of text: an image then fills the width. A card narrower than 324px always stacks |
 | Layout | Center (not: statistic, header-title, link) | `.nds-center` | `.nds-card` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing. It does not move the card: its container places it |
 | Meta | None (default) | — | — | No tags or rating |
 | Meta | Tags | canon `#card-tags` | `.nds-card-content:not(a.nds-card > *)` | Tags alone go straight in the content |
@@ -495,7 +495,7 @@ Set these on `.nds-card`, except the image properties, which go on `.nds-card-im
 | `--card-rating` | `var(--text-secondary-paragraph)` | Rating count color |
 | `--featuredicon-color` | `var(--featuredicons-icon-primary)` | Featured icon and avatar color. Color classes change it |
 | `--featuredicon-bg` | `var(--featuredicons-background-primary-light)` | Featured icon background |
-| `--card-image-width` | `160px` | Image width in a row card. No effect on a stacked card, where the image fills the width |
+| `--card-image-width` | `160px` | Image width in a row card. A wider image stacks the card sooner. No effect on a stacked card, where the image fills the width |
 | `--img-ratio` | `2 / 1` | Image aspect ratio |
 | `--img-pos-x` | `50%` | Horizontal focal point of the image |
 | `--img-pos-y` | `50%` | Vertical focal point of the image |

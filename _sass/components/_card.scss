@@ -144,39 +144,36 @@
 
     // An avatar or featured icon is its own size, so the header hugs it. An
     // image is the one child that needs a real width, and asks for it here.
+    // The row breaks by content, not at a width: a part that no longer fits
+    // beside the text's reading room wraps. The content's huge grow keeps the
+    // free space in the row; a part alone on its line takes the line, so a
+    // wrapped image runs full width (its min-width follows the header).
     .nds-card-header {
-      flex: 0 1 auto;
+      flex: 1 1 auto;
       flex-direction: column;
       flex-wrap: wrap;
       align-content: flex-start;
 
       .nds-card-image {
         width: var(--card-image-width, 160px);
-        min-width: 100px;
+        min-width: 100%;
         max-width: 100%;
       }
     }
 
-    // A zero base keeps the break the query's job: the content only fills what
-    // is left, and shrinks past a long tag instead of pushing the row open. Its
-    // floor is the query threshold, not a min-width of its own.
+    // 13rem keeps an icon, avatar or ring beside the text in a 360px card, and drops an image under it.
     > .nds-card-content {
-      flex: 1 1 0;
+      flex: 9999 1 13rem;
       min-width: 0;
     }
 
-    // Once the two columns no longer fit, the row breaks: the header takes the
-    // whole line and lays its children back out as a row. The threshold is the
-    // image width plus the card gap plus the room the text needs, measured
-    // against the card's content box — its padding is already off.
+    // A small header (an icon, an avatar) still fits beside 15rem on a narrow
+    // card: under 324px the header takes its own line and lays its children
+    // out as a row.
     @container (width < 324px) {
       .nds-card-header {
         flex-basis: 100%;
         flex-direction: row;
-
-        .nds-card-image {
-          width: 100%;
-        }
       }
     }
 
@@ -185,21 +182,9 @@
     }
 
     // Reverse: the header at the end side of the row, for a figure that closes it (a progress
-    // ring). Once the row breaks, the header goes back on top.
+    // ring). row-reverse, not order: the header stays first, so once the row breaks it is on top.
     &.nds-reverse {
-      > .nds-card-header {
-        order: 1;
-      }
-
-      > .nds-card-actions {
-        order: 2;
-      }
-
-      @container (width < 324px) {
-        > .nds-card-header {
-          order: 0;
-        }
-      }
+      flex-direction: row-reverse;
     }
   }
 
