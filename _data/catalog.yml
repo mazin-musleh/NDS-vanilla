@@ -550,6 +550,14 @@
   url: "/components/featured-icon.html"
   scss: _sass/components/_featured-icon.scss
 
+- title: "Image"
+  description: "A photo cropped to fill a set shape, with a focal point and an optional overlay"
+  use_when: "A photo that must fit a set shape: gallery tiles, list and news thumbnails, a row of photos of different sizes that must line up. .nds-image is a box with one img: --image-ratio sets the shape (default 4 / 3), --image-pos-x and --image-pos-y the focal point, --image-radius the corners, --image-overlay-opacity a dim layer (0 to 1). For the Image Popup Viewer, put nds-image on .nds-ipv-image-card and keep nds-ipv-thumbnail on the img. A card's photo is the card's image header, with the same knobs; a person's photo is Avatar; a photo shown whole in an article is a plain img in Prose."
+  category: "Content"
+  tags: ["CSS"]
+  url: "/components/image.html"
+  scss: _sass/components/_image.scss
+
 - title: "Meta"
   description: "A line of short facts, each with an icon, such as a time, a place and a person"
   use_when: "A row of short icon-and-text details under a title: class time, room and teacher, a request's reference and date, an event's place. Fits inside a link, a button, a drawer row or a card. For labeled values use Definition List; for a status use Tags."

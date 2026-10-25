@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 09:51 AM"
+last_edit: "25/10/2026 - 08:31 PM"
 ---
 
 <section id="ipv-overview" class="nds-content-section nds-doc-overview">
@@ -38,19 +38,19 @@ Pick another component when:
 <script type="text/html" id="ipv-gallery" data-canon data-variants="ipv-variants-table" data-demo-width="100%">
 <div class="nds-grid" style="--max-col:3;--mid-col:2;--min-col:1;">
   <div>
-    <div class="nds-ipv-image-card">
+    <div class="nds-ipv-image-card nds-image">
       <img src="../docs-assets/img/home_hero_bg_sm.webp" data-ipv-full="../docs-assets/img/home_hero_bg.webp" alt="Mud-brick palace reflected in rainwater" class="nds-ipv-thumbnail">
     </div>
     <div class="nds-ipv-image-title">Heritage Palace</div>
   </div>
   <div>
-    <div class="nds-ipv-image-card">
+    <div class="nds-ipv-image-card nds-image">
       <img src="../assets/img/riyadhcenter.webp" data-ipv-full="../assets/img/riyadhcenter.webp" alt="Riyadh skyline at night" class="nds-ipv-thumbnail">
     </div>
     <div class="nds-ipv-image-title">Riyadh at Night</div>
   </div>
   <div>
-    <div class="nds-ipv-image-card">
+    <div class="nds-ipv-image-card nds-image">
       <img src="../docs-assets/events/foundation_day/Hero_thumb.webp" data-ipv-full="../docs-assets/events/foundation_day/Hero_bg.webp" alt="A man in traditional dress among old stone walls" class="nds-ipv-thumbnail">
     </div>
     <div class="nds-ipv-image-title">Foundation Day</div>
@@ -171,6 +171,7 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
 - Use the viewer for images people inspect: photos, maps, plans and scans. Do not use it for decorative images.
 - Put `data-ipv-full` on every thumbnail, with the URL of a large image. Without it, the viewer shows the thumbnail, which blurs when zoomed.
 - Keep thumbnails small, about 400px wide.
+- Put `nds-image` on each `.nds-ipv-image-card`, so the tiles share one shape. Leave it off for your own look: `nds-ipv-thumbnail` adds no style.
 - Write `alt` on every thumbnail. The viewer copies it to the full image, and it names the thumbnail for screen readers.
 - In a gallery, put a `nds-ipv-image-title` under each image, so people know what it shows before they open it.
 - For more than one gallery on a page, give each thumbnail a `data-ipv-gallery` name. The arrows page through the thumbnails with the same name, in page order. Thumbnails without a name form one gallery together.
@@ -194,7 +195,7 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
 | Class | Element | Effect |
 |---|---|---|
 | `nds-ipv-thumbnail` | `<img>` | Opens the viewer on a click. It does not size the image: your own styles stay as written. Required |
-| `nds-ipv-image-card` | the thumbnail's parent | Holds the zoom badge. Optional: a thumbnail without it looks and works the same |
+| `nds-ipv-image-card` | the thumbnail's parent | Holds the zoom badge. With `nds-image`, it crops the thumbnail to one shape: see [Image](../components/image). Optional: a thumbnail without it works the same |
 | `nds-zoom-badge` | `.nds-ipv-image-card` | Shows a magnifier in the bottom start corner |
 | `nds-ipv-image-title` | an element after the card | A caption under the image. Optional |
 {: .nds-table .nds-responsive}

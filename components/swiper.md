@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 11:53 PM"
+last_edit: "25/10/2026 - 09:11 PM"
 ---
 
 <section id="swiper-overview" class="nds-content-section nds-doc-overview">
@@ -102,7 +102,7 @@ Pick another component when:
   <div class="nds-swiper nds-hero nds-oncolor nds-full-width">
     <div class="nds-swiper-wrapper">
       <div class="nds-swiper-slide nds-content-wrapper">
-        <div class="nds-hero-image-wrapper" style="--overlay: 0.8;">
+        <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0.8;">
           <img src="../docs-assets/img/home_hero_bg_md.webp" class="nds-hero-image" alt="" fetchpriority="high">
         </div>
         <div class="nds-section-body">
@@ -116,7 +116,7 @@ Pick another component when:
         </div>
       </div>
       <div class="nds-swiper-slide nds-content-wrapper" hidden>
-        <div class="nds-hero-image-wrapper" style="--overlay: 0.5;">
+        <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0.5;">
           <img data-src="../docs-assets/events/foundation_day/Hero_bg.webp" class="nds-hero-image" alt="">
         </div>
         <div class="nds-section-body">
@@ -130,7 +130,7 @@ Pick another component when:
         </div>
       </div>
       <div class="nds-swiper-slide nds-content-wrapper" hidden>
-        <div class="nds-hero-image-wrapper" style="--overlay: 0;">
+        <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0;">
           <img data-src="../docs-assets/events/Hajj/darkhero_ltr.webp" class="nds-hero-image" alt="">
         </div>
         <div class="nds-section-body">
@@ -144,7 +144,7 @@ Pick another component when:
         </div>
       </div>
       <div class="nds-swiper-slide nds-content-wrapper" hidden>
-        <div class="nds-hero-image-wrapper" style="--overlay: 0;">
+        <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0;">
           <img data-src="../docs-assets/events/national_day_96/hero_bg.webp" class="nds-hero-image" alt="">
         </div>
         <div class="nds-section-body">

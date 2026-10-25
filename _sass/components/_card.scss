@@ -309,33 +309,8 @@
   }
 
   .nds-card-image:not(.nds-avatar) {
-    position: relative;
-    width: 100%;
+    @include image-frame('2 / 1');
     height: 100%;
-    aspect-ratio: var(--img-ratio, 2 / 1);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-
-    &::after {
-      --_overlay: var(--overlay, 0);
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: color-mix(in srgb, var(--background-image-overlay) calc(var(--_overlay) * 100%), transparent);
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    img {
-      max-width: 100%;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: var(--img-pos-x, 50%) var(--img-pos-y, 50%);
-    }
   }
 
   &:not(.nds-center) .nds-card-featured-icon {
@@ -873,8 +848,8 @@ html:not([data-nds-loaded]) .nds-card {
   }
 
   .nds-card-image:not(.nds-avatar) {
-    aspect-ratio: var(--img-ratio, 2/1);
-    border-radius: var(--radius-md);
+    aspect-ratio: var(--image-ratio, 2/1);
+    border-radius: var(--image-radius, var(--radius-md));
     overflow: hidden;
     @include skeleton-fill;
 

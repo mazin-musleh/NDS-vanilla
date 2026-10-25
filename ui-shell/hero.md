@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "15/10/2026 - 10:08 AM"
+last_edit: "25/10/2026 - 09:11 PM"
 ---
 
 <section id="hero-overview" class="nds-content-section nds-doc-overview">
@@ -190,7 +190,7 @@ The hero is one region of the page. The other regions are on [Page Layout](../la
   <div class="nds-swiper nds-hero nds-oncolor nds-full-width" data-swiper-loop>
     <div class="nds-swiper-wrapper">
       <div class="nds-swiper-slide nds-content-wrapper">
-        <div class="nds-hero-image-wrapper" style="--overlay: 0.6;">
+        <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0.6;">
           <picture>
             <source media="(max-width: 768px)" srcset="../assets/img/riyadhcenter_IQ_sm.webp">
             <source media="(max-width: 1646px)" srcset="../assets/img/riyadhcenter_IQ_md.webp">
@@ -208,7 +208,7 @@ The hero is one region of the page. The other regions are on [Page Layout](../la
         </div>
       </div>
       <div class="nds-swiper-slide nds-content-wrapper" hidden>
-        <div class="nds-hero-image-wrapper" style="--overlay: 0.7;">
+        <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0.7;">
           <picture>
             <source media="(max-width: 768px)" data-srcset="../docs-assets/img/home_hero_bg_sm.webp">
             <source media="(max-width: 1646px)" data-srcset="../docs-assets/img/home_hero_bg_md.webp">
@@ -271,7 +271,7 @@ The main hero is a section that holds one hero swiper. The navigation row is the
 | `section.nds-hero-section` | The main hero, with no `nds-sub` | Yes |
 | `.nds-swiper.nds-hero` | The slides. Write `nds-oncolor` and `nds-full-width` with it | Yes |
 | `.nds-swiper-slide.nds-content-wrapper` | One slide. Write `hidden` on every slide after the first | Yes |
-| `.nds-hero-image-wrapper` | The image and its tint. `--overlay` in its `style` sets the tint for the slide | Yes |
+| `.nds-hero-image-wrapper` | The image and its tint. `--hero-overlay-opacity` in its `style` sets the tint for the slide | Yes |
 | `img.nds-hero-image` | The image, in a `picture` with one `source` for each screen size. Give it `alt=""`: the image is decoration. `object-position` in its `style` picks the part of the image that stays in view | Yes |
 | `.nds-section-body` | The title, the description and a `.nds-section-action`. The first slide's title is the page's `h1`, the others are `h2` | Yes |
 {: .nds-table .nds-responsive}
@@ -381,7 +381,7 @@ The main hero shows one slide at a time, and the Swiper script moves between the
 - Preload the first slide's image in the `<head>`, with one `<link rel="preload" as="image">` for each `source`. Copy the `media` of each `source` exactly, or the browser loads one file and paints another. Each page preloads only its own hero image. See [Head](../ui-shell/head).
 - Give each later slide's `img` a `data-src`, and each of its `source` elements a `data-srcset`. A plain `srcset` loads at once.
 - Keep a photo in the main hero. If the photo is not ready, point the `picture` at a placeholder image and replace it later.
-- Set `--overlay` on each slide for its image: about 0.4 to 0.5 for a dark image, and 0.6 to 0.8 for a bright one.
+- Set `--hero-overlay-opacity` on each slide for its image: about 0.4 to 0.5 for a dark image, and 0.6 to 0.8 for a bright one.
 - Do not set `--background-image-overlay`. It follows the brand, and a fixed value stops that.
 - For a photo in the sub hero, pick one with its subject on one side. The fade keeps the end side and hides the side of the title.
 - Do not write `nds-oncolor` on text in a flat hero: it shows white on a light page.
@@ -416,8 +416,9 @@ The main hero shows one slide at a time, and the Swiper script moves between the
 | `--hero-image-fade-angle` | `90deg`, or `270deg` on a left-to-right page | The direction of the photo's fade. Another angle fades it from the top or a corner |
 | `--hero-image-fade-from` | `0%` | Where the fade starts. Up to this point, the photo is solid |
 | `--hero-image-fade-to` | `70%` | Where the photo is gone |
-| `--overlay` | `0.7` on a slide, `0.5` on the sub hero | The strength of the tint over the image, from `0` (none) to `1` (solid). On the main hero, set it in the `style` of each `.nds-hero-image-wrapper`. On the sub hero, set it in the `style` of the section, with `--hero-image` |
-| `--background-image-overlay` | `var(--colors-primary-950)` | The color of that tint, a theme token. A custom brand sets it to `var(--colors-neutral-950)`. Do not set it |
+| `--hero-overlay-opacity` | `0.7` on a slide, `0.5` on the sub hero | The strength of the tint over the image, from `0` (none) to `1` (solid). On the main hero, set it in the `style` of each `.nds-hero-image-wrapper`. On the sub hero, set it in the `style` of the section, with `--hero-image` |
+| `--hero-overlay-color` | `var(--background-image-overlay)` | The color of the tint on a main hero slide, for one slide that needs another color. On the sub hero, the tint is the section's own background |
+| `--background-image-overlay` | `var(--colors-primary-950)` | The default tint color, a theme token. A custom brand sets it to `var(--colors-neutral-950)`. Do not set it |
 | `--background-hero` | `var(--background-primary-strong)` | The color behind the main hero, a theme token. It shows until the first image loads |
 | `--background-sub-hero` | `var(--background-primary-light)` | The color of the sub hero, a theme token. High contrast mode changes it |
 {: .nds-table .nds-responsive}

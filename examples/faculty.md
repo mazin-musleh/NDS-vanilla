@@ -13,7 +13,7 @@ sidemenu_mode: top
 
 <section id="faculty-info" class="nds-content-section">
     <div class="nds-section-wrapper">
-        <div class="nds-section-image faculty-avatar nds-avatar nds-3xl nds-image nds-image-border">
+        <div class="nds-section-image faculty-avatar nds-avatar nds-3xl nds-image-border">
             <img src="{{ 'docs-assets/img/avatar3.webp' | relative_url }}" width="112" height="112"
                 alt="Faculty member photo" fetchpriority="high">
         </div>

@@ -443,6 +443,9 @@
             // A form harness keeps its form and Validate button; only the slot inside it re-renders.
             var slot = preview.querySelector('[data-demo-slot]') || preview;
             NDS.init.destroy(slot);
+            // A structure's own data-demo-width (a small gallery tile beside a large photo) wins over the base's.
+            var width = srcEl.getAttribute('data-demo-width') || script.getAttribute('data-demo-width');
+            if (slot !== preview) slot.style.width = width || '';
             preview.style.removeProperty('--card-bg');
             // A JS-only structure (a toast) shows a Run button, on the page and in a screen.
             if (!html) {

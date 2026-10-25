@@ -527,6 +527,29 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // One pulse per held REGION, never per bar. Blink ticks these on the main
 // thread: per-bar it restyled 258 pseudos a frame and cost ~10% of load
 // blocking (2026-09-02). Include on the hold root; bars stay static.
+// A photo cropped to fill a shape: Image (.nds-image) and Card's image header share it.
+// The overlay is the background under the photo, shown at 1 - --image-overlay-opacity (the sub hero's way):
+// no pseudo-element, so the host's own ::before/::after stay free (the viewer's zoom badge).
+@mixin image-frame($ratio: '4 / 3') {
+  --_overlay: var(--image-overlay-opacity, 0);
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--image-ratio, #{$ratio});
+  border-radius: var(--image-radius, var(--radius-md));
+  overflow: hidden;
+  // Opaque from the first step of overlay: under a photo at 1 - N, that is the photo covered by N.
+  background-color: color-mix(in srgb, var(--image-overlay-color, var(--background-image-overlay)) calc(min(var(--_overlay) * 1000, 1) * 100%), transparent);
+
+  img {
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--image-pos-x, 50%) var(--image-pos-y, 50%);
+    opacity: calc(1 - var(--_overlay));
+  }
+}
+
 @mixin skeleton-pulse {
   animation: processing 1.5s ease-in-out infinite;
 }

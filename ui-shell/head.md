@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 03:54 PM"
+last_edit: "25/10/2026 - 09:11 PM"
 ---
 
 <section id="head-overview" class="nds-content-section nds-doc-overview">
@@ -52,7 +52,7 @@ Copy the head as one block. The JS Library tab holds the main script: put it jus
     html[data-theme~=dark] :where(.nds-topbar){background-color:var(--background-topbar, #111927)}
     :where(.nds-main-nav){background-color:var(--background-nav, #fff)}
     html[data-theme~=dark] :where(.nds-main-nav){background-color:var(--background-nav, #1f2a37)}
-    :where(.nds-hero-image-wrapper)::before{content:"";position:absolute;inset:0;background:color-mix(in srgb, var(--background-image-overlay, #092a1e) calc(var(--overlay, 0.7) * 100%), transparent);pointer-events:none}
+    :where(.nds-hero-image-wrapper)::before{content:"";position:absolute;inset:0;background:color-mix(in srgb, var(--hero-overlay-color, var(--background-image-overlay, #092a1e)) calc(var(--hero-overlay-opacity, 0.7) * 100%), transparent);pointer-events:none}
 
     /* Structure: reserved heights, and the rules that hide the content until the main CSS applies. */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}

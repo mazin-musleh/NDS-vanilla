@@ -16,7 +16,7 @@ Determine hero sliders source:
         <div class="nds-swiper-wrapper">
             {%- for slide in hero_sliders %}
             <div class="nds-swiper-slide nds-content-wrapper{%- if slide.class %} {{ slide.class }}{%- endif %}"{%- unless forloop.first %} hidden{%- endunless %}>
-                <div class="nds-hero-image-wrapper" {%- if slide.overlay %} style="--overlay:{{ slide.overlay }};"{%- endif %}>
+                <div class="nds-hero-image-wrapper" {%- if slide.overlay %} style="--hero-overlay-opacity:{{ slide.overlay }};"{%- endif %}>
                     {%- if forloop.first %}
                     <picture>
                         {%- if slide.src_small %}

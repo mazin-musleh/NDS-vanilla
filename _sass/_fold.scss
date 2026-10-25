@@ -149,7 +149,7 @@ html:not([data-nds-loaded]) main { overflow-x: clip; }
         content: "";
         position: absolute;
         inset: 0;
-        background: color-mix(in srgb, var(--background-image-overlay, #{$c-hero-overlay}) calc(var(--overlay, .7) * 100%), transparent);
+        background: color-mix(in srgb, var(--hero-overlay-color, var(--background-image-overlay, #{$c-hero-overlay})) calc(var(--hero-overlay-opacity, .7) * 100%), transparent);
         pointer-events: none;
     }
 

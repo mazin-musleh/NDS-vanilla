@@ -23,7 +23,7 @@ direction: ltr
         <div class="nds-swiper nds-hero nds-oncolor nds-full-width" style="--total: 3">
             <div class="nds-swiper-wrapper">
                 <div class="nds-swiper-slide nds-content-wrapper">
-                    <div class="nds-hero-image-wrapper" style="--overlay: 0.8;">
+                    <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0.8;">
                         <picture>
                             <source media="(max-width: 768px)" srcset="{{ 'docs-assets/img/home_hero_bg_sm.webp' | relative_url }}">
                             <source media="(max-width: 1646px)" srcset="{{ 'docs-assets/img/home_hero_bg_md.webp' | relative_url }}">
@@ -42,7 +42,7 @@ direction: ltr
                 </div>
 
                 <div class="nds-swiper-slide nds-content-wrapper" hidden>
-                    <div class="nds-hero-image-wrapper" style="--overlay: 0.8;">
+                    <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0.8;">
                         <picture>
                             <source media="(max-width: 768px)" data-srcset="{{ 'docs-assets/img/home_hero_bg_sm.webp' | relative_url }}">
                             <source media="(max-width: 1646px)" data-srcset="{{ 'docs-assets/img/home_hero_bg_md.webp' | relative_url }}">
@@ -61,7 +61,7 @@ direction: ltr
                 </div>
 
                 <div class="nds-swiper-slide nds-content-wrapper" hidden>
-                    <div class="nds-hero-image-wrapper" style="--overlay: 0.8;">
+                    <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0.8;">
                         <picture>
                             <source media="(max-width: 768px)" data-srcset="{{ 'docs-assets/img/home_hero_bg_sm.webp' | relative_url }}">
                             <source media="(max-width: 1646px)" data-srcset="{{ 'docs-assets/img/home_hero_bg_md.webp' | relative_url }}">

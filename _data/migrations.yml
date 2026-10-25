@@ -179,6 +179,11 @@
 - { kind: property, name: --colors-tertiary-alpha-10, status: removed, since: "2.0.0", fix: "Use color-mix(in srgb, var(--colors-tertiary-500) 10%, transparent)." }
 - { kind: property, name: --colors-tertiary-alpha-20, status: removed, since: "2.0.0", fix: "Use color-mix(in srgb, var(--colors-tertiary-500) 20%, transparent)." }
 - { kind: property, name: --img-overlay-color, status: renamed, use: --background-image-overlay, since: "2.0.0", fix: "Use --background-image-overlay." }
+- { kind: property, name: --img-pos-x, scope: .nds-card, status: renamed, use: --image-pos-x, since: "2.0.0", fix: "Use --image-pos-x: the card image header shares it with Image." }
+- { kind: property, name: --img-pos-y, scope: .nds-card, status: renamed, use: --image-pos-y, since: "2.0.0", fix: "Use --image-pos-y: the card image header shares it with Image." }
+- { kind: property, name: --img-ratio, scope: .nds-card, status: renamed, use: --image-ratio, since: "2.0.0", fix: "Use --image-ratio: the card image header shares it with Image." }
+- { kind: property, name: --overlay, scope: .nds-card, status: renamed, use: --image-overlay-opacity, since: "2.0.0", fix: "Use --image-overlay-opacity on a card image." }
+- { kind: property, name: --overlay, scope: .nds-hero-section, status: renamed, use: --hero-overlay-opacity, since: "2.0.0", fix: "Use --hero-overlay-opacity on the hero slide or the sub hero." }
 - { kind: property, name: --main-gap, scope: .nds-content, status: renamed, use: --content-gap, since: "2.0.0", fix: "Use --content-gap." }
 - { kind: property, name: --main-padding-block, scope: .nds-content, status: renamed, use: --content-padding-block, since: "2.0.0", fix: "Use --content-padding-block." }
 - { kind: property, name: --main-padding-inline, scope: .nds-content, status: renamed, use: --content-padding-inline, since: "2.0.0", fix: "Use --content-padding-inline." }

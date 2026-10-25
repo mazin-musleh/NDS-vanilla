@@ -223,7 +223,7 @@
     function buildSlide() {
         var imgUrl = resolveAssetUrl(hero.image);
         var img = imgUrl
-            ? '<div class="nds-hero-image-wrapper" style="--overlay:0;">' +   // photo carries its own wash; the default 0.7 would black it out
+            ? '<div class="nds-hero-image-wrapper" style="--hero-overlay-opacity:0;">' +   // photo carries its own wash; the default 0.7 would black it out
                 '<picture><img src="' + escapeHtml(imgUrl) + '" class="nds-hero-image" alt="" fetchpriority="high"></picture>' +
               '</div>'
             : '';

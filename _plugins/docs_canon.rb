@@ -12,7 +12,6 @@ module DocsCanon
   # Knobs only, scoped to the skeleton section classes (nds-doc-{name}). `.nds-doc-icons`: the icon catalog's copy tiles. `.nds-doc-swatch`, `-bar`, `-sample`, `-ramps`: the token catalog's previews.
   DOC_STYLE = '.nds-doc-features .nds-definition-list{--max-col:2;--mid-col:1;--min-col:1;--dl-icon-size:24px;--row-gap:24px;--col-gap:32px}' \
               '.nds-doc-variants .nds-table{--min-width:900px}' \
-              '[data-demo-slot] .nds-ipv-thumbnail{display:block;width:100%;height:200px;object-fit:cover;border-radius:var(--radius-md)}' \
               '.nds-grid.nds-doc-icons{--max-col:4;--min-col:2;--row-gap:var(--spacing-lg);--col-gap:var(--spacing-lg)}' \
               '.nds-grid.nds-doc-icons .nds-btn{--btn-width:100%;--btn-height:auto;--btn-gap:var(--spacing-md);--btn-FS:var(--typo-text-xs-FS);flex-direction:column;white-space:normal;padding-block:var(--spacing-2xl);word-break:break-word}' \
               '.nds-grid.nds-doc-icons .nds-label{text-align:center;white-space:normal}' \
@@ -310,6 +309,7 @@ module DocsCanon
   # data-preview="run": the component leaves the card (a FAB docks at the screen edge), so the card
   # holds Run (or `data-run-label`) and Clear, as a toast's does. Runs mount in the held box (nds-docs.js).
   # `data-demo-width` on the canon fixes the slot's width, for a field that would stretch or shrink to its content.
+  # A Structure canon's own `data-demo-width` wins while it is chosen (nds-docs.js render()).
   # `data-demo-size` sets the slot's font-size, for parts that size in em (icons).
   def self.harness(src, kind, run = nil, width = nil, size = nil)
     return %(<div class="nds-flex" data-demo-run><button type="button" class="nds-btn nds-primary nds-md" data-run><span class="nds-label">#{run}</span></button><button type="button" class="nds-btn nds-subtle nds-md" data-run-clear><span class="nds-label">Clear</span></button></div><div data-demo-held></div>) if run

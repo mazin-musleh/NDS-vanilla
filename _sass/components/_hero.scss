@@ -58,11 +58,11 @@
         inset: 0;
 
         &::before {
-            --_overlay: var(--overlay, 0.7);
+            --_overlay: var(--hero-overlay-opacity, 0.7);
             content: "";
             position: absolute;
             inset: 0;
-            background: color-mix(in srgb, var(--background-image-overlay) calc(var(--_overlay) * 100%), transparent);
+            background: color-mix(in srgb, var(--hero-overlay-color, var(--background-image-overlay)) calc(var(--_overlay) * 100%), transparent);
             pointer-events: none;
         }
     }
@@ -112,7 +112,7 @@
             mask-image: linear-gradient(var(--_fade-angle), black var(--_fade-from), transparent var(--_fade-to));
             // The main hero's tint knob: the tint is the background under the photo,
             // so covering the photo by N is showing it at 1 - N.
-            opacity: calc(1 - var(--overlay, 0.5));
+            opacity: calc(1 - var(--hero-overlay-opacity, 0.5));
             pointer-events: none;
         }
 

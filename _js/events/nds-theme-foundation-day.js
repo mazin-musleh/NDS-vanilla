@@ -122,7 +122,7 @@
         var slide = document.createElement('div');
         slide.className = 'nds-swiper-slide nds-content-wrapper ' + SLIDE_CLASS;
         slide.innerHTML =
-            '<div class="nds-hero-image-wrapper" style="--overlay:0;">' + img + '</div>' +
+            '<div class="nds-hero-image-wrapper" style="--hero-overlay-opacity:0;">' + img + '</div>' +
             '<div class="nds-section-body nds-full-width">' +
               '<div class="nds-block nds-content-wrapper"><div>' +
                 '<h2 class="nds-section-title">' + escapeHtml(getText(hero.title)) + '</h2>' +

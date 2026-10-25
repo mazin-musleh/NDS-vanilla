@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "25/10/2026 - 09:11 PM"
 ---
 
 <section id="page-layout-overview" class="nds-content-section nds-doc-overview">
@@ -124,7 +124,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
       <div class="nds-swiper nds-hero nds-oncolor nds-full-width" style="--total: 1">
         <div class="nds-swiper-wrapper">
           <div class="nds-swiper-slide nds-content-wrapper">
-            <div class="nds-hero-image-wrapper" style="--overlay: 0.6">
+            <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0.6">
               <picture>
                 <source media="(max-width: 768px)" srcset="../assets/img/riyadhcenter_IQ_sm.webp">
                 <source media="(max-width: 1646px)" srcset="../assets/img/riyadhcenter_IQ_md.webp">

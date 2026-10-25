@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 02:17 PM"
+last_edit: "25/10/2026 - 09:11 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -57,7 +57,7 @@ Pick another component when:
 <script type="text/html" id="card-image" data-canon>
 <div class="nds-card nds-stroke">
   <div class="nds-card-header">
-    <div class="nds-card-image" style="--img-pos-x:50%; --img-pos-y:10%;">
+    <div class="nds-card-image" style="--image-pos-x:50%; --image-pos-y:10%;">
       <img src="../assets/img/riyadhcenter.webp" alt="Card image">
     </div>
   </div>
@@ -299,7 +299,7 @@ Pick another component when:
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Icon header (default) | — | — | A featured icon above the text |
-| Structure | Image header (id: image) | canon `#card-image` | — | A photo above the text. Set the focal point with `--img-pos-x` and `--img-pos-y` |
+| Structure | Image header (id: image) | canon `#card-image` | — | A photo above the text. Set the focal point with `--image-pos-x` and `--image-pos-y` |
 | Structure | Avatar header | canon `#card-avatar` | — | A person or an account |
 | Structure | No header | canon `#card-no-header` | — | Text only |
 | Structure | Link card (hint: A navigation tile: the whole card is one link) (id: link) | canon `#card-link` | — | A navigation tile: the whole card is one `<a>` (or `<button>`) that opens one page, with an icon, a title and at most one line. A card that carries an action, a price or tags keeps action buttons instead. Hover and press feedback come from the element. Do not put links or buttons inside it |
@@ -496,10 +496,12 @@ Set these on `.nds-card`, except the image properties, which go on `.nds-card-im
 | `--featuredicon-color` | `var(--featuredicons-icon-primary)` | Featured icon and avatar color. Color classes change it |
 | `--featuredicon-bg` | `var(--featuredicons-background-primary-light)` | Featured icon background |
 | `--card-image-width` | `160px` | Image width in a row card. A wider image stacks the card sooner. No effect on a stacked card, where the image fills the width |
-| `--img-ratio` | `2 / 1` | Image aspect ratio |
-| `--img-pos-x` | `50%` | Horizontal focal point of the image |
-| `--img-pos-y` | `50%` | Vertical focal point of the image |
-| `--overlay` | `0` | Opacity of a dark overlay on the image, from 0 to 1 |
+| `--image-ratio` | `2 / 1` | Image aspect ratio. The image header shares these properties with [Image](../components/image) |
+| `--image-pos-x` | `50%` | Horizontal focal point of the image |
+| `--image-pos-y` | `50%` | Vertical focal point of the image |
+| `--image-overlay-opacity` | `0` | How much the overlay covers the image, from 0 to 1 |
+| `--image-overlay-color` | `var(--background-image-overlay)` | The overlay color |
+| `--image-radius` | `var(--radius-md)` | Corner radius of the image |
 {: .nds-table .nds-responsive}
 
 ### JavaScript

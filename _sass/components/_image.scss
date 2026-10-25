@@ -1,0 +1,7 @@
+@use '../mixins' as *;
+
+// Image: one photo cropped to fill a shape, with a focal point and an optional overlay.
+// Knobs: --image-ratio, --image-pos-x, --image-pos-y, --image-radius, --image-overlay-opacity, --image-overlay-color. An avatar keeps its own circle.
+.nds-image:not(.nds-avatar) {
+  @include image-frame;
+}
