@@ -246,7 +246,7 @@ last_edit: "25/10/2026 - 04:48 PM"
             </div>
         </div>
 
-        <aside class="nds-sideinfo" aria-label="Request summary">
+        <aside class="nds-sideinfo nds-sticky nds-top" aria-label="Request summary">
             <!-- A direct child card takes the side column's look. Print prints the card alone; data-hidden="print" keeps its buttons off the paper -->
             <div id="request-summary" class="nds-card nds-stroke nds-shadow">
                 <dl class="nds-definition-list">
