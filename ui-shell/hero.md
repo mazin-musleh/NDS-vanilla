@@ -259,7 +259,7 @@ The sub hero is a section with a breadcrumb before its wrapper. Its head parts a
 | `.nds-section-action` in the head | The title action: written first in the head, it floats on the end side of the title. With `nds-minimal`, its buttons show only their icons on phones, so each one needs an icon. With `nds-wrap`, it moves under the title on phones | No |
 | `h1.nds-section-title` | The page title. The sub hero holds the page's `h1` | Yes |
 | `.nds-section-brief` | One short line under the title, in semibold | No |
-| `.nds-section-meta` | A `.nds-section-tags` of small [Tags](../components/tag), under the title | No |
+| `.nds-section-meta` | Under the title: a `.nds-section-tags` of small [Tags](../components/tag), a [Meta](../components/meta) line such as an article's dates and author, or both | No |
 | `.nds-section-description` | One or two sentences on the page | Yes |
 | `.nds-section-action` after the head | The action row. It sits beside the head, on the end side, and moves under the description when the head has a title action | No |
 {: .nds-table .nds-responsive}

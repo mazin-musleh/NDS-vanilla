@@ -49,6 +49,11 @@
         margin-block: var(--spacing-xl);
     }
 
+    // Wrapper weight: a component's own image (an avatar's circle) keeps its shape.
+    :where(img) {
+        border-radius: var(--radius-md);
+    }
+
     :where(ul, ol) > :where(li) {
         padding-block: var(--_list-item-pad);
 

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "25/10/2026 - 08:03 PM"
 ---
 
 <section id="sideinfo-overview" class="nds-content-section nds-doc-overview">
@@ -123,8 +123,8 @@ The side info is the side column of a standard page. The other page columns are 
 | `section.nds-sideinfo-section` | A `.nds-section-body` with the content and the column | Yes |
 | `.nds-info-content` | The content of the section, usually an `article` | Yes |
 | `aside.nds-sideinfo` | The column. Give it an `aria-label` that names what it holds | Yes |
-| The card | A direct child of the `aside`, such as a definition list, a table of contents or a stepper. It carries `nds-card` itself. The `aside` can hold several. For several blocks in one card, use a `div` with `nds-card` that holds groups | Yes |
-| `.nds-sideinfo-group` | One block in that `div`: a `span.nds-sideinfo-title`, then its definition list or links | No |
+| The block | A direct child of the `aside`, such as a definition list, a table of contents, a stepper or a group. `nds-card` on it is optional and changes only the look. The `aside` can hold several. For several blocks in one card, use a `div` with `nds-card` that holds groups | Yes |
+| `.nds-sideinfo-group` | One block with a title: a `span.nds-sideinfo-title`, then its definition list or links. It sits in the `aside` or in a card | No |
 {: .nds-table .nds-responsive}
 
 </div>
@@ -254,9 +254,9 @@ The `aside` shows where it is in the markup: after the content, it is on the end
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Put information about the section's content in the column: facts, progress, or a table of contents. Do not put ads or links to other pages in it.
+- Put information about the section's content in the column: facts, progress, a table of contents, or links to related pages such as related news. Do not put ads in it.
 - Put `nds-card` on the card inside the `aside`, never on the `aside`.
-- Give each topic its own card. Use one card with groups for short blocks that belong together, such as contact numbers.
+- Give each topic its own block. Use one card with groups for short blocks that belong together, such as contact numbers.
 - Keep the column short. Use a definition list for facts and a stepper for progress, not long paragraphs.
 - Make the column sticky beside long content. On a short page, the reader sees all of it without help.
 - Use Beside the title only when the column is about the whole page, and only in the first section.

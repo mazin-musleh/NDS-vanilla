@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "11/10/2026 - 11:19 PM"
+last_edit: "25/10/2026 - 08:07 PM"
 ---
 
 <section id="prose-overview" class="nds-content-section nds-doc-overview">
@@ -225,7 +225,7 @@ Some elements are styled on every page, with or without `nds-prose`. Others are 
 |---|---|
 | `h1` to `h6` | Everywhere: size, weight and color. Inside prose: a larger gap above `h2` to `h6` |
 | `ul`, `ol` | Everywhere: indent. Inside prose: a gap below, space between items, and 1., a., i. markers on nested `ol` |
-| `img` | Everywhere: full width at most. Inside prose: a gap above and below a direct child `img` or `picture` |
+| `img` | Everywhere: full width at most. Inside prose: rounded corners (`--radius-md`), and a gap above and below a direct child `img` or `picture`. A component's own image, such as an avatar, keeps its shape |
 | `a` | Everywhere: the [Link](../components/link) style |
 | `hr` | Everywhere: the [Divider](../components/divider). Inside prose: a wider gap above and below |
 | `table` | Everywhere: the [Tables](../components/table) style. Inside prose: a gap below |

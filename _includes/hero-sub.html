@@ -131,8 +131,9 @@
             {%- if page.hero_brief %}
             <p class="nds-section-brief">{{ page.hero_brief }}</p>
             {%- endif %}
-            {%- if hero_tags or page.since %}
+            {%- if hero_tags or page.since or page.hero_meta %}
             <div class="nds-section-meta">
+                {%- if hero_tags or page.since %}
                 <div class="nds-section-tags">
                     {%- for tag in hero_tags %}
                     <span class="nds-tag {{ tag.style | default: 'nds-gray' }} {{ tag.modifiers }} nds-sm">
@@ -163,6 +164,15 @@
                     {%- endif %}
                     {%- endif %}
                 </div>
+                {%- endif %}
+                {%- comment %} An article's byline: each item is { icon, label }, plus datetime for a date. {%- endcomment %}
+                {%- if page.hero_meta %}
+                <span class="nds-meta">
+                    {%- for item in page.hero_meta %}
+                    <span class="nds-meta-item">{%- if item.icon %}<i class="hgi hgi-stroke {{ item.icon }}" aria-hidden="true"></i>{%- endif %}{%- if item.datetime %}<time datetime="{{ item.datetime }}">{{ item.label }}</time>{%- else %}{{ item.label }}{%- endif %}</span>
+                    {%- endfor %}
+                </span>
+                {%- endif %}
                 {%- comment %} Rating is opt-in per page: set `rating: true` in the page front matter. Deliberately NOT tied to `hero_tags`, so a page's status tags never trigger it. {%- endcomment %}
                 {%- if page.rating %}
                 <div class="nds-dropmenu">

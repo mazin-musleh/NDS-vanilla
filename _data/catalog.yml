@@ -1254,11 +1254,11 @@
   new: true
 
 - title: "News Article"
-  description: "One news article as a CMS renders it: a cover image, prose with a quote and a photo gallery, the author, the article's facts beside it, and more news."
-  use_when: "A page for one article people read: news, a press release, an announcement, a blog post, a media center story. The headline and summary are the hero, with the category as a hero tag and the hero's Share. The facts (published and updated dates, category, reading time, press contact) are the side info column (nds-has-sideinfo), which also keeps the text lines short. The body is one nds-prose element, as a CMS writes it: the cover image in a figure with a caption, plain headings from h2, a Quote next to the text it supports, and a gallery of Image Popup Viewer thumbnails (one ratio, each with a title, the zoom badge). The author closes the article as a Persona. More news is a Swiper of image cards in a breakout body, each with a Meta line and one link. For a long page with a table of contents, see the Content Template."
+  description: "One news article in the order news sites use: a byline under the headline, prose with a quote and a photo gallery, Share and the author after it, related news and the press office beside it, and more news."
+  use_when: "A page for one article people read: news, a press release, an announcement, a blog post, a media center story. A flat hero (nds-flat) holds the headline, the byline as a Meta line under it (hero_meta: published and updated dates with <time datetime>, author, reading time), then the summary; the hero's Share is off (hide_share_page). The body is one nds-prose element, as a CMS writes it: the lead image in a figure with a caption and a photo credit, a dateline at the start of the first paragraph, plain headings from h2, a Quote next to the text it supports, and a gallery of Image Popup Viewer thumbnails (Image tiles of one shape, each with a title and the zoom badge). After the body, Share is the Inline structure (a row of buttons), then the author is a Persona. The side info column (nds-has-sideinfo, not sticky) holds what news sites put beside an article, each block a group with a title and no card: related news and most read as Drawer links with a date or a read count, the press office as a Definition List with Copy buttons, a one-field email signup, and the social accounts. More news is a Swiper of image cards in a breakout body, each with a Meta line and one link. A schema.org NewsArticle JSON-LD block repeats the headline, dates, author and image for search engines. For a long page with a table of contents, see the Content Template."
   icon: '<i class="hgi hgi-stroke hgi-news"></i>'
   category: "Content"
-  tags: ["Prose", "Quote", "Image Popup Viewer", "Persona", "Swiper"]
+  tags: ["Prose", "Quote", "Image Popup Viewer", "Share", "Swiper"]
   url: "/examples/news-article.html"
   new: true
 
