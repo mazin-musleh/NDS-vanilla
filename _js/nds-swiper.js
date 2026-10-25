@@ -505,6 +505,7 @@
             // caller here targets a position it computed itself; none wants re-snapping.
             this.wrapper.style.scrollSnapType = 'none';
             scroll();
+            this._instantLeft = this.wrapper.scrollLeft;
             this.wrapper.style.scrollSnapType = prevSnap;
             this.wrapper.style.scrollBehavior = prevBehavior;
         }
@@ -701,8 +702,9 @@
             // The gutter mask cuts cards short of the screen edge; CSS lifts it while the row moves.
             if (this._isHero || this._spotlight || !this._container.closest('.nds-max-width')) return;
             const clearMoving = () => wrapper.removeAttribute('data-swiper-moving');
+            // Not for a jump's own event (scroll anchoring as the loop adds clones, an instant landing): nothing passes the edge.
             wrapper.addEventListener('scroll', () => {
-                if (!wrapper.hasAttribute('data-swiper-moving')) wrapper.setAttribute('data-swiper-moving', '');
+                if (!wrapper.hasAttribute('data-swiper-moving') && !this._loopPending && wrapper.scrollLeft !== this._instantLeft) wrapper.setAttribute('data-swiper-moving', '');
             }, { passive: true, signal });
             if ('onscrollend' in wrapper) wrapper.addEventListener('scrollend', clearMoving, { signal });
             else wrapper.addEventListener('scroll', NDS.debounce(clearMoving, 150), { passive: true, signal });

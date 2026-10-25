@@ -132,6 +132,9 @@
             -webkit-mask-image: linear-gradient(to right, $mask);
             mask-image: linear-gradient(to right, $mask);
         }
+    }
+    // From init on: the load's peek and edge flips would each run a paint-thread fade.
+    .nds-max-width .nds-swiper[data-nds-swiper-initialized]:not(.nds-hero, .nds-spotlight) > & {
         transition: --_swiper-fade-start, --_swiper-fade-end;
         transition-duration: calc(var(--nds-transition-speed) * 1s);
         transition-timing-function: var(--nds-transition-effect);

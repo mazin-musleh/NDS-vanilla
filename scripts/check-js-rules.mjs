@@ -488,7 +488,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         }
         const t = b.text;
         if (/requestAnimationFrame\s*\(|NDS\.(?:debounce|throttleToFrame|onResize)\s*\(|removeEventListener\s*\(/.test(t)) continue;
-        if (/^\{\s*if\s*\(\s*![\w$.]+\.hasAttribute\([^)]*\)\s*\)\s*[\w$.]+\.setAttribute\([^)]*\)\s*;?\s*\}$/.test(t.trim())) continue; // one-time flag
+        if (/^\{\s*if\s*\(\s*![\w$.]+\.hasAttribute\([^)]*\)(?:\s*&&\s*[^(){};&|]+)*\s*\)\s*[\w$.]+\.setAttribute\([^)]*\)\s*;?\s*\}$/.test(t.trim())) continue; // one-time flag, plain reads may guard it
         const called = [...t.matchAll(/(?:this\.)?([\w$]+)\s*\(/g)].map((c) => bodyOf({ text: c[1], at: 0 }) || {});
         if (called.some((c) => /removeEventListener\s*\(/.test(c.text || ''))) continue; // a single-shot dismiss
         if (called.some((c) => c.wrap && /^NDS\.(throttleToFrame|debounce)$/.test(c.wrap))) continue; // calls a throttled function
@@ -1218,6 +1218,8 @@ const CASES = [
     [`(function(){ const CONFIG = { transitionDuration: 250 }; function hide() { NDS.state.add(el, 'hide'); setTimeout(() => el.setAttribute('hidden', ''), CONFIG.transitionDuration); } })();`, ['JSD-13']],
     [`(function(){ function f() { el.addEventListener('scroll', () => { fit(); }); } })();`, ['JSP-02']],
     [`(function(){ function f() { el.addEventListener('scroll', NDS.throttleToFrame(fit)); } })();`, []],
+    [`(function(){ function f() { el.addEventListener('scroll', () => { if (!el.hasAttribute('m') && !this.p && el.scrollLeft !== this.x) el.setAttribute('m', ''); }); } })();`, []], // one-time flag, plain reads
+    [`(function(){ function f() { el.addEventListener('scroll', () => { if (!el.hasAttribute('m') && fit()) el.setAttribute('m', ''); }); } })();`, ['JSP-02']],
     [`(function(){ function f() { const r = NDS.throttleToFrame(fit); el.addEventListener('scroll', (e) => { if (ok(e)) r(); }); } })();`, []], // calls a throttled function
     [`(function(){ function f() { const off = () => document.removeEventListener('scroll', h); function h() { close(); off(); } document.addEventListener('scroll', h); } })();`, []], // single-shot dismiss
     [`(function(){ function f() { el.scrollTo({ left: 0, behavior: 'smooth' }); } })();`, ['JSA-21a']],
