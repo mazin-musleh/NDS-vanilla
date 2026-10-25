@@ -2,7 +2,7 @@
  * Rides: nds-forms (the adopted textarea stays a normal field — validation and field
  *        chrome keep working) · nds-dropmenu (the link, image and remove popovers)
  *      · nds-upload (the image popover's file field) · nds-tooltip (toolbar button labels)
- *      · nds-link (link chrome refresh after an edit; soft)
+ *      · nds-link (link chrome refresh after an edit)
  * Methods:
  *   NDS.Editor.init() / .reinit()   scan + initialize .nds-editor
  *   NDS.Editor.create(el)           instance one editor — null when the markup is

@@ -222,7 +222,7 @@
 
     // Read off the element, so an unmounted stepper (a framework removing it without destroy()) is gone.
     function getInstance(target) {
-        return (typeof target === 'string' ? document.getElementById(target) : target)?.ndsStepper || null;
+        return NDS.resolveElement(target)?.ndsStepper || null;
     }
 
     function control(target, action, value) {

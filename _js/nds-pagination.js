@@ -1,5 +1,5 @@
 /* NDS.Pagination — public surface
- * Rides: nds-dropmenu (ellipsis menu + per-page picker; soft — plain markup without it)
+ * Rides: nds-dropmenu (ellipsis menu + per-page picker)
  * Methods:
  *   NDS.Pagination.init() / .reinit()          scan + initialize navs (reinit also runs initAuto)
  *   NDS.Pagination.initAuto()                  initialize auto-pagination containers only

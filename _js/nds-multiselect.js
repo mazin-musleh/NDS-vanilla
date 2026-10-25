@@ -1,5 +1,5 @@
 /* NDS.Multiselect — public surface
- * Rides: nds-dropmenu (top layer, positioning, search, auto-close knobs; soft — works without it)
+ * Rides: nds-dropmenu (top layer, positioning, search, auto-close knobs)
  *      · nds-forms (required + min/max validation, disabled state)
  * Methods:
  *   NDS.Multiselect.init() / .reinit()   scan + initialize .nds-multiselect fields

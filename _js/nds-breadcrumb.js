@@ -1,6 +1,5 @@
 /* NDS.Breadcrumb — public surface
- * Rides: nds-dropmenu (the overflow menu; soft — without it the extra levels stay as
- *        plain markup)
+ * Rides: nds-dropmenu (the overflow menu)
  * Methods:
  *   NDS.Breadcrumb.init() / .reinit()   scan + initialize .nds-breadcrumb-nav
  *   NDS.Breadcrumb.create(nav)          instance one breadcrumb — null when it has no items;

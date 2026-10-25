@@ -9,7 +9,7 @@
  *   nds:countdown:end    detail {}          — once, at zero
  * Hooks:
  *   data-countdown          the target: YYYY-MM-DD[THH:mm[:ss]][offset]. No offset = the site timezone.
- *                           Empty: shows its placeholders and waits for set(), with no timer and no events
+ *                           Empty: shows its placeholders and waits for setTarget(), with no timer and no events
  *   data-countdown-seconds  a duration from wire time instead of a target
  *   data-countdown-warn     seconds; at or under it the root carries data-state="warning"
  *   data-countdown-now      the server's current time (ISO), on the root or any ancestor (<html> for the page),
@@ -23,9 +23,9 @@
  *                           or plain units (number over word), as in a row card's banner
  *   [data-countdown-hide-zero]  on a unit: hidden while its value is 0 (the default markup's days)
  *   data-countdown-hide     ids, space-separated: those elements get hidden at zero (an action that ends with the
- *                           deadline), anywhere on the page. set() shows them again
+ *                           deadline), anywhere on the page. setTarget() shows them again
  *   data-countdown-show     ids, space-separated: hidden until zero, then shown (a closed message outside the root)
- *   .nds-countdown-ended    at zero it becomes the root's only content, from any depth; set() puts the rest back.
+ *   .nds-countdown-ended    at zero it becomes the root's only content, from any depth; setTarget() puts the rest back.
  *                           Without it the zeros stay
  *   no [data-unit] at all   the script writes the default: days with their word (hidden at 0), then hh:mm:ss
  * Gotchas:
@@ -53,7 +53,7 @@
     // Per-element runtime: { target (ms), offset, warn, warned, lang, order, units: [{ unit, box, value, label, hideZero }] }
     const items = new Map();
     const offsets = new WeakMap(); // server now − visitor now, fixed at wire time
-    const endedSwap = new WeakMap(); // the content an ended message replaced, for set() to put back
+    const endedSwap = new WeakMap(); // the content an ended message replaced, for setTarget() to put back
     let timer = null;
     let visibilityBound = false;
     const zoneFormats = new Map();
@@ -143,7 +143,7 @@
             if (x.hideZero) x.box.hidden = value === 0;
         }
         fire(el, 'nds:countdown:tick', { remaining: rem });
-        // A listener's set() replaced this run and rendered itself: this one stops.
+        // A listener's setTarget() replaced this run and rendered itself: this one stops.
         if (items.get(el) !== it) return;
         if (it.warn && !it.warned && rem <= it.warn) {
             it.warned = true;
@@ -168,7 +168,7 @@
 
     function tick() {
         timer = null;
-        // A copy: an entry a listener's set() replaces or re-adds would be visited again in this loop.
+        // A copy: an entry a listener's setTarget() replaces or re-adds would be visited again in this loop.
         for (const [el, it] of [...items]) {
             if (items.get(el) !== it) continue;
             if (!el.isConnected) { items.delete(el); continue; }
@@ -254,12 +254,12 @@
         if (!el.hasAttribute('dir')) el.dir = 'auto';
         el.querySelectorAll('.nds-countdown-ended:not([dir])').forEach((message) => { message.dir = 'auto'; });
         const seconds = el.getAttribute('data-countdown-seconds');
-        if (seconds === null && el.getAttribute('data-countdown') === '') return; // waits for set()
+        if (seconds === null && el.getAttribute('data-countdown') === '') return; // waits for setTarget()
         // Stamped only on success, so reinit() retries a target filled in later.
         if (track(el, seconds !== null ? parseInt(seconds, 10) : el.getAttribute('data-countdown'))) el.setAttribute(WIRED_ATTRIBUTE, '');
     }
 
-    // A page with no countdown at load never runs init(), so set() binds this too.
+    // A page with no countdown at load never runs init(), so setTarget() binds this too.
     function addVisibilityListeners() {
         if (visibilityBound) return;
         visibilityBound = true;

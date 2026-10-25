@@ -599,7 +599,8 @@
                 // A nested sub-dropmenu's item (date-picker month/year) leaves its parent open.
                 if (!item || !this._isOwnItem(item)) return;
                 if (!item.hasAttribute('data-no-auto-close')) {
-                    setTimeout(() => this.close(), 100);
+                    // destroy() inside the wait: a late close() would strip a re-inited wrapper's state.
+                    setTimeout(() => { if (!signal.aborted) this.close(); }, 100);
                 }
             }, { signal });
         }

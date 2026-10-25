@@ -1,7 +1,7 @@
 /* NDS.Autocomplete — public surface
  * Rides: nds-dropmenu (menu shell, open/close, positioning, outside-click)
  *      · nds-forms (loading chrome via data-state="loading", the field's clear button)
- *      · nds-empty (the "no results" placeholder; soft — the menu just closes without it)
+ *      · nds-empty (the "no results" placeholder)
  * Methods:
  *   NDS.Autocomplete.init() / .reinit()      arm the delegated focusin builder
  *   NDS.Autocomplete.create(el, options)     build one field now; options {filter, renderItem}.

@@ -74,6 +74,7 @@
     function getLists() {
         const set = new Set();
         document.querySelectorAll('[data-selection-target]').forEach(el => {
+            if (el.closest('code')) return;
             const list = document.getElementById(el.getAttribute('data-selection-target'));
             if (list) set.add(list);
         });

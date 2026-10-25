@@ -527,7 +527,7 @@
 
     // Read off the element, so an unmounted calendar (a framework removing it without destroy()) is gone.
     function getInstance(target) {
-        return (typeof target === 'string' ? document.getElementById(target) : target)?.ndsCalendar || null;
+        return NDS.resolveElement(target)?.ndsCalendar || null;
     }
 
     function create(el) {

@@ -3071,6 +3071,8 @@
         destroy() {
             this.abortController.abort();
             if (this.fetchAbortController) this.fetchAbortController.abort();
+            // The aborted request skips its own release: its loading marks would stay on the page.
+            if (this._filterContainer.ndsFilter === this && NDS.state.has(this._filterContainer, 'submitting')) this._releaseSubmitUi();
             // Sort is created by this filter, so it dies with it — its trigger
             // listeners live on surfaces that outlive the target container.
             if (this.sort) { this.sort.destroy(); this.sort = null; }

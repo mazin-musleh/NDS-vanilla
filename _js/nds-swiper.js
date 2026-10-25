@@ -608,7 +608,8 @@
                 this._settleLoop();
             };
             if ('onscrollend' in this.wrapper) this.wrapper.addEventListener('scrollend', settle, { signal });
-            else this.wrapper.addEventListener('scroll', NDS.debounce(settle, 150), { passive: true, signal });
+            // No scrollend: the debounced settle can land after destroy().
+            else this.wrapper.addEventListener('scroll', NDS.debounce(() => { if (!signal.aborted) settle(); }, 150), { passive: true, signal });
             // A wheel or a touch cancels the move, so its target no longer holds the settle.
             this.wrapper.addEventListener('wheel', () => { this._aim = null; }, { passive: true, signal });
 
@@ -707,7 +708,7 @@
                 if (!wrapper.hasAttribute('data-swiper-moving') && !this._loopPending && wrapper.scrollLeft !== this._instantLeft) wrapper.setAttribute('data-swiper-moving', '');
             }, { passive: true, signal });
             if ('onscrollend' in wrapper) wrapper.addEventListener('scrollend', clearMoving, { signal });
-            else wrapper.addEventListener('scroll', NDS.debounce(clearMoving, 150), { passive: true, signal });
+            else wrapper.addEventListener('scroll', NDS.debounce(() => { if (!signal.aborted) clearMoving(); }, 150), { passive: true, signal });
         }
 
         _detectCurrentSlide() {

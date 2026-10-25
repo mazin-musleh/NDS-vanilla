@@ -92,7 +92,8 @@
     // alongside the reduced-motion listener.
     const minimalBreakpoint = parseInt(getComputedStyle(document.documentElement)
         .getPropertyValue('--nds-minimal-nav-bp')) || MINIMAL_NAV_BREAKPOINT_FALLBACK;
-    const minimalMediaQuery = window.matchMedia(`(max-width: ${minimalBreakpoint}px)`);
+    // Exclusive edge, as tablet(max) in CSS: at exactly the breakpoint the nav is the desktop one.
+    const minimalMediaQuery = window.matchMedia(`(width < ${minimalBreakpoint}px)`);
 
     // Scroll behavior for every JS-driven nav scroll. 'auto' defers to the element's
     // CSS scroll-behavior, which is unset on the nav and on the document — so it is a

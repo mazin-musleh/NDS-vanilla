@@ -296,7 +296,7 @@
             // nds-pagination.js, grow-only per shown page). Later
             // deliveries are debounced to coalesce resize storms.
             let firstMeasure = true;
-            const checkTable = NDS.debounce(() => this._checkTableWidth(), 100);
+            const checkTable = this._debouncedCheck = NDS.debounce(() => this._checkTableWidth(), 100);
             const handleSizeChange = () => {
                 if (firstMeasure) {
                     firstMeasure = false;
@@ -309,7 +309,7 @@
             this._offResizeWrapper = NDS.onElementResize(this._wrapper, handleSizeChange);
 
             // Detect visibility changes (when tab becomes visible)
-            const onVisibleDebounced = NDS.debounce(() => this._checkTableWidth(), 150);
+            const onVisibleDebounced = this._debouncedVisibleCheck = NDS.debounce(() => this._checkTableWidth(), 150);
             this._offIntersect = NDS.onIntersect(this._wrapper, (entry) => {
                 if (entry.isIntersecting) onVisibleDebounced();
             }, { threshold: 0.1 });
@@ -325,6 +325,9 @@
             if (this._offResizeTable) { this._offResizeTable(); this._offResizeTable = null; }
             if (this._offResizeWrapper) { this._offResizeWrapper(); this._offResizeWrapper = null; }
             if (this._offIntersect) { this._offIntersect(); this._offIntersect = null; }
+            // A pending check would stamp role, tabindex and has-more back on a kept wrapper.
+            this._debouncedCheck?.cancel();
+            this._debouncedVisibleCheck?.cancel();
 
             NDS.state.clear(this._wrapper);
             this._setScrollFocus(false);

@@ -222,7 +222,7 @@
             // scrollHeight/getComputedStyle reads are free. Later deliveries are
             // debounced to coalesce resize storms.
             let firstMeasure = true;
-            const debounced = NDS.debounce(() => this._checkContentHeight(), 100);
+            const debounced = this._debouncedCheck = NDS.debounce(() => this._checkContentHeight(), 100);
             this._offResize = NDS.onElementResize(this._contentElement, () => {
                 if (firstMeasure) {
                     firstMeasure = false;
@@ -269,6 +269,8 @@
                 this._offResize();
                 this._offResize = null;
             }
+            // A pending check would rebuild the button on a destroyed instance.
+            this._debouncedCheck?.cancel();
 
             // Remove button if it exists
             if (this._expandButton) {

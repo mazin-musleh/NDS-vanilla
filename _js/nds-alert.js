@@ -1,5 +1,5 @@
 /* NDS.Alert — public surface
- * Rides: nds-copy (an action with copy / copyTarget becomes a copy button; soft)
+ * Rides: nds-copy (an action with copy / copyTarget becomes a copy button)
  * Methods:
  *   NDS.Alert.init()               wire the close button on alerts already in the page
  *   NDS.Alert.create(options)      build and insert one alert — returns the element.

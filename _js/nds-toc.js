@@ -168,7 +168,11 @@
             // idle slot keeps that read out of the component-init burst, where
             // the DOM is dirty and the read would force a synchronous reflow.
             // The scrollspy itself is already live via the scroll listener.
-            NDS.onIdle(() => { this._box = this._findBox(); this.refresh(); }, 2000);
+            NDS.onIdle(() => {
+                if (this.abortController.signal.aborted) return; // destroyed while waiting: no marks on a dead instance
+                this._box = this._findBox();
+                this.refresh();
+            }, 2000);
             this._toc.setAttribute('data-nds-toc-initialized', 'true');
         }
 

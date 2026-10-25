@@ -1,5 +1,5 @@
 /* NDS.Ipv — public surface
- * Rides: nds-backdrop (dims the page behind the overlay; soft)
+ * Rides: nds-backdrop (dims the page behind the overlay)
  * Methods:
  *   NDS.Ipv.init() / .reinit()   wire the thumbnails (the overlay builds on first open);
  *                                a repeat call gives later thumbnails tabindex + role
