@@ -2981,10 +2981,10 @@
             // Regenerate auto-scanned filters only (skip data-filter-values — those have their own source)
             const filterElements = this.queryAll('[data-filter-type]');
             filterElements.forEach(element => {
-                if (element.hasAttribute('data-filter-values')) return;
-
                 const filterName = element.getAttribute('data-filter');
                 const filterType = element.getAttribute('data-filter-type');
+                // A slider's range comes from its own min/max, not the items.
+                if (element.hasAttribute('data-filter-values') || filterType === 'slider') return;
 
                 // Clear existing inputs first
                 element.innerHTML = '';
