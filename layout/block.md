@@ -7,8 +7,8 @@ breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.6.0"
-last_edit: "10/10/2026 - 05:28 PM"
+updated: "1.12.x"
+last_edit: "25/10/2026 - 10:10 PM"
 ---
 
 <section id="block-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "10/10/2026 - 05:28 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A block is one class, `nds-block`, on any element. It makes the element full width and puts a 32px gap below it. The last block in its parent has no gap. A block has no padding, border or background: add `nds-card nds-stroke` to box it. Put it on a wrapper around text, or straight on a component such as a grid, a tab set or a table. An optional `nds-block-title` heading sits at the top. A block needs no JavaScript.
+A block is one class, `nds-block`, on any element. It makes the element full width and puts a 32px gap below it. The last block in its parent has no gap, and a [Divider](../components/divider) right after a block sets the gap with its own space. A block has no padding, border or background: add `nds-card nds-stroke` to box it. Put it on a wrapper around text, or straight on a component such as a grid, a tab set or a table. An optional `nds-block-title` heading sits at the top. A block needs no JavaScript.
 
 Pick another component when:
 
@@ -98,7 +98,7 @@ Pick another component when:
             <i class="hgi hgi-stroke hgi-distribute-vertical-center"></i>
             <span class="nds-label">Consistent Vertical Rhythm</span>
           </span>
-          <p class="nds-item-desc">Each block puts a 32px gap below it. The last block in its parent has none, so the parent ends flush.</p>
+          <p class="nds-item-desc">Each block puts a 32px gap below it. The last block in its parent has none, so the parent ends flush. A divider after a block replaces the gap with its own space.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -159,7 +159,7 @@ Pick another component when:
 
 | Class | Element | Effect |
 |---|---|---|
-| `nds-block` | Any element | Full width, with a 32px gap below. No gap on the last child |
+| `nds-block` | Any element | Full width, with a 32px gap below. No gap on the last child, and a divider right after it sets its own space instead |
 | `nds-block-title` | A heading at the top of a block | The block's title. No gap below it when it is the last child |
 | `nds-cq` | `.nds-block` | Makes a grid inside follow the block's width. Opt-in, because it traps `position: fixed` children, such as a modal or a dropmenu, inside the block. See [Grid](../layout/grid) |
 {: .nds-table .nds-responsive}

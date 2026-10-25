@@ -11,6 +11,12 @@
         margin-block-end: 0;
     }
 
+    // A divider after a block sets the gap: its space above cancels the block's end margin.
+    // A negative margin, not :has() on the block; it nets the same with or without margin collapse.
+    & + :is(.nds-divider, hr):not(.nds-vertical) {
+        margin-block-start: calc(var(--_divider) - var(--spacing-4xl));
+    }
+
     &>img {
         max-width: 80%;
         margin: auto;
