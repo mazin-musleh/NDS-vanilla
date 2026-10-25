@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 11:49 PM"
+last_edit: "25/10/2026 - 08:33 AM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -277,7 +277,7 @@ The picker checks the field at each `change`, typed text included. A date that d
 | `data-picker-mode` | `.nds-date-picker` | The script writes `day`, `month` or `year` from `data-format` when the field starts. The CSS reads it to show the month or the year grid |
 | `data-min-date`, `data-max-date` | `.nds-date-input` | The first and the last day the user can pick, in the field's format and calendar, `today`, or `today±N` with an optional `m` or `y`. See Date Bounds |
 | `data-year-before`, `data-year-after` | `.nds-date-input` | How many years before and after this year the year menu lists. The defaults are `5` and `0`. See Year List |
-| `data-lang` | `.nds-date-input` | The language of the calendar text, such as `ar` or `en`. Without it, the picker reads the input's `lang`, then the page language. See [Internationalization](../core/i18n) |
+| `data-lang` | `.nds-date-input` | The language of the calendar text, such as `ar` or `en`. Without it, the picker reads the nearest `lang`, the input's own included. See [Internationalization](../core/i18n) |
 | `data-converted-date` | `.nds-date-input` | The script writes the date in the other calendar, in the field's format, when the user presses Save, and when the calendar opens on a field that holds a date. Clear, and Save with no date, remove it. A typed date does not update it |
 {: .nds-table .nds-responsive}
 

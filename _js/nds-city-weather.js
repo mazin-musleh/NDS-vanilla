@@ -63,7 +63,7 @@
     }
 
     // The cache holds the condition key, not text, so one entry serves every language.
-    async function syncWeather() {
+    async function loadWeather() {
         const el = document.getElementById('nds-weather-info');
         if (!el) return;
 
@@ -203,7 +203,7 @@
         // racing critical resources during post-DCL hydration. Runs on
         // every init, so a replaced widget element fills in again.
         NDS.onIdle(() => {
-            syncWeather();
+            loadWeather();
             syncCity();
         });
 
@@ -211,15 +211,15 @@
         initDone = true;
 
         // Update weather every 15 minutes
-        setInterval(syncWeather, 15 * 60 * 1000);
+        setInterval(loadWeather, 15 * 60 * 1000);
 
         // City doesn't need interval - coordinates don't change, cached for 30 days
-        NDS.onAttributeChange('html', ['lang'], () => { syncWeather(); syncCity(); });
+        NDS.onAttributeChange('html', ['lang'], () => { loadWeather(); syncCity(); });
     }
 
     NDS.CityWeather = {
         init: setupCityWeather,
-        loadWeather: syncWeather,
+        loadWeather: loadWeather,
         syncCity
     };
 

@@ -83,7 +83,7 @@
     }
 
     // ── Dark/light modes axis ────────────────────────────────────────────────
-    function getTheme() {
+    function get() {
         return getCurrentTokens().indexOf('dark') !== -1 ? 'dark' : 'light';
     }
     function setThemeMode(theme) {
@@ -130,11 +130,11 @@
             );
         }, () => {});
     }
-    function setTheme(theme, el) {
+    function set(theme, el) {
         reveal(() => setThemeMode(theme), el);
     }
     function toggle(el) {
-        setTheme(getTheme() === 'dark' ? 'light' : 'dark', el);
+        set(get() === 'dark' ? 'light' : 'dark', el);
     }
     function setToggles(theme) {
         const elements = document.querySelectorAll(TOGGLE_SELECTOR);
@@ -328,7 +328,7 @@
     // listeners once. First paint is owned by the pre-paint FOUC script.
     let wired = false, reconciled = false;
     function init() {
-        setToggles(getTheme());
+        setToggles(get());
         if (reconciled) syncSwitcher(currentValue);
         else if (document.querySelector(SWITCH_SELECTOR)) {
             reconciled = true;
@@ -375,10 +375,10 @@
             if (!e.target.matches('.nds-switch-input')) return;
             const el = e.target.closest(TOGGLE_SELECTOR);
             if (!el) return;
-            setTheme(e.target.checked ? 'dark' : 'light', el);
+            set(e.target.checked ? 'dark' : 'light', el);
         });
     }
 
     // Public API
-    NDS.Theme = { init, get: getTheme, set: setTheme, toggle };
+    NDS.Theme = { init, get, set, toggle };
 })();

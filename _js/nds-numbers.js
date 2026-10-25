@@ -75,7 +75,7 @@
         if (parsed) write(node, parsed.prefix + NDS.formatNumber(parsed.value, toFractionOptions(parsed)) + parsed.suffix);
     }
 
-    function formatNumbers() {
+    function formatAll() {
         document.querySelectorAll('.nds-number-format').forEach(format);
     }
 
@@ -129,13 +129,13 @@
 
     // Exposed at once: the loader's init system calls it.
     function init() {
-        formatNumbers();
+        formatAll();
         initCounters();
     }
 
     NDS.Numbers = {
         format,
-        formatAll: formatNumbers,
+        formatAll: formatAll,
         initCounters,
         init,
         reinit: init

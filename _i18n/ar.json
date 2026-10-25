@@ -444,7 +444,7 @@
         "tag_required": "يرجى إضافة وسم واحد على الأقل"
     },
     "time-date": {
-        "hijri_date": "{day} {month} {year} هـ"
+        "hijri_format": "D MMMM YYYY"
     },
     "time-picker": {
         "hour": "ساعة",

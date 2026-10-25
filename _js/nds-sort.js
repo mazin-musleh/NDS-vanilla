@@ -328,7 +328,7 @@
             if (hasKey) {
                 const accessor = this.options.accessor;
                 const sample = items.map(i => accessor(i, key));
-                const dateFormat = NDS.Date.formatFor(this.root);
+                const dateFormat = NDS.Date.getFormat(this.root);
                 const calendar = NDS.Date.getCalendar(this.root);
                 const type = (this.options.types && this.options.types[key]) || detectType(sample, dateFormat, calendar);
                 ordered = [...items].sort((left, right) =>

@@ -176,7 +176,7 @@
     // Re-lex in place. No source snapshot is kept: highlighting preserves
     // textContent (bar the leading newline and trailing blanks getSourceText and
     // splitTokensIntoLines already drop), so re-reading it is idempotent.
-    function reprocessCodeElement(codeElement) {
+    function highlight(codeElement) {
         codeElement.dataset.ndsCodeHighlighted = 'false';
         processCodeElement(codeElement);
     }
@@ -734,7 +734,7 @@
 
     NDS.Code = {
         init: setupCodeProcessing,
-        highlight: reprocessCodeElement,
+        highlight: highlight,
         detectLanguage: detectLanguage
     };
 

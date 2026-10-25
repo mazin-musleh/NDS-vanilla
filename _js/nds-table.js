@@ -773,7 +773,7 @@
     // NDS.Table.getRow(tr) — per-row handle. Accepts the sub row itself too, so a
     // collapse control inside the expanded content uses the same call shape as
     // the chevron up in the parent row.
-    function getRowHandle(tr) {
+    function getRow(tr) {
         if (tr?.classList?.contains('nds-sub')) tr = tr.previousElementSibling;
         if (!tr || tr.tagName !== 'TR') return null;
 
@@ -880,7 +880,7 @@
         const btn = e.target.closest(SUB_TOGGLE);
         if (!btn || btn.closest('code')) return;
 
-        const handle = getRowHandle(findRow(btn));
+        const handle = getRow(findRow(btn));
         if (!handle) return;
 
         // Second click while a sub-request is outstanding cancels it rather
@@ -975,7 +975,7 @@
             el?.ndsTableResponsive?.destroy();
             el?.ndsColumnToggle?.destroy();
         },
-        getRow: getRowHandle,
+        getRow: getRow,
         setColumnHidden
     };
 })();

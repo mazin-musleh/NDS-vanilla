@@ -9,7 +9,7 @@
  *   NDS.Date.toParts(date, calendar) · .fromParts({ year, month, day }, calendar)
  *                                    a day as numbers in a calendar (month 1-based), and back (null: no such day)
  *   NDS.Date.getMonthLength({ year, month }, calendar)   days in that month
- *   NDS.Date.formatFor(el)           the nearest data-date-format (<html> is the site's)
+ *   NDS.Date.getFormat(el)           the nearest data-date-format (<html> is the site's)
  *   NDS.Date.getCalendar(el, fb)     the nearest data-calendar: hijri | gregory (else fb, gregory)
  *   NDS.Date.getMonthNames(calendar, lang) · .getWeekdayNames(lang, weekStart)   names in a language,
  *                                    from weekStart (0 = Sunday, the default)
@@ -153,15 +153,15 @@
         const getStartOfWeek = (date, weekStart = 0) => new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() - weekStart + 7) % 7);
 
         // The nearest data-date-format wins, like a dark area; <html> holds the site's.
-        const formatFor = (el) => el?.closest?.('[data-date-format]:not([data-date-format=""])')?.dataset.dateFormat || 'DD/MM/YYYY';
+        const getFormat = (el) => el?.closest?.('[data-date-format]:not([data-date-format=""])')?.dataset.dateFormat || 'DD/MM/YYYY';
         const getCalendar = (el, fallback = 'gregory') => el?.closest?.('[data-calendar]:not([data-calendar=""])')?.dataset.calendar || fallback;
-        const getSiteFormat = () => formatFor(document.documentElement);
+        const getSiteFormat = () => getFormat(document.documentElement);
 
         const api = {
             // Live: a script that sets the attributes after load still applies.
             get site() { return { timeZone: readTimeZone(), format: getSiteFormat() }; },
 
-            formatFor,
+            getFormat,
             getCalendar,
             getMonthNames,
             getWeekdayNames,
@@ -283,7 +283,7 @@
             // A Gregorian <time> is written only in a format of its own: else it already reads right.
             const date = (hijri || el.dataset.dateFormat) && NDS.Date.readDay(el.getAttribute('datetime'));
             if (!date) continue;
-            el.textContent = NDS.Date.format(date, { calendar: hijri ? 'hijri' : 'gregory', format: NDS.Date.formatFor(el) });
+            el.textContent = NDS.Date.format(date, { calendar: hijri ? 'hijri' : 'gregory', format: NDS.Date.getFormat(el) });
             if (hijri && el.hasAttribute('data-date-era')) {
                 const era = document.createElement('span');
                 strings.set(era, 'text', 'hijri_era');

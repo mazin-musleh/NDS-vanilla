@@ -152,7 +152,7 @@
     }
 
     const controllers = new Map();
-    function addClickListener(selector, options) {
+    function addListeners(selector, options) {
         const clickSelector = selector || '.nds-copy';
         const opts = options || {};
 
@@ -167,12 +167,12 @@
     }
 
     function init() {
-        addClickListener('.nds-copy');
+        addListeners('.nds-copy');
     }
 
     NDS.Copy = {
         init,
-        addListeners: addClickListener,
+        addListeners: addListeners,
         writeText,
         flash,
         copyFrom

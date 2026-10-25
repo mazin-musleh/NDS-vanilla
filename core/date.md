@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 09:17 PM"
+last_edit: "25/10/2026 - 08:33 AM"
 ---
 
 <section id="date-overview" class="nds-content-section nds-doc-overview">
@@ -295,7 +295,7 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 | `NDS.Date.toParts(date, calendar)` | Returns the day as numbers, `{ year, month, day }`, in `calendar` (default `'gregory'`). The month counts from 1 in both calendars |
 | `NDS.Date.fromParts(parts, calendar)` | Returns the day that `{ year, month, day }` names in `calendar`, as a `Date` at local midnight, or `null` when that day does not exist |
 | `NDS.Date.getMonthLength(parts, calendar)` | Returns the number of days in the month that `{ year, month }` names in `calendar`. A Hijri month has 29 or 30 |
-| `NDS.Date.formatFor(element)` | Returns the nearest `data-date-format` around `element`, the element's own included, or `DD/MM/YYYY` when there is none. Pass it as `format` for content in that part of the page |
+| `NDS.Date.getFormat(element)` | Returns the nearest `data-date-format` around `element`, the element's own included, or `DD/MM/YYYY` when there is none. Pass it as `format` for content in that part of the page |
 | `NDS.Date.getCalendar(element, fallback)` | Returns the nearest `data-calendar` around `element`, the element's own included, or `fallback` (default `'gregory'`) when there is none. Pass it as `calendar` |
 | `NDS.Date.site` | Returns `{ timeZone, format }` from `<html>`. `timeZone` is `undefined` when the attribute is missing or invalid |
 | `NDS.Date.getMonthNames(calendar, lang)` | Returns the 12 month names of `'gregory'` or `'hijri'`, in `lang` or the page's language. The Hijri names come from the `date` section of the [string pack](../core/i18n) |

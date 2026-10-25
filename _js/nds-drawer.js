@@ -83,7 +83,7 @@
     // EXPAND/COLLAPSE FUNCTIONALITY
     // ==============================================
 
-    function toggleSubmenu(button) {
+    function toggle(button) {
         const listItem = button.closest('li');
         if (!listItem) return;
 
@@ -207,7 +207,7 @@
             button.addEventListener('click', (e) => {
                 if (button.tagName === 'BUTTON' || button.getAttribute('href') === '#') {
                     e.preventDefault();
-                    toggleSubmenu(button);
+                    toggle(button);
                 }
             }, { signal });
         });
@@ -218,7 +218,7 @@
     // ==============================================
 
     // Marks the item's button and opens its closed ancestors: painted at once at init,
-    // through toggleSubmenu() later, so a moved mark animates and closes sibling branches.
+    // through toggle() later, so a moved mark animates and closes sibling branches.
     function activateItem(drawer, activeItem, animate) {
         const activeBtn = activeItem.querySelector(':scope > .nds-btn');
         if (activeBtn) setState(activeBtn, config.states.active);
@@ -232,7 +232,7 @@
         closed.forEach(item => {
             const btn = item.querySelector(':scope > .nds-btn');
             if (!animate) return setBranch(item, true);
-            if (btn && item.querySelector(':scope > ul')) toggleSubmenu(btn);
+            if (btn && item.querySelector(':scope > ul')) toggle(btn);
         });
     }
 
@@ -395,7 +395,7 @@
         reinit: setupAllDrawers,
         create: setupDrawer,
         destroy: destroyDrawer,
-        toggle: toggleSubmenu
+        toggle: toggle
     };
 
 })();

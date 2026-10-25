@@ -41,14 +41,14 @@
     }
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
+    // The Hijri date's word order, as an NDS.Date format: Arabic puts the day first.
     const strings = NDS.i18n.getStrings('time-date', {
-        hijri_date: '{month} {day}, {year} AH',
+        hijri_format: 'MMMM D, YYYY',
     });
 
-    // Month names from NDS.Date: Android's ICU names Umm al-Qura months from the Gregorian set.
+    // Month names and the era word from NDS.Date: Android's ICU names Umm al-Qura months from the Gregorian set.
     function formatHijriText(day) {
-        const parts = NDS.Date.toParts(day, 'hijri');
-        return strings.text('hijri_date', { day: parts.day, month: NDS.Date.getMonthNames('hijri')[parts.month - 1], year: parts.year });
+        return NDS.Date.format(day, { calendar: 'hijri', format: strings.text('hijri_format'), era: true });
     }
 
     // The site's wall clock, [h, m, s]. No data-timezone = the visitor's.

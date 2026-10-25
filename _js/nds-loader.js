@@ -647,7 +647,7 @@
     let resolveReady;
     const ready = new Promise((resolve) => { resolveReady = resolve; });
 
-    function setupNds() {
+    function initialize() {
         if (config.disableAll === true) {
             if (config.enableLogging) {
                 console.warn('[NDS] Initialization disabled (config.disableAll = true)');
@@ -1016,7 +1016,7 @@
     }
 
     NDS.init = {
-        initialize: setupNds,
+        initialize: initialize,
         components: components,
         config: config,
         // Works regardless of enableLogging, which only controls the automatic sweep.
@@ -1034,9 +1034,9 @@
     // only the rare sync-in-<head> case waits.
     if (config.autoInitialize) {
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', setupNds);
+            document.addEventListener('DOMContentLoaded', initialize);
         } else {
-            setTimeout(setupNds, 0);
+            setTimeout(initialize, 0);
         }
     }
 })();

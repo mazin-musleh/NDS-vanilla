@@ -175,7 +175,7 @@
   /**
    * Check if backdrop is active
    */
-  function getIsActive() {
+  function isActive() {
     return stack.length > 0;
   }
 
@@ -185,7 +185,7 @@
   NDS.Backdrop = {
     show,
     hide,
-    isActive: getIsActive
+    isActive: isActive
   };
 
 })();

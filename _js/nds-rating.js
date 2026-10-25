@@ -269,7 +269,7 @@
     document.querySelectorAll('.nds-rating').forEach(create);
   }
 
-  function enableRating(element) {
+  function enable(element) {
     create(element).enable();
   }
 
@@ -292,7 +292,7 @@
     validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-form-group') || el, checkField, opts),
     create,
     destroy: (element) => element?.ndsRating?.destroy(),
-    enable: enableRating,
+    enable: enable,
   };
 
   NDS.onDomAdd('.nds-rating', (nodes) => nodes.forEach(create));

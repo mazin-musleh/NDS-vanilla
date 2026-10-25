@@ -1951,9 +1951,9 @@
  },
  {
   "section": "time-date",
-  "key": "hijri_date",
-  "en": "{month} {day}, {year} AH",
-  "ar": "{day} {month} {year} هـ"
+  "key": "hijri_format",
+  "en": "MMMM D, YYYY",
+  "ar": "D MMMM YYYY"
  },
  {
   "section": "time-picker",
