@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.5"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 02:34 PM"
+last_edit: "25/10/2026 - 01:05 PM"
 ---
 
 <section id="accessibility-overview" class="nds-content-section nds-doc-overview">
@@ -76,6 +76,8 @@ The FAB ships `hidden`, and the FAB script shows it once it is docked. A new pag
 {: .nds-block-title}
 
 Any button with `data-accessibility-toggle` and `data-panel-toggle` opens the panel, as the FAB does. The first attribute builds the panel on the first press, with a spinner on the button for about one second. The second opens and closes the panel after that. To open it from your own code, call `NDS.Accessibility.open()`, as in the API.
+
+While settings are on, each trigger shows how many on a badge over its icon, as the Filter button does. The number is the sum of the three group counts, and it is also added to the button's name for screen readers, such as "Accessibility settings (3)". A trigger with no icon shows no badge.
 
 <script type="text/html" id="a11y-trigger" data-canon data-preview="none">
 <button type="button" class="nds-btn nds-secondary-outline" data-accessibility-toggle data-panel-toggle="nds-accessibility-panel">

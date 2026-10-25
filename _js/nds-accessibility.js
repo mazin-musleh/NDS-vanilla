@@ -656,6 +656,9 @@
             const count = counts[el.dataset.a11yCountSr] || 0;
             el.textContent = count > 0 ? `, ${count} ${words.text('active')}` : '';
         });
+        // The FAB carries the sum of the section counts, like Filter's button.
+        const total = counts.modes + counts.readable + counts.visual;
+        document.querySelectorAll('[data-accessibility-toggle]').forEach(toggle => NDS.setBadge(toggle, total));
     }
 
     // Render (cycle.length - 1) bars in [data-a11y-bars]. Idempotent.

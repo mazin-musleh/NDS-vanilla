@@ -70,6 +70,22 @@
     }
 }
 
+// Count badge on the circle's top-end rim (the 45° point, 0.146 of the size in
+// from each edge), not the icon's corner. It is positioned against the icon, so
+// the icon's inset in the button is taken back out. The ring cuts it off the fill.
+.nds-btn:is(.nds-fab, .nds-fab *) .nds-badge {
+    --_badge-size: 20px;
+    --_badge-offset: calc(var(--_btn-size) * 0.146 - var(--_badge-size) / 2 - (var(--_btn-size) - var(--_btn-icon-size)) / 2);
+
+    inset-block-start: var(--_badge-offset);
+    inset-inline-end: var(--_badge-offset);
+    min-width: var(--_badge-size);
+    height: var(--_badge-size);
+    padding: 0 var(--spacing-xs);
+    font-size: var(--typo-text-xs-FS);
+    box-shadow: 0 0 0 2px var(--background-default);
+}
+
 // Every non-solid variant rests on a transparent fill somewhere: outline in both
 // modes, secondary once dark washes it to an alpha tint. That works inline but
 // not over scrolling content — page text reads straight through a floating one.
@@ -279,6 +295,12 @@
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
         border-right-width: 0;
+    }
+
+    // The edge side is cut off: the badge takes the inner corner.
+    .nds-badge {
+        right: auto;
+        left: var(--_badge-offset);
     }
 }
 

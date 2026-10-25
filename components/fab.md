@@ -6,7 +6,7 @@ hero_description: A floating action button (FAB) stays at an edge of the screen 
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "25/10/2026 - 01:20 PM"
 lang: en
 direction: ltr
 ---
@@ -90,6 +90,9 @@ Pick another component when:
   </div>
 </dialog>
 </script>
+<script type="text/html" id="fab-badge" data-canon>
+<span class="nds-badge">3</span>
+</script>
     </div>
   </div>
 </section>
@@ -132,6 +135,8 @@ Variant and Size have two rows. On a single FAB, the class goes on the FAB butto
 | Direction | Vertical (default) (id: vertical) | `.nds-vertical` | `.nds-btn-group` | The buttons stack in a column along a side edge |
 | Direction | Horizontal (id: horizontal) | — | `.nds-btn-group` | The buttons sit in a row. For the bottom edge |
 | Thumb | Thumb (hint: Sits against the screen edge, square on that side) | `.nds-fab-thumb` | `.nds-fab` | The FAB sits against the screen edge, with square corners on that side. It moves aside when its panel opens from the same edge |
+| Badge | Badge (hint: A count on the edge of the button) | canon `#fab-badge` | `.nds-btn.nds-fab > i` | A count on the top corner of the button, such as the number of settings that are on. It goes inside the icon. The icon is `aria-hidden`, so add the count to `aria-label` too. `NDS.setBadge(fab, count)` does both |
+| Badge | Badge (hint: A count on the edge of the button) | canon `#fab-badge` | `.nds-fab > .nds-btn[data-panel-toggle] > i` | The same, on the button of a group that opens the panel |
 | Gap | None (default) | — | — | The dock's own gap between FABs |
 | Gap | SM | `[data-fab-gap="sm"]` | `.nds-fab` | 8px of extra space between the FAB and the one before it |
 | Gap | MD | `[data-fab-gap="md"]` | `.nds-fab` | 16px of extra space, to start a new set of FABs |
