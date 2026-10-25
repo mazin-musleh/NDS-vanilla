@@ -131,9 +131,10 @@
     }
 
     // Room under the number for the dot, out of flow so a day with none keeps the row's height.
+    // The same room on top keeps the number in the middle.
     .nds-calendar-day {
         position: relative;
-        padding: var(--spacing-sm) 0 var(--spacing-lg);
+        padding: var(--spacing-lg) 0;
     }
 
     .nds-calendar-day-dot {
@@ -180,9 +181,27 @@
 
 @include calendar-last-shown('.nds-calendar[data-nds-calendar-initialized]:not([data-view="grid"])');
 
+// Rows break out by their own padding, as a drawer does in a card: a row's tile lines up with the
+// title and the days, and its hover fill takes the margin. Not Grid's columns, which sit under their days.
+@mixin calendar-rows-breakout($calendar) {
+    #{$calendar} > .nds-drawer {
+        // And the row button's 1px border. The drawer's width: 100% grows by both sides, as a card breakout does.
+        --_calendar-breakout: calc(var(--spacing-lg) + 1px);
+        width: calc(100% + 2 * var(--_calendar-breakout));
+        margin-inline: calc(-1 * var(--_calendar-breakout));
+
+        > .nds-calendar-events > li > .nds-btn {
+            padding-inline: var(--spacing-lg);
+        }
+    }
+}
+
+@include calendar-rows-breakout('.nds-calendar:not([data-view="grid"])');
+
 // Under the grid's width Grid draws as rows.
 @container nds-calendar (width < 860px) {
     @include calendar-last-shown('.nds-calendar[data-nds-calendar-initialized]');
+    @include calendar-rows-breakout('.nds-calendar');
 }
 
 .nds-calendar .nds-calendar-empty {
@@ -222,6 +241,24 @@
 }
 
 @container nds-calendar (width >= 860px) {
+    // Rows and Month: the list in two columns, read across then down. The two events of a row share
+    // its height, so their dividers line up and each button fills it.
+    .nds-calendar:not([data-view="grid"]) .nds-calendar-events {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: var(--spacing-3xl);
+
+        > li > .nds-btn {
+            flex-grow: 1;
+        }
+    }
+
+    // A last row of two: its first event drops the divider too.
+    .nds-calendar[data-nds-calendar-initialized]:not([data-view="grid"]) .nds-drawer.nds-divided .nds-calendar-events > li:nth-last-child(2 of [data-calendar-day]:not([data-filtered])):nth-child(odd of [data-calendar-day]:not([data-filtered])) {
+        border-block-end: none;
+        padding-bottom: 0;
+    }
+
     .nds-calendar[data-view="grid"] {
         .nds-calendar-days {
             padding-block-end: var(--spacing-md);

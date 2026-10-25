@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 01:58 PM"
+last_edit: "25/10/2026 - 03:39 PM"
 ---
 
 <section id="calendar-overview" class="nds-content-section nds-doc-overview">
@@ -542,7 +542,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
             <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
             <span class="nds-label">Narrow Calendars</span>
           </span>
-          <p class="nds-item-desc">The calendar's own width sets its layout, not the screen's. Under 860px, Grid shows as Rows and the switch offers Rows and Month. Under 480px, the days show one letter and a smaller day number.</p>
+          <p class="nds-item-desc">The calendar's own width sets its layout, not the screen's. Under 860px, Grid shows as Rows and the switch offers Rows and Month. From 860px, Rows and Month show the events in two columns, read across and then down. Under 480px, the days show one letter and a smaller day number.</p>
         </div>
       </div>
     </div>
