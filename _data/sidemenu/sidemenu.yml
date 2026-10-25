@@ -103,6 +103,9 @@
     - label: "Events Calendar"
       url: "/examples/events"
       href: "/examples/events.html"
+    - label: "Book an Appointment"
+      url: "/examples/book-appointment"
+      href: "/examples/book-appointment.html"
 
 - label: "Events"
   has_sub: true
