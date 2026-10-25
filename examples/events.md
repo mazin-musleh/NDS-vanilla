@@ -337,21 +337,19 @@ last_edit: "25/10/2026 - 01:58 PM"
         </div>
         <div class="nds-section-body">
             <form id="updates-form" class="nds-form" data-ajax>
-                <div class="nds-flex nds-col">
-                    <div class="nds-form-container" data-required style="--form-width: 360px">
-                        <div class="nds-form-header">
-                            <label for="updates-email">
-                                <span class="nds-label">Email address</span>
-                            </label>
-                        </div>
-                        <div class="nds-form-control">
-                            <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
-                            <input type="email" id="updates-email" name="email" class="nds-input" placeholder="name@example.com" autocomplete="email">
-                            <div class="nds-form-action">
-                                <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear email" hidden>
-                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
+                <div class="nds-form-container" data-required style="--form-width: 360px">
+                    <div class="nds-form-header">
+                        <label for="updates-email">
+                            <span class="nds-label">Email address</span>
+                        </label>
+                    </div>
+                    <div class="nds-form-control">
+                        <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
+                        <input type="email" id="updates-email" name="email" class="nds-input" placeholder="name@example.com" autocomplete="email">
+                        <div class="nds-form-action">
+                            <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear email" hidden>
+                                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
