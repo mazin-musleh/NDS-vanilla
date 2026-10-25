@@ -115,6 +115,9 @@
     - label: "Account Settings"
       url: "/examples/account-settings"
       href: "/examples/account-settings.html"
+    - label: "Support Inbox"
+      url: "/examples/support-inbox"
+      href: "/examples/support-inbox.html"
 
 - label: "Events"
   has_sub: true

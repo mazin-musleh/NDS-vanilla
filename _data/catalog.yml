@@ -1263,6 +1263,15 @@
   url: "/examples/account-settings.html"
   new: true
 
+- title: "Support Inbox"
+  description: "A signed-in user's messages, read like letters: Inbox and Sent tabs, unread rows, one panel to read and reply, and a panel to write a new message."
+  use_when: "A page of messages between a user and a government body: an inbox, notifications with replies, support tickets, official letters, messages from a service. Inbox and Sent are Tabs, and the Inbox label carries the unread count. Each message is a Drawer row (a button) with a featured icon, a New tag while unread, a preview line and a Meta line (sender, time). Every row opens ONE shared Panel that a page script fills from the row (a real site loads the message by its id); opening marks it read. A message people can answer has a reply form in the panel; an automatic one shows an info Alert that says where to ask instead. New message opens a second Panel with a form: Custom Select for the topic, a Textarea, and an Upload in Button mode. An empty list is an Empty placeholder (nds-empty with data-empty-message) that leaves when a row is added. The page runs NDS.SessionTimeout.init(). Not a chat: for live back-and-forth, see the parked Chat component; for dated events in a panel, the Events Calendar."
+  icon: '<i class="hgi hgi-stroke hgi-mail-open-01"></i>'
+  category: "Service"
+  tags: ["Drawer", "Panel", "Tabs", "Empty", "Session Timeout"]
+  url: "/examples/support-inbox.html"
+  new: true
+
 # ── Events — seasonal theme packs ─────────────────────────────────────────
 
 - title: "National Day 96"
