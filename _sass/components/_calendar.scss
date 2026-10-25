@@ -8,13 +8,14 @@
 // break a title into a word per line.
 
 .nds-calendar {
-    --_calendar-gap: var(--calendar-gap, var(--spacing-md));
+    --_calendar-gap: var(--calendar-gap, var(--spacing-4xl));
+    --_calendar-day-gap: var(--calendar-day-gap, var(--spacing-md));
     container: nds-calendar / inline-size;
     // A size container takes no width from its content: in a centering parent it would shrink to nothing.
     inline-size: 100%;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xl);
+    gap: var(--_calendar-gap);
     // The calendar's own gap spaces its toolbar.
     --toolbar-margin-block: 0;
 }
@@ -39,7 +40,7 @@
 .nds-calendar-days {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: var(--_calendar-gap);
+    gap: var(--_calendar-day-gap);
 }
 
 .nds-calendar-day {
@@ -269,14 +270,14 @@
             // A line between days, behind the events, so a day with none still shows its column.
             $lines: ();
             @for $k from 1 through 6 {
-                $x: calc((100% - 6 * var(--_calendar-gap)) / 7 * #{$k} + var(--_calendar-gap) * #{$k - 0.5});
+                $x: calc((100% - 6 * var(--_calendar-day-gap)) / 7 * #{$k} + var(--_calendar-day-gap) * #{$k - 0.5});
                 $lines: list.append($lines, linear-gradient(var(--divider-color), var(--divider-color)) $x 0 / 1px 100% no-repeat, comma);
             }
             background: $lines;
             min-height: 160px;
             // Up through the calendar's gap, so the day lines meet the line under the day names.
-            margin-block-start: calc(-1 * var(--spacing-xl));
-            padding-block-start: var(--spacing-xl);
+            margin-block-start: calc(-1 * var(--_calendar-gap));
+            padding-block-start: var(--_calendar-gap);
             display: grid;
             grid-template-columns: repeat(7, minmax(0, 1fr));
             // 1px rows: the script spans each event over its height plus the gap, and dense puts it
@@ -285,7 +286,7 @@
             grid-auto-flow: dense;
             // Start, not stretch: a stretched event would grow to its span and be measured again.
             align-items: start;
-            column-gap: var(--_calendar-gap);
+            column-gap: var(--_calendar-day-gap);
         }
 
         .nds-calendar-events > li {

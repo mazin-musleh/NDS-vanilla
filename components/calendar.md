@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 03:39 PM"
+last_edit: "25/10/2026 - 04:13 PM"
 ---
 
 <section id="calendar-overview" class="nds-content-section nds-doc-overview">
@@ -444,10 +444,12 @@ The script writes each event's Date Tile from its `datetime`: the weekday, the d
 
 `data-calendar-second` adds the dates in the other calendar, in smaller text: the week or the month under the title, and the day number on each day button. Use `hijri` on a Gregorian calendar, or `gregory` on a Hijri one. A screen reader hears both dates in full. A Hijri date ends in the era word (AH, هـ), as in the top bar's date.
 
-### Date in the Address
+### Date and View in the Address
 {: .nds-block-title}
 
 The calendar keeps the shown week or month in the address as `?date=2026-10-25`, its first day, as a [Filter](../components/filter) keeps its filters. A reload or a shared link then opens the same week or month. The script reads it once at load, and it wins over `data-date`. When the user goes back to the week or the month the calendar opened on, the script removes `?date=` from the address. The address changes with no new Back-button step, as in [Pagination](../components/pagination). `data-date-param` sets another name: `data-date-param="exam-date"`. Give each calendar on a page its own name.
+
+The view stays in the address the same way, as `?view=month`. The script reads it once at load, and it wins over `data-view`. Back on the view the calendar opened on, the script removes `?view=`. `data-view-param` sets another name.
 
 ### Events from a Server
 {: .nds-block-title}
@@ -475,7 +477,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 - Render `.nds-calendar-title` and `.nds-calendar-days` empty. The script writes their content.
 - The calendar keeps its state in `data-date`, `data-view` and `data-day`. Write them from your state at any time, and the calendar follows. Read them back on `nds:calendar:change`.
 - The script never moves the items you render. It writes `data-calendar-day` and a `--_calendar-rows` style on them, and `destroy()` removes both. It also writes the text of each event's Date Tile, which stays after `destroy()`.
-- The calendar writes the date to the address with `replaceState`, as a [Filter](../components/filter) does. A router that owns the address keeps the other keys, and reads the date from `?date=` or `data-date`.
+- The calendar writes the date to the address with `replaceState`, as a [Filter](../components/filter) does. A router that owns the address keeps the other keys, and reads the date from `?date=` or `data-date`, and the view from `?view=` or `data-view`.
 
 </div>
   </div>
@@ -514,7 +516,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
             <i class="hgi hgi-stroke hgi-link-01"></i>
             <span class="nds-label">Date in the Address</span>
           </span>
-          <p class="nds-item-desc">The week or the month stays in the address as <code class="nds-inline-code lang-html">?date=</code>, so a reload or a shared link opens the same one.</p>
+          <p class="nds-item-desc">The week or the month stays in the address as <code class="nds-inline-code lang-html">?date=</code>, and the view as <code class="nds-inline-code lang-html">?view=</code>, so a reload or a shared link opens the same one.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -563,7 +565,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 - Show an event that spans days on its first day, and write its last day in the row's text.
 - With a Filter, show the row of applied filters. Without it, a day with no match looks empty for no reason.
 - To show Grid, put the calendar in a container at least 860px wide.
-- Give each calendar on a page its own `data-date-param`. Two calendars with one name share the date in the address.
+- Give each calendar on a page its own `data-date-param` and `data-view-param`. Two calendars with one name share the date or the view in the address.
 
 </div>
   </div>
@@ -602,6 +604,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 | `data-view` | `.nds-calendar` | `grid` (the default), `rows` or `month`. The script writes it when the user switches the view |
 | `data-day` | `.nds-calendar` | The picked day, as `YYYY-MM-DD`: only its events show. The script writes it when the user presses a day, and removes it when the user presses it again or moves to another week or month |
 | `data-date-param` | `.nds-calendar` | The name of the date in the address, `date` by default. Two calendars on a page need two names |
+| `data-view-param` | `.nds-calendar` | The name of the view in the address, `view` by default. Two calendars on a page need two names |
 | `data-calendar` | `.nds-calendar`, or any element around it | `hijri` shows Hijri dates. The nearest one wins. The default is Gregorian |
 | `data-calendar-second` | `.nds-calendar` | `hijri` or `gregory`: the title and each day button also show the dates in that calendar. A screen reader hears that date in full too |
 | `data-week-start` | `.nds-calendar`, or any element around it | `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`: the first day of the week. The nearest one wins. The default is Sunday |
@@ -619,7 +622,8 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 
 | Property | Default | Controls |
 |---|---|---|
-| `--calendar-gap` | `var(--spacing-md)` | The space between the day buttons, and between the events in Grid |
+| `--calendar-gap` | `var(--spacing-4xl)` | The space between the toolbar, the days and the events |
+| `--calendar-day-gap` | `var(--spacing-md)` | The space between the day buttons, and between the day columns in Grid |
 {: .nds-table .nds-responsive}
 
 ### JavaScript

@@ -25,6 +25,8 @@
  *   data-date-param          the date's key in the address (none: date). The date stays there as
  *                            ?date=YYYY-MM-DD, as a Filter's filters do: read once at load, before
  *                            data-date; the opening week or month drops it. Two calendars on a page take two keys
+ *   data-view-param          the view's key in the address (none: view): ?view=month, the same way;
+ *                            the opening view drops it
  *   data-calendar-action     on a button: prev | next | today. Its calendar.previous_week (or next_week)
  *                            label marker becomes previous_month in the month view, and back
  *   data-calendar-view       on a button: grid | rows | month. The current one is pressed (rows
@@ -231,12 +233,16 @@
             const el = this._element;
             const day = toDay(el.dataset.day);
             const date = toDay(el.dataset.date);
-            const view = VIEWS.includes(el.dataset.view) ? el.dataset.view : 'grid';
+            let view = VIEWS.includes(el.dataset.view) ? el.dataset.view : 'grid';
             let anchor;
             if (first) {
-                // The date the page opens on without ?date=: a range that holds it drops the key.
+                // The date and view the page opens on without ?date= and ?view=: they drop the keys.
+                const params = new URLSearchParams(location.search);
                 this._openingDate = date || NDS.Date.getToday();
-                anchor = day || toDay(new URLSearchParams(location.search).get(this._getParamName())) || this._openingDate;
+                this._openingView = view;
+                anchor = day || toDay(params.get(this._getParamName('date'))) || this._openingDate;
+                const paramView = params.get(this._getParamName('view'));
+                if (VIEWS.includes(paramView)) view = paramView;
             } else {
                 // A host that writes a date outside the shown range moves there, and a picked day outside it drops.
                 const isNewRange = date && !isSameDay(this._getRange(date, this._view).start, this._start);
@@ -257,22 +263,25 @@
             this._day = day;
             this._sync();
             if (!first) {
-                this._writeParam();
+                this._writeParams();
                 this._dispatchChange();
             }
             return changed;
         }
 
-        // Always on, as Filter: data-date-param only renames the key.
-        _getParamName() {
-            return this._element.getAttribute('data-date-param') || 'date';
+        // Always on, as Filter: data-date-param and data-view-param only rename the keys.
+        _getParamName(key) {
+            return this._element.getAttribute('data-' + key + '-param') || key;
         }
 
-        _writeParam() {
-            const name = this._getParamName();
+        _writeParams() {
             const params = new URLSearchParams(location.search);
-            if (this._openingDate >= this._start && this._openingDate <= this._end) params.delete(name);
-            else params.set(name, getIso(this._start));
+            const dateName = this._getParamName('date');
+            const viewName = this._getParamName('view');
+            if (this._openingDate >= this._start && this._openingDate <= this._end) params.delete(dateName);
+            else params.set(dateName, getIso(this._start));
+            if (this._view === this._openingView) params.delete(viewName);
+            else params.set(viewName, this._view);
             NDS.writeUrlParams(params);
         }
 
