@@ -535,12 +535,9 @@
             return instance;
         },
 
-        destroy: (root) => (typeof root === 'string' ? document.querySelector(root) : root)?.ndsSort?.destroy(),
+        destroy: (root) => NDS.resolveElement(root)?.ndsSort?.destroy(),
 
-        getInstance: (root) => {
-            if (typeof root === 'string') root = document.querySelector(root);
-            return root?.ndsSort || null;
-        },
+        getInstance: (root) => NDS.resolveElement(root)?.ndsSort || null,
 
         // Pure helpers
         detectType,

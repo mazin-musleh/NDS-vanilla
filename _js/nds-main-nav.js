@@ -1,5 +1,5 @@
 /* NDS.MainNav — public surface
- * Rides: nds-backdrop (dims the page behind an open drawer or dropdown; soft)
+ * Rides: nds-backdrop (dims the page behind an open drawer or dropdown)
  * Requires:
  *   .nds-main-nav needs #nds-nav-collapse — the nav does nothing
  *   .nds-main-nav needs .nds-nav-toggler — the menu cannot open on small screens

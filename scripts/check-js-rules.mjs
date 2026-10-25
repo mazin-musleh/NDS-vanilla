@@ -9,9 +9,9 @@
  * Rules, decided or listed for the reader:
  *   JSP  01, 02, 03, 04 (a)(b), 05, 06 (a)(c), 07, 08, 09, 10, 11, 12
  *   JSS  01, 02, 04, 05, 06
- *   JSD  01, 02, 03, 04, 05 (a)(b), 06, 07, 08, 09, 10, 11, 12, 13, 14 (a)-(e), 15 (PERSONA entry 11), 16, 17, 18, 19
+ *   JSD  01, 02, 03, 04, 05 (a)(b), 06, 07, 08, 09, 10, 11, 12, 13, 14 (a)-(e), 15 (PERSONA entry 11), 16, 17, 18, 19, 20 (b) soft Rides
  *   JSA  01, 02, 03, 04, 05 (registry hygiene), 06, 07, 09, 11 (length + concerns), 13, 21 (a), 22, 23 (a)
- * Left to the reader whole: JSD-15's other PERSONA entries, JSD-20 (check-banners.mjs), and the JSA rules that are judgment only.
+ * Left to the reader whole: JSD-15's other PERSONA entries, the rest of JSD-20 (check-banners.mjs), and the JSA rules that are judgment only.
  * Two kinds of line: `finding` is decided; `verify` is a candidate whose one remaining carve-out
  * needs reading, named on the line. Never writes files. Exit 0 = no finding, 1 = findings.
  *   --self-test   run the built-in cases, and PERSONA's `js` blocks through the naming rules
@@ -368,6 +368,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         const ctx = code.slice(Math.max(0, m.index - 12), m.index);
         if (m[0].endsWith(')') && !/(?:\bif\s*\(\s*|!\s*|&&\s*|\|\|\s*)$/.test(ctx)) continue; // a call's argument, not a test
         if (inMain(sib)) { hit('JSD-12', m.index, `NDS.${sib} guard: main always loads it, so remove it (PERSONA entry 11)`); continue; }
+        if (BUNDLE[name] && BUNDLE[HOME[sib]] === BUNDLE[name]) { hit('JSD-12', m.index, `NDS.${sib} guard: it ships in this file's bundle, so remove it (PERSONA entry 11)`); continue; }
         guarded.add(sib);
         const from = lineStart(source, outerFn(bare, m.index) || m.index, 3); // the outermost function and its leading comment
         const names = new RegExp(`\\b${sib}\\b`);
@@ -709,6 +710,18 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         if (/\.replace\(\s*\/&\/g[\s\S]{0,200}\.replace\(\s*\/</.test(body) || /createElement\([^)]*\)[\s\S]{0,120}\.textContent\s*=[\s\S]{0,120}\.innerHTML/.test(body)) {
             hit('JSD-10', m.index, `local ${fname}() re-implements the HTML escape`, 'use NDS.escapeHtml unless the file runs before the loader');
         }
+    }
+    // JSD-10 (2b) an inline id lookup: NDS.resolveElement also takes `#id` and a selector, and gives null on a bad one.
+    for (const m of code.matchAll(/typeof\s+([\w$.]+)\s*===\s*['"]string['"]\s*\?\s*document\.(?:getElementById|querySelector)\(\s*\1\s*\)/g)) {
+        hit('JSD-10', m.index, `inline lookup of ${m[1]}`, 'NDS.resolveElement does this job; a finding unless the narrower lookup is the documented contract');
+    }
+
+    // JSD-20 (b) a Rides edge called soft whose base always loads with this file: main, or this file's bundle.
+    const rides = /^[ \t]*\*[ \t]*Rides:([\s\S]*?)^[ \t]*\*[ \t]*(?:Requires|Methods):/m.exec(source.slice(0, 4000));
+    for (const m of rides ? rides[1].replace(/^[ \t]*\*/gm, ' ').matchAll(/nds-([\w-]+)\s*\(([^()]*\bsoft\b[^()]*)\)/g) : []) {
+        const base = BUNDLE[`nds-${m[1]}.js`];
+        if (!base || (base !== 'main' && base !== BUNDLE[name]) || /\bsoft\s*—\s*\S/.test(m[2])) continue; // "soft — <why>" states it
+        hit('JSD-20', source.indexOf(`nds-${m[1]}`, rides.index), `Rides calls nds-${m[1]} soft, yet it always loads with this file`, 'true only when soft means the markup is optional; otherwise drop it');
     }
 
     // JSD-14 (a) nesting past 4 levels in one function, (c) a ternary chain 3 deep, (d) code after an
@@ -1378,6 +1391,17 @@ if (args[0] === '--self-test') {
     layer('nds-export.js', `(function(){ function f() { NDS.Panel.open(p); } })();`, 'verify'); // extras → delegated
     layer('nds-export.js', `(function(){ function f() { NDS.Form.validate(p); } })();`, ''); // extras → main
     layer('nds-dialog.js', `(function(){ function f() { NDS.Modal.close(); } })();`, 'finding'); // a base names a component
+    // A sibling in this file's own bundle needs no guard; one in another injected bundle may.
+    const bundled = (file, src, rule, want) => {
+        const got = checkFile(file, src).filter((f) => f.rule === rule).map((f) => (f.verify ? 'verify' : 'finding'));
+        if (got.join() !== want) { failed++; console.log(`FAIL  ${rule} in ${file}: want [${want}] got [${got}]`); }
+    };
+    bundled('nds-filter.js', `(function(){ function f() { if (!NDS.Alert) return; } })();`, 'JSD-12', 'finding'); // delegated → delegated
+    bundled('nds-export.js', `(function(){ function f() { if (!NDS.Panel) return; } })();`, 'JSD-12', 'verify'); // extras → delegated, no comment
+    bundled('nds-share.js', `/* NDS.Share\n * Rides: nds-copy (the copy action; soft)\n * Methods:\n */`, 'JSD-20', 'verify'); // same bundle
+    bundled('nds-share.js', `/* NDS.Share\n * Rides: nds-dropmenu (a menu; soft — an inline row works too)\n * Methods:\n */`, 'JSD-20', ''); // the dash states why
+    bundled('nds-editor.js', `/* NDS.Editor\n * Rides: nds-upload (embeds; soft)\n * Methods:\n */`, 'JSD-20', ''); // editor → extras: soft can be true
+    bundled('nds-chart.js', `(function(){ function f(el) { el = typeof el === 'string' ? document.querySelector(el) : el; } })();`, 'JSD-10', 'verify');
     // Naming: one file per case; then a `_` member another file declares.
     for (const [src, want] of NAME_CASES) {
         const got = checkNames(['case.js'], () => src).map((f) => f.rule + (f.verify ? '?' : '')).sort();
