@@ -402,6 +402,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // Date tile SM step: the .nds-sm class and a parent's container rule share it.
 @mixin date-tile-sm {
     --_date-tile-width: var(--date-tile-width, 48px);
+    --_date-tile-range-width: var(--date-tile-width, 64px);
     --_date-tile-day-FS: var(--typo-text-lg-FS);
     --_date-tile-day-LH: var(--typo-text-lg-LH);
     --_date-tile-text-FS: var(--typo-text-2xs-FS);

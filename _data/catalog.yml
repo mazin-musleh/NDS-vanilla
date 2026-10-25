@@ -486,8 +486,8 @@
   scss: _sass/components/_avatar.scss
 
 - title: "Calendar"
-  description: "One week of events, as seven day columns or as a list of rows"
-  use_when: "Show dated events one week at a time: a class timetable, a training or event schedule, appointments, shifts, an academic week. Grid shows a column per day; Rows shows a list the user filters by tapping a day. Gregorian or Hijri, with any first day of the week. For picking a date use Date Picker; for a dated list with no week to move through use Drawer rows with a Date Tile; for steps in order use Timeline."
+  description: "The events of one week, as seven day columns or a list of rows, or of one month under its days"
+  use_when: "Show dated events one week or one month at a time: a class timetable, a training or event schedule, appointments, shifts, an academic week or month. Grid shows a column per day; Rows shows a list the user filters by tapping a day; Month shows a month of days, each with a dot when it has events, over the list. Gregorian or Hijri, with any first day of the week. For picking a date use Date Picker; for a dated list with no week to move through use Drawer rows with a Date Tile; for steps in order use Timeline."
   category: "Content"
   tags: ["JS", "CSS", "API"]
   url: "/components/calendar.html"
@@ -962,7 +962,7 @@
 
 - title: "Date"
   description: "Show, parse, print and convert dates in Gregorian and Hijri (Umm al-Qura), in the site's timezone and date format"
-  use_when: "Read a date from text, print a date, convert between Gregorian and Hijri, or get today's date in the site's timezone. Use it for any date handled in JavaScript, to show a <time> in Hijri with data-date-to (an issue or expiry date in both calendars), and to set the site's timezone and date format on <html>. For a date field the user fills in use Date Picker; to sort a list by date use Sort."
+  use_when: "Read a date from text, print a date, convert between Gregorian and Hijri, or get today's date in the site's timezone. Use it for any date handled in JavaScript, to show a <time> in Hijri with data-date-calendar (an issue or expiry date in both calendars), and to set the site's timezone and date format on <html>. For a date field the user fills in use Date Picker; to sort a list by date use Sort."
   category: "Core"
   tags: ["JS", "API"]
   url: "/core/date.html"

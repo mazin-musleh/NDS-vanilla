@@ -18,6 +18,8 @@
  *   NDS.Date.readDay(datetime)       a datetime value (YYYY-MM-DD, with or without a time) → its day, or null;
  *                                    with a zone, the day in the site's timezone (else the visitor's)
  *   NDS.Date.fill(root)              write every such <time> in root, and root itself
+ *   NDS.Date.fillTile(tile, { calendar, locale })   write a Date Tile's weekday, day and month from its
+ *                                    datetime (else the nearest calendar and language); an empty tile gets the parts
  *   NDS.Date.init()                  fill the page (the loader calls it)
  * Events:
  *   (none)
@@ -25,13 +27,17 @@
  *   on <html>:             data-timezone · data-date-format · data-calendar · data-week-start (the site's)
  *   on any element:        data-date-format · data-calendar · data-week-start (sun … sat; the dates
  *                          inside it; nearest wins)
- *   on a <time datetime>:  data-date-to="hijri": show the date in Hijri, in the nearest
+ *   on a <time datetime>:  data-date-calendar="hijri": show the date in Hijri, in the nearest
  *                          data-date-format (the element's own included)
- *                          data-date-format on the <time> itself, without data-date-to:
+ *                          data-date-format on the <time> itself, without data-date-calendar:
  *                          show the Gregorian date in that format
  *                          data-date-era (optional, bare): a Hijri date ends in a span
  *                          that holds the pack's date.hijri_era word (AH in English)
- *   written by the component: the <time>'s text
+ *   an empty time.nds-date-tile[datetime]: fill() writes its weekday, day and month parts, in the
+ *                          nearest data-calendar and lang. A tile written with its parts stays as written
+ *                          data-date-end (optional): the range's last day, YYYY-MM-DD: the day and
+ *                          month parts show both ends, and an empty tile gets no weekday
+ *   written by the component: the <time>'s text · an empty Date Tile's three spans
  * Gotchas:
  *   - Main bundle, right after core: Calendar, Date Picker, Filter, Sort, Export, Countdown
  *     and the top bar read NDS.Date synchronously.
@@ -273,13 +279,65 @@
         return api;
     })();
 
+    // ── Date Tile ────────────────────────────────────────────────────
+    const TILE_PARTS = Object.freeze(['weekday', 'day', 'month']);
+    // The weekday, the day and the month of the tile's datetime, in a calendar and a language (else
+    // the nearest ones). An empty tile gets its parts; a written tile keeps the parts it has.
+    // With data-date-end it is a range: "13–17 Dec", or "28–3 Dec–Jan" across months, with no weekday.
+    function fillTile(tile, { calendar = NDS.Date.getCalendar(tile), locale = tile.closest('[lang]')?.lang } = {}) {
+        const date = NDS.Date.readDay(tile.getAttribute('datetime') || '');
+        if (!date) return;
+        const endValue = tile.getAttribute('data-date-end');
+        let end = endValue ? NDS.Date.readDay(endValue) : null;
+        if (endValue && !(end > date)) {
+            console.warn('[NDS.Date] data-date-end needs a day after datetime, such as 2026-12-17; the tile shows one day', tile);
+            end = null;
+        }
+        if (!tile.children.length) {
+            tile.replaceChildren(...TILE_PARTS.filter((part) => !end || part !== 'weekday').map((part) => {
+                const span = document.createElement('span');
+                span.className = 'nds-date-tile-' + part;
+                return span;
+            }));
+        }
+        const weekdays = NDS.Date.getWeekdayNames(locale);
+        const getText = (day) => ({
+            weekday: weekdays[day.getDay()],
+            day: NDS.Date.toParts(day, calendar).day,
+            month: NDS.Date.format(day, { calendar, locale, format: 'MMM' }),
+        });
+        const text = getText(date);
+        if (end) {
+            const last = getText(end);
+            for (const part of TILE_PARTS) {
+                // One month names its month once.
+                if (text[part] !== last[part] || part === 'day') text[part] += '–' + last[part];
+            }
+        }
+        text.day = String(text.day);
+        for (const part of TILE_PARTS) {
+            const span = tile.querySelector(':scope > .nds-date-tile-' + part);
+            if (span && span.textContent !== text[part]) span.textContent = text[part];
+        }
+    }
+
     // ── <time> text ──────────────────────────────────────────────────
-    const SELECTOR = 'time[datetime][data-date-to], time[datetime][data-date-format]';
+    const SELECTOR = 'time[datetime][data-date-calendar], time[datetime][data-date-format]';
+    const TILE_SELECTOR = 'time.nds-date-tile[datetime]';
+    // Tiles fill() wrote: written again when the pack lands, while a written tile stays as written.
+    const filledTiles = new WeakSet();
     function fill(root = document) {
+        const tiles = root.matches?.(TILE_SELECTOR) ? [root] : [];
+        tiles.push(...(root.querySelectorAll?.(TILE_SELECTOR) || []));
+        for (const tile of tiles) {
+            if (tile.children.length && !filledTiles.has(tile)) continue;
+            fillTile(tile);
+            filledTiles.add(tile);
+        }
         const elements = root.matches?.(SELECTOR) ? [root] : [];
         elements.push(...(root.querySelectorAll?.(SELECTOR) || []));
         for (const el of elements) {
-            const hijri = el.dataset.dateTo === 'hijri';
+            const hijri = el.dataset.dateCalendar === 'hijri';
             // A Gregorian <time> is written only in a format of its own: else it already reads right.
             const date = (hijri || el.dataset.dateFormat) && NDS.Date.readDay(el.getAttribute('datetime'));
             if (!date) continue;
@@ -303,4 +361,5 @@
 
     NDS.Date.init = init;
     NDS.Date.fill = fill;
+    NDS.Date.fillTile = fillTile;
 })();

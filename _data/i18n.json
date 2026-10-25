@@ -433,15 +433,27 @@
  },
  {
   "section": "calendar",
-  "key": "today",
-  "en": "Today",
-  "ar": "اليوم"
- },
- {
-  "section": "calendar",
   "key": "next_week",
   "en": "Next week",
   "ar": "الأسبوع التالي"
+ },
+ {
+  "section": "calendar",
+  "key": "previous_month",
+  "en": "Previous month",
+  "ar": "الشهر السابق"
+ },
+ {
+  "section": "calendar",
+  "key": "next_month",
+  "en": "Next month",
+  "ar": "الشهر التالي"
+ },
+ {
+  "section": "calendar",
+  "key": "today",
+  "en": "Today",
+  "ar": "اليوم"
  },
  {
   "section": "calendar",
@@ -457,9 +469,15 @@
  },
  {
   "section": "calendar",
-  "key": "days_of_the_week",
-  "en": "Days of the week",
-  "ar": "أيام الأسبوع"
+  "key": "month",
+  "en": "Month",
+  "ar": "شهر"
+ },
+ {
+  "section": "calendar",
+  "key": "days",
+  "en": "Days",
+  "ar": "الأيام"
  },
  {
   "section": "chart",

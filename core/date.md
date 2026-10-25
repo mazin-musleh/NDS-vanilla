@@ -18,7 +18,7 @@ last_edit: "25/10/2026 - 08:33 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-NDS works with dates in two ways. In markup, a `<time>` with `data-date-to="hijri"` shows its date in Hijri, and one with its own `data-date-format` shows it in that format. You write no script. In JavaScript, `NDS.Date` reads, writes and converts dates. It is in the main bundle, so every page has it, with no init call.
+NDS works with dates in two ways. In markup, a `<time>` with `data-date-calendar="hijri"` shows its date in Hijri, and one with its own `data-date-format` shows it in that format. You write no script. In JavaScript, `NDS.Date` reads, writes and converts dates. It is in the main bundle, so every page has it, with no init call.
 
 Four attributes on `<html>` set the site's dates: `data-timezone` sets its timezone, `data-date-format` its date format, `data-calendar` its calendar, and `data-week-start` the first day of its week.
 
@@ -43,7 +43,7 @@ Pick another component when:
 </script>
 
 <script type="text/html" id="date-time-hijri" data-canon>
-<time datetime="2026-10-18" data-date-to="hijri">18/10/2026</time>
+<time datetime="2026-10-18" data-date-calendar="hijri">18/10/2026</time>
 </script>
 
 <script type="text/html" id="date-to" data-canon>
@@ -53,7 +53,7 @@ Pick another component when:
     <dd>
       <div>
         <time datetime="2026-10-18">18/10/2026</time>
-        <div class="nds-note"><time datetime="2026-10-18" data-date-to="hijri">18/10/2026</time></div>
+        <div class="nds-note"><time datetime="2026-10-18" data-date-calendar="hijri">18/10/2026</time></div>
       </div>
     </dd>
   </div>
@@ -119,13 +119,13 @@ Format goes on the `<time>` that shows the date: in Both Calendars, the Hijri on
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Gregorian (default) | — | — | The Gregorian date. With a Format, the script writes it in that format |
-| Structure | Hijri | canon `#date-time-hijri` | — | `data-date-to="hijri"`: the script writes the date from `datetime` in Umm al-Qura Hijri |
-| Structure | Both Calendars | canon `#date-to` | — | The Gregorian date with the Hijri date under it, such as an issue or expiry date. Write the date twice, and add `data-date-to="hijri"` to the second one |
+| Structure | Hijri | canon `#date-time-hijri` | — | `data-date-calendar="hijri"`: the script writes the date from `datetime` in Umm al-Qura Hijri |
+| Structure | Both Calendars | canon `#date-to` | — | The Gregorian date with the Hijri date under it, such as an issue or expiry date. Write the date twice, and add `data-date-calendar="hijri"` to the second one |
 | Format | None (default) | — | — | The nearest `data-date-format` around the `<time>`, else the site's |
-| Format | Month Name | `[data-date-format="D MMMM YYYY"]` | `time:not(.nds-definition-list time:not([data-date-to]))` | The day, the month's name and the year, in the page language |
-| Format | Short Month | `[data-date-format="D MMM YYYY"]` | `time:not([data-date-to])` | The day, the month's short name and the year, such as 24 Oct 2026, for a narrow column. Gregorian only: a Hijri month has no short name. On an Arabic page, the month's full name shows |
-| Format | ISO | `[data-date-format="YYYY-MM-DD"]` | `time:not(.nds-definition-list time:not([data-date-to]))` | Year, month and day, as a server reads them |
-| Era | Era Marker (hint: «هـ» or AH after the Hijri date) | `[data-date-era]` | `time[data-date-to]` | Adds «هـ» on an Arabic page, or AH on an English one, after the Hijri date. Leave it out where a label already says the date is Hijri |
+| Format | Month Name | `[data-date-format="D MMMM YYYY"]` | `time:not(.nds-definition-list time:not([data-date-calendar]))` | The day, the month's name and the year, in the page language |
+| Format | Short Month | `[data-date-format="D MMM YYYY"]` | `time:not([data-date-calendar])` | The day, the month's short name and the year, such as 24 Oct 2026, for a narrow column. Gregorian only: a Hijri month has no short name. On an Arabic page, the month's full name shows |
+| Format | ISO | `[data-date-format="YYYY-MM-DD"]` | `time:not(.nds-definition-list time:not([data-date-calendar]))` | Year, month and day, as a server reads them |
+| Era | Era Marker (hint: «هـ» or AH after the Hijri date) | `[data-date-era]` | `time[data-date-calendar]` | Adds «هـ» on an Arabic page, or AH on an English one, after the Hijri date. Leave it out where a label already says the date is Hijri |
 {: #date-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -147,12 +147,12 @@ A date is a calendar day: a JavaScript `Date` at local midnight. `parse` returns
 ### Nearest Format
 {: #date-nearest-format}
 
-`data-date-format`, `data-calendar` and `data-week-start` on an element set the format, the calendar and the week start of the dates inside it. The nearest one wins over the one on `<html>`. Date Picker, Sort and `data-date-to` read them.
+`data-date-format`, `data-calendar` and `data-week-start` on an element set the format, the calendar and the week start of the dates inside it. The nearest one wins over the one on `<html>`. Date Picker, Sort and `data-date-calendar` read them.
 
 ### Markup Dates
 {: #date-markup-dates}
 
-The script reads the date from `datetime`, never from the text, and writes the text before the page shows, so the line does not shift. It writes a `<time>` with `data-date-to="hijri"`, or one with its own `data-date-format`. Any other `<time>` already reads right, so it stays as written.
+The script reads the date from `datetime`, never from the text, and writes the text before the page shows, so the line does not shift. It writes a `<time>` with `data-date-calendar="hijri"`, or one with its own `data-date-format`. Any other `<time>` already reads right, so it stays as written.
 
 `datetime` holds `YYYY-MM-DD`, with or without a time. A time with a zone, such as `Z` or `+03:00`, counts in the site's timezone. A value that is not a full date is left as written, and without JavaScript the text you wrote stays. With `data-date-era`, a Hijri date ends in «هـ» on an Arabic page and AH on an English one.
 
@@ -245,9 +245,9 @@ The script reads the date from `datetime`, never from the text, and writes the t
 | `data-date-format` | any element | The date format of the content inside it. The nearest one wins over the one on `<html>`. A Date Picker without its own `data-format`, and Sort when it reads a date from text, use it |
 | `data-calendar` | `<html>`, or any element | `hijri` or `gregory`, the calendar of the dates inside it. The nearest one wins. Date Picker, the top bar date and Sort read it. The default is Gregorian, and the top bar date follows the page language |
 | `data-week-start` | `<html>`, or any element | `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`: the first day of the week inside it. The nearest one wins. The Date Picker's grid starts on it. The default is Sunday, and any other value warns in the console and uses Sunday |
-| `data-date-to` | a `<time>` with `datetime` | `hijri`: the `<time>` shows its date in Hijri, in the nearest `data-date-format`, its own included. Any other value is left as written. See [Markup Dates](#date-markup-dates) |
-| `data-date-format` | a `<time>` with `datetime`, without `data-date-to` | Written on the `<time>` itself: the script writes the Gregorian date from `datetime` in this format. A `<time>` with neither attribute is left as written |
-| `data-date-era` | a `<time>` with `data-date-to="hijri"` | Written bare. Adds the era word after the Hijri date: «هـ» on an Arabic page, AH on an English one, from the `date` section of the [string pack](../core/i18n) |
+| `data-date-calendar` | a `<time>` with `datetime` | `hijri`: the `<time>` shows its date in Hijri, in the nearest `data-date-format`, its own included. Any other value is left as written. See [Markup Dates](#date-markup-dates) |
+| `data-date-format` | a `<time>` with `datetime`, without `data-date-calendar` | Written on the `<time>` itself: the script writes the Gregorian date from `datetime` in this format. A `<time>` with neither attribute is left as written |
+| `data-date-era` | a `<time>` with `data-date-calendar="hijri"` | Written bare. Adds the era word after the Hijri date: «هـ» on an Arabic page, AH on an English one, from the `date` section of the [string pack](../core/i18n) |
 {: .nds-table .nds-responsive}
 
 ### Format Tokens
@@ -302,7 +302,8 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 | `NDS.Date.getWeekdayNames(lang, weekStart)` | Returns the 7 short weekday names in `lang` or the page's language, from `weekStart`: 0 is Sunday (the default) and 6 is Saturday |
 | `NDS.Date.getWeekStart(element)` | Returns the nearest `data-week-start` around `element`, the element's own included, as 0 (Sunday) to 6 (Saturday). Returns 0 when there is none. Pass it as `weekStart` |
 | `NDS.Date.getStartOfWeek(date, weekStart)` | Returns the first day of the week that holds `date`, as a `Date` at local midnight. `weekStart` is 0 (Sunday) by default |
-| `NDS.Date.fill(root)` | Writes the text of every `<time>` in `root`, and of `root` itself, that has `data-date-to` or its own `data-date-format`. The loader runs it at load, and `NDS.init.mount()` on markup added later |
+| `NDS.Date.fill(root)` | Writes the text of every `<time>` in `root`, and of `root` itself, that has `data-date-calendar` or its own `data-date-format`, and of every empty [Date Tile](../components/date-tile). The loader runs it at load, and `NDS.init.mount()` on markup added later |
+| `NDS.Date.fillTile(tile, options)` | Writes a Date Tile's parts from its `datetime` and `data-date-end`, and adds them to an empty tile. `calendar` and `locale` default to the nearest `data-calendar` and `lang`. A Calendar calls it for each event |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="date-api-js" data-canon data-lang="js">

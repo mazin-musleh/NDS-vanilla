@@ -93,10 +93,13 @@
         },
         "previous_week": "الأسبوع السابق",
         "next_week": "الأسبوع التالي",
+        "previous_month": "الشهر السابق",
+        "next_month": "الشهر التالي",
         "today": "اليوم",
         "grid": "شبكة",
         "rows": "صفوف",
-        "days_of_the_week": "أيام الأسبوع"
+        "month": "شهر",
+        "days": "الأيام"
     },
     "chart": {
         "chart": "رسم بياني",

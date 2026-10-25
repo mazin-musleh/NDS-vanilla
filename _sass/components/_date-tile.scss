@@ -26,9 +26,15 @@
     text-align: center;
     white-space: nowrap;
 
+    // A range (data-date-end) holds two days, and across months two month names.
+    &[data-date-end] {
+        width: var(--_date-tile-range-width);
+    }
+
     &,
     &.nds-md {
         --_date-tile-width: var(--date-tile-width, 56px);
+        --_date-tile-range-width: var(--date-tile-width, 80px);
         --_date-tile-day-FS: var(--typo-text-xl-FS);
         --_date-tile-day-LH: var(--typo-text-xl-LH);
         --_date-tile-text-FS: var(--typo-text-xs-FS);
@@ -42,6 +48,7 @@
 
     &.nds-lg {
         --_date-tile-width: var(--date-tile-width, 72px);
+        --_date-tile-range-width: var(--date-tile-width, 96px);
         --_date-tile-day-FS: var(--typo-display-xs-FS);
         --_date-tile-day-LH: var(--typo-display-xs-LH);
         --_date-tile-text-FS: var(--typo-text-sm-FS);
@@ -58,6 +65,11 @@
     font-size: var(--_date-tile-text-FS);
     line-height: var(--_date-tile-text-LH);
     font-weight: var(--font-weight-medium);
+}
+
+// Only the day and the month: hidden from screen readers too, as the date is in datetime.
+.nds-date-tile.nds-no-weekday .nds-date-tile-weekday {
+    display: none;
 }
 
 .nds-date-tile-day {
