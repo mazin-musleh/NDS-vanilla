@@ -217,6 +217,10 @@
             // and it flags that itself — every other input event fetches, whether
             // the user typed it or the consumer dispatched it.
             this._onInput = () => {
+                if (this._clearPending) {
+                    this._clearPending = false;
+                    this._dispatchEvent('nds:autocomplete:clear', {});
+                }
                 if (this._suppressFetch) return;
                 if (this._keyHeld) return;
 
@@ -265,12 +269,10 @@
                 if (this._results[index]) this._selectItem(this._results[index]);
             }, { signal });
 
-            // Clear button — extends existing forms clear behavior
+            // Clear button: Forms empties the field from its page-wide click listener, after this one,
+            // so the click must bubble. The clear event waits for the input that empties it.
             if (this._clearButton) {
-                this._clearButton.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    this._handleClear();
-                }, { signal });
+                this._clearButton.addEventListener('click', () => this._handleClear(), { signal });
             }
 
             // A form reset: the restored text counts as picked, as at build, and old results go.
@@ -537,7 +539,8 @@
             this._activeIndex = -1;
 
             this._close();
-            this._dispatchEvent('nds:autocomplete:clear', {});
+            // Fired from _onInput, once Forms has emptied the field.
+            this._clearPending = true;
         }
 
         // ==============================================
