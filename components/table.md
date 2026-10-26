@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 11:51 PM"
+last_edit: "26/10/2026 - 04:30 PM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -778,7 +778,7 @@ Source: the `table` group in `_sass/tokens/_components.scss`.
 | `NDS.Table.init()` | Starts every table and column menu that has not started yet |
 | `NDS.Table.reinit()` | The same as `init()`. Call it after you add a new table. When only the rows change, call `NDS.init.refresh(tbody)`: see [Init](../core/init) |
 | `NDS.Table.refresh()` | Measures every scroll box again, after a change the script cannot see |
-| `NDS.Table.create(table)` | Starts sorting and selection on one table, and returns its instance, or the instance it already has. Returns `null` when the table has no `<thead>` or `<tbody>` |
+| `NDS.Table.create(table)` | Starts one table: the scroll box, column alignment, sub-rows, sorting and selection. Use it for a table added after the page loads. It returns its instance, or the instance it already has. Returns `null` when the table has no `<thead>` or `<tbody>` |
 | `NDS.Table.createResponsive(table)` | Adds the scroll box to one table and returns its instance |
 | `NDS.Table.createColumnToggle(menu)` | Starts one column menu, and returns its instance, or the instance it already has. Returns `null` when the table or `[data-columns-list]` is missing |
 | `NDS.Table.destroy(el)` | Undoes whichever of the three that lives on `el`: sorting, the scroll box or the column menu |
@@ -796,7 +796,7 @@ Source: the `table` group in `_sass/tokens/_components.scss`.
 | `create()` | `resetSort()` | Clears the sort and puts the rows back in their first order |
 | `create()` | `destroy()` | Stops sorting, and removes the `data-selection-target` link and the `<tbody>` `id` it wrote. The table keeps its scroll box |
 | `createResponsive()` | `refresh()` | Measures this table again |
-| `createResponsive()` | `destroy()` | Stops the scroll checks and marks the table as not started. A box the script built goes and the table returns to its place. A box you wrote stays |
+| `createResponsive()` | `destroy()` | Stops the scroll checks, removes the column alignment, and marks the table as not started. A box the script built goes and the table returns to its place. A box you wrote stays |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |

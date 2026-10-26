@@ -191,6 +191,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Stepper** — In dark mode the step title takes `--text-display`, as it does in light mode. `--stepper-text-primary` no longer has a separate dark value.
 - **Swiper** — the four knobs no longer pass down: a swiper inside another one takes only its own.
 - **Tables** — The actions column is centered, like the checkbox column. `data-align` on its header still wins.
+- **Table** — `NDS.Table.create(table)` starts the whole table: the scroll box, column alignment and sub-rows as well as sorting and selection. A table added after the page loads needs only this call. A table not yet in the page gets the scroll box on its next `create()` or `reinit()`.
 - **Tags** — The default side padding is `--spacing-lg`.
 - **Tags** — Color, status, style and size classes no longer write the public knobs, so `--tag-bg`, `--tag-text`, `--tag-border`, `--tag-icon`, `--tag-height`, `--tag-fs` and `--tag-padding-inline` set on a tag or on its parent win.
 - **Tokens** — `--text-secondary` is `--colors-secondary-800` in light mode (was 600) and `--colors-secondary-400` in dark mode, so it meets AA contrast on every theme. Text that uses it is darker in light mode.

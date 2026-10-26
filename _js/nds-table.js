@@ -6,7 +6,7 @@
  * Methods:
  *   NDS.Table.init() / .reinit()               scan .nds-table and [data-columns-target] menus
  *   NDS.Table.refresh()                        re-measure every table's responsive scroll state
- *   NDS.Table.create(table)                    sort controls for one table
+ *   NDS.Table.create(table)                    start one table (scroll box, alignment, sort controls)
  *   NDS.Table.createResponsive(table)          the scroll wrapper only
  *   NDS.Table.createColumnToggle(root)         one [data-columns-target] menu
  *   NDS.Table.destroy(el)                      undo whichever of the three lives on el
@@ -932,6 +932,21 @@
         handle.sub.toggle();
     });
 
+    // What every table gets, sortable or not — shared by the sweep and create().
+    function setupTable(table) {
+        // Guarded by the scope stamp: reinit() must not append the rules twice.
+        if (!table.hasAttribute('data-nds-align')) syncColumnAlign(table);
+
+        linkAuthoredSubs(table);
+
+        // Every table gets the responsive scroll wrapper. --max-width on the
+        // table (inline only) carries over to the wrapper; --min-width on the
+        // table controls the scroll breakpoint. The stamp is the component's
+        // one init signal: the pre-init cell skeleton and the global handlers
+        // below key on it, so it lands for every table, sortable or not.
+        if (!table.ndsTableResponsive) new NdsTableResponsive(table);   // registers and stamps itself
+    }
+
     // Starts every table and column menu not started yet.
     // The init sentinel is stamped only on a construction that succeeded — a table
     // whose <tbody> arrives later must stay eligible for the next reinit().
@@ -940,17 +955,7 @@
         root.querySelectorAll('.nds-table').forEach(table => {
             if (table.closest('code')) return;
 
-            // Guarded by the scope stamp: reinit() must not append the rules twice.
-            if (!table.hasAttribute('data-nds-align')) syncColumnAlign(table);
-
-            linkAuthoredSubs(table);
-
-            // Every table gets the responsive scroll wrapper. --max-width on the
-            // table (inline only) carries over to the wrapper; --min-width on the
-            // table controls the scroll breakpoint. The stamp is the component's
-            // one init signal: the pre-init cell skeleton and the global handlers
-            // below key on it, so it lands for every table, sortable or not.
-            if (!table.ndsTableResponsive) new NdsTableResponsive(table);   // registers and stamps itself
+            setupTable(table);
 
             // Own header only, matching the constructor's own scoping: a sub-row's
             // nested table carrying sort buttons or a select-all would otherwise
@@ -990,6 +995,8 @@
         refresh: syncAllWidths,
         // The constructors publish their expando only on success → null on a bail.
         create: (table) => {
+            // Stands alone for a table mounted after load; a detached one has no place for the wrapper yet.
+            if (table.isConnected) setupTable(table);
             if (!table.ndsTableControls) new NdsTable(table);
             return table.ndsTableControls || null;
         },
