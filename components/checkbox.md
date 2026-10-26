@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 08:28 AM"
+last_edit: "26/10/2026 - 12:02 PM"
 ---
 
 <section id="checkbox-overview" class="nds-content-section nds-doc-overview">
@@ -194,6 +194,7 @@ A row on `.nds-checkbox-input` (every `<input>`) or `.nds-checkbox` changes ever
     <div class="nds-section-body nds-prose" markdown="1">
 
 - Put a group in a `<fieldset class="nds-form-group nds-checkbox-group">` with a `<legend>` that names the choice. Screen readers read the legend with each option.
+- For many short options, such as times of day, put them in a `<div class="nds-grid" style="--min-width: 6.5rem;">` inside the group, after the `<legend>`, so they line up in as many columns as fit. Do not put `nds-grid` on the `<fieldset>` itself: it stretches the legend.
 - Keep a group to 7 options or fewer. For a longer list, use a [Multiselect](../components/multiselect).
 - When a group has a rule, say it in the legend, such as "Select 2 to 3 interests". The error message appears only after a submit.
 - Put `data-required`, `data-min-checked` and `data-max-checked` on the group, not on its inputs. For a single checkbox, put `data-required` on its container.

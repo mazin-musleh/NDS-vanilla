@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 08:28 AM"
+last_edit: "26/10/2026 - 12:02 PM"
 ---
 
 <section id="radio-overview" class="nds-content-section nds-doc-overview">
@@ -167,6 +167,7 @@ A row on `.nds-radio-input` (every `<input>`) or `.nds-radio` changes every opti
     <div class="nds-section-body nds-prose" markdown="1">
 
 - Put every group in a `<fieldset class="nds-form-group nds-radio-group">` with a `<legend>` that names the choice. Screen readers read the legend with each option.
+- For many short options, such as times of day, put them in a `<div class="nds-grid" style="--min-width: 6.5rem;">` inside the group, after the `<legend>`, so they line up in as many columns as fit. Do not put `nds-grid` on the `<fieldset>` itself: it stretches the legend.
 - Give every radio of a group the same `name`, so the browser treats them as one choice.
 - Offer at least two options. For one yes-or-no setting, use a [Switch](../components/switch) or a [Checkbox](../components/checkbox).
 - Check one option by default when most users will want it. Leave all unchecked when the user must decide.

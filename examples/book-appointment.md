@@ -21,7 +21,7 @@ sidemenu_mode: false
        a click shows every service (data-min-chars="0"), typing filters them, and only a pick counts (data-strict). The script
        keeps the picked item for its code and length. The branch is a Custom Select whose options give the address (nds-description).
      - The free times depend on the service, the branch and the day: ask the server after each change, with the date field in its loading state.
-       The times are one Radio row (nds-horizontal) beside the day, in the branch's time zone, named in the date field's info; a taken time is a disabled radio.
+       The times are a Radio group beside the day, its options in an nds-grid div inside the fieldset (--min-width: as many columns as fit; nds-grid on the fieldset stretches the legend), in the branch's time zone, named in the date field's info; a taken time is a disabled radio.
      - Days that can't be booked are off in the calendar, and typed ones fail: closed weekdays in the markup (data-disabled-weekdays),
        fully booked days from the server for the service and branch (data-disabled-dates). A day that fills up after the pick clears and says why.
      - On a signed-in page, the name and the ID come from the account: show them as a Definition List, never as fields.
@@ -165,55 +165,57 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <!-- The free times of the picked day: shown once the server answers; a taken time is disabled -->
-                            <fieldset class="nds-form-group nds-radio-group nds-horizontal" id="book-time" data-required hidden>
+                            <fieldset class="nds-form-group nds-radio-group" id="book-time" data-required hidden>
                                 <legend class="nds-label">Time</legend>
-                                <div class="nds-form-container nds-radio">
-                                    <div class="nds-form-header"><label for="book-time-0800"><span class="nds-label">8:00 AM</span></label></div>
-                                    <div class="nds-form-control"><input type="radio" id="book-time-0800" name="time" value="08:00" class="nds-radio-input"></div>
-                                </div>
-                                <div class="nds-form-container nds-radio">
-                                    <div class="nds-form-header"><label for="book-time-0830"><span class="nds-label">8:30 AM</span></label></div>
-                                    <div class="nds-form-control"><input type="radio" id="book-time-0830" name="time" value="08:30" class="nds-radio-input"></div>
-                                </div>
-                                <div class="nds-form-container nds-radio">
-                                    <div class="nds-form-header"><label for="book-time-0900"><span class="nds-label">9:00 AM</span></label></div>
-                                    <div class="nds-form-control"><input type="radio" id="book-time-0900" name="time" value="09:00" class="nds-radio-input"></div>
-                                </div>
-                                <div class="nds-form-container nds-radio">
-                                    <div class="nds-form-header"><label for="book-time-0930"><span class="nds-label">9:30 AM</span></label></div>
-                                    <div class="nds-form-control"><input type="radio" id="book-time-0930" name="time" value="09:30" class="nds-radio-input"></div>
-                                </div>
-                                <div class="nds-form-container nds-radio">
-                                    <div class="nds-form-header"><label for="book-time-1000"><span class="nds-label">10:00 AM</span></label></div>
-                                    <div class="nds-form-control"><input type="radio" id="book-time-1000" name="time" value="10:00" class="nds-radio-input"></div>
-                                </div>
-                                <div class="nds-form-container nds-radio">
-                                    <div class="nds-form-header"><label for="book-time-1030"><span class="nds-label">10:30 AM</span></label></div>
-                                    <div class="nds-form-control"><input type="radio" id="book-time-1030" name="time" value="10:30" class="nds-radio-input"></div>
-                                </div>
-                                <div class="nds-form-container nds-radio">
-                                    <div class="nds-form-header"><label for="book-time-1100"><span class="nds-label">11:00 AM</span></label></div>
-                                    <div class="nds-form-control"><input type="radio" id="book-time-1100" name="time" value="11:00" class="nds-radio-input"></div>
-                                </div>
-                                <div class="nds-form-container nds-radio">
-                                    <div class="nds-form-header"><label for="book-time-1130"><span class="nds-label">11:30 AM</span></label></div>
-                                    <div class="nds-form-control"><input type="radio" id="book-time-1130" name="time" value="11:30" class="nds-radio-input"></div>
-                                </div>
-                                <div class="nds-form-container nds-radio">
-                                    <div class="nds-form-header"><label for="book-time-1200"><span class="nds-label">12:00 PM</span></label></div>
-                                    <div class="nds-form-control"><input type="radio" id="book-time-1200" name="time" value="12:00" class="nds-radio-input"></div>
-                                </div>
-                                <div class="nds-form-container nds-radio">
-                                    <div class="nds-form-header"><label for="book-time-1230"><span class="nds-label">12:30 PM</span></label></div>
-                                    <div class="nds-form-control"><input type="radio" id="book-time-1230" name="time" value="12:30" class="nds-radio-input"></div>
-                                </div>
-                                <div class="nds-form-container nds-radio">
-                                    <div class="nds-form-header"><label for="book-time-1300"><span class="nds-label">1:00 PM</span></label></div>
-                                    <div class="nds-form-control"><input type="radio" id="book-time-1300" name="time" value="13:00" class="nds-radio-input"></div>
-                                </div>
-                                <div class="nds-form-container nds-radio">
-                                    <div class="nds-form-header"><label for="book-time-1330"><span class="nds-label">1:30 PM</span></label></div>
-                                    <div class="nds-form-control"><input type="radio" id="book-time-1330" name="time" value="13:30" class="nds-radio-input"></div>
+                                <div class="nds-grid" style="--min-width: 6.5rem; --row-gap: var(--spacing-xl);">
+                                    <div class="nds-form-container nds-radio">
+                                        <div class="nds-form-header"><label for="book-time-0800"><span class="nds-label">8:00 AM</span></label></div>
+                                        <div class="nds-form-control"><input type="radio" id="book-time-0800" name="time" value="08:00" class="nds-radio-input"></div>
+                                    </div>
+                                    <div class="nds-form-container nds-radio">
+                                        <div class="nds-form-header"><label for="book-time-0830"><span class="nds-label">8:30 AM</span></label></div>
+                                        <div class="nds-form-control"><input type="radio" id="book-time-0830" name="time" value="08:30" class="nds-radio-input"></div>
+                                    </div>
+                                    <div class="nds-form-container nds-radio">
+                                        <div class="nds-form-header"><label for="book-time-0900"><span class="nds-label">9:00 AM</span></label></div>
+                                        <div class="nds-form-control"><input type="radio" id="book-time-0900" name="time" value="09:00" class="nds-radio-input"></div>
+                                    </div>
+                                    <div class="nds-form-container nds-radio">
+                                        <div class="nds-form-header"><label for="book-time-0930"><span class="nds-label">9:30 AM</span></label></div>
+                                        <div class="nds-form-control"><input type="radio" id="book-time-0930" name="time" value="09:30" class="nds-radio-input"></div>
+                                    </div>
+                                    <div class="nds-form-container nds-radio">
+                                        <div class="nds-form-header"><label for="book-time-1000"><span class="nds-label">10:00 AM</span></label></div>
+                                        <div class="nds-form-control"><input type="radio" id="book-time-1000" name="time" value="10:00" class="nds-radio-input"></div>
+                                    </div>
+                                    <div class="nds-form-container nds-radio">
+                                        <div class="nds-form-header"><label for="book-time-1030"><span class="nds-label">10:30 AM</span></label></div>
+                                        <div class="nds-form-control"><input type="radio" id="book-time-1030" name="time" value="10:30" class="nds-radio-input"></div>
+                                    </div>
+                                    <div class="nds-form-container nds-radio">
+                                        <div class="nds-form-header"><label for="book-time-1100"><span class="nds-label">11:00 AM</span></label></div>
+                                        <div class="nds-form-control"><input type="radio" id="book-time-1100" name="time" value="11:00" class="nds-radio-input"></div>
+                                    </div>
+                                    <div class="nds-form-container nds-radio">
+                                        <div class="nds-form-header"><label for="book-time-1130"><span class="nds-label">11:30 AM</span></label></div>
+                                        <div class="nds-form-control"><input type="radio" id="book-time-1130" name="time" value="11:30" class="nds-radio-input"></div>
+                                    </div>
+                                    <div class="nds-form-container nds-radio">
+                                        <div class="nds-form-header"><label for="book-time-1200"><span class="nds-label">12:00 PM</span></label></div>
+                                        <div class="nds-form-control"><input type="radio" id="book-time-1200" name="time" value="12:00" class="nds-radio-input"></div>
+                                    </div>
+                                    <div class="nds-form-container nds-radio">
+                                        <div class="nds-form-header"><label for="book-time-1230"><span class="nds-label">12:30 PM</span></label></div>
+                                        <div class="nds-form-control"><input type="radio" id="book-time-1230" name="time" value="12:30" class="nds-radio-input"></div>
+                                    </div>
+                                    <div class="nds-form-container nds-radio">
+                                        <div class="nds-form-header"><label for="book-time-1300"><span class="nds-label">1:00 PM</span></label></div>
+                                        <div class="nds-form-control"><input type="radio" id="book-time-1300" name="time" value="13:00" class="nds-radio-input"></div>
+                                    </div>
+                                    <div class="nds-form-container nds-radio">
+                                        <div class="nds-form-header"><label for="book-time-1330"><span class="nds-label">1:30 PM</span></label></div>
+                                        <div class="nds-form-control"><input type="radio" id="book-time-1330" name="time" value="13:30" class="nds-radio-input"></div>
+                                    </div>
                                 </div>
                             </fieldset>
                         </div>
