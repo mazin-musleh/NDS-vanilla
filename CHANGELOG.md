@@ -210,12 +210,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Accordion** — The loading bar stays next to a leading icon.
 - **Accordion** — In a tab opened in the background, an accordion shows when the page loads. Before, it waited until the visitor opened the tab.
 - **Accordion** — `openItem()` then `closeItem()` on one item before it finishes opening runs only the close: no `nds:accordion:opened` event and no scroll to the item.
+- **Accordion** — When a long open item above closes, the page scrolls back to the heading of the item that opened; before, the heading could end up above the screen or under the main navigation. `--accordion-scroll-offset` sets the space under the navigation (120px).
 - **Alert** — A toast's long title no longer runs under the close button. An alert created with the id of one already in the page replaces it, so a repeated toast no longer stacks copies with one id. The ring around a toast's close button stops again while the pointer or the focus is on the toast, with the timer: in v1.12.0 the ring kept going.
 - **Alert, Feedback Icons and File Upload** — A method that takes an element also takes its bare id, such as `'save-alert'`, as other components do.
 - **Autocomplete** — "No results" shows only on a `data-strict` field. `destroy()` cleans the field so it can start again. `NDS.init.destroy(view)` releases the field, and `create()` on a built field returns its instance.
 - **Autocomplete** — A failed request is announced ("Could not load suggestions") and tried again on the next focus. One empty row no longer drops all the results, Enter in an input method (IME) picks its own candidate and not a suggestion, and results that arrive after the user left the field no longer open the menu. Enter and Space on the clear button clear the field; they toggled the menu.
 - **Autocomplete** — The clear button empties the field again: Forms empties it from a page-wide listener, which the click no longer reached. `nds:autocomplete:clear` fires once the field is empty.
 - **Avatar** — an avatar that is also an `nds-btn` shows its photo.
+- **Avatar** — A photo that fails to load shows the person icon, not its alt text. Screen readers still read the alt text.
 - **Breadcrumb** — `destroy()` restores the collapsed levels and removes the overflow menu.
 - **Breakpoints** — A width between two tiers, such as 959.5px under browser zoom or Windows display scaling, now matches one of them.
 - **Button** — A loading button keeps its colours behind the spinner, and so does a disabled progress button. Status colours hold on hover, press and selected. The copy button's success flash stays green. An on-color button's progress ring follows its label colour. An icon-only button fits a built-in icon with even padding. In a group, a circle no longer rounds the seams, and `nds-full` fits.
@@ -223,6 +225,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Button** — A button prints in its screen colours; every button printed black on transparent, so one on a dark photo could not be read.
 - **Cards** — A block or prose card is full width, with no doubled gap. Card loading bars skip accordion buttons. `nds-truncate` clips a card title. In a row card the status tag stays under the icon. The price skeleton and padding are fixed.
 - **Cards** — A disabled card shows each control the page marks disabled in that control's own disabled look; the fade stays for the rest, its tags included.
+- **Cards** — An avatar in a card keeps the avatar's own color; it took the color of the text around it.
 - **Chart** — A chart keeps its height in a modal and no longer jumps on a resize or a remount. A line chart's first and last x labels, and a tilted first label, stay inside the chart.
 - **Chart** — A destroyed chart no longer draws again into its emptied element.
 - **Chart** — An `aria-label` on the chart element names the chart; it always said "Bar chart", "Line chart" or "Chart". Compact numbers (2K) follow the page's language in Latin digits; they followed the browser's language.
