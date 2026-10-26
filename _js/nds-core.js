@@ -584,14 +584,20 @@
     // the draw and data-nds-drawn makes it a normal section. whenDrawn(el, fn) runs fn at once, or once
     // el's section draws: a ResizeObserver write that resizes a skipped section raises the loop error.
     const EXEMPT = ':first-of-type, :first-of-type + .nds-content-section, .nds-sideinfo-section'; // as in _section.scss
-    const drawnWaits = new Map(); // section → Set of fns
+    const drawnWaits = new WeakMap(); // section → Set of fns; a view removed before its draw drops out
     const canSkip = 'oncontentvisibilityautostatechange' in window;
     const markDrawn = (section) => {
         section.setAttribute('data-nds-drawn', '');
         const waits = drawnWaits.get(section);
         if (waits) { drawnWaits.delete(section); waits.forEach((fn) => fn()); }
     };
+    const drawAll = () => document.querySelectorAll('.nds-content-section:not([data-nds-drawn])').forEach(markDrawn);
     if (canSkip) {
+        // A link to a far section would land on the 680px guesses (Chrome, 2026-10-26: 1020px short).
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a[href*="#"]');
+            if (link && link.pathname === location.pathname && link.hash.length > 1) drawAll();
+        }, true);
         document.documentElement.setAttribute('data-nds-cv', '');
         document.addEventListener('contentvisibilityautostatechange', (e) => {
             if (!e.skipped && e.target.classList.contains('nds-content-section')) markDrawn(e.target);
@@ -1848,7 +1854,7 @@
                 const restore = () => {
                     if (!pending) return;
                     pending = 0;
-                    document.querySelectorAll('.nds-content-section:not([data-nds-drawn])').forEach(markDrawn);
+                    drawAll();
                     if (navType === 'reload' || !window.scrollY) window.scrollTo(0, y);
                 };
                 if (root.hasAttribute('data-nds-loaded')) restore();
@@ -1859,6 +1865,23 @@
                 }
                 window.addEventListener('load', restore);                   // fallback
             }
+        }
+    }
+
+    // ── Sections nobody has scrolled to: draw the rest ────────────────
+    // One per idle frame after the reveal: a scroll then meets no skipped section (up to 196ms
+    // frames at 6.6x), and a scrollIntoView() of yours lands on real heights.
+    if (canSkip) {
+        const root = document.documentElement;
+        const drawNext = () => {
+            const section = document.querySelector('.nds-content-section:not([data-nds-drawn])');
+            if (section) { markDrawn(section); requestAnimationFrame(() => NDS.onIdle(drawNext)); }
+        };
+        if (root.hasAttribute('data-nds-loaded')) NDS.onIdle(drawNext);
+        else {
+            const off = NDS.onAttributeChange('html', ['data-nds-loaded'], () => {
+                if (root.hasAttribute('data-nds-loaded')) { off(); NDS.onIdle(drawNext); }
+            });
         }
     }
 })();

@@ -99,8 +99,9 @@
 
 /* ── Sections nobody has scrolled to: skipped until first drawn ── */
 
-// Cuts style and layout at load by about a quarter on long pages (2026-10-26). nds-core.js stamps
-// data-nds-drawn the first time a section draws (all of them for a scroll restore), and from then
+// Keeps them out of the load's frames (longest frame -10 to -37%, 2026-10-26). nds-core.js stamps
+// data-nds-drawn the first time a section draws, then draws the rest one per idle frame (all at once
+// for a scroll restore or a same-page link, so the jump lands on real heights), and from then
 // on it is a normal section: a component that resizes a section from a ResizeObserver raises the
 // "ResizeObserver loop" error under either property. data-nds-cv: the browser reports the draw;
 // without it cv drops at the reveal. Never skipped (the same list is EXEMPT in nds-core.js): the

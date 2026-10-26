@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 05:27 PM"
+last_edit: "26/10/2026 - 11:33 PM"
 ---
 
 <section id="section-overview" class="nds-content-section nds-doc-overview">
@@ -351,7 +351,7 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
             <i class="hgi hgi-stroke hgi-dashboard-speed-01"></i>
             <span class="nds-label">Off-Screen Sections</span>
           </span>
-          <p class="nds-item-desc">The browser skips the style and layout of a section until the page scrolls near it. After it first draws, the section stays a normal section. The first two sections and a Side Info section always draw.</p>
+          <p class="nds-item-desc">While the page loads, the browser skips the style and layout of a section that is not near the screen. It draws them later, one at a time, when it is idle or when the page scrolls near one. After it first draws, the section stays a normal section. The first two sections and a Side Info section always draw.</p>
         </div>
       </div>
     </div>
@@ -379,6 +379,7 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
 - Use `nds-full` on a title or a description only for short text. Long lines are hard to read.
 - Put two or more parts of a section body in a [grid](../layout/grid), a [flex](../layout/flex) or a [block](../layout/block). The section body is a plain block, so it puts no space between its children.
 - In your own `ResizeObserver`, change the height of a section's content only after the section has `data-nds-drawn`. Before that, the browser reports a "ResizeObserver loop" error.
+- Right after the page shows, a `scrollIntoView()` call of yours can stop short of a far section. A link to `#id` on the same page always scrolls to the right place.
 
 </div>
   </div>
