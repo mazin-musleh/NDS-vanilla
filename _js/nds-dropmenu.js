@@ -939,12 +939,14 @@
 
             if (this._menu.contains(document.activeElement)) {
                 this.trigger.focus();
-                // A trigger that takes no focus (Date Picker's field box): its first own control,
-                // else let go. Focus left in the menu would sit under its aria-hidden.
-                if (this._menu.contains(document.activeElement)) {
-                    const own = [...this.trigger.querySelectorAll(NDS.focusableSel)].find(el => !this._menu.contains(el));
-                    if (own) own.focus(); else document.activeElement.blur();
+                // A trigger that takes no focus (Date Picker's field box): its first own control that
+                // takes it (a loading field hides its button), else let go. Focus left in the menu would
+                // sit under its aria-hidden.
+                for (const el of this.trigger.querySelectorAll(NDS.focusableSel)) {
+                    if (!this._menu.contains(document.activeElement)) break;
+                    if (!this._menu.contains(el)) el.focus();
                 }
+                if (this._menu.contains(document.activeElement)) document.activeElement.blur();
             }
 
             addState(this.dropmenu, 'closing');
