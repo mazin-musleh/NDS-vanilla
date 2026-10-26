@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "26/10/2026 - 01:25 PM"
 ---
 
 <section id="avatar-overview" class="nds-content-section nds-doc-overview">
@@ -203,6 +203,13 @@ The Link, Menu trigger and Button structures take any of the three contents: a p
             <span class="nds-label">High Contrast Ring</span>
           </span>
           <p class="nds-item-desc">In high contrast mode, every avatar gets a solid ring inside its edge, so a photo stays apart from the page.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-image-not-found-01"></i>
+            <span class="nds-label">Broken Photo</span>
+          </span>
+          <p class="nds-item-desc">When a photo does not load, the avatar shows the person icon in place of the broken-image mark and the <code class="nds-inline-code lang-html">alt</code> text. Screen readers still read the <code class="nds-inline-code lang-html">alt</code> text. Safari shows its own small broken-image mark and no text.</p>
         </div>
       </div>
     </div>

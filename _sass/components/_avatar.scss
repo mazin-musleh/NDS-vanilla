@@ -38,6 +38,23 @@
     object-fit: cover;
     display: block;
     border-radius: 50%;
+    position: relative;
+    font-size: 0; // a broken photo's alt text; screen readers still read it
+
+    // Only a broken photo paints these (Chrome, Firefox): the person icon covers the broken-image mark.
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: var(--avatar-background);
+    }
+
+    &::after {
+      inset: 25%;
+      background-color: currentColor; // the avatar's resolved color: --avatar-color can be cycle-invalid in a card
+      mask: var(--nds-icon-avatar) center / contain no-repeat;
+    }
   }
 
   // Optional image border variant
