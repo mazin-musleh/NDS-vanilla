@@ -13,7 +13,7 @@
  *   nds:autocomplete:select   detail {item, text} — a suggestion was picked
  *   nds:autocomplete:clear    detail {} — the field's clear button was used
  * Hooks (all on the .nds-form-container):
- *   data-url · data-name (result field to display, default "Title") · data-min-chars (3)
+ *   data-url · data-name (result field to display, default "Title") · data-min-chars (3; 0 = a click shows the whole list)
  *   data-query-param (q) · data-results-path · data-fetch="each|once"
  *   data-empty-message · data-empty-icon · data-strict (typed text must match a pick)
  * Gotchas:
@@ -89,7 +89,9 @@
             // Config from container attributes
             this._url = containerElement.getAttribute('data-url');
             this._nameField = containerElement.getAttribute('data-name') || 'Title';
-            this._minChars = parseInt(containerElement.getAttribute('data-min-chars'), 10) || 3;
+            // 0 is a real value: the whole list on a click, before any typing.
+            const minChars = parseInt(containerElement.getAttribute('data-min-chars'), 10);
+            this._minChars = Number.isNaN(minChars) ? 3 : minChars;
             this._queryParam = containerElement.getAttribute('data-query-param') || 'q';
             this._resultsPath = containerElement.getAttribute('data-results-path') || '';
             // Fetch mode:
@@ -238,9 +240,12 @@
             // Kept as a field, not inlined — the keyup handler below re-runs it directly.
             this._input.addEventListener('input', this._onInput, { signal });
 
-            // Prevent dropmenu's trigger click-to-toggle on the input
-            // (we control open/close via typing, not clicking)
-            this._input.addEventListener('click', (e) => e.stopPropagation(), { signal });
+            // Prevent dropmenu's trigger click-to-toggle on the input: typing opens it,
+            // and with data-min-chars="0" a click shows the whole list.
+            this._input.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (this._minChars === 0 && !this._dropmenu.isOpen) this._showAll();
+            }, { signal });
 
             // Keyboard navigation — stopPropagation prevents dropmenu's trigger keydown
             this._input.addEventListener('keydown', (e) => {
@@ -309,12 +314,22 @@
         async _fetchResults(query) {
             // Skip if input value has changed since this fetch was queued (stale debounce)
             if (this._input.value.trim() !== query) return;
+            await this._search(query);
+        }
 
-            if (this._fetchMode === 'once') {
-                await this._fetchOnceAndFilter(query);
-            } else {
-                await this._fetchEach(query);
-            }
+        _search(query) {
+            return this._fetchMode === 'once' ? this._fetchOnceAndFilter(query) : this._fetchEach(query);
+        }
+
+        // data-min-chars="0", on a click or Down Arrow: the list for the typed text, or the
+        // whole list when the text is the pick, with the pick active (as a native select).
+        async _showAll() {
+            const text = this._input.value.trim();
+            const picked = !!this._selectedItem && String(this._selectedItem[this._nameField] || '') === text;
+            await this._search(picked ? '' : text);
+            // By name: with data-fetch="each" every answer holds new objects.
+            const index = picked ? this._results.slice(0, 20).findIndex((item) => String(item[this._nameField] || '') === text) : -1;
+            if (index >= 0 && this._dropmenu.isOpen) this._setActiveItem(index, this._items);
         }
 
         // Fetch URL?q=value on every call — server is expected to filter.
@@ -556,6 +571,10 @@
                 case 'ArrowDown':
                     e.preventDefault();
                     e.stopPropagation();
+                    if (!isOpen && this._minChars === 0) {
+                        this._showAll();
+                        return;
+                    }
                     if (!isOpen && this._results.length > 0) {
                         this._renderResults(this._results, this._input.value.trim());
                         return;
