@@ -46,12 +46,6 @@
  *     wrapping div.nds-form-header > label[for] > span.nds-label and div.nds-form-control >
  *     the input — the same skeleton nds-filter generates. Hand-written rows must match it.
  */
-/**
- * NDS Tables Component
- * Sortable table functionality with accessible column sorting
- * Based on WAI-ARIA Authoring Practices Guide
- */
-
 (function() {
     'use strict';
 
@@ -61,7 +55,7 @@
         column: 'Column {n}',
     });
 
-    // The shared cell-text reader lives in core: Export (extras) reads it before Tables loads.
+    // The shared cell-text reader lives in core: Export (extras) reads it before Table loads.
     const getCellText = NDS.getCellText;
 
     // Sort keys are <th> cell indexes, never positions in the sort-button array:
@@ -336,6 +330,7 @@
             // A wrapper this built goes, the table back in its place; an authored one keeps its own style.
             if (this._builtWrapper) this._wrapper.replaceWith(this._table);
             else if (this._ownMaxWidth) this._wrapper.style.removeProperty('--max-width');
+            dropColumnAlign(this._table);
             this._table.removeAttribute('data-nds-table-initialized');
             delete this._table.ndsTableResponsive;
         }
@@ -366,6 +361,7 @@
     function syncFooterColumns(table) {
         const heads = getHeadCells(table);
         table.querySelectorAll(':scope > tfoot > tr').forEach(tr => {
+            if (!tr.cells.length) return;   // an empty row (a framework's loading state) has no label to span
             const span = heads.length - tr.cells.length + 1;
             const shown = heads.slice(0, span).filter(th => !th.hidden).length;
             if (span > 1) tr.cells[0].colSpan = Math.max(shown, 1);
@@ -656,10 +652,21 @@
         rules.forEach(rule => alignSheet.insertRule(rule, alignSheet.cssRules.length));
     }
 
+    // The sheet is page-wide: an unmounted table's rules would stay in it for good.
+    function dropColumnAlign(table) {
+        const scope = table.getAttribute('data-nds-align');
+        if (!scope || !alignSheet) return;
+        table.removeAttribute('data-nds-align');
+        const rules = alignSheet.cssRules;
+        for (let i = rules.length - 1; i >= 0; i--) {
+            if (rules[i].selectorText.includes(`"${scope}"`)) alignSheet.deleteRule(i);
+        }
+    }
+
     // ── Sub-rows (master-detail expansion) ───────────────────────────
     // A parent row pairs with at most one <tr class="nds-sub"> placed directly
-    // after it — adjacency IS the pairing, so there is no back-reference to keep
-    // in sync. Visibility is the `hidden` attribute: rows can't animate, and CSS
+    // after it — adjacency IS the pairing; subRows only lets a sort put a
+    // detached sub back. Visibility is the `hidden` attribute: rows can't animate, and CSS
     // paints a pre-rendered open sub before this bundle lands. Content and
     // visibility are decoupled, and the sub's DOM is never torn down, so form
     // state inside it survives a collapse.
@@ -716,9 +723,8 @@
     // this covers a generated sub and an authored one that left it off.
     function linkSub(tr, sub) {
         if (!sub.id) sub.id = NDS.getUniqueId('nds-sub-');
-        // Direct backref so re-pairing after a sort holds; the aria-controls walk
-        // below covers authored subs
-        // JS has never touched.
+        // Direct backref so re-pairing after a sort holds; repairSubPairing's
+        // aria-controls walk covers a backref that went stale.
         subRows.set(sub, tr);
 
         // Re-derive colspan on every touch rather than trusting the markup: an
@@ -808,7 +814,7 @@
                 if (typeof content === 'string') cell.innerHTML = content;
                 else cell.replaceChildren(content);
                 setToggleLoading(tr, false);
-                setupTables();   // wire a nested .nds-table in the new content
+                setupTables(cell);   // wire a nested .nds-table in the new content
                 return sub;
             },
 
@@ -816,7 +822,7 @@
                 const el = findSub(tr);
                 const table = tr.closest('table');
                 // No sub yet: the consumer answers this by fetching and calling
-                // setContent(html).open(). NDS never fetches it (see tables.md).
+                // setContent(html).open(). NDS never fetches it (see table.md).
                 // detail.signal lets a cancel drop the request itself rather than
                 // just ignore its answer — pass it to fetch / NDS.request.
                 if (!el) {
@@ -929,8 +935,9 @@
     // Starts every table and column menu not started yet.
     // The init sentinel is stamped only on a construction that succeeded — a table
     // whose <tbody> arrives later must stay eligible for the next reinit().
-    function setupTables() {
-        document.querySelectorAll('.nds-table').forEach(table => {
+    // A root narrows the sweep to new content (a sub-row's).
+    function setupTables(root = document) {
+        root.querySelectorAll('.nds-table').forEach(table => {
             if (table.closest('code')) return;
 
             // Guarded by the scope stamp: reinit() must not append the rules twice.
@@ -959,11 +966,11 @@
         });
 
         // Column-visibility menus live in a toolbar, not in the table
-        document.querySelectorAll('[data-columns-target]').forEach(root => {
-            if (root.closest('code')) return;
-            if (root.hasAttribute('data-nds-columns-initialized')) return;
+        root.querySelectorAll('[data-columns-target]').forEach(menu => {
+            if (menu.closest('code')) return;
+            if (menu.hasAttribute('data-nds-columns-initialized')) return;
 
-            new NdsTableColumnToggle(root); // stamps and registers itself when valid
+            new NdsTableColumnToggle(menu); // stamps and registers itself when valid
         });
     }
 
@@ -977,8 +984,9 @@
 
     // Public API — the loader calls init(); see components/table.md for the surface.
     NDS.Table = {
-        init: setupTables,
-        reinit: setupTables,
+        // Wrapped: a caller's argument must never become the sweep's root.
+        init: () => setupTables(),
+        reinit: () => setupTables(),
         refresh: syncAllWidths,
         // The constructors publish their expando only on success → null on a bail.
         create: (table) => {

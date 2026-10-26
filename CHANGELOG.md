@@ -394,7 +394,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Tables** — `--table-row-height` sets the row height of a standard table too; it worked only with `nds-compact`.
 - **Tables** — `data-align` columns align under a strict Content Security Policy; the alignment was a `<style>` the policy blocked.
 - **Tables** — A table that scrolls sideways takes keyboard focus and, with a caption or a label, is a named region; it drops both when the columns fit.
-- **Tables** — `destroy()` takes back what the script wrote. A scroll box it built goes and the table returns to its place; a box you wrote keeps its own `--max-width`.
+- **Tables** — `destroy()` takes back what the script wrote. A scroll box it built goes and the table returns to its place; a box you wrote keeps its own `--max-width`. The table's `data-align` rules go too, so a view that mounts tables again and again no longer piles them up.
 - **Tables** — A row added after a column is hidden (a fetch, a page, a framework render) keeps that column hidden. `NDS.Table.setColumnHidden()` now moves the column menu's checkbox and its badge.
 - **Tabs** — a tab set in a card no longer doubles the panel padding; Home and End go to the first and last tab in RTL too; a tab set in a column that centers its items keeps its full width; a vertical divided tab keeps its icon before the label and starts at the edge. A tab set inside a tab panel or a Content Switcher panel keeps its own look.
 - **Tabs** — In a ghost section on small screens, the tab divider spans the content.
