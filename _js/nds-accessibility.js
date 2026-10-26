@@ -227,7 +227,8 @@
         { key: 'word-spacing',   cssVar: '--user-word-spacing',   token: 'has-word-spacing',   def: '0' },
     ];
 
-    let state = getDefaultState();
+    // The saved settings from the start: a toggleMode() before init() would save defaults over them.
+    let state = load();
     let panel = null;
     let toggleBtn = null;
     let openerEl = null;       // element that opened the panel — focus returns here

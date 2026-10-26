@@ -206,6 +206,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Accessibility** — Escape closes the reading mask only when no modal, panel or menu is open.
 - **Accessibility** — A mode's text-size preset applies even after the visitor cycled the text size tile back to its default.
 - **Accessibility** — `NDS.Accessibility.open()` on a page with no `data-accessibility-toggle` button opens a working panel and applies saved settings. It opened a panel whose tiles did nothing.
+- **Accessibility** — `toggleMode()`, `setVisualFilter()` or `cycleSetting()` called before the panel starts, such as on a page with no `data-accessibility-toggle` button, adds to the visitor's saved settings. It replaced them with the defaults plus the one change. `NDS.Accessibility.state` holds the saved settings from page load.
 - **Accordion** — The loading bar stays next to a leading icon.
 - **Accordion** — In a tab opened in the background, an accordion shows when the page loads. Before, it waited until the visitor opened the tab.
 - **Accordion** — `openItem()` then `closeItem()` on one item before it finishes opening runs only the close: no `nds:accordion:opened` event and no scroll to the item.
