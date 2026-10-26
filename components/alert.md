@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 04:42 PM"
+last_edit: "26/10/2026 - 11:49 AM"
 ---
 
 <section id="alert-overview" class="nds-content-section nds-doc-overview">
@@ -203,7 +203,7 @@ actions: [
 ### Toast
 {: .nds-block-title}
 
-A toast is an alert that floats at a corner of the screen and fades in, so it needs no `target`. Only `NDS.Alert.create()` makes one, with `display: 'toast'`, because its placement and timer need the script. Top toasts sit below the sticky header, with the newest first. Bottom toasts stack with the newest last. On a phone, a toast takes the full width. To dock toasts in a place of your own, add a `.nds-alert-placeholder` with `data-position`.
+A toast is an alert that floats at a corner of the screen and fades in, so it needs no `target`. Only `NDS.Alert.create()` makes one, with `display: 'toast'`, because its placement and timer need the script. Top toasts sit below the sticky header, with the newest first. Bottom toasts stack with the newest last. On a phone, a toast takes the full width. A toast shows above an open Modal or Panel, and the user can hover it or close it there. To dock toasts in a place of your own, add a `.nds-alert-placeholder` with `data-position`.
 
 ### Auto Close
 {: .nds-block-title}

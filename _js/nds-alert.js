@@ -19,6 +19,8 @@
  *   - duration is 0 by default (no auto-dismiss). A running toast pauses on hover or
  *     focus, and a CLICK pins the pause: it then stays until closed.
  *   - An id that an alert already has replaces that alert, so a repeated toast never stacks.
+ *   - A toast shows above an open Modal or Panel: its placeholder is a top-layer popover. A placeholder
+ *     you place inside other markup goes inert with that markup while a Modal is open.
  *   - title and description are escaped. An action's href is scheme-checked, and an
  *     unsafe one downgrades the action to a plain button.
  *   - An action is {label, variant, size, class, onClick, dismiss, href, target, copy, copyTarget};
@@ -293,6 +295,12 @@
                 placeholder.setAttribute('data-position', position);
                 document.body.appendChild(placeholder);
             }
+            // The top layer, above an open Modal or Panel and live while it is open (data-nds-above,
+            // nds-dialog.js). Raised again for each toast: a dialog opened since sits above it.
+            placeholder.setAttribute('popover', 'manual');
+            placeholder.setAttribute('data-nds-above', '');
+            NDS.setTopLayer(placeholder, false);
+            NDS.setTopLayer(placeholder, true);
 
             // Sync top offset to the sticky chrome's bottom edge. A topbar counts as
             // much as the nav and either can be absent, so the measurement is core's —

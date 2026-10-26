@@ -11,7 +11,9 @@
  * Events:
  *   (none — Modal and Panel fire their own)
  * Hooks:
- *   (none — data-nds-modal and data-nds-under are its own stamps, read by the dialog CSS)
+ *   data-nds-above   on a [popover] that stays above every dialog (a toast layer): never inert,
+ *                    a click on it is not outside, and each dialog shown puts it back on top
+ *   (data-nds-modal and data-nds-under are its own stamps, read by the dialog CSS)
  * Gotchas:
  *   - The page goes inert after the open animation: making ~1,000 elements inert restyles them
  *     all (~300 ms on a phone), and showModal() did that inside the click.
@@ -37,7 +39,8 @@
     const want = new Set();
     for (let node = getTop(); node && node !== document.body && node.parentElement; node = node.parentElement) {
       for (const sibling of node.parentElement.children) {
-        if (sibling !== node && !skip.has(sibling.tagName) && (!sibling.inert || inerted.has(sibling))) want.add(sibling);
+        if (sibling !== node && !skip.has(sibling.tagName) && !sibling.hasAttribute('data-nds-above')
+          && (!sibling.inert || inerted.has(sibling))) want.add(sibling);
       }
     }
     inerted.forEach((el) => { if (!want.has(el)) el.inert = false; });
@@ -63,7 +66,7 @@
     const rect = dialog.getBoundingClientRect();
     return e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom;
   };
-  const isAway = (dialog, e) => getTop() === dialog && isOutside(dialog, e);
+  const isAway = (dialog, e) => getTop() === dialog && !e.target.closest?.('[data-nds-above]') && isOutside(dialog, e);
 
   function show(dialog, signal) {
     if (!open.includes(dialog)) {
@@ -87,6 +90,11 @@
     dialog.setAttribute('popover', 'manual');
     dialog.show();
     NDS.setTopLayer(dialog, true);
+    // What stays above every dialog goes back on top of this one.
+    document.querySelectorAll('[data-nds-above]:popover-open').forEach((layer) => {
+      NDS.setTopLayer(layer, false);
+      NDS.setTopLayer(layer, true);
+    });
     // After the open slide: its frames would wait on the restyle.
     NDS.onTransitionEnd(dialog, syncInert, { fallbackMs: NDS.transitionSpeed() + 150 });
   }

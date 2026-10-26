@@ -302,7 +302,17 @@
 // ==============================================
 
 .nds-alert-placeholder {
+  // A [popover] in the top layer (NDS.Alert), fixed to the viewport, with none of the popover's own box
   position: fixed;
+  inset: auto;
+  margin: 0;
+  overflow: visible;
+  color: inherit;
+  width: auto;
+  height: auto;
+  padding: 0;
+  border: 0;
+  background: none;
   z-index: 9999;
   // Content-edge offset shared by every anchored side
   --_toast-edge: max(var(--nds-viewport-padding), calc((100vw - var(--nds-content-max-width)) / 2));
