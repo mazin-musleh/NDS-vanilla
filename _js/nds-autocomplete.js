@@ -14,6 +14,7 @@
  *   nds:autocomplete:clear    detail {} — the field's clear button was used
  * Hooks (all on the .nds-form-container):
  *   data-url · data-name (result field to display, default "Title") · data-min-chars (3; 0 = a click shows the whole list)
+ *   <template class="nds-autocomplete-row"> in the container: each row's parts, [data-field] slots filled as text
  *   data-query-param (q) · data-results-path · data-fetch="each|once"
  *   data-empty-message · data-empty-icon · data-strict (typed text must match a pick)
  * Gotchas:
@@ -89,6 +90,8 @@
             // Config from container attributes
             this._url = containerElement.getAttribute('data-url');
             this._nameField = containerElement.getAttribute('data-name') || 'Title';
+            // A row with more than the name (a second line, a Meta line): authored once, filled per result.
+            this._rowTemplate = containerElement.querySelector(':scope > template.nds-autocomplete-row');
             // 0 is a real value: the whole list on a click, before any typing.
             const minChars = parseInt(containerElement.getAttribute('data-min-chars'), 10);
             this._minChars = Number.isNaN(minChars) ? 3 : minChars;
@@ -464,16 +467,20 @@
                 NDS.aria.selected(btn, false);
                 btn.id = this._menuId + '-item-' + index;
 
-                var labelSpan = document.createElement('span');
-                labelSpan.className = 'nds-label';
-                if (this._customRender) {
-                    // Developer owns escaping in the custom render path.
-                    labelSpan.innerHTML = this._customRender(item, query);
+                if (!this._customRender && this._rowTemplate) {
+                    btn.appendChild(this._fillRow(item, highlightRegex));
                 } else {
-                    var text = String(item[this._nameField] || '');
-                    labelSpan.innerHTML = this._highlightMatch(text, highlightRegex);
+                    var labelSpan = document.createElement('span');
+                    labelSpan.className = 'nds-label';
+                    if (this._customRender) {
+                        // Developer owns escaping in the custom render path.
+                        labelSpan.innerHTML = this._customRender(item, query);
+                    } else {
+                        var text = String(item[this._nameField] || '');
+                        labelSpan.innerHTML = this._highlightMatch(text, highlightRegex);
+                    }
+                    btn.appendChild(labelSpan);
                 }
-                btn.appendChild(labelSpan);
 
                 fragment.appendChild(btn);
             });
@@ -482,6 +489,23 @@
             this._items = this._scroll.querySelectorAll('.nds-dropmenu-item');
 
             this._open();
+        }
+
+        // One row from the field's <template class="nds-autocomplete-row">, in .nds-option-text so its
+        // parts stack and the row grows. Each [data-field] takes its value as text; the data-name one is
+        // marked. A field with no value takes its .nds-meta-item with it, so no icon stands alone.
+        _fillRow(item, highlightRegex) {
+            const row = document.createElement('span');
+            row.className = 'nds-option-text';
+            row.appendChild(this._rowTemplate.content.cloneNode(true));
+            row.querySelectorAll('[data-field]').forEach((slot) => {
+                const field = slot.getAttribute('data-field');
+                const value = item[field];
+                if (value == null || value === '') (slot.closest('.nds-meta-item') || slot).remove();
+                else if (field === this._nameField) slot.innerHTML = this._highlightMatch(String(value), highlightRegex);
+                else slot.textContent = String(value);
+            });
+            return row;
         }
 
         // Regex is precompiled per render in _renderResults — passing it in

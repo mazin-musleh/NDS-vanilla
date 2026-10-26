@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 09:09 AM"
+last_edit: "26/10/2026 - 09:45 AM"
 ---
 
 <section id="autocomplete-overview" class="nds-content-section nds-doc-overview">
@@ -55,6 +55,17 @@ Pick another component when:
   </div>
 </div>
 </script>
+<script type="text/html" id="autocomplete-row" data-canon>
+<template class="nds-autocomplete-row">
+  <span class="nds-label" data-field="Title"></span>
+  <span class="nds-meta">
+    <span class="nds-meta-item">
+      <i class="hgi hgi-stroke hgi-building-02" aria-hidden="true"></i>
+      <span data-field="System"></span>
+    </span>
+  </span>
+</template>
+</script>
     </div>
   </div>
 </section>
@@ -74,6 +85,7 @@ The canon carries `data-fetch="once"` because the demo data is a static file. Fo
 | Min characters | 2 | `[data-min-chars="2"]` | `.nds-form-container` | For short names, such as people's names |
 | Min characters | 1 | `[data-min-chars="1"]` | `.nds-form-container` | For a short list loaded once, such as cities |
 | Min characters | 0 (hint: A click shows the whole list) | `[data-min-chars="0"]` | `.nds-form-container` | A click or the Down Arrow shows the whole list before the user types, and typing filters it. For a short list loaded once, such as services |
+| Row | Meta line (hint: The service group under each name) | canon `#autocomplete-row` | `.nds-form-container` | Each row shows more fields of its result under the name, here a Meta line. The match is marked in the name only |
 | Strict | Strict (hint: Accepts only a value picked from the list) | `[data-strict]` | `.nds-form-container` | The form accepts only text the user picked from the list, and the menu shows "No results" when nothing matches. Not for a search field, where any text is a valid search |
 | Custom empty message | Custom empty message (hint: Replaces the "No results" text) | `[data-empty-message="No matching services"]` | `.nds-form-container[data-strict]` | Replaces the "No results" text that a strict field shows when nothing matches |
 | Required | Required (hint: Press Validate with the field empty) | `[data-required]` | `.nds-form-container` | The form needs text in the field. Use it when the field is required |
@@ -183,6 +195,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 - Use `data-fetch="once"` for a list of a few hundred items or fewer, such as cities or departments. Use `each` for a large set that the server searches.
 - Lower `data-min-chars` only when a short query gives a useful list. With `each`, a lower number sends more requests.
 - Use `data-min-chars="0"` with `data-fetch="once"` and `data-strict` when the user picks one item of a short list, such as a service: a click shows them all, and typing narrows them. Do not add a search box to the menu: the field is the search box.
+- Use a row template for a fact the user picks by, such as how long a service takes or its department. Keep it to one line under the name.
 - Use `data-strict` when the server accepts only a known value, such as a city code. Leave it off a search field.
 - Write the placeholder or the info text as a hint of what to type, such as "Type part of a service name".
 - For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
@@ -204,6 +217,8 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 | Class | Element | Effect |
 |---|---|---|
 | `.nds-autocomplete-menu` | the menu | The script adds the menu, with `.nds-dropmenu-menu`, in the `.nds-form-control`. Style the menu through this class: it stays on the menu when the menu moves to `<body>` |
+| `.nds-autocomplete-row` | a `<template>` in the `.nds-form-container` | The parts of each row. The script copies it for each result and fills its `data-field` elements. Without it, a row shows the `data-name` field alone |
+| `.nds-option-text` | each row from the template | The script wraps the copied parts in it, so they stack under the name and the row grows to fit them |
 | `.nds-autocomplete-value` | a hidden `<input>` | The script adds it with `data-strict`. It holds the picked text, or the text already in the field when the field builds. It has no `name`, so the form data does not change |
 {: .nds-table .nds-responsive}
 
@@ -214,6 +229,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 |---|---|---|
 | `data-url` | `.nds-form-container` | The URL that returns the JSON results. Required. It may hold a query string: the script then adds the typed text after `&` |
 | `data-name` | `.nds-form-container` | The result field that each row shows and that a pick writes into the input. The default is `Title` |
+| `data-field` | an element in the `.nds-autocomplete-row` template | The result field the script writes into it, as text. In the `data-name` field, the match is marked. A field with no value removes its element, or the whole `.nds-meta-item` around it. `renderItem()`, when you pass it, replaces the template |
 | `data-fetch` | `.nds-form-container` | `each` (the default) requests the URL on each search. `once` requests it once and filters in the browser |
 | `data-min-chars` | `.nds-form-container` | The fewest characters that start a search. The default is `3`. Shorter text closes the menu. `0` shows the whole list on a click or the Down Arrow, and again when the user deletes the text. On a field that holds a pick, the list shows every item, with the pick active |
 | `data-query-param` | `.nds-form-container` | The name of the query parameter that holds the typed text with `each`. The default is `q` |

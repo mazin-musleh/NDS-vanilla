@@ -1,4 +1,4 @@
 ---
 ---
-[{% for service in site.data.content.services %}{"Id": {{ forloop.index }}, "Title": "{{ service.title }}"}{% unless forloop.last %},
+[{% for service in site.data.content.services %}{"Id": {{ forloop.index }}, "Title": "{{ service.title }}", "System": {{ service.system | jsonify }}}{% unless forloop.last %},
 {% endunless %}{% endfor %}]

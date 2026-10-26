@@ -20,6 +20,20 @@
     // HIGHLIGHT & EMPTY STATE
     // ==============================================
 
+    // A row from the field's template stacks its parts under the name, and grows to fit them,
+    // with a Custom Select option's padding.
+    .nds-dropmenu-item:has(> .nds-option-text) {
+        --btn-height: auto;
+        padding-block: var(--spacing-md);
+    }
+
+    .nds-option-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+
     .nds-dropmenu-item mark {
         background-color: var(--autocomplete-highlight);
         color: inherit;
