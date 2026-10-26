@@ -208,6 +208,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Accessibility** — `NDS.Accessibility.open()` on a page with no `data-accessibility-toggle` button opens a working panel and applies saved settings. It opened a panel whose tiles did nothing.
 - **Accordion** — The loading bar stays next to a leading icon.
 - **Accordion** — In a tab opened in the background, an accordion shows when the page loads. Before, it waited until the visitor opened the tab.
+- **Accordion** — `openItem()` then `closeItem()` on one item before it finishes opening runs only the close: no `nds:accordion:opened` event and no scroll to the item.
 - **Alert** — A toast's long title no longer runs under the close button. An alert created with the id of one already in the page replaces it, so a repeated toast no longer stacks copies with one id. The ring around a toast's close button stops again while the pointer or the focus is on the toast, with the timer: in v1.12.0 the ring kept going.
 - **Alert, Feedback Icons and File Upload** — A method that takes an element also takes its bare id, such as `'save-alert'`, as other components do.
 - **Autocomplete** — "No results" shows only on a `data-strict` field. `destroy()` cleans the field so it can start again. `NDS.init.destroy(view)` releases the field, and `create()` on a built field returns its instance.
@@ -321,6 +322,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Grid** — `hidden` and `.nds-hidden` hide an `.nds-grid`: its own `display: grid !important` kept it showing.
 - **Hero** — a relative path in it loads from the page, not from the stylesheet's folder.
 - **Image Popup Viewer** — the image counter reads `1 / 5` in Arabic; it read `5 / 1`. A thumbnail added after page load opens the viewer, and `NDS.Ipv.reinit()` gives it keyboard access. In Arabic, Left moves to the next image and Right to the previous. Focus stays in the viewer when Next or Previous disables at the end, or H hides the controls.
+- **Image Popup Viewer** — The spinner stays until the image on screen loads. A quick Next or Previous let the image before it end the spinner early.
 - **Internationalization** — a `window.NDS_I18N` override no longer leaves a component's other text in English. The pack loads from beside `nds-main.min.js` as the bundles do, so a module script or a folder not named `js/` no longer shows English. Voice input, the top bar date and city, and the audit follow any page language, not only Arabic and English.
 - **JavaScript API** — Tabs, Breadcrumb, Expandable Content, Pagination and responsive Tables built with `create()` mark themselves as the page sweep does: a later `init()` no longer builds a second instance, and a created pagination can be destroyed.
 - **JavaScript API** — On a page that had none at load, `create()` or `open()` now wires what `init()` wires: Custom Select option clicks (also after `setValue()` or `clear()`, so the menu builds on focus), Slider painting, Panel toggles, Modal close buttons, Pagination's URL page, and Progress `setValue()`, `setOutOf()` and `create()`. A nested Accordion keeps its own arrow keys, and a nested Scroll More its own button. `NDS.init.destroy(view)` now reaches the side menu and a Progress indicator that has not animated yet.
@@ -335,6 +337,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Mark** — In dark mode `<mark>` takes the translucent primary in `--background-mark`. It kept the light highlight, which was hard to read.
 - **Metric** — The metric's own width picks its layout, so charts and spacing match across cards of one size. From 400px wide, the value and the chart take half the row each; below that, the chart sits under the value. A trend text that does not fit beside its number goes to its own line, where it ran into the chart.
 - **Modal** — Focus moves into the modal when it opens and back to its trigger when it closes.
+- **Modal** — A modal closed, opened and closed again during its fade fires `nds:modal:closed` once, and the second fade runs to the end.
 - **Multiselect** — a multiselect written with `data-state="disabled"` disables its menu button too.
 - **Multiselect** — A read-only multiselect's chips and Reset cannot change it. `destroy()` removes the chips and the menu it built, and closes an open menu. A field started again opens its menu. An icon-only menu button takes its name from `aria-label`.
 - **Multiselect** — In a narrow field, the menu button and the chips stay inside the border. A menu button that wraps to its own row fills the row, with corners that match the field.

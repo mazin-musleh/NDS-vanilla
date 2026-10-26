@@ -127,11 +127,16 @@
         }
     }
 
+    let cityRequest = null;
+
     // City function with API caching
     async function syncCity() {
         const cityEl = document.getElementById('nds-city-name');
         const weatherEl = document.getElementById('nds-weather-info');
         if (!cityEl || !weatherEl) return;
+        // A language change asks again: the older language's answer must not land after.
+        cityRequest?.abort();
+        const { signal } = cityRequest = new AbortController();
 
         const isArabic = NDS.isArabic;
 
@@ -168,7 +173,7 @@
         try {
             const { data } = await NDS.request(
                 `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=${lang}&addressdetails=1`,
-                { timeout: 8000, json: true }
+                { timeout: 8000, json: true, signal }
             );
 
             const city = data.address?.city || data.address?.town || data.address?.village ||
@@ -183,7 +188,7 @@
             NDS.cache.set(cacheKey, city, 30 * 24 * 60);
             
         } catch (error) {
-            cityEl.style.display = 'none';
+            if (!signal.aborted) cityEl.style.display = 'none';
         }
     }
 

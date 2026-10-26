@@ -45,9 +45,11 @@
     const scrollBarUpAndLock = (menuState) => {
         const bar = menuState.accMenu;
         const getBarGap = () => bar.getBoundingClientRect().top - parseFloat(getComputedStyle(bar).top);
+        // A close and re-open before this settles runs its own lock: two locks, one unlock.
+        const epoch = menuEpoch;
         let done = false;
         const lock = () => {
-            if (done || !hasState(menuState.animTarget, 'open')) return;
+            if (done || epoch !== menuEpoch || !hasState(menuState.animTarget, 'open')) return;
             done = true;
             if (getBarGap() >= 1) window.scrollBy({ top: getBarGap(), behavior: 'instant' });
             NDS.scrollLock.lock();

@@ -152,7 +152,10 @@
         const at = renewed;
         document.dispatchEvent(new CustomEvent('nds:session:extend', { detail: { reason } }));
         if (!extendUrl) return;
-        NDS.request(extendUrl, { method: 'POST', credentials: 'same-origin', redirect: 'manual' }).catch((error) => {
+        const { signal } = abortController;
+        NDS.request(extendUrl, { method: 'POST', credentials: 'same-origin', redirect: 'manual', signal }).catch((error) => {
+            // destroy() since: its 401 must not end the next session.
+            if (signal.aborted) return;
             // Status 0 is a redirect under redirect: 'manual', the server sending the user to sign in.
             if (error.status === 401 || error.status === 0) return end();
             console.warn('NDS SessionTimeout: the extend request failed; the old deadline stands'

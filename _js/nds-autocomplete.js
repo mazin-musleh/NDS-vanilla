@@ -779,6 +779,8 @@
         // the default substring match and dropdown-row renderer.
         create: function (element, options) {
             if (!element) return null;
+            // A page with no [data-url] at load never ran init(): later fields build on focus too.
+            setupAutocompletes();
             if (element.ndsAutocomplete) return element.ndsAutocomplete;
             // The constructor sets the backref only once the field is complete.
             var instance = new NdsAutocomplete(element, options);

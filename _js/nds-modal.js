@@ -36,6 +36,7 @@
   let openAbortController = null; // the open modal's own listeners; aborted when it closes
   let initDone = false;
   let opener = null; // element focused before the first open; the last close returns focus to it
+  const closeTimers = new WeakMap(); // modal → its fade-out timer; a re-open cancels it
 
   function open(target) {
     // A page with no modal at load never runs init(), so open() wires the close controls too.
@@ -54,6 +55,8 @@
       return;
     }
     if (activeModal) close();
+    // Re-opened during its fade: that close never finishes.
+    clearTimeout(closeTimers.get(modal));
 
     // Kept across a swap: the first modal's opener gets focus back.
     if (!opener) opener = document.activeElement;
@@ -119,11 +122,10 @@
     NDS.dialog.hideMenus(modal);
     NDS.state.set(modal, 'closing');
     // The dialog stays in the top layer for the fade; the unlock reflow stays out of the click frame.
-    setTimeout(() => {
-      if (activeModal === modal) return; // re-opened during the fade
+    closeTimers.set(modal, setTimeout(() => {
       finish(modal);
       modal.dispatchEvent(new CustomEvent('nds:modal:closed', { bubbles: true }));
-    }, NDS.transitionSpeed() + 100);
+    }, NDS.transitionSpeed() + 100));
   }
 
   /**

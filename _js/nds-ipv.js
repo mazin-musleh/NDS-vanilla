@@ -268,8 +268,8 @@
             img.className = 'nds-ipv-popup-image';
             img.alt = alt || '';
             img.src = src;
-            img.onload = () => this._hideSpinner();
-            img.onerror = () => this._hideSpinner();
+            // A replaced image still loads: only the shown one ends the spinner.
+            img.onload = img.onerror = () => { if (this._image === img) this._hideSpinner(); };
 
             if (this._elements.container && this._elements.controls) {
                 this._elements.container.insertBefore(img, this._elements.controls);

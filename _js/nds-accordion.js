@@ -49,7 +49,8 @@
             this._buttons = findOwnParts(accordionContainer, '.nds-accordion-btn');
             this._collapses = findOwnParts(accordionContainer, '.nds-accordion-collapse');
             this._isAnimating = false; // Simple flag to prevent clicks during animation
-            
+            this._pendingEnds = new Map(); // collapse → cancel of its running transition end
+
             if (this._buttons.length === 0) {
                 console.warn('NDS Accordion: No accordion buttons found');
                 return;
@@ -283,8 +284,10 @@
         }
 
         _animate(collapse, callback) {
+            // openItem() then closeItem() mid-transition: only the last one's end runs.
+            this._pendingEnds.get(collapse)?.();
             if (NDS.prefersReducedMotion) { callback(); return; }
-            NDS.onTransitionEnd(collapse, callback);
+            this._pendingEnds.set(collapse, NDS.onTransitionEnd(collapse, callback));
         }
 
         _dispatchToggleEvent(index, button, collapse, isShown) {

@@ -177,6 +177,8 @@
             || formControl.querySelector(':scope > input, :scope > textarea');
     }
 
+    var shownMessages = new WeakMap(); // container → { prev, timer } of its showing message
+
     // A 4-second field message, placed like any field message (a placeholder hides once the
     // field has text). Neutral: a mic problem is not an invalid value. The message it covered
     // comes back.
@@ -188,13 +190,18 @@
             setTimeout(function() { NDS.Feedback.dismiss(el); }, 4000);
             return;
         }
-        var prev = { status: NDS.status.get(container), message: container.getAttribute('data-message') };
+        // A second message within 4 s keeps the first one's prev: the field's own message comes back, not ours.
+        var shown = shownMessages.get(container);
+        if (shown) clearTimeout(shown.timer);
+        var prev = shown && container.getAttribute('data-message') === shown.message ? shown.prev
+            : { status: NDS.status.get(container), message: container.getAttribute('data-message') };
         NDS.Form.setStatus(input, 'neutral', { message });
-        setTimeout(function() {
+        shownMessages.set(container, { message: message, prev: prev, timer: setTimeout(function() {
+            shownMessages.delete(container);
             if (container.getAttribute('data-message') !== message) return; // validation wrote since
             if (prev.status && prev.message) NDS.Form.setStatus(input, prev.status, { message: prev.message });
             else NDS.Form.clearStatus(input);
-        }, 4000);
+        }, 4000) });
     }
 
     // The element that last lost focus: a click on the mic moves focus off the field,

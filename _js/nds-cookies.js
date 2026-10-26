@@ -150,6 +150,7 @@
     let wired = false;
     let chose = false;
     let opener = null;
+    let autoTimer = null;
 
     function showView(panel, name) {
         panel.querySelectorAll('[data-cookies-view]').forEach(view => { view.hidden = view.dataset.cookiesView !== name; });
@@ -162,6 +163,8 @@
     }
 
     async function open(view = 'notice', from = null, { focus = true } = {}) {
+        // An open before the delay: the auto-open would flip its view back to the notice.
+        clearTimeout(autoTimer);
         addDocumentListeners();
         const panel = await resolvePanel();
         if (!panel) return;
@@ -227,7 +230,7 @@
         // Build and unpack the panel during the wait: hidden, it costs no styling, so
         // the open at DELAY is left only the first paint of it, not one long block.
         NDS.onIdle(resolvePanel);
-        setTimeout(openNotice, DELAY);
+        autoTimer = setTimeout(openNotice, DELAY);
     }
 
     NDS.Cookies = { init, open, close };
