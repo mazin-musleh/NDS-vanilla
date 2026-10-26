@@ -1035,6 +1035,8 @@
     // so the count is mirrored into the button's accessible name instead. The base
     // name is taken from the button's own visible label, captured once before any
     // count lands, so no translated string is needed here: "Columns" → "Columns (2)".
+    // The count is data-count, drawn by CSS: as text it joins the visible label ("2Columns"),
+    // which then no longer matches the name (WCAG 2.5.3).
     // Usage: NDS.setBadge(filterBtn, 3);
     const badgeBases = new WeakMap();   // button → its accessible name before any count landed
     NDS.setBadge = (btn, count) => {
@@ -1048,7 +1050,8 @@
                 badge.className = 'nds-badge';
                 icon.appendChild(badge);
             }
-            badge.textContent = count;
+            badge.textContent = '';   // an authored text count would show beside data-count
+            badge.dataset.count = count;
         } else if (badge) {
             badge.remove();
         }

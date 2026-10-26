@@ -795,6 +795,11 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
     padding: var(--spacing-xs);
     pointer-events: none;
     z-index: 1;
+
+    // Drawn, not text: text would join the button's visible label and fail Label in Name.
+    &::after {
+      content: attr(data-count);
+    }
   }
 }
 

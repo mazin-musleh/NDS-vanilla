@@ -778,6 +778,13 @@
             'Write it as <i class="nds-icon nds-hgi-…" aria-hidden="true">.', undefined, elements.length);
     } });
 
+    // A text count joins the button's visible label ("2Columns"), so the name no longer matches it (2.0.0).
+    addRule({ id: 'badge-text', group: 'migration', docs: 'components/button.html', check(context) {
+        const elements = context.find('.nds-badge:not([data-count])').filter(el => el.textContent.trim());
+        if (elements.length) context.report(elements[0], `a badge count written as text${elements.length > 1 ? ` (${elements.length} badges; the first is shown)` : ''}: it joins the button's visible label, and an accessibility checker reports the name.`,
+            `Move the count to data-count: <span class="nds-badge" data-count="${elements[0].textContent.trim()}"></span>.`, undefined, elements.length);
+    } });
+
     // Prose styles its bare headings (_prose.scss); the section title class gives one a page-level size.
     addRule({ id: 'prose-section-title', docs: 'layout/prose.html', check(context) {
         const elements = context.find('.nds-prose .nds-section-title');

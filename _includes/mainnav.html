@@ -84,7 +84,7 @@
                             <img src="{{ item.img_icon | relative_url }}" alt="{{ item.label }}" class="nds-icon" loading="lazy">
                             {%- if item.avatar %}</div>{% endif -%}
                         {%- elsif item.icon -%}
-                            <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if badge_value and badge_value != 0 %}<span class="nds-badge">{{ badge_value }}</span>{%- endif %}</i>
+                            <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if badge_value and badge_value != 0 %}<span class="nds-badge" data-count="{{ badge_value }}"></span>{%- endif %}</i>
                         {%- endif -%}
                         <span class="nds-label{%- if item.custom_class == 'lang' %} nds-lang-current{%- endif %}"
                             {%- unless item.custom_class contains 'nds-nav-cta' %} data-hidden="sm md sr"{%- endunless %}>{{ item.label }}</span>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "27/10/2026 - 12:19 AM"
 ---
 
 <section id="mainnav-overview" class="nds-content-section nds-doc-overview">
@@ -328,7 +328,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 </script>
 <script type="text/html" id="mainnav-notifications" data-canon>
 <li class="nds-nav-item nds-has-menu nds-icon-only" id="nav-notifications">
-  <button class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Notifications" aria-expanded="false"><i class="nds-icon nds-hgi-notification-02" aria-hidden="true"><span class="nds-badge">2</span></i><span class="nds-label" data-hidden="sm md sr">Notifications</span></button>
+  <button class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Notifications" aria-expanded="false"><i class="nds-icon nds-hgi-notification-02" aria-hidden="true"><span class="nds-badge" data-count="2"></span></i><span class="nds-label" data-hidden="sm md sr">Notifications</span></button>
   <div class="nds-nav-menu nds-fit" hidden>
     <div class="nds-nav-menu-content">
       <div class="nds-nav-column">
