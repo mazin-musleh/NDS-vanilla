@@ -775,6 +775,12 @@
  },
  {
   "section": "date-picker",
+  "key": "unavailable",
+  "en": "{date} is not available. Pick another day",
+  "ar": "{date} غير متاح. اختر يومًا آخر"
+ },
+ {
+  "section": "date-picker",
   "key": "range_order",
   "en": "Start date must come before end date",
   "ar": "تاريخ البداية يجب أن يسبق تاريخ النهاية"

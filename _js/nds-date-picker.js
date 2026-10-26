@@ -35,6 +35,9 @@
  *   on the .nds-date-input:      data-min-date · data-max-date (a date, `today`, or `today±N`
  *                                with d, m or y, counted in the field's calendar; a change
  *                                applies at once) · data-lang
+ *                                data-disabled-days (sun … sat) · data-disabled-dates (dates in the
+ *                                picker's format or YYYY-MM-DD, comma-separated): days that can't be
+ *                                picked; a change applies at once
  *                                data-year-before · data-year-after
  *   written by the picker:       data-picker-mode (container) · data-converted-date (input)
  * Gotchas:
@@ -65,6 +68,11 @@
         var parts = hijriParts.get(date);
         if (parts && parts.day) hijriParts.set(copy, { day: parts.day, month: parts.month, year: parts.year });
         return copy;
+    }
+
+    // One number per day, the same for every Date of that day (a Hijri stamp too).
+    function dayKey(date) {
+        return date.getFullYear() * 10000 + date.getMonth() * 100 + date.getDate();
     }
 
     // Write the Hijri trio onto a Gregorian Date and hand it back. This stamp is
@@ -113,6 +121,7 @@
         invalid: 'Invalid date — expected format {format}',
         before_min: 'Earliest allowed date is {date}',
         after_max: 'Latest allowed date is {date}',
+        unavailable: '{date} is not available. Pick another day',
         range_order: 'Start date must come before end date',
         converted_hijri: 'Converted from the Hijri date {date}',
         converted_gregory: 'Converted from the Gregorian date {date}',
@@ -600,7 +609,9 @@
                 mode: mode,
                 calendarType: this._detectCalendarType(),
                 minDate: null,
-                maxDate: null
+                maxDate: null,
+                disabledWeekdays: [],
+                disabledDays: new Set()
             };
         },
 
@@ -624,16 +635,28 @@
             };
             this._state.minDate = readBound(this._elements.input.getAttribute('data-min-date'));
             this._state.maxDate = readBound(this._elements.input.getAttribute('data-max-date'));
+            // Days that can't be picked: weekdays (sun … sat), and dates in the picker's format or
+            // YYYY-MM-DD, comma-separated, so code can write a server's dates as they come.
+            this._state.disabledWeekdays = NDS.Date.readWeekdays(this._elements.input.getAttribute('data-disabled-days'));
+            this._state.disabledDays = new Set();
+            (this._elements.input.getAttribute('data-disabled-dates') || '').split(',').forEach((text) => {
+                text = text.trim();
+                if (!text) return;
+                var day = calendar.parseDate(text, format) || NDS.Date.readDay(text);
+                if (day) this._state.disabledDays.add(dayKey(day));
+                else console.warn('NDS DatePicker: data-disabled-dates: "' + text + '" is not a date in ' + format + ' or YYYY-MM-DD');
+            });
             // Open at the nearest bound when the view falls outside [min, max] —
             // otherwise the month shown is entirely disabled.
             this._state.currentDate = this._clampToRange(this._state.currentDate);
         },
 
-        // Day-precision membership test. Returns true when there is no bound.
+        // Day-precision membership test: within [min, max], and not an unavailable weekday or date.
         _isDateAllowed: function (date) {
             if (this._state.minDate && date < this._state.minDate) return false;
             if (this._state.maxDate && date > this._state.maxDate) return false;
-            return true;
+            if (this._state.disabledWeekdays.includes(date.getDay())) return false;
+            return !this._state.disabledDays.has(dayKey(date));
         },
 
         // Month is offered in month-grid iff at least one of its days is
@@ -702,6 +725,8 @@
                 if (this._state.maxDate && parsed > this._state.maxDate) {
                     return getMessage('after_max', { date: calendar.formatDate(this._state.maxDate, format) });
                 }
+                // A range may span unavailable days; its two ends may not be one.
+                if (!this._isDateAllowed(parsed)) return getMessage('unavailable', { date: calendar.formatDate(parsed, format) });
                 dates.push(parsed);
             }
             if (dates.length === 2 && dates[0] > dates[1]) return getMessage('range_order');
@@ -958,12 +983,16 @@
         // month/year and focus the corresponding position after re-render.
         // `offset` is in cells (1 = next day, 7 = next week). Maintains the
         // roving tabindex: only the focused cell stays tabbable.
-        _focusDayCell: function (cell, offset) {
+        // step: how to walk past a day that can't be picked (a disabled button takes no focus);
+        // the arrow's own direction unless given. Home and End walk back toward the start.
+        _focusDayCell: function (cell, offset, step) {
             var cells = Array.from(this._elements.datesContainer.querySelectorAll('.nds-date-cell'));
             var index = cells.indexOf(cell);
             if (index === -1) return;
+            step = step || (Math.abs(offset) === 7 ? offset : Math.sign(offset));
 
             var target = index + offset;
+            while (target >= 0 && target < cells.length && cells[target].disabled) target += step;
             // Within the rendered 42-cell grid — focus directly.
             if (target >= 0 && target < cells.length) {
                 this._focusCell(cells[target]);
@@ -976,16 +1005,25 @@
             // month then focus index (42 + target). Moving "off the bottom" by
             // N = move into next month then focus index (target - 42).
             var direction = target < 0 ? -1 : 1;
-            // At the year range's edge the month stays: so does the focus.
+            // At the year range's edge the month stays: so does the focus. So at a bound, when the
+            // next month has no day to pick: the walk past the off days must not show it.
+            var shown = this._state.currentDate;
             if (!this._stepMonth(direction)) return;
+            if (!this._isMonthAllowed(this._getCurrentYear(), this._getCurrentMonth())) {
+                this._state.currentDate = shown;
+                return;
+            }
             this._syncView();
             var newCells = Array.from(this._elements.datesContainer.querySelectorAll('.nds-date-cell'));
             var newIndex = direction === -1
                 ? newCells.length + target  // target is negative
                 : target - newCells.length;
             newIndex = Math.max(0, Math.min(newCells.length - 1, newIndex));
-            // _focusCell also clears the re-rendered grid's own tab stop.
+            while (newCells[newIndex] && newCells[newIndex].disabled) newIndex += step;
+            // _focusCell also clears the re-rendered grid's own tab stop. No day to pick that
+            // way: the grid's own tab stop, so the focus is not lost with the old grid.
             if (newCells[newIndex]) this._focusCell(newCells[newIndex]);
+            else this._elements.datesContainer.querySelector('.nds-date-cell[tabindex="0"]')?.focus();
         },
 
         // WAI-ARIA Date Picker Dialog grid keys.
@@ -1022,7 +1060,8 @@
                     if (index === -1) return;
                     var weekStart = index - (index % 7);
                     var target = e.key === 'Home' ? weekStart : Math.min(cells.length - 1, weekStart + 6);
-                    this._focusDayCell(btn, target - index);
+                    // An unavailable first or last day: the nearest day to pick, toward the focus.
+                    this._focusDayCell(btn, target - index, e.key === 'Home' ? 1 : -1);
                     break;
                 }
                 case 'PageUp': {
@@ -1055,7 +1094,7 @@
         _focusFirstCurrentMonthDay: function () {
             if (!this._elements.datesContainer) return;
             var firstDay = this._elements.datesContainer.querySelector(
-                '.nds-date-cell:not([data-state~="other-month"])'
+                '.nds-date-cell:not([data-state~="other-month"], :disabled)'
             );
             if (firstDay) this._focusCell(firstDay);
         },
@@ -1408,7 +1447,7 @@
 
         // Roving tabindex anchor: pick the most meaningful cell to be the
         // tab-entry point. Priority: selected day → today (current month) →
-        // first day of current month → first cell.
+        // first day of current month → first day to pick → first cell.
         _setActiveDayCell: function () {
             if (!this._elements.datesContainer) return;
             var cells = this._elements.datesContainer.querySelectorAll('.nds-date-cell');
@@ -1426,13 +1465,15 @@
                     break;
                 }
             }
+            // A day that can't be picked takes no focus, so it is never the tab stop.
             var today = this._elements.datesContainer.querySelector(
-                '.nds-date-cell[data-state~="today"]:not([data-state~="other-month"])'
+                '.nds-date-cell[data-state~="today"]:not([data-state~="other-month"], :disabled)'
             );
             var firstCurrent = this._elements.datesContainer.querySelector(
-                '.nds-date-cell:not([data-state~="other-month"])'
+                '.nds-date-cell:not([data-state~="other-month"], :disabled)'
             );
-            var anchor = selected || today || firstCurrent || cells[0];
+            var firstEnabled = this._elements.datesContainer.querySelector('.nds-date-cell:not(:disabled)');
+            var anchor = selected || today || firstCurrent || firstEnabled || cells[0];
             anchor.tabIndex = 0;
         },
 
@@ -1880,8 +1921,8 @@
     function watchBounds() {
         if (boundsWatched) return;
         boundsWatched = true;
-        // A new bound re-checks the value silently (submit shows the error) and redraws an open calendar.
-        NDS.onAttributeChange('.nds-date-input', ['data-min-date', 'data-max-date'], (inputs) => inputs.forEach((input) => {
+        // A new bound or unavailable day re-checks the value silently (submit shows the error) and redraws an open calendar.
+        NDS.onAttributeChange('.nds-date-input', ['data-min-date', 'data-max-date', 'data-disabled-days', 'data-disabled-dates'], (inputs) => inputs.forEach((input) => {
             var instance = input.ndsDatePicker;
             if (!instance) return;
             instance._readBounds();

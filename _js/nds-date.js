@@ -14,6 +14,7 @@
  *   NDS.Date.getMonthNames(calendar, lang) · .getWeekdayNames(lang, weekStart)   names in a language,
  *                                    from weekStart (0 = Sunday, the default)
  *   NDS.Date.getWeekStart(el)        the nearest data-week-start, as 0 (Sunday) to 6 (Saturday)
+ *   NDS.Date.readWeekdays(text)      weekday words ("fri sat", sun … sat) → their numbers, 0 (Sunday) to 6
  *   NDS.Date.getStartOfWeek(date, weekStart)   the first day of date's week
  *   NDS.Date.readDay(datetime)       a datetime value (YYYY-MM-DD, with or without a time) → its day, or null;
  *                                    with a zone, the day in the site's timezone (else the visitor's)
@@ -156,6 +157,12 @@
             if (index < 0) warnOnce(`data-week-start "${value}" is not one of ${WEEKDAYS.join(' ')}; using sun`);
             return Math.max(index, 0);
         };
+        // "fri sat" → [5, 6]: the weekday words data-week-start takes, in a list.
+        const readWeekdays = (text) => String(text || '').toLowerCase().split(/[\s,]+/).filter(Boolean).map((word) => {
+            const index = WEEKDAYS.indexOf(word);
+            if (index < 0) warnOnce(`"${word}" is not one of ${WEEKDAYS.join(' ')}; skipped`);
+            return index;
+        }).filter((index) => index >= 0);
         const getStartOfWeek = (date, weekStart = 0) => new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() - weekStart + 7) % 7);
 
         // The nearest data-date-format wins, like a dark area; <html> holds the site's.
@@ -172,6 +179,7 @@
             getMonthNames,
             getWeekdayNames,
             getWeekStart,
+            readWeekdays,
             getStartOfWeek,
 
             // Today in the site's timezone (the visitor's when unset), as a local day.
