@@ -910,6 +910,14 @@
                 const value = list.scrollHeight > list.clientHeight ? 'contain' : '';
                 return () => { list.style.overscrollBehavior = value; };
             });
+            // Above the trigger, its top was set for the height at placement: a search that shrinks it
+            // would leave a gap. Slide it by the change, so its bottom stays on the trigger.
+            // translate, not a new top: no layout read, and the next placement resets it.
+            this._offMenuSize = NDS.onElementResize(this._menu, (entry) => {
+                if (!this._flipUp || this._placedHeight == null) return;
+                const shift = this._placedHeight - entry.borderBoxSize[0].blockSize;
+                return () => { this._menu.style.translate = shift ? `0 ${shift}px` : ''; };
+            });
 
             requestAnimationFrame(() => {
                 removeState(this.dropmenu, 'opening');
@@ -946,6 +954,7 @@
             if (this._offView) { this._offView.forEach((off) => off()); this._offView = null; }
             if (this._unsubResize) { this._unsubResize(); this._unsubResize = null; }
             if (this._offListSize) { this._offListSize(); this._offListSize = null; }
+            if (this._offMenuSize) { this._offMenuSize(); this._offMenuSize = null; }
 
             // Stored so open() can call this._cancelClose() to abort the
             // in-flight close if the user re-opens before the transition
@@ -968,7 +977,7 @@
             this.dropmenu.removeAttribute('data-position-vertical');
             this._menu.removeAttribute('data-position-vertical');
             // Only what open() wrote: an authored style and the no-popover position stay.
-            ['top', 'left', 'width', 'max-height', 'overflow-y', '--dropmenu-width', '--dropmenu-min-width', '--dropmenu-max-width']
+            ['top', 'left', 'translate', 'width', 'max-height', 'overflow-y', '--dropmenu-width', '--dropmenu-min-width', '--dropmenu-max-width']
                 .forEach(property => this._menu.style.removeProperty(property));
             if (this._anchored) NDS.unplace(this._menu, this.trigger);
             this._anchored = undefined;
@@ -1093,11 +1102,14 @@
             // scrolled off-screen).
             this._flipUp = flipUp;
 
-            this._place(top, leftPx);
+            this._place(top, leftPx, currentMenuRect.height);
         }
 
         // Anchored to the trigger where the browser can; after one miss, plain coords until close.
-        _place(top, left) {
+        // height: the menu's height this top was set for (the resize watch in open() slides from it).
+        _place(top, left, height) {
+            this._menu.style.translate = '';
+            this._placedHeight = height;
             this._anchored = NDS.place(this._menu, top, left, this._anchored === false ? null : this.trigger);
         }
 
@@ -1174,7 +1186,7 @@
             // Same horizontal rule as the opening placement, including its
             // viewport clamp — users can't scroll sideways to recover
             // off-screen content.
-            this._place(top, this._getLeft(tRect, mRect.width, undefined, this._edge));
+            this._place(top, this._getLeft(tRect, mRect.width, undefined, this._edge), mRect.height);
         }
 
         // ==============================================

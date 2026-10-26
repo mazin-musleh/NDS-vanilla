@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 10:22 PM"
+last_edit: "26/10/2026 - 08:45 AM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -321,7 +321,7 @@ A lazy menu keeps its items in a `<template>`, so they are not in the page until
             <i class="hgi hgi-stroke hgi-location-star-01"></i>
             <span class="nds-label">Menu Position</span>
           </span>
-          <p class="nds-item-desc">The menu opens below the trigger, and above it when there is more room there. A menu that fits on neither side shrinks its scroll area, so a search box or a footer stays in view. It never runs past the side of the screen. It stays on its trigger while the page or a box around it scrolls, inside a fixed panel too.</p>
+          <p class="nds-item-desc">The menu opens below the trigger, and above it when there is more room there. A menu that fits on neither side shrinks its scroll area, so a search box or a footer stays in view. It never runs past the side of the screen. It stays on its trigger while the page or a box around it scrolls, inside a fixed panel too. When search or new content changes its height, it keeps its side, and a menu above the trigger moves so its bottom stays on the trigger.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
