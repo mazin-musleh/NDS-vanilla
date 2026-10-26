@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 09:11 AM"
+last_edit: "27/10/2026 - 01:33 AM"
 ---
 
 <section id="tabs-overview" class="nds-content-section nds-doc-overview">
@@ -199,6 +199,44 @@ Pick another component when:
   </div>
 </div>
 </script>
+<script type="text/html" id="tabs-rail" data-canon>
+<div class="nds-tabs nds-vertical nds-rail nds-divided">
+  <div class="nds-tab-list-container nds-scroll-more">
+    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Messages">
+      <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="r-panel-inbox" id="r-tab-inbox" tabindex="0" aria-label="Inbox (2)">
+        <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"><span class="nds-badge" data-count="2"></span></i>
+        <span class="nds-label">Inbox</span>
+      </button>
+      <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false" aria-controls="r-panel-sent" id="r-tab-sent" tabindex="-1">
+        <i class="hgi hgi-stroke hgi-cursor-magic-selection-02" aria-hidden="true"></i>
+        <span class="nds-label">Sent</span>
+      </button>
+      <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false" aria-controls="r-panel-drafts" id="r-tab-drafts" tabindex="-1">
+        <i class="hgi hgi-stroke hgi-license-draft" aria-hidden="true"></i>
+        <span class="nds-label">Drafts</span>
+      </button>
+      <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false" aria-controls="r-panel-deleted" id="r-tab-deleted" tabindex="-1">
+        <i class="nds-icon nds-hgi-delete-02" aria-hidden="true"></i>
+        <span class="nds-label">Deleted</span>
+      </button>
+    </nav>
+  </div>
+  <div class="nds-tab-content">
+    <div class="nds-tab-panel" role="tabpanel" id="r-panel-inbox" aria-labelledby="r-tab-inbox" tabindex="0">
+      <p>Request 2026-118204 needs a clearer copy of your national ID. Upload it by 1 November.</p>
+    </div>
+    <div class="nds-tab-panel" role="tabpanel" id="r-panel-sent" aria-labelledby="r-tab-sent" tabindex="-1" hidden>
+      <p>You sent 3 messages this month.</p>
+    </div>
+    <div class="nds-tab-panel" role="tabpanel" id="r-panel-drafts" aria-labelledby="r-tab-drafts" tabindex="-1" hidden>
+      <p>You have no drafts.</p>
+    </div>
+    <div class="nds-tab-panel" role="tabpanel" id="r-panel-deleted" aria-labelledby="r-tab-deleted" tabindex="-1" hidden>
+      <p>Deleted messages stay here for 30 days.</p>
+    </div>
+  </div>
+</div>
+</script>
     </div>
   </div>
 </section>
@@ -217,8 +255,9 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
 | Structure | Standard (default) | — | — | Text-only tabs |
 | Structure | With icons | canon `#tabs-icons` | — | An icon before each label, for tabs that name distinct categories |
 | Structure | Many tabs (hint: Scrolls when the tabs do not fit) | canon `#tabs-many` | — | More tabs than fit in one row. The row scrolls. The show-more button moves it on by about one screen width, and back to the start at the end |
-| Layout | Horizontal (default) | — | — | Tabs in a row above the panels |
-| Layout | Vertical | `.nds-vertical` | `.nds-tabs` | Tabs stacked beside the panels, for a long list or long labels. The open tab's bar runs beside it, and the list stays in view while the page scrolls |
+| Structure | Rail (hint: Only the icons show on a phone) (id: rail) | canon `#tabs-rail` | — | Vertical tabs with an icon on each and a line beside them, for a short list beside content that needs the width, such as an inbox. Pick icons people know. On a phone the labels hide, the tabs turn square, and the panels get less padding at the sides. Screen readers still read each label. The open tab is filled |
+| Layout | Horizontal (default) (not: rail) | — | — | Tabs in a row above the panels |
+| Layout | Vertical (not: rail) | `.nds-vertical` | `.nds-tabs` | Tabs stacked beside the panels, for a long list or long labels. The open tab's bar runs beside it, and the list stays in view while the page scrolls |
 | Size | SM | `.nds-sm` | `.nds-tabs` | 32px tabs with a small label |
 | Size | MD (default) | — | — | 40px tabs. It needs no class |
 | Size | LG | `.nds-lg` | `.nds-tabs` | 48px tabs, for a larger touch target |
@@ -229,8 +268,8 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
 | Card | Panel only (hint: Only the panels in a card) | `.nds-card` | `.nds-tab-content` | Only the panels in a card, under a plain tab row |
 | Card | Panel only (hint: Only the panels in a card) | `.nds-stroke` | `.nds-tab-content` | The same: gives the card its border |
 | Card | Panel only (hint: Only the panels in a card) | `.nds-shadow` | `.nds-tab-content` | The same: gives the card its shadow |
-| Divided | Divided (hint: A line between the tabs and the panels) | `.nds-divided` | `.nds-tabs` | A line between the tabs and the panels: under the row, or beside a vertical list |
-| Divided | Lined (hint: A line under the tabs only, as wide as the tabs) (limit: 1 row width) | `.nds-lined` | `.nds-tabs:not(.nds-vertical)` | Horizontal only. A line under the tab row that ends after the last tab, instead of a divider across the full width. The row still scrolls when the tabs do not fit. On vertical tabs it draws the Divided line. Not with Center |
+| Divided | Divided (hint: A line between the tabs and the panels) (not: rail) | `.nds-divided` | `.nds-tabs` | A line between the tabs and the panels: under the row, or beside a vertical list |
+| Divided | Lined (hint: A line under the tabs only, as wide as the tabs) (limit: 1 row width) | `.nds-lined` | `.nds-tabs:not(.nds-vertical)` | Horizontal only. A line under the tab row that ends after the last tab, instead of a divider across the full width. The row still scrolls when the tabs do not fit. Not with Center |
 | Center | Center (limit: 1 row width) | `.nds-center` | `.nds-tab-list:not(.nds-vertical .nds-tab-list)` | Horizontal only. Centers a horizontal tab row while every tab fits. A row that scrolls starts at the edge |
 | Loading | Loading | `.nds-loading` | `.nds-tabs` | Gray bars in place of the labels and the panel content while the data loads. On `.nds-tab-list` it bars the labels only |
 {: #tabs-variants-table .nds-table .nds-responsive}
@@ -251,7 +290,7 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-tabs</code> on the page starts by itself. Switching, the keyboard and the scrolling need no call.</p>
+          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-tabs</code> on the page starts by itself. Tab changes, the keys and the scroll need no call.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -320,6 +359,8 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
 - Aim for three to seven tabs. The row scrolls past that, but people may miss the hidden tabs.
 - Put the tab people open most first. It opens when the page loads.
 - Add icons only when the tabs name distinct categories, and leave them off long labels. Give each icon `aria-hidden="true"`.
+- Pick Vertical when the labels must show at every width. Pick Rail when icons people know can stand in for the labels on a phone.
+- To show a count on a tab with an icon, such as new messages, call `NDS.setBadge(tab, count)`. It draws the count on the icon and adds it to the tab's name ("Inbox (2)").
 - Keep the tabs and the panels in the same order and the same number: tab one opens panel one.
 - Give the tab list an `aria-label`, and pair each tab and panel with `aria-controls` and `aria-labelledby`.
 - Build a long panel from `nds-block` parts with `nds-block-title` headings, so it reads in sections.
@@ -355,9 +396,9 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
 | `--btn-indicator-size` | `3px` | Thickness of the open tab's bar and of the divided line |
 | `--tab-button-gap` | `var(--spacing-xs)` | Gap between a tab's icon and its label |
 | `--tab-button-padding-block` | `0` | Padding above and below a tab's label |
-| `--tab-button-padding-inline` | the button padding | Padding at the start and the end of a tab: 12px with `nds-sm`, 16px, and 20px with `nds-lg` |
+| `--tab-button-padding-inline` | the button padding | Padding at the start and the end of a tab: 12px with `nds-sm`, 16px at MD, 20px with `nds-lg`. A Rail on a phone makes each tab square: 8px at MD |
 | `--tab-panel-padding` | `var(--spacing-2xl)` | Padding of a panel on both axes. A card sets `0`, because the card holds the padding |
-| `--tab-panel-padding-inline`, `--tab-panel-padding-block` | `--tab-panel-padding` | Padding of a panel on one axis |
+| `--tab-panel-padding-inline`, `--tab-panel-padding-block` | `--tab-panel-padding` | Padding of a panel on one axis. A Rail on a phone sets 8px at the sides |
 | `--scroll-fade` | `48px` | Width of the fade at the edges of a tab row that scrolls. Set it on `.nds-scroll-more` |
 {: .nds-table .nds-responsive}
 
@@ -406,6 +447,7 @@ The full API is in the banner of `_js/nds-tabs.js`.
 - [Service Page Template](../templates/service-template): the sections of a service in tabs.
 - [FAQ Template](../templates/faq-template): questions grouped by topic in tabs.
 - [Faculty](../examples/faculty) and [Program](../examples/program): profile and program details in tabs.
+- [Support Inbox](../examples/support-inbox): a Rail beside the message list.
 - [Content Switcher](../components/content-switcher): the same controller, drawn as one segmented control.
 - [Scroll More](../components/scroll-more): the overflow scrolling of the tab row.
 

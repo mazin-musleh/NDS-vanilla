@@ -204,19 +204,21 @@
 // Add the sr token to keep the element in the accessibility tree while hidden
 // (visually-hidden instead of display:none) — e.g. data-hidden="sm sr" on a
 // button label that collapses to icon-only without losing its accessible name.
+// Important, as display:none is: a component's own rule (the tabs' pre-init skeleton sizes
+// each label) must not widen it.
 // Deliberately unanchored — a global utility.
 @include mobile {
   [data-hidden~="sm"]:not([data-hidden~="sr"]) { display: none !important; }
-  [data-hidden~="sm"][data-hidden~="sr"] { @include label-hidden; }
+  [data-hidden~="sm"][data-hidden~="sr"] { @include label-hidden(true); }
 }
 @include tablet {
   [data-hidden~="md"]:not([data-hidden~="sr"]) { display: none !important; }
-  [data-hidden~="md"][data-hidden~="sr"] { @include label-hidden; }
+  [data-hidden~="md"][data-hidden~="sr"] { @include label-hidden(true); }
 }
 // lg has no upper edge: stopping at 1279px showed "hidden on desktop" content on most desktops.
 @include desktop('min') {
   [data-hidden~="lg"]:not([data-hidden~="sr"]) { display: none !important; }
-  [data-hidden~="lg"][data-hidden~="sr"] { @include label-hidden; }
+  [data-hidden~="lg"][data-hidden~="sr"] { @include label-hidden(true); }
 }
 
 // ==============================================

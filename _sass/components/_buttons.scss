@@ -778,15 +778,19 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   }
 
   .nds-badge {
+    // Follows the icon: 16px on a 24px icon, 14px on 20px, 12px on 16px.
+    --_badge-size: calc(var(--_btn-icon-size) / 2 + 4px);
     position: absolute;
-    inset-block-start: -8px;
-    inset-inline-end: -4px;
-    font-size: var(--typo-text-2xs-FS);
+    // 6px above a 24px icon, 4px above a smaller one, and never above the button: a scrolling
+    // parent (a tab list) cuts it there.
+    inset-block-start: max(-1 * clamp(4px, var(--_btn-icon-size) - 18px, 6px), (var(--_btn-icon-size) - var(--_btn-size)) / 2);
+    inset-inline-end: calc(var(--_badge-size) / -4);
+    font-size: calc(var(--_badge-size) / 2 + 2px);
     font-family: var(--nds-font-family);
     background-color: var(--background-error);
     color: var(--text-oncolor-primary);
-    min-width: 16px;
-    height: 16px;
+    min-width: var(--_badge-size);
+    height: var(--_badge-size);
     border-radius: 999px;
     display: flex;
     justify-content: center;

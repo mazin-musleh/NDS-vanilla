@@ -155,16 +155,18 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 
 // Hide a label visually but keep it in the accessibility tree — for a control
 // collapsed to icon-only, so it keeps its accessible name (display:none drops it).
-@mixin label-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+// $important: for a utility that must beat a component's own rule on the same element.
+@mixin label-hidden($important: false) {
+  $i: if($important, !important, null);
+  position: absolute $i;
+  width: 1px $i;
+  height: 1px $i;
+  padding: 0 $i;
+  margin: -1px $i;
+  overflow: hidden $i;
+  clip: rect(0, 0, 0, 0) $i;
+  white-space: nowrap $i;
+  border: 0 $i;
 }
 
 // A popup NDS.setTopLayer shows as a [popover]: undo the browser's popover box (centred,

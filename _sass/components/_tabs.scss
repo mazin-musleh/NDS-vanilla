@@ -121,6 +121,45 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
     }
   }
 
+  // ---- Rail ----
+  // Rides .nds-vertical: tabs with icons whose labels hide on a phone, so the panels keep the width.
+  &.nds-vertical.nds-rail {
+    > .nds-tab-list-container > .nds-tab-list,
+    > .nds-tab-list {
+      row-gap: var(--spacing-md);
+    }
+
+    > #{$strip} .nds-tab {
+      // The open tab is the button's own selected look: with no label, the bar alone is too thin a cue.
+      &[aria-selected="true"] {
+        background-color: var(--_btn-bg-selected);
+      }
+
+      // Hidden, never removed: the label is the tab's name. Beats the pre-init skeleton's bar width.
+      @include mobile {
+        // Icon only: a square tab, 8px at MD as an SM button has.
+        padding-inline: var(--tab-button-padding-inline, calc((var(--_btn-size) - var(--_btn-icon-size)) / 2));
+
+        .nds-label {
+          @include label-hidden;
+        }
+      }
+    }
+
+    @include mobile {
+      &:not(.nds-card) > .nds-tab-content:not(.nds-card) > .nds-tab-panel {
+        --_tab-panel-padding-inline: var(--tab-panel-padding-inline, var(--tab-panel-padding, var(--spacing-md)));
+      }
+
+      // A card's gutter shrinks the same way: 16px a side was a tenth of the screen.
+      &.nds-card,
+      > .nds-tab-content.nds-card {
+        --_card-padding-base: var(--spacing-md);
+        --_card-gap-base: var(--spacing-md);
+      }
+    }
+  }
+
   // ---- Center alignment ----
   // `:is(.nds-center, .center)` covers both the prefixed class and the legacy
   // unprefixed one. `margin-inline: auto` horizontally centers the fit-content
@@ -344,8 +383,9 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
     }
   }
 
+  // The card's gap already parts the list and the panels: a padding here doubled it.
   &.nds-vertical > .nds-tab-content {
-    padding-inline-end: 0;
+    padding-inline: 0;
     padding-block: 0;
   }
 }
@@ -355,9 +395,10 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
   --card-width: 100%;
   margin-block-start: var(--spacing-xl);
 
+  // With the card's own padding, the same 24px from the list as a whole-set card.
   .nds-tabs.nds-vertical>& {
     margin-block-start: 0;
-    margin-inline-start: var(--spacing-xl);
+    margin-inline-start: var(--spacing-md);
   }
 }
 

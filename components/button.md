@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 12:19 AM"
+last_edit: "27/10/2026 - 01:22 AM"
 ---
 
 <section id="btn-overview" class="nds-content-section nds-doc-overview">
@@ -148,7 +148,7 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 | Full width | Full width | `.nds-full` | `.nds-btn:not(.nds-btn-group > .nds-btn)` | Fills the width of its container, with the content centered |
 | Full width | Full width | `.nds-full` | `.nds-btn-group` | On a group, the group fills the width and its buttons share it equally. Put it on the group, not on its buttons |
 | Primary text | Primary text (hint: Brand-color text, no fill) | `.nds-color` | `.nds-transparent:not(.nds-destructive):not(.nds-oncolor)` | The text takes the brand primary color, and goes back to the default color on hover |
-| Badge | Badge (hint: A count over the icon corner) | canon `#btn-badge` | `i.nds-icon` | A count over the corner of the icon. It goes inside the `<i>` icon element, never beside it, in `data-count`: CSS draws it, so it never joins the button's text. The icon is `aria-hidden`, so screen readers skip the count: put it in the label too. `NDS.setBadge(button, count)` does both |
+| Badge | Badge (hint: A count over the icon corner) | canon `#btn-badge` | `i.nds-icon` | A count over the corner of the icon. It goes inside the `<i>` icon element, never beside it, in `data-count`: CSS draws it, so it never joins the button's text. It takes the button's size and stays inside the button's top edge. The icon is `aria-hidden`, so screen readers skip the count: put it in the label too. `NDS.setBadge(button, count)` does both |
 {: #btn-variants-table .nds-table .nds-responsive}
 
 </div>

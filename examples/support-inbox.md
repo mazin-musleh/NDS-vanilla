@@ -13,7 +13,8 @@ sidemenu_mode: false
 ---
 
 <!-- Layout rules: a signed-in user's messages, read and written like letters (not a chat).
-     - Inbox and Sent are Tabs. The Inbox label carries the unread count, so the screen and a screen reader say the same.
+     - Inbox and Sent are Tabs, a Rail (nds-vertical nds-rail nds-divided): on a phone only the icons show, so the list keeps the width.
+       The unread count is a badge on the Inbox icon (NDS.setBadge), which also adds it to the tab's name.
      - Each message is a Drawer row (a button) with a featured icon, a New tag while unread, a preview line and a Meta line.
      - Every row opens ONE shared Panel that a small page script fills from the row; a real site loads the message by its id.
        Opening a message marks it read.
@@ -35,21 +36,18 @@ sidemenu_mode: false
                     </div>
                 </div>
             </div>
-            <div class="nds-tabs nds-divided" id="inbox-tabs">
+            <div class="nds-tabs nds-vertical nds-rail nds-divided" id="inbox-tabs">
                 <div class="nds-tab-list-container nds-scroll-more">
                     <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Messages">
-                        <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="inbox-panel-received" id="inbox-tab-received" tabindex="0">
-                            <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
-                            <span class="nds-label">Inbox (2)</span>
+                        <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="inbox-panel-received" id="inbox-tab-received" tabindex="0" aria-label="Inbox (2)">
+                            <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"><span class="nds-badge" data-count="2"></span></i>
+                            <span class="nds-label">Inbox</span>
                         </button>
                         <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false" aria-controls="inbox-panel-sent" id="inbox-tab-sent" tabindex="-1">
-                            <i class="hgi hgi-stroke hgi-sent" aria-hidden="true"></i>
+                            <i class="hgi hgi-stroke hgi-cursor-magic-selection-02" aria-hidden="true"></i>
                             <span class="nds-label">Sent</span>
                         </button>
                     </nav>
-                    <button type="button" class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more" data-i18n-aria-label="scroll-more.show_more">
-                        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                    </button>
                 </div>
                 <div class="nds-tab-content">
                     <div class="nds-tab-panel" role="tabpanel" id="inbox-panel-received" aria-labelledby="inbox-tab-received" tabindex="0">
@@ -323,8 +321,7 @@ sidemenu_mode: false
     var readText = function (el) { return el ? el.textContent.trim() : ''; };
     var request = function () { return new Promise(function (resolve) { setTimeout(resolve, 1000); }); };
     var showUnread = function () {
-      var count = document.querySelectorAll('#inbox-list [data-unread]').length;
-      inboxTab.querySelector('.nds-label').textContent = count ? 'Inbox (' + count + ')' : 'Inbox';
+      NDS.setBadge(inboxTab, document.querySelectorAll('#inbox-list [data-unread]').length);
     };
 
     // ponytail: copies the row; a real site loads the message by its id from the server here
