@@ -1053,24 +1053,26 @@
             const flipUp = spaceBelow < placement.menuRect.height && spaceAbove > spaceBelow;
             const available = flipUp ? spaceAbove : spaceBelow;
 
-            // Last resort, after the flip has already picked the roomier side:
-            // the menu still doesn't fit, so give it a scrollbar rather than let
-            // it run off the edge. An off-edge part is unreachable — page scroll carries the menu along
-            // with its trigger and never reveals it.
-            let clamped = false;
+            // After the flip has already picked the roomier side, the menu still doesn't fit:
+            // a page scroll carries it with its trigger, but the user should not have to scroll for it.
+            let clamped = false, pageShift = 0;
             if (placement.menuRect.height > available) {
                 if (scroll) {
                     // Preferred: shrink the inner list so the menu's own chrome
                     // (search box, footer actions) stays pinned and visible.
                     const chrome = placement.menuRect.height - scroll.getBoundingClientRect().height;
                     scroll.style.maxHeight = Math.max(80, available - chrome) + 'px';
+                    clamped = true;
                 } else {
-                    // No inner scroll region to give back — the date-picker
-                    // calendar is one rigid block. Scroll the whole menu.
-                    this._menu.style.maxHeight = Math.max(80, available) + 'px';
-                    this._menu.style.overflowY = 'auto';
+                    // No list to shrink (the date-picker calendar): a scrollbar would hide its rows.
+                    // Scroll the page to make room; where it can't, scroll the whole menu.
+                    pageShift = this._getPageShift(placement.menuRect.height - available, flipUp, placement, topEdge, gap, pad);
+                    if (!pageShift) {
+                        this._menu.style.maxHeight = Math.max(80, available) + 'px';
+                        this._menu.style.overflowY = 'auto';
+                        clamped = true;
+                    }
                 }
-                clamped = true;
             }
 
             // Re-measure only when the clamp changed the height; otherwise the
@@ -1086,8 +1088,8 @@
             }
 
             // Glued to the trigger edge, no vertical viewport clamp on the
-            // POSITION: everything was already shrunk to `available` above, so
-            // the menu fits the side it was placed on and must never slide over
+            // POSITION: everything was already shrunk to `available` above, or the page scrolls
+            // to make room, so the menu fits the side it was placed on and must never slide over
             // its own trigger — a covered input never recovers.
             // Matches _trackPosition(), which never clamped.
             const top = flipUp ? placement.triggerRect.top - currentMenuRect.height - gap : placement.triggerRect.bottom + gap;
@@ -1103,6 +1105,20 @@
             this._flipUp = flipUp;
 
             this._place(top, leftPx, currentMenuRect.height);
+            // Placed in viewport coords first: the page scroll then carries menu and trigger together.
+            if (pageShift) window.scrollBy({ top: pageShift, behavior: 'instant' });
+        }
+
+        // How far to scroll the page so a rigid menu that overflows by `shortfall` shows whole,
+        // with its trigger still in view. 0 when the page can't carry it: a modal or a fixed
+        // panel, no popover (a fixed menu), or a screen too short for both.
+        _getPageShift(shortfall, up, placement, topEdge, gap, pad) {
+            if (!this._menu.showPopover || !this._respectNav || NDS.isPinned(this.trigger)) return 0;
+            const view = window.innerHeight - pad - topEdge;
+            if (placement.menuRect.height + gap + placement.triggerRect.height > view) return 0;
+            const room = up ? window.scrollY : document.documentElement.scrollHeight - window.innerHeight - window.scrollY;
+            if (room < shortfall) return 0;
+            return Math.ceil(up ? -shortfall : shortfall);
         }
 
         // Anchored to the trigger where the browser can; after one miss, plain coords until close.
