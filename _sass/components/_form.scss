@@ -705,14 +705,15 @@ fieldset {
 // counts as overflow, so a hovered option at the end of a Modal does not scroll it.
 :is(.nds-checkbox, .nds-radio) {
     &.nds-form-container .nds-form-control {
+        // No field underline: its focus and press widths would reshape a ripple on the same pseudo.
         &::before {
+            content: none;
+        }
+
+        &::after {
             content: "";
             position: absolute;
-            // Over the field underline's ::before: its width, height and transform would win over inset.
             inset: 0;
-            width: auto;
-            height: auto;
-            transform: none;
             border-radius: 50%;
             background-color: var(--controls-ripple-effect);
             box-shadow: 0 0 0 0 var(--controls-ripple-effect);
@@ -721,7 +722,7 @@ fieldset {
             pointer-events: none;
         }
 
-        &:has(input:not(:disabled):hover)::before {
+        &:has(input:not(:disabled):hover)::after {
             box-shadow: 0 0 0 calc(var(--nds-input-size, 16px) / 2) var(--controls-ripple-effect);
         }
     }

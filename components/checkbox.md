@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 12:15 AM"
+last_edit: "26/10/2026 - 08:28 AM"
 ---
 
 <section id="checkbox-overview" class="nds-content-section nds-doc-overview">
