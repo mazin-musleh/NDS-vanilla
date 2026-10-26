@@ -180,6 +180,11 @@
     justify-content: flex-start;
     padding: var(--spacing-md);
 
+    // Two lines outgrow the one-line button height; one-line options keep it.
+    &:has(.nds-description) {
+        --btn-height: auto;
+    }
+
     // A leading icon sits with the label row, not centered against a taller
     // label + description stack. No-op on plain-label options (the button's
     // default align-items already sits it beside a single-row label).
