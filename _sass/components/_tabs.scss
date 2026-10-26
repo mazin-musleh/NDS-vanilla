@@ -121,6 +121,11 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
     }
   }
 
+  // The panel's first line meets the first tab's label: 8px down, as the label sits in a 40px tab.
+  &.nds-vertical > .nds-tab-content:not(.nds-card) > .nds-tab-panel:not(.nds-card) {
+    padding-block-start: var(--tab-panel-padding-block, var(--tab-panel-padding, var(--spacing-md)));
+  }
+
   // ---- Rail ----
   // Rides .nds-vertical: tabs with icons whose labels hide on a phone, so the panels keep the width.
   &.nds-vertical.nds-rail {

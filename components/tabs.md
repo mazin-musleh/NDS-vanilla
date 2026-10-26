@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 01:33 AM"
+last_edit: "27/10/2026 - 01:40 AM"
 ---
 
 <section id="tabs-overview" class="nds-content-section nds-doc-overview">
@@ -397,7 +397,7 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
 | `--tab-button-gap` | `var(--spacing-xs)` | Gap between a tab's icon and its label |
 | `--tab-button-padding-block` | `0` | Padding above and below a tab's label |
 | `--tab-button-padding-inline` | the button padding | Padding at the start and the end of a tab: 12px with `nds-sm`, 16px at MD, 20px with `nds-lg`. A Rail on a phone makes each tab square: 8px at MD |
-| `--tab-panel-padding` | `var(--spacing-2xl)` | Padding of a panel on both axes. A card sets `0`, because the card holds the padding |
+| `--tab-panel-padding` | `var(--spacing-2xl)` | Padding of a panel on both axes. A card sets `0`, because the card holds the padding. Vertical tabs set 8px at the top, so the first line meets the first tab. A panel-only card keeps its own padding |
 | `--tab-panel-padding-inline`, `--tab-panel-padding-block` | `--tab-panel-padding` | Padding of a panel on one axis. A Rail on a phone sets 8px at the sides |
 | `--scroll-fade` | `48px` | Width of the fade at the edges of a tab row that scrolls. Set it on `.nds-scroll-more` |
 {: .nds-table .nds-responsive}

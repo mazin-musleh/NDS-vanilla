@@ -15,7 +15,7 @@ sidemenu_mode: false
 <!-- Layout rules: a signed-in user's messages, read and written like letters (not a chat).
      - Inbox and Sent are Tabs, a Rail (nds-vertical nds-rail nds-divided): on a phone only the icons show, so the list keeps the width.
        The unread count is a badge on the Inbox icon (NDS.setBadge), which also adds it to the tab's name.
-     - Each message is a Drawer row (a button) with a featured icon, a New tag while unread, a preview line and a Meta line.
+     - Each message is a Drawer row (a button) with a New tag while unread, a preview line and a Meta line.
      - Every row opens ONE shared Panel that a small page script fills from the row; a real site loads the message by its id.
        Opening a message marks it read.
      - A message people can answer has a reply form in the panel; an automatic one says where to ask instead.
@@ -50,15 +50,12 @@ sidemenu_mode: false
                     </nav>
                 </div>
                 <div class="nds-tab-content">
-                    <div class="nds-tab-panel" role="tabpanel" id="inbox-panel-received" aria-labelledby="inbox-tab-received" tabindex="0">
+                    <div class="nds-tab-panel nds-flush" role="tabpanel" id="inbox-panel-received" aria-labelledby="inbox-tab-received" tabindex="0">
                         <!-- Newest first. data-body and data-attachment stand in for the message the server sends; data-no-reply marks an automatic message, data-sent one the user wrote -->
                         <div class="nds-drawer nds-divided">
                             <ul class="nds-drawer-list" id="inbox-list" aria-label="Received messages">
-                                <li data-status="warning" data-unread data-body="We need a clearer copy of your national ID to finish request 2026-118204. Upload it from the request page by 1 November 2026, or the request closes. Reply here if you have a question.">
+                                <li data-unread data-body="We need a clearer copy of your national ID to finish request 2026-118204. Upload it from the request page by 1 November 2026, or the request closes. Reply here if you have a question.">
                                     <button type="button" class="nds-btn nds-subtle" data-panel-toggle="message-panel">
-                                        <span class="nds-featured-icon nds-sm">
-                                            <i class="hgi hgi-stroke hgi-alert-02" aria-hidden="true"></i>
-                                        </span>
                                         <span class="nds-drawer-item">
                                             <span class="nds-drawer-item-head">
                                                 <span class="nds-tag" data-status="info"><span class="nds-label">New</span></span>
@@ -72,11 +69,8 @@ sidemenu_mode: false
                                         </span>
                                     </button>
                                 </li>
-                                <li data-status="info" data-unread data-no-reply data-attachment="appointment.ics" data-body="Your appointment to renew a national ID is on Monday 26 October 2026 at 8:30 AM, at the Olaya branch. Your booking number is APT-2026-55120. Bring your national ID.">
+                                <li data-unread data-no-reply data-attachment="appointment.ics" data-body="Your appointment to renew a national ID is on Monday 26 October 2026 at 8:30 AM, at the Olaya branch. Your booking number is APT-2026-55120. Bring your national ID.">
                                     <button type="button" class="nds-btn nds-subtle" data-panel-toggle="message-panel">
-                                        <span class="nds-featured-icon nds-sm">
-                                            <i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i>
-                                        </span>
                                         <span class="nds-drawer-item">
                                             <span class="nds-drawer-item-head">
                                                 <span class="nds-tag" data-status="info"><span class="nds-label">New</span></span>
@@ -90,11 +84,8 @@ sidemenu_mode: false
                                         </span>
                                     </button>
                                 </li>
-                                <li data-status="neutral" data-body="The fee to renew a passport is 300 riyals for 5 years, or 600 riyals for 10 years. You pay it online before you send the request. Reply here if you have another question.">
+                                <li data-body="The fee to renew a passport is 300 riyals for 5 years, or 600 riyals for 10 years. You pay it online before you send the request. Reply here if you have another question.">
                                     <button type="button" class="nds-btn nds-subtle" data-panel-toggle="message-panel">
-                                        <span class="nds-featured-icon nds-sm">
-                                            <i class="hgi hgi-stroke hgi-customer-support" aria-hidden="true"></i>
-                                        </span>
                                         <span class="nds-drawer-item">
                                             <span class="nds-drawer-item-head">
                                                 <span class="nds-label">Re: The passport fee</span>
@@ -107,11 +98,8 @@ sidemenu_mode: false
                                         </span>
                                     </button>
                                 </li>
-                                <li data-status="success" data-no-reply data-attachment="license-1010-445566.pdf" data-body="Commercial license 1010-445566 is renewed and valid until 26 October 2027. The license is attached to this message.">
+                                <li data-no-reply data-attachment="license-1010-445566.pdf" data-body="Commercial license 1010-445566 is renewed and valid until 26 October 2027. The license is attached to this message.">
                                     <button type="button" class="nds-btn nds-subtle" data-panel-toggle="message-panel">
-                                        <span class="nds-featured-icon nds-sm">
-                                            <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
-                                        </span>
                                         <span class="nds-drawer-item">
                                             <span class="nds-drawer-item-head">
                                                 <span class="nds-label">Your license is renewed</span>
@@ -127,7 +115,7 @@ sidemenu_mode: false
                             </ul>
                         </div>
                     </div>
-                    <div class="nds-tab-panel" role="tabpanel" id="inbox-panel-sent" aria-labelledby="inbox-tab-sent" tabindex="-1" hidden>
+                    <div class="nds-tab-panel nds-flush" role="tabpanel" id="inbox-panel-sent" aria-labelledby="inbox-tab-sent" tabindex="-1" hidden>
                         <div class="nds-drawer nds-divided">
                             <!-- The placeholder shows while the list holds no items, and leaves on its own when one is added -->
                             <ul class="nds-drawer-list nds-empty" id="sent-list" aria-label="Sent messages" data-empty-message="You have not sent a message yet"></ul>
@@ -356,11 +344,9 @@ sidemenu_mode: false
     // Sent: a new message or a reply joins the Sent list, and its placeholder leaves on its own
     function addSent(title, text) {
       var row = document.createElement('li');
-      row.setAttribute('data-status', 'neutral');
       row.setAttribute('data-sent', '');
       row.setAttribute('data-body', text);
       row.innerHTML = '<button type="button" class="nds-btn nds-subtle" data-panel-toggle="message-panel">' +
-        '<span class="nds-featured-icon nds-sm"><i class="hgi hgi-stroke hgi-sent" aria-hidden="true"></i></span>' +
         '<span class="nds-drawer-item"><span class="nds-drawer-item-head"><span class="nds-label"></span></span>' +
         '<span class="nds-description"></span><span class="nds-meta">' +
         '<span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user" aria-hidden="true"></i>You</span>' +

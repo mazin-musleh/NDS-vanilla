@@ -405,6 +405,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Tabs** — a tab set in a card no longer doubles the panel padding; Home and End go to the first and last tab in RTL too; a tab set in a column that centers its items keeps its full width; a vertical divided tab keeps its icon before the label and starts at the edge. A tab set inside a tab panel or a Content Switcher panel keeps its own look.
 - **Tabs** — In a ghost section on small screens, the tab divider spans the content.
 - **Tabs** — Vertical tabs in a card keep one gutter between the list and the panels: 24px, 16px on a phone. A whole-set card added the panels' own padding to the card's gap (40px), and a panel-only card sat 16px off the list on top of its padding.
+- **Tabs** — The first line of a vertical tab panel lines up with the first tab, in a whole-set card too. The panel's 20px top padding set it 12px lower, and in a card it sat 8px higher. The top padding is 8px now.
 - **Tag Input** — A read-only field blocks chip removal and the Backspace edit. A required tag input with no `data-taginput-name` passes once it has tags.
 - **Tag Input** — A disabled field posts no tag after a tag is added or removed from code or the field is built again; the new hidden inputs were enabled. `destroy()` removes the chips, and `init()` builds them again from the hidden inputs.
 - **Tags** — A tag fits its content in a column layout, and a ghost status tag on color keeps light text.
