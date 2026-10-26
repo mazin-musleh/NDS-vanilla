@@ -145,6 +145,13 @@ check('?per-page=6: the early split shows 6', s.split === 6, s.split);
 check('?per-page=6&page=2: items 7–12 shown', s.count === 6 && s.first === 'Item 7', `${s.count} from ${s.first}`);
 check('?per-page=6: the picker shows 6', s.label === '6', s.label);
 const pick = async (v) => {
+  // The jump draws the sections around the picker for the first time: the page shifts, and a menu opened mid-shift closes.
+  await pp.locator('#pp-wrap .nds-dropmenu-trigger').scrollIntoViewIfNeeded();
+  await pp.waitForFunction(() => new Promise((done) => {
+    const read = () => `${scrollY} ${document.documentElement.scrollHeight}`;
+    const first = read();
+    requestAnimationFrame(() => requestAnimationFrame(() => done(read() === first)));
+  }));
   await pp.click('#pp-wrap .nds-dropmenu-trigger');
   await pp.click(`#pp-wrap .nds-dropmenu-item[data-value="${v}"]`);
   // A click on the trigger while the menu still closes would not open it.

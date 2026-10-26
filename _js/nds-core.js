@@ -579,6 +579,36 @@
         return fn => subscribe(subs, fn);
     })();
 
+    // ── Sections nobody has scrolled to ──────────────────────────────
+    // A section is content-visibility:auto until it first draws (_section.scss); the browser reports
+    // the draw and data-nds-drawn makes it a normal section. whenDrawn(el, fn) runs fn at once, or once
+    // el's section draws: a ResizeObserver write that resizes a skipped section raises the loop error.
+    const EXEMPT = ':first-of-type, :first-of-type + .nds-content-section, .nds-sideinfo-section'; // as in _section.scss
+    const drawnWaits = new Map(); // section → Set of fns
+    const canSkip = 'oncontentvisibilityautostatechange' in window;
+    const markDrawn = (section) => {
+        section.setAttribute('data-nds-drawn', '');
+        const waits = drawnWaits.get(section);
+        if (waits) { drawnWaits.delete(section); waits.forEach((fn) => fn()); }
+    };
+    if (canSkip) {
+        document.documentElement.setAttribute('data-nds-cv', '');
+        document.addEventListener('contentvisibilityautostatechange', (e) => {
+            if (!e.skipped && e.target.classList.contains('nds-content-section')) markDrawn(e.target);
+        }, true); // the event does not bubble
+        // Drawn before this script ran: main CSS can apply first.
+        document.querySelectorAll('.nds-content-section:not([data-nds-drawn])').forEach((section) => {
+            if (getComputedStyle(section).contentVisibility === 'auto' && section.firstElementChild?.checkVisibility({ contentVisibilityAuto: true })) markDrawn(section);
+        });
+    }
+    const whenDrawn = (el, fn) => {
+        const section = canSkip && el.closest('.nds-content-section:not([data-nds-drawn])');
+        if (!section || section.matches(EXEMPT)) { fn(); return () => {}; }
+        if (!drawnWaits.has(section)) drawnWaits.set(section, new Set());
+        drawnWaits.get(section).add(fn);
+        return () => drawnWaits.get(section)?.delete(fn);
+    };
+
     // ── Element Resize Observer ──────────────────────────────────────
     // Single ResizeObserver, multiple elements
     // Usage: const off = NDS.onElementResize(el, handler)
@@ -586,6 +616,7 @@
     //        the batch reads first, then the writes run together — a write between
     //        two handlers' reads forces one layout per element (34 scroll-mores
     //        cost 68ms@6.6x that way).
+    //        An element in a section nobody has scrolled to is observed once the section draws.
     NDS.onElementResize = (() => {
         const map = new Map();
         const resizeObserver = typeof ResizeObserver !== 'undefined'
@@ -602,14 +633,18 @@
             })
             : null;
 
+        const cancels = new Map(); // el → stops its wait for the section to draw
         return (el, fn) => {
             if (!resizeObserver) return () => {};
             let listeners = map.get(el);
-            if (!listeners) { listeners = new Set(); map.set(el, listeners); resizeObserver.observe(el); }
+            if (!listeners) {
+                listeners = new Set(); map.set(el, listeners);
+                cancels.set(el, whenDrawn(el, () => { cancels.delete(el); resizeObserver.observe(el); }));
+            }
             listeners.add(fn);
             return () => {
                 if (!listeners.delete(fn)) return; // a repeat off() must not unobserve a newer subscriber
-                if (!listeners.size) { map.delete(el); resizeObserver.unobserve(el); }
+                if (!listeners.size) { map.delete(el); cancels.get(el)?.(); cancels.delete(el); resizeObserver.unobserve(el); }
             };
         };
     })();
@@ -1790,10 +1825,9 @@
     // paint, so a reload never flashes the top of the page (manual mode painted
     // frame one at 0 and jumped at the stamp). 'auto' is set explicitly: the
     // mode persists per history entry, so tabs stamped 'manual' by earlier
-    // builds must be unstuck. Native can still land short pre-stamp (cv holds
-    // off-screen sections at 680px estimates, capping reachable height on long
-    // pages), so at data-nds-loaded — cv dropped, heights real — re-pin to the
-    // exact saved offset. Reload: always (native target == ours). Back/forward:
+    // builds must be unstuck. Native lands on cv's 680px section estimates, so at
+    // data-nds-loaded every section is marked drawn (real heights from then on)
+    // and the page re-pins to the exact saved offset. Reload: always (native target == ours). Back/forward:
     // only rescue from 0 — native's per-entry offset beats our per-path save.
     // pagehide saves the pending y until the re-pin has run, so re-reloading
     // mid-load can't clobber the position with 0. (whole-page load = fallback.)
@@ -1814,6 +1848,7 @@
                 const restore = () => {
                     if (!pending) return;
                     pending = 0;
+                    document.querySelectorAll('.nds-content-section:not([data-nds-drawn])').forEach(markDrawn);
                     if (navType === 'reload' || !window.scrollY) window.scrollTo(0, y);
                 };
                 if (root.hasAttribute('data-nds-loaded')) restore();

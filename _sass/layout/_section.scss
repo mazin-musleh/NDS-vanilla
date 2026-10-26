@@ -97,20 +97,16 @@
 }
 
 
-/* ── Off-screen sections: skip rendering until the reveal stamp ── */
+/* ── Sections nobody has scrolled to: skipped until first drawn ── */
 
-// content-visibility skips off-screen sections during the reveal-time Layout
-// task and the init's forced-layout reads, then drops at data-nds-loaded — so
-// popups never meet cv's containment clip (no observer needed) and the scroll
-// restore reads real heights. The loader stamps data-nds-loaded only once main
-// CSS has applied (nds-loader.js), and the reveal rule is in main too, so cv is
-// guaranteed present for the reveal layout and drops just after — no dependency
-// on the main-vs-JS load race. 680px ≈ the measured median section height; the
-// near-fold band stays real-height so the reveal can't shift (CLS 0).
-html:not([data-nds-loaded]) .nds-content-section {
+// Cuts style and layout at load by about a quarter on long pages (2026-10-26). nds-core.js stamps
+// data-nds-drawn the first time a section draws (all of them for a scroll restore), and from then
+// on it is a normal section: a component that resizes a section from a ResizeObserver raises the
+// "ResizeObserver loop" error under either property. data-nds-cv: the browser reports the draw;
+// without it cv drops at the reveal. Never skipped (the same list is EXEMPT in nds-core.js): the
+// near-fold pair, so the reveal can't shift, and Side Info, which draws over the hero.
+// 680px ≈ the median section height.
+html:is(:not([data-nds-loaded]), [data-nds-cv]) .nds-content-section:not([data-nds-drawn], :first-of-type, :first-of-type + .nds-content-section, .nds-sideinfo-section) {
     content-visibility: auto;
-    contain-intrinsic-block-size: auto 680px;
-}
-html:not([data-nds-loaded]) :is(.nds-content-section:first-of-type, .nds-content-section:first-of-type + .nds-content-section) {
-    content-visibility: visible;
+    contain-intrinsic-block-size: 680px;
 }

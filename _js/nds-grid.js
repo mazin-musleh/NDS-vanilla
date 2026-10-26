@@ -55,32 +55,13 @@
     function watch(grid) {
         if (offs.has(grid)) return;
         const first = grid.firstElementChild;
-        offs.set(grid, first ? NDS.onElementResize(first, () => (isHeld(grid) ? undefined : mark(grid))) : () => {});
+        // A grid in a section nobody has scrolled to marks once it draws (NDS.onElementResize).
+        offs.set(grid, first ? NDS.onElementResize(first, () => mark(grid)) : () => {});
         if (releasing) return;
         releasing = true;
         NDS.onDomRemove(SELECTOR, (grids) => grids.forEach(unwatch));
         // A re-observed first item delivers again, so the grid re-marks in the observer without forcing layout.
         NDS.onChildrenChange(SELECTOR, (grids) => grids.forEach((gridEl) => { if (offs.has(gridEl)) { unwatch(gridEl); watch(gridEl); } }));
-    }
-
-    // Before the reveal, off-screen sections are content-visibility:auto, and Chrome
-    // tracks their size with its own observer: a mark that resizes one raises the
-    // "ResizeObserver loop" error. Those grids mark once data-nds-loaded drops cv, still off-screen.
-    const root = document.documentElement;
-    const waiting = new Set();
-    function isHeld(grid) {
-        if (root.hasAttribute('data-nds-loaded')) return false;
-        const section = grid.closest('.nds-content-section');
-        if (!section || section.getBoundingClientRect().top < innerHeight || getComputedStyle(section).contentVisibility !== 'auto') return false;
-        if (!waiting.size) {
-            const off = NDS.onAttributeChange('html', ['data-nds-loaded'], () => {
-                off();
-                waiting.forEach((gridEl) => { if (gridEl.isConnected) { unwatch(gridEl); watch(gridEl); } });
-                waiting.clear();
-            });
-        }
-        waiting.add(grid);
-        return true;
     }
 
     function findGrids(container) {
@@ -104,7 +85,6 @@
         const grids = findGrids(container);
         for (let i = 0; i < grids.length; i++) {
             unwatch(grids[i]);
-            waiting.delete(grids[i]);
             for (const item of grids[i].children) item.classList.remove(CLASS_NAME);
         }
     }

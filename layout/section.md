@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "15/10/2026 - 11:40 AM"
+last_edit: "26/10/2026 - 05:27 PM"
 ---
 
 <section id="section-overview" class="nds-content-section nds-doc-overview">
@@ -349,9 +349,9 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-dashboard-speed-01"></i>
-            <span class="nds-label">Fast First Paint</span>
+            <span class="nds-label">Off-Screen Sections</span>
           </span>
-          <p class="nds-item-desc">Until the page shows, the browser skips the layout of off-screen sections after the first two, so a long page shows sooner.</p>
+          <p class="nds-item-desc">The browser skips the style and layout of a section until the page scrolls near it. After it first draws, the section stays a normal section. The first two sections and a Side Info section always draw.</p>
         </div>
       </div>
     </div>
@@ -378,6 +378,7 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
 - Use a breakout body for a [swiper](../components/swiper) or a wide image, not for text.
 - Use `nds-full` on a title or a description only for short text. Long lines are hard to read.
 - Put two or more parts of a section body in a [grid](../layout/grid), a [flex](../layout/flex) or a [block](../layout/block). The section body is a plain block, so it puts no space between its children.
+- In your own `ResizeObserver`, change the height of a section's content only after the section has `data-nds-drawn`. Before that, the browser reports a "ResizeObserver loop" error.
 
 </div>
   </div>
@@ -443,7 +444,7 @@ Set these on `.nds-content-section`. The block title properties are on the [Bloc
 ### JavaScript
 {: .nds-block-title}
 
-Sections have no script, methods or events.
+Sections have no methods or events. The core script writes `data-nds-drawn` on a section the first time the browser draws it. Do not set it yourself.
 
 </div>
   </div>
