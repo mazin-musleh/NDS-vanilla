@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 10:15 AM"
+last_edit: "26/10/2026 - 11:21 AM"
 ---
 
 <section id="date-overview" class="nds-content-section nds-doc-overview">
@@ -301,7 +301,7 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 | `NDS.Date.getMonthNames(calendar, lang)` | Returns the 12 month names of `'gregory'` or `'hijri'`, in `lang` or the page's language. The Hijri names come from the `date` section of the [string pack](../core/i18n) |
 | `NDS.Date.getWeekdayNames(lang, weekStart)` | Returns the 7 short weekday names in `lang` or the page's language, from `weekStart`: 0 is Sunday (the default) and 6 is Saturday |
 | `NDS.Date.getWeekStart(element)` | Returns the nearest `data-week-start` around `element`, the element's own included, as 0 (Sunday) to 6 (Saturday). Returns 0 when there is none. Pass it as `weekStart` |
-| `NDS.Date.readWeekdays(text)` | Returns the weekdays in `text`, words from `sun` to `sat` with spaces or commas between them, as numbers from 0 (Sunday) to 6 (Saturday): `'fri sat'` gives `[5, 6]`. A word that is not a weekday is skipped, with a warning in the console. The Date Picker reads `data-disabled-days` with it |
+| `NDS.Date.readWeekdays(text)` | Returns the weekdays in `text`, words from `sun` to `sat` with spaces or commas between them, as numbers from 0 (Sunday) to 6 (Saturday): `'fri sat'` gives `[5, 6]`. A word that is not a weekday is skipped, with a warning in the console. The Date Picker reads `data-disabled-weekdays` with it |
 | `NDS.Date.getStartOfWeek(date, weekStart)` | Returns the first day of the week that holds `date`, as a `Date` at local midnight. `weekStart` is 0 (Sunday) by default |
 | `NDS.Date.fill(root)` | Writes the text of every `<time>` in `root`, and of `root` itself, that has `data-date-calendar` or its own `data-date-format`, and of every empty [Date Tile](../components/date-tile). The loader runs it at load, and `NDS.init.mount()` on markup added later |
 | `NDS.Date.fillTile(tile, options)` | Writes a Date Tile's parts from its `datetime` and `data-date-end`, and adds them to an empty tile. `calendar` and `locale` default to the nearest `data-calendar` and `lang`. A Calendar calls it for each event |

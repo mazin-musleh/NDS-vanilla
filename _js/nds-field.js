@@ -74,8 +74,9 @@
 
     // ── Resolving a field ──────────────────────────────────────────────
     // The input an event belongs to: a direct input / textarea / select of a .nds-form-control that is no code sample.
+    // A hidden carrier is not a field: a component's write to it must not clear the message it just set.
     function findControl(target) {
-        if (!target || !target.matches || !target.matches('input, textarea, select')) return null;
+        if (!target || !target.matches || !target.matches('input:not([type="hidden"]), textarea, select')) return null;
         const formControl = target.parentElement;
         if (!formControl || !formControl.classList || !formControl.classList.contains('nds-form-control') || formControl.closest('code')) return null;
         return { input: target, control: formControl, container: formControl.closest('.nds-form-container') };

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 10:14 AM"
+last_edit: "26/10/2026 - 11:35 AM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -79,7 +79,7 @@ A Picker choice changes two elements: write `data-format` on `.nds-date-picker` 
 | Picker | Month (hint: A grid of months, for a card expiry) | `[placeholder="MM/YYYY"]` | `.nds-date-input:not(.nds-date-range *)` | |
 | Picker | Year (hint: A grid of years, for a graduation year) | `[data-format="YYYY"]` | `.nds-date-picker:not(.nds-date-range)` | The calendar shows a grid of years, for a year such as a graduation year. Not with Range. See Date Format |
 | Picker | Year (hint: A grid of years, for a graduation year) | `[placeholder="YYYY"]` | `.nds-date-input:not(.nds-date-range *)` | |
-| Unavailable days | Weekends (hint: Friday and Saturday cannot be picked) | `[data-disabled-days="fri sat"]` | `.nds-date-input:not([data-format="MM/YYYY"] *):not([data-format="YYYY"] *)` | Every Friday and Saturday is off, as for an office closed at the weekend. Not with the Month or Year picker. See Unavailable Days |
+| Unavailable days | Weekends off (hint: Friday and Saturday cannot be picked) | `[data-disabled-weekdays="fri sat"]` | `.nds-date-input:not([data-format="MM/YYYY"] *):not([data-format="YYYY"] *)` | Every Friday and Saturday is off, as for an office closed at the weekend. Not with the Month or Year picker. See Unavailable Days |
 | Clear button | Clear button | `[data-clearable]` | `.nds-date-picker:not(.nds-date-range)` | Adds Clear to the calendar. Range has it already. See Clear Button |
 | Size | LG (default) | — | — | 40px high. It needs no class |
 | Size | MD | `.nds-md` | `.nds-form-container` | 32px high, with smaller text, for a table filter or a side panel |
@@ -142,7 +142,7 @@ A format with no day token shows a grid of months, and a format with only year t
 ### Value for the Server
 {: .nds-block-title}
 
-The field sends the date as the user sees it, such as `15/09/1447`. To send the server one fixed format, put a hidden input with the class `nds-date-value` in `.nds-date-picker`, and give it the field name. The script writes the date there each time the field changes, in the input's own `data-date-format` and `data-calendar`. Without them, the input takes the picker's format and calendar, so it holds the same text as the field. Text that is not a valid date leaves it empty. Each one holds the date, so two can send it in two formats. In a range, the first holds the start and the second the end.
+The field sends the date as the user sees it, such as `15/09/1447`. To send the server one fixed format, put a hidden input with the class `nds-date-value` in `.nds-date-picker`, and give it the field name. The script writes the date there each time the field changes, in the input's own `data-date-format` and `data-calendar`. Without them, the input takes the picker's format and calendar, so it holds the same text as the field. Text that is not a valid date, and a day the field does not allow, leave it empty. Each one holds the date, so two can send it in two formats. In a range, the first holds the start and the second the end.
 
 To filter a list by date, put the picker in a [Filter](../components/filter) group: it reads these values, and its chip and link keep the range.
 
@@ -158,9 +158,9 @@ To filter a list by date, put the picker in a [Filter](../components/filter) gro
 ### Unavailable Days
 {: .nds-block-title}
 
-`data-disabled-days` on `.nds-date-input` turns off weekdays: `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`, with spaces between them. `data-disabled-dates` turns off single days, with commas between them. Write each date in the field's format and calendar, or as `YYYY-MM-DD`, so code can write the dates a server sends as they come. An office closed at the weekend and on two holidays takes `data-disabled-days="fri sat" data-disabled-dates="23/09/2026, 2026-12-02"`.
+`data-disabled-weekdays` on `.nds-date-input` turns off weekdays: `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`, with spaces between them. `data-disabled-dates` turns off single days, with commas between them. Write each date in the field's format and calendar, or as `YYYY-MM-DD`, so code can write the dates a server sends as they come. An office closed at the weekend and on two holidays takes `data-disabled-weekdays="fri sat" data-disabled-dates="23/09/2026, 2026-12-02"`.
 
-The calendar shows these days off, the arrow keys skip them, and Tab never lands on one. A typed or pasted date on one of them shows an error under the field, such as "18/09/2026 is not available. Pick another day". In a range, the start and the end cannot be such a day, but the days between them can. Code can change either attribute at any time, such as after a request for the fully booked days, and the calendar and the value's check follow at once. A word that is not a weekday, or a date the picker cannot read, is skipped with a warning in the console.
+The calendar shows these days off, the arrow keys skip them, and Tab never lands on one. When today is one of them, the Today button is off. An empty field whose month has no day left to pick opens on the next month that has one. A typed or pasted date on one of them shows an error under the field, such as "18/09/2026 is not available. Pick another day". In a range, the start and the end cannot be such a day, but the days between them can. Code can change either attribute at any time, such as after a request for the fully booked days, and the calendar and the value's check follow at once. A word that is not a weekday, or a date the picker cannot read, is skipped with a warning in the console.
 
 ### Year List
 {: .nds-block-title}
@@ -251,7 +251,7 @@ The picker checks the field at each `change`, typed text included. A date that d
 - Give the calendar button an `aria-label`, such as "Open calendar". It shows only an icon.
 - To show a saved date, write it in the input's `value`, in the field's format and calendar.
 - Set the year list for the task. With the defaults, the user cannot pick a future year.
-- Turn off the days the user cannot book with `data-disabled-days` and `data-disabled-dates`, so the calendar shows them before the user picks. Check the date on the server too.
+- Turn off the days the user cannot book with `data-disabled-weekdays` and `data-disabled-dates`, so the calendar shows them before the user picks. Check the date on the server too.
 - Use Range for a start and an end date, not two separate pickers. The calendar then shows the days between them.
 - Listen for `change` on the input. A pick fires nothing until the user presses Save.
 - Add a `.nds-date-value` when the server needs one format, such as a Gregorian `YYYY-MM-DD` from a Hijri field.
@@ -285,7 +285,7 @@ The picker checks the field at each `change`, typed text included. A date that d
 | `data-state~="open"` | `.nds-date-picker` | The script sets it when the calendar opens, and removes it when the calendar closes. No NDS style reads it: it is for your CSS |
 | `data-picker-mode` | `.nds-date-picker` | The script writes `day`, `month` or `year` from `data-format` when the field starts. The CSS reads it to show the month or the year grid |
 | `data-min-date`, `data-max-date` | `.nds-date-input` | The first and the last day the user can pick, in the field's format and calendar, `today`, or `today±N` with an optional `m` or `y`. See Date Bounds |
-| `data-disabled-days` | `.nds-date-input` | Weekdays the user cannot pick, `sun` to `sat`, with spaces between them, such as `fri sat`. See Unavailable Days |
+| `data-disabled-weekdays` | `.nds-date-input` | Weekdays the user cannot pick, `sun` to `sat`, with spaces between them, such as `fri sat`. See Unavailable Days |
 | `data-disabled-dates` | `.nds-date-input` | Single days the user cannot pick, in the field's format and calendar or as `YYYY-MM-DD`, with commas between them. A change applies at once. See Unavailable Days |
 | `data-year-before`, `data-year-after` | `.nds-date-input` | How many years before and after this year the year menu lists. The defaults are `5` and `0`. See Year List |
 | `data-lang` | `.nds-date-input` | The language of the calendar text, such as `ar` or `en`. Without it, the picker reads the nearest `lang`, the input's own included. See [Internationalization](../core/i18n) |

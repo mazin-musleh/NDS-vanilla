@@ -8,9 +8,6 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 
 ### Next session (handoff 2026-10-26)
 
-- **Date Picker: a typed unavailable day sets its message but shows nothing.** On Book an Appointment, typing a Friday (`data-disabled-days="fri sat"`) and pressing Tab sets the input's validity to "30/10/2026 is not available. Pick another day", but no error shows under the field (`data-status` stays empty). First: type a date before `data-min-date` on the committed bundles from before `data-disabled-days` landed, to tell whether showing the message broke here or earlier. Then fix it, and check the Date Picker doc's first field too: its test read the validity, not the message under the field.
-- **Date Picker unavailable days: checks still to run.** `check-filter-dates.mjs` (hard-wired to :4002 and the playground), `check-a11y.mjs` on the Date Picker page, and `check-form-validate.mjs` / `check-form-interact.mjs` against the commit before the feature. Passed on 2026-10-26, Chrome and Safari: off days in the grid, the keys skip them (and stop at a bound month), the Tab stop, Today off, a live attribute change, a warning on an unknown weekday word; `check-typing.mjs date` and `check-menus-in-modal.mjs`. One `check-typing.mjs date` run failed once (ISO round trip) and passed twice after.
-- **Book an Appointment: finish its flow check once the message shows.** Pick a service and a branch: the calendar shows Fridays, Saturdays and the server's fully booked days (the 7th, 17th and 27th) off; a typed Friday shows the message and no times. The rest of the flow passed on 2026-10-26: reveal, book, change, cancel, clear button, row template.
 - **Autocomplete: one aborted request, once.** A screenshot run logged `docs-assets/data/appointment-services.json` as `ERR_ABORTED` on the first click. A trace showed one request that finishes, and two reruns were clean. Watch for it.
 
 ### v2.0.0 release

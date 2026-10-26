@@ -22,7 +22,7 @@ sidemenu_mode: false
        keeps the picked item for its code and length. The branch is a Custom Select whose options give the address (nds-description).
      - The free times depend on the service, the branch and the day: ask the server after each change, with the date field in its loading state.
        The times are one Radio row (nds-horizontal) beside the day, in the branch's time zone, named in the date field's info; a taken time is a disabled radio.
-     - Days that can't be booked are off in the calendar, and typed ones fail: closed weekdays in the markup (data-disabled-days),
+     - Days that can't be booked are off in the calendar, and typed ones fail: closed weekdays in the markup (data-disabled-weekdays),
        fully booked days from the server for the service and branch (data-disabled-dates). A day that fills up after the pick clears and says why.
      - On a signed-in page, the name and the ID come from the account: show them as a Definition List, never as fields.
      - The summary is the side info column (nds-has-sideinfo), filled from the form's change events. It holds the Book button
@@ -160,7 +160,7 @@ sidemenu_mode: false
                                             <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
                                         </button>
                                     </div>
-                                    <input type="text" id="book-date" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" data-min-date="today" data-max-date="today+30" data-disabled-days="fri sat">
+                                    <input type="text" id="book-date" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" data-min-date="today" data-max-date="today+30" data-disabled-weekdays="fri sat">
                                     <input type="hidden" class="nds-date-value" name="date" data-date-format="YYYY-MM-DD" data-calendar="gregory">
                                 </div>
                             </div>

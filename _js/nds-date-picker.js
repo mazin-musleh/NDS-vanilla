@@ -35,7 +35,7 @@
  *   on the .nds-date-input:      data-min-date · data-max-date (a date, `today`, or `today±N`
  *                                with d, m or y, counted in the field's calendar; a change
  *                                applies at once) · data-lang
- *                                data-disabled-days (sun … sat) · data-disabled-dates (dates in the
+ *                                data-disabled-weekdays (sun … sat) · data-disabled-dates (dates in the
  *                                picker's format or YYYY-MM-DD, comma-separated): days that can't be
  *                                picked; a change applies at once
  *                                data-year-before · data-year-after
@@ -71,7 +71,7 @@
     }
 
     // One number per day, the same for every Date of that day (a Hijri stamp too).
-    function dayKey(date) {
+    function getDayKey(date) {
         return date.getFullYear() * 10000 + date.getMonth() * 100 + date.getDate();
     }
 
@@ -611,7 +611,7 @@
                 minDate: null,
                 maxDate: null,
                 disabledWeekdays: [],
-                disabledDays: new Set()
+                disabledDates: new Set()
             };
         },
 
@@ -637,13 +637,13 @@
             this._state.maxDate = readBound(this._elements.input.getAttribute('data-max-date'));
             // Days that can't be picked: weekdays (sun … sat), and dates in the picker's format or
             // YYYY-MM-DD, comma-separated, so code can write a server's dates as they come.
-            this._state.disabledWeekdays = NDS.Date.readWeekdays(this._elements.input.getAttribute('data-disabled-days'));
-            this._state.disabledDays = new Set();
+            this._state.disabledWeekdays = NDS.Date.readWeekdays(this._elements.input.getAttribute('data-disabled-weekdays'));
+            this._state.disabledDates = new Set();
             (this._elements.input.getAttribute('data-disabled-dates') || '').split(',').forEach((text) => {
                 text = text.trim();
                 if (!text) return;
                 var day = calendar.parseDate(text, format) || NDS.Date.readDay(text);
-                if (day) this._state.disabledDays.add(dayKey(day));
+                if (day) this._state.disabledDates.add(getDayKey(day));
                 else console.warn('NDS DatePicker: data-disabled-dates: "' + text + '" is not a date in ' + format + ' or YYYY-MM-DD');
             });
             // Open at the nearest bound when the view falls outside [min, max] —
@@ -656,7 +656,26 @@
             if (this._state.minDate && date < this._state.minDate) return false;
             if (this._state.maxDate && date > this._state.maxDate) return false;
             if (this._state.disabledWeekdays.includes(date.getDay())) return false;
-            return !this._state.disabledDays.has(dayKey(date));
+            return !this._state.disabledDates.has(getDayKey(date));
+        },
+
+        // Off days can leave no day to pick in the month on view: show the next month that has one,
+        // a year at most, else stay.
+        _skipEmptyMonths: function () {
+            var shown = this._state.currentDate;
+            for (var i = 0; i < 12 && !this._hasDayToPick(); i++) {
+                if (!this._stepMonth(1)) break;
+            }
+            if (!this._hasDayToPick()) this._state.currentDate = shown;
+        },
+
+        _hasDayToPick: function () {
+            var year = this._getCurrentYear(), month = this._getCurrentMonth();
+            var length = this._state.calendarType === 'hijri' ? getHijriMonthLength(year, month) : new Date(year, month + 1, 0).getDate();
+            for (var day = 1; day <= length; day++) {
+                if (this._isDateAllowed(this._makeDay(year, month, day))) return true;
+            }
+            return false;
         },
 
         // Month is offered in month-grid iff at least one of its days is
@@ -825,6 +844,7 @@
             this._state.isInitialized = true;
             this._readBounds();
             this._parseInitialValue();
+            if (!this._state.selectedDate && !this._state.rangeStart) this._skipEmptyMonths();
             this._addPanelListeners();
             this._setupLanguageObserver();
             this._render();
@@ -1677,6 +1697,8 @@
             var format = this._state.format;
             var type = this._detectCalendarType();
             var text = this._elements.input.value.trim();
+            // A day the field refuses (out of bounds, unavailable) is no value to send.
+            if (text && this._validationError(text)) text = '';
             var range = this._isRangeMode(), parts = text.split(' - ');
             outs.forEach(function (out, i) {
                 var part = range ? parts[i] : text;
@@ -1922,11 +1944,12 @@
         if (boundsWatched) return;
         boundsWatched = true;
         // A new bound or unavailable day re-checks the value silently (submit shows the error) and redraws an open calendar.
-        NDS.onAttributeChange('.nds-date-input', ['data-min-date', 'data-max-date', 'data-disabled-days', 'data-disabled-dates'], (inputs) => inputs.forEach((input) => {
+        NDS.onAttributeChange('.nds-date-input', ['data-min-date', 'data-max-date', 'data-disabled-weekdays', 'data-disabled-dates'], (inputs) => inputs.forEach((input) => {
             var instance = input.ndsDatePicker;
             if (!instance) return;
             instance._readBounds();
             instance._validateInput(true);
+            instance._syncValueInputs();
             if (instance._state.isInitialized) instance._render();
         }));
     }
