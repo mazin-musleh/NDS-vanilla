@@ -1,0 +1,12 @@
+[
+  { "Code": "renew-id", "Title": "Renew a national ID", "Duration": "About 15 minutes", "Minutes": 15 },
+  { "Code": "first-id", "Title": "Issue a first national ID", "Duration": "About 20 minutes", "Minutes": 20 },
+  { "Code": "replace-id", "Title": "Replace a lost national ID", "Duration": "About 20 minutes", "Minutes": 20 },
+  { "Code": "fingerprints", "Title": "Register fingerprints", "Duration": "About 10 minutes", "Minutes": 10 },
+  { "Code": "family-record", "Title": "Issue a family record", "Duration": "About 30 minutes", "Minutes": 30 },
+  { "Code": "add-child", "Title": "Add a child to the family record", "Duration": "About 30 minutes", "Minutes": 30 },
+  { "Code": "birth-certificate", "Title": "Issue a birth certificate", "Duration": "About 15 minutes", "Minutes": 15 },
+  { "Code": "marital-status", "Title": "Change marital status", "Duration": "About 20 minutes", "Minutes": 20 },
+  { "Code": "correct-name", "Title": "Correct a name", "Duration": "About 30 minutes", "Minutes": 30 },
+  { "Code": "update-details", "Title": "Update personal details", "Duration": "About 15 minutes", "Minutes": 15 }
+]
