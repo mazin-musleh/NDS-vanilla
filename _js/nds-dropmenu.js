@@ -451,7 +451,7 @@
             NDS.field.onReset(hidden.form, () => {
                 if (initialItem) { this.setSelection(initialItem, { silent: true }); return; }
                 hidden.value = '';
-                this._getOwnItems().forEach((entry) => NDS.state.clear(entry));
+                this._getOwnItems().forEach((entry) => removeState(entry, 'selected'));
                 if (triggerLabel) triggerLabel.textContent = startLabel;
             }, { signal });
 
@@ -490,10 +490,11 @@
                 else this.trigger.textContent = labelText;
             }
 
+            // Only the selected token moves: an item's own states (disabled) stay.
             this._getOwnItems().forEach((other) => {
-                if (other !== item) NDS.state.clear(other);
+                if (other !== item) removeState(other, 'selected');
             });
-            NDS.state.set(item, 'selected');
+            addState(item, 'selected');
 
             if (!opts.silent) {
                 if (this._selectHidden) NDS.setValue(this._selectHidden, value);
@@ -599,8 +600,9 @@
                 // A nested sub-dropmenu's item (date-picker month/year) leaves its parent open.
                 if (!item || !this._isOwnItem(item)) return;
                 if (!item.hasAttribute('data-no-auto-close')) {
-                    // destroy() inside the wait: a late close() would strip a re-inited wrapper's state.
-                    setTimeout(() => { if (!signal.aborted) this.close(); }, 100);
+                    // open() and destroy() clear it: a late close() would shut a menu re-opened in the wait.
+                    clearTimeout(this._autoCloseTimer);
+                    this._autoCloseTimer = setTimeout(() => { if (this.isOpen) this.close(); }, 100);
                 }
             }, { signal });
         }
@@ -783,9 +785,9 @@
 
 
         open() {
-            // Already open: a second open() would overwrite _offView and
-            // _unsubResize, stranding the pooled subscribers the first one
-            // registered (close() only releases the last pair). Reachable via
+            // Already open: a second open() would overwrite _offOpen,
+            // stranding the pooled subscribers the first one
+            // registered (close() only releases the last list). Reachable via
             // _handleTriggerKeydown, which calls open() unconditionally on
             // Arrow keys. Reposition with syncPosition(), not a re-open.
             if (this.isOpen) return;
@@ -817,6 +819,7 @@
             // Abort any in-flight close so its cleanup doesn't tear down the
             // menu we're about to re-open. No-op when no close is pending.
             this._cancelClose?.();
+            clearTimeout(this._autoCloseTimer);
 
             // Close other open dropmenus — but skip ancestors of this one.
             // Date-picker has month/year sub-dropmenus inside the calendar's
@@ -863,7 +866,19 @@
             NDS.aria.hidden(this._menu, false);
 
             this.syncPosition();
+            this._watchWhileOpen();
+
+            requestAnimationFrame(() => {
+                removeState(this.dropmenu, 'opening');
+                removeState(this._menu,     'opening');
+            });
+            this._dispatchEvent('nds:dropmenu:opened');
+        }
+
+        // What follows the open menu. Each watch pushes its release into _offOpen, which close() runs.
+        _watchWhileOpen() {
             const { signal } = this.documentAbortController;   // close() aborts it with the other document listeners
+            const offOpen = this._offOpen = [];
 
             // Anchored, the browser keeps the menu on its trigger through every scroll, with no script.
             // Otherwise it is absolute in the top layer: page scroll carries it, and JS follows a
@@ -887,9 +902,9 @@
             // Only a change counts: the first report is the state at open, and a script can
             // open a menu whose trigger is off screen (it never left view).
             let shown = false;
-            this._offView = [NDS.onIntersect(this.trigger, (e) => {
+            offOpen.push(NDS.onIntersect(this.trigger, (e) => {
                 if (e.isIntersecting) shown = true; else if (shown) leave();
-            })];
+            }));
             // Resize-reposition (not close) — mobile browsers fire resize as
             // the address bar shows/hides during scroll, which would close
             // the menu mid-interaction otherwise. NDS.onResize is debounced
@@ -900,30 +915,24 @@
             if (viewport) {
                 const handleViewportResize = NDS.debounce(() => this.syncPosition(), 150);
                 viewport.addEventListener('resize', handleViewportResize, { signal });
-                this._unsubResize = handleViewportResize.cancel;
-            } else this._unsubResize = NDS.onResize(() => this.syncPosition());
+                offOpen.push(handleViewportResize.cancel);
+            } else offOpen.push(NDS.onResize(() => this.syncPosition()));
             // Keep scroll momentum off the page (its scroll closes the menu), but only while
             // the list scrolls: on a list that fits, `contain` swallows the page's wheel.
             // Watched while open, since search, results and populate change its length.
             const list = this._findOwnItem('.nds-dropmenu-scroll');
-            if (list) this._offListSize = NDS.onElementResize(list, () => {
+            if (list) offOpen.push(NDS.onElementResize(list, () => {
                 const value = list.scrollHeight > list.clientHeight ? 'contain' : '';
                 return () => { list.style.overscrollBehavior = value; };
-            });
+            }));
             // Above the trigger, its top was set for the height at placement: a search that shrinks it
             // would leave a gap. Slide it by the change, so its bottom stays on the trigger.
             // translate, not a new top: no layout read, and the next placement resets it.
-            this._offMenuSize = NDS.onElementResize(this._menu, (entry) => {
+            offOpen.push(NDS.onElementResize(this._menu, (entry) => {
                 if (!this._flipUp || this._placedHeight == null) return;
                 const shift = this._placedHeight - entry.borderBoxSize[0].blockSize;
                 return () => { this._menu.style.translate = shift ? `0 ${shift}px` : ''; };
-            });
-
-            requestAnimationFrame(() => {
-                removeState(this.dropmenu, 'opening');
-                removeState(this._menu,     'opening');
-            });
-            this._dispatchEvent('nds:dropmenu:opened');
+            }));
         }
 
         close() {
@@ -953,10 +962,7 @@
             addState(this._menu,     'closing');
             NDS.aria.expanded(this.trigger, false);
 
-            if (this._offView) { this._offView.forEach((off) => off()); this._offView = null; }
-            if (this._unsubResize) { this._unsubResize(); this._unsubResize = null; }
-            if (this._offListSize) { this._offListSize(); this._offListSize = null; }
-            if (this._offMenuSize) { this._offMenuSize(); this._offMenuSize = null; }
+            this._offOpen?.splice(0).forEach((off) => off());
 
             // Stored so open() can call this._cancelClose() to abort the
             // in-flight close if the user re-opens before the transition
@@ -1046,7 +1052,7 @@
             const topEdge = Math.max(placement.box.top + pad, placement.topEdge, clip ? clip.top + pad : -Infinity);
             const spaceBelow = (clip ? Math.min(placement.spaceBelow, clip.bottom - placement.triggerRect.bottom) : placement.spaceBelow) - gap - pad;
             // Recompute spaceAbove from triggerRect rather than reusing
-            // p.spaceAbove because p.spaceAbove uses the unclamped p.topEdge
+            // placement.spaceAbove because it uses the unclamped placement.topEdge
             // (which is 0 when no nav is present); we need the clamped value.
             const spaceAbove = placement.triggerRect.top - gap - topEdge;
             // Flip up when the menu doesn't fit below AND above has more room
@@ -1078,7 +1084,7 @@
             }
 
             // Re-measure only when the clamp changed the height; otherwise the
-            // menu is unchanged since p.menuRect (no DOM write since), so reuse
+            // menu is unchanged since placement.menuRect (no DOM write since), so reuse
             // it and skip a forced reflow.
             const currentMenuRect = clamped ? this._menu.getBoundingClientRect() : placement.menuRect;
             if (flipUp) {
@@ -1236,11 +1242,11 @@
             // state open() stamped on the trigger, which would otherwise stay
             // stuck there after a destroy mid-delay.
             this._cancelDelayedOpen();
+            clearTimeout(this._autoCloseTimer);
             // Drain the open-lifecycle subscriptions before releasing the rest.
-            // close() aborts the document listeners, releases this._offView (NDS.onIntersect) and
-            // this._unsubResize (NDS.onResize) synchronously at the top of its
-            // body — without this guard, destroy-while-open strands both pooled
-            // subscribers for the page lifetime.
+            // close() aborts the document listeners and releases this._offOpen (the pooled
+            // NDS.onIntersect / onResize / onElementResize subscribers) synchronously —
+            // without this guard, destroy-while-open strands them for the page lifetime.
             if (this.isOpen) this.close();
             // close() queues its cleanup on NDS.onTransitionEnd. Cancel that
             // and run it now: settling synchronously restores [hidden], the
