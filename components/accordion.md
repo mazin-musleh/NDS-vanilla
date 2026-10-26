@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "26/10/2026 - 01:09 PM"
 ---
 
 <section id="accordion-overview" class="nds-content-section nds-doc-overview">
@@ -175,6 +175,8 @@ The first item is open in the markup: its button has `aria-expanded="true"` and 
 
 By default, one item is open at a time. When a person opens an item, the open one closes, so the list stays short. Pick it for questions and answers, where people read one answer and move on.
 
+When a long item above closes, the page moves up. If the heading of the item that opened is then above the screen, the page scrolls back to it.
+
 ### Always Open
 {: .nds-block-title}
 
@@ -301,6 +303,7 @@ Set them on `.nds-accordion`, in its `style` attribute.
 |---|---|---|
 | `--accordion-header-height` | `56px`, `48px` with `nds-md`, `40px` with `nds-sm` | Minimum height of each heading button. Not used with `nds-minimal` |
 | `--accordion-header-padding` | `var(--spacing-xl)`, `var(--spacing-lg)` with `nds-md`, `var(--spacing-md)` with `nds-sm` | Padding above and below the title in each heading button. With `nds-minimal`, padding above and below each panel instead |
+| `--accordion-scroll-offset` | `120px` | Space between the main navigation and an opened item's heading, when the page scrolls back to it |
 {: .nds-table .nds-responsive}
 
 ### JavaScript

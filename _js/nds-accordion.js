@@ -25,6 +25,8 @@
  *   - data-state="always-open" on the container lets several items stay open at once.
  *     Without it, opening one closes the rest.
  *   - The instance lives on the root as el.ndsAccordion.
+ *   - An opened item whose heading ends above the sticky nav scrolls back below it
+ *     (--accordion-scroll-offset on the root, 120px default).
  */
 /**
  * NDS Accordion Component
@@ -231,6 +233,11 @@
             // Animate and dispatch event after
             this._animate(collapse, () => {
                 NDS.state.set(collapse, 'open');
+                // A long item closing above this one pulls its heading up past the nav.
+                NDS.scrollBelowNav(button, {
+                    offsetVar: '--accordion-scroll-offset',
+                    offsetEl: this._accordionContainer,
+                });
                 // Dispatch custom event
                 this._dispatchToggleEvent(index, button, collapse, true);
             });
