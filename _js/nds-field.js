@@ -84,21 +84,14 @@
 
     // A container's own control: the first whose nearest container is this one (an Editor's popover fields are not).
     function findOwnControl(container) {
-        const controls = container.querySelectorAll('.nds-form-control');
-        for (let i = 0; i < controls.length; i++) {
-            if (controls[i].closest('.nds-form-container') === container) return controls[i];
-        }
-        return null;
+        return NDS.findOwnParts(container, '.nds-form-control', '.nds-form-container')[0] || null;
     }
 
     // A container's own field: never one inside a nested container, never a hidden carrier. A group's: its first field.
     function findOwnInput(container) {
-        const fields = container.querySelectorAll('input:not([type="hidden"]), textarea, select');
-        if (!container.classList.contains('nds-form-container')) return fields[0] || null;
-        for (let i = 0; i < fields.length; i++) {
-            if (fields[i].closest('.nds-form-container') === container) return fields[i];
-        }
-        return null;
+        const selector = 'input:not([type="hidden"]), textarea, select';
+        if (!container.classList.contains('nds-form-container')) return container.querySelector(selector);
+        return NDS.findOwnParts(container, selector, '.nds-form-container')[0] || null;
     }
 
     // A readonly input that stays interactive: its part opens a menu from it (Custom Select).

@@ -1123,7 +1123,7 @@
     }
 
     function createChart(el, opts) {
-        if (typeof el === 'string') el = document.querySelector(el);
+        el = NDS.resolveElement(el);
         if (!el) return null;
         // No options: the chart its markup declares, so destroy → create rebuilds it.
         if (!opts) {
@@ -1141,6 +1141,6 @@
         init: setupCharts,
         reinit: setupCharts,
         create: createChart,
-        destroy: (el) => (typeof el === 'string' ? document.querySelector(el) : el)?.ndsChart?.destroy(),
+        destroy: (el) => NDS.resolveElement(el)?.ndsChart?.destroy(),
     };
 })();
