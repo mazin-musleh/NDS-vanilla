@@ -1253,7 +1253,7 @@
         stampRecordSlots(list.id, from, to, count);
     }
 
-    // Write-only visibility (no layout read) — settles synchronously so the page swap never flashes all-items then hides.
+    // Settles synchronously so the page swap never flashes all-items then hides. The only layout read is lockTableColumns.
     function showPage(items, pageNumber, perPage) {
         const start = (pageNumber - 1) * perPage;
         const end = start + perPage;
@@ -1340,13 +1340,12 @@
     // bounds without re-wiring. Called once per list: only rebuildAutoNav calls
     // it, right after it creates the <ul>.
     function addAutoClickListeners(newPagination, getItems, perPage) {
-        // The nav's controller, so destroy() releases this listener too.
+        // The nav's controller, so destroy() releases this listener too. A fresh one per list:
+        // the old list's listener would otherwise stay on the signal until destroy().
         const nav = resolveNav(newPagination);
-        let abortController = clickAbortControllers.get(nav);
-        if (!abortController) {
-            abortController = new AbortController();
-            clickAbortControllers.set(nav, abortController);
-        }
+        clickAbortControllers.get(nav)?.abort();
+        const abortController = new AbortController();
+        clickAbortControllers.set(nav, abortController);
         newPagination.addEventListener('click', (e) => {
             const { page: pageElement, prev: prevElement, next: nextElement } = resolveClickedControl(newPagination, e.target);
 

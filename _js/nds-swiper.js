@@ -182,6 +182,7 @@
 
             // Static knobs — read once, reused on every breakpoint change.
             // Computed, not inline: a strict-CSP page sets them in a class.
+            // At construction: the loop and its clones are decided from them before first paint.
             const computedStyle = getComputedStyle(container);
             const readKnob = property => parseInt(computedStyle.getPropertyValue(property)) || 0;
             this._slidesMax = readKnob('--max-slides') || 1;
