@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 09:03 AM"
+last_edit: "27/10/2026 - 10:23 PM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -274,7 +274,7 @@ A picker is a dropmenu that chooses one value, like a small select. Add `data-se
 ### Search
 {: .nds-block-title}
 
-`data-search` adds a search box above the items, and it gets focus when the menu opens. The list filters as the user types, and a message shows when nothing matches. The search ignores case and accents, so "cafe" finds "café" and «مطار» finds «المَطار». `data-search-value` adds words an item is also found by, such as its name in another language. Add it to a long list, such as countries. `data-search="20"` adds the box only when the menu has 20 items or more. A group with no matching row hides, and so does the divider left beside it. A menu nested in the group is not counted.
+`data-search` adds a search box above the items, and it gets focus when the menu opens. The list filters as the user types, and a message shows when nothing matches. The search ignores case and accents, so "cafe" finds "café" and «مطار» finds «المَطار». `data-search-value` adds words an item is also found by, such as its name in another language. Add it to a long list, such as countries. `data-search="20"` adds the box only when the menu has 20 items or more. Items a script adds later, such as a Filter's options, count when the menu opens. A group with no matching row hides, and so does a Filter group shown as an accordion item, and so does the divider left beside it. A menu nested in the group is not counted.
 
 ### Settings Menu
 {: .nds-block-title}

@@ -8,7 +8,7 @@
  *                                      when there already is one, null when it has no buttons
  *   NDS.Accordion.destroy(container)   undo create()
  *   instance.openItem(i) / .closeItem(i) / .toggleItem(i)
- *   instance.closeAll()
+ *   instance.openAll() / .closeAll()   openAll opens every item, in a one-open accordion too
  *   instance.getOpenItems()            [{index, button, collapse, isOpen}]
  *   instance.refresh()                 adopt items added to this root since construction
  *   instance.destroy()                 the same, on the controller create() returned; open items stay open
@@ -203,14 +203,14 @@
             }
         }
 
-        _show(index) {
+        _show(index, keepOthers = false) {
             const button = this._buttons[index];
             const collapse = this._collapses[index];
 
             if (!button || !collapse) return;
 
             // If not always-open mode, hide other panels first
-            if (!this._isAlwaysOpen) {
+            if (!keepOthers && !this._isAlwaysOpen) {
                 this._hideAll(index);
             }
 
@@ -322,6 +322,12 @@
             if (index >= 0 && index < this._buttons.length) {
                 this._toggle(index);
             }
+        }
+
+        openAll() {
+            this._buttons.forEach((button, index) => {
+                if (button.ariaExpanded !== 'true') this._show(index, true);
+            });
         }
 
         closeAll() {

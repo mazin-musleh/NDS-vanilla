@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "27/10/2026 - 10:35 PM"
 ---
 
 <section id="sort-overview" class="nds-content-section nds-doc-overview">
@@ -349,8 +349,8 @@ In `create()`, set `urlSync: { keyParam, orderParam }` and the sort key and orde
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Decide who sorts before you write a trigger. If the page holds every matching row, Sort reorders them. If the server sends one page at a time, the server must sort. Then write no `data-sort` triggers, and send your own sort parameter.
-- Point `data-sort-target` only at a list that no Filter or table sorts. Those sort their own list, and `NDS.init.audit()` warns about the button.
+- Decide who sorts before you write a trigger. If the page holds every matching row, Sort reorders them. If the server sends one page at a time, the server must sort. Then write no `data-sort` triggers. In a [Filter](../components/filter) form, a Dropmenu picker sends the sort with the request.
+- Point `data-sort-target` only at a list that no Filter or table sorts. Those sort their own list, and `NDS.init.audit()` warns about the button. For a Filter's list, write the filter's `data-filter-target` on each trigger in its place.
 - Write direct mode triggers as an ascending and a descending pair, and add a trigger with an empty `data-sort` to restore the original order.
 - Use cycle mode when one control carries one key. Users expect the third click to undo the sort. Write `data-sort-mode="cycle"` on every trigger of the list.
 - Give each trigger a text label, or an `aria-label` when it shows only an icon.

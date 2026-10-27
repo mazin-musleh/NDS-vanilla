@@ -117,7 +117,7 @@ const report = await page.evaluate(() => {
           </button>
         </form>
         <div class="nds-filter" data-filter-target="assocAuth">
-          <div data-filter="category">${optionHtml.replace(/name="filter-category"/g, 'name="category"')}</div>
+          <div data-filter="category">${optionHtml}</div>
         </div>
         <div id="assocAuth" data-filter-items></div>`);
 
@@ -147,8 +147,8 @@ const report = await page.evaluate(() => {
     out.search.value = 'roads';
     const outData = new FormData(out.form);
     check('outside: checked value reaches FormData',
-        outData.get('filter-category') === out.boxes[0].value,
-        `filter-category=${outData.get('filter-category')} want ${out.boxes[0].value}`);
+        outData.get('category') === out.boxes[0].value,
+        `category=${outData.get('category')} want ${out.boxes[0].value}`);
     check('outside: search string reaches FormData',
         outData.get('search') === 'roads',
         `search=${outData.get('search')}`);
@@ -162,8 +162,8 @@ const report = await page.evaluate(() => {
     inside.boxes[0].dispatchEvent(new Event('change', { bubbles: true }));
     const inData = new FormData(inside.form);
     check('inside: checked value still reaches FormData',
-        inData.get('filter-category') === inside.boxes[0].value,
-        `filter-category=${inData.get('filter-category')}`);
+        inData.get('category') === inside.boxes[0].value,
+        `category=${inData.get('category')}`);
 
     // --- AUTHORED NAMES (server-driven shape) ---
     const auth = probeFixture('assocAuth');
@@ -180,15 +180,12 @@ const report = await page.evaluate(() => {
         Object.keys(authInstance.filterInputs).includes('category'),
         `filterInputs keys=${Object.keys(authInstance.filterInputs).join(',')}`);
 
-    // Reported, not asserted: only AUTO-GENERATED options invent a name, and the
-    // invented one does not match the URL key the component reads back. Server-
-    // driven pages author their options (auto-scan reads only the rows currently
-    // on the page, so it cannot enumerate a server-paged set), which is why this
-    // has never bitten in the field. Left as a note so the harness stays green
-    // for what it guards — association — rather than failing on a known gap.
+    // 2.0: generated options take the group's own name, the key the URL reads back.
     const outInstance = NDS.Filter.getByTarget('assocOut');
-    const notes = [`generated options submit "${out.boxes[0].name}" but the URL key is `
-        + `"${Object.keys(outInstance.filterInputs)[0]}" — authored options are unaffected`];
+    check('generated: submit under the URL key',
+        out.boxes[0].name === Object.keys(outInstance.filterInputs)[0],
+        `name=${out.boxes[0].name} key=${Object.keys(outInstance.filterInputs)[0]}`);
+    const notes = [];
 
     return { checks, notes };
 });

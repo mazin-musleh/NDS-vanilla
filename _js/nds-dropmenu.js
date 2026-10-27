@@ -242,7 +242,9 @@
             // The scroll's items only: footer buttons (Apply, Reset) are .nds-dropmenu-item too.
             const getItems = () => this._getOwnItems(itemSelector).filter(el => scroll.contains(el));
             const threshold = parseInt(attribute, 10) || 0;
-            if (threshold && getItems().length < threshold) return;
+            // Rows a script builds later (a Filter group) count again on open: open() calls this while it is set.
+            this._searchPending = !!threshold && getItems().length < threshold;
+            if (this._searchPending) return;
 
             // Search box — canonical `.nds-form-container > .nds-form-control` so
             // nds-form.js wires the .nds-clear button (auto show/hide + reset)
@@ -313,8 +315,9 @@
                     item.hidden = !match;
                     if (match) visible++;
                 }
-                // A group with no match hides, and so does a divider left with nothing on one side.
-                for (const group of this._getOwnItems('.nds-dropmenu-group')) {
+                // A group with no match hides (a Filter group wrapped as an accordion item too),
+                // and so does a divider left with nothing on one side.
+                for (const group of this._getOwnItems(':is(.nds-dropmenu-group, .nds-accordion-item)')) {
                     // Own rows only: a menu nested in the group keeps its items unfiltered.
                     const rows = items.filter(el => el !== group && group.contains(el));
                     group.hidden = !!query && rows.length > 0 && rows.every(row => row.hidden);
@@ -358,6 +361,8 @@
                         e.preventDefault();
                         this._searchInput.value = '';
                         filter();
+                        // As the clear button does, so a listener (Filter) sees the query go.
+                        this._searchInput.dispatchEvent(new Event('input', { bubbles: true }));
                     }
                     return;
                 }
@@ -856,6 +861,7 @@
             this._respectNav = !this.trigger.closest('.nds-modal, dialog[data-nds-modal]');
 
             this._stampItemRoles();
+            if (this._searchPending) this._setupSearch();
             this._menu.removeAttribute('hidden');
             NDS.setTopLayer(this._menu, true);
 

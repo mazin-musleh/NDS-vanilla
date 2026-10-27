@@ -128,7 +128,8 @@ const waits = await page.evaluate(async ({ form, panel }) => {
     const beforeSubmit = sent.length;
     NDS.Filter.getByTarget('ds').submitForm();
     await settle();
-    const day = sent.length ? new URLSearchParams(sent.at(-1).split('?')[1] || '').get('day') : null;
+    const query = new URLSearchParams(sent.at(-1)?.split('?')[1] || '');
+    const day = sent.length ? `${query.get('day-min')}..${query.get('day-max')}` : null;
     const shown = () => [...document.querySelectorAll('#pa-items .pa-item')].filter((i) => getComputedStyle(i).display !== 'none' && !i.hidden).length;
     NDS.setValue(document.getElementById('pa-day'), '12/10/2026 - 31/10/2026');
     await settle();
@@ -146,7 +147,7 @@ const waits = await page.evaluate(async ({ form, panel }) => {
 });
 const formOk = waits.beforeSubmit === 0 && waits.sent === 1 && waits.day === '2026-10-12..2026-10-31';
 const panelOk = waits.panelBefore === ITEMS.length && waits.panelAfter === 3;
-console.log(`${formOk ? 'PASS' : 'FAIL'}  form (server mode): ${waits.beforeSubmit} request(s) on the pick (want 0), then ${waits.sent} on submit carrying day=${waits.day}`);
+console.log(`${formOk ? 'PASS' : 'FAIL'}  form (server mode): ${waits.beforeSubmit} request(s) on the pick (want 0), then ${waits.sent} on submit carrying day-min..day-max=${waits.day}`);
 console.log(`${panelOk ? 'PASS' : 'FAIL'}  panel with Apply: ${waits.panelBefore} of ${ITEMS.length} shown after the pick (want all), ${waits.panelAfter} after Apply (want 3)`);
 if (!formOk || !panelOk) bad++;
 

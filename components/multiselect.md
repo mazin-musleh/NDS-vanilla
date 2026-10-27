@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 03:30 AM"
+last_edit: "27/10/2026 - 10:23 PM"
 ---
 
 <section id="multiselect-overview" class="nds-content-section nds-doc-overview">
@@ -250,7 +250,7 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
 ### Search
 {: .nds-block-title}
 
-`data-search` on the `[data-multiselect-dropmenu]` element adds a search box at the top of the menu. The box hides each row with `data-search-item` whose text does not match. `data-search="20"` adds the box only when the menu holds 20 rows or more. Data-driven builds its rows after the box is set up. So there, use `data-search` with no number, and keep the empty `.nds-dropmenu-scroll` in the menu.
+`data-search` on the `[data-multiselect-dropmenu]` element adds a search box at the top of the menu. The box hides each row with `data-search-item` whose text does not match. `data-search="20"` adds the box only when the menu holds 20 rows or more, counted when the menu opens. For Data-driven, keep the empty `.nds-dropmenu-scroll` in the menu.
 
 ### Validation
 {: .nds-block-title}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 03:36 PM"
+last_edit: "27/10/2026 - 10:34 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -384,7 +384,7 @@ Every card carries three marks: `sector`, `fee` and `updated`. A group in the me
 
 An element with `data-filter` in the menu is a group. Its options come from one of four places: the marks on the items (`data-filter-type`), a list on the group (`data-filter-values`), inputs you write, or your script (`renderFilter()`). From the marks, the script makes one option per value it finds, sorted, in a `<fieldset>` that replaces the element.
 
-The user picks values in the menu, and Apply applies them all at once. Closing the menu without Apply puts back the values that were applied, so the search box or a chip never applies a value the user did not apply. A checkbox or switch group matches an item that has any picked value. An item must match every group that has a value.
+The user picks values in the menu, and Apply applies them all at once. Closing the menu without Apply puts back the values that were applied, so the search box or a chip never applies a value the user did not apply. In a surface with no Apply button, a pick applies at once, and closing the menu keeps it. A checkbox or switch group matches an item that has any picked value. An item must match every group that has a value.
 
 ### Values and Labels
 {: .nds-block-title}
@@ -396,21 +396,21 @@ A filter can also drive a view that holds no items, such as a [Calendar](../comp
 ### Range Slider
 {: .nds-block-title}
 
-`data-filter-type="slider"` builds a [Slider](../components/slider) over the number in each item's `data-filter-value`. With `data-filter-min` and `data-filter-max` it has two thumbs. With `data-filter-max` alone it has one thumb, "up to", from 0. The applied range shows as one chip, and removing it puts both thumbs back at the ends. In the URL a range reads `fee=200-1500`. The chip groups thousands only when the slider's output does: with `data-filter-currency` or `data-filter-unit`, or when your own output has `.nds-number-format`.
+`data-filter-type="slider"` builds a [Slider](../components/slider) over the number in each item's `data-filter-value`. With `data-filter-min` and `data-filter-max` it has two thumbs. With `data-filter-max` alone it has one thumb, "up to", from 0. The applied range shows as one chip, and removing it puts both thumbs back at the ends. In the URL and the request, a range is two keys: `fee-min=200&fee-max=1500`. An "up to" slider sends `fee-max` only. For other keys, write the slider yourself and name its thumbs (see Manual Options). The chip groups thousands only when the slider's output does: with `data-filter-currency` or `data-filter-unit`, or when your own output has `.nds-number-format`.
 
 ### Date Range
 {: .nds-block-title}
 
-A group that holds a [Date Picker](../components/date-picker) filters by date. In range mode (`nds-date-range`) the user picks a first and a last day. A single picker picks one day, or a whole month or year when its format has no day (`MM/YYYY`, `YYYY`), Hijri months and years too. Give the picker two `.nds-date-value` inputs (one for a single day) with `data-date-format="YYYY-MM-DD"` and `data-calendar="gregory"`: the script reads the days there, so the field may show Hijri. Each item's mark carries its day in `data-filter-value` as a Gregorian `YYYY-MM-DD`, or as a date and time; any other format never matches, and the console says so. The applied range shows as one chip in the field's format, and removing it clears the field. In the URL it reads `updated=2026-10-06..2026-10-18`.
+A group that holds a [Date Picker](../components/date-picker) filters by date. In range mode (`nds-date-range`) the user picks a first and a last day. A single picker picks one day, or a whole month or year when its format has no day (`MM/YYYY`, `YYYY`), Hijri months and years too. Give the picker two `.nds-date-value` inputs (one for a single day) with `data-date-format="YYYY-MM-DD"` and `data-calendar="gregory"`: the script reads the days there, so the field may show Hijri. Each item's mark carries its day in `data-filter-value` as a Gregorian `YYYY-MM-DD`, or as a date and time; any other format never matches, and the console says so. The applied range shows as one chip in the field's format, and removing it clears the field. In the URL and the request it is two keys, `updated-min=2026-10-06&updated-max=2026-10-18`, and an open end is left out. A single picker sends the first and the last day of its pick. A `name` on a `.nds-date-value` sets its key, such as `from` and `to`.
 
-The date group can also sit outside the menu, in the toolbar beside the search box: give its `<fieldset>` the filter's `data-filter-target`, and leave out `nds-dropmenu-group`. There no Apply button reaches it, so a date applies as soon as the user saves it in the calendar or types it, as a search applies on Enter. In a filter form (server mode), or in a panel with its own Apply button, it waits for the submit or the Apply like the other groups, and the request carries it as `updated=2026-10-06..2026-10-18`.
+The date group can also sit outside the menu, in the toolbar beside the search box: give its `<fieldset>` the filter's `data-filter-target`, and leave out `nds-dropmenu-group`. There no Apply button reaches it, so a date applies as soon as the user saves it in the calendar or types it, as a search applies on Enter. In a filter form (server mode), or in a panel with its own Apply button, it waits for the submit or the Apply like the other groups, and the request carries its two keys.
 
 ### Manual Options
 {: .nds-block-title}
 
 Leave out `data-filter-type` and write the inputs in the group yourself, as a [Checkbox](../components/checkbox) or [Radio](../components/radio) group. The script reads every checkbox, radio and `.nds-switch-input` in it, and the chip shows the option's `.nds-label`. Each `value` matches a mark's value, in any letter case. Inputs added later join the group by themselves. For Option search, add `data-search-item` to each `.nds-form-container`.
 
-A group that holds a range [Slider](../components/slider) (`.nds-slider-container`) is a range filter on your slider: its `min` and `max` are the full range. Put `data-filter-currency` or `data-filter-unit` on the group for the chip.
+A group that holds a range [Slider](../components/slider) (`.nds-slider-container`) is a range filter on your slider: its `min` and `max` are the full range. Put `data-filter-currency` or `data-filter-unit` on the group for the chip. A `name` on a thumb sets its key in the URL and the request.
 
 ### Options from a Script
 {: .nds-block-title}
@@ -429,7 +429,7 @@ NDS.Filter.whenReady('.nds-filter[data-filter-target="services-results"]', funct
 ### Collapsible Groups
 {: .nds-block-title}
 
-`data-filter-accordion` turns one group into an [Accordion](../components/accordion) item, closed at load, with `data-filter-legend` as its header. A tag on the header counts the picked values and hides at zero. Each such group is its own accordion. Wrap several in one `<div class="nds-accordion">` to make them one.
+`data-filter-accordion` turns one group into an [Accordion](../components/accordion) item, closed at load, with `data-filter-legend` as its header. A tag on the header counts the picked values and hides at zero. Each such group is its own accordion. Wrap several in one `<div class="nds-accordion">` to make them one. With Option search on the menu, a search term opens every group. Clearing it, or closing the menu, closes the groups it opened.
 
 ### Applied Chips
 {: .nds-block-title}
@@ -444,7 +444,7 @@ A `nds-auto-fill` row holds `nds-item` chips. A click writes the chip's text int
 ### Form Submission
 {: .nds-block-title}
 
-For results from a server, add a `<form>` with the same `data-filter-target` and `data-filter-submit`. Apply, the search box, the menu's Reset and every chip removal then submit the form, and the server returns the filtered page. The script writes the form's `id` into the `form` attribute of each control in the surfaces, so a surface outside the form still submits. Give the form an `id`. A slider range or an unnamed search field goes into hidden inputs, under the same name as in the URL.
+For results from a server, add a `<form>` with the same `data-filter-target` and `data-filter-submit`. Apply, the search box, the menu's Reset and every chip removal then submit the form, and the server returns the filtered page. The script writes the form's `id` into the `form` attribute of each control in the surfaces, so a surface outside the form still submits. Give the form an `id`. The request and the URL are one query, under the names you write: a group sends one key per value (`sector=business&sector=housing`), and a range one key per end. The script puts a range end with no `name`, and a search field with no `name`, in hidden inputs.
 
 <script type="text/html" id="filter-form" data-canon data-form data-preview="none">
 <form id="services-form" data-filter-target="services-results" data-filter-submit method="get" action="/services">
@@ -489,12 +489,12 @@ For results from a server, add a `<form>` with the same `data-filter-target` and
     </div>
   </div>
 </form>
-<div id="services-results">
+<div id="services-results" class="nds-empty">
   <!-- The server writes the matching services here -->
 </div>
 </script>
 
-A group on a server page lists its options with `data-filter-values`: the page holds only one page of results, and options read from it would miss the others. Generated options submit as `filter-{name}`, one key per value. The page the form loads reads them back, so the options stay picked and the chips show.
+A group on a server page lists its options with `data-filter-values`: the page holds only one page of results, and options read from it would miss the others. Generated options submit under the group's name, one key per value, as in the URL. The page the form loads reads them back, so the options stay picked and the chips show.
 
 ### AJAX Submission
 {: .nds-block-title}
@@ -553,33 +553,11 @@ NDS.Filter.whenReady(form, function (filter) {
 ### Sort
 {: .nds-block-title}
 
-A filter also drives the [Sort](../components/sort) triggers that carry its `data-filter-target`. Put them in a [Dropmenu](../components/dropmenu) beside the filter. Each item carries the value it sorts by in `data-sort-<key>`, such as `data-sort-title="Commercial registration"`. A trigger with an empty `data-sort` puts the items back in their first order. `data-sort-mode="cycle"` on a trigger makes each button go from ascending to descending to the first order, as in a table.
-
-<script type="text/html" id="filter-sort" data-canon data-preview="none">
-<div class="nds-dropmenu">
-  <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" type="button">
-    <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
-    <span class="nds-label" data-i18n="sort.sort">Sort</span>
-  </button>
-  <div class="nds-dropmenu-menu" hidden>
-    <div class="nds-dropmenu-scroll">
-      <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort data-filter-target="flt-items">
-        <span class="nds-label">Default</span>
-      </button>
-      <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="title" data-sort-order="asc" data-filter-target="flt-items">
-        <span class="nds-label">A–Z</span>
-      </button>
-      <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="title" data-sort-order="desc" data-filter-target="flt-items">
-        <span class="nds-label">Z–A</span>
-      </button>
-    </div>
-  </div>
-</div>
-</script>
+A filter also drives the [Sort](../components/sort) triggers that carry its `data-filter-target`. Copy the Sort menu from its page, and write `data-filter-target` on each trigger where Sort has `data-sort-target`. Put the menu beside the filter. Each item carries the value it sorts by in `data-sort-<key>`, such as `data-sort-title="Commercial registration"`.
 
 The sort stays in the URL as `sort`, with `order=desc` for a descending order. Ascending writes no `order`. A sort in the URL wins over a `sorted-asc` or `sorted-desc` state written on a trigger, so a shared link opens in its own order. On a page with sort buttons, do not use `sort` or `order` for anything else, not even as a group name: a descending sort writes `order=desc` over it.
 
-Sort is not a filter value and is never sent with the form. Decide by what the server returns. All matching items, paged in the browser: add `data-sort` triggers, and the browser sorts. One page of items: add no `data-sort`, and put a `<select name="sort">` in the form for the server.
+Sort is not a filter value. Decide by what the server returns. All matching items, paged in the browser: add `data-sort` triggers, and the browser sorts. One page of items: the server sorts, so add no `data-sort`. Put the [Dropmenu](../components/dropmenu) picker in the form instead, with `data-select-name="sort"` and the filter's `data-filter-target`, and give each item the value your server reads, such as `data-value="title-asc"`. A pick sends the form. The request and the URL carry its value, and a reload picks it again.
 
 </div>
   </div>
@@ -604,7 +582,7 @@ Sort is not a filter value and is never sent with the form. Decide by what the s
             <i class="hgi hgi-stroke hgi-link-circle-02"></i>
             <span class="nds-label">Shareable URL State</span>
           </span>
-          <p class="nds-item-desc">The search term and the applied values stay in the URL query, so a reload or a shared link opens the same list. The search term's key is the search field's <code class="nds-inline-code lang-html">name</code>, or <code class="nds-inline-code lang-html">search</code> when it has none. A group's key is its <code class="nds-inline-code lang-html">data-filter</code> name. A checkbox or switch group joins its values with commas, so its values must not contain one. The sort is <code class="nds-inline-code lang-html">sort</code> and <code class="nds-inline-code lang-html">order</code>.</p>
+          <p class="nds-item-desc">The search term and the applied values stay in the URL query, so a reload or a shared link opens the same list. The search term's key is the search field's <code class="nds-inline-code lang-html">name</code>, or <code class="nds-inline-code lang-html">search</code> when it has none. A group's key is its <code class="nds-inline-code lang-html">data-filter</code> name, once per value, and a range has a key for each end. Links that joined the values with commas still open, so a checkbox or switch value must not contain a comma. The sort is <code class="nds-inline-code lang-html">sort</code> and <code class="nds-inline-code lang-html">order</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

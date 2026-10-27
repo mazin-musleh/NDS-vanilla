@@ -233,6 +233,8 @@ Verify a whitespace change by rendered text, not by eyeballing: build before/aft
 
 **A component is UI plus an event API; a built-in server call is an optional shortcut.** It is fine when it is simple and never limits usage: the events and methods must do everything the call does, so a developer with CSRF, custom headers or their own client skips it (Session Timeout: `data-session-extend` is the shortcut; `nds:session:extend` + `end()`/`reset()` is the full path). A bug in the call is a bug to fix, not a reason to remove it.
 
+**A key NDS sends to a server or writes to the URL is one the author wrote** (`data-filter`, an input's `name`), or a fixed suffix on one (a range's `{name}-min`), never one NDS invents; its encoding is the form's own, and the URL and the request are the same query. The event API stays the way to send anything else. `scripts/check-filter-server-mode.mjs` fails when Filter's request and URL differ.
+
 ## Framework Hosts
 
 **NDS is plain HTML, CSS and JS, and a consumer can integrate it into any stack: a plain page, a server-rendered app, or a framework such as React, Vue or Angular. Judge every component and API change against all of them, never against how this repo's own pages use it.** A framework host mounts and unmounts views, rebuilds nodes, and keeps state in its own code. `core/init.md` → Framework Views is the contract the consumer follows: `NDS.init.mount(view)` after mount, `NDS.init.destroy(view)` before unmount.

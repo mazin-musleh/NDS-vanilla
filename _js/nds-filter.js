@@ -82,23 +82,24 @@
  *     data-ajax on that form for AJAX submission instead. The filter stamps form="<that
  *     form's id>" on its own controls, so surfaces outside the form still submit — give
  *     the form an id or the criteria never leave the page.
- *     Criteria that no control carries — a range filter's encoded value, an unnamed
- *     search box — are written into .nds-filter-hidden-inputs on each submit, keyed
- *     like the URL param, so the request matches this.criteria. A filter whose own
- *     inputs are named is left alone (auto-generated options submit `filter-{name}`,
- *     not `{name}`). nds:filter:request exposes that container as
- *     hiddenInputsContainer; add your own fields to it there.
- *   - Sort is NOT criteria and never rides the request — by design, not a gap.
- *     ONE question decides who owns the order: does the server return all matching
+ *     The request and the URL are one query, in the form's own encoding, under names the
+ *     author wrote: a group's values as repeated {name} keys, a range as one key per end
+ *     (the end input's name, else {name}-min / {name}-max). What no control sends — a
+ *     range's unnamed ends, an unnamed search box — is written into
+ *     .nds-filter-hidden-inputs on each submit. A group whose own inputs are named is
+ *     left alone, even under another key. nds:filter:request exposes that container as
+ *     hiddenInputsContainer; add your own fields to it there. Links from before 2.0
+ *     (comma lists, one-key ranges, filter-{name}) still open.
+ *   - Sort: ONE question decides who owns the order: does the server return all matching
  *     rows, or one page? All rows (the client pages them via data-auto-pagination)
  *     → CLIENT sort: author data-sort triggers, which ARE the client-side engine.
  *     One page (a data-page-url nav) → SERVER sort: author no data-sort at all
  *     (with no triggers _setupSort() returns early and no engine is created) and
- *     give the form your own named control — <select name="sort"> rides FormData
- *     like any criterion, and the server's row order arrives untouched.
- *     The presence of data-sort IS the switch, so the two cannot conflict; author
- *     both and a client reorder lands on top of a server-paged response, sorting
- *     that page only. Measured in scripts/check-filter-sort-ownership.mjs.
+ *     put a Dropmenu picker (data-select-name) carrying the filter's target in the form:
+ *     a pick sends the form, its value rides the request and the URL, and a reload
+ *     picks it again. The presence of data-sort IS the switch; author both and a client
+ *     reorder lands on top of a server-paged response, sorting that page only.
+ *     Measured in scripts/check-filter-sort-ownership.mjs.
  *   - Auto-generated options come from _buildFilterInput(): div.nds-form-container plus
  *     nds-{check,radio,switch}-container, wrapping div.nds-form-header > label[for] >
  *     span.nds-label and div.nds-form-control > the input. Hand-written options must match
@@ -107,8 +108,9 @@
  *     put data-filter-currency / data-filter-unit on the group for the chip. A [data-filter]
  *     group holding a .nds-date-picker filters by date: it reads YYYY-MM-DD days from the
  *     picker's .nds-date-value inputs (data-date-format="YYYY-MM-DD" data-calendar="gregory"),
- *     matches each item's day, and encodes "from..to" for the chip, URL and request. In a
- *     surface with no Apply button, outside a form mode filter, a committed date applies at once.
+ *     matches each item's day, and holds "from..to" in criteria. In a surface with no Apply
+ *     button, outside a form mode filter, a pick (a tick, a released thumb, a committed date)
+ *     applies at once, and a menu with no Apply keeps no draft.
  *   - Resetting is markup, not JS: a [data-filter-action="reset"] button inside the surface
  *     clears every input and re-emits nds:filter:change. Hand-clearing fields + NDS.Form.refresh
  *     repaints only — it dispatches nothing.
@@ -163,13 +165,13 @@
     const boundInputs = new WeakSet(); // inputs whose change listener was wired
     const itemCaches = new WeakMap(); // item → { values, searchText }, built by _buildItemCache
 
-    // The page's query, with each `filter-{name}` a native form submit sent (generated options, one key
-    // per value) also read as `{name}`, the key the URL uses, unless the page has that key too.
+    // The page's query, with each `filter-{name}` a native submit before 2.0 sent (generated options)
+    // also read as `{name}`, unless the page has that key too: old links still open.
     function readSearchParams() {
         const params = new URLSearchParams(window.location.search);
         for (const key of new Set(params.keys())) {
             const name = key.startsWith('filter-') && key.slice(7);
-            if (name && !params.has(name)) params.set(name, params.getAll(key).join(','));
+            if (name && !params.has(name)) params.getAll(key).forEach(value => params.append(name, value));
         }
         return params;
     }
@@ -252,7 +254,7 @@
             this._filterLabels = {};  // { filterName: { value: label } } — auto-built from data-filter-value
 
             this.abortController = new AbortController();
-            this._draftMenus = new WeakSet();
+            this._wiredMenus = new WeakSet();
             // Pool subscriber handles from _setupManualFilter's NDS.onDomAdd
             // calls; released atomically in destroy() so the per-element
             // closures don't outlive the filter instance.
@@ -399,11 +401,21 @@
             this._hiddenInputsContainer.style.display = 'none';
             this._submissionForm.appendChild(this._hiddenInputsContainer);
 
+            // A pick sends the form, as a chip removal does.
+            this._getPickers().forEach(({ dropmenu, input }) => {
+                this._associateWithForm(input);
+                dropmenu.addEventListener('nds:dropmenu:select', (e) => {
+                    if (e.target === dropmenu) this._commitCriteriaChange();
+                }, { signal: this.abortController.signal });
+            });
+
             // Handle form submission
             this._submissionForm.addEventListener('submit', (e) => {
                 // Both branches read the form's named controls — AJAX through
                 // FormData, native through the browser — so criteria that no
                 // control carries must exist as real inputs before either runs.
+                // A named search box sends what it holds, Enter or not: the chips and URL say so too.
+                if (this._searchInputs.direct?.input.name) this._setSearch(this._searchInputs.direct.input.value);
                 this._writeCriteriaInputs();
 
                 if (this.isAjaxMode) {
@@ -417,21 +429,20 @@
 
         /**
          * Fill .nds-filter-hidden-inputs so the submission carries everything
-         * this.criteria claims. A range filter renders two unnamed thumbs for one
-         * encoded value, so nothing about it reaches the server otherwise — while
-         * its chip, badge and URL param all say it is applied. Rebuilt on every
-         * submit; the key is the one syncUrlParams writes, so the request and
-         * the URL agree.
+         * this.criteria claims that no control sends: a range's ends (unnamed
+         * thumbs, unnamed date values), an unnamed search box. Rebuilt on every
+         * submit, in the pairs syncUrlParams writes, so the request and the URL
+         * are one query.
          *
-         * Only fills genuine gaps. A filter whose own controls already put
-         * something in the form is left alone even when they use a different key
-         * (auto-generated options submit `filter-{name}`) — reconciling that key
-         * would rename a parameter consumers may already read.
+         * A group whose own inputs are named is left alone, even under another
+         * key (`sector[]`): the author chose what the server reads.
          */
         _writeCriteriaInputs() {
             const box = this._hiddenInputsContainer;
             if (!box) return;
             box.textContent = '';
+            // FormData, not form.elements: a control named "elements" shadows that.
+            const sent = new Set(new FormData(this._submissionForm).keys());
 
             const add = (name, value) => {
                 if (!name) return;
@@ -443,9 +454,9 @@
             };
 
             for (const [name, values] of Object.entries(this.criteria.filters)) {
-                if (values.length && !this._filterReachesForm(name)) {
-                    add(name, values.join(','));
-                }
+                if (!values.length || this._filterReachesForm(name)) continue;
+                // A range end the author named sends itself.
+                this._groupParams(name, values).forEach(([key, value]) => sent.has(key) || add(key, value));
             }
 
             // The direct search box is the form-associated one (_setupDirectSearch);
@@ -455,8 +466,8 @@
             }
         }
 
-        // Does this filter's own markup put anything in the form, under any key?
-        // A range never does — two thumbs, no name, one encoded value between them.
+        // Do this group's options put anything in the form, under any key? A range is
+        // checked per end in _writeCriteriaInputs instead.
         _filterReachesForm(filterName) {
             const filterInput = this.filterInputs[filterName];
             if (!filterInput || filterInput.type === 'range') return false;
@@ -574,13 +585,10 @@
          * before the new one starts.
          */
         _buildAjaxRequest() {
-            const method = this._submissionForm.method.toUpperCase() || 'GET';
-            let action = this._submissionForm.action || window.location.href;
-
-            // Handle # or empty action - use current page URL without hash
-            if (!action || action === '#' || action.endsWith('#')) {
-                action = window.location.origin + window.location.pathname;
-            }
+            // The attributes, not form.method / form.action: a group named "method" or "action" shadows those.
+            const method = (this._submissionForm.getAttribute('method') || 'GET').toUpperCase();
+            const url = new URL(this._submissionForm.getAttribute('action') || '', window.location.href);
+            url.hash = '';
 
             // Abort any in-flight submission so a faster second Apply click
             // can't be overtaken by the slower first response (replaceWith
@@ -598,15 +606,11 @@
             // attribute on scattered inputs associated with this form).
             const formData = new FormData(this._submissionForm);
 
-            let url = action;
-            if (method === 'GET') {
-                const params = new URLSearchParams(formData);
-                url = action + (action.includes('?') ? '&' : '?') + params.toString();
-            } else {
-                options.body = formData;
-            }
+            // GET replaces the action's query with the form's, as a native submit does.
+            if (method === 'GET') url.search = new URLSearchParams(formData).toString();
+            else options.body = formData;
 
-            return { url, options };
+            return { url: url.href, options };
         }
 
         /**
@@ -803,9 +807,10 @@
 
         // One write path for the search keyword (typed, dropmenu, URL, API), so a
         // shared link reproduces the list. It is only matched and written to
-        // value / textContent, never rendered as HTML, so nothing is stripped.
+        // value / textContent, never rendered as HTML, so nothing is stripped. Kept as typed,
+        // as the request sends it; only the match ignores case.
         _setSearch(raw) {
-            this.criteria.search = String(raw || '').trim().toLowerCase();
+            this.criteria.search = String(raw || '').trim();
         }
 
         // Sanitize a URL-supplied value for *matching* against existing DOM
@@ -839,52 +844,83 @@
             // filter has sort buttons; it reads them in its init, after _readUrlParams.
             const sorted = this.queryAll('[data-sort]').length > 0;
 
-            // Apply dynamic filter params — plain input names as URL keys
-            for (const [key, value] of params.entries()) {
-                if (key === searchParamName || (sorted && (key === 'sort' || key === 'order'))) continue;
-
-                if (this.filterInputs[key]) {
-                    this._setFilterFromUrl(key, value);
-                    hasParams = true;
-                }
+            for (const filterName of Object.keys(this.filterInputs)) {
+                if (filterName === searchParamName || (sorted && (filterName === 'sort' || filterName === 'order'))) continue;
+                const values = this._readGroupParam(filterName, params);
+                if (!values.length) continue;
+                this._setFilterFromUrl(filterName, values);
+                hasParams = true;
             }
+
+            this._readPickerParams(params);
 
             if (hasParams) {
                 this._settleAfterCriteriaChange();
             }
         }
 
-        // Check every input in a filter group whose value matches one of the
-        // comma-separated values in `rawValue` (URL-param sourced). Values are
+        // Check every input in a filter group whose value is one of `values`. Values are
         // length-capped via _sanitizeFilterValue but keep their literal chars so
         // matching against trusted input.value succeeds (e.g. "Healthcare & Social").
-        //
-        // Only checkbox/switch groups hold several values, so only their param is
-        // a comma-joined list. A radio group carries one value or none — its param
-        // is whatever syncUrlParams wrote for the single checked input, matched
-        // whole. Splitting it broke options whose own value contains commas
-        // (value="1,2,3", one option standing for a group of ids). Comma-bearing
-        // values stay unsupported on checkbox/switch, where comma is the delimiter.
-        _checkInputsForValues(filterData, rawValue) {
-            const values = filterData.type === 'radio'
-                ? [this._sanitizeFilterValue(rawValue).trim()]
-                : rawValue.split(',').map(item => this._sanitizeFilterValue(item).trim());
+        _checkInputsForValues(filterData, values) {
+            const wanted = values.map(value => this._sanitizeFilterValue(value).trim().toLowerCase());
             filterData.inputs.forEach(input => {
-                if (values.some(entry => entry.toLowerCase() === input.value.toLowerCase())) {
-                    input.checked = true;
-                }
+                if (wanted.includes(input.value.toLowerCase())) input.checked = true;
             });
         }
 
-        // One group's controls and criteria from a URL-style value: a slider reads "lo-hi", the rest a
-        // comma list. Without `raw` it reads the group's own param, if any.
-        _setFilterFromUrl(filterName, raw = readSearchParams().get(filterName)) {
+        // One group's values in a query, as criteria holds them: a value per key, a range's two
+        // ends as one encoded string. Old links still open: a comma list ("sector=a,b") and a
+        // one-key range ("fee=200-1500", "updated=a..b"), as written before 2.0.
+        _readGroupParam(filterName, params = readSearchParams()) {
+            const filterInput = this.filterInputs[filterName];
+            if (!filterInput) return [];
+            if (filterInput.type === 'range') {
+                const [low, high] = this._rangeKeys(filterName).map(key => params.get(key) || '');
+                if (!low && !high) {
+                    const encoded = params.get(filterName);
+                    return encoded ? [encoded] : [];
+                }
+                if (filterInput.date) return [low + '..' + high];
+                return [(low || filterInput.min) + '-' + (high || filterInput.max)];
+            }
+            const values = params.getAll(filterName);
+            // A radio value is matched whole: an option may stand for a list ("1,2,3").
+            return filterInput.type === 'radio' ? values.slice(0, 1) : values.flatMap(value => value.split(','));
+        }
+
+        // One group's criteria as query pairs, the same in the URL and the request: a value per
+        // key, a range as one key per end with an open end left out.
+        _groupParams(filterName, values) {
+            const filterInput = this.filterInputs[filterName];
+            if (filterInput?.type !== 'range') return values.map(value => [filterName, value]);
+            const ends = filterInput.date ? this._parseDateRange(values[0]) : this._parseEncodedRange(values[0]);
+            if (!ends) return [];
+            // An "up to" slider's low end is its floor, never sent.
+            const skipLow = filterInput.single && !filterInput.date;
+            return this._rangeKeys(filterName)
+                .map((key, i) => [key, String(ends[i])])
+                .filter(([, value], i) => value && !(i === 0 && skipLow));
+        }
+
+        // A range's two keys, low end first: the name the author gave that end's input (a thumb,
+        // a .nds-date-value), else {name}-min and {name}-max.
+        _rangeKeys(filterName) {
+            const { date, single, minInput, maxInput, outs } = this.filterInputs[filterName];
+            // A single picker's second value input holds the same day in another format, not an end.
+            const [low, high] = date ? [outs[0], single ? null : outs[1]] : [minInput, maxInput];
+            return [low?.name || `${filterName}-min`, high?.name || `${filterName}-max`];
+        }
+
+        // One group's controls and criteria from criteria-shaped values (a range: one encoded
+        // string). Without `values` it reads the group's own URL keys, if any.
+        _setFilterFromUrl(filterName, values = this._readGroupParam(filterName)) {
             const filterData = this.filterInputs[filterName];
-            if (!raw || !filterData) return;
+            if (!values.length || !filterData) return;
             if (filterData.type === 'range') {
-                this._setRangeFromUrl(filterName, raw);
+                this._setRangeFromUrl(filterName, values[0]);
             } else {
-                this._checkInputsForValues(filterData, raw);
+                this._checkInputsForValues(filterData, values);
                 this._syncFilterCriteria(filterName);
             }
         }
@@ -906,16 +942,14 @@
          * Re-apply URL params for a specific filter after dynamic inputs are added
          */
         reapplyUrlParamsForFilter(filterName) {
-            const params = readSearchParams();
-            const value = params.get(filterName);
-            if (!value) return;
+            const values = this._readGroupParam(filterName);
+            if (!values.length) return;
 
             // Re-scan the element for current inputs (handles async/dynamic content)
             const filterData = this.filterInputs[filterName];
-            if (!filterData) return;
             if (filterData.type !== 'range') this._setupManualFilter(filterData.element, filterName);
 
-            this._setFilterFromUrl(filterName, value);
+            this._setFilterFromUrl(filterName, values);
             this._settleAfterCriteriaChange();
         }
 
@@ -933,18 +967,45 @@
             }
 
             for (const [filterName, values] of Object.entries(this.criteria.filters)) {
-                if (values.length > 0) {
-                    params.set(filterName, values.join(','));
-                }
+                if (values.length) this._groupParams(filterName, values).forEach(([key, value]) => params.append(key, value));
             }
+
+            // A picker in a filter form is sent with it, so its pick stays in the URL as the request has it.
+            this._getPickers().forEach(({ name, input }) => { if (input.value) params.set(name, input.value); });
 
             NDS.writeUrlParams(params);
         }
 
-        // This filter's own search + filter names. Sort/order are owned by NDS.Sort,
-        // and other filters' params (distinct names) are left untouched too.
+        // This filter's own keys: the search, each group's (a range's two ends, and the older one-key
+        // and filter-{name} forms, so a write replaces them), and its pickers'. Sort/order are owned
+        // by NDS.Sort, and other filters' params (distinct names) are left untouched too.
         _getUrlKeys() {
-            return new Set([this._getSearchInputName(), ...Object.keys(this.filterInputs)]);
+            const keys = new Set([this._getSearchInputName()]);
+            for (const [filterName, filterInput] of Object.entries(this.filterInputs)) {
+                keys.add(filterName).add(`filter-${filterName}`);
+                if (filterInput.type === 'range') this._rangeKeys(filterName).forEach(key => keys.add(key));
+            }
+            this._getPickers().forEach(({ name }) => keys.add(name));
+            return keys;
+        }
+
+        // Form mode: a Dropmenu picker (data-select-name) carrying this filter's target, such as a
+        // server sort. Its hidden input rides the form like any control.
+        _getPickers() {
+            if (!this.isFormMode) return [];
+            return this._targetRoots
+                .filter(root => root.matches('.nds-dropmenu[data-select-name]'))
+                .map(dropmenu => ({ dropmenu, name: dropmenu.getAttribute('data-select-name'), input: dropmenu.querySelector('input[data-nds-select-value]') }))
+                .filter(picker => picker.input);
+        }
+
+        // On load and on a rollback: pick the URL's value in each picker, silently, so it sends no request.
+        _readPickerParams(params) {
+            this._getPickers().forEach(({ dropmenu, name }) => {
+                const value = params.get(name);
+                const item = value && [...dropmenu.querySelectorAll('[data-value]')].find(el => el.getAttribute('data-value') === value);
+                if (item) dropmenu.ndsDropmenu?.setSelection(item, { silent: true });
+            });
         }
 
         _setupActionButtons() {
@@ -1339,16 +1400,27 @@
             this._flushAccordionInit();
             this._detectDirectSearch();
             this._addDeferredDropmenuListeners();
-            this._addMenuDraftListeners();
+            this._addMenuListeners();
         }
 
-        // The menu's ticks are a draft until Apply: closing it any other way puts the applied
+        // A pick in a surface with no Apply, outside a form mode filter, applies at once: nothing
+        // else would apply it. Elsewhere it waits for Apply or the submit.
+        _appliesOnPick(element) {
+            if (this.isFormMode) return false;
+            const surface = this._targetRoots.find(root => root.contains(element));
+            return !surface?.querySelector('[data-filter-action="apply"]');
+        }
+
+        // A menu's ticks are a draft until its Apply: closing it any other way puts the applied
         // filters back, so a search, a chip or a sort never applies a tick nobody applied.
-        _addMenuDraftListeners() {
+        // A menu with no Apply holds no draft: a pick there applies, or waits for the submit.
+        _addMenuListeners() {
             const { signal } = this.abortController;
             this._targetRoots.forEach(dropmenu => {
-                if (!dropmenu.matches?.('.nds-dropmenu') || this._draftMenus.has(dropmenu)) return;
-                this._draftMenus.add(dropmenu);
+                if (!dropmenu.matches?.('.nds-dropmenu') || this._wiredMenus.has(dropmenu)) return;
+                this._wiredMenus.add(dropmenu);
+                if (dropmenu.hasAttribute('data-search')) this._addOptionSearchListeners(dropmenu, signal);
+                if (!dropmenu.querySelector('[data-filter-action="apply"]')) return;
                 // Its own open and close only: a menu inside it (a Date Picker's calendar) bubbles the same events.
                 dropmenu.addEventListener('nds:dropmenu:opened', (e) => {
                     if (e.target !== dropmenu) return;
@@ -1363,13 +1435,37 @@
             });
         }
 
+        // The menu's option search reaches collapsed groups (data-filter-accordion): a query opens
+        // them all, and an empty query or closing the menu folds back the ones it opened.
+        _addOptionSearchListeners(dropmenu, signal) {
+            let opened = null;   // [accordion, index] pairs the query opened
+            const restore = () => {
+                opened?.forEach(([accordion, index]) => accordion.ndsAccordion?.closeItem(index));
+                opened = null;
+            };
+            dropmenu.addEventListener('input', (e) => {
+                if (!e.target.closest('.nds-dropmenu-search')) return;
+                if (!e.target.value.trim()) return restore();
+                if (opened) return;
+                opened = [];
+                dropmenu.querySelectorAll('.nds-accordion').forEach(accordion => {
+                    if (!accordion.ndsAccordion) return;
+                    NDS.findOwnParts(accordion, '.nds-accordion-btn', '.nds-accordion').forEach((button, index) => {
+                        if (button.ariaExpanded !== 'true') opened.push([accordion, index]);
+                    });
+                    accordion.ndsAccordion.openAll();
+                });
+            }, { signal });
+            dropmenu.addEventListener('nds:dropmenu:closed', (e) => { if (e.target === dropmenu) restore(); }, { signal });
+        }
+
         // Set every group's controls, and the criteria, to `applied` (a criteria.filters copy).
         _restoreFilterInputs(applied) {
             this._resetFilterInputs();
             for (const [name, values] of Object.entries(applied)) {
                 const filterInput = this.filterInputs[name];
                 if (!filterInput || !values.length) continue;
-                this._setFilterFromUrl(name, values.join(','));
+                this._setFilterFromUrl(name, values);
             }
             this._syncApplyButtonLabel();
         }
@@ -1789,12 +1885,14 @@
             filterAbortControllers.set(element, elementController);
             this._filterElementAbortControllers.add(element);
 
+            const applies = this._appliesOnPick(element);
             inputs.forEach(input => {
                 boundInputs.add(input);
                 this._associateWithForm(input);
                 input.addEventListener('change', () => {
                     this._syncFilterCriteria(filterName);
                     this._syncApplyButtonLabel();
+                    if (applies) this._commitCriteriaChange();
                 }, { signal: elementController.signal });
             });
 
@@ -1851,6 +1949,10 @@
             };
             if (minInput) minInput.addEventListener('input', handleInput, { signal: rootController.signal });
             maxInput.addEventListener('input', handleInput, { signal: rootController.signal });
+            // Released, not on every step of the drag.
+            if (this._appliesOnPick(root)) {
+                [minInput, maxInput].forEach(input => input?.addEventListener('change', () => this._commitCriteriaChange(), { signal: rootController.signal }));
+            }
 
             // Filter builds the slider, so it kicks off Slider for it (the loader
             // only auto-inits Slider when a static .nds-slider exists at load).
@@ -2127,8 +2229,7 @@
             // the user commits (Save, or typed) applies, as a search does on Enter. In a menu, a panel
             // with Apply or a form, it waits like the other groups. A range writes both its values in
             // one go: one commit for the pair.
-            const surface = this._targetRoots.find(root => root.contains(element));
-            const applies = !this.isFormMode && !surface?.querySelector('[data-filter-action="apply"]');
+            const applies = this._appliesOnPick(element);
             let queued = false;
             // The picker fires change on each value it writes.
             outs.forEach(out => out.addEventListener('change', () => {
@@ -2490,7 +2591,7 @@
                 const input = document.createElement('input');
                 input.type = 'checkbox';
                 input.id = id;
-                input.name = `filter-${filterName}`;
+                input.name = filterName;
                 input.value = value;
                 input.className = 'nds-switch-input';
 
@@ -2509,7 +2610,7 @@
                 const input = document.createElement('input');
                 input.type = inputType;
                 input.id = id;
-                input.name = `filter-${filterName}`;
+                input.name = filterName;
                 input.value = value;
                 input.className = inputClass;
                 if (variant) {
@@ -2762,7 +2863,7 @@
         }
 
         _matchesSearch(item) {
-            const searchText = this.criteria.search;
+            const searchText = this.criteria.search.toLowerCase();
             if (!searchText) return true;
             return (itemCaches.get(item)?.searchText || '').includes(searchText);
         }
