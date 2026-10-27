@@ -205,8 +205,7 @@
 
 .nds-swiper :is(.nds-prev, .nds-next) {
     user-select: none;
-    // pointerdown handler doesn't preventDefault on touchstart, so block native
-    // tap-and-drag scroll initiation here instead.
+    // No double-tap zoom, so quick taps each move the row. Touch acts on click (nds-swiper.js).
     touch-action: manipulation;
 }
 

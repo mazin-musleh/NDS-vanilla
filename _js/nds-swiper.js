@@ -456,16 +456,17 @@
         // ==============================================
         // ACTIVATION HELPER (nav buttons + bullets)
         // ==============================================
-        // pointerdown unifies mouse + touch + pen; preventDefault prevents focus-
-        // on-click (preserves keyboard nav) and suppresses synthetic mouse events on
-        // touch. Touch-scroll on the button itself is blocked by `touch-action:
-        // manipulation` in _swiper.scss.
+        // A mouse acts on pointerdown; preventDefault keeps focus off the button
+        // (preserves keyboard nav). Touch and pen act on the tap's click: a page
+        // scroll that starts on the button fires pointerdown too, but never a click.
         // `action` receives the triggering event so delegated callers (the
         // pagination container) can resolve e.target; direct callers ignore it.
         _addActivationListeners(btn, action) {
             const { signal } = this.abortController;
+            let isMousePress = false;
             btn.addEventListener('pointerdown', (e) => {
-                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                isMousePress = e.pointerType === 'mouse';
+                if (!isMousePress || e.button !== 0) return;
                 e.preventDefault();
                 action(e);
             }, { signal });
@@ -475,8 +476,8 @@
                     action(e);
                 }
             }, { signal });
-            // A click with no pointer behind it (detail 0): .click(), voice control, a screen reader.
-            btn.addEventListener('click', (e) => { if (e.detail === 0) action(e); }, { signal });
+            // A tap, or a click with no pointer behind it (detail 0): .click(), voice control, a screen reader.
+            btn.addEventListener('click', (e) => { if (e.detail === 0 || !isMousePress) action(e); }, { signal });
         }
 
         // ==============================================
@@ -646,7 +647,8 @@
                 if (e.pointerType === 'mouse') return;
                 this._aim = null; isPanning = false; hasShifted = false;
             }, { passive: true, signal });
-            this.wrapper.addEventListener('pointercancel', () => { isPanning = true; }, { signal });
+            // A mouse or pen cancel (a native drag) has no touchend to clear the flag.
+            this.wrapper.addEventListener('pointercancel', (e) => { if (e.pointerType === 'touch') isPanning = true; }, { signal });
             ['touchend', 'touchcancel'].forEach(type => this.wrapper.addEventListener(type, () => { isPanning = false; }, { passive: true, signal }));
             this.wrapper.addEventListener('scroll', NDS.throttleToFrame(() => {
                 if (!isPanning || hasShifted || this._loopPending || !this._measuredStep) return;
@@ -828,8 +830,7 @@
             ensureSharedKeydown();
         }
 
-        // The nav buttons listen for pointerdown, not click, so an arrow key has to
-        // call the move itself; the button's disabled state stays the boundary guard.
+        // An arrow key calls the move itself; the button's disabled state stays the boundary guard.
         _moveByArrow(dir) {
             const btn = dir === 'next' ? this._nextButton : this._prevButton;
             if (btn && !btn.disabled) this[dir]();
