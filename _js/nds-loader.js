@@ -693,8 +693,12 @@
                 const swipers = [...document.querySelectorAll('.nds-swiper:not([data-nds-swiper-initialized], [data-swiper-preset])')];
                 // Every read before the first write: one style recalc, not one per swiper.
                 const knobs = swipers.map(swiper => {
+                    // Inline first: a computed read styles the whole section content-visibility still skips.
                     const computedStyle = getComputedStyle(swiper);
-                    const readKnob = property => parseInt(computedStyle.getPropertyValue(property)) || 0;
+                    const readKnob = property => {
+                        const inline = parseInt(swiper.style.getPropertyValue(property));
+                        return (Number.isNaN(inline) ? parseInt(computedStyle.getPropertyValue(property)) : inline) || 0;
+                    };
                     return [readKnob(`--${tier}-slides`), readKnob('--peek')];
                 });
                 swipers.forEach((swiper, i) => {

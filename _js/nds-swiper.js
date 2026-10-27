@@ -181,10 +181,14 @@
             }
 
             // Static knobs — read once, reused on every breakpoint change.
-            // Computed, not inline: a strict-CSP page sets them in a class.
             // At construction: the loop and its clones are decided from them before first paint.
+            // Inline first: a computed read styles the whole section content-visibility still skips.
+            // Computed covers a strict-CSP page that sets them in a class, and a var() value.
             const computedStyle = getComputedStyle(container);
-            const readKnob = property => parseInt(computedStyle.getPropertyValue(property)) || 0;
+            const readKnob = property => {
+                const inline = parseInt(container.style.getPropertyValue(property));
+                return (Number.isNaN(inline) ? parseInt(computedStyle.getPropertyValue(property)) : inline) || 0;
+            };
             this._slidesMax = readKnob('--max-slides') || 1;
             this._slidesMid = readKnob('--mid-slides') || 1;
             this._slidesMin = readKnob('--min-slides') || 1;

@@ -533,6 +533,8 @@
     // count all route here so they can never drift.
     // Page lang, Latin digits: one look whatever the browser's language. A bad lang falls back to en.
     NDS.formatNumber = (number, opts) => {
+        // Every locale writes 0–999 this way in Latin digits; skips Intl's first-call locale load.
+        if (!opts && Number.isInteger(number) && number >= 0 && number < 1000) return String(number);
         try { return number.toLocaleString(`${document.documentElement.lang || 'en'}-u-nu-latn`, opts); }
         catch { return number.toLocaleString('en', opts); }
     };
