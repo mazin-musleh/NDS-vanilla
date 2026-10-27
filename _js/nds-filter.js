@@ -163,6 +163,17 @@
     const boundInputs = new WeakSet(); // inputs whose change listener was wired
     const itemCaches = new WeakMap(); // item → { values, searchText }, built by _buildItemCache
 
+    // The page's query, with each `filter-{name}` a native form submit sent (generated options, one key
+    // per value) also read as `{name}`, the key the URL uses, unless the page has that key too.
+    function readSearchParams() {
+        const params = new URLSearchParams(window.location.search);
+        for (const key of new Set(params.keys())) {
+            const name = key.startsWith('filter-') && key.slice(7);
+            if (name && !params.has(name)) params.set(name, params.getAll(key).join(','));
+        }
+        return params;
+    }
+
     class NdsFilter {
         constructor(filterContainer, surfaces = null) {
             this._filterContainer = filterContainer;
@@ -809,7 +820,7 @@
         }
 
         _readUrlParams() {
-            const params = new URLSearchParams(window.location.search);
+            const params = readSearchParams();
             let hasParams = false;
 
             // Each filter reads its own input's `name` as the URL key. Multi-filter
@@ -867,7 +878,7 @@
 
         // One group's controls and criteria from a URL-style value: a slider reads "lo-hi", the rest a
         // comma list. Without `raw` it reads the group's own param, if any.
-        _setFilterFromUrl(filterName, raw = new URLSearchParams(window.location.search).get(filterName)) {
+        _setFilterFromUrl(filterName, raw = readSearchParams().get(filterName)) {
             const filterData = this.filterInputs[filterName];
             if (!raw || !filterData) return;
             if (filterData.type === 'range') {
@@ -895,7 +906,7 @@
          * Re-apply URL params for a specific filter after dynamic inputs are added
          */
         reapplyUrlParamsForFilter(filterName) {
-            const params = new URLSearchParams(window.location.search);
+            const params = readSearchParams();
             const value = params.get(filterName);
             if (!value) return;
 
@@ -1322,7 +1333,7 @@
             // queryAll already excludes elements inside the target container
             // (e.g. <span data-filter> markers on cards).
             const filterElements = this.queryAll('[data-filter]');
-            const params = new URLSearchParams(window.location.search);
+            const params = readSearchParams();
             const deferringMenus = this._classifyDeferringMenus(filterElements, params);
             filterElements.forEach(element => this._dispatchFilterElement(element, params, deferringMenus));
             this._flushAccordionInit();
@@ -3066,7 +3077,7 @@
             // Re-setup the filter listeners; a URL value it took has to reach the items and chips too.
             this._setupManualFilter(actualElement, filterName);
             this._flushAccordionInit();
-            if (new URLSearchParams(window.location.search).has(filterName)) this._settleAfterCriteriaChange();
+            if (readSearchParams().has(filterName)) this._settleAfterCriteriaChange();
         }
 
         destroy() {

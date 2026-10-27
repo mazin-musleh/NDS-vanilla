@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 11:52 AM"
+last_edit: "27/10/2026 - 03:36 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -494,7 +494,7 @@ For results from a server, add a `<form>` with the same `data-filter-target` and
 </div>
 </script>
 
-A group on a server page lists its options with `data-filter-values`: the page holds only one page of results, and options read from it would miss the others. Generated options submit as `filter-{name}`.
+A group on a server page lists its options with `data-filter-values`: the page holds only one page of results, and options read from it would miss the others. Generated options submit as `filter-{name}`, one key per value. The page the form loads reads them back, so the options stay picked and the chips show.
 
 ### AJAX Submission
 {: .nds-block-title}
