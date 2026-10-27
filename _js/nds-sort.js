@@ -1,5 +1,5 @@
 /* NDS.Sort — public surface
- * Rides: nds-dropmenu (triggers may sit inside a menu; soft)
+ * Rides: nds-dropmenu (triggers may sit inside a menu; soft), nds-pagination (a markup-wired paged list repages after a sort; soft)
  * Methods:
  *   NDS.Sort.init()                     wire every list a [data-sort-target] button names
  *   NDS.Sort.refresh(root)              wire new lists, re-sort the wired ones inside root
@@ -150,15 +150,16 @@
         return String(raw == null ? '' : raw);
     }
 
+    // One collator: localeCompare with options builds a new one on every call.
+    let collator;
+    function compareParsed(leftValue, rightValue, type) {
+        if (type !== 'string') return leftValue - rightValue;
+        collator ||= new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+        return collator.compare(leftValue, rightValue);
+    }
+
     function compare(left, right, type, order, dateFormat, calendar) {
-        const leftValue = parseValue(left, type, dateFormat, calendar);
-        const rightValue = parseValue(right, type, dateFormat, calendar);
-        let comparison;
-        if (type === 'string') {
-            comparison = leftValue.localeCompare(rightValue, undefined, { numeric: true, sensitivity: 'base' });
-        } else {
-            comparison = leftValue - rightValue;
-        }
+        const comparison = compareParsed(parseValue(left, type, dateFormat, calendar), parseValue(right, type, dateFormat, calendar), type);
         return order === 'desc' ? -comparison : comparison;
     }
 
@@ -188,7 +189,7 @@
 
             // A sort in the URL wins over the markup's: a shared link opens as it was shared.
             const urlKey = this.options.urlSync && this._getUrlKey();
-            if (urlKey) {
+            if (isKeySet(urlKey)) {
                 this.setSort(urlKey, new URLSearchParams(window.location.search).get(this.options.urlSync.orderParam));
                 return;
             }
@@ -326,19 +327,24 @@
 
             let ordered;
             if (hasKey) {
-                const accessor = this.options.accessor;
-                const sample = items.map(i => accessor(i, key));
+                const raws = items.map(item => this.options.accessor(item, key));
                 const dateFormat = NDS.Date.getFormat(this.root);
                 const calendar = NDS.Date.getCalendar(this.root);
-                const type = (this.options.types && this.options.types[key]) || detectType(sample, dateFormat, calendar);
-                ordered = [...items].sort((left, right) =>
-                    compare(accessor(left, key), accessor(right, key), type, this._state.order, dateFormat, calendar)
-                );
+                const type = (this.options.types && this.options.types[key]) || detectType(raws, dateFormat, calendar);
+                // Each value parsed once, not on every comparison.
+                const values = raws.map(raw => parseValue(raw, type, dateFormat, calendar));
+                const sign = this._state.order === 'desc' ? -1 : 1;
+                ordered = items.map((item, index) => index)
+                    .sort((left, right) => sign * compareParsed(values[left], values[right], type))
+                    .map(index => items[index]);
             } else {
                 // Drop snapshot entries the container no longer holds. appendChild
                 // on a removed node re-attaches it, so restoring a stale snapshot
                 // would resurrect deleted rows — and hold them detached until then.
-                this._originalOrder = this._originalOrder.filter(el => container.contains(el));
+                // Items that arrived since the snapshot follow it, in their current order.
+                const snapshot = new Set(this._originalOrder);
+                this._originalOrder = this._originalOrder.filter(el => container.contains(el))
+                    .concat(items.filter(item => !snapshot.has(item)));
                 ordered = [...this._originalOrder];
             }
 
@@ -364,7 +370,16 @@
         // arrive after create() — an async list, an AJAX swap — miss init()'s pass
         // entirely: a URL-seeded sort settles its state with nothing to sort, and
         // nothing re-applies it on its own. No-op when no sort is active.
-        refresh() { if (isKeySet(this._state.key)) this.setSort(this._state.key, this._state.order); }
+        refresh() {
+            if (!isKeySet(this._state.key)) return;
+            // Read by the markup wiring's onChange: a re-sort of new rows keeps the user's page.
+            this._refreshing = true;
+            try {
+                this.setSort(this._state.key, this._state.order);
+            } finally {
+                this._refreshing = false;
+            }
+        }
 
         getState() { return { key: this._state.key, order: this._state.order }; }
 
@@ -446,13 +461,16 @@
 
         // Whether one of the triggers sorts by `key`. Another use of the same param
         // (a server's own sort select, a second sort on the page) is not this sort's.
+        // String(): a keyFrom may return a column index, and the URL holds text.
         _isOwnKey(key) {
-            return !!key && this._resolveTriggers().some(trigger => this.options.keyFrom(trigger) === key);
+            return !!key && this._resolveTriggers().some(trigger => String(this.options.keyFrom(trigger)) === key);
         }
 
+        // The trigger's own key, not the URL text, so a column index comes back a number.
         _getUrlKey() {
-            const key = new URLSearchParams(window.location.search).get(this.options.urlSync.keyParam);
-            return this._isOwnKey(key) ? key : null;
+            const param = new URLSearchParams(window.location.search).get(this.options.urlSync.keyParam);
+            const trigger = param && this._resolveTriggers().find(trigger => String(this.options.keyFrom(trigger)) === param);
+            return trigger ? this.options.keyFrom(trigger) : null;
         }
 
         // Clears only values this sort could have written, so a site's own ?order=12345 survives.
@@ -461,7 +479,7 @@
             const { keyParam, orderParam } = this.options.urlSync;
             const ownOrder = /^(asc|desc)$/i.test(params.get(orderParam) || '');
 
-            if (this._state.key) {
+            if (isKeySet(this._state.key)) {
                 params.set(keyParam, this._state.key);
                 if (this._state.order === 'desc') params.set(orderParam, 'desc');
                 else if (ownOrder) params.delete(orderParam);
@@ -509,6 +527,12 @@
                 items: () => list.children,
                 triggers: () => document.querySelectorAll(selector),
                 mode: document.querySelector(`${selector}[data-sort-mode="cycle"]`) ? 'cycle' : 'direct',
+                // Pagination's watchers see a reorder as no change, so a paged list repages here:
+                // page 1 for a new sort, the same page for a refresh.
+                onChange: () => {
+                    const paged = list.closest('.nds-paged-content');
+                    if (paged) NDS.Pagination.refresh(paged, { keepPage: !!list.ndsSort?._refreshing });
+                },
             }).hasMarkupTriggers = true;
         });
     }

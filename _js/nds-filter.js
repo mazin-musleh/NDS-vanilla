@@ -819,9 +819,10 @@
         // so the equality match against input.value succeeds. Safe because the
         // value is only compared, never rendered as HTML (stored criteria come
         // from input.value itself).
+        // No length cap: an option's value can be long, and a capped one never matches.
         _sanitizeFilterValue(text) {
             if (!text) return '';
-            return text.replace(/<[^>]*>/g, '').substring(0, 100);
+            return text.replace(/<[^>]*>/g, '');
         }
 
         _readUrlParams() {
@@ -859,8 +860,8 @@
             }
         }
 
-        // Check every input in a filter group whose value is one of `values`. Values are
-        // length-capped via _sanitizeFilterValue but keep their literal chars so
+        // Check every input in a filter group whose value is one of `values`. Values pass
+        // through _sanitizeFilterValue but keep their literal chars so
         // matching against trusted input.value succeeds (e.g. "Healthcare & Social").
         _checkInputsForValues(filterData, values) {
             const wanted = values.map(value => this._sanitizeFilterValue(value).trim().toLowerCase());
@@ -886,7 +887,10 @@
             }
             const values = params.getAll(filterName);
             // A radio value is matched whole: an option may stand for a list ("1,2,3").
-            return filterInput.type === 'radio' ? values.slice(0, 1) : values.flatMap(value => value.split(','));
+            if (filterInput.type === 'radio') return values.slice(0, 1);
+            // An option's own value stays whole ("Health, Education"); only the rest is an old comma list.
+            const options = new Set(Array.from(filterInput.inputs || [], input => input.value.toLowerCase()));
+            return values.flatMap(value => options.has(value.trim().toLowerCase()) ? [value] : value.split(','));
         }
 
         // One group's criteria as query pairs, the same in the URL and the request: a value per
@@ -949,7 +953,8 @@
             const filterData = this.filterInputs[filterName];
             if (filterData.type !== 'range') this._setupManualFilter(filterData.element, filterName);
 
-            this._setFilterFromUrl(filterName, values);
+            // Read again: the new options decide which values stay whole.
+            this._setFilterFromUrl(filterName);
             this._settleAfterCriteriaChange();
         }
 
@@ -1134,6 +1139,9 @@
                 urlSync: { keyParam: 'sort', orderParam: 'order' },
                 onChange: ({ orderedItems }) => {
                     this.items = orderedItems;
+                    // refresh() re-sorts first; its syncFilters pages (keeping the page) and reports once.
+                    // reset() pages and reports once, after the reset event.
+                    if (this._refreshing || this._resetting) return;
                     this._syncPagination();
                     // Counts are null in form mode only, as filter.md documents for nds:filter:change.
                     if (this.isFormMode) this._dispatchFilterEvent();
@@ -2453,11 +2461,8 @@
         // stamps data-nds-accordion-initialized (clears the skeleton), and sets
         // .ndsAccordion on the container.
         //
-        // Once per build pass, never per group: NDS.Accordion snapshots its
-        // buttons at construction and the initializer skips a root that already
-        // has .ndsAccordion, so initializing after the first of several groups
-        // sharing one author-supplied .nds-accordion root (the documented
-        // multi-group shape) leaves every later group's header button unwired.
+        // Once per build pass, never per group: NDS.Accordion.reinit() scans every
+        // .nds-accordion on the page, and a live root adopts the groups added since.
         _flushAccordionInit() {
             if (!this._accordionInitPending) return;
             this._accordionInitPending = false;
@@ -2963,8 +2968,14 @@
         }
 
         reset() {
-            this.clear();
+            // Shown before clear(), whose sort reset runs onChange over these items.
             this.items.forEach(item => this._showItem(item));
+            this._resetting = true;
+            try {
+                this.clear();
+            } finally {
+                this._resetting = false;
+            }
 
             this.dismissNoResultsAlert();
 
@@ -2981,6 +2992,7 @@
 
             this._commitAppliedUi();
             this._syncPagination();
+            this._dispatchFilterEvent(this.items.length);
         }
 
         // ==============================================
@@ -3089,30 +3101,34 @@
             // Update items list
             this.items = this._resolveItems();
             this._cacheBuilt = false;
-            this._resyncSort();
 
-            // Regenerate auto-scanned filters only (skip data-filter-values — those have their own source)
-            const filterElements = this.queryAll('[data-filter-type]');
-            filterElements.forEach(element => {
-                const filterName = element.getAttribute('data-filter');
-                const filterType = element.getAttribute('data-filter-type');
-                // A slider's range comes from its own min/max, not the items.
-                if (element.hasAttribute('data-filter-values') || filterType === 'slider') return;
-
-                // Clear existing inputs first
-                element.innerHTML = '';
-
-                // Regenerate (may replace element with fieldset)
-                const actualEl = this._buildFilterInputs(element, filterName, filterType) || element;
-                this._setupManualFilter(actualEl, filterName);
-            });
-            this._flushAccordionInit();
-
-            // Reapply current filters. The criteria did not change, only the rows, so
-            // pagination must hold the user's page — see _getPageOptions/_syncPagination.
-            // A row edited on page 3 that snapped the list back to page 1 was the bug.
+            // The criteria did not change, only the rows, so pagination must hold the
+            // user's page — see _getPageOptions/_syncPagination. A row edited on page 3
+            // that snapped the list back to page 1 was the bug. Set before _resyncSort:
+            // a new engine replays a URL sort through onChange.
             this._refreshing = true;
             try {
+                this._resyncSort();
+
+                // Regenerate auto-scanned filters only (skip data-filter-values — those have their own source)
+                const filterElements = this.queryAll('[data-filter-type]');
+                filterElements.forEach(element => {
+                    const filterName = element.getAttribute('data-filter');
+                    const filterType = element.getAttribute('data-filter-type');
+                    // A slider's range comes from its own min/max, not the items.
+                    if (element.hasAttribute('data-filter-values') || filterType === 'slider') return;
+
+                    // Clear existing inputs first
+                    element.innerHTML = '';
+
+                    // Regenerate (may replace element with fieldset)
+                    const actualEl = this._buildFilterInputs(element, filterName, filterType) || element;
+                    this._setupManualFilter(actualEl, filterName);
+                });
+                this._flushAccordionInit();
+
+                // New rows join the active sort, then the current filters apply.
+                this.sort?.refresh();
                 this.syncFilters();
             } finally {
                 this._refreshing = false;
@@ -3348,7 +3364,7 @@
          * expected to resolve the instance first — that lookup is the trap this
          * removes. No arg (or document) refreshes every live filter.
          *
-         * AJAX-mode instances are SKIPPED. The server owns the result set there: it
+         * Form-mode instances are SKIPPED. The server owns the result set there: it
          * ran the query, chose the rows and returned exactly one page of them.
          * instance.refresh() would re-filter those rows client-side against criteria
          * the server has already applied — and client matching (data-filter-value

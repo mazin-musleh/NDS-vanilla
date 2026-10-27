@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 11:28 PM"
+last_edit: "27/10/2026 - 11:40 PM"
 ---
 
 <section id="pagination-overview" class="nds-content-section nds-doc-overview">
@@ -446,7 +446,7 @@ After a page change, the script scrolls the content back into view when its top 
             <i class="hgi hgi-stroke hgi-shield-user"></i>
             <span class="nds-label">Accessibility</span>
           </span>
-          <p class="nds-item-desc">The script sets <code class="nds-inline-code lang-html">aria-current="page"</code> on the current page. Buttons it builds get labels in Arabic or English, from the page language. When a page or a filter changes the records counter, a screen reader hears the counter line.</p>
+          <p class="nds-item-desc">The script sets <code class="nds-inline-code lang-html">aria-current="page"</code> on the current page. Buttons it builds get labels in Arabic or English, from the page language. When a page or a filter changes the records counter, a screen reader hears the counter line. A page opened from <code class="nds-inline-code lang-html">?page=</code> is not announced.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

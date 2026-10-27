@@ -99,11 +99,15 @@ Files: nds-filter.js, nds-pagination.js, nds-sort.js, nds-table.js, nds-selectio
 
 Seams:
 - filter → pagination: Filter writes `data-filtered` (`_applyItem`), Pagination's `getPagedItems` skips it; Filter's `_syncPagination` calls `NDS.Pagination.refresh(content, {keepPage})`. Loader: Filter "MUST stay before Pagination".
-- filter → sort: `NDS.Sort.create(target, {items, reorderIn, triggers, accessor, urlSync, onChange})`, whose `onChange` ends in `_syncPagination` + the filter event; Sort dedups through `root.ndsSort`, and its own scan skips a claimed list. Loader: Sort after Filter and Tables.
+- filter → sort: `NDS.Sort.create(target, {items, reorderIn, triggers, accessor, urlSync, onChange})`, whose `onChange` ends in `_syncPagination` + the filter event, except under `_refreshing` / `_resetting`; Sort dedups through `root.ndsSort`, and its own scan skips a claimed list. Loader: Sort after Filter and Tables.
+- filter `refresh()` → sort `refresh()`: under `_refreshing`, `_resyncSort` (a new engine replays a URL sort) then `this.sort?.refresh()` put new rows in the sort; `onChange` only takes `orderedItems`, and `syncFilters` pages with `keepPage` and reports once.
+- filter `reset()` → sort `reset()`: items are shown first, then `clear()` resets the sort under `_resetting`; `reset()` fires one `nds:filter:change` after `nds:filter:reset`.
+- filter ↔ sort, the URL: Filter's `urlSync` uses fixed `sort` / `order`. `_readUrlParams` skips a group named `sort` or `order` when `[data-sort]` exists; `_getUrlKeys` does not, so a group with that name collides with Sort's keys.
+- sort (markup) → pagination: core's DOM bus reports a reorder as a move, so Pagination's `onDomAdd` / `onDomRemove` watchers never see a sort. Sort's markup `init()` passes an `onChange` that calls `NDS.Pagination.refresh(list.closest('.nds-paged-content'), {keepPage: !!list.ndsSort?._refreshing})`; a consumer's own `create()` must do the same.
 - table → sort, pagination, selection: `_setupSort` → `NDS.Sort.create(table, {…, a11y:'sort'})`, whose `onChange` runs `repairSubPairing` then `NDS.Pagination.refresh`; `_setupSelectAll` stamps `data-selection-target` and calls `NDS.Selection.init()` + `refresh(tbody)`.
 - selection ← filter, pagination: `getScope` reads `data-filtered` and Pagination's `item.hidden`, resynced through `NDS.onAttributeChange` on `data-filtered` and on `.nds-page-item` `hidden`. Loader: Selection recounts before Filter.
 - export → selection, filter: reads `NDS.Selection.isSelected(row)` behind the `__ndsStub` check (extras and delegated land in no fixed order) and calls `NDS.Selection.init()` at its own init; excludes `data-filtered` rows and ignores `hidden`, so every page exports.
-- pagination `refresh(content, {keepPage})`: the one entry for Filter, Table and its own `onDomAdd` / `onDomRemove('.nds-page-item')` watchers.
+- pagination `refresh(content, {keepPage})`: the one entry for Filter, Table, Sort's markup wiring and its own `onDomAdd` / `onDomRemove('.nds-page-item')` watchers. `findContentNav` (content → nav) must agree with `findNavContent` (nav → content): the adjacency fallback prefers the nav whose `findNavContent` is this container.
 
 ## @dialogs
 

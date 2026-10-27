@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 10:34 PM"
+last_edit: "27/10/2026 - 11:43 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -764,7 +764,7 @@ Sort is not a filter value. Decide by what the server returns. All matching item
 | `submitForm()` | Submits the form in form mode |
 | `clear()` | Clears every value, the search term and the sort, and applies nothing |
 | `reset()` | Clears everything and shows every item. In form mode it submits the form again |
-| `refresh()` | Reads the items again and rebuilds the groups that have `data-filter-type` and no `data-filter-values`, keeping the current page |
+| `refresh()` | Reads the items again and rebuilds the groups that have `data-filter-type` and no `data-filter-values`, keeping the current page. New items join the active sort |
 | `reapplyUrlParamsForFilter(name)` | Picks the URL's values in a group whose inputs you added after load |
 | `showNoResultsAlert()`, `dismissNoResultsAlert()` | Shows or closes the no-results alert in the item container. Call them from your response handler in form mode. Without an item container they do nothing |
 | `destroy()` | Removes the listeners and shows every item |
@@ -775,7 +775,7 @@ In form mode, each setter submits the form. Setters in one script run share one 
 | Event | Fired on | Detail |
 |---|---|---|
 | `nds:filter:ready` | `.nds-filter`, or the first surface | The filter |
-| `nds:filter:change` | the same | `{ filter, criteria, totalItems, visibleItems, hiddenItems }`, after each apply, also when nothing is applied. The last three are numbers, `null` in form mode. The values are in `criteria.filters`, not in `criteria` |
+| `nds:filter:change` | the same | `{ filter, criteria, totalItems, visibleItems, hiddenItems }`, after each apply, also when nothing is applied, and after `reset()`. The last three are numbers, `null` in form mode. The values are in `criteria.filters`, not in `criteria` |
 | `nds:filter:reset` | the same | `{ filter, totalItems }` |
 | `nds:filter:clear` | the same | `{ filter }`, on `clear()`, `reset()` and the menu's Reset |
 | `nds:filter:submit` | the same | `{ criteria, form }`, before a form submits with a page load, after its fields pass. `preventDefault()` stops it |

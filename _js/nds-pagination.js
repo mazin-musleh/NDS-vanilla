@@ -44,8 +44,8 @@
  *     reconcileCollapse): more than 5 pages collapse to
  *     [Prev] 1 2 3 [ellipsis] N [Next] so author-written full lists never
  *     paint then collapse (horizontal CLS).
- *   - Auto-pagination initial paint (setupAutoContainer → setAutoPagination):
- *     generates the collapsed list from data-total-pages, hides items past
+ *   - Auto-pagination initial paint (setupAutoContainer → rebuildAutoNav):
+ *     generates the collapsed list from the item count, hides items past
  *     --per-page via showPage, which pins table column widths grow-only,
  *     stamps data-paged-initialized so the skeleton reveals.
  *   - Initial active-state stamping (setActivePage + setPrevNextStates +
@@ -645,10 +645,14 @@
         const parent = contentContainer.parentElement;
         if (!parent) return null;
         const ownSub = contentContainer.closest('tr.nds-sub');
+        let firstNav = null;
         for (const nav of parent.querySelectorAll('.nds-pagination[data-auto-pagination]')) {
-            if (nav.closest('tr.nds-sub') === ownSub) return nav;
+            if (nav.closest('tr.nds-sub') !== ownSub) continue;
+            // Two adjacency pairs under one parent: the nav right after this container is its own.
+            if (findNavContent(nav, true) === contentContainer) return nav;
+            firstNav ||= nav;
         }
-        return null;
+        return firstNav;
     }
 
     // Per-page picker: any nds-dropmenu carrying `data-per-page-target="<id>"`
@@ -684,8 +688,8 @@
 
     // Wire one auto-pagination container: paginate to final state now (the
     // rebuild wires clicks), then addAutoNavListeners for the --per-page resize observer.
-    // Skips already-initialized navs and navs inside <code>; the content
-    // container is the previous sibling.
+    // Skips already-initialized navs and navs inside <code>; findNavContent
+    // finds the content (its id binding, else the previous sibling).
     function setupAutoContainer(paginationNav) {
         if (paginationNav.hasAttribute('data-nds-auto-pagination-initialized') ||
             paginationNav.closest('code')) {
@@ -711,21 +715,13 @@
         const perPage = readPerPage(contentContainer);
         perPageSizes.set(contentContainer, perPage);
         contentContainer.setAttribute('data-paged-initialized', '');
-        setAutoPagination(paginationNav, items, perPage);
 
-        // Opt-in URL restore: land on ?page=N before the skeleton reveal —
-        // silent (no event, no scroll), clamped to the page count.
-        const urlPage = readPageParam(paginationNav);
-        if (urlPage && urlPage > 1) {
-            const totalPages = Math.ceil(items.length / perPage);
-            const page = Math.min(urlPage, Math.max(1, totalPages));
-            const list = paginationNav.querySelector('.nds-pagination-list');
-            if (list && page > 1) {
-                setActivePage(list, page);
-                setPrevNextStates(list, page, 1, totalPages);
-                showPage(items, page, perPage);
-            }
-        }
+        // Opt-in URL restore: land on ?page=N before the skeleton reveal — silent
+        // (no event, no scroll), clamped by rebuildAutoNav. One build, so the counter's
+        // first stamp is the page loading and a screen reader hears nothing.
+        const list = paginationNav.querySelector('.nds-pagination-list');
+        const page = readPageParam(paginationNav) || (list ? getCurrentPage(list) : 1);
+        rebuildAutoNav(paginationNav, contentContainer, items, perPage, page);
 
         // Clicks were wired by the rebuild above; add the --per-page ResizeObserver.
         addAutoNavListeners(paginationNav, contentContainer);
@@ -737,9 +733,9 @@
         paginationNav.setAttribute('data-nds-auto-pagination-initialized', 'true');
     }
 
-    // THE rebuild step for an auto nav — both rebuild paths (setAutoPagination's
-    // --per-page change, syncAutoPagination's filter/add/remove) route here, so
-    // the two can't drift. Tears down the old ellipsis menu, then either collapses
+    // THE rebuild step for an auto nav — the first paint (setupAutoContainer) and both
+    // rebuild paths (setAutoPagination's --per-page change, syncAutoPagination's
+    // filter/add/remove) route here, so they can't drift. Tears down the old ellipsis menu, then either collapses
     // to nothing (≤1 page: every item shown, records stamped, and the empty nav
     // self-hides via .nds-pagination:not(:has(>.nds-pagination-list)) — no inline
     // display to track) or emits the collapsed list, pages the items and wires the
@@ -771,8 +767,8 @@
     }
 
     // Rebuild an auto-pagination nav for the given --per-page, preserving the
-    // current page. Callers: setupAutoContainer's initial paint, addAutoNavListeners's
-    // resize callback; syncAutoPagination calls rebuildAutoNav directly.
+    // current page. Caller: addAutoNavListeners's resize callback; setupAutoContainer
+    // and syncAutoPagination call rebuildAutoNav directly.
     function setAutoPagination(paginationNav, items, perPage) {
         // Preserve the current page across a --per-page change — read it before
         // rebuildAutoNav destroys the list it lives on.

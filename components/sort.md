@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 10:35 PM"
+last_edit: "27/10/2026 - 11:40 PM"
 ---
 
 <section id="sort-overview" class="nds-content-section nds-doc-overview">
@@ -255,7 +255,7 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
 ### Markup Wiring
 {: .nds-block-title}
 
-The script wires every list that a `data-sort-target` names, after the page first paints. A trigger can sit anywhere on the page, in a dropmenu too. Every child of the list is an item, so the list holds only the items. For a custom value reader, fixed types, URL sync or a change callback, call `create()` instead (see the API). Leave `data-sort-target` off those triggers: a list keeps its first instance, so a second setup is ignored.
+The script wires every list that a `data-sort-target` names, after the page first paints. A trigger can sit anywhere on the page, in a dropmenu too. Every child of the list is an item, so the list holds only the items. For a custom value reader, fixed types, URL sync or a change callback, call `create()` instead (see the API). Leave `data-sort-target` off those triggers: a list keeps its first instance, so a second setup is ignored. On a list that [Pagination](../components/pagination) pages, a new sort opens page 1.
 
 ### Direct Mode
 {: .nds-block-title}
@@ -335,7 +335,7 @@ In `create()`, set `urlSync: { keyParam, orderParam }` and the sort key and orde
             <i class="hgi hgi-stroke hgi-api"></i>
             <span class="nds-label">Programmatic Control</span>
           </span>
-          <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">apply()</code>, <code class="nds-inline-code lang-js">reset()</code> and <code class="nds-inline-code lang-js">refresh()</code> from your own code. Listen for <code class="nds-inline-code lang-js">nds:sort:change</code> to react to every sort.</p>
+          <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">setSort()</code>, <code class="nds-inline-code lang-js">reset()</code> and <code class="nds-inline-code lang-js">refresh()</code> from your own code. Listen for <code class="nds-inline-code lang-js">nds:sort:change</code> to react to every sort.</p>
         </div>
       </div>
     </div>
@@ -361,6 +361,7 @@ In `create()`, set `urlSync: { keyParam, orderParam }` and the sort key and orde
 - Keep the `accessor` fast and free of side effects: Sort calls it on every comparison.
 - Call `NDS.init.refresh(list)` after you add items, such as after a request. New items join the active sort only after that call. On your own instance, call `refresh()`.
 - Use `onChange` in the code that creates the instance. Use the `nds:sort:change` event in other code.
+- On a list that Pagination pages, call `NDS.Pagination.refresh(list)` in the `onChange` of your own `create()`. Pagination does not see a sort move the items.
 - Call `NDS.init.destroy(view)` before you remove a view in a single-page app. It removes every listener Sort added.
 
 </div>
@@ -412,11 +413,11 @@ Markup wiring is a `create()` call on the list with the defaults below: `items` 
 | `NDS.Sort.create(root, options)` | Returns the instance of the root. A root that already has one returns it and ignores `options`. |
 | `NDS.Sort.destroy(root)` | The same as `sort.destroy()`. `root` is an element or a selector. |
 | `NDS.Sort.getInstance(root)` | Returns the instance of the root, or `null`. `root` is an element or a selector. |
-| `NDS.Sort.detectType(values, dateFormat)` | Returns `'number'`, `'date'` or `'string'`. `dateFormat` is the format a date in the values uses: the site's when you leave it out. |
-| `NDS.Sort.parseValue(raw, type, dateFormat)` | Returns the value as the type sorts it. |
-| `NDS.Sort.compare(a, b, type, order, dateFormat)` | Returns a negative, zero or positive number. |
+| `NDS.Sort.detectType(values, dateFormat, calendar)` | Returns `'number'`, `'date'` or `'string'`. `dateFormat` is the format a date in the values uses, and `calendar` its calendar: the site's when you leave them out. |
+| `NDS.Sort.parseValue(raw, type, dateFormat, calendar)` | Returns the value as the type sorts it. |
+| `NDS.Sort.compare(a, b, type, order, dateFormat, calendar)` | Returns a negative, zero or positive number. |
 | `sort.setSort(key, order)` | Sorts now. A `null` key restores the original order. |
-| `sort.reset()` | Restores the original order. |
+| `sort.reset()` | Restores the original order. Items added after setup follow the others. |
 | `sort.refresh()` | Sorts the items again by the active key. Does nothing when no sort is active. |
 | `sort.getState()` | Returns `{ key, order }`. |
 | `sort.destroy()` | Removes the listeners. The sort states on the triggers and the order of the items stay. |
