@@ -51,7 +51,7 @@
  *   - An event outside the shown week or month, or off the picked day, is hidden, never removed.
  *   - Events added or removed later are read again by themselves.
  *   - A Filter on the same list hides events with data-filtered: they count as none for the
- *     empty message and the day buttons.
+ *     empty message, while a day's dot and event count still include them.
  *   - The address changes with replaceState: no Back-button step per week, as Pagination.
  *   - A press on a day or a week button says the day or week and its event count (NDS.announce).
  *   - The days are one Tab stop (the picked day, else today, else the first); the arrow keys move
@@ -115,7 +115,7 @@
             lists.forEach((list) => list.closest(SELECTOR)?.ndsCalendar?.refresh());
         });
         NDS.state.onToggle('loading', SELECTOR, (el, on) => el.ndsCalendar?._setLoading(on), { className: 'nds-loading' });
-        // A Filter on the list hides events: the empty message and the day buttons count what is left.
+        // A Filter on the list hides events: the empty message counts what is left.
         NDS.onAttributeChange('.nds-calendar-events > li', ['data-filtered'], (items) => {
             new Set(items.map((item) => item.closest(SELECTOR)?.ndsCalendar)).forEach((calendar) => calendar?._sync());
         });
@@ -333,9 +333,10 @@
                 name.textContent = names[i];
                 initial.textContent = NDS.Date.format(addDays(gridStart, i), { locale: lang, weekday: 'narrow' });
             });
+            // Every event, filtered or not: the dot marks a day that has events.
             const counts = new Map();
-            for (const { item, day } of this._events) {
-                if (day && !item.hasAttribute('data-filtered')) counts.set(+day, (counts.get(+day) || 0) + 1);
+            for (const { day } of this._events) {
+                if (day) counts.set(+day, (counts.get(+day) || 0) + 1);
             }
             const today = NDS.Date.getToday();
             this._dayButtons.forEach((btn, i) => {

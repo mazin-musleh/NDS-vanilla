@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 01:09 PM"
+last_edit: "27/10/2026 - 01:55 PM"
 ---
 
 <section id="calendar-overview" class="nds-content-section nds-doc-overview">
@@ -471,7 +471,7 @@ The events are the `<li>` items in `.nds-calendar-events`, and nothing else. A s
 ### Filter
 {: .nds-block-title}
 
-The With Filter structure adds a [Filter](../components/filter) on the events list: `data-filter-items="li"` on the list, and a mark in each event, such as a tag with `data-filter="type"`. The Filter builds its options from the marks. The calendar shows only the events that match, and a day with no match shows the empty message. A filter and a picked day work together: neither clears the other. When the filter hides every event of the week, the month or the day, the empty message's `.nds-calendar-empty-filtered` parts show in place of its message: in the canon, "No item matches the current filters." and a Clear filters button. The message carries the filter's `data-filter-target`, so the button's `data-filter-action="reset"` clears it. The row of applied filters sits at the bar's end, in a `.nds-toolbar-end`, and removes a filter in one press. When a script replaces the events, call `NDS.init.refresh(list)` so that the Filter reads them too.
+The With Filter structure adds a [Filter](../components/filter) on the events list: `data-filter-items="li"` on the list, and a mark in each event, such as a tag with `data-filter="type"`. The Filter builds its options from the marks. The calendar shows only the events that match, and a day with no match shows the empty message. A filter and a picked day work together: neither clears the other. The dots keep marking every day that has events, filtered or not. When the filter hides every event of the week, the month or the day, the empty message's `.nds-calendar-empty-filtered` parts show in place of its message: in the canon, "No item matches the current filters." and a Clear filters button. The message carries the filter's `data-filter-target`, so the button's `data-filter-action="reset"` clears it. The row of applied filters sits at the bar's end, in a `.nds-toolbar-end`, and removes a filter in one press. When a script replaces the events, call `NDS.init.refresh(list)` so that the Filter reads them too.
 
 </div>
   </div>
