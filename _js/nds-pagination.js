@@ -1451,6 +1451,13 @@
 
         const page = rebuildAutoNav(paginationNav, contentContainer, visibleItems, perPage, desiredPage);
 
+        // A container swapped in after setup (an AJAX filter's results) is adopted as
+        // setupAutoContainer does at load: its hold released, its --per-page watched.
+        if (!contentContainer.hasAttribute('data-paged-initialized')) {
+            contentContainer.setAttribute('data-paged-initialized', '');
+            addAutoNavListeners(paginationNav, contentContainer);
+        }
+
         // Keep the opted-in URL param truthful across filter/refresh resets
         // (collapsed or reset → 1 deletes it; keepPage clamps update it). Never
         // runs at init — pre-init refreshes bail above.

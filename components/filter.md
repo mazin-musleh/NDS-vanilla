@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 11:43 PM"
+last_edit: "28/10/2026 - 01:11 AM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -775,7 +775,7 @@ In form mode, each setter submits the form. Setters in one script run share one 
 | Event | Fired on | Detail |
 |---|---|---|
 | `nds:filter:ready` | `.nds-filter`, or the first surface | The filter |
-| `nds:filter:change` | the same | `{ filter, criteria, totalItems, visibleItems, hiddenItems }`, after each apply, also when nothing is applied, and after `reset()`. The last three are numbers, `null` in form mode. The values are in `criteria.filters`, not in `criteria` |
+| `nds:filter:change` | the same | `{ filter, criteria, totalItems, visibleItems, hiddenItems }`, after each apply, also when nothing is applied, and after `reset()`. It fires after the URL, the chips and the page update. The last three are numbers, `null` in form mode. The values are in `criteria.filters`, not in `criteria` |
 | `nds:filter:reset` | the same | `{ filter, totalItems }` |
 | `nds:filter:clear` | the same | `{ filter }`, on `clear()`, `reset()` and the menu's Reset |
 | `nds:filter:submit` | the same | `{ criteria, form }`, before a form submits with a page load, after its fields pass. `preventDefault()` stops it |

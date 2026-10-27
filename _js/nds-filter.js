@@ -651,6 +651,8 @@
                 this._cacheBuilt = false;
                 this._resyncSort();
                 this._revealTargetContainer();
+                // New results open on page 1, as a client-side filter change does.
+                this._syncPagination();
                 eventDetail.html = newContainer.innerHTML;
             } else {
                 // A 200 with no usable container is a server/config fault, not a
@@ -2737,10 +2739,11 @@
                 }
             });
 
-            this._dispatchFilterEvent(visibleCount);
             this._syncPagination(this._getPageOptions());
             this._syncNoResultsAlert(visibleCount);
             this._commitAppliedUi();
+            // Last, as on every path: a listener reads the URL, the chips and the page as they now are.
+            this._dispatchFilterEvent(visibleCount);
         }
 
         _syncNoResultsAlert(visibleCount) {
