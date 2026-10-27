@@ -32,7 +32,8 @@
     // splitting the flow into separate blocks. End side only: in flow it gives
     // the same gap, and inside a flex or grid component (no margin collapse) it
     // never pushes the element away from the one above it.
-    :where(p, ul, ol, blockquote, figure, table, pre, .nds-code, .nds-alert) {
+    // An .nds-table sits in a scroll wrapper: the wrapper takes the gap, or it shows inside the scroll box.
+    :where(p, ul, ol, blockquote, figure, table:not(.nds-table), .nds-table-wrapper, pre, .nds-code, .nds-alert) {
         margin-block-end: var(--spacing-xl);
     }
 
