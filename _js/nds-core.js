@@ -1190,9 +1190,10 @@
     // ── Own Items ────────────────────────────────────────────────────
     // A list's own items. A .nds-sub row is never one: it rides its parent row. A <tbody>
     // owns only its direct rows, so a nested table in a sub row is a list of its own; a grid
-    // or list may nest items under a wrapper, so it keeps them all.
+    // or list may nest items under a wrapper, so it keeps them all. Empty's placeholder is never one.
     // Usage: const rows = NDS.findOwnItems(tbody, tbody.querySelectorAll('.nds-page-item'));
     NDS.findOwnItems = (list, items) => [...items].filter(el => !el.classList.contains('nds-sub')
+        && !el.hasAttribute('data-nds-empty-placeholder')
         && (list.tagName !== 'TBODY' || el.parentElement === list));
 
     // ── Template Resolver ────────────────────────────────────────────

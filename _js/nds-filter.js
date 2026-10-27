@@ -50,7 +50,7 @@
  *   data-filter-submit · data-filter-btn · data-filter-query · data-filter-count
  *   data-filter-all-label · data-filter-no-all · data-filter-ignore · data-filter-accordion
  *   data-filter-min · data-filter-max · data-filter-step · data-filter-currency · data-filter-unit
- *   data-filtered · data-total-count · data-ajax · data-chip-class
+ *   data-filtered · data-total-count · data-filter-no-results · data-ajax · data-chip-class
  * Gotchas:
  *   - Always NDS.Filter.create(); a bare `new NdsFilter` skips the registry, the init stamp
  *     and the ready event, so getInstance/getByTarget/whenReady never see it.
@@ -2629,7 +2629,8 @@
         _syncNoResultsAlert(visibleCount) {
             if (!this._targetContainer) return;
 
-            if (visibleCount === 0) {
+            // No items at all is Empty's message, not "no match".
+            if (visibleCount === 0 && this.items.length) {
                 this.showNoResultsAlert();
             } else {
                 this.dismissNoResultsAlert();
@@ -2669,7 +2670,7 @@
 
             NDS.Alert.create({
                 variant: 'warning',
-                description: strings.text('no_results_description'),
+                description: this._targetContainer.getAttribute('data-filter-no-results') || strings.text('no_results_description'),
                 target: insertTarget,
                 title: strings.text('no_results'),
                 id: alertId,

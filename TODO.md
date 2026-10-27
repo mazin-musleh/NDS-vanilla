@@ -21,9 +21,6 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 - **Chat component (2026-10-16), later.** Found in the Student Portal mockup (https://seu-exam-support.netlify.app/) with Date Tile and Meta, which shipped. Think it through first: the real uses, how it fits with other components, and what it replaces. The portal's support panel (`dialog#support-panel` in `examples/student-portal.md`) is where it would land.
 - **File Upload image preview for a photo picker.** The old catalog card promised one; it never existed.
 - **Rig asks, checked against the docs 2026-10-27.** The rest were already covered or dropped (shop parts are off-mission).
-  - **Filter: a no-results text for each filter.** Today only `NDS_I18N`; one `data-*` on the filter.
-  - **Filter alert vs Empty.** `components/empty.md` names "a filtered list" and Filter shows its own alert; one sentence in each doc says which to use.
-  - **Filter with no items** (a calendar, a map). `data-filter-values` and JSON mode already work without items: test a Filter with no item container. It fires `nds:filter:change` → a doc line; else a small fix.
   - **Selection: a pick limit.** None today; Multiselect's `data-max-checked` only checks on submit. Owner call.
   - Parked: URL state for Multiselect and Tabs, Tabs hash sync (a framework router owns the URL); a compare pattern (an example, not a component).
 - **PDF in the image viewer** (phone browsers do not show a PDF inside a page: iPhone shows the first page, Android downloads it) and **QR code** (an encoder is ~300 lines and NDS has no libraries; scanning needs a large decoder outside Chrome on Android).

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 12:16 PM"
+last_edit: "27/10/2026 - 11:52 AM"
 ---
 
 <section id="empty-overview" class="nds-content-section nds-doc-overview">
@@ -25,6 +25,7 @@ Pick another component when:
 - the data is still loading: [Loading](../components/loading).
 - a request failed and the rest of the view still shows: [Alert](../components/alert), with `data-status="error"`, so the user knows that something went wrong.
 - a request failed and the view has nothing else to show: [Status Section](../layout/status-section).
+- the container has items but none match the user's filter: [Filter](../components/filter) shows its own alert. A filtered-out item stays in the container, so the placeholder does not show.
 
 </div>
   </div>

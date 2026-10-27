@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 12:53 PM"
+last_edit: "27/10/2026 - 11:52 AM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -391,6 +391,8 @@ The user picks values in the menu, and Apply applies them all at once. Closing t
 
 A mark's text is its value. `data-filter-value` on the mark sets a value apart from the text: the URL and the match use the value, and the option and the chip show the text. `data-filter-values` on a group lists its options: an array of values, or an object of value-label pairs. The script then reads no items for that group.
 
+A filter can also drive a view that holds no items, such as a [Calendar](../components/calendar) or a map. Point `data-filter-target` at the view, give each group `data-filter-values`, and update the view from `criteria.filters` in `nds:filter:change`. The view has no `.nds-card` (or nothing that matches its `data-filter-items`), so the filter hides nothing in it and shows no alert.
+
 ### Range Slider
 {: .nds-block-title}
 
@@ -609,7 +611,7 @@ Sort is not a filter value and is never sent with the form. Decide by what the s
             <i class="hgi hgi-stroke hgi-search-01"></i>
             <span class="nds-label">No Results Alert</span>
           </span>
-          <p class="nds-item-desc">When no item matches, a warning alert with a Clear filters button shows in the item container. It closes when items match again.</p>
+          <p class="nds-item-desc">When no item matches, a warning alert with a Clear filters button shows in the item container. It closes when items match again. <code class="nds-inline-code lang-html">data-filter-no-results</code> on the container sets its text. A container with no items at all shows no alert: give it <a href="../components/empty">Empty</a> for that message.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -739,6 +741,7 @@ Sort is not a filter value and is never sent with the form. Decide by what the s
 | `data-autofill-apply` | `.nds-auto-fill` | A chip click also runs the search |
 | `data-filter-ignore` | a text field, or an element around it | The script does not use the field as the search field |
 | `data-filter-items` | the item container | The items: a class name without the dot, a tag, or a selector. The default is `.nds-card`. With it, the container stays hidden until the filter starts |
+| `data-filter-no-results` | the item container | The no-results alert's text, in place of "No item matches the current filters." Say what the user can change, such as "No requests match. Try another status" |
 | `data-total-count` | the item container | A count from the server. `[data-filter-count]` shows it in place of the matching items |
 | `data-filter` | an item, or an element inside one | A mark: the item's value for the group with that name. Its text is the value |
 | `data-filter-value` | a mark | The value in place of the text. A slider group reads it as a number |
