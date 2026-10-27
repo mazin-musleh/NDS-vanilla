@@ -345,6 +345,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Link** — The focus padding no longer applies to `.nds-brand`.
 - **Loader** — with `enableLogging`, the audit now runs 3 seconds after load, not 13. A main CSS with another name, such as `nds-main.3f2a.min.css`, gets its icon and accessibility sheets.
 - **Loader** — A negative `--per-page` falls back to 6 instead of throwing before the page shows.
+- **Loader** — On a page that stays busy for 2 seconds after it shows, the components that remain start in short steps, so a tap is not kept waiting. Before, they all started in one long step.
 - **Loading** — A text bar hides its pseudo-elements, such as a required star or a divider line.
 - **Main Navigation** — a row-list menu stacks its links in a column below 960px; the brand gives way below 960px so the menu button stays on screen; the brand name and slogan have default colors; the drawer's show more arrow no longer covers the last link when every action is pinned; an avatar with initials in an icon-only item shows its initials; with auto-init off, the nav no longer switches to its phone layout before `initialize()`, so a framework hydrates the markup it rendered; Escape in an open menu or the phone drawer returns focus to its button.
 - **Main Navigation** — A drag on the link row no longer opens the link under the pointer.

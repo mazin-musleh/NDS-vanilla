@@ -797,14 +797,18 @@
         function drainList(list, onDone) {
             let i = 0;
             function drain(deadline) {
+                const end = performance.now() + config.initBudgetMs;
                 while (
                     i < list.length &&
+                    performance.now() < end &&
                     (deadline.didTimeout || deadline.timeRemaining() > 1)
                 ) {
                     runInit(list[i++]);
                 }
-                if (i < list.length) scheduleIdle(drain, { timeout: 2000 });
-                else if (onDone) onDone();
+                if (i >= list.length) onDone?.();
+                // didTimeout stays true: keep going in budget slices, not one long task.
+                else if (deadline.didTimeout) yieldToBrowser(() => drain(deadline));
+                else scheduleIdle(drain, { timeout: 2000 });
             }
             scheduleIdle(drain, { timeout: 2000 });
         }
