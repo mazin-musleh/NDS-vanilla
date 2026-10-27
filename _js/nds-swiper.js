@@ -581,7 +581,7 @@
             // Two pages plus one clone on each side, and never fewer than six SLIDES.
             // The floor is absolute because the relative formula strands a short row: a
             // two-slide loop caps its budget at two, so the edge stays two swipes away
-            // and _recenter has no room to work in — it only shifts once the row is a
+            // and a pan has no room to re-anchor in — it only shifts once the row is a
             // whole cycle out. A row shorter than the budget repeats its own cycle to
             // reach it; the wrap math is cycle-relative, so the clone index just wraps.
             const realCount = this._realCount;
@@ -621,7 +621,10 @@
             // move still runs — and a real window can hold that move still for two frames
             // before it starts, so "stopped moving" is no test. Settle only once the row
             // reaches the move's own target; the move's end fires another scrollend.
+            let isPanning = false, hasShifted = false;
             const settle = () => {
+                // Under a finger nothing rests: this is the pan's re-anchor firing its own scrollend.
+                if (isPanning) return;
                 if (this._aim != null) {
                     if (Math.abs(Math.abs(this.wrapper.scrollLeft) - this._aim) > 2) return;
                     this._aim = null;
@@ -634,37 +637,26 @@
             // A wheel or a touch cancels the move, so its target no longer holds the settle.
             this.wrapper.addEventListener('wheel', () => { this._aim = null; }, { passive: true, signal });
 
-            // A rest needs a real pause and a run of swipes never gives one: measured
-            // SEVEN flicks passing before one scrollend landed, each spending a clone,
-            // so the row runs out of them and stops dead on its real edge. Take the
-            // other quiet moment instead — the touch that starts the next swipe.
-            this.wrapper.addEventListener('pointerdown', (e) => this._recenter(e), { passive: true, signal });
-        }
-
-        // Shift whole cycles from where the row ACTUALLY is — mid-flight currentIndex is
-        // a rounded read of a moving position.
-        _recenter(e) {
-            // Touch only: a mouse pointerdown is the start of a click, and moving the
-            // row under it hands pointerup to the twin, which loses the click.
-            if (e.pointerType === 'mouse') return;
-            this._aim = null;
-            if (this._loopPending || !this._measuredStep) return;
-            const position = this._getPosition();
-            const dir = position < this._headCount ? 1 : position >= this._headCount + this._realCount ? -1 : 0;
-            if (!dir) return;
-
-            // The row is nearly always mid-snap here (measured ~0.1 of a slide short),
-            // and mandatory snap re-snaps after ANY programmatic write — that cut to the
-            // nearest slot is the flicker. So hold snap off until the finger leaves:
-            // during a drag it does nothing anyway, and the touch has already cancelled
-            // the animation the cut would have landed on.
-            const wrapper = this.wrapper, snap = wrapper.style.scrollSnapType;
-            wrapper.style.scrollSnapType = 'none';
-            const restore = () => { wrapper.style.scrollSnapType = snap; };
-            if (!this._shiftCycle(dir)) return restore();
-            const { signal } = this.abortController;
-            wrapper.addEventListener('pointerup', restore, { once: true, signal });
-            wrapper.addEventListener('pointercancel', restore, { once: true, signal });
+            // A run of swipes never rests (a real phone passed seven before one scrollend),
+            // so the row re-anchors mid-swipe: on its first scroll once the browser has taken
+            // the touch as a pan (pointercancel). A shift at the touch itself lost to the pan,
+            // which put the row back — three jumps in 50 ms, and a dead stop on the edge.
+            // Touch only: a mouse press is a click, and an arrow move it lands on keeps its target.
+            this.wrapper.addEventListener('pointerdown', (e) => {
+                if (e.pointerType === 'mouse') return;
+                this._aim = null; isPanning = false; hasShifted = false;
+            }, { passive: true, signal });
+            this.wrapper.addEventListener('pointercancel', () => { isPanning = true; }, { signal });
+            ['touchend', 'touchcancel'].forEach(type => this.wrapper.addEventListener(type, () => { isPanning = false; }, { passive: true, signal }));
+            this.wrapper.addEventListener('scroll', NDS.throttleToFrame(() => {
+                if (!isPanning || hasShifted || this._loopPending || !this._measuredStep) return;
+                hasShifted = true;
+                // The slide the settle would read: an unrounded edge position shifted onto the other zone.
+                this._detectCurrentSlide();
+                const i = this.currentIndex;
+                const dir = i < this._headCount ? 1 : i >= this._headCount + this._realCount ? -1 : 0;
+                if (dir) this._shiftCycle(dir);
+            }), { passive: true, signal });
         }
 
         _settleLoop() {
