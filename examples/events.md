@@ -319,9 +319,17 @@ last_edit: "25/10/2026 - 01:58 PM"
                         </li>
                     </ul>
                 </div>
-                <div class="nds-empty-placeholder nds-calendar-empty">
+                <div class="nds-empty-placeholder nds-calendar-empty" data-filter-target="event-list">
                     <i class="nds-icon nds-hgi-desert" aria-hidden="true"></i>
                     <span class="nds-empty-message" data-i18n="empty.message">No content to show</span>
+                    <span class="nds-empty-message nds-calendar-empty-day" data-i18n="calendar.day_empty" hidden>No events on this day</span>
+                    <button class="nds-btn nds-md nds-secondary-outline nds-calendar-empty-day" type="button" data-calendar-action="all" hidden>
+                        <span class="nds-label" data-i18n="calendar.show_all">Show all events</span>
+                    </button>
+                    <span class="nds-empty-message nds-calendar-empty-filtered" data-i18n="filter.no_results_description" hidden>No item matches the current filters.</span>
+                    <button class="nds-btn nds-md nds-secondary-outline nds-calendar-empty-filtered" type="button" data-filter-action="reset" hidden>
+                        <span class="nds-label" data-i18n="filter.clear">Clear filters</span>
+                    </button>
                 </div>
             </div>
         </div>

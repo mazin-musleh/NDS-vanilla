@@ -13,6 +13,7 @@
     container: nds-calendar / inline-size;
     // A size container takes no width from its content: in a centering parent it would shrink to nothing.
     inline-size: 100%;
+    max-inline-size: var(--calendar-max-width, none);
     display: flex;
     flex-direction: column;
     gap: var(--_calendar-gap);
@@ -49,7 +50,22 @@
     flex-direction: column;
     gap: var(--spacing-xxs);
     min-width: 0;
-    padding: var(--spacing-md) 0;
+    // Room under the number for the dot, out of flow so a day with none keeps the row's height.
+    // The same room on top keeps the number in the middle.
+    position: relative;
+    padding: var(--spacing-lg) 0;
+}
+
+// A day with events, in every view: above the picked day's bar.
+.nds-calendar-day-dot {
+    position: absolute;
+    inset-block-end: var(--spacing-xs);
+    left: 50%;
+    translate: -50% 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--background-primary);
 }
 
 .nds-calendar-day-name,
@@ -108,10 +124,9 @@
 // ----------------------------------------------
 // Month
 // ----------------------------------------------
-// The weekday names head the columns; a day button holds its number, and a dot when it has events.
+// The weekday names head the columns; a day button holds its number.
 
-.nds-calendar-weekday,
-.nds-calendar-day-dot {
+.nds-calendar-weekday {
     display: none;
 }
 
@@ -129,25 +144,6 @@
 
     .nds-calendar-day > .nds-calendar-day-initial {
         display: none;
-    }
-
-    // Room under the number for the dot, out of flow so a day with none keeps the row's height.
-    // The same room on top keeps the number in the middle.
-    .nds-calendar-day {
-        position: relative;
-        padding: var(--spacing-lg) 0;
-    }
-
-    .nds-calendar-day-dot {
-        display: block;
-        position: absolute;
-        inset-block-end: var(--spacing-xs);
-        left: 50%;
-        translate: -50% 0;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background-color: var(--background-primary);
     }
 }
 

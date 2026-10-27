@@ -27,7 +27,7 @@
  *                            data-date; the opening week or month drops it. Two calendars on a page take two keys
  *   data-view-param          the view's key in the address (none: view): ?view=month, the same way;
  *                            the opening view drops it
- *   data-calendar-action     on a button: prev | next | today. Its calendar.previous_week (or next_week)
+ *   data-calendar-action     on a button: prev | next | today | all (the whole week or month). Its calendar.previous_week (or next_week)
  *                            label marker becomes previous_month in the month view, and back
  *   data-calendar-view       on a button: grid | rows | month. The current one is pressed (rows
  *                            for grid in a narrow calendar)
@@ -37,6 +37,9 @@
  *   .nds-calendar-days       the script writes the weekday names and a button per day into it
  *   .nds-calendar-events     a list: each <li> is an event, on the day of its first time[datetime]
  *   .nds-calendar-empty      shows while the week or month, or the picked day, has no events
+ *   .nds-calendar-empty-filtered   parts of the empty message (hidden) that show while a Filter hides
+ *                            every event, such as a reset button; a message among them replaces the others
+ *   .nds-calendar-empty-day  the same, while the picked day has no events, such as an "all" button
  *   data-calendar · data-week-start   read through NDS.Date, the nearest wins
  *   written by the component: data-calendar-day on an event (its column, 0–6) ·
  *                             an event's Date Tile, when its first time[datetime] is one: weekday,
@@ -81,6 +84,8 @@
     const isSameDay = (a, b) => (a && b ? +a === +b : a === b);
     // In the week or the picked day, and not hidden by a Filter.
     const isShown = ({ item }) => item.hasAttribute('data-calendar-day') && !item.hasAttribute('data-filtered');
+    // The empty message's parts, by why the list is empty.
+    const EMPTY_PARTS = Object.freeze({ filtered: '.nds-calendar-empty-filtered', day: '.nds-calendar-empty-day' });
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
     const strings = NDS.i18n.getStrings('calendar', {
@@ -403,6 +408,30 @@
         _syncEmpty() {
             const shown = this._loading || this._events.some(isShown);
             NDS.state[shown ? 'remove' : 'add'](this._element, 'empty');
+            // Why it is empty: a Filter hides every event of the range, or the picked day has none.
+            const filtered = !shown && this._events.some(({ item }) => item.hasAttribute('data-calendar-day'));
+            this._showEmptyParts(shown ? null : filtered ? 'filtered' : this._day ? 'day' : null);
+        }
+
+        // The empty message's parts for reason show; a message among them takes the place of the others.
+        _showEmptyParts(reason) {
+            const empty = this._element.querySelector('.nds-calendar-empty');
+            if (!empty) return;
+            const hadFocus = empty.contains(document.activeElement);
+            let replaced = false;
+            for (const [key, selector] of Object.entries(EMPTY_PARTS)) {
+                empty.querySelectorAll(selector).forEach((part) => {
+                    part.hidden = key !== reason;
+                    if (key === reason && part.classList.contains('nds-empty-message')) replaced = true;
+                });
+            }
+            empty.querySelectorAll(`.nds-empty-message:not(${Object.values(EMPTY_PARTS).join(', ')})`)
+                .forEach((message) => { message.hidden = replaced; });
+            // A pressed part that hides takes focus with it (Chrome drops it to <body>, others keep it
+            // on the hidden part): the days' Tab stop keeps it.
+            if (hadFocus && (!empty.contains(document.activeElement) || document.activeElement.closest('[hidden]'))) {
+                this._dayButtons.find((btn) => btn.tabIndex === 0)?.focus();
+            }
         }
 
         // The month: "October 2026". A week, or a month in the second calendar: "18 – 24 Oct 2026";
@@ -449,6 +478,7 @@
                 if (action === 'next') moved = this.next();
                 else if (action === 'prev') moved = this.prev();
                 else if (action === 'today') moved = this.goTo(NDS.Date.getToday());
+                else if (action === 'all') moved = this.setDay(null);
             }
             // The press changed what the list holds: say it, once the events are in.
             if (moved) {
@@ -467,7 +497,7 @@
             const count = this._events.filter(isShown).length;
             const label = this._day ? NDS.Date.getDayLabel(this._day, { calendar, locale: lang }) : this._getTitle(calendar, lang, this._view === 'month');
             // An empty week says the page's own message, so the words fit what the calendar holds.
-            const empty = el.querySelector('.nds-calendar-empty')?.textContent.trim();
+            const empty = (el.querySelector('.nds-calendar-empty .nds-empty-message:not([hidden])') || el.querySelector('.nds-calendar-empty'))?.textContent.trim();
             NDS.announce(label + ': ' + (count || !empty ? strings.text('events', { n: count }, lang) : empty));
         }
 
@@ -520,6 +550,7 @@
                 NDS.state.remove(btn, 'selected');
             });
             NDS.state.remove(el, 'empty');
+            this._showEmptyParts(null);
             el.removeAttribute(INIT_ATTRIBUTE);
             delete el.ndsCalendar;
         }

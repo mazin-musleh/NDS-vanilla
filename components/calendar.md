@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 04:13 PM"
+last_edit: "27/10/2026 - 01:09 PM"
 ---
 
 <section id="calendar-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "25/10/2026 - 04:13 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A calendar is a `.nds-calendar` element with four parts. A [Toolbar](../components/toolbar) holds the shown dates, the buttons that move between weeks or months, and the Grid, Rows and Month switch. `.nds-calendar-days` holds the day buttons, which the script writes. `.nds-calendar-events` is a [Drawer](../components/drawer) list with one `<li>` per event, and each event has a [Date Tile](../components/date-tile). `.nds-calendar-empty` is the message for a week, a month or a day with no events. The script reads the day of each event from its `<time datetime>`, and shows the events of one week or one month.
+A calendar is a `.nds-calendar` element with four parts. A [Toolbar](../components/toolbar) holds the shown dates, the buttons that move between weeks or months, and the Grid, Rows and Month switch. `.nds-calendar-days` holds the day buttons, which the script writes. A dot under a day's number marks a day with events, in every view. `.nds-calendar-events` is a [Drawer](../components/drawer) list with one `<li>` per event, and each event has a [Date Tile](../components/date-tile). `.nds-calendar-empty` is the message for a week, a month or a day with no events. The script reads the day of each event from its `<time datetime>`, and shows the events of one week or one month.
 
 Pick another component when:
 
@@ -176,6 +176,10 @@ Pick another component when:
   <div class="nds-empty-placeholder nds-calendar-empty">
     <i class="nds-icon nds-hgi-desert" aria-hidden="true"></i>
     <span class="nds-empty-message" data-i18n="empty.message">No content to show</span>
+    <span class="nds-empty-message nds-calendar-empty-day" data-i18n="calendar.day_empty" hidden>No events on this day</span>
+    <button class="nds-btn nds-md nds-secondary-outline nds-calendar-empty-day" type="button" data-calendar-action="all" hidden>
+      <span class="nds-label" data-i18n="calendar.show_all">Show all events</span>
+    </button>
   </div>
 </div>
 </script>
@@ -365,9 +369,17 @@ Pick another component when:
       </li>
     </ul>
   </div>
-  <div class="nds-empty-placeholder nds-calendar-empty">
+  <div class="nds-empty-placeholder nds-calendar-empty" data-filter-target="calendar-sessions">
     <i class="nds-icon nds-hgi-desert" aria-hidden="true"></i>
     <span class="nds-empty-message" data-i18n="empty.message">No content to show</span>
+    <span class="nds-empty-message nds-calendar-empty-day" data-i18n="calendar.day_empty" hidden>No events on this day</span>
+    <button class="nds-btn nds-md nds-secondary-outline nds-calendar-empty-day" type="button" data-calendar-action="all" hidden>
+      <span class="nds-label" data-i18n="calendar.show_all">Show all events</span>
+    </button>
+    <span class="nds-empty-message nds-calendar-empty-filtered" data-i18n="filter.no_results_description" hidden>No item matches the current filters.</span>
+    <button class="nds-btn nds-md nds-secondary-outline nds-calendar-empty-filtered" type="button" data-filter-action="reset" hidden>
+      <span class="nds-label" data-i18n="filter.clear">Clear filters</span>
+    </button>
   </div>
 </div>
 </script>
@@ -390,7 +402,7 @@ Every option goes on `.nds-calendar`, except No view switch, which removes `.nds
 | Structure | With Filter | canon `#calendar-filter` | — | The same calendar with a [Filter](../components/filter) by event type, and a row of the applied filters. Each event has a tag that names its type |
 | View | Grid (default) | — | — | A column per day, so busy and free days show at a glance. A calendar under 860px wide shows Rows |
 | View | Rows | `[data-view="rows"]` | `.nds-calendar` | A list of the week's events, with a date tile on each. The full title, time and place show at every width |
-| View | Month | `[data-view="month"]` | `.nds-calendar` | A month of day buttons over a list of the month's events. A dot marks each day with events. It fits a phone |
+| View | Month | `[data-view="month"]` | `.nds-calendar` | A month of day buttons over a list of the month's events. It fits a phone |
 | View switch | No view switch | `remove` | `.nds-calendar-views` | Delete the `.nds-calendar-views` group. The calendar then keeps the view in `data-view`, and Grid without it. To offer two views, delete the button of the view you leave out |
 | Calendar | Gregorian (default) | — | — | Gregorian dates in the title and on the day buttons |
 | Calendar | Hijri | `[data-calendar="hijri"]` | `.nds-calendar` | Hijri dates in the title, on the day buttons, on each event's Date Tile and in what a screen reader hears. The month view shows a Hijri month. Keep `datetime` in Gregorian |
@@ -431,7 +443,7 @@ The month view shows the days of one month as buttons, with the weekday names ov
 ### Day Filter
 {: .nds-block-title}
 
-A press on a day button shows that day's events only, and a second press shows the week or the month again. In Grid, the day's events take the whole width. When the week, the month or the day has no events, `.nds-calendar-empty` shows in place of the list.
+A press on a day button shows that day's events only, and a second press shows the week or the month again. In Grid, the day's events take the whole width. When the week, the month or the day has no events, `.nds-calendar-empty` shows in place of the list. A picked day with no events shows the message's `.nds-calendar-empty-day` parts in place of its message: in the canon, "No events on this day" and a Show all events button. `data-calendar-action="all"` on that button shows the whole week or month again, so the picked day is not mistaken for today.
 
 The day buttons are one Tab stop, as the Date Picker's days: the picked day, else today, else the first. The arrow keys move between them, and in the month view Up and Down move one week. Home and End move to the first and the last. A picked day that is also today keeps a ring inside its fill, so today stays in view.
 
@@ -459,7 +471,7 @@ The events are the `<li>` items in `.nds-calendar-events`, and nothing else. A s
 ### Filter
 {: .nds-block-title}
 
-The With Filter structure adds a [Filter](../components/filter) on the events list: `data-filter-items="li"` on the list, and a mark in each event, such as a tag with `data-filter="type"`. The Filter builds its options from the marks. The calendar shows only the events that match, and a day with no match shows the empty message. The row of applied filters sits at the bar's end, in a `.nds-toolbar-end`, and removes a filter in one press. When a script replaces the events, call `NDS.init.refresh(list)` so that the Filter reads them too.
+The With Filter structure adds a [Filter](../components/filter) on the events list: `data-filter-items="li"` on the list, and a mark in each event, such as a tag with `data-filter="type"`. The Filter builds its options from the marks. The calendar shows only the events that match, and a day with no match shows the empty message. A filter and a picked day work together: neither clears the other. When the filter hides every event of the week, the month or the day, the empty message's `.nds-calendar-empty-filtered` parts show in place of its message: in the canon, "No item matches the current filters." and a Clear filters button. The message carries the filter's `data-filter-target`, so the button's `data-filter-action="reset"` clears it. The row of applied filters sits at the bar's end, in a `.nds-toolbar-end`, and removes a filter in one press. When a script replaces the events, call `NDS.init.refresh(list)` so that the Filter reads them too.
 
 </div>
   </div>
@@ -544,7 +556,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
             <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
             <span class="nds-label">Narrow Calendars</span>
           </span>
-          <p class="nds-item-desc">The calendar's own width sets its layout, not the screen's. Under 860px, Grid shows as Rows and the switch offers Rows and Month. From 860px, Rows and Month show the events in two columns, read across and then down. Under 480px, the days show one letter and a smaller day number.</p>
+          <p class="nds-item-desc">The calendar's own width sets its layout, not the screen's. <code class="nds-inline-code lang-css">--calendar-max-width</code> caps it. Under 860px, Grid shows as Rows and the switch offers Rows and Month. From 860px, Rows and Month show the events in two columns, read across and then down. Under 480px, the days show one letter and a smaller day number.</p>
         </div>
       </div>
     </div>
@@ -564,7 +576,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 - Keep event titles short. A Grid column is narrow, and a long title wraps over many lines.
 - Show an event that spans days on its first day, and write its last day in the row's text.
 - With a Filter, show the row of applied filters. Without it, a day with no match looks empty for no reason.
-- To show Grid, put the calendar in a container at least 860px wide.
+- To show Grid, put the calendar in a container at least 860px wide, and keep any `--calendar-max-width` at 860px or more.
 - Give each calendar on a page its own `data-date-param` and `data-view-param`. Two calendars with one name share the date or the view in the address.
 
 </div>
@@ -589,10 +601,12 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 | `nds-calendar-days` | `div` | The script writes the weekday names and a button per day in it. Give it `role="group"` and an `aria-label` |
 | `nds-calendar-weekday` | `span` | Written by the script: the weekday names over the month view's columns. Hidden in Grid and Rows, where each day button names its day |
 | `nds-calendar-day` | `button` | Written by the script, one per day |
-| `nds-calendar-day-dot` | `span` in a day button | Written by the script: the dot under the day's number in the month view, on a day with events |
+| `nds-calendar-day-dot` | `span` in a day button | Written by the script: the dot under the day's number, on a day with events |
 | `nds-calendar-title-second`, `nds-calendar-day-second` | `span` | Written by the script with `data-calendar-second`: the week under the title, and the day number on each day button |
 | `nds-calendar-events` | `ul.nds-drawer-list` | The events, one `<li>` each |
 | `nds-calendar-empty` | `div` | Shows while the week, the month or the picked day has no events. The canon gives it the `nds-empty-placeholder` look and the message of [Empty](../components/empty). A screen reader hears its text for an empty week or day, so write words that fit your events, such as "No sessions this week" |
+| `nds-calendar-empty-filtered` | an element in `.nds-calendar-empty`, written with `hidden` | Shows in place of the other messages while a Filter hides every event of the week, the month or the day. The script hides it again when an event shows. See With Filter |
+| `nds-calendar-empty-day` | an element in `.nds-calendar-empty`, written with `hidden` | Shows in place of the other messages while the picked day has no events, such as a `data-calendar-action="all"` button. A filter that hides the day's events shows the filtered parts instead |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes
@@ -608,7 +622,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 | `data-calendar` | `.nds-calendar`, or any element around it | `hijri` shows Hijri dates. The nearest one wins. The default is Gregorian |
 | `data-calendar-second` | `.nds-calendar` | `hijri` or `gregory`: the title and each day button also show the dates in that calendar. A screen reader hears that date in full too |
 | `data-week-start` | `.nds-calendar`, or any element around it | `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`: the first day of the week. The nearest one wins. The default is Sunday |
-| `data-calendar-action` | a button in the calendar | `prev`, `next` or `today`. On `prev` and `next` with the canon's `data-i18n-aria-label`, the script changes the label from week to month in the month view, and back |
+| `data-calendar-action` | a button in the calendar | `prev`, `next`, `today`, or `all`, which shows the whole week or month after a picked day. On `prev` and `next` with the canon's `data-i18n-aria-label`, the script changes the label from week to month in the month view, and back |
 | `data-calendar-view` | a button in the calendar | `grid`, `rows` or `month`. The script sets `aria-pressed` and `data-state="selected"` on the current one. Under 860px, Grid shows as Rows, so the Rows button is the pressed one |
 | `datetime` | the first `<time>` in an event | The event's day, as `YYYY-MM-DD`, with or without a time. A time with a zone, such as `Z` or `+03:00`, counts in the site's timezone. Write it in Gregorian, on a Hijri calendar too |
 | `data-calendar-day` | an event `<li>` | The script sets it on an event of the shown week or month (or the picked day), as its column from `0` to `6`, and removes it from the others. An event without it is hidden. Do not write it |
@@ -624,6 +638,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 |---|---|---|
 | `--calendar-gap` | `var(--spacing-4xl)` | The space between the toolbar, the days and the events |
 | `--calendar-day-gap` | `var(--spacing-md)` | The space between the day buttons, and between the day columns in Grid |
+| `--calendar-max-width` | `none` | The calendar's widest size, such as `720px` for Rows and Month. Grid needs `860px` or more |
 {: .nds-table .nds-responsive}
 
 ### JavaScript

@@ -480,6 +480,18 @@
   "ar": "الأيام"
  },
  {
+  "section": "calendar",
+  "key": "day_empty",
+  "en": "No events on this day",
+  "ar": "لا توجد فعاليات في هذا اليوم"
+ },
+ {
+  "section": "calendar",
+  "key": "show_all",
+  "en": "Show all events",
+  "ar": "عرض كل الفعاليات"
+ },
+ {
   "section": "chart",
   "key": "chart",
   "en": "Chart",
