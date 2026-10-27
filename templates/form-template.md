@@ -497,9 +497,16 @@ sidemenu_mode: false
         // Read the field as the user sees it. The date field is an NDS date picker,
         // which writes its own formatted string (and stamps the other calendar in
         // data-converted-date) — reparsing that would break the Hijri format.
+        // A select gives its option's text; a box, or a group's id (a fieldset,
+        // a Multiselect), gives the labels of its checked boxes.
         function valueOf(id) {
             const el = document.getElementById(id);
-            return el ? (el.value || '').trim() : '';
+            if (!el) return '';
+            if (el.tagName === 'SELECT') return [...el.selectedOptions].map(o => o.text.trim()).join(', ');
+            if (el.matches('input:not([type="checkbox"], [type="radio"]), textarea')) return (el.value || '').trim();
+            const boxes = el.matches('input') ? [el] : el.querySelectorAll('input:is([type="checkbox"], [type="radio"])');
+            return [...boxes].filter(b => b.checked)
+                .map(b => (b.dataset.label || b.labels?.[0]?.textContent || b.value).trim()).join(', ');
         }
 
         function populateReview() {
