@@ -247,6 +247,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Copy** — the default announcement is «تم النسخ» on an Arabic page; it was always "Copied".
 - **Copy** — A second press during the "Copied" flash is ignored, so the button no longer stays "Copied".
 - **Core** — markup added after page load with `loading`, `hidden`, `has-more`, `always-open` or `dropbox` already in its `data-state` now gets its styles.
+- **Core** — `NDS.onDomAdd` no longer reports existing elements as added when a script wraps them in a new element, such as the box a Table puts around its table. A paged table no longer builds its page buttons a second time at load.
 - **Core** — `NDS.escapeHtml` escapes quotes too, so its output is safe in attribute values. The focus trap skips hidden inputs and `tabindex="-1"` ends, so Tab stays inside a modal. The scroll lock restores fractional scroll offsets, and positioned popups handle 3D transforms.
 - **Core** — `NDS.state.set()` and `clear()` fire the `onAdd` and `onRemove` hooks. A disabled Editor, Multiselect or Tag Input set through `NDS.state.set` now disables its toolbar and chips. Two `NDS.onIntersect` subscribers on one element both fire.
 - **Core** — In React, a FAB (the accessibility FAB too), a pinned nav item and a `<template>` that held a modal or a panel no longer crash the app when React adds a node before one of them or removes it (`insertBefore` / `removeChild`: not a child of this node). A FAB the app removes takes its empty dock with it.

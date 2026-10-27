@@ -709,14 +709,18 @@
         const addSubs = [], removeSubs = [], childrenSubs = [];
         let started = false;
 
-        function dispatch(nodes, subs) {
+        function dispatch(nodes, subs, moved) {
             callEach(subs, sub => {
                 // A Set: a parent and its child added in one batch both reach the child.
                 const hits = new Set();
                 for (let i = 0; i < nodes.length; i++) {
                     if (nodes[i].matches(sub.sel)) hits.add(nodes[i]);
                     const descendants = nodes[i].querySelectorAll(sub.sel);
-                    for (let j = 0; j < descendants.length; j++) hits.add(descendants[j]);
+                    if (!descendants.length) continue;
+                    // A new wrapper around a moved node (Table's .nds-table-wrapper) brings no new descendants.
+                    const movedInside = moved && moved.filter(node => nodes[i].contains(node));
+                    for (let j = 0; j < descendants.length; j++)
+                        if (!movedInside || !movedInside.some(node => node.contains(descendants[j]))) hits.add(descendants[j]);
                 }
                 if (hits.size) sub.fn([...hits]);
             });
@@ -749,16 +753,18 @@
                 // both lists so subscribers (and any descendants matching their
                 // selectors) keep their instances, listeners, and internal state
                 // across relocations and similar reparents.
-                let realAdded = added, realRemoved = removed;
+                let realAdded = added, realRemoved = removed, moved = null;
                 if (added.length && removed.length) {
                     const addedSet = new Set(added), removedSet = new Set(removed);
                     realAdded = added.filter(node => !removedSet.has(node));
                     realRemoved = removed.filter(node => !addedSet.has(node));
+                    moved = added.filter(node => removedSet.has(node));
+                    if (!moved.length) moved = null;
                 }
                 // Removes before adds: for unrelated mutations batched together,
                 // tearing down old state before constructing new state is safer.
                 if (realRemoved.length) dispatch(realRemoved, removeSubs);
-                if (realAdded.length) dispatch(realAdded, addSubs);
+                if (realAdded.length) dispatch(realAdded, addSubs, moved);
                 if (parents.size && childrenSubs.length) dispatchParents(parents, childrenSubs);
             }).observe(document.documentElement, { childList: true, subtree: true });   // <html>: a whole-body swap (Turbo Drive) stays in view
         }
