@@ -53,6 +53,9 @@
  *   - The markup is .nds-swiper-wrapper holding .nds-swiper-slide items, plus optional
  *     .nds-swiper-navigation (with .nds-prev / .nds-next) and .nds-swiper-pagination.
  *   - The instance lives on the element as el.ndsSwiper.
+ *   - A swiper in a section nobody has scrolled to sets up when the section first draws
+ *     (NDS.whenDrawn): until then it has no data-nds-swiper-initialized, bullets or clones.
+ *     A method call sets it up at once.
  *   - A looping swiper sets its track's scrollLeft at init, which fires one scroll event
  *     on the wrapper. A "first interaction" gate that listens for scroll in capture
  *     mode counts it — listen without capture, or ignore element scrolls.
@@ -180,10 +183,25 @@
                 return;
             }
 
-            // Static knobs — read once, reused on every breakpoint change.
-            // At construction: the loop and its clones are decided from them before first paint.
-            // Inline first: a computed read styles the whole section content-visibility still skips.
-            // Computed covers a strict-CSP page that sets them in a class, and a var() value.
+            this._realCount = this._slides.length; // real slides; clones extend this._slides at both ends
+            this._headCount = 0;                  // clones before the first real slide
+
+            this._valid = true;
+            // Below the fold, setup waits for the section to draw: its knob read would style the whole skipped section.
+            const offDrawn = NDS.whenDrawn(container, () => this.init());
+            if (!this.abortController) this._offDrawn = offDrawn;
+        }
+
+        // A method called before the section draws sets the swiper up now.
+        _ensureInit() {
+            if (this._offDrawn) { this._offDrawn(); this.init(); }
+        }
+
+        // Static knobs — read once, reused on every breakpoint change. The loop and its
+        // clones are decided from them before the section's first paint.
+        _readKnobs() {
+            const container = this._container;
+            // Inline first: computed covers a strict-CSP page that sets them in a class, and a var() value.
             const computedStyle = getComputedStyle(container);
             const readKnob = property => {
                 const inline = parseInt(container.style.getPropertyValue(property));
@@ -202,11 +220,6 @@
             // it needs one more.
             this._loop = (container.hasAttribute('data-swiper-loop') || this._spotlight) &&
                 this._slides.length > Math.max(this._slidesMax, this._slidesMid, this._slidesMin) + (this._spotlight ? 1 : 0);
-            this._realCount = this._slides.length; // real slides; clones extend this._slides at both ends
-            this._headCount = 0;                  // clones before the first real slide
-
-            this._valid = true;
-            this.init();
         }
 
         // ==============================================
@@ -257,7 +270,9 @@
         }
 
         init() {
+            this._offDrawn = null;
             this.abortController = new AbortController();
+            this._readKnobs();
             // An unencoded space in a srcset URL breaks the candidate. Before _setupLoop,
             // so the clones copy the repaired value.
             this._container.querySelectorAll('img[srcset], source[srcset]').forEach(el => {
@@ -476,8 +491,8 @@
         // Always a full view. A loop whose count is not a multiple of the slides
         // per view drifts off the page grid by the remainder on every wrap; the
         // bullets absorb that (_syncPagination), the movement never does.
-        prev() { this.goToFull(this.currentIndex - this.slidesPerView); }
-        next() { this.goToFull(this.currentIndex + this.slidesPerView); }
+        prev() { this._ensureInit(); this.goToFull(this.currentIndex - this.slidesPerView); }
+        next() { this._ensureInit(); this.goToFull(this.currentIndex + this.slidesPerView); }
 
         // The index counts real slides. Internally the row may carry clones
         // at both ends, so every scroll target is a full-list index.
@@ -516,6 +531,7 @@
         }
 
         goToFull(index, instant = NDS.prefersReducedMotion) {
+            this._ensureInit();
             // A move before the first resize callback lands the loop now; landing after
             // would cancel the move and strand _aim. No layout yet = leave it to remeasure.
             if (this._loopPending && this._slides[1].offsetLeft !== this._slides[0].offsetLeft) {
@@ -929,6 +945,7 @@
         // ==============================================
 
         syncState() {
+            this._ensureInit();
             if (this.lastIndex === this.currentIndex) return;
             this.lastIndex = this.currentIndex;
 
@@ -982,6 +999,7 @@
         // ==============================================
 
         goTo(index, animate = true) {
+            this._ensureInit();
             // Real index in, clamped to the last real page. A loop has no last page, so
             // any slide goes — the index nds:swiper:change reports must restore.
             index = Math.max(0, Math.min(index, this._realCount - (this._loop ? 1 : this.slidesPerView)));
@@ -996,6 +1014,7 @@
         // subsequent call to a setup method that reads `this.abortController.signal` will
         // throw. Re-initialize via `NDS.Swiper.create(el)` (constructs a fresh instance).
         destroy() {
+            if (this._offDrawn) { this._offDrawn(); this._offDrawn = null; }
             this._container.removeAttribute('data-nds-swiper-initialized');
             if (this._ownsTabindex) this._container.removeAttribute('tabindex');
 
@@ -1042,7 +1061,8 @@
         swipers.forEach(swiper => {
             // A loop clone's nested swiper is a dead copy — reinit must not wire it.
             if (swiper.closest('code, .nds-swiper-clone')) return;
-            if (swiper.hasAttribute('data-nds-swiper-initialized')) return;
+            // A swiper waiting for its section to draw has its instance but no stamp yet.
+            if (swiper.hasAttribute('data-nds-swiper-initialized') || swiper.ndsSwiper) return;
             const instance = new NdsSwiper(swiper);
             // Expando only on successful construction — retries must not inherit
             // a half-built instance.

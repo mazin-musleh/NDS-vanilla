@@ -21,6 +21,7 @@
  *   scheduling
  *     NDS.debounce(fn, ms) (.cancel() drops a pending call) · NDS.throttleToFrame(fn) · NDS.onIdle(fn, timeout)
  *     NDS.onNextPaint(fn) · NDS.onTransitionEnd(el, fn, opts) → cancel()
+ *     NDS.whenDrawn(el, fn) → cancel()  fn now, or once el's section first draws (content-visibility)
  *     NDS.transitionSpeed()            the token-sourced duration in ms
  *   DOM
  *     NDS.markHome(el) / .sendHome(el) / .getHome(el)   move a node the app owns; its old spot answers for it
@@ -616,6 +617,8 @@
         drawnWaits.get(section).add(fn);
         return () => drawnWaits.get(section)?.delete(fn);
     };
+    // A style read in a skipped section styles the whole section: read once it draws.
+    NDS.whenDrawn = whenDrawn;
 
     // ── Element Resize Observer ──────────────────────────────────────
     // Single ResizeObserver, multiple elements

@@ -686,14 +686,15 @@
             const main = findMainCssLink();
             // Size each swiper's skeleton row to what nds-swiper.js will pick (same knobs,
             // same breakpoints), so init moves nothing. The stamp releases crit's guards.
-            const syncSwiperPresets = () => {
+            const syncSwiperPresets = (list) => {
                 const tier = matchMedia(NDS.breakpoints.desktop).matches ? 'max'
                     : matchMedia(NDS.breakpoints.tablet).matches ? 'mid' : 'min';
                 const tracks = [];
-                const swipers = [...document.querySelectorAll('.nds-swiper:not([data-nds-swiper-initialized], [data-swiper-preset])')];
+                // A method call can set a swiper up before its section draws.
+                const swipers = list.filter(swiper => !swiper.hasAttribute('data-nds-swiper-initialized'));
                 // Every read before the first write: one style recalc, not one per swiper.
                 const knobs = swipers.map(swiper => {
-                    // Inline first: a computed read styles the whole section content-visibility still skips.
+                    // Inline first: computed covers a strict-CSP class and a var() value.
                     const computedStyle = getComputedStyle(swiper);
                     const readKnob = property => {
                         const inline = parseInt(swiper.style.getPropertyValue(property));
@@ -716,13 +717,9 @@
                 });
                 return tracks;
             };
-            // Idempotent: three listeners race to get here.
-            const reveal = () => {
-                if (root.hasAttribute('data-nds-loaded')) return;
-                const tracks = syncSwiperPresets();
-                root.setAttribute('data-nds-loaded', '');
-                // WebKit RTL lands a newly overflowing track at its END; the first write
-                // rides the reveal's own recalc. Same double write as nds-swiper.js.
+            // WebKit RTL lands a newly overflowing track at its END; at the reveal the first
+            // write rides the reveal's own recalc. Same double write as nds-swiper.js.
+            const pinTracks = (tracks) => {
                 tracks.forEach(track => {
                     if (!track) return;
                     track.style.scrollBehavior = 'auto';
@@ -732,6 +729,20 @@
                     void track.offsetHeight;
                     track.style.scrollBehavior = '';
                 });
+            };
+            // Idempotent: three listeners race to get here.
+            const reveal = () => {
+                if (root.hasAttribute('data-nds-loaded')) return;
+                // Below the fold the preset waits for the section to draw, as the swiper does:
+                // its knob read would style the whole skipped section.
+                const drawn = [];
+                let isRevealing = true;
+                document.querySelectorAll('.nds-swiper:not([data-nds-swiper-initialized], [data-swiper-preset])').forEach(swiper =>
+                    NDS.whenDrawn(swiper, () => isRevealing ? drawn.push(swiper) : pinTracks(syncSwiperPresets([swiper]))));
+                isRevealing = false;
+                const tracks = syncSwiperPresets(drawn);
+                root.setAttribute('data-nds-loaded', '');
+                pinTracks(tracks);
                 if (!main) return;
                 addSheet('nds-icons.min.css'); // no-op once requested; covers a main CSS error
                 loadHgiSheet();

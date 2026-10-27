@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 09:11 PM"
+last_edit: "27/10/2026 - 09:35 PM"
 ---
 
 <section id="swiper-overview" class="nds-content-section nds-doc-overview">
@@ -441,6 +441,8 @@ Source: the `swiper` group in `_sass/tokens/_components.scss`.
 {: .nds-block-title}
 
 A swiper in the page starts by itself. The instance is on the element as `el.ndsSwiper`. Indexes count real slides only, never loop copies.
+
+A swiper far down the page sets up when its section is about to show, so the page loads faster. Until then it has no dots and no `data-nds-swiper-initialized`. A method call sets it up at once.
 
 | Method | Effect |
 |---|---|
