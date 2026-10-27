@@ -64,10 +64,14 @@
         line-height: var(--typo-text-sm-LH);
         font-weight: var(--font-weight-bold);
         color: var(--text-display);
+        // The group's inline padding, less the button's 1px border, so the title starts where a legend does.
+        padding-inline: calc(var(--spacing-md) - 1px);
 
         // Pushes the count tag to the end edge, whatever the title's length.
+        // Inherits the bold above: the accordion's own title weight is lighter.
         .nds-accordion-title {
             flex: 1;
+            font-weight: inherit;
         }
     }
 

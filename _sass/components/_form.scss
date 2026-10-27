@@ -599,7 +599,7 @@ fieldset {
 .nds-form-group {
     display: flex;
     flex-direction: column;
-    row-gap: var(--spacing-xl);
+    row-gap: var(--spacing-md);
     column-gap: var(--spacing-4xl);
     // Room for the last option's hover halo, which a scroll box (a Modal) would clip.
     margin-block-end: var(--spacing-sm);
