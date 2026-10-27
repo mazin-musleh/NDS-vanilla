@@ -14,6 +14,19 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 
 - **NDS IQ v4.0 on release day** (plan and status in `plans/iq-v4.md`; `IQv3.2` is already tagged and pushed, off main). [ ] `python scripts/publish-iq.py --apply` BEFORE the build and `mkrelease.py` (`verify()` checks the published copy and the guides' v4.0 render), `git push origin main IQv4.0`, then `nds-iq-eval` `evolve`. [ ] Optional, owner go: the S101 behavior run.
 - **v2.0.0 is the window for breaking improvements.** A major is the one time a wrong name or a split API can be fixed rather than aliased. For each find: add a sub-item here with the problem, the fix and its migration line, then decide build or drop with the owner. Every landed break gets a Migrating entry in `CHANGELOG.md`.
+  - **Filter server mode sends two key shapes.** The request carries generated options as `filter-type=a&filter-type=b` (`nds-filter.js` `filter-${filterName}`), the address bar writes `type=a,b`, and a reload or shared link sends that to the server, so a backend parses both. Fix: generated options submit under the URL key and shape (observable request change: major only). If dropped, `components/filter.md` server section names both shapes.
+- **NDS IQ Update rule downgrades during an rc**. v4.0's §This file Update treats "any difference" from raw main as newer; main serves v3.1 until release day, so an rc install's update replaces v4.0 with v3.1. Fix in the draft: compare line 1's `instructions vX.Y` and install only a higher revision. Land before the next rc.
+- **rc → rc changes are recorded nowhere.** An rc.1 → rc.2 upgrade finds only "Migrating from v1.12.0" in `CHANGELOG.md`; `migrations.yml` rows say `since: "2.0.0"`, so an agent cannot tell which rows are new since its rc (the `--overlay` → `--hero-overlay-opacity` hero rename landed between rc.1 and rc.2). Decide: a per-prerelease changelog section, or `since` naming the rc that changed it.
+
+### Filter and Dropmenu gaps
+
+Checked against the source 2026-10-27. Related: the Update rule and the key-shape items under v2.0.0 above.
+
+- **Filter: a menu without Apply never applies.** The draft-on-close (`_addMenuDraftListeners`, `66d22888`) was written for menus with Apply; a one-group dropdown with no footer drops every pick on close. Fix: draft only in a menu holding `[data-filter-action="apply"]`; elsewhere a pick commits on change (`_commitCriteriaChange` already coalesces form submits). No new attribute. Per-surface badge: skip.
+- **Dropmenu `data-search="N"` never shows on a filter-built group.** `_setupSearch` counts rows once at setup, before Filter builds them. Fix: below the threshold, recount on open and inject then.
+- **Server-mode sort has no canon.** `components/filter.md` ("put a `<select name="sort">` in the form") prescribes a bare native select, against Custom Select and NDS IQ. Canon: a Dropmenu picker (`data-select-name="sort"`) in the filter form, submitted on pick; the pick also goes to the address bar (today the filter writes only its own keys, so a reload loses the sort). Verify the request carries `sort=`.
+- **Dropmenu search can't reach a collapsed filter group** (`data-search` + `data-filter-accordion`). Fix: Dropmenu fires one event after it filters; Filter opens its collapsed groups holding matches and closes them when the query clears. Fallback: a doc line that the two do not combine.
+- Minor: the server-mode example (`filter.md` `#services-results`) shows no empty state: `nds-empty` on a wrapper that also holds the pagination never shows. One line: `nds-empty` goes on the item grid.
 
 ### Parked features (owner calls; after v2.0.0 unless noted)
 
