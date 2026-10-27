@@ -9,7 +9,7 @@ lang: en
 direction: ltr
 content_class: nds-stripe
 sidemenu_mode: false
-last_edit: "25/10/2026 - 01:58 PM"
+last_edit: "27/10/2026 - 01:51 PM"
 ---
 
 <!-- Layout rules: how an event opens depends on what the user does with it.
@@ -47,7 +47,7 @@ last_edit: "25/10/2026 - 01:58 PM"
                         <p class="nds-card-description">Leaders and teams from across government share what they built this year, and what comes next.</p>
                     </div>
                     <span class="nds-meta">
-                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i>Tue 10 Nov 2026, 9:00 AM</span>
+                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i><time id="forum-date" datetime="2026-11-10T09:00">Tue 10 Nov 2026, 9:00 AM</time></span>
                         <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>King Abdulaziz Center, Riyadh</span>
                     </span>
                 </div>
@@ -88,7 +88,7 @@ last_edit: "25/10/2026 - 01:58 PM"
             <p class="nds-section-description">Pick an event to see its details and book a seat.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-calendar" data-date="2026-10-25" data-view="month">
+            <div class="nds-calendar" data-view="month">
                 <div class="nds-toolbar">
                     <div class="nds-toolbar-start">
                         <p class="nds-calendar-title"></p>
@@ -506,6 +506,31 @@ last_edit: "25/10/2026 - 01:58 PM"
         </button>
     </div>
 </dialog>
+
+<!-- Demo only: moves the sample dates to the current week, so the calendar and the countdown never show a past event.
+     Delete in production: your server writes the real dates. It runs before NDS starts, so every component reads the moved dates. -->
+<script>
+  (function () {
+    var DAY = 864e5;
+    var WRITTEN_WEEK = Date.UTC(2026, 9, 25); // the Sunday of the week the samples were written for
+    var now = new Date();
+    var today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+    // Whole weeks, so each event keeps its weekday.
+    var shift = (today - now.getDay() * DAY - WRITTEN_WEEK) / DAY;
+    if (!shift) return;
+    var move = function (value) {
+      var day = new Date(Date.UTC(+value.slice(0, 4), +value.slice(5, 7) - 1, +value.slice(8, 10) + shift));
+      return day.toISOString().slice(0, 10) + value.slice(10);
+    };
+    document.querySelectorAll('#forum-date, .nds-calendar-events time[datetime]').forEach(function (el) { el.setAttribute('datetime', move(el.getAttribute('datetime'))); });
+    document.querySelectorAll('[data-countdown]').forEach(function (el) { el.dataset.countdown = move(el.dataset.countdown); });
+    var forum = document.getElementById('forum-date');
+    var start = new Date(forum.getAttribute('datetime'));
+    forum.textContent = start.toLocaleDateString('en-GB', { weekday: 'short' }) + ' '
+      + start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) + ', '
+      + start.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  })();
+</script>
 
 <script>
   function initPage() {
