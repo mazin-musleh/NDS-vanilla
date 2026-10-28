@@ -338,6 +338,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Switch** — A press on a read-only switch no longer shows the pressed look. The switch never changed, but it looked as if it would.
 - **Switch** — The label in the field header checks a required switch again and fires the change event, as a click on the track does. Before, turning the switch on from that label left "This field is required" on screen.
 - **Forms** — A group enabled again keeps a field that was disabled on its own disabled. Before, the group enabled every field in it, and that field still looked disabled.
+- **Forms** — A held step button of a number field stops on the number it shows when it is let go. Before, the release added one more step.
+- **Switch** — A switch in a disabled `<fieldset>` no longer toggles from a click on its track.
+- **OTP** — Tab, Shift and the arrow keys leave the error message up. Only an edit clears it.
 - **Forms** — An icon-only button in a field's action slot is square: it takes its width from the slot's height.
 - **Forms** — A field's message sits right after its input row, so a search box's suggestions stay below it.
 - **Forms** — Arabic digits typed into a numeric field, such as a phone or a page jump, go in as 0-9; they were blocked. A field's `loading`, `disabled` and `readonly` states work however they are written: `NDS.state`, the attribute, or the `nds-loading` class.

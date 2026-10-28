@@ -505,6 +505,7 @@
     // Number stepper: the buttons step, a held button repeats and speeds up, and blur clamps to min/max.
     var stepTiers = [[0, 1, 75], [1500, 10, 50]];   // [held for (ms), step multiplier, interval (ms)]
     var hold = null;
+    var heldButton = null;   // a hold that stepped: the click its release sends steps no more
     function stepValue(btn, multiplier) {
         var formControl = btn.closest('.nds-form-control');
         var input = formControl && formControl.querySelector('input');
@@ -531,6 +532,7 @@
         clearTimeout(hold.start);
         clearInterval(hold.repeat);
         hold.tiers.forEach(clearTimeout);
+        heldButton = hold.stepped ? hold.btn : null;
         hold = null;
     }
     // Simple class selectors first: every click off a field's own input passes through these parts.
@@ -540,16 +542,22 @@
     };
     NDS.field.addType('number', {
         around: {
-            click: function(e) { var btn = findStepButton(e.target); if (btn) stepValue(btn); },
+            click: function(e) {
+                var btn = findStepButton(e.target);
+                // detail 0: Enter or Space, never a release.
+                if (btn && btn === heldButton && e.detail) heldButton = null;
+                else if (btn) stepValue(btn);
+            },
             pointerdown: function(e) {
                 var btn = findStepButton(e.target);
                 if (!btn || e.button !== 0) return;
                 stopHold();
-                var activeHold = hold = { btn: btn, tiers: [], repeat: null };
+                heldButton = null;
+                var activeHold = hold = { btn: btn, tiers: [], repeat: null, stepped: false };
                 // Step at one tier's pace, replacing the pace before; a later tier takes over at its time.
                 var repeat = function(multiplier, speed) {
                     clearInterval(activeHold.repeat);
-                    activeHold.repeat = setInterval(function() { stepValue(btn, multiplier); }, speed);
+                    activeHold.repeat = setInterval(function() { activeHold.stepped = true; stepValue(btn, multiplier); }, speed);
                 };
                 activeHold.start = setTimeout(function() {
                     repeat(stepTiers[0][1], stepTiers[0][2]);

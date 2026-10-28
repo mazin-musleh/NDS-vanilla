@@ -158,13 +158,14 @@
         var index = inputs.indexOf(input);
         var isRtl = NDS.isRtl;
 
-        clearStaleStatus(group);
         // preventDefault still: WebKit reads Backspace in a read-only field as Back.
         if (input.readOnly && (e.key === 'Backspace' || e.key === 'Delete')) { e.preventDefault(); return; }
 
+        // Only an edit clears the message: Tab, an arrow or Shift leaves it up. A typed digit clears it on input.
         switch (e.key) {
             case 'Backspace':
                 e.preventDefault();
+                clearStaleStatus(group);
                 input.value = '';
                 syncHidden(group);
                 if (inputs[index - 1]) inputs[index - 1].focus();
@@ -173,6 +174,7 @@
 
             case 'Delete':
                 e.preventDefault();
+                clearStaleStatus(group);
                 input.value = '';
                 syncHidden(group);
                 if (inputs[index + 1]) inputs[index + 1].focus();
