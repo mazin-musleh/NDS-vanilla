@@ -73,7 +73,7 @@ sidemenu_mode: false
                     </div>
 
                     <!-- Phone with country code prefix -->
-                    <div class="nds-form-container nds-darker nds-formatted nds-phone" data-required>
+                    <div class="nds-form-container nds-darker nds-formatted" data-format="phone" data-required>
                         <div class="nds-form-header">
                             <label for="contact-phone">
                                 <span class="nds-label">Phone</span>
@@ -87,7 +87,7 @@ sidemenu_mode: false
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <!-- GCC — home region first -->
-                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966" data-format="00 000 0000">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966" data-groups="00 000 0000">
                                             <span class="nds-label">Saudi Arabia (+966)</span>
                                         </button>
                                         <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-trigger-label="+971">

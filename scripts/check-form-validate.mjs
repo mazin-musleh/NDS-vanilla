@@ -36,7 +36,7 @@ async function probe() {
         form.querySelectorAll('input:not([type="hidden"], [readonly], [disabled], [type="file"]), textarea').forEach((i) => {
             if (i.type === 'checkbox' || i.type === 'radio') return;
             if (i.closest('.nds-otp-container')) return;
-            let v = i.closest('.nds-national-id') ? '1000000008' : i.closest('.nds-iban') ? 'SA0380000000608010167519' : (SAMPLE[i.type] || 'Hello');
+            let v = i.closest('[data-format="national-id"]') ? '1000000008' : i.closest('[data-format="iban"]') ? 'SA0380000000608010167519' : i.closest('[data-format="plate"]') ? 'ABJ1234' : (SAMPLE[i.type] || 'Hello');
             if (i.closest('.nds-time-fields')) v = i.classList.contains('nds-time-hour') ? '10' : '30';
             if (i.classList.contains('nds-time-input')) v = '10:30';
             if (i.closest('.nds-taginput')) return;

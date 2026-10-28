@@ -36,7 +36,7 @@ const timeField = (format) => `<div class="nds-form-container nds-time-picker" d
   <div class="nds-form-control"><input type="text" class="nds-input nds-time-input" placeholder="${format}"></div></div>`;
 
 // A Form field: phone and IBAN shape through Forms, with no instance to wait for. kind: its container's class.
-const formField = (kind, input, extra = '') => `<div class="nds-form-container nds-formatted${kind === 'formatted' ? '' : ' nds-' + kind}"${extra}>
+const formField = (kind, input, extra = '') => `<div class="nds-form-container nds-formatted"${kind === 'formatted' ? '' : ` data-format="${kind}"`}${extra}>
   <div class="nds-form-control">${input}</div></div>`;
 
 const PATTERNS = {
@@ -243,7 +243,7 @@ const PATTERNS = {
         fields: {
             // maxlength as old markup wrote it: the groups must still fit.
             iban: formField('iban', '<input type="text" class="nds-input" maxlength="34">'),
-            phone: formField('phone', '<div class="nds-form-action nds-prefix"><input type="hidden" value="+966"></div><input type="tel" class="nds-input" inputmode="numeric" maxlength="9">', ' data-format="00 000 0000"'),
+            phone: formField('phone', '<div class="nds-form-action nds-prefix"><input type="hidden" value="+966"></div><input type="tel" class="nds-input" inputmode="numeric" maxlength="9">', ' data-groups="00 000 0000"'),
             // No country code: the number as typed, its 0 kept, up to maxlength (free: up to 15).
             plain: formField('phone', '<input type="tel" class="nds-input" inputmode="numeric" maxlength="10">'),
             free: formField('phone', '<input type="tel" class="nds-input" inputmode="numeric">'),
@@ -251,15 +251,15 @@ const PATTERNS = {
             world: formField('phone', `<div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+966">
   <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger"><span class="nds-label">+966</span></button>
   <div class="nds-dropmenu-menu" hidden><div class="nds-dropmenu-scroll">
-    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966" data-format="00 000 0000"><span class="nds-label">SA</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966" data-groups="00 000 0000"><span class="nds-label">SA</span></button>
     <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-trigger-label="+971"><span class="nds-label">AE</span></button>
   </div></div></div><input type="tel" class="nds-input" inputmode="numeric">`),
             // A fixed code in the prefix, and a picker on Italy, whose numbers keep their 0.
-            saudi: formField('phone', '<div class="nds-form-action nds-prefix"><span class="nds-btn nds-subtle"><span class="nds-label">+966</span></span><input type="hidden" name="country-code" value="+966"></div><input type="tel" class="nds-input" inputmode="numeric">', ' data-format="00 000 0000"'),
+            saudi: formField('phone', '<div class="nds-form-action nds-prefix"><span class="nds-btn nds-subtle"><span class="nds-label">+966</span></span><input type="hidden" name="country-code" value="+966"></div><input type="tel" class="nds-input" inputmode="numeric">', ' data-groups="00 000 0000"'),
             italy: formField('phone', `<div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+39">
   <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger"><span class="nds-label">+39</span></button>
   <div class="nds-dropmenu-menu" hidden><div class="nds-dropmenu-scroll">
-    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966" data-format="00 000 0000"><span class="nds-label">SA</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966" data-groups="00 000 0000"><span class="nds-label">SA</span></button>
     <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+39" data-trigger-label="+39"><span class="nds-label">IT</span></button>
   </div></div></div><input type="tel" class="nds-input" inputmode="numeric">`),
             // .nds-formatted: the author's slots: digits only, capitals then digits, small letters, either as typed.
@@ -268,7 +268,7 @@ const PATTERNS = {
             small: formField('formatted', '<input type="text" class="nds-input">', ' data-format="aa-**"'),
             // A Saudi plate: three Arabic letters, four digits.
             arabic: formField('formatted', '<input type="text" class="nds-input">', ' data-format="ححح 0000"'),
-            // .nds-plate: a Saudi plate in its input's lang, a car's or a motorcycle's.
+            // data-format="plate": a Saudi plate in its input's lang, a car's or a motorcycle's.
             plateEn: formField('plate', '<input type="text" class="nds-input" lang="en" maxlength="7">'),
             plateAr: formField('plate', '<input type="text" class="nds-input" lang="ar">'),
             plateMoto: formField('plate', '<input type="text" class="nds-input" lang="en">', ' data-vehicle="motorcycle"'),

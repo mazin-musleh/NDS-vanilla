@@ -1,9 +1,9 @@
-/* NDS.FormattedInput — public surface (a .nds-formatted field: the class on the .nds-form-container, with one
- * preset beside it, .nds-phone, .nds-national-id, .nds-iban or .nds-plate, or a data-format of its own; the field's input
- * is the one its .nds-form-control holds)
+/* NDS.FormattedInput — public surface (a .nds-formatted field: the class on the .nds-form-container, and its
+ * data-format there: a built-in kind (phone, national-id, iban, plate), a name addFormat() added, or a slot
+ * format of its own; the field's input is the one its .nds-form-control holds)
  * Rides: nds-field (its part) · nds-typing (group) · nds-dropmenu (a phone's country picker)
  * Methods:
- *   NDS.FormattedInput.isNationalId(str, country) / .isIban(str)   the checks behind .nds-national-id / .nds-iban;
+ *   NDS.FormattedInput.isNationalId(str, country) / .isIban(str)   the checks behind national-id / iban;
  *                                     country defaults to SA, and one with no rule passes
  *   NDS.FormattedInput.addIdRule(country, { check(value), digits, length })   a national ID rule for a
  *                                     country ("AE"): check gets the clean value; digits, digits only (else
@@ -11,45 +11,46 @@
  *   NDS.FormattedInput.addFormat(name, { format, check(value), message })   a named format, for
  *                                     data-format="name": format, its slots; check gets the value the form
  *                                     submits and returns true when it is valid; message, shown when it is not
- *                                     ("Invalid value" by default). Replaces one set before
+ *                                     ("Invalid value" by default). Replaces one set before; refuses a built-in kind
  * Events:
- *   nds:phone:change            detail {value, countryCode, nationalNumber} — from a .nds-phone field's input,
+ *   nds:phone:change            detail {value, countryCode, nationalNumber} — from a phone field's input,
  *                               when the number it submits changes (typing, a paste, a country pick, a reset)
  * Hooks:
- *   data-format on a .nds-phone field's container, or on each item of its country picker: the
- *   groups it shows (0 a digit: "00 000 0000"); an item without one shows the number as typed
- *   data-format on a .nds-formatted field's container: its slots (0 a digit, A a capital, a a small letter,
+ *   data-format on a .nds-formatted field's container: phone, national-id, iban, plate, a name addFormat()
+ *   added ("card"), or its slots (0 a digit, A a capital, a a small letter,
  *   * a letter or a digit as typed, ح an Arabic letter: "AA-0000", "ححح 0000"), or the name of one addFormat()
  *   added ("card": small letters, digits and dashes, with a letter other than a)
- *   a hidden input in a .nds-phone field's .nds-prefix: its value is the code the phone submits before its
+ *   data-groups on a phone field's container, or on each item of its country picker: the groups the
+ *   number shows (0 a digit: "00 000 0000"); an item without one shows the number as typed
+ *   a hidden input in a phone field's .nds-prefix: its value is the code the phone submits before its
  *   number ("+966"); a country picker's is the one Dropmenu writes, from the picked item's data-value
  *   data-country on any element, <html> for the site ("AE"): the country a national ID and an IBAN
  *   inside it follow; the nearest wins, SA without one; "any" takes an ID of any country, unchecked
- *   data-vehicle="motorcycle" on a .nds-plate field's container: 1 or 2 letters and 1 to 3 digits (a car: 3 and 4)
- *   data-submit="arabic" on a .nds-plate field's container: it submits Arabic letters ("أبح1234")
- *   lang on a .nds-plate field's .nds-form-control (or its input): "ar" flips the row and shows the Arabic letters
+ *   data-vehicle="motorcycle" on a plate field's container: 1 or 2 letters and 1 to 3 digits (a car: 3 and 4)
+ *   data-submit="arabic" on a plate field's container: it submits Arabic letters ("أبح1234")
+ *   lang on a plate field's .nds-form-control (or its input): "ar" flips the row and shows the Arabic letters
  *   apart with Arabic digits, right to left ("أ ب ح ١٢٣٤"); any other, the Latin ones ("ABJ 1234").
  *   Without it, the first letter typed picks the script, and the field writes it as lang on its .nds-form-control;
  *   empty, the page's lang applies
  * Gotchas:
  *   - Layers: NDS.typing shapes the text; Date Picker and Time Picker add a picker menu; this file is a
  *     formatted field with no picker. A type part of the form field: no init() and no loader entry.
- *   - .nds-national-id and .nds-iban stamp setCustomValidity on input (and at init), so the
+ *   - national-id and iban stamp setCustomValidity on input (and at init), so the
  *     checksum fails the field through checkValidity like any native rule. A pattern on the same
  *     input is redundant.
- *   - .nds-iban shows groups of four (letters only in the country; an SA one is 22 digits after it), and a .nds-phone or .nds-formatted with a data-format shows its groups: input.value
+ *   - iban shows groups of four (letters only in the country; an SA one is 22 digits after it), and a phone with data-groups or a slot format shows its groups: input.value
  *     holds the spaces; a submit and new FormData(form) send the value without them. Inserts go
  *     through this file there, and a maxlength shorter than the format is removed: the format sets the most.
- *   - A .nds-phone with a code drops its leading 0 (not +39/+378/+379) and a pasted
+ *   - A phone with a code drops its leading 0 (not +39/+378/+379) and a pasted
  *     "+966…" (another country its picker lists picks that country), and submits E.164
  *     ("+966551234567"); without one it keeps the number as typed, 0 included, up to 15 digits. The code joins in the formdata event only: input.value keeps the
  *     local number, so code reading it (jQuery serialize(), framework state) gets no code: it
  *     listens for nds:phone:change instead.
  *   - A national ID of a country with no rule keeps capitals and digits and checks nothing; SA's rule ships.
  *     An IBAN starting with a digit gets the country's letters, SA's by default.
- *   - A .nds-phone or a preset-less field with a data-format fails a value that leaves a slot empty ("Incomplete
+ *   - A phone with data-groups, or a slot or named format, fails a value that leaves a slot empty ("Incomplete
  *     value"); a pattern on its input adds a rule, checked on the value as shown, separators included.
- *   - .nds-plate takes the 17 letters of a Saudi plate in either script (ا for أ, ي for ى, ه for هـ) and
+ *   - plate takes the 17 letters of a Saudi plate in either script (ا for أ, ي for ى, ه for هـ) and
  *     shows them in its script (see lang); letters always come before digits. It submits the Latin letters, then the
  *     digits ("ABJ1234"), and fails a value with no letter or no digit ("Incomplete value"). Without a
  *     placeholder, it writes one that follows its letters and vehicle ("ABJ 1234", "أ ب ١٢٣").
@@ -94,7 +95,7 @@
         }
         idRules.set(country, rule);
         // A field already stamped takes the new rule.
-        document.querySelectorAll('.nds-national-id .nds-form-control > input').forEach(function(input) {
+        document.querySelectorAll('.nds-formatted[data-format="national-id"] .nds-form-control > input').forEach(function(input) {
             if (getKind(input) === 'national-id' && getCountry(input) === country) stampIdentifier(input, { quiet: true });
         });
     }
@@ -105,6 +106,10 @@
     function isFormatName(text) { return /^[a-z][a-z\d]*(-[a-z\d]+)*$/.test(text) && /[b-z]/.test(text); }
 
     function addFormat(name, rule) {
+        if (presets.indexOf(name) >= 0) {
+            console.warn('NDS FormattedInput: "' + name + '" is built in; addFormat takes another name');
+            return;
+        }
         if (!isFormatName(String(name)) || !rule || typeof rule.format !== 'string' || (rule.check && typeof rule.check !== 'function')) {
             console.warn('NDS FormattedInput: addFormat needs a name of small letters and dashes ("card") and a format');
             return;
@@ -116,7 +121,7 @@
         });
     }
 
-    // A preset-less field's data-format: a named format's rule, or { format } for a slot format of its own.
+    // A field's data-format that is no built-in kind: a named format's rule, or { format } for a slot format of its own.
     // Null: none, or a name not added yet.
     function getFormatRule(input) {
         var written = input.closest('.nds-form-container').getAttribute('data-format');
@@ -234,15 +239,16 @@
         ownPlaceholders.set(input, sample);
     }
 
-    // The field an input is the text box of: its .nds-formatted container's preset ('phone', 'iban',
-    // 'national-id', 'plate'), else 'formatted'. Null: none.
+    // The field an input is the text box of: its .nds-formatted container's built-in kind, its data-format
+    // ('phone', 'iban', 'national-id', 'plate'), else 'formatted'. Null: none.
     var presets = ['phone', 'iban', 'national-id', 'plate'];
     function getKind(input) {
         var control = input.parentElement;
         if (input.type === 'hidden' || !control || !control.classList.contains('nds-form-control')) return null;
         var container = control.closest('.nds-formatted');
         if (!container) return null;
-        return presets.find(function(preset) { return container.classList.contains('nds-' + preset); }) || 'formatted';
+        var kind = container.getAttribute('data-format');
+        return presets.indexOf(kind) >= 0 ? kind : 'formatted';
     }
 
     // Groups of four: two letters, two check digits, then up to the longest IBAN (34). A Saudi one is 22 digits after SA.
@@ -263,7 +269,7 @@
     }
 
     // The slot format a field shows (NDS.typing.group): an IBAN's groups of four, a .nds-formatted field's
-    // data-format, or a phone's, read from the picked country when the field has a country picker. Null: the value as typed.
+    // data-format, or a phone's data-groups, read from the picked country when the field has a country picker. Null: the value as typed.
     function getGroupFormat(input) {
         var kind = getKind(input);
         if (kind === 'iban') return getIbanFormat(input.value);
@@ -273,7 +279,7 @@
         }
         if (kind !== 'phone') return null;
         var source = getPhoneSetup(input).source;
-        return (source && source.getAttribute('data-format')) || null;
+        return (source && source.getAttribute('data-groups')) || null;
     }
 
     // The picked country item: the one whose data-value Dropmenu holds in its hidden input. Before Dropmenu
@@ -297,7 +303,7 @@
         return digits ? '+' + digits : null;
     }
 
-    // A phone's code and where its data-format lives: with a picker, the picked country item; else the hidden
+    // A phone's code and where its data-groups live: with a picker, the picked country item; else the hidden
     // input in its prefix and the field's container.
     function getPhoneSetup(input) {
         var picker = getCountryPicker(input);
@@ -397,7 +403,7 @@
             }
             code = full.code;
         }
-        var format = (source && source.getAttribute('data-format')) || null;
+        var format = (source && source.getAttribute('data-groups')) || null;
         // A whole value with the code but no + ("966551234567"): too long for the field, so the code goes.
         var room = code && format ? format.replace(/[^0A*]/g, '').length : input.maxLength;
         var typed = text.slice(from).replace(/\D/g, '');
@@ -430,7 +436,7 @@
         if (ownMessages.delete(input) && (!input.willValidate || input.validationMessage === own)) input.setCustomValidity('');
     }
 
-    // .nds-phone / .nds-national-id / .nds-iban / .nds-formatted: the value in its shape, then the checksum result, so
+    // A .nds-formatted field: the value in its shape, then the checksum result, so
     // checkValidity() (blur and submit) fails the field with a localized message. Empty = valid. opts:
     // text and caret, an edit to write in place of the value; inserted, the text that edit typed or pasted
     // (the slots may drop it, never what was there); quiet, write it without an input event;

@@ -271,8 +271,8 @@ for (const v of REACT) {
             + dir + ' nds-icon-only" type="button" aria-label="' + dir + '"><i class="nds-icon nds-hgi-plus-sign"></i></button></div>';
         const box = document.createElement('div');
         box.id = 'sv-fixtures';
-        box.innerHTML = field('<input type="tel" id="sv-phone" class="nds-input">', '', '', ' nds-formatted nds-phone')
-            + field('<input type="text" id="sv-iban" class="nds-input" maxlength="34">', '', '', ' nds-formatted nds-iban')
+        box.innerHTML = field('<input type="tel" id="sv-phone" class="nds-input">', '', '', ' nds-formatted" data-format="phone')
+            + field('<input type="text" id="sv-iban" class="nds-input" maxlength="34">', '', '', ' nds-formatted" data-format="iban')
             + field('<input type="text" id="sv-num" class="nds-input nds-center" inputmode="numeric" value="1" min="1" max="20" step="1">',
                 step('decrement', 'prefix'), step('increment', 'suffix'));
         document.querySelector('.nds-section-body').prepend(box);
@@ -360,7 +360,7 @@ for (const ver of VUE) {
                 + '<div class="nds-form-container nds-time-picker" id="v-tp"><div class="nds-form-control">'
                 + '<div class="nds-form-action"><button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle nds-icon-only" aria-label="t"><i class="nds-icon nds-hgi-clock-01"></i></button></div>'
                 + '<input type="text" class="nds-input nds-time-input"><input type="hidden" class="nds-time-value" v-model="time"></div></div>'
-                + '<div class="nds-form-container nds-formatted nds-phone"><div class="nds-form-control"><input type="tel" id="v-phone" class="nds-input" v-model="phone"></div></div>'
+                + '<div class="nds-form-container nds-formatted" data-format="phone"><div class="nds-form-control"><input type="tel" id="v-phone" class="nds-input" v-model="phone"></div></div>'
                 + '<div class="nds-form-container"><div class="nds-form-control"><input type="text" id="v-text" class="nds-input" v-model="text"></div></div>'
                 + '<input type="checkbox" id="v-agree" v-model="agree">'
                 + '<div class="nds-form-container" id="v-sw-box"><div class="nds-form-control"><div class="nds-switch-toggle">'
@@ -469,7 +469,7 @@ for (const ver of VUE) {
                 + '<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="SA"><span class="nds-label">Saudi Arabia</span></button>'
                 + '<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="AE"><span class="nds-label">UAE</span></button>'
                 + '</div></div></div>'
-                + '<div class="nds-form-container nds-formatted nds-iban"><div class="nds-form-control"><input type="text" id="v2-iban" class="nds-input" v-model="iban"></div></div>'
+                + '<div class="nds-form-container nds-formatted" data-format="iban"><div class="nds-form-control"><input type="text" id="v2-iban" class="nds-input" v-model="iban"></div></div>'
                 + '<div class="nds-form-container"><div class="nds-form-control">' + step('decrement', 'prefix')
                 + '<input type="text" id="v2-qty" class="nds-input nds-center" inputmode="numeric" min="1" max="20" step="1" v-model="qty">'
                 + step('increment', 'suffix') + '</div></div>'
@@ -577,7 +577,7 @@ const FIELDS = (p, bind) => {
         + `<input type="text" class="nds-input nds-date-input" ${bind('date')}></div></div>`
         + `<div class="nds-form-container nds-time-picker" id="${p}-tp"><div class="nds-form-control">` + act('time-picker-toggle', 'nds-hgi-clock-01')
         + `<input type="text" class="nds-input nds-time-input"><input type="hidden" class="nds-time-value" ${bind('time')}></div></div>`
-        + `<div class="nds-form-container nds-formatted nds-phone"><div class="nds-form-control"><input type="tel" id="${p}-phone" class="nds-input" ${bind('phone')}></div></div>`
+        + `<div class="nds-form-container nds-formatted" data-format="phone"><div class="nds-form-control"><input type="tel" id="${p}-phone" class="nds-input" ${bind('phone')}></div></div>`
         + `<div class="nds-form-container"><div class="nds-form-control"><input type="text" id="${p}-text" class="nds-input" ${bind('text')}></div></div>`
         + `<input type="checkbox" id="${p}-agree" ${bind('agree', true)}>`
         + `<div class="nds-form-container" id="${p}-sw-box"><div class="nds-form-control"><div class="nds-switch-toggle">`

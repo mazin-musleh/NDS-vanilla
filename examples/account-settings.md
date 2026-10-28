@@ -225,7 +225,7 @@ sidemenu_mode: false
                 <span class="nds-card-title" id="acc-mobile-modal-title">Change mobile number</span>
                 <p class="nds-card-description">We send a code by text message to the new number to check it is yours.</p>
             </div>
-            <div class="nds-form-container nds-formatted nds-phone" data-required data-format="00 000 0000">
+            <div class="nds-form-container nds-formatted" data-format="phone" data-required data-groups="00 000 0000">
                 <div class="nds-form-header">
                     <label for="acc-new-phone">
                         <span class="nds-label">New mobile number</span>

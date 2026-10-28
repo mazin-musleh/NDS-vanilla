@@ -117,7 +117,7 @@ last_edit: "25/10/2026 - 05:46 PM"
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-form-container nds-formatted nds-phone" data-required data-format="00 000 0000">
+                                <div class="nds-form-container nds-formatted" data-format="phone" data-required data-groups="00 000 0000">
                                     <div class="nds-form-header">
                                         <label for="job-phone">
                                             <span class="nds-label">Mobile number</span>

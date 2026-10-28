@@ -796,11 +796,11 @@ fieldset {
 
 // A plate in Arabic reads right to left, its letters first, as the plate's Arabic row: "أ ب ح ١٢٣٤".
 // Its whole row flips: the actions and icons too.
-.nds-plate .nds-form-control:lang(ar) {
+.nds-formatted[data-format="plate"] .nds-form-control:lang(ar) {
     direction: rtl;
 }
 
-.nds-plate .nds-input:lang(ar) {
+.nds-formatted[data-format="plate"] .nds-input:lang(ar) {
     direction: rtl;
     text-align: start;
 
@@ -811,7 +811,7 @@ fieldset {
 }
 
 // A phone's row reads left to right too, its country code first, as the number is written: "+966 55 123 4567".
-.nds-phone .nds-form-control {
+.nds-formatted[data-format="phone"] .nds-form-control {
     direction: ltr;
 
     // The country menu keeps the page's direction.
@@ -824,7 +824,7 @@ fieldset {
     }
 }
 
-.nds-phone .nds-prefix ~ .nds-input {
+.nds-formatted[data-format="phone"] .nds-prefix ~ .nds-input {
     text-align: left;
 }
 
