@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 12:24 AM"
+last_edit: "28/10/2026 - 11:39 AM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -242,7 +242,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `field-label` | structure | error | A form field with no label: no `<label>`, `aria-label`, `aria-labelledby`, `title` or `placeholder`. A screen reader announces it with no name |
 | `img-alt` | structure | error | An `<img>` with no `alt`: a screen reader reads its file name. `alt=""` marks a picture that only decorates |
 | `nav-current` | structure | warn | A main nav link to the current page with no `data-state="current"` |
-| `id-reference` | structure | error | A `data-*-target`, `data-auto-pagination` or `data-copy-target` value that names no element. An id inside a `<template>` counts as present |
+| `id-reference` | structure | error | A `data-*-target`, `data-auto-pagination` or `data-copy-target` value that names no element, read the way its component reads it. An attribute that takes a bare id reports `#list` and names the fix, `list`. An id inside a `<template>` counts as present |
 | `aria-controls` | structure | warn | An `aria-controls` id that no element has, inside or outside a `<template>` |
 | `id-duplicate` | structure | error | One `id` on two or more elements, outside SVG: a lookup by id reaches only the first |
 | `sort-target-owned` | structure | warn | A `data-sort-target` on a list that a filter or a table already sorts |

@@ -420,14 +420,28 @@
     };
     // A template-held modal or panel is real: NDS.fromTemplate moves it in on first open.
     const isInTemplate = (id) => [...document.querySelectorAll('template')].some(template => template.content.getElementById(id));
-    const isResolved = (attribute, value) => !!NDS.resolveElement(value) || isInTemplate(value.replace(/^#/, ''))
-        || (attribute === 'data-voice-target' && !!document.querySelector(`[name="${CSS.escape(value)}"]`));
+    // Read each value as its component does. These take a bare id (getElementById): "#list" or a
+    // selector names nothing for them. Copy and Export take a selector, Voice a field's id, name or
+    // data-name, and the rest go through NDS.resolveElement, which takes either.
+    const idRefs = new Set(['data-filter-target', 'data-selection-target', 'data-sort-target', 'data-paged-target', 'data-stepper-target', 'data-modal-target']);
+    const selectorRefs = new Set(['data-copy-target', 'data-export-target']);
+    const isResolved = (attribute, value) => {
+        if (idRefs.has(attribute)) return !!document.getElementById(value) || isInTemplate(value);
+        if (selectorRefs.has(attribute)) { try { return !!document.querySelector(value); } catch { return false; } }
+        if (attribute === 'data-voice-target') return !!(document.getElementById(value) || document.querySelector(`[name="${CSS.escape(value)}"], [data-name="${CSS.escape(value)}"]`));
+        return !!NDS.resolveElement(value) || isInTemplate(value.replace(/^#/, ''));
+    };
     addRule({ id: 'id-reference', severity: 'error', check(context) {
         for (const attribute in refs) {
             context.find(`[${attribute}]`).forEach(el => {
                 const value = el.getAttribute(attribute).trim();
                 // An empty data-auto-pagination uses the container right before the nav.
                 if (!value || isResolved(attribute, value)) return;
+                const bare = value.replace(/^#/, '');
+                if (bare !== value && isResolved(attribute, bare)) {
+                    context.report(el, `${attribute}="${value}" takes a bare id — with the "#" it names no element, so the component it wires does nothing.`, `Write ${attribute}="${bare}". See ${DOCUMENTATION_URL}${refs[attribute]}`);
+                    return;
+                }
                 context.report(el, `${attribute}="${value}" names no element on the page — the component it wires does nothing.`, `Give the element id="${value.replace(/^#/, '')}", or fix the value. See ${DOCUMENTATION_URL}${refs[attribute]}`);
             });
         }
