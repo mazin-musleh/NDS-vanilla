@@ -327,7 +327,7 @@
     // before the browser paints, and never flashes uncollapsed. Adds within one
     // task (a loop or a fragment) already arrive as a single batch, so no debounce
     // is needed to coalesce them; loop-safety is reconcileCollapse's signature
-    // guard. Auto navs manage their own collapse (setAutoPagination) — skipped.
+    // guard. Auto navs manage their own collapse (rebuildAutoNav) — skipped.
     function addCollapseWatchListeners() {
         if (collapseWatchReady) return;
         collapseWatchReady = true;
@@ -405,6 +405,7 @@
     // Initialization function (called by nds-loader.js)
     function setupPagination() {
         addNavCleanupListeners();
+        addPerPagePickerListeners();
         const paginationContainers = document.querySelectorAll('.nds-pagination, .nds-pagination-list');
 
         paginationContainers.forEach(container => {
@@ -861,8 +862,8 @@
     // Wire a directly-generated collapsed list: create the ellipsis dropmenu (if
     // present) and stamp active state. Replaces `new NdsPagination` for the
     // auto-pagination paths — the collapse already lives in the markup.
-    // totalPages marks the menu as lazily windowed: the collapsed range lands as
-    // an element property on the scroll container (dies with the node on any
+    // totalPages marks the menu as lazily windowed: the collapsed range lands in
+    // lazyRanges, keyed by the scroll container (dies with the node on any
     // rebuild — never a consumer-facing attribute) BEFORE activateGeneratedPage,
     // which reads it. reconcileCollapse (author markup, eager menu) passes none.
     function setupGeneratedPagination(paginationNav, activePage, totalPages) {
@@ -1383,7 +1384,7 @@
 
     // Wire one auto-pagination's --per-page ResizeObserver + (once) the shared
     // .nds-paged-content onDomRemove cleanup. Click wiring rides rebuildAutoNav.
-    // Called from setupAutoContainer's initial paint.
+    // Called from setupAutoContainer's initial paint and when syncAutoPagination adopts a swapped-in container.
     function addAutoNavListeners(paginationNav, contentContainer) {
         // Watch for --per-page changes on resize. Stored handle lets the
         // shared .nds-paged-content removal listener release the pooled
@@ -1639,8 +1640,9 @@
             // A live nav is returned as-is — re-wiring its click handler would
             // stack a second listener on the same element.
             if (container.ndsPagination) return container.ndsPagination;
-            // A page with no pagination at load never runs init(), so create() wires the cleanup too.
+            // A page with no pagination at load never runs init(), so create() wires the cleanup and picker too.
             addNavCleanupListeners();
+            addPerPagePickerListeners();
             // Manual navs take init's full path (URL page, states, reveal); auto-paginations
             // are wired by reinit() (setupAutoContainer).
             const instance = container.hasAttribute('data-auto-pagination')
