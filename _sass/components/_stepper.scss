@@ -529,6 +529,8 @@
     .nds-stepper-step {
         position: relative;
         flex-direction: row;
+        // The base flex: 1 shares a row; in a column it would spread the steps over a stretched stepper.
+        flex: none;
 
         // Override horizontal line to vertical
         .nds-stepper-base::after {
