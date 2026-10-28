@@ -53,6 +53,7 @@
  *     NDS.i18n.pack() → Promise         the page language's pack
  *     NDS.i18n.resolveLang(lang?)       the page's language or lang as a base tag ('ar-SA' → 'ar'); else 'en'
  *     NDS.i18n.isMissing(lang?)         true when that language's file failed to load
+ *     NDS.i18n.has(section, key?)       true when a getStrings() call declared that section (and key)
  *     NDS.i18n.format(value, vars)     fill {name}; a plural value picks by vars.n
  *     NDS.i18n.mergeOwnKeys(target, src)  copy own keys, skipping __proto__ / constructor / prototype
  *     NDS.setValue(el, value, { change }) write value (checked: a click), fire input + change
@@ -160,7 +161,9 @@
     // and the markup. A missing pack, section or key shows the English.
     //
     // Override hooks:
-    //   window.NDS_I18N      = { '{component}': {...}, ... }   inline strings, read on every lookup
+    //   window.NDS_I18N       = { '{component}': {...}, ... }           inline strings, every language
+    //   window.NDS_I18N_LANGS = { '{lang}': { '{component}': {...} } }  inline strings for one language;
+    //                           a name of its own, since a section such as otp reads like a language code
     //   window.NDS_I18N_PATH = '/custom/'                       base path, read once per file
     //
     // Markers (plans/i18n-markers.md): data-i18n="section.key" writes an element's text, and
@@ -206,16 +209,25 @@
             if (lang === 'en') return null;
             const pack = this._files[lang];
             if (pack === undefined) return undefined;
-            return pack && component in pack ? pack[component] : null;
+            return pack && Object.prototype.hasOwnProperty.call(pack, component) ? pack[component] : null;
         },
 
-        // The files' text with the inline override laid over it key by key. Until they
-        // land, the override stands alone.
+        // The files' text with the overrides laid over it key by key, the language's own last.
+        // Until the files land, the overrides stand alone.
         _getSection(component, lang) {
-            const inline = window.NDS_I18N && window.NDS_I18N[component];
+            const own = (object, key) => (object && Object.prototype.hasOwnProperty.call(object, key) ? object[key] : undefined);
+            const inline = own(window.NDS_I18N, component);
+            const local = own(own(window.NDS_I18N_LANGS, this.resolveLang(lang)), component);
             const data = this._fromFiles(component, lang);
-            if (!inline) return data;
-            return data ? Object.assign({}, data, inline) : inline;
+            if (!inline && !local) return data;
+            return Object.assign({}, data, inline, local);
+        },
+
+        // A script declared this section, or this key in it, with getStrings(): the audit tells a
+        // site's own section from a misspelled one.
+        has(section, key) {
+            const seed = this._seeds[section];
+            return !!seed && (key === undefined || Object.prototype.hasOwnProperty.call(seed, key));
         },
 
         _get(component, lang) { return this.pack(lang); },

@@ -253,7 +253,7 @@ class JSProcessor
   def bundle_deps(bundle_name, source_files)
     deps = source_files.map { |sf| File.join(@source_dir, sf) }
     deps += injected_bundles.values.flatten.map { |sf| File.join(@source_dir, sf) } if bundle_name == 'nds-main.min.js'
-    deps += [MIGRATIONS] + anatomy_sources if bundle_name == 'nds-audit.min.js'
+    deps += [MIGRATIONS] + anatomy_sources + find_files(I18N_PACKS) if bundle_name == 'nds-audit.min.js'
     (deps + global_deps).uniq
   end
 
@@ -309,13 +309,24 @@ class JSProcessor
       next if sets.any? { |a| a.any? { |x| x.end_with?('-menu') } }
       parts[c] = root if sets.all? { |a| a.include?(root) }
     end
-    { known: known, parts: parts, requires: requires_rows }
+    { known: known, parts: parts, requires: requires_rows }.merge(i18n_words)
+  end
+
+  # The word packs NDS ships, for the audit's i18n rules: their languages, and each section's keys
+  # (check-i18n holds every pack to the same keys).
+  I18N_PACKS = '_i18n/*.json'
+  def i18n_words
+    packs = find_files(I18N_PACKS).select { |f| File.basename(f) =~ /\A[a-z]{2,3}\.json\z/ }
+    words = {}
+    packs.each { |f| JSON.parse(read_text(f)).each { |section, keys| (words[section] ||= []).concat(keys.keys).uniq! } }
+    { languages: packs.map { |f| File.basename(f, '.json') }, words: words }
   end
 
   # One short hash per part of the audit's data, written into the bundle's header. Order-free, so
   # check-audit reading the staged index agrees with a build reading the disk.
   def audit_stamp(migrations, anatomy)
-    parts = { 'migrations' => migrations, 'known' => anatomy[:known], 'parts' => anatomy[:parts].sort.to_h, 'requires' => anatomy[:requires] }
+    parts = { 'migrations' => migrations, 'known' => anatomy[:known], 'parts' => anatomy[:parts].sort.to_h, 'requires' => anatomy[:requires],
+              'words' => [anatomy[:languages], anatomy[:words].sort.to_h] }
     parts.map { |k, v| "#{k}:#{Digest::SHA1.hexdigest(v.is_a?(String) ? v : JSON.generate(v))[0, 10]}" }.join(' ')
   end
 
@@ -333,7 +344,7 @@ class JSProcessor
     alternatives.flat_map { |alt| @index.keys.select { |p| File.fnmatch(alt, p, File::FNM_PATHNAME) }.sort }
   end
 
-  AUDIT_INPUTS = %r{\A(?:foundations|components|ui-shell|layout|utilities|core|templates|examples|_includes|_layouts|_js|_data|_plugins)/.+\.(?:md|html|js|yml|rb)\z}
+  AUDIT_INPUTS = %r{\A(?:(?:foundations|components|ui-shell|layout|utilities|core|templates|examples|_includes|_layouts|_js|_data|_plugins)/.+\.(?:md|html|js|yml|rb)|_i18n/[a-z]{2,3}\.json)\z}
   def staged_file(path)
     out = IO.popen(['git', 'show', ":#{path}"], &:read)
     $?.success? ? out.force_encoding('utf-8') : nil

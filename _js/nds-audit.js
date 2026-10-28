@@ -332,8 +332,32 @@
 
     addRule({ id: 'i18n-pack', group: 'i18n', severity: 'error', docs: 'core/i18n.html', check(context) {
         const lang = NDS.i18n.resolveLang();
-        if (NDS.i18n.isMissing(lang)) {
+        if (!NDS.i18n.isMissing(lang)) return;
+        if ((anatomy.languages || []).includes(lang)) {
             context.report(null, `the language file for "${lang}" did not load — components show their English text.`, 'Keep the i18n/ folder beside the folder that holds nds-main.min.js, or set NDS_I18N_PATH.');
+        } else if (!(window.NDS_I18N_LANGS && window.NDS_I18N_LANGS[lang])) {
+            context.report(null, `NDS ships no "${lang}" words — components show their English text.`, `Put the words in window.NDS_I18N_LANGS.${lang}: start from a copy of assets/i18n/en.json.`, 'warn');
+        }
+    } });
+
+    // An override section or key nothing reads does nothing, silently.
+    addRule({ id: 'i18n-override', group: 'i18n', severity: 'warn', docs: 'core/i18n.html', check(context) {
+        const words = anatomy.words || {};
+        const own = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
+        const overrides = [['NDS_I18N', window.NDS_I18N],
+            ...Object.entries(window.NDS_I18N_LANGS || {}).map(([lang, sections]) => [`NDS_I18N_LANGS.${lang}`, sections])];
+        for (const [where, sections] of overrides) {
+            for (const [section, keys] of Object.entries(sections || {})) {
+                if (!own(words, section) && !NDS.i18n.has(section)) {
+                    context.report(null, `${where}.${section}: no NDS component or getStrings() call has a "${section}" section — nothing reads it.`, 'Name the section and key from the Word List, such as validation.required. Your own component declares its section with NDS.i18n.getStrings().');
+                    continue;
+                }
+                for (const key of Object.keys(keys || {})) {
+                    if (!(own(words, section) && words[section].includes(key)) && !NDS.i18n.has(section, key)) {
+                        context.report(null, `${where}.${section}.${key}: the "${section}" section has no "${key}" word — nothing reads it.`, 'Name the key from the Word List.');
+                    }
+                }
+            }
         }
     } });
 

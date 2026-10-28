@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 11:39 AM"
+last_edit: "28/10/2026 - 12:48 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -227,7 +227,8 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `toolbar-sizes` | structure | warn | Items on one toolbar line with different heights, such as a 32px `nds-md` button beside a 40px one. It skips hidden items |
 | `table-min-width` | structure | warn | On a desktop, a table with an actions column whose `--min-width` is wider than its box, so users scroll sideways to reach a row's actions. Content that widens a table does not count. Phones and tablets are skipped |
 | `form-row-align` | structure | warn | Fields side by side whose inputs do not start level, because something above one input pushes it down, such as an Info line under its label or a label on two lines. A message under an input does not count. It skips checkboxes, radios, switches and uploads |
-| `i18n-pack` | i18n | error | The language file of the page did not load |
+| `i18n-pack` | i18n | error | The language file of the page did not load. A language NDS does not ship is a `warn`, and only when `window.NDS_I18N_LANGS` has no words for it |
+| `i18n-override` | i18n | warn | A section or key in `window.NDS_I18N` or `window.NDS_I18N_LANGS` that no NDS component or `getStrings()` call has, so it changes nothing |
 | `filter-unclaimed` | structure | error | `data-filter-items` that no filter claimed, so it stays in its skeleton |
 | `filter-no-target` | structure | error | A `.nds-filter` with no `data-filter-target` |
 | `paged-no-nav` | structure | error | A `.nds-paged-content` with no pagination nav |
@@ -336,7 +337,7 @@ The full API is in the banner of `_js/nds-audit.js`.
 
 - [Migration](../guides/migration): every changed name by release, the list the migration checks read.
 - [Init](../core/init): `enableLogging` and the other loader settings.
-- [Internationalization](../core/i18n): the language file that `i18n-pack` checks.
+- [Internationalization](../core/i18n): the language file that `i18n-pack` checks, and the overrides that `i18n-override` checks.
 
 </div>
   </div>

@@ -2,8 +2,9 @@
 // English is built in: a script's words are its NDS.i18n.getStrings() defaults, a marker's word is its
 // markup. Each pack in _i18n/<lang>.json (NDS maintainers edit these) holds every English word and
 // no other. A marker names a plain word its markup matches. No _js/ file carries Arabic or reads NDS.langKey.
-// --build writes assets/i18n/<lang>.json (minified, banner key "_") and _data/i18n.json, the word
-// list core/i18n.md prints; without it, a built file that is out of date fails.
+// --build writes assets/i18n/<lang>.json (minified, banner key "_"), assets/i18n/en.json (the English,
+// for a site to translate) and _data/i18n.json, the word list core/i18n.md prints; without it, a
+// built file that is out of date fails.
 // No browser. Usage: node scripts/check-i18n.mjs [--build]   (js_processor.rb runs --build)
 import { readFileSync, readdirSync, existsSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -151,6 +152,10 @@ for (const [l, pack] of Object.entries(packs)) {
         + `node scripts/check-i18n.mjs --build · do not edit: an update replaces this file; change words with window.NDS_I18N`;
     outputs[join(OUT, l + '.json')] = JSON.stringify({ _: banner, ...pack });
 }
+// en.json: never fetched (English is built in). A site translates a copy into window.NDS_I18N_LANGS.
+const sorted = Object.fromEntries(Object.entries(english).sort(([a], [b]) => a.localeCompare(b)));
+outputs[join(OUT, 'en.json')] = JSON.stringify({ _: `NDS ${version} · every English word of NDS components, by section and key · `
+    + `to add a language, copy it into window.NDS_I18N_LANGS.<lang> and translate the words`, ...sorted }, null, 1) + '\n';
 const show = (v) => (v === undefined ? '' : typeof v === 'string' ? v
     : Array.isArray(v) ? v.join(' · ') : Object.entries(v).map(([k, w]) => `${k}: ${w}`).join(' · '));
 const rows = Object.entries(english).sort(([a], [b]) => a.localeCompare(b)).flatMap(([section, words]) =>

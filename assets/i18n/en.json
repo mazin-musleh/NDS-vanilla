@@ -1,0 +1,529 @@
+{
+ "_": "NDS 1.12.x-dev · every English word of NDS components, by section and key · to add a language, copy it into window.NDS_I18N_LANGS.<lang> and translate the words",
+ "accessibility": {
+  "panel_title": "Accessibility Tools",
+  "panel_label": "Accessibility settings",
+  "close_panel": "Close accessibility panel",
+  "toggle_theme": "Toggle theme",
+  "scroll_panel": "Scroll panel",
+  "section_modes": "Accessibility Modes",
+  "section_readable": "Readable Experience",
+  "section_visual": "Visually Pleasing Experience",
+  "aria_readable": "Readable experience controls",
+  "aria_visual": "Visual adjustments",
+  "default": "Default",
+  "font_sizing": "Font Sizing",
+  "dyslexia": "Dyslexia Friendly",
+  "highlight_titles": "Highlight Titles",
+  "highlight_links": "Highlight Links",
+  "reading_mask": "Reading Mask",
+  "pause_motion": "Pause Motion",
+  "text_align": "Text Alignment",
+  "line_height": "Line Height",
+  "letter_spacing": "Letter Spacing",
+  "word_spacing": "Word Spacing",
+  "reset": "Reset Settings",
+  "mode_epilepsy_safe": "Epilepsy Safe Mode",
+  "mode_epilepsy_safe_desc": "Stops motion and dampens color intensity",
+  "mode_visually_impaired": "Visually Impaired Mode",
+  "mode_visually_impaired_desc": "Enlarges text and boosts contrast for clearer reading",
+  "mode_cognitive_disability": "Cognitive Disability Mode",
+  "mode_cognitive_disability_desc": "Highlights titles and stops motion to reduce distraction",
+  "mode_motor_impaired": "Motor Impaired Mode",
+  "mode_motor_impaired_desc": "Enlarges click targets",
+  "mode_colorblind": "Colorblind Mode",
+  "mode_colorblind_desc": "Adjusts colors to distinguish red and green clearly",
+  "mode_dyslexia_friendly": "Dyslexia Friendly Mode",
+  "mode_dyslexia_friendly_desc": "Uses a clearer font and widens line and word spacing",
+  "mode_adhd_friendly": "ADHD Friendly Mode",
+  "mode_adhd_friendly_desc": "Stops motion, highlights titles, and enables the reading mask",
+  "visual_boost_contrast": "Boost Contrast",
+  "visual_monochrome": "Monochrome",
+  "visual_high_contrast": "High Contrast",
+  "visual_high_saturation": "High Saturation",
+  "visual_low_saturation": "Low Saturation",
+  "visual_cvd_deutan": "Deuteranopia",
+  "on": "on",
+  "off": "off",
+  "set": "set to",
+  "reset_announce": "All accessibility settings reset to default.",
+  "reset_done": "Settings reset",
+  "active": "active",
+  "confirm_reset": "Click again to confirm",
+  "confirm_reset_msg": "Press the reset button again to confirm.",
+  "confirm_reset_remaining": {
+   "one": "Confirm reset within 1 second.",
+   "other": "Confirm reset within {n} seconds."
+  },
+  "reset_cancelled": "Reset cancelled.",
+  "start": "Start",
+  "end": "End",
+  "justify": "Justify",
+  "small": "Small",
+  "medium": "Medium",
+  "large": "Large",
+  "mask_toolbar": "Reading mask controls",
+  "mask_size_down": "Decrease mask band",
+  "mask_size_up": "Increase mask band",
+  "mask_grab": "Drag mask vertically. Use arrow keys to nudge.",
+  "mask_close": "Close reading mask"
+ },
+ "alert": {
+  "close": "Close",
+  "close_alert": "Close alert"
+ },
+ "autocomplete": {
+  "no_results": "No results",
+  "load_failed": "Could not load suggestions",
+  "pick_suggestion": "Choose from the suggestions"
+ },
+ "breadcrumb": {
+  "more": "More",
+  "breadcrumb": "Breadcrumb"
+ },
+ "calendar": {
+  "events": {
+   "one": "1 event",
+   "other": "{n} events"
+  },
+  "previous_week": "Previous week",
+  "next_week": "Next week",
+  "previous_month": "Previous month",
+  "next_month": "Next month",
+  "today": "Today",
+  "grid": "Grid",
+  "rows": "Rows",
+  "month": "Month",
+  "days": "Days",
+  "day_empty": "No events on this day",
+  "show_all": "Show all events"
+ },
+ "chart": {
+  "chart": "Chart",
+  "bar": "Bar chart",
+  "line": "Line chart"
+ },
+ "city-weather": {
+  "weather": "{desc}, {temp}°C",
+  "clear": "Clear",
+  "partly_cloudy": "Partly Cloudy",
+  "overcast": "Overcast",
+  "fog": "Fog",
+  "rain": "Rain",
+  "snow": "Snow",
+  "storm": "Storm"
+ },
+ "code": {
+  "code_language": "Code language"
+ },
+ "cookies": {
+  "panel_label": "Cookie settings",
+  "title": "Cookies",
+  "description": "Use of Cookies by this site is just to guarantee Ease of Access and better user experience while browsing. Continuation of your browsing acknowledges your approval for Terms and Conditions of this site and its use of Cookies.",
+  "accept": "Accept",
+  "reject": "Reject",
+  "manage": "Manage Cookies",
+  "close": "Close",
+  "scroll_panel": "Scroll panel",
+  "manage_title": "Manage Cookies",
+  "manage_description": "When you visit any website, it may store or retrieve information on your browser, mostly in the form of cookies. This information might be about you, your preferences or your device, and is mostly used to make the site work as you expect it to. The information does not usually identify you directly, but it can give you a more personalized web experience. Because we respect your right to privacy, you can choose not to allow some types of cookies. However, blocking some types of cookies may affect your experience of the site and the services we are able to offer.",
+  "types": "Cookie types",
+  "necessary": "Necessary Cookies",
+  "necessary_info": "Always active",
+  "performance": "Performance Cookies",
+  "functional": "Functional Cookies",
+  "targeting": "Targeting Cookies",
+  "confirm": "Confirm My Choices",
+  "reject_all": "Reject All",
+  "done_title": "Thank you!",
+  "done": "Your response has been successfully recorded. If you wish to modify or change your answer, you can go back by clicking the Undo button.",
+  "undo": "Undo"
+ },
+ "copy": {
+  "copied": "Copied",
+  "copy_code": "Copy code"
+ },
+ "custom-select": {
+  "select_option": "Please select an option"
+ },
+ "date": {
+  "hijri_months": [
+   "Muharram",
+   "Safar",
+   "Rabi al-Awwal",
+   "Rabi al-Thani",
+   "Jumada al-Ula",
+   "Jumada al-Akhirah",
+   "Rajab",
+   "Shaban",
+   "Ramadan",
+   "Shawwal",
+   "Dhu al-Qadah",
+   "Dhu al-Hijjah"
+  ],
+  "hijri_era": "AH"
+ },
+ "date-picker": {
+  "select_month": "Select month",
+  "select_year": "Select year",
+  "prev_month": "Previous month",
+  "next_month": "Next month",
+  "today": "Today",
+  "close": "Close",
+  "clear": "Clear",
+  "save": "Save",
+  "invalid": "Invalid date — expected format {format}",
+  "before_min": "Earliest allowed date is {date}",
+  "after_max": "Latest allowed date is {date}",
+  "unavailable": "{date} is not available. Pick another day",
+  "range_order": "Start date must come before end date",
+  "converted_hijri": "Converted from the Hijri date {date}",
+  "converted_gregory": "Converted from the Gregorian date {date}",
+  "open_calendar": "Open calendar"
+ },
+ "digital-stamp": {
+  "tab": "A government website registered with the Digital Government Authority.",
+  "tab_short": "Government website registered with DGA",
+  "verify": "How you know?",
+  "label": "Digital government stamp",
+  "flag": "Saudi Arabia flag",
+  "dga": "Digital Government Authority",
+  "register": "Registered on Digital Government Authority:",
+  "https_title": "Official Reliable websites use",
+  "https_desc": "Ensure the website is using the HTTPS protocol.",
+  "gov_title": "Official Saudi Government websites URL ends with",
+  "gov_mark": ".gov.sa",
+  "gov_desc": "Website belongs to an official government organization in the Kingdom of Saudi Arabia always ends with .gov.sa .",
+  "edu_title": "Official Saudi educational websites URL ends with",
+  "edu_mark": ".edu.sa",
+  "edu_desc": "Website belongs to an official educational in the Kingdom of Saudi Arabia always ends with .edu.sa or sch.sa .",
+  "sch_title": "Official Saudi educational websites URL ends with",
+  "sch_mark": ".sch.sa",
+  "sch_desc": "Website belongs to an official educational in the Kingdom of Saudi Arabia always ends with .edu.sa or sch.sa .",
+  "med_title": "Official Saudi medical websites URL ends with",
+  "med_mark": ".med.sa",
+  "med_desc": "Website belongs to an official medical in the Kingdom of Saudi Arabia always ends with .med.sa .",
+  "org_title": "Official Saudi non-profit organizations websites URL ends with",
+  "org_mark": ".org.sa",
+  "org_desc": "Website belongs to an official non-profit organizations in the Kingdom of Saudi Arabia always ends with .org.sa .",
+  "sa_title": "Official Saudi activities and initiatives websites URL ends with",
+  "sa_mark": ".sa",
+  "sa_desc": "Website belongs to an official activities and initiatives in the Kingdom of Saudi Arabia always ends with .sa ."
+ },
+ "drawer": {
+  "search": "Search the menu",
+  "search_placeholder": "Search…",
+  "clear_search": "Clear search",
+  "no_results": "No results"
+ },
+ "dropmenu": {
+  "search": "Search items",
+  "search_placeholder": "Search…",
+  "clear_search": "Clear search",
+  "no_results": "No results",
+  "select_option": "Please select an option"
+ },
+ "editor": {
+  "undo": "Undo",
+  "redo": "Redo",
+  "clear": "Clear formatting",
+  "remove": "Remove component",
+  "bold": "Bold",
+  "italic": "Italic",
+  "underline": "Underline",
+  "strike": "Strikethrough",
+  "link": "Insert link",
+  "image": "Insert image",
+  "h1": "Heading 1",
+  "h2": "Heading 2",
+  "h3": "Heading 3",
+  "h4": "Heading 4",
+  "ul": "Bulleted list",
+  "ol": "Numbered list",
+  "align-left": "Align left",
+  "align-center": "Align center",
+  "align-right": "Align right",
+  "align-justify": "Justify",
+  "dir-ltr": "Left to right",
+  "dir-rtl": "Right to left",
+  "source": "View HTML source",
+  "url": "URL",
+  "text": "Text",
+  "external": "Open in new tab",
+  "colored": "Colored link",
+  "no_badge": "Hide external badge",
+  "from_link": "From link",
+  "or": "OR",
+  "attrs": "Attributes",
+  "invalid_image_url": "Enter a valid image URL",
+  "invalid_url": "Enter a valid URL",
+  "upload_pending": "Wait for the upload to finish",
+  "upload_failed": "The file was not uploaded. Choose another file or enter a link",
+  "paste_blocked": "Pasting images is not available — use the image dialog",
+  "paste_clips_shell": "Selection crosses a component — adjust it before pasting",
+  "alt": "Alt text",
+  "width": "Width (px)",
+  "height": "Height (px)",
+  "upload": "Upload image",
+  "cancel": "Cancel",
+  "insert": "Insert",
+  "unlink": "Unlink",
+  "remove_prompt": "Remove the component:"
+ },
+ "empty": {
+  "message": "No content to show"
+ },
+ "expandable": {
+  "show_more": "Show More",
+  "show_less": "Show Less"
+ },
+ "export": {
+  "exported": {
+   "one": "Exported {n} row",
+   "other": "Exported {n} rows"
+  },
+  "export": "Export"
+ },
+ "filter": {
+  "update_failed": "Could not update results",
+  "update_failed_description": "Something went wrong applying the filter. The results shown are unchanged.",
+  "no_results": "No results",
+  "no_results_description": "No item matches the current filters.",
+  "clear": "Clear filters",
+  "all": "All",
+  "apply": "Apply",
+  "min": "Minimum",
+  "max": "Maximum",
+  "max_value": "Maximum value",
+  "filter": "Filter",
+  "reset": "Reset",
+  "applied_filters": "Applied Filters:",
+  "search": "Search"
+ },
+ "footer": {
+  "site_footer": "Site Footer",
+  "footer_navigation": "Footer navigation"
+ },
+ "form": {
+  "min_value": "Minimum value is {n}",
+  "max_value": "Maximum value is {n}",
+  "no_arabic": "Arabic characters are not allowed",
+  "loading": "Loading",
+  "show_password": "Show password",
+  "hide_password": "Hide password",
+  "clear_input": "Clear input",
+  "clear_search": "Clear search",
+  "suggestions": "Suggestions:",
+  "decrease_value": "Decrease value",
+  "increase_value": "Increase value",
+  "clear": "Clear"
+ },
+ "formatted-input": {
+  "invalid_national_id": "Invalid national ID number",
+  "invalid_iban": "Invalid IBAN"
+ },
+ "ipv": {
+  "viewerLabel": "Image viewer",
+  "zoomIn": "Zoom in",
+  "zoomOut": "Zoom out",
+  "resetZoom": "Reset zoom",
+  "toggleUI": "Toggle controls",
+  "close": "Close",
+  "prevImage": "Previous image",
+  "nextImage": "Next image",
+  "instructionsTitle": "Controls:",
+  "instructionsScroll": "• Scroll to zoom",
+  "instructionsDrag": "• Drag to pan",
+  "instructionsReset": "• Double-click to reset",
+  "instructionsNav": "• Arrow keys to navigate",
+  "instructionsToggle": "• H key to toggle UI",
+  "instructionsClose": "• ESC to close"
+ },
+ "main-nav": {
+  "primary_navigation": "Primary navigation",
+  "toggle_menu": "Toggle navigation menu"
+ },
+ "modal": {
+  "close": "Close",
+  "close_dialog": "Close dialog"
+ },
+ "multiselect": {
+  "none": "{label}: No selection",
+  "added": "Added {value}",
+  "removed": "Removed {value}",
+  "cleared": "Selection cleared",
+  "applied": "Applied {value}",
+  "reset": "Reset",
+  "apply": "Apply"
+ },
+ "otp": {
+  "digit": "Digit {n} of {total}",
+  "otp_incomplete": "Please enter all {n} digits"
+ },
+ "pagination": {
+  "prev": "Previous page",
+  "next": "Next page",
+  "page": "Page {n}",
+  "more": "More pages",
+  "jump": "Jump to page",
+  "pagination": "Pagination"
+ },
+ "panel": {
+  "close_panel": "Close panel",
+  "make_smaller": "Make panel smaller",
+  "make_larger": "Make panel larger"
+ },
+ "password": {
+  "mismatch": "The two passwords do not match",
+  "met": "{n} of {total} password rules met",
+  "clear_password": "Clear password"
+ },
+ "radio": {
+  "select_option": "Please select an option"
+ },
+ "rating": {
+  "stars": {
+   "one": "{n} star",
+   "other": "{n} stars"
+  },
+  "score": "{n} of {total}",
+  "rating_required": "Please choose a rating",
+  "vote": "Vote"
+ },
+ "scroll-more": {
+  "show_more": "Show more"
+ },
+ "selection": {
+  "select_all": "Select all",
+  "clear_all": "Clear all"
+ },
+ "session-timeout": {
+  "warning_title": "Your session is about to end",
+  "warning_description": "You have not used the page for a while. When the time runs out, you are signed out and lose any data you have not saved.",
+  "stay": "Stay signed in",
+  "sign_out": "Sign out",
+  "ended_title": "Your session has ended",
+  "ended_description": "You were signed out because the page was not used. Sign in again to continue.",
+  "sign_in": "Sign in"
+ },
+ "share": {
+  "share_page": "Share Page",
+  "share_on_x": "Share on X",
+  "share_on_linkedin": "Share on LinkedIn",
+  "share_on_whatsapp": "Share on WhatsApp",
+  "copy_link": "Copy Link"
+ },
+ "sidemenu": {
+  "sidebar": "Sidebar",
+  "sidebar_menu": "Sidebar Menu"
+ },
+ "sort": {
+  "sort": "Sort"
+ },
+ "swiper": {
+  "go_to_page": "Go to page {n}",
+  "previous_slide": "Previous slide",
+  "next_slide": "Next slide"
+ },
+ "table": {
+  "reset": "Reset",
+  "column": "Column {n}",
+  "columns": "Columns",
+  "visible_columns": "Visible columns",
+  "toggle_details": "Toggle details"
+ },
+ "taginput": {
+  "added": "Added {value}",
+  "removed": "Removed {value}",
+  "editing": "Editing {value}",
+  "duplicate": "Already added",
+  "max": "Maximum limit {n}",
+  "cleared": "All tags removed",
+  "strict": "Choose from the suggestions",
+  "tag_required": "Please add at least one tag"
+ },
+ "time-date": {
+  "hijri_format": "MMMM D, YYYY"
+ },
+ "time-picker": {
+  "hour": "Hour",
+  "minute": "Minute",
+  "second": "Second",
+  "meridiem": "AM/PM",
+  "am": "AM",
+  "pm": "PM",
+  "toggle": "Pick a time",
+  "invalid": "Invalid time — expected format {format}",
+  "incomplete": "Enter the hour and the minute",
+  "before_min": "Earliest allowed time is {time}",
+  "after_max": "Latest allowed time is {time}",
+  "required": "This field is required"
+ },
+ "toc": {
+  "on_this_page": "On this page",
+  "table_of_contents": "Table of contents"
+ },
+ "tooltip": {
+  "more_info": "More info"
+ },
+ "topbar": {
+  "toggle_dark_mode": "Toggle dark mode",
+  "top_bar_utilities": "Top bar utilities",
+  "choose_theme": "Choose a theme"
+ },
+ "upload": {
+  "size_exceeds": "File size exceeds {size}",
+  "type_not_allowed": "File type not allowed",
+  "type_not_allowed_ext": "File type not allowed (.{ext})",
+  "max_files": "Maximum number of files reached ({n})",
+  "network_error": "Network error",
+  "timed_out": "Upload timed out",
+  "cancelled": "Upload cancelled",
+  "failed": "Upload failed",
+  "remove_file": "Remove file",
+  "file_required": "Please add a file",
+  "upload_pending": "Please wait for the upload to finish",
+  "drag_drop": "Drag and drop files here to upload",
+  "browse_files": "Browse Files"
+ },
+ "user-feedback": {
+  "success": "Your feedback is submitted!",
+  "error": "An error occurred, please try again"
+ },
+ "validation": {
+  "required": "This field is required",
+  "invalid": "Invalid input",
+  "invalid_email": "Please enter a valid email address",
+  "invalid_url": "Please enter a valid URL",
+  "pattern": "Please match the requested format",
+  "too_short": "Input is too short (minimum {n} characters)",
+  "too_long": "Input is too long (maximum {n} characters)",
+  "range_under": "Value must be at least {n}",
+  "range_over": "Value must be no more than {n}",
+  "select_at_least": {
+   "one": "Please select at least 1 option",
+   "other": "Please select at least {n} options"
+  },
+  "select_at_most": {
+   "one": "Please select no more than 1 option",
+   "other": "Please select no more than {n} options"
+  },
+  "still_loading": "Still loading. Try again in a moment"
+ },
+ "voice-input": {
+  "start": "Start voice input ({language})",
+  "stop": "Stop voice input",
+  "language": "English",
+  "no-speech": "No speech detected",
+  "not-allowed": "Microphone permission required",
+  "audio-capture": "Microphone access denied",
+  "network": "Network error",
+  "aborted": "Voice input cancelled",
+  "language-not-supported": "Language not supported",
+  "default": "Voice input error",
+  "timeout": "Voice input timed out",
+  "unsupported": "Voice input is not supported in this browser",
+  "voice_input": "Voice input",
+  "start_voice_input": "Start voice input"
+ }
+}
