@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 05:57 AM"
+last_edit: "28/10/2026 - 07:15 PM"
 ---
 
 <section id="formatted-input-overview" class="nds-content-section nds-doc-overview">
@@ -206,7 +206,7 @@ Phone with country puts a [Dropmenu](../components/dropmenu) with `data-select-n
 ### IBAN
 {: .nds-block-title #iban}
 
-`.nds-iban` shows the IBAN in groups of four and writes the letters as capitals. It holds 34 letters and digits at most, the longest IBAN, and removes a shorter `maxlength`. A value that starts with a digit, as some banking apps copy a Saudi IBAN, gets the letters of the site country in front, `SA` by default. The field fails when the value is not an IBAN: two letters for the country, two check digits, then 11 to 30 letters or digits, with a correct check sum. The check takes an IBAN of any country, whatever the site country is.
+`.nds-iban` shows the IBAN in groups of four and writes the letters as capitals. It takes letters for the country, digits for the two check digits, then letters or digits, 34 characters at most, the longest IBAN, and removes a shorter `maxlength`. An IBAN that starts with `SA` takes digits only after it, 24 characters in all. A value that starts with a digit, as some banking apps copy a Saudi IBAN, gets the letters of the site country in front, `SA` by default. The field fails when the value is not an IBAN: two letters for the country, two check digits, then 11 to 30 letters or digits, with a correct check sum. The check takes an IBAN of any country, whatever the site country is.
 
 ### Site Country
 {: .nds-block-title #site-country}

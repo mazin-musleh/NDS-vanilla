@@ -23,7 +23,7 @@
  *   - .nds-national-id and .nds-iban stamp setCustomValidity on input (and at init), so the
  *     checksum fails the field through checkValidity like any native rule. A pattern on the same
  *     input is redundant.
- *   - .nds-iban shows groups of four, and a .nds-phone with a data-format its groups: input.value
+ *   - .nds-iban shows groups of four (letters only in the country; an SA one is 22 digits after it), and a .nds-phone with a data-format its groups: input.value
  *     holds the spaces; a submit and new FormData(form) send the value without them. Inserts go
  *     through this file there, and a maxlength shorter than the format is removed: the format sets the most.
  *   - A .nds-phone with a code drops its leading 0 (not +39/+378/+379) and a pasted
@@ -112,14 +112,18 @@
         return (container && kinds.find(function(kind) { return container.classList.contains('nds-' + kind); })) || null;
     }
 
-    // Groups of four, up to the longest IBAN (34).
-    var IBAN_FORMAT = '**** **** **** **** **** **** **** **** **';
+    // Groups of four: two letters, two check digits, then up to the longest IBAN (34). A Saudi one is 22 digits after SA.
+    var IBAN_FORMAT = 'AA00 **** **** **** **** **** **** **** **';
+    var IBAN_FORMATS = Object.freeze({ SA: 'AA00 0000 0000 0000 0000 0000' });
+    function getIbanFormat(text) {
+        return IBAN_FORMATS[text.replace(/[^A-Za-z0-9]/g, '').slice(0, 2).toUpperCase()] || IBAN_FORMAT;
+    }
 
     // The slot format a field shows (NDS.typing.group): an IBAN's groups of four, or a phone's data-format,
     // read from the picked country when the field has a country picker. Null: the value as typed.
     function getGroupFormat(input) {
         var kind = getKind(input);
-        if (kind === 'iban') return IBAN_FORMAT;
+        if (kind === 'iban') return getIbanFormat(input.value);
         if (kind !== 'phone') return null;
         var source = getPhoneSetup(input).source;
         return (source && source.getAttribute('data-format')) || null;
@@ -278,7 +282,7 @@
         else if (iban) formatted = formatIban(text, caret, opts.country && country);
         // An ID keeps digits only, or capitals and digits when its rule lets it have letters.
         else formatted = keepCharacters(text.toUpperCase(), caret, 0, rule && rule.digits ? /\d/ : /[A-Z\d]/);
-        var format = iban ? IBAN_FORMAT : formatted.groupFormat || null;
+        var format = iban ? getIbanFormat(formatted.text) : formatted.groupFormat || null;
         // The format sets the most characters: Safari's maxlength would stop the groups before the browser asks.
         if (format && input.maxLength >= 0 && input.maxLength < format.length) input.removeAttribute('maxlength');
         // With no format, a maxlength holds: a script write would skip it.
