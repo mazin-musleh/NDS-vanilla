@@ -18,6 +18,8 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 ### Parked features (owner calls; after v2.0.0 unless noted)
 
 - **Chat component (2026-10-16), later.** Found in the Student Portal mockup (https://seu-exam-support.netlify.app/) with Date Tile and Meta, which shipped. Think it through first: the real uses, how it fits with other components, and what it replaces. The portal's support panel (`dialog#support-panel` in `examples/student-portal.md`) is where it would land.
+- **Formatted Input: named formats with a JS check (2026-10-28).** `pattern` cannot hold a checksum, so a number like a VAT number or a card number (Luhn) has no reusable rule. Shape: `NDS.FormattedInput.addFormat(name, { format, check })` and `data-format="name"`, as `addIdRule()` works for IDs: the markup stays an attribute, the logic lives in JS. Build it with a real form in hand. Not `setFormat(input, format)`: it would only write `data-format` and refresh (state must round-trip through the attribute), so it adds a second way and no power.
+- **Formatted Input: Arabic letter slots (2026-10-28).** `A` and `a` take Latin letters only, so a Saudi plate (three Arabic letters, four digits) has no shape. Needs a slot character for an Arabic letter, and the left-to-right reading of `.nds-formatted` checked for it.
 - **File Upload image preview for a photo picker.** The old catalog card promised one; it never existed.
 - **Rig asks, checked against the docs 2026-10-27.** The rest were already covered or dropped (shop parts are off-mission).
   - **Selection: a pick limit.** None today; Multiselect's `data-max-checked` only checks on submit. Owner call.

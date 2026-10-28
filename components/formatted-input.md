@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 10:08 PM"
+last_edit: "28/10/2026 - 11:11 PM"
 ---
 
 <section id="formatted-input-overview" class="nds-content-section nds-doc-overview">
@@ -253,6 +253,8 @@ idType.addEventListener('change', function () {
 A value that leaves a slot empty fails with "Incomplete value", at blur and at submit. An empty field passes unless it is required. For a rule the shape cannot hold, add a `pattern` to the input. It checks the value as the field shows it, separators included: `[34]-[0-9]{6}` takes only a first digit of 3 or 4 in a `0-000000` shape.
 
 A delete can move letters onto digit slots, as when the user deletes `AB` from `AB-123456`. The field then keeps every character until the value fits its shape again. It never drops a character the user did not just type. An IBAN works the same way.
+
+The field reads `data-format` at each key, so a script can change the shape at any time. Call `NDS.Form.refresh(input)` after the change to reshape the value the field already holds. A rule can also live in a script, with `setCustomValidity()` as on any [text field](../components/form). "Incomplete value" shows first while a slot is empty.
 
 </div>
   </div>
