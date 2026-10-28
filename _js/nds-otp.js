@@ -24,9 +24,6 @@
  *   - There is no reinit(): every init() sweeps, and later groups and boxes are picked up
  *     by the shared DOM bus. NDS.init.destroy(view) releases a group (group.ndsOtp).
  */
-// NDS OTP Input Controller
-// File: nds-otp.js
-
 (function () {
     'use strict';
 
@@ -315,7 +312,7 @@
     NDS.validation.addRule('.nds-form-group.nds-otp-group[data-min-checked], .nds-form-group.nds-otp-group[data-max-checked], .nds-form-group.nds-otp-group[data-required], .nds-form-group.nds-otp-group.nds-required',
         function (group) { return Object.assign(checkField(group), { focus: getOtpInputs(group)[0] }); },
         // The group's rule answers for its boxes: the native pass leaves their container alone.
-        { on: ['input'], owns: function (container) { return container.classList.contains('nds-otp-container'); } });
+        { owns: function (container) { return container.classList.contains('nds-otp-container'); } });
 
     NDS.Otp = {
         init: init,

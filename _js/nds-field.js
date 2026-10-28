@@ -33,19 +33,29 @@
     'use strict';
 
     const SCOPE = '.nds-form-container, .nds-form-group';
+    const DISABLED = `:is(${SCOPE})[data-state~="disabled"]`, READONLY = `:is(${SCOPE})[data-state~="readonly"]`;
+    // A country picker changes the value: readonly holds it, as disabled does.
+    const PICKER = '.nds-form-action.nds-dropmenu[data-select-name] > .nds-dropmenu-trigger';
 
     // ── Field states ───────────────────────────────────────────────────
     // Chips are built after load: their component re-applies with NDS.state.refresh after a render.
+    // Leaving disabled keeps what a scope around still holds: a group enabled again keeps a field disabled on its own.
     NDS.state.onToggle('disabled', SCOPE, (el, on) => {
-        el.querySelectorAll('input, textarea, select').forEach((input) => { input.disabled = on; });
+        el.querySelectorAll('input, textarea, select').forEach((input) => { input.disabled = on || !!input.closest(DISABLED); });
         el.querySelectorAll('.nds-form-action .nds-btn, button.nds-chip').forEach((btn) => {
-            NDS.aria.disabled(btn, on);
-            if (btn.tagName === 'BUTTON') btn.disabled = on;
+            const held = on || !!btn.closest(btn.matches(PICKER) ? `${DISABLED}, ${READONLY}` : DISABLED);
+            NDS.aria.disabled(btn, held);
+            if (btn.tagName === 'BUTTON') btn.disabled = held;
         });
     });
     // An input that stays interactive is readonly by design (Custom Select's display): leaving the state keeps it so.
     NDS.state.onToggle('readonly', SCOPE, (el, on) => {
         el.querySelectorAll('input, textarea, select').forEach((input) => { if (!isInteractive(input)) input.readOnly = on; });
+        el.querySelectorAll(PICKER).forEach((btn) => {
+            const held = on || !!btn.closest(`${DISABLED}, ${READONLY}`);
+            NDS.aria.disabled(btn, held);
+            btn.disabled = held;
+        });
     });
 
     // ── Parts ──────────────────────────────────────────────────────────
@@ -104,7 +114,9 @@
     function sync(input, formControl) {
         const container = formControl.closest('.nds-form-container');
         if (!container) return;
-        input.disabled ? NDS.state.add(container, 'disabled') : NDS.state.remove(container, 'disabled');
+        // A disable a scope around the container holds is that scope's, never the container's own. Readonly is
+        // still copied: the date and time pickers read it from the container.
+        if (!container.parentElement?.closest(DISABLED)) input.disabled ? NDS.state.add(container, 'disabled') : NDS.state.remove(container, 'disabled');
         if (isInteractive(input)) return;
         input.readOnly ? NDS.state.add(container, 'readonly') : NDS.state.remove(container, 'readonly');
         // Radios and checkboxes answer as a group; a component that owns the value keeps the container's mark.

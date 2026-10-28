@@ -26,7 +26,7 @@
  *   - .nds-national-id and .nds-iban stamp setCustomValidity on input (and at init), so the
  *     checksum fails the field through checkValidity like any native rule. A pattern on the same
  *     input is redundant.
- *   - .nds-iban shows groups of four (letters only in the country; an SA one is 22 digits after it), and a .nds-phone or .nds-formatted with a data-format its groups: input.value
+ *   - .nds-iban shows groups of four (letters only in the country; an SA one is 22 digits after it), and a .nds-phone or .nds-formatted with a data-format shows its groups: input.value
  *     holds the spaces; a submit and new FormData(form) send the value without them. Inserts go
  *     through this file there, and a maxlength shorter than the format is removed: the format sets the most.
  *   - A .nds-phone with a code drops its leading 0 (not +39/+378/+379) and a pasted
@@ -153,9 +153,9 @@
     function getPickedItem(picker) {
         var hidden = picker.querySelector('input[type="hidden"]');
         var value = hidden ? hidden.value : picker.getAttribute('data-select-value');
-        return [].find.call(picker.querySelectorAll('.nds-dropmenu-item'), function(item) {
-            return value ? item.getAttribute('data-value') === value : NDS.state.has(item, 'selected');
-        });
+        var items = picker.querySelectorAll('.nds-dropmenu-item');
+        return [].find.call(items, function(item) { return value && item.getAttribute('data-value') === value; })
+            || [].find.call(items, function(item) { return NDS.state.has(item, 'selected'); });
     }
 
     function getCountryPicker(input) {
@@ -284,13 +284,15 @@
 
     // A value that leaves a slot of its format empty, or does not fit it, fails as incomplete. Only that message
     // is cleared here: a page's own setCustomValidity stays.
+    var stampedIncomplete = new WeakSet();
     function checkFilled(input, value, format) {
         var message = strings.text('incomplete');
-        var filled = value.replace(/[^A-Za-z0-9]/g, '').length;
-        var incomplete = !!format && filled > 0
-            && (filled < format.replace(/[^0Aa*]/g, '').length || NDS.typing.group(value, 0, format).dropped.length > 0);
-        if (incomplete) input.setCustomValidity(message);
-        else if (input.validationMessage === message) input.setCustomValidity('');
+        var shape = format && NDS.typing.group(value, 0, format);
+        // A letter or digit in the value is a start, even a fixed one ("REF-" with no slot filled).
+        var incomplete = !!shape && /[A-Za-z0-9]/.test(NDS.toLatinDigits(value)) && (shape.open > 0 || shape.dropped.length > 0);
+        // Its own stamp, not validationMessage: a disabled or readonly field reports none.
+        if (incomplete) { input.setCustomValidity(message); stampedIncomplete.add(input); }
+        else if (stampedIncomplete.delete(input) && (!input.willValidate || input.validationMessage === message)) input.setCustomValidity('');
     }
 
     // .nds-phone / .nds-national-id / .nds-iban / .nds-formatted: the value in its shape, then the checksum result, so

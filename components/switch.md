@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 07:56 AM"
+last_edit: "28/10/2026 - 10:41 PM"
 ---
 
 <section id="switch-overview" class="nds-content-section nds-doc-overview">
@@ -160,7 +160,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
             <i class="hgi hgi-stroke hgi-keyboard"></i>
             <span class="nds-label">Toggle Input</span>
           </span>
-          <p class="nds-item-desc">A click on the track, or on a label inside the control, toggles the switch. Space and Enter toggle it from the keyboard. Each of these fires <code class="nds-inline-code lang-js">nds:switch:change</code>. The label in the field header toggles the input natively and fires no <code class="nds-inline-code lang-js">nds:switch:change</code>: listen for <code class="nds-inline-code lang-js">change</code> on the input for that click.</p>
+          <p class="nds-item-desc">A click on the track, on a label inside the control or on the label in the field header toggles the switch. Space and Enter toggle it from the keyboard. Every change of the input, including <code class="nds-inline-code lang-js">NDS.setValue()</code>, checks the field again and fires <code class="nds-inline-code lang-js">nds:switch:change</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

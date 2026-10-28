@@ -116,7 +116,7 @@
     // which has no plain slot: a new slot would squeeze the input), creating a
     // slot if there is none. Its own button, so no styled button is repurposed.
     // nds-btn's CSS renders the spinner from .nds-loading, which core mirrors from the token. Every other
-    // button in those slots hides while loading; a prefix is never touched.
+    // child of those slots hides while loading; a prefix is never touched.
     // On exit, restore them; the .nds-clear button's visibility is
     // re-computed from the current input value.
     var LOADING_SLOTS = '.nds-form-action:not(.nds-prefix)';

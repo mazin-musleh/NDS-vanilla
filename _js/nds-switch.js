@@ -8,8 +8,8 @@
  *   (none — the structure is markup: .nds-switch-toggle holds .nds-switch-input and .nds-switch-track)
  * Gotchas:
  *   - A type part of the form field: no init() and no loader entry.
- *   - A label outside the control (the field header's) toggles the input natively: that change fires no
- *     nds:switch:change.
+ *   - Every change of the input checks the field again and fires nds:switch:change: the track, a key, a label
+ *     (the field header's too), input.click() or NDS.setValue().
  */
 (() => {
     'use strict';
@@ -23,6 +23,12 @@
         const input = findInput(switchToggle);
         if (isDisabled(switchToggle, input) || input.readOnly) return;
         NDS.setValue(input, !input.checked);
+    }
+
+    // Every way the input changes reports here, not in toggle(): a header label toggles it natively.
+    function report(input) {
+        const switchToggle = findToggle(input);
+        if (!switchToggle) return;
         NDS.field.refresh(input, { validate: true });
         switchToggle.dispatchEvent(new CustomEvent('nds:switch:change', {
             detail: { checked: input.checked, value: input.value, input },
@@ -60,10 +66,11 @@
                 if (!isDisabled(switchToggle, input) && NDS.field.isActive(input)) setActive(switchToggle, true);
             },
             mouseup: (e) => { const switchToggle = findToggle(findTrack(e.target)); if (switchToggle) setActive(switchToggle, false); },
+            change: (e) => { if (e.target.classList && e.target.classList.contains('nds-switch-input')) report(e.target); },
             click: (e) => {
                 const switchToggle = findToggle(findTrack(e.target));
                 if (switchToggle) { e.preventDefault(); toggle(switchToggle); return; }
-                // A label in the same control: its own click would toggle the input with no event.
+                // A label in the same control goes through toggle(), which also keeps a switch with the .disabled class still.
                 const label = e.target.closest && e.target.closest('label[for]');
                 const input = label && document.getElementById(label.htmlFor);
                 const owner = input && input.classList.contains('nds-switch-input') && findToggle(input);
