@@ -104,8 +104,9 @@
         const allBoxes = getAllBoxes(list);
         if (allBoxes.length) {
             watchPages();
-            const shown = getScope(items, true).filter(canSelect).map(getBox).filter(Boolean);
-            const on = shown.filter(box => box.checked).length;
+            // Box-less items count too: selectAll() selects them.
+            const shown = getScope(items, true).filter(canSelect);
+            const on = shown.filter(isSelected).length;
             allBoxes.forEach(box => {
                 box.checked = on > 0 && on === shown.length;
                 NDS.Checkbox.setIndeterminate(box, on > 0 && on < shown.length);
@@ -114,12 +115,13 @@
 
         if (list.id) {
             const rest = getScope(items, false).some(i => canSelect(i) && !isSelected(i));
+            // Clear all needs a selected item it can clear: a checked disabled box stays.
+            const clearable = items.some(i => canSelect(i) && isSelected(i));
             document.querySelectorAll(`[data-selection-target="${list.id}"]:not(input.nds-checkbox-input)`).forEach(wrap => {
                 wrap.querySelectorAll('[data-selection-count]').forEach(el => { el.textContent = NDS.formatNumber(count); });
                 wrap.querySelectorAll('[data-selection-total]').forEach(el => { el.textContent = NDS.formatNumber(items.length); });
                 wrap.querySelectorAll('[data-selection-all]').forEach(btn => { btn.hidden = !count || !rest; });
-                // A list whose every box is disabled has nothing Clear all could clear.
-                wrap.querySelectorAll('[data-selection-clear]').forEach(btn => { btn.hidden = !count || rest || !items.some(canSelect); });
+                wrap.querySelectorAll('[data-selection-clear]').forEach(btn => { btn.hidden = rest || !clearable; });
                 if (count) NDS.state.add(wrap, 'has-selection');
                 else NDS.state.remove(wrap, 'has-selection');
                 const records = wrap.querySelector('.nds-records-view');
@@ -155,13 +157,12 @@
         list = NDS.resolveElement(list);
         if (!list) return;
         const shown = getScope(getItems(list), scope === 'page').filter(canSelect);
-        // An item with no box takes the state itself, as clear() clears it.
+        // Every item takes the state, a box-less one too, as clear() clears it.
         shown.forEach(item => {
             const box = getBox(item);
             if (box) box.checked = on;
-            else NDS.state[on ? 'add' : 'remove'](item, 'selected');
+            NDS.state[on ? 'add' : 'remove'](item, 'selected');
         });
-        mirror(shown);
         sync(list, true);
     }
 
@@ -230,7 +231,7 @@
         document.addEventListener('click', handleClick, { signal: controller.signal });
 
         // Items added or removed fire no change event — ride the shared DOM bus
-        // (every selectable item carries an input.nds-checkbox-input).
+        // (items with a box; an item marked only by data-state needs refresh()).
         const refresh = NDS.debounce(recountAll, 150);
         offs = [
             refresh.cancel,
