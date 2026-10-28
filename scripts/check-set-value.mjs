@@ -179,12 +179,12 @@ for (const v of REACT) {
     const page = await open('components/date-picker.html');
     const res = await page.evaluate(async () => {
         const input = document.querySelector('.nds-date-input');
-        const dp = await NDS.DatePicker.create(input); // a stub's promise while the bundle loads
+        const dp = await NDS.DatePicker.create(input); // a stub's promise while the bundle loads; its members are internal since 6f559f18
         window.__log.length = 0;
-        dp.selectDate(new Date(2026, 9, 15));
-        dp.updateInput();
+        dp._selectDate(new Date(2026, 9, 15));
+        dp._syncInput();
         const a = { value: input.value, log: window.__log.splice(0) };
-        dp.clearSelection();
+        dp._clearSelection();
         return { a, cleared: input.value, log: window.__log.slice() };
     });
     ok('Date Picker: a pick writes the field with input + change', res.a.value
@@ -377,8 +377,8 @@ for (const ver of VUE) {
         // A component's code may still be loading: its stub returns a promise.
         await NDS.CustomSelect.setValue(document.getElementById('v-cs'), 'makkah');
         const dp = await NDS.DatePicker.create(document.querySelector('#v-dp .nds-date-input'));
-        dp.selectDate(new Date(2026, 9, 15));
-        dp.updateInput();
+        dp._selectDate(new Date(2026, 9, 15));
+        dp._syncInput();
         await NDS.TimePicker.setValue(document.getElementById('v-tp'), '09:30');
         NDS.setValue(document.getElementById('v-text'), 'hello');
         NDS.setValue(document.getElementById('v-agree'), true);
@@ -589,8 +589,8 @@ async function driveFields(page, p) {
     await page.evaluate(async (p) => {
         await NDS.CustomSelect.setValue(document.getElementById(p + '-cs'), 'makkah');
         const dp = await NDS.DatePicker.create(document.querySelector('#' + p + '-dp .nds-date-input'));
-        dp.selectDate(new Date(2026, 9, 15));
-        dp.updateInput();
+        dp._selectDate(new Date(2026, 9, 15));
+        dp._syncInput();
         await NDS.TimePicker.setValue(document.getElementById(p + '-tp'), '09:30');
         NDS.setValue(document.getElementById(p + '-text'), 'hello');
         NDS.setValue(document.getElementById(p + '-agree'), true);
