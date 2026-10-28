@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 10:32 AM"
+last_edit: "28/10/2026 - 11:11 AM"
 ---
 
 <section id="selection-overview" class="nds-content-section nds-doc-overview">
@@ -381,7 +381,7 @@ The script starts on its own. Call `refresh(list)` or `reinit()` after a change 
 | `NDS.Selection.getSelected(list)` | Returns the selected items, in page order |
 | `NDS.Selection.isSelected(item)` | Returns `true` when the item is selected. [Export](../components/export) uses it to pick the selected rows |
 | `NDS.Selection.reinit()` | Updates every list |
-| `NDS.Selection.refresh(list)` | Updates one list's states, select-all and counters. With no list, it adds the listeners if they are missing and updates every list. `NDS.init.refresh()` calls it that way |
+| `NDS.Selection.refresh(list)` | Updates one list's states, select-all and counters, and adds the listeners if they are missing, so a list added after the page loads works. With no list, it updates every list. `NDS.init.refresh()` calls it that way |
 | `NDS.Selection.destroy()` | Removes the listeners. Use it when a single-page app tears the view down |
 {: .nds-table .nds-responsive}
 

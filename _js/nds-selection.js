@@ -143,6 +143,7 @@
     }
 
     function selectAll(list, on = true, scope) {
+        init();
         list = NDS.resolveElement(list);
         if (!list) return;
         const shown = getScope(getItems(list), scope === 'page');
@@ -158,6 +159,7 @@
 
     // Every item, filter-hidden and box-less ones too: the reset after a bulk action.
     function clear(list) {
+        init();
         list = NDS.resolveElement(list);
         if (!list) return;
         getItems(list).forEach(item => {
@@ -245,11 +247,11 @@
     }
 
     // With no list (the loader's hook), refresh updates every list: counters and select-all
-    // boxes sit outside the list, so the container the walk passes would match nothing. It
-    // calls init() first because the walk dispatches an owner's refresh INSTEAD of its init:
-    // on a page with no list at load, the listener was never wired.
+    // boxes sit outside the list, so the container the walk passes would match nothing.
+    // refresh, selectAll and clear call init() first: the loader starts Selection only when a
+    // list is on the page at load, so a list added later gets the listeners from its first call.
     NDS.Selection = {
-        init, reinit: recountAll, refresh: (list) => { if (list) return recount(list); init(); recountAll(); },
+        init, reinit: recountAll, refresh: (list) => { init(); if (list) return recount(list); recountAll(); },
         selectAll, clear, getSelected, isSelected, destroy
     };
 })();
