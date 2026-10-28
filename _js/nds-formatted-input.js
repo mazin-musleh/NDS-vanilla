@@ -36,7 +36,8 @@
  *     listens for nds:phone:change instead.
  *   - A national ID of a country with no rule keeps capitals and digits and checks nothing; SA's rule ships.
  *     An IBAN starting with a digit gets the country's letters, SA's by default.
- *   - .nds-formatted checks nothing: a pattern on its input checks the value as shown, separators included.
+ *   - A .nds-phone or a preset-less field with a data-format fails a value that leaves a slot empty ("Incomplete
+ *     value"); a pattern on its input adds a rule, checked on the value as shown, separators included.
  *   - NDS.Form.refresh() re-stamps the field: a phone sends nds:phone:change when its number changed
  *     (a full number may pick its country).
  */
@@ -48,6 +49,7 @@
     var strings = NDS.i18n.getStrings('formatted-input', {
         invalid_national_id: 'Invalid national ID number',
         invalid_iban:        'Invalid IBAN',
+        incomplete:          'Incomplete value',
     });
 
     // Saudi national ID / iqama: 10 digits, first 1 or 2, Luhn check digit.
@@ -280,6 +282,17 @@
         return { text: kept.text + tail, caret: kept.caret + (caret === text.length ? tail.length : 0), code: code, groupFormat: format };
     }
 
+    // A value that leaves a slot of its format empty, or does not fit it, fails as incomplete. Only that message
+    // is cleared here: a page's own setCustomValidity stays.
+    function checkFilled(input, value, format) {
+        var message = strings.text('incomplete');
+        var filled = value.replace(/[^A-Za-z0-9]/g, '').length;
+        var incomplete = !!format && filled > 0
+            && (filled < format.replace(/[^0Aa*]/g, '').length || NDS.typing.group(value, 0, format).dropped.length > 0);
+        if (incomplete) input.setCustomValidity(message);
+        else if (input.validationMessage === message) input.setCustomValidity('');
+    }
+
     // .nds-phone / .nds-national-id / .nds-iban / .nds-formatted: the value in its shape, then the checksum result, so
     // checkValidity() (blur and submit) fails the field with a localized message. Empty = valid. opts:
     // text and caret, an edit to write in place of the value; inserted, the text that edit typed or pasted
@@ -320,8 +333,8 @@
             else NDS.setValue(input, shown.value, { change: false });
         }
         if (focused) try { input.setSelectionRange(shown.caret, shown.caret); } catch (_) {}
-        if (phone) { reportPhone(input); return; }
-        if (generic) return;
+        if (phone) reportPhone(input);
+        if (phone || generic) { checkFilled(input, shown.value, format); return; }
         var clean = shown.value.replace(/\s/g, '');
         var ok = iban ? isIban(clean) : !rule || !!rule.check(clean);
         input.setCustomValidity(clean && !ok ? strings.text(iban ? 'invalid_iban' : 'invalid_national_id') : '');

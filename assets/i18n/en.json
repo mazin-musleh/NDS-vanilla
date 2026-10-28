@@ -320,7 +320,8 @@
  },
  "formatted-input": {
   "invalid_national_id": "Invalid national ID number",
-  "invalid_iban": "Invalid IBAN"
+  "invalid_iban": "Invalid IBAN",
+  "incomplete": "Incomplete value"
  },
  "ipv": {
   "viewerLabel": "Image viewer",
@@ -495,7 +496,7 @@
   "invalid": "Invalid input",
   "invalid_email": "Please enter a valid email address",
   "invalid_url": "Please enter a valid URL",
-  "pattern": "Please match the requested format",
+  "pattern": "Please use the correct format",
   "too_short": "Input is too short (minimum {n} characters)",
   "too_long": "Input is too long (maximum {n} characters)",
   "range_under": "Value must be at least {n}",

@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 08:57 PM"
+last_edit: "28/10/2026 - 10:08 PM"
 lang: en
 direction: ltr
 ---
@@ -528,7 +528,7 @@ The checks are the browser's own: write these standard attributes on the input. 
 | `type="url"` | Please enter a valid URL |
 | `minlength` | Input is too short (minimum N characters) |
 | `maxlength` | Input is too long (maximum N characters). The browser stops the user at the limit, so this message rarely shows |
-| `pattern` | Please match the requested format. The value must match the whole expression: `pattern="[0-9]{10}"` takes exactly ten digits. The message does not name the format, so add `data-error-message` |
+| `pattern` | Please use the correct format. The value must match the whole expression: `pattern="[0-9]{10}"` takes exactly ten digits. The message does not name the format, so add `data-error-message` |
 | `min`, `max` | Value must be at least N, or Value must be no more than N |
 | any other failure | Invalid input. A component that checks its own field, such as Date Picker or [Formatted Input](../components/formatted-input), shows its own message |
 {: .nds-table .nds-responsive}

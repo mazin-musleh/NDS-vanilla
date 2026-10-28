@@ -38,7 +38,7 @@
         invalid:        'Invalid input',
         invalid_email:  'Please enter a valid email address',
         invalid_url:    'Please enter a valid URL',
-        pattern:        'Please match the requested format',
+        pattern:        'Please use the correct format',
         too_short:      'Input is too short (minimum {n} characters)',
         too_long:       'Input is too long (maximum {n} characters)',
         range_under:    'Value must be at least {n}',
@@ -74,10 +74,11 @@
         else if (validity.tooLong) return strings.text('too_long', { n: input.maxLength });
         else if (validity.rangeUnderflow) return strings.text('range_under', { n: input.min });
         else if (validity.rangeOverflow) return strings.text('range_over', { n: input.max });
+        // A setCustomValidity stamp, already localized by the component that wrote it: more precise than a
+        // pattern's ("Incomplete value" before "Please use the correct format").
+        else if (validity.customError) return input.validationMessage;
         // The one vague default: data-error-message says what the pattern asks for.
         else if (validity.patternMismatch) return input.getAttribute('data-error-message') || strings.text('pattern');
-        // A setCustomValidity stamp, already localized by the component that wrote it.
-        else if (validity.customError) return input.validationMessage;
         return strings.text('invalid');
     }
 

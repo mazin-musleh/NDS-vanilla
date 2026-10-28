@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 09:08 PM"
+last_edit: "28/10/2026 - 10:08 PM"
 ---
 
 <section id="formatted-input-overview" class="nds-content-section nds-doc-overview">
@@ -143,7 +143,7 @@ Pick another component when:
     </label>
   </div>
   <div class="nds-form-control">
-    <input type="text" id="application-number" name="application-number" class="nds-input" placeholder="AB-123456" pattern="[A-Z]{2}-[0-9]{6}" data-error-message="Enter two letters and six digits" autocomplete="off" spellcheck="false">
+    <input type="text" id="application-number" name="application-number" class="nds-input" placeholder="AB-123456" autocomplete="off" spellcheck="false">
     <div class="nds-form-action">
       <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -171,10 +171,11 @@ Each Structure is one kind of value. Every one carries `.nds-formatted`, and all
 | Structure | Phone with country (id: phone-country) | canon `#field-phone-country` | — | A phone number after a country-code picker. The picker is a [Dropmenu](../components/dropmenu) with `data-select-name`. Each country item's `data-value` is its code, and it may carry its own `data-format` |
 | Structure | National ID (id: national-id) (demo: + required) | canon `#field-national-id` | — | A national ID: by default a Saudi ID or iqama number, with digits only, 10 at most, and a check digit. Another country follows its own rule: see Site Country |
 | Structure | IBAN (id: iban) (demo: + required) | canon `#field-iban` | — | A bank account IBAN. The field shows it in groups of four, writes capitals, adds missing country letters (`SA` by default), and checks the country, the length and the check digits |
-| Structure | Custom format (id: formatted) (demo: + required) | canon `#field-formatted` | — | A value in a shape you write in `data-format`: `0` takes a digit, `A` a capital letter, `a` a small letter, `*` a letter or a digit as typed. It checks nothing itself: the `pattern` here fails a value that does not fill every slot |
+| Structure | Custom format (id: formatted) (demo: + required) (demo: + pattern) | canon `#field-formatted` | — | A value in a shape you write in `data-format`: `0` takes a digit, `A` a capital letter, `a` a small letter, `*` a letter or a digit as typed. A value that leaves a slot empty fails. Add a `pattern` only for a rule the shape cannot hold |
 | Affix style | Subtle (default) | `.nds-subtle` | `.nds-prefix > .nds-btn` | The code or the country picker on the field's own background |
 | Affix style | Solid (hint: Light fill behind the code) | `.nds-secondary` | `.nds-prefix > .nds-btn` | The code or the country picker on a light fill, set apart from the number. Phone only |
 | Required | Required (id: required) | `[data-required]` | `.nds-form-container` | A red asterisk before the label. An empty field blocks the submit |
+| Pattern | Pattern (id: pattern) (hint: The value must start with AB) | `[pattern="AB-[0-9]{6}"]` | `#application-number` | A rule the shape cannot hold, here the letters `AB`. A value that breaks it fails with "Please use the correct format". Write the pattern with the separators the field shows. Custom format only |
 | Field states | Size, style, label, info, hint, disabled, readonly, loading | — | — | Shared by every text field. See [Text Fields](../components/form) |
 | Site country | Site country | — | — | `data-country="AE"` on `<html>` or any element around the field. Without it, the country is `SA`. Not a builder option: see Site Country |
 {: #formatted-input-variants-table .nds-table .nds-responsive}
@@ -210,7 +211,7 @@ Phone with country puts a [Dropmenu](../components/dropmenu) with `data-select-n
 ### Number Groups
 {: .nds-block-title #number-groups}
 
-`data-format` on the field's `.nds-form-container` shows the number in groups. Each `0` is one digit, and any other character goes between them: `00 000 0000` shows `55 123 4567`. The field then takes no more digits than the format holds, and removes a `maxlength` shorter than the format. With a country picker, the field reads `data-format` from the picked country item instead. A country without one shows the number as typed.
+`data-format` on the field's `.nds-form-container` shows the number in groups. Each `0` is one digit, and any other character goes between them: `00 000 0000` shows `55 123 4567`. The field then takes no more digits than the format holds, and removes a `maxlength` shorter than the format. A number that leaves a slot empty fails with "Incomplete value". With a country picker, the field reads `data-format` from the picked country item instead. A country without one shows the number as typed.
 
 ### National ID
 {: .nds-block-title #national-id}
@@ -249,7 +250,7 @@ idType.addEventListener('change', function () {
 
 `.nds-formatted` with no preset takes any value with a fixed shape. Write the shape in `data-format` on its `.nds-form-container`. `0` takes a digit, `A` a letter written as a capital, `a` a letter written small, and `*` a letter or a digit as typed. The field writes every other character for the user: `AA-000000` shows `AB-123456` when the user types `ab123456`, and `AB-` when the user types the dash too. A key that does not fit the next slot is dropped, and the field stops at the last slot.
 
-The field checks nothing itself. A `pattern` on its input checks the value as the field shows it, separators included: `[34]-[0-9]{6}` takes only a first digit of 3 or 4 in a `0-000000` shape.
+A value that leaves a slot empty fails with "Incomplete value", at blur and at submit. An empty field passes unless it is required. For a rule the shape cannot hold, add a `pattern` to the input. It checks the value as the field shows it, separators included: `[34]-[0-9]{6}` takes only a first digit of 3 or 4 in a `0-000000` shape.
 
 A delete can move letters onto digit slots, as when the user deletes `AB` from `AB-123456`. The field then keeps every character until the value fits its shape again. It never drops a character the user did not just type. An IBAN works the same way.
 
@@ -304,7 +305,7 @@ A delete can move letters onto digit slots, as when the user deletes `AB` from `
             <i class="hgi hgi-stroke hgi-security-check"></i>
             <span class="nds-label">Checksum Validation</span>
           </span>
-          <p class="nds-item-desc">An IBAN, or a national ID whose country has a rule, fails the field through the browser's own check when its check digits are wrong. The message shows at blur and at submit, in Arabic or English to match the page. An empty field passes unless it is required.</p>
+          <p class="nds-item-desc">An IBAN, or a national ID whose country has a rule, fails the field through the browser's own check when its check digits are wrong. A field with a <code class="nds-inline-code lang-html">data-format</code> fails when a slot is left empty. The message shows at blur and at submit, in Arabic or English to match the page. An empty field passes unless it is required.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -343,7 +344,7 @@ A delete can move letters onto digit slots, as when the user deletes `AB` from `
 - Give a Saudi national ID `maxlength="10"`. The browser then stops at 10 before the script loads.
 - On a site outside Saudi Arabia, set `data-country` on `<html>`, and add your country's ID rule with `addIdRule()`.
 - For a passport or a foreign ID, set `data-country="any"` on the field, and leave `inputmode` and `maxlength` off.
-- For a value with a known shape that no preset covers, such as a reference number, use `.nds-formatted` with a `data-format`. Add a `pattern` and a `data-error-message` for its rules, and write the pattern with the separators the field shows.
+- For a value with a known shape that no preset covers, such as a reference number, use `.nds-formatted` with a `data-format`. The shape already fails a value that is too short. Add a `pattern` and a `data-error-message` only for a rule the shape cannot hold, and write the pattern with the separators the field shows.
 - To fill a field from a script, set `input.value`, then call `NDS.Form.refresh(input)`. The field then takes its shape.
 
 </div>
@@ -362,7 +363,7 @@ A delete can move letters onto digit slots, as when the user deletes `AB` from `
 
 | Class | Element | Effect |
 |---|---|---|
-| `nds-formatted` | `.nds-form-container` | Makes the field a formatted input. With no preset, it keeps the value in the shape of its `data-format`, submits its letters and digits only, and checks nothing. Without `data-format` either, it keeps the value as typed |
+| `nds-formatted` | `.nds-form-container` | Makes the field a formatted input. With no preset, it keeps the value in the shape of its `data-format`, submits its letters and digits only, and fails a value that leaves a slot empty. Without `data-format` either, it keeps the value as typed |
 | `nds-phone` | a `.nds-formatted` container, its input `type="tel"` | Preset. Keeps the digits. With a code, submits the whole number (`+966551234567`); without one, the number as typed. With `data-format`, shows the number in groups |
 | `nds-national-id` | a `.nds-formatted` container | Preset. Follows the ID rule of its country, Saudi Arabia by default: keeps digits only, and fails the field when the value is not a Saudi national ID or iqama number |
 | `nds-iban` | a `.nds-formatted` container | Preset. Shows the IBAN in groups of four, writes capitals, adds missing country letters, and fails the field when the value is not an IBAN |
@@ -393,6 +394,7 @@ The script shows the message in Arabic or English to match the page. The other c
 |---|---|
 | `.nds-national-id` | Invalid national ID number |
 | `.nds-iban` | Invalid IBAN |
+| A `data-format` slot left empty, on a phone or a field with no preset | Incomplete value |
 {: .nds-table .nds-responsive}
 
 ### JavaScript
