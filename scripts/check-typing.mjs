@@ -275,6 +275,7 @@ const PATTERNS = {
             // A saved value, as a server writes it back: shaped at load in the field's letters.
             // No lang: the first letter typed picks the script.
             plateAuto: formField('plate', '<input type="text" class="nds-input">'),
+            vat: formField('vat', '<input type="text" class="nds-input" inputmode="numeric">'),
             card: formField('formatted', '<input type="text" class="nds-input" inputmode="numeric">', ' data-format="card"'),
             cardLate: formField('formatted', '<input type="text" class="nds-input" value="4111111111111111">', ' data-format="late-card"'),
             plateSubmitAr: formField('plate', '<input type="text" class="nds-input" lang="en">', ' data-submit="arabic"'),
@@ -288,7 +289,8 @@ const PATTERNS = {
             message: 'Check the card number',
         }),
         ready: () => NDS.FormattedInput.addFormat('late-card', { format: '0000 0000 0000 0000' }),
-        validity: [['card', '4111111111111111', ''], ['card', '4111111111111112', 'Check the card number'], ['card', '4111', 'Incomplete value']],
+        validity: [['card', '4111111111111111', ''], ['card', '4111111111111112', 'Check the card number'], ['card', '4111', 'Incomplete value'],
+            ['vat', '300000000000003', ''], ['vat', '300000000000004', 'Invalid VAT number'], ['vat', '200000000000003', 'Invalid VAT number'], ['vat', '3000', 'Incomplete value']],
         initial: { cardLate: '4111 1111 1111 1111', plateServedAr: 'أ ب ح ١٢٣٤', plateServedEn: 'ABJ 1234' },
         cases: [
             ['iban', '', 'sa0380000000608010167519', 'SA03 8000 0000 6080 1016 7519|'],
@@ -349,6 +351,8 @@ const PATTERNS = {
             ['plateAuto', '', 'ab1', 'AB 1|'],
             ['plateAuto', '', '1أ', 'أ| ١'],
             ['plateAuto', '', 'aب', 'AB|'],
+            ['vat', '', '300000000000003', '300000000000003|'],
+            ['vat', '', '3000000000000039', '300000000000003|'],
             ['card', '', '4111111111111111', '4111 1111 1111 1111|'],
             ['card', '', '{Paste:4111-1111-1111-1111}', '4111 1111 1111 1111'],
             // A separator the user types after the last character stays; a backspace takes it alone.

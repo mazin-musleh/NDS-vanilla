@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "29/10/2026 - 12:40 AM"
+last_edit: "29/10/2026 - 12:53 AM"
 ---
 
 <section id="formatted-input-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "29/10/2026 - 12:40 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A formatted input is a text field that keeps its value in one shape as the user types or pastes. `.nds-formatted` goes on the `.nds-form-container` of a [text field](../components/form): the label, the messages and submit validation work as on every field. `data-format` on the same element sets the shape. A built-in kind: `phone` for a phone number, `national-id` for a national ID (a Saudi ID or iqama number, unless the page sets another country), `iban` for a bank account IBAN, and `plate` for a Saudi vehicle plate. Or a shape you write, for a value such as a reference number (`AA-000000`), or the name of one a script added (`card`).
+A formatted input is a text field that keeps its value in one shape as the user types or pastes. `.nds-formatted` goes on the `.nds-form-container` of a [text field](../components/form): the label, the messages and submit validation work as on every field. `data-format` on the same element sets the shape. A built-in kind: `phone` for a phone number, `national-id` for a national ID (a Saudi ID or iqama number, unless the page sets another country), `iban` for a bank account IBAN, `plate` for a Saudi vehicle plate, and `vat` for a Saudi VAT number. Or a shape you write, for a value such as a reference number (`AA-000000`), or the name of one a script added (`card`).
 
 Pick another component when:
 
@@ -135,6 +135,23 @@ Pick another component when:
   </div>
 </div>
 </script>
+<script type="text/html" id="field-vat" data-canon>
+<div class="nds-form-container nds-formatted" data-format="vat">
+  <div class="nds-form-header">
+    <label for="vat-number">
+      <span class="nds-label">VAT number</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <input type="text" id="vat-number" name="vat-number" class="nds-input" placeholder="3XXXXXXXXXXXXX3" inputmode="numeric" autocomplete="off">
+    <div class="nds-form-action">
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+</script>
 <script type="text/html" id="field-formatted" data-canon>
 <div class="nds-form-container nds-formatted" data-format="AA-000000">
   <div class="nds-form-header">
@@ -180,7 +197,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Each Structure is one kind of value. Every one carries `.nds-formatted` and a `data-format`: a built-in kind, or a shape you write. The size, style, states and messages of a text field work on all six: see [Text Fields](../components/form).
+Each Structure is one kind of value. Every one carries `.nds-formatted` and a `data-format`: a built-in kind, or a shape you write. The size, style, states and messages of a text field work on all seven: see [Text Fields](../components/form).
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -188,6 +205,7 @@ Each Structure is one kind of value. Every one carries `.nds-formatted` and a `d
 | Structure | Phone with country (id: phone-country) | canon `#field-phone-country` | — | A phone number after a country-code picker. The picker is a [Dropmenu](../components/dropmenu) with `data-select-name`. Each country item's `data-value` is its code, and it may carry its own `data-groups` |
 | Structure | National ID (id: national-id) (demo: + required) | canon `#field-national-id` | — | A national ID: by default a Saudi ID or iqama number, with digits only, 10 at most, and a check digit. Another country follows its own rule: see Site Country |
 | Structure | IBAN (id: iban) (demo: + required) | canon `#field-iban` | — | A bank account IBAN. The field shows it in groups of four, writes capitals, adds missing country letters (`SA` by default), and checks the country, the length and the check digits |
+| Structure | VAT number (id: vat) (demo: + required) | canon `#field-vat` | — | A Saudi VAT number: 15 digits, the first and the last `3` |
 | Structure | Custom format (id: formatted) (demo: + required) (demo: + pattern) | canon `#field-formatted` | — | A value in a shape you write in `data-format`: `0` takes a digit, `A` a capital letter, `a` a small letter, `*` a letter or a digit as typed, `ح` an Arabic letter. A value that leaves a slot empty fails. Add a `pattern` only for a rule the shape cannot hold |
 | Structure | Saudi plate (id: plate) (demo: + required) | canon `#field-plate` | — | A Saudi vehicle plate: letters, then digits. The field takes the 17 plate letters in Arabic or Latin, shows them in the field's language, and submits the Latin letters, then the digits (`ABJ1234`) |
 | Affix style | Subtle (default) | `.nds-subtle` | `.nds-prefix > .nds-btn` | The code or the country picker on the field's own background |
@@ -246,6 +264,11 @@ Phone with country puts a [Dropmenu](../components/dropmenu) with `data-select-n
 {: .nds-block-title #iban}
 
 `iban` shows the IBAN in groups of four and writes the letters as capitals. It takes two letters for the country, two check digits, then letters or digits. It holds 34 characters at most, the longest IBAN, and removes a shorter `maxlength`. An IBAN that starts with `SA` takes digits only after it, 24 characters in all. A value that starts with a digit, as some banking apps copy a Saudi IBAN, gets the letters of the site country in front, `SA` by default. The field fails when the value is not an IBAN: two letters for the country, two check digits, then 11 to 30 letters or digits, with correct check digits. The check takes an IBAN of any country, whatever the site country is.
+
+### VAT Number
+{: .nds-block-title #vat-number}
+
+`vat` takes a Saudi VAT number: 15 digits, the first and the last `3` (`300000000000003`). A number with fewer digits fails with "Incomplete value", and one that does not start and end with `3` fails with "Invalid VAT number". ZATCA does not publish the rule of its check digit, so the field cannot check it. Only ZATCA's lookup says a number is registered.
 
 ### Saudi Plate
 {: .nds-block-title #saudi-plate}
@@ -394,13 +417,13 @@ NDS.FormattedInput.addFormat('card', {
     <div class="nds-section-body nds-prose" markdown="1">
 
 - Write `.nds-formatted` and a `data-format` on every field. A built-in kind without `.nds-formatted` is a plain text box: `NDS.init.audit()` reports it.
-- Use `type="tel"` and `inputmode="numeric"` on a phone. Use `inputmode="numeric"` on a national ID or a custom format of digits only. Leave `inputmode` off a field that takes letters, such as an IBAN or a plate: a phone keyboard would show digits only.
+- Use `type="tel"` and `inputmode="numeric"` on a phone. Use `inputmode="numeric"` on a national ID, a VAT number or a custom format of digits only. Leave `inputmode` off a field that takes letters, such as an IBAN or a plate: a phone keyboard would show digits only.
 - Set `autocomplete="tel-national"` on a phone with a code, and `autocomplete="off"` on every other formatted field.
 - Give every phone field that shows a code its hidden code input, or a picker whose items' `data-value` is the code. Without a code, the submit sends the local number only.
 - Read the phone number from the form's data, or keep the `value` of `nds:phone:change`. `input.value` holds the local number with its spaces.
 - Write a phone's `data-groups` only for a country whose number length you know. Phone numbers differ in length between countries, and even inside one.
 - Keep `00 000 0000` for a Saudi mobile only. A field that takes any Saudi number, a landline or an `800` number too, has no `data-groups`: the groups hold 9 digits and drops the last digit of `800 123 4567`.
-- Add no `pattern` to a national ID, an IBAN or a plate field. The field checks itself.
+- Add no `pattern` to a national ID, an IBAN, a plate or a VAT field. The field checks itself.
 - Give a Saudi national ID `maxlength="10"`. The browser then stops at 10 before the script loads.
 - On a site outside Saudi Arabia, set `data-country` on `<html>`, and add your country's ID rule with `addIdRule()`.
 - For a passport or a foreign ID, set `data-country="any"` on the field, and leave `inputmode` and `maxlength` off.
@@ -432,7 +455,7 @@ NDS.FormattedInput.addFormat('card', {
 | Attribute | Element | Effect |
 |---|---|---|
 | `input type="hidden"` | in the `.nds-prefix` of a phone field | Its `value` is the code the submit puts before the number (`+966`). The field also drops it from a pasted full number. Give it a `name` to also send the code as its own field |
-| `data-format` | the `.nds-form-container` of a `.nds-formatted` field | The shape. A built-in kind: `phone` (keeps the digits; with a code, submits the whole number, `+966551234567`), `national-id` (follows the ID rule of its country, Saudi Arabia by default, and fails a wrong number), `iban` (groups of four, capitals, missing country letters added, fails a wrong IBAN), or `plate` (a Saudi plate's letters and digits, submitted as `ABJ1234`). Or the name of a format `addFormat()` added (`card`), or the shape of the value: `0` takes a digit, `A` a capital letter, `a` a small letter, `*` a letter or a digit as typed, `ح` an Arabic letter, and any other character goes between them (`AA-000000`, `ححح 0000`) |
+| `data-format` | the `.nds-form-container` of a `.nds-formatted` field | The shape. A built-in kind: `phone` (keeps the digits; with a code, submits the whole number, `+966551234567`), `national-id` (follows the ID rule of its country, Saudi Arabia by default, and fails a wrong number), `iban` (groups of four, capitals, missing country letters added, fails a wrong IBAN), `plate` (a Saudi plate's letters and digits, submitted as `ABJ1234`), or `vat` (a Saudi VAT number: 15 digits, the first and the last `3`). Or the name of a format `addFormat()` added (`card`), or the shape of the value: `0` takes a digit, `A` a capital letter, `a` a small letter, `*` a letter or a digit as typed, `ح` an Arabic letter, and any other character goes between them (`AA-000000`, `ححح 0000`) |
 | `data-select-name` | the `.nds-dropmenu` in a phone field's `.nds-form-control` | Makes the menu the field's country picker. The picked code submits in a hidden input of this name. See [Dropmenu](../components/dropmenu) |
 | `data-select-value` | the same `.nds-dropmenu` | The `data-value` of the country picked at page load. It wins over an item with `data-state="selected"` |
 | `data-value` | a `.nds-dropmenu-item` in the country picker | The code for that country (`+971`). Dropmenu writes the picked one to the picker's hidden input |
@@ -455,6 +478,7 @@ The script shows the message in Arabic or English to match the page. The other c
 |---|---|
 | `national-id` | Invalid national ID number |
 | `iban` | Invalid IBAN |
+| `vat` | Invalid VAT number |
 | A slot left empty, in a shape or a phone's `data-groups` | Incomplete value |
 | A named format whose `check` fails | Its `message`, or Invalid value |
 | `plate` with no letter or no digit | Incomplete value |

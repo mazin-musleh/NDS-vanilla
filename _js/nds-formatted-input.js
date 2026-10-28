@@ -16,7 +16,7 @@
  *   nds:phone:change            detail {value, countryCode, nationalNumber} — from a phone field's input,
  *                               when the number it submits changes (typing, a paste, a country pick, a reset)
  * Hooks:
- *   data-format on a .nds-formatted field's container: phone, national-id, iban, plate, a name addFormat()
+ *   data-format on a .nds-formatted field's container: phone, national-id, iban, plate, vat, a name addFormat()
  *   added ("card"), or its slots (0 a digit, A a capital, a a small letter,
  *   * a letter or a digit as typed, ح an Arabic letter: "AA-0000", "ححح 0000"), or the name of one addFormat()
  *   added ("card": small letters, digits and dashes, with a letter other than a)
@@ -54,6 +54,8 @@
  *     shows them in its script (see lang); letters always come before digits. It submits the Latin letters, then the
  *     digits ("ABJ1234"), and fails a value with no letter or no digit ("Incomplete value"). Without a
  *     placeholder, it writes one that follows its letters and vehicle ("ABJ 1234", "أ ب ١٢٣").
+ *   - vat takes a Saudi VAT number: 15 digits, the first and the last 3 ("Invalid VAT number"). Its check
+ *     digit's rule is not published, so the field cannot check it.
  *   - A data-format name not added yet keeps the value as typed, unchecked; addFormat() then shapes the fields
  *     that name it. A full value that fails check() shows the format's message; an empty slot shows "Incomplete value" first.
  *   - NDS.Form.refresh() re-stamps the field: a phone sends nds:phone:change when its number changed
@@ -67,6 +69,7 @@
     var strings = NDS.i18n.getStrings('formatted-input', {
         invalid_national_id: 'Invalid national ID number',
         invalid_iban:        'Invalid IBAN',
+        invalid_vat:         'Invalid VAT number',
         incomplete:          'Incomplete value',
         invalid:             'Invalid value',
     });
@@ -105,8 +108,16 @@
     var formats = new Map();
     function isFormatName(text) { return /^[a-z][a-z\d]*(-[a-z\d]+)*$/.test(text) && /[b-z]/.test(text); }
 
+    // Built in: a Saudi VAT number, 15 digits, the first and the last 3. Its check digit's rule is not published.
+    formats.set('vat', {
+        format: '000000000000000',
+        check: function(value) { return /^3\d{13}3$/.test(value); },
+        get message() { return strings.text('invalid_vat'); },
+    });
+    var builtInFormats = Array.from(formats.keys());
+
     function addFormat(name, rule) {
-        if (presets.indexOf(name) >= 0) {
+        if (presets.indexOf(name) >= 0 || builtInFormats.indexOf(name) >= 0) {
             console.warn('NDS FormattedInput: "' + name + '" is built in; addFormat takes another name');
             return;
         }

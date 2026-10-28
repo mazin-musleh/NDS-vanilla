@@ -321,6 +321,7 @@
  "formatted-input": {
   "invalid_national_id": "Invalid national ID number",
   "invalid_iban": "Invalid IBAN",
+  "invalid_vat": "Invalid VAT number",
   "incomplete": "Incomplete value",
   "invalid": "Invalid value"
  },

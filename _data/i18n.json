@@ -1513,6 +1513,12 @@
  },
  {
   "section": "formatted-input",
+  "key": "invalid_vat",
+  "en": "Invalid VAT number",
+  "ar": "الرقم الضريبي غير صحيح"
+ },
+ {
+  "section": "formatted-input",
   "key": "incomplete",
   "en": "Incomplete value",
   "ar": "القيمة غير مكتملة"
