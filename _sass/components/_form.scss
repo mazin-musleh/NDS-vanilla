@@ -785,7 +785,7 @@ fieldset {
 
 // Addresses and numbers read left to right in every language: "50 123 4567" showed as "4567 123 50" on
 // an Arabic page. Aligned to the page's side, as the other fields are.
-.nds-input:is([type="email"], [type="tel"], [type="url"]), :is(.nds-phone, .nds-iban) .nds-input {
+.nds-input:is([type="email"], [type="tel"], [type="url"]), .nds-formatted .nds-input {
     direction: ltr;
     text-align: right;
 

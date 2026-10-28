@@ -248,6 +248,15 @@
             'Move each knob to a class in your own stylesheet (Inline Knobs).', undefined, dead.length);
     } });
 
+    // A preset without .nds-formatted is a plain text box: nothing shapes or checks it. With two, the first wins.
+    addRule({ id: 'formatted-preset', group: 'structure', docs: 'components/formatted-input.html', check(context) {
+        context.find('.nds-form-container:is(.nds-phone, .nds-iban, .nds-national-id)').forEach(el => {
+            const presets = ['nds-phone', 'nds-iban', 'nds-national-id'].filter(name => el.classList.contains(name));
+            if (!el.classList.contains('nds-formatted')) context.report(el, `.${presets[0]} without .nds-formatted: nothing shapes or checks the field.`, `Add nds-formatted: class="nds-form-container nds-formatted ${presets[0]}".`, 'error');
+            else if (presets.length > 1) context.report(el, `${presets.map(name => '.' + name).join(' and ')} on one field: only .${presets[0]} works.`, 'Keep one preset.');
+        });
+    } });
+
     // A toolbar part lifted out of .nds-toolbar still lays out as a bar, so nothing else shows the
     // lost wrapper: stacked rows touch, and the bar loses its gap to the content below.
     // Every nds-toolbar-* class is a toolbar part. One finding per lost bar: a part inside a reported one is skipped.

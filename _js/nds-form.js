@@ -53,7 +53,7 @@
  *     through its hidden carrier; the error shows on the field that holds it.
  *   - An autocomplete with data-strict is checked at submit too: typed text must match a
  *     picked suggestion (mechanism and carve-outs in the autocomplete banner).
- *   - A .nds-phone, .nds-national-id or .nds-iban container is nds-formatted-input.js's field.
+ *   - A .nds-formatted container is nds-formatted-input.js's field.
  *   - data-error-message on a field is the pattern's message only; on a group, the message
  *     when nothing is picked. Every other failure keeps its own message.
  *   - A blank setCustomValidity(' ') blocks the submit and outlines the field with no message:
@@ -485,7 +485,7 @@
         on: {
             beforeinput: function(e, context) {
                 // A formatted field's part (nds-formatted-input.js) takes every insert on it.
-                if (!context || (!e.isComposing && context.container && context.container.matches('.nds-phone, .nds-national-id, .nds-iban'))) return;
+                if (!context || (!e.isComposing && context.container && context.container.matches('.nds-formatted'))) return;
                 if (context.input.readOnly || context.input.getAttribute('inputmode') !== 'numeric' || !e.data) return;
                 var latin = NDS.toLatinDigits(e.data);
                 if (latin === e.data && !/\D/.test(latin)) return;

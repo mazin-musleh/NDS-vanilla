@@ -1,5 +1,6 @@
-/* NDS.FormattedInput — public surface (the .nds-phone, .nds-national-id and .nds-iban fields: each class on
- * the .nds-form-container; the field's input is the one its .nds-form-control holds)
+/* NDS.FormattedInput — public surface (a .nds-formatted field: the class on the .nds-form-container, with one
+ * preset beside it, .nds-phone, .nds-national-id or .nds-iban, or a data-format of its own; the field's input
+ * is the one its .nds-form-control holds)
  * Rides: nds-field (its part) · nds-typing (group) · nds-dropmenu (a phone's country picker)
  * Methods:
  *   NDS.FormattedInput.isNationalId(str, country) / .isIban(str)   the checks behind .nds-national-id / .nds-iban;
@@ -13,6 +14,8 @@
  * Hooks:
  *   data-format on a .nds-phone field's container, or on each item of its country picker: the
  *   groups it shows (0 a digit: "00 000 0000"); an item without one shows the number as typed
+ *   data-format on a .nds-formatted field's container: its slots (0 a digit, A a capital, a a small letter,
+ *   * a letter or a digit as typed: "AA-0000")
  *   a hidden input in a .nds-phone field's .nds-prefix: its value is the code the phone submits before its
  *   number ("+966"); a country picker's is the one Dropmenu writes, from the picked item's data-value
  *   data-country on any element, <html> for the site ("AE"): the country a national ID and an IBAN
@@ -23,7 +26,7 @@
  *   - .nds-national-id and .nds-iban stamp setCustomValidity on input (and at init), so the
  *     checksum fails the field through checkValidity like any native rule. A pattern on the same
  *     input is redundant.
- *   - .nds-iban shows groups of four (letters only in the country; an SA one is 22 digits after it), and a .nds-phone with a data-format its groups: input.value
+ *   - .nds-iban shows groups of four (letters only in the country; an SA one is 22 digits after it), and a .nds-phone or .nds-formatted with a data-format its groups: input.value
  *     holds the spaces; a submit and new FormData(form) send the value without them. Inserts go
  *     through this file there, and a maxlength shorter than the format is removed: the format sets the most.
  *   - A .nds-phone with a code drops its leading 0 (not +39/+378/+379) and a pasted
@@ -33,6 +36,7 @@
  *     listens for nds:phone:change instead.
  *   - A national ID of a country with no rule keeps capitals and digits and checks nothing; SA's rule ships.
  *     An IBAN starting with a digit gets the country's letters, SA's by default.
+ *   - .nds-formatted checks nothing: a pattern on its input checks the value as shown, separators included.
  *   - NDS.Form.refresh() re-stamps the field: a phone sends nds:phone:change when its number changed
  *     (a full number may pick its country).
  */
@@ -103,13 +107,15 @@
         return remainder === 1;
     }
 
-    // The field an input is the text box of: 'phone', 'iban' or 'national-id', from its container's class. Null: none.
-    var kinds = ['phone', 'iban', 'national-id'];
+    // The field an input is the text box of: its .nds-formatted container's preset ('phone', 'iban',
+    // 'national-id'), else 'formatted'. Null: none.
+    var presets = ['phone', 'iban', 'national-id'];
     function getKind(input) {
         var control = input.parentElement;
         if (input.type === 'hidden' || !control || !control.classList.contains('nds-form-control')) return null;
-        var container = control.closest('.nds-form-container');
-        return (container && kinds.find(function(kind) { return container.classList.contains('nds-' + kind); })) || null;
+        var container = control.closest('.nds-formatted');
+        if (!container) return null;
+        return presets.find(function(preset) { return container.classList.contains('nds-' + preset); }) || 'formatted';
     }
 
     // Groups of four: two letters, two check digits, then up to the longest IBAN (34). A Saudi one is 22 digits after SA.
@@ -119,11 +125,22 @@
         return IBAN_FORMATS[text.replace(/[^A-Za-z0-9]/g, '').slice(0, 2).toUpperCase()] || IBAN_FORMAT;
     }
 
-    // The slot format a field shows (NDS.typing.group): an IBAN's groups of four, or a phone's data-format,
-    // read from the picked country when the field has a country picker. Null: the value as typed.
+    // text in its slots, dropping only what was just inserted (it ends at the caret): when the letter and digit
+    // slots would drop characters already there (a deleted country moves letters onto digit slots), every
+    // slot takes either until the value fits again.
+    function shapeSlots(text, caret, format, inserted) {
+        var shown = NDS.typing.group(text, caret, format), loose = format.replace(/[0Aa]/g, '*');
+        var from = caret - (inserted || '').length;
+        if (loose === format || shown.dropped.every(function(index) { return index >= from && index < caret; })) return shown;
+        return NDS.typing.group(text, caret, loose);
+    }
+
+    // The slot format a field shows (NDS.typing.group): an IBAN's groups of four, a .nds-formatted field's
+    // data-format, or a phone's, read from the picked country when the field has a country picker. Null: the value as typed.
     function getGroupFormat(input) {
         var kind = getKind(input);
         if (kind === 'iban') return getIbanFormat(input.value);
+        if (kind === 'formatted') return input.closest('.nds-form-container').getAttribute('data-format') || null;
         if (kind !== 'phone') return null;
         var source = getPhoneSetup(input).source;
         return (source && source.getAttribute('data-format')) || null;
@@ -258,27 +275,32 @@
             for (var seen = 0; seen < code.length - 1; from++) if (/\d/.test(text[from])) seen++;
         }
         var kept = keepCharacters(text, caret, from, /\d/, code && keepZero.indexOf(code) < 0);
-        return { text: kept.text, caret: kept.caret, code: code, groupFormat: format };
+        // A separator typed after the last digit reaches the groups, which show it ("55 ").
+        var tail = format && kept.text ? text.match(/\D*$/)[0] : '';
+        return { text: kept.text + tail, caret: kept.caret + (caret === text.length ? tail.length : 0), code: code, groupFormat: format };
     }
 
-    // .nds-phone / .nds-national-id / .nds-iban: the value in its shape, then the checksum result, so
+    // .nds-phone / .nds-national-id / .nds-iban / .nds-formatted: the value in its shape, then the checksum result, so
     // checkValidity() (blur and submit) fails the field with a localized message. Empty = valid. opts:
-    // text and caret, an edit to write in place of the value; quiet, write it without an input event;
+    // text and caret, an edit to write in place of the value; inserted, the text that edit typed or pasted
+    // (the slots may drop it, never what was there); quiet, write it without an input event;
     // country, a whole value that may lack an IBAN's country (a paste, a first key, the page's own value).
     function stampIdentifier(input, opts) {
         var kind = getKind(input);
         if (!kind) return;
-        var iban = kind === 'iban', phone = kind === 'phone', nationalId = kind === 'national-id';
+        var iban = kind === 'iban', phone = kind === 'phone', nationalId = kind === 'national-id', generic = kind === 'formatted';
         opts = opts || {};
         var focused = document.activeElement === input, text = opts.text, caret = opts.caret;
         if (text === undefined) {
             text = input.value;
             caret = focused ? input.selectionStart : text.length;
         }
-        var country = !phone && getCountry(input), rule = nationalId && idRules.get(country);
+        var country = (iban || nationalId) && getCountry(input), rule = nationalId && idRules.get(country);
         text = NDS.toLatinDigits(text);
         var formatted;
         if (phone) formatted = formatPhone(input, text, caret, opts);
+        // The slots keep what fits them, in their case (NDS.typing.group).
+        else if (generic) formatted = { text: text, caret: caret, groupFormat: getGroupFormat(input) };
         else if (iban) formatted = formatIban(text, caret, opts.country && country);
         // An ID keeps digits only, or capitals and digits when its rule lets it have letters.
         else formatted = keepCharacters(text.toUpperCase(), caret, 0, rule && rule.digits ? /\d/ : /[A-Z\d]/);
@@ -290,7 +312,7 @@
         // A phone holds at most 15 digits, its country code included (E.164).
         if (phone && most === Infinity) most = 15 - (formatted.code ? formatted.code.length - 1 : 0);
         if (rule && rule.length < most) most = rule.length;
-        var shown = format ? NDS.typing.group(formatted.text, formatted.caret, format)
+        var shown = format ? shapeSlots(formatted.text, formatted.caret, format, opts.inserted)
             : { value: formatted.text.slice(0, most), caret: Math.min(formatted.caret, most) };
         if (opts.dry) return shown;
         if (shown.value !== input.value) {
@@ -299,6 +321,7 @@
         }
         if (focused) try { input.setSelectionRange(shown.caret, shown.caret); } catch (_) {}
         if (phone) { reportPhone(input); return; }
+        if (generic) return;
         var clean = shown.value.replace(/\s/g, '');
         var ok = iban ? isIban(clean) : !rule || !!rule.check(clean);
         input.setCustomValidity(clean && !ok ? strings.text(iban ? 'invalid_iban' : 'invalid_national_id') : '');
@@ -320,7 +343,7 @@
                 if (data && /^insert/.test(e.inputType)) {
                     var edit = {
                         text: value.slice(0, start) + data + value.slice(field.selectionEnd), caret: start + data.length,
-                        country: !value || /^insertFrom(Paste|Drop)$/.test(e.inputType),
+                        country: !value || /^insertFrom(Paste|Drop)$/.test(e.inputType), inserted: data,
                     };
                     // Already in shape: the browser inserts it, faster than a script write.
                     var shown = stampIdentifier(field, Object.assign({ dry: true }, edit));
@@ -330,20 +353,21 @@
                     return;
                 }
                 // A delete that meets a group's space takes the character past it too, as the space comes back.
+                // A space at the end, one the user typed, goes alone.
                 var back = e.inputType === 'deleteContentBackward', at = back ? start - 1 : start;
                 if (getGroupFormat(field) && /^deleteContent(Backward|Forward)$/.test(e.inputType) && start === field.selectionEnd
-                    && /[^A-Za-z0-9]/.test(value[at] || '') && value[back ? at - 1 : at + 1]) {
+                    && /[^A-Za-z0-9]/.test(value[at] || '') && value[back ? at - 1 : at + 1] && /[A-Za-z0-9]/.test(value.slice(at))) {
                     e.preventDefault();
                     stampIdentifier(field, { text: back ? value.slice(0, at - 1) + value.slice(start) : value.slice(0, at) + value.slice(at + 2), caret: back ? at - 1 : at });
                 }
             },
             // A keyboard composing a word owns its text until it commits (Android): a rewrite then doubles it.
             input: function(e, context) {
-                if (context && !e.isComposing) stampIdentifier(context.input, { country: /^insertFrom(Paste|Drop)$/.test(e.inputType) });
+                if (context && !e.isComposing) stampIdentifier(context.input, { country: /^insertFrom(Paste|Drop)$/.test(e.inputType), inserted: e.data });
             },
             // A word composed into an empty field takes the country, as one typed does.
             compositionend: function(e, context) {
-                if (context) stampIdentifier(context.input, { country: e.data === context.input.value });
+                if (context) stampIdentifier(context.input, { country: e.data === context.input.value, inserted: e.data });
             },
             // Submit and new FormData(form) send the value without its groups ("SA03 8000 …" → "SA038000…"),
             // and a phone the whole number, its country code first (E.164: "+966551234567").
@@ -351,7 +375,7 @@
             'formdata:capture': function(e) {
                 [].forEach.call(e.target.elements || [], function(el) {
                     var kind = el.name && getKind(el);
-                    if ((kind !== 'phone' && kind !== 'iban') || e.formData.getAll(el.name).length !== 1) return;
+                    if (!kind || kind === 'national-id' || (kind === 'formatted' && !getGroupFormat(el)) || e.formData.getAll(el.name).length !== 1) return;
                     e.formData.set(el.name, kind === 'phone' ? getPhoneNumber(el).value : el.value.replace(/[^A-Za-z0-9]/g, ''));
                 });
             }

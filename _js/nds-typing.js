@@ -9,8 +9,9 @@
  *   NDS.typing.addTypingListeners(input, options)  shaped typing and paste on the input: options { getMask(), read(text)
  *                                     (the text in the field's format, or null), adopt() (commit what the
  *                                     read just found; true when it did), signal, decimal }
- *   NDS.typing.group(text, caret, format)  text in a slot format ("00 000 0000": 0 a digit, A a letter,
- *                                     * either) → { value, caret }: what a phone or an IBAN field shows
+ *   NDS.typing.group(text, caret, format)  text in a slot format ("00 000 0000": 0 a digit, A a capital,
+ *                                     a a small letter, * either as typed) → { value, caret, dropped }: what a phone or an IBAN field
+ *                                     shows, and the indexes of the letters and digits it left out
  * Events:
  *   (none — a write goes through NDS.setValue, so Forms hears it)
  * Hooks:
@@ -317,29 +318,42 @@
         }, { signal });
     }
 
-    // Text laid into a slot format ("00 000 0000"): 0 takes a digit, A a letter, * either, and anything
-    // else is written as it is once a later slot is filled, so the value never ends on a separator. A
-    // character the next slot does not take is dropped, and so is everything past the last slot. The
-    // caret stays after the same characters, and past a separator a later one follows. Returns { value, caret }.
-    const SLOTS = Object.freeze({ 0: /\d/, A: /[A-Za-z]/, '*': /[A-Za-z\d]/ });
+    // Text laid into a slot format ("00 000 0000"): 0 takes a digit, A a letter written as a capital, a one
+    // written small, * a letter or a digit as typed, and anything else is written as it is once a later slot
+    // is filled, or once the user types it after the last character ("AB-"). A character the next slot does not take is dropped,
+    // and so is everything past the last slot. The caret stays after the same characters, and past a
+    // separator a later one follows. Returns { value, caret, dropped }: dropped, the indexes of the letters
+    // and digits left out.
+    const SLOTS = Object.freeze({ 0: /\d/, A: /[A-Za-z]/, a: /[A-Za-z]/, '*': /[A-Za-z\d]/ });
     function group(text, caret, format) {
         text = toLatinDigits(text);
         const slots = [...format].filter((char) => SLOTS[char]);
-        const kept = [];
-        let before = 0;
-        for (let index = 0; index < text.length && kept.length < slots.length; index++) {
-            if (!SLOTS[slots[kept.length]].test(text[index])) continue;
-            kept.push(text[index]);
+        const kept = [], dropped = [];
+        let before = 0, last = -1;
+        for (let index = 0; index < text.length; index++) {
+            const slot = slots[kept.length];
+            if (!slot || !SLOTS[slot].test(text[index])) {
+                if (SLOTS['*'].test(text[index])) dropped.push(index);
+                continue;
+            }
+            kept.push(slot === 'A' ? text[index].toUpperCase() : slot === 'a' ? text[index].toLowerCase() : text[index]);
             if (index < caret) before = kept.length;
+            last = index;
         }
-        let value = '', placed = 0, at = 0;
-        for (const char of format) {
-            if (placed === kept.length) break;
-            value += SLOTS[char] ? kept[placed++] : char;
+        let value = '', placed = 0, at = 0, next = 0;
+        for (; next < format.length && placed < kept.length; next++) {
+            value += SLOTS[format[next]] ? kept[placed++] : format[next];
             if (placed === before) at = value.length;
         }
-        return { value, caret: at };
+        // The separators before the next slot, when the user typed one of them after the last character.
+        let gap = '';
+        for (let index = next; index < format.length && !SLOTS[format[index]]; index++) gap += format[index];
+        if (gap && [...text.slice(last + 1)].some((char) => gap.includes(char))) {
+            value += gap;
+            if (caret > last) at = value.length;
+        }
+        return { value, caret: at, dropped };
     }
 
-    NDS.typing = { compile, type, addTypingListeners, group };
+    NDS.typing ={ compile, type, addTypingListeners, group };
 })();

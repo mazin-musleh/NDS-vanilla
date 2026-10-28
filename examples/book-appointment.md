@@ -240,7 +240,7 @@ sidemenu_mode: false
                                     </div>
                                 </div>
                             </div>
-                            <div class="nds-form-container nds-national-id" data-required>
+                            <div class="nds-form-container nds-formatted nds-national-id" data-required>
                                 <div class="nds-form-header">
                                     <label for="book-national-id">
                                         <span class="nds-label">National ID or Iqama number</span>
@@ -255,7 +255,7 @@ sidemenu_mode: false
                                     </div>
                                 </div>
                             </div>
-                            <div class="nds-form-container nds-phone" data-required data-format="00 000 0000">
+                            <div class="nds-form-container nds-formatted nds-phone" data-required data-format="00 000 0000">
                                 <div class="nds-form-header">
                                     <label for="book-phone">
                                         <span class="nds-label">Mobile number</span>

@@ -34,7 +34,7 @@ const timeField = (format) => `<div class="nds-form-container nds-time-picker" d
   <div class="nds-form-control"><input type="text" class="nds-input nds-time-input" placeholder="${format}"></div></div>`;
 
 // A Form field: phone and IBAN shape through Forms, with no instance to wait for. kind: its container's class.
-const formField = (kind, input, extra = '') => `<div class="nds-form-container nds-${kind}"${extra}>
+const formField = (kind, input, extra = '') => `<div class="nds-form-container nds-formatted${kind === 'formatted' ? '' : ' nds-' + kind}"${extra}>
   <div class="nds-form-control">${input}</div></div>`;
 
 const PATTERNS = {
@@ -260,6 +260,10 @@ const PATTERNS = {
     <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966" data-format="00 000 0000"><span class="nds-label">SA</span></button>
     <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+39" data-trigger-label="+39"><span class="nds-label">IT</span></button>
   </div></div></div><input type="tel" class="nds-input" inputmode="numeric">`),
+            // .nds-formatted: the author's slots: digits only, capitals then digits, small letters, either as typed.
+            border: formField('formatted', '<input type="text" class="nds-input">', ' data-format="0 000 000 000"'),
+            plate: formField('formatted', '<input type="text" class="nds-input">', ' data-format="AA-0000"'),
+            small: formField('formatted', '<input type="text" class="nds-input">', ' data-format="aa-**"'),
         },
         cases: [
             ['iban', '', 'sa0380000000608010167519', 'SA03 8000 0000 6080 1016 7519|'],
@@ -275,7 +279,28 @@ const PATTERNS = {
             ['iban', '[SA]03 8000', '{Backspace}', '|0380 00'],
             ['iban', 'SA03 |8000', '{Backspace}', 'SA0|8 000'],
             ['iban', 'SA03| 8000', '{Delete}', 'SA03 |000'],
-            ['iban', '', '1234567890123456789012345678901234567890', 'SA12 3456 7890 1234 5678 9012 3456 7890 12|'],
+            // Letters only in the country: a Saudi IBAN is 22 digits after SA, another country's up to 34 characters.
+            ['iban', '', '1234567890123456789012345678901234567890', 'SA12 3456 7890 1234 5678 9012|'],
+            ['iban', '', 'SA03X8000', 'SA03 8000|'],
+            ['iban', '', 'gb29nwbk60161331926819', 'GB29 NWBK 6016 1331 9268 19|'],
+            ['iban', '', 'GB1234567890123456789012345678901234567890', 'GB12 3456 7890 1234 5678 9012 3456 7890 12|'],
+            ['border', '', '3a000٠٠٠0000999', '3 000 000 000|'],
+            ['border', '', '{Paste:3-000-000-000}', '3 000 000 000'],
+            ['border', '3 000 |000', '{Backspace}', '3 00|0 00'],
+            // Characters already there are kept when a delete moves letters onto digit slots.
+            ['iban', '[GB29 ]NWBK 6016', '{Backspace}', '|NWBK 6016'],
+            ['plate', '[AB-]1234', '{Backspace}', '|12-34'],
+            ['iban', 'SA03 8000|', 'X', 'SA03 8000|'],
+            ['plate', '', 'ab1234', 'AB-1234|'],
+            ['plate', '', '1ab', 'AB|'],
+            ['small', '', 'ABcD', 'ab-cD|'],
+            // A separator the user types after the last character stays; a backspace takes it alone.
+            ['plate', '', 'ab-', 'AB-|'],
+            ['plate', '', 'ab-1', 'AB-1|'],
+            ['plate', '', 'ab/', 'AB|'],
+            ['plate', 'AB-|', '{Backspace}', 'AB|'],
+            ['phone', '', '55 ', '55 |'],
+            ['iban', '', 'SA03 ', 'SA03 |'],
             ['phone', '', '0551234567', '55 123 4567|'],
             ['phone', '', '٠٥٥١٢٣٤٥٦٧', '55 123 4567|'],
             ['phone', '', '5512345678', '55 123 4567|'],
@@ -300,11 +325,12 @@ const PATTERNS = {
         ],
         // What new FormData(form) sends for a field showing a value: E.164 when the field shows a code.
         submit: [['saudi', '55 123 4567', '+966551234567'], ['italy', '0612345678', '+390612345678'], ['saudi', '', ''],
-            ['plain', '0551234567', '0551234567'], ['iban', 'SA03 8000 0000 6080 1016 7519', 'SA0380000000608010167519']],
+            ['plain', '0551234567', '0551234567'], ['iban', 'SA03 8000 0000 6080 1016 7519', 'SA0380000000608010167519'],
+            ['border', '3 000 000 000', '3000000000'], ['plate', 'AB-1234', 'AB1234']],
         // Keys typed into an empty field: how many nds:phone:change it fires, and the last one's detail.
         events: [['saudi', '0551234567', 9, { value: '+966551234567', countryCode: '+966', nationalNumber: '551234567' }],
             ['plain', '0551234567', 10, { value: '0551234567', countryCode: null, nationalNumber: null }]],
-        roundTrip: { iban: ['SA03 8000 0000 6080 1016 7519'], phone: ['55 123 4567'] },
+        roundTrip: { iban: ['SA03 8000 0000 6080 1016 7519', 'GB29 NWBK 6016 1331 9268 19'], phone: ['55 123 4567'], border: ['3 000 000 000'], plate: ['AB-1234'] },
         limits: { phone: [9, '  '] },
     },
 };

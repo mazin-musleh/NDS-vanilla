@@ -73,7 +73,7 @@ sidemenu_mode: false
                     </div>
 
                     <!-- Phone with country code prefix -->
-                    <div class="nds-form-container nds-darker nds-phone" data-required>
+                    <div class="nds-form-container nds-darker nds-formatted nds-phone" data-required>
                         <div class="nds-form-header">
                             <label for="contact-phone">
                                 <span class="nds-label">Phone</span>

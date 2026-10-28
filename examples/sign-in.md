@@ -82,7 +82,7 @@ breadcrumb: [["Examples", "/examples"]]
               </div>
 
               <!-- National ID -->
-              <div class="nds-form-container nds-national-id" data-required>
+              <div class="nds-form-container nds-formatted nds-national-id" data-required>
                 <div class="nds-form-header">
                   <label for="national-id">
                     <span class="nds-label">National ID</span>

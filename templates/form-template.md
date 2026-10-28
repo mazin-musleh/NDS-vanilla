@@ -32,7 +32,7 @@ sidemenu_mode: false
                     <h2 class="nds-section-title">Identity Verification</h2>
                     <div class="nds-grid" style="--min-col: 1; --max-col: 2; --gap: var(--spacing-4xl);">
 
-                        <div class="nds-form-container nds-national-id" data-required>
+                        <div class="nds-form-container nds-formatted nds-national-id" data-required>
                             <div class="nds-form-header">
                                 <label for="ft-national-id"><span class="nds-label">National ID</span></label>
                             </div>
@@ -70,7 +70,7 @@ sidemenu_mode: false
                             </div>
                         </div>
 
-                        <div class="nds-form-container nds-phone" data-required data-format="00 000 0000">
+                        <div class="nds-form-container nds-formatted nds-phone" data-required data-format="00 000 0000">
                             <div class="nds-form-header">
                                 <label for="ft-mobile"><span class="nds-label">Mobile Number</span></label>
                             </div>

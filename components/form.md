@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 08:54 AM"
+last_edit: "28/10/2026 - 08:57 PM"
 lang: en
 direction: ltr
 ---
@@ -399,7 +399,7 @@ The eye button switches the field between hidden and plain text, and its label b
             <i class="hgi hgi-stroke hgi-text-align-left"></i>
             <span class="nds-label">Left-to-Right Values</span>
           </span>
-          <p class="nds-item-desc">An e-mail, phone or URL field, and a <a href="../components/formatted-input"><code class="nds-inline-code lang-html">nds-phone</code></a> field, reads left to right on every page, so a phone number keeps its digit groups in order on an Arabic page. The value stays on the page side, as in the other fields.</p>
+          <p class="nds-item-desc">An e-mail, phone or URL field, and a <a href="../components/formatted-input"><code class="nds-inline-code lang-html">nds-formatted</code></a> field, reads left to right on every page, so a phone number keeps its digit groups in order on an Arabic page. The value stays on the page side, as in the other fields.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
