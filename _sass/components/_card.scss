@@ -204,9 +204,13 @@
     --card-width: 100%;
   }
 
-  // Flow content: the block or prose margins space the children, so the flex gap would double them.
   &:is(.nds-block, .nds-prose) {
     --card-width: 100%;
+  }
+
+  // Flow content: the block or prose margins space the children, so the flex gap would double them.
+  // A card with nds-card-* parts keeps its gap: the parts have no margins.
+  &:is(.nds-block, .nds-prose):not(:has(> [class*="nds-card-"])) {
     --_card-gap-base: 0;
   }
 
