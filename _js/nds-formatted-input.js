@@ -220,15 +220,13 @@
         return !input.hasAttribute('lang') && (!written || ownLangs.get(control) === written);
     }
 
+    // :lang(ar), as the plate CSS reads it (_form.scss).
     function isPlateArabic(input, text) {
-        var lang;
-        if (isAutoLang(input)) {
-            var first = [].find.call(text, function(char) { return plateLetters[char]; });
-            if (first) return first.charCodeAt(0) > 127;
-            var control = input.closest('.nds-form-control');
-            lang = control.parentElement && control.parentElement.closest('[lang]');
-        } else lang = input.closest('[lang]');
-        return !!lang && /^ar\b/i.test(lang.getAttribute('lang'));
+        if (!isAutoLang(input)) return input.matches(':lang(ar)');
+        var first = [].find.call(text, function(char) { return plateLetters[char]; });
+        if (first) return first.charCodeAt(0) > 127;
+        var page = input.closest('.nds-form-control').parentElement;
+        return !!page && page.matches(':lang(ar)');
     }
 
     // An auto field writes its script on its .nds-form-control, so the row flips with it (_form.scss); empty, the page's applies.
@@ -497,13 +495,19 @@
         if (plate) {
             syncPlateLang(input, shown);
             syncPlatePlaceholder(input, shown.arabic);
-            setOwnMessage(input, shown.value && !shown.complete ? strings.text('incomplete') : '');
-            return;
         }
-        if (phone || generic) { checkFilled(input, shown.value, format, generic && getFormatRule(input)); return; }
-        var clean = shown.value.replace(/\s/g, '');
-        var ok = iban ? isIban(clean) : !rule || !!rule.check(clean);
-        input.setCustomValidity(clean && !ok ? strings.text(iban ? 'invalid_iban' : 'invalid_national_id') : '');
+        stampMessage(input, kind, shown, format, rule);
+    }
+
+    // The field's own message for the value it shows; every kind goes through setOwnMessage.
+    function stampMessage(input, kind, shown, format, rule) {
+        if (kind === 'plate') setOwnMessage(input, shown.value && !shown.complete ? strings.text('incomplete') : '');
+        else if (kind === 'phone' || kind === 'formatted') checkFilled(input, shown.value, format, kind === 'formatted' && getFormatRule(input));
+        else {
+            var clean = shown.value.replace(/\s/g, ''), iban = kind === 'iban';
+            var ok = iban ? isIban(clean) : !rule || !!rule.check(clean);
+            setOwnMessage(input, clean && !ok ? strings.text(iban ? 'invalid_iban' : 'invalid_national_id') : '');
+        }
     }
 
     // Registered before Form's parts (this file loads first), so its beforeinput runs before Form's digits part.
