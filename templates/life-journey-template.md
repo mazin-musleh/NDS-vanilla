@@ -20,7 +20,7 @@ hero_float_actions:
         <div class="nds-form-header" data-feedback-target><label for="first-visit-toggle"><span class="nds-note">First visit</span></label></div>
         <div class="nds-form-control"><div class="nds-switch-toggle"><input type="checkbox" id="first-visit-toggle" class="nds-switch-input"><div class="nds-switch-track"><div class="nds-switch-thumb"></div></div></div></div>
         </div>
-last_edit: "04/12/2020 - 04:13 PM"
+last_edit: "28/10/2026 - 03:53 PM"
 current:
   - title: "Starting a Business"
     step: 2
@@ -68,7 +68,7 @@ completed:
 {% capture journey_steps %}<div class="nds-stepper nds-block nds-center nds-xl nds-static nds-icons nds-vertical-sm">
     <div class="nds-stepper-step">
         <div class="nds-stepper-base">
-            <div class="nds-stepper-circle"><i class="hgi hgi-stroke hgi-cursor-magic-selection-02" aria-hidden="true"></i></div>
+            <div class="nds-stepper-circle nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-cursor-magic-selection-02" aria-hidden="true"></i></div>
         </div>
         <div class="nds-stepper-content">
             <div class="nds-stepper-text">
@@ -79,7 +79,7 @@ completed:
     </div>
     <div class="nds-stepper-step">
         <div class="nds-stepper-base">
-            <div class="nds-stepper-circle"><i class="hgi hgi-stroke hgi-view" aria-hidden="true"></i></div>
+            <div class="nds-stepper-circle nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-view" aria-hidden="true"></i></div>
         </div>
         <div class="nds-stepper-content">
             <div class="nds-stepper-text">
@@ -90,7 +90,7 @@ completed:
     </div>
     <div class="nds-stepper-step">
         <div class="nds-stepper-base">
-            <div class="nds-stepper-circle"><i class="hgi hgi-stroke hgi-file-verified" aria-hidden="true"></i></div>
+            <div class="nds-stepper-circle nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-file-verified" aria-hidden="true"></i></div>
         </div>
         <div class="nds-stepper-content">
             <div class="nds-stepper-text">

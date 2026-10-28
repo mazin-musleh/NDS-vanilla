@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "28/10/2026 - 04:14 PM"
 ---
 
 <section id="stepper-overview" class="nds-content-section nds-doc-overview">
@@ -177,7 +177,20 @@ Most classes go on `.nds-stepper`. The Card rows put `nds-card` on the stepper, 
 | Icons | Icons (hint: An icon in each circle in place of the number. Not with Dot) | canon `#stepper-icon-3` | `.nds-stepper-step:nth-child(4) .nds-stepper-circle` | The icon of step 3 |
 | Icons | Icons (hint: An icon in each circle in place of the number. Not with Dot) | canon `#stepper-icon-4` | `.nds-stepper-step:nth-child(5) .nds-stepper-circle` | The icon of step 4 |
 | Type | Progress (default) (hint: Steps done, current and to come) | `[data-current="2"]` | `.nds-stepper` | The script marks each step completed, current or upcoming from `data-current`. For a flow the user moves through |
-| Type | Static (hint: Every step looks the same, with no progress. Not radial) | `.nds-static` | `.nds-stepper:not(.nds-radial):not(.nds-radial-sm):not(.nds-radial-md)` | Every step looks the same, and the line is neutral. For an order with no progress, such as a how-it-works row. Not radial, which needs a current step. See Static under Behavior |
+| Type | Static (hint: Every step looks the same, with no progress. Not radial) (demo: + icon-circle) (demo: + icon-outline) | `.nds-static` | `.nds-stepper:not(.nds-radial):not(.nds-radial-sm):not(.nds-radial-md)` | Every step looks the same, and the line is neutral. For an order with no progress, such as a how-it-works row. Not radial, which needs a current step. See Static under Behavior |
+| Type | Static (hint: Every step looks the same, with no progress. Not radial) (demo: + icon-circle) (demo: + icon-outline) | `.nds-featured-icon` | `.nds-stepper:not(.nds-dot) .nds-stepper-circle` | Every circle is a [Featured Icon](../components/featured-icon). Write `nds-circle nds-outline` too, and change them in the Icon rows. A dot takes no featured icon classes |
+| On color | On color (hint: For a dark or brand background) | `.nds-oncolor` | `.nds-stepper` | Light circles, lines and text, for a dark or brand background |
+| Icon shape | Rounded (default) (hint: A rounded square) | — | `.nds-stepper-circle.nds-featured-icon` | A rounded square |
+| Icon shape | Circle (hint: A round icon) (id: icon-circle) | `.nds-circle` | `.nds-stepper-circle.nds-featured-icon` | A round icon |
+| Icon style | Light (default) (hint: A light fill in the icon color) | — | `.nds-stepper-circle.nds-featured-icon` | A light fill in the icon color |
+| Icon style | Outline (hint: No fill and a border in the icon color) (id: icon-outline) | `.nds-outline` | `.nds-stepper-circle.nds-featured-icon` | No fill and a border in the icon color |
+| Icon style | Dark (hint: A solid fill and white content) | `.nds-dark` | `.nds-stepper-circle.nds-featured-icon` | A solid fill, with a white icon or number |
+| Icon color | Brand (default) (hint: The brand color, or the status around it) | — | `.nds-stepper:not(.nds-oncolor) .nds-stepper-circle.nds-featured-icon` | The brand color, or the color of a status around it |
+| Icon color | Green (hint: Success) | `.nds-green` | `.nds-stepper:not(.nds-oncolor) .nds-stepper-circle.nds-featured-icon` | The success color |
+| Icon color | Blue (hint: Information) | `.nds-blue` | `.nds-stepper:not(.nds-oncolor) .nds-stepper-circle.nds-featured-icon` | The information color |
+| Icon color | Yellow (hint: A warning) | `.nds-yellow` | `.nds-stepper:not(.nds-oncolor) .nds-stepper-circle.nds-featured-icon` | The warning color |
+| Icon color | Red (hint: An error) | `.nds-red` | `.nds-stepper:not(.nds-oncolor) .nds-stepper-circle.nds-featured-icon` | The error color |
+| Icon color | Neutral (hint: Gray, with no meaning) | `.nds-neutral` | `.nds-stepper:not(.nds-oncolor) .nds-stepper-circle.nds-featured-icon` | Gray, with no meaning of its own |
 | Divider | Divider (hint: A label above each step, such as a date. Vertical only) | — | `.nds-stepper.nds-vertical` | A divider at the start of each step, as its label: a date, a phase name, or a group of steps. Vertical only. See Divider Labels under Behavior |
 | Divider | Divider (hint: A label above each step, such as a date. Vertical only) | — | `.nds-stepper.nds-vertical-sm` | A divider at the start of each step, as its label: a date, a phase name, or a group of steps. Vertical only. See Divider Labels under Behavior |
 | Divider | Divider (hint: A label above each step, such as a date. Vertical only) | — | `.nds-stepper.nds-vertical-md` | A divider at the start of each step, as its label: a date, a phase name, or a group of steps. Vertical only. See Divider Labels under Behavior |
@@ -204,7 +217,6 @@ Most classes go on `.nds-stepper`. The Card rows put `nds-card` on the stepper, 
 | Neutral | Neutral (hint: A gray ring. Radial only) | `.nds-neutral` | `.nds-stepper.nds-radial` | A gray ring in place of the primary color. Radial only |
 | Neutral | Neutral (hint: A gray ring. Radial only) | `.nds-neutral` | `.nds-stepper.nds-radial-sm` | A gray ring in place of the primary color. Radial only |
 | Neutral | Neutral (hint: A gray ring. Radial only) | `.nds-neutral` | `.nds-stepper.nds-radial-md` | A gray ring in place of the primary color. Radial only |
-| On color | On color (hint: For a dark or brand background) | `.nds-oncolor` | `.nds-stepper` | Light circles, lines and text, for a dark or brand background |
 | Loading | Loading (hint: Skeleton placeholders while the data loads) | `.nds-loading` | `.nds-stepper` | Every step shows as a skeleton while its data loads. Remove the class when the data is in |
 {: #stepper-variants-table .nds-table .nds-responsive}
 
@@ -256,7 +268,7 @@ A stepper with On color gives its cards the translucent white surface and the on
 ### Static
 {: .nds-block-title}
 
-`nds-static` makes the stepper a plain list of steps in order, such as a how-it-works row. The script writes no step state, so `data-current`, the methods and the control buttons change nothing on screen. Every circle takes the light tint of a [Featured Icon](../components/featured-icon), and the line is neutral. Inside a status, such as an info [Alert](../components/alert), the circles take that status color.
+`nds-static` makes the stepper a plain list of steps in order, such as a how-it-works row. The script writes no step state, so `data-current`, the methods and the control buttons change nothing on screen. The line is neutral. Write `nds-featured-icon nds-circle nds-outline` on every `.nds-stepper-circle`: each circle is a [Featured Icon](../components/featured-icon), so its style and color classes change the look, such as `nds-dark` or `nds-green`. The stepper size still sets the circle size. Inside a status, such as an info [Alert](../components/alert), the circles take that status color. A dot takes no featured icon classes. With `nds-oncolor`, the circles are light and a color class changes nothing. `nds-dark` then gives a white fill, like a completed step.
 
 ### Step Action
 {: .nds-block-title}

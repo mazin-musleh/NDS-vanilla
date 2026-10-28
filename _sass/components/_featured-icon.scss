@@ -100,6 +100,7 @@
   &.nds-dark {
     background-color: var(--_featuredicon-dark-bg);
     border: 2px solid transparent;
+    color: var(--icon-oncolor); // text too, such as a stepper's number
 
     :is(.nds-icon, i, svg) {
       color: var(--icon-oncolor);

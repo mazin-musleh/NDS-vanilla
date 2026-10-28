@@ -186,25 +186,31 @@
     justify-content: center;
     width: var(--stepper-size);
     height: var(--stepper-size);
-    border-radius: 50%;
-    border: 2px solid var(--stepper-button-current);
-    background-color: var(--stepper-button-background);
-    color: var(--stepper-button-current);
-    font-size: calc(var(--stepper-size)/2);
+    font-size: 0; // Hide HTML text content: the number is the counter below
     font-weight: var(--font-weight-medium);
     transition: var(--nds-transition);
     position: relative;
     z-index: 1;
     flex-shrink: 0;
 
-    // Current state (default)
-    &:hover {
-        border-color: var(--stepper-button-current-hovered);
-        color: var(--stepper-button-current-hovered);
+    // A featured icon as the circle (static) brings its own look: :where() keeps the specificity.
+    &:where(:not(.nds-featured-icon)) {
+        border-radius: 50%;
+        border: 2px solid var(--stepper-button-current);
+        background-color: var(--stepper-button-background);
+        color: var(--stepper-button-current);
+
+        // Current state (default)
+        &:hover {
+            border-color: var(--stepper-button-current-hovered);
+            color: var(--stepper-button-current-hovered);
+        }
     }
 
-    // Default counter content behavior
-    font-size: 0; // Hide HTML text content
+    // The featured icon scales with the circle, so its padding and glyph follow the stepper size.
+    &.nds-featured-icon {
+        --featuredicon-size: var(--stepper-size);
+    }
 
     &::before {
         content: counter(step-counter);
@@ -479,20 +485,12 @@
 // ==============================================
 
 // Static: a fixed list, such as a how-it-works row. The script stamps no state, so
-// every step keeps the base look; the line takes the neutral colour. The circle reads the
-// featured-icon status knobs, so it follows a status around it, such as an info alert.
+// every step keeps the base look; the line takes the neutral colour. Each circle is a
+// featured icon, whose classes and status set its look.
 .nds-stepper.nds-static {
     --_stepper-line-current: var(--stepper-line-upcoming);
 
-    .nds-stepper-circle {
-        &, &:hover {
-            border-color: transparent;
-            background-color: var(--featuredicon-bg, var(--background-primary-light));
-            color: var(--featuredicon-color, var(--stepper-button-current));
-        }
-    }
-
-    // A dot keeps the dot look, as the current step: the light circle above hid its light dot.
+    // A dot keeps the dot look, as the current step: the base circle would hide its light dot.
     &.nds-dot .nds-stepper-circle {
         &, &:hover {
             background-color: var(--stepper-button-current);
@@ -915,6 +913,16 @@
             background-color: var(--colors-alpha-white-10);
             color: var(--text-oncolor-primary);
         }
+    }
+
+    // A dark featured icon takes the completed step's look: a white fill and the brand ink.
+    .nds-stepper-step .nds-stepper-circle.nds-dark {
+        &, &:hover {
+            background-color: var(--background-surface-oncolor);
+            color: var(--stepper-button-completed);
+        }
+
+        :is(.nds-icon, i, svg) { color: inherit; }
     }
 
     &.nds-dot .nds-stepper-step .nds-stepper-circle {

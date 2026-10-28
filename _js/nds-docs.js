@@ -339,11 +339,14 @@
         // `(limit: 2 widgets)`: once that many chips sharing it are on, the others stay off.
         // The chip's own group does not count: picking in it swaps the chip that is on.
         var limitOf = function (choice) { var match = choice.option.match(/\(limit:\s*([^)]+)\)/); return match && match[1]; };
+        // The table row a group shows in: each chip of a `(any)` row is a group of its own.
+        var rowOf = function (group) { return group.replace(/\|.*$/, ''); };
         function isApplicable(choice) {
             if (choice.structure) return true;
             if (isExcluded(choice)) return false;
-            var limit = limitOf(choice);
-            if (limit && active[choice.group] !== choice && order.filter(function (group) { return group !== choice.group && active[group] && limitOf(active[group]) === limit; }).length >= parseInt(limit, 10)) return false;
+            // A limit of 1 swaps chips within one row (choose), so only another row's chip holds it off.
+            var limit = limitOf(choice), swaps = parseInt(limit, 10) === 1;
+            if (limit && active[choice.group] !== choice && order.filter(function (group) { return group !== choice.group && active[group] && limitOf(active[group]) === limit && !(swaps && rowOf(group) === rowOf(choice.group)); }).length >= parseInt(limit, 10)) return false;
             // A `—` row with a target (a default that fits only some structures) is checked too.
             var operations = choice.ops.filter(function (row) { return row.op || (row.target && row.target !== '—'); });
             // Like the build, a descendant target never gates when the choice has a one-element target.
@@ -526,13 +529,18 @@
             if (btn.hasAttribute('aria-disabled')) { if (btn.ndsTooltip) btn.ndsTooltip.open(); return; }
             // A multi-select group toggles each chip; a group whose default is None turns off when
             // its chosen chip is tapped again; any other group is pick-one; a single option toggles.
-            var on = true;
+            var on = true, wasOn = active[choice.group] === choice;
             if (combos[choice.group]) toggle(choice);
             else if (sizes[choice.group] > 1 && active[choice.group] === choice && isNone(defaults[choice.group])) set(defaults[choice.group], true);
             else { on = sizes[choice.group] > 1 || active[choice.group] !== choice; set(choice, on); }
+            // `(limit: 1 x)` in a `(any)` row: the chip turned on takes the place of the one on in that row.
+            var limit = limitOf(choice);
+            if (on && !wasOn && limit && parseInt(limit, 10) === 1) order.forEach(function (group) {
+                if (group !== choice.group && rowOf(group) === rowOf(choice.group) && active[group] && limitOf(active[group]) === limit) set(active[group], false);
+            });
             // `(demo: + x)` turns on the row marked `(id: x)`, by id so a translated page keeps
-            // working. An option can carry several.
-            (on && choice.option.match(/\(demo:\s*\+\s*[^)]+\)/g) || []).forEach(function (marker) {
+            // working. An option can carry several. A tap on the chip already on changes nothing.
+            (on && !wasOn && choice.option.match(/\(demo:\s*\+\s*[^)]+\)/g) || []).forEach(function (marker) {
                 var id = marker.replace(/^\(demo:\s*\+\s*|\)$/g, '').trim();
                 Object.keys(byKey).forEach(function (key) {
                     var otherChoice = byKey[key], own = otherChoice.option.match(/\(id:\s*([\w-]+)\)/);

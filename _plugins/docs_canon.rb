@@ -393,20 +393,21 @@ module DocsCanon
       need = needs(r, rows, canons, src, js)
       # `(limit: 2 widgets)`: once that many chips sharing it start on, the others start off.
       lim = r[:option][/\(limit:\s*([^)]+)\)/, 1]
-      # A limit of 1 makes the chips exclusive: name the other one, like any blocker.
+      # A limit of 1 makes the chips exclusive. Within one row they swap (nds-docs.js), so only
+      # another row's chips block it: name them, like any blocker.
+      rival = ->(x) { x[:option].include?("(limit: #{lim})") && (lim.to_i > 1 || x[:group] != r[:group]) }
       if lim
-        # A one-choice group is exclusive already, so its own chips are not named.
-        others = rows.select { |x| [x[:group], x[:option]] != [r[:group], r[:option]] && x[:option].include?("(limit: #{lim})") && (x[:group] != r[:group] || x[:group].end_with?('(any)')) }.uniq { |x| [x[:group], x[:option]] }
+        others = rows.select { |x| [x[:group], x[:option]] != [r[:group], r[:option]] && rival[x] }.uniq { |x| [x[:group], x[:option]] }
         others = others.group_by { |x| x[:group] }.map do |group, xs|
           names = xs.map { |x| label(x[:option]) }
           next names.first if rows.count { |y| y[:group] == group } == 1
           list = names.size > 1 ? "#{names[0..-2].join(', ')} or #{names[-1]}" : names.first
           "#{group.delete_suffix(' (any)')}: #{list}"
         end
-        limit = lim.to_i == 1 ? "Not with #{others.join(' or ')}" : "Up to #{lim}"
-        need = need.empty? ? limit : "#{need}. #{limit}"
+        limit = lim.to_i == 1 ? ("Not with #{others.join(' or ')}" unless others.empty?) : "Up to #{lim}"
+        need = need.empty? ? limit : "#{need}. #{limit}" if limit
       end
-      full = lim && !sel && rows.count { |x| x[:option].include?("(limit: #{lim})") && x[:option].include?('(default)') } >= lim.to_i
+      full = lim && !sel && rows.count { |x| rival[x] && x[:option].include?('(default)') } >= lim.to_i
       off = !applies?(r, src, js) || full
       state = [('selected' if sel), ('disabled' if off)].compact.join(' ')
       msg = off && !need.empty? ? need : (tip.empty? ? need : tip)

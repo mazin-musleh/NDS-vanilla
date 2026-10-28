@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 10:01 PM"
+last_edit: "28/10/2026 - 03:53 PM"
 ---
 
 <section id="timeline-overview" class="nds-content-section nds-doc-overview">
@@ -211,7 +211,7 @@ Pick another component when:
 <div class="nds-stepper nds-vertical nds-static nds-icons nds-reverse" id="activity-timeline">
   <div class="nds-stepper-step">
     <div class="nds-stepper-base">
-      <div class="nds-stepper-circle">
+      <div class="nds-stepper-circle nds-featured-icon nds-circle nds-outline">
         <i class="hgi hgi-stroke hgi-edit-02" aria-hidden="true"></i>
       </div>
     </div>
@@ -233,7 +233,7 @@ Pick another component when:
   </div>
   <div class="nds-stepper-step">
     <div class="nds-stepper-base">
-      <div class="nds-stepper-circle">
+      <div class="nds-stepper-circle nds-featured-icon nds-circle nds-outline">
         <i class="hgi hgi-stroke hgi-file-upload" aria-hidden="true"></i>
       </div>
     </div>
@@ -256,7 +256,7 @@ Pick another component when:
   </div>
   <div class="nds-stepper-step">
     <div class="nds-stepper-base">
-      <div class="nds-stepper-circle">
+      <div class="nds-stepper-circle nds-featured-icon nds-circle nds-outline">
         <i class="hgi hgi-stroke hgi-comment-01" aria-hidden="true"></i>
       </div>
     </div>
@@ -279,7 +279,7 @@ Pick another component when:
   </div>
   <div class="nds-stepper-step">
     <div class="nds-stepper-base">
-      <div class="nds-stepper-circle">
+      <div class="nds-stepper-circle nds-featured-icon nds-circle nds-outline">
         <i class="hgi hgi-stroke hgi-checkmark-circle-02" aria-hidden="true"></i>
       </div>
     </div>
