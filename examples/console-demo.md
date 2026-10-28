@@ -1,6 +1,6 @@
 ---
 layout: console
-body_class: nds-full-width
+layout_class: nds-full-width
 title: Admin Console Demo
 hero_title: Admin Console
 hero_description: A management console showcasing statistics, transaction records, team directory, and system notifications.

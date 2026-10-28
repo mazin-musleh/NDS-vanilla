@@ -30,8 +30,7 @@ breadcrumb: [["Components", "/components"]]     # or mix linked + label: [["Pare
 # footerlogos: footerlogos    # loads _data/footerlogos/{value}.yml (default: footerlogos)
 
 # === Layout & Body ===
-# body_class: nds-full-width   # edge-to-edge chrome + content (console pages)
-# layout_class: nds-card-view  # nds-card-view | nds-middle (combinable)
+# layout_class: nds-card-view  # nds-card-view | nds-compact | nds-full-width | nds-middle (combinable)
 
 # === Custom Assets ===
 # custom_css:

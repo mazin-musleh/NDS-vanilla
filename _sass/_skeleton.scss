@@ -348,7 +348,7 @@ tbody[data-filter-items]:not([data-nds-filter-initialized], .nds-paged-content) 
 }
 
 // MaxWidth 100% re-resolves against the body itself, so the cap never applies here.
-body.nds-full-width :is(.nds-content-wrapper, .nds-hero-section, .nds-content-section) .nds-max-width {
+:is(.nds-content-layout.nds-full-width, body:has(.nds-content-layout.nds-full-width)) :is(.nds-content-wrapper, .nds-hero-section, .nds-content-section) .nds-max-width {
     margin-inline: calc(var(--_wrapper-padding) * -1);
 }
 

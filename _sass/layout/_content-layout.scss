@@ -83,14 +83,14 @@ main {
     }
 
     /* ── Edge-to-edge ──
-       body.nds-full-width (_reset.scss) is the single switch: it sets
-       --nds-content-max-width: 100% page-wide, which widens the chrome. These
-       rules take the layout's own gutters off to match, so the content area
-       goes edge-to-edge from the same class — no per-layout modifier. */
+       nds-full-width on this layout (_reset.scss) sets
+       --nds-content-max-width: 100%, which widens the chrome. These rules take
+       the layout's own gutters off to match. */
 
     // cardView is exempt: its gutters and card gaps ARE the presentation, so
     // full-width widens the page around it without flattening the cards.
-    body.nds-full-width &:not(.nds-card-view) {
+    // (0,3,0) beats the side menu's centring gutter below in any source order.
+    &.nds-full-width:not(.nds-card-view) {
         padding: 0;
 
         // The knobs sit on .nds-content, so they beat cardView's
@@ -187,12 +187,33 @@ main {
 
     /* ── Side menu layout ── */
 
+    // Flat by default: one surface, no shadows. .nds-compact lifts the menu and
+    // sections off the body color; cardView keeps its cards.
+    &.nds-has-sidemenu:not(.nds-compact, .nds-card-view) {
+        background-color: var(--background-default);
+    }
+
+    // The column gap splits menu and content, not the sections' gutters. Full width
+    // has no layout gutter, so the sections keep theirs there.
+    @include desktop(min) {
+        &.nds-has-sidemenu:not(.nds-compact, .nds-card-view, .nds-full-width) {
+            --_layout-gap: var(--layout-gap, var(--nds-viewport-padding));
+
+            // A filled section keeps its gutter, so its text clears the fill.
+            .nds-content:not(.nds-stripe) .nds-content-section:not(.nds-primary, .nds-gradient-primary, .nds-neutral, .nds-brand) {
+                --_wrapper-padding: 0;
+            }
+        }
+    }
+
+    &:is(.nds-compact, .nds-has-sidemenu.nds-card-view) .nds-content-section {
+        @include desktop(min) {
+            --_section-shadow-base: var(--shadow-md);
+        }
+    }
+
     &.nds-has-sidemenu {
         .nds-content-section {
-            @include desktop(min) {
-                --_section-shadow-base: var(--shadow-md);
-            }
-
             @include tablet(max) {
                 &:first-child {
                     --_section-padding-block-start-base: var(--spacing-4xl);
@@ -209,14 +230,6 @@ main {
         &.nds-has-sidemenu {
             margin-inline: auto;
             padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-max-width)) / 2));
-        }
-
-        // Edge-to-edge wins over the centring gutter above — higher specificity
-        // (0,3,1), so it holds regardless of source order. cardView keeps its
-        // own gutter, same exemption as the padding reset.
-        body.nds-full-width &.nds-has-sidemenu:not(.nds-card-view) {
-            margin-inline: 0;
-            padding-inline: 0;
         }
     }
 

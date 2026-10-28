@@ -75,6 +75,7 @@
 - { kind: class, name: nds-focus, status: removed, since: "2.0.0", fix: "Remove it: the field styles its own focus." }
 - { kind: class, name: nds-foundingDay, status: renamed, use: nds-founding-day, since: "2.0.0", fix: "Use nds-founding-day." }
 - { kind: class, name: nds-full-width, scope: "&.nds-card", status: renamed, use: nds-full, since: "2.0.0", fix: "Use nds-full: on a card, nds-full-width is the full-bleed breakout." }
+- { kind: class, name: nds-full-width, scope: "&body", status: removed, since: "2.0.0", fix: "Move nds-full-width to .nds-content-layout (layout_class in page front matter). The header and the footer follow it." }
 - { kind: class, name: nds-gradient-green, status: renamed, use: nds-gradient-primary, since: "2.0.0", fix: "Use nds-gradient-primary." }
 - { kind: class, name: nds-green, scope: "&:is(.nds-content-section, .nds-footer)", status: renamed, use: nds-primary, since: "2.0.0", fix: "Use nds-primary or nds-brand: the surface follows the theme color." }
 - { kind: class, name: nds-hgi-refresh-ccw-02, scope: .nds-filter, status: removed, since: "2.0.0", fix: "Put data-filter-action=\"reset\" on the button: a refresh icon no longer makes it a reset button." }
@@ -373,7 +374,7 @@
 - { kind: class, name: nds-modal-closed, status: renamed, use: nds:modal:closed, since: "1.7.0", fix: "Listen for the event nds:modal:closed (it is an event name, not a class)." }
 - { kind: class, name: nds-modal-opened, status: renamed, use: nds:modal:opened, since: "1.7.0", fix: "Listen for the event nds:modal:opened (it is an event name, not a class)." }
 - { kind: attribute, name: data-filter-name, scope: .nds-filter, status: removed, since: "1.7.0", fix: "Delete it. Applied filter chips show the raw value." }
-- { kind: class, name: nds-toEdge, scope: body, status: renamed, use: nds-full-width, since: "1.6.0", fix: "Put nds-full-width on body (body_class in page front matter) for edge-to-edge pages." }
+- { kind: class, name: nds-toEdge, scope: body, status: renamed, use: nds-full-width, since: "1.6.0", fix: "Put nds-full-width on .nds-content-layout (layout_class in page front matter) for edge-to-edge pages." }
 - { kind: class, name: nds-accessibility-panel-body, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-body, since: "1.5.0", fix: "Use the shared nds-panel-body class." }
 - { kind: class, name: nds-accessibility-panel-footer, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-footer, since: "1.5.0", fix: "Use the shared nds-panel-footer class." }
 - { kind: class, name: nds-accessibility-panel-header, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-header, since: "1.5.0", fix: "Use the shared nds-panel-header class." }

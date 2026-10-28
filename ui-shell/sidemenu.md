@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "29/10/2026 - 02:00 AM"
 ---
 
 <section id="sidemenu-overview" class="nds-content-section nds-doc-overview">
@@ -526,7 +526,7 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
 | `--nds-sidemenu-width` | `260px` | The width of the side menu and of its layout column. Set it on `:root` |
 | `--nds-sidemenu-toggle-height` | `56px` | The height of the top bar. Set it on `:root` |
 | `--toggle-pos` | `40svh` | How far below the main navigation the slide-in menu button sits. Set it on `button.nds-sidemenu-toggle` |
-| `--drawer-max-height` | The screen height less the main navigation, or `60svh` in top bar mode | The height of the list before it scrolls. Set it on `aside.nds-sidemenu`. The open slide-in menu fits the list to the screen and ignores it |
+| `--drawer-max-height` | The screen height less the main navigation and `--spacing-3xl`, or `--spacing-xl` with `nds-compact` or card view on a desktop. `60svh` in top bar mode | The height of the list before it scrolls. Set it on `aside.nds-sidemenu`. The open slide-in menu fits the list to the screen and ignores it |
 {: .nds-table .nds-responsive}
 
 ### JavaScript

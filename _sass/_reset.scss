@@ -42,7 +42,9 @@ body {
     text-rendering: optimizeLegibility;
 }
 
-body.nds-full-width {
+// The header and footer follow the layout through :has(). :is() is forgiving, so a
+// browser without :has() drops only that branch; the content still goes full width.
+:is(.nds-content-layout.nds-full-width, body:has(.nds-content-layout.nds-full-width)) {
     --nds-content-max-width: 100%;
 }
 
