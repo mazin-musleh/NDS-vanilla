@@ -26,7 +26,7 @@
  *   DOM
  *     NDS.markHome(el) / .sendHome(el) / .getHome(el)   move a node the app owns; its old spot answers for it
  *     NDS.setTopLayer(el, on)             show or hide a [popover] in the top layer, in place
- *     NDS.resolveElement(idOrElOrSel) · NDS.fromTemplate(id) · NDS.flipPosition(trigger, menu) · NDS.place(el, t, l[, anchor]) · NDS.unplace(el, anchor) · NDS.isPinned(el)
+ *     NDS.resolveElement(idOrElOrSel) · NDS.fromTemplate(id) · NDS.isPinned(el)
  *     NDS.getStickyHeaderBottom() · NDS.getViewportPadding(el) · NDS.getVisibleBox() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
  *     NDS.dragScroll(el, { canScroll, signal })   wheel + mouse-drag sideways scroll; a drag swallows its click
  *     NDS.trapFocus(getEl) · NDS.focusableSel
@@ -1296,13 +1296,13 @@
     };
 
     // The page's side gutter in px. Menus and tooltips keep it from the screen's
-    // side edges, so they line up with the content. Internal. 16 where the browser
+    // side edges, so they line up with the content. 16 where the browser
     // has no @property and reads the token as a calc() string.
     NDS.getViewportPadding = (el = document.documentElement) =>
         parseFloat(getComputedStyle(el).getPropertyValue('--nds-viewport-padding')) || 16;
 
     // The part of the screen the visitor sees, in getBoundingClientRect() coords. A pinch
-    // zoom or an on-screen keyboard shrinks it; the layout viewport keeps its size. Internal.
+    // zoom or an on-screen keyboard shrinks it; the layout viewport keeps its size.
     NDS.getVisibleBox = () => {
         const viewport = window.visualViewport, root = document.documentElement;
         const top = viewport ? viewport.offsetTop : 0, left = viewport ? viewport.offsetLeft : 0;
@@ -1717,128 +1717,11 @@
         else if (el.isConnected) el.showPopover();
     };
 
-    // ── Place a positioned element at viewport coords ─────────────────
-    // Writes `top`/`left` then measures and corrects, so the element lands at
-    // the viewport coords whatever its containing block: the page for an
-    // absolute popover in the top layer (the correction adds the scroll), the
-    // wrapper where popover is missing, the viewport for a fixed element.
-    // The transform back-out handles in-flight slide animations on the
-    // element itself (e.g. dropmenu's opening translateY).
-    // With an anchor and CSS anchor positioning (Chrome 125, Safari 26), the coords are written
-    // against the anchor, so the browser keeps el on it through every scroll with no script.
-    // An anchor in a fixed or sticky box (a panel) gets a fixed el: page scroll moves neither.
-    // Checked once: an anchor el cannot use (one in a later top-layer box) gets plain coords.
-    // Returns true when anchored; NDS.unplace(el, anchor) removes what an anchored place wrote.
-    // Usage: NDS.place(menu, top, leftPx[, trigger]);
-    const ANCHORS = typeof CSS !== 'undefined' && CSS.supports('anchor-name: --a');
-    const anchorNames = new WeakMap();
-    let anchorCount = 0;
-    const offset = (el, top, left) => {
-        const rect = el.getBoundingClientRect();
-        const { m41: translateX, m42: translateY } = new DOMMatrixReadOnly(getComputedStyle(el).transform);
-        return [(rect.left - translateX) - left, (rect.top - translateY) - top];
-    };
-    NDS.place = (el, top, left, anchor) => {
-        if (anchor && ANCHORS) {
-            if (!anchorNames.has(anchor)) anchorNames.set(anchor, '--nds-anchor-' + ++anchorCount);
-            const name = anchorNames.get(anchor), at = anchor.getBoundingClientRect();
-            anchor.style.setProperty('anchor-name', name);
-            el.style.setProperty('position-anchor', name);
-            el.style.position = NDS.isPinned(anchor) ? 'fixed' : '';
-            el.style.top = `calc(anchor(top) + ${top - at.top}px)`;
-            el.style.left = `calc(anchor(left) + ${left - at.left}px)`;
-            const [dx, dy] = offset(el, top, left);
-            if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return true;
-            NDS.unplace(el, anchor);
-        }
-        el.style.top = top + 'px';
-        el.style.left = left + 'px';
-        const [dx, dy] = offset(el, top, left);
-        if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
-            el.style.top  = (top  - dy) + 'px';
-            el.style.left = (left - dx) + 'px';
-        }
-        return false;
-    };
-    NDS.unplace = (el, anchor) => {
-        anchor?.style.removeProperty('anchor-name');
-        ['position-anchor', 'position', 'top', 'left'].forEach((property) => el.style.removeProperty(property));
-    };
-
     // Inside a fixed or sticky box: it stays put while the page scrolls under it.
     // Usage: if (NDS.isPinned(trigger)) follow it on page scroll;
     NDS.isPinned = (el) => {
         for (let box = el.parentElement; box; box = box.parentElement) if (/fixed|sticky/.test(getComputedStyle(box).position)) return true;
         return false;
-    };
-
-    // Cached lookup for `.nds-main-nav` — flipPosition fires on every popup
-    // open, so avoiding the repeated qS adds up. `undefined` = never looked up,
-    // null = looked up and absent, element = cached. SPA consumers that swap
-    // the nav DOM on route changes leave a detached element in the cache;
-    // isConnected re-lookups in that case (null stays sticky to avoid
-    // re-querying on every popup when no nav is present).
-    let navEl;
-
-    // ── Viewport Flip-Position Measurement ─────────────────────────────
-    // Measures available space around a trigger so popup-like components
-    // (dropmenus, tooltips, date pickers, custom selects) can decide
-    // whether their menu fits below the trigger or should flip above.
-    // Returns raw measurements only — the caller computes its own flipUp
-    // heuristic (e.g. `spaceBelow < menuRect.height`) and writes final
-    // top/left styles so each component keeps its own arrow offsets,
-    // RTL clamp, and gap conventions.
-    //
-    // When `respectNav` is true (default), treats the sticky `.nds-main-nav`
-    // bottom edge + `navGap` as the top viewport boundary so menus can't
-    // open behind it. Pass `respectNav: false` for components inside forms
-    // or other contexts where the nav overlap doesn't apply.
-    //
-    // Usage: const p = NDS.flipPosition(trigger, menu);
-    //        const flipUp = p.spaceBelow < p.menuRect.height && p.spaceAbove > p.spaceBelow;
-    //        const top = flipUp ? p.triggerRect.top - p.menuRect.height - 4 : p.triggerRect.bottom + 4;
-    NDS.flipPosition = (trigger, menuEl, opts = {}) => {
-        const { respectNav = true, navGap = 16 } = opts;
-        const triggerRect = trigger.getBoundingClientRect();
-        const root = document.documentElement;
-        const vw = root.clientWidth;
-        const vh = root.clientHeight;
-        // Space is measured inside what the visitor sees, so a menu never opens under the keyboard.
-        const box = NDS.getVisibleBox();
-
-        let topEdge = box.top;
-        if (respectNav) {
-            if (navEl === undefined || (navEl && !navEl.isConnected)) {
-                navEl = document.querySelector('.nds-main-nav');
-            }
-            if (navEl) {
-                const navRect = navEl.getBoundingClientRect();
-                // The sticky nav is a top boundary only for triggers BELOW it. A
-                // trigger ABOVE the nav (e.g. a topbar dropmenu) opens a downward
-                // menu that passes in front of the nav, so the nav must not clamp
-                // it down past itself — leaving a gap below the trigger. Same for
-                // a trigger INSIDE the nav (a nav-link tooltip): its popup opens
-                // in front of the nav, and the clamp pushed it navGap below it.
-                if (navRect.bottom > 0 && triggerRect.bottom > navRect.top && !navEl.contains(trigger)) {
-                    topEdge = Math.max(topEdge, navRect.bottom + navGap);
-                }
-            }
-        }
-
-        const menuRect = menuEl.getBoundingClientRect();
-        const spaceBelow = box.bottom - triggerRect.bottom;
-        const spaceAbove = triggerRect.top - topEdge;
-
-        return {
-            spaceBelow,
-            spaceAbove,
-            topEdge,
-            triggerRect,
-            menuRect,
-            box,
-            viewportWidth: vw,
-            viewportHeight: vh,
-        };
     };
 
     // ── Scroll restoration ─────────────────────────────────────────────

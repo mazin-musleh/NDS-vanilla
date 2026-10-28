@@ -1378,9 +1378,9 @@
         _computeSourceSelection() {
             const selection = window.getSelection();
             if (!selection.rangeCount || !this._editable.contains(selection.anchorNode)) return null;
-            const normalizeText = (text) => text.replace(/\s+/g, ' ').trim();
+            const collapseSpaces = (text) => text.replace(/\s+/g, ' ').trim();
 
-            let needle = normalizeText(selection.toString());
+            let needle = collapseSpaces(selection.toString());
             if (!needle) {
                 // Collapsed caret — use the word around it.
                 const node = selection.anchorNode;
@@ -1389,7 +1389,7 @@
                 const at = selection.anchorOffset;
                 const before = /\S*$/.exec(text.slice(0, at))[0];
                 const after = /^\S*/.exec(text.slice(at))[0];
-                needle = normalizeText(before + after);
+                needle = collapseSpaces(before + after);
                 if (!needle) return null;
             }
 
@@ -1399,7 +1399,7 @@
             const pre = document.createRange();
             pre.selectNodeContents(this._editable);
             pre.setEnd(range.startContainer, range.startOffset);
-            const preText = normalizeText(pre.toString());
+            const preText = collapseSpaces(pre.toString());
             let occurrences = 0;
             for (let i = preText.indexOf(needle); i !== -1; i = preText.indexOf(needle, i + 1)) occurrences++;
 

@@ -1,5 +1,5 @@
 /* NDS.Tooltip — public surface
- * Rides: (none — base component)
+ * Rides: nds-popup (where it fits beside the trigger, and putting it there)
  * Methods:
  *   NDS.Tooltip.init() / .reinit()   scan + initialize .nds-tooltip
  *   NDS.Tooltip.create(el)           instance one tooltip
@@ -386,7 +386,7 @@
             this.openAbortController?.abort();
             this.openAbortController = null;
             if (this._offScroll) { this._offScroll(); this._offScroll = null; }
-            if (this._anchored) NDS.unplace(this.balloon, this._trigger);
+            if (this._anchored) NDS.popup.clearPosition(this.balloon, this._trigger);
             this._anchored = false;
 
             NDS.setTopLayer(this.balloon, false);
@@ -402,15 +402,15 @@
             this.balloon.style.top = '';
             this.balloon.style.left = '';
 
-            // NDS.flipPosition returns raw space values + topEdge using the
+            // NDS.popup.getSpace returns raw space values + topEdge using the
             // sticky mainnav as the top boundary. Clamp topEdge to `pad` for
             // pages without the nav and subtract our own gap/pad from the
             // raw space values. Recompute spaceAbove from triggerRect rather
             // than reusing p.spaceAbove because p.spaceAbove uses the
             // unclamped p.topEdge (which is 0 when no nav is present).
-            const placement = NDS.flipPosition(this._trigger, this.balloon);
+            const placement = NDS.popup.getSpace(this._trigger, this.balloon);
             const topEdge = Math.max(placement.box.top + pad, placement.topEdge);
-            const bW = placement.menuRect.width, bH = placement.menuRect.height;
+            const bW = placement.popupRect.width, bH = placement.popupRect.height;
             const spaceBelow = placement.spaceBelow - gap - pad;
             const spaceAbove = placement.triggerRect.top - gap - topEdge;
             const flipUp = spaceBelow < bH && spaceAbove > spaceBelow;
@@ -429,7 +429,7 @@
             let left = placement.triggerRect.left + (placement.triggerRect.width / 2) - (bW / 2);
             left = Math.max(placement.box.left + edge, Math.min(left, placement.box.right - bW - edge));
 
-            this._anchored = NDS.place(this.balloon, top, left, this._trigger);
+            this._anchored = NDS.popup.setPosition(this.balloon, top, left, this._trigger);
 
             // Arrow points at the trigger center, clamped inside balloon edges
             const triggerCenterX = placement.triggerRect.left + placement.triggerRect.width / 2;

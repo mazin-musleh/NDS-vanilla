@@ -78,6 +78,10 @@ changes where the rules give a simpler, more consistent result (as the naming re
   own doc page (`layout/grid.md`) and no JS file. Published in core's banner (`nds-core.js:29`).
 - **In core for a reason, keep:** `buildChip` and `badge` build CSS-only components that have no JS owner;
   `cellText` serves table (delegated) and export (extras), two injected bundles.
+- **Popup placement is a base, `NDS.popup` (`nds-popup.js`, main; owner, 2026-10-28):** `getSpace` (was
+  `flipPosition`, which only measured) and `setPosition` / `clearPosition` (were `place` / `unplace`) serve a
+  popup beside its trigger, and the measurement looks up `.nds-main-nav`. Core keeps the page facts any element
+  uses: `isPinned`, `getVisibleBox`, `getViewportPadding`. `findOwnItems` stays in core, as `cellText` does.
 
 ### Names
 

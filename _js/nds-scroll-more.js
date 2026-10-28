@@ -82,7 +82,7 @@
     }
 
     // A scroller with nothing focusable inside takes a tab stop (NDS.setScrollStop).
-    function scrollStop(content, on) {
+    function syncScrollStop(content, on) {
         NDS.setScrollStop(content, on && !content.querySelector(NDS.focusableSel));
     }
 
@@ -95,13 +95,13 @@
         const axis = detectAxis(content);
         if (!axis) return wrapper.hasAttribute('data-axis') ? Object.assign(() => {
             wrapper.removeAttribute('data-axis');
-            scrollStop(content, false);
+            syncScrollStop(content, false);
             removeState(wrapper, config.overflow.hasMore, config.overflow.atStart, config.overflow.atEnd);
         }, { clears: true }) : undefined;
         const position = getScrollPosition(content, axis), maxScroll = getMaxScroll(content, axis);
         return () => {
             wrapper.setAttribute('data-axis', axis);
-            scrollStop(content, true);
+            syncScrollStop(content, true);
             addState(wrapper, config.overflow.hasMore);
             syncEdges(wrapper, position, maxScroll);
         };
@@ -221,7 +221,7 @@
         wrapperSetups.delete(wrapper);
         setup?.abortController?.abort();
         setup?.offResize?.();
-        if (setup?.content) scrollStop(setup.content, false);
+        if (setup?.content) syncScrollStop(setup.content, false);
         setup?.builtDivider?.remove();
         // What measure() wrote: a re-create measures again.
         wrapper.removeAttribute('data-axis');

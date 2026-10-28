@@ -72,7 +72,7 @@
                 if (!entry.isIntersecting) return;
                 off();
                 processCodeElement(codeElement);
-                offSize = NDS.onElementResize(codeElement, () => scrollStop(codeElement));
+                offSize = NDS.onElementResize(codeElement, () => measureScrollStop(codeElement));
             }, { rootMargin: '100% 0px' });
             // NDS.init.destroy() finds this: core's pools hold the block until it is released.
             codeElement.ndsCode = {
@@ -83,7 +83,7 @@
     }
 
     // A block that scrolls takes a tab stop (NDS.setScrollStop). Returns the write, for onElementResize.
-    function scrollStop(el) {
+    function measureScrollStop(el) {
         const scrolls = el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1;
         return () => NDS.setScrollStop(el, scrolls);
     }

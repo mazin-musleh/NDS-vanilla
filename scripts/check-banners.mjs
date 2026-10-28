@@ -47,6 +47,7 @@ const SCOPE = [
     ['nds-date.js', 'Date'],
     ['nds-date-picker.js', 'DatePicker'],
     ['nds-dialog.js', 'dialog'],
+    ['nds-popup.js', 'popup'],
     ['nds-validation.js', 'validation'],
     ['nds-field.js', 'field'],
     ['nds-typing.js', 'typing'],

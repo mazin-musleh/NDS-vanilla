@@ -337,7 +337,8 @@
 - { kind: api, name: NDS.triggerEvents, status: renamed, use: NDS.setValue, since: "2.0.0", fix: "Use NDS.setValue(el, value): it writes the value and fires input and change. el.value = x; NDS.triggerEvents(el); becomes NDS.setValue(el, x);" }
 - { kind: api, name: NDS.langKey, status: renamed, use: NDS.lang, since: "2.0.0", fix: "Use NDS.lang: it holds the page language, not only ar or en." }
 - { kind: api, name: NDS.loadExtras, status: removed, since: "2.0.0", fix: "Use NDS.init.mount(el) for new markup, or NDS.loadBundle(name). Editor, Chart and Code have their own bundles now." }
-- { kind: api, name: NDS.placeFixed, status: renamed, use: NDS.place, since: "2.0.0", fix: "Use NDS.place(el, top, left)." }
+- { kind: api, name: NDS.placeFixed, status: renamed, use: NDS.popup.setPosition, since: "2.0.0", fix: "Use NDS.popup.setPosition(el, top, left)." }
+- { kind: api, name: NDS.flipPosition, status: renamed, use: NDS.popup.getSpace, since: "2.0.0", fix: "Use NDS.popup.getSpace(trigger, popup, opts): the same measurements, with popupRect where it returned menuRect." }
 - { kind: api, name: NDS.Ipv.create, status: removed, since: "2.0.0", fix: "Drive the viewer from the namespace: NDS.Ipv.open(img), close(), next(), prev(), resetZoom(), toggleControls() and destroy()." }
 - { kind: api, name: window.ndsIPV, status: removed, since: "2.0.0", fix: "Drive the viewer from NDS.Ipv: open(img), close(), next(), prev(), resetZoom(), toggleControls() and destroy()." }
 - { kind: api, name: el.ndsSideinfo.updatePosition, status: removed, since: "2.0.0", fix: "Remove the call: the column measures itself again when the hero resizes or the fonts load." }

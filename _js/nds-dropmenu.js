@@ -1,5 +1,5 @@
 /* NDS.Dropmenu — public surface
- * Rides: (none — base component)
+ * Rides: nds-popup (where it fits beside the trigger, and putting it there)
  * Requires:
  *   .nds-dropmenu-footer sits outside .nds-dropmenu-scroll — the footer scrolls away with the list, and search hides its buttons
  * Methods:
@@ -993,7 +993,7 @@
             // Only what open() wrote: an authored style and the no-popover position stay.
             ['top', 'left', 'translate', 'width', 'max-height', 'overflow-y', '--dropmenu-width', '--dropmenu-min-width', '--dropmenu-max-width']
                 .forEach(property => this._menu.style.removeProperty(property));
-            if (this._anchored) NDS.unplace(this._menu, this.trigger);
+            if (this._anchored) NDS.popup.clearPosition(this._menu, this.trigger);
             this._anchored = undefined;
             const scroll = this._findOwnItem('.nds-dropmenu-scroll');
             if (scroll) scroll.style.maxHeight = '';
@@ -1011,7 +1011,7 @@
         // ==============================================
 
         /**
-         * Compute placement in viewport coords; NDS.place writes them for the
+         * Compute placement in viewport coords; NDS.popup.setPosition writes them for the
          * absolute menu in the top layer. Vertical flips up when space below is tight;
          * horizontal prefers trigger-edge alignment (RTL-aware) then clamps
          * to the viewport.
@@ -1039,7 +1039,7 @@
             const width = Math.min(this._menu.offsetWidth, vw - edge * 2);
             this._menu.style.width = width + 'px';
 
-            // NDS.flipPosition returns raw space values + topEdge using the
+            // NDS.popup.getSpace returns raw space values + topEdge using the
             // sticky mainnav as the top boundary. We clamp topEdge to `pad`
             // for pages without the nav and subtract our own gap/pad from
             // the raw space values.
@@ -1049,7 +1049,7 @@
             // ~nav height while the down side only gives up `pad`, so a tall menu
             // reads "less room above", stays down, and runs off the viewport with
             // real space going unused above it.
-            const placement = NDS.flipPosition(this.trigger, this._menu, {
+            const placement = NDS.popup.getSpace(this.trigger, this._menu, {
                 respectNav: this._respectNav
             });
             // No popover (Safari 16): the part of a fixed menu outside the modal's scroll box takes
@@ -1064,23 +1064,23 @@
             // Flip up when the menu doesn't fit below AND above has more room
             // (real measured height, not a fixed threshold — a fits-below menu
             // must never flip, a taller-than-threshold one must not stay down).
-            const flipUp = spaceBelow < placement.menuRect.height && spaceAbove > spaceBelow;
+            const flipUp = spaceBelow < placement.popupRect.height && spaceAbove > spaceBelow;
             const available = flipUp ? spaceAbove : spaceBelow;
 
             // After the flip has already picked the roomier side, the menu still doesn't fit:
             // a page scroll carries it with its trigger, but the user should not have to scroll for it.
             let clamped = false, pageShift = 0;
-            if (placement.menuRect.height > available) {
+            if (placement.popupRect.height > available) {
                 if (scroll) {
                     // Preferred: shrink the inner list so the menu's own chrome
                     // (search box, footer actions) stays pinned and visible.
-                    const chrome = placement.menuRect.height - scroll.getBoundingClientRect().height;
+                    const chrome = placement.popupRect.height - scroll.getBoundingClientRect().height;
                     scroll.style.maxHeight = Math.max(80, available - chrome) + 'px';
                     clamped = true;
                 } else {
                     // No list to shrink (the date-picker calendar): a scrollbar would hide its rows.
                     // Scroll the page to make room; where it can't, scroll the whole menu.
-                    pageShift = this._getPageShift(placement.menuRect.height - available, flipUp, placement, topEdge, gap, pad);
+                    pageShift = this._getPageShift(placement.popupRect.height - available, flipUp, placement, topEdge, gap, pad);
                     if (!pageShift) {
                         this._menu.style.maxHeight = Math.max(80, available) + 'px';
                         this._menu.style.overflowY = 'auto';
@@ -1090,9 +1090,9 @@
             }
 
             // Re-measure only when the clamp changed the height; otherwise the
-            // menu is unchanged since placement.menuRect (no DOM write since), so reuse
+            // menu is unchanged since placement.popupRect (no DOM write since), so reuse
             // it and skip a forced reflow.
-            const currentMenuRect = clamped ? this._menu.getBoundingClientRect() : placement.menuRect;
+            const currentMenuRect = clamped ? this._menu.getBoundingClientRect() : placement.popupRect;
             if (flipUp) {
                 this.dropmenu.setAttribute('data-position-vertical', 'top');
                 this._menu.setAttribute('data-position-vertical', 'top');
@@ -1129,7 +1129,7 @@
         _getPageShift(shortfall, up, placement, topEdge, gap, pad) {
             if (!this._menu.showPopover || !this._respectNav || NDS.isPinned(this.trigger)) return 0;
             const view = window.innerHeight - pad - topEdge;
-            if (placement.menuRect.height + gap + placement.triggerRect.height > view) return 0;
+            if (placement.popupRect.height + gap + placement.triggerRect.height > view) return 0;
             const room = up ? window.scrollY : document.documentElement.scrollHeight - window.innerHeight - window.scrollY;
             if (room < shortfall) return 0;
             return Math.ceil(up ? -shortfall : shortfall);
@@ -1140,7 +1140,7 @@
         _place(top, left, height) {
             this._menu.style.translate = '';
             this._placedHeight = height;
-            this._anchored = NDS.place(this._menu, top, left, this._anchored === false ? null : this.trigger);
+            this._anchored = NDS.popup.setPosition(this._menu, top, left, this._anchored === false ? null : this.trigger);
         }
 
         // The nearest scroll box around the menu inside an open <dialog>, or null.

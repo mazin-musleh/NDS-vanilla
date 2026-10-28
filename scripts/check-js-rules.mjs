@@ -246,10 +246,10 @@ const POOLS = 'Resize|ElementResize|Intersect|OutsideScroll|AttributeChange|DomA
 // JSD-08's core-utility allowlist; the values among them are read, not called, so only `?.` guards them.
 const CORE_UTILS = ['state', 'status', 'breakpoints', 'lang', 'isRtl', 'isArabic', 'langKey', 'escapeHtml', 'debounce',
     'throttleToFrame', 'onResize', 'onElementResize', 'onIntersect', 'onDomAdd', 'onDomRemove', 'onChildrenChange',
-    'onAttributeChange', 'onOutsideScroll', 'trapFocus', 'scrollLock', 'cache', 'i18n', 'setTopLayer', 'place', 'flipPosition',
+    'onAttributeChange', 'onOutsideScroll', 'trapFocus', 'scrollLock', 'cache', 'i18n', 'setTopLayer',
     'getUniqueId', 'transitionSpeed', 'focusableSel', 'onIdle'];
 // JSD-10: core functions a component must not re-declare.
-const CORE_FNS = new Set(['escapeHtml', 'debounce', 'throttleToFrame', 'getUniqueId', 'transitionSpeed', 'onIdle', 'trapFocus', 'flipPosition', 'toSafeUrl', 'mergeOwnKeys', 'setValue', 'announce']);
+const CORE_FNS = new Set(['escapeHtml', 'debounce', 'throttleToFrame', 'getUniqueId', 'transitionSpeed', 'onIdle', 'trapFocus', 'toSafeUrl', 'mergeOwnKeys', 'setValue', 'announce']);
 const CORE_VALUES = new Set(['lang', 'isRtl', 'isArabic', 'langKey', 'focusableSel']);
 // JSD-13: the CSS transition durations NDS uses, and the tokens a transition writes.
 const DURATIONS = new Set([150, 200, 250, 300, 400]);

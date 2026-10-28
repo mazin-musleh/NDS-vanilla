@@ -6,7 +6,7 @@
 //   TOP LAYER  the open menu is a popover in the top layer, still a DOM child of
 //            its wrapper: nothing clips it, and closest(), bubbling and a dark
 //            area reach it.
-//   FLIP     flipPosition reserved the sticky nav's height off the TOP side for
+//   FLIP     NDS.popup.getSpace reserved the sticky nav's height off the TOP side for
 //            a menu stacked ABOVE the nav (a modal is in the top layer, over
 //            the nav). The up side measured ~120px smaller than it was, so
 //            `spaceAbove > spaceBelow` came out false and a tall panel stayed
