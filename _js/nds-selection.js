@@ -32,7 +32,7 @@
  *   - The count covers EVERY selected item, including other pages and items a filter hides —
  *     the bulk-action truth export sends. Select-all skips the items a filter hides.
  *   - An item with a checkbox mirrors it into data-state="selected". An item without one
- *     keeps whatever data-state the page set, and counts by it.
+ *     counts by its data-state: the page sets it, and selectAll() and clear() write it.
  *   - Ship .nds-selection-view with `hidden` so first paint is right before this bundle
  *     lands; the component swaps it against .nds-records-view.
  *   - data-state="has-selection" sits on the counter while anything is selected.
@@ -146,7 +146,12 @@
         list = NDS.resolveElement(list);
         if (!list) return;
         const shown = getScope(getItems(list), scope === 'page');
-        shown.forEach(item => { const box = getBox(item); if (box) box.checked = on; });
+        // An item with no box takes the state itself, as clear() clears it.
+        shown.forEach(item => {
+            const box = getBox(item);
+            if (box) box.checked = on;
+            else NDS.state[on ? 'add' : 'remove'](item, 'selected');
+        });
         mirror(shown);
         sync(list, true);
     }
@@ -239,10 +244,10 @@
         pagesOff = null;
     }
 
-    // refresh ignores the container on purpose: counters and select-all boxes sit outside
-    // the list, so a container handed in would match nothing. It calls init() first because
-    // the walk dispatches an owner's refresh INSTEAD of its init: on a page with no list at
-    // load, the listener was never wired.
+    // With no list (the loader's hook), refresh updates every list: counters and select-all
+    // boxes sit outside the list, so the container the walk passes would match nothing. It
+    // calls init() first because the walk dispatches an owner's refresh INSTEAD of its init:
+    // on a page with no list at load, the listener was never wired.
     NDS.Selection = {
         init, reinit: recountAll, refresh: (list) => { if (list) return recount(list); init(); recountAll(); },
         selectAll, clear, getSelected, isSelected, destroy

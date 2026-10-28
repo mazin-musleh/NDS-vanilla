@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "28/10/2026 - 10:32 AM"
 ---
 
 <section id="selection-overview" class="nds-content-section nds-doc-overview">
@@ -365,13 +365,13 @@ The list is the element with the id that `data-selection-target` names. Its item
 | `data-selection-total` | an element in a counter | The script writes the number of items in the list into it. On a paged list, `data-paged-count` from [Pagination](../components/pagination) can take its place: it counts only the items that match the filter |
 | `data-state~="has-selection"` | a counter | The script sets it while anything is selected |
 | `data-selection-target="id"` | an `input.nds-checkbox-input` | Makes the checkbox the list's select-all. It acts on the current page only. [Tables](../components/table) add it to the header checkbox, and give the `<tbody>` an id if it has none |
-| `data-state~="selected"` | an item | The script sets it when the item's checkbox is checked, and removes it when the box is cleared. Set it yourself on an item with no checkbox. `clear()` removes it from every item |
+| `data-state~="selected"` | an item | The script sets it when the item's checkbox is checked, and removes it when the box is cleared. Set it yourself on an item with no checkbox. Select all sets it too, and `clear()` removes it from every item |
 {: .nds-table .nds-responsive}
 
 ### JavaScript
 {: .nds-block-title}
 
-The script starts on its own. Call `recount()` or `reinit()` after a change that fires no `change` event: a `checked` set from code, or an item marked only with `data-state`. A method that takes a list takes its id or the element.
+The script starts on its own. Call `refresh(list)` or `reinit()` after a change that fires no `change` event: a `checked` set from code, or an item marked only with `data-state`. A method that takes a list takes its id or the element.
 
 | Method | Effect |
 |---|---|
