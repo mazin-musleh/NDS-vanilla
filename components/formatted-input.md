@@ -2,13 +2,13 @@
 layout: page
 title: Formatted Input
 hero_title: Formatted Input - National Design System
-hero_description: Text fields that keep a phone number, a national ID, an IBAN or a value of your own shape in that shape as the user types
+hero_description: Text fields that keep a phone number, a national ID, an IBAN, a Saudi plate or a value of your own shape in that shape as the user types
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 11:11 PM"
+last_edit: "29/10/2026 - 12:03 AM"
 ---
 
 <section id="formatted-input-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "28/10/2026 - 11:11 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A formatted input is a text field that keeps its value in one shape as the user types or pastes. `.nds-formatted` goes on the `.nds-form-container` of a [text field](../components/form): the label, the messages and submit validation work as on every field. Beside it, one preset class sets the shape: `.nds-phone` for a phone number, `.nds-national-id` for a national ID (a Saudi ID or iqama number, unless the page sets another country), and `.nds-iban` for a bank account IBAN. With no preset, the field takes a shape you write in `data-format`, for a value such as a reference number.
+A formatted input is a text field that keeps its value in one shape as the user types or pastes. `.nds-formatted` goes on the `.nds-form-container` of a [text field](../components/form): the label, the messages and submit validation work as on every field. Beside it, one preset class sets the shape: `.nds-phone` for a phone number, `.nds-national-id` for a national ID (a Saudi ID or iqama number, unless the page sets another country), `.nds-iban` for a bank account IBAN, and `.nds-plate` for a Saudi vehicle plate. With no preset, the field takes a shape you write in `data-format`, for a value such as a reference number.
 
 Pick another component when:
 
@@ -152,6 +152,23 @@ Pick another component when:
   </div>
 </div>
 </script>
+<script type="text/html" id="field-plate" data-canon>
+<div class="nds-form-container nds-formatted nds-plate">
+  <div class="nds-form-header">
+    <label for="plate-number">
+      <span class="nds-label">Plate number</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <input type="text" id="plate-number" name="plate-number" class="nds-input" autocomplete="off" spellcheck="false">
+    <div class="nds-form-action">
+      <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+</script>
     </div>
   </div>
 </section>
@@ -163,7 +180,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Each Structure is one kind of value. Every one carries `.nds-formatted`, and all but Custom format add one preset class beside it. The size, style, states and messages of a text field work on all five: see [Text Fields](../components/form).
+Each Structure is one kind of value. Every one carries `.nds-formatted`, and all but Custom format add one preset class beside it. The size, style, states and messages of a text field work on all six: see [Text Fields](../components/form).
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -171,9 +188,16 @@ Each Structure is one kind of value. Every one carries `.nds-formatted`, and all
 | Structure | Phone with country (id: phone-country) | canon `#field-phone-country` | — | A phone number after a country-code picker. The picker is a [Dropmenu](../components/dropmenu) with `data-select-name`. Each country item's `data-value` is its code, and it may carry its own `data-format` |
 | Structure | National ID (id: national-id) (demo: + required) | canon `#field-national-id` | — | A national ID: by default a Saudi ID or iqama number, with digits only, 10 at most, and a check digit. Another country follows its own rule: see Site Country |
 | Structure | IBAN (id: iban) (demo: + required) | canon `#field-iban` | — | A bank account IBAN. The field shows it in groups of four, writes capitals, adds missing country letters (`SA` by default), and checks the country, the length and the check digits |
-| Structure | Custom format (id: formatted) (demo: + required) (demo: + pattern) | canon `#field-formatted` | — | A value in a shape you write in `data-format`: `0` takes a digit, `A` a capital letter, `a` a small letter, `*` a letter or a digit as typed. A value that leaves a slot empty fails. Add a `pattern` only for a rule the shape cannot hold |
+| Structure | Custom format (id: formatted) (demo: + required) (demo: + pattern) | canon `#field-formatted` | — | A value in a shape you write in `data-format`: `0` takes a digit, `A` a capital letter, `a` a small letter, `*` a letter or a digit as typed, `ح` an Arabic letter. A value that leaves a slot empty fails. Add a `pattern` only for a rule the shape cannot hold |
+| Structure | Saudi plate (id: plate) (demo: + required) | canon `#field-plate` | — | A Saudi vehicle plate: letters, then digits. The field takes the 17 plate letters in Arabic or Latin, shows them in the field's language, and submits the Latin letters, then the digits (`ABJ1234`) |
 | Affix style | Subtle (default) | `.nds-subtle` | `.nds-prefix > .nds-btn` | The code or the country picker on the field's own background |
 | Affix style | Solid (hint: Light fill behind the code) | `.nds-secondary` | `.nds-prefix > .nds-btn` | The code or the country picker on a light fill, set apart from the number. Phone only |
+| Letters | Auto (default) | — | `.nds-plate > .nds-form-control` | The first letter the user types picks the script: Arabic or Latin. An empty field follows the page's `lang`. Plate only |
+| Letters | Arabic (hint: أ ب ح ١٢٣٤, right to left) | `[lang="ar"]` | `.nds-plate > .nds-form-control` | Arabic letters apart and Arabic digits, right to left, as the plate's Arabic row: `أ ب ح ١٢٣٤` |
+| Letters | English (hint: ABJ 1234, left to right) | `[lang="en"]` | `.nds-plate > .nds-form-control` | Latin letters, left to right: `ABJ 1234` |
+| Vehicle | Car (default) | — | `.nds-plate` | 1 to 3 letters and 1 to 4 digits |
+| Vehicle | Motorcycle | `[data-vehicle="motorcycle"]` | `.nds-plate` | 1 or 2 letters and 1 to 3 digits |
+| Submit Arabic | Submit Arabic (hint: Sends أبح1234) | `[data-submit="arabic"]` | `.nds-plate` | The submit sends Arabic letters, then the digits: `أبح1234`. For a server that stores the plate in Arabic |
 | Required | Required (id: required) | `[data-required]` | `.nds-form-container` | A red asterisk before the label. An empty field blocks the submit |
 | Pattern | Pattern (id: pattern) (hint: The value must start with AB) | `[pattern="AB-[0-9]{6}"]` | `#application-number` | A rule the shape cannot hold, here the letters `AB`. A value that breaks it fails with "Please use the correct format". Write the pattern with the separators the field shows. Custom format only |
 | Field states | Size, style, label, info, hint, disabled, readonly, loading | — | — | Shared by every text field. See [Text Fields](../components/form) |
@@ -223,6 +247,15 @@ Phone with country puts a [Dropmenu](../components/dropmenu) with `data-select-n
 
 `.nds-iban` shows the IBAN in groups of four and writes the letters as capitals. It takes two letters for the country, two check digits, then letters or digits. It holds 34 characters at most, the longest IBAN, and removes a shorter `maxlength`. An IBAN that starts with `SA` takes digits only after it, 24 characters in all. A value that starts with a digit, as some banking apps copy a Saudi IBAN, gets the letters of the site country in front, `SA` by default. The field fails when the value is not an IBAN: two letters for the country, two check digits, then 11 to 30 letters or digits, with correct check digits. The check takes an IBAN of any country, whatever the site country is.
 
+### Saudi Plate
+{: .nds-block-title #saudi-plate}
+
+`.nds-plate` takes a Saudi vehicle plate: letters, then digits. It takes only the 17 letters a plate uses, typed in Arabic or Latin: `أ` or `A`, `ب` or `B`, `ح` or `J`, and so on. It also takes `ا` for `أ`, `ي` for `ى`, and `ه` for `هـ`. A car has 1 to 3 letters and 1 to 4 digits. `data-vehicle="motorcycle"` on the `.nds-form-container` sets 1 or 2 letters and 1 to 3 digits. Letters always come before the digits, so a pasted `1234 ABJ` shows `ABJ 1234`.
+
+The first letter the user types picks the script: type `أ` and the field shows Arabic, type `A` and it shows Latin. An empty field follows the page's `lang`. To fix one script, write `lang` on its `.nds-form-control`. With Arabic, the whole row flips, its actions and icons included, and the field shows the Arabic letters apart and Arabic digits, right to left, as the plate's Arabic row: `أ ب ح ١٢٣٤`. With Latin, it shows `ABJ 1234`. Either way, the submit sends the Latin letters, then the digits: `ABJ1234`. `data-submit="arabic"` on the `.nds-form-container` sends Arabic letters instead: `أبح1234`. A value the page writes back in `value` shows the same in either script. A value with no letter or no digit fails with "Incomplete value".
+
+Leave out the `placeholder`: the field writes a sample plate that follows its letters and vehicle, `ABJ 1234`, `AB 123`, `أ ب ح ١٢٣٤` or `أ ب ١٢٣`. A placeholder you write stays as written.
+
 ### Site Country
 {: .nds-block-title #site-country}
 
@@ -248,7 +281,7 @@ idType.addEventListener('change', function () {
 ### Custom Format
 {: .nds-block-title #custom-format}
 
-`.nds-formatted` with no preset takes any value with a fixed shape. Write the shape in `data-format` on its `.nds-form-container`. `0` takes a digit, `A` a letter written as a capital, `a` a letter written small, and `*` a letter or a digit as typed. The field writes every other character for the user: `AA-000000` shows `AB-123456` when the user types `ab123456`, and `AB-` when the user types the dash too. A key that does not fit the next slot is dropped, and the field stops at the last slot.
+`.nds-formatted` with no preset takes any value with a fixed shape. Write the shape in `data-format` on its `.nds-form-container`. `0` takes a digit, `A` a letter written as a capital, `a` a letter written small, `*` a letter or a digit as typed, and `ح` an Arabic letter. The field writes every other character for the user: `AA-000000` shows `AB-123456` when the user types `ab123456`, and `AB-` when the user types the dash too. For a Saudi plate, use `.nds-plate`. A key that does not fit the next slot is dropped, and the field stops at the last slot.
 
 A value that leaves a slot empty fails with "Incomplete value", at blur and at submit. An empty field passes unless it is required. For a rule the shape cannot hold, add a `pattern` to the input. It checks the value as the field shows it, separators included: `[34]-[0-9]{6}` takes only a first digit of 3 or 4 in a `0-000000` shape.
 
@@ -336,13 +369,13 @@ The field reads `data-format` at each key, so a script can change the shape at a
     <div class="nds-section-body nds-prose" markdown="1">
 
 - Write `.nds-formatted` on every field, and at most one preset beside it. A preset without it is a plain text box, and with two presets only the first works: `NDS.init.audit()` reports both.
-- Use `type="tel"` and `inputmode="numeric"` on a phone. Use `inputmode="numeric"` on a national ID or a custom format of digits only. Leave `inputmode` off a field that takes letters, such as an IBAN: a phone keyboard would show digits only.
+- Use `type="tel"` and `inputmode="numeric"` on a phone. Use `inputmode="numeric"` on a national ID or a custom format of digits only. Leave `inputmode` off a field that takes letters, such as an IBAN or a plate: a phone keyboard would show digits only.
 - Set `autocomplete="tel-national"` on a phone with a code, and `autocomplete="off"` on every other formatted field.
 - Give every phone field that shows a code its hidden code input, or a picker whose items' `data-value` is the code. Without a code, the submit sends the local number only.
 - Read the phone number from the form's data, or keep the `value` of `nds:phone:change`. `input.value` holds the local number with its spaces.
 - Write a phone `data-format` only for a country whose number length you know. Phone numbers differ in length between countries, and even inside one.
 - Keep `00 000 0000` for a Saudi mobile only. A field that takes any Saudi number, a landline or an `800` number too, has no `data-format`: the format holds 9 digits and drops the last digit of `800 123 4567`.
-- Add no `pattern` to a national ID or an IBAN field. The field checks itself.
+- Add no `pattern` to a national ID, an IBAN or a plate field. The field checks itself.
 - Give a Saudi national ID `maxlength="10"`. The browser then stops at 10 before the script loads.
 - On a site outside Saudi Arabia, set `data-country` on `<html>`, and add your country's ID rule with `addIdRule()`.
 - For a passport or a foreign ID, set `data-country="any"` on the field, and leave `inputmode` and `maxlength` off.
@@ -369,6 +402,7 @@ The field reads `data-format` at each key, so a script can change the shape at a
 | `nds-phone` | a `.nds-formatted` container, its input `type="tel"` | Preset. Keeps the digits. With a code, submits the whole number (`+966551234567`); without one, the number as typed. With `data-format`, shows the number in groups |
 | `nds-national-id` | a `.nds-formatted` container | Preset. Follows the ID rule of its country, Saudi Arabia by default: keeps digits only, and fails the field when the value is not a Saudi national ID or iqama number |
 | `nds-iban` | a `.nds-formatted` container | Preset. Shows the IBAN in groups of four, writes capitals, adds missing country letters, and fails the field when the value is not an IBAN |
+| `nds-plate` | a `.nds-formatted` container | Preset. Takes a Saudi plate's letters and digits, shows the letters in the field's language, submits the Latin letters, then the digits (`ABJ1234`), and fails a value with no letter or no digit |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes
@@ -378,13 +412,17 @@ The field reads `data-format` at each key, so a script can change the shape at a
 |---|---|---|
 | `input type="hidden"` | in the `.nds-prefix` of a `.nds-phone` field | Its `value` is the code the submit puts before the number (`+966`). The field also drops it from a pasted full number. Give it a `name` to also send the code as its own field |
 | `data-format` | the `.nds-form-container` of a `.nds-phone` field | The groups the number shows in: `0` is one digit, and any other character goes between digits (`00 000 0000`) |
-| `data-format` | the `.nds-form-container` of a `.nds-formatted` field with no preset | The shape of the value: `0` takes a digit, `A` a capital letter, `a` a small letter, `*` a letter or a digit as typed, and any other character goes between them (`AA-000000`) |
+| `data-format` | the `.nds-form-container` of a `.nds-formatted` field with no preset | The shape of the value: `0` takes a digit, `A` a capital letter, `a` a small letter, `*` a letter or a digit as typed, `ح` an Arabic letter, and any other character goes between them (`AA-000000`, `ححح 0000`) |
 | `data-select-name` | the `.nds-dropmenu` in a phone field's `.nds-form-control` | Makes the menu the field's country picker. The picked code submits in a hidden input of this name. See [Dropmenu](../components/dropmenu) |
 | `data-select-value` | the same `.nds-dropmenu` | The `data-value` of the country picked at page load. It wins over an item with `data-state="selected"` |
 | `data-value` | a `.nds-dropmenu-item` in the country picker | The code for that country (`+971`). Dropmenu writes the picked one to the picker's hidden input |
 | `data-format` | a `.nds-dropmenu-item` in the country picker | The groups for that country, read while it is picked. A country without one shows the number as typed |
 | `data-country` | `<html>`, or any element around a `.nds-national-id` or `.nds-iban` field | The two-letter country the fields inside it follow (`AE`). The nearest one wins. Without one, `SA`. `any` takes an ID of any country, a passport too, with no check |
-| `maxlength` | the input of a `.nds-formatted` field | The most characters, for a field with no `data-format`. A field with a `data-format`, and an IBAN field, remove a `maxlength` shorter than their groups |
+| `data-vehicle` | the `.nds-form-container` of a `.nds-plate` field | `motorcycle`: 1 or 2 letters and 1 to 3 digits. Without it, a car: 1 to 3 letters and 1 to 4 digits |
+| `lang` | the `.nds-form-control` of a `.nds-plate` field | Fixes the script. `ar` flips the row, its actions and icons included, and shows the Arabic letters apart and Arabic digits, right to left (`أ ب ح ١٢٣٤`). Any other language shows the Latin letters (`ABJ 1234`). Without it, the first letter typed picks the script, and the field writes `lang` there itself. An empty field follows the page's `lang` |
+| `data-submit` | the `.nds-form-container` of a `.nds-plate` field | `arabic`: the submit sends Arabic letters, then the digits (`أبح1234`). Without it, Latin letters (`ABJ1234`) |
+| `placeholder` | the input of a `.nds-plate` field | Leave it out: the field writes a sample plate in its letters and vehicle (`AB 123` for a motorcycle). One you write stays |
+| `maxlength` | the input of a `.nds-formatted` field | The most characters, for a field with no `data-format`. A field with a `data-format`, and an IBAN field, remove a `maxlength` shorter than their groups. A plate field removes any `maxlength` |
 {: .nds-table .nds-responsive}
 
 ### Validation Messages
@@ -397,6 +435,7 @@ The script shows the message in Arabic or English to match the page. The other c
 | `.nds-national-id` | Invalid national ID number |
 | `.nds-iban` | Invalid IBAN |
 | A `data-format` slot left empty, on a phone or a field with no preset | Incomplete value |
+| `.nds-plate` with no letter or no digit | Incomplete value |
 {: .nds-table .nds-responsive}
 
 ### JavaScript

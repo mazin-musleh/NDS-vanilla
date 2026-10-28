@@ -131,6 +131,8 @@ for (const [c, en] of Object.entries(english)) for (const [k, v] of Object.entri
 const INPUT_TOKENS = {
     'nds-time-picker.js': ['const MERIDIEM =', 'const isPm =', 'const meridiemKeys =', 'const getMeridiemWords ='],   // "2:30 م" parses on an English page too
     'nds-date-picker.js': ['(هـ|ه|AH)', '(?:to|إلى)'],   // a pasted Hijri date's هـ, a range's إلى
+    'nds-typing.js': ['const SLOTS =', 'const SLOT_CHARACTER =', 'format.split('],   // the ح slot and the Arabic letters it takes
+    'nds-formatted-input.js': ['var PLATE_LETTERS =', 'var PLATE_ALIASES =', 'var letter = [pair[0] ==='],   // a Saudi plate's letters
 };
 const ARABIC_LETTER = /[ء-ي]/;   // letters only: Arabic-Indic digit ranges in regexes pass
 for (const f of jsFiles) {

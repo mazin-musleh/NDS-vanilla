@@ -264,7 +264,20 @@ const PATTERNS = {
             border: formField('formatted', '<input type="text" class="nds-input">', ' data-format="0 000 000 000"'),
             plate: formField('formatted', '<input type="text" class="nds-input">', ' data-format="AA-0000"'),
             small: formField('formatted', '<input type="text" class="nds-input">', ' data-format="aa-**"'),
+            // A Saudi plate: three Arabic letters, four digits.
+            arabic: formField('formatted', '<input type="text" class="nds-input">', ' data-format="ححح 0000"'),
+            // .nds-plate: a Saudi plate in its input's lang, a car's or a motorcycle's.
+            plateEn: formField('plate', '<input type="text" class="nds-input" lang="en" maxlength="7">'),
+            plateAr: formField('plate', '<input type="text" class="nds-input" lang="ar">'),
+            plateMoto: formField('plate', '<input type="text" class="nds-input" lang="en">', ' data-vehicle="motorcycle"'),
+            // A saved value, as a server writes it back: shaped at load in the field's letters.
+            // No lang: the first letter typed picks the script.
+            plateAuto: formField('plate', '<input type="text" class="nds-input">'),
+            plateSubmitAr: formField('plate', '<input type="text" class="nds-input" lang="en">', ' data-submit="arabic"'),
+            plateServedAr: formField('plate', '<input type="text" class="nds-input" lang="ar" value="ABJ1234">'),
+            plateServedEn: formField('plate', '<input type="text" class="nds-input" lang="en" value="أبح١٢٣٤">'),
         },
+        initial: { plateServedAr: 'أ ب ح ١٢٣٤', plateServedEn: 'ABJ 1234' },
         cases: [
             ['iban', '', 'sa0380000000608010167519', 'SA03 8000 0000 6080 1016 7519|'],
             ['iban', '', '0380000000608010167519', 'SA03 8000 0000 6080 1016 7519|'],
@@ -294,6 +307,36 @@ const PATTERNS = {
             ['plate', '', 'ab1234', 'AB-1234|'],
             ['plate', '', '1ab', 'AB|'],
             ['small', '', 'ABcD', 'ab-cD|'],
+            ['arabic', '', 'أبج1234', 'أبج 1234|'],
+            ['arabic', '', 'أبج١٢٣٤', 'أبج 1234|'],
+            ['arabic', '', 'ab1أبج', 'أبج|'],
+            // An Arabic letter is not a separator: a backspace takes it alone.
+            ['arabic', 'أبج| 1234', '{Backspace}', 'أب|1 234'],
+            ['arabic', 'أبج |1234', '{Backspace}', 'أب|1 234'],
+            ['arabic', 'أ|بج 1234', '{Backspace}', '|بج1 234'],
+            // A plate: its 17 letters in either script, letters before digits, as many as the vehicle has.
+            ['plateEn', '', 'abj1234', 'ABJ 1234|'],
+            ['plateEn', '', 'أبح1234', 'ABJ 1234|'],
+            ['plateEn', '', 'abjk12345', 'ABJ 1234|'],
+            ['plateEn', '', 'cfi', '|'],
+            ['plateEn', '', '1a', 'A| 1'],
+            ['plateEn', '', '{Paste:1234 ABJ}', 'ABJ 1234'],
+            ['plateEn', 'AB| 1234', '{Backspace}', 'A| 1234'],
+            ['plateEn', 'AB |1234', '{Backspace}', 'A| 1234'],
+            ['plateAr', '', 'أبح1234', 'أ ب ح ١٢٣٤|'],
+            ['plateAr', '', 'abj١٢٣٤', 'أ ب ح ١٢٣٤|'],
+            ['plateAr', '', 'اي1', 'أ ى ١|'],
+            ['plateAr', '', 'ه1', 'هـ ١|'],
+            ['plateAr', 'هـ| ١', '{Backspace}', '|١'],
+            ['plateAr', 'أ ب| ١', '{Backspace}', 'أ| ١'],
+            // Arabic digits are digits, not separators: a backspace takes one.
+            ['plateAr', 'أ ب ح ١٢|٣٤', '{Backspace}', 'أ ب ح ١|٣٤'],
+            ['plateAr', 'أ |ب', '{Backspace}', '|ب'],
+            ['plateMoto', '', 'abj12345', 'AB 123|'],
+            ['plateAuto', '', 'أب1', 'أ ب ١|'],
+            ['plateAuto', '', 'ab1', 'AB 1|'],
+            ['plateAuto', '', '1أ', 'أ| ١'],
+            ['plateAuto', '', 'aب', 'AB|'],
             // A separator the user types after the last character stays; a backspace takes it alone.
             ['plate', '', 'ab-', 'AB-|'],
             ['plate', '', 'ab-1', 'AB-1|'],
@@ -326,11 +369,11 @@ const PATTERNS = {
         // What new FormData(form) sends for a field showing a value: E.164 when the field shows a code.
         submit: [['saudi', '55 123 4567', '+966551234567'], ['italy', '0612345678', '+390612345678'], ['saudi', '', ''],
             ['plain', '0551234567', '0551234567'], ['iban', 'SA03 8000 0000 6080 1016 7519', 'SA0380000000608010167519'],
-            ['border', '3 000 000 000', '3000000000'], ['plate', 'AB-1234', 'AB1234']],
-        // Keys typed into an empty field: how many nds:phone:change it fires, and the last one's detail.
+            ['border', '3 000 000 000', '3000000000'], ['plate', 'AB-1234', 'AB1234'], ['arabic', 'أبج 1234', 'أبج1234'],
+            ['plateAr', 'أ ب ح ١٢٣٤', 'ABJ1234'], ['plateEn', 'ABJ 1234', 'ABJ1234'], ['plateSubmitAr', 'AHJ 1234', 'أهح1234']],        // Keys typed into an empty field: how many nds:phone:change it fires, and the last one's detail.
         events: [['saudi', '0551234567', 9, { value: '+966551234567', countryCode: '+966', nationalNumber: '551234567' }],
             ['plain', '0551234567', 10, { value: '0551234567', countryCode: null, nationalNumber: null }]],
-        roundTrip: { iban: ['SA03 8000 0000 6080 1016 7519', 'GB29 NWBK 6016 1331 9268 19'], phone: ['55 123 4567'], border: ['3 000 000 000'], plate: ['AB-1234'] },
+        roundTrip: { iban: ['SA03 8000 0000 6080 1016 7519', 'GB29 NWBK 6016 1331 9268 19'], phone: ['55 123 4567'], border: ['3 000 000 000'], plate: ['AB-1234'], arabic: ['أبج 1234'], plateEn: ['ABJ 1234'], plateAr: ['أ ب ح ١٢٣٤'] },
         limits: { phone: [9, '  '] },
     },
 };

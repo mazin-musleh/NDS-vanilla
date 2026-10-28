@@ -794,6 +794,22 @@ fieldset {
     }
 }
 
+// A plate in Arabic reads right to left, its letters first, as the plate's Arabic row: "أ ب ح ١٢٣٤".
+// Its whole row flips: the actions and icons too.
+.nds-plate .nds-form-control:lang(ar) {
+    direction: rtl;
+}
+
+.nds-plate .nds-input:lang(ar) {
+    direction: rtl;
+    text-align: start;
+
+    // On an English page too: the rule above aligns every formatted field left there.
+    @include ltr {
+        text-align: start;
+    }
+}
+
 // A phone's row reads left to right too, its country code first, as the number is written: "+966 55 123 4567".
 .nds-phone .nds-form-control {
     direction: ltr;

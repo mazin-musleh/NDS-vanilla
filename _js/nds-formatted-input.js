@@ -1,5 +1,5 @@
 /* NDS.FormattedInput — public surface (a .nds-formatted field: the class on the .nds-form-container, with one
- * preset beside it, .nds-phone, .nds-national-id or .nds-iban, or a data-format of its own; the field's input
+ * preset beside it, .nds-phone, .nds-national-id, .nds-iban or .nds-plate, or a data-format of its own; the field's input
  * is the one its .nds-form-control holds)
  * Rides: nds-field (its part) · nds-typing (group) · nds-dropmenu (a phone's country picker)
  * Methods:
@@ -15,11 +15,17 @@
  *   data-format on a .nds-phone field's container, or on each item of its country picker: the
  *   groups it shows (0 a digit: "00 000 0000"); an item without one shows the number as typed
  *   data-format on a .nds-formatted field's container: its slots (0 a digit, A a capital, a a small letter,
- *   * a letter or a digit as typed: "AA-0000")
+ *   * a letter or a digit as typed, ح an Arabic letter: "AA-0000", "ححح 0000")
  *   a hidden input in a .nds-phone field's .nds-prefix: its value is the code the phone submits before its
  *   number ("+966"); a country picker's is the one Dropmenu writes, from the picked item's data-value
  *   data-country on any element, <html> for the site ("AE"): the country a national ID and an IBAN
  *   inside it follow; the nearest wins, SA without one; "any" takes an ID of any country, unchecked
+ *   data-vehicle="motorcycle" on a .nds-plate field's container: 1 or 2 letters and 1 to 3 digits (a car: 3 and 4)
+ *   data-submit="arabic" on a .nds-plate field's container: it submits Arabic letters ("أبح1234")
+ *   lang on a .nds-plate field's .nds-form-control (or its input): "ar" flips the row and shows the Arabic letters
+ *   apart with Arabic digits, right to left ("أ ب ح ١٢٣٤"); any other, the Latin ones ("ABJ 1234").
+ *   Without it, the first letter typed picks the script, and the field writes it as lang on its .nds-form-control;
+ *   empty, the page's lang applies
  * Gotchas:
  *   - Layers: NDS.typing shapes the text; Date Picker and Time Picker add a picker menu; this file is a
  *     formatted field with no picker. A type part of the form field: no init() and no loader entry.
@@ -38,6 +44,10 @@
  *     An IBAN starting with a digit gets the country's letters, SA's by default.
  *   - A .nds-phone or a preset-less field with a data-format fails a value that leaves a slot empty ("Incomplete
  *     value"); a pattern on its input adds a rule, checked on the value as shown, separators included.
+ *   - .nds-plate takes the 17 letters of a Saudi plate in either script (ا for أ, ي for ى, ه for هـ) and
+ *     shows them in its script (see lang); letters always come before digits. It submits the Latin letters, then the
+ *     digits ("ABJ1234"), and fails a value with no letter or no digit ("Incomplete value"). Without a
+ *     placeholder, it writes one that follows its letters and vehicle ("ABJ 1234", "أ ب ١٢٣").
  *   - NDS.Form.refresh() re-stamps the field: a phone sends nds:phone:change when its number changed
  *     (a full number may pick its country).
  */
@@ -109,9 +119,91 @@
         return remainder === 1;
     }
 
+    // Saudi plates: 17 Arabic letters, each with its Latin twin; a car has 1 to 3 letters and 1 to 4 digits.
+    var PLATE_LETTERS = 'أA بB حJ دD رR سS صX طT عE قG كK لL مZ نN هH وU ىV';
+    var PLATE_SIZES = Object.freeze({ car: { letters: 3, digits: 4 }, motorcycle: { letters: 2, digits: 3 } });
+    // A typed letter, either script, any case → [as the Arabic row shows it, Latin]. ه shows as هـ, as on the plate.
+    var plateLetters = {};
+    PLATE_LETTERS.split(' ').forEach(function(pair) {
+        var letter = [pair[0] === 'ه' ? 'هـ' : pair[0], pair[1]];
+        plateLetters[pair[0]] = plateLetters[pair[1]] = plateLetters[pair[1].toLowerCase()] = letter;
+    });
+    // The letters a keyboard gives for أ and ى.
+    var PLATE_ALIASES = 'اأ إأ آأ يى';
+    PLATE_ALIASES.split(' ').forEach(function(pair) { plateLetters[pair[0]] = plateLetters[pair[1]]; });
+
+    // A plate's letters, then its digits, from text in any order and script; the caret stays after the same
+    // character. Arabic: the letters apart and Arabic digits, as the plate's Arabic row ("أ ب ح ١٢٣٤"); else "ABJ 1234".
+    function formatPlate(input, text, caret) {
+        var container = input.closest('.nds-form-container');
+        var size = PLATE_SIZES[container.getAttribute('data-vehicle') === 'motorcycle' ? 'motorcycle' : 'car'];
+        // data-submit="arabic": the letters submit in Arabic, هـ as ه.
+        var submitArabic = container.getAttribute('data-submit') === 'arabic';
+        var letters = [], digits = '', last = null, lettersBefore = 0, digitsBefore = 0;
+        text = NDS.toLatinDigits(text);
+        var arabic = isPlateArabic(input, text);
+        for (var i = 0; i < text.length; i++) {
+            var letter = plateLetters[text[i]];
+            if (letter && letters.length < size.letters) letters.push(letter);
+            else if (/\d/.test(text[i]) && digits.length < size.digits) digits += text[i];
+            else continue;
+            if (i >= caret) continue;
+            last = letter ? 'letter' : 'digit';
+            lettersBefore = letters.length;
+            digitsBefore = digits.length;
+        }
+        var join = function(count) { return letters.slice(0, count).map(function(pair) { return arabic ? pair[0] : pair[1]; }).join(arabic ? ' ' : ''); };
+        var shown = join(letters.length), lead = shown && digits ? shown.length + 1 : 0;
+        return {
+            value: shown + (lead ? ' ' : '') + (arabic ? digits.replace(/\d/g, function(digit) { return String.fromCharCode(0x0660 + +digit); }) : digits),
+            caret: last === 'letter' ? join(lettersBefore).length : last === 'digit' ? lead + digitsBefore : 0,
+            complete: letters.length > 0 && digits.length > 0,
+            submitted: letters.map(function(pair) { return submitArabic ? pair[0][0] : pair[1]; }).join('') + digits,
+            arabic: arabic,
+        };
+    }
+
+    // A plate's script: the lang the page wrote on its .nds-form-control or input; without one, the first
+    // letter typed, and before that the page's lang. The lang syncPlateLang writes on the control is not the page's.
+    var ownLangs = new WeakMap();
+    function isAutoLang(input) {
+        var control = input.closest('.nds-form-control'), written = control.getAttribute('lang');
+        return !input.hasAttribute('lang') && (!written || ownLangs.get(control) === written);
+    }
+
+    function isPlateArabic(input, text) {
+        var lang;
+        if (isAutoLang(input)) {
+            var first = [].find.call(text, function(char) { return plateLetters[char]; });
+            if (first) return first.charCodeAt(0) > 127;
+            var control = input.closest('.nds-form-control');
+            lang = control.parentElement && control.parentElement.closest('[lang]');
+        } else lang = input.closest('[lang]');
+        return !!lang && /^ar\b/i.test(lang.getAttribute('lang'));
+    }
+
+    // An auto field writes its script on its .nds-form-control, so the row flips with it (_form.scss); empty, the page's applies.
+    function syncPlateLang(input, shown) {
+        if (!isAutoLang(input)) return;
+        var control = input.closest('.nds-form-control');
+        if (!shown.value) { control.removeAttribute('lang'); ownLangs.delete(control); return; }
+        var lang = shown.arabic ? 'ar' : 'en';
+        control.setAttribute('lang', lang);
+        ownLangs.set(control, lang);
+    }
+
+    // A placeholder the page left out shows a sample plate in the field's letters and size ("AB 123").
+    var ownPlaceholders = new WeakMap();
+    function syncPlatePlaceholder(input, arabic) {
+        if (input.placeholder && ownPlaceholders.get(input) !== input.placeholder) return;
+        var sample = formatPlate(input, ['A', 'B', 'J'].map(function(letter) { return plateLetters[letter][arabic ? 0 : 1]; }).join('') + '1234', 0).value;
+        input.placeholder = sample;
+        ownPlaceholders.set(input, sample);
+    }
+
     // The field an input is the text box of: its .nds-formatted container's preset ('phone', 'iban',
-    // 'national-id'), else 'formatted'. Null: none.
-    var presets = ['phone', 'iban', 'national-id'];
+    // 'national-id', 'plate'), else 'formatted'. Null: none.
+    var presets = ['phone', 'iban', 'national-id', 'plate'];
     function getKind(input) {
         var control = input.parentElement;
         if (input.type === 'hidden' || !control || !control.classList.contains('nds-form-control')) return null;
@@ -131,10 +223,10 @@
     // slots would drop characters already there (a deleted country moves letters onto digit slots), every
     // slot takes either until the value fits again.
     function shapeSlots(text, caret, format, inserted) {
-        var shown = NDS.typing.group(text, caret, format), loose = format.replace(/[0Aa]/g, '*');
+        var shown = NDS.typing.group(text, caret, format);
         var from = caret - (inserted || '').length;
-        if (loose === format || shown.dropped.every(function(index) { return index >= from && index < caret; })) return shown;
-        return NDS.typing.group(text, caret, loose);
+        if (shown.dropped.every(function(index) { return index >= from && index < caret; })) return shown;
+        return NDS.typing.group(text, caret, format, true);
     }
 
     // The slot format a field shows (NDS.typing.group): an IBAN's groups of four, a .nds-formatted field's
@@ -286,10 +378,13 @@
     // is cleared here: a page's own setCustomValidity stays.
     var stampedIncomplete = new WeakSet();
     function checkFilled(input, value, format) {
-        var message = strings.text('incomplete');
         var shape = format && NDS.typing.group(value, 0, format);
         // A letter or digit in the value is a start, even a fixed one ("REF-" with no slot filled).
-        var incomplete = !!shape && /[A-Za-z0-9]/.test(NDS.toLatinDigits(value)) && (shape.open > 0 || shape.dropped.length > 0);
+        setIncomplete(input, !!shape && [].some.call(NDS.toLatinDigits(value), NDS.typing.isSlotCharacter) && (shape.open > 0 || shape.dropped.length > 0));
+    }
+
+    function setIncomplete(input, incomplete) {
+        var message = strings.text('incomplete');
         // Its own stamp, not validationMessage: a disabled or readonly field reports none.
         if (incomplete) { input.setCustomValidity(message); stampedIncomplete.add(input); }
         else if (stampedIncomplete.delete(input) && (!input.willValidate || input.validationMessage === message)) input.setCustomValidity('');
@@ -303,7 +398,7 @@
     function stampIdentifier(input, opts) {
         var kind = getKind(input);
         if (!kind) return;
-        var iban = kind === 'iban', phone = kind === 'phone', nationalId = kind === 'national-id', generic = kind === 'formatted';
+        var iban = kind === 'iban', phone = kind === 'phone', nationalId = kind === 'national-id', generic = kind === 'formatted', plate = kind === 'plate';
         opts = opts || {};
         var focused = document.activeElement === input, text = opts.text, caret = opts.caret;
         if (text === undefined) {
@@ -312,23 +407,29 @@
         }
         var country = (iban || nationalId) && getCountry(input), rule = nationalId && idRules.get(country);
         text = NDS.toLatinDigits(text);
-        var formatted;
-        if (phone) formatted = formatPhone(input, text, caret, opts);
-        // The slots keep what fits them, in their case (NDS.typing.group).
-        else if (generic) formatted = { text: text, caret: caret, groupFormat: getGroupFormat(input) };
-        else if (iban) formatted = formatIban(text, caret, opts.country && country);
-        // An ID keeps digits only, or capitals and digits when its rule lets it have letters.
-        else formatted = keepCharacters(text.toUpperCase(), caret, 0, rule && rule.digits ? /\d/ : /[A-Z\d]/);
-        var format = iban ? getIbanFormat(formatted.text) : formatted.groupFormat || null;
-        // The format sets the most characters: Safari's maxlength would stop the groups before the browser asks.
-        if (format && input.maxLength >= 0 && input.maxLength < format.length) input.removeAttribute('maxlength');
-        // With no format, a maxlength holds: a script write would skip it.
-        var most = input.maxLength >= 0 ? input.maxLength : Infinity;
-        // A phone holds at most 15 digits, its country code included (E.164).
-        if (phone && most === Infinity) most = 15 - (formatted.code ? formatted.code.length - 1 : 0);
-        if (rule && rule.length < most) most = rule.length;
-        var shown = format ? shapeSlots(formatted.text, formatted.caret, format, opts.inserted)
-            : { value: formatted.text.slice(0, most), caret: Math.min(formatted.caret, most) };
+        var formatted, format = null, shown;
+        if (plate) {
+            // The plate sets the most characters, its letters apart included.
+            if (input.maxLength >= 0) input.removeAttribute('maxlength');
+            shown = formatPlate(input, text, caret);
+        } else {
+            if (phone) formatted = formatPhone(input, text, caret, opts);
+            // The slots keep what fits them, in their case (NDS.typing.group).
+            else if (generic) formatted = { text: text, caret: caret, groupFormat: getGroupFormat(input) };
+            else if (iban) formatted = formatIban(text, caret, opts.country && country);
+            // An ID keeps digits only, or capitals and digits when its rule lets it have letters.
+            else formatted = keepCharacters(text.toUpperCase(), caret, 0, rule && rule.digits ? /\d/ : /[A-Z\d]/);
+            format = iban ? getIbanFormat(formatted.text) : formatted.groupFormat || null;
+            // The format sets the most characters: Safari's maxlength would stop the groups before the browser asks.
+            if (format && input.maxLength >= 0 && input.maxLength < format.length) input.removeAttribute('maxlength');
+            // With no format, a maxlength holds: a script write would skip it.
+            var most = input.maxLength >= 0 ? input.maxLength : Infinity;
+            // A phone holds at most 15 digits, its country code included (E.164).
+            if (phone && most === Infinity) most = 15 - (formatted.code ? formatted.code.length - 1 : 0);
+            if (rule && rule.length < most) most = rule.length;
+            shown = format ? shapeSlots(formatted.text, formatted.caret, format, opts.inserted)
+                : { value: formatted.text.slice(0, most), caret: Math.min(formatted.caret, most) };
+        }
         if (opts.dry) return shown;
         if (shown.value !== input.value) {
             if (opts.quiet) input.value = shown.value;
@@ -336,6 +437,12 @@
         }
         if (focused) try { input.setSelectionRange(shown.caret, shown.caret); } catch (_) {}
         if (phone) reportPhone(input);
+        if (plate) {
+            syncPlateLang(input, shown);
+            syncPlatePlaceholder(input, shown.arabic);
+            setIncomplete(input, !!shown.value && !shown.complete);
+            return;
+        }
         if (phone || generic) { checkFilled(input, shown.value, format); return; }
         var clean = shown.value.replace(/\s/g, '');
         var ok = iban ? isIban(clean) : !rule || !!rule.check(clean);
@@ -367,13 +474,18 @@
                     stampIdentifier(field, edit);
                     return;
                 }
-                // A delete that meets a group's space takes the character past it too, as the space comes back.
-                // A space at the end, one the user typed, goes alone.
-                var back = e.inputType === 'deleteContentBackward', at = back ? start - 1 : start;
-                if (getGroupFormat(field) && /^deleteContent(Backward|Forward)$/.test(e.inputType) && start === field.selectionEnd
-                    && /[^A-Za-z0-9]/.test(value[at] || '') && value[back ? at - 1 : at + 1] && /[A-Za-z0-9]/.test(value.slice(at))) {
+                // A delete that meets a group's space takes the character past it too, as the space comes back
+                // (a plate's هـ is two characters). A space at the end, one the user typed, goes alone; a plate has none.
+                var back = e.inputType === 'deleteContentBackward', at = back ? start - 1 : start, isSlotCharacter = NDS.typing.isSlotCharacter;
+                var plate = getKind(field) === 'plate';
+                if ((plate || getGroupFormat(field)) && /^deleteContent(Backward|Forward)$/.test(e.inputType) && start === field.selectionEnd
+                    && value[at] && !isSlotCharacter(value[at]) && (plate || [].some.call(value.slice(at), isSlotCharacter))) {
+                    var from = at, to = at + 1;
+                    if (back) { while (from > 0 && !isSlotCharacter(value[from - 1])) from--; from--; }
+                    else { while (to < value.length && !isSlotCharacter(value[to])) to++; to++; }
+                    if (from < 0 || to > value.length) return;
                     e.preventDefault();
-                    stampIdentifier(field, { text: back ? value.slice(0, at - 1) + value.slice(start) : value.slice(0, at) + value.slice(at + 2), caret: back ? at - 1 : at });
+                    stampIdentifier(field, { text: value.slice(0, from) + value.slice(back ? start : to), caret: from });
                 }
             },
             // A keyboard composing a word owns its text until it commits (Android): a rewrite then doubles it.
@@ -385,13 +497,17 @@
                 if (context) stampIdentifier(context.input, { country: e.data === context.input.value, inserted: e.data });
             },
             // Submit and new FormData(form) send the value without its groups ("SA03 8000 …" → "SA038000…"),
-            // and a phone the whole number, its country code first (E.164: "+966551234567").
+            // a phone the whole number, its country code first (E.164: "+966551234567"), and a plate its Latin
+            // letters, then its digits ("أ ب ح 1234" → "ABJ1234").
             // ponytail: a name two fields share keeps what the browser wrote.
             'formdata:capture': function(e) {
                 [].forEach.call(e.target.elements || [], function(el) {
                     var kind = el.name && getKind(el);
                     if (!kind || kind === 'national-id' || (kind === 'formatted' && !getGroupFormat(el)) || e.formData.getAll(el.name).length !== 1) return;
-                    e.formData.set(el.name, kind === 'phone' ? getPhoneNumber(el).value : el.value.replace(/[^A-Za-z0-9]/g, ''));
+                    var sent = [].filter.call(el.value, NDS.typing.isSlotCharacter).join('');
+                    if (kind === 'phone') sent = getPhoneNumber(el).value;
+                    else if (kind === 'plate') sent = formatPlate(el, el.value, 0).submitted;
+                    e.formData.set(el.name, sent);
                 });
             }
         }
