@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "28/10/2026 - 01:20 PM"
 ---
 
 <section id="themes-overview" class="nds-content-section nds-doc-overview">
@@ -146,7 +146,7 @@ A theme option with `data-seed-*` attributes applies a custom palette on click, 
 ### Stylesheet Themes
 {: .nds-block-title}
 
-A stylesheet theme is your own CSS file that sets the color tokens at `:root`. Load it with a `<link>` in the `<head>`, after the NDS CSS, so it applies before first paint.
+A stylesheet theme is your own CSS file that sets the color tokens at `:root`. Load it with a `<link>` in the `<head>`, right after the critical CSS, so it applies before first paint.
 
 <script type="text/html" id="theme-sheet-html" data-canon data-preview="none" data-js="theme-sheet-css">
 <link rel="stylesheet" href="assets/themes/my-brand.css">

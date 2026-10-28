@@ -584,12 +584,13 @@
 
     // What NDS's own sheets declare: their classes, the nds- classes of each selector, and the tokens
     // at :root in light mode, in dark mode, and with the dark-area selector. null when the sheets
-    // come from another origin.
-    function readNdsSheets() {
+    // come from another origin. With a node, only the sheets that load after it.
+    function readNdsSheets(after) {
         const nds = { classes: new Set(), items: [], light: new Set(), dark: new Set(), area: new Set() };
         let readable = false;
         for (const sheet of document.styleSheets) {
             if (!sheet.href || !OWN.test(sheet.href)) continue;
+            if (after && !(after.compareDocumentPosition(sheet.ownerNode) & Node.DOCUMENT_POSITION_FOLLOWING)) continue;
             readable = walkRules(sheet, cssRule => {
                 const it = splitSelectors(cssRule.selectorText);
                 for (const selector of it) {
@@ -605,16 +606,21 @@
     }
     const isToken = (nds, property) => nds.light.has(property) || nds.dark.has(property);
 
-    // A site sheet before the NDS one loses every tie with it, so its overrides of NDS do nothing.
+    // A site sheet before an NDS one loses every tie with it, so its overrides of what that sheet declares do nothing.
+    // A theme between the critical and main sheets passes: main declares no palette or semantic token.
     addRule({ id: 'css-order', group: 'page', docs: 'foundations/tokens.html', check(context) {
         const main = document.querySelector('link[rel="stylesheet"][href*="nds-main"]');
-        const nds = main && readNdsSheets();
-        if (!nds) return;
+        if (!main || !readNdsSheets()) return;
         for (const sheet of document.styleSheets) {
             const node = sheet.ownerNode;
             if (!node || (sheet.href && OWN.test(sheet.href)) || isOwnStyle(node) || !(main.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_PRECEDING)) continue;
+            const later = readNdsSheets(node);
+            if (!later) continue;
             let touches = false;
-            walkRules(sheet, cssRule => { touches ||= /\.nds-/.test(cssRule.selectorText) || [...cssRule.style].some(property => isToken(nds, property)); });
+            walkRules(sheet, cssRule => {
+                touches ||= [...cssRule.selectorText.matchAll(/\.(nds-[\w-]+)/g)].some(match => later.classes.has(match[1]))
+                    || [...cssRule.style].some(property => isToken(later, property));
+            });
             if (touches) context.report(node, `${sheet.href || 'an inline <style>'} styles NDS but loads before the NDS stylesheet, so NDS wins every tie and the override does nothing.`,
                 'Load it after the NDS stylesheet.');
         }

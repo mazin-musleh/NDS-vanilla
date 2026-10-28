@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 12:48 PM"
+last_edit: "28/10/2026 - 01:20 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -248,7 +248,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `id-duplicate` | structure | error | One `id` on two or more elements, outside SVG: a lookup by id reaches only the first |
 | `sort-target-owned` | structure | warn | A `data-sort-target` on a list that a filter or a table already sorts |
 | `stepper-submit` | structure | warn | `data-stepper-control` on a submit button, where it does nothing |
-| `css-order` | page | warn | A site style sheet that styles NDS classes or tokens but loads before the NDS style sheet, so NDS wins every tie and the override does nothing |
+| `css-order` | page | warn | A site style sheet that styles NDS classes or tokens but loads before the NDS style sheet that declares them, so NDS wins every tie and the override does nothing. A theme right after the critical CSS passes |
 | `nds-restyle` | page | warn | A rule in the site's own CSS that restyles NDS classes with no project class, id or `data-*` attribute in its selector. One finding per sheet. It skips a rule that sets only custom properties |
 | `global-element-css` | page | warn | A rule in the site's own CSS on bare elements, such as `body`, `h1` or `a`: it reaches every NDS element on the page. One finding per sheet. It skips a rule that sets only custom properties |
 | `token-dark` | page | warn | A token override in the site's own CSS that has no dark value where NDS has one, sets only some states of a family, or misses the dark-area selector on a page with dark areas. See [Tokens](../foundations/tokens) |
