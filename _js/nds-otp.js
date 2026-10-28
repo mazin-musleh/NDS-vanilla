@@ -309,14 +309,16 @@
         return { valid: filled, message: filled ? '' : strings.text('otp_incomplete', { n: inputs.length }),
             empty: inputs.every(function (i) { return !i.value; }), filled: filled };
     }
+    // validate(el) answers the same way, so a group of disabled boxes passes there too.
+    function answerField(group) { return Object.assign(checkField(group), { focus: getOtpInputs(group)[0] }); }
     NDS.validation.addRule('.nds-form-group.nds-otp-group[data-min-checked], .nds-form-group.nds-otp-group[data-max-checked], .nds-form-group.nds-otp-group[data-required], .nds-form-group.nds-otp-group.nds-required',
-        function (group) { return Object.assign(checkField(group), { focus: getOtpInputs(group)[0] }); },
+        answerField,
         // The group's rule answers for its boxes: the native pass leaves their container alone.
         { owns: function (container) { return container.classList.contains('nds-otp-container'); } });
 
     NDS.Otp = {
         init: init,
-        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-form-group') || el, checkField, opts); },
+        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-form-group') || el, answerField, opts); },
 
         getValue: getValue,
 

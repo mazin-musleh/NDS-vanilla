@@ -22,12 +22,14 @@
 
     // A group answers when it holds a checkbox and opts in. Focus goes to an enabled box: validation
     // passes a field whose focus is disabled, so one disabled option would pass the whole group.
+    // validate(el) answers the same way, so a group of disabled boxes passes there too.
+    const answer = (group) => {
+        const box = group.querySelector('input[type="checkbox"]:not(:disabled)') || group.querySelector('input[type="checkbox"]');
+        return box ? Object.assign(check(group), { focus: box }) : null;
+    };
     NDS.validation.addRule(
         '.nds-form-group[data-min-checked], .nds-form-group[data-max-checked], .nds-form-group[data-required], .nds-form-group.nds-required',
-        (group) => {
-            const box = group.querySelector('input[type="checkbox"]:not(:disabled)') || group.querySelector('input[type="checkbox"]');
-            return box ? Object.assign(check(group), { focus: box }) : null;
-        },
+        answer,
         { on: ['change'] }
     );
 
@@ -49,7 +51,7 @@
     });
 
     NDS.Checkbox = {
-        validate: (el, opts) => NDS.Form.validateField(getGroup(el), check, opts),
+        validate: (el, opts) => NDS.Form.validateField(getGroup(el), answer, opts),
         setIndeterminate,
     };
 })();

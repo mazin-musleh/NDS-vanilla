@@ -62,12 +62,15 @@
     const parts = [];
     const listening = new Set();
     const handlers = {};      // the base's own, run before the parts
+    let settingUp = false;
 
     function listen(type) {
         if (listening.has(type)) return;
         listening.add(type);
         const [name, phase] = type.split(':');
         document.addEventListener(name, (e) => {
+            // A part's setup write (a value put in its shape) is no edit: the status the page shipped stays.
+            if (settingUp) return;
             const field = findControl(e.target);
             if (handlers[type]) handlers[type](e, field);
             for (const part of parts) {
@@ -251,7 +254,8 @@
             // A slider's inputs sit in its track, one level down.
             formControl.querySelectorAll(':scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input').forEach((input) => {
                 setupInput(input, formControl);
-                for (const part of parts) if (part.setupInput) part.setupInput(input, formControl);
+                settingUp = true;
+                try { for (const part of parts) if (part.setupInput) part.setupInput(input, formControl); } finally { settingUp = false; }
             });
         });
         getSelfAndInner(el, '.nds-form-group').forEach((group) => NDS.state.refresh(group, 'disabled', 'readonly', 'loading'));

@@ -27,13 +27,14 @@
         return { valid, message: valid ? '' : strings.text('select_option'), empty: !picked, selected: picked };
     };
 
+    // An enabled radio: a disabled focus would pass the whole group (see Checkbox). validate(el) answers the same way.
+    const answer = (group) => {
+        const radio = group.querySelector('input[type="radio"]:not(:disabled)') || group.querySelector('input[type="radio"]');
+        return radio ? Object.assign(check(group), { focus: radio }) : null;
+    };
     NDS.validation.addRule(
         '.nds-form-group[data-min-checked], .nds-form-group[data-max-checked], .nds-form-group[data-required], .nds-form-group.nds-required',
-        (group) => {
-            // An enabled radio: a disabled focus would pass the whole group (see Checkbox).
-            const radio = group.querySelector('input[type="radio"]:not(:disabled)') || group.querySelector('input[type="radio"]');
-            return radio ? Object.assign(check(group), { focus: radio }) : null;
-        },
+        answer,
         { on: ['change'] }
     );
 
@@ -52,6 +53,6 @@
     });
 
     NDS.Radio = {
-        validate: (el, opts) => NDS.Form.validateField(getGroup(el), check, opts),
+        validate: (el, opts) => NDS.Form.validateField(getGroup(el), answer, opts),
     };
 })();
