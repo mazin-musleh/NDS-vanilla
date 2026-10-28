@@ -43,6 +43,12 @@ const ALLOW = [
     { file: 'nds-main-nav.js', near: 'function syncOpenFlags()' },
 ];
 
+// JSA-22 skips the row's own carve-out: input tolerance that keeps no name alive.
+const COMPAT_OK = [
+    { file: 'nds-filter.js', near: 'Selectors with punctuation pass through' },
+    { file: 'nds-code.js', near: 'Class wins (explicit override' },
+];
+
 // The index of the quote that closes the string opening at `i`. A template's `${…}` may hold
 // strings and templates of its own.
 function stringEnd(src, i) {
@@ -967,7 +973,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     for (const c of source.matchAll(/\/\/[^\n]*\b(back-?compat\w*|backward[s]? compatib\w*|deprecated (?:alias|name|spelling|class|attribute|API)\w*|legacy (?:alias|API|name|class|attribute|selector|spelling)\w*)[^\n]*/gi)) {
         const near = source.slice(c.index, source.indexOf('\n', source.indexOf('\n', c.index) + 1));
         const names = [...near.matchAll(/(?:\.|\b)(nds-[\w-]+|data-[\w-]+|[a-z]+[A-Z]\w+|--[\w-]+)/g)].map((n) => n[1]);
-        if (names.some((n) => DEPRECATIONS.includes(n))) continue;
+        if (names.some((n) => DEPRECATIONS.includes(n)) || COMPAT_OK.some((a) => a.file === name && c[0].includes(a.near))) continue;
         hit('JSA-22', c.index, c[0].trim().slice(0, 70), 'resolve the name it keeps alive, then look for its row');
     }
 
@@ -1402,6 +1408,8 @@ if (args[0] === '--self-test') {
     bundled('nds-share.js', `/* NDS.Share\n * Rides: nds-copy (the copy action; soft)\n * Methods:\n */`, 'JSD-20', 'verify'); // same bundle
     bundled('nds-share.js', `/* NDS.Share\n * Rides: nds-dropmenu (a menu; soft — an inline row works too)\n * Methods:\n */`, 'JSD-20', ''); // the dash states why
     bundled('nds-editor.js', `/* NDS.Editor\n * Rides: nds-upload (embeds; soft)\n * Methods:\n */`, 'JSD-20', ''); // editor → extras: soft can be true
+    bundled('nds-code.js', `// Class wins (explicit override, back-compat); plain\n`, 'JSA-22', ''); // the row's carve-out
+    bundled('nds-tabs.js', `// Class wins (explicit override, back-compat); plain\n`, 'JSA-22', 'verify'); // only in its own file
     bundled('nds-chart.js', `(function(){ function f(el) { el = typeof el === 'string' ? document.querySelector(el) : el; } })();`, 'JSD-10', 'verify');
     // Naming: one file per case; then a `_` member another file declares.
     for (const [src, want] of NAME_CASES) {
