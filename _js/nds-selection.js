@@ -5,9 +5,10 @@
  *   NDS.Selection.reinit()                  resync every list after the DOM changed
  *   NDS.Selection.refresh(list?)            resync one list (its id or the element); with no
  *                                           list, every list — the NDS.init.refresh hook
- *   NDS.Selection.selectAll(list, on=true, scope)  check or clear every item a filter shows;
- *                                           scope 'page' = only the items on the current page
- *   NDS.Selection.clear(list)               clear EVERY item, filter-hidden and box-less too
+ *   NDS.Selection.selectAll(list, on=true, scope)  check or clear every item a filter shows, but
+ *                                           not a disabled box; scope 'page' = only the current page
+ *   NDS.Selection.clear(list)               clear EVERY item, filter-hidden and box-less too, but
+ *                                           not a disabled box
  *   NDS.Selection.getSelected(list)         the selected items, in DOM order
  *   NDS.Selection.isSelected(item)          the one "is this item selected" rule (export reads it)
  *   NDS.Selection.destroy()                 detach the listeners
@@ -33,6 +34,9 @@
  *     the bulk-action truth export sends. Select-all skips the items a filter hides.
  *   - An item with a checkbox mirrors it into data-state="selected". An item without one
  *     counts by its data-state: the page sets it, and selectAll() and clear() write it.
+ *   - A disabled box (:disabled, a disabled fieldset too) is the page's to set: select-all,
+ *     the Select all and Clear all links and clear() leave it, and the half-checked state and
+ *     the links count only the items users can change. A checked one still counts as selected.
  *   - Ship .nds-selection-view with `hidden` so first paint is right before this bundle
  *     lands; the component swaps it against .nds-records-view.
  *   - data-state="has-selection" sits on the counter while anything is selected.
@@ -50,6 +54,9 @@
     // An item's own box is its FIRST input.nds-checkbox-input, so a checklist inside a card never selects the card.
     const getBox = (item) => item.querySelector('input.nds-checkbox-input');
     const isSelected = (item) => NDS.state.has(item, 'selected') || !!getBox(item)?.checked;
+    // A disabled box is the page's to set: select-all, its links and clear() leave it, as AG Grid
+    // and TanStack Table skip rows that cannot be selected. :disabled covers a disabled fieldset.
+    const canSelect = (item) => !getBox(item)?.matches(':disabled');
 
     // A sub row's nested table stays its own list (NDS.findOwnItems).
     function getItems(list) {
@@ -97,7 +104,7 @@
         const allBoxes = getAllBoxes(list);
         if (allBoxes.length) {
             watchPages();
-            const shown = getScope(items, true).map(getBox).filter(Boolean);
+            const shown = getScope(items, true).filter(canSelect).map(getBox).filter(Boolean);
             const on = shown.filter(box => box.checked).length;
             allBoxes.forEach(box => {
                 box.checked = on > 0 && on === shown.length;
@@ -106,12 +113,13 @@
         }
 
         if (list.id) {
-            const rest = getScope(items, false).some(i => !isSelected(i));
+            const rest = getScope(items, false).some(i => canSelect(i) && !isSelected(i));
             document.querySelectorAll(`[data-selection-target="${list.id}"]:not(input.nds-checkbox-input)`).forEach(wrap => {
                 wrap.querySelectorAll('[data-selection-count]').forEach(el => { el.textContent = NDS.formatNumber(count); });
                 wrap.querySelectorAll('[data-selection-total]').forEach(el => { el.textContent = NDS.formatNumber(items.length); });
                 wrap.querySelectorAll('[data-selection-all]').forEach(btn => { btn.hidden = !count || !rest; });
-                wrap.querySelectorAll('[data-selection-clear]').forEach(btn => { btn.hidden = !count || rest; });
+                // A list whose every box is disabled has nothing Clear all could clear.
+                wrap.querySelectorAll('[data-selection-clear]').forEach(btn => { btn.hidden = !count || rest || !items.some(canSelect); });
                 if (count) NDS.state.add(wrap, 'has-selection');
                 else NDS.state.remove(wrap, 'has-selection');
                 const records = wrap.querySelector('.nds-records-view');
@@ -146,7 +154,7 @@
         init();
         list = NDS.resolveElement(list);
         if (!list) return;
-        const shown = getScope(getItems(list), scope === 'page');
+        const shown = getScope(getItems(list), scope === 'page').filter(canSelect);
         // An item with no box takes the state itself, as clear() clears it.
         shown.forEach(item => {
             const box = getBox(item);
@@ -157,12 +165,12 @@
         sync(list, true);
     }
 
-    // Every item, filter-hidden and box-less ones too: the reset after a bulk action.
+    // Every item, filter-hidden and box-less ones too, but not a disabled box: the reset after a bulk action.
     function clear(list) {
         init();
         list = NDS.resolveElement(list);
         if (!list) return;
-        getItems(list).forEach(item => {
+        getItems(list).filter(canSelect).forEach(item => {
             const box = getBox(item);
             if (box) box.checked = false;
             NDS.state.remove(item, 'selected');

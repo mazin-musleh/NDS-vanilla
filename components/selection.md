@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 11:11 AM"
+last_edit: "28/10/2026 - 11:18 AM"
 ---
 
 <section id="selection-overview" class="nds-content-section nds-doc-overview">
@@ -244,6 +244,8 @@ Put a button with `data-selection-all` in the counter, after the `nds-selection-
 
 A button with `data-selection-clear` after it clears every item, on every page. Ship it with `hidden` too: the script shows it once every item the filter shows is selected. So the two links never show together: Select all takes its place until everything is selected.
 
+A disabled checkbox is yours to set. The select-all, both links and `clear()` leave it as it is. The half-checked state and the links look only at the items users can change, while the selected count still includes a checked disabled item.
+
 ### Records Swap
 {: .nds-block-title}
 
@@ -365,7 +367,7 @@ The list is the element with the id that `data-selection-target` names. Its item
 | `data-selection-total` | an element in a counter | The script writes the number of items in the list into it. On a paged list, `data-paged-count` from [Pagination](../components/pagination) can take its place: it counts only the items that match the filter |
 | `data-state~="has-selection"` | a counter | The script sets it while anything is selected |
 | `data-selection-target="id"` | an `input.nds-checkbox-input` | Makes the checkbox the list's select-all. It acts on the current page only. [Tables](../components/table) add it to the header checkbox, and give the `<tbody>` an id if it has none |
-| `data-state~="selected"` | an item | The script sets it when the item's checkbox is checked, and removes it when the box is cleared. Set it yourself on an item with no checkbox. Select all sets it too, and `clear()` removes it from every item |
+| `data-state~="selected"` | an item | The script sets it when the item's checkbox is checked, and removes it when the box is cleared. Set it yourself on an item with no checkbox. Select all sets it too, and `clear()` removes it from every item except one with a disabled checkbox |
 {: .nds-table .nds-responsive}
 
 ### JavaScript
@@ -377,7 +379,7 @@ The script starts on its own. Call `refresh(list)` or `reinit()` after a change 
 |---|---|
 | `NDS.Selection.init()` | Adds the document listeners. The loader calls it |
 | `NDS.Selection.selectAll(list, on, scope)` | Selects every item the filter shows, or clears them when `on` is `false`. `on` defaults to `true`. With `scope` set to `'page'`, it acts only on the items on the current page |
-| `NDS.Selection.clear(list)` | Clears every item, including items a filter hides and items with no checkbox. Call it after a bulk action |
+| `NDS.Selection.clear(list)` | Clears every item, including items a filter hides and items with no checkbox. An item with a disabled checkbox keeps its state. Call it after a bulk action |
 | `NDS.Selection.getSelected(list)` | Returns the selected items, in page order |
 | `NDS.Selection.isSelected(item)` | Returns `true` when the item is selected. [Export](../components/export) uses it to pick the selected rows |
 | `NDS.Selection.reinit()` | Updates every list |
