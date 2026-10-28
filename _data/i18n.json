@@ -1518,6 +1518,12 @@
   "ar": "القيمة غير مكتملة"
  },
  {
+  "section": "formatted-input",
+  "key": "invalid",
+  "en": "Invalid value",
+  "ar": "القيمة غير صحيحة"
+ },
+ {
   "section": "ipv",
   "key": "viewerLabel",
   "en": "Image viewer",

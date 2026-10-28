@@ -9,6 +9,8 @@
 //   SUBMIT     what new FormData(form) sends for a field showing a value (submit)
 //   EVENTS     keys typed into an empty field: the nds:phone:change count and the last detail (events)
 //   MESSAGES   keys typed into an empty field and the field left: the message it shows (messages)
+//   VALIDITY   keys typed into an empty field: its validationMessage, '' when valid (validity)
+//   prepare / ready: a function a pattern runs in each page before its fields mount / once they are built
 //   FUZZ       generated: random typing, pastes and Backspace on each field in limits ([most digits,
 //              each other character as often as it may appear]); the field must stay inside them. FUZZ=<runs per
 //              field, default 60>, SEED=<n> repeats a run
@@ -273,11 +275,21 @@ const PATTERNS = {
             // A saved value, as a server writes it back: shaped at load in the field's letters.
             // No lang: the first letter typed picks the script.
             plateAuto: formField('plate', '<input type="text" class="nds-input">'),
+            card: formField('formatted', '<input type="text" class="nds-input" inputmode="numeric">', ' data-format="card"'),
+            cardLate: formField('formatted', '<input type="text" class="nds-input" value="4111111111111111">', ' data-format="late-card"'),
             plateSubmitAr: formField('plate', '<input type="text" class="nds-input" lang="en">', ' data-submit="arabic"'),
             plateServedAr: formField('plate', '<input type="text" class="nds-input" lang="ar" value="ABJ1234">'),
             plateServedEn: formField('plate', '<input type="text" class="nds-input" lang="en" value="أبح١٢٣٤">'),
         },
-        initial: { plateServedAr: 'أ ب ح ١٢٣٤', plateServedEn: 'ABJ 1234' },
+        // A named format: 'card' added before the fields mount, 'late-card' after (a script that loads late).
+        prepare: () => NDS.FormattedInput.addFormat('card', {
+            format: '0000 0000 0000 0000',
+            check: (value) => [...value].reverse().reduce((sum, char, i) => sum + (i % 2 ? (2 * char > 9 ? 2 * char - 9 : 2 * char) : +char), 0) % 10 === 0,
+            message: 'Check the card number',
+        }),
+        ready: () => NDS.FormattedInput.addFormat('late-card', { format: '0000 0000 0000 0000' }),
+        validity: [['card', '4111111111111111', ''], ['card', '4111111111111112', 'Check the card number'], ['card', '4111', 'Incomplete value']],
+        initial: { cardLate: '4111 1111 1111 1111', plateServedAr: 'أ ب ح ١٢٣٤', plateServedEn: 'ABJ 1234' },
         cases: [
             ['iban', '', 'sa0380000000608010167519', 'SA03 8000 0000 6080 1016 7519|'],
             ['iban', '', '0380000000608010167519', 'SA03 8000 0000 6080 1016 7519|'],
@@ -337,6 +349,8 @@ const PATTERNS = {
             ['plateAuto', '', 'ab1', 'AB 1|'],
             ['plateAuto', '', '1أ', 'أ| ١'],
             ['plateAuto', '', 'aب', 'AB|'],
+            ['card', '', '4111111111111111', '4111 1111 1111 1111|'],
+            ['card', '', '{Paste:4111-1111-1111-1111}', '4111 1111 1111 1111'],
             // A separator the user types after the last character stays; a backspace takes it alone.
             ['plate', '', 'ab-', 'AB-|'],
             ['plate', '', 'ab-1', 'AB-1|'],
@@ -370,7 +384,7 @@ const PATTERNS = {
         submit: [['saudi', '55 123 4567', '+966551234567'], ['italy', '0612345678', '+390612345678'], ['saudi', '', ''],
             ['plain', '0551234567', '0551234567'], ['iban', 'SA03 8000 0000 6080 1016 7519', 'SA0380000000608010167519'],
             ['border', '3 000 000 000', '3000000000'], ['plate', 'AB-1234', 'AB1234'], ['arabic', 'أبج 1234', 'أبج1234'],
-            ['plateAr', 'أ ب ح ١٢٣٤', 'ABJ1234'], ['plateEn', 'ABJ 1234', 'ABJ1234'], ['plateSubmitAr', 'AHJ 1234', 'أهح1234']],        // Keys typed into an empty field: how many nds:phone:change it fires, and the last one's detail.
+            ['plateAr', 'أ ب ح ١٢٣٤', 'ABJ1234'], ['plateEn', 'ABJ 1234', 'ABJ1234'], ['plateSubmitAr', 'AHJ 1234', 'أهح1234'], ['card', '4111 1111 1111 1111', '4111111111111111']],        // Keys typed into an empty field: how many nds:phone:change it fires, and the last one's detail.
         events: [['saudi', '0551234567', 9, { value: '+966551234567', countryCode: '+966', nationalNumber: '551234567' }],
             ['plain', '0551234567', 10, { value: '0551234567', countryCode: null, nationalNumber: null }]],
         roundTrip: { iban: ['SA03 8000 0000 6080 1016 7519', 'GB29 NWBK 6016 1331 9268 19'], phone: ['55 123 4567'], border: ['3 000 000 000'], plate: ['AB-1234'], arabic: ['أبج 1234'], plateEn: ['ABJ 1234'], plateAr: ['أ ب ح ١٢٣٤'] },
@@ -443,6 +457,7 @@ async function openPage() {
     await step('load ' + SITE, () => page.goto(SITE, { waitUntil: 'load' }));
     await step('NDS ready', () => page.waitForFunction(() => window.NDS?.init?.mount));
     const fields = patterns.flatMap((name) => Object.entries(PATTERNS[name].fields).map(([field, html]) => ({ id: `${name}-${field}`, html, instance: PATTERNS[name].instance })));
+    for (const name of patterns) if (PATTERNS[name].prepare) await page.evaluate(PATTERNS[name].prepare);
     await page.evaluate((fields) => {
         const host = document.createElement('div');
         host.id = 'typing-fixture';
@@ -459,6 +474,7 @@ async function openPage() {
         const input = document.getElementById(id);
         return !instance || input[instance] || input.closest('.nds-form-container')[instance];
     }), fields));
+    for (const name of patterns) if (PATTERNS[name].ready) await page.evaluate(PATTERNS[name].ready);
     return page;
 }
 
@@ -569,6 +585,14 @@ for (const name of patterns) {
             return message;
         }, id);
         if (message !== want) failures.push(`${name}/${field} message: ${JSON.stringify(keys)} shows "${message}", want "${want}"`);
+    }
+}
+// VALIDITY: the keys run as a case, then the input's validationMessage read.
+for (const name of patterns) {
+    for (const [field, keys, want] of PATTERNS[name].validity || []) {
+        await run(pages[0], { pattern: name, field, from: '', keys, want: '' });
+        const message = await pages[0].evaluate((id) => document.getElementById(id).validationMessage, `${name}-${field}`);
+        if (message !== want) failures.push(`${name}/${field} validity: ${JSON.stringify(keys)} → "${message}", want "${want}"`);
     }
 }
 await Promise.all(pages.map(async (page, p) => {

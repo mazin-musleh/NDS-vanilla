@@ -8,6 +8,10 @@
  *   NDS.FormattedInput.addIdRule(country, { check(value), digits, length })   a national ID rule for a
  *                                     country ("AE"): check gets the clean value; digits, digits only (else
  *                                     capitals and digits); length, the most characters. Replaces one set before
+ *   NDS.FormattedInput.addFormat(name, { format, check(value), message })   a named format, for
+ *                                     data-format="name": format, its slots; check gets the value the form
+ *                                     submits and returns true when it is valid; message, shown when it is not
+ *                                     ("Invalid value" by default). Replaces one set before
  * Events:
  *   nds:phone:change            detail {value, countryCode, nationalNumber} — from a .nds-phone field's input,
  *                               when the number it submits changes (typing, a paste, a country pick, a reset)
@@ -15,7 +19,8 @@
  *   data-format on a .nds-phone field's container, or on each item of its country picker: the
  *   groups it shows (0 a digit: "00 000 0000"); an item without one shows the number as typed
  *   data-format on a .nds-formatted field's container: its slots (0 a digit, A a capital, a a small letter,
- *   * a letter or a digit as typed, ح an Arabic letter: "AA-0000", "ححح 0000")
+ *   * a letter or a digit as typed, ح an Arabic letter: "AA-0000", "ححح 0000"), or the name of one addFormat()
+ *   added ("card": small letters, digits and dashes, with a letter other than a)
  *   a hidden input in a .nds-phone field's .nds-prefix: its value is the code the phone submits before its
  *   number ("+966"); a country picker's is the one Dropmenu writes, from the picked item's data-value
  *   data-country on any element, <html> for the site ("AE"): the country a national ID and an IBAN
@@ -48,6 +53,8 @@
  *     shows them in its script (see lang); letters always come before digits. It submits the Latin letters, then the
  *     digits ("ABJ1234"), and fails a value with no letter or no digit ("Incomplete value"). Without a
  *     placeholder, it writes one that follows its letters and vehicle ("ABJ 1234", "أ ب ١٢٣").
+ *   - A data-format name not added yet keeps the value as typed, unchecked; addFormat() then shapes the fields
+ *     that name it. A full value that fails check() shows the format's message; an empty slot shows "Incomplete value" first.
  *   - NDS.Form.refresh() re-stamps the field: a phone sends nds:phone:change when its number changed
  *     (a full number may pick its country).
  */
@@ -60,6 +67,7 @@
         invalid_national_id: 'Invalid national ID number',
         invalid_iban:        'Invalid IBAN',
         incomplete:          'Incomplete value',
+        invalid:             'Invalid value',
     });
 
     // Saudi national ID / iqama: 10 digits, first 1 or 2, Luhn check digit.
@@ -89,6 +97,31 @@
         document.querySelectorAll('.nds-national-id .nds-form-control > input').forEach(function(input) {
             if (getKind(input) === 'national-id' && getCountry(input) === country) stampIdentifier(input, { quiet: true });
         });
+    }
+
+    // Named formats (data-format="card"): a slot format and an optional check of the value the form submits. A
+    // name is small letters, digits and dashes with a letter other than a, so it never reads as a slot format.
+    var formats = new Map();
+    function isFormatName(text) { return /^[a-z][a-z\d]*(-[a-z\d]+)*$/.test(text) && /[b-z]/.test(text); }
+
+    function addFormat(name, rule) {
+        if (!isFormatName(String(name)) || !rule || typeof rule.format !== 'string' || (rule.check && typeof rule.check !== 'function')) {
+            console.warn('NDS FormattedInput: addFormat needs a name of small letters and dashes ("card") and a format');
+            return;
+        }
+        formats.set(name, rule);
+        // A field already on the page takes it: until now it kept its value as typed.
+        document.querySelectorAll('.nds-formatted[data-format="' + name + '"] .nds-form-control > input').forEach(function(input) {
+            if (getKind(input) === 'formatted') stampIdentifier(input, { quiet: true });
+        });
+    }
+
+    // A preset-less field's data-format: a named format's rule, or { format } for a slot format of its own.
+    // Null: none, or a name not added yet.
+    function getFormatRule(input) {
+        var written = input.closest('.nds-form-container').getAttribute('data-format');
+        if (!written) return null;
+        return isFormatName(written) ? formats.get(written) || null : { format: written };
     }
 
     function isNationalId(value, country) {
@@ -234,7 +267,10 @@
     function getGroupFormat(input) {
         var kind = getKind(input);
         if (kind === 'iban') return getIbanFormat(input.value);
-        if (kind === 'formatted') return input.closest('.nds-form-container').getAttribute('data-format') || null;
+        if (kind === 'formatted') {
+            var rule = getFormatRule(input);
+            return rule && rule.format;
+        }
         if (kind !== 'phone') return null;
         var source = getPhoneSetup(input).source;
         return (source && source.getAttribute('data-format')) || null;
@@ -374,20 +410,24 @@
         return { text: kept.text + tail, caret: kept.caret + (caret === text.length ? tail.length : 0), code: code, groupFormat: format };
     }
 
-    // A value that leaves a slot of its format empty, or does not fit it, fails as incomplete. Only that message
-    // is cleared here: a page's own setCustomValidity stays.
-    var stampedIncomplete = new WeakSet();
-    function checkFilled(input, value, format) {
+    // A value that leaves a slot of its format empty, or does not fit it, fails as incomplete; a whole one fails
+    // its named format's check, with the format's message. Only this file's message is cleared here: a page's
+    // own setCustomValidity stays.
+    function checkFilled(input, value, format, rule) {
         var shape = format && NDS.typing.group(value, 0, format);
+        var sent = [].filter.call(NDS.toLatinDigits(value), NDS.typing.isSlotCharacter).join('');
         // A letter or digit in the value is a start, even a fixed one ("REF-" with no slot filled).
-        setIncomplete(input, !!shape && [].some.call(NDS.toLatinDigits(value), NDS.typing.isSlotCharacter) && (shape.open > 0 || shape.dropped.length > 0));
+        if (shape && sent && (shape.open > 0 || shape.dropped.length > 0)) setOwnMessage(input, strings.text('incomplete'));
+        else if (rule && rule.check && sent && !rule.check(sent)) setOwnMessage(input, rule.message || strings.text('invalid'));
+        else setOwnMessage(input, '');
     }
 
-    function setIncomplete(input, incomplete) {
-        var message = strings.text('incomplete');
-        // Its own stamp, not validationMessage: a disabled or readonly field reports none.
-        if (incomplete) { input.setCustomValidity(message); stampedIncomplete.add(input); }
-        else if (stampedIncomplete.delete(input) && (!input.willValidate || input.validationMessage === message)) input.setCustomValidity('');
+    var ownMessages = new WeakMap();
+    function setOwnMessage(input, message) {
+        // Its own record, not validationMessage: a disabled or readonly field reports none.
+        if (message) { input.setCustomValidity(message); ownMessages.set(input, message); return; }
+        var own = ownMessages.get(input);
+        if (ownMessages.delete(input) && (!input.willValidate || input.validationMessage === own)) input.setCustomValidity('');
     }
 
     // .nds-phone / .nds-national-id / .nds-iban / .nds-formatted: the value in its shape, then the checksum result, so
@@ -440,10 +480,10 @@
         if (plate) {
             syncPlateLang(input, shown);
             syncPlatePlaceholder(input, shown.arabic);
-            setIncomplete(input, !!shown.value && !shown.complete);
+            setOwnMessage(input, shown.value && !shown.complete ? strings.text('incomplete') : '');
             return;
         }
-        if (phone || generic) { checkFilled(input, shown.value, format); return; }
+        if (phone || generic) { checkFilled(input, shown.value, format, generic && getFormatRule(input)); return; }
         var clean = shown.value.replace(/\s/g, '');
         var ok = iban ? isIban(clean) : !rule || !!rule.check(clean);
         input.setCustomValidity(clean && !ok ? strings.text(iban ? 'invalid_iban' : 'invalid_national_id') : '');
@@ -522,6 +562,7 @@
 
     NDS.FormattedInput = {
         addIdRule: addIdRule,
+        addFormat: addFormat,
         isNationalId: isNationalId,
         isIban: isIban
     };

@@ -327,7 +327,8 @@
     "formatted-input": {
         "invalid_national_id": "رقم الهوية غير صحيح",
         "invalid_iban": "رقم الآيبان غير صحيح",
-        "incomplete": "القيمة غير مكتملة"
+        "incomplete": "القيمة غير مكتملة",
+        "invalid": "القيمة غير صحيحة"
     },
     "ipv": {
         "viewerLabel": "عارض الصور",

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "29/10/2026 - 12:03 AM"
+last_edit: "29/10/2026 - 12:09 AM"
 ---
 
 <section id="formatted-input-overview" class="nds-content-section nds-doc-overview">
@@ -289,6 +289,31 @@ A delete can move letters onto digit slots, as when the user deletes `AB` from `
 
 The field reads `data-format` at each key, so a script can change the shape at any time. Call `NDS.Form.refresh(input)` after the change to reshape the value the field already holds. A rule can also live in a script, with `setCustomValidity()` as on any [text field](../components/form). "Incomplete value" shows first while a slot is empty.
 
+### Named Formats
+{: .nds-block-title #named-formats}
+
+A shape that needs a check the slots cannot hold, such as the check digit of a card number, is a named format. Add it once in a script with `NDS.FormattedInput.addFormat(name, rule)`, and write its name in `data-format`: `data-format="card"`. The rule gives the slots in `format`, and `check(value)` returns `true` for a valid value. `check` gets the value the form submits: its letters and digits, with no separators. A full value that fails shows `message`, or "Invalid value". A value with an empty slot shows "Incomplete value" first.
+
+A name is small letters, digits and dashes, with at least one letter other than `a`, so it never reads as a shape. A field whose name is not added yet keeps its value as typed. When `addFormat()` runs, every field that names it takes the shape at once, so a script that loads after NDS still works.
+
+<script type="text/html" id="formatted-input-named-format" data-canon data-lang="js" data-preview="none">
+// A card number: 16 digits in groups of four, with a Luhn check digit
+NDS.FormattedInput.addFormat('card', {
+  format: '0000 0000 0000 0000',
+  check: function (value) {
+    var sum = 0;
+    for (var i = 0; i < value.length; i++) {
+      var digit = +value[value.length - 1 - i];
+      if (i % 2) { digit *= 2; if (digit > 9) digit -= 9; }
+      sum += digit;
+    }
+    return sum % 10 === 0;
+  },
+  message: 'Check the card number'
+});
+// In the markup: <div class="nds-form-container nds-formatted" data-format="card">
+</script>
+
 </div>
   </div>
 </section>
@@ -412,7 +437,7 @@ The field reads `data-format` at each key, so a script can change the shape at a
 |---|---|---|
 | `input type="hidden"` | in the `.nds-prefix` of a `.nds-phone` field | Its `value` is the code the submit puts before the number (`+966`). The field also drops it from a pasted full number. Give it a `name` to also send the code as its own field |
 | `data-format` | the `.nds-form-container` of a `.nds-phone` field | The groups the number shows in: `0` is one digit, and any other character goes between digits (`00 000 0000`) |
-| `data-format` | the `.nds-form-container` of a `.nds-formatted` field with no preset | The shape of the value: `0` takes a digit, `A` a capital letter, `a` a small letter, `*` a letter or a digit as typed, `ح` an Arabic letter, and any other character goes between them (`AA-000000`, `ححح 0000`) |
+| `data-format` | the `.nds-form-container` of a `.nds-formatted` field with no preset | The name of a format `addFormat()` added (`card`), or the shape of the value: `0` takes a digit, `A` a capital letter, `a` a small letter, `*` a letter or a digit as typed, `ح` an Arabic letter, and any other character goes between them (`AA-000000`, `ححح 0000`) |
 | `data-select-name` | the `.nds-dropmenu` in a phone field's `.nds-form-control` | Makes the menu the field's country picker. The picked code submits in a hidden input of this name. See [Dropmenu](../components/dropmenu) |
 | `data-select-value` | the same `.nds-dropmenu` | The `data-value` of the country picked at page load. It wins over an item with `data-state="selected"` |
 | `data-value` | a `.nds-dropmenu-item` in the country picker | The code for that country (`+971`). Dropmenu writes the picked one to the picker's hidden input |
@@ -435,6 +460,7 @@ The script shows the message in Arabic or English to match the page. The other c
 | `.nds-national-id` | Invalid national ID number |
 | `.nds-iban` | Invalid IBAN |
 | A `data-format` slot left empty, on a phone or a field with no preset | Incomplete value |
+| A named format whose `check` fails | Its `message`, or Invalid value |
 | `.nds-plate` with no letter or no digit | Incomplete value |
 {: .nds-table .nds-responsive}
 
@@ -444,6 +470,7 @@ The script shows the message in Arabic or English to match the page. The other c
 | Method | Effect |
 |---|---|
 | `NDS.FormattedInput.isNationalId(value, country)`, `isIban(value)` | Return `true` when the string passes the `.nds-national-id` or `.nds-iban` check. They take the clean value: Latin digits only, or capitals with no spaces. Remove an IBAN field's spaces first: `input.value.replace(/\s/g, '')`. `country` is `SA` by default. A country with no rule passes |
+| `NDS.FormattedInput.addFormat(name, rule)` | Adds a named format for `data-format="name"`, or replaces one. `rule` is `{ format, check, message }`: `format` the slots, `check(value)` returns `true` for a valid value (the value the form submits), `message` shows when it fails. `check` and `message` are optional. See Named Formats |
 | `NDS.FormattedInput.addIdRule(country, rule)` | Adds the national ID rule of a country (`'AE'`), or replaces one. `rule` is `{ check, digits, length }`: `check(value)` returns `true` for a valid clean value, `digits: true` keeps digits only (else capitals and digits), and `length` is the most characters. Fields already on the page take it at once |
 {: .nds-table .nds-responsive}
 

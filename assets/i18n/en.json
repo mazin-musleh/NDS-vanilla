@@ -321,7 +321,8 @@
  "formatted-input": {
   "invalid_national_id": "Invalid national ID number",
   "invalid_iban": "Invalid IBAN",
-  "incomplete": "Incomplete value"
+  "incomplete": "Incomplete value",
+  "invalid": "Invalid value"
  },
  "ipv": {
   "viewerLabel": "Image viewer",
