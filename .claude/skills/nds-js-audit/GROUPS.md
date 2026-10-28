@@ -76,6 +76,17 @@ Seams:
 - time-picker → custom-select: `NDS.CustomSelect.init()` synchronously, then `create` / `setValue` / `clear` / `destroy` per unit; listens to `nds:custom-select:change` on each unit's `.nds-form-control`.
 - dropmenu template arming: `armTemplateDropmenu` / `stampMenuTemplate` call `NDS.init.refresh(menu)`, so multiselect content inside a template menu starts.
 
+## @popups
+
+Files: nds-popup.js, nds-dropmenu.js, nds-tooltip.js
+
+Seams:
+- dropmenu, tooltip → popup (base): `NDS.popup.getSpace(trigger, popup, opts)`; both read `popupRect` / `triggerRect` / `box` / `topEdge` / `spaceBelow` and recompute the space above from `triggerRect`, because `topEdge` is the unclamped visible top. Dropmenu passes `respectNav: false` inside a modal (`_respectNav`). Bundle: popup in main before dropmenu; tooltip rides delegated.
+- dropmenu, tooltip → popup, the anchor: `setPosition(el, top, left, trigger)` returns true when anchored; each keeps it in `_anchored` and calls `clearPosition(el, trigger)` on close only when true. Dropmenu passes a `null` anchor once one was refused (`_anchored === false`).
+- dropmenu ↔ tooltip, one trigger: a trigger that is both (the topbar theme button, `.nds-dropmenu-trigger.nds-tooltip`) gets one `anchor-name` from `anchorNames`; `anchorUsers` keeps it until the last popup on it clears, so the tooltip closing on a click leaves the menu anchored.
+- popup → main-nav (in @nav): `getSpace` makes `.nds-main-nav`'s bottom + `navGap` the top edge only for a trigger below the nav and not inside it.
+- dropmenu, tooltip → core `NDS.setTopLayer`: the open popup is in the top layer; `setPosition` measures and corrects against the containing block that gives it.
+
 ## @dates
 
 Files: nds-date.js, nds-date-picker.js, nds-time-date.js, nds-calendar.js

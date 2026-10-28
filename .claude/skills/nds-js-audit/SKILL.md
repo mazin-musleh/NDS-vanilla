@@ -87,7 +87,7 @@ For related files together (deep read on each + the seams between them), name a
 group from GROUPS.md or list the files. A rule group is required:
   /nds-js-audit @lists architecture
   /nds-js-audit filter,pagination architecture
-Groups: @forms @menus @dates @lists @dialogs @nav
+Groups: @forms @menus @popups @dates @lists @dialogs @nav
 ```
 
 Accept `0` or `exit` as "end here, nothing runs".

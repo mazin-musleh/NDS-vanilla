@@ -831,7 +831,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     }).map((c) => c[1]));
     for (const m of code.matchAll(/new\s+([\w$]+)\s*\(\s*([\w$]+)[^)]*\)\s*;?([\s\S]{0,200})/g)) {
         if (!bails.has(m[1])) continue;
-        const stamp = m[3].match(new RegExp(`${m[2]}\\s*\\.\\s*(?:setAttribute\\(\\s*['"]data-nds-[\\w-]+-initialized|nds[A-Z]\\w*\\s*=)|${addsTo(`${m[2]}\\s*\\)`)}`));
+        const stamp = m[3].match(new RegExp(`${m[2]}\\s*\\.\\s*(?:setAttribute\\(\\s*['"]data-nds-[\\w-]+-initialized|nds[A-Z]\\w*\\s*=(?!=))|${addsTo(`${m[2]}\\s*\\)`)}`));
         if (!stamp || /\bif\s*\(/.test(m[3].slice(0, stamp.index))) continue;
         hit('JSD-18', m.index, `${m[2]} stamped after new ${m[1]}(), whose constructor can bail`, 'gate the stamp on the instance being valid');
     }
@@ -1247,6 +1247,7 @@ const CASES = [
     [`(function(){ function render(box, items) { box.innerHTML = ''; items.forEach((b) => { b.addEventListener('click', go); }); } })();`, []], // old nodes left
     [`(function(){ const built = new WeakSet(); class A { constructor(el) { if (!el.id) return; } } function sweep(el) { new A(el); built.add(el); } })();`, ['JSD-18?']],
     [`(function(){ const built = new WeakSet(); class A { constructor(el) { if (!el.id) return; } } function sweep(el) { new A(el); if (el.ndsA) built.add(el); } })();`, []],
+    [`(function(){ class A { constructor(el) { if (!el.id) return; el.ndsA = this; } } function create(el) { const a = new A(el); return el.ndsA === a ? a : null; } })();`, []], // a check, not a stamp
     [`(function(){ function f() { clearTimeout(t); t = setTimeout(run, 200); } })();`, ['JSP-07?']],
     [`(function(){ function f() { clearTimeout(t); t = setTimeout(run, 200); } function cancel() { clearTimeout(t); } })();`, []], // latch
     [`(function(){ function f() { clearTimeout(t); t = setTimeout(run, delay); } })();`, []], // a scheduler
