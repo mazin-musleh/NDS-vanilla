@@ -946,8 +946,9 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         hit('JSA-07', open, `a nested walk inside a loop over ${over.slice(0, 40)}`, 'a finding when both sides can grow (rows × rows), not rows × a bounded few');
     }
 
-    // JSA-09 two ten-line blocks with one shape (names, strings and numbers masked).
-    const norm = source.split('\n').map((l) => l.replace(/\/\/.*$/, '').replace(/(['"`])(?:\\.|(?!\1).)*\1/g, 'S').replace(/\b\d+\b/g, 'N').replace(/\b[A-Za-z_$][\w$]*\b/g, (w) => (/^(if|else|for|while|return|const|let|var|function|new|this|await|of|in)$/.test(w) ? w : 'I')).trim());
+    // JSA-09 two ten-line blocks with one shape (names, strings and numbers masked). Read from `bare`:
+    // markup in a template literal is data, and a helper would hide its data-i18n markers from check-i18n.
+    const norm = bare.split('\n').map((l) => l.replace(/(['"`])(?:\\.|(?!\1).)*\1/g, 'S').replace(/\b\d+\b/g, 'N').replace(/\b[A-Za-z_$][\w$]*\b/g, (w) => (/^(if|else|for|while|return|const|let|var|function|new|this|await|of|in)$/.test(w) ? w : 'I')).trim());
     const seen = new Map();
     let lastPair = -20;
     for (let i = 0; i + 10 <= norm.length; i++) {
@@ -1384,6 +1385,9 @@ if (args[0] === '--self-test') {
     const block = Array(10).fill('const one = first.value + other;').join('\n');
     const rep = checkFile('case.js', `(function(){\n${block}\n}\nfunction b() {\n${block}\n})();`).find((f) => f.rule === 'JSA-09');
     if (rep?.line !== 14) { failed++; console.log(`FAIL  JSA-09 line: want 14 got ${rep?.line}`); }
+    // JSA-09 skips markup a template literal holds.
+    const tile = Array(10).fill('    <button type="button" class="nds-btn" data-a11y-mode="x">Tile</button>').join('\n');
+    if (checkFile('case.js', `const markup = \`\n${tile}\n<hr>\n${tile}\n\`;`).some((f) => f.rule === 'JSA-09')) { failed++; console.log('FAIL  JSA-09 flagged template markup'); }
     // JSD-05a pairs a helper copied under another name.
     const twin = (n) => `(function(){ function ${n}(p, c) { const i = document.createElement('i'); i.className = 'nds-icon'; NDS.aria.hidden(i, true); const s = document.createElement('span'); s.className = 'nds-meta-item'; s.append(i, c); p.replaceChildren(s); } })();`;
     const pairs = (await checkTree(['a.js', 'b.js'], (f) => twin(f === 'a.js' ? 'renderCity' : 'renderDate'))).filter((f) => f.rule === 'JSD-05a');
