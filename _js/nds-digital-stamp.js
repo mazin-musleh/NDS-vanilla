@@ -108,6 +108,8 @@
     const isOpen = () => !!panel && hasState(panel, 'open') && !hasState(panel, 'closing');
 
     function open() {
+        // A direct call on a page with no stamp at load: the loader stub replays only open().
+        init();
         if (!panel || !tab || isOpen()) return;
         cancelClose?.();
         cancelClose = null;
