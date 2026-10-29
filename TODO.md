@@ -12,9 +12,8 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 
 ### JS audit hotspots (full-tree `architecture` run, 2026-10-29)
 
-Suspected, not confirmed: one session each, best value first. Pagination, Drawer, Main Nav, Digital Stamp, Table/Selection/Export, Dropmenu and Form/OTP/Typing are done. Prove a behavior fix on your own `:4010` server, old bundles vs new.
+Suspected, not confirmed: one session each, best value first. Pagination, Drawer, Main Nav, Digital Stamp, Table/Selection/Export, Dropmenu, Form/OTP/Typing and Accessibility are done. Prove a behavior fix on your own `:4010` server, old bundles vs new.
 
-- [ ] `/nds-js-audit nds-accessibility.js architecture`: four repeated-block pairs (~L1248–1343); likely LOW.
 - [ ] `/nds-js-audit nds-copy.js architecture`, `nds-countdown.js`: a module map that may only grow (`controllers`, `unitFormats`); likely a bounded cache.
 - **Smaller finds, not fixed:** Pagination `setPage()` takes a page out of range, and `setRecords()` puts the list id into a selector without `CSS.escape`. Drawer: the slide ignores the OS reduced-motion setting (CSS), and `destroy()` leaves the `nds-menu-btn` class `create()` added. Main Nav: a mode flip during a menu's open animation can still leave `opened`; `destroy()` leaves an open menu stamped open, and `reinit()` on a swapped nav skips `destroy()`. Table/Selection/Export, owner calls: a selected row a filter hides is counted by Selection but left out of the export (fix Export or the count and selection.md:291); Selection's Select all shows while only a filter-hidden item is selected, against its banner. Also: `new CSSStyleSheet()` in `syncColumnAlign` throws on Safari < 16.4; table `destroy()` leaves a sub row's request running; an export after the Selection wait may lose the click for the PDF print in Safari (untested).
 

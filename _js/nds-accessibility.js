@@ -3,8 +3,8 @@
  * Methods:
  *   NDS.Accessibility.init(triggerEl?)         build and wire the panel
  *   NDS.Accessibility.open(triggerEl?) / .close() / .toggle(triggerEl?)
- *                                              triggerEl: the calling element — used as the
- *                                              cold-arm loading target and toggleBtn; omit it
+ *                                              triggerEl: the calling element — the cold-arm
+ *                                              loading target, whose data-panel-side places a new panel; omit it
  *                                              to fall back to the page's [data-accessibility-toggle]
  *   NDS.Accessibility.toggleMode(id)          turn one mode on or off
  *   NDS.Accessibility.setVisualFilter(id)     apply a colour-vision filter
@@ -19,7 +19,7 @@
  * Hooks:
  *   data-accessibility-panel · data-accessibility-toggle · data-accessibility-action
  *   (the panel markup lives in this file, not the page HTML — built into a
- *   <template> and pulled out on arm by the id the FAB's data-panel-toggle names)
+ *   <template> and pulled out on arm by its fixed id, nds-accessibility-panel)
  *   data-a11y-mode · data-a11y-visual · data-a11y-setting · data-a11y-value
  *   data-a11y-exclude-token   letter-spacing: the tile goes on a page whose script joins its letters (ar, fa, ur…)
  *   data-armed                the panel gate (see below)
@@ -59,7 +59,7 @@
     'use strict';
 
     // The one panel this component ever builds or looks up — a fixed constant,
-    // not read off whichever element triggered the arm. toggleBtn's own
+    // not read off whichever element triggered the arm. The FAB's own
     // data-panel-toggle is real (nds-fab.js needs it for auto-positioning,
     // Panel.js needs it to open an already-built panel later) but a custom
     // trigger passed into open()/toggle() has no obligation to carry it, and
@@ -161,7 +161,7 @@
     // block at the bottom of _variables-a11y.scss is documentation only.
     //
     // `settings` is the bundle's "opening position" — applied on activation
-    // for keys still at default (see toggleMode), restored on deactivation
+    // for keys still at default (see activateBundle), restored on deactivation
     // for keys the user didn't manually re-cycle.
     const modeBundles = {
         'epilepsy-safe':        ['reduce-motion', 'low-saturation'],          // WCAG 2.3.1
@@ -230,7 +230,6 @@
     // The saved settings from the start: a toggleMode() before init() would save defaults over them.
     let state = load();
     let panel = null;
-    let toggleBtn = null;
     let openerEl = null;       // element that opened the panel — focus returns here
     let initAbortController = null;             // AbortController for listeners scoped to current init
     let maskAbortController = null;         // reading-mask pointer listener (lifecycle = mode on/off)
@@ -279,6 +278,8 @@
             // __proto__ key can't replace the rehydrated state's prototype.
             const result = NDS.i18n.mergeOwnKeys(getDefaultState(), parsed);
             result.settings = NDS.i18n.mergeOwnKeys(getDefaultState().settings, parsed.settings || {});
+            // A visit saved before every writer kept the type stored font-step as text.
+            for (const key in result.settings) result.settings[key] = toSettingType(key, result.settings[key]);
             if (!Array.isArray(result.modes))    result.modes = [];
             if (!Array.isArray(result.bundles))  result.bundles = [];
             if (!Array.isArray(result.excluded)) result.excluded = [];
@@ -286,6 +287,13 @@
         } catch {
             return getDefaultState();
         }
+    }
+
+    // A setting keeps its default's type whoever writes it: a tile cycles text, a bundle and a caller may pass numbers.
+    function toSettingType(key, value) {
+        const defaultValue = getDefaultState().settings[key];
+        if (typeof defaultValue === 'number') return Number(value);
+        return typeof defaultValue === 'string' ? String(value) : value;
     }
 
     // (state.modes ∪ each active bundle's primitives ∪ OS-supplied) − state.excluded
@@ -701,23 +709,16 @@
         NDS.announce(message, panel ? panel.querySelector('[data-a11y-status]') : null);
     }
 
-    // Resolve a localized label by reading the visible <span class="nds-label">.
+    // Resolve a localized label by reading the visible <span class="nds-label">. Mode, filter
+    // and setting names never collide, so one query covers all three.
     function getLabel(name) {
         if (!panel) return name;
         const el = panel.querySelector(
-            '[data-a11y-mode="' + name + '"], [data-a11y-visual="' + name + '"]'
+            '[data-a11y-mode="' + name + '"], [data-a11y-visual="' + name + '"], [data-a11y-setting="' + name + '"]'
         );
         if (!el) return name;
         const lab = el.querySelector('.nds-label');
         return lab ? lab.textContent.trim() : name;
-    }
-
-    function getSettingLabel(key) {
-        if (!panel) return key;
-        const btn = panel.querySelector('[data-a11y-setting="' + key + '"]');
-        if (!btn) return key;
-        const lab = btn.querySelector('.nds-label');
-        return lab ? lab.textContent.trim() : key;
     }
 
     // ----------------------------------------------
@@ -733,7 +734,7 @@
         for (const key in snapshot) {
             // String() both sides: a cycled tile stores strings ('2' vs 2).
             if (bundleSettings && String(state.settings[key]) !== String(bundleSettings[key])) continue;
-            state.settings[key] = snapshot[key];
+            state.settings[key] = toSettingType(key, snapshot[key]);
         }
         delete state.settingsSnapshots[name];
     }
@@ -832,10 +833,10 @@
         const current = String(state.settings[key]);
         // String() the values too: a caller may pass numbers ([0, 1, 2, 3]).
         const index = cycle.map(String).indexOf(current);
-        const next = cycle[(index + 1) % cycle.length];
+        const next = toSettingType(key, cycle[(index + 1) % cycle.length]);
         state.settings[key] = next;
         commit();
-        announce(getSettingLabel(key) + ' ' + words.text('set') + ' ' + formatSettingValue(key, next));
+        announce(getLabel(key) + ' ' + words.text('set') + ' ' + formatSettingValue(key, next));
     }
 
     function reset() {
@@ -952,9 +953,7 @@
     //     listener has to pre-empt Panel's own delegated handler on the FAB's
     //     first click — see the Accessibility entry's lazy hook in nds-loader.js;
     //   • the cold-arm loading affordance, covering the first (heavy) build —
-    //     shared by every trigger via open()/toggle() below, not just the FAB;
-    //   • mirroring open state onto the FAB, since Panel only manages the
-    //     toggles it owns.
+    //     shared by every trigger via open()/toggle() below, not just the FAB.
     // NDS.Panel ships in the delegated bundle: until it lands, its stub answers
     // ANY call with a Promise — always truthy — which would read as "open" and
     // wrongly trigger close() on a panel Panel.js never actually opened.
@@ -1012,10 +1011,12 @@
     // ----------------------------------------------
     function destroy() {
         // Route through close() first so Panel's open-state cleanup runs before
-        // the AbortController aborts the state-mirroring listeners.
+        // the AbortController aborts the closed-event listener.
         if (isPanelOpen()) close();
-        if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
-        if (resetDoneTimer) { clearTimeout(resetDoneTimer); resetDoneTimer = null; }
+        // A reset still asking to confirm, or flashing done, gets its own label back.
+        const resetBtn = panel && panel.querySelector('[data-accessibility-action="reset"]');
+        if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; if (resetBtn) restoreResetLabel(resetBtn); }
+        if (resetDoneTimer) { clearTimeout(resetDoneTimer); resetDoneTimer = null; if (resetBtn) endResetFlash(resetBtn); }
         if (resetCountdownTimer) { clearTimeout(resetCountdownTimer); resetCountdownTimer = null; }
         if (initAbortController) { initAbortController.abort(); initAbortController = null; }
         removeMask();
@@ -1384,18 +1385,18 @@
     // supplies the <template> content instead. Still honors a page-authored
     // <template class="nds-panel-template"> or a bare panel already in the
     // document (pre-1.13 markup, or a consumer's own customized copy).
-    function resolvePanel() {
+    function resolvePanel(side) {
         const live = document.querySelector('[data-accessibility-panel]');
         if (live) return live;
         const id = PANEL_ID;
         // No page-authored <template> for this id — inject the markup this
         // bundle carries so fromTemplate can arm it exactly like one, without
-        // it ever sitting in the page's HTML. data-panel-side still comes from
-        // toggleBtn when it has one — a real trigger without it just gets the
-        // 'end' default, same as the built-in FAB markup ships.
+        // it ever sitting in the page's HTML. side comes from the trigger's
+        // data-panel-side — a trigger without it gets the 'end' default, same
+        // as the built-in FAB markup ships.
         if (!document.getElementById(id) && ![...document.querySelectorAll('template')].some(item => item.content.getElementById(id))) {
             const template = document.createElement('template');
-            template.innerHTML = buildPanelMarkup((toggleBtn && toggleBtn.dataset.panelSide) || 'end');
+            template.innerHTML = buildPanelMarkup(side);
             document.body.appendChild(template);
         }
         const injected = NDS.fromTemplate(id);
@@ -1427,16 +1428,15 @@
     }
 
     // triggerEl: the element that caused this arm (a click on it, if any) —
-    // used as toggleBtn so buildPanelMarkup() reads ITS data-panel-side and i18n
-    // localizes the element the user actually sees, rather than an arbitrary
+    // buildPanelMarkup() reads ITS data-panel-side, rather than an arbitrary
     // document-order first-match. Falls back to a plain query when arming
     // with no trigger (the saved-prefs path).
     function init(triggerEl) {
         if (initDone) destroy();
         initDone = true;
 
-        toggleBtn = triggerEl || document.querySelector('[data-accessibility-toggle]');
-        panel = resolvePanel();
+        const trigger = triggerEl || document.querySelector('[data-accessibility-toggle]');
+        panel = resolvePanel((trigger && trigger.dataset.panelSide) || 'end');
         // No trigger is fine (open() from code); no panel unlatches so the next arm retries.
         if (!panel) { initDone = false; return; }
         // Not in the markup: before the first press the panel does not exist, so the id would point nowhere.
@@ -1478,6 +1478,12 @@
             if (isPanelOpen()) close();
         });
         signal.addEventListener('abort', offResize);
+
+        // A trigger a view adds later gets the link and the count too: the loader runs init() once.
+        signal.addEventListener('abort', NDS.onDomAdd('[data-accessibility-toggle]', (toggles) => {
+            toggles.forEach(toggle => toggle.setAttribute('aria-controls', panel.id));
+            syncUi();
+        }));
 
         wire.forEach(({ sel: selector, event, fn, each }) => {
             panel.querySelectorAll(selector).forEach(el => {

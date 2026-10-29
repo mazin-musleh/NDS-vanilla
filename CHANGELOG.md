@@ -225,6 +225,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Accessibility** — A mode's text-size preset applies even after the visitor cycled the text size tile back to its default.
 - **Accessibility** — `NDS.Accessibility.open()` on a page with no `data-accessibility-toggle` button opens a working panel and applies saved settings. It opened a panel whose tiles did nothing.
 - **Accessibility** — `toggleMode()`, `setVisualFilter()` or `cycleSetting()` called before the panel starts, such as on a page with no `data-accessibility-toggle` button, adds to the visitor's saved settings. It replaced them with the defaults plus the one change. `NDS.Accessibility.state` holds the saved settings from page load.
+- **Accessibility** — `NDS.Accessibility.init()` called again while the reset button asks to confirm, or shows "Settings reset", gives the button its own label back. It kept "Click again to confirm", and the next press saved that text as the label.
 - **Accordion** — The loading bar stays next to a leading icon.
 - **Accordion** — In a tab opened in the background, an accordion shows when the page loads. Before, it waited until the visitor opened the tab.
 - **Accordion** — `openItem()` then `closeItem()` on one item before it finishes opening runs only the close: no `nds:accordion:opened` event and no scroll to the item.
@@ -521,6 +522,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Migrating from v1.12.0
 - Replace the runtime: copy `_site/assets/` over your assets folder.
 - Run `NDS.init.audit()` on every page. It lists each old name the page still uses, with its replacement. The full list by release is on the [Migration](https://mazin-musleh.github.io/NDS-vanilla/guides/migration.html) page.
+- **Accessibility** — `NDS.Accessibility.state.settings['font-step']` is always a number, 0 to 3. A Font Sizing tile press stored it as text (`'2'`), and the Visually Impaired mode as a number (`2`). A visitor's saved settings are read back as a number. Compare with `===` against a number.
 - **Autocomplete** — With `data-strict`, text already in the field when it builds counts as a pick, so a server-filled value passes after the user tabs through the field. Check a value the server fills on the server, if it can be out of date.
 - **Button** — A button no longer stretches to fill a column. Add `.nds-full` to one that should fill its container.
 - **Button** — A badge you write by hand takes its count in `data-count`: `<span class="nds-badge">3</span>` becomes `<span class="nds-badge" data-count="3"></span>`. A text count still shows, but an accessibility checker reports it on a button with a label. `NDS.init.audit()` names each one (`badge-text`).
