@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 10:08 PM"
+last_edit: "29/10/2026 - 02:09 PM"
 lang: en
 direction: ltr
 ---
@@ -385,7 +385,7 @@ The eye button switches the field between hidden and plain text, and its label b
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">Every field on the page starts when the page loads, and a field added later starts on its own. Call <code class="nds-inline-code lang-js">NDS.Form.create()</code> only to start a part of the page at once.</p>
+          <p class="nds-item-desc">Every field on the page starts when the page loads, and a field added later starts on its own. The first field on a page that had none needs <code class="nds-inline-code lang-js">NDS.init.mount()</code> on the new content. Call <code class="nds-inline-code lang-js">NDS.Form.create()</code> only to start a part of the page at once.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

@@ -484,6 +484,8 @@
     NDS.field.addType('digits', {
         on: {
             beforeinput: function(e, context) {
+                // A component took the insert itself (OTP's paste spread, shaped typing): a second insert doubles it.
+                if (e.defaultPrevented) return;
                 // A formatted field's part (nds-formatted-input.js) takes every insert on it.
                 if (!context || (!e.isComposing && context.container && context.container.matches('.nds-formatted'))) return;
                 if (context.input.readOnly || context.input.getAttribute('inputmode') !== 'numeric' || !e.data) return;
@@ -503,7 +505,7 @@
     });
 
     // Number stepper: the buttons step, a held button repeats and speeds up, and blur clamps to min/max.
-    var stepTiers = [[0, 1, 75], [1500, 10, 50]];   // [held for (ms), step multiplier, interval (ms)]
+    var stepTiers = [[0, 1, 75], [1500, 10, 50]];   // [ms after the repeat starts (400 ms after the press), step multiplier, interval (ms)]
     var hold = null;
     var heldButton = null;   // a hold that stepped: the click its release sends steps no more
     function stepValue(btn, multiplier) {
@@ -843,10 +845,11 @@
                     container.removeAttribute('data-required');
                     container.classList.remove('nds-required');
                 }
-                // Propagate to inputs, skip radios (always in groups, validated at group level). A field whose
-                // value a component owns never stamps required.
-                if (!NDS.validation.isOwned(container)) container.querySelectorAll('input, textarea, select').forEach(function(input) {
-                    if (input.type !== 'radio') input.required = add;
+                // Propagate to inputs, skip radios (always in groups, validated at group level). An input whose
+                // value a component owns never stamps required, judged by its own field, as setup does (OTP's boxes).
+                container.querySelectorAll('input, textarea, select').forEach(function(input) {
+                    if (input.type === 'radio' || NDS.validation.isOwned(input.closest('.nds-form-container') || container)) return;
+                    input.required = add;
                 });
             } else {
                 add ? NDS.state.add(container, stateName) : NDS.state.remove(container, stateName);

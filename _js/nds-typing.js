@@ -11,8 +11,9 @@
  *                                     read just found; true when it did), signal, decimal }
  *   NDS.typing.group(text, caret, format, loose)  text in a slot format ("00 000 0000": 0 a digit, A a capital,
  *                                     a a small letter, * either as typed, ح an Arabic letter; loose, any in any slot)
- *                                     → { value, caret, dropped }: what a phone or an IBAN field
- *                                     shows, and the indexes of the letters and digits it left out
+ *                                     → { value, caret, dropped, open }: what a phone or an IBAN field
+ *                                     shows, the indexes of the letters and digits it left out, and
+ *                                     the slots still empty
  *   NDS.typing.isSlotCharacter(char)  true for a character some slot takes: a Latin or Arabic letter, a digit (Arabic too)
  * Events:
  *   (none — a write goes through NDS.setValue, so Forms hears it)
@@ -254,7 +255,7 @@
 
     // Typing at the end is shaped; typing inside the value types over it. A delete keeps what the user
     // wrote, so Backspace can remove an added separator. A paste that reads as a value (read(text) → the
-    // text in the field's format, or null) is that value, which adopt(text) may commit (true); anything
+    // text in the field's format, or null) is that value, which adopt() may commit (true); anything
     // else goes in as if typed, under the same limits.
     function addTypingListeners(input, { getMask, read, adopt, signal, decimal }) {
         let shaped = false;
@@ -325,8 +326,8 @@
     // is filled, or once the user types it after the last character ("AB-"). A character the next slot does not take is dropped,
     // and so is everything past the last slot. The caret stays after the same characters, and past a
     // separator a later one follows. loose: every slot takes any character a slot takes, as typed. Returns
-    // { value, caret, dropped, filled, open }: dropped, the indexes of the letters and digits left out; filled
-    // and open, the slots taken and the slots left.
+    // { value, caret, dropped, open }: dropped, the indexes of the letters and digits left out; open, the
+    // slots left.
     const SLOTS = Object.freeze({ 0: /\d/, A: /[A-Za-z]/, a: /[A-Za-z]/, '*': /[A-Za-z\d]/, 'ح': /[ء-غف-ي]/ });
     // Arabic digits too: a field may show them (a plate in Arabic).
     const SLOT_CHARACTER = /[A-Za-z\dء-غف-ي٠-٩۰-۹]/;
@@ -365,7 +366,7 @@
             value += gap;
             if (caret > last) at = value.length;
         }
-        return { value, caret: at, dropped, filled: kept.length, open: slots.length - kept.length };
+        return { value, caret: at, dropped, open: slots.length - kept.length };
     }
 
     NDS.typing ={ compile, type, addTypingListeners, group, isSlotCharacter };

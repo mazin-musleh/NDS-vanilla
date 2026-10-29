@@ -208,7 +208,8 @@
         NDS.state.onToggle('active', '.nds-form-container', syncTarget);
         // Sweep only the outermost form, group or field around each added control:
         // a page-wide sweep cost 63 ms per added row at 1,000 fields (6.6x CPU).
-        NDS.onDomAdd('.nds-form-control', (controls) => {
+        // A form with no field added later still gets its submit wiring.
+        NDS.onDomAdd('.nds-form-control, form.nds-form', (controls) => {
             const roots = new Set();
             controls.forEach((formControl) => {
                 let root = formControl;

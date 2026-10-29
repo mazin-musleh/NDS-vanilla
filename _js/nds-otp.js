@@ -3,6 +3,7 @@
  *   the outcome; the status clears as the user types)
  * Requires:
  *   .nds-otp-group needs .nds-otp-container input — the group is not wired
+ *   .nds-otp-group is .nds-form-group — no error shows and a submit never checks the code
  * Methods:
  *   NDS.Otp.init()                  wire every .nds-otp-group, and self-arm for late ones
  *   NDS.Otp.validate(el, opts)      the group's check → {valid, message, filled}; opts {showMessage}
@@ -19,7 +20,7 @@
  * Gotchas:
  *   - Each box's aria-label is "Digit n of N" in the page's language, renumbered for the
  *     group; a label that is not that English stays.
- *   - setValue() writes the boxes and the hidden carrier but fires NO event.
+ *   - setValue() fires no nds:otp event; the hidden carrier gets one input and change when its value changes.
  *   - A multi-digit paste spreads across the boxes from the focused one.
  *   - There is no reinit(): every init() sweeps, and later groups and boxes are picked up
  *     by the shared DOM bus. NDS.init.destroy(view) releases a group (group.ndsOtp).
@@ -240,7 +241,7 @@
         var abortController = new AbortController();
         var signal = abortController.signal;
         group.ndsOtp = {
-            boxes: inputs.length,
+            boxes: inputs,
             destroy: function () {
                 abortController.abort();
                 group.removeAttribute('data-nds-otp-initialized');
@@ -288,7 +289,9 @@
                 if (!group) return;
                 if (group.ndsOtp) {
                     // Already wired with these boxes (init's sweep ran first): leave it, and its focus.
-                    if (group.ndsOtp.boxes === getOtpInputs(group).length) return;
+                    // The same boxes, not the same count: a host may rebuild them all.
+                    var wired = group.ndsOtp.boxes, live = getOtpInputs(group);
+                    if (live.length === wired.length && live.every(function (box, i) { return box === wired[i]; })) return;
                     group.ndsOtp.destroy();
                 }
                 setupOtpGroup(group);
@@ -313,7 +316,7 @@
     }
     // validate(el) answers the same way, so a group of disabled boxes passes there too.
     function answerField(group) { return Object.assign(checkField(group), { focus: getOtpInputs(group)[0] }); }
-    NDS.validation.addRule('.nds-form-group.nds-otp-group[data-min-checked], .nds-form-group.nds-otp-group[data-max-checked], .nds-form-group.nds-otp-group[data-required], .nds-form-group.nds-otp-group.nds-required',
+    NDS.validation.addRule('.nds-form-group.nds-otp-group[data-required], .nds-form-group.nds-otp-group.nds-required',
         answerField,
         // The group's rule answers for its boxes: the native pass leaves their container alone.
         { owns: function (container) { return container.classList.contains('nds-otp-container'); } });
@@ -325,7 +328,8 @@
         getValue: getValue,
 
         setValue: function (group, value) {
-            clearInputs(group);
+            // One sync, in distributeDigits: the carrier hears the new value, never '' first.
+            getOtpInputs(group).forEach(function (i) { i.value = ''; });
             distributeDigits(group, NDS.toLatinDigits(value).replace(/\D/g, ''), 0);
         },
 

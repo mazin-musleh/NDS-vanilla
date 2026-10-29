@@ -84,7 +84,8 @@
         {
             // Critical: init un-hides [hidden] form wrappers and reveals .nds-clear on pre-filled fields (CLS if late).
             name: 'Form',
-            selector: '.nds-form-control',
+            // form.nds-form too: a form with only a button still owns its submit (data-ajax, nds:form:valid).
+            selector: '.nds-form-control, form.nds-form',
             critical: true,
         },
         {

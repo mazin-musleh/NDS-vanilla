@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 06:08 PM"
+last_edit: "29/10/2026 - 02:13 PM"
 ---
 
 <section id="slider-overview" class="nds-content-section nds-doc-overview">
@@ -150,7 +150,7 @@ The `nds-loading` class shows the bar and the value as a skeleton, and hides the
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">nds-slider-container</code> on the page starts on its own, and so does a slider added later. No call is needed.</p>
+          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">nds-slider-container</code> on the page starts on its own, and so does a slider added later. The first slider on a page that had none needs <code class="nds-inline-code lang-js">NDS.init.mount()</code> on the new content.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -250,7 +250,7 @@ Source: the `slider` group in `_sass/tokens/_components.scss`.
 
 | Method | Effect |
 |---|---|
-| `NDS.Slider.init()` | Starts every slider on the page. It runs once at page load, and a slider added later starts on its own |
+| `NDS.Slider.init()` | Starts every slider on the page. It runs once at page load, and a slider added later starts on its own. The first slider on a page that had none needs `NDS.init.mount()` on the new content |
 | `NDS.Slider.reinit(container)` | Starts one container again, or every container with no argument |
 | `NDS.Slider.create(container)` | Starts one container and returns it |
 | `NDS.Slider.destroy(container)` | Stops one container, or every container with no argument |

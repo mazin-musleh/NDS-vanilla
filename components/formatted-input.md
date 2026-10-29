@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "29/10/2026 - 12:53 AM"
+last_edit: "29/10/2026 - 02:09 PM"
 ---
 
 <section id="formatted-input-overview" class="nds-content-section nds-doc-overview">
@@ -353,7 +353,7 @@ NDS.FormattedInput.addFormat('card', {
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">Every field starts when the page loads, and a field added later starts on its own. No init call is needed.</p>
+          <p class="nds-item-desc">Every field starts when the page loads, and a field added later starts on its own. The first field on a page that had none needs <code class="nds-inline-code lang-js">NDS.init.mount()</code> on the new content.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

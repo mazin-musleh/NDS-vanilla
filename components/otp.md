@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "29/10/2026 - 02:09 PM"
 ---
 
 <section id="otp-overview" class="nds-content-section nds-doc-overview">
@@ -142,7 +142,7 @@ For another code length, copy a box and give it a unique `id`. The script number
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">nds-otp-group</code> on the page starts on its own, and so does a group added later. No call is needed.</p>
+          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">nds-otp-group</code> on the page starts on its own, and so does a group added later. The first group on a page that had none needs <code class="nds-inline-code lang-js">NDS.init.mount()</code> on the new content.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -251,9 +251,9 @@ Each method takes the `.nds-otp-group` element.
 | Method | Effect |
 |---|---|
 | `NDS.Otp.getValue(group)` | Returns the digits as one string. An empty box adds nothing |
-| `NDS.Otp.setValue(group, value)` | Fills the boxes from the first, and removes characters that are not digits. It fires no event |
+| `NDS.Otp.setValue(group, value)` | Fills the boxes from the first, and removes characters that are not digits. It fires no `nds:otp` event. The hidden input gets one `input` and `change` when its value changes |
 | `NDS.Otp.clear(group)` | Empties the boxes, focuses the first box and fires `nds:otp:clear`. It does not remove an error: call `NDS.Form.clearStatus(group)` for that |
-| `NDS.Otp.init()` | Starts every group on the page that has not started. It runs at page load, and a group added later starts on its own. `NDS.init.destroy(view)` releases a group |
+| `NDS.Otp.init()` | Starts every group on the page that has not started. It runs at page load, and a group added later starts on its own. The first group on a page that had none needs `NDS.init.mount()` on the new content. `NDS.init.destroy(view)` releases a group |
 | `NDS.Otp.validate(group, options)` | Checks that every box holds a digit, shows the error when one is empty, and returns `{ valid, message, filled }`. Pass `{ showMessage: false }` to check without showing the error |
 {: .nds-table .nds-responsive}
 

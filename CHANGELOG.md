@@ -365,6 +365,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Forms** — `NDS.Form.setStatus(el, '')` fires `nds:form:status` once; it fired twice. A number field with a blank `min` or `max` steps without a limit on that side; it wrote `NaN`. A paste into a read-only field no longer sets the `typing` state.
 - **Forms** — A field that becomes read-only while it has focus loses its focus look when the user leaves it. Before, `data-state="focus"` stayed.
 - **Forms** — A radio or checkbox ripple stays round while it is pressed; the field underline's press width squeezed it.
+- **Forms** — A `<form class="nds-form">` with no field in it, such as a form with only a confirm button, gets its submit handling: `data-ajax` stops the page load and `nds:form:valid` fires. This works at page load and for a form added later. Before, it submitted as a plain form when the page had no field at load, or when it was added later. A form that is the first on a page that had none still needs `NDS.init.mount()`, as every component does.
 - **Grid** — `hidden` and `.nds-hidden` hide an `.nds-grid`: its own `display: grid !important` kept it showing.
 - **Hero** — a relative path in it loads from the page, not from the stylesheet's folder.
 - **[Hidden](https://mazin-musleh.github.io/NDS-vanilla/utilities/hidden.html)** — A label with `data-hidden="sm sr"` stays hidden while its component starts. In Tabs the loading bar gave it a width, so on a phone the tab row took an edge fade that never cleared and hid the open tab's bar.
