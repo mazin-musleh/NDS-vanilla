@@ -278,9 +278,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Date Picker and Autocomplete** — `destroy()` keeps a `nds-dropmenu` class or a `data-dropmenu-no-click`, `data-dropmenu-no-keys` or `data-anchor` you wrote on the field, and takes back only what the component wrote.
 - **Definition list** — `nds-md` and `nds-sm` titles keep 16px and 14px on phones instead of shrinking.
 - **Digital Stamp** — The panel opens and closes with no animation when the visitor asks for reduced motion. The highlight text reaches 4.5:1 contrast in light mode.
+- **Digital Stamp** — `NDS.DigitalStamp.open()` and `toggle()` open the panel when its markup was added after the page loaded. They did nothing until `init()` ran.
 - **Divider** — A labelled divider's text lines up with its lines, and a vertical divider spaces sideways.
 - **Drawer** — In fit mode, a rich row fills its share of the height, so a shorter list in a grid leaves no gap under each row.
 - **Drawer** — A second click while a branch opens or closes no longer leaves it stuck open over a closed submenu.
+- **Drawer** — A `--drawer-transition` longer than the page's transition speed runs to its end. After about 250 ms, the submenu snapped open or vanished partway through closing, and `nds:drawer:shown` and `nds:drawer:hidden` fired early.
 - **Dropmenu** — a dropmenu in a row that centers its items is centered too. It still fills a column section action.
 - **Dropmenu** — `data-search` no longer hides the footer buttons (Apply, Reset): it narrows only the items in `.nds-dropmenu-scroll`.
 - **Dropmenu** — `data-search` hides a group with no matches, and its divider. The mouse wheel scrolls the page over a menu that fits.
@@ -379,6 +381,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Main Navigation** — a row-list menu stacks its links in a column below 960px; the brand gives way below 960px so the menu button stays on screen; the brand name and slogan have default colors; the drawer's show more arrow no longer covers the last link when every action is pinned; an avatar with initials in an icon-only item shows its initials; with auto-init off, the nav no longer switches to its phone layout before `initialize()`, so a framework hydrates the markup it rendered; Escape in an open menu or the phone drawer returns focus to its button.
 - **Main Navigation** — A drag on the link row no longer opens the link under the pointer.
 - **Main Navigation** — At a window exactly 960px wide, the nav shows its desktop layout, as the rest of the page does. It showed the phone layout.
+- **Main Navigation** — A menu closed during its open animation, such as with Escape, no longer keeps `opened` in its `data-state` after it has closed.
+- **Main Navigation** — With reduced motion, closing the drawer also closes the menu open inside it. The menu stayed open, with `aria-expanded="true"`, and showed open the next time the drawer opened.
+- **Main Navigation** — The Show more button scrolls the links at once when the visitor turns on reduced motion after the page loads. It scrolled smoothly until the next load.
 - **Mark** — In dark mode `<mark>` takes the translucent primary in `--background-mark`. It kept the light highlight, which was hard to read.
 - **Metric** — The metric's own width picks its layout, so charts and spacing match across cards of one size. From 400px wide, the value and the chart take half the row each; below that, the chart sits under the value. A trend text that does not fit beside its number goes to its own line, where it ran into the chart.
 - **Modal** — Focus moves into the modal when it opens and back to its trigger when it closes.
@@ -396,6 +401,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Page Layout** — A `#hash` link or `scrollIntoView()` lands below the sticky main navigation, not under it.
 - **Pagination** — A screen reader hears the records counter when a page or a filter changes it, and not when a link with `?page=` opens its page. A disabled arrow of a link-mode nav keeps `role="link"`. A `--per-page` set in a class or a media query pages the list before it shows; the list showed 6 items, then jumped. A disabled Previous or Next `<button>` has the same color as a disabled link; it was faded a second time, to 40%.
 - **Pagination** — In a data-driven nav, `setTotalPages()` with the same count no longer builds the nav again, so keyboard focus stays on the page button. A count of 0 or 1 hides the nav (0 left the old pages up, 1 showed a lone button). A nav whose count came only from `setTotalPages()` no longer keeps its loading placeholder. `data-active-page` holds the current page, and `setTotalPages()` updates `?page=`.
+- **Pagination** — `setTotalPages()` on a nav with no page buttons yet, such as one whose count comes with the first request, opens the page in its `data-active-page`, or the address's `?page=` when the nav has `data-page-param`. It opened page 1, so a reload or a shared link lost the page.
 - **Pagination** — `destroy()` closes and removes the menu of hidden pages, and a nav started again builds it again. Before, an open menu stayed on the page after `destroy()`, and the nav started again had no menu.
 - **Pagination** — `destroy()` on a nav that pages a content list also removes its page clicks. Picking a page size no longer makes the next resize build the nav again.
 - **Pagination** — When `nds:pagination:change` fires, `?page=` already holds the new page, so a listener can read it for its request.

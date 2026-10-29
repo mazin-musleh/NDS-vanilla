@@ -53,10 +53,6 @@
     // ==============================================
     // dom REFERENCES
     // ==============================================
-    // Mainnav is a singleton with a stable markup tree, so all node references
-    // are cached eagerly at module load (script runs after DOMContentLoaded via
-    // the loader). Previously every reference re-ran querySelector — `dom.collapse`
-    // alone is touched ~25× across this file.
     const dom = {
         nav: null, collapse: null, collapseContent: null,
         primary: null, secondary: null, toggler: null, minimal: null,
@@ -65,7 +61,7 @@
     // Re-resolvable rather than captured once: the module runs when the bundle does, and a
     // framework consumer may not have rendered the chrome yet. Capturing null there left
     // the whole nav inert for the session with no warning — CSS painted it, nothing worked.
-    // Fields are reassigned in place so the ~25 `dom.collapse` reads elsewhere keep working.
+    // Fields are reassigned in place so the `dom.collapse` reads elsewhere keep working.
     function captureDom() {
         const nav = document.querySelector('.nds-main-nav');
         dom.nav = nav;
@@ -88,17 +84,15 @@
     // matchMedia so the flip fires as an event rather than being polled
     // inside scheduleUpdate. Consumers that override `--nds-minimal-nav-bp`
     // still get honored (the override is what we read here). The
-    // matchMedia change listener is attached at the bottom of the file
-    // alongside the reduced-motion listener.
+    // matchMedia change listener is attached at the bottom of the file.
     const minimalBreakpoint = parseInt(getComputedStyle(document.documentElement)
         .getPropertyValue('--nds-minimal-nav-bp')) || MINIMAL_NAV_BREAKPOINT_FALLBACK;
     // Exclusive edge, as tablet(max) in CSS: at exactly the breakpoint the nav is the desktop one.
     const minimalMediaQuery = window.matchMedia(`(width < ${minimalBreakpoint}px)`);
 
     // Scroll behavior for every JS-driven nav scroll. 'auto' defers to the element's
-    // CSS scroll-behavior, which is unset on the nav and on the document — so it is a
-    // real instant scroll here. Check the stylesheet before copying this onto a
-    // surface that sets scroll-behavior: smooth, where 'auto' still animates.
+    // scroll-behavior: the bar carries this value inline (set at setup, re-read before each
+    // show-more scroll), and the document sets none, so 'auto' is a real instant scroll.
     const getScrollBehavior = () => NDS.prefersReducedMotion ? 'auto' : 'smooth';
 
     // Mode class at eval, ahead of the loader's reveal stamp, so it rides the
@@ -119,7 +113,7 @@
     // STATE MANAGEMENT
     // ==============================================
     const state = {
-        isAnimating: false,
+        get isAnimating() { return animate._activeCount > 0; },
         pendingAction: null,
         pendingOverflowCheck: null,
         // Flipped true by the navChanged dom-mutation debounce; consumed in
@@ -160,16 +154,13 @@
     };
 
     // Tracked delayed action for toggle functions — prevents stale callbacks.
-    // Boxed in a holder so dropdown.toggle's onComplete can read the pending
-    // state via toggleTimer.value while scheduleToggleAction/cancelToggleAction
-    // own the write side.
-    const toggleTimer = { value: null };
+    let toggleTimer = null;
     const scheduleToggleAction = (duration, callback) => {
         cancelToggleAction();
-        duration === 0 ? callback() : (toggleTimer.value = setTimeout(() => { toggleTimer.value = null; callback(); }, duration));
+        duration === 0 ? callback() : (toggleTimer = setTimeout(() => { toggleTimer = null; callback(); }, duration));
     };
     const cancelToggleAction = () => {
-        if (toggleTimer.value) { clearTimeout(toggleTimer.value); toggleTimer.value = null; }
+        if (toggleTimer) { clearTimeout(toggleTimer); toggleTimer = null; }
     };
 
     // Resolve the animation target for a dropdown element. needsHeight + animTarget
@@ -236,7 +227,7 @@
     // here (removeCollapseHidden on the first settled check) — deferring it would
     // pop the affordance / hold the drawer hidden post-reveal (CLS).
     const overflow = {
-        schedule(priority = 'normal', delay = 50) {
+        schedule(priority = 'normal') {
             if (state.pendingOverflowCheck) clearTimeout(state.pendingOverflowCheck);
 
             if (priority === 'immediate') {
@@ -245,7 +236,7 @@
                 return;
             }
 
-            const ms = priority === 'high' ? 10 : priority === 'low' ? 100 : delay;
+            const ms = priority === 'high' ? 10 : priority === 'low' ? 100 : 50;
             state.pendingOverflowCheck = setTimeout(() => {
                 state.pendingOverflowCheck = null;
                 this.check();
@@ -270,13 +261,13 @@
                 // forever and the retry never ends — ~9 wake-ups a second for as long as the
                 // drawer stays open. Falling through is also the right answer for it: an
                 // empty list cannot overflow.
-                if (scrollHeight === 0 && dom.primary.firstElementChild) { this.schedule('low', 50); return; }
+                if (scrollHeight === 0 && dom.primary.firstElementChild) { this.schedule('low'); return; }
                 if (isFinite(maxH) && maxH > 0) hasOverflow = scrollHeight > maxH + 2;
             } else {
                 const { scrollWidth, clientWidth } = dom.primary;
                 // Same guard as the minimal branch above: only retry when there is content
                 // whose layout could still arrive.
-                if (scrollWidth === 0 && clientWidth === 0 && dom.primary.firstElementChild) { this.schedule('low', 50); return; }
+                if (scrollWidth === 0 && clientWidth === 0 && dom.primary.firstElementChild) { this.schedule('low'); return; }
                 hasOverflow = scrollWidth > clientWidth;
             }
 
@@ -426,19 +417,17 @@
         _activeCount: 0,
 
         run(element, open, config = {}) {
-            const { onStart, onComplete, getMenu, blockWhileAnimating = true } = config;
-            if (blockWhileAnimating && open && state.isAnimating) return false;
+            const { onStart, onComplete, getMenu } = config;
+            if (open && state.isAnimating) return;
 
             const duration = state.getDuration(getMenu?.() || element);
 
             this._activeCount++;
-            state.isAnimating = true;
 
             const finish = () => {
                 this._activeCount--;
                 if (this._activeCount <= 0) {
                     this._activeCount = 0;
-                    state.isAnimating = false;
                     this.processPending();
                 }
                 onComplete?.();
@@ -466,14 +455,14 @@
                 dispatchNavEvent(element, 'opened');
                 onStart?.();
                 NDS.onNextPaint(() => removeState(element, 'opening'));
-                runAfterDelay(duration, () => { addState(element, 'opened'); finish(); });
+                // A close may start mid-open (Escape, outside click): an 'opened' stamped then outlives it.
+                runAfterDelay(duration, () => { if (!hasState(element, 'closing')) addState(element, 'opened'); finish(); });
             } else {
                 addState(element, 'closing');
                 removeState(element, 'opened');
                 onStart?.();
                 runAfterDelay(duration, () => { removeState(element, 'open', 'opening', 'closing'); finishClose(); finish(); });
             }
-            return true;
         },
 
         processPending() {
@@ -568,9 +557,8 @@
 
             animate.run(el, open, {
                 getMenu: () => animationTarget,
-                blockWhileAnimating: open,
                 onStart: () => {
-                    overflow.schedule('high', 10);
+                    overflow.schedule('high');
                     if (open) {
                         // Drop intrinsic [hidden] before the open transition so
                         // display:none doesn't kill the animation.
@@ -580,7 +568,7 @@
                 },
                 onComplete: () => {
                     if (!isInMinimal) syncDrawerOverflow();
-                    overflow.schedule('low', 100);
+                    overflow.schedule('low');
 
                     if (!open) {
                         // Restore [hidden] after the close transition ends — but
@@ -594,7 +582,7 @@
                         if (!collapseHandlesBackdrop &&
                             openDropdowns.size === 0 &&
                             !hasState(dom.collapse, 'open') &&
-                            !toggleTimer.value) {
+                            !toggleTimer) {
                             hideNavBackdrop('dropdown');
                         }
                     }
@@ -625,13 +613,13 @@
 
                 animate.run(dom.collapse, true, {
                     getMenu: () => state.isMinimal ? (collapseContent || dom.collapse) : null,
-                    onStart: () => { if (state.isMinimal) overflow.schedule('high', 10); },
-                    onComplete: () => { syncDrawerOverflow(); overflow.schedule('low', 100); }
+                    onStart: () => { if (state.isMinimal) overflow.schedule('high'); },
+                    onComplete: () => { syncDrawerOverflow(); overflow.schedule('low'); }
                 });
             } else {
                 removeState(dom.toggler, 'open');
                 NDS.aria.expanded(toggleButton, false);
-                const closeDelay = NDS.prefersReducedMotion ? 0 : dropdown.closeAll();
+                const closeDelay = dropdown.closeAll();
 
                 runAfterDelay(closeDelay, () => {
                     animate.run(dom.collapse, false, {
@@ -639,7 +627,7 @@
                         // Defer hideNavBackdrop until the drawer finishes closing —
                         // Backdrop.hide()'s synchronous scrollLock.unlock() reflow would
                         // otherwise land in the toggle click frame and inflate INP.
-                        onComplete: () => { hideNavBackdrop('navbar'); syncDrawerOverflow(); overflow.schedule('low', 100); }
+                        onComplete: () => { hideNavBackdrop('navbar'); syncDrawerOverflow(); overflow.schedule('low'); }
                     });
                 });
             }
@@ -662,30 +650,18 @@
     //   1. minimal+isInMinimal+drawer-open: close the drawer first, then open
     //   2. default:                         schedule open after the closeAll settles
     function scheduleDropdownOpen(isInMinimal, closeDelay, open) {
-        if (isInMinimal && state.isMinimal) {
-            let delay = 0;
-
-            if (hasState(dom.collapse, 'open')) {
-                showNavBackdrop('dropdown', () => {
-                    openDropdowns.forEach(dropdownItem => {
-                        if (dropdownItem.closest('.nds-nav-minimal')) dropdown.toggle(dropdownItem, false);
-                    });
+        let delay = closeDelay;
+        if (isInMinimal && state.isMinimal && hasState(dom.collapse, 'open')) {
+            showNavBackdrop('dropdown', () => {
+                openDropdowns.forEach(dropdownItem => {
+                    if (dropdownItem.closest('.nds-nav-minimal')) dropdown.toggle(dropdownItem, false);
                 });
-
-                const dropdownCloseDelay = NDS.prefersReducedMotion ? 0 : dropdown.closeAll();
-                const collapseContent = dom.collapseContent;
-                const totalNavbarDuration = dropdownCloseDelay + state.getDuration(collapseContent || dom.collapse);
-
-                navbar.toggle(false);
-                delay = Math.max(delay, totalNavbarDuration * 1.2);
-            } else {
-                delay = Math.max(delay, closeDelay);
-            }
-
-            scheduleToggleAction(delay, open);
-        } else {
-            scheduleToggleAction(closeDelay, open);
+            });
+            // toggleMenu already closed every other menu, so only the drawer's slide is left to wait on.
+            delay = state.getDuration(dom.collapseContent || dom.collapse) * 1.2;
+            navbar.toggle(false);
         }
+        scheduleToggleAction(delay, open);
     }
 
     function toggleMenu(dropdownItem) {
@@ -707,7 +683,6 @@
         const closeDelay = dropdown.closeAll(dropdownItem);
 
         const open = () => {
-            if (animate._activeCount === 0) state.isAnimating = false;
             dropdown.toggle(dropdownItem, true);
             if (isInPrimary && hasState(dom.collapse, 'open')) runAfterDelay(duration * 0.1, syncDrawerOverflow);
         };
@@ -794,6 +769,8 @@
 
             const atEnd = hasState(dom.primary, 'at-end');
             const amount = (state.isMinimal ? dom.primary.clientHeight : dom.primary.clientWidth) * 0.8;
+            // Inline, so it outranks any stylesheet; read per scroll, so a preference changed since load holds.
+            dom.primary.style.scrollBehavior = getScrollBehavior();
 
             if (state.isMinimal) {
                 openDropdowns.forEach(dropdownItem => {
@@ -841,8 +818,7 @@
 
         addShowMoreListeners(signal);
         addScrollTrackingListeners(signal);
-        // Inline, so it outranks any stylesheet — it must honour reduced motion here
-        // or every scrollTo below silently animates through its 'auto' branch.
+        // The bar's other scrolls (focus, a drag's settle) follow the mode at setup; show-more re-reads it.
         dom.primary.style.scrollBehavior = getScrollBehavior();
         // Not in minimal mode, only while the bar overflows, never from inside a dropdown menu.
         NDS.dragScroll(dom.primary, {
@@ -980,7 +956,7 @@
         // overflow flag — `.nds-nav-primary`'s clientWidth changes whenever
         // the container shrinks, and only `overflow.check()` flips has-more
         // (which un-hides `.nds-show-more` via the sibling selector at
-        // _main-nav.scss:281). Without this call, resizing past the items'
+        // _main-nav.scss:241). Without this call, resizing past the items'
         // intrinsic width leaves the nav scroll-only with no show-more.
         const onNavResize = NDS.debounce(() => {
             primaryMaxHeightCached = null;
@@ -992,10 +968,8 @@
         // changes size meaningfully (≥ 5px on either axis to drop spurious
         // sub-pixel deliveries). CSS flex sizing owns primary's width budget;
         // this handler only triggers downstream JS work (mode-flip check,
-        // toggler visibility, overflow recheck) via scheduleUpdate.
-        // Pre-JSA-15 this also observed dom.nav (for updateNavMaxWidth's
-        // navW input). With that gone, NDS.onResize fully covers window-level
-        // size changes — observing just primary is enough.
+        // toggler visibility, overflow recheck) via scheduleUpdate. NDS.onResize covers
+        // window-level size changes, so observing primary alone is enough.
         const handleNavResize = (entry) => {
             const { width, height } = entry.contentRect;
             const last = lastSizes.get(entry.target);
@@ -1111,7 +1085,7 @@
     // `--nds-minimal-nav-bp`. scheduleUpdate's syncMode call then
     // sees the mismatch between .nds-main-nav.nds-minimal and the new state.isMinimal
     // and runs the mode-transition logic (close dropdowns, drawer cleanup,
-    // PAB placement). Replaces the old windowWidth-vs-minimalBreakpoint poll.
+    // PAB placement).
     minimalMediaQuery.addEventListener('change', () => {
         if (!initDone) return;
         primaryMaxHeightCached = null;
@@ -1131,7 +1105,7 @@
         offElementResizes.splice(0).forEach(off => off());
         offDomWatches.splice(0).forEach(off => off());
         openDropdowns.clear();
-        hideNavBackdrop(navBackdropOwner);
+        if (navBackdropOwner) hideNavBackdrop(navBackdropOwner);
     }
 
     const isDrawerOpen = () => hasState(dom.collapse, 'open');
