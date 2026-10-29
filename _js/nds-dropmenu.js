@@ -27,8 +27,8 @@
  *   data-search · data-search-empty · data-search-item · data-search-value
  *   data-select-name · data-select-value · data-required · data-trigger-label · data-value
  * Gotchas:
- *   - An instance holds a document-level click listener, so dropping its wrapper from
- *     the DOM (replacing a table row, closing a view) leaks it and the detached subtree.
+ *   - An open instance listens on the document, and a picker on its form at all times, so dropping
+ *     its wrapper from the DOM (replacing a table row, closing a view) leaks it and the detached subtree.
  *     Call destroy(el) first. reinit() covers the other side: wrappers you ADD.
  *   - nds:dropmenu:prepare is the lazy-content hook; opened fires after placement.
  *     waitUntil(promise) keeps the spinner until it settles; call it in the listener, not
@@ -310,8 +310,7 @@
                 let visible = 0;
                 const items = getItems();
                 for (const item of items) {
-                    const haystack = normalizeText(item.textContent + ' ' + (item.getAttribute('data-search-value') || ''));
-                    const match = !query || haystack.includes(query);
+                    const match = !query || normalizeText(item.textContent + ' ' + (item.getAttribute('data-search-value') || '')).includes(query);
                     item.hidden = !match;
                     if (match) visible++;
                 }
@@ -942,6 +941,8 @@
         }
 
         close() {
+            // Already closed (or closing): a second run would fire nds:dropmenu:closed again.
+            if (!this.isOpen) return;
             this.isOpen = false;
             openDropmenus.delete(this.dropmenu);
             this._unlistenDocument();
@@ -973,9 +974,6 @@
             // Stored so open() can call this._cancelClose() to abort the
             // in-flight close if the user re-opens before the transition
             // finishes. Cleared at the end of the cleanup body.
-            // Cancel first — close() has no re-entry guard, and re-arming over a
-            // live handle strands it: both fire, so _finishClose() runs twice.
-            this._cancelClose?.();
             this._cancelClose = NDS.onTransitionEnd(this._menu, () => this._finishClose());
         }
 

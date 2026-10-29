@@ -12,9 +12,8 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 
 ### JS audit hotspots (full-tree `architecture` run, 2026-10-29)
 
-Suspected, not confirmed: one session each, best value first. Pagination, Drawer, Main Nav, Digital Stamp and Table/Selection/Export are done. Prove a behavior fix on your own `:4010` server, old bundles vs new.
+Suspected, not confirmed: one session each, best value first. Pagination, Drawer, Main Nav, Digital Stamp, Table/Selection/Export and Dropmenu are done. Prove a behavior fix on your own `:4010` server, old bundles vs new.
 
-- [ ] `/nds-js-audit nds-dropmenu.js architecture`: `_setupSearch` is 162 lines.
 - [ ] `/nds-js-audit form,otp,typing architecture`: `NDS.Form.setState(el, 'required')` walks every input in the container unguarded (`nds-form.js`); OTP `setValue`/`clear` on a group never set up; the `masks` map in `nds-typing.js` may only grow.
 - [ ] `/nds-js-audit nds-accessibility.js architecture`: four repeated-block pairs (~L1248–1343); likely LOW.
 - [ ] `/nds-js-audit nds-copy.js architecture`, `nds-countdown.js`: a module map that may only grow (`controllers`, `unitFormats`); likely a bounded cache.
