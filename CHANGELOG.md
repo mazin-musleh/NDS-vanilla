@@ -261,6 +261,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Cooldown Button** — The count keeps time in a hidden tab. The end of a cycle no longer enables a button the page disabled. A button with no `.nds-label` warns in the console. Focus returns to the button when its cooldown ends.
 - **Copy** — the default announcement is «تم النسخ» on an Arabic page; it was always "Copied".
 - **Copy** — A second press during the "Copied" flash is ignored, so the button no longer stays "Copied".
+- **Copy** — On a page served over plain `http://`, keyboard focus stays on the copy button after a copy. It moved to the top of the page.
 - **Core** — markup added after page load with `loading`, `hidden`, `has-more`, `always-open` or `dropbox` already in its `data-state` now gets its styles.
 - **Core** — `NDS.onDomAdd` no longer reports existing elements as added when a script wraps them in a new element, such as the box a Table puts around its table. A paged table no longer builds its page buttons a second time at load.
 - **Core** — `NDS.escapeHtml` escapes quotes too, so its output is safe in attribute values. The focus trap skips hidden inputs and `tabindex="-1"` ends, so Tab stays inside a modal. The scroll lock restores fractional scroll offsets, and positioned popups handle 3D transforms.

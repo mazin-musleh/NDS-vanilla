@@ -50,20 +50,23 @@
             }
         }
 
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        textarea.style.top = '0';
+        // select() takes focus: it goes back after, so a keyboard user keeps their place.
+        const focused = document.activeElement;
+        document.body.appendChild(textarea);
         try {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.setAttribute('readonly', '');
-            textarea.style.position = 'fixed';
-            textarea.style.left = '-9999px';
-            textarea.style.top = '0';
-            document.body.appendChild(textarea);
             textarea.select();
-            const ok = document.execCommand('copy');
-            document.body.removeChild(textarea);
-            return ok;
+            return document.execCommand('copy');
         } catch (_) {
             return false;
+        } finally {
+            textarea.remove();
+            if (focused && focused !== document.body) focused.focus({ preventScroll: true });
         }
     }
 

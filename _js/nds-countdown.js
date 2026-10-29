@@ -73,7 +73,7 @@
         }
     }
 
-    // The wall clock of epoch `t` in `tz`, as if it were UTC.
+    // The wall clock of `epoch` in `timeZone`, as if it were UTC.
     function getWallTime(epoch, timeZone) {
         let formatter = zoneFormats.get(timeZone);
         if (!formatter) {
@@ -239,8 +239,9 @@
         return true;
     }
 
-    function setupCountdown(el) {
-        if (el.hasAttribute(WIRED_ATTRIBUTE) || el.closest('code')) return;
+    // What a countdown needs before its first run, from init() or from a setTarget() that came first:
+    // the server clock, the default units and the direction. Each step runs once.
+    function prepare(el) {
         // Once: a waiter is re-wired by every reinit(), and the server time in the markup does not move.
         const src = !offsets.has(el) && el.closest('[data-countdown-now]');
         if (src) {
@@ -253,6 +254,11 @@
         // which bidi treats as a neutral) flips "02:03" to "03:02" on an Arabic page.
         if (!el.hasAttribute('dir')) el.dir = 'auto';
         el.querySelectorAll('.nds-countdown-ended:not([dir])').forEach((message) => { message.dir = 'auto'; });
+    }
+
+    function setupCountdown(el) {
+        if (el.hasAttribute(WIRED_ATTRIBUTE) || el.closest('code')) return;
+        prepare(el);
         const seconds = el.getAttribute('data-countdown-seconds');
         if (seconds === null && el.getAttribute('data-countdown') === '') return; // waits for setTarget()
         // Stamped only on success, so reinit() retries a target filled in later.
@@ -274,6 +280,6 @@
     NDS.Countdown = {
         init,
         reinit: init,
-        setTarget(el, target) { if (el) { addVisibilityListeners(); track(el, target); } }
+        setTarget(el, target) { if (el) { addVisibilityListeners(); prepare(el); track(el, target); } }
     };
 })();

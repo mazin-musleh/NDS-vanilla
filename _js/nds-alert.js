@@ -192,7 +192,7 @@
                 });
                 alert.querySelector('.nds-alert-content').appendChild(actionsWrap);
                 // Late-created copy actions need the delegated .nds-copy binding even on
-                // pages that had no copy button at loader scan time (bind is idempotent).
+                // pages that had no copy button at loader scan time (init() replaces its own listener).
                 if (actions.some(actionItem => actionItem.copy || actionItem.copyTarget)) NDS.Copy.init();
             }
 
