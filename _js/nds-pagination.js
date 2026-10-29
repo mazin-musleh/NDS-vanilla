@@ -1250,7 +1250,7 @@
         stampRecordSlots(list.id, from, to, count);
     }
 
-    // Settles synchronously so the page swap never flashes all-items then hides. The only layout read is lockTableColumns.
+    // Settles synchronously so the page swap never flashes all-items then hides. Layout reads: lockTableColumns, and the counter's innerText when its text changes.
     function showPage(items, pageNumber, perPage) {
         const start = (pageNumber - 1) * perPage;
         const end = start + perPage;
@@ -1531,7 +1531,7 @@
 
     // Shared apply step for manual paginations: stamp active, refresh prev/next
     // bounds from the page set, scroll if needed. Both branches of
-    // the document click handler land here once they've resolved a target page.
+    // the nav's click handler land here once they've resolved a target page.
     function setManualPage(pagination, targetPageNumber, allPageElements) {
         const previousPage = findCurrentPage(pagination);
         setActivePage(pagination, targetPageNumber);
@@ -1604,6 +1604,9 @@
         }
         totalPages = parseInt(totalPages);
         if (!(totalPages >= 0)) return;
+        // A page with no pagination at load never ran init(), as in create().
+        addNavCleanupListeners();
+        addPerPagePickerListeners();
 
         const list = paginationNav.querySelector('.nds-pagination-list');
         const current = list ? getCurrentPage(list) : 1;
