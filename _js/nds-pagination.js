@@ -973,7 +973,11 @@
         const pagination = resolveList(nav);
         const total = parseInt(nav.dataset.totalPages);
         const page = total > 0 ? Math.min(urlPage, total) : urlPage;
-        if (!hasPage(pagination, page)) return;
+        if (!hasPage(pagination, page)) {
+            // An empty data-driven nav keeps the page for the app's first request and setTotalPages().
+            if (nav.hasAttribute('data-total-pages') && !getAllPageElements(pagination).length) nav.dataset.activePage = page;
+            return;
+        }
         setActivePage(pagination, page);
         const { min, max } = getPageBounds(getAllPageElements(pagination));
         setPrevNextStates(pagination, page, min, max);
@@ -1609,7 +1613,8 @@
         addPerPagePickerListeners();
 
         const list = paginationNav.querySelector('.nds-pagination-list');
-        const current = list ? getCurrentPage(list) : 1;
+        // No list yet: the page init or the app wrote, then ?page= for a nav init never saw.
+        const current = list ? getCurrentPage(list) : (parseInt(paginationNav.dataset.activePage) || readPageParam(paginationNav) || 1);
         const target = Math.min(Math.max(1, parseInt(activePage) || current), Math.max(1, totalPages));
 
         if (list && parseInt(paginationNav.dataset.totalPages) === totalPages) {

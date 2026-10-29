@@ -29,6 +29,8 @@ await page.evaluate(() => {
     <nav id="t-zero" class="nds-pagination" data-total-pages="0" aria-label="t"></nav>
     <nav id="t-one" class="nds-pagination" data-total-pages="1" aria-label="t"></nav>
     <nav id="t-late" class="nds-pagination" aria-label="t"></nav>
+    <nav id="t-empty-url" class="nds-pagination" data-total-pages="0" data-page-param aria-label="t"></nav>
+    <nav id="t-remount" class="nds-pagination" data-total-pages="0" data-active-page="7" aria-label="t"></nav>
     <nav id="t-drop" class="nds-pagination" data-total-pages="12" aria-label="t"></nav>`);
   const nav = document.getElementById('t-focus');
   // The doc's sample pattern: the reply carries the count, so every change resets it.
@@ -68,6 +70,20 @@ check('setTotalPages(nav, 7) after 0: shown again', await shown('t-drop'), 'hidd
 // 3. Count known only after the first request: the placeholder releases.
 await page.evaluate(() => NDS.Pagination.setTotalPages(document.getElementById('t-late'), 8));
 check('empty nav + setTotalPages(nav, 8): buttons shown', await shown('t-late'), 'hidden');
+// The doc's first request reads data-active-page, then the count arrives: the page survives.
+const emptyUrl = await page.evaluate(() => {
+  const nav = document.getElementById('t-empty-url');
+  const before = nav.dataset.activePage;
+  NDS.Pagination.setTotalPages(nav, 10);
+  return `${before} ${nav.dataset.activePage} ${new URLSearchParams(location.search).get('page')}`;
+});
+check('empty nav on ?page=4: data-active-page, then setTotalPages keeps page 4', emptyUrl === '4 4 4', emptyUrl);
+const remount = await page.evaluate(() => {
+  const nav = document.getElementById('t-remount');
+  NDS.Pagination.setTotalPages(nav, 10);
+  return nav.dataset.activePage;
+});
+check('re-mounted empty nav with data-active-page="7": setTotalPages keeps page 7', remount === '7', remount);
 
 // 4. data-active-page and ?page= stay current.
 const url = await page.evaluate(() => document.getElementById('t-url').dataset.activePage);
